@@ -1,57 +1,84 @@
-# Scroll Area 의 수치 원본 — 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Scroll Area 의 수치 원본 — 기본 스크롤 + 전역 스크롤바 한 벌 · 스크롤 상자 규칙(2026-10-10 사용자 결정, 펼치고 접기 · 나누기
+# 비교 페이지 14A · "따라오는 것"). 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
-# size variant 가 없다(폭·높이는 사용처 className). 스크롤바 수치는 모두 조건 없는 규칙에 있다.
-# 전역 native scrollbar(firefox · webkitScrollbar · webkitThumb)와 `.scrollbar-hide`(scrollbarHide)도
-# 같은 톤의 원본이라 부위로 함께 둔다.
-# `no overflow` 에서 track · thumb 는 스크롤바가 숨어 값이 없다(—).
+# 스크롤은 브라우저 기본(overflow)이고 스크롤바 모양만 전역 한 벌이다 — 6px 알약 · thumb stroke-neutral-solid · track 투명.
+# Firefox 는 scrollbar-width: thin + scrollbar-color 를 @supports not selector(::-webkit-scrollbar) 안에 둔다 —
+# 크로미움은 scrollbar-width · scrollbar-color 가 걸리면 ::-webkit-scrollbar 를 쓰지 않는다(크로미움 140 에서 잼 — 6px 이
+# thin 과 함께 10px, color 만이면 15px 이 된다). Radix ScrollArea(겹쳐 뜨는 막대)는 걷는다.
+# 세로 스크롤바는 숨기지 않는다 — 가로 줄만 숨긴다(Scroll Fog row). 안에 초점 가는 것이 없는 스크롤 상자는 tabindex="0" +
+# role="region" + 이름, 시트 · 대화상자 · 팝오버 안 상자는 overscroll-behavior: contain.
+#
+# 축 — context(놓인 자리: 화면 · 시트 같은 떠 있는 표면 · 가로 줄) · focusable(안에 초점 가는 것이 있나).
+#
+# SEED 와 다른 자리(scroll-area.md 의 "SEED 와 다른 점")
+#   - SEED 에는 Scroll Area · 스크롤바 규칙이 없다(끝 흐림 Scroll Fog 만) — 값은 모두 porest 가 정했다.
 
-name: Scroll Area
+name: ScrollArea
 
 slots:
-  scrollbar: ScrollAreaScrollbar — vertical 우측 · horizontal 하단 막대
-  track: 스크롤바 바탕
-  thumb: ScrollAreaThumb — 끌어 옮기는 손잡이
-  firefox: Firefox 표준 — 전역 native scrollbar
-  webkitScrollbar: "WebKit 글로벌 — `::-webkit-scrollbar` (전역)"
-  webkitThumb: "WebKit 글로벌 — `::-webkit-scrollbar-thumb` (전역)"
-  scrollbarHide: "`.scrollbar-hide` utility — 스크롤바 완전 숨김(opt-in)"
+  box: 스크롤 상자 — overflow 를 둔 요소(문서 전체 포함). 이름 · 초점 · 넘침 막기
+  scrollbar: 스크롤바 — 세로는 오른쪽, 가로는 아래. 전역 한 벌(웹)
+  thumb: 막대 — 끌어 옮긴다
+  track: 바탕 — 투명
+  firefox: Firefox 규칙 — @supports not selector(::-webkit-scrollbar) 안에서만
+  focusRing: 키보드 포커스 링(웹) — 초점을 받는 상자 안쪽
 
-variants: {}
+variants:
+  context:
+    page: 화면 · 카드 안 — 문서 스크롤과 높이를 정한 상자(기본)
+    overlay: 시트 · 대화상자 · 팝오버 · 옆 패널 안 — 본문과 그 안의 상자
+    row: 가로 줄 — 칩 줄 · 탭 · 가로 카드 줄(Scroll Fog row). 스크롤바를 숨긴다
+  focusable:
+    inside: 안에 초점 가는 것이 있다 — 키보드로 그것에 닿으면 브라우저가 스크롤한다(기본)
+    none: 안에 초점 가는 것이 없다(글 · 표 · 일정 칸) — 상자 자신이 초점을 받는다
+
+defaults:
+  context: page
+  focusable: inside
 
 states:
-  default: (스크롤 가능)
-  hover: (scrollbar 영역 hover) — scrollbar 가시성 더 명확
-  dragging: (thumb drag) — Radix `data-state` 자동 — 시각 효과 없음
-  no overflow: (콘텐츠 fit) — scrollbar 자동 hide (Radix)
+  enabled: 기본 — 스크롤바는 상태로 모양이 바뀌지 않는다
+  focused: 웹 — 초점을 받는 상자(focusable none)에 키보드 포커스
 
 rules:
+  # ── 공통 ──────────────────────────────────────────────
   - when: {}
-    default:
+    enabled:
+      box:
+        overflow: { value: auto, note: "넘치는 방향만(overflow-y · overflow-x) — 스크롤은 브라우저 그대로(휠 · 키보드 · 끌기 · 관성). 가로채지 않는다" }
       scrollbar:
-        size: { value: 6px, note: "두께 — `w-1.5` (vertical) / `h-1.5` (horizontal)" }
-        borderWidth: { value: 1px, note: "`border-l border-l-transparent` (vertical) / `border-t border-t-transparent` (horizontal)" }
-        borderColor: { value: transparent, note: "hover 시 색 부여 가능" }
-        transitionProperty: colors
-        transitionDuration: $motion-duration-fast
-      track:
-        background: { value: transparent, note: "Radix 기본 background 없음" }
+        width: { value: 6px, note: "세로 스크롤바 — ::-webkit-scrollbar 전역 한 벌(지금 Desk 웹과 같다)" }
+        height: { value: 6px, note: "가로 스크롤바" }
+        display: { value: 늘 보임, note: "넘치면 보인다 — 맥 · 폰의 겹침 스크롤바는 OS 설정대로. 세로 스크롤바는 숨기지 않는다 — 부품이 스크롤을 제 모양으로 쓰는 자리(Wheel Picker 의 휠 · Date Picker 의 이어지는 달)만 그 스펙대로 숨긴다" }
       thumb:
-        background: $color-border-strong
-        radius: { value: $radius-full, note: "pill" }
+        background: { value: $color-stroke-neutral-solid, note: "흰 면 4.18 · 바닥 3.87 · 떠 있는 표면 4.18 / 다크 4.13 · 4.68 · 3.58(≥ 3) — 지금 Desk 웹 #767C8B 와 같다" }
+        radius: { value: $radius-full, note: "알약" }
+      track:
+        background: { value: transparent, note: "바탕을 칠하지 않는다 — 지금 HR 의 회색 track 을 걷는다" }
       firefox:
-        scrollbarWidth: thin
-        thumbColor: $color-border-strong
-        trackColor: { value: transparent, note: "`scrollbar-width: thin; scrollbar-color: var(--color-border-strong) transparent;` (전역)" }
-      webkitScrollbar:
-        width: 6px
-        height: { value: 6px, note: "`::-webkit-scrollbar { width: 6px; height: 6px }` (전역)" }
-      webkitThumb:
-        background: $color-border-strong
-        radius: { value: $radius-full, note: "pill — `::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: var(--radius-full); }` (전역)" }
-      scrollbarHide:
-        display: { value: none, note: "`.scrollbar-hide` (opt-in, Firefox/IE 폴백 포함)" }
-    no overflow:
-      track:
-        background: —
-      thumb:
-        background: —
+        scrollbarWidth: { value: thin, note: "@supports not selector(::-webkit-scrollbar) 안에서만 — 밖에 두면 크로미움이 webkit 6px 을 버리고 10 · 15px 로 그린다" }
+        thumbColor: { value: $color-stroke-neutral-solid, note: "scrollbar-color 의 첫 값" }
+        trackColor: { value: transparent, note: "scrollbar-color 의 둘째 값" }
+
+  # ── 놓인 자리 ─────────────────────────────────────────
+  - when: { context: overlay }
+    enabled:
+      box:
+        overscrollBehavior: { value: contain, note: "끝에 닿아도 뒤 화면이 따라 스크롤되지 않게 — 시트 · 대화상자 · 팝오버의 본문과 그 안 상자(지금 웹 1곳 · HR 0)" }
+  - when: { context: row }
+    enabled:
+      scrollbar:
+        display: { value: 숨김, note: "가로 줄만 — scrollbar-width: none + ::-webkit-scrollbar 숨김(.scrollbar-hide). 끝은 Scroll Fog row 흐림이 알린다" }
+
+  # ── 초점 ──────────────────────────────────────────────
+  - when: { focusable: none }
+    enabled:
+      box:
+        tabIndex: { value: 0, note: "상자 자신이 Tab 정지점 — 초점을 두고 ↑ ↓ · PageUp · PageDown · Home · End 로 스크롤한다(WCAG 2.1.1)" }
+        role: { value: region, note: "이름을 달 수 있게 — 역할 없는 div 에는 aria-label 을 쓸 수 없다(ARIA 1.2)" }
+        name: { value: 필수, note: "무엇의 상자인지 — \"10월 9일 일정\" · \"휴가 정책\"(aria-label 또는 aria-labelledby)" }
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: -2px, note: "상자 안쪽 — 바깥 링은 카드 · 시트에 잘린다" }
+        color: $color-stroke-focus-ring

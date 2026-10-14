@@ -1,7 +1,8 @@
 /*
  * shadcn Card 예제 — docs site components/card.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 넷(목록 카드 — 오늘 쓴 돈 · 지표 카드 — 폰은 한 줄에 하나 · 누르는 카드 · 순자산 카드)은
- * 차례 · 제목 · 코드가 specs/components/card.md 의 "코드" 절과 같고, 뒤의 둘(증감 셋 · 데스크톱 격자 — 넷씩)은 md 의 증감 표기 · 지표를 코드로 더 보인다.
+ * 차례 · 제목 · 코드가 specs/components/card.md 의 "코드" 절과 같고, 뒤의 셋(증감 셋 · 데스크톱 격자 — 넷씩 · 아코디언 카드 — 유의사항)은 md 의 증감 표기 ·
+ * 지표 · 카드 안 아코디언(body="accordion", 2026-10-10)을 코드로 더 보인다.
  * 면은 SEED Elevation · stroke.neutral-weak · Feedback 이다 — SEED 에는 카드 컴포넌트가 없어 바닥 위 흰 면 + 1px 테두리 · 그림자 없음 ·
  * 누름은 SEED 를, 머리 · 여백 · 지표 · 순자산 · 증감은 porest 가 정했다(2026-10-08). 옛 예제(그림자 · bordered · muted · brand 넷 · 모서리 12 ·
  * 여백 16 / 24 · 머리 설명 · 아래 버튼 줄)를 대신한다.
@@ -10,6 +11,7 @@
  * recipes/shadcn/components/ui/card.tsx 의 상수와, HEADER · HEADER_BODY · TITLE · CONTENT · DELTA* · STAT* · HERO_* 는 그 파일의 JSX 에 적힌
  * 클래스와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 둘레의 부품은 그 레시피의 값을 옮겨 썼다 — LIST_* 는 list.tsx(list-examples.mjs),
  * TOGGLE_* 는 toggle.tsx(toggle-examples.mjs)의 것과 같다 — 메모 카드의 고정 단추(켜고 끄는 아이콘 단추 · tone default)만 옮겼다(2026-10-09).
+ * ACC_* 는 accordion.tsx(accordion-examples.mjs)의 값이다 — 아코디언 카드의 inline 아코디언(접힌 항목 · 그냥 줄 · 모두 펼치기)만 옮겼다.
  * 규칙은 specs/components/card.md, 수치 원본은 specs/components/card.yaml. 증감은 DESIGN.md Colors 의 "증감 — 방향 색 (2026-10-08)" 이다.
  *
  * Preview 는 정적 HTML 이다 — 페이지의 Tailwind v4 browser CDN 이 클래스를 utility 로 만든다.
@@ -40,6 +42,9 @@ const BODY = {
   // 좌우 · 위 0 — 머리가 위 24 · 좌우 24 를 갖고, 줄이 제 좌우 24 · 위아래 12 를 가진다. 아래 12 + 마지막 줄 12 = 보이는 24.
   // 머리가 없으면 위도 12 — 첫 줄 12 와 합쳐 보이는 24(위 · 아래 같게)
   list: "pb-x3 [&:not(:has(>[data-slot=card-header]))]:pt-x3",
+  // 좌우 · 위 0 — 머리가 위 24 · 좌우 24 를 갖고, 트리거가 제 좌우 24 · 위아래 16 을 가진다. 아래 8 + 마지막 트리거 16 = 보이는 24.
+  // 머리가 없으면 위도 8 — 첫 트리거 16 과 합쳐 보이는 24(위 · 아래 같게, 목록 카드와 같은 셈)
+  accordion: "pb-x2 [&:not(:has(>[data-slot=card-header]))]:pt-x2",
 };
 const PRESS_WHOLE = [
   "w-full cursor-pointer",
@@ -77,7 +82,7 @@ const ARROW = { up: "▲", down: "▼", flat: null };
 // ── card.tsx 의 JSX 에 적힌 클래스 ──────────────────────────────────
 
 const HEADER = "flex items-center justify-between gap-x2";
-const HEADER_BODY = { list: "px-x6 pb-x1 pt-x6", content: "pb-x2" };
+const HEADER_BODY = { list: "px-x6 pb-x1 pt-x6", accordion: "px-x6 pb-x1 pt-x6", content: "pb-x2" };
 const TITLE = "min-w-0 font-sans text-t5 font-bold text-fg-neutral";
 const CONTENT = "flex flex-col gap-x3";
 const DELTA = "inline-flex flex-wrap items-baseline gap-x1 font-sans text-t3";
@@ -106,9 +111,9 @@ const LIST_ITEM_VARIANTS = {
   },
 };
 const LIST_ITEM_DEFAULTS = { highlight: "none" };
-const LIST_CONTENT_BASE = "relative flex w-full px-global-gutter py-x3 [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:1]";
-const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" } };
-const LIST_CONTENT_DEFAULTS = { align: "center" };
+const LIST_CONTENT_BASE = "relative flex w-full py-x3 [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:1]";
+const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" }, nest: { none: "px-global-gutter", parent: "pl-x1 pr-global-gutter", child: "pl-[104px] pr-global-gutter" } };
+const LIST_CONTENT_DEFAULTS = { align: "center", nest: "none" };
 const LIST_PREFIX_BASE = "flex shrink-0 items-center pr-x3 text-fg-neutral [&>svg]:size-[22px]";
 const LIST_PREFIX_VARIANTS = {
   disabled: {
@@ -258,6 +263,7 @@ const svg = (paths, { strokeWidth = 2, cls = "" } = {}) =>
 const PATHS = {
   chevronRight: '<path d="m9 18 6-6-6-6"/>',
   chevronDown: '<path d="m6 9 6 6 6-6"/>',
+  chevronsUpDown: '<path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/>',
   ellipsisVertical: '<circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>',
   x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
@@ -309,6 +315,63 @@ function listButtonItem({ title, detail, prefix, suffix }) {
 const listTile = (icon, className) => `<span data-list-tile="" class="${merge(`${listTileVariants()} ${className}`)}">${svg(PATHS[icon])}</span>`;
 
 const toggleVariants = cvaOf(TOGGLE_BASE, { variants: TOGGLE_VARIANTS, defaultVariants: TOGGLE_DEFAULTS });
+
+// ── accordion.tsx 의 값 — 아코디언 카드의 inline 아코디언(accordion-examples.mjs 의 것과 같다) ──
+
+const ACC_ROOT_INLINE = [
+  "flex flex-col",
+  "[&>[data-accordion-row]+[data-accordion-row]]:before:block [&>[data-accordion-row]+[data-accordion-row]]:before:h-px [&>[data-accordion-row]+[data-accordion-row]]:before:mx-x6",
+  "[&>[data-accordion-row]+[data-accordion-row]]:before:bg-stroke-neutral-subtle [&>[data-accordion-row]+[data-accordion-row]]:before:content-['']",
+].join(" ");
+const ACC_ITEM_INLINE = "relative";
+const ACC_TRIGGER = [
+  "group/accordion-trigger relative flex min-h-[54px] w-full cursor-pointer appearance-none border-0 bg-transparent p-0 text-left font-sans",
+  "[--trigger-pressed:var(--color-bg-layer-default-pressed)]",
+  "before:pointer-events-none before:absolute before:inset-y-0 before:inset-x-0 before:rounded-none before:bg-transparent before:content-['']",
+  "before:[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),inset_var(--motion-duration-color-transition)_var(--motion-ease-easing),border-radius_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
+  "[@media(hover:hover)]:enabled:hover:before:inset-x-x1_5 [@media(hover:hover)]:enabled:hover:before:rounded-r2_5 [@media(hover:hover)]:enabled:hover:before:bg-(--trigger-pressed)",
+  "enabled:active:before:inset-x-x1_5 enabled:active:before:rounded-r2_5 enabled:active:before:bg-(--trigger-pressed)",
+  "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
+  "disabled:cursor-not-allowed",
+  "rounded-none",
+].join(" ");
+const ACC_CONTENT = [
+  "relative flex w-full min-w-0 items-center gap-x3 py-x4",
+  "px-global-gutter",
+  "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
+].join(" ");
+const ACC_CONTENT_PRESS = "group-active/accordion-trigger:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-active/accordion-trigger:[scale:1]";
+const ACC_BODY = "flex min-w-0 flex-1 flex-col items-start gap-x0_5";
+const ACC_TITLE = "font-sans text-t5 font-medium break-keep [overflow-wrap:break-word] text-fg-neutral";
+const ACC_CHEVRON = "size-5 shrink-0 [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none text-fg-neutral-subtle";
+const ACC_PANEL_TEXT = "px-global-gutter pb-x4 pt-0 font-sans text-article-note font-normal text-fg-neutral-muted whitespace-pre-line break-keep [overflow-wrap:break-word]";
+const ACC_PLAIN_MIN = "min-h-[54px]";
+const ACC_EXPAND_ALL = [
+  "relative inline-flex h-8 shrink-0 cursor-pointer items-center gap-x0_5 rounded-r2 border-0 bg-transparent pl-x2 pr-x1",
+  "font-sans text-t4 font-medium text-fg-neutral-subtle [&_svg]:size-4 [&_svg]:shrink-0",
+  "before:absolute before:left-1/2 before:top-1/2 before:h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
+  "[@media(hover:hover)]:hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
+].join(" ");
+
+// 유의사항 다섯 — 첫 제목이 84자, 셋째는 상세가 없다(그냥 줄). 지어낸 카드 약관이다
+const CAUTIONS = [
+  { id: "c1", title: "전월 이용실적에서 제외되는 이용금액: 상품권 · 선불카드 구매 및 충전, 국세 · 지방세 · 공과금, 아파트 관리비, 대학 등록금, 무이자 할부 이용분", detail: "■ 위 이용금액은 전월 실적 산정에서 빠져요." },
+  { id: "c2", title: "연회비 · 카드 발급 후 첫 달 실적 기준", detail: "■ 발급 후 첫 달은 실적 조건 없이 혜택을 받을 수 있어요." },
+  { id: "c3", title: "할인 한도는 서비스별로 따로 적용돼요", detail: null },
+  { id: "c4", title: "혜택 변경 안내", detail: "■ 카드사 사정에 따라 혜택이 바뀔 수 있어요. 바뀌면 6개월 전에 알려요." },
+  { id: "c5", title: "해외 원화결제(DCC) 이용 시 별도 수수료가 붙어요", detail: "■ 해외에서 원화로 결제하면 3 ~ 8% 수수료가 더해져요." },
+];
+
+// <AccordionItem> + <AccordionTrigger title> + <AccordionContent> · <AccordionPlainItem title> — 접힌 채(내용은 hidden)
+const accItem = (uid, title, detail) =>
+  detail
+    ? `<div data-slot="accordion-item" data-accordion-row="" data-state="closed" class="${ACC_ITEM_INLINE}"><h3 data-slot="accordion-heading" class="m-0 flex"><button type="button" id="${uid}-trigger" aria-expanded="false" aria-controls="${uid}-content" data-slot="accordion-trigger" data-state="closed" class="${ACC_TRIGGER}"><span data-slot="accordion-trigger-content" class="${ACC_CONTENT} ${ACC_CONTENT_PRESS}"><span data-slot="accordion-trigger-body" class="${ACC_BODY}"><span data-slot="accordion-title" class="${ACC_TITLE}">${esc(title)}</span></span>${svg(PATHS.chevronDown, { cls: ACC_CHEVRON })}</span></button></h3><div id="${uid}-content" data-slot="accordion-content" data-state="closed" hidden=""><div data-slot="accordion-content-text" class="${ACC_PANEL_TEXT}">${esc(detail)}</div></div></div>`
+    : `<div data-slot="accordion-plain-item" data-accordion-row="" class="${ACC_ITEM_INLINE}"><div data-slot="accordion-plain-item-content" class="${ACC_CONTENT} ${ACC_PLAIN_MIN}"><span data-slot="accordion-trigger-body" class="${ACC_BODY}"><span data-slot="accordion-title" class="${ACC_TITLE}">${esc(title)}</span></span></div></div>`;
+// <AccordionExpandAll controls> — 하나라도 접혀 있어 "모두 펼치기"
+const accExpandAll = (controls) =>
+  `<button type="button" aria-controls="${controls}" data-slot="accordion-expand-all" data-state="collapsed" class="${ACC_EXPAND_ALL}"><span>모두 펼치기</span>${svg(PATHS.chevronsUpDown)}</button>`;
 
 // ── <Card> 조각 — card.tsx 가 그리는 DOM ─────────────────────────────────
 
@@ -525,6 +588,41 @@ import { Toggle } from "@/components/ui/toggle"
           ].map((s) => card({ children: cardStat({ ...s, size: "small" }) })),
           4,
         ),
+      ),
+  },
+
+  {
+    title: "아코디언 카드 — 유의사항",
+    description:
+      "상세를 접어 둔 목록(카드 상세의 혜택 · 유의사항)은 Accordion inline 을 카드에 바로 넣는다 — body=\"accordion\" 은 좌우 여백 0 이라 트리거가 제 좌우 24 · 위아래 16 을 가지고 카드 가장자리까지 간다(2026-10-10 사용자 결정 6A, 웹 · 앱 같다). 머리는 목록 카드와 같은 위 24 · 좌우 24 · 아래 4, 카드 아래 여백은 8 — 마지막 트리거의 아래 16 과 합쳐 보이는 24 다. 머리 오른쪽 동작 자리에는 Accordion 의 \"모두 펼치기\"(14 · 500 · fg-neutral-subtle + chevrons-up-down 16 — 보이는 32 · 누르는 44, CardAction 과 같은 모양)를 두고 건수는 제목에 붙인다. 항목 사이 선은 List 의 들인 선(좌우 24)이고, 누름 바탕은 목록 카드와 같은 동심 모서리 10 이다. 84자 첫 제목도 줄을 바꿔 다 보인다.",
+    jsx: `import { Accordion, AccordionContent, AccordionExpandAll, AccordionItem, AccordionPlainItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+
+<Card body="accordion">
+  <CardHeader>
+    <CardTitle>유의사항 · {cautions.length}건</CardTitle>
+    <AccordionExpandAll controls="card-cautions" values={open} expandable={expandable} onValuesChange={setOpen} />
+  </CardHeader>
+  <Accordion id="card-cautions" values={open} onValuesChange={setOpen}>
+    {cautions.map((c) =>
+      c.detail ? (
+        <AccordionItem key={c.id} value={c.id}>
+          <AccordionTrigger title={c.title} />
+          <AccordionContent>{c.detail}</AccordionContent>
+        </AccordionItem>
+      ) : (
+        <AccordionPlainItem key={c.id} title={c.title} />
+      ),
+    )}
+  </Accordion>
+</Card>`,
+    render: () =>
+      floor(
+        card({
+          body: "accordion",
+          children: `<div data-slot="card-header" class="${HEADER} ${HEADER_BODY.accordion}"><h2 id="card-ex-caution-title" data-slot="card-title" class="${TITLE}">유의사항 · ${CAUTIONS.length}건</h2>${accExpandAll("card-ex-cautions")}</div><div data-slot="accordion" data-variant="inline" class="${ACC_ROOT_INLINE}" id="card-ex-cautions">${CAUTIONS.map((c) => accItem(`card-ex-caution-${c.id}`, c.title, c.detail)).join("")}</div>`,
+        }),
+        "408px",
       ),
   },
 ];

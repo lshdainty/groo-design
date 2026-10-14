@@ -152,6 +152,20 @@
 
 [그림: 구분선 — 없음(기본) · 줄 폭 · 들임](../../site/components/specs/list.tsx#divider)
 
+### 하위 줄 — 접는 부모 줄
+
+카테고리처럼 부모 · 하위 두 단계로 된 목록에서 줄 자체는 편집을 열고 하위 줄만 접을 때는, 부모 줄 앞에 **꺾쇠 단추**를 둔다(`nest="parent"` — 2026-10-10 사용자 결정 7C). 단추는 보이는 상자가 곧 누르는 영역 44 이고, 줄 앞 4 · 단추 뒤 4 를 지나 앞 붙이개가 52 에서 시작한다. 꺾쇠는 lucide `chevron-right` 20 `fg-neutral-subtle` — 접혀 있으면 오른쪽, 펼치면 아래로 90° 돈다(300ms — Accordion 과 같다). 이름은 "{카테고리} 하위 카테고리" 로 고정하고 펼침은 `aria-expanded` 가 알린다 — "접기 · 펼치기" 로 바꾸지 않는다. 하위 줄(`nest="child"`)은 부모의 제목 자리 104(= 4 + 44 + 4 + 타일 40 + 12)에서 시작해 하위 타일이 부모 제목 아래에 선다 — 누름 바탕은 줄 폭 그대로다. 하위가 없는 부모 줄 · 늘 펼쳐 두는 화면(편집 모드)도 꺾쇠 자리를 같은 폭으로 비워 부모 타일이 모두 52 에 선다 — 타일이 두 세로줄(52 · 104)로 정리된다(사용자 결정 17B). 처음 펼침은 화면이 정한다 — 카테고리는 지금처럼 모두 펼친 채 연다(기본 지출 카테고리의 하위는 0 ~ 6개).
+
+이 줄은 편집 대화상자를 여는 줄이라 오른쪽 화살표를 달지 않는다(화살표는 화면을 옮기는 줄에만) — 지금 앱처럼 접힌 부모 줄에 › 가 둘(접힘 · 이동) 생기지 않는다. 여러 단계에서 하나를 고르는 나무는 [Tree View](tree-view.md) 다. 접기를 걷는 안(7B)과 부모 줄 전체를 펼치기로 · 편집은 ⋮(7D)는 고르지 않았다.
+
+[그림: 카테고리 — 줄 앞 꺾쇠 단추 44 · 하위 줄 104 · 하위 없는 줄은 빈 자리(폰 · 데스크톱)](../../site/components/specs/list.tsx#nested)
+
+[표: 단계](list.yaml#nest)
+
+[표: 펼침](list.yaml#expanded)
+
+[표: 꺾쇠 단추 — 상태](list.yaml#states.nest)
+
 ## Guidelines
 
 ### 모든 줄을 List 로
@@ -216,7 +230,9 @@
 
 ## 코드
 
-레시피 `recipes/shadcn/components/ui/list.tsx` 를 쓴다 — `List` · `ListItem` · `ListButtonItem` · `ListLinkItem` · `ListSwitchItem` · `ListCheckItem` · `ListCheckGroup` · `ListRadioGroup` · `ListRadioItem` · `ListDivider` · `ListHeader` · `ListTile`. 아래 미리보기는 스펙 값으로 그린 모습이다.
+레시피 `recipes/shadcn/components/ui/list.tsx` 를 쓴다 — `List` · `ListItem` · `ListButtonItem` · `ListLinkItem` · `ListSwitchItem` · `ListCheckItem` · `ListCheckGroup` · `ListRadioGroup` · `ListRadioItem` · `ListDivider` · `ListHeader` · `ListTile` · `ListParentItem`. 아래 미리보기는 스펙 값으로 그린 모습이다.
+
+`ListParentItem` 은 하위 줄을 접는 부모 줄이다 — `ListButtonItem` 의 속성(`title` · `detail` · `prefix` · `suffix` · `onClick` …)에 `expandLabel`(꺾쇠 단추의 고정 이름 — 하위가 있으면 필수) · `open` · `defaultOpen` · `onOpenChange(open)` 을 더 받고, 자식(`ListButtonItem` …)이 하위 줄이 된다. 자식이 없으면 꺾쇠 자리를 비운다. 꺾쇠 단추(`aria-expanded` · `aria-controls`)와 하위 줄 묶음(`ul` — 104 들임 · 높이 300ms)은 줄이 그린다. 한 목록에 `ListParentItem` 이 있으면 그 목록의 맨 위 단계 줄은 모두 `ListParentItem` 이다 — 타일 자리를 맞춘다.
 
 라우터의 링크는 `ListLinkItem asChild` 의 자식으로 넣는다 — 제목 · 설명은 그 링크 안에 그려진다(`<ListLinkItem asChild title="도움말"><Link to="/help" /></ListLinkItem>`).
 
@@ -300,6 +316,38 @@ import { List, ListButtonItem, ListItem } from "@/components/ui/list"
 </List>
 ```
 
+### 하위 줄 — 카테고리
+
+[그림: 지출 카테고리 — 식비 하위 6개 펼침 · 기타는 하위 없음](../../site/components/specs/list.tsx#ex-nested)
+
+```tsx
+import { Tag, Utensils } from "lucide-react"
+import { List, ListButtonItem, ListParentItem, ListTile } from "@/components/ui/list"
+
+<List aria-label="지출 카테고리">
+  {/* 줄을 누르면 편집, 앞 꺾쇠 단추가 하위 줄을 접는다 — 이름은 고정 */}
+  <ListParentItem
+    prefix={<ListTile className="bg-chart-orange-weak text-chart-orange"><Utensils /></ListTile>}
+    title="식비 · 외식 · 배달음식"
+    detail="지출 · 하위 6개"
+    onClick={() => editCategory(food.id)}
+    expandLabel="식비 · 외식 · 배달음식 하위 카테고리"
+    defaultOpen
+  >
+    {food.children.map((c) => (
+      <ListButtonItem key={c.id} prefix={renderTile(c)} title={c.name} detail="지출" onClick={() => editCategory(c.id)} />
+    ))}
+  </ListParentItem>
+  {/* 하위가 없으면 꺾쇠 자리만 비운다 — 타일 · 제목이 같은 자리 */}
+  <ListParentItem
+    prefix={<ListTile className="bg-chart-gray-weak text-chart-gray"><Tag /></ListTile>}
+    title="기타"
+    detail="지출 · 하위 없음"
+    onClick={() => editCategory(etc.id)}
+  />
+</List>
+```
+
 ## Behavior
 
 | 인터랙션 | 동작 |
@@ -310,6 +358,7 @@ import { List, ListButtonItem, ListItem } from "@/components/ui/list"
 | Keyboard `Tab` | 누르는 줄 · 컨트롤로 간다. 보기만 하는 줄은 건너뛴다. |
 | Keyboard `Enter` · `Space` | 누르는 줄은 누르기와 같다. 컨트롤 줄은 그 컨트롤의 키(스위치 · 체크 Space, 라디오 화살표). 체크 · 라디오 줄의 `Enter` 는 폼을 제출한다 — 진짜 input 처럼 폼의 기본 버튼을 누른다(Checkbox · Radio 와 같다, 2026-10-08). 키를 누르고 있는 동안은 포인터로 누를 때와 같은 누름 모습(바탕 · 콘텐츠 축소)이다. |
 | Disabled | 누르기 · 키보드 불가, 포커스에서 빠진다. 값은 그대로 보인다. |
+| 꺾쇠 단추(하위 줄) | 누르기 · `Enter` · `Space` 로 하위 줄을 펼치고 접는다 — 줄의 편집은 열리지 않는다. 초점은 단추에 그대로. `Tab` 은 꺾쇠 단추 → 그 줄 → 펼친 하위 줄 → 다음 부모의 꺾쇠 단추. 모션 줄이기면 높이 움직임 없이 150ms 서서히 · 꺾쇠는 바로 |
 
 ## Accessibility
 
@@ -321,7 +370,7 @@ import { List, ListButtonItem, ListItem } from "@/components/ui/list"
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에만 줄 안쪽 링 2px(`stroke-focus-ring`). 컨트롤 줄은 끼운 컨트롤이 포커스를 받고 그 컨트롤의 링이 보인다 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 줄 높이 46 이상 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 누르는 줄은 줄 전체 — 한 줄짜리도 46 ✓ |
-| **ARIA** | `List` 는 `<ul>` · 줄은 `<li>`. 누르는 줄의 버튼 · 링크 이름은 제목 + 설명. 컨트롤 줄은 `<label>` 이 줄 전체라 제목 + 설명이 컨트롤의 이름이다. 목록 제목이 있으면 `List` 에 `aria-labelledby` 로 잇는다. 하나 고르기(`ListRadioGroup`)는 `role="radiogroup"`, 여럿 고르기(`ListCheckGroup`)는 `<fieldset>` 이고 둘 다 이름(`aria-label` · `aria-labelledby`) 필수 — 묶음 안의 줄 · 선은 `<div>` 다(SEED 와 같다). 줄 사이 선은 `aria-hidden` 이라 줄 수에 들지 않는다 |
+| **ARIA** | `List` 는 `<ul>` · 줄은 `<li>`. 누르는 줄의 버튼 · 링크 이름은 제목 + 설명. 컨트롤 줄은 `<label>` 이 줄 전체라 제목 + 설명이 컨트롤의 이름이다. 목록 제목이 있으면 `List` 에 `aria-labelledby` 로 잇는다. 하나 고르기(`ListRadioGroup`)는 `role="radiogroup"`, 여럿 고르기(`ListCheckGroup`)는 `<fieldset>` 이고 둘 다 이름(`aria-label` · `aria-labelledby`) 필수 — 묶음 안의 줄 · 선은 `<div>` 다(SEED 와 같다). 줄 사이 선은 `aria-hidden` 이라 줄 수에 들지 않는다. 하위 줄을 접는 꺾쇠 단추는 이름 "{카테고리} 하위 카테고리"(고정) + `aria-expanded` · `aria-controls`(하위 줄 `ul`) — 누르는 영역 44 ✓ ✓ |
 | **Reduced motion** | 모션 줄이기면 콘텐츠 축소를 뺀다 — 바탕 색 전환은 그대로(기초 Motion) |
 
 ## Do / Don't
@@ -332,6 +381,7 @@ import { List, ListButtonItem, ListItem } from "@/components/ui/list"
 - 화면을 옮기는 줄에만 오른쪽 화살표를 단다.
 - 컨트롤 줄은 줄 전체가 눌리게 한다.
 - 막힌 줄은 제목 · 설명 · 아이콘을 모두 비활성 색으로.
+- 줄은 편집 · 하위만 접는 목록은 줄 앞 꺾쇠 단추(44 · 고정 이름 + 펼침 상태)로.
 
 ### ❌ Don't
 
@@ -341,6 +391,7 @@ import { List, ListButtonItem, ListItem } from "@/components/ui/list"
 - 한 줄에 누르는 것 넷 이상.
 - 한 묶음에서 라디오 · 체크 섞기.
 - 줄 높이를 줄이려고 스위치 · 체크의 누르는 영역을 자르기.
+- 하위를 접는 꺾쇠를 18 · 24 로 작게 · 이름을 "접기 · 펼치기" 로 바꾸기 · 접힌 부모 줄에 › 를 둘 달기.
 
 ## Specification
 
@@ -359,8 +410,18 @@ import { List, ListButtonItem, ListItem } from "@/components/ui/list"
 - 누르면 콘텐츠 층만 주는 건 SEED 와 같다(SEED `scaleScope: content`) — 배율은 기초 Feedback v104 의 2px 거리다.
 - 목록 제목의 좌우도 24 다.
 - **포커스 링(웹)은 porest 가 정했다** — 줄 안쪽 2px. SEED 는 목록 줄의 포커스 링을 적지 않았다.
+- **하위 줄 · 줄 앞 꺾쇠 단추** — SEED List 에 없다(2026-10-10 사용자 결정 7C).
 
 ## Migration notes
+
+### 2026-10-10 — 하위 줄 · 줄 앞 꺾쇠 단추
+
+사용자가 [펼치고 접기 · 나누기 비교 페이지](https://claude.ai/artifact/9uvjeFyjFXc7TaWnpnnQ6H)에서 카테고리 나무의 접기를 남기기로 정했다 — 줄 왼쪽 꺾쇠 단추 44 · 이름 "{카테고리} 하위 카테고리" 고정 + `aria-expanded`(7C — 추천이던 접기 걷기 7B 가 아니다). 펼침은 Accordion 과 같은 300ms 다(3A). 지금 그대로(7A) · 접기 걷기(7B) · 부모 줄 전체가 펼치기(7D)는 고르지 않았다. 하위 줄의 정렬은 스펙을 쓰다 나온 질문으로 따로 정했다(같은 비교 페이지 17번 — 17B 두 세로줄) — 하위 타일은 부모 제목 자리(104)에서 시작하고, 하위가 없는 부모도 꺾쇠 자리를 비워 타일이 52 에 선다. 7C 그림 그대로(17A — 하위 줄 100 · 하위 없는 부모 타일 24, 하위 타일이 부모 제목보다 4 왼쪽이고 부모 타일 줄이 들쭉날쭉하다)는 고르지 않았다.
+
+제품은 앱 적용 단계에서 옮긴다(2026-10-09 조사).
+
+- **웹 설정 > 카테고리** — 부모 줄 왼쪽 꺾쇠 단추가 18 × 18(아이콘 14)이고 이름은 "접기 / 펼치기" 뿐(카테고리 이름 없음) · `aria-expanded` 0 · 움직임 0 이며, 하위 줄 들임이 28 이다(`widgets/category-manage/ui/CategoryManager.tsx:592-660 · 735-772`, D4 · D13). 줄 자체는 데스크톱에서 반응하지 않는다.
+- **앱 카테고리** — 꺾쇠가 `InkWell` 24 × 24 · 이름 "" 이고, 접힌 부모 줄에는 왼쪽 접힘 꺾쇠와 오른쪽 이동 꺾쇠가 같은 › 로 둘이다(`features/category/presentation/category_screen.dart:365-430 · 629-655 · 691`, D14). 줄은 편집을 열므로 오른쪽 › 를 걷는다.
 
 ### 2026-10-08 — 체크 · 라디오 줄의 Enter
 

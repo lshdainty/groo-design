@@ -1,15 +1,16 @@
 /*
  * shadcn List 예제 — docs site components/list.html 에서 Preview + Code 토글로 보인다.
- * 각 예제 = { title, description, jsx, render() }. 차례 · 제목 · 코드는 specs/components/list.md 의 "코드" 절을 따르고, 마지막(앞 붙이개 —
+ * 각 예제 = { title, description, jsx, render() }. 차례 · 제목 · 코드는 specs/components/list.md 의 "코드" 절을 따르고(하위 줄 — 카테고리까지), 마지막(앞 붙이개 —
  * 타일 · 로고 타일 · 카드 그림)은 md 의 Prefix 를 코드로 더 보인다 — 그 줄의 Logo Tile · 카드 그림(CardArt)은 LOGO_* 가 logo-tile.tsx,
  * FRAME_* · IMAGE_* · CARD_FACE_* · FIXED_WIDTH 가 image-frame.tsx, RATIO_* 가 aspect-ratio.tsx 의 것(logo-tile-examples.mjs · image-frame-examples.mjs 의 것)과 같다 —
  * 이 줄이 쓰는 크기 · 모서리만 옮겼다. 기관 색은 recipes/shadcn/lib/institution-colors.ts 의 표를 그대로 읽고, institutionColor · avatarInitial ·
  * avatarHue · imageFrameRadius 는 레시피의 규칙 함수와 같은 답을 낸다.
  *
  * LIST_BASE · CHECK_GROUP · ITEM_* · CONTENT_* · PREFIX_* · BODY_BASE · TITLE_* · HIGHLIGHT_MUTED · DETAIL_* · SUFFIX_* · ACTION_BASE ·
- * CONTROL_BASE · DIVIDER_* · HEADER_* · TILE_BASE · MARK_NO_SCALE 는 recipes/shadcn/components/ui/list.tsx 의 cva 정의 · 상수와
- * 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 줄에 끼우는 컨트롤의 SWITCHMARK_* · THUMB_* · CHECKMARK_* · INDICATOR* ·
- * CHECK_ICON · MINUS_ICON · RADIOMARK_* · DOT_* 는 switch.tsx · checkbox.tsx · radio-group.tsx 의 것(그 예제 파일의 것)과 같다.
+ * CONTROL_BASE · DIVIDER_* · HEADER_* · TILE_BASE · MARK_NO_SCALE · LIST_EXPAND_BUTTON · LIST_EXPAND_ICON · LIST_EXPAND_SLOT 는
+ * recipes/shadcn/components/ui/list.tsx 의 cva 정의 · 상수와, PARENT_ITEM · SUB_LIST 는 그 파일의 ListParentItem JSX 에 적힌 클래스와
+ * 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 하위 줄(nest — 부모 줄 · 하위 줄의 콘텐츠 층 좌우)은 CONTENT_VARIANTS 의 축이다(2026-10-10).
+ * 줄에 끼우는 컨트롤의 SWITCHMARK_* · THUMB_* · CHECKMARK_* · INDICATOR* · CHECK_ICON · MINUS_ICON · RADIOMARK_* · DOT_* 는 switch.tsx · checkbox.tsx · radio-group.tsx 의 것(그 예제 파일의 것)과 같다.
  * 규칙은 specs/components/list.md, 수치 원본은 specs/components/list.yaml · list-header.yaml.
  *
  * Preview 는 정적 HTML 이다 — 페이지의 Tailwind v4 browser CDN 이 클래스를 utility 로 만든다.
@@ -55,9 +56,10 @@ const ITEM_VARIANTS = {
 
 const ITEM_DEFAULTS = { highlight: "none" };
 
-// 콘텐츠 층(listContentVariants) — 앞 · 본문 · 뒤. 누르면 이 층만 준다
+// 콘텐츠 층(listContentVariants) — 앞 · 본문 · 뒤. 누르면 이 층만 준다. 좌우는 단계(nest)가 건다 — 보통 줄 24 · 부모 줄 앞 4(꺾쇠 단추 44 + 4 를 지나
+// 앞 붙이개가 52) · 하위 줄 104(부모의 제목 자리 = 4 + 44 + 4 + 타일 40 + 12)
 const CONTENT_BASE = [
-  "relative flex w-full px-global-gutter py-x3",
+  "relative flex w-full py-x3",
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:1]",
 ].join(" ");
@@ -67,9 +69,14 @@ const CONTENT_VARIANTS = {
     center: "items-center",
     top: "items-start",
   },
+  nest: {
+    none: "px-global-gutter",
+    parent: "pl-x1 pr-global-gutter",
+    child: "pl-[104px] pr-global-gutter",
+  },
 };
 
-const CONTENT_DEFAULTS = { align: "center" };
+const CONTENT_DEFAULTS = { align: "center", nest: "none" };
 
 // 앞 붙이개(listPrefixVariants) — 아이콘 22. 막히면 아이콘 · 타일 모두 비활성 색(타일은 부르는 쪽의 카테고리 색을 덮는다)
 const PREFIX_BASE = "flex shrink-0 items-center pr-x3 text-fg-neutral [&>svg]:size-[22px]";
@@ -150,6 +157,23 @@ const TILE_BASE = "inline-grid size-10 shrink-0 place-items-center rounded-r3 [&
 // 끼운 컨트롤은 따로 줄지 않는다 — 줄의 콘텐츠가 함께 준다. 컨트롤에도 data-list-action 을 단다(switchmark · checkmark · radiomark) —
 // 키보드(Space)로 누르면 :active 가 라벨이 아니라 컨트롤에 걸려도 줄의 누름이 선다
 const MARK_NO_SCALE = "active:[scale:1]";
+
+// 하위 줄을 접는 부모 줄(ListParentItem) — 줄 앞 꺾쇠 단추: 보이는 상자 = 누르는 영역 44 · 모서리 10 · 단추 뒤 4. 줄과 따로 눌린다(줄의 누름 바탕은 생기지 않는다):
+// 올리거나 누르면 단추만 bg-layer-default-pressed, 누르면 2px 거리 축소(기준 44). 키보드 포커스에만 단추 안쪽 2px 링. 위아래 2 를 줄의 여백에 겹쳐
+// 타일 40 줄의 높이(64)를 그대로 둔다. 줄의 버튼 ::after 위(z 1)에 놓인다
+const LIST_EXPAND_BUTTON = [
+  "relative z-[1] -my-x0_5 mr-x1 inline-flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-r2_5 border-0 bg-transparent p-0 text-fg-neutral-subtle",
+  "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
+  "[--press-basis:44] [@media(hover:hover)]:hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
+  "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
+].join(" ");
+// 꺾쇠 20 — 접혀 있으면 오른쪽, 펼치면 아래(90° · 300ms easing, 모션 줄이기면 바로)
+const LIST_EXPAND_ICON = "size-5 shrink-0 [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none";
+// 하위가 없는 부모 줄 · 늘 펼쳐 두는 화면 — 꺾쇠 단추와 같은 폭의 빈 자리
+const LIST_EXPAND_SLOT = "-my-x0_5 mr-x1 size-11 shrink-0";
+// 부모 줄의 li · 하위 줄 묶음(ul — listVariants 뒤에 붙인다) — list.tsx 의 JSX
+const PARENT_ITEM = "flex w-full flex-col";
+const SUB_LIST = "m-0 list-none p-0";
 
 // ── logo-tile.tsx 의 상수와 같은 값 — 물건 줄의 앞(Logo Tile 40) ─────────────
 
@@ -567,6 +591,7 @@ const ICONS = {
   utensils: svg('<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>'),
   arrowLeftRight: svg('<path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/>'),
   tag: svg('<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>'),
+  house: svg('<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'),
   chevronRight: svg('<path d="m9 18 6-6-6-6"/>'),
 };
 
@@ -648,8 +673,8 @@ function listItem({ title, detail, prefix, suffix, align, highlighted }) {
   return `<li class="${merge(listItemVariants({ highlight: hl(highlighted) }))}"><div class="${listContentVariants({ align })}">${content}</div></li>`;
 }
 
-// <ListButtonItem> — 줄 전체가 버튼. 막히면 disabled · data-disabled
-function listButtonItem({ title, detail, prefix, suffix, align, highlighted, disabled = false }) {
+// <ListButtonItem> — 줄 전체가 버튼. 막히면 disabled · data-disabled. 부모 줄(ListParentItem) 안의 하위 줄이면 nest "child"(레시피의 ListNestContext)
+function listButtonItem({ title, detail, prefix, suffix, align, highlighted, disabled = false, nest }) {
   const button = attrs([
     'type="button"',
     disabled && "disabled",
@@ -658,7 +683,39 @@ function listButtonItem({ title, detail, prefix, suffix, align, highlighted, dis
     `class="${merge(`${listActionVariants()} ${listBodyVariants()}`)}"`,
   ]);
   const content = `${part(prefix, merge(listPrefixVariants({ disabled })))}<button ${button}>${body({ title, detail, disabled, highlighted })}</button>${part(suffix, merge(listSuffixVariants({ disabled, highlighted })))}`;
-  return `<li class="${merge(listItemVariants({ highlight: hl(highlighted) }))}"><div class="${listContentVariants({ align })}">${content}</div></li>`;
+  return `<li class="${merge(listItemVariants({ highlight: hl(highlighted) }))}"><div class="${listContentVariants({ align, nest })}">${content}</div></li>`;
+}
+
+// <ListParentItem expandLabel open> — 하위 줄을 접는 부모 줄. li > 줄(바탕 층 · 콘텐츠 층 — 앞 4 · 꺾쇠 단추 44 · 앞 붙이개 52) + 하위 줄 묶음(ul — 접히면 hidden).
+// 자식(children — 이미 그린 하위 줄)이 없거나 expandLabel 이 없으면 꺾쇠 자리를 같은 폭으로 비운다(하위가 없으면 묶음도 없다)
+function listParentItem({ uid, title, detail, prefix, suffix, align, highlighted, disabled = false, expandLabel, open = false, children = [] }) {
+  const hasChildren = children.length > 0;
+  const foldable = hasChildren && expandLabel != null;
+  const isOpen = foldable ? open : hasChildren;
+  const subId = `${uid}-sub`;
+  const lead = foldable
+    ? `<button ${attrs([
+        'type="button"',
+        `aria-expanded="${isOpen}"`,
+        `aria-controls="${subId}"`,
+        `aria-label="${expandLabel}"`,
+        'data-slot="list-expand-button"',
+        `data-state="${isOpen ? "open" : "closed"}"`,
+        `class="${LIST_EXPAND_BUTTON}"`,
+      ])}>${svg('<path d="m9 18 6-6-6-6"/>', { cls: [LIST_EXPAND_ICON, isOpen && "rotate-90"].filter(Boolean).join(" ") })}</button>`
+    : `<span aria-hidden="true" data-slot="list-expand-slot" class="${LIST_EXPAND_SLOT}"></span>`;
+  const button = attrs([
+    'type="button"',
+    disabled && "disabled",
+    'data-list-action=""',
+    disabled && 'data-disabled=""',
+    `class="${merge(`${listActionVariants()} ${listBodyVariants()}`)}"`,
+  ]);
+  const content = `${lead}${part(prefix, merge(listPrefixVariants({ disabled })))}<button ${button}>${body({ title, detail, disabled, highlighted })}</button>${part(suffix, merge(listSuffixVariants({ disabled, highlighted })))}`;
+  const sub = hasChildren
+    ? `<ul id="${subId}" data-slot="list-sub-list" data-state="${isOpen ? "open" : "closed"}"${isOpen ? "" : ' hidden=""'} class="${merge(`${listVariants()} ${SUB_LIST}`)}">${children.join("")}</ul>`
+    : "";
+  return `<li data-slot="list-parent-item" class="${PARENT_ITEM}"><div data-slot="list-parent-row" class="${merge(listItemVariants({ highlight: hl(highlighted) }))}"><div class="${listContentVariants({ align, nest: "parent" })}">${content}</div></div>${sub}</li>`;
 }
 
 // <ListLinkItem> — 줄 전체가 링크. 코드 절에는 아직 없지만 레시피의 부품이라 같은 짜임으로 그려 둔다
@@ -790,6 +847,26 @@ const CAPTION =
 // 위 이름표 + 화면 — 둘을 나란히 두고, 좁으면 아래로 내린다
 const captioned = (caption, html) =>
   `<div style="display:flex; flex:1 1 280px; flex-direction:column; gap:var(--spacing-x2); max-width:360px;"><span style="${CAPTION}">${caption}</span>${screen(html)}</div>`;
+
+// 지출 카테고리(설정 > 카테고리) — 부모 · 하위 두 단계. 지어낸 이름이다(가장 긴 부모 이름 · 하위 6개)
+const CATEGORIES = [
+  { id: "food", name: "식비 · 외식 · 배달음식", icon: "utensils", hue: "orange", children: ["배달 · 포장 주문 음식", "장보기 · 마트 · 시장", "회식 · 모임 식비", "카페 · 디저트 · 간식", "점심 · 구내식당 식비", "편의점 · 간편식 · 야식"] },
+  { id: "home", name: "주거 · 통신비 · 관리비", icon: "house", hue: "indigo", children: ["월세 · 전세 대출 이자", "아파트 관리비 · 수도", "휴대폰 · 인터넷 · TV", "전기 · 가스 요금", "가전 · 가구 수리비"] },
+  { id: "etc", name: "기타", icon: "tag", hue: "gray", children: [] },
+];
+const categoryTile = (c) => listTile(ICONS[c.icon], `bg-chart-${c.hue}-weak text-chart-${c.hue}`);
+const categoryRows = (uid, open = ["food"]) =>
+  CATEGORIES.map((c) =>
+    listParentItem({
+      uid: `${uid}-${c.id}`,
+      prefix: categoryTile(c),
+      title: c.name,
+      detail: `지출 · ${c.children.length ? `하위 ${c.children.length}개` : "하위 없음"}`,
+      expandLabel: c.children.length ? `${c.name} 하위 카테고리` : undefined,
+      open: open.includes(c.id),
+      children: c.children.map((k) => listButtonItem({ nest: "child", prefix: categoryTile(c), title: k, detail: "지출" })),
+    }),
+  );
 
 // ── 예제 ──────────────────────────────────────────────────────────────────
 
@@ -930,6 +1007,38 @@ import { List, ListButtonItem, ListItem } from "@/components/ui/list"
           }),
         ]),
       ),
+  },
+
+  {
+    title: "하위 줄 — 카테고리",
+    description:
+      "카테고리처럼 부모 · 하위 두 단계로 된 목록에서 줄 자체는 편집을 열고 하위 줄만 접을 때는 ListParentItem 을 쓴다 — 부모 줄 앞에 꺾쇠 단추를 둔다(사용자 결정 7C). 단추는 보이는 상자가 곧 누르는 영역 44(모서리 10)이고, 줄 앞 4 · 단추 뒤 4 를 지나 앞 붙이개가 52 에서 시작한다. 꺾쇠는 chevron-right 20 · fg-neutral-subtle — 접혀 있으면 오른쪽, 펼치면 아래로 90° 돈다(300ms — Accordion 과 같다). 이름은 \"{카테고리} 하위 카테고리\" 로 고정하고 펼침은 aria-expanded 가 알린다 — \"접기 · 펼치기\" 로 바꾸지 않는다. 단추는 줄과 따로 눌린다 — 줄을 누르면 편집이 열리고, 단추는 펼치고 접기만 한다(Tab 은 단추 → 줄 → 펼친 하위 줄). 하위 줄은 부모의 제목 자리 104 에서 시작해 하위 타일이 부모 제목 아래에 선다 — 누름 바탕은 줄 폭 그대로다. 하위가 없는 부모(기타)도 꺾쇠 자리를 같은 폭으로 비워 부모 타일이 모두 52 에 선다 — 타일이 두 세로줄(52 · 104)로 정리된다(사용자 결정 17B). 편집을 여는 줄이라 오른쪽 화살표를 달지 않는다. 그림은 식비를 펼치고 주거를 접은 모습이다.",
+    jsx: `import { Tag, Utensils } from "lucide-react"
+import { List, ListButtonItem, ListParentItem, ListTile } from "@/components/ui/list"
+
+<List aria-label="지출 카테고리">
+  {/* 줄을 누르면 편집, 앞 꺾쇠 단추가 하위 줄을 접는다 — 이름은 고정 */}
+  <ListParentItem
+    prefix={<ListTile className="bg-chart-orange-weak text-chart-orange"><Utensils /></ListTile>}
+    title="식비 · 외식 · 배달음식"
+    detail="지출 · 하위 6개"
+    onClick={() => editCategory(food.id)}
+    expandLabel="식비 · 외식 · 배달음식 하위 카테고리"
+    defaultOpen
+  >
+    {food.children.map((c) => (
+      <ListButtonItem key={c.id} prefix={renderTile(c)} title={c.name} detail="지출" onClick={() => editCategory(c.id)} />
+    ))}
+  </ListParentItem>
+  {/* 하위가 없으면 꺾쇠 자리만 비운다 — 타일 · 제목이 같은 자리 */}
+  <ListParentItem
+    prefix={<ListTile className="bg-chart-gray-weak text-chart-gray"><Tag /></ListTile>}
+    title="기타"
+    detail="지출 · 하위 없음"
+    onClick={() => editCategory(etc.id)}
+  />
+</List>`,
+    render: () => screen(list(categoryRows("list-ex-nest"), { ariaLabel: "지출 카테고리" })),
   },
 
   {

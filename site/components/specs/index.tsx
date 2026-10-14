@@ -1,6 +1,7 @@
 // 컴포넌트 페이지의 그림 자리 — 스펙 md 의 `[그림: 캡션](../../site/components/specs/<이름>.tsx#<id>)` 한 줄이
 // scripts/gen-content.mjs 에서 <SpecFigure name id caption /> 가 되고, 여기서 그 그림을 찾아 그린다.
 import type { ReactNode } from 'react';
+import { accordionFigures } from './accordion';
 import { alertDialogFigures } from './alert-dialog';
 import { aspectRatioFigures } from './aspect-ratio';
 import { avatarFigures } from './avatar';
@@ -16,6 +17,7 @@ import { checkboxFigures } from './checkbox';
 import { contentPlaceholderFigures } from './content-placeholder';
 import { datePickerFigures } from './date-picker';
 import { chipFigures } from './chip';
+import { collapsibleFigures } from './collapsible';
 import { colorSwatchFigures } from './color-swatch';
 import { dialogFigures } from './dialog';
 import { dividerFigures } from './divider';
@@ -38,12 +40,15 @@ import { progressCircleFigures } from './progress-circle';
 import { pageBannerFigures } from './page-banner';
 import { paginationFigures } from './pagination';
 import { radioGroupFigures } from './radio-group';
+import { resizableFigures } from './resizable';
 import { resultSectionFigures } from './result-section';
 import { searchableListFigures } from './searchable-list';
 import { selectFigures } from './select';
 import { selectBoxFigures } from './select-box';
 import { sideNavigationFigures } from './side-navigation';
 import { sidePanelFigures } from './side-panel';
+import { scrollAreaFigures } from './scroll-area';
+import { scrollAutoHideFigures } from './scroll-auto-hide';
 import { scrollFogFigures } from './scroll-fog';
 import { skeletonFigures } from './skeleton';
 import { sliderFigures } from './slider';
@@ -60,10 +65,12 @@ import { timePickerFigures } from './time-picker';
 import { toggleFigures } from './toggle';
 import { tooltipFigures } from './tooltip';
 import { topNavigationFigures } from './top-navigation';
+import { treeViewFigures } from './tree-view';
 import { wheelPickerFigures } from './wheel-picker';
 import { SpecSheet } from './spec-sheet';
 
 const FIGURES: Record<string, Record<string, (p: { caption?: string }) => ReactNode>> = {
+  accordion: accordionFigures,
   'alert-dialog': alertDialogFigures,
   'aspect-ratio': aspectRatioFigures,
   avatar: avatarFigures,
@@ -78,6 +85,7 @@ const FIGURES: Record<string, Record<string, (p: { caption?: string }) => ReactN
   'content-placeholder': contentPlaceholderFigures,
   'date-picker': datePickerFigures,
   chip: chipFigures,
+  collapsible: collapsibleFigures,
   'color-swatch': colorSwatchFigures,
   dialog: dialogFigures,
   divider: dividerFigures,
@@ -100,12 +108,15 @@ const FIGURES: Record<string, Record<string, (p: { caption?: string }) => ReactN
   'page-banner': pageBannerFigures,
   pagination: paginationFigures,
   'radio-group': radioGroupFigures,
+  resizable: resizableFigures,
   'result-section': resultSectionFigures,
   'searchable-list': searchableListFigures,
   select: selectFigures,
   'select-box': selectBoxFigures,
   'side-navigation': sideNavigationFigures,
   'side-panel': sidePanelFigures,
+  'scroll-area': scrollAreaFigures,
+  'scroll-auto-hide': scrollAutoHideFigures,
   'scroll-fog': scrollFogFigures,
   skeleton: skeletonFigures,
   slider: sliderFigures,
@@ -122,6 +133,7 @@ const FIGURES: Record<string, Record<string, (p: { caption?: string }) => ReactN
   toggle: toggleFigures,
   tooltip: tooltipFigures,
   'top-navigation': topNavigationFigures,
+  'tree-view': treeViewFigures,
   'wheel-picker': wheelPickerFigures,
 };
 

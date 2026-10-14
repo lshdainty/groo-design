@@ -330,9 +330,10 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
 );
 DialogContent.displayName = "DialogContent";
 
-// 본문 — 좌우 24, 이 안에서만 스크롤. 맨 앞 자식(머리가 없으면)이면 위 24, 맨 끝 자식(바닥이 없으면)이면 아래 24
+// 본문 — 좌우 24, 이 안에서만 스크롤. 맨 앞 자식(머리가 없으면)이면 위 24, 맨 끝 자식(바닥이 없으면)이면 아래 24.
+// 끝에 닿아도 뒤 화면이 따라 스크롤되지 않는다(overscroll-behavior: contain — Scroll Area, 2026-10-10)
 const BODY = [
-  "min-h-0 flex-1 overflow-y-auto px-x6 first:pt-x6",
+  "min-h-0 flex-1 overflow-y-auto overscroll-contain px-x6 first:pt-x6",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 const BODY_PLAIN = "last:pb-x6";

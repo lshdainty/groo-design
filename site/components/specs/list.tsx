@@ -5,6 +5,7 @@ import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { listLook, LIST_STATES, type ListState, type RowSpec } from './list-look';
 import { ListHeaderView, ListView, type ViewMode } from './list-view';
 import { ListPlayground } from './list-playground';
+import { ExNested, Nested } from './list-nest';
 import { Card, Phone, Verdict, rc, type Mode } from './kit';
 import { PhoneBoard, T, TX, items, txRow, type Tx } from './display-screens';
 import { Card as CardArt, LTL, Logo } from './image-screens';
@@ -665,6 +666,7 @@ export const listFigures: Record<string, Fig> = {
   detail: Detail,
   header: Header,
   divider: Divider,
+  nested: Nested,
   'all-rows': AllRows,
   'group-guide': GroupGuide,
   'chevron-guide': ChevronGuide,
@@ -681,4 +683,5 @@ export const listFigures: Record<string, Fig> = {
   'ex-switch': ExSwitch,
   'ex-select': ExSelect,
   'ex-states': ExStates,
+  'ex-nested': ExNested,
 };

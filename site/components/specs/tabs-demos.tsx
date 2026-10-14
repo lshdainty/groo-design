@@ -143,20 +143,22 @@ function ComparePanel({ look, mode }: { look: TabsLook; mode: ViewMode }) {
 export function StatsDemo({ look, mode = 'auto', layout, size, height = 360 }: { look: TabsLook; mode?: ViewMode; layout?: TabsLayout; size?: TabsSize; height?: number }) {
   const id = cleanId(useId());
   const [tab, setTab] = useState('category');
-  const panel: CSSProperties = { height, overflowY: 'auto', boxSizing: 'border-box', paddingTop: 20, paddingBottom: 20, paddingLeft: look.gutter, paddingRight: look.gutter, scrollbarWidth: 'none' };
+  // 세로 스크롤바는 숨기지 않는다(scroll-area — 6px 알약, .psa). 모드를 정한 그림은 막대 색을 그 모드 값으로.
+  // 탭마다 넘침이 달라(카테고리만 넘친다) 막대가 생기고 없어지며 내용 폭이 6px 흔들린다 — 막대 자리를 늘 둔다(scrollbar-gutter)
+  const panel = { height, overflowY: 'auto', scrollbarGutter: 'stable', boxSizing: 'border-box', paddingTop: 20, paddingBottom: 20, paddingLeft: look.gutter, paddingRight: look.gutter, '--psa-thumb': t(look, 'stroke-neutral-solid', mode) } as CSSProperties;
   return (
     <div>
       <ScreenTitle look={look} mode={mode}>
         통계
       </ScreenTitle>
       <LineTabsView look={look} mode={mode} layout={layout} size={size} items={STATS_TABS} value={tab} onValue={setTab} ariaLabel="통계" idBase={id} />
-      <TabPanel idBase={id} value="category" active={tab === 'category'} style={panel}>
+      <TabPanel idBase={id} value="category" active={tab === 'category'} className="psa" style={panel}>
         <CategoryPanel look={look} mode={mode} />
       </TabPanel>
-      <TabPanel idBase={id} value="trend" active={tab === 'trend'} style={panel}>
+      <TabPanel idBase={id} value="trend" active={tab === 'trend'} className="psa" style={panel}>
         <TrendPanel look={look} mode={mode} />
       </TabPanel>
-      <TabPanel idBase={id} value="compare" active={tab === 'compare'} style={panel}>
+      <TabPanel idBase={id} value="compare" active={tab === 'compare'} className="psa" style={panel}>
         <ComparePanel look={look} mode={mode} />
       </TabPanel>
     </div>

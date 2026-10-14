@@ -2624,6 +2624,7 @@ html {
 - 영문은 원래 단어 단위라 바뀌지 않는다. 일본어는 `keep-all` 이 잘못 끊는다(SEED 레시피 주석) — porest 는 한국어 · 영문만 쓴다.
 - 앱의 이음 문자는 보여 주는 글에만 넣는다 — 입력칸 · 복사할 글 · 검색어 · 서버로 보낼 값에는 넣지 않는다. Flutter 3.41 에서 시험했다: 기본값은 "휴 / 가를" · "권 / 한입니다" 처럼 끊고, 이음 문자를 넣으면 낱말 사이에서만 끊으며 한 줄보다 긴 낱말은 그래도 끊는다.
 - 한 줄 말줄임 · 줄 수 제한은 그대로 쓴다 — 줄을 바꾸는 자리만 바뀐다.
+- 읽어야 하는 글은 자르지 않는다 — 규정 카드의 본문 · 유의사항(아코디언) 제목 · 나무의 부서 이름은 말줄임 · 줄 수 제한 없이 줄을 바꿔 다 보이고, "더 보기" · 눌러서 상세로 펼치게 하지 않는다(사용자 결정 2026-10-10 — 펼치고 접기 10A).
 - 당근(SEED)은 전역 규칙 없이 읽는 글(게시글 본문 · 시트 · 패널 제목 · 도움말 말풍선)만 단어 단위이고, 컴포넌트 라벨 · 설명은 글자 단위다(daangn.com CSS · SEED 레시피, 2026-10-01). porest 는 컴포넌트 라벨 · 설명까지 단어 단위로 한다 — 사용자 결정(2026-10-01).
 - 제품은 앱 적용 단계에서 옮긴다 — Desk 웹은 4곳(카드 혜택 2 · 일정 상세 2)에만 손으로 `keep-all` 을 걸었고 HR 웹 · Desk 앱은 없다. 전역 규칙을 걸고 그 4곳은 걷는다.
 
@@ -3375,7 +3376,7 @@ DESIGN.md baseline 정의 참고 — 14 keyframes (단발 10 + loop 4): fade-in/
 #### 조작
 
 - **터치 영역** — 누르는 영역은 모두 44 × 44 이상(`touch-min`). 보이는 크기가 작으면 보이지 않는 여백으로 넓힌다.
-- **제스처 대신 누르기** — 밀기 · 끌기 · 핀치 같은 제스처로 하는 일은 누르기로도 할 수 있게 한다. Slider 는 트랙을 눌러 고르고 키보드로도 옮긴다(2026-10-09).
+- **제스처 대신 누르기** — 밀기 · 끌기 · 핀치 같은 제스처로 하는 일은 누르기로도 할 수 있게 한다. Slider 는 트랙을 눌러 고르고 키보드로도 옮긴다(2026-10-09). 나누기 손잡이는 한 번 눌러 25 ↔ 40 · 키보드 5% 로, 대시보드 위젯 크기는 ⋮ "크기" 로도 바꾼다(Resizable, 2026-10-10).
 - **보조 기술** — 모든 동작에 VoiceOver · TalkBack · 키보드로 닿는다. 키보드 포커스는 State › `focused`.
 - **요청 중에도 막지 않는다** — 누르는 순간 저장되는 컨트롤을 응답을 기다리며 막지 않는다. 막으면 초점이 본문으로 빠져 키보드 · 화면 읽기 프로그램 사용자가 자리를 잃는다. 실패하면 되돌리고 그 자리에서 알린다(State, 2026-10-09).
 - **앱의 키보드** — 앱도 누를 수 있는 것은 모두 키보드 포커스를 받는다(버튼 `PButton` 포함). 링은 키보드로 옮길 때만 웹과 같게 그리고, 손가락으로 누를 때는 그리지 않는다(State › 앱의 키보드 포커스, 사용자 결정 2026-10-08).
@@ -3383,7 +3384,7 @@ DESIGN.md baseline 정의 참고 — 14 keyframes (단발 10 + loop 4): fade-in/
 
 #### 콘텐츠
 
-- **이름** — 아이콘만 있는 버튼 · 이미지에는 기능과 맥락을 짧게 적은 이름을 단다(웹 `aria-label` · `alt`, 앱 `Semantics` label · `tooltip`). 장식은 보조 기술에서 숨긴다(`alt=""` · `aria-hidden` · `ExcludeSemantics`). 이름도 번역 문구에 둔다. 켜고 끄는 단추는 이름을 고정하고 켬은 `aria-pressed`(앱 `toggled`)로 알린다 — 상태마다 이름을 바꾸지 않는다(Toggle, 2026-10-09).
+- **이름** — 아이콘만 있는 버튼 · 이미지에는 기능과 맥락을 짧게 적은 이름을 단다(웹 `aria-label` · `alt`, 앱 `Semantics` label · `tooltip`). 장식은 보조 기술에서 숨긴다(`alt=""` · `aria-hidden` · `ExcludeSemantics`). 이름도 번역 문구에 둔다. 켜고 끄는 단추는 이름을 고정하고 켬은 `aria-pressed`(앱 `toggled`)로 알린다 — 상태마다 이름을 바꾸지 않는다(Toggle, 2026-10-09). 펼치고 접는 트리거도 이름을 고정하고 펼침은 `aria-expanded`(앱 `expanded`)로 알린다 — "펼치기 · 접기" 로 바꾸지 않는다(Accordion · Collapsible, 2026-10-10).
 - **오류** — 바로 알린다. 테두리 색(State › `invalid`)과 함께, 웹은 `aria-invalid` + `aria-describedby` 로 입력칸과 문구를 잇고 `role="alert"`(또는 `aria-live`)로 알린다. 앱은 `Semantics` liveRegion. 문구는 입력칸 가까이, 고칠 방법까지(Writing › 오류).
 
 #### 개인 설정
@@ -3821,6 +3822,7 @@ HR — 직원 정보 form(필수/선택 옵션), 권한 토글 switch, 평가 �
 - 줄 사이 선은 기본 없음 — 필요할 때만 `ListDivider`(1px `stroke-neutral-subtle`, 줄 폭 또는 좌우 24 들임).
 - 목록 제목: `t4` 14 · 위아래 8 · 좌우 24 — `mediumWeak`(500 · `fg-neutral-subtle`, 기본) · `boldSolid`(700 · `fg-neutral`).
 - HR — 오늘 줄 모양 24가지 · 목록 33곳, 오른쪽 화살표 0, 줄 전체를 누르는 10 중 키보드로 닿는 것 3(2026-10-01 조사). 앱 적용 단계에서 List 로 옮긴다.
+- 하위 줄(2026-10-10): 부모 · 하위 두 단계에서 줄은 편집을 열고 하위만 접는 목록(카테고리) — 부모 줄 앞 꺾쇠 단추 44(이름 "{카테고리} 하위 카테고리" + `aria-expanded` · 펼치면 90° · 300ms) · 하위 줄은 부모 제목 자리 104 · 하위가 없는 줄도 꺾쇠 자리를 비워 부모 타일이 한 세로줄(52)에 선다(17B). 여러 단계에서 고르는 나무는 Tree View.
 - 목록은 흰 바탕(`bg-layer-default`) · 시트(`bg-layer-floating`) 위에 둔다 — 회색 바탕(`bg-layer-basement`) 위에서는 누름 바탕이 보이지 않는다(카드에 담는다).
 
 ### Select Box
@@ -3955,6 +3957,18 @@ HR — 월별 휴가 사용(막대) · 휴가 유형(도넛). 10색 × 2 모드(
 - **테마 단추** — 이름 "Toggle theme"(영어) · 상태 0. 테마는 설정으로 간다(2026-10-04 화면 틀) — 남는 동안 이름을 한국어로.
 - **부서 색** — 부서 폼의 색은 Select(점 16 + "파란색 · 녹색 · 노란색 · 보라색 · 빨간색" + 없음)이고 shadcn chart-1 ~ chart-5 이름을 저장한다. "노란색" 이 실제 주황이고 점이 흰 바탕 2.52 · 2.55 다. HR 적용 때 Color Swatch(v110 10색 · 색 이름)로 옮기고, 저장 값은 차트 색 이름에 잇는다(위 "Chart color").
 
+### 펼치고 접기 · 나누기 — HR
+
+> 2026-10-10 — 모양 · 쓰는 규칙은 DESIGN.md 의 "펼치고 접기 · 나누기 — Accordion · Collapsible · Tree View · Resizable · Scroll Area · Scroll Auto Hide" 절과 각 스펙(`specs/components/accordion.md` · `collapsible.md` · `tree-view.md` · `resizable.md` · `scroll-area.md` · `scroll-auto-hide.md`). HR 의 쓰는 자리만 적는다. 아코디언 · 숨는 머리는 HR 에 없다(2026-10-09 조사).
+
+- **부서 나무** — 관리 > 회사 · 부서 사용자의 부서 나무는 Tree View 다. 잎 17개도 키보드로 닿고(`Tab` 하나 · 화살표), 부모 줄은 줄 전체가 누르는 자리라 누르면 고르면서 펴고 접으며(지금처럼 — 꺾쇠는 표시만, 16D), 추가 · 수정 · 삭제는 패널 머리의 ⋮ 하나("{부서} 더보기")가 고른 부서에 건다. 노드마다의 `h3` · 단추 안 단추 · 이름 말줄임을 걷는다. 부서 사용자 화면은 늘 펼친 나무 — 꺾쇠 · `aria-expanded` 없이 들임만.
+- **관리 화면 나누기** — 역할 · 사용자 · 회사 · 부서 사용자(768 이상)는 Resizable — 선 1px + 가운데 손잡이 표시 · 누르는 폭 16 · 이름 "목록 너비" · 5% · 목록 20 ~ 40%(회사 · 부서 사용자도 오른쪽 60% 아래로 줄지 않는다) · 화면마다 폭 기억 · 한 번 누르면 25 ↔ 40.
+- **대시보드 위젯 크기** — 편집 모드의 모서리 손잡이는 24 · 표식 대비 3 이상, 끄는 동안 자리표시는 초록 옅은 바탕 + 점선(라이브러리 기본 빨강 20% 를 걷는다), 끌지 않는 대안은 위젯 ⋮ 의 "크기"(4 · 6 · 8 · 12칸). `react-grid-layout` 은 1.5.3(npm 이 내려 둔 판)에서 1.5.4 로 올린다.
+- **업무 보고 필터** — "필터 2" outline 단추(이름 "필터2" · 상태 0)를 걷고 조건 카드의 머리가 Collapsible 트리거다 — "상세 검색 조건 · 2개 필터 적용 중".
+- **사내 규정 카드** — 4줄 자르기(`line-clamp-4` 16곳)를 걷고 줄을 바꿔 다 보인다. 4열에서 한 줄의 카드 높이는 그 줄에서 가장 긴 카드에 맞춘다. "지급 시기" 의 같은 문장이 두 번 찍히는 것도 고친다.
+- **스크롤** — 전역 4px + 회색 바탕을 6px 알약 한 벌로, Radix ScrollArea 8곳(옅은 막대 1.11)은 기본 스크롤로. 달력 일정 · 일 · 주 상자는 초점 가는 것이 없어 이름("10월 9일 일정")을 단다. 휴가 신청 · 승인 · 정책 같은 대화상자 안 상자는 `overscroll-behavior: contain`.
+- **사이드바 메뉴 나무** — 같은 옛 나무 부품을 쓰지만 Side Navigation 이다(위 "화면 틀 · 이동 — HR") — Tree View 가 아니다.
+
 ### Pagination / Drawer / Spinner / Stepper (v67 추가 batch)
 
 HR(B2B) 4 컴포넌트 사용 패턴 — DESIGN.md 공통 spec 외 brand-specific 안내.
@@ -4031,13 +4045,12 @@ HR(B2B) 5 input 컴포넌트 — 데이터 그리드 + form 입력 위주.
 HR(B2B) 5 disclosure/overlay 컴포넌트.
 
 #### Accordion — HR
-- **결재 detail 그룹**: 신청 정보 / 첨부 / 결재 history 3 섹션 — single mode (한 번에 하나만 펼침).
-- **권한 설정 그룹**: 일반 / 결재 / 평가 / 보고서 권한 — multiple mode (여러 영역 동시 검토).
-- **평가 항목 list**: 자기평가 5 카테고리 — 항목별 펼침으로 입력.
+
+> 2026-10-10 다시 정했다 — 위 "펼치고 접기 · 나누기 — HR". HR 에는 아코디언이 없다(2026-10-09 조사) — 결재 상세 · 권한 · 평가 묶음의 옛 쓰임은 제품에 없다.
 
 #### Collapsible — HR
-- **결재 첨부 expansion**: "첨부 파일 3개" 트리거 → expand로 file list.
-- **권한 detail "더 보기"**: 기본 정보 + collapse된 추가 권한.
+
+> 2026-10-10 다시 정했다 — 트리거는 Accordion 항목 하나(위 "펼치고 접기 · 나누기 — HR" 의 업무 보고 필터). 잘린 글을 "더 보기" 로 펼치지 않는다 — 자르지 않는다.
 
 #### Hover Card — HR
 
@@ -4067,14 +4080,12 @@ HR(B2B) 5 data display 컴포넌트 — 데이터 그리드 핵심 application �
 > 2026-10-04 걷었다 — 그림 여러 장은 공유 DESIGN.md 의 "이미지 — Image Frame · Aspect Ratio · Logo Tile" 절(끝이 보이는 가로 줄 + 장수 글). 점 · 화살표 · 자동 넘김은 두지 않는다.
 
 #### Scroll Area — HR
-- **데이터 그리드 sticky thead** + 본문 scroll: 표 머리 고정 + body-lg 영역 scrollable.
-- **결재 detail 긴 panel**: 첨부 history 100+ — scroll area 안에서 native scroll 보존.
-- always-visible scrollbar — 데스크탑 application 톤.
+
+> 2026-10-10 다시 정했다 — 기본 스크롤 + 전역 한 벌(위 "펼치고 접기 · 나누기 — HR" 의 스크롤). Radix ScrollArea 8곳 · 전역 4px + 회색 바탕을 걷는다.
 
 #### Resizable — HR
-- **3-pane layout**: 좌측 sidebar(고정) + 가운데 결재 list + 우측 detail panel — 가운데↔우측 resizable.
-- **dashboard split**: 위 KPI / 아래 차트 panel — vertical resize.
-- localStorage persistence — power user 자기 layout 기억.
+
+> 2026-10-10 다시 정했다 — 관리 화면 나누기 · 대시보드 위젯 크기(위 "펼치고 접기 · 나누기 — HR"). 3단 나누기 · 위아래 나누기는 쓰는 곳이 없다.
 
 ### Extras batch (v72 추가)
 
@@ -4131,8 +4142,5 @@ HR(B2B) 5 추가 shadcn 누락 컴포넌트.
 - 업로드 실패 시 error variant + 재시도 button — 결재 큐에서 빠지지 않도록.
 
 #### Treeview — HR
-- **조직도 탐색** — 회사 → 본부 → 팀 → 직원 4단계 nested tree.
-- 직원명 노드 selected 시 우측 panel에 상세 표시 (master-detail).
-- expand/collapse: 본부/팀 레벨 자식 ≥ 1 — 직원은 leaf node.
-- 검색 input 동기화 — 필터링 시 매칭 노드까지 자동 expand + highlight.
-- **권한 트리 편집** — admin이 부서별 권한 그룹 토글, checkbox 통합 variant.
+
+> 2026-10-10 다시 정했다 — 부서 나무는 Tree View(위 "펼치고 접기 · 나누기 — HR"). 직원까지 4단계 · 검색 동기화 · 권한 체크 나무는 쓰는 곳이 없다.

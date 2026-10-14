@@ -399,8 +399,9 @@ const BottomSheetContent = React.forwardRef<React.ElementRef<typeof DrawerPrimit
 );
 BottomSheetContent.displayName = "BottomSheetContent";
 
-// 본문 — 좌우 화면 여백 24, 넘치면 이 안에서 스크롤. 바닥이 없어 맨 끝이면 아래 16(바닥의 아래 여백)
-const BODY = "min-h-0 flex-1 overflow-y-auto px-global-gutter";
+// 본문 — 좌우 화면 여백 24, 넘치면 이 안에서 스크롤. 바닥이 없어 맨 끝이면 아래 16(바닥의 아래 여백).
+// 끝에 닿아도 뒤 화면이 따라 스크롤되지 않는다(overscroll-behavior: contain — Scroll Area, 2026-10-10)
+const BODY = "min-h-0 flex-1 overflow-y-auto overscroll-contain px-global-gutter";
 const BODY_PLAIN = "last:pb-x4";
 // 끝 흐림(scrollFog) — 본문 안 여백 위 20 · 아래 80(바닥이 있어도), 스크롤 여유도 위 20 · 아래 80
 const BODY_FOG = "pt-[20px] pb-[80px] scroll-pt-[20px] scroll-pb-[80px]";

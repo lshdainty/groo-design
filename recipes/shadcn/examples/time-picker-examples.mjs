@@ -154,7 +154,7 @@ const SHEET_CLOSE = [
 const SHEET_HEADER = "flex shrink-0 flex-col gap-x2 px-global-gutter pb-x4 pt-x6";
 const SHEET_TITLE = "m-0 text-t8 font-bold text-fg-neutral";
 const SHEET_TITLE_WITH_CLOSE = "pr-x10";
-const SHEET_BODY = "min-h-0 flex-1 overflow-y-auto px-global-gutter";
+const SHEET_BODY = "min-h-0 flex-1 overflow-y-auto overscroll-contain px-global-gutter";
 // 끝 흐림이 없는 본문(scrollFog 아님) — 끝이면 아래 16
 const SHEET_BODY_PLAIN = "last:pb-x4";
 const SHEET_FOOTER = "flex shrink-0 gap-x2 px-global-gutter pb-x4 pt-x3 [&>*]:min-w-0 [&>*]:flex-1";
@@ -176,7 +176,7 @@ const POP_CONTENT = [
 // 본문 — Dialog 의 본문과 같다(좌우 24 · 머리가 없으면 위 24 · 끝이면 아래 24). 끝 흐림(scrollFog — BODY_FOG)은 이 파일의 패널이
 // 쓰지 않아 BODY_PLAIN 만 옮겼다. 위로 스크롤되면 머리 아래 1px 선은 머리(HEADER)가 긋는다 — 이 패널에는 머리가 없다
 const POP_BODY = [
-  "min-h-0 flex-1 overflow-y-auto px-x6 first:pt-x6",
+  "min-h-0 flex-1 overflow-y-auto overscroll-contain px-x6 first:pt-x6",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 const POP_BODY_PLAIN = "last:pb-x6";

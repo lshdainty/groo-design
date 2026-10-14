@@ -333,7 +333,7 @@ function fogCode(use: FogUse) {
   if (use === 'row') return `import { Chip, ChipGroup } from "@/components/ui/chip"\n\n{/* 칩 줄은 따로 켜지 않는다 — layout="scroll" 이면 늘 좌우 흐림 */}\n<ChipGroup layout="scroll" aria-label="카테고리">\n  {categories.map((c) => <Chip key={c}>{c}</Chip>)}\n</ChipGroup>`;
   if (use === 'overlayBody') return `import { ResponsiveDialogBody } from "@/components/ui/dialog"\n\n{/* 넘칠 수 있는 본문 — 위 · 아래 흐림과 같은 여백 */}\n<ResponsiveDialogBody scrollFog className="px-0">\n  <List>…</List>\n</ResponsiveDialogBody>`;
   if (use === 'page') return `import { ScrollFog } from "@/components/ui/scroll-fog"\n\n{/* 바닥 고정 버튼이 있는 화면 — 위는 머리 아래, 아래는 버튼 위에서 흐림이 끝난다 */}\n<ScrollFog use="page" className="flex-1">\n  <Terms />\n</ScrollFog>\n<footer className="px-6 pb-7 pt-3">\n  <Button size="large" className="w-full">동의하기</Button>\n</footer>`;
-  return `import { ScrollFog } from "@/components/ui/scroll-fog"\n\n{/* 카드 안 높이를 정한 스크롤 — 넘치는 방향 양 끝 */}\n<ScrollFog className="max-h-60" tabIndex={0} aria-label="이용 약관">\n  <p>{terms}</p>\n</ScrollFog>`;
+  return `import { ScrollFog } from "@/components/ui/scroll-fog"\n\n{/* 카드 안 높이를 정한 스크롤 — 넘치는 방향 양 끝 */}\n<ScrollFog className="max-h-60" tabIndex={0} role="region" aria-label="이용 약관">\n  <p>{terms}</p>\n</ScrollFog>`;
 }
 export function ScrollFogPlayground({ kit, screen, chip, list, cta }: { kit: LoadingKit; screen: LdScreen; chip: ChipLook; list: ListLook; cta: ButtonLook }) {
   const [use, setUse] = useState<FogUse>('row');

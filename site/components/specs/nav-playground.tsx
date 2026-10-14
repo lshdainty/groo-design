@@ -309,7 +309,7 @@ export function BottomNavPlayground({ look, top, tones }: { look: TabBarLook; to
       stage={
         <PlayScreen tones={tones} mode={mode} h={560} home={safe === 'on'}>
           {bar}
-          <div ref={scroller} onScroll={onScroll} tabIndex={0} aria-label={`${titles[tab]} 목록`} style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto', paddingBottom: tabInset(look, safeArea), outline: 'none' }}>
+          <div ref={scroller} onScroll={onScroll} tabIndex={0} role="region" aria-label={`${titles[tab]} 목록`} style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto', paddingBottom: tabInset(look, safeArea), outline: 'none' }}>
             <PlayRows tones={tones} mode={mode} n={16} from={['home', 'ledger', 'calendar', 'more'].indexOf(tab) * 2} />
           </div>
           <TabBar look={look} mode={mode} items={items} current={tab} addLabel={add} size={compact ? 'compact' : 'regular'} safe={safeArea} live onSelect={select} onAdd={() => setSaid(`+ — ${add}`)} onExpand={() => setCompact(false)} />
@@ -369,7 +369,7 @@ export function FabPlayground({ looks, tops, tones, snack, bottomBtn }: { looks:
       stage={
         <PlayScreen tones={t} mode={mode} h={560} home={safe === 'on'}>
           <TopNavBar look={tops[brand]} mode={mode} title="할 일" actions={[{ icon: 'search', label: '검색' }]} />
-          <div tabIndex={0} aria-label="할 일 목록" style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto', paddingBottom: look.size + look.bottom * 2 + (below === 'none' ? safeArea : 0), outline: 'none' }}>
+          <div tabIndex={0} role="region" aria-label="할 일 목록" style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto', paddingBottom: look.size + look.bottom * 2 + (below === 'none' ? safeArea : 0), outline: 'none' }}>
             <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: 24, paddingRight: 24 }}>
               {TODO_ROWS.map((r) => (
                 <PlayRow key={r} tones={t} mode={mode} title={r} check />

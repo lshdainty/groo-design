@@ -2414,6 +2414,7 @@ html {
 - 영문은 원래 단어 단위라 바뀌지 않는다. 일본어는 `keep-all` 이 잘못 끊는다(SEED 레시피 주석) — porest 는 한국어 · 영문만 쓴다.
 - 앱의 이음 문자는 보여 주는 글에만 넣는다 — 입력칸 · 복사할 글 · 검색어 · 서버로 보낼 값에는 넣지 않는다. Flutter 3.41 에서 시험했다: 기본값은 "휴 / 가를" · "권 / 한입니다" 처럼 끊고, 이음 문자를 넣으면 낱말 사이에서만 끊으며 한 줄보다 긴 낱말은 그래도 끊는다.
 - 한 줄 말줄임 · 줄 수 제한은 그대로 쓴다 — 줄을 바꾸는 자리만 바뀐다.
+- 읽어야 하는 글은 자르지 않는다 — 규정 카드의 본문 · 유의사항(아코디언) 제목 · 나무의 부서 이름은 말줄임 · 줄 수 제한 없이 줄을 바꿔 다 보이고, "더 보기" · 눌러서 상세로 펼치게 하지 않는다(사용자 결정 2026-10-10 — 펼치고 접기 10A).
 - 당근(SEED)은 전역 규칙 없이 읽는 글(게시글 본문 · 시트 · 패널 제목 · 도움말 말풍선)만 단어 단위이고, 컴포넌트 라벨 · 설명은 글자 단위다(daangn.com CSS · SEED 레시피, 2026-10-01). porest 는 컴포넌트 라벨 · 설명까지 단어 단위로 한다 — 사용자 결정(2026-10-01).
 - 제품은 앱 적용 단계에서 옮긴다 — Desk 웹은 4곳(카드 혜택 2 · 일정 상세 2)에만 손으로 `keep-all` 을 걸었고 HR 웹 · Desk 앱은 없다. 전역 규칙을 걸고 그 4곳은 걷는다.
 
@@ -3291,6 +3292,8 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 | Progress Circle | 회전 · 호 · 채움 — `progress-circle.yaml` 의 motion(1.2초 숫자 곡선, 2026-10-03) |
 | Notification dot | `animation: ping var(--motion-duration-loop) cubic-bezier(0, 0, 0.2, 1) infinite` |
 | Form error | `animation: shake var(--motion-duration-d6) cubic-bezier(.36,.07,.19,.97)` |
+| 펼치고 접기(아코디언 · Collapsible · 하위 줄 · 나무 · 사이드바 하위) | `transition: height var(--motion-duration-d6) var(--motion-ease-easing)` + 꺾쇠 회전 같은 시간 — 모션 줄이기면 높이 대신 `opacity` 150ms(2026-10-10) |
+| 숨는 머리 스냅(Scroll Auto Hide) | `transition: transform var(--motion-duration-d4) var(--motion-ease-enter)` — 스크롤이 끝났을 때만, 스크롤 중은 거리 1:1(2026-10-10) |
 
 #### 추가 이유
 1. v32(duration/ease) + v63(loop) → 직접 keyframe 작성 사용 사례 누적: Modal/Dialog scale-in, Drawer slide-in, Toast slide-in, Skeleton shimmer, Spinner spin 등 spec prose에 반복 등장.
@@ -3428,7 +3431,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 #### 조작
 
 - **터치 영역** — 누르는 영역은 모두 44 × 44 이상(`touch-min`). 보이는 크기가 작으면 보이지 않는 여백으로 넓힌다.
-- **제스처 대신 누르기** — 밀기 · 끌기 · 핀치 같은 제스처로 하는 일은 누르기로도 할 수 있게 한다. Slider 는 트랙을 눌러 고르고 키보드로도 옮긴다(2026-10-09).
+- **제스처 대신 누르기** — 밀기 · 끌기 · 핀치 같은 제스처로 하는 일은 누르기로도 할 수 있게 한다. Slider 는 트랙을 눌러 고르고 키보드로도 옮긴다(2026-10-09). 나누기 손잡이는 한 번 눌러 25 ↔ 40 · 키보드 5% 로, 대시보드 위젯 크기는 ⋮ "크기" 로도 바꾼다(Resizable, 2026-10-10).
 - **보조 기술** — 모든 동작에 VoiceOver · TalkBack · 키보드로 닿는다. 키보드 포커스는 State › `focused`.
 - **요청 중에도 막지 않는다** — 누르는 순간 저장되는 컨트롤을 응답을 기다리며 막지 않는다. 막으면 초점이 본문으로 빠져 키보드 · 화면 읽기 프로그램 사용자가 자리를 잃는다. 실패하면 되돌리고 그 자리에서 알린다(State, 2026-10-09).
 - **앱의 키보드** — 앱도 누를 수 있는 것은 모두 키보드 포커스를 받는다(버튼 `PButton` 포함). 링은 키보드로 옮길 때만 웹과 같게 그리고, 손가락으로 누를 때는 그리지 않는다(State › 앱의 키보드 포커스, 사용자 결정 2026-10-08).
@@ -3436,7 +3439,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 
 #### 콘텐츠
 
-- **이름** — 아이콘만 있는 버튼 · 이미지에는 기능과 맥락을 짧게 적은 이름을 단다(웹 `aria-label` · `alt`, 앱 `Semantics` label · `tooltip`). 장식은 보조 기술에서 숨긴다(`alt=""` · `aria-hidden` · `ExcludeSemantics`). 이름도 번역 문구에 둔다. 켜고 끄는 단추는 이름을 고정하고 켬은 `aria-pressed`(앱 `toggled`)로 알린다 — 상태마다 이름을 바꾸지 않는다(Toggle, 2026-10-09).
+- **이름** — 아이콘만 있는 버튼 · 이미지에는 기능과 맥락을 짧게 적은 이름을 단다(웹 `aria-label` · `alt`, 앱 `Semantics` label · `tooltip`). 장식은 보조 기술에서 숨긴다(`alt=""` · `aria-hidden` · `ExcludeSemantics`). 이름도 번역 문구에 둔다. 켜고 끄는 단추는 이름을 고정하고 켬은 `aria-pressed`(앱 `toggled`)로 알린다 — 상태마다 이름을 바꾸지 않는다(Toggle, 2026-10-09). 펼치고 접는 트리거도 이름을 고정하고 펼침은 `aria-expanded`(앱 `expanded`)로 알린다 — "펼치기 · 접기" 로 바꾸지 않는다(Accordion · Collapsible, 2026-10-10).
 - **오류** — 바로 알린다. 테두리 색(State › `invalid`)과 함께, 웹은 `aria-invalid` + `aria-describedby` 로 입력칸과 문구를 잇고 `role="alert"`(또는 `aria-live`)로 알린다. 앱은 `Semantics` liveRegion. 문구는 입력칸 가까이, 고칠 방법까지(Writing › 오류).
 
 #### 개인 설정
@@ -3685,7 +3688,8 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 | `logo-tile` | `r2_5` · `r3` · `r3_5` | 10px · 12px · 14px | 32 · 40 · 48 — 크기 × 0.3(List 타일과 같다) — 2026-10-04(`logo-tile.yaml`) |
 | `aspect-ratio` | — | 0 | 비율 상자만 — 둥근 그림 틀은 Image Frame. 2026-10-04 SEED Aspect Ratio(`aspect-ratio.yaml`). Carousel 은 걷었다 |
 | divider(옛 `separator`) | — | — | 1px 선, 모서리 무관 — 2026-10-03 SEED Divider(`divider.yaml`) |
-| `scroll-area` / `resizable` | — | — | 부모 컨테이너에 따름 |
+| `scroll-area` (스크롤바 막대) | `full` | 9999px | 6px 알약 — 2026-10-10(`scroll-area.yaml`) |
+| `resizable` (손잡이 표시 · 위젯 자리표시) | `r0_5` · `r4` | 2px · 16px | 손잡이 표시 4 × 24 · 자리표시는 위젯(Card 면)과 같다 — 2026-10-10(`resizable.yaml`) |
 | `scroll-fog` | — | — | 마스크(모양 없음) — 2026-10-03 SEED Scroll Fog(`scroll-fog.yaml`) |
 | `typography` | — | — | 텍스트, radius 무관 |
 | **Overlay** | | | |
@@ -3706,7 +3710,8 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 | `bottom-navigation` 바 · 가운데 + | `full` | 9999px | 떠 있는 알약 · 원 44 — 2026-10-04(`bottom-navigation.yaml`) |
 | `side-navigation` 항목 · 펼침 메뉴 | `r2_5` · `r5` | 10px · 20px | 항목 바탕 10 · 펼침 메뉴는 Menu 와 같은 20(줄 알약 12) — 2026-10-04 SEED Side Navigation(`side-navigation.yaml`). breadcrumb · navigation-menu 는 걷었다 |
 | **Disclosure** | | | |
-| `accordion` / `collapsible` | — | — | 인라인 |
+| `accordion` · `collapsible` (separated 면 · 누름 바탕) | `r4` · `r2_5` | 16px · 10px | separated · 카드 면은 Card 16, 트리거의 누름 바탕은 10(동심) · 모두 펼치기 8 — 2026-10-10 SEED Accordion(`accordion.yaml` · `collapsible.yaml`) |
+| `tree-view` 줄 · List 하위 줄 꺾쇠 단추 | `r2_5` | 10px | 줄 바탕 · 포커스 링 · 꺾쇠 단추 — Side Navigation 항목과 같다. 2026-10-10(`tree-view.yaml` · `list.yaml`) |
 | **Data** | | | |
 | `date-picker` 날짜 원 · 기간 띠 | `full` · — | 9999px · 0 | 원 42 · 띠는 줄 끝에서 각지게 끊는다 — 2026-10-03 SEED Date Picker(`date-picker.yaml`) |
 | `wheel-picker` 선택 띠 | `r2` | 8px | 2026-10-03 SEED Wheel Picker(`wheel-picker.yaml`) — Time Picker · 연 · 월 휠 |
@@ -3912,6 +3917,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 | 누름 | 면 `bg-layer-default-pressed` + 2px 거리 축소 — 안에 대등한 동작이 있으면 색만(SEED Feedback). 그림자 상승 · 위로 뜨기 없음 |
 | 지표 카드 | 라벨 13 · 500 · `fg-neutral-subtle` · 숫자 24(데스크톱 격자에 셋 · 넷씩이면 20) · 700 · 고정폭 숫자 · 증감 줄(Colors 의 "증감 — 방향 색") — 폰은 한 줄에 하나, 숫자 굴림 애니메이션 없음 |
 | 순자산 카드 | Desk 홈 · 자산 한 자리 — 브랜드 채움 135° + 흰 글자, 다크도 짙은 채움 · 증감도 흰 ▲ · ▼(Desk 파일의 Card 절) |
+| 카드 안 아코디언 | 카드 상세의 혜택 · 유의사항(2026-10-10) — 좌우 0 · 머리 위 · 좌우 24 · 아래 4, 카드 아래 8(마지막 트리거 16 과 합쳐 24) · 머리 오른쪽에 모두 펼치기 |
 
 - 변형은 `default` · `hero` 둘이다. 그림자 카드 · 흰 위 흰 그림자 카드(raised) · 회색 채움(muted) · 브랜드 틴트(brand)는 두지 않는다 — 시트 · 대화상자 안의 요약은 List 키-값 줄 · Callout.
 - 카드 안에 카드를 두지 않는다. 카드의 데이터를 못 불러오면 그 카드 안에 Result Section `medium` + 다시 시도 — 화면 전체를 스켈레톤으로 되돌리지 않는다.
@@ -4529,6 +4535,7 @@ binary on/off 상태 또는 group 선택을 표현하는 form control 3종. 공�
 - 강조: 바탕만 옅은 브랜드 색(브랜드 파일의 brand-weak 역할 색 — 누름 · 호버는 한 단계 짙은 짝, 그동안 설명 · 값 글자는 `fg-neutral-muted` 로 4.5:1 을 지킨다).
 - 줄 사이 선은 기본 없음 — 필요할 때만 `ListDivider`(1px `stroke-neutral-subtle`, 줄 폭 또는 좌우 24 들임).
 - 목록 제목: `t4` 14 · 위아래 8 · 좌우 24 — `mediumWeak`(500 · `fg-neutral-subtle`, 기본) · `boldSolid`(700 · `fg-neutral`).
+- 하위 줄(2026-10-10): 부모 · 하위 두 단계에서 줄은 편집을 열고 하위만 접는 목록(카테고리) — 부모 줄 앞 꺾쇠 단추 44(이름 "{카테고리} 하위 카테고리" + `aria-expanded` · 펼치면 90° · 300ms) · 하위 줄은 부모 제목 자리 104 · 하위가 없는 줄도 꺾쇠 자리를 비워 부모 타일이 한 세로줄(52)에 선다(17B). 여러 단계에서 고르는 나무는 Tree View.
 - 목록은 흰 바탕(`bg-layer-default`) · 시트(`bg-layer-floating`) 위에 둔다 — 회색 바탕(`bg-layer-basement`) 위에서는 누름 바탕이 보이지 않는다(카드에 담는다).
 
 ### Select Box
@@ -4822,6 +4829,56 @@ Toggle Group 은 두지 않는다 — 하나 고르기는 Segmented Control(2 ~ 
 - Icon Picker 격자는 listbox · 칸 이름 = 한국어 이름 · 격자에 Tab 하나 + 2차원 화살표 · 찾으면 결과 수를 한 번 알린다.
 - 누르는 영역은 44 이상 — 슬라이더 손잡이 줄 44 · 토글 44 · 색 칸 44 · 아이콘 칸 48. 인증 코드 칸 medium 40 은 1280 이상 데스크톱 웹만이다(Input 과 같다).
 
+### 펼치고 접기 · 나누기 — Accordion · Collapsible · Tree View · Resizable · Scroll Area · Scroll Auto Hide
+
+> 2026-10-10 정했다(사용자 결정 — 비교 페이지 https://claude.ai/artifact/9uvjeFyjFXc7TaWnpnnQ6H, 1B · 2A · 3A · 4A · 5A · 6A · 7C · 8A · 9A · 10A · 11A · 12B · 13A · 14A · 15A + 따라오는 것, 스펙을 쓰다 나온 16D · 17B). SEED 가 컴포넌트로 가진 것은 Accordion(rootage 3.0.2 · react 2.0.0)과 Breeze 의 Scroll Auto Hide 뿐이라, Collapsible(Accordion 가이드의 한 줄) · 나무 · 나누기 · 스크롤바는 SEED 의 원칙과 porest 의 이웃 결정(List · Card · Side Navigation · Scroll Fog · v104 모션)에서 porest 가 정했다. 수치 원본은 `specs/components/accordion.yaml` · `collapsible.yaml` · `tree-view.yaml` · `resizable.yaml` · `scroll-area.yaml` · `scroll-auto-hide.yaml`, 하위 줄은 `list.yaml`, 카드 안 아코디언은 `card.yaml` 이고 쓰는 규칙은 각 스펙 md 다. 옛 Accordion · Collapsible(v70) · Scroll Area · Resizable(v71) · Treeview(v73) 절은 다시 정했다 — 옛 스펙은 각 `.history` 의 `v-pre-seed-collapse.*`. 토큰은 더하지 않았다.
+
+#### 나누기
+
+| 하는 일 | 쓰는 것 |
+|---|---|
+| 상세가 긴 항목 여럿을 묶어 접는다(카드 혜택 · 유의사항) | Accordion — 화면 · 카드 안은 `inline`, 혜택 상세 시트 · 대화상자는 `separated` |
+| 상세 하나를 접고 편다(분할 내역 · 빠르게 맞추기 · 상세 검색 조건) | Collapsible — Accordion 항목 하나의 모양 |
+| 부모 · 하위 두 단계에서 줄은 편집을 열고 하위만 접는다(카테고리) | List 하위 줄 — 줄 앞 꺾쇠 단추 |
+| 여러 단계에서 하나를 골라 옆에 그 내용을 본다(HR 부서) | Tree View — APG 트리 |
+| 목록 · 상세 두 패널의 목록 폭을 바꾼다(HR 관리, 768 이상) | Resizable `split` |
+| 대시보드 위젯의 크기를 바꾼다(HR 편집 모드) | Resizable `widget` + ⋮ "크기" |
+| 넘친 내용을 스크롤한다 | Scroll Area — 기본 스크롤 + 전역 스크롤바 한 벌 |
+| 목록을 넓게 보려고 보조 머리를 스크롤에 숨긴다(폰 원장 머리) | Scroll Auto Hide |
+| 읽어야 하는 긴 글(규정 · 유의사항 제목 · 부서 이름) | 자르지 않는다 — 줄을 바꾼다 |
+
+#### 모양
+
+| | 값 |
+|---|---|
+| Accordion | 트리거 위아래 16 · 좌우 24 · 제목 16 / 22 · 500 · 설명 13 / 18 · 500 `fg-neutral-subtle` · 꺾쇠 20 `fg-neutral-subtle` · 54(설명이 있으면 74) · 앞 아이콘 22 · 사이 12 · 폰 · 데스크톱 같음 · `inline` 들인 선 24 `stroke-neutral-subtle` · `separated` Card 면(16 · 1px `stroke-neutral-weak` · 사이 8 · 그림자 없음) · 누름 = List 누름(들임 6 · 모서리 10 · `bg-layer-default-pressed` · 콘텐츠만 2px) · 펼친 내용 0 / 24 / 16 · `text-article-note` · `fg-neutral-muted` · 모두 펼치기는 Card 머리 동작 모양(보이는 32 · 누르는 44) · 포커스 링은 트리거 안쪽 |
+| Collapsible | 트리거는 Accordion 항목 하나(54 · 74) — 흰 면 · 시트의 줄 · 카드 면의 머리(펼친 내용 아래 24) · 경고 상자의 아래 줄(좌우 16 · 위 선 `stroke-warning-weak` · 누름 `bg-warning-weak-pressed`) |
+| List 하위 줄 | 줄 앞 꺾쇠 단추 44(모서리 10 · `chevron-right` 20 · 펼치면 90°) · 줄 앞 4 · 하위 줄은 부모 제목 자리 104 · 하위가 없는 줄도 꺾쇠 자리를 비워 부모 타일이 52 에 선다(17B) |
+| Tree View | 줄 44 · 위아래 12 · 좌우 8 · 단계마다 20 · 모서리 10 · `text-t4` · 꺾쇠 16(칸 20 · 표시만 — 누르는 자리는 줄 전체) · 아이콘 16 · 사이 6 · 고름 `bg-neutral-weak-pressed` · 누름 `bg-layer-default-pressed` + 콘텐츠만 2px · 패널 가장자리 8 · 노드 동작 ⋮ 하나(40 · 누르는 44) |
+| Resizable | 선 1px `stroke-neutral-weak`(올리기 · 초점 · 끌기에 `stroke-neutral-solid`) · 손잡이 표시 4 × 24 `stroke-neutral-solid` · 누르는 폭 16 · 목록 25%(20 ~ 40%) · 위젯 모서리 24 · 표식 9 × 9 2px `stroke-neutral-solid` · 자리표시 브랜드 옅은 바탕 + 1px 브랜드 점선 · 모서리 16 |
+| Scroll Area | 6px 알약 · 막대 `stroke-neutral-solid` · 바탕 투명 · Firefox `thin` + `scrollbar-color` 는 `@supports not selector(::-webkit-scrollbar)` 안 |
+| Scroll Auto Hide | 스크롤 상자 맨 위 `sticky` · 스크롤 거리 1:1 · 끝나면 50% 스냅 `motion-duration-d4` `motion-ease-enter` · `translate3d` 로만(높이 그대로) · 바탕 `bg-layer-default` |
+
+#### 쓰는 규칙
+
+- **여럿을 함께 연다** — 아코디언은 늘 여럿을 열고, 목록 머리 오른쪽에 "모두 펼치기"(펼치면 "모두 접기")를 둔다. 항목은 둘 이상이고(하나면 Collapsible) 처음엔 모두 접혀 있다. 상세가 없는 항목은 꺾쇠 없는 그냥 줄이다 — 막힌 트리거 · 꺾쇠만 뒤집히는 줄을 두지 않는다.
+- **줄 전체가 트리거** — Accordion · Collapsible 은 줄 전체를 누르고, 머리 글이 곧 이름이다. 이름은 고정하고 펼침은 `aria-expanded` 가 알린다. 줄이 따로 하는 일(편집)이 있으면 줄 앞 꺾쇠 단추 44 로 접는다(카테고리 — "{카테고리} 하위 카테고리").
+- **펼쳐도 그 자리에** — 저절로 스크롤하거나 초점을 옮기지 않고, 패널 안에 스크롤 상자를 두지 않는다. 꺾쇠 · 높이는 `motion-duration-d6` `motion-ease-easing` 이고 모션 줄이기면 높이 움직임 없이 150ms 서서히 — 사이드바 하위 펼침 · 나무 · 하위 줄도 같다.
+- **자르지 않는다** — 제목 · 이름 · 규정 글은 줄을 바꿔 다 보인다. "더 보기" · 눌러서 상세로 잘린 글을 펼치지 않는다(Typography v114).
+- **카드 상세** — 혜택 · 유의사항은 웹 · 앱 모두 카드 안 `inline` 아코디언이고, 혜택 상세 시트 · 대화상자는 `separated` 다.
+- **원장 머리** — 폰 가계부의 소비 요약과 월 달력은 하나만 펼친다. 원장 머리(월 · 총액 · 주 달력)는 스크롤하면 숨는다 — 상단 바 · Line Tabs 는 숨지 않고 하단 탭 바는 제 규칙으로 줄어든다.
+- **나무** — `Tab` 하나 · 화살표로 다닌다. 줄 전체가 누르는 자리라 부모 줄을 누르면(`Enter` · `Space` 도) 고르면서 펴고 접고, 꺾쇠는 표시만이다(16D — SEED Accordion 의 "터치 영역은 Trigger 전체"). `→` `←` 는 고르지 않고 펴고 접기만 한다. 노드 동작은 나무 밖 ⋮ 하나, 머리말은 두지 않는다.
+- **나누기** — HR 관리의 768 이상에서만, 목록 20 ~ 40%(오른쪽은 60% 아래로 줄지 않는다) · 화면마다 폭을 기억 · 손잡이를 한 번 누르면 25 ↔ 40. 위젯 크기는 모서리를 끌거나 ⋮ "크기" 로.
+- **스크롤** — 기본 스크롤 + 전역 한 벌이고 Radix ScrollArea 는 걷는다. 세로 스크롤바는 숨기지 않는다(가로 줄만 — Scroll Fog).
+
+#### 접근성
+
+- Accordion · Collapsible 트리거는 `heading > button`(기본 `h3`) · `aria-expanded` · `aria-controls`, 펼친 내용에 `role="region"` 을 두지 않는다. 아코디언 트리거 사이 `↓` `↑`(돌아가며) · `Home` · `End`. 앱은 단추 + 펼침 상태로 읽고, 접힌 내용은 읽지 않는다.
+- Tree View 는 `tree` · `treeitem`(`aria-level` · `aria-setsize` · `aria-posinset` · `aria-expanded` · `aria-selected`) · `group`, 나무 전체가 `Tab` 정지점 하나(roving tabindex). `Enter` · `Space` 는 누르기와 같다.
+- Resizable 손잡이는 `role="separator"` · 이름 "목록 너비" · `aria-orientation` · 값(지금 · 최소 · 최대 %). 끌지 않는 대안 — 손잡이 한 번 누르기 · 키보드 · 위젯 ⋮ "크기"(WCAG 2.5.7).
+- 안에 초점 가는 것이 없는 스크롤 상자는 `tabindex="0"` + `role="region"` + 이름, 시트 · 대화상자 · 팝오버 안 상자는 `overscroll-behavior: contain`. 숨는 머리는 모션 줄이기면 숨지 않고, 그 안으로 초점이 오면 드러난다.
+- 누르는 영역 — 트리거 줄 54 이상 · 모두 펼치기 · 꺾쇠 단추 · 나무 줄(부모 줄도 줄 전체 — 꺾쇠만 누르는 자리는 없다) · ⋮ 44. 위젯 모서리 24 는 AAA(2.5.5) ✗ — 같은 일을 ⋮ "크기" 로 한다. 나누기 손잡이 16 은 AA(2.5.8)도 ⚠ — 데스크톱 마우스 경계라 사용자가 정했고(12B) 같은 일을 키보드 · 누르기로 한다.
+
 ### Pagination (v67 추가)
 
 > 2026-10-04 다시 정했다 — 위 "화면 틀 · 이동" 절과 `specs/components/pagination.md` · `table-pagination.md`(SEED Pagination · Table Pagination). 옛 numbered · prev-next · load-more 변형, 지금 쪽 primary 채움, sm 32 · md 40 · lg 48 은 걷었다 — 폰의 긴 목록은 끝없이 불러오기이고 "더 보기" 버튼은 두지 않는다. 옛 스펙은 `specs/components/pagination.history/v-pre-seed-nav.*`.
@@ -4986,63 +5043,11 @@ spec brand-neutral. brand 파일 — HR(Combobox 직원 검색), Desk(Combobox �
 
 ### Accordion (v70 추가)
 
-다중 Collapsible — 여러 섹션 접고 펼치기 (FAQ, settings 그룹). **새 토큰 0**.
-
-#### Variant
-| Variant | 동작 |
-|---|---|
-| **single** (default) | 한 번에 하나만 펼침 — 다른 펼치면 이전 자동 닫힘 |
-| **multiple** | 다수 동시 펼침 가능 |
-
-#### Anatomy
-- 각 item: trigger(header) + content(body-lg)
-- trigger: 좌측 label + 우측 caret(`▾` rotate animation), `surface-default` background, 1px `border-default`
-- content: surface-default 배경, padding `lg` (16px)
-- divider: items 사이 1px border
-
-#### State
-- collapsed: caret `▾` (down), content height 0
-- expanded: caret `▴` (up, rotate 180deg), content auto height
-- hover: trigger `surface-input` background
-- focus: `border-focus` 2px outline
-
-#### Motion
-- expand: height 0 → auto + opacity 0 → 1 `motion-duration-base` (200ms) `motion-ease-out`
-- collapse: 역순
-- caret rotate: `motion-duration-fast` (150ms)
-- `prefers-reduced-motion`: instant (transition 0)
-
-#### Accessibility
-- `<dl>` (description list) 또는 `<div role="region">` 패턴
-- trigger: `<button aria-expanded="true|false" aria-controls="content-id">`
-- content: `<div id="content-id" role="region" aria-labelledby="trigger-id">`
-- 키보드: Tab focus, Enter/Space toggle, arrow keys 옵션 (group 이동)
+> 2026-10-10 다시 정했다 — 위 "펼치고 접기 · 나누기" 절과 `specs/components/accordion.md`(SEED Accordion). 옛 single 기본 · 트리거 `surface-default` 바탕 + 1px 테두리 · 호버 바탕 · 펼침 200ms + 투명도 · 꺾쇠 150ms · 모션 줄이기면 즉시 · 펼친 내용 `region` 은 걷었다 — 늘 여럿 + 모두 펼치기, 펼침은 300ms · 줄이기면 150ms 서서히. 옛 스펙은 `specs/components/accordion.history/v-pre-seed-collapse.*`.
 
 ### Collapsible (v70 추가)
 
-단일 섹션 expand/collapse — Accordion보다 가벼운 단순 toggle. **새 토큰 0**.
-
-#### Anatomy
-- trigger: button (text 또는 icon-text)
-- content: hidden/shown 영역
-
-#### Differences vs Accordion
-- **Collapsible**: 단일 섹션, 독립 toggle
-- **Accordion**: 여러 섹션 그룹, single/multiple mode
-
-#### State
-- collapsed: content `display: none` 또는 height 0
-- expanded: content 자연 height
-
-#### Use cases
-- 긴 form section 접기 (Optional fields)
-- detail expansion ("자세히" 클릭 → 추가 정보)
-- code snippet 접기 (긴 example block)
-
-#### Accessibility
-- trigger: `<button aria-expanded aria-controls>`
-- content: `<div id role="region">`
-- Enter/Space toggle, 동일
+> 2026-10-10 다시 정했다 — 트리거는 Accordion 항목 하나의 모양(위 "펼치고 접기 · 나누기" 절과 `specs/components/collapsible.md`). 옛 글 · 아이콘 + 글 트리거 · "자세히" · 긴 코드 접기 쓰임 · 펼친 내용 `region` 은 걷었다 — 잘린 글은 펼치지 않고 자르지 않는다. 옛 스펙은 `specs/components/collapsible.history/v-pre-seed-collapse.md`.
 
 ### Hover Card (v70 추가)
 
@@ -5084,75 +5089,14 @@ spec brand-neutral. brand 파일 — HR(Combobox 직원 검색), Desk(Combobox �
 
 ### Scroll Area (v71 추가)
 
-custom scrollbar 영역 — native overflow + 시각 일관 scrollbar. **새 토큰 0**.
-
-#### Anatomy
-- viewport: `overflow: auto`, content scroll 영역
-- scrollbar track (가상): viewport 우측 (vertical) 또는 하단 (horizontal)
-- scrollbar thumb: drag-able, hover/active 상태별 시각
-
-#### Variant
-| Variant | 사용 |
-|---|---|
-| **always-visible** | scrollbar 항상 표시 (데스크탑 표 등) |
-| **hover** (default) | hover 시 scrollbar 등장 (clean look) |
-| **scrolling** | scroll 중에만 표시 (mobile 톤) |
-
-#### Style
-- track: transparent 또는 `surface-input` 약한 배경
-- thumb: `border-strong` 또는 `text-tertiary` opacity 0.4
-- thumb hover: opacity 0.7
-- thumb active (drag): opacity 1
-- width: 6-8px (vertical), height 6-8px (horizontal)
-
-#### Browser fallback
-- Webkit (Safari, Chrome): `::-webkit-scrollbar` 커스터마이즈
-- Firefox: `scrollbar-color` + `scrollbar-width: thin`
-- IE/legacy: native scrollbar fallback (커스텀 무시)
-
-#### Accessibility
-- 키보드: 일반 scroll (Up/Down arrow, Page Up/Down, Home/End, Space) — native 동작 보존
-- 스크린리더: scroll 영역 진입 시 `aria-label="scrollable region"` 안내 (필요 시)
-- focus visible: scroll 영역 안 focus가 viewport 안에 있도록 자동 scroll-into-view
+> 2026-10-10 다시 정했다 — 기본 스크롤 + 전역 스크롤바 한 벌(위 "펼치고 접기 · 나누기" 절과 `specs/components/scroll-area.md`). 옛 always-visible · hover · scrolling 변형 · 6 ~ 8px · `surface-input` 바탕 · 불투명도 0.4 ~ 1 · "필요 시 이름" 은 걷었다 — 6px 알약 · Firefox 두 줄은 `@supports not selector(::-webkit-scrollbar)` 안 · 초점 가는 것이 없는 상자는 `tabindex="0"` + 이름. 옛 스펙은 `specs/components/scroll-area.history/v-pre-seed-collapse.*`.
 
 ### Resizable (v71 추가)
 
-drag-able split panel — 좌우 또는 상하 분할 layout 사용자 조정. **새 토큰 0**.
-
-#### Anatomy
-- container: 2개 이상 panel + 사이 resize handle
-- panel: 자유 콘텐츠
-- handle: 4-6px wide (vertical split) 또는 height (horizontal split), `border-default` 1px 양쪽
-- handle hover: `primary` 색 강조 + cursor: col-resize / row-resize
-
-#### Variant
-| Variant | 방향 |
-|---|---|
-| **horizontal** (split) | 좌-우 panel, vertical handle |
-| **vertical** (stacked) | 상-하 panel, horizontal handle |
-| **nested** | panel 안에 또 다른 resizable group |
-
-#### State
-- default handle: 거의 invisible (subtle line)
-- hover handle: `primary` 색 + 가운데 grip dots (∶)
-- dragging: `primary` 채움 + cursor 유지 + outline animation 옵션
-- collapsed: panel min-width/-height 0 가능 (또는 임계값까지)
-
-#### Constraints
-- min/max size: panel별 percentage 또는 px 명시
-- snap points: 25%/50%/75% 같은 권장 위치 (drag 시 가까우면 snap)
-
-#### Persistence
-- 사용자 조정값 localStorage 저장 권장 — 새로고침 후 복구
-- viewport 변경 시 percentage 기준 재계산
-
-#### Accessibility
-- handle: `role="separator" aria-orientation="vertical|horizontal"` + `aria-valuenow="50"` (현재 위치 %)
-- `aria-controls`로 양쪽 panel id 명시
-- 키보드: arrow keys로 ±1% 조정, Home/End로 min/max, Enter/Space로 collapse 토글
+> 2026-10-10 다시 정했다 — HR 관리 화면 나누기 · 대시보드 위젯 크기(위 "펼치고 접기 · 나누기" 절과 `specs/components/resizable.md`). 옛 손잡이 4 ~ 6px · hover 브랜드 색 · 세로 · 중첩 · snap 25 / 50 / 75% · ±1% · `Enter` · `Space` 로 접기 · "localStorage 권장" 은 걷었다 — 선 1px + 손잡이 표시 · 누르는 폭 16 · 5% · 목록 20 ~ 40% · 화면마다 기억 · 한 번 누르면 25 ↔ 40. 옛 스펙은 `specs/components/resizable.history/v-pre-seed-collapse.*`.
 
 #### HR / Desk 듀얼 브랜드 (v71 5종 공통)
-spec brand-neutral. brand 파일 — HR(Resizable 좌측 nav + 우측 detail / Scroll Area 데이터 그리드), Desk(Scroll Area 메모 본문 긴 글). Table · Data Table 은 2026-10-08 Table 절로 합쳤고, Carousel 은 2026-10-04 걷었다.
+spec brand-neutral. Scroll Area · Resizable 의 쓰는 자리는 2026-10-10 "펼치고 접기 · 나누기 — HR" · "— Desk" 절로 옮겼다. Table · Data Table 은 2026-10-08 Table 절로 합쳤고, Carousel 은 2026-10-04 걷었다.
 
 ### Sonner (v72 추가, Toast 강화)
 
@@ -5276,49 +5220,7 @@ drag-drop area + click 업로드 button. **새 토큰 0** — surface + border +
 
 ### Treeview (v73 추가)
 
-계층 list — folder/category/조직도 depth 표현. **새 토큰 0** — list + Collapsible 합성.
-
-#### Anatomy
-- 각 노드: indent (depth × 16-20px) + caret(▾/▸) + icon (옵션 폴더/파일) + label
-- caret 클릭: 자식 노드 expand/collapse
-- selected node: `surface-input` 배경 + `border-focus` 좌측 stroke
-- guide line (옵션): 부모-자식 시각 연결 — 1px `border-default` vertical line
-
-#### State
-- collapsed: caret `▸`, 자식 hidden
-- expanded: caret `▾`, 자식 표시
-- hover: `surface-input` 약한 배경
-- selected: `surface-input` 배경 + 좌측 `primary` 2px stroke
-- focus: `border-focus` 2px outline
-
-#### Variant
-- **single-select**: 한 번에 하나 (file picker)
-- **multi-select**: checkbox 동반 (다중 선택)
-- **drag-drop reorder**: 노드 이동 (HR 조직도 변경)
-
-#### Layout
-- root level: indent 0
-- depth × 16-20px (compact) 또는 24-28px (loose)
-- icon 16-20×16-20, label `body-md` (15/400)
-
-#### Use cases
-- HR 조직도 (회사 → 본부 → 팀 → 직원)
-- Desk 카테고리 tree (가계부 카테고리 — 식비 → 카페/외식, 교통 → 대중교통/택시)
-- file/folder picker
-- 권한 tree (관리자 → 결재 → 평가 → 보고서)
-
-#### Accessibility
-- `role="tree"` (root) + 각 노드 `role="treeitem"`
-- 자식 그룹: `role="group"` 또는 nested `role="tree"`
-- `aria-expanded="true|false"` (자식 있는 노드)
-- `aria-selected="true|false"` (selected variant)
-- `aria-level="N"` + `aria-setsize="X"` + `aria-posinset="P"` (계층 위치)
-- 키보드:
-  - 위/아래 arrow: 노드 이동
-  - 좌 arrow: collapse 또는 부모로
-  - 우 arrow: expand 또는 첫 자식으로
-  - Home/End: 첫/마지막 노드
-  - Enter/Space: 선택 또는 활성
+> 2026-10-10 다시 정했다 — 여러 단계에서 고르는 나무는 Tree View(APG Treeview — `specs/components/tree-view.md`, HR 부서), 하위 줄을 접는 카테고리는 List 하위 줄(`specs/components/list.md`)이다(위 "펼치고 접기 · 나누기" 절). 옛 고름 `surface-input` + 왼쪽 브랜드 2px · 여럿 고르기 · 끌어서 옮기기 · 안내 선 · 메모 폴더 나무는 걷었다.
 
 #### HR / Desk 듀얼 브랜드 (v73 5종 공통)
-spec brand-neutral. brand 파일 — HR(Banner 약관 변경 / Chip 결재라인 입력값 칩 / Popover 결재 의견 입력 / File Upload 평가 첨부 / Treeview 조직도), Desk(Banner 시스템 점검 / Chip 메모 태그 입력값 칩 / Popover 카테고리 quick edit / File Upload 영수증 다중 업로드 / Treeview 가계부 카테고리 tree).
+spec brand-neutral. brand 파일 — HR(Banner 약관 변경 / Chip 결재라인 입력값 칩 / Popover 결재 의견 입력 / File Upload 평가 첨부), Desk(Banner 시스템 점검 / Chip 메모 태그 입력값 칩 / Popover 카테고리 quick edit / File Upload 영수증 다중 업로드). 나무의 쓰는 자리는 2026-10-10 "펼치고 접기 · 나누기 — HR" · "— Desk" 절로 옮겼다.

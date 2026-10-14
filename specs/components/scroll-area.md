@@ -1,125 +1,205 @@
 # Scroll Area
 
-> 고정 폭·고정 높이 컨테이너 안에서 콘텐츠가 넘칠 때 **커스텀 스크롤바**로 스크롤을 제공하는 wrapper. native scrollbar 톤 차이(Win vs macOS)를 통일하고 dark mode·brand 색에 맞춘 스크롤바 시각 제공. Radix `ScrollArea` 베이스 — viewport + scrollbar(track + thumb) 합성.
+> 스크롤되는 자리의 규칙 — 스크롤은 브라우저 기본이고 스크롤바 모양은 전역 한 벌(6px 알약)이다. 안에 초점 가는 것이 없는 스크롤 상자는 상자 자신이 초점과 이름을 받고, 시트 · 대화상자 · 팝오버 안의 상자는 끝에서 뒤 화면을 끌고 가지 않는다. 끝을 흐려 더 있다는 것을 알리는 일은 [Scroll Fog](scroll-fog.md) 다.
 
-Porest Scroll Area는 **2 orientations(vertical/horizontal) × 단일 시각 톤** 매트릭스로 정의됩니다. 스크롤바는 `6px` 폭의 얇은 thumb(`border-strong` 색) + transparent track — 콘텐츠 위에 살짝 떠 있는 톤(porest-desk-front 정합). site/preview-html 전역 native scrollbar에도 동일 톤이 글로벌로 적용되어 React `ScrollArea`와 native overflow 영역이 한 톤으로 통일됨. 외곽 wrapper(border/radius)는 사용처가 결정(spec 외 범위), Scroll Area 자체는 viewport + scrollbar만.
+SEED 에는 Scroll Area · 스크롤바 규칙이 없다 — 스크롤 끝 흐림(Scroll Fog)만 있다. 그래서 모양은 porest 가 정했다(2026-10-10 사용자 결정 14A — "당근 스크롤에 모양 자체는 없는 거라면 모양은 A") — 기본 스크롤 + 전역 한 벌(6px 알약 · thumb `stroke-neutral-solid` · track 투명), Firefox 는 `thin` + `scrollbar-color` 를 `@supports not selector(::-webkit-scrollbar)` 안에. 내용 위에 겹쳐 뜨는 Radix ScrollArea 는 걷는다. 옛 Scroll Area 스펙(Radix 베이스 · `border-strong` thumb · 전역 webkit + Firefox 를 한 곳에)과 DESIGN.md v71 의 다른 글(hover 때만 · 6 ~ 8px · 불투명도 0.4 ~ 1)을 대신한다. 스크롤하면 숨는 머리는 [Scroll Auto Hide](scroll-auto-hide.md) 다(사용자가 14번 답에서 말한 "자동으로 접히고 펴지는" SEED 컴포넌트 — 스크롤바가 아니다).
+
+수치 원본은 [`scroll-area.yaml`](scroll-area.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
+
+[그림: 카드 상세 대화상자 본문 · HR 달력 일 보기 — 6px 알약 스크롤바, 라이트 · 다크](../../site/components/specs/scroll-area.tsx#hero)
+
+### 직접 골라 보기
+
+놓인 면(흰 면 · 바닥 · 떠 있는 표면) · 다크 · 상자 안 초점 가는 것의 유무 · 시트 안 여부를 고르고 스크롤해 보라 — 스크롤바 대비 · 읽기(상자 이름) · 끝에 닿았을 때 뒤 화면이 따라오는지가 함께 보인다.
+
+[그림: 플레이그라운드](../../site/components/specs/scroll-area.tsx#playground)
 
 ## Anatomy
 
-```
-┌─────────────────────────────┐ ─┐
-│ ⓑ Viewport                  │  │
-│ ┌─────────────────────────┐ │  │
-│ │ ⓒ children              │ │  │ ⓐ root (h-72 w-48)
-│ │ (overflow-hidden)       │ │  │
-│ │                         │ │  │
-│ └─────────────────────────┘ │  │
-│                          ▲▒ │  │  ← ⓓ vertical scrollbar (6px thumb)
-└─────────────────────────────┘ ─┘
-                            ▲
-                            ⓔ thumb (border-strong)
-```
+[그림: 스크롤 상자 · 스크롤바 6 · 막대(알약) · 투명 바탕](../../site/components/specs/scroll-area.tsx#anatomy)
 
-| ⓐ root | `<div>` (Radix `ScrollAreaPrimitive.Root`) — `relative overflow-hidden` + 사용처 `h-*`/`w-*` className. |
-| ⓑ viewport | Radix `ScrollAreaPrimitive.Viewport` — `h-full w-full rounded-[inherit]`. 실제 스크롤이 동작하는 영역. |
-| ⓒ children | 사용처가 결정 — list/grid/text 등. 내부 padding은 자식이 담당(`p-[var(--spacing-lg)]` 등). |
-| ⓓ scrollbar | Radix `ScrollAreaPrimitive.ScrollAreaScrollbar` — `flex touch-none select-none transition-colors duration-[var(--motion-duration-fast)]`. vertical: `h-full w-1.5 border-l border-l-transparent`. horizontal: `h-1.5 flex-col border-t border-t-transparent`. |
-| ⓔ thumb | Radix `ScrollAreaPrimitive.ScrollAreaThumb` — `relative flex-1 rounded-full bg-border-strong`. 콘텐츠 위치 따라 자동 크기·위치 계산. |
-| ⓕ corner | Radix `ScrollAreaPrimitive.Corner` — vertical + horizontal 둘 다 있을 때 우하단 만나는 모서리. transparent 기본. |
+| ⓐ Box | 스크롤 상자 — `overflow` 를 둔 요소. 문서 전체도 같다. |
+| ⓑ Scrollbar | 스크롤바 — 세로 6 · 가로 6. 전역 한 벌. |
+| ⓒ Thumb | 막대 — 알약, `stroke-neutral-solid`. |
+| ⓓ Track | 바탕 — 투명. |
 
-**규칙**
+[표: 부위](scroll-area.yaml#slots)
 
-- 외곽 wrapper(border/radius)는 사용처가 결정 — Scroll Area 자체는 `border` 없음. `<ScrollArea className="border border-border-default rounded-md">` 패턴.
-- viewport `rounded-[inherit]`로 부모 라운드 상속 — 외곽 라운드 깨지지 않게.
-- thumb 색은 `border-strong` — `border-default`(1.4:1)보다 강한 시각 식별. 다크 모드에서도 충분한 대비.
-- thumb은 `rounded-full` pill — 부드러운 시각 톤. 사각형 thumb은 native 스크롤바 톤이라 회피.
-- scrollbar 폭은 `6px` (`w-1.5`/`h-1.5`) — 콘텐츠 위에 살짝 떠 있는 얇은 톤. Toss/porest-desk-front 정합.
-- 콘텐츠가 viewport보다 작으면 scrollbar 자동 hide — Radix 기본 동작.
-- **전역 native scrollbar 정합**: site/preview-html `@layer base`에 `::-webkit-scrollbar` 6px + `border-strong` pill + transparent track + Firefox `scrollbar-width: thin` + `scrollbar-color`가 모든 overflow 요소에 자동 적용. React `ScrollArea`와 native overflow 영역이 한 톤으로 시각 통일.
-- **scrollbar-hide utility**: `.scrollbar-hide` className으로 스크롤바 완전 숨김 opt-in — filter chip carousel, hero banner 등 시각 noise 회피.
+## Properties
 
-## Variants (orientation)
+### 스크롤바 — 전역 한 벌
 
-| Variant | 동작 | 사용처 |
+스크롤은 브라우저 기본이다 — 휠 · 키보드 · 끌기 · 관성을 가로채지 않는다. 모양만 전역으로 한 벌 둔다 — 세로 · 가로 6px, 막대는 알약 `stroke-neutral-solid`(흰 면 4.18 · 바닥 3.87 · 떠 있는 표면 4.18, 다크 4.13 · 4.68 · 3.58 — 모두 3 이상), 바탕은 투명이다. 넘치면 늘 보인다 — 맥 · 폰의 겹침 스크롤바는 OS 설정대로다. 막대는 올리거나 끌어도 모양이 바뀌지 않는다.
+
+Firefox 는 `::-webkit-scrollbar` 를 모르므로 `scrollbar-width: thin` + `scrollbar-color` 로 같은 색을 건다 — 이 두 줄은 반드시 `@supports not selector(::-webkit-scrollbar)` 안에 둔다. 크로미움은 `scrollbar-width` · `scrollbar-color` 가 걸린 요소에서 `::-webkit-scrollbar` 를 쓰지 않아, 한 곳에 함께 쓰면 6px 이 10px(thin) · 15px(color 만)로 바뀐다(크로미움 140 에서 잼 — 옛 스펙의 "webkit 6 + Firefox thin + scrollbar-color" 를 그대로 쓰면 크롬에서 6px 이 사라진다).
+
+[그림: 같은 대화상자 본문 — 흰 면 · 바닥 · 떠 있는 표면 위 막대 대비, 라이트 · 다크](../../site/components/specs/scroll-area.tsx#scrollbar)
+
+[표: 스크롤바](scroll-area.yaml#base.enabled)
+
+### 놓인 자리
+
+| 자리 | `context` | 규칙 |
 |---|---|---|
-| `vertical` *(default)* | 세로 스크롤 + 우측 scrollbar | 고정 높이 list, sidebar, dropdown menu 안 긴 옵션. |
-| `horizontal` | 가로 스크롤 + 하단 scrollbar | 카드 갤러리, table 가로 스크롤, image strip. |
-| `both` | 둘 다 (`<ScrollArea><ScrollBar orientation="vertical" /><ScrollBar orientation="horizontal" /></ScrollArea>`) | 큰 table, 마인드맵 canvas 등. corner 자동 표시. |
+| 화면 · 카드 안 — 문서 스크롤 · 높이를 정한 상자 | `page` *(기본)* | 전역 스크롤바 그대로 |
+| 시트 · 대화상자 · 팝오버 · 옆 패널 안 — 본문과 그 안의 상자 | `overlay` | `overscroll-behavior: contain` — 끝에 닿아도 뒤 화면이 따라 스크롤되지 않는다 |
+| 가로 줄 — 칩 줄 · 탭 · 가로 카드 줄 | `row` | 스크롤바를 숨긴다 — 끝은 Scroll Fog `row` 흐림이 알린다 |
 
-## Sizes
+세로 스크롤바는 숨기지 않는다 — 숨기는 것은 가로 줄뿐이다(Scroll Fog 의 규칙). 폰 웹 본문 · 시트 본문에서 스크롤바를 숨겨 둔 것(`.m-scroll` 0 · `scrollbar-hide`)은 걷는다. 부품이 스크롤을 제 모양으로 쓰는 자리 — [Wheel Picker](wheel-picker.md) 의 휠 · [Date Picker](date-picker.md) 의 이어지는 달 — 는 제 안개를 가진 자리라 그 스펙대로 스크롤바를 숨긴다.
 
-Scroll Area는 **size variant 없음** — 사용처 className(`h-*`, `w-*`, `max-h-*`)으로 폭/높이 결정.
+[그림: 시트 안 상자 — 끝에서 뒤 화면이 따라오지 않는다 · 칩 줄은 스크롤바 없이 흐림](../../site/components/specs/scroll-area.tsx#context)
 
-[표: 스크롤바 수치](scroll-area.yaml#base.default)
+[표: 놓인 자리](scroll-area.yaml#context)
 
-## States
+### 초점 가는 것이 없는 상자
 
-[표: 상태](scroll-area.yaml#matrix)
+안에 버튼 · 링크 · 칸이 없는 스크롤 상자(글 · 표 · 일정 칸)는 키보드로 닿을 길이 없다 — 상자 자신이 초점을 받는다(`tabindex="0"`). 초점을 두고 `↑` `↓` · `PageUp` · `PageDown` · `Home` · `End` 로 스크롤한다. 이름이 있어야 무엇의 상자인지 읽히므로 `role="region"` 과 이름("10월 9일 일정" · "휴가 정책")을 함께 단다 — 역할 없는 `div` 에는 `aria-label` 을 쓸 수 없다(ARIA 1.2). 키보드 포커스 링은 상자 안쪽 2px 다. 안에 초점 가는 것이 있으면 달지 않는다 — 그것에 초점이 가면 브라우저가 스크롤한다.
 
-**규칙**: hover/active state 시각 효과는 minimal(절제) — 스크롤바는 보조 UI라 강조 회피.
+[그림: HR 달력 일 보기 — "10월 9일 일정, 스크롤 영역" · 초점 링 안쪽, ↓ 로 스크롤](../../site/components/specs/scroll-area.tsx#focus)
 
-## Layout
+[표: 초점](scroll-area.yaml#focusable)
 
-**List with fixed height**
+[표: 초점 — 상태](scroll-area.yaml#matrix.focusable.none@box+focusRing)
 
-- 태그 list, recent items, dropdown menu 안 옵션 — `<ScrollArea className="h-72 w-48 border border-border-default rounded-md">`.
-- 내부 padding은 자식 `<div className="p-[var(--spacing-lg)]">` (16) 담당.
+## Guidelines
 
-**Card gallery (horizontal)**
+### 부분 스크롤은 적게
 
-- 카드 가로 스크롤 — `<ScrollArea className="w-full whitespace-nowrap border border-border-default rounded-md"><div className="flex gap-[var(--spacing-md)] p-[var(--spacing-lg)]">{cards}</div></ScrollArea>`.
-- `flex` + `gap` + `p-` 토큰 인용 — 사용처에서 모든 layout 토큰 결정.
+화면 전체가 스크롤되는 것이 기본이다 — 카드 · 상자 안에 높이를 정한 스크롤을 만들면 손가락이 어느 쪽을 움직이는지 모르고, 끝에 닿은 뒤 화면이 따라 움직인다. 높이를 정한 상자가 꼭 필요하면(일정 칸 · 긴 약관) 끝을 [Scroll Fog](scroll-fog.md) `box` 로 흐리고, 위 규칙(초점 · 이름 · contain)을 지킨다. [Accordion](accordion.md) · [Collapsible](collapsible.md) 의 펼친 내용 안에는 스크롤 상자를 두지 않는다.
 
-**Dialog/Drawer 안 긴 본문**
+### 내용 위에 겹쳐 뜨는 막대를 쓰지 않는다
 
-- modal body가 화면 높이 넘으면 — `<ScrollArea className="max-h-[60vh]">{body}</ScrollArea>`. dialog는 자체로 max-height 있는 경우가 많아 ScrollArea 보조.
+Radix ScrollArea 처럼 마우스를 올리기 전에는 보이지 않는 막대는 스크롤할 수 있다는 표시가 없고, 옅은 색이면 늘 보인다고 해도 안 보인다(지금 HR 1.11). 기본 스크롤 + 전역 스크롤바를 쓴다. OS 기본 그대로(14C)는 제품 · 기기마다 모양이 달라 고르지 않았다.
 
-**Table with both directions**
+[그림: 겹쳐 뜨는 막대(올리기 전 없음) · 전역 한 벌(늘 보임)](../../site/components/specs/scroll-area.tsx#overlay-guide)
 
-- 큰 표 — vertical + horizontal scrollbar 동시. `<ScrollArea><Table />...<ScrollBar orientation="horizontal" /></ScrollArea>`. corner 자동.
+## 코드
+
+전역 스크롤바는 컴포넌트가 아니라 CSS 한 벌이다 — `recipes/shadcn/styles/porest-shadcn-bridge.css` 에 둔다(줄바꿈 v114 의 `html` 규칙과 같은 자리 — 이 bridge 를 부르는 화면이 함께 받는다). 사이트 · 미리보기의 전역 규칙도 이 계약을 따른다. 레시피 `recipes/shadcn/components/ui/scroll-area.tsx` 는 Radix 를 걷고 기본 스크롤 상자로 바꾼다.
+
+- `ScrollArea` — 기본 스크롤 상자(`div`). `orientation`(`"vertical"` 기본 · `"horizontal"` · `"both"` — 넘치는 방향만 `overflow: auto`) · `label`(주면 `role="region"` · `tabIndex={0}` · `aria-label` — 안에 초점 가는 것이 없으면 필수) · `contain`(`overscroll-behavior: contain` — 시트 · 대화상자 · 팝오버 안), 나머지는 `div` 속성. 스크롤바는 그리지 않는다(전역 CSS). `ScrollBar` 는 걷는다.
+- 끝을 흐리는 상자는 [Scroll Fog](scroll-fog.md) 의 `ScrollFog` 가 곧 스크롤 상자다 — 같은 규칙을 `div` 속성(`role="region"` · `tabIndex={0}` · `aria-label`)과 `className`(`overscroll-contain` — 시트 · 대화상자 · 팝오버 안)으로 받는다. 시트 · 대화상자 · 팝오버의 본문(`DialogBody` · `BottomSheetBody` · `ResponsiveDialogBody` · `PopoverBody`)은 스스로 `contain` 이다 — 레시피가 본문에 건다(지금은 없다).
+
+### 전역 스크롤바
+
+```css
+/* 전역 스크롤바 — Scroll Area(2026-10-10). 크로미움 · 사파리는 webkit, Firefox 만 표준 두 줄 */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-stroke-neutral-solid); border-radius: var(--radius-full); }
+::-webkit-scrollbar-corner { background: transparent; }
+
+/* 크로미움은 scrollbar-width · scrollbar-color 가 걸리면 webkit 규칙을 버린다 — 반드시 이 안에 */
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: var(--color-stroke-neutral-solid) transparent; }
+}
+
+/* 가로 줄만 — 세로 스크롤바에는 쓰지 않는다 */
+.scrollbar-hide { scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+```
+
+### 초점 가는 것이 없는 상자 — HR 달력 일 보기
+
+[그림: 10월 9일 일정 상자 — 초점 링 안쪽 · 오전 8시까지 내린 모습](../../site/components/specs/scroll-area.tsx#ex-calendar)
+
+```tsx
+import { ScrollArea } from "@/components/ui/scroll-area"
+
+{/* 안에 초점 가는 것이 없다 — 이름을 주면 region + tabindex 0 */}
+<ScrollArea label="10월 9일 일정" className="h-[380px]">
+  {dayTimeline}
+</ScrollArea>
+```
+
+### 대화상자 안 상자 — 휴가 정책
+
+[그림: 휴가 신청 대화상자 — 정책 상자 끝에서 대화상자 본문이 따라 스크롤되지 않는다](../../site/components/specs/scroll-area.tsx#ex-dialog)
+
+```tsx
+import { ScrollArea } from "@/components/ui/scroll-area"
+
+{/* 대화상자 안 — 끝에 닿아도 본문이 따라 움직이지 않게 contain */}
+<ScrollArea label="휴가 정책" contain className="max-h-[300px]">
+  <p>{vacationPolicy}</p>
+</ScrollArea>
+```
 
 ## Behavior
 
 | 인터랙션 | 동작 |
 |---|---|
-| Scroll wheel / Touch swipe | native 스크롤 동작 그대로 — Radix가 가로채지 않음. |
-| Thumb drag | thumb을 잡고 드래그 — 콘텐츠 위치 이동. Radix `data-state="dragging"` 자동. |
-| Click on track | thumb이 그 위치로 점프(또는 native 스크롤). |
-| `Tab` (focusable child) | 자식이 focusable일 때 정상 focus. ScrollArea 자체는 focus 대상 아님. |
-| Resize | 부모 폭/높이 변경 시 자동 scrollbar 표시/숨김 재계산. |
+| 휠 · 터치 · 키보드 | 브라우저 그대로 — 가로채지 않는다 |
+| 막대 끌기 · 바탕 누르기 | 브라우저 그대로 |
+| 초점 가는 것이 없는 상자 | `Tab` 으로 상자에 초점 → `↑` `↓` · `PageUp` · `PageDown` · `Home` · `End` 로 스크롤 |
+| 시트 · 대화상자 · 팝오버 안 상자의 끝 | 뒤 화면 · 본문이 따라 스크롤되지 않는다(`contain`) |
+| 가로 줄 | 스크롤바 없이 — 끝은 흐림, 칸마다 `Tab` 이면 브라우저가 따라 스크롤 |
+| 모션 줄이기 | 스크롤 모션은 OS 설정대로 — 손대지 않는다 |
 
 ## Accessibility
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.11** Non-text contrast (thumb × bg) | `border-strong` 2.5:1+ ✓ (light) / 다크 모드도 `border-strong-dark` 자동 swap. |
-| **WCAG 2.1.1** Keyboard | native 스크롤은 키보드 `ArrowUp/Down` (focusable child 포함 시) ✓ — Radix가 native 키보드 동작 보존. |
-| **WCAG 2.4.7** Focus Visible | ScrollArea 자체는 focus 대상 아님. 내부 자식이 focusable이면 자식 focus ring. |
-| **WCAG 2.5.8** Target Size Minimum (AA, 24×24) | thumb 6px — 미달(⚠). 모바일 친화 환경이면 native 스크롤(wheel/swipe)이 primary, thumb drag은 보조. |
-| **ARIA** | Radix가 `role`/`aria-orientation`/`aria-controls` 자동. 시각 스크롤이지만 native 스크롤 동작 보존이라 screen reader 호환. |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 막대 `stroke-neutral-solid` 흰 면 4.18 · 바닥 3.87 · 떠 있는 표면 4.18, 다크 4.13 · 4.68 · 3.58 ✓ — 지금 HR Radix #EEEEEE 1.11 · 앱 안드로이드 #BCBCBC 1.9 |
+| **WCAG 2.1.1** Keyboard | 초점 가는 것이 없는 상자는 `tabindex="0"` 로 키보드 스크롤 ✓ |
+| **WCAG 2.4.7** Focus visible | 상자 안쪽 링 2px ✓ |
+| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 막대 6 — 스크롤은 휠 · 터치 · 키보드가 주이고 막대 끌기는 보조다(해당 없음에 가깝다) |
+| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 위와 같다 |
+| **WCAG 4.1.2** Name, Role, Value | 초점을 받는 상자는 `role="region"` + 이름 ✓ — 이름 없는 `div` 에 `aria-label` 을 달지 않는다 |
+| **ARIA** | 스크롤바는 브라우저 것이라 따로 읽지 않는다. 크로미움은 이름 없는 스크롤 상자도 `Tab` 정지점으로 만든다 — 이름을 달아 무엇인지 알린다 |
 
 ## Do / Don't
 
 ### ✅ Do
 
-- 고정 높이/폭 컨테이너 — 페이지 일부에 스크롤 필요할 때.
-- list/grid/text 등 콘텐츠 자체는 일반 layout — ScrollArea는 wrapper만.
-- 외곽 border/radius는 사용처가 결정 — `<ScrollArea className="border border-border-default rounded-md">`.
-- 내부 padding은 자식이 — `<ScrollArea><div className="p-[var(--spacing-lg)]">{content}</div></ScrollArea>`.
+- 기본 스크롤 + 전역 스크롤바 한 벌 — Firefox 두 줄은 `@supports not selector(::-webkit-scrollbar)` 안에.
+- 세로 스크롤바는 늘 — 숨기는 것은 가로 줄뿐.
+- 초점 가는 것이 없는 상자에 `tabindex="0"` + `role="region"` + 이름.
+- 시트 · 대화상자 · 팝오버 안 상자에 `overscroll-behavior: contain`.
 
 ### ❌ Don't
 
-- 페이지 전체에 ScrollArea — body의 native 스크롤이 이미 충분. ScrollArea는 부분 스크롤용.
-- viewport 안에 fixed position 자식 — overflow context 파괴, 시각 깨짐.
-- thumb 색을 brand primary로 — 스크롤바는 보조 UI라 brand 강조 회피. `border-strong` 절제 톤 유지.
-- `border-default`/`border-strong` 사이의 임의 색 — 색 종류 최소화로 시각 위계 보호.
+- 내용 위에 겹쳐 뜨는 막대(Radix ScrollArea) · 올렸을 때만 보이는 막대.
+- `scrollbar-width` · `scrollbar-color` 를 webkit 규칙과 한 곳에(크롬에서 6px 이 10 · 15px 로).
+- 옅은 막대(#EEEEEE 1.11) · 회색 바탕(track) · 화면마다 다른 굵기.
+- 폰 본문 · 시트 본문의 세로 스크롤바 숨기기.
+- 펼친 아코디언 안 · 카드 안에 높이를 정한 스크롤을 쉽게 만들기.
+
+## Specification
+
+`scroll-area.yaml` 의 규칙을 하나도 빼지 않고 조건마다 그린다 — 웹이 스크롤 상자를 만들 때 이 값을 그대로 쓴다. 조건이 없는 `Base` 가 모든 조합에 걸리고, 뒤의 규칙이 앞의 같은 값을 덮는다.
+
+[그림: Specification — scroll-area.yaml 의 규칙 전부](../../site/components/specs/spec-sheet.tsx#scroll-area)
+
+## SEED 와 다른 점
+
+- **SEED 에는 Scroll Area · 스크롤바 규칙이 없다** — 끝 흐림(Scroll Fog)만 있다. 모양 · Firefox 처리 · 초점 · 이름 · contain 은 모두 porest 가 정했다.
 
 ## Migration notes
 
-- `scroll-area.tsx` scrollbar 두께 정정: `w-2.5`/`h-2.5` (10px) → `w-1.5`/`h-1.5` (**6px**). porest-desk-front `index.css` (`@apply w-1.5 h-1.5`) 정합. 사용자 피드백 — "기본은 두꺼움".
-- `p-[1px]` 미세 padding 제거 — 6px 두께에선 시각 차이 거의 없고 thumb 영역 hit area도 충분.
-- transition 모션 토큰 직접 인용 추가 — `transition-colors duration-[var(--motion-duration-fast)] ease-[var(--motion-ease-out)]`.
-- shadcn 기본 `bg-border` → `bg-border-strong` 정합 — 콘텐츠 위 시각 식별 강화(border-default 1.4:1은 약함).
-- **전역 native scrollbar 톤 추가** — `scripts/build-site.mjs` siteCss() + `scripts/build-preview-html.mjs` `<style>` 둘 다 `@layer base`에 `::-webkit-scrollbar`(6px + border-strong pill + transparent track) + Firefox `scrollbar-width: thin` + `scrollbar-color` 부여. React `ScrollArea`와 native overflow 영역이 한 톤. WCAG/ARIA 영향 없음(semantic 유지, native 스크롤 동작 보존).
-- **`.scrollbar-hide` utility 신규** — `scrollbar-width: none; -ms-overflow-style: none; ::-webkit-scrollbar { display: none; }` 조합. filter chip carousel 등 시각 noise 회피용 opt-in. site/preview 둘 다 글로벌 등록.
-- preview-html에 별도 `.sa-*` CSS 없음 — preview-html 안 일부 카드(`.kpi-grid`, `.ld-*`)의 native overflow는 전역 thin scrollbar 자동 적용.
+### 2026-10-10 — 기본 스크롤 + 전역 한 벌
+
+사용자가 [펼치고 접기 · 나누기 비교 페이지](https://claude.ai/artifact/9uvjeFyjFXc7TaWnpnnQ6H)에서 정했다 — 기본 스크롤 + 전역 한 벌(14A — 6px 알약 · thumb `stroke-neutral-solid` · track 투명 · Firefox `thin` + color 는 `@supports not selector(::-webkit-scrollbar)` 안), Radix ScrollArea 는 걷는다. 그리고 "따라오는 것" — 세로 스크롤바는 숨기지 않는다(가로 줄만) · 초점 가는 것이 없는 스크롤 상자는 모두 `tabindex="0"` + 이름 · 시트 · 대화상자 · 팝오버 안 상자는 `overscroll-behavior: contain`. Radix 유지(14B) · OS 기본(14C)은 고르지 않았다. 이름을 다는 상자에는 `role="region"` 을 함께 둔다 — 역할 없는 `div` 의 `aria-label` 은 ARIA 1.2 에서 쓸 수 없다. 옛 스펙은 `scroll-area.history/v-pre-seed-collapse.*` 에 남겼다.
+
+| 옛 Scroll Area | 새 Scroll Area |
+|---|---|
+| Radix ScrollArea — 내용 위 겹친 막대(넘치지 않으면 숨김) | 기본 스크롤 — 스크롤바는 전역 한 벌, `ScrollArea` 는 기본 상자 |
+| thumb `border-strong` · 6px · 막대 1px 투명 테두리 · 색 전환 | thumb `stroke-neutral-solid` · 6px · 알약 · 상태 변화 없음 |
+| 전역 webkit 6 + Firefox `thin` · `scrollbar-color` 를 한 곳에 | Firefox 두 줄은 `@supports not selector(::-webkit-scrollbar)` 안 |
+| "ScrollArea 자체는 focus 대상 아님" | 초점 가는 것이 없는 상자는 `tabindex="0"` + `role="region"` + 이름 |
+| `.scrollbar-hide` 는 보이지 않게 하고 싶은 곳에 | 가로 줄에만 — 세로 스크롤바는 숨기지 않는다 |
+| (DESIGN v71) hover 때만 · 6 ~ 8px · 불투명도 0.4 ~ 1 · always / hover / scrolling | 이 스펙으로 바꿨다 |
+
+제품은 앱 적용 단계에서 옮긴다(2026-10-09 조사 — 웹 · HR 은 스크롤바 숨김을 끄고 크로미움 140 에 띄워 쟀다).
+
+- **Desk 웹** — 전역 webkit 6 · `--border-strong` #767C8B 는 그대로 맞고 Firefox 규칙이 0 이다(`index.css:470-498`, D20) — `@supports` 안에 두 줄을 더한다. 폰 본문 `.m-scroll` 은 스크롤바 0, 서랍 본문은 `scrollbar-hide`(`shared/ui/drawer.tsx:163`) — 세로는 숨기지 않는다. Radix `scroll-area.tsx` 는 실사용 0(유일한 `NotificationBell.tsx:103` 을 아무도 안 쓴다) · `.scroll` CSS 도 쓰는 곳 0 이다(`porest.css:270-288`, D21) — 걷는다. 가로 줄 11곳은 숨김이 맞고 끝 흐림(Scroll Fog `row`)이 아직 없다.
+- **HR** — 전역 4px + 보이는 회색 track(#787878 ↔ #F8F8F8 4.16 · 다크 3.63, `index.css:132-160`). Radix ScrollArea 8곳은 막대 10 · thumb 7 `bg-border` #EEEEEE 가 바탕 1.11(다크 1.34)이라 `type="always"` 4곳도 사실상 보이지 않는다(`shared/ui/shadcn/scrollArea.tsx:33-43` · 달력 일정 · 일 · 주 `calendar-agenda-view.tsx:64` · `calendar-day-view.tsx:98 · 206` · `calendar-week-view.tsx:94`, D8). 기본 overflow + 전역 한 벌로 — 일정 상자는 초점 가는 것이 없어 이름("{날짜} 일정")을 단다. `overscroll-behavior` 는 0 이다.
+- **Desk 앱** — 전역 스크롤바 테마가 없고 Material `Scrollbar` 3곳만 4dp 네모 #BCBCBC(흰 면 1.9 — `account_add_dialog.dart:732` · `card_add_dialog.dart:979` · `investment_add_dialog.dart:1300`, D18)이다. 앱은 스크롤할 때만 보이는 플랫폼 스크롤바를 두되 막대 색을 `stroke-neutral-solid` · 6 · 알약으로 맞춘다(전역 `ScrollbarTheme` 하나).
+- **넘침 막기** — `overscroll-behavior` 는 웹 1곳(`icon-picker.tsx:163` contain)뿐이고 HR · SSO 는 0 이다. 대화상자 안 상자(아이콘 240 · 시간 208 · 자산 기관 260 · 주식 56vh · HR 휴가 신청 · 승인 · 정책 300 · SSO 역할 권한 200)에 `contain` 을.
+- **이름 없는 정지점** — 크로미움 140 은 읽기만 하는 스크롤 상자(주식 지표 카드 줄 `summary-strip.tsx:72` · 설치 주소 `DownloadPage.tsx:203` · 가져오기 · 내보내기 표)를 이름 없는 `Tab` 정지점으로 만든다(사파리는 그렇지 않다 — 추정). 이름을 단다.
+- **SSO** — 전역 CSS 가 없어 OS 기본이고 `scroll-area.tsx` 는 쓰는 곳이 0 이다(D21) — 전역 한 벌을 받고 부품은 걷는다.
+- **스펙 글** — DESIGN.md v71 Scroll Area 가 이 스펙과 달랐다(조사 S4 · S5 · S7) — "펼치고 접기 · 나누기" 절로 바꿨다. 사이트(`scripts/build-site.mjs`) · 미리보기(`scripts/build-preview-html.mjs`)의 전역 규칙 `* { scrollbar-width: thin; scrollbar-color … }` 도 같은 이유로 크롬에서 6px 이 아니다 — 위 계약으로 옮긴다.
+
+### 이전 기록
+
+- **2026-05 — 6px 로 정정 · 전역 톤.** Radix 막대 10 → 6, thumb `border-strong`, 사이트 · 미리보기 전역 webkit + Firefox 를 한 곳에, `.scrollbar-hide` 를 더했다. 이번에 Firefox 자리 · Radix · 초점 규칙이 바뀌었다.

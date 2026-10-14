@@ -9,10 +9,12 @@ import { cn } from "@/lib/utils";
  * 옛 변형 넷(shadow · bordered · muted · brand) · 모서리 12 · 여백 16 / 24 · 그림자 상승은 걷었다.
  *
  *   Card            카드 면. variant "default"(바닥 위 흰 면 + 1px 테두리) · "hero"(순자산 — 브랜드 채움 · 흰 글자, 한 화면에 하나).
- *                   body "content"(기본 — 여백 24) · "list"(List 를 담는다 — 좌우 여백 0, 머리 위 · 좌우 24 · 아래 4, 카드 아래 12).
+ *                   body "content"(기본 — 여백 24) · "list"(List 를 담는다 — 좌우 여백 0, 머리 위 · 좌우 24 · 아래 4, 카드 아래 12) ·
+ *                   "accordion"(Accordion inline 을 담는다 — 좌우 여백 0, 머리는 목록 카드와 같다, 카드 아래 8 — 마지막 트리거의 아래 16 과
+ *                   합쳐 보이는 24. 머리 오른쪽 동작 자리에는 AccordionExpandAll, 2026-10-10).
  *                   press "none"(기본) · "whole"(카드 전체가 한 곳 — <a href> 또는 <button>, 누름 색 + 2px 축소) · "peers"(카드를 누르면
  *                   열리고 안에 대등한 동작이 더 있다 — 카드 위에 깐 CardLink 가 누르는 자리, 색만 바뀐다). href · onClick 을 주면 "whole"
- *   CardHeader      머리 — 제목과 오른쪽 동작 한 줄, 아래 8(목록 카드 4)
+ *   CardHeader      머리 — 제목과 오른쪽 동작 한 줄, 아래 8(목록 · 아코디언 카드 4)
  *   CardTitle       제목 16 / 22 · 700 · fg-neutral — as(기본 h2)
  *   CardAction      머리 동작("전체 보기") — href · onClick. 14 · 500 · fg-neutral-subtle + chevron-right 16(사이 2), 보이는 상자 32 ·
  *                   왼쪽 8 · 오른쪽 4 · 모서리 8, 누르는 영역 44. 이름은 "{제목} {글}"(aria-labelledby — 제목이 있을 때)
@@ -37,7 +39,7 @@ import { cn } from "@/lib/utils";
  */
 
 export type CardVariant = "default" | "hero";
-export type CardBody = "content" | "list";
+export type CardBody = "content" | "list" | "accordion";
 export type CardPress = "none" | "whole" | "peers";
 
 type CardContextValue = {
@@ -70,6 +72,9 @@ const BODY: Record<CardBody, string> = {
   // 좌우 · 위 0 — 머리가 위 24 · 좌우 24 를 갖고, 줄이 제 좌우 24 · 위아래 12 를 가진다. 아래 12 + 마지막 줄 12 = 보이는 24.
   // 머리가 없으면 위도 12 — 첫 줄 12 와 합쳐 보이는 24(위 · 아래 같게)
   list: "pb-x3 [&:not(:has(>[data-slot=card-header]))]:pt-x3",
+  // 좌우 · 위 0 — 머리가 위 24 · 좌우 24 를 갖고, 트리거가 제 좌우 24 · 위아래 16 을 가진다. 아래 8 + 마지막 트리거 16 = 보이는 24.
+  // 머리가 없으면 위도 8 — 첫 트리거 16 과 합쳐 보이는 24(위 · 아래 같게, 목록 카드와 같은 셈)
+  accordion: "pb-x2 [&:not(:has(>[data-slot=card-header]))]:pt-x2",
 };
 
 // whole — 면 색 + 축소, 키보드 포커스에만 바깥 링
@@ -97,7 +102,7 @@ const HERO_GLOW =
 type CardOwnProps = {
   /** "default"(기본 — 바닥 위 흰 면 + 테두리) · "hero"(순자산 — 브랜드 채움 · 흰 글자) */
   variant?: CardVariant;
-  /** "content"(기본 — 여백 24) · "list"(List 를 담는다 — 줄이 가장자리까지) */
+  /** "content"(기본 — 여백 24) · "list"(List 를 담는다 — 줄이 가장자리까지) · "accordion"(Accordion inline 을 담는다 — 트리거가 가장자리까지) */
   body?: CardBody;
   /** "none"(기본) · "whole"(카드 전체가 한 곳) · "peers"(카드 링크 + 대등한 동작). href · onClick 을 주면 "whole" */
   press?: CardPress;
@@ -210,8 +215,8 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
       data-slot="card-header"
       className={cn(
         "flex items-center justify-between gap-x2",
-        // 목록 카드 — 위 24 · 좌우 24 · 아래 4(줄이 제 위 여백 12 를 가진다). 글 카드는 카드 여백 안 · 아래 8
-        ctx?.body === "list" ? "px-x6 pb-x1 pt-x6" : "pb-x2",
+        // 목록 · 아코디언 카드 — 위 24 · 좌우 24 · 아래 4(줄 · 트리거가 제 위 여백 12 · 16 을 가진다). 글 카드는 카드 여백 안 · 아래 8
+        ctx?.body === "list" || ctx?.body === "accordion" ? "px-x6 pb-x1 pt-x6" : "pb-x2",
         className,
       )}
       {...props}

@@ -63,7 +63,7 @@ const HEADER = [
 
 // 본문 — Dialog 의 본문과 같다(좌우 24, 맨 앞이면 위 24 · 맨 끝이면 아래 24)
 const BODY = [
-  "min-h-0 flex-1 overflow-y-auto px-x6 first:pt-x6",
+  "min-h-0 flex-1 overflow-y-auto overscroll-contain px-x6 first:pt-x6",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 

@@ -80,6 +80,8 @@ export const TABS_TONES = [
   'bg-neutral-weak',
   'stroke-neutral-weak',
   'stroke-neutral-subtle',
+  // 세로 스크롤바 막대(scroll-area.yaml thumbColor — .psa 의 --psa-thumb)
+  'stroke-neutral-solid',
   'chart-orange-weak',
   'chart-orange-contrast',
   'chart-blue-weak',

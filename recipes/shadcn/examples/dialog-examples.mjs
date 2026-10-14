@@ -74,7 +74,7 @@ const HEADER = [
 
 // 본문 — 좌우 24, 이 안에서만 스크롤. 맨 앞 자식(머리가 없으면)이면 위 24, 맨 끝 자식(바닥이 없으면)이면 아래 24
 const BODY = [
-  "min-h-0 flex-1 overflow-y-auto px-x6 first:pt-x6",
+  "min-h-0 flex-1 overflow-y-auto overscroll-contain px-x6 first:pt-x6",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 
@@ -236,12 +236,12 @@ const LIST_ITEM_VARIANTS = {
 };
 const LIST_ITEM_DEFAULTS = { highlight: "none" };
 const LIST_CONTENT_BASE = [
-  "relative flex w-full px-global-gutter py-x3",
+  "relative flex w-full py-x3",
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:1]",
 ].join(" ");
-const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" } };
-const LIST_CONTENT_DEFAULTS = { align: "center" };
+const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" }, nest: { none: "px-global-gutter", parent: "pl-x1 pr-global-gutter", child: "pl-[104px] pr-global-gutter" } };
+const LIST_CONTENT_DEFAULTS = { align: "center", nest: "none" };
 const LIST_BODY_BASE = "flex min-w-0 flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
 const LIST_TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral";
 const LIST_TITLE_VARIANTS = { disabled: { true: "text-fg-disabled", false: "" } };

@@ -121,7 +121,8 @@ export type SideNavLook = {
   icon: { size: number; fg: NColor; currentFg: NColor; disabledFg: NColor };
   label: { type: NType; weight: number; fg: NColor; currentFg: NColor; disabledFg: NColor; padY: number };
   chevron: { size: number; fg: NColor; motion: NMotion };
-  sub: { minH: number; padLeft: number; motion: NMotion };
+  // 하위 펼침 — 높이 · 꺾쇠(d6 — 2026-10-10 Accordion 과 같게), 모션 줄이기면 높이 움직임 없이 서서히(reduce)
+  sub: { minH: number; padLeft: number; motion: NMotion; reduce: NMotion };
   footer: { pad: number };
   flyout: {
     width: number;

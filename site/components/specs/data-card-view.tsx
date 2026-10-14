@@ -57,7 +57,7 @@ export type CardSurfaceProps = {
   look: CardLook;
   mode?: ViewMode;
   press?: CardPress;
-  body?: 'content' | 'list';
+  body?: 'content' | 'list' | 'accordion';
   state?: CardState;
   live?: boolean;
   label?: string;
@@ -88,7 +88,7 @@ export function CardSurface({ look, mode = 'auto', press = 'none', body = 'conte
   const tinted = clickable && (state === 'hovered' || pressed);
   const shrink = press === 'whole' && pressed && !reduce;
   const ratio = shrink ? pressRatio(look.press, size?.w ?? (typeof width === 'number' ? width : 320), size?.h ?? 120) : 1;
-  const padding = body === 'list' ? pad(0, 0, look.list.padBottom, 0) : pad(s.pad, s.pad, s.pad, s.pad);
+  const padding = body === 'list' ? pad(0, 0, look.list.padBottom, 0) : body === 'accordion' ? pad(0, 0, look.accordion.padBottom, 0) : pad(s.pad, s.pad, s.pad, s.pad);
   const role = clickable && live ? 'button' : undefined;
   return (
     <div
@@ -155,9 +155,10 @@ export function CardSurface({ look, mode = 'auto', press = 'none', body = 'conte
 
 // ── 머리 ──────────────────────────────────────────────────
 // 목록 카드(list)는 머리가 제 여백(위 24 · 좌우 24 · 아래 4)을 갖고, 글 카드는 카드 여백 안에서 아래 8 만
-export function CardHeaderView({ look, mode = 'auto', title, action, body = 'content', heading = 'h3', live = false, actionState, actionHit = false, marks, pins, onAction }: { look: CardLook; mode?: ViewMode; title: string; action?: string; body?: 'content' | 'list'; heading?: 'h2' | 'h3' | 'span'; live?: boolean; actionState?: CardState; actionHit?: boolean; marks?: CardMarks; pins?: CardPins; onAction?: () => void }) {
+export function CardHeaderView({ look, mode = 'auto', title, action, body = 'content', heading = 'h3', live = false, actionState, actionHit = false, marks, pins, onAction }: { look: CardLook; mode?: ViewMode; title: string; action?: string; body?: 'content' | 'list' | 'accordion'; heading?: 'h2' | 'h3' | 'span'; live?: boolean; actionState?: CardState; actionHit?: boolean; marks?: CardMarks; pins?: CardPins; onAction?: () => void }) {
   const h = look.header;
-  const box = body === 'list' ? pad(h.list.top, h.list.x, h.list.bottom, h.list.x) : pad(0, 0, h.padBottom, 0);
+  const ac = look.accordion.header;
+  const box = body === 'list' ? pad(h.list.top, h.list.x, h.list.bottom, h.list.x) : body === 'accordion' ? pad(ac.top, ac.x, ac.bottom, ac.x) : pad(0, 0, h.padBottom, 0);
   const T = heading;
   return (
     <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: h.gap, ...box, ...marks?.header }}>

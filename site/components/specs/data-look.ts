@@ -273,7 +273,7 @@ export function cardLook(): CardLook {
   const spec = loadComponentSpec('card');
   sameSet(axisValues(spec, 'variant'), ['default', 'hero'], `${F} variant`);
   sameSet(axisValues(spec, 'press'), ['none', 'whole', 'peers'], `${F} press`);
-  sameSet(axisValues(spec, 'body'), ['content', 'list'], `${F} body`);
+  sameSet(axisValues(spec, 'body'), ['content', 'list', 'accordion'], `${F} body`);
   sameSet(axisValues(spec, 'stat'), ['none', 'large', 'small'], `${F} stat`);
   sameSet(axisValues(spec, 'delta'), ['none', 'up', 'down', 'flat'], `${F} delta`);
   sameSet(stateNames(spec), ['enabled', 'hovered', 'pressed', 'focused'], `${F} states`);
@@ -282,6 +282,8 @@ export function cardLook(): CardLook {
   const pr = resolveState(spec, {}, 'pressed');
   const fo = resolveState(spec, {}, 'focused');
   const L = resolveState(spec, { body: 'list' }, 'enabled');
+  // 카드 안 아코디언(2026-10-10 — 카드 상세의 혜택 · 유의사항) — 좌우 0 · 아래 8 · 머리는 목록 카드와 같은 자리
+  const A = resolveState(spec, { body: 'accordion' }, 'enabled');
   const W = resolveState(spec, { press: 'whole' }, 'enabled');
   const Wh = resolveState(spec, { press: 'whole' }, 'hovered');
   const Wp = resolveState(spec, { press: 'whole' }, 'pressed');
@@ -296,6 +298,7 @@ export function cardLook(): CardLook {
   if (String(unbox(b['root.shadow'])) !== 'none') throw new Error(`${F} root.shadow 가 none 이 아니다 — 그림은 그림자 없이 그린다`);
   if (String(unbox(Wh['root.background'])) !== String(unbox(Wp['root.background'])) || String(unbox(Pp['root.background'])) !== String(unbox(Wp['root.background']))) throw new Error(`${F} 누름 · 호버 면 색이 갈린다 — 그림은 한 색으로 그린다`);
   if (len(L['root.padding'], `${F} list root.padding`) !== 0) throw new Error(`${F} 목록 카드의 좌우 여백이 0 이 아니다`);
+  if (len(A['root.padding'], `${F} accordion root.padding`) !== 0) throw new Error(`${F} 아코디언 카드의 좌우 여백이 0 이 아니다`);
   const radius = len(b['root.radius'], `${F} root.radius`);
   const listLk = listLook(brand);
   const itemRadius = len(b['list.itemRadius'], `${F} list.itemRadius`);
@@ -347,6 +350,10 @@ export function cardLook(): CardLook {
     },
     content: { gap: len(b['content.gap'], `${F} content.gap`) },
     list: { itemRadius, padBottom: len(L['root.paddingBottom'], `${F} list root.paddingBottom`), look: listLk },
+    accordion: {
+      padBottom: len(A['root.paddingBottom'], `${F} accordion root.paddingBottom`),
+      header: { top: len(A['header.paddingTop'], `${F} accordion header.paddingTop`), x: len(A['header.paddingX'], `${F} accordion header.paddingX`), bottom: len(A['header.paddingBottom'], `${F} accordion header.paddingBottom`) },
+    },
     stat: {
       label: { ...typeOf(b['statLabel.typography'], `${F} statLabel.typography`, b['statLabel.fontWeight']), fg: tok(b['statLabel.foreground'], brand, `${F} statLabel.foreground`) },
       value: {
