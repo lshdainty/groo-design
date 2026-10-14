@@ -67,9 +67,9 @@ const LIST_ITEM_VARIANTS = {
   },
 };
 const LIST_ITEM_DEFAULTS = { highlight: "none" };
-const LIST_CONTENT_BASE = "relative flex w-full px-global-gutter py-x3 [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:1]";
-const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" } };
-const LIST_CONTENT_DEFAULTS = { align: "center" };
+const LIST_CONTENT_BASE = "relative flex w-full py-x3 [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:1]";
+const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" }, nest: { none: "px-global-gutter", parent: "pl-x1 pr-global-gutter", child: "pl-[104px] pr-global-gutter" } };
+const LIST_CONTENT_DEFAULTS = { align: "center", nest: "none" };
 const LIST_PREFIX_BASE = "flex shrink-0 items-center pr-x3 text-fg-neutral [&>svg]:size-[22px]";
 const LIST_PREFIX_VARIANTS = {
   disabled: {

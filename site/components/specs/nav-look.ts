@@ -353,7 +353,8 @@ function sideLook(brand: Brand): SideNavLook {
       padY: len(b['itemLabel.paddingY'], `${F} itemLabel.paddingY`),
     },
     chevron: { size: len(b['chevron.size'], `${F} chevron.size`), fg: tok(b['chevron.color'], brand, `${F} chevron.color`), motion: motionPair(b['chevron.transitionDuration'], b['chevron.transitionEasing'], `${F} chevron`) },
-    sub: { minH: len(b['subItem.minHeight'], `${F} subItem.minHeight`), padLeft: len(b['subItem.paddingLeft'], `${F} subItem.paddingLeft`), motion: motionOf('side-navigation', '하위 펼침') },
+    // 모션 줄이기 — 높이 움직임 없이 하위 목록만 서서히(motion "하위 펼침 — 모션 줄이기")
+    sub: { minH: len(b['subItem.minHeight'], `${F} subItem.minHeight`), padLeft: len(b['subItem.paddingLeft'], `${F} subItem.paddingLeft`), motion: motionOf('side-navigation', '하위 펼침'), reduce: motionOf('side-navigation', '하위 펼침 — 모션 줄이기') },
     footer: { pad: len(b['footer.padding'], `${F} footer.padding`) },
     flyout: {
       width: len(b['flyout.width'], `${F} flyout.width`),

@@ -3,6 +3,7 @@
 // 그림은 색을 hex 대신 이 변수로 쓴다(kit 의 rc — 모드를 정하지 않으면 변수).
 import { design, proseValue } from '@/lib/design-tokens';
 import { loadingCss } from './loading-look';
+import { scrollAreaCss } from './collapse-look';
 
 function build() {
   const desk = design('desk').front.colors;
@@ -31,7 +32,8 @@ function build() {
   light.push('--p-frame:#1A1F2E', '--p-chrome:#E4E6EB', '--p-chrome-url:#F5F6FA');
   dark.push('--p-frame:#3A3F4C', '--p-chrome:#2B303D', '--p-chrome-url:#1E222C');
   // 기다림 묶음의 움직임(Progress Circle · Skeleton — 버튼의 로딩 원도 이것) — 시간 · 곡선은 YAML 에서(loading-look)
-  return `:root{${light.join(';')}}.dark{${dark.join(';')}}${loadingCss()}`;
+  // Scroll Area 그림의 스크롤바 · 초점 링(scroll-area.yaml — collapse-look 의 scrollAreaCss) — 그림 상자(.psa)에만
+  return `:root{${light.join(';')}}.dark{${dark.join(';')}}${loadingCss()}${scrollAreaCss()}`;
 }
 
 let css: string | undefined;

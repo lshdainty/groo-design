@@ -81,6 +81,12 @@ SEED 에는 카드 컴포넌트가 없다. 그래도 SEED 가 그린 카드는 �
 
 [표: 카드 안 목록](card.yaml#base.enabled@list)
 
+### 카드 안 아코디언
+
+카드 상세의 혜택 · 유의사항처럼 상세를 접어 둔 목록은 [Accordion](accordion.md) `inline` 을 카드에 바로 넣는다(`body="accordion"` — 2026-10-10 사용자 결정 6A, 웹 · 앱 같다). 트리거가 제 좌우 24 · 위아래 16 을 가지므로 카드 좌우 여백은 0 이고, 머리는 목록 카드와 같다(위 24 · 좌우 24 · 아래 4). 카드 아래 여백은 8 — 마지막 트리거의 아래 16 과 합쳐 보이는 24 다. 머리 오른쪽 동작 자리에는 Accordion 의 "모두 펼치기" 를 둔다 — 건수는 제목에 붙인다("혜택 · 12건"). 누름 바탕은 목록 카드와 같은 동심 모서리 10 이다.
+
+[그림: 혜택 · 12건 — 카드 머리 + 모두 펼치기, 트리거가 가장자리까지 · 카드 아래 8](../../site/components/specs/card.tsx#accordion-card)
+
 ### 지표 카드
 
 숫자 하나를 보이는 카드다 — 라벨 13 · 500 · `fg-neutral-subtle`, 아래 4 에 큰 숫자 700 · 고정폭 숫자, 아래 4 에 증감 줄. 카드 하나에 숫자 하나면 24(`large`)다. 폰에서는 지표 카드를 한 줄에 하나 둔다 — 둘씩 놓으면 360 폭에서 칸 안쪽이 101(여백 16 이어도 117)인데 "1,240,000원" 20 / 700 은 120 이라 들어가지 않는다(실측). 데스크톱 격자에 셋 · 넷씩 나란히 놓을 때만 20(`small`)이고, 여백은 그대로 24 다. 돈은 줄이지 않고 원까지 쓴다. 숫자가 굴러가며 바뀌는 애니메이션은 두지 않는다 — 금액은 처음부터 그 값으로 보인다.
@@ -178,7 +184,7 @@ Desk 홈 · 자산 맨 위의 순자산은 브랜드 색으로 채운 카드다(
 
 레시피 `recipes/shadcn/components/ui/card.tsx` 를 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
-- `Card` — 카드 면. `variant`(`"default"` 기본 · `"hero"`) · `body`(`"content"` 기본 · `"list"` — 좌우 여백 0, 머리 24) · `press`(`"none"` 기본 · `"whole"` · `"peers"`) · `onClick` · `href`(주면 `press` 를 `"whole"` 로 본다 — 카드 전체가 버튼 · 링크). `"peers"` 는 카드를 누르는 자리를 카드 위에 깐 링크(`CardLink`)로 만들고, 안의 버튼은 그 위에 놓는다 — 버튼을 눌러도 카드가 열리지 않는다. 여백은 폭과 상관없이 24 다.
+- `Card` — 카드 면. `variant`(`"default"` 기본 · `"hero"`) · `body`(`"content"` 기본 · `"list"` — 좌우 여백 0, 머리 24 · `"accordion"` — 좌우 0, 아래 8, 머리 24) · `press`(`"none"` 기본 · `"whole"` · `"peers"`) · `onClick` · `href`(주면 `press` 를 `"whole"` 로 본다 — 카드 전체가 버튼 · 링크). `"peers"` 는 카드를 누르는 자리를 카드 위에 깐 링크(`CardLink`)로 만들고, 안의 버튼은 그 위에 놓는다 — 버튼을 눌러도 카드가 열리지 않는다. 여백은 폭과 상관없이 24 다.
 - `CardHeader` — 머리. `CardTitle`(`as` — 기본 `h2`) · `CardAction`(머리 동작 — `href` · `onClick`, 자식 글 뒤에 chevron 을 붙인다 · `aria-label` 기본 "{제목} {글}").
 - `CardContent` — 본문(여백 안). 목록 카드는 `CardContent` 없이 `List` 를 바로 넣는다. 머리 설명(`CardDescription`) · 아래 버튼 줄(`CardFooter`)은 두지 않는다 — 머리는 제목 하나, 버튼은 본문 끝에 둔다.
 - `CardLink` — `peers` 카드의 누르는 자리(카드 전체를 덮는 링크 · 버튼, 이름은 카드 제목).
@@ -328,6 +334,10 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 - **증감 색** — SEED 에 증감 규칙이 없다. porest 는 방향 색(▲ 빨강 · ▼ 파랑)이다.
 
 ## Migration notes
+
+### 2026-10-10 — 카드 안 아코디언
+
+사용자가 [펼치고 접기 · 나누기 비교 페이지](https://claude.ai/artifact/9uvjeFyjFXc7TaWnpnnQ6H)에서 카드 상세의 혜택 · 유의사항을 웹 · 앱 모두 접는 목록으로 정했다(6A — 둘 다 펼친 목록 6B 는 고르지 않았다). 그래서 본문에 `accordion` 을 더했다 — 좌우 0 · 아래 8 · 머리는 목록 카드와 같다. 지금 웹은 카드 상세 혜택을 `ul.divide-y` 의 Radix Collapsible 로 접고(`widgets/card-detail/ui/AvailableBenefitsList.tsx:49-94`), 앱은 혜택 상세 본문까지 다 펼쳐 보이며 유의사항만 주황 상자 안에서 접는다(`features/card/presentation/card_detail_screen.dart:153-236`, 조사 D15). 둘 다 이 카드 안 `inline` 아코디언으로 옮긴다.
 
 ### 2026-10-08 — SEED 면 · Feedback 으로 다시 쓴다
 

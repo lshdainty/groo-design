@@ -1,0 +1,73 @@
+# Accordion 의 수치 원본 — 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# type(single · multiple)은 동작만 다르고 시각 값은 같아 축으로 두지 않는다(accordion.md Variants).
+# 트리거 상태 표는 closed 를 바탕으로 hover · focus-visible 을 closed 에서만, open 을 한 줄로 적는다 —
+# 그래서 open 은 축이 아니라 상태다.
+
+name: Accordion
+
+slots:
+  item: AccordionItem — 항목 하나. 외곽 container 없이 아래 테두리로만 나뉜다
+  trigger: AccordionTrigger — 펼침 버튼(글자 + chevron)
+  chevron: ChevronDown 아이콘
+  content: AccordionContent — 펼친 내용
+  focusRing: 키보드 포커스 링(trigger)
+
+variants: {}
+
+states:
+  closed: (default)
+  hover: (closed)
+  focus-visible: (closed)
+  open: ""
+  disabled: ""
+
+rules:
+  - when: {}
+    closed:
+      item:
+        borderBottomWidth: 1px
+        borderBottomColor: $color-border-default
+      trigger:
+        paddingY: $spacing-lg
+        typography: $text-title-sm
+        foreground: $color-text-primary
+        gap: { value: flex justify-between, note: "text ↔ chevron — text-left + chevron-right" }
+      chevron:
+        size: 16px
+        color: $color-text-secondary
+        rotate: { value: 0°, note: down }
+      content:
+        paddingBottom: $spacing-lg
+        paddingTop: 0
+        typography: $text-body-md
+        foreground: $color-text-secondary
+    hover:
+      trigger:
+        foreground: { value: $color-text-secondary, note: "또는 underline · `transition-[color]`" }
+    focus-visible:
+      focusRing:
+        width: 2px
+        offset: 2px
+        color: { value: $color-border-focus, note: "`ring-2 ring-ring ring-offset-2` — ring = border-focus(shadcn bridge)" }
+        radius: $radius-xs
+    open:
+      chevron:
+        rotate: { value: 180°, note: "up — `data-[state=open]:rotate-180`" }
+    disabled:
+      trigger:
+        opacity: 0.5
+        cursor: { value: not-allowed, note: "`cursor-not-allowed`" }
+        pointerEvents: { value: none, note: "`pointer-events-none`" }
+
+motion:
+  trigger:
+    duration: $motion-duration-fast
+    easing: $motion-ease-out
+    properties: [color]
+  chevron:
+    duration: $motion-duration-base
+    properties: [transform]
+  content:
+    duration: $motion-duration-base
+    note: "accordion-down/up — keyframes from DESIGN.md `--motion-duration-base`"

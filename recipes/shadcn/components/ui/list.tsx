@@ -2,8 +2,10 @@ import * as React from "react";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import { ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { useExpandMotion } from "@/components/ui/accordion";
 import { Checkmark, type CheckmarkProps } from "@/components/ui/checkbox";
 import { Radiomark, submitOnRadioEnter, type RadiomarkProps } from "@/components/ui/radio-group";
 import { Switchmark, type SwitchmarkProps } from "@/components/ui/switch";
@@ -17,6 +19,14 @@ import { Switchmark, type SwitchmarkProps } from "@/components/ui/switch";
  *   ListRadioGroup · ListCheckGroup   하나 고르기(role=radiogroup) · 여럿 고르기(fieldset) 묶음 — 줄은 li 대신 div
  *   itemRadius               목록 · 묶음의 누름 바탕 모서리(기본 radius-r2_5) — 카드 안에서는 카드 모서리 − 카드 가장자리에서 바탕까지 거리
  *   ListDivider · ListHeader · ListTile   줄 사이 선(필요할 때만) · 목록 제목 · 내용 줄의 앞 타일
+ *   ListParentItem           하위 줄을 접는 부모 줄(2026-10-10 — 카테고리). ListButtonItem 의 속성에 expandLabel(꺾쇠 단추의 고정 이름 —
+ *                            "{카테고리} 하위 카테고리", 하위가 있으면 준다) · open · defaultOpen · onOpenChange(open) 를 더 받고, 자식(ListButtonItem …)이
+ *                            하위 줄이 된다. 줄 앞 4 · 꺾쇠 단추 44(보이는 상자 = 누르는 영역, 모서리 10 · chevron-right 20 fg-neutral-subtle ·
+ *                            펼치면 90° 300ms) · 그 뒤 4 를 지나 앞 붙이개가 52 에서 시작한다. 단추는 줄과 따로 눌린다(aria-expanded · aria-controls,
+ *                            이름은 상태마다 바꾸지 않는다) — 줄을 누르면 하는 일(편집)은 그대로. 하위 줄은 부모의 제목 자리 104 에서 시작하고
+ *                            (누름 바탕은 줄 폭 그대로), 높이 300ms 로 펼치고 접는다(모션 줄이기면 150ms 서서히 — Accordion 과 같다).
+ *                            자식이 없거나 expandLabel 이 없으면(늘 펼쳐 두는 편집 모드) 꺾쇠 자리를 같은 폭으로 비운다 — 한 목록의 맨 위 단계 줄은
+ *                            모두 ListParentItem 으로 두어 타일 · 제목이 같은 자리에 서게 한다
  *
  * 한 줄은 두 층이다 — 바탕 층(li::before: 누름 · 호버 · 강조 바탕, 줄지 않는다)과 콘텐츠 층(앞 · 본문 · 뒤).
  * 누르면 바탕이 좌우 6 들어와 모서리 10 이 되고(SEED), 콘텐츠 층만 2px 거리로 준다(기초 Feedback v104) —
@@ -50,10 +60,11 @@ const listItemVariants = cva(
   },
 );
 
-// 콘텐츠 층 — 앞 · 본문 · 뒤. 누르면 이 층만 준다
+// 콘텐츠 층 — 앞 · 본문 · 뒤. 누르면 이 층만 준다. 하위 줄(nest) — 부모 줄은 줄 앞 4(꺾쇠 단추 44 + 4 를 지나 앞 붙이개가 52),
+// 하위 줄은 부모의 제목 자리 104(= 4 + 44 + 4 + 타일 40 + 12)에서 시작한다
 const listContentVariants = cva(
   [
-    "relative flex w-full px-global-gutter py-x3",
+    "relative flex w-full py-x3",
     "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
     "group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:1]",
   ].join(" "),
@@ -63,8 +74,13 @@ const listContentVariants = cva(
         center: "items-center",
         top: "items-start",
       },
+      nest: {
+        none: "px-global-gutter",
+        parent: "pl-x1 pr-global-gutter",
+        child: "pl-[104px] pr-global-gutter",
+      },
     },
-    defaultVariants: { align: "center" },
+    defaultVariants: { align: "center", nest: "none" },
   },
 );
 
@@ -150,7 +166,7 @@ type ItemBase = {
   suffix?: React.ReactNode;
   /** 새 알림처럼 주목이 필요한 줄 — 옅은 브랜드 바탕(list.yaml highlight) */
   highlighted?: boolean;
-} & VariantProps<typeof listContentVariants>;
+} & Pick<VariantProps<typeof listContentVariants>, "align">;
 
 const hl = (highlighted?: boolean) => (highlighted ? "highlighted" : "none");
 
@@ -190,6 +206,10 @@ function Body({ title, detail, disabled, highlighted }: { title: React.ReactNode
 // 줄의 태그 — 목록(ul) 안에서는 li, 묶음(radiogroup · fieldset) 안에서는 div
 const ListRowTag = React.createContext<"li" | "div">("li");
 
+// 하위 줄인가 — ListParentItem 의 하위 줄 묶음 안이면 "child"(부모의 제목 자리 104 에서 시작)
+const ListNestContext = React.createContext<"none" | "child">("none");
+const useNest = () => React.useContext(ListNestContext);
+
 type ItemRadius = {
   /** 누름 · 호버 바탕의 모서리(기본 radius-r2_5 10) — 카드 안에서는 카드 모서리 − 카드 가장자리에서 바탕까지 거리 */
   itemRadius?: string;
@@ -210,7 +230,7 @@ export interface ListItemProps extends ItemBase, Omit<React.LiHTMLAttributes<HTM
 const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
   ({ className, title, detail, prefix, suffix, align, highlighted, ...props }, ref) => (
     <li ref={ref} className={cn(listItemVariants({ highlight: hl(highlighted) }), className)} {...props}>
-      <div className={listContentVariants({ align })}>
+      <div className={listContentVariants({ align, nest: useNest() })}>
         {prefix && <span className={listPrefixVariants()}>{prefix}</span>}
         <span className={listBodyVariants()}>
           <Body title={title} detail={detail} />
@@ -230,7 +250,7 @@ export interface ListButtonItemProps extends ItemBase, Omit<React.ButtonHTMLAttr
 const ListButtonItem = React.forwardRef<HTMLButtonElement, ListButtonItemProps>(
   ({ className, title, detail, prefix, suffix, align, highlighted, disabled, rootProps: { className: rootClassName, ...rootRest } = {}, type = "button", ...props }, ref) => (
     <li className={cn(listItemVariants({ highlight: hl(highlighted) }), rootClassName)} {...withPress(rootRest)}>
-      <div className={listContentVariants({ align })}>
+      <div className={listContentVariants({ align, nest: useNest() })}>
         {prefix && <span className={cn(listPrefixVariants({ disabled }))}>{prefix}</span>}
         <button
           ref={ref}
@@ -259,9 +279,10 @@ export interface ListLinkItemProps extends ItemBase, Omit<React.AnchorHTMLAttrib
 const ListLinkItem = React.forwardRef<HTMLAnchorElement, ListLinkItemProps>(
   ({ className, title, detail, prefix, suffix, align, highlighted, asChild = false, rootProps: { className: rootClassName, ...rootRest } = {}, children, ...props }, ref) => {
     const actionProps = { "data-list-action": "", className: cn(listActionVariants(), listBodyVariants(), className), ...props };
+    const nest = useNest();
     return (
       <li className={cn(listItemVariants({ highlight: hl(highlighted) }), rootClassName)} {...withPress(rootRest)}>
-        <div className={listContentVariants({ align })}>
+        <div className={listContentVariants({ align, nest })}>
           {prefix && <span className={listPrefixVariants()}>{prefix}</span>}
           {asChild ? (
             <Slot ref={ref} {...actionProps}>
@@ -281,6 +302,114 @@ const ListLinkItem = React.forwardRef<HTMLAnchorElement, ListLinkItemProps>(
 );
 ListLinkItem.displayName = "ListLinkItem";
 
+// 줄 앞 꺾쇠 단추 — 보이는 상자 = 누르는 영역 44 · 모서리 10 · 단추 뒤 4. 줄과 따로 눌린다(줄의 누름 바탕은 생기지 않는다):
+// 올리거나 누르면 단추만 bg-layer-default-pressed, 누르면 2px 거리 축소(기준 44 → 0.955). 키보드 포커스에만 단추 안쪽 2px 링.
+// 위아래 2 를 줄의 여백에 겹쳐 타일 40 줄의 높이(64)를 그대로 둔다. 줄의 버튼 ::after 위(z 1)에 놓인다
+const LIST_EXPAND_BUTTON = [
+  "relative z-[1] -my-x0_5 mr-x1 inline-flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-r2_5 border-0 bg-transparent p-0 text-fg-neutral-subtle",
+  "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
+  "[--press-basis:44] [@media(hover:hover)]:hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
+  "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
+].join(" ");
+// 꺾쇠 20 — 접혀 있으면 오른쪽, 펼치면 아래(90° · 300ms easing, 모션 줄이기면 바로)
+const LIST_EXPAND_ICON = "size-5 shrink-0 [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none";
+// 하위가 없는 부모 줄 · 늘 펼쳐 두는 화면 — 꺾쇠 단추와 같은 폭의 빈 자리
+const LIST_EXPAND_SLOT = "-my-x0_5 mr-x1 size-11 shrink-0";
+
+export interface ListParentItemProps extends ListButtonItemProps {
+  /** 꺾쇠 단추의 고정 이름 — "{카테고리} 하위 카테고리". 하위가 있으면 준다(없으면 늘 펼쳐 두고 꺾쇠 자리를 비운다) */
+  expandLabel?: string;
+  /** 하위 줄 펼침 — 쥐고 다룰 때 */
+  open?: boolean;
+  /** 처음 펼침 — 화면이 정한다(카테고리는 모두 펼친 채 연다) */
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  /** 하위 줄(ListButtonItem …) */
+  children?: React.ReactNode;
+}
+
+// 하위 줄을 접는 부모 줄 — li > 줄(바탕 층 · 콘텐츠 층) + 하위 줄 묶음(ul). 줄을 누르면 onClick(편집), 꺾쇠 단추는 펼치고 접기만
+const ListParentItem = React.forwardRef<HTMLButtonElement, ListParentItemProps>(
+  (
+    {
+      className,
+      title,
+      detail,
+      prefix,
+      suffix,
+      align,
+      highlighted,
+      disabled,
+      rootProps: { className: rootClassName, ...rootRest } = {},
+      type = "button",
+      expandLabel,
+      open: openProp,
+      defaultOpen = false,
+      onOpenChange,
+      children,
+      ...props
+    },
+    ref,
+  ) => {
+    const hasChildren = React.Children.toArray(children).length > 0;
+    const foldable = hasChildren && expandLabel != null;
+    const [inner, setInner] = React.useState(defaultOpen);
+    // 꺾쇠 단추가 없으면(늘 펼쳐 두는 화면) 하위 줄은 늘 보인다
+    const open = foldable ? (openProp ?? inner) : hasChildren;
+    const setOpen = (next: boolean) => {
+      if (openProp === undefined) setInner(next);
+      onOpenChange?.(next);
+    };
+    const subId = React.useId();
+    const { ref: motionRef, hidden } = useExpandMotion<HTMLUListElement>(open);
+    return (
+      <li data-slot="list-parent-item" className={cn("flex w-full flex-col", rootClassName)} {...rootRest}>
+        <div data-slot="list-parent-row" className={listItemVariants({ highlight: hl(highlighted) })} {...withPress({})}>
+          <div className={listContentVariants({ align, nest: "parent" })}>
+            {foldable ? (
+              <button
+                type="button"
+                aria-expanded={open}
+                aria-controls={subId}
+                aria-label={expandLabel}
+                data-slot="list-expand-button"
+                data-state={open ? "open" : "closed"}
+                className={LIST_EXPAND_BUTTON}
+                onClick={() => setOpen(!open)}
+              >
+                <ChevronRight aria-hidden strokeWidth={2} className={cn(LIST_EXPAND_ICON, open && "rotate-90")} />
+              </button>
+            ) : (
+              <span aria-hidden data-slot="list-expand-slot" className={LIST_EXPAND_SLOT} />
+            )}
+            {prefix && <span className={cn(listPrefixVariants({ disabled }))}>{prefix}</span>}
+            <button
+              ref={ref}
+              type={type}
+              disabled={disabled}
+              data-list-action=""
+              data-disabled={disabled ? "" : undefined}
+              className={cn(listActionVariants(), listBodyVariants(), className)}
+              {...props}
+            >
+              <Body title={title} detail={detail} disabled={disabled} highlighted={highlighted} />
+            </button>
+            {suffix && <span className={cn(listSuffixVariants({ disabled, highlighted }))}>{suffix}</span>}
+          </div>
+        </div>
+        {hasChildren && (
+          <ListNestContext.Provider value="child">
+            <ul ref={motionRef} id={subId} data-slot="list-sub-list" data-state={open ? "open" : "closed"} hidden={hidden} className={cn(listVariants(), "m-0 list-none p-0")}>
+              {children}
+            </ul>
+          </ListNestContext.Provider>
+        )}
+      </li>
+    );
+  },
+);
+ListParentItem.displayName = "ListParentItem";
+
 type ControlRowProps = ItemBase & { rootProps?: React.HTMLAttributes<HTMLElement> };
 
 // 컨트롤 줄의 짜임 — li(묶음 안에서는 div) > label(콘텐츠 층 · 누르는 영역) > 앞 · 본문 · 뒤
@@ -297,6 +426,7 @@ function ControlRow({
   htmlFor,
 }: ControlRowProps & { as?: "li" | "div"; disabled?: boolean; htmlFor?: string }) {
   const tag = React.useContext(ListRowTag);
+  const nest = useNest();
   const Comp = (as ?? tag) as React.ElementType;
   return (
     <Comp className={cn(listItemVariants({ highlight: hl(highlighted) }), rootClassName)} {...withPress(rootRest)}>
@@ -304,7 +434,7 @@ function ControlRow({
         htmlFor={htmlFor}
         data-list-action=""
         data-disabled={disabled ? "" : undefined}
-        className={cn(listContentVariants({ align }), listControlVariants())}
+        className={cn(listContentVariants({ align, nest }), listControlVariants())}
       >
         {prefix && <span className={cn(listPrefixVariants({ disabled }))}>{prefix}</span>}
         <span className={listBodyVariants()}>
@@ -463,6 +593,7 @@ export {
   ListDivider,
   ListHeader,
   ListTile,
+  ListParentItem,
   listVariants,
   listItemVariants,
   listContentVariants,

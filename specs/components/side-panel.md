@@ -242,5 +242,5 @@ import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNav
 
 - **HR 폰 메뉴 서랍** — shadcn Sheet 왼쪽 288(80%) · `#FAFAFA`. 이름이 "Sidebar" · 설명 "Displays the mobile sidebar."(영어), 열면 지금 화면의 묶음도 접혀 있고(`treeView.tsx:263-265` — 펼침 초기값은 첫 마운트에만), 잎을 눌러 이동해도 서랍이 열린 채 남는다(`SidebarContent.tsx:101-108` · `shared/ui/shadcn/sidebar.tsx:198-201`, F12). Side Panel(왼쪽) + Side Navigation 항목으로.
 - **Desk 웹** — 모바일 사이드바 시트는 닿지 않는 코드다(768 미만은 하단 탭 바 — F27). 옆 패널을 쓰는 화면이 없다.
-- **HR 나눔 패널 4**(회사 · 부서 · 역할 · 사용자 — Resizable 25 / 75, `CompanyContent.tsx:116-140` 외)은 화면 안의 나눔이지 Side Panel 이 아니다.
+- **HR 나눔 패널 4**(회사 · 부서 · 역할 · 사용자 — Resizable 25 / 75, `CompanyContent.tsx:116-140` 외)은 화면 안의 나눔이지 Side Panel 이 아니다 — [Resizable](resizable.md)(2026-10-10 — 목록 20 ~ 40%).
 - 앱 적용 때 정할 자리 — HR 전체 화면 Dialog 3(페이지 · 시트 · 오른쪽 Side Panel — dialog.md), 데스크톱 필터(Dialog · Popover · 오른쪽 Side Panel).

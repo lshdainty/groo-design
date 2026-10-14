@@ -1,0 +1,57 @@
+# Scroll Area 의 수치 원본 — 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# size variant 가 없다(폭·높이는 사용처 className). 스크롤바 수치는 모두 조건 없는 규칙에 있다.
+# 전역 native scrollbar(firefox · webkitScrollbar · webkitThumb)와 `.scrollbar-hide`(scrollbarHide)도
+# 같은 톤의 원본이라 부위로 함께 둔다.
+# `no overflow` 에서 track · thumb 는 스크롤바가 숨어 값이 없다(—).
+
+name: Scroll Area
+
+slots:
+  scrollbar: ScrollAreaScrollbar — vertical 우측 · horizontal 하단 막대
+  track: 스크롤바 바탕
+  thumb: ScrollAreaThumb — 끌어 옮기는 손잡이
+  firefox: Firefox 표준 — 전역 native scrollbar
+  webkitScrollbar: "WebKit 글로벌 — `::-webkit-scrollbar` (전역)"
+  webkitThumb: "WebKit 글로벌 — `::-webkit-scrollbar-thumb` (전역)"
+  scrollbarHide: "`.scrollbar-hide` utility — 스크롤바 완전 숨김(opt-in)"
+
+variants: {}
+
+states:
+  default: (스크롤 가능)
+  hover: (scrollbar 영역 hover) — scrollbar 가시성 더 명확
+  dragging: (thumb drag) — Radix `data-state` 자동 — 시각 효과 없음
+  no overflow: (콘텐츠 fit) — scrollbar 자동 hide (Radix)
+
+rules:
+  - when: {}
+    default:
+      scrollbar:
+        size: { value: 6px, note: "두께 — `w-1.5` (vertical) / `h-1.5` (horizontal)" }
+        borderWidth: { value: 1px, note: "`border-l border-l-transparent` (vertical) / `border-t border-t-transparent` (horizontal)" }
+        borderColor: { value: transparent, note: "hover 시 색 부여 가능" }
+        transitionProperty: colors
+        transitionDuration: $motion-duration-fast
+      track:
+        background: { value: transparent, note: "Radix 기본 background 없음" }
+      thumb:
+        background: $color-border-strong
+        radius: { value: $radius-full, note: "pill" }
+      firefox:
+        scrollbarWidth: thin
+        thumbColor: $color-border-strong
+        trackColor: { value: transparent, note: "`scrollbar-width: thin; scrollbar-color: var(--color-border-strong) transparent;` (전역)" }
+      webkitScrollbar:
+        width: 6px
+        height: { value: 6px, note: "`::-webkit-scrollbar { width: 6px; height: 6px }` (전역)" }
+      webkitThumb:
+        background: $color-border-strong
+        radius: { value: $radius-full, note: "pill — `::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: var(--radius-full); }` (전역)" }
+      scrollbarHide:
+        display: { value: none, note: "`.scrollbar-hide` (opt-in, Firefox/IE 폴백 포함)" }
+    no overflow:
+      track:
+        background: —
+      thumb:
+        background: —

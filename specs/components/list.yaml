@@ -15,6 +15,9 @@
 #   - 막힌 줄은 값 글자 · 타일도 비활성 색(SEED 는 제목 · 설명 · 아이콘만 — porest 비활성은 전용 색, v106).
 #   SEED 와 같은 자리: 누르면 콘텐츠 층만 준다(SEED scaleScope: content — 배율은 기초 Feedback v104 의 2px 거리).
 #   - 포커스 링(웹)은 줄 안쪽 2px — v106 의 띄움 2px 는 화면 폭 줄에서 잘린다. SEED 는 목록 줄의 포커스 링을 정하지 않았다.
+#   - 하위 줄(nest)과 줄 앞 꺾쇠 단추 — SEED List 에 없다. 카테고리처럼 부모 · 하위 두 단계에서 줄은 편집, 하위만 접는 자리
+#     (2026-10-10 사용자 결정 7C — 펼치고 접기 · 나누기 비교 페이지, 정렬은 17B — 부모 타일 52 · 하위 타일 104 의 두 세로줄).
+#     펼침 상태는 하위 줄 묶음의 상태라 축(expanded)으로 둔다.
 
 name: List
 
@@ -33,6 +36,8 @@ slots:
   suffixText: 뒤 값 글자
   suffixIcon: 뒤 아이콘 — 오른쪽 화살표
   divider: 줄 사이 선(ListDivider) — 필요할 때만
+  expandButton: 줄 앞 꺾쇠 단추 — 부모 줄의 하위 줄을 펼치고 접는다(누르는 44). 줄을 누르면 하는 일(편집)과 따로 눌린다
+  subList: 하위 줄 묶음 — 부모 줄 바로 아래에서 펼치고 접힌다
   focusRing: 키보드 포커스 링(웹) — 줄 안쪽
 
 variants:
@@ -42,10 +47,19 @@ variants:
   highlight:
     none: 기본
     highlighted: 새 알림처럼 주목이 필요한 줄 — 옅은 브랜드 바탕
+  nest:
+    none: 단계 없는 목록(기본)
+    parent: 맨 위 단계 줄 — 앞에 꺾쇠 자리(4 + 44 + 4)를 둔다. 하위가 있으면 꺾쇠 단추, 없으면 같은 폭의 빈 자리
+    child: 하위 줄 — 부모의 제목 자리(104)에서 시작한다
+  expanded:
+    collapsed: 하위 줄 접힘(기본) — 꺾쇠가 오른쪽
+    expanded: 하위 줄 펼침 — 꺾쇠가 아래
 
 defaults:
   align: center
   highlight: none
+  nest: none
+  expanded: collapsed
 
 states:
   enabled: 기본
@@ -161,6 +175,48 @@ rules:
       detail: { foreground: $color-fg-neutral-muted }
       suffixText: { foreground: $color-fg-neutral-muted }
 
+  # ── 하위 줄 ───────────────────────────────────────────
+  - when: { nest: parent }
+    enabled:
+      item:
+        paddingLeft: { value: $spacing-x1, note: "줄 앞 4 — 꺾쇠 단추 44 와 그 뒤 4 를 지나 앞 붙이개가 52 에서 시작한다. 하위가 없는 부모 줄도 같은 자리를 비워 부모 타일이 모두 52 에 선다(사용자 결정 17B — 7C 그림의 24 는 고르지 않았다)" }
+      expandButton:
+        size: { value: 44px, note: "보이는 상자 = 누르는 영역. 하위가 없는 줄 · 늘 펼쳐 두는 화면(편집 모드)은 같은 폭의 빈 자리" }
+        radius: { value: $radius-r2_5, note: "누를 때 바탕 — 줄의 누름 바탕과 같은 모서리 10" }
+        iconSize: { value: 20px, note: "lucide chevron-right — 접혀 있으면 오른쪽, 펼치면 아래(90°)" }
+        color: { value: $color-fg-neutral-subtle, note: "흰 면 5.50 · 다크 6.09" }
+        rotate: 0deg
+        marginRight: { value: $spacing-x1, note: "꺾쇠 단추 ↔ 앞 붙이개 4" }
+        background: transparent
+        cursor: pointer
+        touchTarget: { value: 44 × 44, note: "AA ✓ · AAA ✓ — 지금 웹 18 · 앱 24" }
+        name: { value: "{카테고리} 하위 카테고리", note: "고정 이름 + aria-expanded · aria-controls(하위 줄 묶음) — 상태마다 \"접기 · 펼치기\" 로 바꾸지 않는다(사용자 결정 7C)" }
+        transitionProperty: { value: "rotate, background-color", note: "회전은 하위 줄 펼침과 같은 300ms, 바탕은 150ms(motion)" }
+      subList:
+        display: { value: 숨김, note: "접혀 있으면 하위 줄을 그리지 않는다 — 처음 상태는 화면이 정한다(카테고리는 모두 펼친 채 연다)" }
+    hovered:
+      expandButton:
+        background: { value: $color-bg-layer-default-pressed, note: "꺾쇠 단추만 — 줄의 누름 바탕과 따로" }
+    pressed:
+      expandButton:
+        background: $color-bg-layer-default-pressed
+        scale: { value: 2px 거리 축소, note: "기준 44 → 0.955(v104) — 줄은 줄지 않는다" }
+    focused:
+      expandButton:
+        outlineWidth: 2px
+        outlineOffset: { value: -2px, note: "단추 안쪽 — 줄 앞 4 안에서 잘리지 않는다. 모서리는 단추와 같은 10" }
+        outlineColor: $color-stroke-focus-ring
+  - when: { nest: child }
+    enabled:
+      item:
+        paddingLeft: { value: 104px, note: "부모의 제목 자리 = 4 + 꺾쇠 44 + 4 + 타일 40 + 12 — 하위 타일이 부모 제목 아래에서 시작한다(사용자 결정 17B — 7C 그림의 100 은 고르지 않았다). 누름 바탕은 줄 폭 그대로(좌우 6 들임)" }
+  - when: { expanded: expanded }
+    enabled:
+      expandButton:
+        rotate: { value: 90deg, note: "아래로 — 하위 줄이 펼쳐졌다" }
+      subList:
+        display: 보임
+
 motion:
   "누름 · 호버 — 바탕":
     duration: $motion-duration-color-transition
@@ -172,3 +228,18 @@ motion:
     easing: $motion-ease-pressed-scale
     properties: [scale]
     note: "콘텐츠 층만 2px 거리 축소(줄은 세로로 1px 남짓) — 모션 줄이기면 하지 않는다"
+  "하위 줄 — 펼침 · 접힘":
+    duration: $motion-duration-d6
+    easing: $motion-ease-easing
+    properties: [height]
+    note: "Accordion 과 같은 300ms(2026-10-10 사용자 결정 3A)"
+  "하위 줄 — 모션 줄이기":
+    duration: $motion-duration-d3
+    easing: $motion-ease-easing
+    properties: [opacity]
+    note: "높이를 움직이지 않고 하위 줄이 150ms 서서히 나타나고 사라진다(v104 · Accordion 과 같다)"
+  "꺾쇠 단추 — 회전":
+    duration: $motion-duration-d6
+    easing: $motion-ease-easing
+    properties: [rotate]
+    note: "0 → 90°(오른쪽 → 아래) — 모션 줄이기면 바로"

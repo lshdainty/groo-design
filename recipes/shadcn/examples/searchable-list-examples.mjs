@@ -222,7 +222,7 @@ const SHEET_HANDLE = [
   "absolute left-1/2 top-x1_5 h-1 w-9 -translate-x-1/2 cursor-pointer rounded-full bg-stroke-neutral-weak",
   "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
 ].join(" ");
-const SHEET_BODY = "min-h-0 flex-1 overflow-y-auto px-global-gutter";
+const SHEET_BODY = "min-h-0 flex-1 overflow-y-auto overscroll-contain px-global-gutter";
 const SHEET_BODY_PLAIN = "last:pb-x4";
 const SHEET_HEADER = "flex shrink-0 flex-col gap-x2 px-global-gutter pb-x4 pt-x6";
 const SHEET_TITLE = "m-0 text-t8 font-bold text-fg-neutral";

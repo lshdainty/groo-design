@@ -1,73 +1,152 @@
-# Resizable 의 수치 원본 — 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Resizable 의 수치 원본 — HR 관리 화면 나누기 · 대시보드 위젯 크기(2026-10-10 사용자 결정, 펼치고 접기 · 나누기 비교 페이지
+# 12B · 13A). 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
-# 크기 · 색은 조건 없는 규칙(#base), 상태별 값은 direction 규칙(#states.direction)에 있다.
-# hover 커서가 방향마다 달라(ew-resize · ns-resize) direction 축을 둔다. dragging · focus-visible 은
-# 두 방향이 같지만 상태 표에 함께 나오도록 방향 규칙마다 적는다.
-# 상태 표의 "(변화 없음)"(Handle · Grip box)은 각 상태 값의 비고로 옮겼다.
+# 두 가지다(축 kind).
+#   split  — 목록 | 상세 두 패널 사이 손잡이로 목록 폭을 바꾼다(HR 관리 > 역할 · 사용자 · 회사 · 부서 사용자). 768 이상만.
+#            보이는 선 1px + 가운데 손잡이 표시(대비 3 이상) · 누르는 폭 16 · 이름 "목록 너비" · ← → 5% · Home · End ·
+#            목록 20 ~ 40%(오른쪽은 60% 아래로 줄지 않는다) · 화면마다 폭을 기억 · 손잡이를 한 번 누르면 25 ↔ 40(끌지 않는 대안).
+#   widget — HR 대시보드 편집 모드의 위젯 크기. 오른쪽 아래 모서리 손잡이(표식 대비 3 이상) · 끄는 동안 토큰 색 자리표시 ·
+#            끌지 않는 대안은 위젯 ⋮ 의 "크기".
+#
+# SEED 와 다른 자리(resizable.md 의 "SEED 와 다른 점")
+#   - SEED 에는 Resizable 이 없다(모바일 앱 중심이라 끌어서 나누는 패널이 없다) — 값은 모두 porest 가 정했다.
 
 name: Resizable
 
 slots:
-  handle: ⓒ handle — 1px 라인(PanelResizeHandle)
-  hitArea: ⓔ hit area(`::after`)
-  grip: ⓓ grip box — withHandle 옵션일 때만
-  focusRing: 키보드 포커스 링
+  group: 나눈 자리 — split 은 목록 | 상세 두 패널, widget 은 대시보드 칸(격자)
+  panel: 목록 패널(왼쪽) — 폭이 바뀐다. 상세 패널은 남는 폭
+  handle: 손잡이 — 두 패널 사이. role="separator", 누르는 폭 16
+  line: 보이는 선 — 1px
+  grip: 가운데 손잡이 표시 — 4 × 24
+  widgetHandle: 위젯 모서리 손잡이 — 오른쪽 아래, 누르는 24 × 24
+  widgetMark: 모서리 표식 — 9 × 9 꺾쇠
+  placeholder: 끄는 동안 자리표시 — 위젯이 놓일 칸
+  ghost: 끄는 동안 포인터를 따라오는 위젯
+  moreButton: 위젯 머리 ⋮ — "크기" 메뉴를 연다(Button ghost · iconOnly · medium)
+  sizeMenu: 위젯 ⋮ 의 "크기" — 끌지 않는 대안(Menu)
+  focusRing: 키보드 포커스 링(웹) — 손잡이 둘레
 
 variants:
-  direction:
-    horizontal: 좌·우 패널 + vertical handle
-    vertical: 상·하 패널 + horizontal handle
+  kind:
+    split: 패널 나누기 — 목록 | 상세(기본)
+    widget: 대시보드 위젯 크기 — 편집 모드에서만
 
 defaults:
-  direction: horizontal
+  kind: split
 
 states:
-  default: ""
-  hover: ""
-  dragging: ""
-  focus-visible: (keyboard)
+  enabled: 기본
+  hovered: 웹 — 손잡이에 마우스를 올림
+  focused: 웹 — 키보드 포커스
+  pressed: 끄는 동안(누르고 있는 동안)
 
 rules:
-  # ── 크기 · 색 ─────────────────────────────────────────
-  - when: {}
-    default:
+  # ── 패널 나누기 ───────────────────────────────────────
+  - when: { kind: split }
+    enabled:
+      group:
+        direction: { value: 가로, note: "목록 | 상세 — 세로 나누기 · 셋 이상 나누기는 쓰는 곳이 없어 두지 않는다" }
+        breakpoint: { value: 768px 이상, note: "768 미만은 나누지 않는다 — 역할 · 사용자는 목록 → 상세, 회사는 탭(지금과 같다)" }
+      panel:
+        width: { value: 25%, note: "목록 패널의 기본 폭 — 1280 에서 본문 992 의 248(사이드바 240 · 여백 24 × 2)" }
+        minWidth: { value: 20%, note: "목록이 이보다 좁아지지 않는다" }
+        maxWidth: { value: 40%, note: "오른쪽 상세가 60% 아래로 줄지 않는다 — 지금 회사 · 부서 사용자는 0폭까지 민다" }
+        toggleWidth: { value: 40%, note: "손잡이를 한 번 누르면(Enter) 기본 25 ↔ 넓게 40" }
+        persist: { value: 화면마다 기억, note: "끌거나 누른 폭을 브라우저에 저장한다(localStorage — 키는 화면: 역할 · 사용자 · 회사 · 부서 사용자). 사이드바 접힘처럼 다시 열면 그 폭" }
       handle:
-        thickness: { value: 1px, note: "`w-px` (horizontal) / `h-px` (vertical)" }
-        background: $color-border-default
-      hitArea:
-        thickness: { value: 4px, note: "라인 + 좌우 2px씩 — `::after` `w-1 -translate-x-1/2`" }
+        width: { value: 16px, note: "누르는 폭 — 선 가운데로 양쪽 8. 768 이상 데스크톱의 마우스 경계라 44 가 아니다(사용자 결정 12B)" }
+        cursor: col-resize
+        touchAction: { value: none, note: "끄는 동안 화면이 스크롤되지 않게" }
+        touchTarget: { value: 16 × 패널 높이, note: "AA ⚠(폭 16) · AAA ✗ — 같은 일을 누르기(25 ↔ 40) · 키보드로도 한다" }
+        name: { value: 목록 너비, note: "role=separator · aria-orientation=vertical · aria-valuenow(목록 %) · aria-valuemin 20 · aria-valuemax 40 · aria-controls(목록 패널)" }
+        keyboard: { value: "← → 5% · Home 20% · End 40% · Enter 25 ↔ 40", note: "APG Window Splitter — Shift + 화살표는 두지 않는다" }
+        step: { value: 5%, note: "← → 한 번에 — 지금 HR 은 10%" }
+        press: { value: 누르면 25 ↔ 40, note: "끌지 않고 한 번 눌렀다 떼면(3px 안) 기본 25 ↔ 넓게 40 — WCAG 2.5.7 Dragging Movements 의 대안" }
+        dragStart: { value: 3px, note: "누른 채 3px 넘게 움직이면 끌기 — 그 안에서 놓으면 누르기" }
+      line:
+        width: 1px
+        background: { value: $color-stroke-neutral-weak, note: "흰 면 위 1.23 · 다크 1.56 — 경계일 뿐이고 손잡이는 가운데 표시가 알린다" }
+        transitionProperty: background-color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
       grip:
-        width: 12px
-        height: 16px
-        iconSize: { value: 10px, note: "lucide `GripVertical`" }
-        radius: $radius-sm
-        background: $color-surface-default
-        borderColor: $color-border-default
-        borderWidth: 1px
-
-  # ── 상태 ──────────────────────────────────────────────
-  - when: { direction: horizontal }
-    hover:
-      handle:
-        cursor: { value: ew-resize, note: "브라우저 native — Handle · Grip box (변화 없음)" }
-    dragging:
-      handle:
-        attribute: { value: data-resize-handle-active, note: "자동 — document cursor 유지. Handle · Grip box (변화 없음)" }
-    focus-visible:
+        width: 4px
+        height: 24px
+        radius: $radius-r0_5
+        background: { value: $color-stroke-neutral-solid, note: "흰 면 위 4.18 · 다크 4.13(WCAG 1.4.11 ≥ 3) — 지금 HR 은 선 · 손잡이가 모두 #EEEEEE 1.11" }
+        position: { value: 선 가운데, note: "패널 높이의 가운데" }
+    hovered:
+      line:
+        background: { value: $color-stroke-neutral-solid, note: "선 전체가 손잡이 표시와 같은 색 — 끌 수 있는 자리가 보인다" }
+    focused:
+      line:
+        background: $color-stroke-neutral-solid
       focusRing:
-        width: 1px
-        offset: 1px
-        color: { value: $color-border-focus, note: "`ring-1 ring-ring ring-offset-1` — 1px ring, handle이 얇아 작게. Handle · Grip box (변화 없음)" }
+        width: 2px
+        offset: { value: 0px, note: "누르는 폭 16 둘레 — 패널 높이 전체" }
+        radius: $radius-r1
+        color: $color-stroke-focus-ring
+    pressed:
+      line:
+        background: $color-stroke-neutral-solid
+      group:
+        cursor: { value: col-resize, note: "끄는 동안 화면 전체 — 글을 고르지 않는다(user-select none)" }
 
-  - when: { direction: vertical }
-    hover:
-      handle:
-        cursor: { value: ns-resize, note: "브라우저 native — Handle · Grip box (변화 없음)" }
-    dragging:
-      handle:
-        attribute: { value: data-resize-handle-active, note: "자동 — document cursor 유지. Handle · Grip box (변화 없음)" }
-    focus-visible:
+  # ── 위젯 크기 ─────────────────────────────────────────
+  - when: { kind: widget }
+    enabled:
+      group:
+        columns: { value: 12, note: "대시보드 격자 — 지금 HR 값(react-grid-layout). 크기 · 위치는 편집 모드에서만 바꾸고 저장 단추로 서버에 저장한다" }
+        rowHeight: { value: 72px, note: "격자 한 줄 — 지금 HR 값" }
+        gap: { value: $spacing-x4, note: "칸 사이 16 — 지금 HR 값" }
+      widgetHandle:
+        size: { value: 24px, note: "누르는 자리 24 × 24 — 오른쪽 아래 모서리. 지금 20" }
+        cursor: se-resize
+        touchAction: none
+        touchTarget: { value: 24 × 24, note: "AA ✓ · AAA ✗ — 끌지 않는 대안은 ⋮ 의 \"크기\"(moreButton)" }
+      widgetMark:
+        size: { value: 9px, note: "오른쪽 · 아래 두 변만 그린 꺾쇠 — 지금 5" }
+        borderWidth: 2px
+        borderColor: { value: $color-stroke-neutral-solid, note: "카드 면 위 4.18 · 다크 4.13(≥ 3) — 지금 rgba(0,0,0,.4) 는 2.85 · 다크 1.14" }
+        right: { value: 6px, note: "위젯 오른쪽 끝에서" }
+        bottom: { value: 6px, note: "위젯 아래 끝에서" }
+      placeholder:
+        display: { value: 숨김, note: "끄는 동안만 보인다" }
+        background: { value: $color-bg-brand-weak, note: "놓일 칸 — 브랜드 옅은 바탕. 지금은 라이브러리 기본 빨강 20%" }
+        borderWidth: { value: 1px, note: "비교 페이지 13A 그림은 1.5 였지만 크로미움은 1.5px 테두리를 1px 로 그린다(1 · 2배 화면 모두 — 레시피 하네스 실측) — 사용자가 본 모습 그대로 1" }
+        borderStyle: dashed
+        borderColor: { value: $color-stroke-brand-solid, note: "바닥 위 HR 4.69 · 다크 7.05 · 옅은 바탕 위 4.56 · 5.42(≥ 3) — 자리표시의 경계" }
+        radius: { value: $radius-r4, note: "위젯(Card 면)과 같은 16" }
+      ghost:
+        display: { value: 숨김, note: "끄는 동안 포인터를 따라오는 위젯 — 위젯 모양 그대로" }
+        shadow: { value: $shadow-s3, note: "떠 있는 동안만" }
+        radius: $radius-r4
+      moreButton:
+        size: { value: 40px, note: "Button ghost · iconOnly · medium — 표 · 줄의 ⋮ 와 같다. 위젯 머리 오른쪽" }
+        iconSize: { value: 18px, note: "lucide ellipsis-vertical" }
+        touchTarget: { value: 44 × 44, note: "보이는 40 바깥으로 2 씩 — 모서리 손잡이(24)의 끌지 않는 대안. AA ✓ · AAA ✓" }
+        name: { value: "{위젯} 더보기", note: "편집 모드에서만 — 위젯 제목을 붙인다" }
+      sizeMenu:
+        label: { value: 크기, note: "메뉴 묶음 이름(MenuGroupLabel) — 1280 미만은 Menu Sheet" }
+        items: { value: "작게 — 4칸 · 보통 — 6칸 · 넓게 — 8칸 · 가득 — 12칸", note: "누르면 바로 그 폭 — 높이는 그대로. 메뉴는 실행만이라 체크 · 라디오가 없고, 지금 크기 줄에 설명 \"지금 크기\"(menu.md)" }
+    pressed:
+      placeholder:
+        display: { value: 보임, note: "손잡이를 끄는 동안 — 놓을 칸을 칸 단위로" }
+      ghost:
+        display: 보임
+    focused:
       focusRing:
-        width: 1px
-        offset: 1px
-        color: { value: $color-border-focus, note: "`ring-1 ring-ring ring-offset-1` — 1px ring, handle이 얇아 작게. Handle · Grip box (변화 없음)" }
+        width: 2px
+        offset: 2px
+        color: { value: $color-stroke-focus-ring, note: "⋮ 단추의 링(Button) — 모서리 손잡이는 키보드로 닿지 않는다(대안이 ⋮ \"크기\")" }
+
+motion:
+  "선 — 색":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color]
+    note: "올리거나 초점 · 끄는 동안 선이 짙어진다"
+  "목록 폭":
+    properties: [width]
+    note: "끄는 동안 포인터를 1:1 로 따라가고, 키보드 · 누르기는 바로 바뀐다 — 모션이 없다"

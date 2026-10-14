@@ -344,7 +344,8 @@ export function FilterBarDemo({
         ))}
       </ChipGroupView>
       {list && (
-        <div className="min-h-0 flex-1 overflow-y-auto pt-2" style={{ scrollbarWidth: 'none' }}>
+        <div className="psa min-h-0 flex-1 overflow-y-auto pt-2" style={{ '--psa-thumb': t(look, 'stroke-neutral-solid', mode) } as CSSProperties}>
+          {/* 세로 스크롤바는 숨기지 않는다(scroll-area — 6px 알약, .psa). 모드를 정한 그림은 막대 색을 그 모드 값으로 */}
           <TxRows look={look} mode={mode} f={f} />
         </div>
       )}

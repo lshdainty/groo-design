@@ -260,9 +260,13 @@ export function SideNav(props: SideNavProps) {
                         id={`side-sub-${it.value}`}
                         style={{
                           display: 'grid',
+                          // 모션 줄이기면 높이는 바로 바뀌고 하위만 서서히 나타나고 사라진다(side-navigation.yaml 하위 펼침 — v104)
                           gridTemplateRows: isOpen ? '1fr' : '0fr',
                           opacity: isOpen ? 1 : 0,
-                          transition: reduce ? 'none' : `grid-template-rows ${look.sub.motion.duration} ${look.sub.motion.easing}, opacity ${look.sub.motion.duration} ${look.sub.motion.easing}`,
+                          // 접을 때는 서서히 사라진 뒤에 높이를 거둔다(높이 칸의 전환을 사라지는 시간만큼 늦춘다)
+                          transition: reduce
+                            ? `opacity ${look.sub.reduce.duration} ${look.sub.reduce.easing}${isOpen ? '' : `, grid-template-rows 0ms linear ${look.sub.reduce.duration}`}`
+                            : `grid-template-rows ${look.sub.motion.duration} ${look.sub.motion.easing}, opacity ${look.sub.motion.duration} ${look.sub.motion.easing}`,
                         }}
                       >
                         <div style={{ minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>

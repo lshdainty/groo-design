@@ -88,7 +88,7 @@ const CLOSE_SIDE = {
 
 // 본문 — 좌우 24(왼쪽 패널 16), 이 안에서만 스크롤. 맨 끝 자식(바닥이 없으면)이면 아래 24
 const BODY = [
-  "min-h-0 flex-1 overflow-y-auto [touch-action:pan-y_pinch-zoom]",
+  "min-h-0 flex-1 overflow-y-auto overscroll-contain [touch-action:pan-y_pinch-zoom]",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 const BODY_SIDE = { left: "px-x4", right: "px-x6" };
@@ -129,12 +129,18 @@ const SN_ITEM_CONTENT = "relative flex min-w-0 flex-1 items-center gap-x3 [trans
 const SN_ITEM_CONTENT_PRESS = "group-active/side-navigation-item:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-active/side-navigation-item:[scale:1]";
 const SN_ITEM_ICON = "flex shrink-0 [&>svg]:size-5";
 const SN_ITEM_LABEL = "min-w-0 flex-1 py-x1_5 text-t4 font-medium break-keep [overflow-wrap:break-word]";
-const SN_CHEVRON = "size-4 shrink-0 text-fg-neutral-subtle [transition:rotate_var(--motion-duration-d4)_var(--motion-ease-easing)] motion-reduce:transition-none";
-const SN_SUB_LIST = "grid motion-reduce:transition-none";
-const SN_SUB_LIST_OPEN =
-  "visible grid-rows-[1fr] opacity-100 [transition:grid-template-rows_var(--motion-duration-d4)_var(--motion-ease-easing),opacity_var(--motion-duration-d4)_var(--motion-ease-easing),visibility_0s]";
-const SN_SUB_LIST_CLOSED =
-  "invisible grid-rows-[0fr] opacity-0 [transition:grid-template-rows_var(--motion-duration-d4)_var(--motion-ease-easing),opacity_var(--motion-duration-d4)_var(--motion-ease-easing),visibility_0s_linear_var(--motion-duration-d4)]";
+const SN_CHEVRON = "size-4 shrink-0 text-fg-neutral-subtle [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none";
+const SN_SUB_LIST = "grid";
+const SN_SUB_LIST_OPEN = [
+  "visible grid-rows-[1fr] opacity-100",
+  "[transition:grid-template-rows_var(--motion-duration-d6)_var(--motion-ease-easing),opacity_var(--motion-duration-d6)_var(--motion-ease-easing),visibility_0s]",
+  "motion-reduce:[transition:opacity_var(--motion-duration-d3)_var(--motion-ease-easing),visibility_0s]",
+].join(" ");
+const SN_SUB_LIST_CLOSED = [
+  "invisible grid-rows-[0fr] opacity-0",
+  "[transition:grid-template-rows_var(--motion-duration-d6)_var(--motion-ease-easing),opacity_var(--motion-duration-d6)_var(--motion-ease-easing),visibility_0s_linear_var(--motion-duration-d6)]",
+  "motion-reduce:[transition:grid-template-rows_0s_linear_var(--motion-duration-d3),opacity_var(--motion-duration-d3)_var(--motion-ease-easing),visibility_0s_linear_var(--motion-duration-d3)]",
+].join(" ");
 const SN_SUB_UL = "m-0 flex min-h-0 list-none flex-col overflow-hidden p-0";
 const SN_LEAF_LI = "flex";
 const SN_PARENT_LI = "flex flex-col";

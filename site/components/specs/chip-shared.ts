@@ -82,6 +82,8 @@ export const CHIP_TONES = [
   'stroke-neutral-weak',
   'stroke-neutral-subtle',
   'stroke-critical-solid',
+  // 세로 스크롤바 막대(scroll-area.yaml thumbColor — .psa 의 --psa-thumb)
+  'stroke-neutral-solid',
   'chart-orange-weak',
   'chart-orange-contrast',
   'chart-blue-weak',

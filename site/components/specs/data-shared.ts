@@ -169,6 +169,8 @@ export type CardLook = {
   action: { h: number; padL: number; padR: number; radius: number; type: DType; fg: DColor; icon: number; gap: number; touch: number; bg: DColor; press: DPress };
   content: { gap: number };
   list: { itemRadius: number; padBottom: number; look: ListLook };
+  // 카드 안 아코디언(body accordion) — 아래 여백 · 머리 여백(트리거가 제 좌우 24 · 위아래 16 을 가진다)
+  accordion: { padBottom: number; header: { top: number; x: number; bottom: number } };
   stat: {
     label: DType & { fg: DColor };
     value: { weight: number; fg: DColor; marginTop: number; sizes: Record<CardStatSize, DType> };

@@ -234,6 +234,24 @@ export const PROP_LABEL = {
   exitOffsetY: '사라질 때 아래 거리',
   scrollFog: '끝 흐림',
   dragStart: '끌기 시작',
+  // 펼치고 접기 · 나누기 묶음(2026-10-10) — Accordion · Collapsible · Tree View · Resizable · Scroll Area · Scroll Auto Hide · List 하위 줄
+  'heading.level': '머리말 단계',
+  level: '단계',
+  indent: '단계 들임',
+  toggleWidth: '누르면 넓게',
+  persist: '폭 기억',
+  step: '한 번에',
+  rowHeight: '격자 한 줄',
+  bottom: '아래 거리',
+  scrollbarWidth: '스크롤바 굵기',
+  thumbColor: '막대 색',
+  trackColor: '바탕 색',
+  overscrollBehavior: '끝에서 넘침',
+  tabIndex: 'Tab 정지점',
+  follow: '따라가기',
+  snapThreshold: '스냅 기준',
+  snapDuration: '스냅 시간',
+  snapEasing: '스냅 곡선',
 };
 export const PROP_ORDER = Object.keys(PROP_LABEL);
 
@@ -288,6 +306,10 @@ export const PROP_LABEL_BY_COMPONENT = {
   },
   // 배지 묶음의 사이
   Badge: { 'root.gap': '앞 아이콘과 글 사이', 'group.gap': '배지 사이' },
+  // 나눈 자리 — 목록 | 상세를 가로로 나눈다(쌓는 방향이 아니다)
+  Resizable: { 'group.direction': '나누는 방향' },
+  // 나무 줄을 누르면 하는 일(고른다 · 고르며 편다 · 고르며 접는다) — 다른 부품의 누름 피드백(누름)과 다르다
+  TreeView: { 'row.press': '누르면' },
   // 틀 · 그림 · 윤곽 · 그림 위 자리 · 불러오는 동안 · 대체 그림 — 부위 이름까지 한국어로
   ImageFrame: {
     'image.width': '그림 너비',

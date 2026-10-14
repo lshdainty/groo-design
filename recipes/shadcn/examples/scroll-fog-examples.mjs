@@ -119,7 +119,7 @@ const DIALOG_CLOSE = [
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 const DIALOG_BODY = [
-  "min-h-0 flex-1 overflow-y-auto px-x6 first:pt-x6",
+  "min-h-0 flex-1 overflow-y-auto overscroll-contain px-x6 first:pt-x6",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 // 끝 흐림(scrollFog) — 본문 안 여백 위 20(머리가 없으면 24 그대로) · 아래 80(바닥이 있어도), 스크롤 여유도 위 20 · 아래 80
@@ -144,12 +144,12 @@ const LIST_ITEM_VARIANTS = {
 };
 const LIST_ITEM_DEFAULTS = { highlight: "none" };
 const LIST_CONTENT_BASE = [
-  "relative flex w-full px-global-gutter py-x3",
+  "relative flex w-full py-x3",
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:1]",
 ].join(" ");
-const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" } };
-const LIST_CONTENT_DEFAULTS = { align: "center" };
+const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" }, nest: { none: "px-global-gutter", parent: "pl-x1 pr-global-gutter", child: "pl-[104px] pr-global-gutter" } };
+const LIST_CONTENT_DEFAULTS = { align: "center", nest: "none" };
 const LIST_CONTROL_BASE = "cursor-pointer select-none data-[disabled]:cursor-not-allowed";
 const LIST_BODY_BASE = "flex min-w-0 flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
 const LIST_TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral";
@@ -427,19 +427,19 @@ import { ListRadioGroup, ListRadioItem } from "@/components/ui/list"
   {
     title: "칩 줄 · 상자",
     description:
-      "가로로 넘기는 칩 줄(ChipGroup layout=\"scroll\")과 ChipTabsList 는 늘 row 흐림이다 — 따로 켜지 않는다. 좌우 20 이 흐리고, 안쪽 여백이 화면 여백 24 라 처음 · 끝의 칩은 흐리지 않는다. 카드 · 상자 안의 높이를 정한 스크롤은 ScrollFog(use=\"box\" — 기본)로 감싼다 — 넘치는 방향의 양 끝 20, 안쪽 여백 · 스크롤 여유 20. 마스크라 바탕색과 상관없고(흰 면 · 회색 바탕 · 다크 어디서나 같다) 흐린 자리의 칩 · 글도 그대로 눌린다. 안에 초점 가는 요소가 없는 상자는 키보드로 스크롤하도록 tabIndex={0} 과 이름(aria-label)을 준다.",
+      "가로로 넘기는 칩 줄(ChipGroup layout=\"scroll\")과 ChipTabsList 는 늘 row 흐림이다 — 따로 켜지 않는다. 좌우 20 이 흐리고, 안쪽 여백이 화면 여백 24 라 처음 · 끝의 칩은 흐리지 않는다. 카드 · 상자 안의 높이를 정한 스크롤은 ScrollFog(use=\"box\" — 기본)로 감싼다 — 넘치는 방향의 양 끝 20, 안쪽 여백 · 스크롤 여유 20. 마스크라 바탕색과 상관없고(흰 면 · 회색 바탕 · 다크 어디서나 같다) 흐린 자리의 칩 · 글도 그대로 눌린다. 안에 초점 가는 요소가 없는 상자는 키보드로 스크롤하도록 tabIndex={0} · role=\"region\" 과 이름(aria-label)을 준다 — 역할 없는 div 에는 이름을 달 수 없다(Scroll Area). 스크롤바는 전역 한 벌이고, 숨기는 것은 가로 줄(row)뿐이다.",
     jsx: `import { ScrollFog } from "@/components/ui/scroll-fog"
 
 {/* 칩 줄은 따로 켜지 않는다 — layout="scroll" 이면 늘 좌우 20 */}
 <ChipGroup layout="scroll" aria-label="필터">…</ChipGroup>
 
 {/* 카드 안 높이를 정한 스크롤 — 넘치는 방향 양 끝 20 */}
-<ScrollFog className="max-h-60" tabIndex={0} aria-label="이용 약관">
+<ScrollFog className="max-h-60" tabIndex={0} role="region" aria-label="이용 약관">
   <p>{terms}</p>
 </ScrollFog>`,
     render: () =>
       `<div style="${GRID}">${labeled(`<div style="${CARD} padding:var(--spacing-x4) 0;">${chipRow({ label: "필터", chips: CHIPS, selected: "전체" })}</div>`, "row — 좌우 20 · 여백 24")}${labeled(
-        `<div style="${CARD}">${scrollFog({ use: "box", className: "max-h-60", html: `<p style="${P_FIX} padding:0 var(--spacing-x5);">${esc(TERMS)}</p>` })}</div>`,
+        `<div style="${CARD}">${scrollFog({ use: "box", className: "max-h-60", extra: ['tabindex="0"', 'role="region"', 'aria-label="이용 약관"'], html: `<p style="${P_FIX} padding:0 var(--spacing-x5);">${esc(TERMS)}</p>` })}</div>`,
         "box — max-h-60 · 위아래 20",
       )}</div>`,
   },
@@ -455,11 +455,11 @@ import { ListRadioGroup, ListRadioItem } from "@/components/ui/list"
   <div className="px-global-gutter pb-x4 pt-x3"><Button size="large" className="w-full">가계부에 넣기</Button></div>
 </div>`,
     render: () =>
-      `<div style="${GRID}">${labeled(`<div style="${CARD}">${scrollFog({ use: "box", className: "max-h-60", extra: ['tabindex="0"', 'aria-label="거래"'], html: rows(8) })}</div>`, "box — 양 끝 20 · 여백 20")}${labeled(
-        `<div style="${CARD}">${scrollFog({ use: "overlayBody", className: "max-h-72", extra: ['tabindex="0"', 'aria-label="거래"'], html: rows(10) })}</div>`,
+      `<div style="${GRID}">${labeled(`<div style="${CARD}">${scrollFog({ use: "box", className: "max-h-60", extra: ['tabindex="0"', 'role="region"', 'aria-label="거래"'], html: rows(8) })}</div>`, "box — 양 끝 20 · 여백 20")}${labeled(
+        `<div style="${CARD}">${scrollFog({ use: "overlayBody", className: "max-h-72", extra: ['tabindex="0"', 'role="region"', 'aria-label="거래"'], html: rows(10) })}</div>`,
         "overlayBody — 위 20 · 아래 80",
       )}${labeled(
-        `<div style="${CARD} display:flex; flex-direction:column; height:320px;">${scrollFog({ use: "page", className: "min-h-0 flex-1", extra: ['tabindex="0"', 'aria-label="가져온 거래"'], html: rows(10) })}<div style="padding:var(--spacing-x3) var(--spacing-global-gutter) var(--spacing-x4);"><div aria-hidden="true" style="display:grid; place-items:center; height:48px; border-radius:var(--radius-r3); background:var(--color-bg-neutral-inverted); font-family:var(--font-sans); font-size:var(--text-t6); font-weight:700; color:var(--color-fg-neutral-inverted);">가계부에 넣기</div></div></div>`,
+        `<div style="${CARD} display:flex; flex-direction:column; height:320px;">${scrollFog({ use: "page", className: "min-h-0 flex-1", extra: ['tabindex="0"', 'role="region"', 'aria-label="가져온 거래"'], html: rows(10) })}<div style="padding:var(--spacing-x3) var(--spacing-global-gutter) var(--spacing-x4);"><div aria-hidden="true" style="display:grid; place-items:center; height:48px; border-radius:var(--radius-r3); background:var(--color-bg-neutral-inverted); font-family:var(--font-sans); font-size:var(--text-t6); font-weight:700; color:var(--color-fg-neutral-inverted);">가계부에 넣기</div></div></div>`,
         "page — 바닥 버튼 위에서 끝난다",
       )}</div>`,
   },
@@ -468,7 +468,7 @@ import { ListRadioGroup, ListRadioItem } from "@/components/ui/list"
     title: "가로 상자 — box 는 넘치는 방향으로",
     description:
       "box 는 상자의 넘침으로 축을 정한다 — 가로로만 스크롤하는 상자(overflow-x-auto overflow-y-hidden)면 흐림 · 여백 · 스크롤 여유가 좌우 20 으로 간다(data-fog-axis=\"x\"). 넘쳤는지는 재지 않는다. 가로 카드 줄처럼 화면 끝까지 내는 줄은 row 를 쓴다(여백 24).",
-    jsx: `<ScrollFog className="overflow-x-auto overflow-y-hidden" tabIndex={0} aria-label="카드">
+    jsx: `<ScrollFog className="overflow-x-auto overflow-y-hidden" tabIndex={0} role="region" aria-label="카드">
   <div className="flex gap-x3">{cards.map((c) => <CardThumb key={c.id} card={c} />)}</div>
 </ScrollFog>`,
     render: () =>
@@ -477,7 +477,7 @@ import { ListRadioGroup, ListRadioItem } from "@/components/ui/list"
           use: "box",
           axis: "x",
           className: "overflow-x-auto overflow-y-hidden",
-          extra: ['tabindex="0"', 'aria-label="카드"'],
+          extra: ['tabindex="0"', 'role="region"', 'aria-label="카드"'],
           html: `<div class="flex gap-x3">${["현대카드 M", "신한 SOL", "국민 노리", "삼성 taptap", "롯데 라이킷"]
             .map((n) => `<span aria-hidden="true" style="display:flex; align-items:flex-end; width:112px; height:70px; flex-shrink:0; padding:var(--spacing-x2); border-radius:var(--radius-r2); background:linear-gradient(135deg, var(--color-gray-1000), var(--color-gray-800)); font-family:var(--font-sans); font-size:11px; font-weight:700; color:var(--color-static-white);">${n}</span>`)
             .join("")}</div>`,

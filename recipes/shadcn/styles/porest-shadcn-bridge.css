@@ -80,3 +80,45 @@ html {
   word-break: keep-all;
   overflow-wrap: break-word;
 }
+
+/*
+ * 전역 스크롤바 — Scroll Area(2026-10-10, specs/components/scroll-area.yaml). 스크롤은 브라우저 기본이고 모양만 한 벌 둔다 —
+ * 세로 · 가로 6px 알약, 막대 stroke-neutral-solid(흰 면 4.18 · 바닥 3.87 · 떠 있는 표면 4.18, 다크 4.13 · 4.68 · 3.58), 바탕 투명.
+ * 넘치면 늘 보인다(맥 · 폰의 겹침 스크롤바는 OS 설정대로), 올리거나 끌어도 모양이 바뀌지 않는다.
+ * 크로미움 · 사파리는 webkit 규칙, Firefox 만 표준 두 줄. 크로미움은 scrollbar-width · scrollbar-color 가 걸린 요소에서 ::-webkit-scrollbar 를
+ * 쓰지 않아 한 곳에 함께 쓰면 6px 이 10px(thin) · 15px(color 만)로 바뀐다 — 그래서 두 줄은 반드시 @supports 안에 둔다.
+ * 세로 스크롤바는 숨기지 않는다 — 숨기는 것은 가로 줄(칩 줄 · 탭 · 가로 카드 줄 — Scroll Fog row)과 스크롤을 제 모양으로 쓰는
+ * 부품(Wheel Picker 의 휠 · Date Picker 의 이어지는 달)뿐이다.
+ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-stroke-neutral-solid); border-radius: var(--radius-full); }
+::-webkit-scrollbar-corner { background: transparent; }
+
+/* 크로미움은 scrollbar-width · scrollbar-color 가 걸리면 webkit 규칙을 버린다 — 반드시 이 안에 */
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: var(--color-stroke-neutral-solid) transparent; }
+}
+
+/* 가로 줄만 — 세로 스크롤바에는 쓰지 않는다 */
+.scrollbar-hide { scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/*
+ * 위젯 크기 — HR 대시보드 편집 모드(Resizable widget, specs/components/resizable.yaml). react-grid-layout 의 기본 모양(빨강 20% 자리표시 ·
+ * 끄는 위젯 투명도 0.9)을 덮는다. 끄는 동안 놓일 칸은 브랜드 옅은 바탕 + 1px 브랜드 점선 · 모서리 16, 따라오는 위젯은 위젯 모양 그대로
+ * 그림자 s3 · 모서리 16. 모서리 손잡이는 resizable.tsx 의 WidgetResizeHandle 이 그린다. 라이브러리 CSS 가 뒤에 와도 이기도록 격자(.react-grid-layout)부터 짚는다.
+ */
+.react-grid-layout .react-grid-item.react-grid-placeholder {
+  background: var(--color-bg-brand-weak);
+  opacity: 1;
+  border: 1px dashed var(--color-stroke-brand-solid);
+  border-radius: var(--radius-r4);
+  box-sizing: border-box;
+}
+.react-grid-layout .react-grid-item.resizing,
+.react-grid-layout .react-grid-item.react-draggable-dragging {
+  opacity: 1;
+  border-radius: var(--radius-r4);
+  box-shadow: var(--shadow-s3);
+}

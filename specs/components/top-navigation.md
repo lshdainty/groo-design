@@ -144,7 +144,7 @@
 
 ### 스크롤해도 선을 긋지 않는다
 
-바는 스크롤해도 맨 위에 그대로 있고, 목록이 그 밑으로 지나가도 선 · 그림자를 긋지 않는다(SEED Top Navigation — "고정된 영역과 스크롤되는 영역을 구분하기 위해 별도의 시각적인 장치를 표시하지 않습니다"). 데스크톱 머리 아래 늘 있던 1px 선도 걷는다. 바는 스크롤 방향에 따라 숨지 않는다. 한 표면 안에서 머리와 본문이 따로 스크롤되는 [Dialog](dialog.md) · [Side Panel](side-panel.md) · [Side Navigation](side-navigation.md) 은 그 부품의 규칙대로 본문이 스크롤되면 머리 아래 1px 선을 긋는다.
+바는 스크롤해도 맨 위에 그대로 있고, 목록이 그 밑으로 지나가도 선 · 그림자를 긋지 않는다(SEED Top Navigation — "고정된 영역과 스크롤되는 영역을 구분하기 위해 별도의 시각적인 장치를 표시하지 않습니다"). 데스크톱 머리 아래 늘 있던 1px 선도 걷는다. 바는 스크롤 방향에 따라 숨지 않는다 — 원장 머리처럼 스크롤하면 숨는 보조 머리는 바 아래 스크롤 상자 안의 [Scroll Auto Hide](scroll-auto-hide.md) 다(2026-10-10). 한 표면 안에서 머리와 본문이 따로 스크롤되는 [Dialog](dialog.md) · [Side Panel](side-panel.md) · [Side Navigation](side-navigation.md) 은 그 부품의 규칙대로 본문이 스크롤되면 머리 아래 1px 선을 긋는다.
 
 [그림: 스크롤한 목록 — 바 아래 선 · 그림자 없음 · 늘 있던 선](../../site/components/specs/top-navigation.tsx#scroll-guide)
 

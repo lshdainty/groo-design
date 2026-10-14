@@ -145,7 +145,7 @@ rules:
         size: { value: 16px, note: "lucide chevron-down — 접혀 있으면 아래, 펼치면 위" }
         color: $color-fg-neutral-subtle
         transitionProperty: rotate
-        transitionDuration: $motion-duration-d4
+        transitionDuration: { value: $motion-duration-d6, note: "하위 펼침과 같은 300ms — Accordion 과 같다(2026-10-10 사용자 결정 3A)" }
         transitionEasing: $motion-ease-easing
       subItem:
         minHeight: 44px
@@ -278,10 +278,15 @@ motion:
     properties: [width, padding]
     note: "이름은 접히기 시작할 때 사라지고 다 펴진 뒤 나타난다. 모션 줄이기면 바로 바뀐다"
   "하위 펼침":
-    duration: $motion-duration-d4
+    duration: $motion-duration-d6
     easing: $motion-ease-easing
     properties: [height, opacity]
-    note: "꺾쇠도 같은 시간에 돈다"
+    note: "꺾쇠도 같은 시간에 돈다 — 300ms, Accordion 과 같다(2026-10-10 사용자 결정 3A — 그전의 d4 200 은 스펙 초안의 값이었다). 꺾쇠는 모션 줄이기면 바로"
+  "하위 펼침 — 모션 줄이기":
+    duration: $motion-duration-d3
+    easing: $motion-ease-easing
+    properties: [opacity]
+    note: "높이를 움직이지 않고 하위 목록이 150ms 서서히 나타나고 사라진다(v104 · Accordion 과 같다)"
   "펼침 메뉴 — 열림":
     duration: $motion-duration-d3
     easing: $motion-ease-enter

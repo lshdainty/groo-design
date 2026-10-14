@@ -87,15 +87,22 @@ const ITEM_ICON = "flex shrink-0 [&>svg]:size-5";
 // 이름 — t4 · 500 · 위아래 6, 단어 단위로 줄을 바꾼다(말줄임 없음)
 const ITEM_LABEL = "min-w-0 flex-1 py-x1_5 text-t4 font-medium break-keep [overflow-wrap:break-word]";
 
-// 꺾쇠 — 16 · fg-neutral-subtle, 펼치면 위로(200ms)
-const CHEVRON = "size-4 shrink-0 text-fg-neutral-subtle [transition:rotate_var(--motion-duration-d4)_var(--motion-ease-easing)] motion-reduce:transition-none";
+// 꺾쇠 — 16 · fg-neutral-subtle, 펼치면 위로(300ms — 하위 펼침과 같은 시간, 모션 줄이기면 바로)
+const CHEVRON = "size-4 shrink-0 text-fg-neutral-subtle [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none";
 
-// 하위 목록 — 높이 · 투명도로 펼친다(200ms). 접히면 다 접힌 뒤 보이지 않게
-const SUB_LIST = "grid motion-reduce:transition-none";
-const SUB_LIST_OPEN =
-  "visible grid-rows-[1fr] opacity-100 [transition:grid-template-rows_var(--motion-duration-d4)_var(--motion-ease-easing),opacity_var(--motion-duration-d4)_var(--motion-ease-easing),visibility_0s]";
-const SUB_LIST_CLOSED =
-  "invisible grid-rows-[0fr] opacity-0 [transition:grid-template-rows_var(--motion-duration-d4)_var(--motion-ease-easing),opacity_var(--motion-duration-d4)_var(--motion-ease-easing),visibility_0s_linear_var(--motion-duration-d4)]";
+// 하위 목록 — 높이 · 투명도로 펼친다(300ms — Accordion 과 같다). 접히면 다 접힌 뒤 보이지 않게.
+// 모션 줄이기면 높이는 바로 바꾸고 투명도만 150ms — 접을 때는 다 흐려진 뒤 높이를 접는다
+const SUB_LIST = "grid";
+const SUB_LIST_OPEN = [
+  "visible grid-rows-[1fr] opacity-100",
+  "[transition:grid-template-rows_var(--motion-duration-d6)_var(--motion-ease-easing),opacity_var(--motion-duration-d6)_var(--motion-ease-easing),visibility_0s]",
+  "motion-reduce:[transition:opacity_var(--motion-duration-d3)_var(--motion-ease-easing),visibility_0s]",
+].join(" ");
+const SUB_LIST_CLOSED = [
+  "invisible grid-rows-[0fr] opacity-0",
+  "[transition:grid-template-rows_var(--motion-duration-d6)_var(--motion-ease-easing),opacity_var(--motion-duration-d6)_var(--motion-ease-easing),visibility_0s_linear_var(--motion-duration-d6)]",
+  "motion-reduce:[transition:grid-template-rows_0s_linear_var(--motion-duration-d3),opacity_var(--motion-duration-d3)_var(--motion-ease-easing),visibility_0s_linear_var(--motion-duration-d3)]",
+].join(" ");
 
 // 펼침 메뉴 — Menu 표면(폭 200 · 모서리 20 · 떠 있는 바탕 + s3 · 위아래 8 · z-floating). 150ms enter · 100ms exit 로 0.95 ↔ 1 · 투명도
 const FLYOUT = [
@@ -426,7 +433,7 @@ import {
   {
     title: "하위가 지금이면 부모가 펼쳐진 채 — HR",
     description:
-      "하위 항목은 아이콘 없이 이름만이고 부모 이름과 같은 자리(40)에서 시작한다. 하위 하나가 지금 화면이면(휴가 현황) 부모(휴가)는 사용자가 손대지 않아도 펼쳐진 채이고 꺾쇠가 위를 가리킨다 — 하위 항목이 지금 항목이다. 부모를 누르면 하위 목록을 펼치고 접기만 하고(높이 · 투명도 200ms) 어떤 화면으로도 가지 않는다 — 부모에 따로 갈 화면이 필요하면 하위 첫 줄에 둔다(\"전체 보기\"). 빵부스러기 없이 사이드바의 지금 항목과 본문 제목이 위치를 알린다(HR 은 데스크톱 머리가 없다). 묶음 이름은 성격이 다른 항목을 나눌 때만 짧은 명사로 둔다 — 회사 이름처럼 바뀌는 말을 묶음 이름으로 두지 않는다.",
+      "하위 항목은 아이콘 없이 이름만이고 부모 이름과 같은 자리(40)에서 시작한다. 하위 하나가 지금 화면이면(휴가 현황) 부모(휴가)는 사용자가 손대지 않아도 펼쳐진 채이고 꺾쇠가 위를 가리킨다 — 하위 항목이 지금 항목이다. 부모를 누르면 하위 목록을 펼치고 접기만 하고(높이 · 투명도 300ms — Accordion 과 같다, 모션 줄이기면 150ms 서서히) 어떤 화면으로도 가지 않는다 — 부모에 따로 갈 화면이 필요하면 하위 첫 줄에 둔다(\"전체 보기\"). 빵부스러기 없이 사이드바의 지금 항목과 본문 제목이 위치를 알린다(HR 은 데스크톱 머리가 없다). 묶음 이름은 성격이 다른 항목을 나눌 때만 짧은 명사로 둔다 — 회사 이름처럼 바뀌는 말을 묶음 이름으로 두지 않는다.",
     jsx: `<SideNavigationGroup label="근무">
   <SideNavigationItem href="/calendar" icon={<CalendarDays />} label="캘린더" current={path === "/calendar"} />
   {/* 하위가 지금이면 저절로 펼친다 — defaultOpen 을 주지 않아도 */}

@@ -448,9 +448,9 @@ export function LineTabsView({
 
 // ── 내용 칸 ──────────────────────────────────────────────
 // 고른 탭의 내용 — 안 고른 칸은 숨기기만 한다(스크롤 · 입력 상태가 남는다). 포커스할 것이 없어도 Tab 이 선다
-export function TabPanel({ idBase, value, active, children, style }: { idBase: string; value: string; active: boolean; children: ReactNode; style?: CSSProperties }) {
+export function TabPanel({ idBase, value, active, children, style, className }: { idBase: string; value: string; active: boolean; children: ReactNode; style?: CSSProperties; className?: string }) {
   return (
-    <div role="tabpanel" id={panelId(idBase, value)} aria-labelledby={tabId(idBase, value)} tabIndex={0} hidden={!active} style={style}>
+    <div role="tabpanel" id={panelId(idBase, value)} aria-labelledby={tabId(idBase, value)} tabIndex={0} hidden={!active} className={className} style={style}>
       {children}
     </div>
   );

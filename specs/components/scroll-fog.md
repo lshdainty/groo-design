@@ -18,7 +18,7 @@
 
 [그림: 스크롤 상자 · 흐림(깊이) · 여백 — 처음 · 끝에서는 흐림이 빈 여백 위에 놓인다](../../site/components/specs/scroll-fog.tsx#anatomy)
 
-| ⓐ Scroll Area | 스크롤 상자 — 넘친 내용이 이 안에서 스크롤된다. 마스크를 이 상자에 건다. |
+| ⓐ Scroll Area | 스크롤 상자 — 넘친 내용이 이 안에서 스크롤된다. 마스크를 이 상자에 건다. 스크롤바 · 초점 · 이름 규칙은 [Scroll Area](scroll-area.md). |
 | ⓑ Fog | 흐림 — 정한 쪽 가장자리에서 깊이만큼 투명에서 불투명으로. |
 | ⓒ Padding | 여백 — 흐린 쪽에 깊이 이상. |
 
@@ -76,7 +76,7 @@ SEED 의 권장 그대로다 — 가로 스크롤은 좌우 20(정보가 촘촘�
 - 칸 두셋처럼 늘 들어맞는 시트 · 대화상자 본문에는 걸지 않는다 — 스크롤이 생기지 않으니 아래 80 이 빈자리만 늘린다.
 - 탭 바 위의 목록 화면 · 일반 페이지 스크롤에는 걸지 않는다 — 화면 끝이 곧 영역의 끝이고, 탭 바 위 80 이 늘 흐려진다. 탭 바 위 목록은 아래 여백으로 마지막 줄을 바 위에 올린다([Bottom Navigation](bottom-navigation.md) 의 "본문 아래 여백").
 - 부품이 제 안개를 가진 자리 — [Wheel Picker](wheel-picker.md) 의 위아래(min(40%, 3칸)) · [Date Picker](date-picker.md) 이어지는 달의 아래 96 · [Side Navigation](side-navigation.md) 내용의 아래 24 — 는 그 스펙을 따른다. 겹쳐 걸지 않는다.
-- 흐림은 힌트일 뿐이다 — 스크롤 · 키보드 스크롤 · 초점 이동은 그대로 둔다. 가로 줄만 스크롤바를 숨긴다.
+- 흐림은 힌트일 뿐이다 — 스크롤 · 키보드 스크롤 · 초점 이동은 그대로 둔다. 가로 줄만 스크롤바를 숨긴다 — 세로 스크롤바는 전역 한 벌 그대로다([Scroll Area](scroll-area.md), 2026-10-10).
 
 [그림: 거는 자리 · 걸지 않는 자리 — 칩 줄 · 긴 시트 본문 · 짧은 폼 · 탭 바 위 목록](../../site/components/specs/scroll-fog.tsx#where-guide)
 
@@ -115,7 +115,7 @@ import { ScrollFog } from "@/components/ui/scroll-fog"
 <ChipGroup layout="scroll" aria-label="필터">…</ChipGroup>
 
 {/* 카드 안 높이를 정한 스크롤 — 넘치는 방향 양 끝 20 */}
-<ScrollFog className="max-h-60" tabIndex={0} aria-label="이용 약관">
+<ScrollFog className="max-h-60" tabIndex={0} role="region" aria-label="이용 약관">
   <p>{terms}</p>
 </ScrollFog>
 ```
@@ -136,7 +136,7 @@ import { ScrollFog } from "@/components/ui/scroll-fog"
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 흐림 안의 글은 옅어진다 — 깊이만큼 여백이 있어 어떤 글도 흐림 안에 머물지 않는다(스크롤하면 흐림 밖으로 온다) ✓ |
 | **WCAG 2.4.11** Focus Not Obscured — Minimum(AA) | 스크롤 여유를 깊이만큼 둬 키보드 초점이 흐림 아래 멈추지 않는다 ✓ |
-| **WCAG 2.1.1** Keyboard | 스크롤 상자는 키보드로 스크롤된다 — 안에 초점 가는 요소가 없으면 상자에 `tabindex="0"` 과 이름을 준다 ✓ |
+| **WCAG 2.1.1** Keyboard | 스크롤 상자는 키보드로 스크롤된다 — 안에 초점 가는 요소가 없으면 상자에 `tabindex="0"` · `role="region"` 과 이름을 준다([Scroll Area](scroll-area.md) — 역할 없는 `div` 에는 이름을 달 수 없다) ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 흐림 자체는 누르는 것이 아니다 — 해당 없음(흐린 자리의 칩 · 줄은 그대로 눌린다) |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 해당 없음 |
 | **ARIA** | 흐림은 장식 — 역할 · 이름이 없다 |

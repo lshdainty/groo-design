@@ -8935,6 +8935,611 @@ export function renderInputGallery(brand) {
   </section>`;
 }
 
+// 펼치고 접기 · 나누기 — spec: specs/components/accordion.md · collapsible.md · tree-view.md · resizable.md · scroll-area.md · scroll-auto-hide.md ·
+// list.md(하위 줄) · card.md(body accordion) · 수치 accordion.yaml · collapsible.yaml · tree-view.yaml · resizable.yaml · scroll-area.yaml · scroll-auto-hide.yaml · list.yaml.
+// SEED 가 컴포넌트로 가진 것은 Accordion(rootage accordion.json · @seed-design/react 2.0.0)과 Breeze Scroll Auto Hide 뿐이라, Collapsible(Accordion 가이드의
+// 한 줄) · Tree View(APG Treeview) · Resizable(APG Window Splitter) · Scroll Area(전역 스크롤바)는 porest 가 정했다(2026-10-10 사용자 결정 1 ~ 17).
+// 아코디언 .pacc(data-variant inline · separated) > 줄 .pacc-row(항목 .pacc-item · 상세가 없는 줄 .pacc-plain — inline 은 둘째 줄부터 ::before 들인 선) >
+//   머리말 .pacc-heading > 트리거 .pacc-trigger(바탕 층 ::before · 줄 전체) > 콘텐츠 층 .pacc-content(앞 아이콘 .pacc-prefix · 본문 .pacc-body(.pacc-title · .pacc-desc) ·
+//   꺾쇠 .pacc-chevron) + 펼친 내용 .pacc-panel > .pacc-panel-text. 목록 머리 .pacc-header(.pacc-header-title · 모두 펼치기 .pacc-all).
+// 접기 .pcls(data-surface default · card · warning) — 트리거는 아코디언의 .pacc-heading · .pacc-trigger 그대로, 펼친 내용 .pcls-panel > .pcls-panel-inner(data-layout).
+//   경고 상자 .pcls-box > 경고 글 .pcls-box-text + 맨 아래 줄 .pcls[data-surface=warning].
+// 하위 줄 — 03e 의 목록 줄(.plst-row · .plst-content …)에 부모 줄 .pnest-parent(줄 앞 꺾쇠 단추 .pnest-expand · 빈 자리 .pnest-slot) · 하위 줄 묶음 .pnest-sub ·
+//   하위 줄 콘텐츠 층 .pnest-content--child(104)를 더한다(list.tsx 의 ListParentItem).
+// 나무 .ptree(role=tree) > 항목 .ptree-item(role=treeitem) > 줄 .ptree-row(단계 들임은 style) > 콘텐츠 층 .ptree-content(꺾쇠 칸 .ptree-chevron · 아이콘 .ptree-icon ·
+//   이름 .ptree-label) + 하위 묶음 .ptree-group(role=group). 부서 패널 .ptree-panel > 머리 .ptree-head(제목 .ptree-title + ⋮ — 03m 의 menuTrigger).
+// 나누기 .prsz > 목록 패널 .prsz-panel--list(flex-basis %) · 손잡이 .prsz-handle(선 1px) > .prsz-sep(role=separator · 누르는 폭 16) > .prsz-grip(4 × 24) ·
+//   남는 폭 .prsz-panel--fill. 위젯 격자 .prsz-grid > 위젯 .prsz-widget(머리 .prsz-widget-head + ⋮) > 모서리 손잡이 .prsz-corner > 표식 .prsz-mark · 자리표시 .prsz-ph.
+// 스크롤 상자 .pscr(이름이 있으면 role=region · tabindex 0) — 스크롤바는 페이지의 전역 한 벌(pageCss)이다. 숨는 머리 .psah(sticky · top 0 · 옮기기만) — 폰 .psah-phone 의
+//   스크롤 상자 .psah-scroll 맨 위.
+// 화면 틀(.pcol-phone · .pcol-sheet · .pcol-desk · .pcol-floor)과 라이트 · 다크 나란히 틀(.pdsp-pair · .pdsp-theme — 03o)은 갤러리 것이다.
+// 그림은 그 순간을 멈춘 것이고(--hover · --pressed · --focus 클래스), "직접" 견본은 페이지 끝 스크립트가 누르기 · 키보드 · 끌기 · 스크롤에 따라 바꾼다.
+
+// 아이콘 — lucide-react 1.28.0(Desk 웹 판)의 안쪽 마크업
+const COL_ICON_PATHS = {
+  "chevron-down": "<path d=\"m6 9 6 6 6-6\"/>",
+  "chevron-right": "<path d=\"m9 18 6-6-6-6\"/>",
+  "chevron-left": "<path d=\"m15 18-6-6 6-6\"/>",
+  "chevrons-up-down": "<path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/>",
+  "chevrons-down-up": "<path d=\"m7 20 5-5 5 5\"/><path d=\"m7 4 5 5 5-5\"/>",
+  "building-2": "<path d=\"M10 12h4\"/><path d=\"M10 8h4\"/><path d=\"M14 21v-3a2 2 0 0 0-4 0v3\"/><path d=\"M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2\"/><path d=\"M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16\"/>",
+  "utensils": "<path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\"/><path d=\"M7 2v20\"/><path d=\"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\"/>",
+  "house": "<path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\"/><path d=\"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/>",
+  "tag": "<path d=\"M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\"/>",
+  "coffee": "<path d=\"M10 2v2\"/><path d=\"M14 2v2\"/><path d=\"M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1\"/><path d=\"M6 2v2\"/>",
+  "ticket": "<path d=\"M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z\"/><path d=\"M13 5v2\"/><path d=\"M13 17v2\"/><path d=\"M13 11v2\"/>",
+  "credit-card": "<rect width=\"20\" height=\"14\" x=\"2\" y=\"5\" rx=\"2\"/><line x1=\"2\" x2=\"22\" y1=\"10\" y2=\"10\"/>",
+  "search": "<path d=\"m21 21-4.34-4.34\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/>",
+};
+const colSvg = (name, cls = "") => {
+  if (!COL_ICON_PATHS[name]) throw new Error(`펼치고 접기 블록에 아이콘 "${name}" 이 없다 — COL_ICON_PATHS 에 더한다`);
+  return `<svg${cls ? ` class="${cls}"` : ""} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${COL_ICON_PATHS[name]}</svg>`;
+};
+let pcolSeq = 0;
+const nextPcolId = (prefix = "pcol") => `${prefix}-${(pcolSeq += 1)}`;
+const pcolWon = (n) => `${n < 0 ? "−" : ""}${Math.abs(n).toLocaleString("ko-KR")}원`;
+const PCOL_STATES = ["hover", "pressed", "focus"];
+
+// ── 내용 — 지어낸 것이다(가장 나쁜 값: 28자 혜택 제목 · 7줄 상세 · 84자 유의사항 · 23자 부서 이름 · −123,456,789원) ──────────
+const PCOL_LONG_DETAIL = [
+  "■ 할인 대상: 네이버페이 · 카카오페이 · 토스페이 · 페이코 · SSG페이에서 이 카드로 결제한 온라인 가맹점 이용금액",
+  "■ 할인율: 이용금액의 10% 결제일 할인(건당 이용금액 1만 원 이상)",
+  "■ 월 할인 한도: 전월 이용실적 30만 원 이상 50만 원 미만 5천 원 / 50만 원 이상 100만 원 미만 1만 원 / 100만 원 이상 2만 원",
+  "■ 유의사항: 간편결제 내 충전 · 송금 · 상품권 구매 · 대학 등록금 · 아파트 관리비 · 국세 · 지방세 납부는 할인 대상에서 빠져요.",
+  "■ 해외 가맹점 이용분, 무이자 할부 · 부분 무이자 할부 이용분은 할인과 실적 모두에서 빠져요.",
+  "■ 할인 받은 이용금액은 다음 달 전월 실적에 들어가요. 다만 할인 금액만큼은 실적에서 빠져요.",
+  "■ 결제일 할인은 결제일에 청구 금액에서 빠지고, 카드를 해지하면 남은 할인은 사라져요.",
+].join("\n");
+const PCOL_BENEFITS = [
+  { id: "pay", title: "온라인 간편결제 · 배달앱 · 해외 직구 통합 할인", summary: "네이버페이 · 카카오페이 · 토스페이 결제 시 이용금액의 10% 결제일 할인(월 최대 2만 원)", detail: PCOL_LONG_DETAIL },
+  { id: "coffee", title: "커피", summary: "스타벅스 · 투썸플레이스 · 이디야 50% 할인", detail: "■ 할인 대상: 스타벅스 · 투썸플레이스 · 이디야 커피 매장 이용금액\n■ 월 2회 · 회당 최대 5천 원" },
+  { id: "transit", title: "대중교통", summary: "버스 · 지하철 10% 청구할인", detail: null },
+  { id: "telecom", title: "통신", summary: "SKT · KT · LG U+ 자동이체 5천 원 할인", detail: "■ 통신요금을 이 카드로 자동이체할 때\n■ 전월 실적 30만 원 이상" },
+  { id: "store", title: "편의점", summary: "GS25 · CU · 세븐일레븐 5% 할인", detail: null },
+  { id: "movie", title: "영화", summary: "CGV · 롯데시네마 · 메가박스 4천 원 할인", detail: "■ 온라인 예매 포함 · 월 1회" },
+  { id: "fuel", title: "주유", summary: "GS칼텍스 · SK에너지 리터당 60원 할인", detail: "■ 주유소 이용 시 · 월 최대 6천 원\n■ 셀프 주유소 포함" },
+  { id: "abroad", title: "해외", summary: "해외 이용금액 1.5% 적립 · 해외 결제 수수료 면제", detail: "■ 해외 가맹점(온 · 오프라인) 이용금액\n■ 수수료 면제는 브랜드 수수료 제외" },
+  { id: "shop", title: "쇼핑", summary: "쿠팡 · 11번가 · G마켓 7% 할인", detail: "■ 건당 2만 원 이상 · 월 최대 1만 원" },
+  { id: "clinic", title: "병원 · 약국", summary: "병원 · 약국 5% 할인", detail: "■ 월 최대 5천 원" },
+  { id: "sub", title: "구독", summary: "넷플릭스 · 유튜브 프리미엄 · 멜론 30% 할인", detail: "■ 정기결제 이용금액 · 월 최대 5천 원" },
+  { id: "lounge", title: "공항 라운지", summary: "국내외 공항 라운지 연 2회 무료", detail: "■ 본인만 · 동반자 제외\n■ 전월 실적 50만 원 이상" },
+];
+const PCOL_CAUTIONS = [
+  { id: "c1", title: "전월 이용실적에서 제외되는 이용금액: 상품권 · 선불카드 구매 및 충전, 국세 · 지방세 · 공과금, 아파트 관리비, 대학 등록금, 무이자 할부 이용분", detail: "■ 위 이용금액은 전월 실적 산정에서 빠져요.\n■ 할인 받은 이용금액도 할인 금액만큼 실적에서 빠져요." },
+  { id: "c2", title: "연회비 · 카드 발급 후 첫 달 실적 기준", detail: "■ 발급 후 첫 달은 실적 조건 없이 혜택을 받을 수 있어요." },
+  { id: "c3", title: "할인 한도는 서비스별로 따로 적용돼요", detail: null },
+  { id: "c4", title: "혜택 변경 안내", detail: "■ 카드사 사정에 따라 혜택이 바뀔 수 있어요. 바뀌면 6개월 전에 알려요." },
+  { id: "c5", title: "해외 원화결제(DCC) 이용 시 별도 수수료가 붙어요", detail: "■ 해외에서 원화로 결제하면 3 ~ 8% 수수료가 더해져요." },
+];
+const PCOL_SPLITS = [
+  { title: "전세 보증금 잔금(계약금 · 중도금 제외)", category: "주거 · 월세", amount: 100000000, hue: "indigo" },
+  { title: "관리비", category: "주거 · 관리비", amount: 12000000, hue: "indigo" },
+  { title: "휴대폰 · 인터넷 · TV", category: "통신", amount: 456789, hue: "indigo" },
+  { title: "배달 · 포장 · 테이크아웃 주문", category: "식비", amount: 1000000, hue: "orange" },
+  { title: "택시", category: "교통", amount: 5000000, hue: "blue" },
+  { title: "사료 · 간식", category: "반려동물", amount: 5000000, hue: "green" },
+];
+const PCOL_SPLIT_TOTAL = PCOL_SPLITS.reduce((s, x) => s + x.amount, 0);
+const PCOL_SHORTFALL = 3456789;
+const PCOL_QUICK_FIXES = ["첫 내역에 모자란 금액 더하기", "모자란 금액을 새 내역으로", "남은 금액을 내역마다 똑같이 나누기"];
+const PCOL_FILTERS = [["기간", "2026. 10. 1. ~ 2026. 10. 31."], ["작성자", "김민수 · 이서연"], ["프로젝트", "전체"], ["상태", "전체"]];
+// 부서 스물(부모 3 · 잎 17) — 가장 긴 뿌리 이름은 248 패널에서 줄을 바꾼다
+const PCOL_DEPTS = [
+  {
+    id: "root",
+    label: "포레스트 디지털혁신본부 클라우드 플랫폼 운영 그룹",
+    children: [
+      { id: "infra", label: "클라우드 인프라팀", children: [{ id: "k8s", label: "쿠버네티스 운영 파트" }, { id: "net", label: "네트워크 · 보안 파트(야간 당직 포함)" }] },
+      { id: "data", label: "데이터 플랫폼팀", children: [{ id: "eng", label: "데이터 엔지니어링 파트" }, { id: "ana", label: "분석 파트" }] },
+      { id: "ops", label: "경영지원팀" },
+      ...Array.from({ length: 12 }, (_, i) => ({ id: `p${i + 1}`, label: `프로젝트 ${i + 1}팀` })),
+    ],
+  },
+];
+const PCOL_DEPT_PARENTS = ["root", "infra", "data"];
+const PCOL_CATEGORIES = [
+  { id: "food", name: "식비 · 외식 · 배달음식", icon: "utensils", hue: "orange", children: ["배달 · 포장 주문 음식", "장보기 · 마트 · 시장", "회식 · 모임 식비", "카페 · 디저트 · 간식", "점심 · 구내식당 식비", "편의점 · 간편식 · 야식"] },
+  { id: "home", name: "주거 · 통신비 · 관리비", icon: "house", hue: "indigo", children: ["월세 · 전세 대출 이자", "아파트 관리비 · 수도", "휴대폰 · 인터넷 · TV", "전기 · 가스 요금", "가전 · 가구 수리비"] },
+  { id: "etc", name: "기타", icon: "tag", hue: "gray", children: [] },
+];
+// 가계부 원장 — 10월 8일부터 하루 4줄 · 열흘(첫 줄은 1억 넘는 이체)
+const PCOL_LEDGER = (() => {
+  const pool = [
+    ["김밥천국 강남점", "식비 · 삼성카드 taptap O", 9500, "orange", "utensils"],
+    ["파리바게뜨", "카페 · 간식 · 토스 체크카드", 4800, "orange", "coffee"],
+    ["티머니", "교통 · 토스 체크카드", 1450, "blue", "credit-card"],
+    ["무신사", "쇼핑 · 삼성카드 taptap O", 58900, "violet", "tag"],
+    ["스타벅스 역삼점", "카페 · 간식 · 현대카드 M", 6300, "orange", "coffee"],
+    ["GS25 역삼점", "식비 · 토스 체크카드", 3200, "orange", "utensils"],
+    ["쿠팡", "쇼핑 · 현대카드 M", 27400, "violet", "tag"],
+    ["배달의민족", "식비 · 삼성카드 taptap O", 23900, "orange", "utensils"],
+  ];
+  const days = ["10월 8일 (목) · 오늘", "10월 7일 (수)", "10월 6일 (화)", "10월 5일 (월)", "10월 4일 (일)", "10월 3일 (토)", "10월 2일 (금)", "10월 1일 (목)", "9월 30일 (수)", "9월 29일 (화)"];
+  return days.map((label, d) => ({
+    label,
+    rows: Array.from({ length: 4 }, (_, j) => {
+      if (d === 0 && j === 0) return { title: "(주)한빛공인중개사사무소 · 한빛이사 · 깨끗한청소", sub: "주거 · 계좌이체 · 10:00", amount: -123456789, hue: "indigo", icon: "house" };
+      const [title, sub, a, hue, icon] = pool[(d * 4 + j) % pool.length];
+      return { title, sub: `${sub} · ${String(19 - j * 3).padStart(2, "0")}:${String(((d * 4 + j) * 7) % 60).padStart(2, "0")}`, amount: -(a + ((d * 4 + j) % 5) * 100), hue, icon };
+    }),
+  }));
+})();
+
+// ── Accordion ────────────────────────────────────────────────────────────
+// 항목 하나 — 트리거(머리말 안의 단추 · 줄 전체) + 펼친 내용. 글은 여기서 escape 한다.
+//   variant  inline · separated(링의 모서리 14 — 항목 모서리를 따른다)
+//   state    hover · pressed · focus — 그 순간을 멈춘 트리거(갤러리 전용)
+//   level    머리말 단계(기본 3)
+function paccItem({ uid = nextPcolId("pacc"), variant = "inline", title, description = "", icon = "", detail = "", open = false, disabled = false, level = 3, state = "" } = {}) {
+  const tid = `${uid}-trigger`;
+  const pid = `${uid}-panel`;
+  const trigger = `<button ${attrsOf([
+    `class="pacc-trigger${PCOL_STATES.includes(state) ? ` pacc-trigger--${state}` : ""}"`,
+    'type="button"',
+    `id="${tid}"`,
+    `aria-expanded="${open ? "true" : "false"}"`,
+    `aria-controls="${pid}"`,
+    disabled && "disabled",
+  ])}><span class="pacc-content">${icon ? `<span class="pacc-prefix" aria-hidden="true">${colSvg(icon)}</span>` : ""}<span class="pacc-body"><span class="pacc-title">${escape(title)}</span>${
+    description ? `<span class="pacc-desc">${escape(description)}</span>` : ""
+  }</span>${colSvg("chevron-down", "pacc-chevron")}</span></button>`;
+  return `<div class="pacc-row pacc-item" data-state="${open ? "open" : "closed"}"${disabled ? " data-disabled" : ""}><h${level} class="pacc-heading">${trigger}</h${level}><div class="pacc-panel" id="${pid}"${open ? "" : " hidden"}><div class="pacc-panel-text">${escape(detail)}</div></div></div>`;
+}
+// 상세가 없는 항목 — 트리거가 아닌 그냥 줄. 꺾쇠 · 단추 · 머리말 없이 같은 높이 · 같은 글 시작
+const paccPlain = ({ title, description = "", icon = "" } = {}) =>
+  `<div class="pacc-row pacc-plain"><div class="pacc-content">${icon ? `<span class="pacc-prefix" aria-hidden="true">${colSvg(icon)}</span>` : ""}<span class="pacc-body"><span class="pacc-title">${escape(title)}</span>${description ? `<span class="pacc-desc">${escape(description)}</span>` : ""}</span></div></div>`;
+// 아코디언 — rows 는 그린 줄(paccItem · paccPlain). live 면 누르기 · 키보드 · 모션(페이지 끝 스크립트)
+const pacc = ({ id = nextPcolId("pacc-root"), variant = "inline", rows = [], live = false } = {}) =>
+  `<div ${attrsOf([`class="pacc"`, `id="${id}"`, `data-variant="${variant}"`, live && "data-pacc-live"])}>${rows.join("")}</div>`;
+// 모두 펼치기 — 글 단추(보이는 32 · 누르는 44). 상세가 있는 항목이 모두 펼쳐져 있으면 "모두 접기"
+const paccAll = ({ controls, allOpen = false, live = false, state = "" } = {}) =>
+  `<button ${attrsOf([`class="pacc-all${PCOL_STATES.includes(state) ? ` pacc-all--${state}` : ""}"`, 'type="button"', `aria-controls="${controls}"`, live && "data-pacc-all", `data-state="${allOpen ? "expanded" : "collapsed"}"`])}><span>${allOpen ? "모두 접기" : "모두 펼치기"}</span>${colSvg(allOpen ? "chevrons-down-up" : "chevrons-up-down")}</button>`;
+// 목록 머리 — 시트 · 대화상자에서 아코디언 위 한 줄(높이 32 · 아래 8 · 제목 16 / 22 · 700)
+const paccHeader = (title, right = "") => `<div class="pacc-header"><div class="pacc-header-title">${escape(title)}</div>${right}</div>`;
+// 혜택 · 유의사항 줄 — 상세가 있으면 항목, 없으면 그냥 줄
+const paccBenefitRows = ({ variant = "inline", open = [], uid = nextPcolId("pacc-b"), list = PCOL_BENEFITS, describe = true, states = {} } = {}) =>
+  list.map((b) => (b.detail
+    ? paccItem({ uid: `${uid}-${b.id}`, variant, title: b.title, description: describe ? b.summary : "", detail: b.detail, open: open.includes(b.id), state: states[b.id] || "" })
+    : paccPlain({ title: b.title, description: describe ? b.summary : "" })));
+
+// ── Collapsible ──────────────────────────────────────────────────────────
+// 접는 자리 하나 — 트리거는 아코디언 항목 모양 그대로. surface default · card · warning(경고 상자의 맨 아래 줄), layout text · rows
+function pcls({ uid = nextPcolId("pcls"), surface = "default", title, description = "", layout = "text", open = false, disabled = false, content = "", state = "", live = false } = {}) {
+  const tid = `${uid}-trigger`;
+  const pid = `${uid}-panel`;
+  const trigger = `<button ${attrsOf([
+    `class="pacc-trigger${PCOL_STATES.includes(state) ? ` pacc-trigger--${state}` : ""}"`,
+    'type="button"',
+    `id="${tid}"`,
+    `aria-expanded="${open ? "true" : "false"}"`,
+    `aria-controls="${pid}"`,
+    disabled && "disabled",
+  ])}><span class="pacc-content"><span class="pacc-body"><span class="pacc-title">${escape(title)}</span>${description ? `<span class="pacc-desc">${escape(description)}</span>` : ""}</span>${colSvg("chevron-down", "pacc-chevron")}</span></button>`;
+  return `<div ${attrsOf([`class="pcls"`, `data-surface="${surface}"`, `data-state="${open ? "open" : "closed"}"`, disabled && "data-disabled", live && "data-pcls-live"])}><h3 class="pacc-heading">${trigger}</h3><div class="pcls-panel" id="${pid}"${open ? "" : " hidden"}><div class="pcls-panel-inner" data-layout="${layout}">${content}</div></div></div>`;
+}
+// 화면의 내용 — 분할 줄 · 경고 글 · 빠르게 맞추기의 고를 것 · 검색 조건 칸
+const pclsSplitRows = (n = PCOL_SPLITS.length) => PCOL_SPLITS.slice(0, n).map((s) => `<div class="pcls-split"><span class="pcls-split-dot" style="--pcls-dot: var(--color-chart-${s.hue});" aria-hidden="true"></span><span class="pcls-split-body"><span class="pcls-split-title">${escape(s.title)}</span><span class="pcls-split-sub">${escape(s.category)}</span></span><span class="pcls-split-amount">${pcolWon(-s.amount)}</span></div>`).join("");
+const pclsShortfall = () => `<div class="pcls-shortfall"><span class="pcls-shortfall-title">분할 합계가 ${pcolWon(PCOL_SHORTFALL)} 모자라요.</span><span class="pcls-shortfall-sub">거래 ${pcolWon(PCOL_SPLIT_TOTAL)} · 분할 합계 ${pcolWon(PCOL_SPLIT_TOTAL - PCOL_SHORTFALL)}</span></div>`;
+const pclsQuickFixes = () => `<div class="pcls-fixes">${PCOL_QUICK_FIXES.map((t) => `<button class="pcls-fix" type="button">${escape(t)}</button>`).join("")}</div>`;
+const pclsFilters = (cols = 4) => `<div class="pcls-filters" style="--pcls-cols: ${cols};">${PCOL_FILTERS.map(([k, v]) => `<label class="pcls-filter"><span class="pcls-filter-label">${escape(k)}</span><input class="pcls-filter-input" type="text" readonly value="${escape(v)}"></label>`).join("")}</div>`;
+// 경고 상자 — 화면이 그린다(바탕 · 1px · 모서리 12 · 경고 글 위 14 · 좌우 16 · 아래 12) + 맨 아래 줄의 Collapsible
+//   short — 상태 표 칸처럼 좁은 자리에는 경고 글 한 줄만
+const pclsWarningBox = (collapsible, { short = false } = {}) =>
+  `<div class="pcls-box"><div class="pcls-box-text">${short ? `<div class="pcls-shortfall"><span class="pcls-shortfall-title">${pcolWon(PCOL_SHORTFALL)} 모자라요.</span></div>` : pclsShortfall()}</div>${collapsible}</div>`;
+
+// ── List 하위 줄 ─────────────────────────────────────────────────────────
+// 카테고리 타일 40 — 03e 의 .plst-tile(카테고리 색의 옅은 바탕 + 그 색 아이콘 20)
+const pnestTile = (c) => `<span class="plst-tile plst-tile--${c.hue}">${colSvg(c.icon)}</span>`;
+// 누르는 줄(편집) — 03e 의 줄 짜임. child 면 하위 줄(콘텐츠 층 왼쪽 104)
+const pnestRow = ({ title, detail, prefix, child = false, state = "" }) =>
+  `<li class="plst-row${PCOL_STATES.includes(state) ? ` plst-row--${state}` : ""}"><div class="plst-content${child ? " pnest-content--child" : ""}"><span class="plst-prefix">${prefix}</span><button type="button" class="plst-body plst-action" data-list-action=""><span class="plst-title">${escape(title)}</span><span class="plst-detail">${escape(detail)}</span></button></div></li>`;
+// 부모 줄 — 줄 앞 꺾쇠 단추 44(이름 고정 "{카테고리} 하위 카테고리" + aria-expanded) · 하위가 없으면 같은 폭의 빈 자리. 하위 줄 묶음은 접히면 hidden
+function pnestParent({ c, open = true, live = false, buttonState = "" }) {
+  const subId = nextPcolId("pnest-sub");
+  const has = c.children.length > 0;
+  const lead = has
+    ? `<button ${attrsOf([`class="pnest-expand${PCOL_STATES.includes(buttonState) ? ` pnest-expand--${buttonState}` : ""}"`, 'type="button"', `aria-expanded="${open ? "true" : "false"}"`, `aria-controls="${subId}"`, `aria-label="${escape(`${c.name} 하위 카테고리`)}"`, live && "data-pnest-toggle"])}>${colSvg("chevron-right", "pnest-chevron")}</button>`
+    : '<span class="pnest-slot" aria-hidden="true"></span>';
+  const row = `<div class="plst-row pnest-row"><div class="plst-content pnest-content--parent">${lead}<span class="plst-prefix">${pnestTile(c)}</span><button type="button" class="plst-body plst-action" data-list-action=""><span class="plst-title">${escape(c.name)}</span><span class="plst-detail">${escape(`지출 · ${has ? `하위 ${c.children.length}개` : "하위 없음"}`)}</span></button></div></div>`;
+  const sub = has ? `<ul class="plst pnest-sub" id="${subId}"${open ? "" : " hidden"}>${c.children.map((k) => pnestRow({ title: k, detail: "지출", prefix: pnestTile(c), child: true })).join("")}</ul>` : "";
+  return `<li class="pnest-parent">${row}${sub}</li>`;
+}
+const pnestList = ({ open = ["food"], live = false, label = "지출 카테고리", states = {} } = {}) =>
+  `<ul class="plst pnest"${live ? " data-pnest-live" : ""} aria-label="${escape(label)}">${PCOL_CATEGORIES.map((c) => pnestParent({ c, open: open.includes(c.id), live, buttonState: states[c.id] || "" })).join("")}</ul>`;
+
+// ── Tree View ────────────────────────────────────────────────────────────
+// 나무 — role=tree. 줄 전체가 누르는 자리(16D — 부모는 고르면서 펴고 접는다), 꺾쇠는 표시만. Tab 정지점은 고른 항목(없으면 첫 항목) 하나다.
+//   collapsible  false 면 늘 펼친 나무 — 꺾쇠 · 꺾쇠 칸 · aria-expanded 없음
+//   state        { id, i } — 그 순간을 멈춘 줄(hover · pressed · focus)
+function ptree({ id = nextPcolId("ptree"), nodes = PCOL_DEPTS, selectedId = null, expandedIds = PCOL_DEPT_PARENTS, collapsible = true, name = 'aria-label="부서"', live = false, state = null } = {}) {
+  const expanded = new Set(expandedIds);
+  const shown = (target, list = nodes, vis = true) => {
+    for (const n of list) {
+      if (n.id === target) return vis;
+      const kids = n.children ?? [];
+      if (kids.length && shown(target, kids, vis && (!collapsible || expanded.has(n.id)))) return true;
+    }
+    return false;
+  };
+  const tabStop = selectedId && shown(selectedId) ? selectedId : nodes[0].id;
+  const item = (n, level, pos, size) => {
+    const kids = n.children ?? [];
+    const parent = kids.length > 0;
+    const open = !collapsible || expanded.has(n.id);
+    const sel = selectedId === n.id;
+    const st = state && state.id === n.id && PCOL_STATES.includes(state.i) ? ` ptree-item--${state.i}` : "";
+    const labelId = `${id}-${n.id}-label`;
+    const chevron = collapsible ? `<span class="ptree-chevron" aria-hidden="true">${parent ? colSvg("chevron-right") : ""}</span>` : "";
+    const row = `<div class="ptree-row" style="--ptree-level: ${level - 1};"><span class="ptree-content">${chevron}<span class="ptree-icon" aria-hidden="true">${colSvg("building-2")}</span><span class="ptree-label" id="${labelId}">${escape(n.label)}</span></span></div>`;
+    const group = parent ? `<ul class="ptree-group" role="group" id="${id}-${n.id}-group"${open ? "" : " hidden"}>${kids.map((k, i) => item(k, level + 1, i + 1, kids.length)).join("")}</ul>` : "";
+    return `<li ${attrsOf([
+      `class="ptree-item${st}"`,
+      'role="treeitem"',
+      `tabindex="${tabStop === n.id ? 0 : -1}"`,
+      `aria-level="${level}"`,
+      `aria-setsize="${size}"`,
+      `aria-posinset="${pos}"`,
+      collapsible && parent && `aria-expanded="${open ? "true" : "false"}"`,
+      `aria-selected="${sel ? "true" : "false"}"`,
+      `aria-labelledby="${labelId}"`,
+      `data-id="${n.id}"`,
+      sel && "data-selected",
+    ])}>${row}${group}</li>`;
+  };
+  return `<ul ${attrsOf([`class="ptree${collapsible ? "" : " ptree--fixed"}"`, 'role="tree"', `id="${id}"`, name, live && "data-ptree-live"])}>${nodes.map((n, i) => item(n, 1, i + 1, nodes.length)).join("")}</ul>`;
+}
+const ptreeFind = (id, list = PCOL_DEPTS) => {
+  for (const n of list) {
+    if (n.id === id) return n;
+    const f = ptreeFind(id, n.children ?? []);
+    if (f) return f;
+  }
+  return null;
+};
+
+// ── Resizable ────────────────────────────────────────────────────────────
+// 나누기 — 목록 패널(폭 %) | 손잡이(선 1px · 누르는 폭 16 · 손잡이 표시 4 × 24) | 남는 폭. state 는 hover · focus · drag(끄는 동안 — data-active)
+function prsz({ listId = nextPcolId("prsz-list"), size = 25, min = 20, max = 40, label = "목록 너비", state = "", live = "", left = "", right = "" } = {}) {
+  const sep = `<div ${attrsOf([
+    `class="prsz-sep${state === "focus" ? " prsz-sep--focus" : ""}"`,
+    'role="separator"',
+    'tabindex="0"',
+    `aria-label="${escape(label)}"`,
+    'aria-orientation="vertical"',
+    `aria-valuenow="${Math.round(size)}"`,
+    `aria-valuemin="${min}"`,
+    `aria-valuemax="${max}"`,
+    `aria-valuetext="${Math.round(size)}%"`,
+    `aria-controls="${listId}"`,
+  ])}><span class="prsz-grip" aria-hidden="true"></span></div>`;
+  const handle = `<div class="prsz-handle${state === "hover" ? " prsz-handle--hover" : ""}"${state === "drag" ? " data-active" : ""}>${sep}</div>`;
+  return `<div ${attrsOf(['class="prsz"', live && `data-prsz-live="${live}"`, 'data-prsz-default="25"', 'data-prsz-toggle="40"'])}><div class="prsz-panel prsz-panel--list" id="${listId}" style="flex-basis: ${size}%;">${left}</div>${handle}<div class="prsz-panel prsz-panel--fill">${right}</div></div>`;
+}
+// 화면의 내용 — 부서 나무(이름만) · 조직도
+const prszTreePane = () => `<div class="prsz-pane"><div class="prsz-pane-title">부서</div>${["포레스트 디지털혁신본부 클라우드 플랫폼 운영 그룹", "클라우드 인프라팀", "데이터 플랫폼팀", "경영지원팀", "프로젝트 1팀", "프로젝트 2팀"].map((d, i) => `<div class="prsz-pane-row${d === "경영지원팀" ? " prsz-pane-row--on" : ""}" style="--ptree-level: ${i === 0 ? 0 : 1};">${escape(d)}</div>`).join("")}</div>`;
+const prszChartPane = () => `<div class="prsz-pane prsz-pane--chart"><div class="prsz-pane-title">경영지원팀 · 조직도</div><div class="prsz-people">${["팀장 김하늘", "이도윤", "박서연", "최민준", "정우진"].map((p) => `<span class="prsz-person">${escape(p)}</span>`).join("")}</div></div>`;
+// 위젯 — 대시보드 편집 모드의 위젯 하나(Card 면 · 머리 ⋮ · 오른쪽 아래 모서리 손잡이 24 · 표식 9). cols 는 12칸 가운데 몇 칸
+const PRSZ_SIZES = [
+  { label: "작게 — 4칸", cols: 4 },
+  { label: "보통 — 6칸", cols: 6 },
+  { label: "넓게 — 8칸", cols: 8 },
+  { label: "가득 — 12칸", cols: 12 },
+];
+//   menu  none(⋮ 만) · open(크기 메뉴를 연 순간) · live(페이지 끝 스크립트 — 03m 의 메뉴가 열고, 고르면 이 블록의 스크립트가 폭을 바꾼다)
+//   ghost 끄는 동안 따라오는 위젯(그림자 s3)
+function prszWidget({ title, cols = 6, rows = 2, body = "", menu = "none", ghost = false, area = "" }) {
+  const groups = [{ label: "크기", items: PRSZ_SIZES.map((s) => ({ label: s.label, description: s.cols === cols ? "지금 크기" : "" })) }];
+  const more = menuTrigger({ name: `${title} 더보기`, live: menu === "live", menu: menu === "none" ? null : groups });
+  const place = area ? `grid-area: ${area};` : `--prsz-cols: ${cols}; --prsz-rows: ${rows};`;
+  return `<div ${attrsOf([`class="prsz-widget${ghost ? " prsz-widget--ghost" : ""}${menu === "open" ? " prsz-widget--menu" : ""}"`, `style="${place}"`, `data-prsz-cols="${cols}"`])}><div class="prsz-widget-head"><span class="prsz-widget-title">${escape(title)}</span>${more}</div>${body ? `<div class="prsz-widget-body">${escape(body)}</div>` : ""}<span class="prsz-corner" aria-hidden="true"><span class="prsz-mark"></span></span></div>`;
+}
+
+// 끄는 동안 놓일 칸 — 옅은 브랜드 바탕 + 1px 브랜드 점선 · 모서리 16(bridge CSS 의 .react-grid-placeholder 와 같은 값)
+const prszPlaceholder = (area) => `<div class="prsz-ph" style="grid-area: ${area};" aria-hidden="true"></div>`;
+
+// ── Scroll Area · Scroll Auto Hide ───────────────────────────────────────
+// 스크롤 상자 — 이름(label)을 주면 role=region · tabindex 0 · aria-label(안에 초점 가는 것이 없는 상자), contain 은 시트 · 대화상자 안
+const pscr = ({ label = "", contain = false, height = 0, maxHeight = 0, cls = "", html = "", state = "" } = {}) =>
+  `<div ${attrsOf([
+    `class="pscr${contain ? " pscr--contain" : ""}${state === "focus" ? " pscr--focus" : ""}${cls ? ` ${cls}` : ""}"`,
+    label && 'role="region"',
+    label && 'tabindex="0"',
+    label && `aria-label="${escape(label)}"`,
+    (height || maxHeight) && `style="${height ? `height: ${height}px;` : ""}${maxHeight ? `max-height: ${maxHeight}px;` : ""}"`,
+  ])}>${html}</div>`;
+// 가계부 원장 머리 — 월 이동 · 총액 · 소비 요약 · 월 달력(이름 고정 + aria-expanded — 하나만 펼친다) · 주 달력
+function psahLedgerHeader({ id = nextPcolId("psah-head"), chips = false } = {}) {
+  const sumId = `${id}-summary`;
+  const calId = `${id}-calendar`;
+  const week = [["일", 4], ["월", 5], ["화", 6], ["수", 7], ["목", 8], ["금", 9], ["토", 10]];
+  return `<div class="psah-ledger"><div class="psah-month"><button class="psah-icon" type="button" aria-label="이전 달">${colSvg("chevron-left")}</button><span class="psah-month-title">2026년 10월</span><button class="psah-icon" type="button" aria-label="다음 달">${colSvg("chevron-right")}</button></div><div class="psah-total"><span class="psah-total-label">10월 지출</span><span class="psah-total-value">${pcolWon(-125870220)}</span></div><div class="psah-toggles"><button class="psah-toggle" type="button" aria-expanded="false" aria-controls="${sumId}" data-psah-toggle>소비 요약${colSvg("chevron-down")}</button><button class="psah-toggle" type="button" aria-expanded="false" aria-controls="${calId}" data-psah-toggle>월 달력${colSvg("chevron-down")}</button></div><div class="psah-drop" id="${sumId}" hidden><div class="psah-summary">${[["식비", 412300], ["쇼핑", 186300], ["교통", 54800]].map(([k, v]) => `<span><b>${escape(k)}</b>${pcolWon(-v)}</span>`).join("")}</div></div><div class="psah-drop" id="${calId}" hidden><div class="psah-month-grid">${Array.from({ length: 35 }, (_, i) => `<span>${i - 3 > 0 && i - 3 <= 31 ? i - 3 : ""}</span>`).join("")}</div></div>${
+    chips ? `<div class="psah-chips" role="group" aria-label="필터">${["식비", "현대카드 M", "1만 원 이상"].map((c) => `<span class="psah-chip">${escape(c)}</span>`).join("")}</div>` : ""
+  }<div class="psah-week">${week.map(([d, n]) => `<span class="psah-day${n === 8 ? " psah-day--today" : ""}">${d}<b>${n}</b></span>`).join("")}</div></div>`;
+}
+const psahList = () => PCOL_LEDGER.map((d) => `<div class="psah-group"><div class="psah-group-label">${escape(d.label)}</div>${d.rows.map((r) => `<div class="psah-row"><span class="plst-tile plst-tile--${r.hue === "violet" ? "violet" : r.hue}">${colSvg(r.icon)}</span><span class="psah-row-body"><span class="psah-row-title">${escape(r.title)}</span><span class="psah-row-sub">${escape(r.sub)}</span></span><span class="psah-row-amount">${pcolWon(r.amount)}</span></div>`).join("")}</div>`).join("");
+// 폰 가계부 — 상단 바 56 · Line Tabs 는 숨지 않고, 그 아래 스크롤 상자 맨 위에 숨는 머리(.psah — sticky · top 0 · 바탕 흰 면 · z 2)
+const psahPhone = ({ live = "", chips = false, height = 640 } = {}) =>
+  `<div class="psah-phone" style="--psah-h: ${height}px;"><div class="psah-bar"><span class="psah-bar-title">가계부</span><button class="psah-icon" type="button" aria-label="검색">${colSvg("search")}</button></div><div class="psah-tabs" role="tablist" aria-label="가계부">${["내역", "예산", "자산"].map((t, i) => `<span class="psah-tab" role="tab" aria-selected="${i === 0}"${i === 0 ? ' tabindex="0"' : ' tabindex="-1"'}>${t}</span>`).join("")}</div><div class="psah-scroll"${live ? ` data-psah-live="${live}"` : ""}><div class="psah">${psahLedgerHeader({ chips })}</div>${psahList()}</div></div>`;
+
+// 펼치고 접기 · 나누기 갤러리 — Accordion 다섯 · Collapsible 둘 · List 하위 줄 하나 · Tree View 셋 · Resizable 셋 · Scroll Area 둘 · Scroll Auto Hide 하나,
+// 판을 흰 표면(.vignette-card) 위에 그린다. 견본 틀(.ptf-samples · .ptf-cap)과 상태 표(.cb-matrix)는 Text Field 갤러리 것, 라이트 · 다크 나란히 틀(.pdsp-pair ·
+// .pdsp-theme)은 03o 것이다 — 나란히 틀에는 이 블록의 부품과 03e 의 목록 줄 · 03m 의 ⋮ 만 담는다(메뉴는 페이지 테마를 따른다).
+// 글은 각 스펙 md 의 코드 예와 같은 자리다 — Desk(카드 혜택 · 유의사항 · 거래 분할 · 카테고리 · 가계부 원장)와 HR(업무 보고 검색 조건 · 부서 나무 · 관리 화면 · 대시보드).
+export function renderCollapseGallery(brand) {
+  const desk = brand.key === "desk";
+  const panel = (title, sub, body) => `
+    <div class="vignette-card cb-panel pcol-panel">
+      <div class="vignette-head">
+        <div class="vignette-title">${escape(title)}</div>
+        <div class="vignette-sub">${escape(sub)}</div>
+      </div>${body}
+    </div>`;
+  const samples = (items, cls = "ptf-samples") => `
+      <div class="${cls}">${items.join("")}
+      </div>`;
+  const sample = (capText, en, body) => `
+        <div class="ptf-sample">
+          <div class="ptf-cap">${escape(capText)}<span>${escape(en)}</span></div>
+          ${body}
+        </div>`;
+  const matrix = (cls, first, cols, rows, cell) => `
+      <div class="cb-matrix ${cls}" style="--cb-cols: ${cols.length};">
+        <div class="cb-matrix-row cb-matrix-row--head"><div class="cb-matrix-head">${escape(first)}</div>${
+          cols.map((c) => `<div class="cb-matrix-head">${escape(c.ko)}<span>${escape(c.en)}</span></div>`).join("")
+        }</div>${rows.map((r) => `
+        <div class="cb-matrix-row"><div class="cb-matrix-label">${escape(r.ko)}<span>${escape(r.en)}</span></div>${
+          cols.map((c) => `<div class="cb-matrix-cell pcol-cell">${cell(r, c)}</div>`).join("")
+        }</div>`).join("")}
+      </div>`;
+  const pair = (body, cls = "") => `<div class="pdsp-pair${cls ? ` ${cls}` : ""}">${["light", "dark"].map((t) => `<div class="pdsp-theme pdsp-theme--${t}"><div class="pdsp-theme-cap">${t === "light" ? "라이트" : "다크"}</div>${typeof body === "function" ? body(t) : body}</div>`).join("")}</div>`;
+  const status = (attr, text) => `<p class="pnav-live-status pcol-live-status" aria-hidden="true" ${attr}="">${escape(text)}</p>`;
+  const controls = (items) => `<div class="pcol-controls">${items.map(([label, attr]) => `<button class="btn btn-neutral-weak btn-size-small" type="button" ${attr}><span>${escape(label)}</span></button>`).join("")}</div>`;
+  // 모션 줄이기 견본 스위치 — 이 견본 안에서만 기기의 "동작 줄이기" 를 흉내 낸다(data-pcol-reduce)
+  const reduceSwitch = (target) => `<label class="pcol-reduce"><input type="checkbox" data-pcol-reduce-for="${target}"> 모션 줄이기(이 견본만)</label>`;
+  const measure = (attr) => `<span class="pcol-measure" aria-hidden="true" ${attr}=""></span>`;
+  // 화면 틀 — 폰(390) · 시트 본문(떠 있는 표면 · 위 모서리 24) · 데스크톱 화면 · 바닥. 좁은 미리보기에서는 폰은 줄고 데스크톱은 가로로 민다
+  const phone = (body, cls = "", height = 0) => `<div class="pcol-phone${cls ? ` ${cls}` : ""}"${height ? ` style="--pcol-h: ${height}px;"` : ""}>${body}</div>`;
+  const sheet = (title, body, height = 0) => `<div class="pcol-sheet"${height ? ` style="--pcol-h: ${height}px;"` : ""}><div class="pcol-sheet-title">${escape(title)}</div><div class="pcol-sheet-body">${body}</div></div>`;
+  const dialog = (title, body, height = 0) => `<div class="pcol-dialog"${height ? ` style="--pcol-h: ${height}px;"` : ""}><div class="pcol-dialog-title">${escape(title)}</div><div class="pcol-dialog-body">${body}</div></div>`;
+  const deskFrame = (body, width = 760, cls = "") => `<div class="pcol-wide"><div class="pcol-desk${cls ? ` ${cls}` : ""}" style="--pcol-w: ${width}px;">${body}</div></div>`;
+  const floor = (body) => `<div class="pcol-floor">${body}</div>`;
+  const WIDE = "ptf-samples pcol-samples--wide";
+  const NEXT = "ptf-samples";
+
+  // ── Accordion ──────────────────────────────────────────────────────────
+  const BENEFIT_TITLE = `혜택 상세 · ${PCOL_BENEFITS.length}건`;
+  const expandable = (list) => list.filter((b) => b.detail).map((b) => b.id);
+  // 카드 상세의 혜택 카드 — Card body="accordion"(좌우 0 · 머리 위 24 · 좌우 24 · 아래 4 · 카드 아래 8) + 모두 펼치기 + inline
+  const benefitCard = ({ open = [], live = false, list = PCOL_BENEFITS, title = `혜택 · ${PCOL_BENEFITS.length}건`, describe = true, allOpen = false } = {}) => {
+    const id = nextPcolId("pacc-card");
+    return `<div class="pcard pacc-card"><div class="pcard-head pacc-card-head"><div class="pcard-title">${escape(title)}</div>${paccAll({ controls: id, allOpen, live })}</div>${pacc({ id, variant: "inline", live, rows: paccBenefitRows({ variant: "inline", open, list, describe }) })}</div>`;
+  };
+  const benefitSheet = ({ open = ["coffee"], live = false, height = 620 } = {}) => {
+    const id = nextPcolId("pacc-sheet");
+    return sheet("카드 혜택", `${paccHeader(BENEFIT_TITLE, paccAll({ controls: id, live }))}${pacc({ id, variant: "separated", live, rows: paccBenefitRows({ variant: "separated", open }) })}`, height);
+  };
+  const cardDetail = ({ live = false, height = 640 } = {}) =>
+    phone(`<div class="pcol-screen-title">카드 상세</div><div class="pcol-floor pcol-floor--screen">${`<div class="pcard pcol-card-summary"><div class="pcol-card-art" aria-hidden="true"></div><div><div class="pcard-title">신한카드 데일리 플러스</div><div class="pcol-card-meta">연회비 15,000원 · 전월 실적 300,000원 이상</div></div></div>`}${benefitCard({ live })}${benefitCard({ live, list: PCOL_CAUTIONS, title: `유의사항 · ${PCOL_CAUTIONS.length}건`, describe: false })}</div>`, "pcol-phone--scroll", height);
+
+  const accLook = panel(
+    "Accordion — SEED 두 변형: inline · separated",
+    "관련 상세를 세로로 묶고 항목마다 머리를 눌러 펼치는 목록이다 — 구조는 SEED Accordion 이다(트리거 = 앞 아이콘 · 제목 · 설명 · 꺾쇠, 펼친 내용). 화면 · 카드 안에서 목록으로 읽히는 자리는 inline(기본 — 연속 목록 + 항목 사이 1px stroke-neutral-subtle 들인 선 좌우 24, 첫 항목 위 · 마지막 항목 아래에는 긋지 않는다), 항목 하나하나가 따로 읽히는 정보 묶음(카드 혜택 상세 시트 · 대화상자)은 separated(항목마다 Card 면 — 1px stroke-neutral-weak · 모서리 16 · 사이 8 · 그림자 없음, 면은 놓인 표면 그대로)다. 카드 상세의 혜택 · 유의사항은 웹 · 앱 모두 카드 안 inline(Card body=\"accordion\" — 좌우 0 · 카드 아래 8, 마지막 트리거의 아래 16 과 합쳐 보이는 24)이고 머리 오른쪽에 모두 펼치기를 둔다. 크기는 SEED medium 하나 — 폰 · 데스크톱이 같다. 시트 본문 · 카드 상세 화면은 실제로 스크롤되고, 트리거 · 모두 펼치기는 실제로 펼치고 접는다. 옛 Accordion(Radix · 아래 선만 · 좌우 0 · 꺾쇠 16 · 하나만 열기)은 걷었다.",
+    `${pair(() => benefitSheet({ live: true }))}${pair(() => cardDetail({ live: true }), "pcol-pair--next")}${samples([
+      sample("데스크톱 웹 — 대화상자 480(separated)", "1280 이상 — 같은 크기 · 같은 모양(크기는 medium 하나)", dialog("카드 혜택", (() => { const id = nextPcolId("pacc-dlg"); return `${paccHeader(BENEFIT_TITLE, paccAll({ controls: id, live: true }))}${pacc({ id, variant: "separated", live: true, rows: paccBenefitRows({ variant: "separated", open: ["pay"], list: PCOL_BENEFITS.slice(0, 5) }) })}`; })(), 560)),
+    ], WIDE)}`,
+  );
+
+  // 크기 · 글
+  const accSize = panel(
+    "크기 · 글 — 제목만 54 · 설명 있음 74 · 줄을 바꾼다",
+    "트리거는 위아래 16 · 좌우 24(화면 가장자리 규칙 — SEED 16), 제목 16 / 22 · 500 · fg-neutral, 설명 13 / 18 · 500 · fg-neutral-subtle(제목 아래 2), 꺾쇠 20 · fg-neutral-subtle, 앞 아이콘 22 · fg-neutral — 앞 아이콘 · 본문 · 꺾쇠 사이 12 다. 제목만이면 54, 설명이 있으면 74 이고 제목이 줄을 바꾸면 늘어난다 — 28자 첫 혜택 · 84자 유의사항 제목도 말줄임 없이 단어 단위로 줄을 바꾼다(\"더 보기\" 없음). 앞 아이콘 · 꺾쇠는 트리거 가운데에 선다. 펼친 내용은 위 0 · 좌우 24 · 아래 16, 14 / 22(text-article-note) · fg-neutral-muted 이고 줄바꿈 문자를 지키며 안에서 스크롤하지 않는다 — 앞 아이콘이 있어도 24 에서 시작한다. 아래 글은 이 미리보기에서 잰 높이다.",
+    `${samples([
+      sample("제목만 — 54", "description none", `<div class="pcol-surface" data-pcol-measure-host>${pacc({ rows: [paccItem({ title: "커피", detail: PCOL_BENEFITS[1].detail })] })}${measure("data-pcol-h")}</div>`),
+      sample("제목 + 설명 — 74", "description shown", `<div class="pcol-surface" data-pcol-measure-host>${pacc({ rows: [paccItem({ title: "커피", description: "스타벅스 50% 할인", detail: PCOL_BENEFITS[1].detail })] })}${measure("data-pcol-h")}</div>`),
+    ], NEXT)}${samples([
+      sample("28자 제목 — 폰 390", "줄을 바꾸면 늘어난다", `<div class="pcol-surface pcol-surface--390" data-pcol-measure-host>${pacc({ rows: [paccItem({ title: PCOL_BENEFITS[0].title, description: PCOL_BENEFITS[0].summary, detail: PCOL_BENEFITS[0].detail })] })}${measure("data-pcol-h")}</div>`),
+      sample("84자 유의사항 제목 — 자르지 않는다", "설명 없음 · 폰 390", `<div class="pcol-surface pcol-surface--390" data-pcol-measure-host>${pacc({ rows: [paccItem({ title: PCOL_CAUTIONS[0].title, detail: PCOL_CAUTIONS[0].detail })] })}${measure("data-pcol-h")}</div>`),
+      sample("앞 아이콘 22 · 펼친 내용 0 / 24 / 16", "prefixIcon — 내용은 24 에서 시작(separated 면 안)", `<div class="pcol-surface pcol-surface--390 pcol-surface--pad">${pacc({ variant: "separated", rows: [paccItem({ variant: "separated", icon: "coffee", title: "커피", description: PCOL_BENEFITS[1].summary, detail: PCOL_BENEFITS[1].detail, open: true })] })}</div>`),
+      sample("7줄 상세 — 그대로 펼친다", "안에서 스크롤하지 않는다(SEED)", `<div class="pcol-surface pcol-surface--390">${pacc({ rows: [paccItem({ title: PCOL_BENEFITS[0].title, description: PCOL_BENEFITS[0].summary, detail: PCOL_BENEFITS[0].detail, open: true })] })}</div>`),
+    ], "ptf-samples pcol-samples--sheet")}`,
+  );
+
+  // 상세 없는 항목 · 모두 펼치기
+  const accPlain = panel(
+    "상세가 없는 항목 · 모두 펼치기(여럿 열기)",
+    "목록 가운데 상세가 없는 항목(대중교통 · 편의점 — 요약뿐)은 트리거가 아닌 그냥 줄이다 — 꺾쇠 · 단추 · 머리말 없이 같은 위아래 16 · 좌우 24 · 같은 글이라 높이와 글 시작이 같고, Tab 이 건너뛰며, 눌러도 바탕이 생기지 않는다(막힌 트리거 · 꺾쇠만 뒤집히는 줄로 그리지 않는다). 여럿을 함께 열고 다른 항목을 열어도 앞 항목은 닫히지 않는다 — 하나만 여는 모드는 없다. 목록 머리 오른쪽 \"모두 펼치기\"(14 · 500 · fg-neutral-subtle + chevrons-up-down 16 · 보이는 32 · 누르는 44 — Card 머리 동작과 같은 모양)는 상세가 있는 항목을 모두 펼치고 글이 \"모두 접기\"(chevrons-down-up)로 바뀐다 — 하나라도 접히면 다시 \"모두 펼치기\". 이름은 보이는 글, aria-controls 는 아코디언이다.",
+    samples([
+      sample("그냥 줄 — 대중교통 · 편의점", "같은 높이 · 같은 글 시작 · 꺾쇠 없음", phone(benefitCard({ list: PCOL_BENEFITS.slice(1, 5), title: "혜택 · 4건" }), "pcol-phone--pad")),
+      sample("모두 펼친 뒤 — \"모두 접기\"", "상세가 있는 항목만 열렸다 · 셋째 유의사항은 그냥 줄", phone(benefitCard({ list: PCOL_CAUTIONS, title: `유의사항 · ${PCOL_CAUTIONS.length}건`, describe: false, open: expandable(PCOL_CAUTIONS), allOpen: true }), "pcol-phone--pad")),
+    ], NEXT),
+  );
+
+  // 상태
+  const ACC_STATES = [
+    { ko: "기본", en: "enabled", i: "" },
+    { ko: "호버", en: "hovered — 웹", i: "hover" },
+    { ko: "포커스", en: "focused — 키보드", i: "focus" },
+    { ko: "누름", en: "pressed — 콘텐츠 2px", i: "pressed" },
+    { ko: "막힘", en: "disabled", i: "disabled" },
+  ];
+  const accStates = panel(
+    "상태 — 기본 · 호버 · 포커스 · 누름 · 막힘 × inline · separated",
+    "누르거나 마우스를 올리면(웹) 바탕이 좌우 6 들어와 모서리 10 으로 둥글어진다 — 바탕은 불투명한 bg-layer-default-pressed(시트 · 대화상자 위도 같은 값 — SEED bg.transparent-pressed 의 불투명 짝)이고, 누르는 동안 콘텐츠 층(앞 아이콘 · 본문 · 꺾쇠)만 2px 거리로 준다(List 줄과 같은 짜임 — v104). separated 면(16) 안의 바탕 10 은 16 − 6 으로 동심이다. 키보드 포커스에만 트리거 안쪽 2px 링 — inline 은 각진 링, separated 는 항목 모서리를 따라 14(16 − 2) — 카드 · 시트의 overflow 에 잘리지 않는다. 막힘은 앞 아이콘 · 제목 · 설명 · 꺾쇠가 모두 fg-disabled 이고 흐리게 하지 않는다. 표는 그 순간을 멈춰 그렸다.",
+    matrix("pcol-matrix", "상태", [
+      { ko: "inline", en: "연속 목록", v: "inline" },
+      { ko: "separated", en: "항목마다 Card 면", v: "separated" },
+    ], ACC_STATES, (r, c) => `<div class="pcol-surface pcol-surface--cell">${pacc({ variant: c.v, rows: [paccItem({ variant: c.v, icon: "coffee", title: "커피", description: "스타벅스 · 투썸플레이스 · 이디야 50% 할인", detail: "", state: r.i === "disabled" ? "" : r.i, disabled: r.i === "disabled" })] })}</div>`),
+  );
+
+  // 직접
+  const accLiveId = nextPcolId("pacc-live");
+  const accLive = panel(
+    "직접 — 여럿 열기 · 모두 펼치기 · ↓ ↑ Home End · 300ms · 모션 줄이기",
+    "트리거를 누르거나 초점을 두고 Enter · Space 를 누르면 그 항목만 펼치고 접는다 — 초점은 트리거에 그대로고 화면을 저절로 스크롤하지 않는다(SEED). ↓ ↑ 는 다음 · 앞 트리거(끝에서 처음으로 돈다), Home · End 는 첫 · 끝 트리거이고 상세가 없는 줄 · 막힌 트리거는 건너뛴다. 꺾쇠는 180° 돌고 내용은 높이로 펼쳐지고 접힌다 — 둘 다 300ms motion-ease-easing(SEED d6). 모션 줄이기면 높이를 움직이지 않고 내용이 150ms 서서히 나타나고 사라지며 꺾쇠는 바로 뒤집힌다(누름 축소도 없다). 아래 글이 펼친 항목 수 · 모두 펼치기의 글을 따라간다.",
+    `${samples([sample("혜택 상세 시트 — separated · 12건", "Accordion values · AccordionExpandAll", `<div class="pcol-live" id="${accLiveId}">${benefitSheet({ live: true, open: [], height: 600 })}${reduceSwitch(accLiveId)}${status("data-pacc-status", "트리거를 누르거나 Tab 으로 초점을 두고 ↓ ↑ 를 눌러 보세요.")}</div>`)], "ptf-samples pcol-samples--sheet")}`,
+  );
+
+  // ── Collapsible ────────────────────────────────────────────────────────
+  const txDetail = ({ live = false } = {}) =>
+    phone(`<div class="pcol-screen-title">거래 상세</div><div class="pcol-amount">${pcolWon(-PCOL_SPLIT_TOTAL)}</div><div class="pcol-kv"><span>날짜</span><span>10월 8일 (목) 10:00</span></div><div class="pcol-kv"><span>결제 수단</span><span>계좌이체</span></div>${pcls({ title: `내역 분할 ${PCOL_SPLITS.length}개`, description: `합계 ${pcolWon(-PCOL_SPLIT_TOTAL)}`, layout: "rows", open: true, live, content: pclsSplitRows() })}<div class="pcol-split-box">${pclsWarningBox(pcls({ surface: "warning", title: "빠르게 맞추기", live, content: pclsQuickFixes() }))}</div>`, "pcol-phone--scroll", 860);
+  const reportCard = ({ live = false, open = true } = {}) =>
+    deskFrame(`<div class="pcol-desk-title">업무 보고</div>${pcls({ surface: "card", title: "상세 검색 조건", description: "2개 필터 적용 중", open, live, content: pclsFilters(4) })}<div class="pcard pcol-report-list">${[["10월 2주차 클라우드 인프라 점검 보고", "김민수 · 10월 9일"], ["데이터 플랫폼 배치 지연 원인 분석", "이서연 · 10월 8일"], ["프로젝트 3팀 주간 진행 보고", "박지훈 · 10월 7일"]].map(([t, m]) => `<div class="pcol-report-row"><span>${escape(t)}</span><span>${escape(m)}</span></div>`).join("")}</div>`, 1040, "pcol-desk--basement");
+  const clsLook = panel(
+    "Collapsible — Accordion 항목 하나: 흰 면 · 경고 상자 · 카드",
+    "내용 하나를 접고 펴는 자리의 트리거는 Accordion 항목 하나의 모양이다(SEED Accordion 가이드의 한 줄 — 단일 콘텐츠는 그 항목에 Collapsible 동작) — 줄 전체가 머리말 안의 단추이고, 이름은 무엇을 여닫는지 고정한다(\"내역 분할 6개\" — 펼침은 aria-expanded 가 알린다). 접혀 있어도 알아야 할 값은 설명으로 둔다(\"합계 −123,456,789원\" · \"2개 필터 적용 중\" — 숫자를 이름에 붙이지 않는다). 놓인 면 셋 — 흰 면(default · 좌우 24 · 거래 상세의 분할 내역 — 줄 목록이면 펼친 내용 아래 8), 경고 상자의 맨 아래 줄(warning — 좌우 16 · 위 1px stroke-warning-weak · 누름은 bg-warning-weak-pressed · 빠르게 맞추기), 카드(card — Collapsible 이 Card 면 1px · 16 을 그리고 트리거가 그 머리, 펼친 내용 아래 24 · HR 업무 보고의 상세 검색 조건). 펼침 · 꺾쇠는 Accordion 과 같은 300ms 다. 옛 글 단추(128.9 × 18 · 103 × 16.5 · 필터 2)를 대신한다.",
+    `${pair(() => txDetail({ live: true }))}${samples([sample("데스크톱 웹 — HR 업무 보고(카드)", "surface card · 펼친 내용 아래 24 · 1040 폭 그림", reportCard({ live: true }))], WIDE)}`,
+  );
+  const CLS_STATES = ACC_STATES;
+  const clsStates = panel(
+    "상태 — 놓인 면 셋 × 기본 · 호버 · 포커스 · 누름 · 막힘",
+    "트리거의 글 · 꺾쇠 · 높이와 상태는 Accordion 과 같다 — 다른 것은 놓인 면의 여백 · 선 · 누름 색 · 링 모서리다. 경고 상자 아래 줄의 바탕은 경고 바탕의 누름 짝 bg-warning-weak-pressed(꺾쇠 4.37 · 이름 13.04)이고 링은 상자 모서리 12 − 2 = 10, 카드는 16 − 2 = 14, 흰 면은 각진 링이다. 막힘은 이름 · 설명 · 꺾쇠가 fg-disabled — 흐리게 하지 않는다.",
+    matrix("pcol-matrix", "상태", [
+      { ko: "흰 면", en: "default", s: "default" },
+      { ko: "경고 상자", en: "warning", s: "warning" },
+      { ko: "카드", en: "card", s: "card" },
+    ], CLS_STATES, (r, c) => {
+      const one = pcls({ surface: c.s, title: c.s === "warning" ? "빠르게 맞추기" : c.s === "card" ? "상세 검색 조건" : "내역 분할 6개", description: c.s === "warning" ? "" : c.s === "card" ? "2개 필터 적용 중" : "합계 −123,456,789원", state: r.i === "disabled" ? "" : r.i, disabled: r.i === "disabled" });
+      return `<div class="pcol-surface pcol-surface--cell${c.s === "card" ? " pcol-surface--basement" : ""}">${c.s === "warning" ? pclsWarningBox(one, { short: true }) : one}</div>`;
+    }),
+  );
+
+  // ── List 하위 줄 ───────────────────────────────────────────────────────
+  const nestLook = panel(
+    "List 하위 줄 — 줄 앞 꺾쇠 단추 44 · 하위 104 · 하위 없는 부모는 빈 자리",
+    "카테고리처럼 부모 · 하위 두 단계에서 줄 자체는 편집을 열고 하위 줄만 접을 때는 부모 줄 앞에 꺾쇠 단추를 둔다(ListParentItem — 사용자 결정 7C). 단추는 보이는 상자가 곧 누르는 영역 44(모서리 10)이고, 줄 앞 4 · 단추 뒤 4 를 지나 앞 붙이개가 52 에서 시작한다. 꺾쇠는 chevron-right 20 · fg-neutral-subtle — 접혀 있으면 오른쪽, 펼치면 아래로 90°(300ms — Accordion 과 같다). 이름은 \"{카테고리} 하위 카테고리\" 로 고정하고 펼침은 aria-expanded 가 알린다. 단추는 줄과 따로 눌린다 — 올리거나 누르면 단추만 bg-layer-default-pressed · 2px 축소이고 줄을 누르면 편집이 열린다. 하위 줄은 부모의 제목 자리 104 에서 시작해 하위 타일이 부모 제목 아래에 서고, 하위가 없는 부모(기타)도 꺾쇠 자리를 비워 부모 타일이 모두 52 에 선다 — 타일이 두 세로줄(52 · 104)로 정리된다(17B). 꺾쇠 단추는 실제로 하위 줄을 펼치고 접는다.",
+    `${pair(() => phone(pnestList({ open: ["food"], live: true }), "pcol-phone--360 pcol-phone--list"))}${samples([
+      sample("꺾쇠 단추 — 호버 · 누름", "단추만 바탕 · 줄은 그대로", phone(pnestList({ open: [], states: { food: "hover", home: "pressed" } }), "pcol-phone--360 pcol-phone--list")),
+    ], NEXT)}`,
+  );
+
+  // ── Tree View ──────────────────────────────────────────────────────────
+  const treePanel = ({ selectedId = "ops", expandedIds = PCOL_DEPT_PARENTS, live = false, height = 560, state = null, collapsible = true } = {}) => {
+    const titleId = nextPcolId("ptree-title");
+    const sel = ptreeFind(selectedId);
+    const more = menuTrigger({ name: `${sel ? sel.label : "부서"} 더보기`, live, menu: live ? [{ items: [{ label: "하위 부서 추가" }, { label: "수정" }] }, { items: [{ label: "삭제", tone: "critical" }] }] : null });
+    return `<div class="ptree-panel" style="--pcol-h: ${height}px;"><div class="ptree-head"><h2 class="ptree-title" id="${titleId}">부서</h2>${collapsible ? more : ""}</div>${ptree({ selectedId, expandedIds, name: `aria-labelledby="${titleId}"`, live, state, collapsible })}</div>`;
+  };
+  const treeLook = panel(
+    "Tree View — 부서 나무 248 | 조직도",
+    "여러 단계로 된 항목 가운데 하나를 고르는 나무다(HR 관리 > 회사 · 부서 사용자) — 고른 부서의 조직도가 옆에 보인다. 줄은 Side Navigation 항목과 같다 — 높이 44 · 위아래 12 · 좌우 8 · 모서리 10, 이름 14 / 19 · 400 · fg-neutral, 나무는 패널 가장자리에서 8 들고 마지막 줄 아래 16. 단계마다 20 을 들여(줄 왼쪽 = 8 + (단계 − 1) × 20) 하위 꺾쇠가 부모의 꺾쇠 · 아이콘 사이에 선다. 꺾쇠 칸 20 × 19(chevron-right 16 · fg-neutral-subtle — 펼치면 아래로 90°) · 아이콘 16(building-2) · 이름 사이 6, 하위가 없으면 꺾쇠 칸을 비운다. 가장 긴 뿌리 이름도 말줄임 · title 없이 줄을 바꿔 다 보인다 — 꺾쇠 · 아이콘은 첫 줄에 맞춘다. 패널은 1280 에서 본문 992 의 25% = 248 이다(Resizable 의 기본 폭). 고른 항목은 Side Navigation 의 지금 항목과 같은 바탕 bg-neutral-weak-pressed 이고, 노드 동작은 나무 밖 패널 머리의 ⋮ 하나(Button ghost · iconOnly · medium — 이름 \"경영지원팀 더보기\")가 고른 항목에 건다. 머리말 · 항목 안 단추는 두지 않는다.",
+    `${pair(() => deskFrame(`<div class="pcol-split-demo">${treePanel({ selectedId: "ops" })}<div class="pcol-orgchart">${prszChartPane()}</div></div>`, 520, "pcol-desk--flush"))}`,
+  );
+  const TREE_STATES = [
+    { ko: "기본", en: "enabled", i: "" },
+    { ko: "호버", en: "hovered — 웹", i: "hover" },
+    { ko: "포커스", en: "focused — 키보드", i: "focus" },
+    { ko: "누름", en: "pressed — 콘텐츠 2px", i: "pressed" },
+  ];
+  const oneRow = (sel, state) => ptree({ nodes: [{ id: "ops", label: "경영지원팀" }], selectedId: sel ? "ops" : null, state: state ? { id: "ops", i: state } : null });
+  const treeStates = panel(
+    "줄 전체가 누르는 자리(16D) · 상태 · 늘 펼친 나무",
+    "누르는 자리는 줄 전체(줄 폭 × 44 이상)다 — 꺾쇠만 누르는 작은 자리(31 × 44)를 두지 않는다(사용자 결정 16D — SEED Accordion \"터치 영역은 Chevron 아이콘뿐만 아니라 Trigger 전체\"). 잎을 누르면 고르고, 부모 줄을 누르면 그 항목을 고르면서 접힌 하위는 펴고 펼친 하위는 접는다 — 꺾쇠는 표시만이다. Enter · Space 는 누르기와 같고, → ← 는 고르지 않고 펴고 접기만 한다. 호버(웹) · 누름은 bg-layer-default-pressed, 누르는 동안 꺾쇠 · 아이콘 · 이름만 2px 거리 축소, 키보드 포커스에만 줄 안쪽 2px 링(모서리 10). 고른 항목은 올리거나 눌러도 바탕이 그대로다(더 짙은 불투명 역할이 없다). 늘 펼친 나무(부서 사용자 — collapsible false)는 꺾쇠 · 꺾쇠 칸 · aria-expanded 없이 들임만이고 줄을 누르면 고르기만 한다.",
+    `${matrix("pcol-matrix pcol-matrix--tree", "고름", TREE_STATES, [
+      { ko: "안 고름", en: "aria-selected=\"false\"", sel: false },
+      { ko: "고름", en: "aria-selected=\"true\" — bg-neutral-weak-pressed", sel: true },
+    ], (r, c) => `<div class="pcol-surface pcol-surface--cell pcol-surface--tree">${oneRow(r.sel, c.i)}</div>`)}${samples([
+      sample("펼친 부모를 누르기 전", "클라우드 인프라팀 — 펼침 · 고르지 않음", treePanel({ selectedId: "ops", expandedIds: ["root", "infra", "data"], height: 380 })),
+      sample("누른 뒤 — 고르며 접힌다", "aria-selected · aria-expanded=false — 한 번 더 누르거나 → 로 다시 편다", treePanel({ selectedId: "infra", expandedIds: ["root", "data"], height: 380 })),
+      sample("늘 펼친 나무 — 부서 사용자", "collapsible false — 꺾쇠 · aria-expanded 없음 · 누르면 고르기만", treePanel({ selectedId: "infra", collapsible: false, height: 380 })),
+    ], NEXT)}`,
+  );
+  const treeLiveId = nextPcolId("ptree-live");
+  const treeLive = panel(
+    "직접 — 나무에 Tab 하나 · 화살표 · 줄 전체 누르기",
+    "나무 전체가 Tab 정지점 하나다 — 들어오면 고른 항목(없으면 첫 항목)에 초점이 오고, 다시 Tab 하면 나무를 나간다. ↓ ↑ 다음 · 앞 보이는 항목(끝에서 멈춘다), → 접힌 부모는 펼치고(초점 그대로) 펼친 부모는 첫 하위로, ← 펼친 부모는 접고 그 밖에는 부모로, Home · End 첫 · 마지막 보이는 항목 — 화살표는 고르지 않는다. 줄을 누르거나 Enter · Space 는 누르기다 — 잎은 고르고, 부모는 고르면서 펴고 접는다. ⋮ 의 이름이 고른 부서를 따라 바뀐다. 하위 묶음은 높이 300ms 로 펼치고 접고 모션 줄이기면 150ms 서서히다. 아래 글이 초점 · 읽기 · 고른 부서 · Tab 정지점 수를 따라간다.",
+    samples([sample("HR 관리 > 회사 — 부서 나무", "TreeView — role=tree · treeitem · group", `<div class="pcol-live" id="${treeLiveId}">${treePanel({ selectedId: "ops", live: true, height: 520 })}${reduceSwitch(treeLiveId)}${status("data-ptree-status", "나무를 눌러 초점을 두고 ↑ ↓ → ← Home End Enter 를 눌러 보세요.")}</div>`)], "ptf-samples pcol-samples--tree"),
+  );
+
+  // ── Resizable ──────────────────────────────────────────────────────────
+  const splitFrame = (opts, height = 300) => deskFrame(`<div class="pcol-split-frame" style="--pcol-h: ${height}px;">${prsz({ left: prszTreePane(), right: prszChartPane(), ...opts })}</div>`, 760, "pcol-desk--flush");
+  const rszLook = panel(
+    "Resizable — 목록 | 상세: 25 · 20 · 40, 선 1px + 손잡이 표시 · 누르는 폭 16",
+    "HR 관리 > 역할 · 사용자 · 회사 · 부서 사용자는 768 이상에서 목록 | 상세로 나뉘고, 그 사이 손잡이로 목록 폭을 바꾼다(768 미만은 목록 → 상세 · 탭). 목록은 기본 25%(1280 에서 본문 992 의 248)이고 20 ~ 40% 사이에서만 바뀐다 — 오른쪽 상세는 60% 아래로 줄지 않는다. 선은 1px stroke-neutral-weak(경계일 뿐 — 흰 면 1.23), 가운데 손잡이 표시 4 × 24 · 모서리 2 · stroke-neutral-solid(4.18 — 3 이상)가 끌 수 있는 자리를 알린다. 누르는 폭은 선 가운데로 양쪽 8 — 16(768 이상 마우스 경계, 사용자 결정 12B — 지금 5). 마우스를 올리거나 키보드 초점 · 끄는 동안 선 전체가 손잡이 표시와 같은 색으로 짙어지고(150ms), 키보드 포커스에만 누르는 폭 16 둘레에 링 2px · 모서리 4. 손잡이 이름은 \"목록 너비\"(role=separator · aria-valuenow · min 20 · max 40 · aria-controls). 그림은 760 폭 화면이다.",
+    samples([
+      sample("기본 25%", "defaultSize 25", splitFrame({ size: 25 })),
+      sample("최소 20% · 최대 40%", "오른쪽은 60% 아래로 줄지 않는다", `${splitFrame({ size: 20 }, 200)}<div class="pcol-gap"></div>${splitFrame({ size: 40 }, 200)}`),
+      sample("호버 · 키보드 포커스 · 끄는 동안", "선이 짙어진다 · 링은 누르는 폭 16 둘레", `${splitFrame({ size: 25, state: "hover" }, 160)}<div class="pcol-gap"></div>${splitFrame({ size: 25, state: "focus" }, 160)}<div class="pcol-gap"></div>${splitFrame({ size: 32, state: "drag" }, 160)}`),
+    ], WIDE),
+  );
+  const rszLiveId = nextPcolId("prsz-live");
+  const rszLive = panel(
+    "직접 — 끌기 · 한 번 누르기 25 ↔ 40 · ← → 5% · Home End · 화면마다 기억",
+    "손잡이를 누른 채 3px 넘게 움직이면 끈다 — 폭이 포인터를 1:1 로 따라 20 ~ 40% 사이에서 바뀌고(끄는 동안 화면 전체 col-resize · 글을 고르지 않는다), 놓으면 그 폭을 기억한다. 끌지 않고 한 번 누르면(3px 안) 기본 25 ↔ 넓게 40 — 끌기를 못 하는 사람의 대안(WCAG 2.5.7)이다. 키보드는 ← → 5%(끝에서 멈춘다) · Home 20 · End 40 · Enter 25 ↔ 40. 폭이 바뀌는 모션은 없다. 끌거나 바꾼 폭은 화면마다 브라우저에 남긴다 — \"화면 다시 열기\" 는 기억한 폭으로 다시 그린다(저장소를 쓰지 못하면 기억 없이 쓴다). 아래 글이 목록 · 상세 폭과 읽기를 따라간다.",
+    samples([sample("HR 관리 > 회사 — storageKey hr-admin-company", "ResizablePanelGroup · ResizableHandle label=\"목록 너비\"", `<div class="pcol-live" id="${rszLiveId}">${splitFrame({ size: 25, live: "hr-admin-company" }, 320)}${controls([["화면 다시 열기", "data-prsz-reopen"], ["기억 지우기", "data-prsz-forget"]])}${status("data-prsz-status", "손잡이를 끌거나 한 번 누르거나, Tab 으로 초점을 두고 ← → Home End Enter 를 눌러 보세요.")}</div>`)], WIDE),
+  );
+  const grid = (items, live = false, cls = "") => `<div class="prsz-grid${cls ? ` ${cls}` : ""}"${live ? " data-prsz-grid-live" : ""}>${items.join("")}</div>`;
+  const rszWidget = panel(
+    "위젯 크기 — 모서리 손잡이 24 · 표식 9 · 끄는 동안 자리표시 · ⋮ 크기",
+    "HR 대시보드 편집 모드에서 위젯의 크기를 바꾼다(12칸 격자 · 줄 72 · 사이 16). 오른쪽 아래 모서리 손잡이는 누르는 자리 24 × 24 · 표식 9 × 9 꺾쇠 2px stroke-neutral-solid(4.18 · 끝에서 6)이고 보조 기술에 숨긴다. 끄는 동안 놓일 칸에 자리표시(옅은 브랜드 바탕 bg-brand-weak + 1px 브랜드 점선 stroke-brand-solid · 모서리 16 — 라이브러리 기본 빨강 20% 를 덮는다)를 보이고, 위젯은 그림자 shadow-s3 로 포인터를 따라온다. 끌지 못하는 사람은 위젯 ⋮(Button ghost · iconOnly · medium — \"{위젯} 더보기\") → \"크기\" 에서 고른다 — 작게 4 · 보통 6 · 넓게 8 · 가득 12칸, 지금 크기 줄에 설명 \"지금 크기\"(메뉴는 실행만이라 체크가 없다). 아래 직접 견본은 모서리를 끌면 칸 단위로 맞추고 ⋮ → 크기도 실제로 바꾼다. 크기 · 위치는 편집 모드에서만 바꾸고 저장 단추로 서버에 저장한다.",
+    `${samples([
+      sample("끄는 동안 — 자리표시 8칸 · 따라오는 위젯", "react-grid-placeholder · resizing(그림자 s3)", `<div class="pcol-wide">${grid([prszPlaceholder("1 / 1 / span 2 / span 8"), prszWidget({ title: "내 휴가", cols: 6, area: "1 / 1 / span 2 / span 7", body: "남은 연차 8.5일 · 다음 휴가 10월 12일", ghost: true }), prszWidget({ title: "팀 일정", cols: 4, area: "1 / 9 / span 2 / span 4", body: "오늘 휴가 2명" })])}</div>`),
+      sample("⋮ → 크기 — \"지금 크기\"", "Menu — 묶음 이름 \"크기\" · 줄 넷", `<div class="pcol-wide">${grid([prszWidget({ title: "내 휴가", cols: 6, body: "남은 연차 8.5일 · 다음 휴가 10월 12일", menu: "open" }), prszWidget({ title: "팀 일정", cols: 6, body: "오늘 휴가 2명 · 외근 1명" })], false, "prsz-grid--menu")}</div>`),
+    ], WIDE)}${samples([sample("직접 — 편집 모드", "모서리 끌기 · ⋮ → 크기", `<div class="pcol-live"><div class="pcol-wide">${grid([prszWidget({ title: "공지 — 10월 정기 점검은 18일(토) 밤 11시예요", cols: 12, rows: 1, menu: "live" }), prszWidget({ title: "내 휴가", cols: 6, body: "남은 연차 8.5일 · 다음 휴가 10월 12일", menu: "live" }), prszWidget({ title: "팀 일정", cols: 6, body: "오늘 휴가 2명 · 외근 1명", menu: "live" })], true, "prsz-grid--menu")}</div>${status("data-prsz-grid-status", "모서리를 끌거나 ⋮ → 크기를 골라 보세요.")}</div>`)], WIDE)}`,
+  );
+
+  // ── Scroll Area ────────────────────────────────────────────────────────
+  const scrollLines = (n) => Array.from({ length: n }, (_, i) => `<div class="pscr-line">${escape(["식비", "교통", "쇼핑", "카페", "구독", "의료", "여행", "주거", "통신", "교육", "경조사", "반려동물"][i % 12])}</div>`).join("");
+  const scrLook = panel(
+    "Scroll Area — 기본 스크롤 + 전역 한 벌: 6px 알약 · 막대 stroke-neutral-solid · 바탕 투명",
+    "스크롤은 브라우저 기본이다 — 휠 · 키보드 · 끌기 · 관성을 가로채지 않고, 모양만 전역으로 한 벌 둔다. 세로 · 가로 6px, 막대는 알약 stroke-neutral-solid(흰 면 4.18 · 바닥 3.87 · 떠 있는 표면 4.18, 다크 4.13 · 4.68 · 3.58 — 모두 3 이상), 바탕(track) · 모서리는 투명이고 올리거나 끌어도 모양이 바뀌지 않는다. Firefox 는 scrollbar-width: thin + scrollbar-color 를 @supports not selector(::-webkit-scrollbar) 안에서만 건다 — 크로미움은 두 속성이 걸린 요소에서 webkit 6px 을 버린다(10 · 15px). 이 페이지의 전역 규칙도 이 계약이다. 세로 스크롤바는 숨기지 않는다 — 숨기는 것은 가로 줄(칩 · 탭 · 가로 사진)뿐이다. 맥 · 폰의 겹침 스크롤바는 OS 설정대로 넘칠 때만 보인다. 아래 글은 이 미리보기에서 잰 막대 폭이다(겹침 스크롤바면 0). 옛 Radix ScrollArea(겹쳐 뜨는 막대 — HR 1.11)는 걷었다.",
+    pair(() => `<div class="pscr-demo">${[
+      ["흰 면", "default", "bg-layer-default — 4.18"],
+      ["바닥", "basement", "bg-layer-basement — 3.87"],
+      ["떠 있는 표면", "floating", "대화상자 · 시트 본문 — contain"],
+    ].map(([ko, s, en]) => `<div class="pscr-sample"><div class="pnav-cap">${escape(ko)}<span>${escape(en)}</span></div><div class="pscr-surface pscr-surface--${s}">${pscr({ label: `카테고리 — ${ko}`, contain: s === "floating", height: 180, html: scrollLines(12) })}</div>${measure("data-pscr-bar")}</div>`).join("")}</div>`),
+  );
+  const hours = Array.from({ length: 24 }, (_, h) => h);
+  const EVENTS = { 9: "주간 회의 · 9시 ~ 10시", 11: "클라우드 인프라 점검", 14: "면접 — 데이터 플랫폼팀", 16: "1:1 김하늘" };
+  const hourLabel = (h) => (h === 0 ? "오전 12시" : h < 12 ? `오전 ${h}시` : h === 12 ? "오후 12시" : `오후 ${h - 12}시`);
+  const dayView = () => hours.map((h) => `<div class="pscr-hour"><span class="pscr-hour-label">${hourLabel(h)}</span>${EVENTS[h] ? `<span class="pscr-event">${escape(EVENTS[h])}</span>` : ""}</div>`).join("");
+  const POLICY = ["제1조(연차) 1년간 80% 이상 출근한 직원에게 15일의 유급 휴가를 준다. 입사 1년 미만은 한 달 개근마다 1일씩 생긴다.", "제2조(사용) 연차는 1시간 단위로 나눠 쓸 수 있다. 쓰려는 날 3일 전까지 신청하고 팀장이 승인한다.", "제3조(이월) 그해 안에 쓰지 못한 연차는 다음 해로 넘어가지 않는다.", "제4조(경조 휴가) 본인 결혼 5일, 자녀 결혼 1일, 배우자 출산 10일, 부모 · 배우자 부모 사망 5일을 준다.", "제5조(병가) 업무 밖의 질병 · 부상으로 일할 수 없을 때 연 60일 안에서 무급 병가를 쓸 수 있다.", "제6조(공가) 예비군 · 민방위 훈련, 건강검진은 그날 유급 공가다."].map((p) => `<p class="pscr-p">${escape(p)}</p>`).join("");
+  const scrFocus = panel(
+    "초점 가는 것이 없는 상자 — region · 이름 · tabindex 0 · 시트 · 대화상자 안은 contain",
+    "안에 버튼 · 링크 · 칸이 없는 스크롤 상자(글 · 표 · 일정 칸)는 키보드로 닿을 길이 없다 — 상자 자신이 초점을 받고(tabindex 0) role=\"region\" 과 이름(\"10월 9일 일정\")을 함께 단다(역할 없는 div 에는 aria-label 을 쓸 수 없다 — ARIA 1.2). Tab 으로 상자에 초점을 두고 ↑ ↓ · PageUp · PageDown · Home · End 로 스크롤한다 — 키보드 포커스 링은 상자 안쪽 2px 다(바깥 링은 카드 · 시트에 잘린다). 시트 · 대화상자 · 팝오버 · 옆 패널 안의 상자는 overscroll-behavior: contain — 끝에 닿아도 본문 · 뒤 화면이 따라 스크롤되지 않는다. 두 상자는 실제로 스크롤된다.",
+    samples([
+      sample("HR 달력 일 보기 — \"10월 9일 일정\"", "ScrollArea label — 키보드 포커스 링 안쪽 2px(그림)", `<div class="pscr-card"><div class="pscr-card-title">10월 9일 (금)</div>${pscr({ label: "10월 9일 일정", height: 320, html: dayView(), state: "focus" })}</div>`),
+      sample("휴가 신청 대화상자 — 정책 상자 contain", "ScrollArea label contain · max-h 300", dialog("휴가 신청", `<div class="pscr-field-label">휴가 정책</div><div class="pscr-policy">${pscr({ label: "휴가 정책", contain: true, maxHeight: 220, html: POLICY })}</div>`)),
+    ], NEXT),
+  );
+
+  // ── Scroll Auto Hide ───────────────────────────────────────────────────
+  const sahLiveId = nextPcolId("psah-live");
+  const sahLook = panel(
+    "Scroll Auto Hide — 폰 가계부 원장 머리: 스크롤 거리 1:1 · 50% 스냅 · 높이를 바꾸지 않는다",
+    "폰 가계부 · 할 일 원장의 머리(월 이동 · 총액 · 소비 요약 · 주 달력)는 SEED Breeze Scroll Auto Hide 다 — 아래로 스크롤하면 그 거리만큼 위로 숨고, 위로 스크롤하면 같은 거리만큼 드러난다. 스크롤이 끝나면 영역 높이의 50% 를 기준으로 다 숨거나 다 드러난다 — 200ms motion-ease-enter(SEED 의 cubic-bezier(0, 0, 0.15, 1) 과 같은 값). 높이를 바꾸지 않고 translate3d 로만 옮긴다 — 목록이 접히는 만큼 당겨지지 않는다(지금의 72px 를 지나면 높이를 접는 동작을 대신한다). 머리는 스크롤 상자 맨 위에 붙고(sticky · top 0) 바탕 흰 면 · z 2 다 — 상단 바(가계부)와 Line Tabs 는 숨지 않는다. 소비 요약 · 월 달력은 하나만 펼친다(이름 고정 + aria-expanded). 모션 줄이기면 자동 숨김을 끄고(늘 보인다), 숨은 머리 안으로 키보드 초점이 오면 바로 다 드러낸다. 두 폰은 실제로 스크롤된다 — 아래 글이 숨은 높이 · 목록이 보이는 높이를 잰다.",
+    `${pair(() => psahPhone({ live: "pair" }))}${samples([sample("직접 — 내렸다 조금 올리기 · 모션 줄이기 · 숨은 머리로 초점", "ScrollAutoHide scrollContainerRef", `<div class="pcol-live" id="${sahLiveId}">${psahPhone({ live: "main" })}${controls([["900 내리기", "data-psah-run=\"down\""], ["160 올리기", "data-psah-run=\"up\""], ["숨은 머리로 초점(Tab)", "data-psah-run=\"focus\""], ["맨 위로", "data-psah-run=\"top\""]])}${reduceSwitch(sahLiveId)}${status("data-psah-status", "폰 안을 스크롤하거나 단추를 눌러 보세요.")}</div>`)], "ptf-samples pcol-samples--sheet")}`,
+  );
+
+  const lede = "SEED Accordion 과 SEED Breeze Scroll Auto Hide 위에 둔 펼치고 접기 · 나누기 여섯이다(2026-10-10 사용자 결정 1 ~ 17). SEED 가 컴포넌트로 가진 것은 이 둘뿐이라 Collapsible(Accordion 가이드의 한 줄 — 항목 하나의 모양) · Tree View(APG Treeview) · Resizable(APG Window Splitter) · Scroll Area(전역 스크롤바)는 porest 가 정했다. 아코디언은 inline · separated 두 변형 · 크기 medium 하나(제목 16 · 설명 13 · 54 · 74) · 꺾쇠 · 높이 300ms · 여럿 열기 + 모두 펼치기 · 상세가 없는 항목은 그냥 줄이고, 접기는 그 항목 하나의 트리거를 흰 면 · 경고 상자 · 카드에 놓는다. 카테고리는 List 의 하위 줄(줄 앞 꺾쇠 단추 44 · 하위 104 · 두 세로줄), 부서 나무는 줄 전체가 누르는 자리(부모는 고르면서 펴고 접는다) · Tab 하나 + 화살표 · ⋮ 하나다. 나누기는 선 1px + 손잡이 표시 · 누르는 폭 16 · 20 ~ 40% · ← → 5% · 한 번 누르면 25 ↔ 40 · 화면마다 기억, 위젯은 모서리 손잡이 · 토큰 색 자리표시 · ⋮ 크기다. 스크롤은 브라우저 기본 + 전역 6px 알약(Firefox 두 줄은 @supports 안), 원장 머리는 스크롤 거리를 따라 숨는다. 옛 Accordion · Collapsible · Scroll Area · Resizable · Treeview 칸(17 · 18 · 20)과 그 CSS 는 걷었다 — 18 Data 는 통째로 걷었다."
+    + (desk ? "" : brand.key === "hr" ? "" : " 공유 토큰에는 브랜드 역할 색이 없어 포커스 링 · 자리표시가 여기서는 중립으로 보인다.");
+
+  return `
+  <section class="section pcol-section">
+    <header class="section-head">
+      <div class="section-eyebrow">03u — 펼치고 접기 · 나누기: Accordion · Collapsible · Tree View · Resizable · Scroll Area · Scroll Auto Hide</div>
+      <h2 class="section-title">펼치고 접기 · 나누기 — 아코디언 · 접기 · 나무 · 나누기 · 스크롤 상자 · 숨는 머리</h2>
+      <p class="section-lede">${escape(lede)}</p>
+    </header>
+    ${accLook}
+    ${accSize}
+    ${accPlain}
+    ${accStates}
+    ${accLive}
+    ${clsLook}
+    ${clsStates}
+    ${nestLook}
+    ${treeLook}
+    ${treeStates}
+    ${treeLive}
+    ${rszLook}
+    ${rszLive}
+    ${rszWidget}
+    ${scrLook}
+    ${scrFocus}
+    ${sahLook}
+  </section>`;
+}
+
 export function renderVignettes(brand) {
   // 배지 — 옛 .badge(알약 · 대문자)는 걷고 03o 의 Badge 로 그린다. HR 결재 상태는 대기 neutral · 진행 informative · 승인 positive · 반려 critical(badge.md Migration notes).
   // 탭 — 옛 underline · pills 그림(브랜드 색 밑줄 · 채움)은 걷었다(tabs.md 2026-10-02). 다른 구역으로 옮기는 자리(HR 직원 상세 · 공유 문서)는 Line 탭,
@@ -9555,35 +10160,16 @@ export function renderShadcnInput(brand) {
 }
 
 export function renderShadcnDisclose(brand) {
-  // v70 Disclosure 5
+  // v70 Disclosure — 옛 Accordion(single · 위아래 선만 · ▾ 글자) · Collapsible(테두리 글 단추 "자세히 보기") 칸은 걷었다(2026-10-10).
+  // 아코디언 · 접기는 03u — 펼치고 접기 · 나누기의 Accordion · Collapsible 이다(accordion.md · collapsible.md)
   return `
   <section class="section">
     <header class="section-head">
       <div class="section-eyebrow">17 — Disclosure (v70)</div>
-      <h2 class="section-title">Accordion · Collapsible · Alert Dialog</h2>
-      <p class="section-lede">3 disclosure/overlay 컴포넌트 — 접기/펼치기, destructive confirm. 옛 Hover Card · Context Menu 는 걷었다 — 동작 목록은 03m 의 Menu 다.</p>
+      <h2 class="section-title">Alert Dialog</h2>
+      <p class="section-lede">destructive confirm. 옛 Hover Card · Context Menu 는 걷었다 — 동작 목록은 03m 의 Menu 다. 옛 Accordion · Collapsible 칸은 걷었다 — 03u — 펼치고 접기 · 나누기의 Accordion(inline · separated · 모두 펼치기) · Collapsible(Accordion 항목 하나의 트리거)이다.</p>
     </header>
     <div class="sc-grid">
-      <div class="sc-card">
-        <div class="sc-head">Accordion (single)</div>
-        <div class="acc">
-          <div class="acc-item acc-item--open">
-            <div class="acc-trigger">${brand.key === "hr" ? "신청 정보" : brand.key === "desk" ? "보기 옵션" : "Source"} <span>▴</span></div>
-            <div class="acc-body">${brand.key === "hr" ? "직원/기간/사유" : brand.key === "desk" ? "list / grid / card" : "DESIGN.md → HR/Desk"}</div>
-          </div>
-          <div class="acc-item">
-            <div class="acc-trigger">${brand.key === "hr" ? "첨부 파일" : brand.key === "desk" ? "정렬 옵션" : "Lint policy"} <span>▾</span></div>
-          </div>
-          <div class="acc-item">
-            <div class="acc-trigger">${brand.key === "hr" ? "결재 history" : brand.key === "desk" ? "알림" : "Sync"} <span>▾</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="sc-card">
-        <div class="sc-head">Collapsible</div>
-        <button class="col-trigger">${brand.key === "hr" ? "첨부 3개" : brand.key === "desk" ? "자세히 보기" : "더 보기"} <span>▾</span></button>
-        <div class="sc-note">단일 toggle — Accordion보다 가벼움</div>
-      </div>
       <!-- Alert Dialog — 옛 모양(모서리 12 · shadow-xl · 합니다체 · 처음 초점 취소)은 걷고 03k 의 확인창으로 그린다(alert-dialog.md, 2026-10-02) -->
       <div class="sc-card sc-card--full">
         <div class="sc-head">Alert Dialog — spec: specs/components/alert-dialog.md · 모양은 03k · 바깥 누르기 무시 · Esc 는 취소 · 닫기 버튼 없음 · 처음 초점은 확인창</div>
@@ -9615,28 +10201,8 @@ export function renderShadcnDisclose(brand) {
   </section>`;
 }
 
-export function renderShadcnData(brand) {
-  // v71 Data — 옛 Data Table 칸(.dt-* — 머리 바탕 · 작은 대문자 회색 머리 · 정렬한 열에만 화살표 · 브랜드 10% 일괄 바)은 걷었다(2026-10-08 — Data Table 은
-  // 스펙 없이 Table 로 합쳤다). 표 · 정렬 ↑↓ · 고르기 · 일괄 작업 바는 03s — 데이터 표시의 Table 이다.
-  // Carousel 칸(화살표 32 · 점 · 자동 넘김)은 걷었다(2026-10-04 — carousel.history) — 여러 장은 03q 의 가로 줄(Scroll Fog row · Indicator "1 / 12")이다
-  return `
-  <section class="section">
-    <header class="section-head">
-      <div class="section-eyebrow">18 — Data (v71)</div>
-      <h2 class="section-title">Scroll Area · Resizable</h2>
-      <p class="section-lede">커스텀 scroll · 분할 panel. 옛 Table · Data Table 칸은 걷었다 — 표는 03s — 데이터 표시의 Table 이다. 옛 Carousel 은 걷었다 — 여러 장은 03q 의 끝이 보이는 가로 줄과 장수 글(\"1 / 12\")이다.</p>
-    </header>
-    <div class="sc-grid">
-      <div class="sc-card">
-        <div class="sc-head">Scroll Area + Resizable hint</div>
-        <div class="sa">
-          <div class="sa-content">${"긴 콘텐츠 ".repeat(8)}</div>
-        </div>
-        <div class="sc-note">3-pane layout: nav | content | detail (resizable handles)</div>
-      </div>
-    </div>
-  </section>`;
-}
+// 18 — Data(v71 · Scroll Area + Resizable 안내 칸 — 회색 상자 안 글 · "3-pane layout" 글)는 걷었다(2026-10-10). 옛 Table · Data Table · Carousel 칸은 그 전에 걷었다.
+// 스크롤 상자 · 나누기는 03u — 펼치고 접기 · 나누기의 Scroll Area(전역 6px 알약 · region · contain) · Resizable(선 1px + 손잡이 표시 · 누르는 폭 16)이다
 
 export function renderShadcnExtras(brand) {
   // v72 Extras — 옛 Sonner 칸은 Snackbar 로 바꿨다(2026-10-02). 띠는 brand.snackbars 의 액션 띠다
@@ -9680,7 +10246,8 @@ export function renderShadcnExtras(brand) {
 }
 
 export function renderBatchV73V78(brand) {
-  // v73(Banner/Tag/Popover/File Upload/Treeview) + v74(Animation) + v75(Form validation) + v76(RTL)
+  // v73(Banner/Tag/Popover/File Upload) + v74(Animation) + v75(Form validation) + v76(RTL)
+  // 옛 v73 Treeview 칸(▾ ▸ 글자 · 고른 줄 브랜드 10% · button 안 나무)은 걷었다(2026-10-10) — 나무는 03u 의 Tree View(APG Treeview · 줄 전체가 누르는 자리)다
   // 옛 v73 Tag / Chip(브랜드 10% 바탕 · 칩 안의 입력칸 · "제거" ×)은 걷고 03i 의 입력값 칩(chip.md — Outline Weak 고른 모습 + "{글} 지우기")으로 옮겼다(2026-10-02)
   // 옛 v73 Banner 셋(왼쪽 4px 막대 · 8% 바탕 · 동그라미 글자 아이콘)은 걷고 03l 의 Page Banner 하나로 옮겼다(page-banner.md 2026-10-02 — 한 화면에 하나).
   // 점검 안내는 한 번 보면 되는 안내라 닫을 수 있다(눌러 보면 바로 걷힌다 — 페이지 끝 스크립트)
@@ -9696,15 +10263,12 @@ export function renderBatchV73V78(brand) {
     : isDesk
       ? { id: nextOverlayId("pov-pop"), page: "가계부", label: "이번 달 예산", title: "예산 알림", text: "카테고리 예산의 80% 와 100% 에 닿으면 알려드려요." }
       : { id: nextOverlayId("pov-pop"), page: "가계부", label: "공유 토큰", title: "공유 토큰 동기화", text: "DESIGN.md 의 공유 토큰은 npm run sync 로 HR · Desk 파일에 복제돼요." };
-  const treeRoot = isHr ? ["개발본부", "백엔드팀", "프론트팀"]
-                        : isDesk ? ["식비", "외식", "마트"]
-                                 : ["루트", "자식 1", "자식 2"];
   return `
   <section class="section">
     <header class="section-head">
       <div class="section-eyebrow">20 — Extras-2 (v73) · Animation (v74) · Field 검증(옛 v75) · RTL (v76)</div>
-      <h2 class="section-title">Page Banner · Chip 입력값 · Popover · File Upload · Treeview · Animation · Field 검증 · RTL</h2>
-      <p class="section-lede">v73-v76 시각 데모 — shadcn 누락 5종 + 14 keyframe 라이브 + Field 검증 모습 5(옛 v75 form state 를 Field 로) + dir 토글.</p>
+      <h2 class="section-title">Page Banner · Chip 입력값 · Popover · File Upload · Animation · Field 검증 · RTL</h2>
+      <p class="section-lede">v73-v76 시각 데모 — shadcn 누락 넷 + 14 keyframe 라이브 + Field 검증 모습 5(옛 v75 form state 를 Field 로) + dir 토글. 옛 Treeview 칸은 걷었다 — 나무는 03u 의 Tree View 다.</p>
     </header>
 
     <!-- Page Banner — 옛 v73 Banner 셋을 03l 의 Page Banner 하나로(머리 바로 아래 · 한 화면 하나) -->
@@ -9757,21 +10321,6 @@ export function renderBatchV73V78(brand) {
             <button class="fu-remove" aria-label="제거" type="button">×</button>
           </div>
         </div>
-      </div>
-
-      <!-- Treeview -->
-      <div class="sc-card">
-        <div class="sc-head">Treeview — hierarchical</div>
-        <ul class="tv" role="tree">
-          <li role="treeitem" aria-expanded="true" aria-level="1">
-            <button class="tv-row tv-row--expanded" type="button"><span class="tv-chev">▾</span>${escape(treeRoot[0])}</button>
-            <ul role="group">
-              <li role="treeitem" aria-level="2"><button class="tv-row" type="button"><span class="tv-chev">▸</span>${escape(treeRoot[1])}</button></li>
-              <li role="treeitem" aria-level="2" aria-selected="true"><button class="tv-row tv-row--selected" type="button">${escape(treeRoot[2])}</button></li>
-            </ul>
-          </li>
-        </ul>
-        <div class="sc-note">arrow 네비 + Home/End / Enter select</div>
       </div>
 
       <!-- v74 Animation showcase -->
@@ -9930,16 +10479,26 @@ export function pageCss() {
       -webkit-font-smoothing: antialiased;
     }
 
-    /* === Thin scrollbar (porest-desk-front 톤 정합) ===
-       WebKit/Blink: 6px + border-strong pill thumb + transparent track
-       Firefox(W3C 표준): scrollbar-width: thin + scrollbar-color
-       .scrollbar-hide utility: 완전 숨김 opt-in */
-    * { scrollbar-width: thin; scrollbar-color: var(--color-border-strong) transparent; }
+    /* === 전역 스크롤바 — Scroll Area(2026-10-10, specs/components/scroll-area.yaml) ===
+       recipes/shadcn/styles/porest-shadcn-bridge.css 와 같은 계약이다 — 세로 · 가로 6px 알약 · 막대 stroke-neutral-solid · 바탕 · 모서리 투명.
+       크로미움 · 사파리는 webkit 규칙, Firefox 만 표준 두 줄(scrollbar-width thin · scrollbar-color)을 @supports not selector(::-webkit-scrollbar) 안에 둔다 —
+       크로미움은 scrollbar-width · scrollbar-color 가 걸린 요소에서 ::-webkit-scrollbar 를 버려 6px 이 10px(thin) · 15px(color 만)로 바뀐다.
+       블록마다 두던 scrollbar-width: thin 도 그 블록의 @supports 안으로 옮겼다(03r · 03s · 03t).
+       이 페이지의 전역 다크 블록은 옛 이름만 바꾸므로(역할 색은 블록마다 바꾼다) 다크 페이지의 막대는 stroke-neutral-solid 의 다크 짝을 따로 건다 —
+       라이트 · 다크 나란히 틀(.pdsp-theme)은 그 틀의 짝을 따른다(다크 틀은 블록의 짝 바꾸기가 stroke-neutral-solid 를 다크로 바꾼다).
+       .scrollbar-hide 는 가로 줄(칩 · 탭 · 가로 사진)에만 — 세로 스크롤바는 숨기지 않는다 */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: var(--radius-full); }
-    ::-webkit-scrollbar-thumb:hover { background: var(--color-border-strong); }
-    .scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
+    ::-webkit-scrollbar-thumb { background: var(--color-stroke-neutral-solid); border-radius: var(--radius-full); }
+    ::-webkit-scrollbar-corner { background: transparent; }
+    [data-theme="dark"]::-webkit-scrollbar-thumb,
+    [data-theme="dark"] :not(.pdsp-theme--light, .pdsp-theme--light *)::-webkit-scrollbar-thumb { background: var(--color-stroke-neutral-solid-dark); }
+    @supports not selector(::-webkit-scrollbar) {
+      * { scrollbar-width: thin; scrollbar-color: var(--color-stroke-neutral-solid) transparent; }
+      [data-theme="dark"],
+      [data-theme="dark"] :not(.pdsp-theme--light, .pdsp-theme--light *) { scrollbar-color: var(--color-stroke-neutral-solid-dark) transparent; }
+    }
+    .scrollbar-hide { scrollbar-width: none; }
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     main { max-width: 1180px; margin: 0 auto; padding: var(--spacing-2xl) var(--spacing-xl); }
     code { font-family: ui-monospace, SFMono-Regular, monospace; background: var(--color-surface-input); padding: 2px 6px; border-radius: var(--radius-xs); font-size: 13px; }
@@ -14988,7 +15547,7 @@ export function pageCss() {
     .pnav-status { position: absolute; top: 0; left: 0; right: 0; z-index: calc(var(--z-sticky) + 1); display: flex; align-items: center; height: var(--pnav-safe-top); padding: 0 var(--spacing-x6); box-sizing: border-box; font-size: var(--text-t2); line-height: var(--text-t2--line-height); font-weight: 700; color: var(--color-fg-neutral); pointer-events: none; }
     .pnav-home { position: absolute; left: 50%; bottom: 8px; z-index: var(--z-dev); width: 134px; max-width: 40%; height: 5px; translate: -50% 0; border-radius: var(--radius-full); background: var(--color-fg-neutral); pointer-events: none; }
     /* 폰 화면의 몸 — 바 아래에서 스크롤된다. 탭 바가 있으면 아래 여백 = 바의 아래 자리 + 66 + 24(바가 줄어도 그대로 — BOTTOM_NAVIGATION_INSET) */
-    .pnav-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-bottom: calc(var(--pnav-safe-bottom) + var(--spacing-x6)); scrollbar-width: thin; }
+    .pnav-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-bottom: calc(var(--pnav-safe-bottom) + var(--spacing-x6)); }
     .pnav-body[hidden] { display: none; }
     .pnav-body--tabbar { padding-bottom: calc(max(14px, var(--pnav-safe-bottom) - 6px) + 66px + var(--spacing-x6)); }
     /* 떠 있는 버튼이 있으면 아래 여백 = 56 + 20 + 20 + 안전 영역(마지막 줄이 버튼에 가리지 않게) */
@@ -15002,13 +15561,13 @@ export function pageCss() {
     .pnav-row-detail { font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); }
     .pnav-row-value { flex-shrink: 0; font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; color: var(--color-fg-neutral); font-variant-numeric: tabular-nums; }
     /* 데스크톱 웹 창 — 창 막대 28 + 화면(사이드바 · 머리 · 본문). 창은 실제 폭이라 좁은 화면에서는 가로로 밀린다(.pnav-wide) */
-    .pnav-wide { max-width: 100%; overflow-x: auto; scrollbar-width: thin; }
+    .pnav-wide { max-width: 100%; overflow-x: auto; }
     .pnav-desk { box-sizing: border-box; overflow: hidden; border: 1px solid var(--color-stroke-neutral-subtle); border-radius: var(--radius-r4); background: var(--color-bg-layer-basement); color: var(--color-fg-neutral); font-family: var(--font-sans); }
     .pnav-desk-bar { display: flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; background: var(--color-bg-neutral-weak); }
     .pnav-desk-bar > span { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-stroke-neutral-weak); }
     .pnav-desk-view { position: relative; isolation: isolate; display: flex; height: var(--pnav-h, 520px); overflow: hidden; }
     .pnav-desk-main { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; }
-    .pnav-desk-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 0 var(--layout-margin) var(--spacing-x8); scrollbar-width: thin; }
+    .pnav-desk-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 0 var(--layout-margin) var(--spacing-x8); }
     .pnav-desk-top { padding-top: var(--spacing-x3); }
     /* 본문 맨 위 제목(ScreenTitle) — 26/35 · 700, 머리 아래 20(spacing-nav-to-title) */
     .pnav-screen-title { margin: var(--spacing-nav-to-title) 0 var(--spacing-x4); font-size: var(--text-screen-title); line-height: var(--text-screen-title--line-height); font-weight: 700; color: var(--color-fg-neutral); }
@@ -15272,7 +15831,6 @@ export function pageCss() {
       overflow-y: auto;
       padding: var(--spacing-x2) var(--spacing-x2) 24px;
       scroll-padding: var(--spacing-x2) 0 24px;
-      scrollbar-width: thin;
       -webkit-mask-image: linear-gradient(#000, #000), linear-gradient(to top, var(--pfog-stops));
       mask-image: linear-gradient(#000, #000), linear-gradient(to top, var(--pfog-stops));
       -webkit-mask-size: 100% calc(100% - 24px), 100% 24px;
@@ -15318,7 +15876,8 @@ export function pageCss() {
     .psnav-icon > svg { display: block; width: 20px; height: 20px; }
     .psnav-label { flex: 1 1 auto; min-width: 0; padding: var(--spacing-x1_5) 0; font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 500; overflow-wrap: break-word; word-break: keep-all; }
     /* 꺾쇠 — 16 · fg-neutral-subtle, 펼치면 위로(200ms) */
-    .psnav-chevron { display: grid; flex-shrink: 0; place-items: center; width: 16px; height: 16px; color: var(--color-fg-neutral-subtle); transition: rotate var(--motion-duration-d4) var(--motion-ease-easing); }
+    .psnav-chevron { display: grid; flex-shrink: 0; place-items: center; width: 16px; height: 16px; color: var(--color-fg-neutral-subtle); transition: rotate var(--motion-duration-d6) var(--motion-ease-easing); }
+    /* 꺾쇠 · 하위 펼침은 300ms(d6 — Accordion 과 같다, side-navigation.md 2026-10-10). 하위 목록은 페이지 끝 스크립트가 같은 시간으로 펼친다 */
     .psnav-chevron > svg { display: block; width: 16px; height: 16px; }
     .psnav-item[aria-expanded="true"] .psnav-chevron { rotate: 180deg; }
     .psnav--collapsed .psnav-chevron { display: none; }
@@ -15442,7 +16001,7 @@ export function pageCss() {
     .pspanel-title { margin: 0; font-size: var(--text-t8); line-height: var(--text-t8--line-height); font-weight: 700; color: var(--color-fg-neutral); }
     .pspanel-desc { margin: 0; font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 400; color: var(--color-fg-neutral-muted); }
     .pspanel > .pov-close--box { top: calc(28px - 15px + var(--pnav-safe-top, 0px)); }
-    .pspanel-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 0 var(--spacing-x6) var(--spacing-x6); scrollbar-width: thin; }
+    .pspanel-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 0 var(--spacing-x6) var(--spacing-x6); }
     .pspanel-body--footer { padding-bottom: 0; }
     .pspanel--left > .pspanel-body { padding-inline: var(--spacing-x4); }
     /* 끝 흐림(scrollFog) — Scroll Fog overlayBody 의 마스크(기다림 블록 .pfog--overlay-body), 머리 아래 16 은 그대로 두고 본문 안 위 20 · 아래 80 */
@@ -15532,7 +16091,11 @@ export function pageCss() {
     .pnav-table { overflow: hidden; border-radius: var(--radius-r3); background: var(--color-bg-layer-default); font-family: var(--font-sans); }
     .pnav-tr { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: var(--spacing-x3); align-items: center; min-height: 40px; padding: 0 var(--spacing-x4); box-shadow: inset 0 -1px 0 var(--color-stroke-neutral-subtle); font-size: var(--text-t4); line-height: var(--text-t4--line-height); color: var(--color-fg-neutral); }
     .pnav-tr--head { font-weight: 700; color: var(--color-fg-neutral-muted); }
-    .pnav-table-narrow { max-width: 340px; overflow-x: auto; border-radius: var(--radius-r4); scrollbar-width: thin; }
+    .pnav-table-narrow { max-width: 340px; overflow-x: auto; border-radius: var(--radius-r4); }
+    /* Firefox 의 얇은 스크롤바 — @supports 안에만(크로미움은 scrollbar-width 가 걸리면 전역 webkit 6px 을 버린다 — Scroll Area 2026-10-10) */
+    @supports not selector(::-webkit-scrollbar) {
+      .pnav-body, .pnav-wide, .pnav-desk-scroll, .psnav-content, .pspanel-body, .pnav-table-narrow { scrollbar-width: thin; }
+    }
     .pnav-table-narrow:focus-visible { outline: 2px solid var(--pnav-ring); outline-offset: 2px; }
     .pnav-table-box--narrow { width: 560px; }
 
@@ -15637,7 +16200,7 @@ export function pageCss() {
     /* 갤러리 틀 — 회색 바닥(카드가 놓이는 자리) · 가로로 밀리는 칸 · 견본 줄 · 폰의 카드 묶음(화면 끝 24 · 쌓은 사이 8) · 데스크톱 격자(칸 사이 24) */
     .pdata-floor { box-sizing: border-box; min-width: 0; padding: var(--spacing-x6); border-radius: var(--radius-r4); background: var(--color-bg-layer-basement); color: var(--color-fg-neutral); font-family: var(--font-sans); }
     .pdata-floor--tight { padding: var(--spacing-x4); }
-    .pdata-wide { position: relative; max-width: 100%; min-width: 0; overflow-x: auto; scrollbar-width: thin; }
+    .pdata-wide { position: relative; max-width: 100%; min-width: 0; overflow-x: auto; }
     .pdata-samples--wide { grid-template-columns: minmax(0, 1fr); }
     .pdata-samples--sheet { grid-template-columns: repeat(auto-fill, minmax(min(100%, 362px), 1fr)); }
     .pdata-samples--tables { grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr)); }
@@ -15683,7 +16246,7 @@ export function pageCss() {
 
     /* 표(Table) — 상자 .ptbl(카드 안에 가장자리까지 · 넘치면 가로로 민다 · 바깥 테두리 · 모서리 · 세로 선 · 줄무늬 없음). 글은 t4 14 에 줄 높이 20(SEED 문서 표).
        칸 좌우 16, 첫 칸 앞 · 끝 칸 뒤만 카드 여백과 같은 24. 줄 선은 칸 아래 1px stroke-neutral-subtle — 머리 아래 · 줄마다 · 마지막 줄 아래까지 */
-    .ptbl { --ptbl-min: 0px; position: relative; max-width: 100%; overflow-x: auto; scrollbar-width: thin; color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .ptbl { --ptbl-min: 0px; position: relative; max-width: 100%; overflow-x: auto; color: var(--color-fg-neutral); font-family: var(--font-sans); }
     .ptbl--sticky { overflow-y: auto; }
     .ptbl--sticky:focus-visible { outline: 2px solid var(--pdata-ring); outline-offset: -2px; }
     .ptbl--visible { overflow: visible; }
@@ -16243,7 +16806,11 @@ export function pageCss() {
     .pdata-swipe-stack { display: flex; flex-direction: column; gap: var(--spacing-x4); }
     .pdata-swipe-item { display: flex; flex-direction: column; gap: var(--spacing-x2); }
     /* 줄 띠는 폰 폭(300 ~ 360)으로 그린다 — 미리보기 칸이 좁으면 바닥 안에서 가로로 민다(줄 글자가 겹치지 않게) */
-    .pdata-floor--swipe { overflow-x: auto; scrollbar-width: thin; }
+    .pdata-floor--swipe { overflow-x: auto; }
+    /* Firefox 의 얇은 스크롤바 — @supports 안에만(크로미움은 scrollbar-width 가 걸리면 전역 webkit 6px 을 버린다 — Scroll Area 2026-10-10) */
+    @supports not selector(::-webkit-scrollbar) {
+      .pdata-wide, .ptbl, .pdata-floor--swipe { scrollbar-width: thin; }
+    }
     .pdata-floor--swipe .pdata-swipe-screen { min-width: 300px; }
     @media (max-width: 560px) { .pdata-floor--swipe { padding: var(--spacing-x4); } }
     .pdata-swipe-screen { box-sizing: border-box; max-width: 360px; overflow: hidden; border: 1px solid var(--color-stroke-neutral-weak); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); }
@@ -16323,7 +16890,7 @@ export function pageCss() {
     .pinp-phone--flush { padding: 0; overflow: hidden; }
     .pinp-phone--360 { max-width: 360px; }
     .pinp-phone--screen { position: relative; min-height: 480px; padding-bottom: 88px; }
-    .pinp-wide { position: relative; max-width: 100%; min-width: 0; overflow-x: auto; scrollbar-width: thin; }
+    .pinp-wide { position: relative; max-width: 100%; min-width: 0; overflow-x: auto; }
     .pinp-desk { box-sizing: border-box; width: 760px; padding: var(--spacing-x6); border: 1px solid var(--color-stroke-neutral-subtle); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); color: var(--color-fg-neutral); font-family: var(--font-sans); }
     .pinp-desk--dialog { width: 480px; border-radius: var(--radius-r5); background: var(--color-bg-layer-floating); }
     .pinp-stack { display: flex; flex-direction: column; gap: var(--spacing-x6); }
@@ -16704,9 +17271,12 @@ export function pageCss() {
     .pinp-float { box-sizing: border-box; display: flex; flex-direction: column; width: 100%; max-width: 408px; max-height: 420px; overflow: hidden; padding: 0 var(--spacing-x6); border-radius: var(--radius-r5); background: var(--color-bg-layer-floating); box-shadow: var(--shadow-s3); color: var(--color-fg-neutral); }
     .pinp-float > .pipk { flex: 1 1 auto; }
     .pinp-float .pipk-search { padding-top: var(--spacing-x6); }
-    .pinp-float .pipk-scroll { scrollbar-width: thin; }
     .pinp-live--ipk { max-width: 408px; }
     .pinp-float--live { margin-top: var(--spacing-x2); max-height: 460px; }
+    /* Firefox 의 얇은 스크롤바 — @supports 안에만(크로미움은 scrollbar-width 가 걸리면 전역 webkit 6px 을 버린다 — Scroll Area 2026-10-10) */
+    @supports not selector(::-webkit-scrollbar) {
+      .pinp-wide, .pinp-float .pipk-scroll { scrollbar-width: thin; }
+    }
     .pinp-samples--find { grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
     .pipk-trigger-icon { color: var(--color-fg-neutral-muted); }
 
@@ -16761,6 +17331,395 @@ export function pageCss() {
     }
     [data-theme="dark"] .pinp-surface--hero,
     .pdsp-theme--dark .pinp-surface--hero { --pinp-hero-end: var(--color-brand-300-dark, var(--color-bg-neutral-inverted)); }
+
+    /* === 펼치고 접기 · 나누기 — Accordion · Collapsible · Tree View · Resizable · Scroll Area · Scroll Auto Hide ===
+       specs/components/accordion.md · collapsible.md · tree-view.md · resizable.md · scroll-area.md · scroll-auto-hide.md · list.md(하위 줄) · card.md(body accordion)
+       (수치 원본은 같은 이름의 .yaml). SEED Accordion · Breeze Scroll Auto Hide 를 따르고, 나머지는 porest 가 정했다(2026-10-10 사용자 결정 1 ~ 17).
+       아코디언 트리거는 두 층이다 — 바탕 층(::before: 누름 · 호버 바탕, 줄지 않는다 — 좌우 6 들어와 모서리 10)과 콘텐츠 층(.pacc-content — 누르는 동안만
+       2px 거리 축소, 기준 --press-basis 는 페이지 끝 스크립트가 누르는 순간 잰다). 접기 · 나무 줄 · 하위 줄의 꺾쇠 단추도 같은 셈이다.
+       펼침 · 접힘(높이 300ms d6 · 모션 줄이기면 투명도 150ms d3)은 페이지 끝 스크립트가 맡고, 꺾쇠의 회전만 CSS 다. 모션 줄이기는 기기 설정이거나
+       견본의 스위치(data-pcol-reduce — 이 견본만)다. --hover · --pressed · --focus 는 갤러리에서 그 순간을 고정해 보여 주는 클래스다.
+       다크 짝은 이 블록 끝에서 바꾼다 — 03o 의 라이트 · 다크 나란히 틀(.pdsp-theme--dark)은 페이지가 라이트여도 바꾼다. */
+    :is(.pcol-section, .pacc, .pcls, .pnest, .ptree, .ptree-panel, .prsz, .prsz-grid, .pscr, .psah-phone) {
+      --pcol-ring: var(--color-stroke-focus-ring, var(--color-border-focus, var(--color-fg-neutral)));
+    }
+    .pcol-section [hidden] { display: none !important; }
+
+    /* 갤러리 틀 — 폰(390) · 시트 본문(떠 있는 표면 · 위 모서리 24) · 대화상자(480 · 모서리 20) · 데스크톱 화면(좁으면 가로로 민다) · 바닥 · 견본 칸 */
+    .pcol-panel > :not(.vignette-head) + :is(.pdsp-pair, .cb-matrix, .ptf-samples) { margin-top: var(--spacing-xl); }
+    .pcol-samples--wide { grid-template-columns: minmax(0, 1fr); }
+    .pcol-samples--sheet { grid-template-columns: repeat(auto-fill, minmax(min(100%, 392px), 1fr)); }
+    .pcol-samples--tree { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+    .pcol-gap { height: var(--spacing-x3); }
+    .pcol-phone { box-sizing: border-box; width: 100%; max-width: 390px; overflow: hidden; border: 1px solid var(--color-stroke-neutral-subtle); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .pcol-phone--scroll { height: var(--pcol-h, 640px); overflow-y: auto; }
+    .pcol-phone--pad { padding: var(--spacing-x4); background: var(--color-bg-layer-basement); }
+    .pcol-phone--360 { max-width: 360px; }
+    .pcol-phone--list { padding: var(--spacing-x1_5) 0; }
+    .pcol-screen-title { padding: var(--spacing-x5) var(--spacing-global-gutter) var(--spacing-x3); font-size: var(--text-t7); line-height: var(--text-t7--line-height); font-weight: 700; }
+    .pcol-floor { display: flex; flex-direction: column; gap: var(--spacing-x2); padding: var(--spacing-x4); background: var(--color-bg-layer-basement); }
+    .pcol-floor--screen { min-height: calc(100% - 60px); }
+    .pcol-sheet, .pcol-dialog { box-sizing: border-box; display: flex; flex-direction: column; width: 100%; max-height: var(--pcol-h, none); overflow: hidden; background: var(--color-bg-layer-floating); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-subtle); color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .pcol-sheet { max-width: 390px; border-radius: var(--radius-r6) var(--radius-r6) 0 0; }
+    .pcol-dialog { max-width: 480px; border-radius: var(--radius-r5); }
+    .pcol-sheet-title, .pcol-dialog-title { flex-shrink: 0; padding: var(--spacing-x6) var(--spacing-x6) var(--spacing-x4); font-size: var(--text-t8); line-height: var(--text-t8--line-height); font-weight: 700; }
+    /* 본문 — 이 안에서만 스크롤하고 끝에서 뒤 화면을 끌고 가지 않는다(overscroll contain — 시트 · 대화상자 본문, Scroll Area) */
+    .pcol-sheet-body, .pcol-dialog-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0 var(--spacing-global-gutter) var(--spacing-x4); }
+    .pcol-dialog-body { padding-bottom: var(--spacing-x6); }
+    .pcol-wide { position: relative; max-width: 100%; min-width: 0; overflow-x: auto; }
+    .pcol-desk { box-sizing: border-box; width: var(--pcol-w, 760px); padding: var(--spacing-x6); border: 1px solid var(--color-stroke-neutral-subtle); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .pcol-desk--basement { display: flex; flex-direction: column; gap: var(--spacing-x4); background: var(--color-bg-layer-basement); }
+    .pcol-desk--flush { padding: 0; overflow: hidden; }
+    .pcol-desk-title { font-size: var(--text-t9); line-height: var(--text-t9--line-height); font-weight: 700; }
+    .pcol-surface { box-sizing: border-box; width: 100%; max-width: 480px; padding: var(--spacing-x2) 0; border-radius: var(--radius-r4); background: var(--color-bg-layer-default); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-subtle); color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .pcol-surface--390 { max-width: 390px; }
+    .pcol-surface--pad { padding: var(--spacing-x4); }
+    .pcol-surface--cell { max-width: none; min-width: 0; padding: var(--spacing-x2); }
+    .pcol-surface--basement { background: var(--color-bg-layer-basement); }
+    .pcol-surface--tree { padding: var(--spacing-x1) 0 0; }
+    .pcol-cell { align-items: stretch; }
+    .pcol-cell > .pcol-surface { flex: 1; }
+    .pcol-matrix .cb-matrix-row { grid-template-columns: 120px repeat(var(--cb-cols), minmax(260px, 1fr)); }
+    .pcol-matrix--tree .cb-matrix-row { grid-template-columns: 168px repeat(var(--cb-cols), minmax(180px, 1fr)); }
+    .pcol-measure { display: block; margin-top: var(--spacing-x1); padding: 0 var(--spacing-x4); font-family: ui-monospace, monospace; font-size: 11px; line-height: 16px; color: var(--color-fg-neutral-subtle); }
+    .pcol-measure:empty { display: none; }
+    .pcol-live { position: relative; }
+    .pcol-live-status { margin-top: var(--spacing-x2); }
+    .pcol-controls { display: flex; flex-wrap: wrap; gap: var(--spacing-x2); margin-top: var(--spacing-x3); }
+    .pcol-reduce { display: inline-flex; align-items: center; gap: var(--spacing-x1_5); margin-top: var(--spacing-x3); font-family: var(--font-sans); font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); cursor: pointer; }
+    .pcol-reduce + .pcol-live-status { margin-top: var(--spacing-x1); }
+    .pcol-pair--next { margin-top: var(--spacing-xl); }
+    /* 카드 상세 화면 — 카드 요약(카드 그림 자리) */
+    .pcol-card-summary { flex-direction: row; align-items: center; gap: var(--spacing-x4); }
+    .pcol-card-art { flex-shrink: 0; width: 56px; aspect-ratio: 1.586; border-radius: var(--radius-r2); background: linear-gradient(135deg, var(--color-chart-blue, #1b6adb), var(--color-chart-indigo, #3c4fc8)); }
+    .pcol-card-meta { margin-top: var(--spacing-x0_5); font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); }
+
+    /* 아코디언 — 루트 .pacc(data-variant). inline 은 둘째 줄부터 위에 들인 선(1px stroke-neutral-subtle · 좌우 24 — List 의 들인 선, 첫 줄 위 · 끝 줄 아래 없음),
+       separated 는 줄마다 Card 면(1px stroke-neutral-weak · 모서리 16 · 사이 8 · 그림자 없음 · 바탕은 놓인 면 그대로 — 누름 바탕 · 펼친 내용을 모서리에서 자른다) */
+    .pacc { display: flex; flex-direction: column; font-family: var(--font-sans); }
+    .pacc[data-variant="separated"] { gap: var(--spacing-x2); }
+    .pacc-row { position: relative; }
+    .pacc[data-variant="inline"] > .pacc-row + .pacc-row::before { content: ""; display: block; height: 1px; margin: 0 var(--spacing-x6); background: var(--color-stroke-neutral-subtle); }
+    .pacc[data-variant="separated"] > .pacc-row { overflow: hidden; border: 1px solid var(--color-stroke-neutral-weak); border-radius: var(--radius-r4); background: transparent; }
+    .pacc-heading { display: flex; margin: 0; font: inherit; }
+    /* 트리거 — 줄 전체가 누르는 자리(최소 54 · 설명이 있으면 74). 누름 색 --pacc-pressed(흰 면 bg-layer-default-pressed — 시트 · 대화상자 위도 같은 불투명 값,
+       경고 상자 아래 줄은 bg-warning-weak-pressed). 키보드 포커스에만 안쪽 2px 링 — inline 각진 · separated 14 · 카드 14 · 경고 상자 10 */
+    .pacc-trigger {
+      --pacc-pressed: var(--color-bg-layer-default-pressed);
+      position: relative;
+      display: flex;
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 54px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      appearance: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pacc[data-variant="separated"] .pacc-trigger { border-radius: var(--radius-r3_5); }
+    .pacc-trigger::before {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      inset-inline: 0;
+      border-radius: 0;
+      background: transparent;
+      pointer-events: none;
+      transition:
+        background-color var(--motion-duration-color-transition) var(--motion-ease-easing),
+        inset var(--motion-duration-color-transition) var(--motion-ease-easing),
+        border-radius var(--motion-duration-color-transition) var(--motion-ease-easing);
+    }
+    @media (hover: hover) {
+      .pacc-trigger:enabled:hover::before { inset-inline: var(--spacing-x1_5); border-radius: var(--radius-r2_5); background: var(--pacc-pressed); }
+    }
+    .pacc-trigger:enabled:active::before,
+    .pacc-trigger--hover::before,
+    .pacc-trigger--pressed::before { inset-inline: var(--spacing-x1_5); border-radius: var(--radius-r2_5); background: var(--pacc-pressed); }
+    .pacc-trigger:focus { outline: none; }
+    .pacc-trigger:focus-visible,
+    .pacc-trigger--focus { outline: 2px solid var(--pcol-ring); outline-offset: -2px; }
+    .pacc-trigger:disabled { cursor: not-allowed; }
+    /* 콘텐츠 층 — 앞 아이콘 22 · 본문 · 꺾쇠 20 사이 12, 위아래 16 · 좌우 24. 앞 아이콘 · 꺾쇠는 트리거 가운데 */
+    .pacc-content { position: relative; display: flex; align-items: center; gap: var(--spacing-x3); box-sizing: border-box; width: 100%; min-width: 0; padding: var(--spacing-x4) var(--spacing-global-gutter); transition: scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale); }
+    .pacc-plain .pacc-content { min-height: 54px; }
+    .pacc-trigger:enabled:active > .pacc-content,
+    .pacc-trigger--pressed > .pacc-content { scale: calc(1 - 2 / var(--press-basis, 54)); }
+    .pacc-prefix { display: flex; flex-shrink: 0; color: var(--color-fg-neutral); }
+    .pacc-prefix > svg { width: 22px; height: 22px; }
+    .pacc-body { display: flex; flex: 1 1 auto; flex-direction: column; align-items: flex-start; gap: var(--spacing-x0_5); min-width: 0; }
+    .pacc-title { font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 500; color: var(--color-fg-neutral); }
+    .pacc-desc { font-size: var(--text-t3); line-height: var(--text-t3--line-height); font-weight: 500; color: var(--color-fg-neutral-subtle); }
+    .pacc-chevron { flex-shrink: 0; width: 20px; height: 20px; color: var(--color-fg-neutral-subtle); transition: rotate var(--motion-duration-d6) var(--motion-ease-easing); }
+    .pacc-trigger[aria-expanded="true"] .pacc-chevron { rotate: 180deg; }
+    /* 막힘 — 전용 색(흐리게 하지 않는다) */
+    .pacc-trigger:disabled :is(.pacc-prefix, .pacc-title, .pacc-desc, .pacc-chevron) { color: var(--color-fg-disabled); }
+    /* 펼친 내용 — 위 0 · 좌우 24 · 아래 16, 14 / 22(text-article-note) · fg-neutral-muted · 줄바꿈 문자를 지킨다. 안에서 스크롤하지 않는다 */
+    .pacc-panel-text { padding: 0 var(--spacing-global-gutter) var(--spacing-x4); font-size: var(--text-article-note); line-height: var(--text-article-note--line-height); font-weight: 400; color: var(--color-fg-neutral-muted); white-space: pre-line; }
+    /* 목록 머리 — 높이 32 · 아래 8 · 제목 t5 700(카드 머리와 같은 글) + 오른쪽 모두 펼치기 */
+    .pacc-header { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-x2); min-height: 32px; margin-bottom: var(--spacing-x2); }
+    .pacc-header-title { min-width: 0; font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; color: var(--color-fg-neutral); }
+    /* 모두 펼치기 — 보이는 32 · 왼쪽 8 · 오른쪽 4 · 모서리 8 · t4 500 · fg-neutral-subtle + 아이콘 16(사이 2), 누르는 영역 44(::before) */
+    .pacc-all { position: relative; display: inline-flex; flex-shrink: 0; align-items: center; gap: var(--spacing-x0_5); box-sizing: border-box; height: 32px; margin: 0; padding: 0 var(--spacing-x1) 0 var(--spacing-x2); border: 0; border-radius: var(--radius-r2); background: transparent; font-family: var(--font-sans); font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 500; color: var(--color-fg-neutral-subtle); cursor: pointer; transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing), scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale); }
+    .pacc-all::before { content: ""; position: absolute; left: 50%; top: 50%; width: 100%; min-width: 44px; height: 44px; translate: -50% -50%; }
+    .pacc-all > svg { flex-shrink: 0; width: 16px; height: 16px; }
+    @media (hover: hover) { .pacc-all:hover { background: var(--color-bg-layer-default-pressed); } }
+    .pacc-all:active, .pacc-all--pressed { background: var(--color-bg-layer-default-pressed); scale: calc(1 - 2 / var(--press-basis, 32)); }
+    .pacc-all:focus { outline: none; }
+    .pacc-all:focus-visible, .pacc-all--focus { outline: 2px solid var(--pcol-ring); outline-offset: 2px; }
+    /* 카드 상세 — Card body="accordion": 좌우 0 · 머리 위 24 · 좌우 24 · 아래 4 · 카드 아래 8(마지막 트리거 16 과 합쳐 보이는 24) */
+    .pcard.pacc-card { padding: 0 0 var(--spacing-x2); }
+    .pacc-card > .pacc-card-head { padding: var(--spacing-x6) var(--spacing-x6) var(--spacing-x1); }
+
+    /* 접기 — 트리거는 아코디언 항목 그대로. 놓인 면: card(Card 면 1px · 16 · bg-layer-default — 트리거가 그 머리) · warning(경고 상자의 맨 아래 줄 —
+       위 1px stroke-warning-weak · 좌우 16 · 누름 bg-warning-weak-pressed). 펼친 내용 위 0 · 좌우는 트리거와 같고 아래 글 16 · 줄 목록 8 · 카드 24 */
+    .pcls { position: relative; font-family: var(--font-sans); color: var(--color-fg-neutral); }
+    .pcls[data-surface="card"] { overflow: hidden; border: 1px solid var(--color-stroke-neutral-weak); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); }
+    .pcls[data-surface="card"] .pacc-trigger { border-radius: var(--radius-r3_5); }
+    .pcls[data-surface="warning"] { border-top: 1px solid var(--color-stroke-warning-weak); }
+    .pcls[data-surface="warning"] .pacc-trigger { --pacc-pressed: var(--color-bg-warning-weak-pressed); border-radius: var(--radius-r2_5); }
+    .pcls[data-surface="warning"] .pacc-content { padding-inline: var(--spacing-x4); }
+    .pcls-panel-inner { padding: 0 var(--spacing-global-gutter) var(--spacing-x4); }
+    .pcls-panel-inner[data-layout="rows"] { padding-bottom: var(--spacing-x2); }
+    .pcls[data-surface="card"] .pcls-panel-inner { padding-bottom: var(--spacing-x6); }
+    .pcls[data-surface="warning"] .pcls-panel-inner { padding-inline: var(--spacing-x4); }
+    /* 경고 상자 — 화면이 그린다: bg-warning-weak · 1px stroke-warning-weak · 모서리 12 · 경고 글 위 14 · 좌우 16 · 아래 12 */
+    .pcls-box { overflow: hidden; border: 1px solid var(--color-stroke-warning-weak); border-radius: var(--radius-r3); background: var(--color-bg-warning-weak); font-family: var(--font-sans); }
+    .pcls-box-text { padding: var(--spacing-x3_5) var(--spacing-x4) var(--spacing-x3); }
+    /* 화면의 내용 — 분할 줄(점 8 · 15 / 21 · 금액 600) · 경고 글 · 고를 것 · 검색 조건 칸 */
+    .pcls-split { display: flex; align-items: flex-start; gap: var(--spacing-x3); padding: var(--spacing-x3) 0; }
+    .pcls-split-dot { flex-shrink: 0; width: 8px; height: 8px; margin-top: 7px; border-radius: var(--radius-full); background: var(--pcls-dot); }
+    .pcls-split-body { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+    .pcls-split-title, .pcls-split-amount { font-size: 15px; line-height: 21px; color: var(--color-fg-neutral); }
+    .pcls-split-title { font-weight: 500; }
+    .pcls-split-sub { font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); }
+    .pcls-split-amount { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .pcls-shortfall { display: flex; flex-direction: column; gap: var(--spacing-x0_5); }
+    .pcls-shortfall-title { font-size: 15px; line-height: 21px; font-weight: 600; color: var(--color-fg-neutral); }
+    .pcls-shortfall-sub { font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); font-variant-numeric: tabular-nums; }
+    .pcls-fixes { display: flex; flex-direction: column; gap: var(--spacing-x2); }
+    .pcls-fix { display: flex; align-items: center; min-height: 40px; padding: 0 var(--spacing-x3); border: 0; border-radius: var(--radius-r2_5); background: var(--color-bg-layer-default); font-family: var(--font-sans); font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 500; color: var(--color-fg-neutral); text-align: left; cursor: pointer; }
+    .pcls-filters { display: grid; grid-template-columns: repeat(var(--pcls-cols, 4), minmax(0, 1fr)); gap: var(--spacing-x4); }
+    .pcls-filter { display: flex; flex-direction: column; gap: var(--spacing-x2); min-width: 0; }
+    .pcls-filter-label { font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 500; color: var(--color-fg-neutral); }
+    .pcls-filter-input { box-sizing: border-box; min-width: 0; height: 40px; padding: 0 var(--spacing-x3); border: 1px solid var(--color-stroke-neutral-weak); border-radius: var(--radius-r2); background: var(--color-bg-layer-default); font-family: var(--font-sans); font-size: var(--text-t4); color: var(--color-fg-neutral); }
+    /* 거래 상세 화면(갤러리 그림) — 금액 · 키-값 줄 · 경고 상자 자리 */
+    .pcol-amount { padding: 0 var(--spacing-global-gutter) var(--spacing-x2); font-size: var(--text-t9); line-height: var(--text-t9--line-height); font-weight: 700; font-variant-numeric: tabular-nums; }
+    .pcol-kv { display: flex; justify-content: space-between; gap: var(--spacing-x3); padding: var(--spacing-x2) var(--spacing-global-gutter); font-size: var(--text-t4); line-height: var(--text-t4--line-height); }
+    .pcol-kv > :first-child { color: var(--color-fg-neutral-subtle); }
+    .pcol-split-box { padding: var(--spacing-x2) var(--spacing-global-gutter) var(--spacing-x6); }
+    .pcol-report-list { padding: var(--spacing-x2) 0; }
+    .pcol-report-row { display: flex; justify-content: space-between; gap: var(--spacing-x4); padding: var(--spacing-x3) var(--spacing-x6); font-size: 15px; line-height: 21px; }
+    .pcol-report-row > :last-child { color: var(--color-fg-neutral-subtle); white-space: nowrap; }
+
+    /* 하위 줄(List — ListParentItem) — 부모 줄은 줄 앞 4 · 꺾쇠 단추 44 · 단추 뒤 4 를 지나 앞 붙이개가 52, 하위 줄은 부모의 제목 자리 104(= 4 + 44 + 4 + 40 + 12).
+       단추는 보이는 상자 = 누르는 영역 44 · 모서리 10 — 줄과 따로 눌린다(올리거나 누르면 단추만 bg-layer-default-pressed · 누르면 2px 축소, 줄의 바탕은 생기지 않는다).
+       위아래 2 를 줄의 여백에 겹쳐 줄의 높이를 그대로 둔다(하위 줄 · 단추 없는 줄과 같다). 하위가 없는 부모는 같은 폭의 빈 자리(17B — 부모 타일이 모두 52) */
+    .pnest-parent { display: flex; flex-direction: column; }
+    .plst-content.pnest-content--parent { padding-left: var(--spacing-x1); padding-right: var(--spacing-global-gutter); }
+    .plst-content.pnest-content--child { padding-left: 104px; }
+    .pnest-sub { margin: 0; padding: 0; list-style: none; }
+    .pnest-expand { position: relative; z-index: 1; display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; width: 44px; height: 44px; margin: calc(-1 * var(--spacing-x0_5)) var(--spacing-x1) calc(-1 * var(--spacing-x0_5)) 0; padding: 0; border: 0; border-radius: var(--radius-r2_5); background: transparent; color: var(--color-fg-neutral-subtle); cursor: pointer; appearance: none; transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing), scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale); }
+    @media (hover: hover) { .pnest-expand:hover { background: var(--color-bg-layer-default-pressed); } }
+    .pnest-expand:active, .pnest-expand--hover, .pnest-expand--pressed { background: var(--color-bg-layer-default-pressed); }
+    .pnest-expand:active, .pnest-expand--pressed { scale: calc(1 - 2 / 44); }
+    .pnest-expand:focus { outline: none; }
+    .pnest-expand:focus-visible, .pnest-expand--focus { outline: 2px solid var(--pcol-ring); outline-offset: -2px; }
+    .pnest-chevron { width: 20px; height: 20px; flex-shrink: 0; transition: rotate var(--motion-duration-d6) var(--motion-ease-easing); }
+    .pnest-expand[aria-expanded="true"] .pnest-chevron { rotate: 90deg; }
+    .pnest-slot { flex-shrink: 0; width: 44px; height: 44px; margin: calc(-1 * var(--spacing-x0_5)) var(--spacing-x1) calc(-1 * var(--spacing-x0_5)) 0; }
+
+    /* 나무 — 패널 가장자리 8 · 마지막 줄 아래 16. 줄 최소 44 · 위아래 12 · 오른쪽 8 · 왼쪽 8 + (단계 − 1) × 20 · 모서리 10, 줄 전체가 누르는 자리(16D).
+       호버(웹) · 누름 bg-layer-default-pressed, 고른 항목 bg-neutral-weak-pressed(올리거나 눌러도 그대로), 키보드 포커스에만 줄 안쪽 2px 링(모서리 10).
+       꺾쇠 칸 20 × 19(아이콘 16 — 표시만, 펼치면 90°) · 아이콘 16 · 이름 14 / 19 사이 6 — 이름이 여러 줄이면 꺾쇠 · 아이콘은 첫 줄 */
+    .ptree, .ptree-group { margin: 0; padding: 0; list-style: none; }
+    .ptree { padding: 0 var(--spacing-x2) var(--spacing-x4); font-family: var(--font-sans); color: var(--color-fg-neutral); }
+    .ptree-item { margin: 0; padding: 0; outline: none; }
+    .ptree-row { position: relative; display: flex; box-sizing: border-box; min-height: 44px; padding: var(--spacing-x3) var(--spacing-x2) var(--spacing-x3) calc(var(--spacing-x2) + var(--ptree-level, 0) * var(--spacing-x5)); border-radius: var(--radius-r2_5); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing); }
+    @media (hover: hover) { .ptree-item:not([data-selected]) > .ptree-row:hover { background: var(--color-bg-layer-default-pressed); } }
+    .ptree-item:not([data-selected]) > .ptree-row:active,
+    .ptree-item:not([data-selected]):is(.ptree-item--hover, .ptree-item--pressed) > .ptree-row { background: var(--color-bg-layer-default-pressed); }
+    .ptree-item[data-selected] > .ptree-row { background: var(--color-bg-neutral-weak-pressed); }
+    .ptree-item:focus-visible > .ptree-row,
+    .ptree-item--focus > .ptree-row { outline: 2px solid var(--pcol-ring); outline-offset: -2px; }
+    .ptree-content { position: relative; display: flex; flex: 1 1 auto; align-items: flex-start; gap: var(--spacing-x1_5); min-width: 0; transition: scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale); }
+    .ptree-row:active > .ptree-content,
+    .ptree-item--pressed > .ptree-row > .ptree-content { scale: calc(1 - 2 / var(--press-basis, 44)); }
+    .ptree-chevron { display: flex; flex-shrink: 0; align-items: center; justify-content: center; width: 20px; height: 19px; color: var(--color-fg-neutral-subtle); }
+    .ptree-chevron > svg { width: 16px; height: 16px; transition: rotate var(--motion-duration-d6) var(--motion-ease-easing); }
+    .ptree-item[aria-expanded="true"] > .ptree-row .ptree-chevron > svg { rotate: 90deg; }
+    .ptree-icon { display: flex; flex-shrink: 0; align-items: center; height: 19px; color: var(--color-fg-neutral-subtle); }
+    .ptree-icon > svg { width: 16px; height: 16px; }
+    .ptree-label { flex: 1 1 auto; min-width: 0; font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 400; color: var(--color-fg-neutral); }
+    /* 부서 패널 248(1280 에서 본문 992 의 25% — resizable.yaml) — 머리는 위 12 · 오른쪽 8 · 아래 8 · 왼쪽 16(나무 줄의 글 시작), 제목 18 / 24 · 700 + ⋮(Button ghost · iconOnly · medium) */
+    .ptree-panel { box-sizing: border-box; display: flex; flex-direction: column; width: 248px; max-width: 100%; height: var(--pcol-h, auto); overflow-y: auto; border-radius: var(--radius-r4); background: var(--color-bg-layer-default); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-subtle); color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .ptree-head { display: flex; flex-shrink: 0; align-items: center; justify-content: space-between; gap: var(--spacing-x2); min-height: 40px; padding: var(--spacing-x3) var(--spacing-x2) var(--spacing-x2) var(--spacing-x4); }
+    .ptree-title { margin: 0; font-size: var(--text-t6); line-height: var(--text-t6--line-height); font-weight: 700; color: var(--color-fg-neutral); }
+    .pcol-split-demo { display: flex; height: 600px; }
+    .pcol-split-demo > .ptree-panel { flex-shrink: 0; height: 100%; border-radius: 0; box-shadow: inset -1px 0 0 var(--color-stroke-neutral-weak); }
+    .pcol-orgchart { flex: 1 1 auto; min-width: 0; }
+
+    /* 나누기 — 목록 패널(폭 % — 20 ~ 40) | 손잡이 | 남는 폭. 선 1px stroke-neutral-weak(경계) + 가운데 손잡이 표시 4 × 24 stroke-neutral-solid(3 이상).
+       올리거나(마우스) 키보드 초점 · 끄는 동안(data-active) 선 전체가 stroke-neutral-solid(150ms). 누르는 폭 16 — 선 가운데로 양쪽 8, 키보드 포커스에만 둘레 링 2px · 모서리 4 */
+    .prsz { display: flex; width: 100%; height: 100%; }
+    .prsz-panel { min-width: 0; overflow: hidden; }
+    .prsz-panel--list { flex: 0 0 auto; }
+    .prsz-panel--fill { flex: 1 1 0; }
+    .prsz-handle { position: relative; z-index: 1; flex-shrink: 0; align-self: stretch; width: 1px; background: var(--color-stroke-neutral-weak); transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing); }
+    @media (hover: hover) { .prsz-handle:hover { background: var(--color-stroke-neutral-solid); } }
+    .prsz-handle:has(.prsz-sep:focus-visible), .prsz-handle:has(.prsz-sep--focus), .prsz-handle[data-active], .prsz-handle--hover { background: var(--color-stroke-neutral-solid); }
+    .prsz-sep { position: absolute; inset-block: 0; left: 50%; width: 16px; translate: -50% 0; border-radius: var(--radius-r1); cursor: col-resize; touch-action: none; outline: none; }
+    .prsz-sep:focus-visible, .prsz-sep--focus { outline: 2px solid var(--pcol-ring); outline-offset: 0; }
+    .prsz-grip { position: absolute; left: 50%; top: 50%; width: 4px; height: 24px; translate: -50% -50%; border-radius: var(--radius-r0_5); background: var(--color-stroke-neutral-solid); pointer-events: none; }
+    .pcol-split-frame { height: var(--pcol-h, 300px); }
+    /* 화면의 내용 — 부서 나무(이름만) · 조직도 */
+    .prsz-pane { box-sizing: border-box; height: 100%; padding: var(--spacing-x3) var(--spacing-x2); overflow: hidden; font-family: var(--font-sans); color: var(--color-fg-neutral); }
+    .prsz-pane--chart { padding: var(--spacing-x4) var(--spacing-x6); background: var(--color-bg-layer-default); }
+    .prsz-pane-title { padding: 0 var(--spacing-x2) var(--spacing-x2); font-size: var(--text-t6); line-height: var(--text-t6--line-height); font-weight: 700; }
+    .prsz-pane--chart .prsz-pane-title { padding: 0 0 var(--spacing-x3); }
+    .prsz-pane-row { padding: var(--spacing-x3) var(--spacing-x2) var(--spacing-x3) calc(var(--spacing-x2) + var(--ptree-level, 0) * var(--spacing-x5)); border-radius: var(--radius-r2_5); font-size: var(--text-t4); line-height: var(--text-t4--line-height); }
+    .prsz-pane-row--on { background: var(--color-bg-neutral-weak-pressed); }
+    .prsz-people { display: flex; flex-wrap: wrap; gap: var(--spacing-x3); }
+    .prsz-person { padding: var(--spacing-x2) var(--spacing-x3); border-radius: var(--radius-r2); background: var(--color-bg-layer-basement); font-size: var(--text-t4); line-height: var(--text-t4--line-height); }
+    /* 위젯 격자 — 12칸 · 줄 72 · 사이 16. 위젯은 Card 면, 오른쪽 아래 모서리 손잡이 24 × 24 · 표식 9 × 9(오른쪽 · 아래 2px stroke-neutral-solid · 끝에서 6).
+       끄는 동안 놓일 칸은 자리표시(bg-brand-weak + 1px 브랜드 점선 · 모서리 16 — bridge CSS 의 .react-grid-placeholder), 따라오는 위젯은 그림자 s3 */
+    .prsz-grid { position: relative; display: grid; box-sizing: border-box; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: 72px; gap: var(--spacing-x4); width: 760px; padding: var(--spacing-x4); border-radius: var(--radius-r4); background: var(--color-bg-layer-basement); font-family: var(--font-sans); }
+    .prsz-widget { position: relative; display: flex; box-sizing: border-box; flex-direction: column; min-width: 0; grid-column: span var(--prsz-cols, 6); grid-row: span var(--prsz-rows, 2); padding: var(--spacing-x2) var(--spacing-x2) var(--spacing-x4) var(--spacing-x5); border: 1px solid var(--color-stroke-neutral-weak); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); color: var(--color-fg-neutral); }
+    .prsz-widget--ghost { z-index: 2; box-shadow: var(--shadow-s3); }
+    .prsz-widget--menu { z-index: 3; }
+    .prsz-widget-head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-x2); }
+    .prsz-widget-title { font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; }
+    .prsz-widget-body { margin-top: var(--spacing-x1); font-size: var(--text-t4); line-height: var(--text-t4--line-height); color: var(--color-fg-neutral-subtle); }
+    .prsz-corner { position: absolute; right: 0; bottom: 0; z-index: 1; width: 24px; height: 24px; cursor: se-resize; touch-action: none; }
+    .prsz-mark { position: absolute; right: 6px; bottom: 6px; box-sizing: border-box; width: 9px; height: 9px; border-right: 2px solid var(--color-stroke-neutral-solid); border-bottom: 2px solid var(--color-stroke-neutral-solid); pointer-events: none; }
+    .prsz-ph { box-sizing: border-box; border: 1px dashed var(--color-stroke-brand-solid, var(--color-stroke-neutral-solid)); border-radius: var(--radius-r4); background: var(--color-bg-brand-weak, var(--color-bg-neutral-weak)); }
+    .prsz-grid[data-prsz-dragging] { cursor: se-resize; user-select: none; }
+    /* ⋮ 메뉴를 연 그림 · 직접 견본 — 메뉴(줄 넷 · 설명 한 줄)가 격자 안에 들어오게 바닥을 늘린다(가로 스크롤 틀이 세로도 자른다) */
+    .prsz-grid--menu { min-height: 420px; align-content: start; }
+
+    /* 스크롤 상자 — 기본 스크롤(스크롤바는 pageCss 의 전역 한 벌). 이름이 있으면 키보드 포커스에만 안쪽 2px 링, 시트 · 대화상자 안은 contain */
+    .pscr { position: relative; min-width: 0; min-height: 0; overflow-x: hidden; overflow-y: auto; }
+    .pscr--contain { overscroll-behavior: contain; }
+    .pscr:focus { outline: none; }
+    .pscr:focus-visible, .pscr--focus { outline: 2px solid var(--pcol-ring); outline-offset: -2px; }
+    .pscr-demo { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: var(--spacing-x4); }
+    .pscr-sample { display: flex; flex-direction: column; gap: var(--spacing-x2); min-width: 0; }
+    .pscr-sample > .pcol-measure { padding: 0; }
+    .pscr-surface { overflow: hidden; border-radius: var(--radius-r4); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-subtle); color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .pscr-surface--default { background: var(--color-bg-layer-default); }
+    .pscr-surface--basement { background: var(--color-bg-layer-basement); }
+    .pscr-surface--floating { background: var(--color-bg-layer-floating); }
+    .pscr-line { padding: var(--spacing-x2) var(--spacing-x4); font-size: var(--text-t4); line-height: var(--text-t4--line-height); }
+    .pscr-card { max-width: 360px; overflow: hidden; border-radius: var(--radius-r4); background: var(--color-bg-layer-default); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-subtle); color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .pscr-card-title { padding: var(--spacing-x4) var(--spacing-x4) var(--spacing-x2); font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; }
+    .pscr-hour { display: flex; gap: var(--spacing-x3); min-height: 48px; padding: 0 var(--spacing-x4); box-shadow: inset 0 1px 0 var(--color-stroke-neutral-subtle); }
+    .pscr-hour-label { flex-shrink: 0; width: 56px; padding-top: var(--spacing-x1); font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); }
+    .pscr-event { flex: 1; min-width: 0; margin: var(--spacing-x1) 0; padding: var(--spacing-x1_5) var(--spacing-x2); border-radius: var(--radius-r1_5); background: var(--color-bg-informative-weak, var(--color-bg-neutral-weak)); font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-informative-contrast, var(--color-fg-neutral)); }
+    .pscr-field-label { margin-bottom: var(--spacing-x2); font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 500; }
+    .pscr-policy { overflow: hidden; border-radius: var(--radius-r3); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-weak); }
+    .pscr-policy > .pscr { padding: var(--spacing-x3) var(--spacing-x4) 0; }
+    .pscr-p { margin: 0 0 var(--spacing-x3); font-size: var(--text-t4); line-height: 1.6; color: var(--color-fg-neutral-muted); }
+
+    /* 숨는 머리 — 폰 가계부. 상단 바 56 · Line Tabs 는 숨지 않고, 그 아래 스크롤 상자 맨 위에 붙은 머리(sticky · top 0 · 바탕 흰 면 · z 2)가 스크롤 거리를
+       1:1 로 따라 위로 옮겨 숨는다 — 높이는 그대로(translate3d). 멈추면 50% 를 기준으로 200ms motion-ease-enter 로 다 숨거나 다 드러난다(페이지 끝 스크립트) */
+    .psah-phone { box-sizing: border-box; display: flex; flex-direction: column; width: 100%; max-width: 390px; height: var(--psah-h, 640px); overflow: hidden; border: 1px solid var(--color-stroke-neutral-subtle); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .psah-bar { display: flex; flex-shrink: 0; align-items: center; justify-content: space-between; height: 56px; padding: 0 var(--spacing-x2) 0 var(--spacing-global-gutter); }
+    .psah-bar-title { font-size: var(--text-t7); line-height: var(--text-t7--line-height); font-weight: 700; }
+    .psah-icon { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: var(--radius-r2_5); background: transparent; color: var(--color-fg-neutral); cursor: pointer; }
+    .psah-icon > svg { width: 22px; height: 22px; }
+    .psah-tabs { display: flex; flex-shrink: 0; box-shadow: inset 0 -1px 0 var(--color-stroke-neutral-subtle); }
+    .psah-tab { flex: 1; padding: var(--spacing-x2_5) 0; text-align: center; font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 500; color: var(--color-fg-neutral-subtle); }
+    .psah-tab[aria-selected="true"] { font-weight: 700; color: var(--color-fg-neutral); box-shadow: inset 0 -2px 0 var(--color-fg-neutral); }
+    .psah-scroll { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+    .psah { position: sticky; top: 0; z-index: 2; background: var(--color-bg-layer-default); }
+    .psah-ledger { padding-bottom: var(--spacing-x1); }
+    .psah-month { display: flex; align-items: center; justify-content: space-between; padding: var(--spacing-x2) var(--spacing-x2) 0; }
+    .psah-month-title { font-size: var(--text-t6); line-height: var(--text-t6--line-height); font-weight: 700; }
+    .psah-total { display: flex; flex-direction: column; padding: var(--spacing-x1) var(--spacing-global-gutter) var(--spacing-x3); }
+    .psah-total-label { font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); }
+    .psah-total-value { font-size: var(--text-t9); line-height: var(--text-t9--line-height); font-weight: 700; font-variant-numeric: tabular-nums; }
+    .psah-toggles { display: flex; gap: var(--spacing-x2); padding: 0 var(--spacing-global-gutter); }
+    .psah-toggle { display: inline-flex; align-items: center; gap: var(--spacing-x1); height: 36px; padding: 0 var(--spacing-x3); border: 0; border-radius: var(--radius-full); background: var(--color-bg-neutral-weak); font-family: var(--font-sans); font-size: var(--text-t4); font-weight: 500; color: var(--color-fg-neutral); cursor: pointer; }
+    .psah-toggle > svg { width: 16px; height: 16px; transition: rotate var(--motion-duration-d6) var(--motion-ease-easing); }
+    .psah-toggle[aria-expanded="true"] > svg { rotate: 180deg; }
+    .psah-toggle:focus-visible { outline: 2px solid var(--pcol-ring); outline-offset: 2px; }
+    .psah-drop { padding: var(--spacing-x3) var(--spacing-global-gutter) 0; }
+    .psah-summary { display: flex; gap: var(--spacing-x4); padding: var(--spacing-x3) var(--spacing-x4); border-radius: var(--radius-r3); background: var(--color-bg-layer-basement); font-size: var(--text-t3); line-height: var(--text-t3--line-height); }
+    .psah-summary > span { display: flex; flex-direction: column; font-variant-numeric: tabular-nums; }
+    .psah-month-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--spacing-x1); font-size: var(--text-t3); line-height: 28px; text-align: center; color: var(--color-fg-neutral-muted); }
+    .psah-chips { display: flex; gap: var(--spacing-x2); padding: var(--spacing-x3) var(--spacing-global-gutter) 0; overflow-x: auto; scrollbar-width: none; }
+    .psah-chips::-webkit-scrollbar { display: none; }
+    .psah-chip { flex-shrink: 0; padding: var(--spacing-x1_5) var(--spacing-x3); border-radius: var(--radius-full); background: var(--color-bg-neutral-inverted); font-size: var(--text-t4); font-weight: 500; color: var(--color-fg-neutral-inverted); }
+    .psah-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); padding: var(--spacing-x2) var(--spacing-x4) var(--spacing-x3); }
+    .psah-day { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x1); font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); }
+    .psah-day > b { display: grid; place-items: center; width: 32px; height: 32px; border-radius: var(--radius-full); font-size: var(--text-t4); color: var(--color-fg-neutral); }
+    .psah-day--today > b { background: var(--color-bg-neutral-inverted); color: var(--color-fg-neutral-inverted); }
+    .psah-group-label { padding: var(--spacing-x4) var(--spacing-global-gutter) var(--spacing-x1); font-size: var(--text-t3); line-height: var(--text-t3--line-height); font-weight: 500; color: var(--color-fg-neutral-subtle); }
+    .psah-row { display: flex; align-items: center; gap: var(--spacing-x3); padding: var(--spacing-x3) var(--spacing-global-gutter); }
+    .psah-row-body { display: flex; flex: 1; flex-direction: column; gap: var(--spacing-x0_5); min-width: 0; }
+    .psah-row-title { font-size: var(--text-t5); line-height: var(--text-t5--line-height); }
+    .psah-row-sub { font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); }
+    .psah-row-amount { font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+    /* 모션 줄이기 — 기기 설정 · 견본 스위치(data-pcol-reduce): 꺾쇠는 바로 돌고, 누름 축소가 없다(펼침의 투명도 150ms 는 스크립트) */
+    @media (prefers-reduced-motion: reduce) {
+      :is(.pacc-chevron, .pnest-chevron, .ptree-chevron > svg, .psah-toggle > svg) { transition: none; }
+      .pacc-trigger:enabled:active > .pacc-content, .pacc-trigger--pressed > .pacc-content,
+      .ptree-row:active > .ptree-content, .ptree-item--pressed > .ptree-row > .ptree-content,
+      .pnest-expand:active, .pnest-expand--pressed, .pacc-all:active, .pacc-all--pressed { scale: 1; }
+    }
+    [data-pcol-reduce] :is(.pacc-chevron, .pnest-chevron, .ptree-chevron > svg, .psah-toggle > svg) { transition: none; }
+    [data-pcol-reduce] :is(.pacc-trigger:enabled:active > .pacc-content, .ptree-row:active > .ptree-content, .pnest-expand:active, .pacc-all:active) { scale: 1; }
+
+    /* 다크 — 역할 색을 이 블록의 부품 · 갤러리 틀 안에서만 다크 짝으로 바꾼다(.pinp-* 와 같다). 라이트 틀(.pdsp-theme--light)과 그 안은 빼고,
+       다크 틀(.pdsp-theme--dark)은 페이지가 라이트여도 바꾼다 — 끼운 03e 의 목록 줄 · 03s 의 카드 면도 이 짝을 이어받는다 */
+    [data-theme="dark"] :is(.pcol-phone, .pcol-sheet, .pcol-dialog, .pcol-desk, .pcol-surface, .pcol-floor, .pacc, .pcls, .pcls-box, .pnest, .ptree, .ptree-panel, .prsz, .prsz-grid, .pscr-demo, .pscr-card, .pscr-surface, .psah-phone, .pacc-card, .pcol-live-status, .pcol-measure, .pcol-reduce):not(.pdsp-theme--light, .pdsp-theme--light *),
+    .pdsp-theme--dark {
+      --color-bg-layer-default: var(--color-bg-layer-default-dark);
+      --color-bg-layer-default-pressed: var(--color-bg-layer-default-pressed-dark);
+      --color-bg-layer-floating: var(--color-bg-layer-floating-dark);
+      --color-bg-layer-floating-pressed: var(--color-bg-layer-floating-pressed-dark);
+      --color-bg-layer-basement: var(--color-bg-layer-basement-dark);
+      --color-bg-neutral-weak: var(--color-bg-neutral-weak-dark);
+      --color-bg-neutral-weak-pressed: var(--color-bg-neutral-weak-pressed-dark);
+      --color-bg-neutral-inverted: var(--color-bg-neutral-inverted-dark);
+      --color-bg-brand-weak: var(--color-bg-brand-weak-dark);
+      --color-bg-warning-weak: var(--color-bg-warning-weak-dark);
+      --color-bg-warning-weak-pressed: var(--color-bg-warning-weak-pressed-dark);
+      --color-bg-informative-weak: var(--color-bg-informative-weak-dark);
+      --color-bg-disabled: var(--color-bg-disabled-dark);
+      --color-fg-neutral: var(--color-fg-neutral-dark);
+      --color-fg-neutral-muted: var(--color-fg-neutral-muted-dark);
+      --color-fg-neutral-subtle: var(--color-fg-neutral-subtle-dark);
+      --color-fg-neutral-inverted: var(--color-fg-neutral-inverted-dark);
+      --color-fg-disabled: var(--color-fg-disabled-dark);
+      --color-fg-informative-contrast: var(--color-fg-informative-contrast-dark);
+      --color-stroke-neutral-subtle: var(--color-stroke-neutral-subtle-dark);
+      --color-stroke-neutral-weak: var(--color-stroke-neutral-weak-dark);
+      --color-stroke-neutral-solid: var(--color-stroke-neutral-solid-dark);
+      --color-stroke-warning-weak: var(--color-stroke-warning-weak-dark);
+      --color-stroke-brand-solid: var(--color-stroke-brand-solid-dark);
+      --color-stroke-focus-ring: var(--color-stroke-focus-ring-dark);
+      --color-chart-orange: var(--color-chart-orange-dark);
+      --color-chart-orange-weak: var(--color-chart-orange-weak-dark);
+      --color-chart-blue: var(--color-chart-blue-dark);
+      --color-chart-blue-weak: var(--color-chart-blue-weak-dark);
+      --color-chart-indigo: var(--color-chart-indigo-dark);
+      --color-chart-indigo-weak: var(--color-chart-indigo-weak-dark);
+      --color-chart-violet: var(--color-chart-violet-dark);
+      --color-chart-violet-weak: var(--color-chart-violet-weak-dark);
+      --color-chart-green: var(--color-chart-green-dark);
+      --color-chart-gray: var(--color-chart-gray-dark);
+      --color-chart-gray-weak: var(--color-chart-gray-weak-dark);
+      --shadow-s3: var(--shadow-s3-dark);
+    }
 
     /* todo-card */
     .todo-list { display: flex; flex-direction: column; gap: 2px; }
@@ -17192,13 +18151,7 @@ export function pageCss() {
     /* 올리는 중 — 값 있는 Progress Circle 24(이름 옆 neutral — progress-circle.md "올리기 · 받기"). 옛 4px 브랜드 막대(.fu-progress)는 걷었다 */
     .fu-remove { width: 24px; height: 24px; border: 0; background: transparent; cursor: pointer; color: var(--color-text-tertiary); border-radius: var(--radius-sm); }
 
-    /* Treeview */
-    .tv, .tv ul { list-style: none; margin: 0; padding: 0; }
-    .tv ul { padding-inline-start: var(--spacing-md); }
-    .tv-row { display: flex; align-items: center; gap: var(--spacing-xs); padding: 4px var(--spacing-sm); width: 100%; background: transparent; border: 0; cursor: pointer; text-align: start; font-size: var(--text-body-md); color: var(--color-text-primary); border-radius: var(--radius-sm); }
-    .tv-row:hover { background: var(--color-surface-input); }
-    .tv-row--selected { background: color-mix(in srgb, var(--color-primary) 10%, transparent); color: var(--color-primary); font-weight: 600; }
-    .tv-chev { display: inline-block; width: 12px; font-size: 10px; color: var(--color-text-tertiary); }
+    /* 옛 Treeview(.tv-* — ▾ ▸ 글자 꺾쇠 · 고른 줄 브랜드 10% · 줄 32)는 걷었다(2026-10-10). 나무는 펼치고 접기 블록의 .ptree 다(03u, tree-view.md) */
 
     /* Animation showcase (v74) */
     .anim-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md); }
@@ -17253,15 +18206,8 @@ export function pageCss() {
     /* 옛 Slider(.sld — 브랜드 채움 · 흰 손잡이 16 + 테두리 · 그림자) · Toggle(.tg — 글 토글) · Toggle Group(.tgg) · Input OTP(.otp — 칸 6 × 40)는 걷었다(2026-10-09).
        슬라이더 · 켜고 끄는 아이콘 단추 · 인증 코드 칸은 입력 블록의 .psld · .ptgl · .potp-* 다(03t, slider.md · toggle.md · input-otp.md). Toggle Group 은 걷었다 */
 
-    /* Accordion / Collapsible */
-    /* Accordion — accordion.md SoT (FAQ 스타일, 외곽 wrapper 없음 + item 사이 border-bottom only) */
-    .acc { display: flex; flex-direction: column; }
-    .acc-item { border-bottom: 1px solid var(--color-border-default); }
-    .acc-trigger { display: flex; flex: 1; align-items: center; justify-content: space-between; width: 100%; padding: var(--spacing-lg) 0; cursor: pointer; font-weight: 500; font-size: var(--text-title-sm); color: var(--color-text-primary); background: transparent; border: 0; text-align: left; transition: color var(--motion-duration-fast) var(--motion-ease-out); }
-    .acc-trigger:hover { color: var(--color-text-secondary); }
-    .acc-body { padding: 0 0 var(--spacing-lg); color: var(--color-text-secondary); font-size: var(--text-body-md); line-height: var(--text-body-md--line-height); }
-    .col-trigger { padding: var(--spacing-sm) var(--spacing-md); border: 1px solid var(--color-border-default); background: transparent; border-radius: var(--radius-md); cursor: pointer; font-family: inherit; font-size: var(--text-body-md); display: inline-flex; gap: var(--spacing-sm); }
-    .col-trigger:hover { background: var(--color-surface-input); }
+    /* 옛 Accordion(.acc-* — 위아래 선만 · 좌우 0 · 글자색 호버) · Collapsible(.col-trigger — 테두리 글 단추)은 걷었다(2026-10-10).
+       아코디언 · 접기는 펼치고 접기 블록의 .pacc · .pcls 다(03u, accordion.md · collapsible.md) */
 
     /* 옛 Hover Card(.hc-* — 호버로 여는 프로필 카드) · Context Menu(.ctx-* — 160 · 1px 테두리 · shadow-md)는 걷었다. 동작 목록은 Menu 블록의 .pmenu 다(03m) */
 
@@ -17271,9 +18217,7 @@ export function pageCss() {
 
     /* 옛 Carousel(.car-* — 화살표 32 · 점 · 고른 점 24 알약)은 걷었다(2026-10-04). 여러 장은 이미지 블록의 가로 줄(.pfog--row · .pimg-strip)과 장수 글(.pif-ind)이다(03q) */
 
-    /* Scroll Area */
-    .sa { max-height: 100px; overflow-y: auto; padding: var(--spacing-sm); background: var(--color-bg-page); border-radius: var(--radius-md); }
-    .sa-content { font-size: var(--text-caption); color: var(--color-text-secondary); line-height: 1.6; }
+    /* 옛 Scroll Area(.sa — 회색 상자 · 높이 100 · 안 글)는 걷었다(2026-10-10). 스크롤 상자는 펼치고 접기 블록의 .pscr 이고 스크롤바는 전역 한 벌이다(03u, scroll-area.md) */
 
     /* 옛 Sonner 쌓기(.son · .son-toast)는 걷었다 — 19 의 Snackbar 칸은 알림 메시지 블록의 .psnack 이다(2026-10-02) */
 
@@ -17344,13 +18288,8 @@ export function pageCss() {
     [data-theme="dark"] .batch-card,
     [data-theme="dark"] .sc-card,
     [data-theme="dark"] .swatch { background: var(--color-surface-default-dark); }
-    [data-theme="dark"] .cmd,
-    [data-theme="dark"] .sa { background: var(--color-bg-page-dark); }
+    [data-theme="dark"] .cmd { background: var(--color-bg-page-dark); }
     [data-theme="dark"] .cb { background: var(--color-surface-input-dark); }
-    [data-theme="dark"] .col-trigger,
-    [data-theme="dark"] .acc-item { border-color: var(--color-border-default-dark); }
-    [data-theme="dark"] .acc-trigger:hover { color: var(--color-text-secondary-dark); }
-    [data-theme="dark"] .col-trigger:hover,
     [data-theme="dark"] .cmd-item:hover { background: var(--color-surface-input-dark); }
     [data-theme="dark"] .cmd-input { background: var(--color-surface-default-dark); border-color: var(--color-border-default-dark); color: var(--color-text-primary-dark); }
     [data-theme="dark"] .stp-connector { background: var(--color-border-default-dark); }
@@ -17555,6 +18494,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
     ${renderNavGallery(brand)}
     ${renderDataGallery(brand)}
     ${renderInputGallery(brand)}
+    ${renderCollapseGallery(brand)}
     ${renderVignettes(brand)}
     ${renderListingDetail(brand)}
     ${renderCalendar(brand)}
@@ -17568,7 +18508,6 @@ function renderHtml(brandName, css, tokens, sourceFile) {
     ${renderShadcnNav(brand)}
     ${renderShadcnInput(brand)}
     ${renderShadcnDisclose(brand)}
-    ${renderShadcnData(brand)}
     ${renderShadcnExtras(brand)}
     ${renderBatchV73V78(brand)}
     ${renderTokenCatalog(tokens)}
@@ -19449,6 +20388,25 @@ function renderHtml(brandName, css, tokens, sourceFile) {
 
       // 사이드바 — 펼친 부모는 눌러 펼치고 접는다(어느 사이드바든). 접힌 사이드바(직접)는 펼침 메뉴
       function subOf(parent) { return document.getElementById(parent.getAttribute("aria-controls")); }
+      // 하위 목록 — 높이 300ms(d6) ease-easing 으로 펼치고 접는다(side-navigation.md 2026-10-10 — Accordion 과 같다). 모션 줄이기면 높이는 바로 · 투명도 150ms(d3).
+      // 움직이는 동안만 넘친 것을 자르고, 접힘이 끝나면 hidden(보조 기술 · Tab 에서 빠진다)
+      function motionMs(el, name, fallback) { var v = getComputedStyle(el).getPropertyValue(name).trim(); var n = parseFloat(v); return isNaN(n) ? fallback : /ms$/.test(v) ? n : n * 1000; }
+      function slideSub(el, open) {
+        if (el._psnavAnim) el._psnavAnim.cancel();
+        var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var from = el.hidden ? 0 : el.getBoundingClientRect().height;
+        el.hidden = false;
+        if (typeof el.animate !== "function") { el.hidden = !open; return; }
+        var easing = getComputedStyle(el).getPropertyValue("--motion-ease-easing").trim() || "ease";
+        var anim;
+        if (reduce) anim = el.animate([{ opacity: open ? 0 : 1 }, { opacity: open ? 1 : 0 }], { duration: motionMs(el, "--motion-duration-d3", 150), easing: easing });
+        else {
+          el.style.overflow = "hidden";
+          anim = el.animate([{ height: from + "px" }, { height: (open ? el.scrollHeight : 0) + "px" }], { duration: motionMs(el, "--motion-duration-d6", 300), easing: easing });
+        }
+        el._psnavAnim = anim;
+        anim.onfinish = function () { el._psnavAnim = null; el.style.removeProperty("overflow"); if (!open) el.hidden = true; };
+      }
       document.addEventListener("click", function (e) {
         var parent = closest(e, "[data-psnav-parent]");
         if (!parent) return;
@@ -19458,7 +20416,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
         if (!sub) return;
         var open = parent.getAttribute("aria-expanded") !== "true";
         parent.setAttribute("aria-expanded", open ? "true" : "false");
-        sub.hidden = !open;
+        slideSub(sub, open);
       });
       document.querySelectorAll("[data-psnav-live]").forEach(function (nav) {
         var view = nav.closest(".pnav-desk-view");
@@ -20757,6 +21715,558 @@ function renderHtml(brandName, css, tokens, sourceFile) {
       document.addEventListener("keydown", function (e) { if (e.key === "Escape") hideTip(); }, true);
       // 스크롤되면(격자 · 페이지) 자리를 다시 잰다 — 화살표로 옮긴 칸이 스크롤돼도 툴팁은 그 칸을 따라간다
       document.addEventListener("scroll", function () { if (tipEl && !tipEl.hidden && tipFor) showTip(tipFor); }, true);
+    })();
+    // 펼치고 접기 · 나누기 (2026-10-10) — accordion.tsx · collapsible.tsx · list.tsx(ListParentItem) · tree-view.tsx · resizable.tsx · scroll-auto-hide.tsx 가 하는 일 가운데
+    // 그림에 필요한 것을 흉내 낸다(03u 의 "직접" 견본).
+    // 펼침 · 접힘 — 높이 300ms(d6) motion-ease-easing, 모션 줄이기(기기 설정 · 견본 스위치 data-pcol-reduce)면 높이를 움직이지 않고 투명도 150ms(d3).
+    //   움직이는 중에 다시 누르면 지금 높이에서 이어 가고, 움직이는 동안만 넘친 것을 자르며, 접힘이 끝나면 hidden(보조 기술 · Tab 에서 빠진다)이다(useExpandMotion).
+    // 아코디언 [data-pacc-live] — 트리거 누르기 · Enter · Space 는 그 항목만 펴고 접는다(여럿 열기 — 앞 항목은 닫히지 않는다). ↓ ↑(끝에서 처음으로 돈다) · Home · End 는
+    //   다음 · 앞 · 첫 · 끝 트리거로(막힌 트리거 · 상세가 없는 줄은 건너뛴다). 모두 펼치기 [data-pacc-all] 는 상세가 있는 항목을 모두 펴고 "모두 접기" 가 된다 — 하나라도
+    //   접히면 다시 "모두 펼치기". 접기 [data-pcls-live] · 하위 줄 [data-pnest-toggle] 도 같은 펼침이다.
+    // 나무 [data-ptree-live] — 줄 전체가 누르는 자리(16D): 누르기 · Enter · Space 는 고르고, 부모면 펴고 접는다(늘 펼친 나무는 고르기만). ↓ ↑ 다음 · 앞 보이는 항목(끝에서 멈춘다) ·
+    //   → 접힌 부모는 펴고 펼친 부모는 첫 하위로 · ← 펼친 부모는 접고 그 밖에는 부모로 · Home · End 첫 · 끝 보이는 항목 — 화살표는 고르지 않는다. Tab 정지점은 하나 —
+    //   나무 안에 초점이 있으면 그 항목, 나가면 고른 항목(숨었으면 보이는 가장 가까운 조상 · 없으면 첫 항목). 패널 머리 ⋮ 의 이름이 고른 부서를 따라간다.
+    // 나누기 [data-prsz-live] — 손잡이를 누른 채 3px 넘게 움직이면 끈다(1:1 · 20 ~ 40% · 화면 전체 col-resize · 글 고르기 없음), 3px 안에서 놓으면 기본 25 ↔ 넓게 40.
+    //   ← → 5%(끝에서 멈춘다) · Home 20 · End 40 · Enter 25 ↔ 40. 바꾼 폭은 localStorage "porest:resizable:{storageKey}" 에 남기고(쓰지 못하면 기억 없이), "화면 다시 열기" 는
+    //   기억한 폭으로 다시 그린다. 위젯 격자 [data-prsz-grid-live] — 모서리 손잡이를 끄는 동안 위젯은 포인터를 따라오고(그림자 s3) 놓일 칸에 자리표시를 보이며,
+    //   놓으면 칸 단위로 맞춘다. ⋮ → 크기(03m 의 메뉴가 열고 닫는다)는 고른 칸 수로 바꾸고 "지금 크기" 설명을 옮긴다.
+    // 숨는 머리 [data-psah-live] — 스크롤 거리를 1:1 로 따라 위로 옮기고(맨 위 근처에서는 스크롤한 거리보다 더 숨지 않는다), 스크롤이 끝나면(scrollend — 없으면 120ms 뒤)
+    //   높이의 50% 를 기준으로 200ms motion-ease-enter 로 다 숨거나 다 드러난다. 키보드로 스크롤한 뒤에는 움직임 없이 바로. 모션 줄이기면 늘 보이고, 숨은 머리 안으로 초점이
+    //   오면 바로 다 드러낸다. ScrollTimeline 은 쓰지 않고 scroll 이벤트로 같은 일을 한다(레시피의 대체 길). 소비 요약 · 월 달력은 하나만 펼친다.
+    // 아래 글(.pcol-measure)은 이 미리보기에서 잰 값이다 — 트리거 높이 · 스크롤바 막대 폭.
+    (function () {
+      if (!document.querySelector(".pcol-section")) return;
+      var ICON_ALL = ${JSON.stringify({ more: colSvg("chevrons-up-down"), less: colSvg("chevrons-down-up") })};
+      var SIZES = ${JSON.stringify(PRSZ_SIZES)};
+      var mq = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+      function closest(e, sel) { return e.target && e.target.closest ? e.target.closest(sel) : null; }
+      function reducedAt(el) { return !!((mq && mq.matches) || (el && el.closest && el.closest("[data-pcol-reduce]"))); }
+      function statusIn(el, attr) { var box = el.closest(".pcol-live") || el.closest(".ptf-sample"); return box ? box.querySelector("[" + attr + "]") : null; }
+      function say(el, attr, text) { var out = statusIn(el, attr); if (out) out.textContent = text; }
+      function textOf(el, sel) { var t = el && el.querySelector(sel); return t ? t.textContent.trim() : ""; }
+      function motionMs(el, name, fallback) { var v = getComputedStyle(el).getPropertyValue(name).trim(); var n = parseFloat(v); return isNaN(n) ? fallback : /ms$/.test(v) ? n : n * 1000; }
+
+      // 모션 줄이기 견본 스위치 — 견본 틀(.pcol-live)에 data-pcol-reduce 를 걸고 걷는다
+      document.addEventListener("change", function (e) {
+        var input = closest(e, "input[data-pcol-reduce-for]");
+        if (!input) return;
+        var host = document.getElementById(input.getAttribute("data-pcol-reduce-for"));
+        if (!host) return;
+        if (input.checked) host.setAttribute("data-pcol-reduce", ""); else host.removeAttribute("data-pcol-reduce");
+        host.dispatchEvent(new CustomEvent("pcol-reduce", { bubbles: false }));
+      });
+
+      // 누름 배율의 기준 = max(높이, 폭 ÷ 4, 24) — 누르는 순간(포인터 · 키) 재서 --press-basis 로. 콘텐츠 층이 물려받는다. 멈춰 그린 누름은 그릴 때 잰다
+      var PRESS = ".pacc-trigger, .pacc-all, .ptree-row";
+      function basis(el) { el.style.setProperty("--press-basis", String(Math.max(el.offsetHeight, el.offsetWidth / 4, 24))); }
+      document.addEventListener("pointerdown", function (e) { var el = closest(e, PRESS); if (el && el.closest(".pcol-section")) basis(el); }, true);
+      document.querySelectorAll(".pacc-trigger--pressed, .pacc-all--pressed, .ptree-item--pressed > .ptree-row").forEach(basis);
+
+      // 펼침 · 접힘
+      function slide(el, open) {
+        var from = el.hidden ? 0 : el.getBoundingClientRect().height;
+        var fromOpacity = el.hidden ? (open ? 0 : 1) : Number(getComputedStyle(el).opacity);
+        var running = el._pcolAnim;
+        if (running) running.cancel();
+        el._pcolAnim = null;
+        el.style.removeProperty("overflow");
+        el.hidden = false;
+        if (typeof el.animate !== "function") { el.hidden = !open; return; }
+        var easing = getComputedStyle(el).getPropertyValue("--motion-ease-easing").trim() || "ease";
+        var anim;
+        if (reducedAt(el)) {
+          anim = el.animate([{ opacity: running ? fromOpacity : open ? 0 : 1 }, { opacity: open ? 1 : 0 }], { duration: motionMs(el, "--motion-duration-d3", 150), easing: easing });
+        } else {
+          el.style.overflow = "hidden";
+          anim = el.animate([{ height: (running || !open ? from : 0) + "px" }, { height: (open ? el.scrollHeight : 0) + "px" }], { duration: motionMs(el, "--motion-duration-d6", 300), easing: easing });
+        }
+        el._pcolAnim = anim;
+        anim.onfinish = function () {
+          if (el._pcolAnim !== anim) return;
+          el._pcolAnim = null;
+          el.style.removeProperty("overflow");
+          if (!open) el.hidden = true;
+        };
+      }
+
+      // ── 아코디언 · 접기 ──
+      function panelOf(trigger) { return document.getElementById(trigger.getAttribute("aria-controls")); }
+      function setOpen(trigger, open) {
+        if (trigger.disabled || (trigger.getAttribute("aria-expanded") === "true") === open) return;
+        trigger.setAttribute("aria-expanded", open ? "true" : "false");
+        var row = trigger.closest(".pacc-item, .pcls");
+        if (row) row.setAttribute("data-state", open ? "open" : "closed");
+        var panel = panelOf(trigger);
+        if (panel) slide(panel, open);
+      }
+      function triggersOf(root) { return Array.prototype.slice.call(root.querySelectorAll(":scope > .pacc-item .pacc-trigger")); }
+      function syncAll(root) {
+        var all = document.querySelector('[data-pacc-all][aria-controls="' + root.id + '"]');
+        var ts = triggersOf(root).filter(function (t) { return !t.disabled; });
+        var allOpen = ts.length > 0 && ts.every(function (t) { return t.getAttribute("aria-expanded") === "true"; });
+        if (all) {
+          all.setAttribute("data-state", allOpen ? "expanded" : "collapsed");
+          all.innerHTML = "<span>" + (allOpen ? "모두 접기" : "모두 펼치기") + "</span>" + (allOpen ? ICON_ALL.less : ICON_ALL.more);
+        }
+        var open = ts.filter(function (t) { return t.getAttribute("aria-expanded") === "true"; }).length;
+        return "펼친 항목 " + open + " / " + ts.length + " · 머리 단추 “" + (allOpen ? "모두 접기" : "모두 펼치기") + "”";
+      }
+      document.addEventListener("click", function (e) {
+        var all = closest(e, "[data-pacc-all]");
+        if (all) {
+          var root = document.getElementById(all.getAttribute("aria-controls"));
+          if (!root) return;
+          var open = all.getAttribute("data-state") !== "expanded";
+          triggersOf(root).forEach(function (t) { setOpen(t, open); });
+          say(root, "data-pacc-status", syncAll(root));
+          return;
+        }
+        var trigger = closest(e, ".pacc-trigger");
+        if (!trigger || trigger.disabled) return;
+        var acc = trigger.closest(".pacc[data-pacc-live]");
+        var cls = trigger.closest(".pcls[data-pcls-live]");
+        if (!acc && !cls) return;
+        setOpen(trigger, trigger.getAttribute("aria-expanded") !== "true");
+        if (acc) say(acc, "data-pacc-status", "“" + textOf(trigger, ".pacc-title") + "” " + (trigger.getAttribute("aria-expanded") === "true" ? "펼침" : "접힘") + " · " + syncAll(acc));
+      });
+      document.addEventListener("keydown", function (e) {
+        var trigger = closest(e, ".pacc-trigger");
+        var acc = trigger && trigger.closest(".pacc[data-pacc-live]");
+        if (!acc || e.altKey || e.ctrlKey || e.metaKey) return;
+        var ts = triggersOf(acc).filter(function (t) { return !t.disabled; });
+        var i = ts.indexOf(trigger);
+        var next = null;
+        if (e.key === "ArrowDown") next = ts[(i + 1) % ts.length];
+        else if (e.key === "ArrowUp") next = ts[(i - 1 + ts.length) % ts.length];
+        else if (e.key === "Home") next = ts[0];
+        else if (e.key === "End") next = ts[ts.length - 1];
+        else if (e.key === "Enter" || e.key === " ") basis(trigger);
+        if (!next) return;
+        e.preventDefault();
+        next.focus();
+        say(acc, "data-pacc-status", "초점 “" + textOf(next, ".pacc-title") + "” · " + (next.getAttribute("aria-expanded") === "true" ? "펼침" : "접힘") + " — 화면을 저절로 스크롤하지 않는다");
+      });
+
+      // ── 하위 줄 — 줄 앞 꺾쇠 단추는 하위 줄 묶음만 펴고 접는다(줄은 편집) ──
+      document.addEventListener("click", function (e) {
+        var btn = closest(e, "[data-pnest-toggle]");
+        if (!btn) return;
+        var open = btn.getAttribute("aria-expanded") !== "true";
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        var sub = panelOf(btn);
+        if (sub) slide(sub, open);
+      });
+
+      // ── 나무 ──
+      function treeItems(tree) { return Array.prototype.slice.call(tree.querySelectorAll(".ptree-item")); }
+      function isFixed(tree) { return tree.classList.contains("ptree--fixed"); }
+      function parentItem(li) { var g = li.parentElement; return g && g.classList.contains("ptree-group") ? g.closest(".ptree-item") : null; }
+      function isVisible(tree, li) {
+        if (isFixed(tree)) return true;
+        for (var p = parentItem(li); p; p = parentItem(p)) if (p.getAttribute("aria-expanded") !== "true") return false;
+        return true;
+      }
+      function visibleItems(tree) { return treeItems(tree).filter(function (li) { return isVisible(tree, li); }); }
+      function groupOf(li) { return li.querySelector(":scope > .ptree-group"); }
+      function labelOfItem(li) { return textOf(li.querySelector(":scope > .ptree-row"), ".ptree-label"); }
+      function selectedOf(tree) { return tree.querySelector(".ptree-item[data-selected]"); }
+      function setStop(tree, li) { treeItems(tree).forEach(function (x) { x.setAttribute("tabindex", x === li ? "0" : "-1"); }); }
+      function restStop(tree) {
+        var sel = selectedOf(tree);
+        var stop = null;
+        for (var p = sel; p && !stop; p = parentItem(p)) if (isVisible(tree, p)) stop = p;
+        setStop(tree, stop || visibleItems(tree)[0]);
+      }
+      function reading(tree, li) {
+        var g = groupOf(li);
+        var bits = [labelOfItem(li)];
+        if (g && !isFixed(tree)) bits.push(li.getAttribute("aria-expanded") === "true" ? "펼침" : "접힘");
+        bits.push(li.getAttribute("aria-level") + "단계", li.getAttribute("aria-posinset") + " / " + li.getAttribute("aria-setsize"));
+        if (li.getAttribute("aria-selected") === "true") bits.push("선택됨");
+        return bits.join(", ");
+      }
+      function treeSay(tree, li) {
+        var stops = treeItems(tree).filter(function (x) { return x.getAttribute("tabindex") === "0"; }).length;
+        var sel = selectedOf(tree);
+        say(tree, "data-ptree-status", "읽기 “" + reading(tree, li) + "” · 고른 부서 " + (sel ? labelOfItem(sel) : "없음") + " · Tab 정지점 " + stops + "개");
+      }
+      function toggleItem(tree, li) {
+        var g = groupOf(li);
+        if (!g || isFixed(tree)) return;
+        var open = li.getAttribute("aria-expanded") !== "true";
+        li.setAttribute("aria-expanded", open ? "true" : "false");
+        slide(g, open);
+      }
+      function selectItem(tree, li) {
+        treeItems(tree).forEach(function (x) {
+          var on = x === li;
+          x.setAttribute("aria-selected", on ? "true" : "false");
+          if (on) x.setAttribute("data-selected", ""); else x.removeAttribute("data-selected");
+        });
+        var panel = tree.closest(".ptree-panel");
+        var more = panel && panel.querySelector(".ptree-head [aria-haspopup=menu]");
+        if (more) more.setAttribute("aria-label", labelOfItem(li) + " 더보기");
+      }
+      // 누르기 — 고르고, 부모면 펴고 접는다(16D). 늘 펼친 나무는 고르기만
+      function pressItem(tree, li) {
+        selectItem(tree, li);
+        if (groupOf(li)) toggleItem(tree, li);
+      }
+      document.addEventListener("click", function (e) {
+        var row = closest(e, ".ptree-row");
+        var tree = row && row.closest(".ptree[data-ptree-live]");
+        if (!tree) return;
+        var li = row.parentElement;
+        pressItem(tree, li);
+        setStop(tree, li);
+        if (document.activeElement !== li) li.focus();
+        treeSay(tree, li);
+      });
+      document.addEventListener("keydown", function (e) {
+        var li = e.target;
+        if (!li || !li.matches || !li.matches(".ptree-item")) return;
+        var tree = li.closest(".ptree[data-ptree-live]");
+        if (!tree || e.altKey || e.ctrlKey || e.metaKey) return;
+        var KEYS = ["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft", "Home", "End", "Enter", " "];
+        if (KEYS.indexOf(e.key) < 0) return;
+        e.preventDefault();
+        var vis = visibleItems(tree);
+        var i = vis.indexOf(li);
+        var g = groupOf(li);
+        var to = null;
+        if (e.key === "ArrowDown") to = vis[i + 1] || null;
+        else if (e.key === "ArrowUp") to = vis[i - 1] || null;
+        else if (e.key === "ArrowRight") {
+          if (g && !isFixed(tree) && li.getAttribute("aria-expanded") !== "true") toggleItem(tree, li);
+          else if (g) to = g.querySelector(":scope > .ptree-item");
+        } else if (e.key === "ArrowLeft") {
+          if (g && !isFixed(tree) && li.getAttribute("aria-expanded") === "true") toggleItem(tree, li);
+          else to = parentItem(li);
+        } else if (e.key === "Home") to = vis[0];
+        else if (e.key === "End") to = vis[vis.length - 1];
+        else pressItem(tree, li);
+        if (to) { setStop(tree, to); to.focus(); treeSay(tree, to); }
+        else treeSay(tree, li);
+      });
+      document.addEventListener("focusin", function (e) {
+        var li = e.target;
+        if (!li || !li.matches || !li.matches(".ptree-item")) return;
+        var tree = li.closest(".ptree[data-ptree-live]");
+        if (!tree) return;
+        setStop(tree, li);
+        treeSay(tree, li);
+      });
+      document.addEventListener("focusout", function (e) {
+        var tree = e.target && e.target.closest ? e.target.closest(".ptree[data-ptree-live]") : null;
+        if (!tree || tree.contains(e.relatedTarget)) return;
+        restStop(tree);
+        var sel = selectedOf(tree);
+        say(tree, "data-ptree-status", "나무를 나갔다 · 고른 부서 " + (sel ? labelOfItem(sel) : "없음") + " · 다시 들어오면 " + labelOfItem(treeItems(tree).filter(function (x) { return x.getAttribute("tabindex") === "0"; })[0]) + " 에 초점 — Tab 정지점 1개");
+      });
+
+      // ── 나누기 ──
+      var STORE = "porest:resizable:";
+      function readStored(key) { try { var v = parseFloat(window.localStorage.getItem(STORE + key)); return isFinite(v) ? v : null; } catch (err) { return null; } }
+      function writeStored(key, v) { try { window.localStorage.setItem(STORE + key, String(Math.round(v * 100) / 100)); return true; } catch (err) { return false; } }
+      function forgetStored(key) { try { window.localStorage.removeItem(STORE + key); } catch (err) { /* 저장소를 못 쓰면 기억도 없다 */ } }
+      document.querySelectorAll(".prsz[data-prsz-live]").forEach(function (group) {
+        var key = group.getAttribute("data-prsz-live");
+        var sep = group.querySelector(".prsz-sep");
+        var handle = group.querySelector(".prsz-handle");
+        var list = group.querySelector(".prsz-panel--list");
+        var min = Number(sep.getAttribute("aria-valuemin")), max = Number(sep.getAttribute("aria-valuemax"));
+        var def = Number(group.getAttribute("data-prsz-default")), wide = Number(group.getAttribute("data-prsz-toggle"));
+        var size = def;
+        var live = group.closest(".pcol-live") || group;
+        function report(how) {
+          var w = group.getBoundingClientRect().width;
+          var lw = list.getBoundingClientRect().width;
+          say(live, "data-prsz-status", how + " — 목록 " + Math.round(size) + "% (" + Math.round(lw) + "px) · 상세 " + Math.round(100 - size) + "% (" + Math.round(w - lw - 1) + "px) · 읽기 “목록 너비, " + Math.round(size) + "%”");
+        }
+        function setSize(v, persist) {
+          size = Math.min(max, Math.max(min, v));
+          list.style.flexBasis = size + "%";
+          sep.setAttribute("aria-valuenow", String(Math.round(size)));
+          sep.setAttribute("aria-valuetext", Math.round(size) + "%");
+          if (persist) writeStored(key, size);
+        }
+        function toggle() { setSize(Math.abs(size - def) < 0.5 ? wide : def, true); }
+        var stored = readStored(key);
+        setSize(stored == null ? def : stored, false);
+        var start = null;
+        sep.addEventListener("pointerdown", function (e) {
+          if (e.button !== 0) return;
+          e.preventDefault();
+          sep.setPointerCapture(e.pointerId);
+          start = { x: e.clientX, size: size, width: group.getBoundingClientRect().width, dragging: false };
+        });
+        sep.addEventListener("pointermove", function (e) {
+          if (!start) return;
+          var dx = e.clientX - start.x;
+          if (!start.dragging && Math.abs(dx) <= 3) return;
+          if (!start.dragging) {
+            start.dragging = true;
+            handle.setAttribute("data-active", "");
+            document.documentElement.style.cursor = "col-resize";
+            document.documentElement.style.userSelect = "none";
+          }
+          setSize(start.size + (dx / start.width) * 100, false);
+          report("끄는 중");
+        });
+        function end(e) {
+          if (!start) return;
+          var was = start.dragging;
+          start = null;
+          handle.removeAttribute("data-active");
+          document.documentElement.style.removeProperty("cursor");
+          document.documentElement.style.removeProperty("user-select");
+          if (e.type === "pointercancel") return;
+          if (was) { writeStored(key, size); report("끌기를 놓았다 · 기억"); }
+          else { toggle(); report("한 번 눌렀다(3px 안) · 기억"); }
+        }
+        sep.addEventListener("pointerup", end);
+        sep.addEventListener("pointercancel", end);
+        sep.addEventListener("keydown", function (e) {
+          var next = null;
+          if (e.key === "ArrowLeft") next = size - 5;
+          else if (e.key === "ArrowRight") next = size + 5;
+          else if (e.key === "Home") next = min;
+          else if (e.key === "End") next = max;
+          else if (e.key === "Enter") { e.preventDefault(); toggle(); report("Enter · 기억"); return; }
+          if (next == null) return;
+          e.preventDefault();
+          setSize(next, true);
+          report(e.key + " · 기억");
+        });
+        sep.addEventListener("focus", function () { report("초점"); });
+        var box = group.closest(".pcol-live");
+        if (box) {
+          box.addEventListener("click", function (e) {
+            if (closest(e, "[data-prsz-reopen]")) {
+              var s = readStored(key);
+              setSize(s == null ? def : s, false);
+              report(s == null ? "다시 열었다 — 기억이 없어 기본 25" : "다시 열었다 — 기억한 폭");
+            } else if (closest(e, "[data-prsz-forget]")) {
+              forgetStored(key);
+              report("기억을 지웠다 — 다시 열면 기본 25");
+            }
+          });
+        }
+      });
+
+      // ── 위젯 격자 — 모서리 끌기 · ⋮ → 크기 ──
+      document.querySelectorAll(".prsz-grid[data-prsz-grid-live]").forEach(function (grid) {
+        var live = grid.closest(".pcol-live") || grid;
+        var GAP = 16, ROW = 72;
+        function colW() { var cs = getComputedStyle(grid); var inner = grid.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight); return (inner - GAP * 11) / 12; }
+        function sizeOf(w) { return { cols: Number(w.getAttribute("data-prsz-cols")) || 6, rows: Number(getComputedStyle(w).getPropertyValue("--prsz-rows")) || 2 }; }
+        function titleOf(w) { return textOf(w, ".prsz-widget-title"); }
+        function report(w, how) { var s = sizeOf(w); say(live, "data-prsz-grid-status", "“" + titleOf(w) + "” " + s.cols + "칸 × " + s.rows + "줄 (" + Math.round(w.getBoundingClientRect().width) + "px) — " + how); }
+        function apply(w, cols, rows) {
+          w.style.setProperty("--prsz-cols", String(cols));
+          w.style.setProperty("--prsz-rows", String(rows));
+          w.setAttribute("data-prsz-cols", String(cols));
+          // 메뉴의 "지금 크기" 설명을 옮긴다
+          w.querySelectorAll(".pmenu-item").forEach(function (it, i) {
+            var body = it.querySelector(".pmenu-item-body");
+            var desc = it.querySelector(".pmenu-item-desc");
+            var now = SIZES[i] && SIZES[i].cols === cols;
+            if (now && !desc) { desc = document.createElement("span"); desc.className = "pmenu-item-desc"; desc.textContent = "지금 크기"; body.appendChild(desc); }
+            else if (!now && desc) desc.remove();
+          });
+        }
+        var drag = null;
+        grid.addEventListener("pointerdown", function (e) {
+          var corner = closest(e, ".prsz-corner");
+          if (!corner || e.button !== 0) return;
+          e.preventDefault();
+          var w = corner.closest(".prsz-widget");
+          var g = grid.getBoundingClientRect(), r = w.getBoundingClientRect();
+          var s = sizeOf(w);
+          var ph = document.createElement("div");
+          ph.className = "prsz-ph";
+          ph.setAttribute("aria-hidden", "true");
+          ph.style.gridColumn = "span " + s.cols;
+          ph.style.gridRow = "span " + s.rows;
+          grid.insertBefore(ph, w);
+          w.classList.add("prsz-widget--ghost");
+          w.style.position = "absolute";
+          w.style.left = (r.left - g.left) + "px";
+          w.style.top = (r.top - g.top) + "px";
+          w.style.width = r.width + "px";
+          w.style.height = r.height + "px";
+          corner.setPointerCapture(e.pointerId);
+          grid.setAttribute("data-prsz-dragging", "");
+          drag = { w: w, ph: ph, corner: corner, x: e.clientX, y: e.clientY, width: r.width, height: r.height, cols: s.cols, rows: s.rows };
+        });
+        grid.addEventListener("pointermove", function (e) {
+          if (!drag) return;
+          var cw = colW();
+          var width = Math.max(cw, drag.width + e.clientX - drag.x);
+          var height = Math.max(ROW, drag.height + e.clientY - drag.y);
+          drag.w.style.width = width + "px";
+          drag.w.style.height = height + "px";
+          drag.cols = Math.min(12, Math.max(2, Math.round((width + GAP) / (cw + GAP))));
+          drag.rows = Math.min(4, Math.max(1, Math.round((height + GAP) / (ROW + GAP))));
+          drag.ph.style.gridColumn = "span " + drag.cols;
+          drag.ph.style.gridRow = "span " + drag.rows;
+          say(live, "data-prsz-grid-status", "끄는 중 — 자리표시 " + drag.cols + "칸 × " + drag.rows + "줄");
+        });
+        function end() {
+          if (!drag) return;
+          var d = drag;
+          drag = null;
+          d.ph.remove();
+          d.w.classList.remove("prsz-widget--ghost");
+          ["position", "left", "top", "width", "height"].forEach(function (p) { d.w.style.removeProperty(p); });
+          grid.removeAttribute("data-prsz-dragging");
+          apply(d.w, d.cols, d.rows);
+          report(d.w, "모서리를 놓았다 · 칸 단위로 맞춤");
+        }
+        grid.addEventListener("pointerup", end);
+        grid.addEventListener("pointercancel", end);
+        // ⋮ → 크기 — 03m 의 메뉴 스크립트가 먼저 닫고 초점을 ⋮ 로 돌려준 뒤 여기서 폭을 바꾼다
+        function pick(it) {
+          var w = it.closest(".prsz-widget");
+          if (!w || !grid.contains(w) || it.getAttribute("aria-disabled") === "true") return;
+          var i = Array.prototype.indexOf.call(w.querySelectorAll(".pmenu-item"), it);
+          if (!SIZES[i]) return;
+          apply(w, SIZES[i].cols, sizeOf(w).rows);
+          report(w, "⋮ → 크기 “" + SIZES[i].label + "”");
+        }
+        document.addEventListener("click", function (e) { var it = closest(e, ".pmenu-item"); if (it) pick(it); });
+        document.addEventListener("keydown", function (e) { if (e.key !== "Enter" && e.key !== " ") return; var it = closest(e, ".pmenu-item"); if (it) pick(it); });
+      });
+
+      // ── 숨는 머리 ──
+      // 소비 요약 · 월 달력 — 하나만 펼친다(이름 고정 + aria-expanded)
+      document.addEventListener("click", function (e) {
+        var btn = closest(e, "[data-psah-toggle]");
+        if (!btn) return;
+        var open = btn.getAttribute("aria-expanded") !== "true";
+        btn.parentElement.querySelectorAll("[data-psah-toggle]").forEach(function (b) {
+          var on = b === btn && open;
+          b.setAttribute("aria-expanded", on ? "true" : "false");
+          var drop = panelOf(b);
+          if (drop) drop.hidden = !on;
+        });
+      });
+      var SCROLL_KEYS = ["ArrowDown", "ArrowUp", "End", "Home", "PageDown", "PageUp", " "];
+      document.querySelectorAll("[data-psah-live]").forEach(function (scroller) {
+        var root = scroller.querySelector(".psah");
+        if (!root) return;
+        var live = scroller.closest(".pcol-live") || scroller.closest(".pdsp-theme") || scroller;
+        var supportsEnd = "onscrollend" in scroller;
+        var height = 0, natural = 0, ty = 0, prev = scroller.scrollTop, timer = 0, settling = false, skipAnim = false, raf = 0;
+        function top() { return Math.min(Math.max(0, scroller.scrollHeight - scroller.clientHeight), Math.max(0, scroller.scrollTop)); }
+        function minT(st) { if (height === 0 || st <= natural) return 0; if (st >= natural + height) return -height; return -(st - natural); }
+        function clamp(v, lo) { return Math.min(0, Math.max(lo, v)); }
+        function report() {
+          if (raf) return;
+          raf = requestAnimationFrame(function () {
+            raf = 0;
+            if (!scroller.matches("[data-psah-live=main]")) return;
+            var shown = Math.round(Math.max(0, height + parseTy()));
+            say(scroller, "data-psah-status", "숨은 높이 " + Math.round(height - shown) + " / " + Math.round(height) + "px · 목록이 보이는 높이 " + Math.round(scroller.clientHeight - shown) + "px · 머리 높이는 그대로(" + Math.round(root.offsetHeight) + ")" + (reducedAt(scroller) ? " · 모션 줄이기 — 늘 보인다" : ""));
+          });
+        }
+        function parseTy() { var m = getComputedStyle(root).transform; if (!m || m === "none") return 0; var v = m.slice(m.indexOf("(") + 1, -1).split(/[ ,]+/); var y = parseFloat(v[m.indexOf("matrix3d(") === 0 ? 13 : 5]); return isFinite(y) ? y : 0; }
+        function put(v) { ty = v; root.style.transform = "translate3d(0px, " + v + "px, 0px)"; report(); }
+        function finish() { settling = false; root.style.removeProperty("transition"); root.style.removeProperty("will-change"); report(); }
+        function cancelSettle() { if (!settling) return; var y = parseTy(); finish(); put(clamp(y, minT(top()))); }
+        function settle() {
+          clearTimeout(timer);
+          if (height === 0) return;
+          if (reducedAt(scroller)) { finish(); put(0); skipAnim = false; return; }
+          var target = 1 + ty / height >= 0.5 ? 0 : clamp(-height, minT(top()));
+          if (target === ty) { finish(); skipAnim = false; return; }
+          if (skipAnim) { finish(); put(target); skipAnim = false; return; }
+          settling = true;
+          root.style.willChange = "transform";
+          root.style.transition = "transform var(--motion-duration-d4) var(--motion-ease-enter)";
+          put(target);
+        }
+        function measure() {
+          cancelSettle();
+          var ratio = height === 0 ? 1 : 1 + ty / height;
+          var pos = root.style.position, tr = root.style.transform;
+          root.style.position = "relative";
+          root.style.transform = "none";
+          var rr = root.getBoundingClientRect(), sr = scroller.getBoundingClientRect();
+          var st = top();
+          height = rr.height;
+          natural = st + rr.top - sr.top - scroller.clientTop;
+          root.style.position = pos;
+          root.style.transform = tr;
+          put(clamp(height === 0 ? 0 : -(1 - ratio) * height, minT(st)));
+        }
+        scroller.addEventListener("scroll", function () {
+          clearTimeout(timer);
+          cancelSettle();
+          var st = top();
+          var d = st - prev;
+          prev = st;
+          if (reducedAt(scroller)) { finish(); put(0); return; }
+          put(clamp(ty - d, minT(st)));
+          if (!supportsEnd) timer = setTimeout(settle, 120);
+        }, { passive: true });
+        scroller.addEventListener("scrollend", settle);
+        root.addEventListener("transitionend", function (e) { if (e.target === root && e.propertyName === "transform") finish(); });
+        scroller.addEventListener("pointerdown", function () { clearTimeout(timer); cancelSettle(); skipAnim = false; });
+        scroller.addEventListener("wheel", function () { skipAnim = false; }, { passive: true });
+        scroller.addEventListener("keydown", function (e) {
+          if (SCROLL_KEYS.indexOf(e.key) < 0) return;
+          var t = e.target;
+          if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+          skipAnim = true;
+          cancelSettle();
+        });
+        // 숨은 머리 안으로 초점이 오면 바로 다 드러낸다
+        root.addEventListener("focusin", function () {
+          clearTimeout(timer);
+          cancelSettle();
+          prev = top();
+          root.style.removeProperty("transition");
+          put(0);
+          if (scroller.matches("[data-psah-live=main]")) setTimeout(function () { var a = document.activeElement; say(scroller, "data-psah-status", "숨은 머리 안으로 초점이 왔다(“" + ((a && (a.getAttribute("aria-label") || a.textContent.trim())) || "") + "”) — 바로 다 드러냈다"); }, 0);
+        });
+        if (window.ResizeObserver) { var ro = new ResizeObserver(function () { measure(); }); ro.observe(root); ro.observe(scroller); }
+        var reduceHost = live.matches && live.matches(".pcol-live") ? live : null;
+        if (reduceHost) reduceHost.addEventListener("pcol-reduce", function () { clearTimeout(timer); finish(); put(0); prev = top(); if (!reducedAt(scroller)) measure(); });
+        if (mq && mq.addEventListener) mq.addEventListener("change", function () { finish(); put(0); prev = top(); if (!mq.matches) measure(); });
+        measure();
+        if (reduceHost) {
+          reduceHost.addEventListener("click", function (e) {
+            var run = closest(e, "[data-psah-run]");
+            if (!run) return;
+            var what = run.getAttribute("data-psah-run");
+            if (what === "down") scroller.scrollBy({ top: 900, behavior: "smooth" });
+            else if (what === "up") scroller.scrollBy({ top: -160, behavior: "smooth" });
+            else if (what === "top") scroller.scrollTo({ top: 0, behavior: "smooth" });
+            else if (what === "focus") { var first = root.querySelector("button"); if (first) first.focus({ preventScroll: true }); }
+          });
+        }
+      });
+
+      // ── 잰 값 ──
+      function measureAll() {
+        document.querySelectorAll("[data-pcol-measure-host]").forEach(function (host) {
+          var t = host.querySelector(".pacc-trigger");
+          var out = host.querySelector("[data-pcol-h]");
+          if (t && out) out.textContent = "트리거 " + Math.round(t.getBoundingClientRect().height) + " × " + Math.round(t.getBoundingClientRect().width);
+        });
+        document.querySelectorAll(".pscr-sample").forEach(function (s) {
+          var box = s.querySelector(".pscr");
+          var out = s.querySelector("[data-pscr-bar]");
+          if (!box || !out) return;
+          var bar = box.offsetWidth - box.clientWidth;
+          out.textContent = bar > 0 ? "막대 폭 " + bar + "px · 상자 " + box.clientHeight + " / 내용 " + box.scrollHeight : "막대 폭 0 — 겹침 스크롤바(넘칠 때만 보인다)";
+        });
+      }
+      measureAll();
+      window.addEventListener("load", measureAll);
+      window.addEventListener("resize", measureAll);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureAll);
     })();
   </script>
 </body>

@@ -85,7 +85,7 @@ const DESCRIPTION = "m-0 text-t5 font-normal text-fg-neutral-muted";
 // 스냅 높이를 두면 시트를 화면의 90% 높이로 둔다 — cn(CONTENT, SNAP_HEIGHT)
 const SNAP_HEIGHT = "h-[90dvh]";
 // 본문 — 좌우 24, 넘치면 이 안에서 스크롤. 바닥이 없어 맨 끝이면 아래 16(BODY_PLAIN). 레시피는 cn(BODY, scrollFog ? BODY_FOG : BODY_PLAIN, className)
-const BODY = "min-h-0 flex-1 overflow-y-auto px-global-gutter";
+const BODY = "min-h-0 flex-1 overflow-y-auto overscroll-contain px-global-gutter";
 const BODY_PLAIN = "last:pb-x4";
 // 끝 흐림(scrollFog) — 본문 안 여백 위 20 · 아래 80(바닥이 있어도), 스크롤 여유도 위 20 · 아래 80
 const BODY_FOG = "pt-[20px] pb-[80px] scroll-pt-[20px] scroll-pb-[80px]";
@@ -146,12 +146,12 @@ const LIST_ITEM_VARIANTS = {
 const LIST_ITEM_DEFAULTS = { highlight: "none" };
 
 const LIST_CONTENT_BASE = [
-  "relative flex w-full px-global-gutter py-x3",
+  "relative flex w-full py-x3",
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-has-[[data-list-action]:not([data-disabled]):active]/list-item:[scale:1]",
 ].join(" ");
-const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" } };
-const LIST_CONTENT_DEFAULTS = { align: "center" };
+const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" }, nest: { none: "px-global-gutter", parent: "pl-x1 pr-global-gutter", child: "pl-[104px] pr-global-gutter" } };
+const LIST_CONTENT_DEFAULTS = { align: "center", nest: "none" };
 
 const LIST_BODY_BASE = "flex min-w-0 flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
 

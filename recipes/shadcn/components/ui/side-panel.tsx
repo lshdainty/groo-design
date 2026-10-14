@@ -461,9 +461,10 @@ const SidePanelContent = React.forwardRef<React.ElementRef<typeof DialogPrimitiv
 );
 SidePanelContent.displayName = "SidePanelContent";
 
-// 본문 — 좌우 24(왼쪽 패널 16), 이 안에서만 스크롤. 맨 끝 자식(바닥이 없으면)이면 아래 24. 손가락 가로 끌기는 패널이 받는다
+// 본문 — 좌우 24(왼쪽 패널 16), 이 안에서만 스크롤. 맨 끝 자식(바닥이 없으면)이면 아래 24. 손가락 가로 끌기는 패널이 받는다.
+// 끝에 닿아도 뒤 화면이 따라 스크롤되지 않는다(overscroll-behavior: contain — Scroll Area 의 옆 패널, 2026-10-10)
 const BODY = [
-  "min-h-0 flex-1 overflow-y-auto [touch-action:pan-y_pinch-zoom]",
+  "min-h-0 flex-1 overflow-y-auto overscroll-contain [touch-action:pan-y_pinch-zoom]",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 const BODY_SIDE: Record<Side, string> = { left: "px-x4", right: "px-x6" };

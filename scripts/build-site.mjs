@@ -45,6 +45,7 @@ import { progressCircleExamples } from "../recipes/shadcn/examples/progress-circ
 import { scrollFogExamples } from "../recipes/shadcn/examples/scroll-fog-examples.mjs";
 import { contentPlaceholderExamples } from "../recipes/shadcn/examples/content-placeholder-examples.mjs";
 import { scrollAreaExamples } from "../recipes/shadcn/examples/scroll-area-examples.mjs";
+import { scrollAutoHideExamples } from "../recipes/shadcn/examples/scroll-auto-hide-examples.mjs";
 import { typographyExamples } from "../recipes/shadcn/examples/typography-examples.mjs";
 import { resizableExamples } from "../recipes/shadcn/examples/resizable-examples.mjs";
 import { calloutExamples } from "../recipes/shadcn/examples/callout-examples.mjs";
@@ -73,6 +74,7 @@ import { sideNavigationExamples } from "../recipes/shadcn/examples/side-navigati
 // Phase 5 Disclosure
 import { accordionExamples } from "../recipes/shadcn/examples/accordion-examples.mjs";
 import { collapsibleExamples } from "../recipes/shadcn/examples/collapsible-examples.mjs";
+import { treeViewExamples } from "../recipes/shadcn/examples/tree-view-examples.mjs";
 // Phase 1 Form remaining
 import { toggleExamples } from "../recipes/shadcn/examples/toggle-examples.mjs";
 import { sliderExamples } from "../recipes/shadcn/examples/slider-examples.mjs";
@@ -104,7 +106,6 @@ import {
   renderShadcnNav,
   renderShadcnInput,
   renderShadcnDisclose,
-  renderShadcnData,
   renderShadcnExtras,
   renderBatchV73V78,
   renderVignettes,
@@ -138,6 +139,7 @@ const SHADCN_EXAMPLES = {
   progress: progressExamples,
   "progress-circle": progressCircleExamples,
   "scroll-area": scrollAreaExamples,
+  "scroll-auto-hide": scrollAutoHideExamples,
   "scroll-fog": scrollFogExamples,
   "content-placeholder": contentPlaceholderExamples,
   typography: typographyExamples,
@@ -169,6 +171,7 @@ const SHADCN_EXAMPLES = {
   // Phase 5 Disclosure
   accordion: accordionExamples,
   collapsible: collapsibleExamples,
+  "tree-view": treeViewExamples,
   // Phase 1 Form remaining
   toggle: toggleExamples,
   slider: sliderExamples,
@@ -480,16 +483,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* === Thin scrollbar (porest-desk-front 톤 정합) ===
-   - WebKit/Blink(::-webkit-scrollbar): 6px width + border-strong pill thumb + transparent track
-   - Firefox(W3C CSS Scrollbars Module L1): scrollbar-width: thin + scrollbar-color
-   - .scrollbar-hide utility: 스크롤바 완전 숨김 (filter chip carousel 등 opt-in) */
-* { scrollbar-width: thin; scrollbar-color: var(--color-border-strong) transparent; }
+/* === 전역 스크롤바 — Scroll Area(2026-10-10, specs/components/scroll-area.yaml) ===
+   recipes/shadcn/styles/porest-shadcn-bridge.css 와 같은 계약이다 — 세로 · 가로 6px 알약 · 막대 stroke-neutral-solid · 바탕 · 모서리 투명.
+   크로미움 · 사파리는 webkit 규칙, Firefox 만 표준 두 줄(scrollbar-width thin · scrollbar-color)을 @supports not selector(::-webkit-scrollbar) 안에 둔다 —
+   크로미움은 scrollbar-width · scrollbar-color 가 걸린 요소에서 ::-webkit-scrollbar 를 버려 6px 이 10px(thin) · 15px(color 만)로 바뀐다.
+   .scrollbar-hide 는 가로 줄(칩 · 탭 · 가로 카드)에만 — 세로 스크롤바는 숨기지 않는다 */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: var(--radius-full); }
-::-webkit-scrollbar-thumb:hover { background: var(--color-border-strong); }
-.scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
+::-webkit-scrollbar-thumb { background: var(--color-stroke-neutral-solid); border-radius: var(--radius-full); }
+::-webkit-scrollbar-corner { background: transparent; }
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: var(--color-stroke-neutral-solid) transparent; }
+}
+.scrollbar-hide { scrollbar-width: none; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 
 /* === Layout === */
@@ -1990,7 +1996,7 @@ const SHADCN_CATALOG = [
   { slug: "toggle", name: "Toggle", category: "Form", description: "단추 하나가 한 상태를 켜고 끄는 아이콘 단추(보이는 40 · 누르는 44) — 관심 등록 · 메모 고정 · 금액 가리기 · 비밀값 보기에 쓰고, 이름은 그대로 둔 채 켬은 aria-pressed 와 아이콘의 모양 · 굵기 · 색으로만 가른다 (SEED 에 디자인 문서가 없어 SEED Iconography 의 켜고 끄기 규칙 · 하트 단추를 바탕으로 porest 가 정했다)." },
   { slug: "wheel-picker", name: "Wheel Picker", category: "Form", description: "순서가 있는 값을 세로로 굴려 고르는 휠 — 칼럼 · 항목 · 가운데 선택 띠 · 위아래 안개. Time Picker 의 바탕이고, 달력의 연 · 월 휠 · 달만 고르는 자리에 쓴다 (SEED Wheel Picker 구조)." },
 
-  // Display (21)
+  // Display (22) — Scroll Auto Hide 는 2026-10-10 더했다(SEED Breeze — 스크롤하면 숨는 원장 머리)
   { slug: "aspect-ratio", name: "Aspect Ratio", category: "Display", description: "폭이 정해지면 비율로 높이가 정해지는 상자 하나 — 동영상 · 지도 · 바깥 페이지처럼 그림이 아닌 자리에 쓰고, 비율은 여덟(기본 4:3 · 카드 1.586)이며 모서리 · 바탕 없이 자식 하나가 채운다 (SEED Aspect Ratio 구조)." },
   { slug: "avatar", name: "Avatar", category: "Display", description: "사람 한 명을 보이는 원 — 사진이 있으면 사진, 없으면 이니셜 + 이름 색이고, 여러 사람은 지름 1/4 을 겹친 묶음(Avatar Stack — 앞 4명 + \"+N\")이다 (SEED Avatar 구조)." },
   { slug: "badge", name: "Badge", category: "Display", description: "대상의 상태 · 분류를 한두 낱말로 보이는 누르지 않는 작은 라벨(예정 · 연체 · 승인). weak · outline · solid × 톤 6 × medium 20 · large 24 (SEED Badge 구조)." },
@@ -2005,9 +2011,10 @@ const SHADCN_CATALOG = [
   { slug: "page-banner", name: "Page Banner", category: "Display", description: "페이지 머리 바로 아래 화면 폭 전체로 놓여 그 페이지 전체의 상태(연결 끊김 · 만료 예정 · 새 버전)를 알리는 띠 — 한 화면에 하나 (SEED Page Banner 구조)." },
   { slug: "progress", name: "Progress", category: "Display", description: "\"얼마나 찼나\" 를 보이는 높이 8 미터 막대 — 예산 · 카드 한도처럼 쓸수록 차는 것과 저축 목표 · 카드 실적처럼 모을수록 차는 것, 넘친 한도만 위험 색 (SEED 에 선형 막대가 없어 porest 가 정한 부품 — 진행은 Progress Circle)." },
   { slug: "progress-circle", name: "Progress Circle", category: "Display", description: "작업이 진행 중임을 알리는 원 — 값을 모르면 호가 늘었다 줄며 돌고 값을 알면 12시부터 채운다, 크기 24 · 40 · 버튼 안, 톤 neutral · brand · staticWhite · inherit (SEED Progress Circle 구조)." },
-  { slug: "resizable", name: "Resizable", category: "Display", description: "드래그로 크기 조절 가능 패널." },
+  { slug: "resizable", name: "Resizable", category: "Display", description: "화면 안의 크기를 손으로 바꾸는 손잡이 — 768 이상 HR 관리 화면의 목록 | 상세(선 1px + 손잡이 표시 · 누르는 폭 16 · 목록 20 ~ 40% · ← → 5% · 한 번 누르면 25 ↔ 40 · 화면마다 폭 기억)와 대시보드 위젯 크기(모서리 손잡이 · ⋮ \"크기\") (SEED 에 Resizable 이 없어 porest 가 정했다 — 키보드는 APG Window Splitter)." },
   { slug: "result-section", name: "Result Section", category: "Display", description: "화면이나 그 영역 가운데에 놓는 결과 — 비어 있음 · 불러오기 실패 · 완료 · 찾을 수 없는 페이지 · 화면 오류를 한 틀로 그린다 (SEED Result Section 구조)." },
-  { slug: "scroll-area", name: "Scroll Area", category: "Display", description: "스타일된 스크롤 컨테이너." },
+  { slug: "scroll-area", name: "Scroll Area", category: "Display", description: "스크롤되는 자리의 규칙 — 스크롤은 브라우저 기본이고 스크롤바는 전역 한 벌(6px 알약 · 막대 stroke-neutral-solid · Firefox 두 줄은 @supports 안)이며, 초점 가는 것이 없는 상자는 region · 이름 · tabindex 0, 시트 · 대화상자 안 상자는 contain 이다 (SEED 에 스크롤바 규칙이 없어 porest 가 정했다 — 끝 흐림은 SEED Scroll Fog)." },
+  { slug: "scroll-auto-hide", name: "Scroll Auto Hide", category: "Display", description: "스크롤 상자 맨 위의 영역이 아래로 스크롤하면 그 거리만큼 숨고 위로 스크롤하면 같은 거리만큼 드러난다 — 폰 가계부 · 할 일 원장 머리, 멈추면 50% 를 기준으로 200ms 스냅 · translate3d 로만 옮김 · 모션 줄이기면 끔 · 숨은 머리에 초점이 오면 드러냄 (SEED Breeze Scroll Auto Hide 구조)." },
   { slug: "scroll-fog", name: "Scroll Fog", category: "Display", description: "스크롤되는 영역의 끝을 투명도 마스크로 늘 흐려 뒤에 더 있다는 것을 알린다 — 칩 줄 좌우 20 · 시트 · 대화상자 본문 위 20 · 아래 80 · 바닥 고정 버튼이 있는 화면 (SEED Scroll Fog 구조)." },
   { slug: "skeleton", name: "Skeleton", category: "Display", description: "불러오는 동안 데이터 자리만 미리 그리는 회색 면과 1.5초 띠 — 모서리 넷 · 글줄 높이, 1초 뒤에 보이고 5초 · 10초에 바뀌는 시간표(LoadingRegion) (SEED Skeleton 구조)." },
   { slug: "tag-group", name: "Tag Group", category: "Display", description: "여러 메타 정보(카테고리 이름 · 자산 · 시각 · 거리 · 개수 · 금액)를 \" · \" 로 이어 한 줄로 보이는 글줄 — 읽기만 하고, 넘치면 낱말 단위로 줄을 바꾸거나 한 줄에서 말줄임한다 (SEED Tag Group 구조)." },
@@ -2035,9 +2042,10 @@ const SHADCN_CATALOG = [
   { slug: "tabs", name: "Tabs", category: "Navigation", description: "다른 구역으로 옮기는 탭. 화면 · 구역 맨 위의 1차 탭은 Line(Fill · Hug × small · medium — 고르면 2px 막대가 미끄러진다), 그 안의 2차 탭은 Chip Tabs (SEED Tabs 구조)." },
   { slug: "top-navigation", name: "Top Navigation", category: "Navigation", description: "화면 맨 위의 바 — 지금 화면의 이름과 이동(뒤로 · 닫기 · 주 메뉴) · 동작 두셋을 두고, 탭 첫 화면은 큰 제목(Root) · 그 아래 화면은 ← + 제목(Standard) · 768 이상 Desk 는 제목 없는 데스크톱 머리이며 높이 56 · 선 없이 맨 위에 붙는다 (SEED Top Navigation 구조)." },
 
-  // Disclosure (2)
-  { slug: "accordion", name: "Accordion", category: "Disclosure", description: "접고 펼치는 패널 (단일/다중)." },
-  { slug: "collapsible", name: "Collapsible", category: "Disclosure", description: "콘텐츠 접고 펼치기 (단일)." },
+  // Disclosure (3) — Tree View 는 2026-10-10 더했다(HR 부서 나무 — APG Treeview)
+  { slug: "accordion", name: "Accordion", category: "Disclosure", description: "관련 상세를 세로로 묶어 두고 항목마다 머리를 눌러 펼치는 목록 — inline(연속 목록 + 들인 선) · separated(항목마다 카드 면), 제목 16 · 설명 13 · 꺾쇠 20 · 54 · 74, 여럿을 함께 열고 \"모두 펼치기\" 를 두며 상세가 없는 항목은 그냥 줄이다 (SEED Accordion 구조)." },
+  { slug: "collapsible", name: "Collapsible", category: "Disclosure", description: "내용 하나를 접고 펴는 자리 — 거래 상세의 분할 내역 · 빠르게 맞추기 · 상세 검색 조건, 트리거는 Accordion 항목 하나의 모양(줄 전체 · 고정 이름 + aria-expanded)이고 흰 면 · 카드 · 경고 상자에 놓인다 (SEED 에 Collapsible 이 없어 SEED Accordion 가이드의 한 줄대로 항목 하나의 모양을 쓴다)." },
+  { slug: "tree-view", name: "Tree View", category: "Disclosure", description: "여러 단계로 된 항목 가운데 하나를 고르는 나무 — HR 부서 나무, 줄 44 · 단계마다 20 들임 · 줄 전체가 누르는 자리(부모는 고르면서 펴고 접는다) · Tab 하나 + 화살표 · 노드 동작은 나무 밖 ⋮ 하나 · 긴 이름은 줄바꿈 (SEED 에 나무가 없어 APG Treeview 를 따랐다 — 줄 전체를 누르는 자리는 SEED Accordion 트리거 규칙)." },
 
   // Data (4) — 데이터 표시(2026-10-08). 옛 Data Table 은 걷었다 — 정렬 · 고르기 · 일괄 작업은 Table 의 부품이다. Card 는 Display 에 있다
   { slug: "chart", name: "Chart", category: "Data", description: "숫자의 흐름 · 비율 · 세기를 그리는 차트 — 이중 축 추이 · 위 지표 타일 · \"■ 라벨 값\" 툴팁 · 목록 범례 도넛 · 칸 112 이상만 원까지 쓰는 열지도, recharts 베이스 (SEED 대시보드 그림 기준)." },

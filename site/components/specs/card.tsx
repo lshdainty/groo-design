@@ -9,6 +9,7 @@ import { CardPlayground, ExHeroDemo, ExListDemo, ExPressDemo, ExStatDemo } from 
 import { toggleLook } from './input-look';
 import { ToggleView } from './toggle-view';
 import { contrastPair } from './data-contrast';
+import { AccordionCard } from './card-accordion';
 import { NET_WORTH, STATS, TODAY } from './data-data';
 import { BudgetCard, CL, DimH, DimV, EDGE, Floor, GuideV, HomeDesktop, HomePhone, ListCard, MODES, ModeLabel, NetWorth, PINK, SCREEN_W, StatCard, pinkFill, spendRow, won, type Fig } from './data-screens';
 import { resultSectionLook } from './feedback-look';
@@ -636,6 +637,7 @@ export const cardFigures: Record<string, Fig> = {
   header: Header,
   press: Press,
   'list-card': ListCardFig,
+  'accordion-card': AccordionCard,
   stat: Stat,
   delta: Delta,
   'hero-card': HeroCard,

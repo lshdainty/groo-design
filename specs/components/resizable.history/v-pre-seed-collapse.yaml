@@ -1,0 +1,73 @@
+# Resizable 의 수치 원본 — 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 크기 · 색은 조건 없는 규칙(#base), 상태별 값은 direction 규칙(#states.direction)에 있다.
+# hover 커서가 방향마다 달라(ew-resize · ns-resize) direction 축을 둔다. dragging · focus-visible 은
+# 두 방향이 같지만 상태 표에 함께 나오도록 방향 규칙마다 적는다.
+# 상태 표의 "(변화 없음)"(Handle · Grip box)은 각 상태 값의 비고로 옮겼다.
+
+name: Resizable
+
+slots:
+  handle: ⓒ handle — 1px 라인(PanelResizeHandle)
+  hitArea: ⓔ hit area(`::after`)
+  grip: ⓓ grip box — withHandle 옵션일 때만
+  focusRing: 키보드 포커스 링
+
+variants:
+  direction:
+    horizontal: 좌·우 패널 + vertical handle
+    vertical: 상·하 패널 + horizontal handle
+
+defaults:
+  direction: horizontal
+
+states:
+  default: ""
+  hover: ""
+  dragging: ""
+  focus-visible: (keyboard)
+
+rules:
+  # ── 크기 · 색 ─────────────────────────────────────────
+  - when: {}
+    default:
+      handle:
+        thickness: { value: 1px, note: "`w-px` (horizontal) / `h-px` (vertical)" }
+        background: $color-border-default
+      hitArea:
+        thickness: { value: 4px, note: "라인 + 좌우 2px씩 — `::after` `w-1 -translate-x-1/2`" }
+      grip:
+        width: 12px
+        height: 16px
+        iconSize: { value: 10px, note: "lucide `GripVertical`" }
+        radius: $radius-sm
+        background: $color-surface-default
+        borderColor: $color-border-default
+        borderWidth: 1px
+
+  # ── 상태 ──────────────────────────────────────────────
+  - when: { direction: horizontal }
+    hover:
+      handle:
+        cursor: { value: ew-resize, note: "브라우저 native — Handle · Grip box (변화 없음)" }
+    dragging:
+      handle:
+        attribute: { value: data-resize-handle-active, note: "자동 — document cursor 유지. Handle · Grip box (변화 없음)" }
+    focus-visible:
+      focusRing:
+        width: 1px
+        offset: 1px
+        color: { value: $color-border-focus, note: "`ring-1 ring-ring ring-offset-1` — 1px ring, handle이 얇아 작게. Handle · Grip box (변화 없음)" }
+
+  - when: { direction: vertical }
+    hover:
+      handle:
+        cursor: { value: ns-resize, note: "브라우저 native — Handle · Grip box (변화 없음)" }
+    dragging:
+      handle:
+        attribute: { value: data-resize-handle-active, note: "자동 — document cursor 유지. Handle · Grip box (변화 없음)" }
+    focus-visible:
+      focusRing:
+        width: 1px
+        offset: 1px
+        color: { value: $color-border-focus, note: "`ring-1 ring-ring ring-offset-1` — 1px ring, handle이 얇아 작게. Handle · Grip box (변화 없음)" }

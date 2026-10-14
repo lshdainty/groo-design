@@ -43,8 +43,9 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  *   위 12 · 오른쪽 12(접히면 8 — 56 의 가운데).
  *   내용 위 8 · 좌우 8 · 아래 24, 묶음 사이 8(접히면 1px 선 · 위아래 8 · 좌우 8). 묶음 이름 t4 14 / 19 · 700 · fg-neutral-muted · 안쪽 6.
  *   항목 최소 44 · 좌우 8 · 아이콘 20 fg-neutral-subtle ↔ 이름 12 · 이름 t4 · 500 · fg-neutral-muted · 위아래 6 · 모서리 10 — 긴 이름은 단어 단위로
- *   줄을 바꾼다(말줄임 없음). 접히면 항목 40(좌우 10 — 아이콘이 화면 끝에서 18). 꺾쇠 16 fg-neutral-subtle(펼치면 위로 200ms).
- *   하위 항목 최소 44 · 이름이 부모 이름과 같은 자리(40)에서 시작, 펼침 · 접힘은 높이 · 투명도 200ms.
+ *   줄을 바꾼다(말줄임 없음). 접히면 항목 40(좌우 10 — 아이콘이 화면 끝에서 18). 꺾쇠 16 fg-neutral-subtle(펼치면 위로 300ms).
+ *   하위 항목 최소 44 · 이름이 부모 이름과 같은 자리(40)에서 시작, 펼침 · 접힘은 높이 · 투명도 300ms(motion-duration-d6 — Accordion 과 같다,
+ *   2026-10-10). 모션 줄이기면 높이를 움직이지 않고 150ms 서서히 나타나고 사라지며 꺾쇠는 바로 돈다.
  *   지금 항목 bg-neutral-weak-pressed + 아이콘 · 이름 fg-neutral(굵기 500 그대로 — 사용자 결정 2026-10-08). 접혔을 때는 하위가 지금인 부모가
  *   지금 항목이다. 지금 항목은 마우스를 올리거나 눌러도 바탕이 그대로다(그보다 짙은 불투명 역할이 없다).
  * 상태: 호버(웹) · 누름 bg-layer-default-pressed, 누르면 아이콘 · 이름만 2px 거리 축소(바탕은 그대로 — 모션 줄이기면 하지 않는다).
@@ -431,15 +432,22 @@ const tone = (current: boolean, disabled: boolean) =>
       ? { icon: "text-fg-neutral", label: "text-fg-neutral" }
       : { icon: "text-fg-neutral-subtle", label: "text-fg-neutral-muted" };
 
-// 꺾쇠 — 16 · fg-neutral-subtle, 펼치면 위로(200ms)
-const CHEVRON = "size-4 shrink-0 text-fg-neutral-subtle [transition:rotate_var(--motion-duration-d4)_var(--motion-ease-easing)] motion-reduce:transition-none";
+// 꺾쇠 — 16 · fg-neutral-subtle, 펼치면 위로(300ms — 하위 펼침과 같은 시간, 모션 줄이기면 바로)
+const CHEVRON = "size-4 shrink-0 text-fg-neutral-subtle [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none";
 
-// 하위 목록 — 높이 · 투명도로 펼친다(200ms). 접히면 다 접힌 뒤 보이지 않게(보조 기술 · Tab 에서 빠진다)
-const SUB_LIST = "grid motion-reduce:transition-none";
-const SUB_LIST_OPEN =
-  "visible grid-rows-[1fr] opacity-100 [transition:grid-template-rows_var(--motion-duration-d4)_var(--motion-ease-easing),opacity_var(--motion-duration-d4)_var(--motion-ease-easing),visibility_0s]";
-const SUB_LIST_CLOSED =
-  "invisible grid-rows-[0fr] opacity-0 [transition:grid-template-rows_var(--motion-duration-d4)_var(--motion-ease-easing),opacity_var(--motion-duration-d4)_var(--motion-ease-easing),visibility_0s_linear_var(--motion-duration-d4)]";
+// 하위 목록 — 높이 · 투명도로 펼친다(300ms — Accordion 과 같다). 접히면 다 접힌 뒤 보이지 않게(보조 기술 · Tab 에서 빠진다).
+// 모션 줄이기면 높이는 바로 바꾸고 투명도만 150ms — 접을 때는 다 흐려진 뒤 높이를 접는다
+const SUB_LIST = "grid";
+const SUB_LIST_OPEN = [
+  "visible grid-rows-[1fr] opacity-100",
+  "[transition:grid-template-rows_var(--motion-duration-d6)_var(--motion-ease-easing),opacity_var(--motion-duration-d6)_var(--motion-ease-easing),visibility_0s]",
+  "motion-reduce:[transition:opacity_var(--motion-duration-d3)_var(--motion-ease-easing),visibility_0s]",
+].join(" ");
+const SUB_LIST_CLOSED = [
+  "invisible grid-rows-[0fr] opacity-0",
+  "[transition:grid-template-rows_var(--motion-duration-d6)_var(--motion-ease-easing),opacity_var(--motion-duration-d6)_var(--motion-ease-easing),visibility_0s_linear_var(--motion-duration-d6)]",
+  "motion-reduce:[transition:grid-template-rows_0s_linear_var(--motion-duration-d3),opacity_var(--motion-duration-d3)_var(--motion-ease-easing),visibility_0s_linear_var(--motion-duration-d3)]",
+].join(" ");
 
 // 펼침 메뉴 — Menu 표면(폭 200 · 모서리 20 · 떠 있는 바탕 + s3 · 위아래 8 · z-floating). 150ms enter · 100ms exit 로 0.95 ↔ 1 · 투명도
 const FLYOUT = [
