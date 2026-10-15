@@ -118,10 +118,11 @@ SEED 의 무채색 그대로다 — 트랙 4 `stroke-neutral-weak`(SEED gray-400
 |---|---|
 | 범위 안의 자리가 중요한 값(임계값 · 비율) · 2 ~ 5단계 가운데 하나(별점) | **Slider** |
 | 정확한 숫자 · 금액(더치페이 비율 · 할부 개월 · 금액 범위 필터) | [Input](input.md) — 숫자 키보드 · 뒤 단위 글자 |
+| 한 단계씩 세는 작은 정수(승인 필요 횟수 0 ~ 3 · 부여 시간 0 ~ 7시간) | [Quantity Picker](quantity-picker.md) |
 | 이름이 붙은 2 ~ 4개 | [Chip](chip.md) 하나 고르기 — 같은 내용을 바로 다르게 보면 [Segmented Control](segmented-control.md) |
 | 이름이 붙은 5개 이상 | [Select](select.md) |
 
-옛 스펙의 Don't "옵션이 3개 이하면 Slider 를 쓰지 않는다" 는 걷었다 — SEED 는 별점(1 ~ 5) · 수량(10 · 20 · 30) · 할인율(5% 단위)처럼 2 ~ 5단계 고르기도 Slider 로 한다(사용자 결정 3B).
+옛 스펙의 Don't "옵션이 3개 이하면 Slider 를 쓰지 않는다" 는 걷었다 — SEED 는 별점(1 ~ 5) · 수량(10 · 20 · 30) · 할인율(5% 단위)처럼 2 ~ 5단계 고르기도 Slider 로 한다(사용자 결정 3B). 단계가 자리를 뜻하지 않고 하나씩 세는 수(횟수 · 시간 · 개수)면 [Quantity Picker](quantity-picker.md) 다 — 지금 값이 버튼 사이에 늘 보이고 한 번에 하나씩 오르내린다.
 
 [그림: 별점은 Slider · 금액은 Input](../../site/components/specs/slider.tsx#when-guide)
 

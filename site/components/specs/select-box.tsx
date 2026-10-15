@@ -14,6 +14,10 @@ import { RadioView } from './radio-group-view';
 import { selectLook } from './select-look';
 import { formatDay } from './date-shared';
 import { Phone, Verdict, rc, type Mode } from './kit';
+import { RolesLive } from './finish-play';
+import { HR_USER } from './finish-shared';
+import { Fit } from './finish-view';
+import { textFieldLook } from './text-field-look';
 
 type Fig = (p: { caption?: string }) => ReactNode;
 const look = () => selectBoxLook('desk');
@@ -575,6 +579,60 @@ const ExStates: Fig = ({ caption }) => (
   </Preview>
 );
 
+// 여럿 고르고 저장 — HR 역할(8개: 기본 넷 + 관리자가 더한 넷). 데스크톱은 사용자 상세 칸(역할 및 권한 > 사용자), 폰은 사용자 상세 화면 — 같은 모양
+const HR_DETAIL_W = 760;
+function HrUserHead({ back = false }: { back?: boolean }) {
+  return (
+    <div style={{ paddingTop: 24, paddingBottom: 20, paddingLeft: 24, paddingRight: 24, borderBottom: `1px solid ${rc('stroke-neutral-subtle')}` }}>
+      {!back && (
+        <span style={{ display: 'block', fontSize: 24, lineHeight: '32px', fontWeight: 700, color: rc('fg-neutral') }}>{HR_USER.name}</span>
+      )}
+      <span style={{ display: 'block', fontSize: 15, lineHeight: '22px', color: rc('fg-neutral-subtle') }}>{HR_USER.email}</span>
+      <span style={{ display: 'block', marginTop: 8, fontSize: 14, lineHeight: '19px', color: rc('fg-neutral-subtle') }}>
+        {HR_USER.dept} · {HR_USER.position}
+      </span>
+    </div>
+  );
+}
+const ExRoles: Fig = ({ caption }) => {
+  const sb = selectBoxLook('hr');
+  const field = textFieldLook('hr').field;
+  const save = buttonLook({}, 'hr');
+  return (
+    <figure className="not-prose my-6">
+      <div className="flex flex-col gap-4 rounded-2xl bg-[#E9E9EC] p-4 dark:bg-fd-muted sm:p-6">
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-full overflow-hidden rounded-xl" style={{ maxWidth: HR_DETAIL_W }}>
+            <Fit w={HR_DETAIL_W}>
+              <div style={{ width: HR_DETAIL_W, background: rc('bg-layer-default') }}>
+                <HrUserHead />
+                <div style={{ paddingTop: 24, paddingBottom: 24, paddingLeft: 24, paddingRight: 24 }}>
+                  <RolesLive look={sb} field={field} save={save} />
+                </div>
+              </div>
+            </Fit>
+          </div>
+          <Cap strong="데스크톱 — 사용자 상세 칸">역할을 골라도 바로 바뀌지 않는다 — "저장" 한 번(바뀐 것이 없으면 막힘)</Cap>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-full" style={{ maxWidth: 406 }}>
+            <Fit w={406}>
+              <Phone screenW={390} h={1210} title={HR_USER.name} back brand="hr" bg="bg-layer-default">
+                <HrUserHead back />
+                <div style={{ paddingTop: 24, paddingLeft: 24, paddingRight: 24 }}>
+                  <RolesLive look={sb} field={field} save={save} />
+                </div>
+              </Phone>
+            </Fit>
+          </div>
+          <Cap strong="폰 390 — 같은 모양">검색 시트 · 팝오버 두 벌을 걷었다 — 역할이 늘어도 상자를 쌓는다</Cap>
+        </div>
+      </div>
+      {caption && <figcaption className="sr-only">{caption}</figcaption>}
+    </figure>
+  );
+};
+
 export const selectBoxFigures: Record<string, Fig> = {
   hero: Hero,
   playground: Playground,
@@ -597,4 +655,5 @@ export const selectBoxFigures: Record<string, Fig> = {
   'ex-check': ExCheck,
   'ex-columns': ExColumns,
   'ex-states': ExStates,
+  'ex-roles': ExRoles,
 };

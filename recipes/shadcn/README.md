@@ -121,7 +121,7 @@ button 다음에 만들 컴포넌트 우선순위 (Porest 사용처 기준):
 2. **Card** — listing detail / 정보 그룹
 3. **Dialog (Modal)** — confirm / form modal
 4. **Badge** — 상태 표시 (승인/대기/반려, 카테고리)
-5. **Select / Combobox** — form 영역
+5. **Select · Input Button** — form 영역
 6. **Toast** — 시스템 알림
 7. **Tabs** — 탭 네비
 8. **Menu** — 줄 · 화면의 동작(1280 미만은 Menu Sheet — `menu.tsx` 의 ResponsiveMenu)

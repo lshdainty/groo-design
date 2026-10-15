@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { accordionFigures } from './accordion';
 import { alertDialogFigures } from './alert-dialog';
 import { aspectRatioFigures } from './aspect-ratio';
+import { attachmentInputFigures } from './attachment-input';
 import { avatarFigures } from './avatar';
 import { badgeFigures } from './badge';
 import { bottomNavigationFigures } from './bottom-navigation';
@@ -23,6 +24,7 @@ import { dialogFigures } from './dialog';
 import { dividerFigures } from './divider';
 import { fieldFigures } from './field';
 import { floatingActionButtonFigures } from './floating-action-button';
+import { footerFigures } from './footer';
 import { helpBubbleFigures } from './help-bubble';
 import { iconPickerFigures } from './icon-picker';
 import { imageFrameFigures } from './image-frame';
@@ -37,6 +39,7 @@ import { notificationBadgeFigures } from './notification-badge';
 import { popoverFigures } from './popover';
 import { progressFigures } from './progress';
 import { progressCircleFigures } from './progress-circle';
+import { quantityPickerFigures } from './quantity-picker';
 import { pageBannerFigures } from './page-banner';
 import { paginationFigures } from './pagination';
 import { radioGroupFigures } from './radio-group';
@@ -73,6 +76,7 @@ const FIGURES: Record<string, Record<string, (p: { caption?: string }) => ReactN
   accordion: accordionFigures,
   'alert-dialog': alertDialogFigures,
   'aspect-ratio': aspectRatioFigures,
+  'attachment-input': attachmentInputFigures,
   avatar: avatarFigures,
   badge: badgeFigures,
   'bottom-navigation': bottomNavigationFigures,
@@ -91,6 +95,7 @@ const FIGURES: Record<string, Record<string, (p: { caption?: string }) => ReactN
   divider: dividerFigures,
   field: fieldFigures,
   'floating-action-button': floatingActionButtonFigures,
+  footer: footerFigures,
   'help-bubble': helpBubbleFigures,
   'icon-picker': iconPickerFigures,
   'image-frame': imageFrameFigures,
@@ -105,6 +110,7 @@ const FIGURES: Record<string, Record<string, (p: { caption?: string }) => ReactN
   popover: popoverFigures,
   progress: progressFigures,
   'progress-circle': progressCircleFigures,
+  'quantity-picker': quantityPickerFigures,
   'page-banner': pageBannerFigures,
   pagination: paginationFigures,
   'radio-group': radioGroupFigures,

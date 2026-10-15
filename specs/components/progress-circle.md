@@ -97,7 +97,7 @@
 
 ### 올리기 · 받기 — 값 있는 원 24
 
-진행을 알면 값 있는 원 24 를 그 항목에 둔다 — 사진이면 사진 위 딤(`overlay-dim-light` · 다크 `overlay-dim-dark`) 가운데 `staticWhite`, 파일 · 앱 업데이트면 이름 옆 `neutral`. 다 차면 원을 걷고 결과를 보인다. 진행이 10초 동안 멈추면 실패다(Skeleton 의 요청 제한). 막대([Progress](progress.md))는 진행에 쓰지 않는다 — 막대는 얼마나 찼나를 보이는 미터다.
+진행을 알면 값 있는 원 24 를 그 항목에 둔다 — 사진이면 사진 위 딤(`overlay-dim-light` · 다크 `overlay-dim-dark`) 가운데 `staticWhite`, 파일 · 앱 업데이트면 이름 옆 `neutral`. 첨부 칸은 [Attachment Input](attachment-input.md)(사진 썸네일 · 파일 카드), 프로필 사진은 [Avatar](avatar.md) 의 "사진 바꾸기" 가 이 규칙대로 그린다. 다 차면 원을 걷고 결과를 보인다. 진행이 10초 동안 멈추면 실패다(Skeleton 의 요청 제한). 막대([Progress](progress.md))는 진행에 쓰지 않는다 — 막대는 얼마나 찼나를 보이는 미터다.
 
 [그림: 사진 올리는 중 — 딤 위 흰 원 · 파일 옆 회색 원](../../site/components/specs/progress-circle.tsx#determinate-guide)
 

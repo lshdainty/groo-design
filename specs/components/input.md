@@ -97,6 +97,7 @@
 
 - 숫자 키보드를 띄운다(`inputMode="numeric"` · 소수면 `"decimal"`). `type="number"` 는 쓰지 않는다 — 쉼표를 못 넣고, 휠 · 화살표로 값이 바뀐다.
 - 쓰는 동안 천 단위 쉼표를 넣는다("12,000"). 단위는 뒤 글자("원").
+- 작은 정수라도 흔한 값이 열 단계보다 멀면(반복 거래 "총 12회" — 흔한 24 · 36) 이 숫자 칸이다. 흔한 값이 열 단계 안쪽이면 [Quantity Picker](quantity-picker.md) 다.
 
 [그림: 금액 — 쉼표와 뒤 글자 원 · 쉼표 없이 라벨에 (원)](../../site/components/specs/input.tsx#number-guide)
 
@@ -113,6 +114,7 @@
 | 이런 자리 | 컴포넌트 |
 |---|---|
 | 짧은 글 · 숫자를 직접 친다 | **Input** |
+| 작은 정수를 한 단계씩 — 흔한 값이 열 단계 안쪽(승인 필요 횟수 0 ~ 3) | [Quantity Picker](quantity-picker.md) |
 | 여러 줄 글을 친다 | Textarea |
 | 짧은 선택지 5개 이상에서 값을 고른다 | Select |
 | 달력 · 시각 · 시트 · 긴 목록에서 고른다 | Input Button |
@@ -257,7 +259,7 @@ import { Search } from "lucide-react"
 | 아이콘은 쓰는 쪽이 절대 위치로(`pl-9`) | `prefixIcon` · `suffixIcon` · `prefix` · `suffix` · `clearable` |
 | 상태 6(default · focused · filled · error · disabled · readonly) | 상태 5(enabled · focused · invalid · disabled · readonly) — 값이 있는지(filled)는 모습이 같다 |
 
-레시피는 `<input>` 하나에서 상자(div) + 입력으로 바뀌었다 — `className` 은 입력에, 상자에는 `rootClassName`. 쓰던 곳(Sidebar · Searchable List · Icon Picker)의 검색칸은 `prefixIcon` 으로 옮겼다. Select 의 트리거는 Select · Input Button 차례(2026-10-01)에 같은 상자로 맞췄다. Command 의 입력은 아직 옛 모양이다 — 그 컴포넌트 차례에 맞춘다. [Input OTP](input-otp.md) 는 2026-10-09 이 상자 한 칸으로 다시 썼다.
+레시피는 `<input>` 하나에서 상자(div) + 입력으로 바뀌었다 — `className` 은 입력에, 상자에는 `rootClassName`. 쓰던 곳(Sidebar · Searchable List · Icon Picker)의 검색칸은 `prefixIcon` 으로 옮겼다. Select 의 트리거는 Select · Input Button 차례(2026-10-01)에 같은 상자로 맞췄다. Command 는 2026-10-15 걷었다. [Input OTP](input-otp.md) 는 2026-10-09 이 상자 한 칸으로 다시 썼다.
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-01 조사).
 

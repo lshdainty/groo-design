@@ -2414,6 +2414,7 @@ html {
 - 영문은 원래 단어 단위라 바뀌지 않는다. 일본어는 `keep-all` 이 잘못 끊는다(SEED 레시피 주석) — porest 는 한국어 · 영문만 쓴다.
 - 앱의 이음 문자는 보여 주는 글에만 넣는다 — 입력칸 · 복사할 글 · 검색어 · 서버로 보낼 값에는 넣지 않는다. Flutter 3.41 에서 시험했다: 기본값은 "휴 / 가를" · "권 / 한입니다" 처럼 끊고, 이음 문자를 넣으면 낱말 사이에서만 끊으며 한 줄보다 긴 낱말은 그래도 끊는다.
 - 한 줄 말줄임 · 줄 수 제한은 그대로 쓴다 — 줄을 바꾸는 자리만 바뀐다.
+- 예외 — 파일 이름(Attachment Input 의 파일 카드)은 글자 단위로 끊는다(`word-break: break-all` — SEED 레시피와 같다). 파일 이름은 문장이 아니라 이름표다 — 띄어쓰기 없이 밑줄 · 붙임표로 이어져 단어 단위의 이득이 없고, 글자 단위로 채워야 좁은 칸(폭 70)에 이름이 가장 많이 든다(사용자 결정 2026-10-15 마무리 11D, `specs/components/attachment-input.md`).
 - 읽어야 하는 글은 자르지 않는다 — 규정 카드의 본문 · 유의사항(아코디언) 제목 · 나무의 부서 이름은 말줄임 · 줄 수 제한 없이 줄을 바꿔 다 보이고, "더 보기" · 눌러서 상세로 펼치게 하지 않는다(사용자 결정 2026-10-10 — 펼치고 접기 10A).
 - 당근(SEED)은 전역 규칙 없이 읽는 글(게시글 본문 · 시트 · 패널 제목 · 도움말 말풍선)만 단어 단위이고, 컴포넌트 라벨 · 설명은 글자 단위다(daangn.com CSS · SEED 레시피, 2026-10-01). porest 는 컴포넌트 라벨 · 설명까지 단어 단위로 한다 — 사용자 결정(2026-10-01).
 - 제품은 앱 적용 단계에서 옮긴다 — Desk 웹은 4곳(카드 혜택 2 · 일정 상세 2)에만 손으로 `keep-all` 을 걸었고 HR 웹 · Desk 앱은 없다. 전역 규칙을 걸고 그 4곳은 걷는다.
@@ -3359,6 +3360,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 - 켜고 끄는 아이콘 단추(Toggle)는 켬에 바탕을 칠하지 않는다 — 위 표의 `selected` 바탕(반전)은 칩 · 세그먼트 · 날짜처럼 여럿 가운데 고르는 요소의 것이다. 켬은 아이콘이 진한 색 + 선 2.5 로 말한다(Iconography, 2026-10-09).
 - 누르는 순간 저장되는 컨트롤(Switch · Toggle · 할 일 완료 체크, 손을 뗄 때 저장되는 Slider)은 요청 중에도 `loading` · `disabled` 로 바꾸지 않는다 — 화면은 바로 바뀌고, 실패하면 되돌리고 그 자리에서 알린다. 한 요청이 화면의 다른 컨트롤을 막지도 않는다 — 막으면 키보드 초점이 본문으로 빠진다(2026-10-09).
 - 스위치처럼 색으로 켜짐을 뜻하는 요소의 비활성도 컴포넌트 단계에서 정한다(SEED 스위치는 불투명도 0.58).
+- 예외 — Attachment Input 의 사진 항목은 읽기 전용 · 끄는 중에 SEED 그대로 불투명도 0.5 다(파일 카드는 글 · 아이콘 `fg-disabled`). 사용자가 SEED 모양 그대로를 골랐다(2026-10-15 마무리 13B — 흐리지 않는 안은 고르지 않았다) — 이 두 상태의 사진 항목에만 쓰고, 막힘(`disabled`)은 그대로 불투명도를 쓰지 않는다.
 - **앱의 키보드 포커스** — 앱도 하드웨어 키보드로 옮길 때만 웹과 같은 링(2px · 띄움 2px · `stroke-focus-ring`)을 그린다 — Flutter 의 `FocusHighlightMode.traditional` 일 때만이고, 손가락으로 누를 때는 그리지 않는다. 누를 수 있는 것은 모두 포커스를 받아 Tab 순서에 든다 — 버튼(`PButton`)도(사용자 결정 2026-10-08).
 
 #### 겹칠 때
@@ -3668,6 +3670,8 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 | 인증 코드 칸(Input OTP) | `r3` · `r2` | 12px · 8px | Input 한 칸 — large · medium, Input 과 같다. 2026-10-09(`input-otp.yaml`) |
 | `color-swatch` (색 칸 · 고른 고리) | `full` | 9999px | 원 40 — 2026-10-09(`color-swatch.yaml`) |
 | `icon-picker` (칸) | `r3` | 12px | 칸 48 — 2026-10-09(`icon-picker.yaml`). 트리거는 Input Button |
+| `quantity-picker` (상자 · 버튼) | `r2` · `r3` | 8px · 12px | small · medium 8, large 12 — 버튼의 누름 바탕도 같은 모서리. 2026-10-15 SEED Quantity Picker(`quantity-picker.yaml`) |
+| `attachment-input` (타일 · 항목 · 드롭존 · ×) | `r3` · `r2` · `full` | 12px · 8px · 9999px | 첨부 타일 · 사진 · 파일 카드 · 드롭존 12, 파일 카드의 썸네일 칸 8, × 는 원 — 2026-10-15 SEED Attachment Input(`attachment-input.yaml`) |
 | `chip` | `full` | 9999px | 알약 — 2026-10-02 SEED Chip(`specs/components/chip.yaml`) |
 | `checkbox` (칸) | `r1` | 4px | SEED Checkmark(2026-09-30, `specs/components/checkbox.yaml`). 이 표는 2px 이었지만 스펙 · 코드는 4px 이었다 |
 | `radio-group` (동그라미 · 점) | `full` | 9999px | 원형 — SEED Radiomark(2026-09-30, `specs/components/radio-group.yaml`) |
@@ -3704,7 +3708,6 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 | `tabs` (Line) | — | 0 | 각진 막대 — 2026-10-02 SEED Tabs(`tabs.yaml`). Chip Tabs 는 `chip` |
 | `segmented-control` (트랙 · 알약) | `full` | 9999px | 2026-10-02 SEED Segmented Control(`segmented-control.yaml`) |
 | `menu` 줄 바탕(알약) | `r3` | 12px | 좌우 8 들인 알약 — 표면은 위 Overlay 의 `menu` |
-| `command` palette | `sm` | 4px | |
 | `pagination` 칸 · `table-pagination` 화살표 | `r2` | 8px | 칸 40 — 지금 쪽 채움 · 누를 때 바탕. 2026-10-04 SEED Pagination(`pagination.yaml` · `table-pagination.yaml`) |
 | `top-navigation` 아이콘 · 글 버튼 | `r2` | 8px | 누를 때만 보이는 바탕 — 바 자체는 모서리 없음. 2026-10-04 SEED Top Navigation(`top-navigation.yaml`) |
 | `bottom-navigation` 바 · 가운데 + | `full` | 9999px | 떠 있는 알약 · 원 44 — 2026-10-04(`bottom-navigation.yaml`) |
@@ -3719,6 +3722,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 | `chart` | `r3` · `r1` | 12px · 4px | 툴팁 · 지표 타일 12 · 막대 위 · 열지도 칸 4 — 2026-10-08(`chart.yaml`) |
 | `searchable-list` | — | — | 줄은 List · 검색칸은 Input 그대로 — 2026-10-08(`searchable-list.yaml`) |
 | `swipe-actions` 배지 | `full` | 9999px | 원형 배지 36 — 2026-10-08(`swipe-actions.yaml`) |
+| `footer` 링크 포커스 링 | `r1` | 4px | 바닥 자체는 모서리 없음 — 2026-10-15 SEED Footer(`footer.yaml`) |
 
 #### Toss 톤 vs Material/shadcn 표준 비교
 - **shadcn 표준**: button/input `md` 8px, card `lg` 12px, modal `lg` 12px (부드럽고 친근한 톤)
@@ -4550,6 +4554,7 @@ binary on/off 상태 또는 group 선택을 표현하는 form control 3종. 공�
 - 누름 · 호버(웹): 상자 바탕이 `bg-layer-default-pressed` 가 되고 누르는 자리(콘텐츠 + 컨트롤)만 2px 거리로 준다(v104). 키보드 포커스 링은 상자 바깥 2px · 띄움 2px.
 - 펼침: 고른 상자 아래로 딸린 입력 · 안내가 열린다(안쪽 좌우 20 · 아래 16, 높이 400ms · 투명도 300ms). 닫히면 보이지 않고 Tab 도 닿지 않는다.
 - 누르는 순간 바뀌는 고르기(테마 같은)는 List 의 라디오 줄, 누르면 바로 무언가를 하는 자리는 버튼이다.
+- 권한을 주는 여럿 고르기(HR 사용자 역할)도 상자로 고르고 "저장" 한 번으로 반영한다 — 폰 · 데스크톱 같은 모양(2026-10-15 마무리 10A, 위 "마무리" 절).
 
 ### Avatar · Avatar Stack
 
@@ -4879,6 +4884,54 @@ Toggle Group 은 두지 않는다 — 하나 고르기는 Segmented Control(2 ~ 
 - 안에 초점 가는 것이 없는 스크롤 상자는 `tabindex="0"` + `role="region"` + 이름, 시트 · 대화상자 · 팝오버 안 상자는 `overscroll-behavior: contain`. 숨는 머리는 모션 줄이기면 숨지 않고, 그 안으로 초점이 오면 드러난다.
 - 누르는 영역 — 트리거 줄 54 이상 · 모두 펼치기 · 꺾쇠 단추 · 나무 줄(부모 줄도 줄 전체 — 꺾쇠만 누르는 자리는 없다) · ⋮ 44. 위젯 모서리 24 는 AAA(2.5.5) ✗ — 같은 일을 ⋮ "크기" 로 한다. 나누기 손잡이 16 은 AA(2.5.8)도 ⚠ — 데스크톱 마우스 경계라 사용자가 정했고(12B) 같은 일을 키보드 · 누르기로 한다.
 
+### 마무리 — Quantity Picker · Attachment Input · Footer
+
+> 2026-10-15 정했다(사용자 결정 — 비교 페이지 https://claude.ai/artifact/KVyg5Kr95cYUkMT3vsxz1z, 1A · 2A · 3A · 4A · 5A · 6A · 7B · 8A · 9A · 10A + 따라오는 것, 스펙을 쓰다 나온 11D · 12A · 13B · 14A). SEED 가 컴포넌트로 가진 Quantity Picker · Attachment Input(rootage · React)과 조합 예시인 Footer(블록 코드)를 porest 에 처음 둔다 — 디자인 시스템의 마지막 묶음이다. 같은 날 Command(⌘K · cmdk)를 디자인 시스템과 제품에서 걷었다(아래 "Command" 절) — 그 자리였던 HR 역할 고르기는 Select Box 여럿 + "저장"(10A), 프로필 사진은 Avatar + 늘 보이는 버튼(6A)이다. 수치 원본은 `specs/components/quantity-picker.yaml` · `attachment-input.yaml` · `footer.yaml`(사진 바꾸기는 `avatar.yaml` 의 edit 축), 쓰는 규칙은 각 스펙 md 다. 옛 File Upload(v73) 절은 걷었다 — Attachment Input 이 대신한다. 토큰은 더하지 않았다.
+
+#### 나누기
+
+| 하는 일 | 쓰는 것 |
+|---|---|
+| 작은 정수를 한 단계씩 — 흔한 값이 열 단계 안쪽(승인 필요 횟수 · 반복 간격 · 부여 시간 · 소요시간) | Quantity Picker |
+| 흔한 값이 열 단계보다 먼 정수(반복 거래 "총 n회") · 돈 · 소수 | Input — 숫자 칸 |
+| 날짜 부분 · 띄엄띄엄 이름 붙은 값(반복 일자 · 할부) | Select |
+| 여럿 · 사진이 섞이는 첨부(거래 영수증 · 메모 · 휴가 증빙) | Attachment Input — 타일 |
+| 파일 하나를 골라 바로 넘긴다(CSV · Excel 가져오기) | Attachment Input — 드롭존(1280 이상 웹) · 파일 선택 버튼(1280 미만 · 앱) |
+| 사람의 프로필 사진 한 장을 바꾼다 | Avatar + "사진 바꾸기" · "사진 지우기" |
+| 여럿을 골라 한 번에 반영한다(HR 사용자 역할) | Select Box 여럿 + "저장" |
+| 사이트 맨 아래 — 탐색 · 정책 · 저작권 | Footer — 블록 조립 |
+
+#### 모양
+
+| | 값 |
+|---|---|
+| Quantity Picker | 상자 1px `stroke-neutral-weak` · `bg-layer-default` · small 36 · medium 40 · large 52(모서리 8 · 8 · 12, 아이콘 16 · 18 · 22, 값 16 / 22 · 16 / 22 · 18 / 24 · 500) · 웹 폼 기본 responsive(1280 미만 52 · 이상 40) · 표 칸 36 · 선 1 × 16 `stroke-neutral-subtle` · 값 칸 좌우 8 · 가장 긴 값의 폭 · 누름 `bg-layer-default-pressed` + 그 버튼만 2px · 36 · 40 버튼은 누르는 자리 44 · 끝 `fg-disabled`(초점은 남는다) · 오류 안쪽 2px `stroke-critical-solid` · 로딩 원 16 · 18 · 22(Button ghost 의 원과 같은 값) |
+| Attachment Input | 타일 80 · 모서리 12 · 1px `stroke-neutral-weak` · 아이콘 24 · 개수 12 / 16("3/10") · 사진 80(윤곽 `stroke-neutral-overlay`) · 파일 카드 160 × 80(좌우 16 · 썸네일 칸 48 · 이름 12 / 16 · 500 글자 단위 네 줄 · 넘치면 넷째 줄에 확장자 · 크기 11 / 15) · 사이 8 · × 20(4 걸침 · 구멍 24 · 누르는 44) · 올리는 중 원 24 · 실패 "다시 시도" · 대표 띠 24 · 줄은 화면 여백까지 + 끝 흐림 20 · 드롭존 높이 120 · 1px 실선 `stroke-neutral-solid`(끌기 `stroke-neutral-contrast` + `bg-layer-default-pressed`) · 안내 14 / 19 · 500 + "파일 선택" neutralWeak small · 항목을 누르면 메뉴(크게 보기 · 대표로 정하기 · 앞으로 옮기기 · 뒤로 옮기기 \| 지우기) · 읽기 전용 · 끄는 사진은 불투명도 0.5(SEED) |
+| Footer | 틀 1040(`layout-max-content`) · 위아래 40 · 좌우 32(1280 미만 24) · 영역 사이 40 · 위 선 · 브랜드 20 / 27 · 700 + 소개 13 / 18 · 사이트맵 열 최소 100 · 사이 32 · 열 제목 13 / 18 · 500 `fg-neutral-muted` · 링크 16 / 22 · 500 사이 16 · 선 `stroke-neutral-subtle` · 안내 영역 사이 16 · 정책 링크 14 / 19 · 500 `fg-neutral-muted` 사이 24 · 안내 글 13 / 18 `fg-neutral-subtle` · 저작권 14 / 19 · 500 · 소셜은 Button ghost large(사이 24) |
+| Avatar 사진 바꾸기 | 108 아래 16 에 "사진 바꾸기"(neutralWeak small) · "사진 지우기"(ghost small · 사진이 있을 때만) · 올리는 중 원 위 딤 + 값 있는 원 24 · 실패는 Field 오류 글 |
+| HR 역할 고르기 | 칸 없는 체크 상자(이름 16 · 500 + 역할 설명 13) 여럿 + 아래 "저장"(바뀐 것이 없으면 막힘) — 폰 · 데스크톱 같은 모양 |
+
+#### 쓰는 규칙
+
+- **수량 칸은 치지 못한다** — 값 칸은 보기만 하고 한 번에 1 씩이다. 누르고 있어도 반복하지 않고 화살표 키도 없다. 흔한 값이 열 단계보다 먼 자리는 숫자 칸이다. 최소 · 최대는 데이터로 건다(승인 필요 횟수의 최대 = 고를 수 있는 승인자 수). 단위는 값 칸의 글("3회"), 제출은 정수다.
+- **옆 칸과 같은 높이** — 수량 칸은 Input 처럼 웹 responsive · 앱 52, 표 칸은 36. 버튼 줄의 48 에 맞추지 않는다.
+- **첨부는 한 줄** — 항목은 줄을 바꾸지 않고 옆으로 스크롤하며, 사진 · 파일 카드가 파일 종류대로 섞인다. 다 차면 타일이 막힌다. "n/최대" 는 서버의 개수 한도가 있을 때만 그린다.
+- **다시 검사하고 그 자리에서** — `accept` 를 믿지 않고 형식 · 크기 · 개수를 다시 본다. 거절은 Field 오류 글 한 번("10MB 넘는 파일은 올릴 수 없어요."), 올리기 실패는 항목 덮개 + "다시 시도", 진행은 값 있는 원 24 다(막대를 쓰지 않는다).
+- **드롭존은 1280 이상 웹만** — 끌어 놓기가 없는 폰 · 앱은 "파일 선택" 버튼 + 파일 카드다. 상자 전체를 누르는 자리로 두지 않는다 — 키보드는 버튼으로 닿는다.
+- **흐림은 사진의 두 상태만** — 막힘은 불투명도로 흐리지 않는다(v106). 예외로 사진 항목의 읽기 전용 · 끄는 중은 SEED 그대로 불투명도 0.5 이고, 파일 카드는 글 · 아이콘이 `fg-disabled` 다(사용자 결정 13B).
+- **누르면 메뉴** — 항목을 누르면 1280 미만 Menu Sheet · 이상 Menu 로 크게 보기 · 대표로 정하기 · 앞으로 옮기기 · 뒤로 옮기기 | 지우기 — 끌지 않고 순서를 바꾸는 길이다(14A). 끝에서는 그 방향이 막히고, × 는 지름길로 남는다.
+- **파일 이름** — 글자 단위로 네 줄까지 보이고(Typography v114 의 예외 — 11D), 넘치면 셋째 줄 끝을 "…" 로 줄이고 넷째 줄에 확장자를 남긴다. 보조 기술에는 전체 이름을 준다.
+- **프로필 사진** — 늘 보이는 버튼으로 바꾸고 지운다. 마우스를 올려야 나타나는 덮개를 두지 않는다.
+- **바닥은 블록 조립** — 순서는 SEED 그대로이고 필수 블록이 없다. 사업자 정보 · 연락처 · 소셜은 값이 생기면 넣는다(지어내지 않는다). 개인정보 처리방침은 로그인 전에도 닿는 바닥에 둔다. 저작권은 "© {해} POREST" 한 벌이다(홈 · SSO 로그인 · HR 문서 · Desk 설명서). porest-home 은 짜임 · 간격 · 글 크기만 따르고 색 · 글꼴은 홈 것을 쓴다 — 안내 글은 4.5 이상으로 짙게 한다.
+- **권한은 저장 한 번** — 역할처럼 권한을 주는 여럿 고르기는 누를 때마다 저장하지 않는다.
+
+#### 접근성
+
+- Quantity Picker 는 `role="group"` + 이름(Field 라벨)이다. 버튼 이름은 "줄이기" · "늘리기", 끝은 `aria-disabled`(초점이 남는다), 값 칸은 `aria-live="polite"` · `aria-atomic`, 로딩은 `aria-busy`.
+- Attachment Input 의 타일 이름은 "{칸 이름} 첨부, 3/10", × 는 "{파일 이름} 지우기", 항목 이름은 전체 파일 이름 + 크기 + 상태다. 포커스 링은 모두 부품 안쪽이다(가로 스크롤 줄이 바깥 링을 자른다). 순서 바꾸기는 끌기 · 항목 메뉴(포인터 한 번 — 2.5.7 ✓) · 키보드(Space · ← → · Space · Esc, 한국어 읽기 글) 셋으로 한다. 드롭존의 키보드 길은 "파일 선택" 버튼이다.
+- Footer 는 `<footer>`(contentinfo) · 사이트맵 `<nav aria-label="사이트 지도">` 이고, 새 탭 링크는 보이지 않는 "(새 탭)" + ↗(장식)이다.
+- 누르는 영역 — 수량 버튼 · × 는 보이지 않는 여백으로 44, 첨부 타일 80, "파일 선택" 은 Button 의 44. 바닥의 글 링크(22 · 19)는 AAA ⚠ — SEED 와 같고, 간격 예외로 AA 는 ✓.
+
 ### Pagination (v67 추가)
 
 > 2026-10-04 다시 정했다 — 위 "화면 틀 · 이동" 절과 `specs/components/pagination.md` · `table-pagination.md`(SEED Pagination · Table Pagination). 옛 numbered · prev-next · load-more 변형, 지금 쪽 primary 채움, sm 32 · md 40 · lg 48 은 걷었다 — 폰의 긴 목록은 끝없이 불러오기이고 "더 보기" 버튼은 두지 않는다. 옛 스펙은 `specs/components/pagination.history/v-pre-seed-nav.*`.
@@ -4961,66 +5014,14 @@ spec brand-neutral. brand 파일 — HR(결재 단계 horizontal, sequential), D
 
 ### Command (Cmd+K menu, v68 추가)
 
-전역 search/action menu — `Cmd+K` (macOS) / `Ctrl+K` (Windows)로 호출. **새 토큰 0** — Modal + Dropdown + Input 합성.
-
-#### Anatomy
-- overlay: `overlay-dim-light` 위 modal-like
-- 카드: `surface-default` + `radius-lg` + `shadow-xl`, viewport 60-70% width, max 640px
-- header: search input (placeholder "명령 검색...")
-- body-lg: filtered list — group(title `caption` `text-tertiary` + items)
-- item: icon + label + shortcut hint 우측 (`⌘P` 등 monospace `caption`)
-
-#### Sections (예시)
-- **Suggestions**: 자주 사용한 명령
-- **Pages**: 페이지 navigation (Home, Settings, Help)
-- **Actions**: 즉시 실행 (New File, Save, Export)
-- **Help**: docs, support links
-
-#### State
-- default: list 표시, 첫 item highlighted
-- typing: filter (substring match)
-- empty result: `caption` "결과 없음" + 빠른 안내
-
-#### Motion
-- 등장: scale(0.95→1) + fade-in `motion-duration-base` (200ms) `motion-ease-out`
-- 사라짐: 역순 (`motion-duration-fast`)
-
-#### Accessibility
-- `role="dialog"` + `aria-label="명령 검색"`
-- search input `aria-controls="cmd-list"` + `aria-activedescendant="item-id"` (현재 highlighted item)
-- list `role="listbox"` + items `role="option"` + `aria-selected="true"` (highlighted)
-- 키보드:
-  - `Cmd+K` / `Ctrl+K`: 열기 (단, input focus 중에는 차단 가능)
-  - 위/아래 arrow: item 이동
-  - Enter: 활성화
-  - Esc: 닫기 + return focus
+> 2026-10-15 걷었다 — 세 제품 모두 ⌘K 팔레트를 쓰지 않는다(Desk 웹 팔레트는 2026-09-01 에 지웠다). cmdk 는 고르기 칸 두 곳의 검색 목록으로만 남아 있었다 — Desk 카드 상품 고르기(쓰는 곳 없음)는 지우고, HR 역할 고르기는 Select Box 여럿 고르기(`CheckSelectBox` — 이름 + 역할 설명) + 아래 "저장" 한 번으로 바꾼다(마무리 10A — 폰 · 데스크톱 같은 모양, 아래 "마무리" 절 · `specs/components/select-box.md`). 옛 스펙은 `specs/components/command.history/v-pre-drop.*`. 검색해 고르는 긴 목록은 Input Button + Searchable List.
 
 #### HR / Desk 듀얼 브랜드 (v68 5종 공통)
-spec brand-neutral. brand 파일 — HR(결재/평가 application 톤), Desk(Command 메모/할일 빠른 검색 핵심). 사이드바 · 머리 메뉴는 2026-10-04 "화면 틀 · 이동" 절로 옮겼다(Menubar 는 2026-10-02 걷었다).
+spec brand-neutral. 사이드바 · 머리 메뉴는 2026-10-04 "화면 틀 · 이동" 절로 옮겼다(Menubar 는 2026-10-02 걷었다).
 
 ### Combobox (v69 추가)
 
-Input + Dropdown 결합 — typing autocomplete + 선택. v45 Dropdown의 combobox variant 확장. **새 토큰 0**.
-
-#### Anatomy
-- trigger: Input(v34) + 우측 caret (`▾`)
-- panel: Dropdown 패턴 — items list, current 선택 highlight
-- typing 중: panel 안 items가 substring 또는 fuzzy match로 filter
-
-#### State
-- empty: panel 닫힘, placeholder 표시
-- typing: panel 자동 열림, items filter, 첫 match highlight
-- selected: trigger에 선택 라벨 + 우측 ✕ 클리어 버튼
-- multiple (옵션): chip list로 선택 표시 (`태그 1` `태그 2` × ... + Input)
-
-#### Differences vs Select
-- **Select**: 사전 정의된 options 중 1개 선택, typing 없음
-- **Combobox**: typing으로 필터 + free text 입력 가능 (옵션) + 다중 선택 가능
-
-#### Accessibility
-- `role="combobox"` + `aria-expanded` + `aria-controls="listbox-id"` + `aria-autocomplete="list"`
-- listbox: `role="listbox"` + items `role="option"` + `aria-selected`
-- 키보드: 위/아래 arrow item 이동, Enter 선택, Esc 닫기, Tab 닫기 + 다음 필드
+> 2026-10-15 걷었다 — 칸에 바로 치는 콤보박스를 두지 않는다. 짧은 선택지는 Select, 검색해 고르는 긴 목록은 Input Button 이 여는 Searchable List 다(SEED 도 Combobox 를 두지 않는다 — Select 문서). 쓰는 곳 없는 카탈로그 항목만 남아 있었다.
 
 ### Slider (v69 추가)
 
@@ -5039,7 +5040,7 @@ Input + Dropdown 결합 — typing autocomplete + 선택. v45 Dropdown의 combob
 > 2026-10-09 다시 정했다 — Input 한 칸(위 "입력" 절과 `specs/components/input-otp.md`). 칸마다 입력 · 6칸 · 3-3 구분 · 자동 다음 칸은 걷었다 — 칸을 나누지 않는다(SEED Text Input). 옛 스펙은 `specs/components/input-otp.history/v-pre-seed-input.*`.
 
 #### HR / Desk 듀얼 브랜드 (v69 5종 공통)
-spec brand-neutral. brand 파일 — HR(Combobox 직원 검색), Desk(Combobox 태그 자동완성). Slider · Toggle · Input OTP 의 쓰는 자리는 2026-10-09 "입력 — HR" · "입력 — Desk" 절로 옮겼다(Toggle Group 은 걷었다).
+spec brand-neutral. Slider · Toggle · Input OTP 의 쓰는 자리는 2026-10-09 "입력 — HR" · "입력 — Desk" 절로 옮겼다(Toggle Group 은 걷었다).
 
 ### Accordion (v70 추가)
 
@@ -5186,41 +5187,11 @@ spec brand-neutral. brand 파일 — HR(Sonner top-right 결재 알림 stack / C
 
 ### File Upload (v73 추가)
 
-drag-drop area + click 업로드 button. **새 토큰 0** — surface + border + button 합성.
-
-#### Anatomy
-- drop zone (정사각/직사각): `border-default` 2px dashed + `surface-input` 배경 + `radius-md`
-- 가운데: 아이콘 (📁 또는 ⬆) + 안내 텍스트("파일을 끌어다 놓거나 클릭하세요") + 옵션 ("최대 10MB / .jpg .png .pdf")
-- 좌측 또는 하단: 업로드된 file list — 파일명 + 사이즈 + ✕ 제거 + 값 있는 Progress Circle 24(올리는 중 — 2026-10-03)
-
-#### State
-- default: 정적 안내
-- dragover: `border-focus` 2px solid (dashed → solid 변화) + `primary` 8% tint 배경
-- drop: 등록된 file 목록에 추가, 값 있는 원 시작
-- uploading: 값 있는 Progress Circle 24(진행을 모르면 값 없는 원) — 막대(Progress)는 쓰지 않는다
-- success: ✓ icon + "업로드 완료" caption (`success` 색)
-- error: ✕ icon + 에러 메시지 ("크기 초과" / "지원 안 되는 형식") (`error` 색)
-- disabled: opacity 0.5
-
-#### File constraints
-- accept 속성: MIME type 제한 (`image/*`, `.pdf` 등)
-- max size: spec 제한 + 초과 시 즉시 reject + alert
-- multiple: 단일 또는 다중 파일 (`multiple` 속성)
-
-#### Motion
-- dragover 강조: border 색 + bg tint `motion-duration-fast` (150ms)
-- drop animation: file item 등장 fade-in `motion-duration-base`
-- progress: 원의 채움 300ms(`progress-circle.yaml`)
-
-#### Accessibility
-- `<input type="file" hidden>` + label as drop zone (native a11y)
-- aria-label: "파일 업로드 영역 — 끌어다 놓거나 Enter로 선택"
-- 키보드: Tab focus → Enter/Space로 file dialog 열기
-- screen reader 알림: drop 즉시 "파일 N개 추가됨", 업로드 완료/실패 시 alert
+> 2026-10-15 걷었다 — 사진 · 파일을 붙이는 칸은 Attachment Input(`specs/components/attachment-input.md` — SEED, 위 "마무리" 절)이다. 옛 2px 점선 상자 · 회색 바탕 · 📁 · 끌기 때 브랜드 테두리 + 8% 바탕 · 막힘 불투명도 0.5 · 성공 ✓ 글은 걷었다 — 드롭존은 1px 실선 `stroke-neutral-solid`(끌기 `stroke-neutral-contrast` + `bg-layer-default-pressed`)이고, 올리는 중은 값 있는 원 24, 실패는 "다시 시도" 다.
 
 ### Treeview (v73 추가)
 
 > 2026-10-10 다시 정했다 — 여러 단계에서 고르는 나무는 Tree View(APG Treeview — `specs/components/tree-view.md`, HR 부서), 하위 줄을 접는 카테고리는 List 하위 줄(`specs/components/list.md`)이다(위 "펼치고 접기 · 나누기" 절). 옛 고름 `surface-input` + 왼쪽 브랜드 2px · 여럿 고르기 · 끌어서 옮기기 · 안내 선 · 메모 폴더 나무는 걷었다.
 
 #### HR / Desk 듀얼 브랜드 (v73 5종 공통)
-spec brand-neutral. brand 파일 — HR(Banner 약관 변경 / Chip 결재라인 입력값 칩 / Popover 결재 의견 입력 / File Upload 평가 첨부), Desk(Banner 시스템 점검 / Chip 메모 태그 입력값 칩 / Popover 카테고리 quick edit / File Upload 영수증 다중 업로드). 나무의 쓰는 자리는 2026-10-10 "펼치고 접기 · 나누기 — HR" · "— Desk" 절로 옮겼다.
+spec brand-neutral. brand 파일 — HR(Banner 약관 변경 / Chip 결재라인 입력값 칩 / Popover 결재 의견 입력), Desk(Banner 시스템 점검 / Chip 메모 태그 입력값 칩 / Popover 카테고리 quick edit). 나무의 쓰는 자리는 2026-10-10 "펼치고 접기 · 나누기 — HR" · "— Desk" 절로, 첨부의 쓰는 자리는 2026-10-15 "마무리 — HR" · "— Desk" 절로 옮겼다.

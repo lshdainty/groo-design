@@ -1982,6 +1982,37 @@ export function renderSelectBoxGallery(brand) {
     ]),
   );
 
+  // 5. 여럿 고르고 저장 — HR 역할(2026-10-15 마무리 10A). porest-sql 기본 넷(설명 원문) + 관리자가 더한 넷(그림용 — 비교 페이지 10 이 그린 것).
+  // 칸 없는 체크 상자 여럿 + 아래 "저장" 한 번(바뀐 것이 없으면 막힘) — 데스크톱 사용자 상세 칸 · 폰 사용자 상세 화면이 같은 모양이다
+  const ROLES = [
+    { code: "ADMIN", title: "관리자", description: "관리자 권한으로 시스템 운영에 필요한 전체 권한이 부여되어 있습니다." },
+    { code: "USER", title: "일반 사용자", description: "일반 사용자 권한으로 시스템 관리에 필요한 권한을 제외한 일반적인 읽기, 쓰기 권한이 부여되어 있습니다." },
+    { code: "APPROVER", title: "승인권자", description: "휴가 신청 항목에 대해 승인/반려를 할 수 있는 권한이 부여되어 있습니다." },
+    { code: "WORKCODE_M", title: "업무 코드 관리자", description: "업무 이력에 사용되는 코드를 관리하는 권한이 부여되어 있습니다." },
+    { code: "ATTEND_M", title: "근태 담당자", description: "출퇴근 기록과 근무 시간을 확인하고 바로잡을 수 있는 권한이 부여되어 있습니다." },
+    { code: "EVAL_M", title: "평가 담당자", description: "평가 일정을 열고 닫으며 평가 결과를 모아 볼 수 있는 권한이 부여되어 있습니다." },
+    { code: "PAY_VIEW", title: "급여 조회", description: "구성원의 급여 명세를 읽기 전용으로 볼 수 있는 권한이 부여되어 있습니다." },
+    { code: "EDU_M", title: "교육 관리자", description: "교육 과정을 만들고 수강 현황을 관리하는 권한이 부여되어 있습니다." },
+  ];
+  const ROLES_SAVED = ["USER", "APPROVER"];
+  const rolesForm = () => {
+    const id = nextId();
+    const labelId = `${id}-label`;
+    const descId = `${id}-desc`;
+    const group = selectBoxGroup({ type: "check", labelledby: labelId, items: ROLES.map((r) => ({ id: `${id}-role-${r.code}`, title: r.title, description: r.description, checked: ROLES_SAVED.includes(r.code) })) })
+      .replace("<fieldset ", `<fieldset aria-describedby="${descId}" `);
+    return `<div class="psb-roles" data-psb-roles data-saved="${ROLES_SAVED.join(" ")}"><div class="ptf-field" data-slot="field"><div class="ptf-field-header"><span class="ptf-label" id="${labelId}">역할</span></div>${group}<div class="ptf-field-footer"><p class="ptf-desc" id="${descId}"><span>여럿 고를 수 있어요. 저장을 눌러야 바뀌어요.</span></p></div></div><div class="psb-roles-bar"><span class="psb-roles-status" data-psb-roles-status>바뀐 것 없음</span><button class="btn btn-size-medium" type="button" data-psb-roles-save disabled><span>저장</span></button></div></div>`;
+  };
+  const rolesUser = `<div class="psb-roles-user">${avatar({ name: "한지우", size: 42 })}<span class="psb-roles-who"><span class="psb-roles-name">한지우</span><span class="psb-roles-mail">경영지원팀 · jiwoo.han@example.com</span></span></div>`;
+  const rolesPanel = panel(
+    "여럿 고르고 저장 — HR 역할 여덟",
+    "권한을 주는 여럿 고르기도 고르기만 한다 — HR 관리 > 역할 및 권한 > 사용자의 역할은 칸 없는 체크 상자(이름 16 · 500 + 역할 설명 13 · fg-neutral-muted)를 고르고 아래 \"저장\"(Button neutralSolid medium) 한 번으로 반영한다(10A). 바뀐 것이 없으면 \"저장\" 은 막혀 있고, 고르면 옆 글이 \"더함 1 · 뺌 0 — 아직 저장 안 됨\" 으로 바뀐다. 누를 때마다 저장하지 않는다 — 권한이 실수 한 번에 바로 바뀌고, 빨리 두 번 누르면 앞 변경을 모르는 목록을 보낼 수 있다. 폰 · 데스크톱이 같은 모양이고 역할이 늘어도 상자를 쌓는다(검색 시트 · 팝오버 + 완료 두 벌을 걷는다). 그림은 기본 넷 + 관리자가 더한 넷 — 가장 긴 \"일반 사용자\" 설명도 폰 상자에서 두 줄에 든다. 두 칸 모두 실제로 고르고 저장한다.",
+    `<div class="psb-samples psb-samples--roles">
+        <div class="psb-sample"><div class="psb-cap">데스크톱 — 사용자 상세 칸<span>CheckSelectBoxGroup + Button "저장"</span></div><div class="psb-roles-screen psb-roles-screen--desk">${rolesUser}${rolesForm()}</div></div>
+        <div class="psb-sample"><div class="psb-cap">폰 390 — 같은 모양<span>검색 시트 · 팝오버 없음</span></div><div class="psb-roles-screen psb-roles-screen--phone">${rolesUser}${rolesForm()}</div></div>
+      </div>`,
+  );
+
   const lede = "SEED Select Box 구조 — 하나 고르기(Radio Select Box) · 여럿 고르기(Check Select Box) · 묶음(Select Box Group). 상자 하나가 선택지 하나이고, 펼침을 뺀 상자 전체가 누르는 영역이다. 고르면 테두리만 2px 짙은 색(stroke-neutral-contrast)으로 바뀌고 바탕은 그대로다 — 브랜드 톤은 없다. 제목 16 · 500, 설명 13 · fg-neutral-muted. 고르기만 하고, 고른 값은 저장 · 다음 같은 버튼이 반영한다. 옛 Tile 을 대신한다 — 누르는 순간 바뀌는 테마는 03e — List 의 라디오 줄이다."
     + (brand.key === "shared" ? " 공유 토큰에는 브랜드 역할 색이 없어 포커스 링이 여기서는 중립(fg-neutral)으로 보인다 — HR · Desk 미리보기에서 브랜드 색이다." : "");
 
@@ -2034,6 +2065,29 @@ export function renderSelectBoxGallery(brand) {
           next.focus();
           next.click();
         });
+        // 여럿 고르고 저장(HR 역할) — 고른 것이 저장한 것과 다르면 "저장" 을 풀고 옆 글에 더함 · 뺌을 적는다. 저장하면 다시 막는다(누를 때마다 저장하지 않는다)
+        function rolesSync(box) {
+          var saved = (box.getAttribute("data-saved") || "").split(" ").filter(Boolean);
+          var picked = Array.prototype.filter.call(box.querySelectorAll("[data-select-box-control]"), function (c) { return c.getAttribute("aria-checked") === "true"; })
+            .map(function (c) { return c.id.slice(c.id.indexOf("-role-") + 6); });
+          var added = picked.filter(function (c) { return saved.indexOf(c) < 0; }).length;
+          var removed = saved.filter(function (c) { return picked.indexOf(c) < 0; }).length;
+          box.querySelector("[data-psb-roles-save]").disabled = added + removed === 0;
+          box.querySelector("[data-psb-roles-status]").textContent = added + removed > 0 ? "더함 " + added + " · 뺌 " + removed + " — 아직 저장 안 됨" : "바뀐 것 없음";
+          return picked;
+        }
+        section.addEventListener("click", function (e) {
+          var box = closestIn(e, "[data-psb-roles]");
+          if (!box) return;
+          if (closestIn(e, "[data-psb-roles-save]")) {
+            var picked = rolesSync(box);
+            box.setAttribute("data-saved", picked.join(" "));
+            rolesSync(box);
+            box.querySelector("[data-psb-roles-status]").textContent = "역할을 저장했어요";
+            return;
+          }
+          if (closestIn(e, "[data-select-box-control]")) rolesSync(box);
+        });
         var frozen = section.querySelectorAll(".psb--pressed > .psb-trigger");
         frozen.forEach(measure);
         if (window.ResizeObserver) {
@@ -2053,7 +2107,8 @@ export function renderSelectBoxGallery(brand) {
     ${basicsPanel}
     ${columnsPanel}
     ${statePanel}
-    ${livePanel}${script}
+    ${livePanel}
+    ${rolesPanel}${script}
   </section>`;
 }
 
@@ -2061,7 +2116,7 @@ export function renderSelectBoxGallery(brand) {
 // Field .ptf-field(머리 · 입력 · 꼬리) · 입력칸 .ptf-input(Text Input) · 여러 줄 .ptf-textarea(Textarea). 짜임은 field.tsx · input.tsx · textarea.tsx 와 같다 —
 // 상자(div)가 테두리 · 바탕 · 모서리를 맡고 입력(<input> · <textarea>)이 그 안을 채운다. 상태는 상자의 data-invalid · data-disabled · data-readonly 다(레시피와 같은 이름).
 // 미리보기의 입력칸 · 여러 줄 입력칸 · 폼 칸 이름 · 설명 · 오류는 모두 이 도우미로 그린다 — 옛 회색 채운 칸(.fv-input · .form-input · .search-pill)은 걷었다.
-// 고르는 칸은 아래 Select · Input Button 도우미(selectTrigger · inputButton — 03h)로 그린다. Command 의 입력은 그 컴포넌트 차례에 맞춘다(input.md Migration notes).
+// 고르는 칸은 아래 Select · Input Button 도우미(selectTrigger · inputButton — 03h)로 그린다. Command(⌘K 팔레트)는 걷었다(2026-10-15).
 // 인증 코드 칸(Input OTP)은 이 입력칸 한 칸이다 — 숫자 키보드 · one-time-code · 고정폭 숫자만 더한다(03t 의 potpField, 2026-10-09).
 // 옛 칩 안의 입력칸(.chip--input)은 걷었다 — 입력값 칩(03i — chipField · chip kind "input")은 넣은 값만 보이고, 값을 넣는 칸은 이 Text Input 이다.
 // 상자를 눌러 포커스 · 지우기 · 글자 수 · 자동 높이 · 금액 쉼표 · 제출 시 검증은 페이지 끝 스크립트(renderHtml)가 레시피처럼 맡는다.
@@ -5471,6 +5526,33 @@ export function renderDisplayGallery(brand) {
     ], "ptf-samples pov-samples--next")}`,
   );
 
+  // 10b. Avatar — 사진 바꾸기 자리(2026-10-15 마무리 6A · avatar.yaml edit photo). 108 + 늘 보이는 버튼 둘, 올리는 중은 원 위 딤 + 값 있는 원 24
+  const EDIT_NAME = "한지우";
+  const editAvatar = ({ photo = "", progress = null } = {}) =>
+    `<span class="pavatar pavatar--108" ${progress == null ? 'role="img"' : 'role="group"'} aria-label="${escape(EDIT_NAME)}"><span class="pavatar-initial pavatar--${AVATAR.hue(EDIT_NAME)}" aria-hidden="true">${escape(AVATAR.initial(EDIT_NAME))}</span>${photo ? `<img class="pavatar-img" src="${photo}" alt="">` : ""}${progress == null ? "" : `<span class="pav-edit-upload">${progressCircle({ size: "24", tone: "staticWhite", value: progress, label: "프로필 사진 올리는 중" })}</span>`}</span>`;
+  const avatarEdit = ({ photo = "", progress = null, error = "", live = false } = {}) => pfinField({
+    invalid: !!error,
+    error,
+    body: () => {
+      const busy = progress != null ? " disabled" : "";
+      const remove = photo || live ? `<button class="btn btn-ghost btn-size-small" type="button"${live ? ' data-pav-edit-action="remove"' : ""}${busy}${photo ? "" : " hidden"}><span>사진 지우기</span></button>` : "";
+      return `<div class="pav-edit"${live ? ` data-pav-edit-live data-pav-next="${avatarPhoto(2)}"` : ""}>${editAvatar({ photo, progress })}<div class="pav-edit-actions"><button class="btn btn-neutral-weak btn-size-small" type="button"${live ? ' data-pav-edit-action="change"' : ""}${busy}><span>사진 바꾸기</span></button>${remove}</div></div>`;
+    },
+  });
+  const editDialog = `<div class="pfin-wide"><div class="pfin-dialog" style="--pfin-w: 480px;"><div class="pfin-dialog-title">사용자 수정</div><div class="pfin-dialog-body"><div class="pfin-form">${avatarEdit({ photo: avatarPhoto(1), live: true })}${textField({ label: "이름", control: { kind: "input", size: "medium", value: EDIT_NAME } })}${textField({ label: "이메일", control: { kind: "input", size: "medium", value: "jiwoo.han@example.com" } })}</div></div><div class="pfin-dialog-footer">${overlayButton("취소", { variant: "neutral-weak" })}${overlayButton("저장")}</div></div></div><label class="pav-edit-fail"><input type="checkbox" data-pav-edit-fail> 다음 올리기를 실패로(이 견본만)</label><p class="pnav-live-status pfin-live-status" aria-hidden="true" data-pav-edit-status="">"사진 바꾸기" · "사진 지우기" 를 눌러 보세요.</p>`;
+  const avatarEditPanel = panel(
+    "Avatar — 사진 바꾸기: 108 + 늘 보이는 \"사진 바꾸기\" · \"사진 지우기\"",
+    "프로필 사진 한 장을 바꾸는 자리(HR 사용자 수정 — 108)는 아바타 아래 16 에 버튼 둘을 늘 보인다 — \"사진 바꾸기\"(Button neutralWeak small) · \"사진 지우기\"(ghost small, 사진이 있을 때만 — 지우면 이니셜), 사이 8 · 가운데 · 좁으면 줄을 바꾼다. 마우스를 올려야 나타나는 덮개는 두지 않는다 — 키보드 · 터치 · 화면 읽기로 닿지 않는다(6A — 호버 덮개 6C · 첨부 칸 한 장 6B 는 고르지 않았다). 올리는 중에는 원 위 딤(라이트 50% · 다크 65%) 가운데 값 있는 원 24(staticWhite · 이름 \"프로필 사진 올리는 중\" · 값 글 \"40%\")를 두고 두 버튼을 막는다 — 그동안 아바타는 role=img 가 아니라 이름 있는 묶음이라 안의 원이 읽힌다. 실패는 Field 오류 글로 그 자리에 알리고, 성공은 따로 알리지 않는다(바뀐 사진이 보인다). 앱의 \"사진 바꾸기\" 는 Menu Sheet(사진 찍기 · 앨범에서 고르기)를 연다. 아래 대화상자는 실제로 바꾸고 지운다.",
+    `${samples([
+      sample("사진 있음", "edit photo — 바꾸기 neutralWeak · 지우기 ghost", surface(avatarEdit({ photo: avatarPhoto(1) }))),
+      sample("올리는 중 — 40%", "uploadProgress={0.4} — 딤 + 원 24 · 두 버튼 막힘", surface(avatarEdit({ photo: avatarPhoto(1), progress: 40 }))),
+      sample("실패 — Field 오류 글", "\"5MB 넘는 사진은 올릴 수 없어요.\"", surface(avatarEdit({ photo: avatarPhoto(1), error: "5MB 넘는 사진은 올릴 수 없어요." }))),
+      sample("사진 없음 — 이니셜 + \"사진 바꾸기\" 하나", "src 없음", surface(avatarEdit())),
+    ])}${samples([
+      sample("직접 — HR 사용자 수정 대화상자 480", "Avatar size={108} decorative={false} uploadProgress", `<div class="pfin-live">${editDialog}</div>`),
+    ], "ptf-samples pfin-samples--wide pov-samples--next")}`,
+  );
+
   // 11. Avatar Stack — 크기마다 겹침 · 링 · "+N", 놓인 바탕 · 화면(더치페이 · HR 구성원)
   const DUTCH = ["김민수", "이서연", "박지훈", "최유진", "정하늘", "한지우"].map(name => ({ name }));
   const stackLadder = `<div class="pdsp-stacks">${AVATAR_SIZES.map(s => `<div class="pdsp-stack-row"><span class="pdsp-cap">${s} · 겹침 ${AVATAR_STACK[s][0]} · 링 ${AVATAR_STACK[s][1]} · "+N" ${AVATAR_STACK[s][2]}</span>${avatarStack({ size: s, people: DUTCH })}</div>`).join("")}</div>`;
@@ -5538,6 +5620,7 @@ export function renderDisplayGallery(brand) {
     ${tagOverflowPanel}
     ${avatarSizePanel}
     ${avatarColorPanel}
+    ${avatarEditPanel}
     ${stackPanel}
     ${dividerPanel}
   </section>`;
@@ -9540,6 +9623,723 @@ export function renderCollapseGallery(brand) {
   </section>`;
 }
 
+// 마무리 — spec: specs/components/quantity-picker.md · attachment-input.md · footer.md · 수치 같은 이름의 .yaml. 구조는 SEED Quantity Picker ·
+// Attachment Input · Footer(2026-10-15 사용자 결정 — 마무리 1A ~ 14A). 짜임은 quantity-picker.tsx · attachment-input.tsx · footer.tsx 가 그리는 DOM 그대로다.
+// Quantity Picker .pqp(상자 · role=group) > 줄이기 .pqp-btn · 선 .pqp-divider · 값 .pqp-value(숨긴 자리 글 .pqp-ph + 지금 값 .pqp-text) · 선 · 늘리기 .pqp-btn.
+// Attachment Input .patt(role=group) > 드롭존 .patt-dropzone · 파일 선택 .patt-pick-narrow · 항목 줄 .patt-row(Scroll Fog row — .pfog--row) > .patt-row-inner >
+// .patt-row-content > 첨부 타일 .patt-trigger + 목록 .patt-list > 항목 자리 .patt-li > 항목 .patt-item(사진 · 파일 카드) + 다시 시도 .patt-action + × .patt-remove.
+// Footer .pfoot(<footer> · 위 선) > 틀 .pfoot-frame > 탐색 영역 .pfoot-nav · 선 .pfoot-divider · 안내 영역 .pfoot-info.
+// 막힘 · 오류는 레시피처럼 data-* · aria-* 로 읽는다. --hover · --pressed · --focus 는 갤러리에서 그 순간을 멈춘 클래스다. 값 바꾸기 · 항목 메뉴 · 순서 바꾸기 ·
+// 끌어 놓기 · 파일 이름 줄이기 · 바닥 링크는 페이지 끝 스크립트(마무리 블록)가 레시피처럼 맡는다.
+const FIN_ICON_PATHS = {
+  minus: '<path d="M5 12h14"/>',
+  plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
+  "trash-2": '<path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+  image: '<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>',
+  paperclip: '<path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551"/>',
+  "file-text": '<path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+  "file-spreadsheet": '<path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 17h2"/><path d="M14 17h2"/>',
+  file: '<path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/>',
+  "rotate-cw": '<path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/>',
+  x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  upload: '<path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>',
+  "arrow-up-right": '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',
+  globe: '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+  "at-sign": '<circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/>',
+  "chevron-down": '<path d="m6 9 6 6 6-6"/>',
+};
+const finSvg = (name, { cls = "", stroke = 2 } = {}) => {
+  if (!FIN_ICON_PATHS[name]) throw new Error(`마무리 블록에 아이콘 "${name}" 이 없다 — FIN_ICON_PATHS 에 더한다`);
+  return `<svg${cls ? ` class="${cls}"` : ""} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${stroke}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${FIN_ICON_PATHS[name]}</svg>`;
+};
+let pfinSeq = 0;
+const nextPfinId = (prefix = "pfin") => `${prefix}-${(pfinSeq += 1)}`;
+const PFIN_STATES = ["hover", "pressed", "focus"];
+
+// Field 둘레 — 묶음(Quantity Picker · Attachment Input)은 라벨이 <span>(field.tsx — 묶음의 aria-labelledby 가 가리킨다), 설명 · 오류는 묶음의 설명이다.
+// 03g 의 .ptf-field 모양 그대로. body(ids) 는 { labelId, describedby } 를 받아 칸을 그린다
+function pfinField({ id = nextPfinId("pfin-field"), label = "", description = "", error = "", invalid = false, disabled = false, className = "", body }) {
+  const ids = { labelId: label ? `${id}-label` : "", desc: `${id}-desc`, error: `${id}-error` };
+  const showError = invalid && error;
+  const describedby = showError ? ids.error : description ? ids.desc : "";
+  const head = label ? `<div class="ptf-field-header"><span class="ptf-label" id="${ids.labelId}">${escape(label)}</span></div>` : "";
+  const errorEl = showError ? `<p class="ptf-error" id="${ids.error}" aria-hidden="true">${TEXT_FIELD_ICON.circleAlert}<span>${escape(error)}</span></p>` : "";
+  const descEl = description ? `<p class="ptf-desc" id="${ids.desc}"${showError ? " hidden" : ""}><span>${escape(description)}</span></p>` : "";
+  const foot = errorEl || descEl ? `<div class="ptf-field-footer">${errorEl}${descEl}</div>` : "";
+  const live = `<span class="ptf-sr-only ptf-live" aria-live="polite">${showError ? escape(error) : ""}</span>`;
+  return `<div class="ptf-field${className ? ` ${className}` : ""}" data-slot="field"${invalid ? ' data-invalid=""' : ""}${disabled ? ' data-disabled=""' : ""}>${head}${body({ labelId: ids.labelId, describedby, errorId: ids.error, descId: ids.desc })}${foot}${live}</div>`;
+}
+
+// ── Quantity Picker ──────────────────────────────────────────────────────
+// 상자 하나 — quantity-picker.tsx 의 QuantityPicker. 글은 여기서 escape 한다.
+//   size     small 36(표 칸) · medium 40(1280 이상 웹 폼) · large 52(폰 · 앱 폼) · responsive(웹 기본 — 1280 미만 large · 이상 medium)
+//   layout   hug(기본 — 값 칸이 가장 긴 값의 폭) · fill(부모 Flex 의 남은 폭 — 늘어나는 것은 값 칸뿐)
+//   unit     값 칸 · 읽기 글의 뒤 글(getValueText — "3회" · "8h") · name 숨은 입력(단위 없는 정수)
+//   removable · removeLabel  최소에서 줄이기 자리가 지우기(휴지통) — 이름 "{항목 이름} 지우기"
+//   loading  true(두 버튼) · "decrement" · "increment" — 그 버튼에 누름 바탕 + 값 없는 원(aria-busy)
+//   invalid · disabled · readOnly  상자의 data-invalid · data-disabled(+ 두 버튼 disabled) · 두 버튼 aria-disabled
+//   label · labelledby · describedby  묶음의 이름 · 설명(Field 안이면 Field 의 라벨 · 설명)
+//   state    { decrement · increment: hover · pressed · focus } — 그 순간을 멈춘 버튼(갤러리 전용) · guide 누르는 자리(분홍)
+//   live     페이지 끝 스크립트가 값을 바꾼다(data-pqp-live) · server 누른 쪽이 1.2초 기다린 뒤 바뀐다(data-pqp-server)
+function pqp({ size = "responsive", layout = "hug", value = 0, min = 0, max = Number.MAX_SAFE_INTEGER, step = 1, unit = "", name = "", removable = false, removeLabel = "", loading = false, invalid = false, disabled = false, readOnly = false, label = "", labelledby = "", describedby = "", state = {}, guide = false, live = false, server = false } = {}) {
+  const text = (v) => `${v}${unit}`;
+  const current = text(value);
+  const bounded = max < Number.MAX_SAFE_INTEGER;
+  const placeholders = [...new Set([text(min), ...(bounded ? [text(max)] : [])])].filter((t) => t !== current);
+  const atMin = value <= min;
+  const atMax = value >= max;
+  const isRemove = removable && atMin;
+  const busy = { decrement: loading === true || loading === "decrement", increment: loading === true || loading === "increment" };
+  const blocked = { decrement: readOnly || (atMin && !isRemove), increment: readOnly || atMax };
+  const icon = (kind) => {
+    if (busy[kind]) return progressCircle({ size: "inherit", tone: "inherit", hidden: true });
+    if (kind === "increment") return finSvg("plus");
+    return finSvg(isRemove ? "trash-2" : "minus");
+  };
+  const button = (kind) => `<button ${attrsOf([
+    `class="pqp-btn${PFIN_STATES.includes(state[kind]) ? ` pqp-btn--${state[kind]}` : ""}"`,
+    'type="button"',
+    `data-pqp-step="${kind === "increment" ? 1 : -1}"`,
+    kind === "decrement" && isRemove && "data-remove",
+    `aria-label="${escape(kind === "increment" ? "늘리기" : isRemove ? removeLabel : "줄이기")}"`,
+    !disabled && blocked[kind] && 'aria-disabled="true"',
+    busy[kind] && 'aria-busy="true"',
+    disabled && "disabled",
+  ])}>${icon(kind)}</button>`;
+  const naming = labelledby ? `aria-labelledby="${labelledby}"` : label ? `aria-label="${escape(label)}"` : "";
+  return `<div ${attrsOf([
+    `class="pqp pqp--${size} pqp--${layout}${guide ? " pqp--guide" : ""}"`,
+    'role="group"',
+    'data-slot="quantity-picker"',
+    invalid && "data-invalid",
+    disabled && "data-disabled",
+    readOnly && "data-readonly",
+    disabled && 'aria-disabled="true"',
+    naming,
+    describedby && `aria-describedby="${describedby}"`,
+    live && "data-pqp-live",
+    server && "data-pqp-server",
+    `data-value="${value}"`,
+    `data-min="${min}"`,
+    bounded && `data-max="${max}"`,
+    `data-step="${step}"`,
+    unit && `data-unit="${escape(unit)}"`,
+    removable && `data-remove-label="${escape(removeLabel)}"`,
+  ])}>${button("decrement")}<span class="pqp-divider" aria-hidden="true"></span><span class="pqp-value"${disabled ? " data-disabled" : ""} aria-live="polite" aria-atomic="true">${placeholders.map((t) => `<span class="pqp-ph" aria-hidden="true">${escape(t)}</span>`).join("")}<span class="pqp-text">${escape(current)}</span></span><span class="pqp-divider" aria-hidden="true"></span>${button("increment")}${name ? `<input type="hidden" name="${escape(name)}" value="${value}"${disabled ? " disabled" : ""}>` : ""}</div>`;
+}
+
+// ── Attachment Input ─────────────────────────────────────────────────────
+// 그림 데이터 — 가장 나쁜 두 이름(비교 페이지 마무리 11 과 글자 수 · 글자 꼴이 같은 지어낸 이름 — 가게 · 앱 이름을 쓰지 않는다) · 사진 아홉(칠한 그림)
+const PATT_PDF = "2026-10-15_카드영수증_숲길커피_리저브_광화문점.pdf";
+const PATT_XLSX = "숲길가계부_2025-01-01_2026-10-15_거래내역_전체계좌.xlsx";
+const PATT_MB = 1024 * 1024;
+const pattMb = (n) => Math.round(n * PATT_MB);
+// 영수증 사진 — 나무 바닥 위 종이 영수증(손으로 칠한 대역)
+const PATT_RECEIPT = pimgUri(600, 600,
+  `<rect width="600" height="600" fill="#c8a27a"/><rect y="0" width="600" height="600" fill="#b38b62" fill-opacity=".35"/>` +
+  `<g transform="rotate(-6 300 300)"><rect x="170" y="70" width="260" height="470" rx="6" fill="#fbfaf7"/>` +
+  `<rect x="200" y="110" width="200" height="18" rx="9" fill="#d9d6cf"/><rect x="230" y="146" width="140" height="12" rx="6" fill="#e6e3dc"/>` +
+  Array.from({ length: 8 }, (_, i) => `<rect x="200" y="${200 + i * 30}" width="${120 + (i % 3) * 20}" height="10" rx="5" fill="#e3e0d8"/><rect x="${360 - (i % 2) * 10}" y="${200 + i * 30}" width="${40 + (i % 2) * 10}" height="10" rx="5" fill="#d3cfc6"/>`).join("") +
+  `<rect x="200" y="460" width="200" height="2" fill="#cfcbc2"/><rect x="200" y="478" width="90" height="14" rx="7" fill="#bdb8ae"/><rect x="330" y="478" width="70" height="14" rx="7" fill="#bdb8ae"/></g>`);
+const PATT_PICS = [PATT_RECEIPT, PIMG.white, PIMG.dusk, PIMG.forest, PIMG.sea, PIMG.dawn, PIMG.night, PATT_RECEIPT, PIMG.snow];
+const PATT_PHOTO_MB = [2.4, 1.8, 3.1, 2.2, 4.6, 2.9, 1.6, 3.4, 2.7];
+const pattPhoto = (i, extra = {}) => ({ id: `p${i}`, name: `IMG_20261015_0842${String(10 + i).padStart(2, "0")}.jpg`, size: pattMb(PATT_PHOTO_MB[i % 9]), kind: "image", status: "success", pic: PATT_PICS[i % PATT_PICS.length], ...extra });
+const pattPdf = (extra = {}) => ({ id: "pdf", name: PATT_PDF, size: pattMb(9.8), kind: "file", status: "success", ...extra });
+const pattXlsx = (extra = {}) => ({ id: "xlsx", name: PATT_XLSX, size: pattMb(4.2), kind: "file", status: "success", ...extra });
+// 영수증 10/10 — PDF 하나 + 사진 아홉(여덟째 올리는 중 62% · 아홉째 실패)
+const pattWorst = () => [pattPdf(), ...Array.from({ length: 9 }, (_, i) => pattPhoto(i, i === 7 ? { status: "uploading", progress: 0.62 } : i === 8 ? { status: "error" } : {}))];
+
+// 크기 글 — attachment-input.tsx 의 formatFileSize("512B" · "84KB" · "9.8MB" — MB 는 소수 한 자리, 띄어 쓰지 않는다)
+function pattSize(bytes) {
+  const b = Math.max(0, Math.round(bytes));
+  if (b < 1024) return `${b}B`;
+  if (b < 1024 * 1024) return `${Math.max(1, Math.round(b / 1024))}KB`;
+  if (b < 1024 * 1024 * 1024) return `${(b / (1024 * 1024)).toFixed(1)}MB`;
+  return `${(b / (1024 * 1024 * 1024)).toFixed(1)}GB`;
+}
+// 항목의 이름(보조 기술) — 전체 파일 이름 · 크기 · 대표 · 상태(attachment-input.tsx 의 describe)
+function pattDescribe(entry, badge = "") {
+  const parts = [entry.name, pattSize(entry.size)];
+  if (badge) parts.push(badge);
+  if (entry.status === "uploading") parts.push(typeof entry.progress === "number" ? `올리는 중 ${Math.round(entry.progress * 100)}%` : "올리는 중");
+  if (entry.status === "error") parts.push("올리지 못했어요");
+  return parts.join(", ");
+}
+const pattFileIcon = (name) => (/\.pdf$/i.test(name) ? "file-text" : /\.(csv|xlsx?|ods|numbers)$/i.test(name) ? "file-spreadsheet" : "file");
+// 파일 이름 — 글자 단위(break-all) 네 줄. 첫 줄만 오른쪽 4 를 비우고(float 4 × 한 줄), 넘치면 페이지 끝 스크립트가 셋째 줄 "…" + 넷째 줄 확장자로 줄인다
+// (레시피처럼 보이지 않는 같은 글로 줄 수를 재고 "앞부분…" 을 글자 단위로 찾는다). 보조 기술은 항목 이름에서 전체 이름을 읽는다
+const pattName = (name) =>
+  `<span class="patt-name" data-patt-name="${escape(name)}"><span class="patt-name-measure" aria-hidden="true"><span class="patt-name-clear"></span>${escape(name)}</span><span class="patt-name-measure" aria-hidden="true"><span class="patt-name-clear"></span><span data-patt-probe></span></span><span class="patt-name-clear" aria-hidden="true"></span><span class="patt-name-text">${escape(name)}</span></span>`;
+
+// 항목 하나(li) — entry { id, name, size, kind(image · file), status(pending · uploading · success · error), progress, pic }.
+//   badge      대표 띠 글(첫 사진에만 — 부르는 쪽이 정한다)
+//   readOnly · disabled  읽기 전용(사진 0.5 · 파일 글 fg-disabled · × aria-disabled) · 막힘(× disabled)
+//   pressable  항목을 누를 수 있다(메뉴 · 순서 바꾸기 · 읽기 전용의 크게 보기 — role=button) · sortable 끌 수 있다(aria-roledescription)
+//   popup      메뉴를 여는 항목 — menu(1280 이상 Menu) · dialog(미만 Menu Sheet)
+//   dragging   끄는 중(그 순간) · state { item · remove · action: hover · pressed · focus } 그 순간을 멈춘 부품 · guide × 의 누르는 자리 44 · 구멍 24
+function pattItem({ entry, badge = "", readOnly = false, disabled = false, pressable = true, sortable = false, popup = "", dragging = false, state = {}, guide = false } = {}) {
+  const image = entry.kind === "image";
+  const pct = typeof entry.progress === "number" ? Math.round(entry.progress * 100) : null;
+  const circle = (tone) => progressCircle({ size: "24", tone, value: pct, hidden: true });
+  let face;
+  if (image) {
+    face = entry.pic ? `<img class="patt-img" src="${entry.pic}" alt="" draggable="false">` : `<span class="patt-img patt-img--fallback" aria-hidden="true">${finSvg("image")}</span>`;
+    if (badge) face += `<span class="patt-badge" aria-hidden="true"><span class="patt-badge-label">${escape(badge)}</span></span>`;
+    if (entry.status === "uploading" || entry.status === "error") face += `<span class="patt-backdrop patt-backdrop--${entry.status}" aria-hidden="true">${entry.status === "uploading" ? circle("staticWhite") : ""}</span>`;
+  } else {
+    face = `<span class="patt-thumb" aria-hidden="true">${entry.status === "uploading" ? circle("neutral") : finSvg(pattFileIcon(entry.name))}</span><span class="patt-meta" aria-hidden="true">${pattName(entry.name)}<span class="patt-size">${escape(pattSize(entry.size))}</span></span>`;
+  }
+  const description = pattDescribe(entry, badge);
+  const press = pressable && !disabled;
+  const item = `<div ${attrsOf([
+    `class="patt-item patt-item--${entry.kind}${PFIN_STATES.includes(state.item) ? ` patt-item--${state.item}` : ""}"`,
+    'data-slot="attachment-input-item"',
+    press && 'role="button"',
+    press && 'tabindex="0"',
+    press && `aria-label="${escape(description)}"`,
+    press && sortable && !readOnly && 'aria-roledescription="순서를 바꿀 수 있는 항목"',
+    press && popup && `aria-haspopup="${popup}"`,
+    press && popup && 'aria-expanded="false"',
+    press && "data-pressable",
+    press && sortable && !readOnly && "data-sortable",
+  ])}>${face}${press ? "" : `<span class="ptf-sr-only">${escape(description)}</span>`}</div>`;
+  const retry = entry.status === "error"
+    ? `<button ${attrsOf([`class="patt-action patt-action--${entry.kind}${PFIN_STATES.includes(state.action) ? ` patt-action--${state.action}` : ""}"`, 'type="button"', 'data-patt-retry', `aria-label="${escape(`${entry.name} 다시 시도`)}"`, disabled && "disabled"])}>${finSvg("rotate-cw")}다시 시도</button>`
+    : "";
+  const remove = `<button ${attrsOf([
+    `class="patt-remove${PFIN_STATES.includes(state.remove) ? ` patt-remove--${state.remove}` : ""}"`,
+    'type="button"',
+    'data-patt-remove',
+    `aria-label="${escape(`${entry.name} 지우기`)}"`,
+    readOnly && !disabled && 'aria-disabled="true"',
+    disabled && "disabled",
+  ])}>${finSvg("x", { stroke: 2.5 })}</button>`;
+  return `<li ${attrsOf([
+    `class="patt-li${guide ? " patt-li--guide" : ""}"`,
+    'data-slot="attachment-input-item-root"',
+    `data-id="${escape(entry.id)}"`,
+    `data-name="${escape(entry.name)}"`,
+    `data-size="${entry.size}"`,
+    `data-kind="${entry.kind}"`,
+    `data-status="${entry.status}"`,
+    readOnly && "data-readonly",
+    dragging && "data-dragging",
+  ])}>${item}${retry}${remove}</li>`;
+}
+
+// 첨부 타일 — 80 · "n/최대". 다 차면 · 읽기 전용이면 aria-disabled(초점은 남는다), 막힘은 disabled. 이름 "{칸 이름} 첨부, 3/10"
+function pattTrigger({ count = 0, max = 10, icon = "image", label = "영수증", labelledby = "", readOnly = false, disabled = false, state = "" } = {}) {
+  const limited = Number.isFinite(max);
+  const full = limited && count >= max;
+  const suffix = limited ? `첨부, ${count}/${max}` : "첨부";
+  return `<button ${attrsOf([
+    `class="patt-trigger${PFIN_STATES.includes(state) ? ` patt-trigger--${state}` : ""}"`,
+    'type="button"',
+    'data-slot="attachment-input-trigger"',
+    `aria-label="${escape(`${label} ${suffix}`)}"`,
+    !disabled && (readOnly || full) && 'aria-disabled="true"',
+    disabled && "disabled",
+  ])}>${finSvg(icon, { cls: "patt-trigger-icon" })}${limited ? `<span class="patt-count" aria-hidden="true"><span class="patt-count-now">${count}</span><span class="patt-count-max">/${max}</span></span>` : ""}</button>`;
+}
+
+// 칸 — layout tile(첨부 타일 + 항목 줄 — 화면 가장자리까지 · 끝 흐림 20) · dropzone(드롭존 · 파일 선택 + 고른 파일 카드).
+//   screen     wide(1280 이상 — 드롭존) · narrow(미만 · 앱 — 파일 선택 버튼) · ""(미리보기 창의 폭을 따른다 — 레시피의 lg)
+//   entries    항목 · max 최대 개수(Infinity 면 개수 없음) · accept image(사진을 받는다 — image 아이콘) · file(파일만 — paperclip)
+//   badge      주면 첫 사진에 띠 · menu 메뉴를 여는 칸(popup menu · dialog) · sortable 순서 바꾸기
+//   dragOver · dragging(끄는 항목 id) · states { id: { item · remove · action } } · trigger 타일의 멈춘 상태 · guide 첫 항목의 누르는 자리
+//   live       페이지 끝 스크립트가 맡는다(data-patt-live — 메뉴 · 순서 · 지우기 · 다시 시도 · 끌어 놓기 · 고르기)
+function patt({ id = nextPfinId("patt"), layout = "tile", screen = "", entries = [], max = 10, accept = "image", label = "영수증", labelledby = "", describedby = "", badge = "", popup = "", sortable = false, readOnly = false, disabled = false, dragOver = false, dragging = "", states = {}, trigger = "", pickState = "", guide = false, live = "", scroll = "" } = {}) {
+  const firstImage = badge ? entries.find((e) => e.kind === "image") : null;
+  const full = Number.isFinite(max) && entries.length >= max;
+  const blocked = disabled || readOnly || full;
+  const failures = entries.filter((e) => e.status === "error").length;
+  const failureId = `${id}-failure`;
+  const items = entries.length
+    ? `<ul class="patt-list" data-slot="attachment-input-items">${entries.map((e, i) => pattItem({ entry: e, badge: firstImage && e.id === firstImage.id ? badge : "", readOnly, disabled, pressable: !!popup || sortable || readOnly, sortable, popup: readOnly ? "" : popup, dragging: dragging === e.id, state: states[e.id] || {}, guide: guide && i === 0 })).join("")}</ul>`
+    : "";
+  let body;
+  if (layout === "dropzone") {
+    const zone = `<div ${attrsOf(['class="patt-dropzone"', 'data-slot="attachment-input-dropzone"', dragOver && !blocked && "data-drag-over", blocked && "data-disabled", live && "data-patt-drop"])}><p class="patt-dropzone-label">파일을 여기로 끌어다 놓으세요</p><button class="btn btn-neutral-weak btn-size-small${pickState ? ` btn-state-${pickState}` : ""}" type="button" data-patt-pick${blocked ? " disabled" : ""}><span>파일 선택</span></button></div>`;
+    const narrow = `<button class="btn btn-neutral-weak btn-size-large patt-pick-narrow" type="button" data-patt-pick${blocked ? " disabled" : ""}>${finSvg("upload")}<span>파일 선택</span></button>`;
+    body = `${zone}${narrow}${items ? `<div class="patt-row patt-row--dropzone" data-slot="attachment-input-row">${items}</div>` : ""}`;
+  } else {
+    const tile = pattTrigger({ count: entries.length, max, icon: accept === "file" ? "paperclip" : "image", label, readOnly, disabled, state: trigger });
+    body = `<div class="patt-row pfog--row" data-slot="attachment-input-row"${scroll ? ` data-pfin-scroll="${scroll}"` : ""}><div class="patt-row-inner"><div class="patt-row-content">${tile}${items}</div></div></div>`;
+  }
+  const naming = labelledby ? `aria-labelledby="${labelledby}"` : `aria-label="${escape(label)}"`;
+  const desc = [describedby, failures ? failureId : ""].filter(Boolean).join(" ");
+  return `<div ${attrsOf([
+    `class="patt"`,
+    'role="group"',
+    'data-slot="attachment-input"',
+    `id="${id}"`,
+    `data-layout="${layout}"`,
+    screen && `data-screen="${screen}"`,
+    disabled && "data-disabled",
+    readOnly && "data-readonly",
+    naming,
+    desc && `aria-describedby="${desc}"`,
+    live && `data-patt-live="${live}"`,
+    live && `data-max="${Number.isFinite(max) ? max : ""}"`,
+    live && badge && `data-badge="${escape(badge)}"`,
+    live && `data-label="${escape(label)}"`,
+  ])}>${body}<span id="${failureId}" hidden>${failures ? `${failures}개는 올리지 못했어요.` : ""}</span><span class="ptf-sr-only" aria-live="polite" data-patt-status></span></div>`;
+}
+// 항목 메뉴의 줄 — 크게 보기(파일 카드는 "열기") · 대표로 정하기(대표 띠를 쓰는 칸의 사진만) · 앞으로 · 뒤로 | 지우기. 맨 앞은 앞으로 · 대표로, 맨 끝은 뒤로가 막힌다
+function pattMenuGroups({ kind = "image", position = "middle", badge = true } = {}) {
+  const first = position === "first";
+  return [
+    { items: [
+      { label: kind === "image" ? "크게 보기" : "열기", action: "preview" },
+      ...(kind === "image" && badge ? [{ label: "대표로 정하기", action: "badge", disabled: first }] : []),
+      { label: "앞으로 옮기기", action: "forward", disabled: first },
+      { label: "뒤로 옮기기", action: "backward", disabled: position === "last" },
+    ] },
+    { items: [{ label: "지우기", tone: "critical", action: "remove" }] },
+  ];
+}
+
+// ── Footer ───────────────────────────────────────────────────────────────
+// porest-home 바닥(7B) — footer.md 코드 절 그대로. 링크는 실제 서비스 주소다(미리보기 안에서는 페이지 끝 스크립트가 떠나지 않게 막는다)
+const PFOOT_HOME = {
+  brand: { name: "POREST", description: "People + Forest. 사람(People)이 모여 숲(Forest)처럼 자라나는 조직 생태계를 설계합니다." },
+  columns: [
+    { title: "서비스", links: [["HR", "https://hr.porest.cloud"], ["Desk", "https://desk.porest.cloud"], ["Desk 설명서", "https://desk.porest.cloud/guide/"]] },
+    { title: "계정", links: [["로그인", "https://sso.porest.cloud"], ["회원가입", "https://sso.porest.cloud"]] },
+  ],
+  policy: [["개인정보 처리방침", "https://sso.porest.cloud/privacy"]],
+  text: "화면의 숫자와 이름은 소개용 예시입니다. 사진: Unsplash.",
+};
+// 값이 없는 블록의 자리표시 — 지어낸 값이 아니라 무엇이 들어갈 자리인지만 쓴다(footer.md "값이 없는 블록은 비워 둔다")
+const PFOOT_PLACEHOLDER = { business: [["(상호)", "대표 (이름)", "사업자 등록번호 000-00-00000"], ["(주소)"]], contact: [["(전화)", "(문의 메일)"]] };
+// 저작권의 해 — 그리는 때(빌드)의 해
+const PFOOT_YEAR = new Date().getFullYear();
+
+// 링크 하나 — size large(사이트맵) · medium(정책), external 이면 새 탭 + ↗ + 보이지 않는 "(새 탭)". state 는 그 순간을 멈춘 링크(hover · pressed · focus)
+const pfootLink = ([label, href], { size = "medium", external = false, state = "" } = {}) =>
+  `<a ${attrsOf([`class="pfoot-link pfoot-link--${size}${PFIN_STATES.includes(state) ? ` pfoot-link--${state}` : ""}"`, 'data-slot="footer-link"', `href="${escape(href)}"`, external && 'target="_blank"', external && 'rel="noopener"'])}>${escape(label)}${external ? `${finSvg("arrow-up-right")}<span class="ptf-sr-only"> (새 탭)</span>` : ""}</a>`;
+// 바닥 — width wide(1280 이상 — 좌우 32 · 저작권 줄 한 줄) · narrow(미만 — 좌우 24 · 위아래) · ""(미리보기 창의 폭을 따른다 — 레시피의 lg)
+//   placeholder  사업자 정보 · 연락처 · 소셜 자리를 자리표시 글로 보인다(값이 생기면 들어갈 자리) · states { "서비스:HR": hover … } 멈춘 링크
+function pfoot({ width = "", topLine = true, placeholder = false, states = {}, nav = true, idPrefix = nextPfinId("pfoot") } = {}) {
+  const h = PFOOT_HOME;
+  const cols = h.columns.map((c, ci) => {
+    const titleId = `${idPrefix}-col${ci}`;
+    return `<div class="pfoot-col" data-slot="footer-column"><span class="pfoot-col-title" id="${titleId}">${escape(c.title)}</span><ul class="pfoot-col-links" aria-labelledby="${titleId}">${c.links.map((l) => `<li>${pfootLink(l, { size: "large", state: states[`${c.title}:${l[0]}`] })}</li>`).join("")}</ul></div>`;
+  }).join("");
+  const navArea = nav ? `<div class="pfoot-nav" data-slot="footer-nav"><div class="pfoot-brand" data-slot="footer-brand"><p class="pfoot-brand-name">${escape(h.brand.name)}</p><p class="pfoot-brand-intro">${escape(h.brand.description)}</p></div><nav class="pfoot-sitemap" aria-label="사이트 지도">${cols}</nav></div><div class="pfoot-divider" aria-hidden="true"></div>` : "";
+  const join = (groups) => groups.map((g) => g.map(escape).join(" | ")).join("<br>");
+  const extra = placeholder ? `<p class="pfoot-text pfoot-text--placeholder">${join(PFOOT_PLACEHOLDER.business)}</p><p class="pfoot-text pfoot-text--placeholder">${join(PFOOT_PLACEHOLDER.contact)}</p>` : "";
+  const social = placeholder ? `<div class="pfoot-social" data-slot="footer-social">${["(소셜 채널 1)", "(소셜 채널 2)"].map((n, i) => `<button class="btn btn-ghost btn-icon-only btn-size-large" type="button" aria-label="${escape(n)}">${finSvg(i ? "at-sign" : "globe")}</button>`).join("")}</div>` : "";
+  return `<footer ${attrsOf([`class="pfoot${topLine ? " pfoot--top-line" : ""}"`, 'data-slot="footer"', width && `data-width="${width}"`])}><div class="pfoot-frame">${navArea}<div class="pfoot-info" data-slot="footer-info"><div class="pfoot-links" data-slot="footer-links">${h.policy.map((l) => pfootLink(l, { external: true, state: states[`정책:${l[0]}`] })).join("")}</div><p class="pfoot-text">${escape(h.text)}</p>${extra}<div class="pfoot-bottom" data-slot="footer-bottom"><p class="pfoot-copyright">© ${PFOOT_YEAR} POREST</p>${social}</div></div></div></footer>`;
+}
+
+// 직접 견본의 항목 메뉴 — 1280 이상 Menu(머리 없이 aria-label = 파일 이름) · 미만 Menu Sheet(머리 = 파일 이름, 아이콘 없이 글만 — 가운데). 줄을 모두 그려 두고
+// 페이지 끝 스크립트가 누른 항목에 맞춰 이름 · 보일 줄 · 막힌 줄을 바꾼다(attachment-input.tsx 의 menuOf). 모양은 03m 의 .pmenu · .pmsheet 그대로
+const PATT_MENU_ROWS = [["preview", "크게 보기"], ["badge", "대표로 정하기"], ["forward", "앞으로 옮기기"], ["backward", "뒤로 옮기기"]];
+const pattLiveMenu = () => {
+  const row = ([action, label], critical = false) => `<div class="pmenu-item${critical ? " pmenu-item--critical" : ""}" role="menuitem" tabindex="-1" data-action="${action}"><span class="pmenu-item-content"><span class="pmenu-item-body"><span class="pmenu-item-label">${escape(label)}</span></span></span></div>`;
+  return `<div class="pmenu patt-menu" role="menu" aria-orientation="vertical" tabindex="-1" data-patt-menu hidden><div class="pmenu-group" role="group">${PATT_MENU_ROWS.map((r) => row(r)).join("")}</div><div class="pmenu-divider" aria-hidden="true"></div><div class="pmenu-group" role="group">${row(["remove", "지우기"], true)}</div></div>`;
+};
+const pattLiveSheet = (id) => {
+  const row = ([action, label], critical = false) => `<button type="button" class="pmsheet-item${critical ? " pmsheet-item--critical" : ""}" data-action="${action}"><span class="pmsheet-item-content"><span class="pmsheet-item-body"><span class="pmsheet-item-label">${escape(label)}</span></span></span></button>`;
+  return `<div class="pfin-dim" data-patt-sheet hidden><div class="pmsheet pmsheet--text-only" role="dialog" aria-modal="true" aria-labelledby="${id}-title"><div class="pmsheet-handle" aria-hidden="true"></div><div class="pmsheet-header"><div class="pmsheet-title" id="${id}-title"></div></div><div class="pmsheet-list"><div class="pmsheet-group">${PATT_MENU_ROWS.map((r) => row(r)).join("")}</div><div class="pmsheet-group">${row(["remove", "지우기"], true)}</div></div><button type="button" class="pmsheet-close">닫기</button></div></div>`;
+};
+
+// 마무리 갤러리 — Quantity Picker 여덟 · Attachment Input 열하나 · Footer 셋, 판을 흰 표면(.vignette-card) 위에 그린다. 견본 틀(.ptf-samples · .ptf-cap) ·
+// 상태 표(.cb-matrix)는 Text Field 갤러리 것, 라이트 · 다크 나란히 틀(.pdsp-pair · .pdsp-theme)은 03o 것, 입력칸 · 고르는 칸 · Field 는 03g · 03h 것,
+// 원은 03p 것, 메뉴 · 메뉴 시트는 03m 것이다. 화면 틀(.pfin-phone · .pfin-sheet · .pfin-dialog · .pfin-desk)은 이 블록 것이다.
+// 글은 각 스펙 md 의 코드 예 · 그림과 같은 자리다 — HR(휴가 정책 · 업무 보고)과 Desk(거래 영수증 · 데이터 가져오기 · 장보기 수량), 바닥은 porest-home(7B).
+// 사진 · 이름은 지어낸 것이다. "직접" 이 붙은 견본은 실제로 누르고 · 고르고 · 끌어 놓을 수 있다(페이지 끝 스크립트).
+export function renderFinishGallery(brand) {
+  const shared = brand.key === "shared";
+  const panel = (title, sub, body) => `
+    <div class="vignette-card cb-panel pfin-panel">
+      <div class="vignette-head">
+        <div class="vignette-title">${escape(title)}</div>
+        <div class="vignette-sub">${escape(sub)}</div>
+      </div>${body}
+    </div>`;
+  const samples = (items, cls = "ptf-samples") => `
+      <div class="${cls}">${items.join("")}
+      </div>`;
+  const sample = (capText, en, body) => `
+        <div class="ptf-sample">
+          <div class="ptf-cap">${escape(capText)}<span>${escape(en)}</span></div>
+          ${body}
+        </div>`;
+  const matrix = (cls, first, cols, rows, cell) => `
+      <div class="cb-matrix ${cls}" style="--cb-cols: ${cols.length};">
+        <div class="cb-matrix-row cb-matrix-row--head"><div class="cb-matrix-head">${escape(first)}</div>${
+          cols.map((c) => `<div class="cb-matrix-head">${escape(c.ko)}<span>${escape(c.en)}</span></div>`).join("")
+        }</div>${rows.map((r) => `
+        <div class="cb-matrix-row"><div class="cb-matrix-label">${escape(r.ko)}<span>${escape(r.en)}</span></div>${
+          cols.map((c) => `<div class="cb-matrix-cell pfin-cell">${cell(r, c)}</div>`).join("")
+        }</div>`).join("")}
+      </div>`;
+  const pair = (body, cls = "") => `<div class="pdsp-pair${cls ? ` ${cls}` : ""}">${["light", "dark"].map((t) => `<div class="pdsp-theme pdsp-theme--${t}"><div class="pdsp-theme-cap">${t === "light" ? "라이트" : "다크"}</div>${typeof body === "function" ? body(t) : body}</div>`).join("")}</div>`;
+  const status = (attr, text) => `<p class="pnav-live-status pfin-live-status" aria-hidden="true" ${attr}="">${escape(text)}</p>`;
+  const controls = (items) => `<div class="pfin-controls">${items.map(([label, attr]) => `<button class="btn btn-neutral-weak btn-size-small" type="button" ${attr}><span>${escape(label)}</span></button>`).join("")}</div>`;
+  const measure = (attr) => `<span class="pfin-measure" aria-hidden="true" ${attr}=""></span>`;
+  // 화면 틀 — 폰(390) · 시트(떠 있는 표면 · 위 모서리 24 · 390) · 대화상자(480 · 모서리 20) · 데스크톱(폭을 정한 화면 — 좁은 미리보기에서는 가로로 민다)
+  const phone = (body, { cls = "", height = 0 } = {}) => `<div class="pfin-phone${cls ? ` ${cls}` : ""}"${height ? ` style="--pfin-h: ${height}px;"` : ""}>${body}</div>`;
+  const sheet = (title, body, { cls = "", overlay = "" } = {}) => `<div class="pfin-sheet${cls ? ` ${cls}` : ""}"><div class="pfin-sheet-title">${escape(title)}</div><div class="pfin-sheet-body">${body}</div>${overlay}</div>`;
+  // fluid — 직접 견본: 좁은 미리보기에서는 폭이 줄고(가로로 밀지 않는다) 메뉴가 대화상자 밖으로 떠도 잘리지 않는다
+  const dialog = (title, body, { width = 480, footer = "", fluid = false } = {}) => {
+    const box = `<div class="pfin-dialog${fluid ? " pfin-dialog--fluid" : ""}" style="--pfin-w: ${width}px;"><div class="pfin-dialog-title">${escape(title)}</div><div class="pfin-dialog-body">${body}</div>${footer ? `<div class="pfin-dialog-footer">${footer}</div>` : ""}</div>`;
+    return fluid ? box : `<div class="pfin-wide">${box}</div>`;
+  };
+  const desktop = (body, width = 760, cls = "") => `<div class="pfin-wide"><div class="pfin-desk${cls ? ` ${cls}` : ""}" style="--pfin-w: ${width}px;">${body}</div></div>`;
+  const WIDE = "ptf-samples pfin-samples--wide pov-samples--next";
+  const NEXT = "ptf-samples pov-samples--next";
+  const SHEET = "ptf-samples pfin-samples--sheet pov-samples--next";
+  const form = (fields) => `<div class="pfin-form">${fields.join("")}</div>`;
+  const row2 = (a, b) => `<div class="pfin-row2">${a}${b}</div>`;
+
+  // ── Quantity Picker ────────────────────────────────────────────────────
+  // HR 휴가 정책 — 승인 필요 횟수 0 ~ 3(승인자 3명) · 반복 간격 1 ~ 100 + 반복 단위 · 최대 부여 횟수 1 ~ 99. 칸 이름 · 설명은 quantity-picker.md 그대로
+  const qpField = (label, description, opts, { error = "", invalid = false } = {}) =>
+    pfinField({ label, description, error, invalid, body: (ids) => pqp({ ...opts, invalid, labelledby: ids.labelId, describedby: ids.describedby }) });
+  const policyForm = (size, live = false) => form([
+    textField({ label: "정책 이름", control: { kind: "input", size, value: "연차 — 입사 1년 이상 정규직(2026년 개정)" } }),
+    qpField("승인 필요 횟수", "0 이면 승인 없이 바로 써요.", { size, min: 0, max: 3, value: 0, unit: "회", name: "approvalCount", live }),
+    row2(
+      qpField("반복 간격", "", { size, min: 1, max: 100, value: 1, name: "repeatInterval", live }),
+      textField({ label: "반복 단위", className: "pfin-grow", control: { kind: "select", size, value: "개월" } }),
+    ),
+    qpField("최대 부여 횟수", "", { size, min: 1, max: 99, value: 11, unit: "회", name: "maxGrantCount", live }),
+  ]);
+  const qpLook = panel(
+    "Quantity Picker — HR 휴가 정책: 폰 시트 large 52 · 데스크톱 대화상자 medium 40",
+    "작은 정수를 한 단계씩 늘리고 줄이는 컨트롤이다 — 흔한 값이 열 단계 안쪽인 수(승인 필요 횟수 0 ~ 3 · 반복 간격 · 최대 부여 횟수)를 받는다. 구조는 SEED Quantity Picker — 테두리 상자(1px stroke-neutral-weak · bg-layer-default) 안에 줄이기 · 선(1 × 16 stroke-neutral-subtle) · 값 · 선 · 늘리기를 한 줄로 두고, 버튼은 상자 높이와 같은 정사각 · 투명 · 아이콘 fg-neutral 이다. 크기는 옆 칸과 같은 높이 — 웹 폼의 기본은 responsive(1280 미만 large 52 · 이상 medium 40 — Input 과 같은 경계)라 폰 시트는 52, 데스크톱 대화상자는 40 이다. 반복 간격은 반복 단위 Select 와 한 줄에 같은 높이로 선다. 값 칸은 보기만 한다(누르지도 치지도 못한다 — 2A) — 값 16 / 22 · 500(large 18 / 24) · 고정폭 숫자이고, 가장 긴 값(\"99회\")의 폭을 숨겨 둔 자리 글로 잡아 값이 바뀌어도 상자 폭이 그대로다. 단위는 값 칸의 글(\"0회\")이고 라벨에 \"(회)\" 를 붙이지 않는다. 승인 필요 횟수는 0 이라 줄이기가 막힌 모습(aria-disabled — 초점은 남는다)이다. 칸은 실제로 눌린다.",
+    `${pair(() => sheet("휴가 정책 수정", policyForm("large", true)))}${samples([
+      sample("데스크톱 웹 — 대화상자 480 · medium 40", "1280 이상 — 옆 Input · Select 와 같은 40", dialog("휴가 정책 수정", policyForm("medium", true), { footer: `${overlayButton("취소", { variant: "neutral-weak" })}${overlayButton("저장")}` })),
+    ], WIDE)}`,
+  );
+
+  // 크기 — 옆 칸과 같은 높이 · 누르는 자리 44(분홍)
+  const qpSizeRow = (size, input) => `<div class="pfin-size-row" data-pfin-measure-host>${pqp({ size, min: 0, max: 99, value: 3, unit: "회", label: "승인 필요 횟수", guide: true })}${input}${measure("data-pqp-measure")}</div>`;
+  const qpSize = panel(
+    "크기 — small 36 · medium 40 · large 52 · 누르는 자리 44",
+    "SEED 의 세 크기 그대로다(1A) — small 36 · medium 40 · large 52, 모서리 8 · 8 · 12, 아이콘 16 · 18 · 22, 값 16 / 22 · 16 / 22 · 18 / 24(500). 크기는 옆 입력과 같은 높이로 고른다 — 폼은 responsive, 앱은 늘 large, small 36 은 표 칸 · 목록 줄 안에만 쓴다. 36 · 40 버튼은 누르는 자리를 44 로 넓힌다(분홍 — 보이는 상자 둘레의 보이지 않는 여백 4 · 2, 상자 밖으로도 나간다). 52 는 그대로 52 다. 아래 글은 이 미리보기에서 잰 값이다(상자 · 버튼 · 누르는 자리 · 아이콘 · 값 글).",
+    samples([
+      sample("large 52 — 폰 폼 · 앱", "옆 Input large 52 와 같은 높이 · 누르는 자리 52", qpSizeRow("large", textInput({ size: "large", label: "정책 이름", value: "연차" }))),
+      sample("medium 40 — 1280 이상 웹 폼", "옆 Input medium 40 · 누르는 자리 44(둘레 2)", qpSizeRow("medium", textInput({ size: "medium", label: "정책 이름", value: "연차" }))),
+      sample("small 36 — 표 칸 · 목록 줄 안", "누르는 자리 44(둘레 4) — 표 칸 위아래 여백 안", qpSizeRow("small", `<span class="pfin-cell-text">업무 보고 소요시간</span>`)),
+    ], "ptf-samples pfin-samples--sizes"),
+  );
+
+  // 폭 — hug · fill
+  const qpLayout = panel(
+    "폭 — hug(가장 긴 값의 폭) · fill(남은 폭)",
+    "hug(기본)는 내용에 맞춘 폭이다 — 값 칸은 가장 긴 표시 글(getValueText(max) — \"99회\")을 보이지 않게 겹쳐 두어 그 폭을 잡는다(SEED 의 숨겨 둔 자리 글 · 고정폭 숫자). 그래서 1 에서 99 까지 바뀌어도 상자 폭이 흔들리지 않는다. fill 은 부모 Flex 의 남은 폭을 채운다 — 늘어나는 것은 값 칸뿐이고 두 버튼은 정사각 그대로다. 아래 폭은 이 미리보기에서 잰 상자 폭이다.",
+    samples([
+      sample("hug — 값 1 · 11 · 99 가 같은 폭", "최대 부여 횟수 1 ~ 99 · medium", `<div class="pfin-stack" data-pfin-width-host>${[1, 11, 99].map((v) => pqp({ size: "medium", min: 1, max: 99, value: v, unit: "회", label: `최대 부여 횟수 ${v}` })).join("")}${measure("data-pqp-widths")}</div>`),
+      sample("fill — 폰 폼의 칸 폭", "layout=\"fill\" · large — 값 칸만 늘어난다", phone(`<div class="pfin-pad">${pfinField({ label: "최대 부여 횟수", body: (ids) => `<div class="pfin-flex">${pqp({ size: "large", layout: "fill", min: 1, max: 99, value: 11, unit: "회", labelledby: ids.labelId })}</div>` })}</div>`)),
+    ], NEXT),
+  );
+
+  // 끝 — 최소 · 최대 · 범위 밖
+  const qpEdge = panel(
+    "끝 — 최소 · 최대에서 그 버튼만 막힘(초점이 남는다) · 범위 밖은 오류",
+    "값이 최소에 닿으면 줄이기가, 최대에 닿으면 늘리기가 막힌 모습(아이콘 fg-disabled)이 된다 — 올려도 눌러도 바탕이 생기지 않고 줄지 않는다. 막힌 버튼은 disabled 속성이 아니라 aria-disabled 라 초점이 남는다 — 키보드로 0 까지 줄여도 초점이 본문으로 빠지지 않고 그 버튼에서 \"사용할 수 없음\" 이 들리며(그림 — 초점 링이 남은 줄이기), Tab 한 번이면 늘리기다. 범위를 칠 수 없으니 최소 · 최대는 데이터로 건다 — 승인 필요 횟수의 최대는 고를 수 있는 승인자 수다. 범위가 바뀌어 지금 값이 밖이 되면(승인자가 2명으로 줄었다) 값을 저절로 고치지 않고 상자 안쪽 2px stroke-critical-solid 와 Field 오류 글로 알린다.",
+    samples([
+      sample("최소 0 — 줄이기 막힘 · 초점 링이 남는다", "aria-disabled — Tab 순서에 그대로", qpField("승인 필요 횟수", "0 이면 승인 없이 바로 써요.", { size: "large", min: 0, max: 3, value: 0, unit: "회", state: { decrement: "focus" } })),
+      sample("범위 안 — 둘 다 눌린다", "값 1", qpField("승인 필요 횟수", "0 이면 승인 없이 바로 써요.", { size: "large", min: 0, max: 3, value: 1, unit: "회" })),
+      sample("최대 3 — 늘리기 막힘", "승인자 3명 = 위 끝", qpField("승인 필요 횟수", "0 이면 승인 없이 바로 써요.", { size: "large", min: 0, max: 3, value: 3, unit: "회" })),
+      sample("범위 밖 — 오류 테두리 + 오류 글", "승인자가 2명으로 줄어 3 이 밖 — 값을 고치지 않는다", qpField("승인 필요 횟수", "0 이면 승인 없이 바로 써요.", { size: "large", min: 0, max: 2, value: 3, unit: "회" }, { invalid: true, error: "승인자는 2명이에요. 횟수를 2회 이하로 줄여주세요." })),
+    ], "ptf-samples"),
+  );
+
+  // 지우기 · 로딩 — 장보기 목록(Desk 메모의 체크 목록 — 그림용 자리)
+  const ITEMS = [["점심 도시락", 1], ["무가당 두유 950ml × 12팩 묶음(유기농 · 저온 살균)", 2], ["키친타월", 9]];
+  const cartRow = ([name, count], { live = false, loading = false, state = {} } = {}) =>
+    `<li class="pfin-cart-row" data-pfin-cart-row><span class="pfin-cart-name">${escape(name)}</span>${pqp({ size: "small", min: 1, max: 9, value: count, unit: "개", removable: true, removeLabel: `${name} 지우기`, label: `${name} 수량`, loading, state, live, server: live })}</li>`;
+  const qpRemove = panel(
+    "지우기 · 로딩 — 최소에서 휴지통 · 서버 응답을 기다리는 버튼",
+    "removable 이면 값이 최소일 때 줄이기 자리가 지우기 버튼(휴지통 trash-2)이 된다 — 값을 더 줄이는 동작이 곧 항목을 지우는 자리다(SEED). 버튼 이름도 함께 바뀐다(\"점심 도시락 지우기\" — removeAriaLabel 필수). 누르면 onRemove 를 부르고 값은 바꾸지 않는다 — 지운 뒤 초점은 다음 줄로 간다. 서버에 바로 반영하는 수량이면 누른 버튼이 응답을 기다리는 동안 누름 바탕 위에 값 없는 원(16 · 18 · 22, 두께 2 — 트랙 gray-500 · 호 fg-neutral, Button ghost 의 로딩 원과 같은 값)을 두고 그 버튼의 누르기를 버린다(aria-busy) — 다른 쪽 버튼은 그대로 눌린다. 목록 줄 안이라 small 36 이다. 아래 직접 목록은 누르면 1.2초 기다린 뒤 바뀌고, 1 에서 휴지통을 누르면 그 줄이 지워진다.",
+    `${samples([
+      sample("수량 2 → 1 — 최소에서 휴지통", "removable · 이름 \"점심 도시락 지우기\"", `<ul class="pfin-cart">${cartRow(ITEMS[0])}${cartRow(ITEMS[1])}</ul>`),
+      sample("늘리기가 기다리는 중 · 줄이기는 눌린다", "loading={{ increment: true }} — aria-busy", `<ul class="pfin-cart">${cartRow(ITEMS[1], { loading: "increment" })}</ul>`),
+      sample("줄이기가 기다리는 중", "loading={{ decrement: true }}", `<ul class="pfin-cart">${cartRow(ITEMS[2], { loading: "decrement" })}</ul>`),
+    ], "ptf-samples")}${samples([
+      sample("직접 — 장보기 목록 · 서버에 바로 반영", "누르면 1.2초 기다린 뒤 바뀐다 · 1 에서 휴지통 → 그 줄을 지운다", `<div class="pfin-live" data-pfin-cart-live><ul class="pfin-cart">${ITEMS.map((it) => cartRow(it, { live: true })).join("")}</ul>${controls([["목록 되돌리기", "data-pfin-cart-reset"]])}${status("data-pfin-status", "− · + 를 누르거나 Tab 으로 버튼에 가서 Enter · Space 를 눌러 보세요.")}</div>`),
+    ], NEXT)}`,
+  );
+
+  // 상태 — 세 크기 × 일곱
+  const QP_STATES = [
+    { ko: "기본", en: "enabled", o: {} },
+    { ko: "호버", en: "hovered — 웹 · + 버튼", o: { state: { increment: "hover" } } },
+    { ko: "포커스", en: "focused — 키보드 · 바깥 링", o: { state: { increment: "focus" } } },
+    { ko: "누름", en: "pressed — + 버튼만 2px", o: { state: { increment: "pressed" } } },
+    { ko: "로딩", en: "loading — + 버튼", o: { loading: "increment" } },
+    { ko: "오류", en: "invalid — 안쪽 2px", o: { invalid: true } },
+    { ko: "막힘", en: "disabled — 흐리지 않는다", o: { disabled: true } },
+  ];
+  const qpStates = panel(
+    "상태 — 세 크기 × 기본 · 호버 · 포커스 · 누름 · 로딩 · 오류 · 막힘",
+    "올림 · 누름 · 포커스 · 로딩은 그 버튼 하나에만 걸린다. 웹 호버는 누름과 같은 바탕 bg-layer-default-pressed(불투명 — SEED bg.transparent-pressed 의 짝)이고 줄지 않는다. 누르면 같은 바탕 + 그 버튼만 2px 거리로 준다(36 은 34/36). 키보드 포커스에만 버튼 바깥 링 2px · 띄움 2px(상자는 overflow 를 자르지 않는다). 오류는 상자 안쪽 2px stroke-critical-solid(내용이 밀리지 않는다), 막힘은 두 버튼 disabled · 아이콘 · 값 fg-disabled 이고 흐리게 하지 않는다(v106). 표는 그 순간을 멈춰 그렸다.",
+    matrix("pfin-matrix", "상태", [
+      { ko: "small 36", en: "표 칸", size: "small" },
+      { ko: "medium 40", en: "1280 이상 웹 폼", size: "medium" },
+      { ko: "large 52", en: "폰 · 앱 폼", size: "large" },
+    ], QP_STATES, (r, c) => pqp({ size: c.size, min: 0, max: 9, value: 3, unit: "회", label: `승인 필요 횟수 — ${r.ko}`, ...r.o })),
+  );
+
+  // 표 칸 — HR 업무 보고
+  const REPORTS = [
+    ["10월 13일 (월)", "클라우드 인프라 정기 점검 — 쿠버네티스 노드 교체 · 인증서 갱신", 8, false],
+    ["10월 14일 (화)", "데이터 플랫폼 배치 지연 원인 분석 · 재처리", 6, true],
+    ["10월 15일 (수)", "프로젝트 3팀 주간 진행 보고 · 회의록 정리", 2, false],
+  ];
+  const reportTable = `<table class="pfin-table"><caption class="ptf-sr-only">업무 보고</caption><thead><tr><th scope="col">날짜</th><th scope="col">업무 내용</th><th scope="col" class="pfin-num">소요시간</th></tr></thead><tbody>${REPORTS.map(([d, t, h, edit]) => `<tr${edit ? ' class="pfin-table-edit"' : ""}><td>${escape(d)}</td><td>${escape(t)}</td><td class="pfin-num">${edit ? pqp({ size: "small", min: 0, max: 24, value: h, unit: "h", label: "소요시간", live: true }) : `${h}h`}</td></tr>`).join("")}</tbody></table>`;
+  const qpTable = panel(
+    "표 칸 — HR 업무 보고 소요시간 small 36",
+    "표 칸 · 목록 줄 안은 small 36 이다(HR 업무 보고 — 줄 수정 중의 소요시간 0 ~ 24). 옆 칸 이름이 없어 aria-label(\"소요시간\")로 이름을 준다. 값 칸이 가장 긴 값(\"24h\")의 폭을 잡아 열이 그만큼 넓어진다. 단위 글은 보기 상태와 같다(\"8h\"). 버튼의 누르는 자리 44 는 줄 위아래 여백 안이라 이웃 줄과 겹치지 않는다. 가운데 줄은 실제로 눌린다.",
+    desktop(`<div class="pfin-desk-title">업무 보고</div>${reportTable}`, 760),
+  );
+
+  // 직접
+  const qpLiveId = nextPfinId("pqp-live");
+  const qpLive = panel(
+    "직접 — 한 단계씩 · 끝에서 그 버튼만 막힘 · 바뀐 값을 단위와 함께 읽는다",
+    "− · + 를 누르거나 Tab 으로 버튼에 가서 Enter · Space 를 누르면 한 단계(step) 바뀐다 — 누르고 있어도 한 번이다(Enter 를 누르고 있을 때 되풀이되는 키도 버린다). 화살표 키 · spinbutton 은 없다. 값 칸은 aria-live polite · aria-atomic 이라 바뀐 값을 단위와 함께 한 번 읽는다(\"2회\"). 끝에 닿으면 그 버튼만 막힌 모습이 되고 초점은 그 버튼에 남는다. 아래 글이 화면 읽기에 들리는 글 · 초점 · 숨은 입력(name — 단위 없는 정수)을 따라간다.",
+    samples([sample("승인 필요 횟수 0 ~ 3 · 반복 간격 1 ~ 100", "Field + QuantityPicker · responsive", `<div class="pfin-live" id="${qpLiveId}">${form([qpField("승인 필요 횟수", "0 이면 승인 없이 바로 써요.", { min: 0, max: 3, value: 0, unit: "회", name: "approvalCount", live: true }), qpField("반복 간격", "", { min: 1, max: 100, value: 1, name: "repeatInterval", live: true })])}${status("data-pfin-status", "버튼을 누르거나 Tab 으로 가서 Enter · Space 를 눌러 보세요.")}</div>`)], "ptf-samples pfin-samples--sheet"),
+  );
+
+  // ── Attachment Input ───────────────────────────────────────────────────
+  const AT_DESC = "사진 · PDF 를 10MB 까지 올려요. 10개까지.";
+  const attField = (opts, { label = "영수증", description = AT_DESC, error = "", invalid = false } = {}) =>
+    pfinField({ label, description, error, invalid, body: (ids) => patt({ label, ...opts, labelledby: ids.labelId, describedby: ids.describedby }) });
+  const txHead = `<div class="pfin-tx"><div class="pfin-tx-amount">−12,800원</div><div class="pfin-tx-merchant">숲길커피 리저브 광화문점 · 카페</div><div class="pfin-tx-meta">2026. 10. 15. 08:42 · 생활비 카드 · 일시불</div></div>`;
+  const receipt = (opts = {}, field = {}) => `${txHead}${attField({ entries: pattWorst(), max: 10, ...opts }, field)}`;
+  const attLook = panel(
+    "Attachment Input — 거래 상세의 영수증: 첨부 타일 + 한 줄 10/10",
+    "사진 · 파일을 골라 붙이는 칸이다 — 여럿을 붙이고 사진이 섞이는 자리(거래 영수증 · 메모 첨부)는 tile 이다(4A). 첨부 타일(80 · \"10/10\") 뒤에 항목을 한 줄로 놓는다 — 사진(image/*)은 80 썸네일, 그 밖(PDF)은 160 × 80 파일 카드이고 한 줄에 섞인다. 줄은 시트 · 대화상자 본문 가장자리까지 넓히고 넘치면 가로로 스크롤한다 — 첫 항목은 다른 칸과 같은 자리(24)에서 시작하고, 좌우 끝은 늘 20 흐린다(Scroll Fog row · 스크롤바 숨김). 열 장이어도 시트가 길어지지 않는 대신 대부분이 옆으로 숨는다 — 여덟째(올리는 중 62%) · 아홉째(실패 — 다시 시도)는 밀어야 보인다. 그래서 실패는 칸의 설명에도 붙는다(\"1개는 올리지 못했어요.\"). 다 찬 타일은 막힌 모습(aria-disabled — 초점은 남는다)이다. 항목 줄은 위 16 을 더 두고 같은 만큼 당겨 × 의 누르는 자리 44 가 잘리지 않는다.",
+    `${pair(() => sheet("거래 상세", receipt()))}${samples([
+      sample("데스크톱 웹 — 대화상자 480", "같은 칸 · 같은 크기 — 줄은 대화상자 본문 가장자리까지", dialog("거래 상세", receipt())),
+      sample("끝까지 민 모습 — 올리는 중 · 실패", "줄을 오른쪽 끝까지 밀었다 · 끝 흐림 20 은 빈 여백 위", sheet("거래 상세", receipt({ scroll: "end" }))),
+      sample("대표 띠를 쓰는 칸 — 띠는 첫 사진에", "badgeLabel=\"대표\" — PDF 다음의 첫 사진", sheet("거래 상세", receipt({ badge: "대표" }))),
+    ], SHEET)}`,
+  );
+
+  // 항목 — 사진 · 파일 카드 · 이름 네 줄
+  const oneRow = (entries, opts = {}) => `<div class="pfin-row-box">${patt({ label: "첨부", entries, max: Infinity, ...opts })}</div>`;
+  const attItems = panel(
+    "항목 — 사진 80 · 파일 카드 160 × 80 · 이름은 글자 단위 네 줄",
+    "사진은 80 × 80 · 모서리 12 · 그림 위 투명 윤곽 1px stroke-neutral-overlay(v118 — Image Frame · Avatar 와 같다). 파일 카드는 160 × 80 · 좌우 16 · 1px stroke-neutral-weak, 썸네일 칸 48(bg-neutral-weak · 모서리 8 · 아이콘 24 fg-neutral-subtle — PDF file-text · 표 file-spreadsheet) + 사이 10 + 이름 · 크기 칸 70 이다. 이름은 12 / 16 · 500 이고 글자 단위로 줄을 바꾼다(break-all — 파일 이름은 이름표라 Typography v114 의 예외, 11D) · 네 줄(64) + 크기 11 / 15 가 80 에 든다. 네 줄을 넘으면 셋째 줄 끝을 \"…\" 로 줄이고 넷째 줄에 확장자를 남긴다 — 끝을 자르면 확장자가 사라진다. 첫 줄만 오른쪽 4 를 비운다(maskClear) — 이름이 카드 위에 바짝 붙어 × 둘레 구멍(24)이 첫 줄 끝 글자를 파먹지 않게. 보조 기술은 늘 전체 이름을 읽는다. × 둘레는 항목 모서리를 × 보다 2 크게 파낸다(SEED 의 구멍 — 사진 · 윤곽이 × 에 닿지 않는다). 아래 글은 이 미리보기에서 잰 값이다.",
+    `${pair(() => oneRow([pattPhoto(1), pattPdf(), pattXlsx()]))}${samples([
+      sample("가장 나쁜 두 이름 — PDF 는 네 줄에 다 든다", "9.8MB · 글자 단위", `<div data-pfin-name-host>${oneRow([pattPdf()])}${measure("data-patt-name-measure")}</div>`),
+      sample("xlsx — 셋째 줄 \"…\" + 넷째 줄 \".xlsx\"", "4.2MB · 보조 기술은 전체 이름", `<div data-pfin-name-host>${oneRow([pattXlsx()])}${measure("data-patt-name-measure")}</div>`),
+      sample("잰 값 — 타일 · 사진 · 카드 · 썸네일 · 이름 칸 · ×", "attachment-input.yaml 의 값과 견준다", `<div data-pfin-att-host>${oneRow([pattPhoto(0), pattPdf()], { max: 10 })}${measure("data-patt-measure")}</div>`),
+    ], NEXT)}`,
+  );
+
+  // 상태
+  const statusRow = () => oneRow([pattPdf({ id: "f1", status: "uploading", progress: 0.4 }), pattXlsx({ id: "f2", status: "error" }), pattPhoto(4, { status: "uploading", progress: 0.62 }), pattPhoto(1, { status: "error" })]);
+  const attStatus = panel(
+    "상태 — 올리는 중 · 실패 · 다시 시도",
+    "고른 직후(pending) · 올림(success)은 보통 모습이다. 올리는 중은 이미 정한 값 있는 Progress Circle 24(두께 3 — 12시부터 올린 만큼)다 — 사진은 사진 위 딤(라이트 50% · 다크 65%) 가운데 staticWhite 원, 파일 카드는 썸네일 칸에서 아이콘 대신 neutral 원. 진행이 10초 동안 멈추면 실패로 보인다. 막대는 쓰지 않는다. 실패는 덮개 + \"다시 시도\"(rotate-cw 24 + 12 / 16 · 500) — 사진은 두 모드 모두 검정 65% 덮개 위 흰 글(흰 사진 위 7.00), 파일 카드는 썸네일 · 이름 자리를 다시 시도 하나가 채운다(fg-neutral-subtle). 다시 시도는 항목 위에 겹친 형제 단추라 실패한 항목을 누르면 곧 다시 시도다. 이름은 \"{파일 이름} 다시 시도\".",
+    pair(statusRow),
+  );
+
+  // 첨부 타일
+  const attTrigger = panel(
+    "첨부 타일 — 0/10 · 3/10 · 10/10 막힘 · 개수 없음",
+    "첨부 타일은 80 × 80 · 모서리 12 · 1px stroke-neutral-weak · 투명 바탕이다. 아이콘 24 fg-neutral-subtle(사진을 받으면 image, 파일만이면 paperclip) 아래 4 에 개수 — 지금 개수 fg-neutral + \"/최대\" fg-neutral-subtle(12 / 16 · 400). 최대가 없으면(서버 한도가 없다) 개수를 두지 않는다 — \"n/최대\" 를 쓰려면 서버의 개수 한도부터 정한다. 다 차면 아이콘 · 개수가 fg-disabled 이고 aria-disabled 라 초점은 남아 \"영수증 첨부, 10/10, 사용할 수 없음\" 을 읽는다. 누르면 고르기 창(앱은 메뉴 시트 — 사진 찍기 · 앨범에서 고르기 · 파일 고르기)이다.",
+    pair(`<div class="pfin-triggers">${[
+      ["0/10", pattTrigger({ count: 0 })],
+      ["3/10", pattTrigger({ count: 3 })],
+      ["10/10 — 막힘", pattTrigger({ count: 10 })],
+      ["개수 없음 · 파일만", pattTrigger({ count: 3, max: Infinity, icon: "paperclip", label: "첨부" })],
+    ].map(([c, t]) => `<span class="pfin-trigger-cell">${t}<span class="pfin-mini-cap">${escape(c)}</span></span>`).join("")}</div>`),
+  );
+
+  // ×
+  const attRemove = panel(
+    "× — 20 원 · 둘레 구멍 24 · 누르는 자리 44",
+    "× 는 20 원(bg-layer-default · 안쪽 1px stroke-neutral-weak · lucide x 10 선 2.5 fg-neutral)이 항목 모서리 밖으로 위 4 · 오른쪽 4 걸친다. 누르는 자리는 44 다 — 보이는 원 둘레로 12 씩(분홍). 항목은 × 둘레를 지름 24 로 파낸다(가운데가 모서리에서 안쪽 6 — × 와 같은 자리). 줄 위 16 덕분에 누르는 자리의 위쪽도 잘리지 않는다. 이름은 \"{파일 이름} 지우기\" 이고 누르면 묻지 않고 지운다(되돌리기는 다시 고르기). 올리면(웹) · 누르면 바탕 bg-layer-default-pressed, 누르면 × 만 2px 거리(기준 24)로 준다. 키보드 포커스 링은 안쪽 2px 이다 — 가로 스크롤 줄이 바깥 링을 자른다.",
+    `${samples([
+      sample("누르는 자리 44(분홍) · 구멍 24", "보이는 20 · 걸침 4 · 둘레 12", `<div class="pfin-row-box pfin-row-box--guide">${patt({ label: "첨부", entries: [pattPhoto(1), pattPdf()], max: Infinity, guide: true })}</div>`),
+      sample("올림 · 누름 · 키보드 포커스", "× 만 바뀐다 — 항목은 그대로", oneRow([pattPhoto(2, { id: "h" }), pattPhoto(3, { id: "p" }), pattPhoto(5, { id: "f" })], { states: { h: { remove: "hover" }, p: { remove: "pressed" }, f: { remove: "focus" } } })),
+    ], "ptf-samples")}`,
+  );
+
+  // 대표 띠 · 순서 바꾸기
+  const FOUR = () => [pattPhoto(0), pattPhoto(2), pattPhoto(4), pattPhoto(5)];
+  const reorderLiveId = nextPfinId("patt-reorder");
+  const attReorder = panel(
+    "대표 띠 · 순서 바꾸기 — 끄는 사진 0.5 · 키보드 Space · ← → · Space",
+    "SEED 의 두 능력을 그대로 둔다(3A — 지금 세 제품에 쓰는 자리는 없다). 대표 띠는 첫 사진 아래 24(검정 65% · 좌우 4 · 아래 두 모서리 12) 위 흰 글 \"대표\"(12 / 16 · 500 · 한 줄)다. 순서를 바꿀 수 있으면 항목을 끌어 옮긴다 — 마우스는 누른 채 8px 넘게, 터치는 250ms 누른 채 움직이면 끌기다(그 전에 움직이면 줄이 스크롤한다). 끄는 항목은 2px 줄어든 채 따라가고 × 와 구멍이 사라지며, 사진은 불투명도 0.5(SEED 그대로 — v106 의 예외, 13B), 파일 카드는 글 · 아이콘 fg-disabled 다. 키보드는 항목에 초점을 두고 Space 로 들고 ← → 로 한 칸씩 옮긴 뒤 Space · Enter 로 놓는다 — Esc 는 그만두기(처음 자리로). 하나하나 읽는다(\"3번째 항목을 들었어요.\" · \"2번째 자리예요.\" · \"1번째 자리에 놓았어요.\"). 순서를 바꾸면 대표 띠는 새 첫 사진으로 옮겨 간다. 아래 직접 견본은 끌기 · 키보드 · 항목 메뉴로 실제로 옮긴다.",
+    `${samples([
+      sample("대표 띠 — 첫 사진", "badgeLabel=\"대표\"", oneRow(FOUR(), { badge: "대표", max: 10 })),
+      sample("끄는 사진 — 2px 줄어듦 · 0.5 · × 없음", "dragging — 오른쪽으로 끄는 중", oneRow(FOUR(), { badge: "대표", max: 10, dragging: "p2", sortable: true })),
+      sample("끄는 파일 카드 — 글 · 아이콘 fg-disabled", "dragging — 불투명도는 그대로", oneRow([pattPhoto(0), pattPdf(), pattPhoto(2)], { max: 10, dragging: "pdf", sortable: true })),
+    ], "ptf-samples")}${samples([
+      sample("직접 — 끌기 · 키보드 · 항목 메뉴(1280 이상 Menu)", "onReorder · onPreview · badgeLabel=\"대표\"", `<div class="pfin-live" id="${reorderLiveId}">${dialog("사진", attField({ entries: FOUR(), max: 10, badge: "대표", popup: "menu", sortable: true, live: "menu" }, { label: "사진", description: "사진을 10장까지 올려요. 첫 사진이 대표예요." }), { fluid: true })}${pattLiveMenu()}${status("data-pfin-status", "사진을 누르거나(메뉴), 끌거나, Tab 으로 초점을 두고 Space · ← → · Space 를 눌러 보세요.")}</div>`),
+    ], WIDE)}`,
+  );
+
+  // 항목 메뉴
+  const MENU_ROW = () => [pattPhoto(0), pattPhoto(2), pattPdf(), pattPhoto(4)];
+  const second = MENU_ROW()[1];
+  const menuSheetOf = (kind, position, title) => menuSheet({ title, layout: "textOnly", groups: pattMenuGroups({ kind, position }).map((g) => ({ items: g.items.map(({ label, tone, disabled }) => ({ label, tone, disabled })) })) });
+  const menuOf = (kind, position, label) => menuContent({ label, groups: pattMenuGroups({ kind, position }).map((g) => ({ items: g.items.map(({ label: l, tone, disabled }) => ({ label: l, tone, disabled })) })) });
+  const menuSheetPhone = sheet("거래 상세", `${attField({ entries: MENU_ROW(), max: 10, badge: "대표", popup: "dialog", sortable: true, states: { [second.id]: { item: "pressed" } } })}`, { cls: "pfin-sheet--tall", overlay: `<div class="pfin-dim">${menuSheetOf("image", "middle", second.name)}</div>` });
+  const menuDialog = dialog("거래 상세", `<div class="pfin-menu-host">${attField({ entries: MENU_ROW(), max: 10, badge: "대표", popup: "menu", sortable: true, states: { [second.id]: { item: "focus" } } })}<div class="pfin-menu-at" style="--pfin-menu-x: ${80 + 8 + 80 + 8}px;">${menuOf("image", "middle", second.name)}</div></div>`);
+  const sheetLiveId = nextPfinId("patt-sheet");
+  const attMenu = panel(
+    "항목 메뉴 — 390 Menu Sheet · 1280 Menu · 끝에서 막히는 줄",
+    "항목(사진 · 파일 카드)을 누르면 메뉴가 열린다(14A — 끌기가 어려운 사람 · 화면 읽기 · 스위치 사용자도 한 번 누르고 골라 순서를 바꾼다, WCAG 2.5.7). 1280 미만 · 앱은 Menu Sheet(머리에 전체 파일 이름 · 아이콘 없이 글만 — 가운데), 1280 이상은 누른 항목 아래 8 의 Menu(머리 없이 aria-label = 파일 이름)다. 위 묶음 — 크게 보기(파일 카드는 \"열기\") · 대표로 정하기(대표 띠를 쓰는 칸의 사진만 — 맨 앞으로) · 앞으로 옮기기 · 뒤로 옮기기(한 칸씩), 아래 위험 묶음 — 지우기(묻지 않고 지운다). × 는 지름길로 남는다. 끝에 닿으면 그 방향 줄이 보이고 눌리지 않는다 — 맨 앞(대표)은 앞으로 · 대표로, 맨 끝은 뒤로. 옮긴 뒤 초점은 옮긴 항목(새 자리)에 있다. Enter 는 메뉴, Space 는 들기다. 순서 바꾸기 · 크게 보기를 줄 때만 열리고, 읽기 전용이면 메뉴 대신 바로 크게 보기, 막힘이면 누르지 않는다.",
+    `${samples([
+      sample("390 — 둘째 사진을 누름 · 메뉴 시트", "머리 = 전체 파일 이름 · 크게 보기 · 대표로 정하기 · 앞으로 · 뒤로 | 지우기", menuSheetPhone),
+      sample("1280 — 대화상자 · 누른 사진 아래 Menu", "aria-label = 파일 이름 · 키보드로 연 항목은 안쪽 링", menuDialog),
+    ], SHEET)}${samples([
+      sample("맨 앞(대표) 사진", "\"대표로 정하기\" · \"앞으로 옮기기\" 막힘", `<div class="pfin-menu-solo">${menuOf("image", "first", MENU_ROW()[0].name)}</div>`),
+      sample("맨 끝 사진", "\"뒤로 옮기기\" 막힘", `<div class="pfin-menu-solo">${menuOf("image", "last", MENU_ROW()[3].name)}</div>`),
+      sample("파일 카드", "첫 줄 \"열기\" · \"대표로 정하기\" 없음", `<div class="pfin-menu-solo">${menuOf("file", "middle", PATT_PDF)}</div>`),
+    ], NEXT)}${samples([
+      sample("직접 — 390 · 항목을 누르면 메뉴 시트", "Menu Sheet — 딤 · 닫기 · Esc 로 닫는다", `<div class="pfin-live" id="${sheetLiveId}">${sheet("거래 상세", attField({ entries: [pattPhoto(0), pattPhoto(2), pattPdf(), pattPhoto(4), pattPhoto(5)], max: 10, badge: "대표", popup: "dialog", sortable: true, live: "sheet" }), { cls: "pfin-sheet--tall", overlay: pattLiveSheet(sheetLiveId) })}${status("data-pfin-status", "항목을 누르거나 Tab 으로 가서 Enter 를 눌러 보세요.")}</div>`),
+    ], SHEET)}`,
+  );
+
+  // 드롭존
+  const IMPORT_DESC = "CSV(.csv) 또는 Excel(.xlsx, .xls) 파일을 올려주세요. 최대 10MB.";
+  const importField = (opts, field = {}) => pfinField({ label: "파일 업로드", description: IMPORT_DESC, ...field, body: (ids) => patt({ layout: "dropzone", max: 1, accept: "file", label: "파일 업로드", ...opts, labelledby: ids.labelId, describedby: ids.describedby }) });
+  const dropLiveId = nextPfinId("patt-drop");
+  const attDrop = panel(
+    "드롭존 — 1280: 1px 실선 · 끌어 들어옴 · 고른 파일 카드 / 390: 파일 선택 버튼",
+    "파일 하나를 골라 바로 서버로 넘기는 자리(CSV · Excel 가져오기)는 dropzone 이다(5A). 1280 이상 웹은 드롭존 — 높이 120 · 모서리 12 · 늘 1px 실선 stroke-neutral-solid(흰 면 4.18 · 다크 4.13 · 떠 있는 면 3.58 — 3:1 이상, 12A)이고 가운데에 안내 \"파일을 여기로 끌어다 놓으세요\"(14 / 19 · 500 · fg-neutral-subtle) + 8 아래 Button neutralWeak small \"파일 선택\"이다. 상자 전체를 누르는 자리로 두지 않는다 — 키보드 길은 이 버튼이다. 파일을 끌고 들어오면 테두리 stroke-neutral-contrast + 바탕 bg-layer-default-pressed 로 함께 바뀐다(기본 테두리와 3.93 · 3.25 — 끄는 동안 \"파일 선택\" 면이 바탕과 섞이는 것은 그대로 둔다). 고른 파일은 아래 8 에 파일 카드로 보이고(분석 중이면 썸네일 칸에 원) 하나를 고르면 드롭존이 막힌다(테두리 stroke-neutral-weak · 안내 fg-disabled — 최대 1, 바꾸려면 × 로 지우고 다시 고른다). 1280 미만 웹 · 앱은 끌어 놓기가 없어 드롭존 없이 \"파일 선택\"(large 48 · 칸 폭 · 앞 아이콘 upload)뿐이다. 점선 상자 · 📁 · 상자 div onClick(지금 웹)은 걷는다.",
+    `${samples([
+      sample("1280 — 기본", "layout=\"dropzone\" · 테두리 1px stroke-neutral-solid", importField({ screen: "wide" })),
+      sample("1280 — 끌어 들어옴", "dragOver — 테두리 stroke-neutral-contrast + 누름 바탕", importField({ screen: "wide", dragOver: true })),
+      sample("1280 — 고른 뒤 · 분석 중", "드롭존 막힘(최대 1) · 파일 카드 + 원", importField({ screen: "wide", entries: [pattXlsx({ status: "uploading", progress: 0.55 })] })),
+    ], "ptf-samples pfin-samples--drop")}${samples([
+      sample("390 · 앱 — 파일 선택 버튼", "드롭존 없음 · large 48 · 칸 폭", phone(`<div class="pfin-pad">${importField({ screen: "narrow" })}</div>`)),
+      sample("390 — 고른 뒤", "파일 선택 막힘 · 파일 카드", phone(`<div class="pfin-pad">${importField({ screen: "narrow", entries: [pattXlsx()] })}</div>`)),
+      sample("거절 — 칸 아래 오류 글", "형식 · 크기를 다시 검사한다(accept 는 고르기 창의 편의일 뿐)", importField({ screen: "wide" }, { invalid: true, error: "CSV · Excel 파일을 10MB 까지 올릴 수 있어요." })),
+    ], NEXT)}${samples([
+      sample("직접 — 1280 드롭존", "파일을 끌어 놓거나 \"파일 선택\" — 다시 검사 · 분석 중 원 · × 로 지우기", `<div class="pfin-live" id="${dropLiveId}">${importField({ screen: "wide", live: "drop" })}${status("data-pfin-status", "파일을 이 상자로 끌어 놓거나 \"파일 선택\" 을 눌러 보세요.")}</div>`),
+    ], WIDE)}`,
+  );
+
+  // 다시 검사 — 거절은 그 자리에
+  const valLiveId = nextPfinId("patt-val");
+  const attValidate = panel(
+    "다시 검사 — 거절은 칸 아래 오류 글 · 이유마다 한 문장",
+    "accept 는 고르기 창의 편의일 뿐이다 — 사용자는 \"모든 파일\" 로 다른 형식을 고를 수 있다(SEED). 그래서 형식 · 크기 · 개수를 다시 검사하고, 거절한 파일은 붙이지 않고 Field 의 오류 글로 한 번 알린다 — 토스트로 알리지 않는다. 이유마다 한 문장이다 — \"10MB 넘는 파일은 올릴 수 없어요.\" · \"사진 · PDF 만 올릴 수 있어요.\" · \"10개까지 올릴 수 있어요.\"(남은 자리만큼은 붙이고 나머지만 거절). 한 번 고른 것에 통과한 것과 거절된 것이 섞이면 붙인 것을 먼저 알리고 거절을 뒤에 알린다 — 붙이며 지난 오류 글을 지워도 거절 글이 남는다. 칸의 설명에 받는 형식 · 크기 · 개수를 미리 적는다. 그림은 12MB 사진 하나와 PDF 둘을 고른 뒤다.",
+    `${samples([
+      sample("12MB 사진 + PDF 둘 — PDF 는 붙고 사진은 거절", "onFilesAccept 다음 onFilesReject", sheet("거래 상세", `${txHead}${attField({ entries: [pattPhoto(0), pattPdf({ id: "pdf-a", name: "2026-10-15_카드영수증_사본.pdf", size: pattMb(0.4) }), pattPdf({ id: "pdf-b", name: "2026-10-15_현금영수증.pdf", size: pattMb(0.3) })], max: 10 }, { invalid: true, error: "10MB 넘는 파일은 올릴 수 없어요." })}`)),
+      sample("직접 — 고르기 창에서 아무 파일이나", "형식 · 크기 · 개수를 다시 검사한다", `<div class="pfin-live" id="${valLiveId}">${sheet("거래 상세", `${txHead}${attField({ entries: [pattPhoto(0)], max: 10, live: "tile" })}`)}${controls([["12MB 사진 + PDF 둘을 고른 것처럼", "data-pfin-fake-pick"]])}${status("data-pfin-status", "타일을 눌러 파일을 고르거나 위 버튼을 눌러 보세요.")}</div>`),
+    ], SHEET)}`,
+  );
+
+  // 읽기 전용 · 막힘
+  const attReadonly = panel(
+    "읽기 전용 · 막힘 — 사진 0.5 · 파일 글 fg-disabled · 막힘은 흐리지 않는다",
+    "읽기 전용(값은 제출된다)은 타일 · × 가 막힌 모습이고, 순서를 못 바꾸며 메뉴 대신 누르면 바로 크게 보기다. 사진은 불투명도 0.5(사진 · 띠 · 윤곽이 함께 — SEED 그대로, 13B), 파일 카드는 글 · 아이콘 fg-disabled 다. 사진의 0.5 는 v106 \"불투명도로 흐리지 않는다\" 의 예외로 이 칸의 읽기 전용 · 끄는 사진에만 쓴다(띠 글이 흰 사진 위 2.27 — 비교 페이지가 알리고 사용자가 정했다). 막힘(값을 내지 않는다)은 새로 고르지 못하고 × 도 막힌다 — 타일 · × 아이콘 fg-disabled · 드롭존 테두리 stroke-neutral-weak 이고 흐리게 하지 않는다(v106).",
+    pair(() => `<div class="pfin-stack pfin-stack--wide">${attField({ entries: [pattPhoto(0), pattPdf(), pattPhoto(2)], max: 10, badge: "대표", readOnly: true }, { label: "영수증 — 읽기 전용" })}${attField({ entries: [pattPhoto(0), pattPdf(), pattPhoto(2)], max: 10, badge: "대표", disabled: true }, { label: "영수증 — 막힘", disabled: true })}${importField({ screen: "wide", disabled: true }, { label: "파일 업로드 — 막힘" })}</div>`),
+  );
+
+  // 상태 표
+  const AT_STATES = [
+    { ko: "기본", en: "enabled", i: "" },
+    { ko: "호버", en: "hovered — 웹", i: "hover" },
+    { ko: "포커스", en: "focused — 안쪽 링", i: "focus" },
+    { ko: "누름", en: "pressed — 2px", i: "pressed" },
+    { ko: "끌어 들어옴", en: "dragOver — 드롭존", i: "drag" },
+    { ko: "읽기 전용", en: "readonly", i: "readonly" },
+    { ko: "막힘", en: "disabled", i: "disabled" },
+  ];
+  const atCell = (r, c) => {
+    const ro = r.i === "readonly";
+    const dis = r.i === "disabled";
+    const st = PFIN_STATES.includes(r.i) ? r.i : "";
+    if (c.part === "trigger") return r.i === "drag" ? '<span class="pfin-na">—</span>' : pattTrigger({ count: 3, readOnly: ro, disabled: dis, state: st });
+    if (c.part === "remove") return r.i === "drag" ? '<span class="pfin-na">—</span>' : `<div class="pfin-cell-row">${patt({ label: "첨부", entries: [pattPhoto(1, { id: "x" })], max: Infinity, readOnly: ro, disabled: dis, states: { x: { remove: st } } })}</div>`;
+    return patt({ layout: "dropzone", screen: "wide", max: 1, accept: "file", label: "파일 업로드", disabled: dis || ro, dragOver: r.i === "drag", pickState: st });
+  };
+  const attStates = panel(
+    "상태 표 — 첨부 타일 · × · 드롭존",
+    "웹 호버는 타일 · × 에 누름과 같은 바탕(bg-layer-default-pressed — v106)이고 줄지 않는다. 누르면 같은 바탕 + 누른 부품(타일 · × · 다시 시도)만 2px 거리로 준다(SEED scaleScope self — 타일 78/80). 키보드 포커스 링은 모두 부품 안쪽 2px 다 — 가로 스크롤 줄이 바깥 링을 자른다(SEED 는 항목만 바깥). 드롭존은 누르는 자리가 아니라 \"파일 선택\" 이 상태를 가진다. 표는 그 순간을 멈춰 그렸다.",
+    matrix("pfin-matrix pfin-matrix--att", "상태", [
+      { ko: "첨부 타일", en: "3/10", part: "trigger" },
+      { ko: "×", en: "사진 항목", part: "remove" },
+      { ko: "드롭존", en: "1280 이상 — 파일 선택", part: "dropzone" },
+    ], AT_STATES, atCell),
+  );
+
+  // ── Footer ─────────────────────────────────────────────────────────────
+  const page = (width, body, cls = "") => `<div class="pfin-wide"><div class="pfin-page${cls ? ` ${cls}` : ""}" style="--pfin-w: ${width}px;"><div class="pfin-page-body" aria-hidden="true"><span></span><span></span><span></span></div>${body}</div></div>`;
+  const footLook = panel(
+    "Footer — porest-home 짜임(7B): 1280 · 768 · 390",
+    "사이트 맨 아래의 바닥이다 — 정해진 한 덩어리가 아니라 블록을 골라 조립한다(SEED Footer 의 \"조합 예시\" — 필수 블록 없이 위 → 아래 순서만). porest-home 짜임은 SEED footer-04 를 줄인 것이다 — 탐색 영역(브랜드 \"POREST\" 20 / 27 · 700 + 소개 13 / 18 · fg-neutral-subtle · 최대 340 | 사이트맵 열 서비스 · 계정 — 열 제목 13 / 18 · 500 · fg-neutral-muted · 링크 16 / 22 · 500 · fg-neutral, 사이 16) · 선(1px stroke-neutral-subtle) · 안내 영역(개인정보 처리방침 ↗ — 14 / 19 · 500 · fg-neutral-muted · 안내 글 · \"© 해 POREST\" 14 / 19 · 500). 틀은 최대 1040(layout-max-content) · 위아래 40 · 좌우 32(1280 미만 24) · 영역 사이 40, 위에는 화면 폭 1px 선. 폭이 줄면 브랜드(1 1 240 · 최소 120)와 사이트맵(사이 32)이 줄을 바꾸고 열은 최소 100 이다. 새 탭으로 여는 처리방침에만 ↗ 와 보이지 않는 \"(새 탭)\" 을 둔다. 링크 없는 \"HR 기능\" 열 · 도메인 줄은 걷었다. 그림은 레시피(porest 토큰)로 그린 바닥이다 — 홈에 넣을 때는 아래 \"홈에 넣은 모습\" 처럼 색 · 글꼴만 홈 것이다(8A). 링크는 눌러도 미리보기를 떠나지 않는다.",
+    `${samples([
+      sample("1280 — 한 줄 · 좌우 32", "Footer width wide — 틀 1040 가운데", page(1280, pfoot({ width: "wide" }))),
+      sample("768 — 좌우 24 · 사이트맵이 브랜드 옆에 남는다", "1280 미만", page(768, pfoot({ width: "narrow" }))),
+    ], WIDE)}${pair(() => page(390, pfoot({ width: "narrow" }), "pfin-page--phone"))}`,
+  );
+  const FT_STATES = [
+    { ko: "기본", en: "enabled", i: "" },
+    { ko: "호버", en: "hovered — 웹", i: "hover" },
+    { ko: "누름", en: "pressed — 호버와 같은 색", i: "pressed" },
+    { ko: "포커스", en: "focused — 링 2 · 띄움 2 · 모서리 4", i: "focus" },
+  ];
+  const footLinks = panel(
+    "링크 — large(사이트맵) · medium(정책) × 상태 · 새 탭만 ↗",
+    "링크는 SEED Footer.LinkText 의 두 크기다 — large(사이트맵 16 / 22 · 500 · fg-neutral → 올리면 · 누르면 fg-neutral-subtle 로 옅게)와 medium(정책 14 / 19 · 500 · fg-neutral-muted → 올리면 · 누르면 fg-neutral 로 짙게). 밑줄은 없다 — 바닥의 링크는 따로 놓인 목록 · 줄이라 위치로 링크임을 안다(SEED). 키보드 포커스에만 링 2px · 띄움 2px · 모서리 4. ↗(lucide arrow-up-right 14 · 12 · 글과 4)는 새 탭으로 여는 링크(처리방침처럼 읽고 돌아오는 문서 · 다른 사이트)에만 둔다 — 같은 탭으로 가는 서비스 링크에는 두지 않는다.",
+    matrix("pfin-matrix pfin-matrix--foot", "상태", [
+      { ko: "large — 사이트맵", en: "같은 탭", size: "large", link: ["Desk 설명서", "https://desk.porest.cloud/guide/"] },
+      { ko: "medium — 정책", en: "새 탭 + ↗", size: "medium", link: ["개인정보 처리방침", "https://sso.porest.cloud/privacy"], external: true },
+    ], FT_STATES, (r, c) => `<div class="pfin-foot-cell">${pfootLink(c.link, { size: c.size, external: !!c.external, state: r.i })}</div>`),
+  );
+  const homeSkin = `<div class="pfin-home">${pfoot({ width: "narrow" })}</div>`;
+  const footPlaceholder = panel(
+    "값이 없는 블록 — 자리표시로만 · 홈에 넣은 모습",
+    "사업자 정보 · 연락처 · 소셜 링크는 블록만 있다 — porest 의 상호 · 사업자 등록번호 · 주소 · 전화 · 문의 메일 · 공개 소셜 채널은 아직 어느 레포에도 없다. 값을 지어내 넣지 않는다 — 그림도 \"(상호) | 사업자 등록번호 000-00-00000\" 처럼 자리표시임이 드러나게만 쓴다. 값이 생기면 안내 글 아래(사업자 정보 → 연락처 — 13 / 18 · \" | \" 로 잇고 묶음이 바뀌면 줄을 바꾼다), 소셜(Button ghost · large · 아이콘만 + 이름, 사이 24)은 저작권 줄 끝(1280 미만은 저작권 아래)이다. porest-home 은 짜임 · 간격 · 글 크기만 스펙이고 색 · 글꼴은 홈 것이다(8A — Noto Sans KR · --ink · --ink2 · --ink3 · --line, 브랜드 글자는 --blue) — 안내 글 --ink3 은 흰 바탕 4.5 이상으로 짙게 했다(#6B7684).",
+    `${samples([
+      sample("자리표시 — 사업자 정보 · 연락처 · 소셜", "1280 — 값이 생기면 들어갈 자리", page(1280, pfoot({ width: "wide", placeholder: true }))),
+    ], WIDE)}${samples([
+      sample("자리표시 — 390", "소셜은 저작권 아래", page(390, pfoot({ width: "narrow", placeholder: true }), "pfin-page--phone")),
+      sample("홈에 넣은 모습 — 390", "짜임은 스펙 · 색 · 글꼴은 홈(그림 — 홈 index.html 의 값)", page(390, homeSkin, "pfin-page--phone pfin-page--home")),
+    ], SHEET)}`,
+  );
+
+  const lede = "SEED Quantity Picker · Attachment Input · Footer 를 따른 마무리 셋이다(2026-10-15 사용자 결정 1A ~ 14A). Quantity Picker 는 테두리 상자 안 − · 선 · 값 · 선 · + — 세 크기 36 · 40 · 52(웹 기본 responsive), 값 칸은 보기만, 끝의 버튼은 aria-disabled(초점이 남는다), 지우기 · 로딩. Attachment Input 은 첨부 타일 80 + 한 줄(사진 80 · 파일 카드 160 × 80 · × 20 누르는 44 · 올리는 중 원 24 · 실패 다시 시도 · 대표 띠 · 순서 바꾸기 · 항목 메뉴)과 1280 이상 드롭존(120 · 1px 실선 · 파일 선택)이다 — 파일 이름은 글자 단위 네 줄, 끄는 · 읽기 전용 사진만 0.5 다. Footer 는 블록을 골라 조립하는 바닥 — porest-home 짜임(브랜드 · 서비스 · 계정 | 선 | 처리방침 ↗ · 안내 글 · © 해 POREST)이다. 옛 File Upload(v73 — 2px 점선 · 📁 · 막힘 0.5)는 걷었다."
+    + (shared ? " 공유 토큰에는 브랜드 역할 색이 없어 포커스 링이 여기서는 중립으로 보인다." : "");
+
+  return `
+  <section class="section pfin-section">
+    <header class="section-head">
+      <div class="section-eyebrow">03v — 마무리: Quantity Picker · Attachment Input · Footer</div>
+      <h2 class="section-title">마무리 — 수량 고르기 · 첨부 칸 · 바닥</h2>
+      <p class="section-lede">${escape(lede)}</p>
+    </header>
+    ${qpLook}
+    ${qpSize}
+    ${qpLayout}
+    ${qpEdge}
+    ${qpRemove}
+    ${qpStates}
+    ${qpTable}
+    ${qpLive}
+    ${attLook}
+    ${attItems}
+    ${attStatus}
+    ${attTrigger}
+    ${attRemove}
+    ${attReorder}
+    ${attMenu}
+    ${attDrop}
+    ${attValidate}
+    ${attReadonly}
+    ${attStates}
+    ${footLook}
+    ${footLinks}
+    ${footPlaceholder}
+  </section>`;
+}
+
 export function renderVignettes(brand) {
   // 배지 — 옛 .badge(알약 · 대문자)는 걷고 03o 의 Badge 로 그린다. HR 결재 상태는 대기 neutral · 진행 informative · 승인 positive · 반려 critical(badge.md Migration notes).
   // 탭 — 옛 underline · pills 그림(브랜드 색 밑줄 · 채움)은 걷었다(tabs.md 2026-10-02). 다른 구역으로 옮기는 자리(HR 직원 상세 · 공유 문서)는 Line 탭,
@@ -10105,55 +10905,19 @@ export function renderBatchV67(brand) {
 export function renderShadcnNav(brand) {
   // v68 Navigation — 옛 Breadcrumb(.bc — 경로 글 + /) · Navigation Menu(.nm — 데스크톱 머리 메뉴) · Menubar 는 걷었다(2026-10-04 — SEED 에 없다).
   // 데스크톱의 위치는 사이드바의 지금 항목(하위가 지금이면 부모가 저절로 펼침)과 본문 제목이 알린다. 옛 Sidebar(.sb — 회색 상자 · 왼쪽 막대 · 대문자 묶음 이름)는
-  // 03r 의 Side Navigation(흰 면 + 오른쪽 선 · 항목 44 · 지금 항목 bg-neutral-weak-pressed)으로 그린다
+  // 03r 의 Side Navigation(흰 면 + 오른쪽 선 · 항목 44 · 지금 항목 bg-neutral-weak-pressed)으로 그린다. 옛 Command(.cmd — ⌘K 팔레트)는 걷었다(2026-10-15 — 세 제품 모두 쓰는 곳이 없다)
   const isHr = brand.key === "hr";
   return `
   <section class="section">
     <header class="section-head">
       <div class="section-eyebrow">15 — Navigation (v68)</div>
-      <h2 class="section-title">Side Navigation · Command</h2>
-      <p class="section-lede">데스크톱 주 메뉴와 전역 command. 사이드바의 모양은 03r 이다. 옛 Breadcrumb · Navigation Menu · Menubar 는 걷었다 — 위치는 사이드바의 지금 항목과 본문 제목이 알리고, 동작 목록은 03m 의 Menu 다.</p>
+      <h2 class="section-title">Side Navigation</h2>
+      <p class="section-lede">데스크톱 주 메뉴. 사이드바의 모양은 03r 이다. 옛 Breadcrumb · Navigation Menu · Menubar · Command 는 걷었다 — 위치는 사이드바의 지금 항목과 본문 제목이 알리고, 동작 목록은 03m 의 Menu 다.</p>
     </header>
     <div class="sc-grid">
       <div class="sc-card">
         <div class="sc-head">Side Navigation — 모양은 03r</div>
         <div class="pnav-navs">${sideNav({ groups: isHr ? PNAV_HR_NAV : PNAV_DESK_NAV, current: isHr ? "휴가 현황" : "가계부", logo: isHr ? "Porest HR" : "Porest Desk", height: 420 })}</div>
-      </div>
-      <div class="sc-card">
-        <div class="sc-head">Command (⌘K) — 전역 search/action</div>
-        <div class="cmd">
-          <input class="cmd-input" placeholder="명령 또는 검색..." readonly>
-          <div class="cmd-section">
-            <div class="cmd-group">${brand.key === "hr" ? "Recent" : "Suggestions"}</div>
-            <div class="cmd-item"><span>${brand.key === "hr" ? "김지원 휴가 승인" : brand.key === "desk" ? "새 메모 작성" : "Run verify"}</span><span class="cmd-shortcut">⌘P</span></div>
-            <div class="cmd-item"><span>${brand.key === "hr" ? "5월 평가 시작" : brand.key === "desk" ? "할일 추가" : "Build preview"}</span><span class="cmd-shortcut">⌘N</span></div>
-            <div class="cmd-group">Pages</div>
-            <div class="cmd-item"><span>${brand.key === "hr" ? "결재 큐" : brand.key === "desk" ? "메모 보관함" : "Token reference"}</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>`;
-}
-
-export function renderShadcnInput(brand) {
-  // v69 Input — 옛 Slider(.sld — 브랜드 채움 · 흰 손잡이) · Toggle(.tg — 글 토글) · Toggle Group(.tgg) · Input OTP(.otp — 칸 6 × 40) 칸은 걷었다(2026-10-09).
-  // 슬라이더 · 켜고 끄는 아이콘 단추 · 인증 코드 칸은 03t — 입력이다. Toggle Group 은 걷었다 — 하나 고르기는 Segmented Control · Chip, 여럿은 Chip, 5개 이상은 Select
-  return `
-  <section class="section">
-    <header class="section-head">
-      <div class="section-eyebrow">16 — Input (v69)</div>
-      <h2 class="section-title">Combobox</h2>
-      <p class="section-lede">typing autocomplete. 옛 Slider · Toggle · Toggle Group · Input OTP 칸은 걷었다 — 슬라이더 · 켜고 끄는 아이콘 단추 · 인증 코드 칸은 03t — 입력이다. Toggle Group 은 걷었다(하나 고르기는 Segmented Control · Chip, 여럿은 Chip, 5개 이상은 Select).</p>
-    </header>
-    <div class="sc-grid">
-      <div class="sc-card">
-        <div class="sc-head">Combobox</div>
-        <div class="cb">
-          <span>${brand.key === "hr" ? "디자인 본부" : brand.key === "desk" ? "#brand · #design" : "spacing"}</span>
-          <span class="cb-caret">▾</span>
-        </div>
-        <div class="sc-note">typing 시 autocomplete dropdown</div>
       </div>
     </div>
   </section>`;
@@ -10246,7 +11010,8 @@ export function renderShadcnExtras(brand) {
 }
 
 export function renderBatchV73V78(brand) {
-  // v73(Banner/Tag/Popover/File Upload) + v74(Animation) + v75(Form validation) + v76(RTL)
+  // v73(Banner/Tag/Popover) + v74(Animation) + v75(Form validation) + v76(RTL)
+  // 옛 v73 File Upload 칸(2px 점선 · 📁 · 막힘 불투명도 0.5)은 걷었다(2026-10-15) — 첨부 칸은 03v 의 Attachment Input 이다
   // 옛 v73 Treeview 칸(▾ ▸ 글자 · 고른 줄 브랜드 10% · button 안 나무)은 걷었다(2026-10-10) — 나무는 03u 의 Tree View(APG Treeview · 줄 전체가 누르는 자리)다
   // 옛 v73 Tag / Chip(브랜드 10% 바탕 · 칩 안의 입력칸 · "제거" ×)은 걷고 03i 의 입력값 칩(chip.md — Outline Weak 고른 모습 + "{글} 지우기")으로 옮겼다(2026-10-02)
   // 옛 v73 Banner 셋(왼쪽 4px 막대 · 8% 바탕 · 동그라미 글자 아이콘)은 걷고 03l 의 Page Banner 하나로 옮겼다(page-banner.md 2026-10-02 — 한 화면에 하나).
@@ -10267,8 +11032,8 @@ export function renderBatchV73V78(brand) {
   <section class="section">
     <header class="section-head">
       <div class="section-eyebrow">20 — Extras-2 (v73) · Animation (v74) · Field 검증(옛 v75) · RTL (v76)</div>
-      <h2 class="section-title">Page Banner · Chip 입력값 · Popover · File Upload · Animation · Field 검증 · RTL</h2>
-      <p class="section-lede">v73-v76 시각 데모 — shadcn 누락 넷 + 14 keyframe 라이브 + Field 검증 모습 5(옛 v75 form state 를 Field 로) + dir 토글. 옛 Treeview 칸은 걷었다 — 나무는 03u 의 Tree View 다.</p>
+      <h2 class="section-title">Page Banner · Chip 입력값 · Popover · Animation · Field 검증 · RTL</h2>
+      <p class="section-lede">v73-v76 시각 데모 — shadcn 누락 넷 + 14 keyframe 라이브 + Field 검증 모습 5(옛 v75 form state 를 Field 로) + dir 토글. 옛 Treeview 칸은 걷었다 — 나무는 03u 의 Tree View 다. 옛 File Upload 칸도 걷었다 — 첨부 칸은 03v 의 Attachment Input 이다.</p>
     </header>
 
     <!-- Page Banner — 옛 v73 Banner 셋을 03l 의 Page Banner 하나로(머리 바로 아래 · 한 화면 하나) -->
@@ -10305,23 +11070,7 @@ export function renderBatchV73V78(brand) {
         })}
       </div>
 
-      <!-- File Upload -->
-      <div class="sc-card">
-        <div class="sc-head">File Upload — 드래그-드롭</div>
-        <div class="fu-zone">
-          <div class="fu-icon">⬆</div>
-          <div class="fu-label">파일을 드래그하거나 클릭</div>
-          <div class="sc-note">PDF / 이미지, 최대 10MB</div>
-        </div>
-        <div class="fu-list">
-          <div class="fu-item">
-            <span class="fu-file-icon">📄</span>
-            <div class="fu-meta"><span class="fu-name">${escape(isHr ? "Q1-evaluation.pdf" : isDesk ? "receipt-2026.jpg" : "sample.pdf")}</span></div>
-            ${progressCircle({ size: "24", value: 67, label: `${isHr ? "Q1-evaluation.pdf" : isDesk ? "receipt-2026.jpg" : "sample.pdf"} 올리는 중` })}
-            <button class="fu-remove" aria-label="제거" type="button">×</button>
-          </div>
-        </div>
-      </div>
+      <!-- 옛 v73 File Upload(2px 점선 · 📁 · "파일을 드래그하거나 클릭" · .fu-*)는 걷었다(2026-10-15) — 첨부 칸은 03v 의 Attachment Input(타일 · 드롭존)이다 -->
 
       <!-- v74 Animation showcase -->
       <div class="sc-card sc-card--full">
@@ -17721,6 +18470,392 @@ export function pageCss() {
       --shadow-s3: var(--shadow-s3-dark);
     }
 
+    /* === 마무리(03v) — Quantity Picker · Attachment Input · Footer ===
+       specs/components/quantity-picker.md · attachment-input.md · footer.md(수치 원본은 같은 이름의 .yaml). SEED 를 따르고 크기 기본 · 누르는 자리 · 드롭존 색 ·
+       파일 이름 네 줄 · 항목 메뉴 · 위 선은 porest 가 정했다(2026-10-15 사용자 결정 1A ~ 14A). 짜임 · 값은 quantity-picker.tsx · attachment-input.tsx · footer.tsx 와 같다.
+       반응형(responsive · 드롭존 · 바닥 여백)은 1280(--breakpoint-lg — 미디어 쿼리는 변수를 못 써 수를 적었다) 경계이고, 갤러리 그림은 data-screen · data-width 로
+       그 폭의 모습을 고정한다. --hover · --pressed · --focus 는 갤러리에서 그 순간을 멈춘 클래스다. 다크 짝은 이 블록 끝에서 바꾼다 — 03o 의 라이트 · 다크
+       나란히 틀(.pdsp-theme--dark)은 페이지가 라이트여도 바꾼다. */
+    :is(.pfin-section, .pqp, .patt, .pfoot, .pav-edit, .psb-roles) {
+      --pfin-ring: var(--color-stroke-focus-ring, var(--color-border-focus, var(--color-fg-neutral)));
+    }
+    .pfin-section [hidden] { display: none !important; }
+
+    /* 갤러리 틀 — 폰(390) · 시트(떠 있는 표면 · 위 모서리 24) · 대화상자(480 · 모서리 20) · 데스크톱 · 바닥이 붙은 페이지(좁으면 가로로 민다) */
+    /* 판은 가로로 민다(cb-panel) — 화면 밖 글(sr-only · 절대 위치)이 판 밖으로 나가 페이지를 넓히지 않게 판을 기준 상자로 둔다 */
+    .pfin-panel { position: relative; }
+    .pfin-panel > :not(.vignette-head) + :is(.pdsp-pair, .cb-matrix, .ptf-samples) { margin-top: var(--spacing-xl); }
+    .pfin-samples--wide { grid-template-columns: minmax(0, 1fr); }
+    .pfin-samples--sheet { grid-template-columns: repeat(auto-fill, minmax(min(100%, 392px), 1fr)); }
+    .pfin-samples--sizes { grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
+    .pfin-samples--drop { grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); }
+    .pfin-wide { position: relative; max-width: 100%; min-width: 0; overflow-x: auto; }
+    .pfin-phone { box-sizing: border-box; width: 100%; max-width: 390px; overflow: hidden; border: 1px solid var(--color-stroke-neutral-subtle); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .pfin-pad { padding: var(--spacing-x6) var(--spacing-global-gutter); }
+    .pfin-sheet, .pfin-dialog { position: relative; box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden; background: var(--color-bg-layer-floating); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-subtle); color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .pfin-sheet { width: 100%; max-width: 390px; border-radius: var(--radius-r6) var(--radius-r6) 0 0; }
+    .pfin-sheet--tall { min-height: 600px; }
+    .pfin-dialog { width: var(--pfin-w, 480px); border-radius: var(--radius-r5); }
+    .pfin-dialog--fluid { width: 100%; max-width: var(--pfin-w, 480px); overflow: visible; }
+    .pfin-sheet-title, .pfin-dialog-title { flex-shrink: 0; padding: var(--spacing-x6) var(--spacing-x6) var(--spacing-x4); font-size: var(--text-t8); line-height: var(--text-t8--line-height); font-weight: 700; }
+    /* 본문 — 좌우 24(화면 가장자리). 첨부 줄은 이 24 를 넘어 표면 가장자리까지 넓힌다 */
+    .pfin-sheet-body, .pfin-dialog-body { padding: 0 var(--spacing-global-gutter) var(--spacing-x6); }
+    .pfin-dialog-footer { display: flex; justify-content: flex-end; gap: var(--spacing-x2); padding: 0 var(--spacing-x6) var(--spacing-x6); }
+    .pfin-desk { box-sizing: border-box; width: var(--pfin-w, 760px); padding: var(--spacing-x6); border: 1px solid var(--color-stroke-neutral-subtle); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); color: var(--color-fg-neutral); font-family: var(--font-sans); }
+    .pfin-desk-title { margin-bottom: var(--spacing-x4); font-size: var(--text-t9); line-height: var(--text-t9--line-height); font-weight: 700; }
+    .pfin-form { display: flex; flex-direction: column; gap: var(--spacing-x6); }
+    /* 짧은 두 칸 한 줄 — 사이 16(field.md) · 앞 칸(Quantity Picker hug)은 내용 폭, 뒤 칸이 남는 폭 */
+    .pfin-row2 { display: flex; align-items: flex-start; gap: var(--spacing-x4); }
+    .pfin-row2 > .ptf-field:first-child { width: auto; flex: 0 0 auto; }
+    .pfin-grow { flex: 1 1 0; }
+    .pfin-flex { display: flex; }
+    .pfin-stack { display: flex; flex-direction: column; align-items: flex-start; gap: var(--spacing-x3); }
+    .pfin-stack--wide { align-items: stretch; gap: var(--spacing-x8); }
+    .pfin-size-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-x3); padding: var(--spacing-x4); border-radius: var(--radius-r3); background: var(--color-bg-layer-default); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-subtle); }
+    .pfin-size-row > .ptf-input { flex: 1 1 140px; width: auto; min-width: 0; }
+    .pfin-cell-text { font-family: var(--font-sans); font-size: var(--text-t4); line-height: var(--text-t4--line-height); color: var(--color-fg-neutral-subtle); }
+    .pfin-measure { display: block; flex-basis: 100%; font-family: ui-monospace, monospace; font-size: 11px; line-height: 1.5; color: var(--color-text-tertiary); white-space: pre-line; }
+    .pfin-live { position: relative; display: flex; flex-direction: column; gap: var(--spacing-x3); }
+    .pfin-controls { display: flex; flex-wrap: wrap; gap: var(--spacing-x2); }
+    .pfin-cell { min-width: 0; }
+    .pfin-matrix .cb-matrix-row { grid-template-columns: 168px repeat(var(--cb-cols), minmax(150px, 1fr)); }
+    .pfin-matrix--att .cb-matrix-row { grid-template-columns: 168px repeat(var(--cb-cols), minmax(200px, 1fr)); }
+    .pfin-matrix--att .cb-matrix-cell { padding: var(--spacing-x4) 0 var(--spacing-x1); }
+    .pfin-matrix--foot .cb-matrix-row { grid-template-columns: 168px repeat(var(--cb-cols), minmax(200px, 1fr)); }
+    .pfin-na { color: var(--color-text-tertiary); }
+    .pfin-cell-row { box-sizing: border-box; width: 100%; min-width: 0; padding: var(--spacing-x1) var(--spacing-global-gutter) 0; }
+    .pfin-mini-cap { font-family: var(--font-sans); font-size: var(--text-t2); line-height: var(--text-t2--line-height); color: var(--color-fg-neutral-subtle); }
+    .pfin-triggers { display: flex; flex-wrap: wrap; gap: var(--spacing-x4); padding-top: var(--spacing-x1); }
+    .pfin-trigger-cell { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x2); }
+    /* 첨부 칸의 견본 상자 — 표면(좌우 24 · 위 8) 위에 칸을 두어 줄이 상자 가장자리까지 넓어진다 */
+    .pfin-row-box { overflow: hidden; padding: var(--spacing-x2) var(--spacing-global-gutter) var(--spacing-x4); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-subtle); }
+    .pdsp-theme > .pfin-row-box { box-shadow: none; padding-inline: var(--spacing-global-gutter); margin-inline: calc(var(--spacing-x5) * -1 + 0px); }
+    /* 거래 상세 머리 */
+    .pfin-tx { display: flex; flex-direction: column; gap: var(--spacing-x1); margin-bottom: var(--spacing-x6); }
+    .pfin-tx-amount { font-size: var(--text-t9); line-height: var(--text-t9--line-height); font-weight: 700; font-variant-numeric: tabular-nums; }
+    .pfin-tx-merchant { font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 500; }
+    .pfin-tx-meta { font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); }
+    /* 딤 · 메뉴 자리 — 시트 안 메뉴 시트(딤 overlay-dim 0.50 · 다크 0.65) · 대화상자 안 메뉴(누른 사진 아래 8) */
+    .pfin-dim { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; justify-content: flex-end; background: var(--overlay-dim-light); }
+    .pfin-dim > .pmsheet { position: relative; width: 100%; max-width: none; }
+    .pfin-menu-host { position: relative; padding-bottom: 236px; }
+    .pfin-menu-at { position: absolute; left: var(--pfin-menu-x, 0); top: calc(var(--text-t5--line-height) + var(--spacing-x2) + 80px + var(--spacing-x2)); z-index: 6; }
+    .pfin-menu-solo { display: flex; padding: var(--spacing-x2); border-radius: var(--radius-r3); background: var(--color-bg-layer-floating); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-subtle); }
+    .pfin-menu-solo > .pmenu { position: static; }
+    .patt-menu { position: absolute; z-index: 30; }
+    /* 장보기 목록 — 줄 안 small 36 */
+    .pfin-cart { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; border-radius: var(--radius-r4); background: var(--color-bg-layer-default); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-subtle); font-family: var(--font-sans); }
+    .pfin-cart-row { display: flex; align-items: center; gap: var(--spacing-x3); min-height: 44px; padding: var(--spacing-x2) var(--spacing-x4); }
+    .pfin-cart-row + .pfin-cart-row { box-shadow: inset 0 1px 0 var(--color-stroke-neutral-subtle); }
+    .pfin-cart-name { flex: 1; min-width: 0; font-size: var(--text-t5); line-height: var(--text-t5--line-height); color: var(--color-fg-neutral); }
+    /* 업무 보고 표 — 머리 41 · 줄 위아래 여백 안에 small 36 */
+    .pfin-table { width: 100%; border-collapse: collapse; font-size: var(--text-t4); line-height: var(--text-t4--line-height); }
+    .pfin-table th { padding: var(--spacing-x2_5) var(--spacing-x4); border-bottom: 1px solid var(--color-stroke-neutral-subtle); font-weight: 500; text-align: left; color: var(--color-fg-neutral-muted); }
+    .pfin-table td { padding: var(--spacing-x3) var(--spacing-x4); border-bottom: 1px solid var(--color-stroke-neutral-subtle); color: var(--color-fg-neutral); vertical-align: middle; }
+    .pfin-table td:first-child { white-space: nowrap; }
+    .pfin-table .pfin-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .pfin-table-edit td { background: var(--color-bg-layer-default-pressed); }
+    /* 바닥이 붙은 페이지 — 본문 자리 셋 + 바닥 */
+    .pfin-page { box-sizing: border-box; width: var(--pfin-w, 1280px); overflow: hidden; border: 1px solid var(--color-stroke-neutral-subtle); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); }
+    .pfin-page--phone { width: 100%; max-width: 390px; }
+    .pfin-page-body { display: flex; flex-direction: column; gap: var(--spacing-x2); padding: var(--spacing-x8) var(--spacing-global-gutter); }
+    .pfin-page-body > span { display: block; height: 12px; border-radius: var(--radius-full); background: var(--color-bg-neutral-weak); }
+    .pfin-page-body > span:nth-child(2) { width: 72%; }
+    .pfin-page-body > span:nth-child(3) { width: 48%; }
+    .pfin-foot-cell { display: flex; padding: var(--spacing-x1); }
+
+    /* ── Quantity Picker — 상자 1px stroke-neutral-weak(오류 2px stroke-critical-solid) · bg-layer-default, 버튼은 정사각 · 투명 ─────────────── */
+    .pqp {
+      --pqp-h: 52px; --pqp-r: var(--radius-r3); --pqp-icon: 22px; --pqp-basis: 52;
+      --pqp-fs: var(--text-t6); --pqp-lh: var(--text-t6--line-height);
+      position: relative; display: inline-flex; flex-shrink: 0; align-items: center; box-sizing: border-box;
+      width: fit-content; height: var(--pqp-h); border-radius: var(--pqp-r);
+      background: var(--color-bg-layer-default); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-weak);
+      font-family: var(--font-sans); color: var(--color-fg-neutral);
+    }
+    .pqp[data-invalid] { box-shadow: inset 0 0 0 2px var(--color-stroke-critical-solid); }
+    .pqp--small { --pqp-h: 36px; --pqp-r: var(--radius-r2); --pqp-icon: 16px; --pqp-basis: 36; --pqp-fs: var(--text-t5); --pqp-lh: var(--text-t5--line-height); }
+    .pqp--medium { --pqp-h: 40px; --pqp-r: var(--radius-r2); --pqp-icon: 18px; --pqp-basis: 40; --pqp-fs: var(--text-t5); --pqp-lh: var(--text-t5--line-height); }
+    /* responsive — 1280 미만 large(위 기본) · 이상 medium */
+    @media (min-width: 1280px) {
+      .pqp--responsive { --pqp-h: 40px; --pqp-r: var(--radius-r2); --pqp-icon: 18px; --pqp-basis: 40; --pqp-fs: var(--text-t5); --pqp-lh: var(--text-t5--line-height); }
+    }
+    .pqp--fill { flex-grow: 1; width: auto; }
+    .pqp-btn {
+      --press-basis: var(--pqp-basis);
+      --progress-size: var(--pqp-icon); --progress-thickness: 2px; --progress-track: var(--color-gray-500); --progress-range: var(--color-fg-neutral);
+      position: relative; display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; box-sizing: border-box;
+      width: var(--pqp-h); height: var(--pqp-h); margin: 0; padding: 0; border: 0; border-radius: var(--pqp-r);
+      background: transparent; color: var(--color-fg-neutral); cursor: pointer; font: inherit;
+      transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing), scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale);
+    }
+    /* 누르는 자리 44 — 보이는 상자보다 작을 때만 넓힌다(36 은 둘레 4 · 40 은 2 · 52 는 그대로) */
+    .pqp-btn::before { content: ""; position: absolute; left: 50%; top: 50%; width: 100%; height: 100%; min-width: 44px; min-height: 44px; translate: -50% -50%; }
+    .pqp-btn > svg:not(.ppc) { width: var(--pqp-icon); height: var(--pqp-icon); flex-shrink: 0; pointer-events: none; }
+    @media (hover: hover) { .pqp-btn:hover { background: var(--color-bg-layer-default-pressed); } }
+    .pqp-btn--hover { background: var(--color-bg-layer-default-pressed); }
+    .pqp-btn:active, .pqp-btn--pressed { background: var(--color-bg-layer-default-pressed); scale: calc(1 - 2 / var(--press-basis)); }
+    .pqp-btn:focus-visible, .pqp-btn--focus { outline: 2px solid var(--pfin-ring); outline-offset: 2px; }
+    /* 끝 · 읽기 전용(aria-disabled — 초점이 남는다) · 막힘(disabled) — 아이콘 fg-disabled, 올려도 눌러도 바탕 · 축소 없음 */
+    .pqp-btn:is([aria-disabled="true"], :disabled) { cursor: not-allowed; color: var(--color-fg-disabled); background: transparent; scale: 1; }
+    /* 로딩 — 누름 바탕 위 값 없는 원(Progress Circle tone inherit), 그 버튼의 누르기를 버린다 */
+    .pqp-btn[aria-busy="true"] { cursor: progress; background: var(--color-bg-layer-default-pressed); scale: 1; }
+    @media (prefers-reduced-motion: reduce) { .pqp-btn:active, .pqp-btn--pressed { scale: 1; } }
+    .pqp-divider { flex-shrink: 0; width: 1px; height: var(--spacing-x4); background: var(--color-stroke-neutral-subtle); }
+    /* 값 칸 — 보기만(누르기 · 초점 · 치기 없음). 숨긴 자리 글과 지금 값을 한 칸에 겹쳐 가장 넓은 글의 폭을 잡는다 */
+    .pqp-value { pointer-events: none; display: grid; flex: 1 0 auto; align-items: center; justify-content: center; padding: 0 var(--spacing-x2); user-select: none; font-size: var(--pqp-fs); line-height: var(--pqp-lh); font-weight: 500; font-variant-numeric: tabular-nums; color: var(--color-fg-neutral); }
+    .pqp-value[data-disabled] { color: var(--color-fg-disabled); }
+    .pqp-value > span { grid-area: 1 / 1; white-space: nowrap; text-align: center; }
+    .pqp-ph { visibility: hidden; }
+    /* 누르는 자리(분홍) — 갤러리 전용 */
+    .pqp--guide .pqp-btn::before { background: color-mix(in srgb, #e5007e 14%, transparent); outline: 1px dashed color-mix(in srgb, #e5007e 60%, transparent); outline-offset: -1px; border-radius: 2px; }
+
+    /* ── Attachment Input ─────────────────────────────────────────────────────────────────────────────────────────── */
+    .patt { display: flex; min-width: 0; flex-direction: column; gap: var(--spacing-x2); font-family: var(--font-sans); color: var(--color-fg-neutral); }
+    /* 항목 줄 — 화면 가장자리까지(좌우 −24 · 안쪽 24 — Scroll Fog row: 끝 흐림 20 · 스크롤바 숨김). 위 16 을 더 두고 같은 만큼 당긴다 —
+       × 의 누르는 자리 44 가 위로 16 나가도 가로 스크롤 줄에 잘리지 않는다. 당긴 16 은 위 칸에 겹치므로 줄은 누르기를 받지 않고 안의 내용만 받는다 */
+    .patt-row { margin: calc(var(--spacing-x4) * -1) calc(var(--spacing-global-gutter) * -1) 0; padding-top: var(--spacing-x4); overflow-x: auto; overflow-y: hidden; scroll-padding-inline: var(--spacing-global-gutter); scrollbar-width: none; pointer-events: none; }
+    .patt-row::-webkit-scrollbar { display: none; }
+    .patt-row > * { pointer-events: auto; }
+    .patt-row-inner { box-sizing: border-box; width: max-content; min-width: 100%; padding-inline: var(--spacing-global-gutter); }
+    .patt-row-content { display: flex; align-items: flex-start; gap: var(--spacing-x2); }
+    .patt-row--dropzone { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--spacing-x2); margin: calc(var(--spacing-x4) * -1) 0 0; padding-top: var(--spacing-x4); overflow: visible; }
+    .patt-list { display: flex; align-items: flex-start; gap: var(--spacing-x2); margin: 0; padding: 0; list-style: none; }
+    /* 첨부 타일 — 80 · 모서리 12 · 안쪽 1px. 다 참 · 읽기 전용(aria-disabled) · 막힘(disabled)은 바탕 · 축소 없이 아이콘 · 개수만 fg-disabled */
+    .patt-trigger {
+      --press-basis: 80;
+      position: relative; display: flex; flex-shrink: 0; flex-direction: column; align-items: center; justify-content: center; gap: var(--spacing-x1);
+      box-sizing: border-box; width: 80px; height: 80px; margin: 0; padding: 0; border: 0; border-radius: var(--radius-r3);
+      background: transparent; box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-weak); font-family: var(--font-sans); color: var(--color-fg-neutral); cursor: pointer;
+      transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing), scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale);
+    }
+    @media (hover: hover) { .patt-trigger:hover { background: var(--color-bg-layer-default-pressed); } }
+    .patt-trigger--hover { background: var(--color-bg-layer-default-pressed); }
+    .patt-trigger:active, .patt-trigger--pressed { background: var(--color-bg-layer-default-pressed); scale: calc(1 - 2 / var(--press-basis)); }
+    .patt-trigger:focus-visible, .patt-trigger--focus { outline: 2px solid var(--pfin-ring); outline-offset: -2px; }
+    .patt-trigger:is([aria-disabled="true"], :disabled) { cursor: not-allowed; background: transparent; scale: 1; }
+    .patt-trigger-icon { width: 24px; height: 24px; flex-shrink: 0; color: var(--color-fg-neutral-subtle); }
+    .patt-count { font-size: var(--text-t2); line-height: var(--text-t2--line-height); font-weight: 400; }
+    .patt-count-now { color: var(--color-fg-neutral); }
+    .patt-count-max { color: var(--color-fg-neutral-subtle); }
+    .patt-trigger:is([aria-disabled="true"], :disabled) :is(.patt-trigger-icon, .patt-count-now, .patt-count-max) { color: var(--color-fg-disabled); }
+    /* 항목 자리 · 항목 — 높이 80 · 모서리 12 · 윤곽(::after, 그림 위). × 둘레를 지름 24 로 파낸다(가운데가 모서리에서 안쪽 6). 끄는 동안 2px 축소 · 구멍 없음 */
+    .patt-li { position: relative; flex-shrink: 0; touch-action: manipulation; }
+    .patt-li[data-dragging] { z-index: 2; }
+    .patt-item {
+      --press-basis: 80;
+      position: relative; display: flex; flex-shrink: 0; align-items: center; justify-content: center; gap: var(--spacing-x2_5);
+      box-sizing: border-box; height: 80px; border-radius: var(--radius-r3); background: transparent;
+      -webkit-mask-image: radial-gradient(circle at calc(100% - 6px) 6px, transparent 12px, #000 12.5px);
+      mask-image: radial-gradient(circle at calc(100% - 6px) 6px, transparent 12px, #000 12.5px);
+      transition: scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale);
+    }
+    .patt-item::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
+    .patt-item[data-pressable] { cursor: pointer; }
+    .patt-item[data-sortable] { cursor: grab; }
+    .patt-item:focus-visible, .patt-item--focus { outline: 2px solid var(--pfin-ring); outline-offset: -2px; }
+    .patt-li[data-dragging] > .patt-item { -webkit-mask-image: none; mask-image: none; scale: calc(1 - 2 / var(--press-basis)); cursor: grabbing; }
+    .patt-item--pressed { scale: calc(1 - 2 / var(--press-basis)); }
+    /* 사진 — 80 정사각 · 투명 윤곽 stroke-neutral-overlay. 읽기 전용 · 끄는 동안 불투명도 0.5(SEED 그대로 — 13B), 흐림 · 축소는 d4 로 서서히 */
+    .patt-item--image { width: 80px; transition: opacity var(--motion-duration-d4) var(--motion-ease-easing), scale var(--motion-duration-d4) var(--motion-ease-easing); }
+    .patt-item--image::after { box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-overlay); }
+    .patt-li:is([data-readonly], [data-dragging]) > .patt-item--image { opacity: 0.5; }
+    /* 파일 카드 — 160 · 좌우 16 · 1px stroke-neutral-weak */
+    .patt-item--file { width: 160px; padding: 0 var(--spacing-x4); }
+    .patt-item--file::after { box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-weak); }
+    @media (prefers-reduced-motion: reduce) {
+      .patt-item--image { transition: none; }
+      .patt-li[data-dragging] > .patt-item, .patt-item--pressed { scale: 1; }
+    }
+    .patt-img { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; pointer-events: none; user-select: none; }
+    .patt-img--fallback { display: flex; align-items: center; justify-content: center; background: var(--color-bg-neutral-weak); color: var(--color-fg-neutral-subtle); }
+    .patt-img--fallback > svg { width: 24px; height: 24px; }
+    .patt-thumb { display: flex; flex-shrink: 0; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: var(--radius-r2); background: var(--color-bg-neutral-weak); color: var(--color-fg-neutral-subtle); }
+    .patt-thumb > svg:not(.ppc) { width: 24px; height: 24px; }
+    .patt-meta { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+    .patt-li[data-status="error"] :is(.patt-thumb, .patt-meta) { display: none; }
+    /* 이름 — 글자 단위(break-all — 11D) · 12 / 16 · 500. 첫 줄만 오른쪽 4 를 비운다(float 4 × 한 줄 — maskClear). 줄 수는 보이지 않는 같은 글로 잰다 */
+    .patt-name { position: relative; display: block; word-break: break-all; font-size: var(--text-t2); line-height: var(--text-t2--line-height); font-weight: 500; color: var(--color-fg-neutral); }
+    .patt-name-clear { float: right; width: var(--spacing-x1); height: 1lh; }
+    .patt-name-measure { position: absolute; inset-inline: 0; top: 0; visibility: hidden; }
+    .patt-name-ext { display: block; }
+    .patt-size { font-size: var(--text-t1); line-height: var(--text-t1--line-height); font-weight: 400; color: var(--color-fg-neutral-subtle); }
+    .patt-li:is([data-readonly], [data-dragging]) :is(.patt-thumb, .patt-name, .patt-size) { color: var(--color-fg-disabled); }
+    /* 덮개 — 올리는 중(라이트 0.50 · 다크 0.65) · 실패(두 모드 0.65 — 글이 얹힌다). 대표 띠 — 첫 사진 아래 24 · 두 모드 0.65 */
+    .patt-backdrop { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; border-radius: inherit; }
+    .patt-backdrop--uploading { background: var(--overlay-dim-light); }
+    .patt-backdrop--error { background: var(--overlay-dim-dark); }
+    .patt-badge { position: absolute; inset-inline: 0; bottom: 0; display: flex; align-items: center; justify-content: center; height: var(--spacing-x6); padding: 0 var(--spacing-x1); border-radius: 0 0 var(--radius-r3) var(--radius-r3); background: var(--overlay-dim-dark); font-size: var(--text-t2); line-height: var(--text-t2--line-height); font-weight: 500; color: var(--color-static-white); }
+    .patt-badge-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* 다시 시도 — 항목 위에 겹친 형제 단추(구멍도 같다). 누르면 이것만 2px(기준 80) */
+    .patt-action {
+      --press-basis: 80;
+      position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--spacing-x1);
+      margin: 0; padding: 0; border: 0; border-radius: var(--radius-r3); background: transparent; cursor: pointer;
+      font-family: var(--font-sans); font-size: var(--text-t2); line-height: var(--text-t2--line-height); font-weight: 500;
+      -webkit-mask-image: radial-gradient(circle at calc(100% - 6px) 6px, transparent 12px, #000 12.5px);
+      mask-image: radial-gradient(circle at calc(100% - 6px) 6px, transparent 12px, #000 12.5px);
+      transition: scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale);
+    }
+    .patt-action > svg { width: 24px; height: 24px; }
+    .patt-action--image { color: var(--color-static-white); }
+    .patt-action--file { color: var(--color-fg-neutral-subtle); }
+    .patt-action:active, .patt-action--pressed { scale: calc(1 - 2 / var(--press-basis)); }
+    .patt-action:focus-visible, .patt-action--focus { outline: 2px solid var(--pfin-ring); outline-offset: -2px; }
+    .patt-action:disabled { cursor: not-allowed; scale: 1; }
+    /* × — 20 원이 모서리 밖으로 위 4 · 오른쪽 4. 누르는 자리 44(::before 둘레 12). 끄는 동안 사라진다 */
+    .patt-remove {
+      --press-basis: 24;
+      position: absolute; top: calc(var(--spacing-x1) * -1); right: calc(var(--spacing-x1) * -1); z-index: 1;
+      display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 20px; height: 20px; margin: 0; padding: 0; border: 0;
+      border-radius: var(--radius-full); background: var(--color-bg-layer-default); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-weak);
+      color: var(--color-fg-neutral); cursor: pointer;
+      transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing), scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale);
+    }
+    .patt-remove::before { content: ""; position: absolute; inset: calc(var(--spacing-x3) * -1); }
+    .patt-remove > svg { width: 10px; height: 10px; }
+    @media (hover: hover) { .patt-remove:hover { background: var(--color-bg-layer-default-pressed); } }
+    .patt-remove--hover { background: var(--color-bg-layer-default-pressed); }
+    .patt-remove:active, .patt-remove--pressed { background: var(--color-bg-layer-default-pressed); scale: calc(1 - 2 / var(--press-basis)); }
+    .patt-remove:focus-visible, .patt-remove--focus { outline: 2px solid var(--pfin-ring); outline-offset: -2px; }
+    .patt-remove:is([aria-disabled="true"], :disabled) { cursor: not-allowed; color: var(--color-fg-disabled); background: var(--color-bg-layer-default); scale: 1; }
+    .patt-li[data-dragging] > .patt-remove { display: none; }
+    @media (prefers-reduced-motion: reduce) { .patt-trigger:active, .patt-trigger--pressed, .patt-action:active, .patt-remove:active, .patt-remove--pressed { scale: 1; } }
+    /* × 의 누르는 자리(분홍) · 구멍(점선) — 갤러리 전용 */
+    .patt-li--guide > .patt-remove::before { background: color-mix(in srgb, #e5007e 14%, transparent); outline: 1px dashed color-mix(in srgb, #e5007e 60%, transparent); outline-offset: -1px; }
+    .patt-li--guide::after { content: ""; position: absolute; top: -6px; right: -6px; width: 24px; height: 24px; border-radius: var(--radius-full); outline: 1px dashed var(--color-fg-neutral-subtle); pointer-events: none; }
+    .pfin-row-box--guide { padding-top: var(--spacing-x6); }
+    /* 드롭존(1280 이상) — 높이 120 · 모서리 12 · 늘 1px 실선 stroke-neutral-solid. 끌어 들어오면 stroke-neutral-contrast + bg-layer-default-pressed.
+       막힘 · 다 참 · 읽기 전용이면 stroke-neutral-weak · 안내 fg-disabled. 1280 미만은 파일 선택 버튼(large · 칸 폭 · 앞 아이콘 upload)만 */
+    .patt-dropzone {
+      display: none; flex-direction: column; align-items: center; justify-content: center; gap: var(--spacing-x2);
+      box-sizing: border-box; height: 120px; padding: 0 var(--spacing-x4); border: 1px solid var(--color-stroke-neutral-solid); border-radius: var(--radius-r3); background: transparent;
+      transition: border-color var(--motion-duration-color-transition) var(--motion-ease-easing), background-color var(--motion-duration-color-transition) var(--motion-ease-easing);
+    }
+    .patt-dropzone[data-drag-over] { border-color: var(--color-stroke-neutral-contrast); background: var(--color-bg-layer-default-pressed); }
+    .patt-dropzone[data-disabled] { border-color: var(--color-stroke-neutral-weak); }
+    .patt-dropzone-label { margin: 0; text-align: center; font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 500; color: var(--color-fg-neutral-subtle); }
+    .patt-dropzone[data-disabled] .patt-dropzone-label { color: var(--color-fg-disabled); }
+    .patt-pick-narrow { width: 100%; }
+    @media (min-width: 1280px) {
+      .patt:not([data-screen]) .patt-dropzone { display: flex; }
+      .patt:not([data-screen]) .patt-pick-narrow { display: none; }
+    }
+    .patt[data-screen="wide"] .patt-dropzone { display: flex; }
+    .patt[data-screen="wide"] .patt-pick-narrow { display: none; }
+
+    /* ── Footer — <footer>(위 선 화면 폭) > 틀 최대 1040 · 위아래 40 · 좌우 24(1280 이상 32) · 영역 사이 40 ─────────────────────────────── */
+    .pfoot { box-sizing: border-box; width: 100%; background: transparent; font-family: var(--font-sans); color: var(--color-fg-neutral); }
+    .pfoot--top-line { border-top: 1px solid var(--color-stroke-neutral-subtle); }
+    .pfoot-frame { box-sizing: border-box; display: flex; flex-direction: column; gap: var(--spacing-x10); width: 100%; max-width: var(--layout-max-content); margin: 0 auto; padding: var(--spacing-x10) var(--spacing-global-gutter); }
+    .pfoot-nav { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--spacing-x8); }
+    .pfoot-brand { display: flex; flex: 1 1 240px; flex-direction: column; align-items: flex-start; gap: var(--spacing-x2); min-width: 120px; }
+    .pfoot-brand-name { margin: 0; font-size: var(--text-t7); line-height: var(--text-t7--line-height); font-weight: 700; color: var(--color-fg-neutral); }
+    .pfoot-brand-intro { margin: 0; max-width: 340px; font-size: var(--text-t3); line-height: var(--text-t3--line-height); font-weight: 400; color: var(--color-fg-neutral-subtle); }
+    .pfoot-sitemap { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--spacing-x8); }
+    .pfoot-col { display: flex; flex-direction: column; align-items: flex-start; gap: var(--spacing-x4); min-width: 100px; }
+    .pfoot-col-title { font-size: var(--text-t3); line-height: var(--text-t3--line-height); font-weight: 500; color: var(--color-fg-neutral-muted); }
+    .pfoot-col-links { display: flex; flex-direction: column; align-items: flex-start; gap: var(--spacing-x4); margin: 0; padding: 0; list-style: none; }
+    .pfoot-col-links > li { display: flex; }
+    .pfoot-divider { flex-shrink: 0; width: 100%; height: 1px; background: var(--color-stroke-neutral-subtle); }
+    .pfoot-info { display: flex; flex-direction: column; align-items: flex-start; gap: var(--spacing-x4); }
+    .pfoot-links { display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--spacing-x6); row-gap: var(--spacing-x2); }
+    .pfoot-text { margin: 0; font-size: var(--text-t3); line-height: var(--text-t3--line-height); font-weight: 400; color: var(--color-fg-neutral-subtle); }
+    .pfoot-bottom { display: flex; flex-direction: column; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--spacing-x4); width: 100%; }
+    .pfoot-copyright { margin: 0; font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 500; color: var(--color-fg-neutral-muted); }
+    .pfoot-social { display: flex; align-items: center; gap: var(--spacing-x6); }
+    .pfoot-social > * { margin-inline: calc(var(--spacing-x3) * -1); }
+    @media (min-width: 1280px) {
+      .pfoot:not([data-width]) .pfoot-frame { padding-inline: var(--spacing-x8); }
+      .pfoot:not([data-width]) .pfoot-bottom { flex-direction: row; align-items: center; }
+    }
+    .pfoot[data-width="wide"] .pfoot-frame { padding-inline: var(--spacing-x8); }
+    .pfoot[data-width="wide"] .pfoot-bottom { flex-direction: row; align-items: center; }
+    /* 링크 — 밑줄 없이 색으로. large(사이트맵 16 / 22 · fg-neutral → fg-neutral-subtle) · medium(정책 14 / 19 · fg-neutral-muted → fg-neutral). 새 탭만 ↗ */
+    .pfoot-link { display: inline-flex; align-items: center; gap: var(--spacing-x1); border-radius: var(--radius-r1); text-decoration: none; cursor: pointer; font-weight: 500; transition: color var(--motion-duration-color-transition) var(--motion-ease-easing); }
+    .pfoot-link > svg { flex-shrink: 0; }
+    .pfoot-link:focus-visible, .pfoot-link--focus { outline: 2px solid var(--pfin-ring); outline-offset: 2px; }
+    .pfoot-link--large { font-size: var(--text-t5); line-height: var(--text-t5--line-height); color: var(--color-fg-neutral); }
+    .pfoot-link--large > svg { width: 14px; height: 14px; }
+    .pfoot-link--large:active, .pfoot-link--large.pfoot-link--hover, .pfoot-link--large.pfoot-link--pressed { color: var(--color-fg-neutral-subtle); }
+    .pfoot-link--medium { font-size: var(--text-t4); line-height: var(--text-t4--line-height); color: var(--color-fg-neutral-muted); }
+    .pfoot-link--medium > svg { width: 12px; height: 12px; }
+    .pfoot-link--medium:active, .pfoot-link--medium.pfoot-link--hover, .pfoot-link--medium.pfoot-link--pressed { color: var(--color-fg-neutral); }
+    @media (hover: hover) {
+      .pfoot-link--large:hover { color: var(--color-fg-neutral-subtle); }
+      .pfoot-link--medium:hover { color: var(--color-fg-neutral); }
+    }
+    /* 홈에 넣은 모습(8A) — 짜임은 스펙, 색 · 글꼴은 porest-home index.html 의 값(--ink · --ink2 · --ink3 은 4.5 이상으로 짙게 고친 값 · --line · --blue). 그림 전용 */
+    .pfin-page--home { background: #ffffff; }
+    .pfin-page--home .pfin-page-body > span { background: #f2f4f6; }
+    .pfin-section .pfin-home .pfoot.pfoot { --color-fg-neutral: #191f28; --color-fg-neutral-muted: #4e5968; --color-fg-neutral-subtle: #6b7684; --color-stroke-neutral-subtle: #e5e8eb; font-family: "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", sans-serif; }
+    .pfin-section .pfin-home .pfoot-brand-name.pfoot-brand-name { color: #1b64da; }
+
+    /* 다크 — 역할 색을 이 블록의 부품 · 갤러리 틀 안에서만 다크 짝으로 바꾼다(.pcol-* 와 같다). 라이트 틀(.pdsp-theme--light)과 그 안은 빼고,
+       다크 틀(.pdsp-theme--dark)은 페이지가 라이트여도 바꾼다 — 끼운 03g 의 Field · 입력칸 · 03h 의 Select · 03m 의 메뉴도 이 짝을 이어받는다.
+       사진 위 올리는 중 딤은 다크 0.65(overlay-dim-dark) — 실패 덮개 · 대표 띠는 두 모드 0.65 그대로다 */
+    [data-theme="dark"] :is(.pfin-phone, .pfin-sheet, .pfin-dialog, .pfin-desk, .pfin-page, .pfin-row-box, .pfin-size-row, .pfin-cart, .pfin-menu-solo, .pfin-live-status, .pfin-measure, .pqp, .patt, .pfoot, .patt-menu):not(.pdsp-theme--light, .pdsp-theme--light *),
+    .pdsp-theme--dark {
+      --color-bg-layer-default: var(--color-bg-layer-default-dark);
+      --color-bg-layer-default-pressed: var(--color-bg-layer-default-pressed-dark);
+      --color-bg-layer-floating: var(--color-bg-layer-floating-dark);
+      --color-bg-layer-floating-pressed: var(--color-bg-layer-floating-pressed-dark);
+      --color-bg-layer-basement: var(--color-bg-layer-basement-dark);
+      --color-bg-neutral-weak: var(--color-bg-neutral-weak-dark);
+      --color-bg-neutral-weak-pressed: var(--color-bg-neutral-weak-pressed-dark);
+      --color-bg-neutral-inverted: var(--color-bg-neutral-inverted-dark);
+      --color-bg-neutral-inverted-pressed: var(--color-bg-neutral-inverted-pressed-dark);
+      --color-bg-disabled: var(--color-bg-disabled-dark);
+      --color-fg-neutral: var(--color-fg-neutral-dark);
+      --color-fg-neutral-muted: var(--color-fg-neutral-muted-dark);
+      --color-fg-neutral-subtle: var(--color-fg-neutral-subtle-dark);
+      --color-fg-neutral-inverted: var(--color-fg-neutral-inverted-dark);
+      --color-fg-placeholder: var(--color-fg-placeholder-dark);
+      --color-fg-disabled: var(--color-fg-disabled-dark);
+      --color-fg-critical: var(--color-fg-critical-dark);
+      --color-stroke-neutral-subtle: var(--color-stroke-neutral-subtle-dark);
+      --color-stroke-neutral-weak: var(--color-stroke-neutral-weak-dark);
+      --color-stroke-neutral-solid: var(--color-stroke-neutral-solid-dark);
+      --color-stroke-neutral-contrast: var(--color-stroke-neutral-contrast-dark);
+      --color-stroke-neutral-overlay: var(--color-stroke-neutral-overlay-dark);
+      --color-stroke-critical-solid: var(--color-stroke-critical-solid-dark);
+      --color-stroke-focus-ring: var(--color-stroke-focus-ring-dark);
+      --color-gray-500: var(--color-gray-500-dark);
+    }
+    [data-theme="dark"] :is(.patt-backdrop--uploading, .pfin-dim):not(.pdsp-theme--light *),
+    .pdsp-theme--dark :is(.patt-backdrop--uploading, .pfin-dim) { background: var(--overlay-dim-dark); }
+    /* 홈 스킨은 라이트 하나(홈은 다크가 없다) */
+    .pfin-home .pfoot { color-scheme: light; }
+
+    /* Avatar — 사진 바꾸기 자리(03o · avatar.yaml edit photo · 6A) — 아바타 아래 16 에 늘 보이는 버튼 둘(사이 8 · 가운데 · 좁으면 줄을 바꾼다).
+       올리는 중은 원 위 딤(라이트 0.50 · 다크 0.65) 가운데 값 있는 원 24 — 1px 안쪽 테두리(::after)는 그 위에 그려진다 */
+    .pav-edit [hidden] { display: none !important; }
+    .pav-edit { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x4); }
+    .pav-edit-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-x2); }
+    .pav-edit-upload { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-full); background: var(--overlay-dim-light); }
+    [data-theme="dark"] .pav-edit-upload:not(.pdsp-theme--light *),
+    .pdsp-theme--dark .pav-edit-upload { background: var(--overlay-dim-dark); }
+    .pav-edit-fail { display: inline-flex; align-items: center; gap: var(--spacing-x1_5); font-size: var(--text-caption); color: var(--color-text-secondary); }
+
+    /* 여럿 고르고 저장 — HR 역할(03f · select-box.md 10A). 사용자 머리 + Field(역할 — 칸 없는 체크 상자 여럿) + 바닥 줄(옆 글 · "저장" neutralSolid medium) */
+    .psb-samples--roles { grid-template-columns: repeat(auto-fill, minmax(min(100%, 390px), 1fr)); }
+    .psb-roles-screen { box-sizing: border-box; display: flex; flex-direction: column; gap: var(--spacing-x6); padding: var(--spacing-x6) var(--spacing-global-gutter); border: 1px solid var(--color-stroke-neutral-subtle); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); font-family: var(--font-sans); color: var(--color-fg-neutral); }
+    .psb-roles-screen--phone { max-width: 390px; }
+    .psb-roles-screen--desk { max-width: 640px; padding: var(--spacing-x8); }
+    .psb-roles { display: flex; flex-direction: column; gap: var(--spacing-x6); }
+    .psb-roles-bar { display: flex; align-items: center; justify-content: flex-end; gap: var(--spacing-x3); }
+    .psb-roles-status { font-size: var(--text-t4); line-height: var(--text-t4--line-height); color: var(--color-fg-neutral-subtle); }
+    .psb-roles-user { display: flex; align-items: center; gap: var(--spacing-x3); }
+    .psb-roles-who { display: flex; min-width: 0; flex-direction: column; }
+    .psb-roles-name { font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; }
+    .psb-roles-mail { font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); }
+    [data-theme="dark"] .psb-roles-screen {
+      --color-bg-layer-default: var(--color-bg-layer-default-dark);
+      --color-stroke-neutral-subtle: var(--color-stroke-neutral-subtle-dark);
+      --color-fg-neutral: var(--color-fg-neutral-dark);
+      --color-fg-neutral-subtle: var(--color-fg-neutral-subtle-dark);
+    }
+
     /* todo-card */
     .todo-list { display: flex; flex-direction: column; gap: 2px; }
     .todo-row {
@@ -18139,17 +19274,7 @@ export function pageCss() {
 
     /* 옛 Popover(.pop · .pop-trigger — 288 · 모서리 8 · 1px 테두리 · shadow-md)는 걷었다. 팝오버는 Overlays 블록의 .pov-popover 다(03k) */
 
-    /* File Upload */
-    .fu-zone { border: 2px dashed var(--color-border-default); border-radius: var(--radius-md); padding: var(--spacing-lg); display: flex; flex-direction: column; align-items: center; gap: 4px; background: var(--color-bg-page); }
-    .fu-icon { font-size: 24px; color: var(--color-text-tertiary); }
-    .fu-label { font-size: var(--text-body-md); color: var(--color-text-primary); }
-    .fu-list { display: flex; flex-direction: column; gap: var(--spacing-xs); margin-top: var(--spacing-xs); }
-    .fu-item { display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-xs) var(--spacing-sm); background: var(--color-surface-input); border-radius: var(--radius-sm); }
-    .fu-file-icon { font-size: 18px; }
-    .fu-meta { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-    .fu-name { font-size: var(--text-caption); color: var(--color-text-primary); }
-    /* 올리는 중 — 값 있는 Progress Circle 24(이름 옆 neutral — progress-circle.md "올리기 · 받기"). 옛 4px 브랜드 막대(.fu-progress)는 걷었다 */
-    .fu-remove { width: 24px; height: 24px; border: 0; background: transparent; cursor: pointer; color: var(--color-text-tertiary); border-radius: var(--radius-sm); }
+    /* 옛 File Upload(.fu-zone · .fu-item … — 2px 점선 border-default · surface-input)는 걷었다(2026-10-15) — 03v 의 Attachment Input(.patt-*)이다 */
 
     /* 옛 Treeview(.tv-* — ▾ ▸ 글자 꺾쇠 · 고른 줄 브랜드 10% · 줄 32)는 걷었다(2026-10-10). 나무는 펼치고 접기 블록의 .ptree 다(03u, tree-view.md) */
 
@@ -18190,18 +19315,7 @@ export function pageCss() {
     /* 옛 Breadcrumb(.bc — 경로 글 + /) · Sidebar(.sb — 회색 상자 · 왼쪽 막대) · Navigation Menu(.nm) · Menubar(.mb-*)는 걷었다.
        사이드바는 화면 틀 · 이동 블록의 .psnav(03r), 동작 목록은 Menu 블록의 .pmenu 다(03m) — 위치는 사이드바의 지금 항목이 알린다 */
 
-    /* Command (⌘K) */
-    .cmd { background: var(--color-bg-page); border-radius: var(--radius-md); padding: var(--spacing-md); }
-    .cmd-input { width: 100%; padding: var(--spacing-sm) var(--spacing-md); background: var(--color-surface-default); border: 1px solid var(--color-border-default); border-radius: var(--radius-sm); color: var(--color-text-primary); font-family: inherit; font-size: var(--text-body-md); }
-    .cmd-section { margin-top: var(--spacing-md); }
-    .cmd-group { font-size: var(--text-caption); color: var(--color-text-tertiary); padding: var(--spacing-xs) var(--spacing-sm); margin-top: var(--spacing-sm); text-transform: uppercase; letter-spacing: 0.04em; }
-    .cmd-item { display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-sm); cursor: pointer; font-size: var(--text-body-md); }
-    .cmd-item:hover { background: var(--color-surface-input); }
-    .cmd-shortcut { font-family: ui-monospace, monospace; font-size: var(--text-caption); color: var(--color-text-tertiary); }
-
-    /* Combobox */
-    .cb { display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-sm) var(--spacing-md); background: var(--color-surface-input); border: 1px solid var(--color-border-default); border-radius: var(--radius-sm); cursor: pointer; }
-    .cb-caret { color: var(--color-text-tertiary); }
+    /* 옛 Command(.cmd — ⌘K 팔레트) · Combobox(.cb — 칸 + ▾)는 걷었다(2026-10-15). 검색해 고르는 긴 목록은 Input Button + Searchable List(03h · 03s) */
 
     /* 옛 Slider(.sld — 브랜드 채움 · 흰 손잡이 16 + 테두리 · 그림자) · Toggle(.tg — 글 토글) · Toggle Group(.tgg) · Input OTP(.otp — 칸 6 × 40)는 걷었다(2026-10-09).
        슬라이더 · 켜고 끄는 아이콘 단추 · 인증 코드 칸은 입력 블록의 .psld · .ptgl · .potp-* 다(03t, slider.md · toggle.md · input-otp.md). Toggle Group 은 걷었다 */
@@ -18288,10 +19402,6 @@ export function pageCss() {
     [data-theme="dark"] .batch-card,
     [data-theme="dark"] .sc-card,
     [data-theme="dark"] .swatch { background: var(--color-surface-default-dark); }
-    [data-theme="dark"] .cmd { background: var(--color-bg-page-dark); }
-    [data-theme="dark"] .cb { background: var(--color-surface-input-dark); }
-    [data-theme="dark"] .cmd-item:hover { background: var(--color-surface-input-dark); }
-    [data-theme="dark"] .cmd-input { background: var(--color-surface-default-dark); border-color: var(--color-border-default-dark); color: var(--color-text-primary-dark); }
     [data-theme="dark"] .stp-connector { background: var(--color-border-default-dark); }
     [data-theme="dark"] .stp-item--current .stp-circle {
       background: var(--color-primary-light, var(--color-primary, var(--color-text-primary-dark)));
@@ -18495,6 +19605,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
     ${renderDataGallery(brand)}
     ${renderInputGallery(brand)}
     ${renderCollapseGallery(brand)}
+    ${renderFinishGallery(brand)}
     ${renderVignettes(brand)}
     ${renderListingDetail(brand)}
     ${renderCalendar(brand)}
@@ -18506,7 +19617,6 @@ function renderHtml(brandName, css, tokens, sourceFile) {
     ${renderSkeleton(brand)}
     ${renderBatchV67(brand)}
     ${renderShadcnNav(brand)}
-    ${renderShadcnInput(brand)}
     ${renderShadcnDisclose(brand)}
     ${renderShadcnExtras(brand)}
     ${renderBatchV73V78(brand)}
@@ -22266,6 +23376,649 @@ function renderHtml(brandName, css, tokens, sourceFile) {
       measureAll();
       window.addEventListener("load", measureAll);
       window.addEventListener("resize", measureAll);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureAll);
+    })();
+    // 마무리 (2026-10-15) — quantity-picker.tsx · attachment-input.tsx · footer.tsx · avatar.tsx(사진 바꾸기)가 하는 일 가운데 그림에 필요한 것을 흉내 낸다(03v · 03o).
+    // Quantity Picker — [data-pqp-live] 상자의 − · + 는 한 단계(step)씩 바꾸고, 끝에 닿은 버튼은 aria-disabled(초점은 남는다)가 된다. 지우기 칸은 최소에서 휴지통 ·
+    // 이름 "{항목} 지우기", [data-pqp-server] 는 누른 버튼이 1.2초 기다린다(aria-busy + 값 없는 원). 누르고 있어 되풀이되는 키는 버린다. 값 칸은 숨긴 자리 글을 다시 잡는다.
+    // Attachment Input — 파일 이름(.patt-name)은 보이지 않는 같은 글로 줄 수를 재고 넘치면 셋째 줄 "…" + 넷째 줄 확장자로 줄인다(글꼴 · 폭이 바뀌면 다시).
+    // [data-patt-live] 칸 — menu(1280 이상 Menu) · sheet(미만 Menu Sheet): 항목을 누르거나 Enter 면 메뉴, Space · ← → · Space(Esc 그만두기)로 옮기고,
+    // 마우스는 8px · 터치는 250ms 누른 채 움직이면 끈다. × 는 지우고 초점을 다음 × → 앞 × → 타일로, 다시 시도는 다시 올린다. tile · drop 은 고르기 창 ·
+    // 끌어 놓기 · 다시 검사(형식 · 크기 · 개수)를 하고, 거절은 Field 오류 글로 한 번 알린다. 바닥 링크는 미리보기를 떠나지 않는다.
+    (function () {
+      var ICON = { minus: ${JSON.stringify(finSvg("minus"))}, plus: ${JSON.stringify(finSvg("plus"))}, trash: ${JSON.stringify(finSvg("trash-2"))}, x: ${JSON.stringify(finSvg("x", { stroke: 2.5 }))}, retry: ${JSON.stringify(finSvg("rotate-cw"))}, fileText: ${JSON.stringify(finSvg("file-text"))}, fileSheet: ${JSON.stringify(finSvg("file-spreadsheet"))}, file: ${JSON.stringify(finSvg("file"))}, alert: ${JSON.stringify(TEXT_FIELD_ICON.circleAlert)} };
+      var SPIN = ${JSON.stringify(progressCircle({ size: "inherit", tone: "inherit", hidden: true }))};
+      function closest(e, sel) { return e.target && e.target.closest ? e.target.closest(sel) : null; }
+      function say(el, text) { var box = el && el.closest(".pfin-live"); var out = box && box.querySelector("[data-pfin-status]"); if (out) out.textContent = text; }
+
+      // ── Quantity Picker ──────────────────────────────────────────────
+      function qpText(root, v) { return v + (root.getAttribute("data-unit") || ""); }
+      function qpRender(root, value) {
+        var min = +root.getAttribute("data-min"), max = root.hasAttribute("data-max") ? +root.getAttribute("data-max") : Infinity;
+        var dec = root.querySelector('[data-pqp-step="-1"]'), inc = root.querySelector('[data-pqp-step="1"]');
+        var removable = root.hasAttribute("data-remove-label"), ro = root.hasAttribute("data-readonly"), off = root.hasAttribute("data-disabled");
+        var atMin = value <= min, atMax = value >= max, isRemove = removable && atMin;
+        root.setAttribute("data-value", String(value));
+        function block(btn, on) { if (off) return; if (on) btn.setAttribute("aria-disabled", "true"); else btn.removeAttribute("aria-disabled"); }
+        block(dec, ro || (atMin && !isRemove));
+        block(inc, ro || atMax);
+        dec.setAttribute("aria-label", isRemove ? root.getAttribute("data-remove-label") : "줄이기");
+        if (isRemove) dec.setAttribute("data-remove", ""); else dec.removeAttribute("data-remove");
+        if (dec.getAttribute("aria-busy") !== "true") dec.innerHTML = isRemove ? ICON.trash : ICON.minus;
+        var box = root.querySelector(".pqp-value");
+        var current = qpText(root, value);
+        var ph = [qpText(root, min)];
+        if (max !== Infinity) ph.push(qpText(root, max));
+        var html = "";
+        ph.filter(function (t, i) { return t !== current && ph.indexOf(t) === i; }).forEach(function (t) { html += '<span class="pqp-ph" aria-hidden="true">' + t + "</span>"; });
+        box.innerHTML = html + '<span class="pqp-text">' + current + "</span>";
+        var hidden = root.querySelector('input[type="hidden"]');
+        if (hidden) hidden.value = String(value);
+      }
+      function qpName(root) {
+        var id = root.getAttribute("aria-labelledby");
+        var el = id && document.getElementById(id);
+        return el ? el.textContent.trim() : root.getAttribute("aria-label") || "";
+      }
+      function qpReport(root, btn) {
+        var label = btn.getAttribute("aria-label") + (btn.getAttribute("aria-disabled") === "true" ? "(사용할 수 없음)" : "");
+        var hidden = root.querySelector('input[type="hidden"]');
+        say(root, "읽기 — “" + qpText(root, +root.getAttribute("data-value")) + "” · 초점 — " + qpName(root) + " " + label + (hidden ? " · 숨은 입력 " + hidden.name + "=" + hidden.value : ""));
+      }
+      document.addEventListener("keydown", function (e) {
+        var btn = closest(e, ".pqp-btn");
+        if (btn && e.repeat && (e.key === "Enter" || e.key === " ")) e.preventDefault();
+      });
+      document.addEventListener("click", function (e) {
+        var btn = closest(e, ".pqp[data-pqp-live] .pqp-btn");
+        if (!btn) return;
+        var root = btn.closest(".pqp");
+        if (btn.disabled || btn.getAttribute("aria-disabled") === "true" || btn.getAttribute("aria-busy") === "true") { qpReport(root, btn); return; }
+        var value = +root.getAttribute("data-value"), step = +root.getAttribute("data-step") || 1;
+        var min = +root.getAttribute("data-min"), max = root.hasAttribute("data-max") ? +root.getAttribute("data-max") : Infinity;
+        if (btn.hasAttribute("data-remove")) { cartRemove(root); return; }
+        var next = btn.getAttribute("data-pqp-step") === "1" ? Math.min(value + step, max) : Math.max(value - step, min);
+        if (!root.hasAttribute("data-pqp-server")) { qpRender(root, next); qpReport(root, btn); return; }
+        btn.setAttribute("aria-busy", "true");
+        btn.innerHTML = SPIN;
+        say(root, qpName(root) + " — 서버 응답을 기다리는 중(누른 버튼만 aria-busy)");
+        setTimeout(function () {
+          btn.removeAttribute("aria-busy");
+          btn.innerHTML = btn.getAttribute("data-pqp-step") === "1" ? ICON.plus : ICON.minus;
+          qpRender(root, next);
+          qpReport(root, btn);
+        }, 1200);
+      });
+      // 장보기 목록 — 1 에서 휴지통을 누르면 그 줄을 지우고 초점을 다음 줄(없으면 앞 줄)의 버튼으로
+      var cart = document.querySelector("[data-pfin-cart-live]");
+      var cartInitial = cart ? cart.querySelector(".pfin-cart").innerHTML : "";
+      function cartRemove(root) {
+        var row = root.closest("[data-pfin-cart-row]");
+        if (!row) return;
+        var name = row.querySelector(".pfin-cart-name").textContent;
+        var next = row.nextElementSibling || row.previousElementSibling;
+        say(root, "“" + name + "” 를 지웠어요 — 초점은 " + (next ? "다음 줄의 줄이기로" : "목록 머리로"));
+        row.remove();
+        if (next) next.querySelector(".pqp-btn").focus();
+      }
+      if (cart) cart.addEventListener("click", function (e) {
+        if (!closest(e, "[data-pfin-cart-reset]")) return;
+        cart.querySelector(".pfin-cart").innerHTML = cartInitial;
+        say(cart, "목록을 되돌렸어요.");
+      });
+
+      // ── Attachment Input — 파일 이름 네 줄 ────────────────────────────
+      function fitName(span) {
+        var name = span.getAttribute("data-patt-name");
+        var full = span.children[0], probe = span.querySelector("[data-patt-probe]"), text = span.querySelector(".patt-name-text");
+        var ext0 = span.querySelector(".patt-name-ext");
+        if (!full || !probe || !text) return;
+        var line = parseFloat(getComputedStyle(full).lineHeight) || 16;
+        if (!full.offsetHeight || full.offsetHeight <= line * 4 + 1) {
+          text.textContent = name;
+          if (ext0) ext0.remove();
+          span.removeAttribute("data-overflow");
+          return;
+        }
+        var dot = name.lastIndexOf(".");
+        var ext = dot > 0 && name.length - dot <= 10 ? name.slice(dot) : "";
+        var base = ext ? name.slice(0, dot) : name;
+        var lines = ext ? 3 : 4, chars = Array.from(base), box = probe.parentElement, lo = 0, hi = chars.length;
+        while (lo < hi) {
+          var mid = Math.ceil((lo + hi) / 2);
+          probe.textContent = chars.slice(0, mid).join("") + "…";
+          if (box.offsetHeight <= line * lines + 1) lo = mid; else hi = mid - 1;
+        }
+        probe.textContent = "";
+        text.textContent = chars.slice(0, lo).join("").replace(/\\s+$/, "") + "…";
+        if (ext) {
+          var e = ext0 || document.createElement("span");
+          e.className = "patt-name-ext";
+          e.textContent = ext;
+          if (!ext0) span.appendChild(e);
+        } else if (ext0) ext0.remove();
+        span.setAttribute("data-overflow", "");
+      }
+      function fitNames(scope) { (scope || document).querySelectorAll(".patt-name").forEach(fitName); }
+
+      // ── Attachment Input — 직접 견본 ──────────────────────────────────
+      var MB = 1024 * 1024;
+      function sizeText(b) { b = Math.max(0, Math.round(b)); if (b < 1024) return b + "B"; if (b < MB) return Math.max(1, Math.round(b / 1024)) + "KB"; return (b / MB).toFixed(1) + "MB"; }
+      function lower(s) { return String(s || "").toLowerCase(); }
+      function endsWith(s, tail) { s = lower(s); return s.slice(s.length - tail.length) === tail; }
+      var IMAGE_EXT = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg", ".heic", ".heif", ".avif"];
+      function isImage(f) { return f.type ? f.type.indexOf("image/") === 0 : IMAGE_EXT.some(function (x) { return endsWith(f.name, x); }); }
+      function fileIcon(name) { return endsWith(name, ".pdf") ? ICON.fileText : [".csv", ".xlsx", ".xls", ".ods", ".numbers"].some(function (x) { return endsWith(name, x); }) ? ICON.fileSheet : ICON.file; }
+      function circle(tone, pct) {
+        return '<svg class="ppc ppc--s24 ppc--' + tone + '" data-state="determinate"' + (pct === 0 ? " data-empty" : "") + ' style="--ppc-p: ' + pct + ';" aria-hidden="true" focusable="false"><circle class="ppc-track"/><circle class="ppc-range"/></svg>';
+      }
+      function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+      function nameMarkup(name) {
+        return '<span class="patt-name" data-patt-name="' + esc(name) + '"><span class="patt-name-measure" aria-hidden="true"><span class="patt-name-clear"></span>' + esc(name) + '</span><span class="patt-name-measure" aria-hidden="true"><span class="patt-name-clear"></span><span data-patt-probe></span></span><span class="patt-name-clear" aria-hidden="true"></span><span class="patt-name-text">' + esc(name) + "</span></span>";
+      }
+      function items(root) { return Array.prototype.slice.call(root.querySelectorAll(".patt-li")); }
+      function mode(root) { return root.getAttribute("data-patt-live"); }
+      function describe(li, badge) {
+        var parts = [li.getAttribute("data-name"), sizeText(+li.getAttribute("data-size"))];
+        if (badge) parts.push(badge);
+        var st = li.getAttribute("data-status");
+        if (st === "uploading") parts.push("올리는 중 " + Math.round((+li.getAttribute("data-progress") || 0) * 100) + "%");
+        if (st === "error") parts.push("올리지 못했어요");
+        return parts.join(", ");
+      }
+      function announce(root, text) {
+        var out = root.querySelector("[data-patt-status]");
+        if (out) out.textContent = out.textContent.slice(-1) === " " ? text : text + " ";
+      }
+      // 줄이 바뀐 뒤 — 타일 개수 · 이름 · 막힘, 대표 띠(첫 사진), 항목 이름, 실패 수
+      function refresh(root) {
+        var list = items(root), max = root.getAttribute("data-max") ? +root.getAttribute("data-max") : Infinity, label = root.getAttribute("data-label") || "";
+        var badge = root.getAttribute("data-badge") || "", firstImage = null;
+        list.forEach(function (li) { if (!firstImage && li.getAttribute("data-kind") === "image") firstImage = li; });
+        list.forEach(function (li) {
+          var item = li.querySelector(".patt-item"), band = item.querySelector(".patt-badge"), on = badge && li === firstImage;
+          if (on && !band) { band = document.createElement("span"); band.className = "patt-badge"; band.setAttribute("aria-hidden", "true"); band.innerHTML = '<span class="patt-badge-label">' + esc(badge) + "</span>"; item.insertBefore(band, item.querySelector(".patt-backdrop")); }
+          if (!on && band) band.remove();
+          if (item.hasAttribute("role")) item.setAttribute("aria-label", describe(li, on ? badge : ""));
+        });
+        var trigger = root.querySelector(".patt-trigger");
+        if (trigger && max !== Infinity) {
+          trigger.querySelector(".patt-count-now").textContent = list.length;
+          trigger.setAttribute("aria-label", label + " 첨부, " + list.length + "/" + max);
+          if (list.length >= max) trigger.setAttribute("aria-disabled", "true"); else trigger.removeAttribute("aria-disabled");
+        }
+        var failures = list.filter(function (li) { return li.getAttribute("data-status") === "error"; }).length;
+        var fail = root.querySelector('[id$="-failure"]');
+        if (fail) fail.textContent = failures ? failures + "개는 올리지 못했어요." : "";
+        var desc = (root.getAttribute("aria-describedby") || "").split(" ").filter(function (x) { return x && x !== (fail && fail.id); });
+        if (failures && fail) desc.push(fail.id);
+        if (desc.length) root.setAttribute("aria-describedby", desc.join(" ")); else root.removeAttribute("aria-describedby");
+      }
+      // 항목 상태 — 올리는 중(값 있는 원) · 실패(덮개 + 다시 시도) · 올림
+      function setStatus(li, status, progress) {
+        var item = li.querySelector(".patt-item"), image = li.getAttribute("data-kind") === "image", pct = Math.round((progress || 0) * 100);
+        li.setAttribute("data-status", status);
+        if (status === "uploading") li.setAttribute("data-progress", String(progress || 0)); else li.removeAttribute("data-progress");
+        var back = item.querySelector(".patt-backdrop"), retry = li.querySelector(".patt-action");
+        if (image) {
+          if (back) back.remove();
+          if (status === "uploading" || status === "error") {
+            back = document.createElement("span");
+            back.className = "patt-backdrop patt-backdrop--" + status;
+            back.setAttribute("aria-hidden", "true");
+            back.innerHTML = status === "uploading" ? circle("static-white", pct) : "";
+            item.appendChild(back);
+          }
+        } else {
+          var thumb = item.querySelector(".patt-thumb");
+          thumb.innerHTML = status === "uploading" ? circle("neutral", pct) : fileIcon(li.getAttribute("data-name"));
+        }
+        if (status === "error" && !retry) {
+          retry = document.createElement("button");
+          retry.type = "button";
+          retry.className = "patt-action patt-action--" + (image ? "image" : "file");
+          retry.setAttribute("data-patt-retry", "");
+          retry.setAttribute("aria-label", li.getAttribute("data-name") + " 다시 시도");
+          retry.innerHTML = ICON.retry + "다시 시도";
+          li.insertBefore(retry, li.querySelector(".patt-remove"));
+        }
+        if (status !== "error" && retry) retry.remove();
+        if (!image) fitNames(li);
+      }
+      // 올리기 흉내 — 0.15초마다 10% · fail 이면 60% 에서 멈춘 뒤 실패
+      function upload(root, li, fail) {
+        var p = 0;
+        setStatus(li, "uploading", 0);
+        refresh(root);
+        var timer = setInterval(function () {
+          if (!li.isConnected) return clearInterval(timer);
+          p = Math.min(1, p + 0.1);
+          if (fail && p >= 0.6) { clearInterval(timer); setStatus(li, "error"); refresh(root); announce(root, "1개는 올리지 못했어요."); return; }
+          if (p >= 1) { clearInterval(timer); setStatus(li, "success"); refresh(root); announce(root, "1개를 올렸어요."); return; }
+          setStatus(li, "uploading", p);
+          li.querySelector(".patt-item").setAttribute("aria-label", describe(li, ""));
+        }, 150);
+      }
+      function newItem(root, f, url) {
+        var image = isImage(f), id = "new-" + Math.random().toString(36).slice(2, 8);
+        var pressable = mode(root) === "menu" || mode(root) === "sheet";
+        var li = document.createElement("li");
+        li.className = "patt-li";
+        li.setAttribute("data-slot", "attachment-input-item-root");
+        li.setAttribute("data-id", id);
+        li.setAttribute("data-name", f.name);
+        li.setAttribute("data-size", String(f.size));
+        li.setAttribute("data-kind", image ? "image" : "file");
+        li.setAttribute("data-status", "pending");
+        var face = image ? (url ? '<img class="patt-img" src="' + url + '" alt="" draggable="false">' : '<span class="patt-img patt-img--fallback" aria-hidden="true">' + ICON.file + "</span>")
+          : '<span class="patt-thumb" aria-hidden="true">' + fileIcon(f.name) + '</span><span class="patt-meta" aria-hidden="true">' + nameMarkup(f.name) + '<span class="patt-size">' + sizeText(f.size) + "</span></span>";
+        var press = pressable ? ' role="button" tabindex="0" aria-roledescription="순서를 바꿀 수 있는 항목" aria-haspopup="' + (mode(root) === "menu" ? "menu" : "dialog") + '" aria-expanded="false" data-pressable data-sortable' : "";
+        li.innerHTML = '<div class="patt-item patt-item--' + (image ? "image" : "file") + '" data-slot="attachment-input-item"' + press + ">" + face + (pressable ? "" : '<span class="ptf-sr-only">' + esc(f.name) + "</span>") + '</div><button class="patt-remove" type="button" data-patt-remove aria-label="' + esc(f.name + " 지우기") + '">' + ICON.x + "</button>";
+        return li;
+      }
+      // Field 오류 글 — 거절은 칸 아래 한 번(이유마다 한 문장). text 가 비면 걷는다
+      function fieldError(root, text) {
+        var field = root.closest(".ptf-field");
+        if (!field) return;
+        var foot = field.querySelector(".ptf-field-footer"), err = field.querySelector(".ptf-error"), desc = field.querySelector(".ptf-desc"), live = field.querySelector(".ptf-live");
+        if (!foot) { foot = document.createElement("div"); foot.className = "ptf-field-footer"; field.insertBefore(foot, live); }
+        if (text) {
+          if (!err) { err = document.createElement("p"); err.className = "ptf-error"; err.id = (desc ? desc.id.replace(/-desc$/, "") : root.id) + "-error"; err.setAttribute("aria-hidden", "true"); foot.insertBefore(err, foot.firstChild); }
+          err.innerHTML = ICON.alert + "<span>" + esc(text) + "</span>";
+          if (desc) desc.hidden = true;
+          field.setAttribute("data-invalid", "");
+          if (live) live.textContent = text;
+          root.setAttribute("aria-describedby", err.id);
+        } else {
+          if (err) err.remove();
+          if (desc) { desc.hidden = false; root.setAttribute("aria-describedby", desc.id); }
+          field.removeAttribute("data-invalid");
+          if (live) live.textContent = "";
+        }
+      }
+      var REJECT = { FILE_TOO_LARGE: "10MB 넘는 파일은 올릴 수 없어요.", INVALID_TYPE: "사진 · PDF 만 올릴 수 있어요.", TOO_MANY_FILES: "10개까지 올릴 수 있어요." };
+      function accepts(root, f) {
+        if (mode(root) === "drop") return [".csv", ".xlsx", ".xls"].some(function (x) { return endsWith(f.name, x); });
+        return isImage(f) || f.type === "application/pdf" || endsWith(f.name, ".pdf");
+      }
+      // 고르기 · 끌어 놓기 — 다시 검사 후 붙인 것을 먼저, 거절을 뒤에 알린다
+      function take(root, files) {
+        var max = root.getAttribute("data-max") ? +root.getAttribute("data-max") : Infinity;
+        var room = Math.max(0, max - items(root).length), accepted = [], codes = [];
+        files.forEach(function (f) {
+          var c = [];
+          if (!accepts(root, f)) c.push("INVALID_TYPE");
+          if (f.size > 10 * MB) c.push("FILE_TOO_LARGE");
+          if (!c.length && accepted.length >= room) c.push("TOO_MANY_FILES");
+          if (c.length) c.forEach(function (x) { if (codes.indexOf(x) < 0) codes.push(x); }); else accepted.push(f);
+        });
+        if (accepted.length) {
+          fieldError(root, "");
+          var list = root.querySelector(".patt-list");
+          if (!list) {
+            list = document.createElement("ul");
+            list.className = "patt-list";
+            list.setAttribute("data-slot", "attachment-input-items");
+            var host = root.querySelector(".patt-row-content");
+            if (!host) { host = document.createElement("div"); host.className = "patt-row patt-row--dropzone"; host.setAttribute("data-slot", "attachment-input-row"); root.insertBefore(host, root.querySelector('[id$="-failure"]')); }
+            host.appendChild(list);
+          }
+          var added = accepted.map(function (f) {
+            var li = newItem(root, f, f.url || (f instanceof Blob && isImage(f) && window.URL ? URL.createObjectURL(f) : ""));
+            list.appendChild(li);
+            return li;
+          });
+          fitNames(list);
+          refresh(root);
+          var images = accepted.filter(isImage).length;
+          announce(root, images === accepted.length ? "사진 " + images + "장을 붙였어요." : images === 0 ? "파일 " + accepted.length + "개를 붙였어요." : accepted.length + "개를 붙였어요.");
+          added.forEach(function (li, i) { upload(root, li, accepted[i].fail); });
+          if (mode(root) === "drop") dropBlock(root, true);
+        }
+        if (codes.length) {
+          var text = mode(root) === "drop" ? "CSV · Excel 파일을 10MB 까지 올릴 수 있어요." : codes.map(function (c) { return REJECT[c]; }).join(" ");
+          fieldError(root, text);
+        }
+        say(root, "붙임 " + accepted.length + "개 · 거절 " + (files.length - accepted.length) + "개" + (codes.length ? " — 칸 아래 오류 글" : ""));
+      }
+      function picker(root) {
+        var input = root.querySelector("input[data-patt-picker]");
+        if (!input) {
+          input = document.createElement("input");
+          input.type = "file";
+          input.hidden = true;
+          input.tabIndex = -1;
+          input.setAttribute("data-patt-picker", "");
+          input.accept = mode(root) === "drop" ? ".csv,.xlsx,.xls" : "image/*,application/pdf";
+          input.multiple = mode(root) !== "drop";
+          input.addEventListener("change", function () { take(root, Array.prototype.slice.call(input.files || [])); input.value = ""; });
+          root.appendChild(input);
+        }
+        input.click();
+      }
+      function dropBlock(root, on) {
+        var zone = root.querySelector(".patt-dropzone");
+        if (zone) { if (on) zone.setAttribute("data-disabled", ""); else zone.removeAttribute("data-disabled"); }
+        root.querySelectorAll("[data-patt-pick]").forEach(function (b) { b.disabled = on; });
+      }
+      // × — 묻지 않고 지운다. 초점은 다음 항목의 × → 앞 항목의 × → 타일(드롭존이면 파일 선택)
+      function removeItem(root, li) {
+        var list = items(root), at = list.indexOf(li), name = li.getAttribute("data-name");
+        li.remove();
+        refresh(root);
+        var rest = items(root), target = rest[at] || rest[at - 1];
+        if (mode(root) === "drop" && !rest.length) dropBlock(root, false);
+        var focus = target ? target.querySelector(".patt-remove") : Array.prototype.filter.call(root.querySelectorAll(".patt-trigger, [data-patt-pick]"), function (b) { return b.offsetParent; })[0];
+        if (focus) focus.focus();
+        say(root, "“" + name + "” 를 지웠어요 — 초점 " + (target ? "다음 항목의 ×" : "타일"));
+      }
+      function move(root, li, to) {
+        var list = items(root), from = list.indexOf(li);
+        if (to < 0 || to >= list.length || to === from) return false;
+        var parent = li.parentElement;
+        list.splice(from, 1);
+        parent.insertBefore(li, list[to] || null);
+        refresh(root);
+        return true;
+      }
+      // 항목 메뉴 — 크게 보기(파일 "열기") · 대표로 정하기(띠를 쓰는 칸의 사진) · 앞으로 · 뒤로 | 지우기. 맨 앞은 앞으로 · 대표로, 맨 끝은 뒤로가 막힌다
+      var open = null;
+      function setupRows(root, li, rows) {
+        var list = items(root), at = list.indexOf(li), image = li.getAttribute("data-kind") === "image", badge = !!root.getAttribute("data-badge");
+        rows.forEach(function (row) {
+          var a = row.getAttribute("data-action"), show = a !== "badge" || (image && badge), blocked = (at === 0 && (a === "forward" || a === "badge")) || (at === list.length - 1 && a === "backward");
+          row.hidden = !show;
+          var label = row.querySelector(".pmenu-item-label, .pmsheet-item-label");
+          if (a === "preview") label.textContent = image ? "크게 보기" : "열기";
+          if (row.tagName === "BUTTON") row.disabled = blocked; else if (blocked) row.setAttribute("aria-disabled", "true"); else row.removeAttribute("aria-disabled");
+        });
+      }
+      function enabledRows(surface) {
+        return Array.prototype.filter.call(surface.querySelectorAll("[data-action]"), function (r) { return !r.hidden && !r.disabled && r.getAttribute("aria-disabled") !== "true"; });
+      }
+      function openMenu(root, li, byKey) {
+        closeMenu(false);
+        var live = root.closest(".pfin-live"), item = li.querySelector(".patt-item"), name = li.getAttribute("data-name");
+        var surface = mode(root) === "sheet" ? live.querySelector("[data-patt-sheet]") : live.querySelector("[data-patt-menu]");
+        if (!surface) return;
+        setupRows(root, li, Array.prototype.slice.call(surface.querySelectorAll("[data-action]")));
+        if (mode(root) === "sheet") {
+          surface.querySelector(".pmsheet-title").textContent = name;
+        } else {
+          surface.setAttribute("aria-label", name);
+          var c = live.getBoundingClientRect(), r = item.getBoundingClientRect();
+          surface.style.left = Math.round(Math.max(0, Math.min(r.left - c.left, c.width - 200))) + "px";
+          surface.style.top = Math.round(r.bottom - c.top + 8) + "px";
+        }
+        surface.hidden = false;
+        item.setAttribute("aria-expanded", "true");
+        open = { root: root, li: li, item: item, surface: surface };
+        var rows = enabledRows(surface);
+        (byKey || mode(root) === "sheet" ? rows[0] : surface).focus();
+        say(root, (mode(root) === "sheet" ? "메뉴 시트 — 머리 “" : "메뉴 — aria-label “") + name + "”");
+      }
+      function closeMenu(refocus) {
+        if (!open) return;
+        var o = open;
+        open = null;
+        o.surface.hidden = true;
+        o.item.setAttribute("aria-expanded", "false");
+        if (refocus && o.item.isConnected) o.item.focus();
+      }
+      function runAction(action) {
+        var o = open;
+        if (!o) return;
+        var root = o.root, li = o.li, list = items(root), at = list.indexOf(li), name = li.getAttribute("data-name");
+        closeMenu(action !== "remove");
+        if (action === "preview") return say(root, (li.getAttribute("data-kind") === "image" ? "크게 보기" : "열기") + " — “" + name + "”(크게 보는 화면은 쓰는 쪽이 연다)");
+        if (action === "remove") return removeItem(root, li);
+        var to = action === "forward" ? at - 1 : action === "backward" ? at + 1 : 0;
+        if (move(root, li, to)) {
+          announce(root, (to + 1) + "번째 자리로 옮겼어요.");
+          li.querySelector(".patt-item").focus();
+          say(root, (to + 1) + "번째 자리로 옮겼어요. — 초점은 옮긴 항목");
+        }
+      }
+      document.addEventListener("click", function (e) {
+        var row = closest(e, "[data-patt-menu] [data-action], [data-patt-sheet] [data-action]");
+        if (row && open) { if (!row.disabled && row.getAttribute("aria-disabled") !== "true") runAction(row.getAttribute("data-action")); return; }
+        if (open && closest(e, "[data-patt-sheet] .pmsheet-close")) return closeMenu(true);
+        if (open && e.target.matches && e.target.matches("[data-patt-sheet]")) return closeMenu(true);
+      });
+      document.addEventListener("pointerdown", function (e) {
+        if (open && !open.surface.contains(e.target) && !open.item.contains(e.target)) closeMenu(false);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (!open || !open.surface.contains(e.target)) return;
+        var rows = enabledRows(open.surface), at = rows.indexOf(e.target.closest("[data-action]"));
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); var n = at < 0 ? (e.key === "ArrowDown" ? 0 : rows.length - 1) : (at + (e.key === "ArrowDown" ? 1 : -1) + rows.length) % rows.length; rows[n].focus(); }
+        else if (e.key === "Home" || e.key === "End") { e.preventDefault(); rows[e.key === "Home" ? 0 : rows.length - 1].focus(); }
+        else if ((e.key === "Enter" || e.key === " ") && at >= 0 && open.surface.matches("[data-patt-menu]")) { e.preventDefault(); runAction(rows[at].getAttribute("data-action")); }
+        else if (e.key === "Escape") { e.preventDefault(); closeMenu(true); }
+        else if (e.key === "Tab") closeMenu(false);
+      });
+      // 순서 바꾸기 — 키보드(Space 들기 · ← → · Space · Enter 놓기 · Esc 그만두기)
+      var held = null;
+      function liftAnnounce(root, text) { announce(root, text); say(root, "읽기 — “" + text + "”"); }
+      document.addEventListener("keydown", function (e) {
+        var item = closest(e, ".patt[data-patt-live] .patt-item[data-pressable]");
+        if (!item) return;
+        var li = item.parentElement, root = li.closest(".patt"), sortable = item.hasAttribute("data-sortable");
+        if (held && held.li === li) {
+          if (e.key === "ArrowLeft" || e.key === "ArrowRight") { e.preventDefault(); var at = items(root).indexOf(li) + (e.key === "ArrowRight" ? 1 : -1); if (move(root, li, at)) { item.focus(); liftAnnounce(root, (at + 1) + "번째 자리예요."); } return; }
+          if (e.key === " " || e.key === "Enter") { e.preventDefault(); li.removeAttribute("data-dragging"); liftAnnounce(root, (items(root).indexOf(li) + 1) + "번째 자리에 놓았어요."); held = null; return; }
+          if (e.key === "Escape" || e.key === "Tab") { if (e.key === "Escape") e.preventDefault(); move(root, li, held.from); li.removeAttribute("data-dragging"); item.focus(); liftAnnounce(root, "옮기기를 그만뒀어요. 처음 자리예요."); held = null; return; }
+          if (e.key === "ArrowUp" || e.key === "ArrowDown") e.preventDefault();
+          return;
+        }
+        if (e.key === "Enter" || (e.key === " " && !sortable)) { e.preventDefault(); if (!e.repeat) openMenu(root, li, true); return; }
+        if (e.key === " " && sortable) { e.preventDefault(); if (e.repeat) return; held = { li: li, from: items(root).indexOf(li) }; li.setAttribute("data-dragging", ""); liftAnnounce(root, (held.from + 1) + "번째 항목을 들었어요."); return; }
+        if (e.key === "ArrowUp" || e.key === "ArrowDown") e.preventDefault();
+      });
+      // 들고 있던 항목에서 초점이 떠나면(Tab · 바깥 누르기) 그 자리에 놓는다. 옮기는 동안 DOM 을 다시 놓아 생기는 focusout 은 건너뛴다
+      document.addEventListener("focusout", function (e) {
+        if (!held || e.target !== held.li.querySelector(".patt-item")) return;
+        var h = held;
+        setTimeout(function () {
+          if (held !== h || h.li.contains(document.activeElement)) return;
+          h.li.removeAttribute("data-dragging");
+          held = null;
+        }, 0);
+      });
+      // 순서 바꾸기 — 끌기(마우스 · 펜 8px · 터치 250ms 누른 채). 그 전에 움직이면 줄이 스크롤하고, 그냥 떼면 누르기(메뉴)다
+      var drag = null, swallowClick = false;
+      document.addEventListener("pointerdown", function (e) {
+        var item = closest(e, ".patt[data-patt-live] .patt-item[data-sortable]");
+        if (!item || !e.isPrimary || e.button !== 0) return;
+        // 마우스 · 펜으로 누르는 순간의 기본 동작(글 고르기 · 초점)을 막는다 — 메뉴 트리거(Radix)가 하는 일과 같고, 끄는 동안 글 고르기가 줄을 밀지 않는다
+        if (e.pointerType !== "touch") e.preventDefault();
+        drag = { item: item, li: item.parentElement, x: e.clientX, y: e.clientY, id: e.pointerId, on: false, touch: e.pointerType === "touch", t: Date.now() };
+      });
+      document.addEventListener("pointermove", function (e) {
+        if (!drag || e.pointerId !== drag.id) return;
+        var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (!drag.on) {
+          if (drag.touch) { if (Date.now() - drag.t < 250) { if (Math.abs(dx) > 5 || Math.abs(dy) > 5) drag = null; return; } }
+          else if (Math.hypot(dx, dy) <= 8) return;
+          drag.on = true;
+          drag.li.setAttribute("data-dragging", "");
+          try { drag.item.setPointerCapture(e.pointerId); } catch (err) { /* 놓친 포인터 */ }
+          var root = drag.li.closest(".patt");
+          liftAnnounce(root, (items(root).indexOf(drag.li) + 1) + "번째 항목을 들었어요.");
+        }
+        e.preventDefault();
+        drag.li.style.transform = "translate3d(" + Math.round(dx) + "px, 0, 0)";
+      });
+      function endDrag(e, cancel) {
+        if (!drag || (e && e.pointerId !== drag.id)) return;
+        var d = drag;
+        drag = null;
+        if (!d.on) return;
+        swallowClick = true;
+        setTimeout(function () { swallowClick = false; }, 0);
+        var root = d.li.closest(".patt"), list = items(root), from = list.indexOf(d.li), to = from;
+        if (!cancel && e) {
+          list.forEach(function (li, i) { if (li === d.li) return; var r = li.getBoundingClientRect(); var mid = r.left + r.width / 2; if (i > from && e.clientX > mid) to = i; if (i < from && e.clientX < mid && to === from) to = i; });
+        }
+        d.li.style.transform = "";
+        d.li.removeAttribute("data-dragging");
+        if (to !== from) move(root, d.li, to);
+        liftAnnounce(root, (items(root).indexOf(d.li) + 1) + "번째 자리에 놓았어요.");
+      }
+      document.addEventListener("pointerup", function (e) { endDrag(e, false); });
+      document.addEventListener("pointercancel", function (e) { endDrag(e, true); });
+      document.addEventListener("click", function (e) {
+        var root = closest(e, ".patt[data-patt-live]");
+        if (!root) return;
+        if (swallowClick) { e.preventDefault(); e.stopPropagation(); return; }
+        var remove = closest(e, "[data-patt-remove]");
+        if (remove) { if (!remove.disabled && remove.getAttribute("aria-disabled") !== "true") removeItem(root, remove.closest(".patt-li")); return; }
+        var retry = closest(e, "[data-patt-retry]");
+        if (retry) { var li = retry.closest(".patt-li"); upload(root, li, false); announce(root, ""); say(root, "다시 시도 — “" + li.getAttribute("data-name") + "” 를 다시 올려요."); return; }
+        var trigger = closest(e, ".patt-trigger, [data-patt-pick]");
+        if (trigger) { if (!trigger.disabled && trigger.getAttribute("aria-disabled") !== "true") picker(root); else say(root, "다 찼어요 — 타일은 aria-disabled(초점은 남는다)"); return; }
+        var item = closest(e, ".patt-item[data-pressable]");
+        if (item && !held) openMenu(root, item.parentElement, e.detail === 0);
+      }, true);
+      // 끌어 놓기 — 드롭존(1280 이상). 막히면 받지 않는다. 드롭존 밖에 놓은 파일을 브라우저가 열지 않게 막는다
+      var depth = 0;
+      function hasFiles(e) { return e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], "Files") >= 0; }
+      document.addEventListener("dragenter", function (e) {
+        var zone = closest(e, "[data-patt-drop]");
+        if (!zone || !hasFiles(e)) return;
+        e.preventDefault();
+        depth += 1;
+        if (!zone.hasAttribute("data-disabled")) zone.setAttribute("data-drag-over", "");
+      });
+      document.addEventListener("dragover", function (e) {
+        if (!hasFiles(e)) return;
+        var zone = closest(e, "[data-patt-drop]");
+        if (zone) { e.preventDefault(); e.dataTransfer.dropEffect = zone.hasAttribute("data-disabled") ? "none" : "copy"; }
+        else if (closest(e, ".pfin-section")) { e.preventDefault(); e.dataTransfer.dropEffect = "none"; }
+      });
+      document.addEventListener("dragleave", function (e) {
+        var zone = closest(e, "[data-patt-drop]");
+        if (!zone || !hasFiles(e)) return;
+        depth = Math.max(0, depth - 1);
+        if (!depth) zone.removeAttribute("data-drag-over");
+      });
+      document.addEventListener("drop", function (e) {
+        if (!hasFiles(e)) return;
+        var zone = closest(e, "[data-patt-drop]");
+        if (!zone) { if (closest(e, ".pfin-section")) e.preventDefault(); return; }
+        e.preventDefault();
+        depth = 0;
+        zone.removeAttribute("data-drag-over");
+        if (!zone.hasAttribute("data-disabled")) take(zone.closest(".patt"), Array.prototype.slice.call(e.dataTransfer.files || []));
+      });
+      // 12MB 사진 + PDF 둘을 고른 것처럼 — 고르기 창 없이 같은 검사를 돌린다
+      document.addEventListener("click", function (e) {
+        var b = closest(e, "[data-pfin-fake-pick]");
+        if (!b) return;
+        var root = b.closest(".pfin-live").querySelector(".patt[data-patt-live]");
+        take(root, [
+          { name: "IMG_20261015_084230.jpg", size: 12 * MB, type: "image/jpeg" },
+          { name: "2026-10-15_카드영수증_사본.pdf", size: Math.round(0.4 * MB), type: "application/pdf" },
+          { name: "2026-10-15_현금영수증.pdf", size: Math.round(0.3 * MB), type: "application/pdf", fail: true },
+        ]);
+      });
+
+      // ── Avatar — 사진 바꾸기(03o) ───────────────────────────────────
+      document.addEventListener("click", function (e) {
+        var b = closest(e, "[data-pav-edit-action]");
+        if (!b || b.disabled) return;
+        var box = b.closest("[data-pav-edit-live]"), av = box.querySelector(".pavatar"), action = b.getAttribute("data-pav-edit-action");
+        var out = box.parentElement.querySelector("[data-pav-edit-status]");
+        function note(t) { if (out) out.textContent = t; }
+        var remove = box.querySelector('[data-pav-edit-action="remove"]'), change = box.querySelector('[data-pav-edit-action="change"]');
+        var fail = box.parentElement.querySelector("[data-pav-edit-fail]");
+        if (action === "remove") {
+          var img = av.querySelector(".pavatar-img");
+          if (img) img.remove();
+          remove.hidden = true;
+          change.focus();
+          return note("사진을 지웠어요 — 이니셜로 · \u201C사진 지우기\u201D 는 사진이 있을 때만");
+        }
+        var p = 0, layer = document.createElement("span");
+        layer.className = "pav-edit-upload";
+        av.appendChild(layer);
+        av.setAttribute("role", "group");
+        av.removeAttribute("aria-hidden");
+        change.disabled = true;
+        remove.disabled = true;
+        var field = box.closest(".ptf-field");
+        if (field) { var err = field.querySelector(".ptf-error"); if (err) err.remove(); field.removeAttribute("data-invalid"); }
+        var timer = setInterval(function () {
+          p = Math.min(100, p + 10);
+          layer.innerHTML = '<svg class="ppc ppc--s24 ppc--static-white" data-state="determinate" style="--ppc-p: ' + p + ';" role="progressbar" aria-label="프로필 사진 올리는 중" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + p + '" aria-valuetext="' + p + '%"><circle class="ppc-track"/><circle class="ppc-range"/></svg>';
+          note("올리는 중 " + p + "% — 두 버튼 막힘");
+          if (fail && fail.checked && p >= 60) {
+            clearInterval(timer);
+            layer.remove();
+            av.setAttribute("role", "img");
+            change.disabled = false;
+            remove.disabled = false;
+            if (field) {
+              field.setAttribute("data-invalid", "");
+              var foot = field.querySelector(".ptf-field-footer");
+              if (!foot) { foot = document.createElement("div"); foot.className = "ptf-field-footer"; field.appendChild(foot); }
+              var er = document.createElement("p");
+              er.className = "ptf-error";
+              er.innerHTML = ICON.alert + "<span>사진을 올리지 못했어요. 다시 해주세요.</span>";
+              foot.appendChild(er);
+            }
+            return note("실패 — Field 오류 글(성공은 따로 알리지 않는다)");
+          }
+          if (p >= 100) {
+            clearInterval(timer);
+            layer.remove();
+            av.setAttribute("role", "img");
+            var img2 = av.querySelector(".pavatar-img") || document.createElement("img");
+            img2.className = "pavatar-img";
+            img2.alt = "";
+            img2.src = box.getAttribute("data-pav-next");
+            av.insertBefore(img2, av.querySelector(".pav-edit-upload"));
+            change.disabled = false;
+            remove.disabled = false;
+            remove.hidden = false;
+            note("사진을 바꿨어요 — 바뀐 사진이 보인다(성공 알림 없음)");
+          }
+        }, 120);
+      });
+
+      // ── 바닥 링크 — 미리보기를 떠나지 않는다 ────────────────────────────
+      document.addEventListener("click", function (e) {
+        var a = closest(e, ".pfoot-link");
+        if (a) e.preventDefault();
+      });
+
+      // ── 잰 값(그림 아래 글) · 처음 스크롤 ─────────────────────────────
+      function px(v) { return Math.round(parseFloat(v) * 10) / 10; }
+      function measureAll() {
+        fitNames();
+        document.querySelectorAll("[data-pfin-scroll='end']").forEach(function (row) { row.scrollLeft = row.scrollWidth; });
+        document.querySelectorAll("[data-pqp-measure]").forEach(function (out) {
+          var root = out.parentElement.querySelector(".pqp"), btn = root.querySelector(".pqp-btn"), b = getComputedStyle(btn, "::before"), icon = btn.querySelector("svg"), val = getComputedStyle(root.querySelector(".pqp-value")), div = root.querySelector(".pqp-divider");
+          var bw = btn.getBoundingClientRect().width, bh = btn.getBoundingClientRect().height;
+          out.textContent = "상자 " + px(root.getBoundingClientRect().height) + " · 버튼 " + px(bw) + " × " + px(bh) + " · 누르는 자리 " + Math.max(px(b.width), px(b.minWidth)) + " × " + Math.max(px(b.height), px(b.minHeight)) + " · 아이콘 " + px(icon.getBoundingClientRect().width) + " · 값 " + px(val.fontSize) + " / " + px(val.lineHeight) + " · 선 " + px(div.getBoundingClientRect().width) + " × " + px(div.getBoundingClientRect().height) + " · 모서리 " + px(getComputedStyle(root).borderTopLeftRadius);
+        });
+        document.querySelectorAll("[data-pqp-widths]").forEach(function (out) {
+          out.textContent = "상자 폭 " + Array.prototype.map.call(out.parentElement.querySelectorAll(".pqp"), function (r) { return px(r.getBoundingClientRect().width); }).join(" · ");
+        });
+        document.querySelectorAll("[data-patt-measure]").forEach(function (out) {
+          var host = out.parentElement, tr = host.querySelector(".patt-trigger"), img = host.querySelector(".patt-item--image"), file = host.querySelector(".patt-item--file"), thumb = host.querySelector(".patt-thumb"), meta = host.querySelector(".patt-meta"), x = host.querySelector(".patt-remove"), row = host.querySelector(".patt-row");
+          var xr = x.getBoundingClientRect(), ir = x.parentElement.querySelector(".patt-item").getBoundingClientRect(), xb = getComputedStyle(x, "::before");
+          out.textContent = "타일 " + px(tr.offsetWidth) + " × " + px(tr.offsetHeight) + " · 사진 " + px(img.offsetWidth) + " × " + px(img.offsetHeight) + " · 카드 " + px(file.offsetWidth) + " × " + px(file.offsetHeight) + " · 좌우 " + px(getComputedStyle(file).paddingLeft) + " · 썸네일 " + px(thumb.offsetWidth) + " · 이름 칸 " + px(meta.getBoundingClientRect().width) + "\\n× " + px(xr.width) + " · 걸침 위 " + px(ir.top - xr.top) + " · 오른쪽 " + px(xr.right - ir.right) + " · 누르는 자리 " + px(xr.width - 2 * parseFloat(xb.left)) + " · 줄 위 여백 " + px(getComputedStyle(row).paddingTop) + " · 당김 " + px(getComputedStyle(row).marginTop);
+        });
+        document.querySelectorAll("[data-patt-name-measure]").forEach(function (out) {
+          var name = out.parentElement.querySelector(".patt-name"), text = name.querySelector(".patt-name-text"), ext = name.querySelector(".patt-name-ext"), lh = parseFloat(getComputedStyle(name).lineHeight);
+          out.textContent = "보이는 줄 " + Math.round(name.offsetHeight / lh) + " · 이름 칸 " + px(name.getBoundingClientRect().width) + (name.hasAttribute("data-overflow") ? " · 줄임 “" + text.textContent.slice(-6) + "” + " + (ext ? ext.textContent : "") : " · 다 든다");
+        });
+      }
+      measureAll();
+      window.addEventListener("load", measureAll);
+      var resizeTimer = 0;
+      window.addEventListener("resize", function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(measureAll, 100); });
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureAll);
     })();
   </script>

@@ -1,7 +1,9 @@
 /*
  * shadcn Avatar 예제 — docs site components/avatar.html 에서 Preview + Code 토글로 보인다.
- * 각 예제 = { title, description, jsx, render() }. 앞의 셋(이름 옆 · 혼자 · 묶음)은 차례 · 제목 · 코드가 specs/components/avatar.md 의
+ * 각 예제 = { title, description, jsx, render() }. 앞의 넷(이름 옆 · 혼자 · 묶음 · 사진 바꾸기)은 차례 · 제목 · 코드가 specs/components/avatar.md 의
  * "코드" 절과 같고, 뒤의 셋(크기 10단계 · 이니셜과 이름 색 · 묶음 크기와 놓인 바탕)은 md 의 Properties 를 코드로 더 보인다.
+ * 사진 바꾸기(2026-10-15 마무리 6A)의 UPLOAD 는 avatar.tsx 의 상수, 올리는 중 원의 PC_* 는 progress-circle.tsx, "사진 바꾸기" · "사진 지우기" 의 BUTTON_* 는
+ * button.tsx(neutralWeak · ghost · small), 둘레의 FIELD_* 는 field.tsx 의 값이다.
  * 옛 예제(32 · 40 · 48 · 64 · 회색 · 브랜드 채움 이니셜 · 8 겹침 + 2px 링)를 대신한다.
  *
  * ROOT · INITIAL · LINE_HEIGHT_1 · HUE_BG · IMAGE · SIZES · STACK_RING · STACK_SIZES · STACK · STACK_SURFACE · OVERFLOW 는
@@ -42,6 +44,9 @@ const HUE_BG = {
 };
 
 const IMAGE = "absolute inset-0 size-full object-cover";
+
+// 올리는 중 — 원 위 딤(라이트 0.50 · 다크 0.65) 가운데 값 있는 원 24(staticWhite). 1px 테두리(::after)는 이 위에 그려진다
+const UPLOAD = "absolute inset-0 flex items-center justify-center rounded-full bg-[var(--overlay-dim-light)] dark:bg-[var(--overlay-dim-dark)]";
 
 // 크기 — 지름 · 이니셜 글자(지름의 40%, 가장 작아도 10)
 const SIZES = {
@@ -172,6 +177,85 @@ const labeled = (html, caption, style = CODE, align = "center") =>
 const NAME = "font-size:var(--text-t5); line-height:var(--text-t5--line-height); color:var(--color-fg-neutral);";
 const SUB = "font-size:var(--text-t3); line-height:var(--text-t3--line-height); color:var(--color-fg-neutral-subtle);";
 
+// ── 사진 바꾸기 자리의 둘레 — progress-circle.tsx · button.tsx · field.tsx 의 값 ───────────────
+
+// 올리는 중 원 — <ProgressCircle size="24" tone="staticWhite" value aria-label="프로필 사진 올리는 중" />
+const PC_SIZE = { 24: "[--pc-size:24px] [--pc-thickness:3px]" };
+const PC_TONE = { staticWhite: "[--pc-track:color-mix(in_srgb,var(--color-static-white)_30%,transparent)] [--pc-range:var(--color-static-white)]" };
+const PC_ROOT = "inline-block shrink-0 overflow-visible align-middle";
+const PC_CIRCLE =
+  "fill-none [cx:calc(var(--pc-size)/2)] [cy:calc(var(--pc-size)/2)] [r:calc(var(--pc-size)/2_-_var(--pc-thickness)/2)] [stroke-width:var(--pc-thickness)]";
+const PC_TRACK = `${PC_CIRCLE} [stroke:var(--pc-track)]`;
+const PC_RANGE = `${PC_CIRCLE} [stroke:var(--pc-range)] [stroke-linecap:round] [transform-box:fill-box] [transform-origin:center] [transform:rotate(-90deg)]`;
+const PC_RANGE_DETERMINATE =
+  "[stroke-dasharray:100_200] [transition:stroke-dashoffset_var(--motion-duration-d6)_var(--motion-ease-enter)] motion-reduce:transition-none";
+
+// "사진 바꾸기"(neutralWeak · small) · "사진 지우기"(ghost · small)
+const BUTTON_BASE = [
+  "relative inline-flex items-center justify-center whitespace-nowrap font-sans font-bold",
+  "before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
+  "active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
+  "disabled:cursor-not-allowed disabled:[scale:1] disabled:bg-bg-disabled disabled:text-fg-disabled",
+  "aria-busy:cursor-progress aria-busy:text-transparent aria-busy:[&>svg:not([data-slot=progress-circle])]:invisible aria-busy:active:[scale:1]",
+  "[--progress-thickness:2px]",
+  "[&_svg]:pointer-events-none [&_svg]:shrink-0",
+].join(" ");
+const BUTTON_VARIANTS = {
+  variant: {
+    neutralWeak:
+      "bg-bg-neutral-weak text-fg-neutral hover:bg-bg-neutral-weak-pressed active:bg-bg-neutral-weak-pressed aria-busy:bg-bg-neutral-weak-pressed [--progress-track:var(--color-gray-500)] [--progress-range:var(--color-fg-neutral)]",
+    ghost:
+      "bg-transparent text-fg-neutral hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed aria-busy:bg-bg-layer-default-pressed disabled:bg-transparent [--progress-track:var(--color-gray-500)] [--progress-range:var(--color-fg-neutral)]",
+  },
+  size: { small: "h-9 rounded-r2 [--press-basis:36] [--progress-size:14px]" },
+  layout: { withText: "", iconOnly: "" },
+  ghostColor: { neutral: "" },
+};
+const BUTTON_COMPOUND = [{ size: "small", layout: "withText", className: "px-x3_5 py-x2 gap-x1 text-t4 [&_svg]:size-3.5" }];
+const BUTTON_DEFAULTS = { variant: "neutralSolid", size: "medium", layout: "withText", ghostColor: "neutral" };
+function buttonClass(variant) {
+  const p = { ...BUTTON_DEFAULTS, variant, size: "small" };
+  const parts = [BUTTON_BASE, BUTTON_VARIANTS.variant[p.variant], BUTTON_VARIANTS.size[p.size], BUTTON_VARIANTS.layout[p.layout], BUTTON_VARIANTS.ghostColor[p.ghostColor]];
+  for (const { className, ...when } of BUTTON_COMPOUND) if (Object.entries(when).every(([k, v]) => p[k] === v)) parts.push(className);
+  // cn()(twMerge) — ghost 의 disabled:bg-transparent 가 바탕의 disabled:bg-bg-disabled 를 지운다
+  const cls = parts.filter(Boolean).join(" ");
+  return variant === "ghost" ? cls.replace("disabled:bg-bg-disabled ", "") : cls;
+}
+
+// <Field> — 라벨 없이 오류만(사진 바꾸기 자리). 오류가 있으면 꼬리에 오류 글
+const FIELD_ROOT = "flex w-full min-w-0 flex-col gap-x2";
+const FIELD_FOOTER = "flex items-start gap-x2 px-x0_5 font-sans";
+const FIELD_ERROR = "m-0 flex min-w-0 text-t4 text-fg-critical";
+const FIELD_ERROR_ICON = "mr-x1_5 mt-[calc((var(--text-t4--line-height)_-_1rem)/2)] size-4 shrink-0";
+const FIELD_TEXT = "min-w-0";
+const CIRCLE_ALERT = '<circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>';
+
+// <Avatar size={108} decorative={false} uploadProgress> — 올리는 중이면 role="group"(안의 원이 읽힌다) + 딤 + 값 있는 원 24
+function editAvatar({ name, src, uploadProgress }) {
+  const uploading = typeof uploadProgress === "number";
+  const percent = uploading ? Math.round(Math.min(Math.max(uploadProgress, 0), 1) * 100) : 0;
+  const shown = displayName(name);
+  const inner = src
+    ? `<img data-slot="avatar-image" src="${src}" alt="" class="${IMAGE}">`
+    : `<span aria-hidden="true" data-slot="avatar-initial" class="${INITIAL} ${HUE_BG[avatarHue(shown)]} ${SIZES[108].initial} ${LINE_HEIGHT_1}">${esc(avatarInitial(shown))}</span>`;
+  const upload = uploading
+    ? `<span data-slot="avatar-upload" class="${UPLOAD}"><svg role="progressbar" aria-label="프로필 사진 올리는 중" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}" aria-valuetext="${percent}%" data-slot="progress-circle" data-size="24" data-tone="staticWhite" data-mode="determinate" class="${PC_ROOT} ${PC_SIZE[24]} ${PC_TONE.staticWhite}" style="width:var(--pc-size); height:var(--pc-size);"><circle data-slot="progress-circle-track" class="${PC_TRACK}"></circle><circle data-slot="progress-circle-range" pathLength="100" class="${PC_RANGE} ${PC_RANGE_DETERMINATE}" style="stroke-dashoffset:${100 - percent};${percent > 0 ? "" : " opacity:0;"}"></circle></svg></span>`
+    : "";
+  return `<span data-slot="avatar" data-status="${src ? "loaded" : "none"}"${uploading ? ' data-uploading="true"' : ""} role="${uploading ? "group" : "img"}" aria-label="${esc(shown)}" class="${ROOT} ${SIZES[108].box}">${inner}${upload}</span>`;
+}
+// 사진 바꾸기 자리 — 코드 예의 짜임(Field > div.flex.flex-col.items-center.gap-x4 > Avatar · 버튼 줄 · 숨은 고르기 창)
+function photoField({ src, uploadProgress, error }) {
+  const busy = typeof uploadProgress === "number";
+  const footer = error
+    ? `<div data-slot="field-footer" class="${FIELD_FOOTER}"><p aria-hidden="true" class="${FIELD_ERROR}" style="margin:0; color:var(--color-fg-critical);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${FIELD_ERROR_ICON}" aria-hidden="true">${CIRCLE_ALERT}</svg><span class="${FIELD_TEXT}">${esc(error)}</span></p></div>`
+    : "";
+  return `<div data-slot="field"${error ? ' data-invalid="true"' : ""} class="${FIELD_ROOT}"><div class="flex flex-col items-center gap-x4">${editAvatar({ name: "한지우", src, uploadProgress })}<div class="flex flex-wrap justify-center gap-x2"><button${busy ? " disabled" : ""} class="${buttonClass("neutralWeak")}">사진 바꾸기</button>${
+    src ? `<button${busy ? " disabled" : ""} class="${buttonClass("ghost")}">사진 지우기</button>` : ""
+  }</div><input type="file" accept="image/*" hidden=""></div>${footer}<span class="sr-only" aria-live="polite">${error ? esc(error) : ""}</span></div>`;
+}
+
 // ── 화면 예시의 값 ────────────────────────────────────────────────────────
 
 // 제주 여행 더치페이 참가자 — 6명(앞 4명 + "+2")
@@ -240,6 +324,71 @@ export const avatarExamples = [
             `<span class="flex items-center gap-x2">${avatarStack({ size: 24, people: PEOPLE })}<span style="${SUB}">6명 · 412,000원</span></span>`,
           ],
           "var(--spacing-x1)",
+        ),
+      ),
+  },
+
+  {
+    title: "사진 바꾸기 — HR 직원 정보 수정",
+    description:
+      "프로필 사진 한 장을 바꾸는 자리(HR 사용자 수정 — 108)는 아바타 아래 16 에 버튼 둘을 늘 보인다 — \"사진 바꾸기\"(Button neutralWeak small) · \"사진 지우기\"(ghost small, 사진이 있을 때만 — 지우면 이니셜), 사이 8 · 가운데. 마우스를 올려야 나타나는 덮개는 두지 않는다(2026-10-15 사용자 결정 6A — 키보드 · 터치 · 화면 읽기로 닿지 않는다). uploadProgress(0 ~ 1)를 주면 올리는 중 — 원 위 딤(라이트 50% · 다크 65%) 가운데 값 있는 원 24(staticWhite · 이름 \"프로필 사진 올리는 중\" · 값 글 \"40%\")이고 그동안 아바타는 role=\"group\" + 이름이라 안의 원이 읽힌다. 두 버튼을 막는 것 · 실패를 Field 오류 글로 알리는 것은 쓰는 쪽이 한다 — 성공은 따로 알리지 않는다(사진이 바뀐 것이 보인다). 미리보기는 사진 있음 · 올리는 중 40% · 실패 · 사진 없음이다.",
+    jsx: `import { useRef, useState } from "react"
+import { Avatar } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Field } from "@/components/ui/field"
+
+const MAX_SIZE = 5 * 1024 * 1024
+const user = { name: "한지우", profileUrl: "/profiles/jiwoo.webp" }
+// POST /users/profiles — 진행을 알려 주고 새 사진 주소를 돌려준다
+const uploadProfile = (file: File, onProgress: (ratio: number) => void) => {
+  onProgress(1)
+  return Promise.resolve(URL.createObjectURL(file))
+}
+
+const fileRef = useRef<HTMLInputElement>(null)
+const [photoUrl, setPhotoUrl] = useState<string | undefined>(user.profileUrl)
+const [progress, setProgress] = useState<number | undefined>(undefined)
+const [error, setError] = useState<string | null>(null)
+
+const pick = (file: File | undefined) => {
+  if (!file) return
+  if (!file.type.startsWith("image/")) return setError("사진 파일만 올릴 수 있어요.")
+  if (file.size > MAX_SIZE) return setError("5MB 넘는 사진은 올릴 수 없어요.")
+  setError(null)
+  setProgress(0)
+  uploadProfile(file, setProgress)
+    .then(setPhotoUrl, () => setError("사진을 올리지 못했어요. 다시 해주세요."))
+    .finally(() => setProgress(undefined))
+}
+
+{/* 버튼은 늘 보인다 — 마우스를 올려야 나타나는 덮개를 두지 않는다 */}
+<Field invalid={error !== null} errorMessage={error}>
+  <div className="flex flex-col items-center gap-x4">
+    <Avatar size={108} name={user.name} src={photoUrl} decorative={false} uploadProgress={progress} />
+    <div className="flex flex-wrap justify-center gap-x2">
+      <Button variant="neutralWeak" size="small" disabled={progress !== undefined} onClick={() => fileRef.current?.click()}>
+        사진 바꾸기
+      </Button>
+      {photoUrl && (
+        <Button variant="ghost" size="small" disabled={progress !== undefined} onClick={() => setPhotoUrl(undefined)}>
+          사진 지우기
+        </Button>
+      )}
+    </div>
+    <input ref={fileRef} type="file" accept="image/*" hidden onChange={(e) => pick(e.target.files?.[0])} />
+  </div>
+</Field>`,
+    render: () =>
+      surface(
+        row(
+          [
+            labeled(photoField({ src: photo(1) }), "사진 있음"),
+            labeled(photoField({ src: photo(1), uploadProgress: 0.4 }), "올리는 중 40% — 버튼 막힘"),
+            labeled(photoField({ src: photo(1), error: "5MB 넘는 사진은 올릴 수 없어요." }), "실패 — Field 오류 글"),
+            labeled(photoField({}), "사진 없음 — 이니셜"),
+          ],
+          "var(--spacing-x8)",
+          "flex-start",
         ),
       ),
   },

@@ -3985,7 +3985,7 @@ Desk — 가계부 카테고리 · 수입 · 지출 추이 · 예산 이행 · �
 - **카드 그림** — 카드 혜택 격자 · 목록 56 · 상세 312 · 카드 추가 미리보기 68 · 카탈로그 목록 44 가 모두 카드 그림(1.586)이다. 세로 그림(표본의 53%)은 시계 방향으로 돌린다. 그림이 없는 카드(활성 카드의 82%)는 아는 카드사의 면 · 모르는 카드사의 대체 그림이다. 웹 상세 대화상자는 최대 높이 220 을 걷고 폭 312 로, 그림 아래 카드 이름 글을 둔다. 단종은 흐리지 않고 배지.
 - **자산 로고** — 은행 · 증권 · 카드 · 코인 · 금 자산은 Logo Tile — 자산 목록 · 계좌 관리 40, 자산 상세 · 계좌 · 투자 추가 미리보기 48. 카드 자산은 카드 그림(옅은 판 위 카드 전체)이 첫 글자를 덮는다. 색은 기관 색 표에서 찾고(저장된 자산 색이 아니라), 기관이 없는 자산은 Avatar 의 이름 색이다 — 웹 oklch · 앱 HSL 해시를 걷는다.
 - **카테고리 타일** — 아이콘 20, 없는 아이콘은 태그 아이콘, 이체 줄은 회색(List).
-- **다음 차례** — 종목 타일(증권 화면), 가맹점 · 구독 로고(그림 출처가 없다 — 지금처럼 카테고리 타일), 확대 보기 · 첨부(영수증 사진) 썸네일.
+- **다음 차례** — 종목 타일(증권 화면), 가맹점 · 구독 로고(그림 출처가 없다 — 지금처럼 카테고리 타일), 확대 보기. 첨부(영수증 사진) 썸네일은 Attachment Input 이다(2026-10-15 — 아래 "마무리 — Desk").
 
 ### 화면 틀 · 이동 — Desk
 
@@ -4019,6 +4019,17 @@ Desk — 가계부 카테고리 · 수입 · 지출 추이 · 예산 이행 · �
 - **카테고리** — 설정 > 카테고리는 List 하위 줄 — 줄 앞 꺾쇠 단추 44 · 이름 "{카테고리} 하위 카테고리" + 펼침 상태 · 하위 줄 104 · 하위 없는 부모도 꺾쇠 자리를 비워 타일 52(17B) · 처음 모두 펼침. 줄은 편집을 열고, 앱의 접힌 부모 줄에 › 가 둘이던 것(접힘 · 이동)을 걷는다.
 - **원장 머리** — 폰 가계부의 "소비 요약" 과 "월 달력" 은 하나만 펼친다(웹도 앱처럼). 월 달력 단추의 이름은 "월 달력" 으로 고정한다(가계부 "목록 / 달력" · 할 일 "월 전체 보기 / 접기" 를 걷는다). 가계부 · 할 일 원장 머리(월 · 총액 · 주 달력 — 가계부에서 필터를 걸면 그 자리에 나오는 필터 칩 줄도)는 Scroll Auto Hide 로 숨는다 — 72px 를 지나면 높이를 접던 것(웹 220ms · 앱 `AnimatedSize`)을 걷는다.
 - **스크롤** — 웹은 전역 6px 그대로 Firefox 두 줄(`@supports` 안)을 더하고, 폰 본문 · 시트의 세로 스크롤바 숨김을 걷는다. 쓰지 않는 Radix ScrollArea(`NotificationBell`) · `.scroll` CSS 를 걷는다. 앱의 Material 스크롤바 3곳(#BCBCBC 1.9)은 막대 색 `stroke-neutral-solid` · 6 · 알약으로.
+
+### 마무리 — Desk
+
+> 2026-10-15 — 모양 · 쓰는 규칙은 DESIGN.md 의 "마무리 — Quantity Picker · Attachment Input · Footer" 절과 각 스펙(`specs/components/quantity-picker.md` · `attachment-input.md` · `footer.md`). Desk 의 쓰는 자리만 적는다.
+
+- **반복 거래 "총 n회"** — 숫자 칸 그대로다 — 흔한 값(24 · 36)이 열 단계보다 멀어 Quantity Picker 를 쓰지 않는다(2A). 웹은 상한이 없고 앱은 999 까지라 상한을 맞춘다. 매월 반복 일자는 카드 결제일처럼 Select 1 ~ 31 로(지금 웹 칸은 비우면 1 로 돌아와 이어 쳐진다), 할부는 Select 그대로다.
+- **더치페이 비율** — 칸 뒤 글은 "%" 인데 계산은 가중치다(1 · 1 · 2 → 25 · 25 · 50%). 먼저 정할 일이다 — 정수 몫으로 바꾸면 Quantity Picker("2인분"), 아니면 글을 계산에 맞게 고친다.
+- **거래 영수증 · 메모 첨부** — 서버(`EXPENSE_RECEIPT` · `MEMO_ATTACHMENT`, 한 파일 10MB)는 있는데 화면이 없다. 거래 상세 · 메모 편집에 Attachment Input 타일로 새로 연다(웹 · 앱). 앱의 `FileAttachmentSection`(붙은 곳 0 · 서버 enum 과 어긋난 referenceType)은 걷는다. "n/최대" 는 서버의 개수 한도를 정한 뒤에 그린다.
+- **데이터 가져오기** — 웹 1280 이상은 드롭존(1px 실선 · "파일을 여기로 끌어다 놓으세요" + "파일 선택"), 1280 미만 · 앱은 "파일 선택" 버튼 + 파일 카드다. 지금 웹의 점선 상자(`div onClick` — 키보드로 못 닿는다)와 앱의 실선 상자를 걷고, 거절은 전역 토스트가 아니라 칸 아래 오류 글로 알린다.
+- **바닥 · 저작권** — Desk 화면 · 앱에는 바닥을 두지 않는다(처리방침 · 설명서는 설정의 줄). Desk 설명서(Docusaurus) 바닥의 "POREST Desk 사용자 설명서" 는 저작권 "© {해} POREST" 로 바꾼다.
+- **cmdk** — 쓰는 곳이 없는 카드 상품 콤보박스 · `command.tsx` · 의존을 지운다(DESIGN.md "Command" 절).
 
 ### Pagination / Drawer / Spinner / Stepper (v67 추가 batch)
 
@@ -4063,18 +4074,16 @@ Desk(B2C) 5 navigation 컴포넌트 — 모바일 우선 + 단순한 페이지 �
 > 2026-10-02 걷었다 — 쓰는 곳이 없다("메뉴 · 메뉴 시트 · 도움말 말풍선 · 툴팁" 절).
 
 #### Command (Cmd+K) — Desk
-- 메모/할일 빠른 검색 핵심 — typing 즉시 fuzzy match (제목 + 본문).
-- Sections: Recent memos / Tags (filter by tag) / Quick actions (새 메모, 새 할일) / Settings.
-- 모바일에서 search trigger는 상단 search bar (`/` shortcut), 데스크탑은 Cmd+K.
+
+> 2026-10-15 걷었다 — 쓰는 곳이 없다(DESIGN.md "### Command" 절).
 
 ### Input batch (v69 추가)
 
 Desk(B2C) 5 input 컴포넌트 — 모바일 우선 + 친근 톤.
 
 #### Combobox — Desk
-- **태그 자동완성**: 메모/할일에 태그 입력 — typing → 기존 태그 추천 + free text 신규 태그.
-- **카테고리 선택**: 가계부 거래 카테고리 — fuzzy match (식비/카페 한 단어 typing으로 매칭).
-- multi-select: 메모에 다중 태그.
+
+> 2026-10-15 걷었다 — 칸에 바로 치는 콤보박스를 두지 않는다(카테고리는 Input Button 이 여는 아이콘 격자, 긴 목록은 Searchable List 다).
 
 #### Slider — Desk
 
@@ -4188,11 +4197,8 @@ Desk(B2C) 5 추가 shadcn 누락 컴포넌트 — 모바일 우선.
 2026-10-02 SEED Popover 로 다시 정했다 — 위 "시트 · 대화상자 · 확인창 · 팝오버" 절.
 
 #### File Upload — Desk
-- **영수증 다중 업로드** — 가계부 거래에 영수증 사진 multi (max 3장 / 거래 1건).
-- **메모 image attachment** — 메모 본문에 inline image (max 5장 / total 30MB).
-- **드래그-드롭** + 카메라 capture (`accept="image/*" capture="environment"`) 모바일.
-- 허용 type: 이미지 only (JPG/PNG/HEIC) — 영수증·사진 메모 위주.
-- 자동 압축: 5MB 초과 시 client-side resize 후 업로드 (네트워크 + storage 절약).
+
+> 2026-10-15 걷었다 — 영수증 · 메모 첨부는 Attachment Input(위 "마무리 — Desk" · `specs/components/attachment-input.md`). 옛 줄의 "영수증 3장 · 메모 5장 · 30MB · HEIC · 5MB 넘으면 줄여 올리기" 는 코드 · 서버에 없는 값이었다 — 서버는 한 파일 10MB · 개수 한도 없음이다.
 
 #### Treeview — Desk
 

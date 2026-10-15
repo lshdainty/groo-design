@@ -9,7 +9,8 @@ import { cn } from "@/lib/utils";
  *   Field            머리(라벨 · 필수 점 또는 "선택" · 보조 액션) · 입력 · 꼬리(설명 또는 오류 · 글자 수). 사이 8
  *   useFieldControl  입력(Input · Textarea)이 Field 의 id · 설명 · 오류 · 필수 · 막힘을 받는다
  *   useFieldGroup    묶음(Checkbox · Radio · Select Box)이 Field 의 라벨을 이름으로, 설명 · 오류를 설명으로 받는다
- *   useFieldGroupState  Checkbox · Radio 묶음이 Field 의 막힘 · 오류 · 필수를 받는다 — 묶음은 aria-disabled 와 칸마다 disabled,
+ *   useFieldGroupState  Checkbox · Radio 묶음이 Field 의 막힘 · 오류 · 필수(· 읽기 전용 — Quantity Picker · Attachment Input)를 받는다 —
+ *                    묶음은 aria-disabled 와 칸마다 disabled,
  *                    radiogroup 은 aria-invalid · aria-required, 체크박스 묶음(role=group)은 오류를 칸마다 aria-invalid 로 건다
  *                    (role=group 은 aria-invalid · aria-required 를 받지 않는다 — SEED useFieldset 과 같다, 2026-10-08)
  *   submitImplicitly Checkbox · Radio 의 Enter — 진짜 input 처럼 폼의 기본 버튼을 누른다(2026-10-08)
@@ -118,11 +119,16 @@ export function useFieldGroup<P extends { "aria-label"?: string; "aria-labelledb
   };
 }
 
-// Field 의 막힘 · 오류 · 필수 — Checkbox · Radio 묶음이 칸에 나눠 건다(useFieldGroupState 를 쓰는 자리마다 다르다 — 머리 주석).
-// Field 밖이면 모두 false. 묶음에 직접 준 값이 이기게 하는 것은 묶음이 한다
+// Field 의 막힘 · 오류 · 필수 · 읽기 전용 — Checkbox · Radio 묶음이 칸에 나눠 건다(useFieldGroupState 를 쓰는 자리마다 다르다 — 머리 주석).
+// Quantity Picker · Attachment Input 은 읽기 전용도 받는다. Field 밖이면 모두 false. 묶음에 직접 준 값이 이기게 하는 것은 묶음이 한다
 export function useFieldGroupState() {
   const field = useField();
-  return { disabled: field?.disabled ?? false, invalid: field?.invalid ?? false, required: field?.required ?? false };
+  return {
+    disabled: field?.disabled ?? false,
+    invalid: field?.invalid ?? false,
+    required: field?.required ?? false,
+    readOnly: field?.readOnly ?? false,
+  };
 }
 
 // Checkbox · Radio 의 Enter — 진짜 input 처럼 폼의 기본 버튼(첫 제출 버튼)을 누른다(암묵 제출). 기본 버튼이 없거나 막혀 있으면

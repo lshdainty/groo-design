@@ -36,6 +36,14 @@ import {
 import { Cap } from './select-screens';
 import { Logo } from './image-screens';
 import { Verdict, rc, type Mode } from './kit';
+import { avEditLook, icv } from './finish-look';
+import { PhotoEditLive } from './finish-play';
+import { AvatarEditView } from './finish-view';
+import { buttonLook } from './button-look';
+import { overlayLook } from './overlay-look';
+import { EndButtons } from './overlay-view';
+import { textFieldLook } from './text-field-look';
+import { TfFieldView, TfInputView } from './text-field-view';
 
 type Fig = (p: { caption?: string }) => ReactNode;
 const al = (brand: 'desk' | 'hr' = 'desk') => dk(brand).avatar;
@@ -490,6 +498,80 @@ const ExStack: Fig = ({ caption }) => (
   </Preview>
 );
 
+// ── 사진 바꾸기 — 늘 보이는 버튼(avatar.yaml edit photo · uploading) ──
+const editErr = (mode: Mode) => {
+  const e = textFieldLook('hr').field.error;
+  return { color: icv(e.color, mode), text: { fontFamily: e.text.fontFamily, fontSize: e.text.fontSize, lineHeight: e.text.lineHeight, fontWeight: e.text.fontWeight }, icon: e.icon, iconGap: e.iconGap };
+};
+const PhotoGuide: Fig = ({ caption }) => {
+  const av = al('hr');
+  const ed = avEditLook('hr');
+  const cells: { strong: string; cap: string; props: Partial<Parameters<typeof AvatarEditView>[0]> }[] = [
+    { strong: '사진 있음', cap: `${ed.change.label} · ${ed.remove.label} — 아래 ${ed.marginTop} · 사이 ${ed.gap}`, props: { photo: 1 } },
+    { strong: '올리는 중', cap: `딤 + 값 있는 원 ${ed.progress} · 두 버튼 막힘`, props: { photo: 1, progress: 0.4 } },
+    { strong: '실패', cap: '그 자리 오류 글 — 성공은 따로 알리지 않는다', props: { photo: 1, error: '5MB 넘는 사진은 올릴 수 없어요.' } },
+    { strong: '사진 없음', cap: `이니셜 + "${ed.change.label}" 하나`, props: {} },
+  ];
+  return (
+    <Panel caption={caption}>
+      <div className="flex flex-col gap-4">
+        {(['light', 'dark'] as const).map((mode) => (
+          <div key={mode} className="flex flex-col gap-2">
+            <div className="grid gap-6 rounded-xl p-5 sm:grid-cols-2" style={{ background: rc('bg-layer-floating', mode) }}>
+              {cells.map((c) => (
+                <div key={c.strong} className="flex flex-col items-center gap-3">
+                  <AvatarEditView avatar={av} edit={ed} mode={mode} name="한지우" frozen errorStyle={editErr(mode)} {...c.props} />
+                  <span className="text-center text-[12px] leading-4" style={{ color: rc('fg-neutral-subtle', mode) }}>
+                    <b style={{ color: rc('fg-neutral', mode) }}>{c.strong}</b>
+                    <br />
+                    {c.cap}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <Cap strong={mode === 'light' ? '라이트' : '다크'}>HR 사용자 수정 대화상자(떠 있는 면) — 108, 마우스를 올려야 나타나는 덮개를 두지 않는다</Cap>
+          </div>
+        ))}
+      </div>
+    </Panel>
+  );
+};
+const ExPhoto: Fig = ({ caption }) => {
+  const o = overlayLook('hr');
+  const tf = textFieldLook('hr');
+  const s = o.dialog.footer.button.size;
+  return (
+    <figure className="not-prose my-6">
+      <div className="rounded-2xl bg-[#E9E9EC] p-4 dark:bg-fd-muted sm:p-6" style={{ fontFamily: "'Pretendard Variable', Pretendard, sans-serif" }}>
+        <PhotoEditLive
+          avatar={al('hr')}
+          edit={avEditLook('hr')}
+          field={tf.field}
+          name="한지우"
+          photo={1}
+          dialog={o.dialog}
+          footer={
+            <EndButtons
+              items={[
+                { label: '취소', look: buttonLook({ variant: 'neutralWeak', size: s }, 'hr') },
+                { label: '저장', look: buttonLook({ variant: 'brandSolid', size: s }, 'hr') },
+              ]}
+            />
+          }
+        >
+          <TfFieldView look={tf.field} label="이름">
+            <TfInputView look={tf.input} size="medium" state="enabled" value="한지우" />
+          </TfFieldView>
+          <TfFieldView look={tf.field} label="이메일">
+            <TfInputView look={tf.input} size="medium" state="enabled" value="jiwoo.han@example.com" />
+          </TfFieldView>
+        </PhotoEditLive>
+      </div>
+      {caption && <figcaption className="sr-only">{caption}</figcaption>}
+    </figure>
+  );
+};
+
 export const avatarFigures: Record<string, Fig> = {
   hero: Hero,
   playground: Playground,
@@ -505,4 +587,6 @@ export const avatarFigures: Record<string, Fig> = {
   'ex-row': ExRow,
   'ex-alone': ExAlone,
   'ex-stack': ExStack,
+  'photo-guide': PhotoGuide,
+  'ex-photo': ExPhoto,
 };

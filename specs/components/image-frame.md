@@ -367,5 +367,5 @@ YAML 이 `1` · `2` · `1.586` 은 숫자로, `16 / 9` · `4 / 3` · `6 / 7` · 
 - **이름을 두 번 읽는다** — 웹 카드 혜택 칸의 `alt` 가 옆 이름과 같다(`CardBenefitPage.tsx:203 · 434 · 447-458`). 옆에 이름이 있으면 `alt=""`.
 - **한 쪽 60장을 한 번에 받는다** — `loading="lazy"` 가 0이다(`CardBenefitPage.tsx:46`). `lazy` 가 기본이다.
 - **HR 규정 그림** — 16장(16.3MB)을 한 번에 받고, `alt` 가 파일 이름("rule_1_1")이며, 정사각 그림을 높이 192 틀에 잘라 58.5 ~ 93% 만 보이고, 마우스에 카드가 1.05배 커진다(모션 줄이기도 무시 — `features/culture-regulation/ui/RuleVacation.tsx:14 · 23 · 42 · 66` · `RuleAttire.tsx` · `RuleEducation.tsx` · `RuleCulture.tsx` 같은 자리, `public/rule_*.png` 중 4장은 확장자만 .png 인 JPEG). Image Frame 1:1 · `lazy` · 확대를 걷고 · 제목 · 설명이 내용을 말하므로 장식(`alt=""`).
-- **진입 없는 그림** — 웹 카드 정보 머리(`widgets/card-detail/ui/CardInfoHeader.tsx:24-42`, 라우트 `/desk/card/:assetRowId` 를 여는 곳이 0) · `features/card-catalog/ui/CardCatalogCombobox.tsx`(마운트 0), 앱 `/cards` · `/cards/:id`(`features/card/presentation/card_detail_screen.dart:60-80`, 1.6). 살릴 때 이 규칙으로.
-- **다음 차례** — 확대 보기 · 첨부(영수증 사진) 썸네일 · 갤러리는 기능을 정할 때 이 규칙으로 정한다(앱 첨부 `features/file/presentation/file_attachment_section.dart` 는 붙은 곳이 0).
+- **진입 없는 그림** — 웹 카드 정보 머리(`widgets/card-detail/ui/CardInfoHeader.tsx:24-42`, 라우트 `/desk/card/:assetRowId` 를 여는 곳이 0), 앱 `/cards` · `/cards/:id`(`features/card/presentation/card_detail_screen.dart:60-80`, 1.6). 살릴 때 이 규칙으로.
+- **첨부 썸네일** — 영수증 · 메모 첨부의 사진 썸네일(80 · 모서리 12 · 같은 투명 윤곽)은 [Attachment Input](attachment-input.md) 이 그린다(2026-10-15 마무리 4A — 앱 첨부 `features/file/presentation/file_attachment_section.dart` 는 붙은 곳이 0 이라 새로 연다). 확대 보기 · 갤러리는 기능을 정할 때 이 규칙으로 정한다.

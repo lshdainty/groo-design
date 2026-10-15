@@ -9,7 +9,7 @@
 ## 목차
 1. [Button](#button)
 2. [Input / Textarea](#input--textarea)
-3. [Select / Combobox](#select--combobox)
+3. [Select / Input Button](#select--input-button)
 4. [Checkbox / Radio / Switch](#checkbox--radio--switch)
 5. [Card](#card)
 6. [Badge / Chip](#badge--chip)
@@ -142,7 +142,7 @@ Textarea — max-length + counter (Desk 메모 550자 제한 등).
 
 ---
 
-## Select / Combobox
+## Select / Input Button
 
 > 2026-10-01 SEED Select · Input Button 으로 다시 정했다 — 원본은 `specs/components/select.md` · `input-button.md`, 코드는 레시피 `select.tsx` · `input-button.tsx`(Field 안에 둔다). 짧은 선택지 5개 이상은 Select(칸 아래 목록), 달력 · 시각 · 아이콘 격자 · 긴 목록은 Input Button(1280 미만 시트 · 이상 팝오버). Combobox 는 두지 않는다 — 검색해 고르는 긴 목록은 Input Button + 검색 시트. 옛 네이티브 select · 콤보박스 예시는 걷었다.
 
