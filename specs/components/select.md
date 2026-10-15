@@ -377,7 +377,7 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
 | 하나만 고른다 | 하나 · 여럿(`multiple`) — "식비, 교통" · "식비 외 2개" |
 | Radix Select 조각(SelectTrigger · SelectValue · SelectContent · SelectLabel · SelectSeparator · 스크롤 버튼) | `Select`(트리거 · 목록) · `SelectGroup label` · `SelectItem value label description prefixIcon` — 묶음 사이 선은 저절로 |
 
-레시피는 Radix Select 대신 Radix Popover 위에 목록(`role="listbox"`)을 직접 짰다 — Radix Select 는 여럿 고르기를 받지 않는다. Command · Input OTP 와 Dropdown(Menu) 은 아직 옛 모양이다 — 그 컴포넌트 차례에 맞춘다.
+레시피는 Radix Select 대신 Radix Popover 위에 목록(`role="listbox"`)을 직접 짰다 — Radix Select 는 여럿 고르기를 받지 않는다.
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-01 조사 — 세 제품 코드를 읽고 일부는 크로미움에 띄워 쟀다).
 

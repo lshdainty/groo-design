@@ -25,7 +25,7 @@ scripts/build-preview-html.mjs `.<name>` CSS  ← preview.html 시각 (spec 시�
 
 - 수치를 바꿀 땐 YAML 을 고친다. md 에는 이유·규칙만 쓴다 — md 에 숫자를 다시 적으면 두 벌이 된다.
 - 구역: `base[.<상태>]`(공통 — 상태를 적으면 그 상태만, 부위별 목록 표) · `slots` · `<축>`(variant · size …) · `grid.<축>[.<축>.<값>…]` · `states.<축>[.<축>…]` · `matrix[.<축>.<값>…]` · `compound`(두 축 이상) · `motion`.
-  뒤에 `@<부위>` 를 붙이면 그 부위만 그린다(`matrix@input`, `base.default@palette`) — 부품마다 상태가 다른 컴포넌트(command 의 Input · Item)는 부품마다 따로 그린다. 여러 부위를 한 표로 묶으려면 `+` 로 잇는다(`size@trigger+value+chevron` — 칸이 너무 많은 표를 부품별로 나눌 때).
+  뒤에 `@<부위>` 를 붙이면 그 부위만 그린다(`matrix@option`, `base.default@palette`) — 부품마다 상태가 다른 컴포넌트(searchable-list 의 검색칸 · 결과 줄)는 부품마다 따로 그린다. 여러 부위를 한 표로 묶으려면 `+` 로 잇는다(`size@trigger+value+chevron` — 칸이 너무 많은 표를 부품별로 나눌 때).
 - 없는 토큰·변형·상태·구역을 가리키면 사이트 빌드(CI `site` 잡)가 파일·줄과 함께 멈춘다.
 - 형식은 `button.yaml` 머리 주석. 아직 YAML 이 없는 컴포넌트는 지금처럼 md 표가 원본이다.
 - 값: `$토큰` · `$토큰 / 12%` · 단위를 붙인 값 · `{ value, dark, note }`(다크 값이 따로 있거나 비고를 붙일 때).

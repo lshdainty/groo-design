@@ -618,3 +618,490 @@ html > body[data-scroll-locked] {
   --pd-s: var(--pd-s-d);
   --pd-t: var(--pd-t-d);
 }
+
+/* 마무리 묶음 그림(finish-view) — Quantity Picker(.pqp) · Attachment Input(.pat) · Footer 링크(.pft). 치수 · 색 · 시간은 YAML 에서
+   CSS 변수로 온다(finish-look). 색은 --p-* 토큰 변수라 사이트 모드를 따른다. 올림 · 누름 · 키보드 포커스는 실제로 반응하는 그림
+   (data-live)만 CSS 가 그리고, 멈춘 그림은 data-state 로 그 상태를 그린다 */
+/* Quantity Picker — 크기는 large(-l) · medium(-m) 두 벌을 싣고 1280 이상이면 -m 을 쓴다(quantity-picker.yaml responsive —
+   finish-look 이 1280 과 맞는지 확인한다). 크기를 정한 컨트롤은 두 벌이 같다. 테두리는 안쪽(box-shadow) — 오류 2px 도 안쪽이라 내용이 밀리지 않는다 */
+.pqp {
+  --pqp-h: var(--pqp-h-l);
+  --pqp-r: var(--pqp-r-l);
+  --pqp-ic: var(--pqp-ic-l);
+  --pqp-ext: var(--pqp-ext-l);
+  --pqp-fs: var(--pqp-fs-l);
+  --pqp-lh: var(--pqp-lh-l);
+  --pqp-ps: var(--pqp-ps-l);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  height: var(--pqp-h);
+  border-radius: var(--pqp-r);
+  background: var(--pqp-bg);
+  box-shadow: inset 0 0 0 var(--pqp-bw) var(--pqp-bd);
+  font-family: 'Pretendard Variable', Pretendard, sans-serif;
+  vertical-align: middle;
+}
+@media (min-width: 1280px) {
+  .pqp {
+    --pqp-h: var(--pqp-h-m);
+    --pqp-r: var(--pqp-r-m);
+    --pqp-ic: var(--pqp-ic-m);
+    --pqp-ext: var(--pqp-ext-m);
+    --pqp-fs: var(--pqp-fs-m);
+    --pqp-lh: var(--pqp-lh-m);
+    --pqp-ps: var(--pqp-ps-m);
+  }
+}
+.pqp[data-invalid] {
+  box-shadow: inset 0 0 0 var(--pqp-iw) var(--pqp-ibd);
+}
+.pqp[data-layout='fill'] {
+  display: flex;
+  width: 100%;
+}
+.pqp-b {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--pqp-h);
+  height: var(--pqp-h);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--pqp-r);
+  background: transparent;
+  color: var(--pqp-icc);
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--pqp-dur) var(--pqp-ease),
+    scale var(--pqp-sdur) var(--pqp-sease);
+}
+.pqp-b > svg {
+  width: var(--pqp-ic);
+  height: var(--pqp-ic);
+  flex-shrink: 0;
+}
+/* 누르는 자리 — 보이는 상자 둘레로 --pqp-ext(36 은 4 · 40 은 2 · 52 는 0) */
+.pqp-b::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--pqp-ext) * -1);
+  right: calc(var(--pqp-ext) * -1);
+  bottom: calc(var(--pqp-ext) * -1);
+  left: calc(var(--pqp-ext) * -1);
+}
+.pqp[data-hit] .pqp-b::before {
+  background: rgba(236, 72, 153, 0.22);
+  outline: 1px dashed #db2777;
+  outline-offset: -1px;
+}
+@media (hover: hover) {
+  .pqp-b[data-live]:not([aria-disabled='true']):not(:disabled):not([aria-busy='true']):hover {
+    background: var(--pqp-hov);
+  }
+}
+.pqp-b[data-live]:not([aria-disabled='true']):not(:disabled):not([aria-busy='true']):active,
+.pqp-b[data-state='pressed'] {
+  background: var(--pqp-prs);
+  scale: var(--pqp-ps);
+}
+.pqp-b[data-state='hovered'] {
+  background: var(--pqp-hov);
+}
+.pqp-b[data-live]:focus-visible,
+.pqp-b[data-state='focused'] {
+  outline: var(--pqp-rw) solid var(--pqp-ring);
+  outline-offset: var(--pqp-ro);
+  z-index: 1;
+}
+.pqp-b[aria-busy='true'] {
+  background: var(--pqp-load);
+  cursor: progress;
+}
+/* 끝(최소 · 최대) · 읽기 전용 — 막힌 모습, 올려도 눌러도 바탕 · 축소가 없다. 초점은 남는다(aria-disabled) */
+.pqp-b[aria-disabled='true'] {
+  color: var(--pqp-dis);
+  cursor: not-allowed;
+}
+.pqp-b[aria-disabled='true'][data-state='hovered'],
+.pqp-b[aria-disabled='true'][data-state='pressed'] {
+  background: transparent;
+  scale: none;
+}
+.pqp-b:disabled {
+  color: var(--pqp-dis);
+  cursor: not-allowed;
+}
+.pqp-d {
+  flex-shrink: 0;
+  width: var(--pqp-dw);
+  height: var(--pqp-dh);
+  background: var(--pqp-dc);
+}
+.pqp-v {
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding-left: var(--pqp-vpx);
+  padding-right: var(--pqp-vpx);
+  font-size: var(--pqp-fs);
+  line-height: var(--pqp-lh);
+  font-weight: var(--pqp-vfw);
+  color: var(--pqp-vc);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+.pqp-v > span {
+  grid-area: 1 / 1;
+}
+.pqp-v > [data-ph] {
+  visibility: hidden;
+}
+.pqp[data-layout='fill'] .pqp-v {
+  flex-grow: 1;
+}
+.pqp[data-disabled] .pqp-v {
+  color: var(--pqp-vdis);
+}
+/* Attachment Input — 첨부 타일(.pat-t) · 항목(.pat-it) · ×(.pat-x) · 다시 시도(.pat-act) · 드롭존(.pat-dz).
+   포커스 링은 모두 부품 안쪽(--pat-ro 음수) — 가로 스크롤 줄이 바깥 링을 자른다 */
+.pat-t {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--pat-ts);
+  height: var(--pat-ts);
+  gap: var(--pat-tg);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--pat-tr);
+  background: transparent;
+  box-shadow: inset 0 0 0 var(--pat-tbw) var(--pat-tbd);
+  font-family: 'Pretendard Variable', Pretendard, sans-serif;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--pat-dur) var(--pat-ease),
+    scale var(--pat-sdur) var(--pat-sease);
+}
+.pat-t > svg {
+  width: var(--pat-tic);
+  height: var(--pat-tic);
+  color: var(--pat-ticc);
+}
+.pat-count {
+  color: var(--pat-cc);
+  font-variant-numeric: tabular-nums;
+}
+.pat-count > [data-max] {
+  color: var(--pat-cm);
+}
+.pat-t[aria-disabled='true'],
+.pat-t:disabled {
+  cursor: not-allowed;
+}
+.pat-t[aria-disabled='true'] > svg,
+.pat-t:disabled > svg,
+.pat-t[aria-disabled='true'] .pat-count,
+.pat-t[aria-disabled='true'] .pat-count > [data-max],
+.pat-t:disabled .pat-count,
+.pat-t:disabled .pat-count > [data-max] {
+  color: var(--pat-dis);
+}
+@media (hover: hover) {
+  .pat-t[data-live]:not([aria-disabled='true']):not(:disabled):hover {
+    background: var(--pat-hov);
+  }
+  .pat-x[data-live]:not([aria-disabled='true']):not(:disabled):hover {
+    background: var(--pat-xhov);
+  }
+}
+.pat-t[data-live]:not([aria-disabled='true']):not(:disabled):active,
+.pat-t[data-state='pressed'] {
+  background: var(--pat-prs);
+  scale: var(--pat-ps);
+}
+.pat-t[data-state='hovered'] {
+  background: var(--pat-hov);
+}
+.pat-t[data-live]:focus-visible,
+.pat-t[data-state='focused'],
+.pat-x[data-live]:focus-visible,
+.pat-x[data-state='focused'],
+.pat-act[data-live]:focus-visible,
+.pat-act[data-state='focused'] {
+  outline: var(--pat-rw) solid var(--pat-ring);
+  outline-offset: var(--pat-ro);
+}
+.pat-it {
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  height: var(--pat-ih);
+  border-radius: var(--pat-ir);
+  outline: none;
+  transition:
+    scale var(--pat-sdur) var(--pat-sease),
+    opacity var(--pat-fdur, 0s) var(--pat-fease, linear);
+}
+/* 항목의 포커스 링 — 사진 · 덮개(위치를 가진 자식)가 바깥 outline 을 덮으므로 그 위에 안쪽 링을 덧그린다(× 는 더 위) */
+.pat-it[data-reorder]:focus-visible::after,
+.pat-it[data-state='focused']::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 var(--pat-rw) var(--pat-ring);
+  pointer-events: none;
+}
+.pat-it[data-reorder] {
+  cursor: grab;
+  touch-action: pan-y;
+}
+.pat-it[data-dragging] {
+  scale: var(--pat-dps);
+  cursor: grabbing;
+  z-index: 2;
+}
+.pat-face {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+/* × 둘레 구멍 — × 보다 2 크게(지름 24) 사진 · 덮개 · 띠 · 윤곽을 파낸다. 가운데는 모서리에서 안쪽 --pat-mo(× 의 가운데) */
+.pat-it[data-x] .pat-face {
+  -webkit-mask-image: radial-gradient(circle var(--pat-mr) at calc(100% - var(--pat-mo)) var(--pat-mo), transparent calc(var(--pat-mr) - 0.5px), #000 var(--pat-mr));
+  mask-image: radial-gradient(circle var(--pat-mr) at calc(100% - var(--pat-mo)) var(--pat-mo), transparent calc(var(--pat-mr) - 0.5px), #000 var(--pat-mr));
+}
+.pat-stroke {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.pat-cover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pat-card {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.pat-thumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--pat-ths);
+  height: var(--pat-ths);
+  border-radius: var(--pat-thr);
+  background: var(--pat-thbg);
+}
+.pat-badge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.pat-act {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--pat-ir);
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: scale var(--pat-sdur) var(--pat-sease);
+}
+.pat-act[data-live]:active,
+.pat-act[data-state='pressed'] {
+  scale: var(--pat-aps);
+}
+.pat-x {
+  position: absolute;
+  top: calc(var(--pat-xo) * -1);
+  right: calc(var(--pat-xo) * -1);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--pat-xs);
+  height: var(--pat-xs);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 9999px;
+  background: var(--pat-xbg);
+  box-shadow: inset 0 0 0 var(--pat-xbw) var(--pat-xbd);
+  color: var(--pat-xic);
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--pat-dur) var(--pat-ease),
+    scale var(--pat-sdur) var(--pat-sease);
+}
+.pat-x > svg {
+  width: var(--pat-xis);
+  height: var(--pat-xis);
+}
+/* × 의 누르는 자리 — 보이는 20 둘레로 12 씩(44) */
+.pat-x::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--pat-xe) * -1);
+  right: calc(var(--pat-xe) * -1);
+  bottom: calc(var(--pat-xe) * -1);
+  left: calc(var(--pat-xe) * -1);
+}
+.pat-it[data-hit] .pat-x::before {
+  background: var(--pat-hitf);
+  outline: 1px dashed var(--pat-hitl);
+  outline-offset: -1px;
+}
+.pat-x[data-live]:not([aria-disabled='true']):not(:disabled):active,
+.pat-x[data-state='pressed'] {
+  background: var(--pat-xprs);
+  scale: var(--pat-xps);
+}
+.pat-x[data-state='hovered'] {
+  background: var(--pat-xhov);
+}
+.pat-x[aria-disabled='true'],
+.pat-x:disabled {
+  color: var(--pat-dis);
+  cursor: not-allowed;
+}
+.pat-dz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--pat-dzh);
+  gap: var(--pat-dzg);
+  padding-left: var(--pat-dzpx);
+  padding-right: var(--pat-dzpx);
+  border-radius: var(--pat-dzr);
+  border: var(--pat-dzbw) solid var(--pat-dzbd);
+  background: transparent;
+  font-family: 'Pretendard Variable', Pretendard, sans-serif;
+  transition:
+    border-color var(--pat-dur) var(--pat-ease),
+    background-color var(--pat-dur) var(--pat-ease);
+}
+.pat-dz[data-drag] {
+  border-color: var(--pat-dzdbd);
+  background: var(--pat-dzdbg);
+}
+.pat-dz[data-disabled] {
+  border-color: var(--pat-dzxbd);
+}
+.pat-dzl {
+  color: var(--pat-dzlc);
+  text-align: center;
+}
+.pat-dz[data-disabled] .pat-dzl {
+  color: var(--pat-dis);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pqp-b,
+  .pat-t,
+  .pat-it,
+  .pat-x,
+  .pat-act {
+    scale: none !important;
+  }
+  .pat-it {
+    transition: none;
+  }
+}
+/* Footer 링크 — 밑줄 없이 글자색만 바뀐다(large 는 옅게 · medium 은 짙게). 키보드 포커스는 글 둘레 링 */
+.pft-a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--pft-c);
+  text-decoration: none;
+  border-radius: var(--pft-rr);
+  outline: none;
+  cursor: pointer;
+  transition: color var(--pft-dur) var(--pft-ease);
+}
+.pft-a > svg {
+  width: var(--pft-is);
+  height: var(--pft-is);
+  flex-shrink: 0;
+}
+@media (hover: hover) {
+  .pft-a[data-live]:hover {
+    color: var(--pft-h);
+  }
+}
+.pft-a[data-live]:active,
+.pft-a[data-state='hovered'],
+.pft-a[data-state='pressed'] {
+  color: var(--pft-h);
+}
+.pft-a[data-live]:focus-visible,
+.pft-a[data-state='focused'] {
+  outline: var(--pft-rw) solid var(--pft-ring);
+  outline-offset: var(--pft-ro);
+}

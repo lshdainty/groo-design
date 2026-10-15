@@ -42,7 +42,7 @@
 
 ### Input
 
-Field 는 어떤 입력이든 감싼다 — 칸 이름 · 설명 · 오류를 입력마다 따로 짜지 않는다. 지금 들어가는 입력은 Text Input([Input](input.md) — 인증 코드 칸 [Input OTP](input-otp.md) 도) · [Textarea](textarea.md) · 고르는 칸([Select](select.md) · [Input Button](input-button.md) — [Icon Picker](icon-picker.md) 도) · [Slider](slider.md)와 Checkbox · Radio · Select Box · [Color Swatch](color-swatch.md) 묶음이다. 고르는 칸은 버튼이라 라벨을 눌러도 포커스만 옮긴다(목록 · 시트를 열지 않는다).
+Field 는 어떤 입력이든 감싼다 — 칸 이름 · 설명 · 오류를 입력마다 따로 짜지 않는다. 지금 들어가는 입력은 Text Input([Input](input.md) — 인증 코드 칸 [Input OTP](input-otp.md) 도) · [Textarea](textarea.md) · 고르는 칸([Select](select.md) · [Input Button](input-button.md) — [Icon Picker](icon-picker.md) 도) · [Slider](slider.md) · [Quantity Picker](quantity-picker.md)(라벨이 묶음의 이름) · [Attachment Input](attachment-input.md)(설명에 형식 · 크기 · 개수, 거절은 오류 글)과 Checkbox · Radio · Select Box · [Color Swatch](color-swatch.md) 묶음이다. 고르는 칸은 버튼이라 라벨을 눌러도 포커스만 옮긴다(목록 · 시트를 열지 않는다).
 
 [그림: 입력 — 한 줄 · 여러 줄 · 선택 상자 묶음을 같은 둘레로](../../site/components/specs/field.tsx#input-slot)
 
@@ -125,6 +125,8 @@ Field 는 24 간격으로 쌓는다. 라벨과 값이 짧은 두 칸은 16 간�
 | 이런 자리 | 컴포넌트 |
 |---|---|
 | 짧은 글 · 숫자를 직접 친다 | Text Input(Input) |
+| 작은 정수를 한 단계씩 — 흔한 값이 열 단계 안쪽 | [Quantity Picker](quantity-picker.md) |
+| 사진 · 파일을 붙인다 | [Attachment Input](attachment-input.md) |
 | 여러 줄 글을 친다 | Textarea |
 | 짧은 선택지 5개 이상에서 값을 고른다 | [Select](select.md) |
 | 달력 · 시각 · 아이콘 격자 · 긴 목록에서 고른다 | [Input Button](input-button.md) |
@@ -212,6 +214,7 @@ import { RadioSelectBox, RadioSelectBoxGroup } from "@/components/ui/select-box"
 ```tsx
 import { useForm } from "react-hook-form"
 import { Form, FormField } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
 
 const form = useForm({ defaultValues: { title: "", reason: "" } })
 

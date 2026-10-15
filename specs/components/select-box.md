@@ -118,6 +118,8 @@ Select Box 는 고르는 도구이고 그 자체로 무언가를 실행하지 �
 
 [그림: 상자로 고르고 내보내기 버튼으로 반영 · 누르는 순간 실행되는 상자](../../site/components/specs/select-box.tsx#submit-guide)
 
+권한을 주는 여럿 고르기도 같다 — HR 관리 > 역할 및 권한의 사용자 역할은 칸 없는 체크 상자(이름 + 역할 설명)를 고르고 아래 "저장" 한 번으로 반영한다(2026-10-15 마무리 10A — 아래 코드 "여럿 고르고 저장"). 폰 · 데스크톱이 같은 모양이고, 역할이 늘어도 상자를 쌓는다(검색 시트 · 팝오버를 두지 않는다). 누를 때마다 저장하면 권한이 실수 한 번에 바로 바뀌고, 빨리 두 번 누르면 앞 변경을 모르는 목록을 보낼 수 있다.
+
 ### 간결하게
 
 제목은 짧게, 설명은 두 줄까지 — 선택지를 빠르게 견주게 한다. 선택지마다의 설명을 드롭다운 아래 한 문단에 몰아 쓰지 않는다(지금 HR 휴가 정책의 "N (고정 시간): …").
@@ -221,6 +223,54 @@ import { RadioSelectBox, RadioSelectBoxGroup } from "@/components/ui/select-box"
 </RadioSelectBoxGroup>
 ```
 
+### 여럿 고르고 저장 — HR 역할
+
+[그림: HR 사용자 역할 — 이름 + 설명 상자 여럿, 아래 "저장"(바뀐 것이 없으면 막힘) — 데스크톱 · 폰 같은 모양](../../site/components/specs/select-box.tsx#ex-roles)
+
+```tsx
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Field } from "@/components/ui/field"
+import { CheckSelectBox, CheckSelectBoxGroup } from "@/components/ui/select-box"
+
+const roles = [
+  { code: "ADMIN", name: "관리자", description: "관리자 권한으로 시스템 운영에 필요한 전체 권한이 부여되어 있습니다." },
+  { code: "USER", name: "일반 사용자", description: "일반 사용자 권한으로 시스템 관리에 필요한 권한을 제외한 일반적인 읽기, 쓰기 권한이 부여되어 있습니다." },
+  { code: "APPROVER", name: "승인권자", description: "휴가 신청 항목에 대해 승인/반려를 할 수 있는 권한이 부여되어 있습니다." },
+]
+const saveUserRoles = (codes: string[]) => Promise.resolve(codes) // 사용자 역할 저장 요청 — 성공하면 토스트 "역할을 저장했어요"
+
+const [saved, setSaved] = useState<string[]>(["USER", "APPROVER"])
+const [picked, setPicked] = useState<string[]>(saved)
+const added = picked.filter((c) => !saved.includes(c)).length
+const removed = saved.filter((c) => !picked.includes(c)).length
+const toggle = (code: string, on: boolean) =>
+  setPicked((list) => (on ? [...list, code] : list.filter((c) => c !== code)))
+
+<Field label="역할" description="여럿 고를 수 있어요. 저장을 눌러야 바뀌어요.">
+  <CheckSelectBoxGroup>
+    {roles.map((r) => (
+      <CheckSelectBox
+        key={r.code}
+        label={r.name}
+        description={r.description}
+        checked={picked.includes(r.code)}
+        onCheckedChange={(on) => toggle(r.code, on)}
+      />
+    ))}
+  </CheckSelectBoxGroup>
+</Field>
+<div className="flex items-center justify-end gap-x3">
+  <span className="text-t4 text-fg-neutral-subtle">
+    {added + removed > 0 ? `더함 ${added} · 뺌 ${removed} — 아직 저장 안 됨` : "바뀐 것 없음"}
+  </span>
+  {/* 바뀐 것이 없으면 막는다 — 저장은 한 번, 누를 때마다 저장하지 않는다 */}
+  <Button disabled={added + removed === 0} onClick={() => saveUserRoles(picked).then(() => setSaved(picked))}>
+    저장
+  </Button>
+</div>
+```
+
 ## Behavior
 
 | 인터랙션 | 동작 |
@@ -280,6 +330,15 @@ import { RadioSelectBox, RadioSelectBoxGroup } from "@/components/ui/select-box"
 - 고른 테두리 `stroke-neutral-contrast` 는 v113 에 더한 역할이다(SEED 와 같은 gray-1000).
 
 ## Migration notes
+
+### 2026-10-15 — HR 역할 고르기는 여럿 고르기 상자 + 저장
+
+사용자가 [마무리 비교 페이지](https://claude.ai/artifact/KVyg5Kr95cYUkMT3vsxz1z) 10A 에서 정했다 — HR 관리 > 역할 및 권한 > 사용자 탭의 역할 고르기는 `CheckSelectBox`(이름 t5 500 + 역할 설명 t3) 여럿 + 아래 "저장" 한 번(바뀐 것이 없으면 막힘), 폰 · 데스크톱 같은 모양이다. 데스크톱 팝오버 · 폰 시트 두 벌을 걷는다 — Command(cmdk)를 디자인 시스템과 제품에서 걷는 일의 하나다. List 체크 줄 · 누르는 순간 저장(10B) · Select 여럿 고르기(10C) · 검색 시트 · 팝오버 + 완료(10D)는 고르지 않았다.
+
+- **데스크톱** — 팝오버 250 안 cmdk 검색 + 체크 줄이고, 줄을 누를 때마다 `await` 없이 사용자 전체를 PUT 한다(hr-front `features/admin-authority/ui/UserRoleAssignment.tsx:29-36 · 98-132` · 저장 `UserManagementPanel.tsx:60-87`). 두 번 빨리 누르면 두 번째 요청이 첫 변경을 모르는 목록으로 계산될 수 있다(코드로 읽은 위험). 검색은 역할 이름으로만 된다.
+- **폰** — 시트 85vh + 검색칸(이름 · 코드) + 체크 카드(`div onClick` — 키보드로 못 닿는다) + "완료" 로 한 번 저장(`MobileRoleSelector.tsx:46-64 · 80-140 · 140-145`). 저장 오류를 스스로 삼켜 실패해도 시트가 닫힌다.
+- **역할 수** — 관리자가 "역할" 탭에서 늘리고 지울 수 있고 상한이 없다. 기본은 넷(porest-sql `hr/data/4. roles.sql` — 관리자 · 일반 사용자 · 승인권자 · 업무 코드 관리자). 비교 페이지는 여덟 개로 그렸다 — 가장 긴 "일반 사용자" 설명도 폰 상자에서 두 줄에 든다. 설명은 1000자까지 쓸 수 있어(`Role.java:52`) 더 길면 두 줄을 넘는다.
+- **걷는 것** — `shared/ui/shadcn/command.tsx` · 배럴 재수출(`shared/ui/shadcn/index.ts:39-49`) · `cmdk` 의존, 고아가 되는 번역 키 `authority.noRoleFound`. 같은 시트 모양의 "권한 관리"(`MobilePermissionDrawer.tsx` — 역할 탭)는 그 차례에 이 모양으로 맞춘다.
 
 ### 2026-10-08 — Enter 는 폼 제출
 

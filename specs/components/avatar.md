@@ -111,9 +111,17 @@
 
 [그림: 앞 4명 + "+2" · 옆에 "6명"](../../site/components/specs/avatar.tsx#stack-guide)
 
+### 사진 바꾸기 — 늘 보이는 버튼
+
+프로필 사진을 바꾸는 자리(HR 직원 정보 수정 — 108)는 아바타 아래 16 에 버튼 둘을 늘 보인다 — "사진 바꾸기"([Button](button.md) `neutralWeak` small) · "사진 지우기"(`ghost` small, 사진이 있을 때만 — 지우면 이니셜). 마우스를 올려야 나타나는 덮개는 두지 않는다 — 키보드 · 터치 · 화면 읽기로 닿지 않는다(사용자 결정 2026-10-15 마무리 6A — 호버 덮개 6C · 첨부 칸 한 장 6B 는 고르지 않았다). 올리는 중에는 아바타 위 딤(라이트 50% · 다크 65%) 가운데 값 있는 원 24(`staticWhite` — [Progress Circle](progress-circle.md) "올리기 · 받기")를 두고 두 버튼을 막는다. 실패는 [Field](field.md) 의 오류 글로 그 자리에 알린다("5MB 넘는 사진은 올릴 수 없어요.") — 성공을 따로 알리지 않는다(사진이 바뀐 것이 보인다). 앱의 "사진 바꾸기" 는 [Menu Sheet](menu-sheet.md)(사진 찍기 · 앨범에서 고르기)를 연다. 여럿 · 파일을 붙이는 자리는 [Attachment Input](attachment-input.md) 이다.
+
+[그림: HR 사용자 수정 — 108 + "사진 바꾸기" · "사진 지우기" · 올리는 중(딤 + 원 24, 버튼 막힘) · 실패(오류 글) · 사진 없음(이니셜 + "사진 바꾸기" 하나)](../../site/components/specs/avatar.tsx#photo-guide)
+
+[표: 사진 바꾸기 자리](avatar.yaml#matrix.edit.photo@uploadOverlay+editActions)
+
 ## 코드
 
-레시피 `recipes/shadcn/components/ui/avatar.tsx` 를 쓴다 — `Avatar` · `AvatarStack` 과 규칙 함수 `avatarInitial(name)`(이니셜) · `avatarHue(name)`(이름 색 — `"blue"` … `"gray"`). `Avatar` 는 `name`(필수 — 이니셜 · 이름 색 · 이름) · `src`(사진, 없으면 이니셜) · `size`(`20` · `24` · `36` · `42` · `48` · `56` · `64` · `80` · `96` · `108`, 기본 `48` — 자리마다 고른다) · `decorative`(기본 `true` — 옆에 이름이 있을 때. `false` 면 이름을 읽는다)를 받는다. `AvatarStack` 은 `size`(안의 아바타가 따른다 — 기본 `24`) · `max`(기본 4) · `surface`(링 색 — `"default"` 기본 · `"floating"`) · `aria-label`(주면 묶음을 그림 하나로 읽고, 없으면 장식으로 숨긴다)을 받는다. 앱은 같은 규칙 함수를 Dart 로 두고 아래 예시 이름으로 같은 답이 나오는지 시험한다. 아래 미리보기는 스펙 값으로 그린 모습이다.
+레시피 `recipes/shadcn/components/ui/avatar.tsx` 를 쓴다 — `Avatar` · `AvatarStack` 과 규칙 함수 `avatarInitial(name)`(이니셜) · `avatarHue(name)`(이름 색 — `"blue"` … `"gray"`). `Avatar` 는 `name`(필수 — 이니셜 · 이름 색 · 이름) · `src`(사진, 없으면 이니셜) · `size`(`20` · `24` · `36` · `42` · `48` · `56` · `64` · `80` · `96` · `108`, 기본 `48` — 자리마다 고른다) · `decorative`(기본 `true` — 옆에 이름이 있을 때. `false` 면 이름을 읽는다) · `uploadProgress`(0 ~ 1 — 주면 원 위 딤 + 값 있는 원 24 `staticWhite`, 이름 "프로필 사진 올리는 중" · 값 글 "40%")를 받는다. `AvatarStack` 은 `size`(안의 아바타가 따른다 — 기본 `24`) · `max`(기본 4) · `surface`(링 색 — `"default"` 기본 · `"floating"`) · `aria-label`(주면 묶음을 그림 하나로 읽고, 없으면 장식으로 숨긴다)을 받는다. 앱은 같은 규칙 함수를 Dart 로 두고 아래 예시 이름으로 같은 답이 나오는지 시험한다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
 ### 이름 옆 — 장식
 
@@ -152,6 +160,59 @@ import { Avatar, AvatarStack } from "@/components/ui/avatar"
 </span>
 ```
 
+### 사진 바꾸기 — HR 직원 정보 수정
+
+[그림: 사용자 수정 대화상자 — 108 + 늘 보이는 버튼 둘, 올리는 중 · 실패](../../site/components/specs/avatar.tsx#ex-photo)
+
+```tsx
+import { useRef, useState } from "react"
+import { Avatar } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Field } from "@/components/ui/field"
+
+const MAX_SIZE = 5 * 1024 * 1024
+const user = { name: "한지우", profileUrl: "/profiles/jiwoo.webp" }
+// POST /users/profiles — 진행을 알려 주고 새 사진 주소를 돌려준다
+const uploadProfile = (file: File, onProgress: (ratio: number) => void) => {
+  onProgress(1)
+  return Promise.resolve(URL.createObjectURL(file))
+}
+
+const fileRef = useRef<HTMLInputElement>(null)
+const [photoUrl, setPhotoUrl] = useState<string | undefined>(user.profileUrl)
+const [progress, setProgress] = useState<number | undefined>(undefined)
+const [error, setError] = useState<string | null>(null)
+
+const pick = (file: File | undefined) => {
+  if (!file) return
+  if (!file.type.startsWith("image/")) return setError("사진 파일만 올릴 수 있어요.")
+  if (file.size > MAX_SIZE) return setError("5MB 넘는 사진은 올릴 수 없어요.")
+  setError(null)
+  setProgress(0)
+  uploadProfile(file, setProgress)
+    .then(setPhotoUrl, () => setError("사진을 올리지 못했어요. 다시 해주세요."))
+    .finally(() => setProgress(undefined))
+}
+
+{/* 버튼은 늘 보인다 — 마우스를 올려야 나타나는 덮개를 두지 않는다 */}
+<Field invalid={error !== null} errorMessage={error}>
+  <div className="flex flex-col items-center gap-x4">
+    <Avatar size={108} name={user.name} src={photoUrl} decorative={false} uploadProgress={progress} />
+    <div className="flex flex-wrap justify-center gap-x2">
+      <Button variant="neutralWeak" size="small" disabled={progress !== undefined} onClick={() => fileRef.current?.click()}>
+        사진 바꾸기
+      </Button>
+      {photoUrl && (
+        <Button variant="ghost" size="small" disabled={progress !== undefined} onClick={() => setPhotoUrl(undefined)}>
+          사진 지우기
+        </Button>
+      )}
+    </div>
+    <input ref={fileRef} type="file" accept="image/*" hidden onChange={(e) => pick(e.target.files?.[0])} />
+  </div>
+</Field>
+```
+
 ## Behavior
 
 | 인터랙션 | 동작 |
@@ -161,6 +222,7 @@ import { Avatar, AvatarStack } from "@/components/ui/avatar"
 | 이름이 바뀜 | 이니셜 · 이름 색이 규칙대로 바로 바뀐다 |
 | 묶음 인원이 바뀜 | 앞 4명 · "+N" 을 다시 센다 |
 | 누르기 | 아바타 · 묶음 자체는 누르지 않는다 — 감싼 버튼 · 링크의 동작 |
+| 사진 바꾸기 · 사진 지우기 | 버튼이 늘 보인다 — "사진 바꾸기" 는 고르기 창(앱은 메뉴 시트), "사진 지우기" 는 이니셜로. 올리는 동안 아바타 위 딤 + 값 있는 원 24 · 두 버튼 막힘, 실패는 Field 오류 글 |
 
 ## Accessibility
 
@@ -171,7 +233,8 @@ import { Avatar, AvatarStack } from "@/components/ui/avatar"
 | **WCAG 1.1.1** Non-text Content | 이름 옆 아바타는 장식(`aria-hidden`, 사진 `alt=""`) — 이름을 한 번만 읽는다. 혼자인 아바타는 `role="img"` + 이름(`aria-label="김민수"`), 사진 실패 · 이니셜이어도 같은 이름 |
 | **WCAG 1.4.1** Use of color | 이름 색은 뜻이 없다 — 상태 · 역할은 글 · 배지로 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 해당 없음 — 누르지 않는다. 감싼 버튼은 그 버튼의 규칙(20 · 24 아바타를 누르게 하려면 누르는 영역을 44 로) |
-| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 해당 없음 — 누르지 않는다 |
+| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 해당 없음 — 누르지 않는다. 사진 바꾸기 버튼은 Button small 36 · 누르는 영역 44 ✓ |
+| **WCAG 2.1.1** Keyboard | 사진 바꾸기 · 지우기는 늘 보이는 버튼이라 `Tab` · `Enter` 로 닿는다 — 마우스를 올려야 나타나는 덮개를 두지 않는다 ✓ |
 | **ARIA** | 묶음은 `aria-label` 이 있으면 `role="img"` 하나("참여자 6명: 김민수, 이서연, 박지훈, 최유진 외 2명"), 없으면 `aria-hidden`(옆 글이 수를 말한다). 안의 아바타 · "+N" 은 따로 읽지 않는다 |
 
 ## Do / Don't
@@ -182,6 +245,7 @@ import { Avatar, AvatarStack } from "@/components/ui/avatar"
 - 같은 자리는 같은 크기 — 10단계 안에서.
 - 이름 옆 아바타는 장식으로 숨긴다.
 - 묶음은 앞 4명 + "+N", 옆에 전체 수를 글로.
+- 사진을 바꾸는 자리는 아바타 아래 늘 보이는 "사진 바꾸기" · "사진 지우기".
 
 ### ❌ Don't
 
@@ -190,6 +254,7 @@ import { Avatar, AvatarStack } from "@/components/ui/avatar"
 - 브랜드 채움 · 회색 한 색 이니셜, 이니셜 두 글자("Ki").
 - 아바타를 흐리게 해서 상태 알리기.
 - 다크에서 차트 색 위 흰 이니셜.
+- 사진 바꾸기를 마우스를 올려야 나타나는 덮개에만 두기.
 
 ## Specification
 
@@ -209,6 +274,13 @@ import { Avatar, AvatarStack } from "@/components/ui/avatar"
 - **이름 옆 아바타는 장식, 혼자면 이름** — SEED 는 `alt` 가 선택이고 예제에 없어 이름 없는 그림으로 읽힌다.
 
 ## Migration notes
+
+### 2026-10-15 — 사진 바꾸기는 늘 보이는 버튼
+
+사용자가 [마무리 비교 페이지](https://claude.ai/artifact/KVyg5Kr95cYUkMT3vsxz1z) 6A 에서 정했다 — 프로필 사진 하나를 바꾸는 자리는 Avatar + 늘 보이는 "사진 바꾸기"(neutralWeak small) · "사진 지우기"(ghost small), 올리는 중은 아바타 위 딤 + 값 있는 원 24, 실패는 Field 오류 글. Attachment Input 한 장(6B — 고칠 때만 네모가 된다) · 지금의 호버 덮개(6C)는 고르지 않았다. `avatar.yaml` 에 `edit`(none · photo) 축과 `uploading` 상태, 레시피에 `uploadProgress` 를 더했다.
+
+- **HR 사용자 수정 대화상자의 사진**(사이드바 계정 `widgets/sidebar/ui/SidebarFooter.tsx:117-119` · 관리자 사용자 표 `UserTable.tsx:322` 두 곳에서 열림) — 160 원 위에 마우스를 올려야 검정 50% 덮개 + 흰 20% 원 48 둘(업로드 · 삭제)이 나타나고, 덮개가 `div onClick` 이라 **키보드로 닿지 않고 터치에선 보이지 않는 채로 눌러야 한다**(`features/user-profile/ui/UserEditDialog.tsx:244-305`). 108 + 늘 보이는 버튼 둘로. 올리는 중의 스켈레톤 + 스피너 "처리 중..." 은 딤 + 값 있는 원 24 로, 빨간 Alert(`imageFileOnly` · `fileSizeLimit`) · 초록 Alert 3초는 Field 오류 글 하나로(성공 알림 없음). 사진을 못 불러오면 `https://github.com/shadcn.png` 로 바꿔 끼우는 것(`:267`)을 걷고 이니셜로. 개발 서버의 이미지 주소 디버그 상자도 걷는다. 고르는 즉시 800px · 품질 0.8 로 줄이는 것(`:69-94`)과 5MB 한도(`:159` · hr-back `UserServiceImpl.java:58`)는 그대로다.
+- **번역 키 두 벌** — `common,fileSizeLimit` 이 문구가 다른 두 줄("5MB 이하여야 합니다" · "5MB를 초과할 수 없습니다"), `imageFileOnly` 도 두 줄이다(`i18n/translations.csv:710 · 1043`) — 해요체 한 줄로("5MB 넘는 사진은 올릴 수 없어요." · "사진 파일만 올릴 수 있어요.").
 
 ### 2026-10-08 — 묶음의 바탕(surface)을 YAML 축으로
 

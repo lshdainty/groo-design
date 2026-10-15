@@ -1,7 +1,8 @@
 /*
  * shadcn Select Box 예제 — docs site components/select-box.html 에서 Preview + Code 토글로 보인다.
- * 각 예제 = { title, description, jsx, render() }. 앞의 다섯은 차례 · 제목 · 코드가 specs/components/select-box.md 의 "코드" 절과 같고,
- * 뒤의 둘(2열 · 앞 · 펼침 보이기)은 md 에 없는 쓰임을 더 보인다.
+ * 각 예제 = { title, description, jsx, render() }. 앞의 여섯은 차례 · 제목 · 코드가 specs/components/select-box.md 의 "코드" 절과 같고,
+ * 뒤의 둘(2열 · 앞 · 펼침 보이기)은 md 에 없는 쓰임을 더 보인다. 여섯째(여럿 고르고 저장 — HR 역할, 2026-10-15 마무리 10A)의 칸 둘레 FIELD_* 는
+ * field.tsx 의 클래스, "저장" 의 BUTTON_* 는 button.tsx 의 값(neutralSolid · medium)이다.
  *
  * GROUP_* · CHECK_GROUP · BOX_BASE · TRIGGER_* · CONTENT_* · PREFIX_* · BODY_BASE · LABEL_* · DESCRIPTION_* · FOOTER_BASE · FOOTER_OPEN ·
  * FOOTER_CLIP · FOOTER_INNER · MARK_IN_BOX · GHOST_NO_BG · HIDDEN_CONTROL 은 recipes/shadcn/components/ui/select-box.tsx 의 cva 정의 · 상수 ·
@@ -552,6 +553,70 @@ const END = [
 ];
 const ends = (prefix, extra = {}) => END.map((it) => ({ ...it, ...extra[it.value], id: `${prefix}-${it.value}` }));
 
+// ── 여럿 고르고 저장(HR 역할)의 둘레 — field.tsx 의 클래스 · button.tsx 의 값(neutralSolid · medium — "저장") ───────────
+
+// <Field> — 묶음이라 라벨은 <span id>(field.tsx — 묶음의 aria-labelledby 가 가리킨다). icon-picker-examples.mjs 의 것과 같다
+const FIELD_ROOT = "flex w-full min-w-0 flex-col gap-x2";
+const FIELD_HEADER = "flex items-center justify-between gap-x2_5 px-x0_5";
+const FIELD_LABEL = "min-w-0 font-sans text-t5 text-fg-neutral";
+const FIELD_LABEL_WEIGHT = { medium: "font-medium", bold: "font-bold" };
+const FIELD_FOOTER = "flex items-start gap-x2 px-x0_5 font-sans";
+const FIELD_DESCRIPTION = "m-0 flex min-w-0 text-t4 text-fg-neutral-subtle";
+const FIELD_TEXT = "min-w-0";
+// 사이트의 `.content p { margin: 12px 0; color: text-primary }` 를 덮는 미리보기용 덧칠(레시피에는 없다)
+const P_FIX_DESCRIPTION = "margin:0; color:var(--color-fg-neutral-subtle);";
+
+const BUTTON_BASE = [
+  "relative inline-flex items-center justify-center whitespace-nowrap font-sans font-bold",
+  "before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
+  "active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
+  "disabled:cursor-not-allowed disabled:[scale:1] disabled:bg-bg-disabled disabled:text-fg-disabled",
+  "aria-busy:cursor-progress aria-busy:text-transparent aria-busy:[&>svg:not([data-slot=progress-circle])]:invisible aria-busy:active:[scale:1]",
+  "[--progress-thickness:2px]",
+  "[&_svg]:pointer-events-none [&_svg]:shrink-0",
+].join(" ");
+const BUTTON_VARIANTS = {
+  variant: {
+    neutralSolid:
+      "bg-bg-neutral-inverted text-fg-neutral-inverted hover:bg-bg-neutral-inverted-pressed active:bg-bg-neutral-inverted-pressed aria-busy:bg-bg-neutral-inverted-pressed [--progress-track:color-mix(in_srgb,var(--color-fg-neutral-inverted)_30%,transparent)] [--progress-range:var(--color-fg-neutral-inverted)]",
+  },
+  size: { medium: "h-10 rounded-r2 [--press-basis:40] [--progress-size:16px]" },
+  layout: { withText: "", iconOnly: "" },
+  ghostColor: { neutral: "" },
+};
+const BUTTON_COMPOUND = [{ size: "medium", layout: "withText", className: "px-x4 py-x2_5 gap-x1_5 text-t4 [&_svg]:size-4" }];
+const BUTTON_DEFAULTS = { variant: "neutralSolid", size: "medium", layout: "withText", ghostColor: "neutral" };
+const buttonVariants = cvaOf(BUTTON_BASE, { variants: BUTTON_VARIANTS, compoundVariants: BUTTON_COMPOUND, defaultVariants: BUTTON_DEFAULTS });
+
+// HR 역할 — porest-sql 기본 넷(설명 원문 그대로) + 관리자가 더한 넷(그림용 — 비교 페이지 마무리 10 이 그린 것). 저장된 역할은 일반 사용자 · 승인권자
+const ROLES = [
+  { code: "ADMIN", name: "관리자", description: "관리자 권한으로 시스템 운영에 필요한 전체 권한이 부여되어 있습니다." },
+  { code: "USER", name: "일반 사용자", description: "일반 사용자 권한으로 시스템 관리에 필요한 권한을 제외한 일반적인 읽기, 쓰기 권한이 부여되어 있습니다." },
+  { code: "APPROVER", name: "승인권자", description: "휴가 신청 항목에 대해 승인/반려를 할 수 있는 권한이 부여되어 있습니다." },
+  { code: "WORKCODE_M", name: "업무 코드 관리자", description: "업무 이력에 사용되는 코드를 관리하는 권한이 부여되어 있습니다." },
+  { code: "ATTEND_M", name: "근태 담당자", description: "출퇴근 기록과 근무 시간을 확인하고 바로잡을 수 있는 권한이 부여되어 있습니다." },
+  { code: "EVAL_M", name: "평가 담당자", description: "평가 일정을 열고 닫으며 평가 결과를 모아 볼 수 있는 권한이 부여되어 있습니다." },
+  { code: "PAY_VIEW", name: "급여 조회", description: "구성원의 급여 명세를 읽기 전용으로 볼 수 있는 권한이 부여되어 있습니다." },
+  { code: "EDU_M", name: "교육 관리자", description: "교육 과정을 만들고 수강 현황을 관리하는 권한이 부여되어 있습니다." },
+];
+const ROLES_SAVED = ["USER", "APPROVER"];
+
+// <Field label="역할" description> > <CheckSelectBoxGroup>(이름 = 라벨 · 설명 = 설명) + 아래 줄(옆 글 · "저장" — 바뀐 것이 없으면 막힘)
+function rolesForm(prefix, picked = ROLES_SAVED) {
+  const labelId = `${prefix}-label`;
+  const descriptionId = `${prefix}-description`;
+  const group = checkSelectBoxGroup(ROLES.map((r) => ({ id: `${prefix}-${r.code}`, label: r.name, description: r.description, checkState: state(picked.includes(r.code)) })))
+    .replace("<fieldset ", `<fieldset aria-labelledby="${labelId}" aria-describedby="${descriptionId}" `);
+  const added = picked.filter((c) => !ROLES_SAVED.includes(c)).length;
+  const removed = ROLES_SAVED.filter((c) => !picked.includes(c)).length;
+  const changed = added + removed > 0;
+  const fieldHtml = `<div data-slot="field" class="${FIELD_ROOT}"><div data-slot="field-header" class="${FIELD_HEADER}"><span id="${labelId}" class="${FIELD_LABEL} ${FIELD_LABEL_WEIGHT.medium}">역할</span></div>${group}<div data-slot="field-footer" class="${FIELD_FOOTER}"><p id="${descriptionId}" class="${FIELD_DESCRIPTION}" style="${P_FIX_DESCRIPTION}"><span class="${FIELD_TEXT}">여럿 고를 수 있어요. 저장을 눌러야 바뀌어요.</span></p></div><span class="sr-only" aria-live="polite"></span></div>`;
+  const bar = `<div class="flex items-center justify-end gap-x3"><span class="text-t4 text-fg-neutral-subtle">${changed ? `더함 ${added} · 뺌 ${removed} — 아직 저장 안 됨` : "바뀐 것 없음"}</span><button${changed ? "" : " disabled"} class="${buttonVariants()}">저장</button></div>`;
+  return `<div style="display:flex; flex-direction:column; gap:var(--spacing-x6);">${fieldHtml}${bar}</div>`;
+}
+
 // ── 예제 ──────────────────────────────────────────────────────────────────
 
 export const selectBoxExamples = [
@@ -676,6 +741,54 @@ import { RadioSelectBox, RadioSelectBoxGroup } from "@/components/ui/select-box"
           { value: "fixed", ariaLabel: "가변 부여 여부" },
         ),
       ),
+  },
+
+  {
+    title: "여럿 고르고 저장 — HR 역할",
+    description:
+      "권한을 주는 여럿 고르기도 고르기만 한다 — HR 관리 > 역할 및 권한 > 사용자의 역할은 칸 없는 체크 상자(이름 + 역할 설명)를 고르고 아래 \"저장\" 한 번으로 반영한다(2026-10-15 사용자 결정 10A). Field 안에 두면 Field 의 라벨이 묶음(fieldset)의 이름, 설명이 묶음의 설명이 된다. 바뀐 것이 없으면 \"저장\" 은 막혀 있고, 고르면 옆 글이 \"더함 1 · 뺌 0 — 아직 저장 안 됨\" 이 된다 — 누를 때마다 저장하지 않는다(실수 한 번에 권한이 바뀌고, 빨리 두 번 누르면 앞 변경을 모르는 목록을 보낼 수 있다). 폰 · 데스크톱이 같은 모양이고 역할이 늘어도 상자를 쌓는다 — 검색 시트 · 팝오버 + 완료 두 벌(cmdk)은 걷는다. 코드는 기본 셋으로 줄였고, 미리보기는 기본 넷 + 관리자가 더한 넷(여덟)을 저장한 그대로(일반 사용자 · 승인권자) 그렸다 — 스크립트 없이 그려 눌러도 고르지 않는다.",
+    jsx: `import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Field } from "@/components/ui/field"
+import { CheckSelectBox, CheckSelectBoxGroup } from "@/components/ui/select-box"
+
+const roles = [
+  { code: "ADMIN", name: "관리자", description: "관리자 권한으로 시스템 운영에 필요한 전체 권한이 부여되어 있습니다." },
+  { code: "USER", name: "일반 사용자", description: "일반 사용자 권한으로 시스템 관리에 필요한 권한을 제외한 일반적인 읽기, 쓰기 권한이 부여되어 있습니다." },
+  { code: "APPROVER", name: "승인권자", description: "휴가 신청 항목에 대해 승인/반려를 할 수 있는 권한이 부여되어 있습니다." },
+]
+const saveUserRoles = (codes: string[]) => Promise.resolve(codes) // 사용자 역할 저장 요청 — 성공하면 토스트 "역할을 저장했어요"
+
+const [saved, setSaved] = useState<string[]>(["USER", "APPROVER"])
+const [picked, setPicked] = useState<string[]>(saved)
+const added = picked.filter((c) => !saved.includes(c)).length
+const removed = saved.filter((c) => !picked.includes(c)).length
+const toggle = (code: string, on: boolean) =>
+  setPicked((list) => (on ? [...list, code] : list.filter((c) => c !== code)))
+
+<Field label="역할" description="여럿 고를 수 있어요. 저장을 눌러야 바뀌어요.">
+  <CheckSelectBoxGroup>
+    {roles.map((r) => (
+      <CheckSelectBox
+        key={r.code}
+        label={r.name}
+        description={r.description}
+        checked={picked.includes(r.code)}
+        onCheckedChange={(on) => toggle(r.code, on)}
+      />
+    ))}
+  </CheckSelectBoxGroup>
+</Field>
+<div className="flex items-center justify-end gap-x3">
+  <span className="text-t4 text-fg-neutral-subtle">
+    {added + removed > 0 ? \`더함 \${added} · 뺌 \${removed} — 아직 저장 안 됨\` : "바뀐 것 없음"}
+  </span>
+  {/* 바뀐 것이 없으면 막는다 — 저장은 한 번, 누를 때마다 저장하지 않는다 */}
+  <Button disabled={added + removed === 0} onClick={() => saveUserRoles(picked).then(() => setSaved(picked))}>
+    저장
+  </Button>
+</div>`,
+    render: () => screen(rolesForm("sb-roles")),
   },
 
   {

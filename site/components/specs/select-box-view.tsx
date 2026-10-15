@@ -392,12 +392,19 @@ export type SelectBoxGroupViewProps = {
   partialTarget?: boolean;
   zone?: Zone;
   style?: CSSProperties;
+  // 여럿 고르기 — 고른 것이 바뀔 때(처음 값도 한 번) 알린다. 바깥에서 "저장" 을 막고 풀 때(HR 역할)
+  onChecksChange?: (checks: Record<string, boolean>) => void;
 };
 
 // 묶음 — 하나 고르기는 radiogroup(화살표로 옮기며 고른다), 여럿은 fieldset. 1 ~ 3열 격자
-export function SelectBoxGroupView({ look, kind, control = 'mark', boxes, columns = 1, layout, mode = 'auto', live = true, value: initial, max, ariaLabel, ariaLabelledby, width = '100%', ragged, partialTarget, zone, style }: SelectBoxGroupViewProps) {
+export function SelectBoxGroupView({ look, kind, control = 'mark', boxes, columns = 1, layout, mode = 'auto', live = true, value: initial, max, ariaLabel, ariaLabelledby, onChecksChange, width = '100%', ragged, partialTarget, zone, style }: SelectBoxGroupViewProps) {
   const [value, setValue] = useState(initial);
   const [checks, setChecks] = useState<Record<string, boolean>>(() => Object.fromEntries(boxes.map((b) => [b.value, !!b.checked])));
+  const notify = useRef(onChecksChange);
+  notify.current = onChecksChange;
+  useEffect(() => {
+    notify.current?.(checks);
+  }, [checks]);
   // 최대 개수 안내 — Snackbar(snackbar.yaml) 그대로: 4초, 머무는 동안 멈춤, 한 번에 하나
   const snack = useSnackbarHost(look.snackbar);
   const refs = useRef<(HTMLDivElement | null)[]>([]);

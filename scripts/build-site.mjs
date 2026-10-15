@@ -67,7 +67,6 @@ import { segmentedControlExamples } from "../recipes/shadcn/examples/segmented-c
 import { paginationExamples } from "../recipes/shadcn/examples/pagination-examples.mjs";
 import { tablePaginationExamples } from "../recipes/shadcn/examples/table-pagination-examples.mjs";
 import { menuExamples } from "../recipes/shadcn/examples/menu-examples.mjs";
-import { commandExamples } from "../recipes/shadcn/examples/command-examples.mjs";
 import { topNavigationExamples } from "../recipes/shadcn/examples/top-navigation-examples.mjs";
 import { bottomNavigationExamples } from "../recipes/shadcn/examples/bottom-navigation-examples.mjs";
 import { sideNavigationExamples } from "../recipes/shadcn/examples/side-navigation-examples.mjs";
@@ -80,7 +79,6 @@ import { toggleExamples } from "../recipes/shadcn/examples/toggle-examples.mjs";
 import { sliderExamples } from "../recipes/shadcn/examples/slider-examples.mjs";
 import { selectExamples } from "../recipes/shadcn/examples/select-examples.mjs";
 import { inputOtpExamples } from "../recipes/shadcn/examples/input-otp-examples.mjs";
-import { comboboxExamples } from "../recipes/shadcn/examples/combobox-examples.mjs";
 import { datePickerExamples } from "../recipes/shadcn/examples/date-picker-examples.mjs";
 import { timePickerExamples } from "../recipes/shadcn/examples/time-picker-examples.mjs";
 import { wheelPickerExamples } from "../recipes/shadcn/examples/wheel-picker-examples.mjs";
@@ -91,6 +89,10 @@ import { chartExamples } from "../recipes/shadcn/examples/chart-examples.mjs";
 import { colorSwatchExamples } from "../recipes/shadcn/examples/color-swatch-examples.mjs";
 import { iconPickerExamples } from "../recipes/shadcn/examples/icon-picker-examples.mjs";
 import { searchableListExamples } from "../recipes/shadcn/examples/searchable-list-examples.mjs";
+// 마무리(2026-10-15) — SEED Quantity Picker · Attachment Input · Footer
+import { quantityPickerExamples } from "../recipes/shadcn/examples/quantity-picker-examples.mjs";
+import { attachmentInputExamples } from "../recipes/shadcn/examples/attachment-input-examples.mjs";
+import { footerExamples } from "../recipes/shadcn/examples/footer-examples.mjs";
 
 import {
   brandProfile,
@@ -104,10 +106,10 @@ import {
   renderForm,
   renderBatchV67,
   renderShadcnNav,
-  renderShadcnInput,
   renderShadcnDisclose,
   renderShadcnExtras,
   renderBatchV73V78,
+  renderFinishGallery,
   renderVignettes,
 } from "./build-preview-html.mjs";
 
@@ -124,6 +126,8 @@ const SHADCN_EXAMPLES = {
   switch: switchExamples,
   chip: chipExamples,
   "floating-action-button": floatingActionButtonExamples,
+  "quantity-picker": quantityPickerExamples,
+  "attachment-input": attachmentInputExamples,
   // Display (Phase 2)
   badge: badgeExamples,
   "notification-badge": notificationBadgeExamples,
@@ -164,10 +168,10 @@ const SHADCN_EXAMPLES = {
   pagination: paginationExamples,
   "table-pagination": tablePaginationExamples,
   menu: menuExamples,
-  command: commandExamples,
   "top-navigation": topNavigationExamples,
   "bottom-navigation": bottomNavigationExamples,
   "side-navigation": sideNavigationExamples,
+  footer: footerExamples,
   // Phase 5 Disclosure
   accordion: accordionExamples,
   collapsible: collapsibleExamples,
@@ -177,7 +181,6 @@ const SHADCN_EXAMPLES = {
   slider: sliderExamples,
   select: selectExamples,
   "input-otp": inputOtpExamples,
-  combobox: comboboxExamples,
   "date-picker": datePickerExamples,
   "time-picker": timePickerExamples,
   "wheel-picker": wheelPickerExamples,
@@ -1972,13 +1975,13 @@ function parseExamplesMd() {
 // 각 항목: slug, name, category, description.
 // 페이지 1대1 매핑: 묶지 않음 (input-textarea 같은 묶음 폐기).
 const SHADCN_CATALOG = [
-  // Form (21) — Toggle Group 은 2026-10-09 걷었다(하나 고르기 2 ~ 4칸은 Segmented Control · 여럿 · 짧은 폼 값은 Chip · 5개 이상은 Select).
+  // Form (22) — Quantity Picker · Attachment Input 은 2026-10-15 더했다(마무리 — SEED). Combobox 는 2026-10-15 걷었다(검색해 고르는 긴 목록은 Input Button + Searchable List). Toggle Group 은 2026-10-09 걷었다(하나 고르기 2 ~ 4칸은 Segmented Control · 여럿 · 짧은 폼 값은 Chip · 5개 이상은 Select).
   // Color Swatch · Icon Picker 는 Field 의 입력이라 Domain 에서 옮겼다(2026-10-09 — field.md Input)
+  { slug: "attachment-input", name: "Attachment Input", category: "Form", description: "사진 · 파일을 골라 붙이는 칸 — 거래 영수증처럼 여럿을 붙이는 자리는 첨부 타일 80 + 한 줄(사진 80 썸네일 · 파일 160 × 80 카드 · × 20 누르는 44 · 올리는 중 원 24 · 실패 다시 시도 · 대표 띠 · 끌기 · 키보드 · 항목 메뉴로 순서 바꾸기), CSV · Excel 가져오기처럼 하나를 골라 넘기는 자리는 1280 이상 드롭존(120 · 1px 실선 · 파일 선택)이고 거절은 칸 아래 오류 글이다 (SEED Attachment Input 구조)." },
   { slug: "button", name: "Button", category: "Form", description: "액션을 실행하는 버튼. 변형 7 × 크기 4 × 배치 2(SEED Action Button 구조)." },
   { slug: "checkbox", name: "Checkbox", category: "Form", description: "여러 선택 가능한 박스." },
   { slug: "chip", name: "Chip", category: "Form", description: "2 ~ 4개 짧은 폼 값 고르기 · 누르면 값을 채우는 제안 · 목록 위 필터 바 · 지우기로 빼는 넣은 값을 맡는 작은 알약 (SEED Chip 구조)." },
   { slug: "color-swatch", name: "Color Swatch", category: "Form", description: "카테고리 · 태그 · 저축 목표 · 캘린더에 붙일 색을 차트 10색으로 칠한 원 칸 40 을 5 × 2 로 늘어놓고 하나 고르는 묶음 — 고른 칸은 2 띄운 2px 짙은 고리 + 체크이고, 고칠 때는 격자 앞에 지금 색 칸을 둔다 (SEED 에 색 고르기 부품이 없어 porest 가 정했다 — 고른 고리는 Select Box 의 짙은 테두리)." },
-  { slug: "combobox", name: "Combobox", category: "Form", description: "검색·필터 가능한 select." },
   { slug: "date-picker", name: "Date Picker", category: "Form", description: "날짜 · 기간 · 여러 날을 고르는 달력 — 날짜 칸(Input Button)을 누르면 1280 미만 시트 · 이상 팝오버로 열리고 \"완료\" 로 넣는다. 머리 · 요일 줄 · 날짜 칸 48 · 기간 띠, 한 달 · 두 달 · 이어지는 달 (SEED Date Picker 구조)." },
   { slug: "floating-action-button", name: "Floating Action Button", category: "Form", description: "화면 위에 떠 있는 그 화면의 주 동작 하나 — 오른쪽 아래(화면 끝 · 아래 끝에서 20)의 브랜드 원 56 에 흰 아이콘 24 이고, 폰의 탭 바가 없는 화면(할 일 · 더치페이)에만 둔다 (SEED Floating Action Button 구조)." },
   { slug: "field", name: "Field", category: "Form", description: "칸 이름 · 필수 표시 · 설명 · 오류 · 글자 수를 입력 하나에 붙이는 둘레 (SEED Field 구조)." },
@@ -1986,6 +1989,7 @@ const SHADCN_CATALOG = [
   { slug: "input", name: "Input", category: "Form", description: "한 줄 글 · 숫자를 직접 치는 입력칸. 상자 · 밑줄 × large · medium · 반응형, 앞 · 뒤 붙이개 · 지우기 (SEED Text Input 구조)." },
   { slug: "input-button", name: "Input Button", category: "Form", description: "입력칸 모양의 버튼. 누르면 달력 · 시각 · 아이콘 격자 · 긴 목록을 1280 미만 시트 · 이상 팝오버로 열고 고른 값이 칸에 들어간다 (SEED Input Button 구조)." },
   { slug: "input-otp", name: "Input OTP", category: "Form", description: "메일 · 문자로 받은 일회용 인증 코드(숫자 6자리)를 넣는 Input 한 칸 — 칸을 자릿수만큼 나누지 않고 붙여 넣으면 숫자만 남기며, 칸 아래 다시 받기 단추가 남은 초를 보이고 설명 줄이 유효 시간 · 틀릴 수 있는 횟수를 늘 알린다 (SEED 에 없는 부품 — 형식이 정해진 값은 칸을 나누지 말라는 SEED Text Input 규칙을 따라 porest 가 정했다)." },
+  { slug: "quantity-picker", name: "Quantity Picker", category: "Form", description: "작은 정수를 한 단계씩 늘리고 줄이는 컨트롤 — 테두리 상자 안 줄이기 · 값 · 늘리기, 세 크기 36 · 40 · 52(웹 기본 1280 미만 52 · 이상 40 — 옆 칸과 같은 높이 · 누르는 자리 44), 값 칸은 보기만, 끝의 버튼은 초점이 남는 막힘, 최소에서 지우기 · 서버를 기다리는 로딩 (SEED Quantity Picker 구조)." },
   { slug: "radio-group", name: "Radio Group", category: "Form", description: "여러 옵션 중 하나만 선택." },
   { slug: "select-box", name: "Select Box", category: "Form", description: "제목 · 설명이 붙은 선택지를 상자로 비교해 하나 · 여럿을 고른다 (SEED Select Box 구조)." },
   { slug: "select", name: "Select", category: "Form", description: "짧은 선택지 5개 이상에서 폼 값을 고르는 칸. 칸 아래 목록 · 묶음 · 하나 · 여럿 고르기 × large · medium · 반응형 (SEED Select 구조)." },
@@ -2031,9 +2035,9 @@ const SHADCN_CATALOG = [
   { slug: "snackbar", name: "Snackbar", category: "Overlay", description: "화면 아래에 잠깐 떴다 사라지는 띠(토스트) — 방금 한 일의 결과 · 뒤에서 끝난 일 · 다시 하면 되는 가벼운 실패를 한 번에 하나 알린다 (SEED Snackbar 구조)." },
   { slug: "tooltip", name: "Tooltip", category: "Overlay", description: "마우스를 올리거나 키보드 초점이 오면 트리거 옆에 뜨는 짧은 설명 — 아이콘 버튼 · 줄인 글이 무엇인지 보여 주는 Help Bubble 모양의 보조 (SEED Help Bubble Tooltip 구조)." },
 
-  // Navigation (9)
+  // Navigation (9) — Footer 는 2026-10-15 더했다(마무리 — SEED 조합 예시). Command(⌘K 팔레트 · cmdk)는 2026-10-15 걷었다(세 제품 모두 쓰는 곳이 없다)
   { slug: "bottom-navigation", name: "Bottom Navigation", category: "Navigation", description: "폰 화면 아래에 떠 있는 탭 바 — 홈 · 가계부 · + · 캘린더 · 전체 다섯 칸이 어느 화면에서나 같은 알약(펼침 66 · 줄어듦 48)이고, 가운데 + 는 탭이 아니라 그 화면의 추가다 (SEED Bottom Navigation 구조 — 떠 있는 알약은 porest)." },
-  { slug: "command", name: "Command", category: "Navigation", description: "Cmd+K 검색 팔레트 — cmdk 베이스." },
+  { slug: "footer", name: "Footer", category: "Navigation", description: "사이트 맨 아래의 바닥 — 브랜드 · 사이트맵(서비스 · 계정) | 선 | 개인정보 처리방침 ↗ · 안내 글 · © 해 POREST 를 블록으로 골라 조립하고(porest-home), 틀 1040 · 위아래 40 · 좌우 32(1280 미만 24) · 링크는 밑줄 없이 색으로 · 새 탭만 ↗ · 값이 없는 사업자 정보 · 연락처 · 소셜은 비워 둔다 (SEED Footer 조합 예시 구조)." },
   { slug: "menu", name: "Menu", category: "Navigation", description: "트리거에 붙어 열리는 동작 목록 — 줄을 누르면 바로 실행하고 닫히며, 1280 미만에서는 같은 목록이 Menu Sheet 로 뜬다 (SEED Menu 구조)." },
   { slug: "pagination", name: "Pagination", category: "Navigation", description: "데스크톱 긴 목록 아래 가운데의 쪽 넘김 줄 — 칸 40 을 사이 없이 잇고(480 이상 9칸 · 미만 7칸) 지금 쪽은 짙게 채우며, 폰의 긴 목록은 쪽을 나누지 않고 끝없이 불러온다 (SEED Pagination 구조)." },
   { slug: "segmented-control", name: "Segmented Control", category: "Navigation", description: "같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게 보는 컨트롤 — 그 내용 바로 위에 하나 두고, 칸이 트랙 폭을 똑같이 나눈다 (SEED Segmented Control 구조)." },
@@ -2068,8 +2072,6 @@ function getDemoFunctions(slug) {
     case "card": return [renderListingDetail];
     case "input-textarea": return [renderForm];
     case "form-layout-validation": return [renderForm, renderBatchV73V78];
-    case "select-combobox": return [renderShadcnInput];
-    case "checkbox-radio-switch": return [renderShadcnInput];
     case "drawer-sheet": return [renderBatchV67];
     case "toast-sonner": return [renderSnackbars, renderShadcnExtras];
     case "skeleton-spinner-progress": return [renderSkeleton, renderBatchV67];
@@ -2081,7 +2083,8 @@ function getDemoFunctions(slug) {
     case "tooltip-popover-hover-card": return [renderShadcnDisclose, renderBatchV73V78];
     case "dropdown-context-menu": return [renderShadcnDisclose];
     case "treeview": return [renderBatchV73V78];
-    case "file-upload": return [renderBatchV73V78];
+    // 옛 file-upload(v73 File Upload 칸)는 걷었다(2026-10-15) — 첨부 칸은 03v 의 Attachment Input 이다
+    case "attachment-input": return [renderFinishGallery];
     case "banner": return [renderBatchV73V78];
     case "badge-tag-chip": return [renderBatchV73V78];
     case "avatar": return [renderListingDetail];

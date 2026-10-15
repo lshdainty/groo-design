@@ -28,6 +28,7 @@ import {
   SlidersHorizontal,
   Star,
   Trash2,
+  Upload,
   X,
 } from 'lucide-react';
 import type { ButtonLook, ButtonState } from './button-look';
@@ -60,6 +61,7 @@ const ICONS = {
   'eye-off': EyeOff,
   'rotate-ccw': RotateCcw,
   moon: Moon,
+  upload: Upload,
 };
 export type IconName = keyof typeof ICONS;
 

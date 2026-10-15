@@ -146,7 +146,7 @@ import { ImageFrame } from "@/components/ui/image-frame"
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-03 조사).
 
-- **Desk 웹** — `<img>` 11곳 중 실패 대체가 있는 곳은 4곳. 7곳은 실패하면 브라우저의 깨진 이미지 아이콘 + 대체 글이 보인다(`widgets/card-detail/ui/CardInfoHeader.tsx:26 · 37` · `AvailableBenefitsList.tsx:64` · `CardCatalogCombobox.tsx:76 · 125` · `AssetEditDialog.tsx:934 · 1042`). 불러오는 동안은 빈 자리이고(`entities/asset/ui/asset-logo.tsx:32-50` — 투명 40 × 40), 카드 혜택 그림만 회색 상자가 미리 자리를 잡는다(`CardBenefitPage.tsx:191-205`, 페이지 위 1.04:1).
+- **Desk 웹** — `<img>` 9곳 중 실패 대체가 있는 곳은 4곳. 5곳은 실패하면 브라우저의 깨진 이미지 아이콘 + 대체 글이 보인다(`widgets/card-detail/ui/CardInfoHeader.tsx:26 · 37` · `AvailableBenefitsList.tsx:64` · `AssetEditDialog.tsx:934 · 1042` — 쓰는 곳 없던 `CardCatalogCombobox.tsx` 의 두 곳은 2026-10-15 Command 와 함께 지웠다). 불러오는 동안은 빈 자리이고(`entities/asset/ui/asset-logo.tsx:32-50` — 투명 40 × 40), 카드 혜택 그림만 회색 상자가 미리 자리를 잡는다(`CardBenefitPage.tsx:191-205`, 페이지 위 1.04:1).
 - **Desk 앱** — 이미지 9곳 모두 실패 대체는 있고(`errorBuilder`) 불러오는 동안의 표시는 0곳이다(`loadingBuilder`). 카드 목록은 회색 + 카드 아이콘(`card/card_screen.dart:410-420`), 카드 혜택 · 상세 · 혜택 시트 · 카드 추가(`card_benefits_screen.dart:581-585` · `card_detail_screen.dart:66-75` · `card_benefit_detail_sheet.dart:314-320` · `asset/card_add_dialog.dart:871 · 1046`).
 - **HR 웹** — 규정 그림 12곳(`culture-regulation/ui/Rule*.tsx`)에 자리 · 실패 대체가 없다. 프로필 사진 실패 대체가 외부 `github.com/shadcn.png` 다(`features/user-profile/ui/UserEditDialog.tsx:261-269`).
 - 자산 · 카드 로고의 글자 모노그램(웹 `asset-logo.tsx:40` · 앱 `asset/widgets/asset_logo.dart:24-37`)은 2026-10-04 [Logo Tile](logo-tile.md) 로 정했다(첫 글자 먼저 · 그림이 오면 덮기 · 실패하면 첫 글자). 그림 틀은 [Image Frame](image-frame.md) 이 이 그림을 대체 그림으로 쓴다.
