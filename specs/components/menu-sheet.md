@@ -61,6 +61,8 @@
 | `focused` | 웹 — 키보드 포커스에만 줄 안쪽 링. 보조 기술용 닫기는 이때 보인다 |
 | `disabled` | 전용 색 — 눌러도 실행하지 않는다 |
 
+줄 바탕은 묶음 폭 전체에 칠한다 — [Menu](menu.md) 의 알약처럼 들어오며 둥글어지지 않고 색만 150ms 로 바뀐다(SEED menu-sheet-item 에는 `marginX` 가 없다. Menu 의 들임 모션은 2026-10-15 구현 세션 질문 Q-009-3 에서 정했다 — 1280 에서 Menu 로 바뀌면 알약이 들어온다).
+
 [그림: 누름 · 키보드 포커스 · 막힌 줄](../../site/components/specs/menu-sheet.tsx#states)
 
 [표: 상태](menu-sheet.yaml#matrix)

@@ -1,0 +1,116 @@
+# Table Pagination 의 수치 원본 — 구조는 SEED Table Pagination(2026-10-04 사용자 결정, 화면 틀 · 이동 비교 페이지 10A · 같은 날 추가 결정).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 데이터 표 아래의 쪽 넘김 한 줄 — 한 번에 몇 줄을 볼지(줄 수 10 · 25 · 50 "{n}개 씩 보기")와 지금 범위("11-20 / 총 237개")를
+# 고르고, 이전 · 다음으로 넘긴다. 표에서는 번호로 뛰는 일보다 정렬 · 거르기로 찾거나 차례로 훑는 일이 많아 Pagination 과
+# 따로 둔다(SEED). 이전 · 다음은 Pagination 의 화살표 칸(40 × 40)이고, 끝에서는 막힌다(Pagination 은 빈 칸).
+# 표 아래에만 둔다. 늘 한 줄이고, 좁으면 표와 함께 가로로 스크롤한다.
+#
+# 칸 40 은 Pagination 과 같은 예외다 — 누르는 영역은 위아래만 44(v106 의 예외, 사용자 결정 2026-10-04). 두 고르기는
+# Select medium(40)을 화면 폭과 상관없이 쓴다 — 줄 한 높이 40. Select 의 "1280 미만 large 52" 규칙의 예외다
+# (사용자 결정 2026-10-08 — 52 는 고르지 않았다).
+#
+# SEED 와 다른 자리(table-pagination.md 의 "SEED 와 다른 점")
+#   - 화살표 칸 · 누름은 Pagination 과 같은 porest 값(불투명 누름 바탕 · 2px 거리 축소 · 세로 44 누르는 영역).
+#   - 고르기는 porest Select medium(select.yaml) — 목록 · 표면은 Select 그대로, 범위 목록만 최대 높이 240(SEED).
+
+name: TablePagination
+
+slots:
+  root: 줄 — 표 아래, 한 줄. 왼쪽 줄 수 · 오른쪽 범위 · 이전 · 다음
+  pageSize: 줄 수 고르기 — Select medium "10개" · 선택지 10 · 25 · 50
+  pageSizeSuffix: 줄 수 뒤 글 — "씩 보기"
+  pageRange: 범위 고르기 — Select medium "11-20" · 목록 최대 높이 240
+  total: 전체 수 — "/ 총 237개"
+  arrow: 이전 · 다음 — Pagination 의 화살표 칸 40. 끝에서는 막힌다
+  focusRing: 키보드 포커스 링(웹)
+
+variants:
+  total:
+    known: 전체 수를 안다 — 범위 고르기 + "/ 총 N개"
+    unknown: 전체 수를 모른다 — 범위는 글로만("11-20")
+
+defaults:
+  total: known
+
+states:
+  enabled: 기본
+  hovered: 웹 — 화살표에 누름과 같은 바탕
+  pressed: 누름 — 화살표 바탕 + 2px 거리 축소
+  focused: 웹 — 키보드 포커스에만 링
+  disabled: 끝 쪽의 화살표 · 빈 표(0개) · 막힌 줄
+
+rules:
+  - when: {}
+    enabled:
+      root:
+        height: { value: 40px, note: "한 줄 — 줄바꿈하지 않는다. 좁으면 표와 같은 가로 스크롤 상자 안에 둔다(SEED)" }
+        justifyContent: { value: space-between, note: "왼쪽 줄 수 · 오른쪽 범위와 화살표" }
+        gap: { value: $spacing-x4, note: "왼쪽 묶음 ↔ 오른쪽 묶음 · 범위 묶음 ↔ 화살표 16" }
+        marginTop: { value: $spacing-component-default, note: "표 아래 12 — 따로 정한 간격이 없는 컴포넌트 사이(v101 역할 간격)" }
+      pageSize:
+        size: { value: Select medium, note: "높이 40 · 최소 폭 96 · 모서리 8 — 선택지 \"10개\" · \"25개\" · \"50개\"(3 ~ 4개를 넘지 않는다). 화면 폭과 상관없이 medium(Select 1280 규칙의 예외 — 사용자 결정 2026-10-08)" }
+        minWidth: 96px
+        gap: { value: $spacing-x2, note: "고르기 ↔ \"씩 보기\"" }
+      pageSizeSuffix:
+        typography: $text-t4
+        fontWeight: 400
+        foreground: $color-fg-neutral
+      pageRange:
+        size: { value: Select medium, note: "높이 40 · 최소 폭 96 — 선택지는 범위(\"1-10\" · \"11-20\" …). 200개를 넘으면 첫 · 마지막 · 지금 둘레만" }
+        minWidth: 96px
+        maxHeight: { value: 240px, note: "열린 목록의 최대 높이 — Select 기본 480 대신(SEED)" }
+        gap: { value: $spacing-x2, note: "고르기 ↔ \"/ 총 N개\"" }
+      total:
+        typography: $text-t4
+        fontWeight: 400
+        foreground: $color-fg-neutral
+        numerals: { value: tabular-nums, note: "수는 세 자리마다 쉼표(\"1,240\")" }
+      arrow:
+        size: { value: 40px, note: "Pagination 의 화살표 칸 — 둘이 붙는다" }
+        radius: $radius-r2
+        iconSize: { value: 16px, note: "lucide chevron-left · chevron-right" }
+        color: $color-fg-neutral
+        background: transparent
+        touchTarget: { value: 40 × 44, note: "위아래만 44 — Pagination 과 같은 예외. AA ✓ · AAA ⚠" }
+        cursor: pointer
+        transitionProperty: background-color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+    hovered:
+      arrow:
+        background: $color-bg-layer-default-pressed
+    pressed:
+      arrow:
+        background: { value: $color-bg-layer-default-pressed, note: "SEED bg.transparent-pressed 의 불투명 짝" }
+        scale: { value: 2px 거리 축소, note: "기준 40 → 0.95 — 모션 줄이기면 하지 않는다" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: 2px, note: "칸 바깥 — 고르기의 링은 Select 그대로" }
+        color: $color-stroke-focus-ring
+    disabled:
+      arrow:
+        color: { value: $color-fg-disabled, note: "첫 쪽의 이전 · 마지막 쪽의 다음 — 숨기지 않고 막는다(Pagination 과 다르다). 빈 표면 둘 다" }
+        cursor: not-allowed
+      pageRange:
+        foreground: { value: $color-fg-disabled, note: "빈 표 \"0-0\" — 줄 수는 그대로 바꿀 수 있다" }
+
+  - when: { total: unknown }
+    enabled:
+      pageRange:
+        display: { value: 글로만, note: "\"11-20\" — 범위 고르기 · \"/ 총 N개\" 가 없다. 다음이 있는지만 안다" }
+      total:
+        display: none
+
+motion:
+  "바탕 색":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color]
+  "누름":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]

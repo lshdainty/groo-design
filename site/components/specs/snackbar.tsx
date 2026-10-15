@@ -35,6 +35,62 @@ function LedgerPhone({ mode, scale = 0.65, h = 600, snack, marks = false }: { mo
     </Phone>
   );
 }
+// 화면 키보드가 올라온 폰 — 키보드(그림, OS 가 그린다 · 높이 KB)가 탭 바를 덮고 띠는 키보드 바로 위 8(자리의 아래 여백).
+// 2026-10-15 사용자 결정 Q-003-1 — 웹 폰 브라우저도 같다
+const KB = 260;
+function SoftKeyboard({ mode }: { mode: Mode }) {
+  const rows = ['ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ', 'ㅁㄴㅇㄹㅎㅗㅓㅏㅣ', 'ㅋㅌㅊㅍㅠㅜㅡ'];
+  const key = (k: string, basis = 30) => (
+    <span key={k} className="grid place-items-center" style={{ flex: `0 1 ${basis}px`, height: 42, borderRadius: 6, background: rc('bg-layer-default', mode), color: rc('fg-neutral', mode), fontSize: basis > 30 ? 13 : 17 }}>
+      {k}
+    </span>
+  );
+  return (
+    <div aria-hidden className="absolute inset-x-0 bottom-0 flex flex-col justify-center gap-[10px]" style={{ height: KB, padding: '8px 4px 16px', background: rc('bg-neutral-weak', mode), zIndex: 3 }}>
+      {rows.map((r) => (
+        <div key={r} className="flex justify-center gap-[5px]">
+          {[...r].map((k) => key(k))}
+        </div>
+      ))}
+      <div className="flex justify-center gap-[5px]">
+        {key('?123', 60)}
+        {key('한국어', 150)}
+        {key('검색', 60)}
+      </div>
+    </div>
+  );
+}
+function KeyboardPhone({ mode, scale = 0.65, h = 600, marks = false }: { mode: Mode; scale?: number; h?: number; marks?: boolean }) {
+  const r = sl().region;
+  return (
+    <Phone
+      title="관심 종목"
+      mode={mode}
+      scale={scale}
+      h={h}
+      bg="bg-layer-default"
+      tabs
+      overlay={
+        <>
+          <SoftKeyboard mode={mode} />
+          <SnackDock style={{ bottom: KB, zIndex: 4 }}>
+            <S mode={mode} tone="critical" message="관심 종목에 넣지 못했어요. 다시 시도해주세요." action={{ label: '다시 시도' }} />
+          </SnackDock>
+          {marks && <Band style={{ left: 0, right: 0, bottom: KB, height: r.padBottom, zIndex: 4 }} />}
+        </>
+      }
+    >
+      <div className="flex flex-col px-6">
+        <div className="flex h-10 items-center" style={{ boxShadow: `inset 0 -2px 0 ${rc('stroke-neutral-contrast', mode)}`, color: rc('fg-neutral', mode), fontSize: 18 }}>
+          숲길
+          <span style={{ display: 'inline-block', width: 1.5, height: 20, marginLeft: 1, background: rc('fg-neutral', mode) }} />
+        </div>
+        <LedgerRows mode={mode} />
+      </div>
+    </Phone>
+  );
+}
+
 // 자리의 여백 표시 — 좌우 · 아래(탭 바 위). 폰은 줄여 그려 글은 그림 아래 설명에 적는다
 function RegionMarks() {
   const r = sl().region;
@@ -374,6 +430,15 @@ const PlacementGuide: Fig = ({ caption }) => {
             <b className="pk-text">폰 — 탭 바 위 {l.region.padBottom}</b>
             <span className="pk-muted">
               분홍은 자리의 여백 — 좌우 {l.region.padX} · 아래 {l.region.padBottom}. 띠 폭은 화면 − {l.region.padX * 2}. 아래는 안전 영역과 피할 자리(탭 바 · 플로팅 버튼 · 바닥 버튼) 중 큰 쪽 위 {l.region.padBottom} — 탭 바는 안전 영역을 품고 있다.
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-6">
+          <KeyboardPhone mode="auto" scale={0.75} h={560} marks />
+          <div className="flex w-[240px] flex-col gap-2 text-[13px] leading-5">
+            <b className="pk-text">화면 키보드 — 키보드 바로 위 {l.region.keyboardGap}</b>
+            <span className="pk-muted">
+              키보드도 피할 자리다 — 탭 바가 키보드 뒤로 가도 띠는 키보드 위 {l.region.keyboardGap} 에 선다. 웹도 폰 브라우저에서 같다(보이는 화면의 아래 끝을 잰다). 자리가 옮겨 갈 때는 {l.region.offset.duration} easing.
             </span>
           </div>
         </div>

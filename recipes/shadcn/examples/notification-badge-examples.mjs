@@ -266,7 +266,7 @@ formatNotificationCount(100) // "99+"`,
   {
     title: "글에 붙을 때 — attach=\"text\"",
     description:
-      "글에 붙으면 마지막 글자 뒤 2 · 글 줄 상자의 위 끝에 놓인다 — 점 · 알약 모두. 감싼 상자가 곧 글 줄 상자라 탭 · 칸의 폭과 줄 높이를 바꾸지 않는다. 탭 · Chip Tabs · Segmented Control 의 새 소식 점이 이것이다(값과 이름 \"새 소식\" · \"새 내용\" 은 Tabs · Segmented Control 스펙) — 여러 탭에 동시에 달지 않는다. 늘 있는 개수(걸린 필터 2개 · 거래 3건)는 알림 배지가 아니다.",
+      "글에 붙으면 마지막 글자 뒤 2 · 글 줄 상자의 위 끝에 놓인다 — 점 · 알약 모두. 감싼 상자가 곧 글 줄 상자라 탭 · 칸의 폭과 줄 높이를 바꾸지 않는다. 탭 · Chip Tabs · Segmented Control 의 새 소식 점이 이것이다(값과 이름 \"새 소식\" 은 Tabs · Segmented Control 스펙) — 여러 탭에 동시에 달지 않는다. 늘 있는 개수(걸린 필터 2개 · 거래 3건)는 알림 배지가 아니다.",
     jsx: `<NotificationBadge attach="text">공지</NotificationBadge>
 <NotificationBadge attach="text" size="large" count={2}>받은 결재</NotificationBadge>`,
     render: () =>

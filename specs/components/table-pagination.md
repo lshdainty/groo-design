@@ -44,7 +44,7 @@
 
 ### 이전 · 다음 — 끝에서 막힌다
 
-이전 · 다음은 [Pagination](pagination.md) 의 화살표 칸(40 × 40 · 아이콘 16)이 붙은 것이다. 끝에서는 숨기지 않고 막는다(`fg-disabled`) — Pagination 은 빈 칸이다. 표가 비면(0개) 둘 다 막히고 범위는 "0-0" 이다 — 줄 수는 그대로 바꿀 수 있다. 칸 40 은 Pagination 과 같은 예외로 누르는 영역이 위아래만 44 다.
+이전 · 다음은 [Pagination](pagination.md) 의 화살표 칸(40 × 40 · 아이콘 16)이 붙은 것이다. 끝에서는 숨기지 않고 막는다(`fg-disabled`) — Pagination 은 빈 칸이다. 표가 비면(0개 — `total: empty`) 둘 다 막히고 범위 고르기도 막혀 "0-0"(`fg-disabled`)이다 — 줄 수는 그대로 바꿀 수 있다. 막힘(`disabled`) 상태는 끝 쪽 화살표 하나에만 쓰고, 빈 표는 전체 수의 값으로 따로 둔다 — 마지막 범위에서 범위 글까지 흐려지지 않게(Q-011-5). 칸 40 은 Pagination 과 같은 예외로 누르는 영역이 위아래만 44 다.
 
 [그림: 첫 범위 — 이전 막힘 · 빈 표 "0-0 / 총 0개"](../../site/components/specs/table-pagination.tsx#ends)
 
@@ -56,7 +56,7 @@
 | `hovered` | 웹 — 화살표에 `bg-layer-default-pressed`, 축소 없음 |
 | `pressed` | 같은 바탕 + 2px 거리 축소 |
 | `focused` | 웹 — 키보드 포커스에만 링(고르기는 Select 의 링) |
-| `disabled` | 끝 쪽의 화살표 · 빈 표 — `fg-disabled` |
+| `disabled` | 끝 쪽의 화살표 — `fg-disabled`. 빈 표(0개)는 `total: empty`(화살표 둘 · 범위 "0-0" 막힘) |
 
 [표: 상태 — 화살표](table-pagination.yaml#matrix@arrow)
 
@@ -169,6 +169,13 @@ import { TablePagination } from "@/components/ui/table-pagination"
 - **표 아래 12**(`spacing-component-default`) — SEED 는 간격을 적지 않았다.
 
 ## Migration notes
+
+### 2026-10-15 — 구현 세션 질문 정리(Q-011-5 · 6)
+
+사용자가 [비교 페이지](https://claude.ai/artifact/HCRX5Ds7svjfCLi9Aogpmt)에서 정리 항목을 "추천대로" 정했다(2026-10-15). 보이는 모습은 바뀌지 않는다.
+
+- **Q-011-5 막힘이 두 경우를 합쳤다** — `disabled` 상태는 끝 쪽 화살표만이다. 빈 표(0개)는 `total` 축의 `empty` 로 따로 두어 화살표 둘 · 범위 "0-0" 을 막는다. 전에는 `disabled` 가 범위 글까지 흐리게 해, 마지막 범위의 다음 화살표가 막힐 때 범위 글도 흐려지는 것처럼 읽혔다. 웹은 이미 둘로 나눠 그린다.
+- **Q-011-6 화살표 전환 속성** — `transitionProperty` 를 `background-color, scale` 로 적었다(누름 축소가 있다). 웹 · 레시피는 이미 둘 다 전환한다.
 
 ### 2026-10-08 — 고르기는 폭과 상관없이 Select medium
 

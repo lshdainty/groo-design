@@ -79,6 +79,9 @@ rules:
         borderColor: $color-stroke-neutral-weak
       icon: { color: $color-fg-neutral }
       label: { color: $color-fg-neutral-muted }
+    disabled:
+      badge:
+        borderColor: { value: $color-stroke-neutral-weak, note: "막혀도 안쪽 1px 은 남는다 — v106 상태 표의 막힘 테두리 색이 바로 이 색이다. 빼면 bg-disabled 배지가 줄 바탕과 1.08 · 다크 1.30 으로 둘레가 사라진다(Q-012-4)" }
 
   - when: { kind: primary }
     enabled:
@@ -108,7 +111,7 @@ rules:
       icon:
         size: 18px
       label:
-        typography: { value: $text-t2, note: "12 — 굵기 · 줄 높이는 이 컴포넌트의 값(12 / 700 / 1.3). 칸 폭 48 이 좁아 기본 줄 높이면 두 줄에서 넘친다" }
+        typography: { value: $text-t2, note: "12 — 굵기 · 줄 높이는 아래 따로 적은 값이 덮는다(12 / 700 / 1.3 = 15.6px — 스펙 JSON 은 typography 에 접어 싣는다, Q-012-1). 칸 폭 48 이 좁아 기본 줄 높이면 두 줄에서 넘친다" }
         fontWeight: { value: 700, note: "v100 — 600 은 쓰지 않는다. 버튼 글자와 같은 700" }
         lineHeight: { value: 1.3, note: "웹 · 앱 같은 값 — 앱의 1.5 를 고친다" }
 

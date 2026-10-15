@@ -2,7 +2,7 @@ import * as React from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
 import { cn } from "@/lib/utils";
-import { BUBBLE, BUBBLE_POSITION, BUBBLE_TITLE, BubbleArrow } from "@/components/ui/help-bubble";
+import { BUBBLE, BUBBLE_POSITION, BUBBLE_TITLE, BubbleArrow, useBubbleEdgePadding } from "@/components/ui/help-bubble";
 
 /*
  * Porest Tooltip — 구조는 SEED Help Bubble Tooltip(2026-10-02). 수치 원본은 specs/components/help-bubble.yaml 의 opens: hover.
@@ -29,6 +29,7 @@ import { BUBBLE, BUBBLE_POSITION, BUBBLE_TITLE, BubbleArrow } from "@/components
  *
  * 모양 · 쌓임 · 모션은 Help Bubble 과 같다 — 최대 280 · 위아래 10 · 좌우 12 · 모서리 12 · bg-neutral-inverted · 글 t3 13 / 18 · 700 ·
  * fg-neutral-inverted, 화살표 12 × 8(늘 트리거 가운데) · 화살표 끝 ↔ 트리거 4 · 화면 가장자리 16, z 210(팝오버 · 메뉴 위).
+ * 화면 끝의 트리거면 화살표는 가운데에 남고 말풍선이 16 보다 가장자리에 붙는다(useBubbleEdgePadding — Help Bubble 과 같은 규칙, Q-004-1).
  * 열림 200ms enter 로 화살표 끝에서 0.9 → 1 · 투명도, 닫힘 200ms easing 으로 투명도만 — 이어서 열 때는 모션 없이.
  * ARIA: 말풍선 role="tooltip"(Radix 가 숨은 사본에 단다) — 트리거의 aria-describedby 가 가리킨다.
  */
@@ -85,6 +86,9 @@ TooltipProvider.displayName = "TooltipProvider";
 type CloseReason = "escape" | "blur" | "press";
 
 type TooltipContextValue = {
+  open: boolean;
+  /** 트리거 — 화면 끝에서 가장자리 여백을 고를 때 잰다 */
+  triggerRef: React.MutableRefObject<HTMLButtonElement | null>;
   /** 이어서 열렸다 · 바로 닫힌다 — 모션 없이 */
   instant: boolean;
   /** 흐려지며 닫히던 중에 다른 툴팁이 열렸다 — 남은 사라짐 없이 보이지 않게 */
@@ -211,8 +215,11 @@ function Tooltip({ open: openProp, defaultOpen, onOpenChange, disabled = false, 
 
   // 걷힘은 닫혀 있는 동안만 — 부르는 쪽이 open 으로 다시 열어도 보인다
   const cutShown = cut && !open;
+  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
   const value = React.useMemo<TooltipContextValue>(
     () => ({
+      open,
+      triggerRef,
       instant,
       cut: cutShown,
       hover: (part, inside) => {
@@ -250,7 +257,7 @@ function Tooltip({ open: openProp, defaultOpen, onOpenChange, disabled = false, 
         window.clearTimeout(openTimerRef.current);
       },
     }),
-    [instant, cutShown, hide],
+    [open, instant, cutShown, hide],
   );
 
   // 막히면 바로 닫는다 · 사라지면 지운다
@@ -289,9 +296,14 @@ const TooltipTrigger = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>
 >(({ onPointerEnter, onPointerLeave, onPointerDown, onClick, onFocus, onBlur, ...props }, ref) => {
   const ctx = useTooltip("TooltipTrigger");
+  const setRef = (node: HTMLButtonElement | null) => {
+    ctx.triggerRef.current = node;
+    if (typeof ref === "function") ref(node);
+    else if (ref) ref.current = node;
+  };
   return (
     <TooltipPrimitive.Trigger
-      ref={ref}
+      ref={setRef}
       data-slot="tooltip-trigger"
       onPointerEnter={(e) => {
         onPointerEnter?.(e);
@@ -339,6 +351,7 @@ export interface TooltipContentProps
 const TooltipContent = React.forwardRef<React.ElementRef<typeof TooltipPrimitive.Content>, TooltipContentProps>(
   ({ className, children, side = "top", align = "center", onPointerEnter, onPointerLeave, onEscapeKeyDown, ...props }, ref) => {
     const ctx = useTooltip("TooltipContent");
+    const collisionPadding = useBubbleEdgePadding(ctx.triggerRef, ctx.open, side);
     return (
       <TooltipPrimitive.Portal>
         <TooltipPrimitive.Content
@@ -349,6 +362,7 @@ const TooltipContent = React.forwardRef<React.ElementRef<typeof TooltipPrimitive
           side={side}
           align={align}
           {...BUBBLE_POSITION}
+          collisionPadding={collisionPadding}
           className={cn(BUBBLE, BUBBLE_TITLE, CUT, className)}
           onPointerEnter={(e) => {
             onPointerEnter?.(e);

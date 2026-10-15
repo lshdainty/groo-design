@@ -22,7 +22,8 @@ import { imageFrameRadius } from "@/components/ui/image-frame";
  *                           size "responsive"(기본 — 1280 미만 large 40 · 이상 medium 34, 앱은 large)
  *   SearchableListInput     검색칸 — Input variant="underline" 을 스스로 건다(앞 돋보기 · 지우기). placeholder("{무엇} 검색") · aria-label(기본 "검색").
  *                           role="combobox" · aria-expanded · aria-controls · aria-autocomplete="list" · aria-activedescendant(강조한 줄, 없으면 비움).
- *                           ↓ ↑ 강조 · Enter 고름 · Esc 지움(비었으면 시트 · 팝오버를 닫게 둔다). placement "sheet" 면 열릴 때 초점
+ *                           ↓ ↑ 강조 · Enter 고름 · Esc 지움(비었으면 시트 · 팝오버를 닫게 둔다). 스스로 초점을 옮기지 않는다 —
+ *                           시트 · 팝오버가 열릴 때 focusSearchableList 로 넘겨받는다
  *   SearchableListResults   결과 목록 — role="listbox", aria-label(대상 — "은행")
  *   SearchableListGroup     분류 — label(List Header mediumWeak — 14 · 500 · fg-neutral-subtle), role="group" 의 이름. 줄이 없으면 머리째 숨긴다
  *   SearchableListItem      결과 줄 — role="option" · aria-selected(지금 값). value · title · detail · prefix(Logo Tile 40 · 카드 그림 56 · Avatar).
@@ -30,6 +31,10 @@ import { imageFrameRadius } from "@/components/ui/image-frame";
  *   SearchableListEmpty     0건 — Result Section medium "'{검색어}'에 대한 검색 결과가 없어요"(제목은 검색어로 만든다 · role="status" 로 알린다) · description
  *   SearchableListError     실패 — Result Section failure "검색 결과를 불러오지 못했어요" + "다시 시도"(onRetry) · 0건과 따로
  *   SearchableListSkeleton  불러오는 줄 — rows(기본 5) · prefix "logo" · "cardArt" · "avatar" · "none"(기본). 줄 높이 그대로
+ *   focusSearchableList     시트 · 팝오버의 onOpenAutoFocus 에 건다 — 첫 초점을 표면 대신 검색칸에, 지금 값을 가운데로(열린 뒤 다시 옮기지 않는다 —
+ *                           2026-10-15 구현 세션 질문 Q-007-3 정리)
+ *   matchesSearch           거르는 규칙 — 검색어와 이름 · 별칭을 NFC 로 맞추고 대소문자 · 공백을 무시해, 하나에 들어 있으면 true. 들고 있는 목록 ·
+ *                           서버 검색이 같은 규칙이다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-007-1, 안 C). 초성 검색은 아직 정하지 않았다
  *
  * 검색칸: Input 밑줄형(화면에 입력이 하나뿐인 목록 위 검색 — 사용자 결정 17A, 상자형 52 는 고르지 않았다) — 아래 1px stroke-neutral-weak,
  *   치는 동안 2px stroke-neutral-contrast, 모서리 · 좌우 여백 없음. 좌우 24 안에 두어 돋보기와 줄의 앞 붙이개가 한 줄에 선다. 목록이
@@ -38,7 +43,9 @@ import { imageFrameRadius } from "@/components/ui/image-frame";
  *   고른 줄의 바탕은 칠하지 않는다 — 오른쪽 라디오만 켠다(채운 원 + 점, radio-group.yaml). 단종처럼 알릴 것은 흐리지 않고 Badge 를 단다.
  * 강조: 화살표로 짚은 줄 · 마우스를 올린 줄이 같은 바탕 — 좌우 6 들어온 bg-layer-default-pressed · 모서리 10(List 의 누름 바탕). 한 번에
  *   한 줄, 초점은 검색칸에 그대로다. 누르면 같은 바탕 + 콘텐츠만 2px 거리 축소(기준 max(높이, 폭 ÷ 4, 24) — 모션 줄이기면 하지 않는다).
- *   화살표로 옮길 때는 바로 바뀐다(전환 없음), 마우스로 올린 바탕만 150ms 로 바뀐다. 강조한 줄은 붙은 검색칸에 가리지 않게 보이도록 스크롤한다.
+ *   마우스 · 누름은 바탕이 좌우 0 → 6 들어오며 모서리 0 → 10 으로 150ms 에 둥글어진다(Menu 알약과 같다 — 2026-10-15 Q-009-3 안 B).
+ *   화살표로 옮길 때는 바로 바뀐다(전환 없음). 마우스로 짚은 강조는 포인터가 목록을 떠나면 지운다 — 키보드로 짚은 강조는 남는다
+ *   (2026-10-15 사용자 결정 — 구현 세션 질문 Q-007-2, 안 B). 강조한 줄은 붙은 검색칸에 가리지 않게 보이도록 스크롤한다.
  * 키보드(콤보박스 — 사용자 결정 12A): 글자는 거르고 강조를 지운다 · ↓ ↑ 는 한 줄씩(강조가 없으면 ↓ 첫 줄 · ↑ 마지막 줄, 끝에서 멈춘다 —
  *   분류 머리는 건너뛴다) · Enter 는 강조한 줄을 고른다(강조가 없으면 아무것도 하지 않고 폼을 제출하지 않는다) · Esc 는 검색어가 있으면 지우고
  *   (시트 · 팝오버는 그대로) 비었으면 시트 · 팝오버의 Esc 로 닫힌다 · Tab 은 검색칸을 떠난다. 줄은 Tab 으로 들어가지 않는다.
@@ -113,6 +120,33 @@ function revealOption(option: HTMLElement, field: HTMLElement | null, block: "ne
   }
   if (rect.top < top) scroller.scrollTop -= top - rect.top;
   else if (rect.bottom > box.bottom) scroller.scrollTop += rect.bottom - box.bottom;
+}
+
+// ── 거르는 규칙 ───────────────────────────────────────────────
+// NFC 로 맞추고 소문자로 바꾸고 공백을 모두 지운다 — "kx 은행" · "KX은행" · 조합형 한글이 같은 글이 된다
+const foldForSearch = (text: string) => text.normalize("NFC").toLowerCase().replace(/\s+/g, "");
+
+/** 거르는 규칙 — 이름 · 별칭 중 하나에 검색어가 들어 있으면 true(빈 검색어는 모두 남긴다). 초성 검색은 하지 않는다 */
+export function matchesSearch(query: string, ...names: (string | null | undefined)[]): boolean {
+  const q = foldForSearch(query);
+  if (q === "") return true;
+  return names.some((name) => name != null && foldForSearch(name).includes(q));
+}
+
+// ── 첫 초점 ──────────────────────────────────────────────────
+/**
+ * 시트 · 팝오버의 onOpenAutoFocus 에 건다 — 표면 대신 검색칸에 첫 초점을 주고, 지금 값이 보이게 가운데로 스크롤한다.
+ * 열린 뒤 다시 옮기지 않는다(시트가 넘겨주는 한 번뿐이다).
+ */
+export function focusSearchableList(event: Event) {
+  const surface = event.currentTarget instanceof HTMLElement ? event.currentTarget : null;
+  const input = surface?.querySelector<HTMLInputElement>('[data-slot="searchable-list-field"] input');
+  if (!surface || !input) return;
+  event.preventDefault();
+  input.focus({ preventScroll: true });
+  const current = surface.querySelector<HTMLElement>('[data-slot="searchable-list-item"][aria-selected="true"]');
+  const field = input.closest<HTMLElement>('[data-slot="searchable-list-field"]');
+  if (current) revealOption(current, field, "center");
 }
 
 // ── 묶음 ─────────────────────────────────────────────────────
@@ -236,17 +270,7 @@ const SearchableListInput = React.forwardRef<HTMLInputElement, SearchableListInp
     React.useLayoutEffect(() => {
       queryRef.current = ctx.query;
     });
-    const { inputRef, changeQuery, placement } = ctx;
-
-    // 시트 · 팝오버로 열리면 검색칸에 초점, 지금 값이 보이게 스크롤(가운데)
-    React.useEffect(() => {
-      if (placement !== "sheet") return;
-      inputRef.current?.focus({ preventScroll: true });
-      const current = ctx.listboxRef.current?.querySelector<HTMLElement>('[role="option"][aria-selected="true"]');
-      if (current) revealOption(current, fieldRef.current, "center");
-      // 열릴 때 한 번
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const { inputRef, changeQuery } = ctx;
 
     // Esc — 검색어가 있으면 지운다. 시트 · 팝오버(Radix)는 문서에서 먼저 Esc 를 받아 닫으므로 창(window)에서 더 먼저 받아
     // 막아 둔다(막힌 Esc 는 닫지 않는다). 비었으면 그대로 두어 시트 · 팝오버가 닫힌다
@@ -319,7 +343,7 @@ const SearchableListInput = React.forwardRef<HTMLInputElement, SearchableListInp
 SearchableListInput.displayName = "SearchableListInput";
 
 // ── 결과 ─────────────────────────────────────────────────────
-const SearchableListResults = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => {
+const SearchableListResults = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, onPointerLeave, ...props }, ref) => {
   const ctx = useSearchableList("SearchableListResults");
   return (
     <div
@@ -327,7 +351,14 @@ const SearchableListResults = React.forwardRef<HTMLDivElement, React.HTMLAttribu
       id={ctx.listboxId}
       role="listbox"
       data-slot="searchable-list-results"
+      // 화살표로 옮기는 동안은 바탕 전환을 끈다 — 떠나는 줄도 바로 지워진다
+      data-highlight-source={ctx.highlightSource}
       className={cn("flex flex-col", className)}
+      // 마우스가 목록을 떠나면 마우스로 짚은 강조를 지운다 — 키보드로 짚은 강조는 남는다
+      onPointerLeave={(e) => {
+        onPointerLeave?.(e);
+        if (e.pointerType === "mouse" && ctx.highlightSource === "pointer" && ctx.highlighted) ctx.highlight(null, "pointer");
+      }}
       {...props}
     />
   );
@@ -354,12 +385,15 @@ const SearchableListGroup = React.forwardRef<HTMLDivElement, SearchableListGroup
 });
 SearchableListGroup.displayName = "SearchableListGroup";
 
-// 줄 — 바탕 층(::before — 강조 · 누름, 줄지 않는다)과 콘텐츠 층(누르면 2px 거리 축소). 마우스로 올린 바탕만 색이 150ms 로 바뀐다
+// 줄 — 바탕 층(::before — 강조 · 누름, 줄지 않는다)과 콘텐츠 층(누르면 2px 거리 축소). 바탕은 줄 폭 전체(0 · 모서리 0)에서
+// 짚으면 좌우 6 · 모서리 10 으로 들어오며 150ms 에 색과 함께 바뀐다(Menu · List). 화살표로 옮기는 동안은 전환 없이 바로
 const OPTION = [
   "group/sl-option relative flex w-full cursor-pointer select-none outline-none",
-  "before:pointer-events-none before:absolute before:inset-y-0 before:inset-x-x1_5 before:rounded-r2_5 before:bg-transparent before:content-['']",
-  "data-[highlighted]:before:bg-bg-layer-default-pressed active:before:bg-bg-layer-default-pressed",
-  "data-[highlighted=pointer]:before:[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
+  "before:pointer-events-none before:absolute before:inset-y-0 before:inset-x-0 before:rounded-none before:bg-transparent before:content-['']",
+  "data-[highlighted]:before:inset-x-x1_5 data-[highlighted]:before:rounded-r2_5 data-[highlighted]:before:bg-bg-layer-default-pressed",
+  "active:before:inset-x-x1_5 active:before:rounded-r2_5 active:before:bg-bg-layer-default-pressed",
+  "before:[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),inset_var(--motion-duration-color-transition)_var(--motion-ease-easing),border-radius_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
+  "[[data-highlight-source=keyboard]_&]:before:transition-none",
 ].join(" ");
 const OPTION_CONTENT = [
   "relative flex w-full items-center px-global-gutter py-x3",

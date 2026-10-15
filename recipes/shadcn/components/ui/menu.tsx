@@ -38,7 +38,8 @@ import {
  * Esc 는 닫고 초점을 트리거로. Tab 은 닫고 트리거 다음 칸으로, Shift+Tab 은 닫고 트리거로(메뉴는 트리거 바로 뒤다).
  * 포인터로 열면 초점은 메뉴(컨테이너)에 가고 링을 그리지 않는다 — 그다음 ↓ · End · 글자로 줄에 들어간다.
  *
- * 호버와 키보드 위치를 따로 그린다 — 마우스를 올린 줄은 좌우 8 들인 알약 바탕(bg-layer-floating-pressed · 모서리 12),
+ * 호버와 키보드 위치를 따로 그린다 — 마우스를 올린 줄은 좌우 8 들인 알약 바탕(bg-layer-floating-pressed · 모서리 12 — 줄 폭 전체에서
+ * 들어오며 150ms 에 둥글어진다),
  * 키보드로 옮긴 줄은 같은 자리에 안쪽 2px 링(바탕 없음). 호버는 초점을 옮기지 않는다(Radix 는 포인터를 따라 초점을 옮긴다 —
  * 줄의 pointermove · pointerleave 에서 그 처리를 건너뛴다). 그래서 둘이 서로 다른 줄에 함께 보일 수 있다.
  * 누르면 알약 + 아이콘 · 글만 2px 거리 축소(기준 max(높이, 폭 ÷ 4, 24) 를 누르는 순간 잰다 · 모션 줄이기면 축소하지 않는다).
@@ -220,11 +221,12 @@ const ITEM = [
   "data-[disabled]:cursor-not-allowed",
 ].join(" ");
 
-// 알약 — 줄은 그대로, 마우스를 올리거나(마우스가 있는 기기에서만) 누르면 좌우 8 들어오며 칠해진다. 막힌 줄에는 없다
+// 알약 — 줄은 그대로, 마우스를 올리거나(마우스가 있는 기기에서만) 누르면 줄 폭 전체에서 좌우 0 → 8 들어오며 모서리 0 → 12 로
+// 둥글어지고 칠해진다 — 150ms(SEED menu-item, 2026-10-15 Q-009-3 안 B). 떠나면 거꾸로 펴지며 투명해진다. 막힌 줄에는 없다
 const PILL =
-  "pointer-events-none absolute inset-y-0 inset-x-0 rounded-r3 bg-transparent [transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),inset_var(--motion-duration-color-transition)_var(--motion-ease-easing)]";
+  "pointer-events-none absolute inset-y-0 inset-x-0 rounded-none bg-transparent [transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),inset_var(--motion-duration-color-transition)_var(--motion-ease-easing),border-radius_var(--motion-duration-color-transition)_var(--motion-ease-easing)]";
 const PILL_ON =
-  "group-hover/menu-item:inset-x-x2 group-hover/menu-item:bg-bg-layer-floating-pressed group-active/menu-item:inset-x-x2 group-active/menu-item:bg-bg-layer-floating-pressed";
+  "group-hover/menu-item:inset-x-x2 group-hover/menu-item:rounded-r3 group-hover/menu-item:bg-bg-layer-floating-pressed group-active/menu-item:inset-x-x2 group-active/menu-item:rounded-r3 group-active/menu-item:bg-bg-layer-floating-pressed";
 
 // 콘텐츠 층 — 아이콘 18 ↔ 글 8. 누르는 동안만 준다(알약은 그대로)
 const ITEM_CONTENT =

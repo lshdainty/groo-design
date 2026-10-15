@@ -23,7 +23,7 @@
 | ⓒ Group Label | 묶음 이름 — 있을 때만. 누를 수 없다. |
 | ⓓ Divider | 선 — 묶음 사이에만. 줄 사이에는 없다. |
 | ⓔ Item | 줄 — 앞 아이콘 · 이름 · 설명 · 뒤 아이콘. 누르면 실행하고 닫힌다. |
-| ⓕ Highlight | 호버 · 누름 바탕 — 좌우 8 들인 알약. 키보드 포커스 링도 이 자리에 그린다. |
+| ⓕ Highlight | 호버 · 누름 바탕 — 줄 폭 전체에서 좌우 8 들어오며 둥글어지는 알약. 키보드 포커스 링은 다 들어온 자리(좌우 8 · 모서리 12)에 그린다. |
 
 [표: 부위](menu.yaml#slots)
 
@@ -56,6 +56,8 @@
 | `disabled` | 전용 색 — 눌러도 실행하지 않고 닫히지 않는다. 화살표 키가 건너뛴다 |
 
 호버와 키보드 포커스를 다르게 그린다 — 마우스가 한 줄 위에 있고 키보드 위치가 다른 줄에 있으면 둘 다 보인다.
+
+알약은 제자리에서 색만 나타나지 않는다 — 마우스를 올리거나 누르면 줄 폭 전체에서 좌우 0 → 8 들어오며 모서리 0 → 12 로 둥글어지고, 색과 함께 150ms 에 끝난다(SEED menu-item 의 pressed `marginX` x2 · `cornerRadius` r3, `marginDuration` · `borderRadiusDuration` d3). 떠날 때는 거꾸로 펴지며 투명해진다. 키보드 포커스 링은 다 들어온 자리에 고정이라, 들어오는 중인 알약과 잠깐 폭이 다를 수 있다. 2026-10-15 사용자 결정 — 구현 세션 질문 Q-009-3, 안 B(제자리에서 색만 나타나는 안 A 는 고르지 않았다). [List](list.md) 의 누름 바탕 · [Searchable List](searchable-list.md) 의 강조 바탕도 같은 움직임이다(들임 6).
 
 [그림: 호버는 알약 바탕 · 키보드는 링 · 누름은 축소 · 막힌 줄](../../site/components/specs/menu.tsx#states)
 
@@ -235,6 +237,10 @@ import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/component
 - **트리거 끝에 맞춘다** — SEED 기본은 가운데(`bottom`)라 줄 끝 ⋮ 의 메뉴가 표 밖으로 100 넘게 나간다. porest 는 오른쪽 끝(`end`)이 기본이다.
 
 ## Migration notes
+
+### 2026-10-15 — 알약이 들어오며 둥글어진다
+
+구현 세션 질문 Q-009-3 — 2026-10-02 결정(1A "좌우 8 들인 알약")은 끝 모습만 정했고 움직임은 묻지 않았다. 사용자가 SEED 처럼 들임 0 → 8 · 모서리 0 → 12 를 150ms 에 들어오게 골랐다(안 B). `item.transitionProperty` 가 바탕 색만 적고 비고는 "들임 · 모서리가 함께" 라고 적어 한 줄 안에서 어긋나 있던 것도 고쳤다. 웹은 알약을 `inset-x-0` · `rounded-none` 에서 호버 · 누름에 `inset-x-x2` · `rounded-r3` 로 바꾸고 `inset` · `border-radius` 도 전환한다(지금은 8 고정 + 색만). 앱은 Menu 가 없다(1280 이상 전용 — Menu Sheet 는 줄 바탕이 묶음 폭 전체라 들임이 없다, SEED menu-sheet-item 도 같다).
 
 ### 2026-10-02 — SEED Menu 로 새로 둔다(옛 Dropdown Menu 를 대신)
 

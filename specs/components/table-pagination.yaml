@@ -29,6 +29,7 @@ variants:
   total:
     known: 전체 수를 안다 — 범위 고르기 + "/ 총 N개"
     unknown: 전체 수를 모른다 — 범위는 글로만("11-20")
+    empty: 빈 표(0개) — 이전 · 다음 둘 다 막힘 · 범위 "0-0" fg-disabled · "/ 총 0개". 줄 수는 그대로 바꿀 수 있다
 
 defaults:
   total: known
@@ -38,7 +39,7 @@ states:
   hovered: 웹 — 화살표에 누름과 같은 바탕
   pressed: 누름 — 화살표 바탕 + 2px 거리 축소
   focused: 웹 — 키보드 포커스에만 링
-  disabled: 끝 쪽의 화살표 · 빈 표(0개) · 막힌 줄
+  disabled: 끝 쪽의 화살표(첫 범위의 이전 · 마지막 범위의 다음) · 막힌 줄(레시피 disabled — 고르기는 Select 의 막힘). 빈 표(0개)는 total empty
 
 rules:
   - when: {}
@@ -74,7 +75,7 @@ rules:
         background: transparent
         touchTarget: { value: 40 × 44, note: "위아래만 44 — Pagination 과 같은 예외. AA ✓ · AAA ⚠" }
         cursor: pointer
-        transitionProperty: background-color
+        transitionProperty: { value: "background-color, scale", note: "바탕 색과 누름 축소 둘 다 — Pagination 화살표 칸과 같다(Q-011-6). 시간은 motion 절" }
         transitionDuration: $motion-duration-color-transition
         transitionEasing: $motion-ease-easing
     hovered:
@@ -93,10 +94,8 @@ rules:
         color: $color-stroke-focus-ring
     disabled:
       arrow:
-        color: { value: $color-fg-disabled, note: "첫 쪽의 이전 · 마지막 쪽의 다음 — 숨기지 않고 막는다(Pagination 과 다르다). 빈 표면 둘 다" }
+        color: { value: $color-fg-disabled, note: "첫 범위의 이전 · 마지막 범위의 다음 — 숨기지 않고 막는다(Pagination 과 다르다). 범위 · 줄 수는 그대로(Q-011-5)" }
         cursor: not-allowed
-      pageRange:
-        foreground: { value: $color-fg-disabled, note: "빈 표 \"0-0\" — 줄 수는 그대로 바꿀 수 있다" }
 
   - when: { total: unknown }
     enabled:
@@ -104,6 +103,17 @@ rules:
         display: { value: 글로만, note: "\"11-20\" — 범위 고르기 · \"/ 총 N개\" 가 없다. 다음이 있는지만 안다" }
       total:
         display: none
+
+  - when: { total: empty }
+    enabled:
+      pageRange:
+        disabled: { value: 막힘, note: "범위 고르기(Select disabled)를 막는다 — 고를 범위가 없다. 보이는 값 \"0-0\"" }
+        foreground: { value: $color-fg-disabled, note: "막힌 범위 \"0-0\" — 글자 대비 예외(비활성)" }
+      total:
+        foreground: { value: $color-fg-neutral, note: "\"/ 총 0개\" — 흐리게 하지 않는다" }
+      arrow:
+        color: { value: $color-fg-disabled, note: "이전 · 다음 둘 다 막힌다(aria-disabled). 줄 수 고르기는 그대로 바꿀 수 있다(Q-011-5)" }
+        cursor: not-allowed
 
 motion:
   "바탕 색":

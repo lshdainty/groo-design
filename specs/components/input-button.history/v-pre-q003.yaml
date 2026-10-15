@@ -1,0 +1,154 @@
+# Input Button 의 수치 원본 — 구조는 SEED Input Button(React Field Button, 2026-10-01 사용자 결정).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 입력칸 모양의 버튼이다 — 누르면 시트(1280 미만) · 팝오버(1280 이상)를 열고, 고른 값이 글자로 들어간다. 직접 타이핑하지 않는다.
+# 혼자 쓰지 않는다 — 늘 달력 · 시각 피커 · 아이콘 격자 · 검색 시트 같은 고르는 자리를 연다. 라벨 · 설명 · 오류는 Field.
+# 상자는 Input(input.yaml)의 상자형과 같은 크기 · 모서리 · 테두리다. 다른 것은 누름(바탕 + 콘텐츠 축소)과 포커스(키보드 링).
+#
+# 부위: root 는 상자 — 그 안의 배경 층 버튼이 테두리 · 바탕 · 포커스 링을 그리고 누르는 영역 전체가 된다(SEED: 버튼은
+# 배경 층, 값 · 붙이개는 그 위에 얹고 누름을 지나 보낸다). 지우기 버튼은 그 위의 따로 누르는 버튼이다(버튼 안에 버튼을 두지 않는다).
+#
+# SEED 와 다른 자리(input-button.md 의 "SEED 와 다른 점")
+#   - 누름 · 호버 바탕은 불투명한 bg-layer-default-pressed(SEED transparent-pressed 는 투명도가 있어 검사기가 받지 않는다 — v102).
+#   - 누르면 콘텐츠를 2px 거리로 준다(SEED rootage 는 scaleScope content 를 적었지만 웹 CSS 에는 없다 — porest 는 rootage 대로, v104).
+#   - 아이콘은 lucide 선 아이콘(v106) — 지우기는 circle-x(SEED 는 채운 원).
+
+name: Input Button
+
+slots:
+  root: 상자 — 테두리 · 바탕 · 모서리. 배경 층 버튼이 누르는 영역 전체
+  value: 고른 값 — 한 줄, 넘치면 말줄임
+  placeholder: 고르기 전의 글 — 고를 값의 종류("날짜 선택")
+  prefixIcon: 앞 아이콘
+  prefixText: 앞 글자
+  suffixText: 뒤 글자
+  suffixIcon: 뒤 아이콘 — 여는 것을 알린다(달력 · 시계 · 아래 화살표)
+  clearButton: 지우기 — 값이 있고 막히지 않았을 때만, 선택 사항인 칸에
+  focusRing: 키보드 포커스 링(웹)
+
+variants:
+  size:
+    large: 52 — 폰 · 앱
+    medium: 40 — 1280 이상 데스크톱 웹(마우스)에서만
+    responsive: 폭에 따라 — 1280 미만 large · 이상 medium. 웹의 기본
+
+defaults:
+  size: responsive
+
+states:
+  enabled: 기본
+  pressed: 누름 — 바탕 + 콘텐츠 2px 거리 축소. 마우스는 호버에 같은 바탕
+  focused: 웹 — 키보드 포커스에만 링
+  invalid: 오류 — Field 의 invalid. 눌러도 빨간 2px 그대로
+  disabled: 비활성 — 누르지 못한다
+  readonly: 읽기 전용 — 값은 보이고 열리지 않는다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        background: transparent
+        borderColor: $color-stroke-neutral-weak
+        borderWidth: { value: 1px, note: "상자 안쪽(inset). 오류의 2px 는 안쪽에 덧그린다" }
+        cursor: pointer
+        touchTarget: { value: 상자 전체, note: "large 52 · 폭 전체 — AA ✓ · AAA ✓, medium 40 은 데스크톱에서만" }
+        transitionProperty: { value: background-color, note: "누름 · 호버 바탕" }
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      value:
+        foreground: $color-fg-neutral
+        fontWeight: 400
+      placeholder:
+        foreground: $color-fg-placeholder
+        fontWeight: 400
+      prefixIcon:
+        color: $color-fg-neutral-muted
+      prefixText:
+        foreground: $color-fg-neutral-subtle
+      suffixText:
+        foreground: $color-fg-neutral-subtle
+      suffixIcon:
+        color: $color-fg-neutral-muted
+      clearButton:
+        color: { value: $color-fg-neutral-subtle, note: "lucide circle-x. 이름 \"지우기\" — 누르면 값을 비운다(열지 않는다)" }
+        radius: $radius-full
+    pressed:
+      root:
+        background: { value: $color-bg-layer-default-pressed, note: "SEED bg.transparent-pressed 의 불투명 짝. 마우스는 호버에 같은 바탕" }
+        scale: { value: 콘텐츠 2px 거리 축소, note: "값 · 붙이개만 준다(SEED scaleScope: content) — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px. 테두리 · 바탕은 그대로" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+      clearButton:
+        scale: { value: 2px 거리 축소, note: "지우기만 따로 준다(SEED scaleScope: self) — 상자는 누름이 아니다" }
+    focused:
+      focusRing:
+        width: 2px
+        offset: 2px
+        color: $color-stroke-focus-ring
+    invalid:
+      root:
+        borderWidth: 2px
+        borderColor: { value: $color-stroke-critical-solid, note: "1px 위에 2px 가 나타난다(100ms) — 두께는 바로" }
+    disabled:
+      root:
+        background: { value: $color-bg-disabled, note: "흐리게 하지 않는다(v106)" }
+        cursor: not-allowed
+      value:
+        foreground: $color-fg-disabled
+      placeholder:
+        foreground: $color-fg-disabled
+      prefixIcon:
+        color: $color-fg-disabled
+      prefixText:
+        foreground: $color-fg-disabled
+      suffixText:
+        foreground: $color-fg-disabled
+      suffixIcon:
+        color: $color-fg-disabled
+    readonly:
+      root:
+        background: { value: $color-bg-disabled, note: "값은 진한 글자 그대로 — 바탕만으로 가른다" }
+        cursor: default
+
+  # ── 크기 ──────────────────────────────────────────────
+  - when: { size: large }
+    enabled:
+      root: { minHeight: 52px, radius: $radius-r3, paddingX: $spacing-x4, gap: $spacing-x2_5 }
+      value: { typography: $text-t5 }
+      placeholder: { typography: $text-t5 }
+      prefixIcon: { size: 20px }
+      prefixText: { typography: $text-t5 }
+      suffixText: { typography: $text-t5 }
+      suffixIcon: { size: 20px }
+      clearButton: { size: 22px }
+  - when: { size: medium }
+    enabled:
+      root: { minHeight: 40px, radius: $radius-r2, paddingX: $spacing-x3_5, gap: $spacing-x2 }
+      value: { typography: $text-t4 }
+      placeholder: { typography: $text-t4 }
+      prefixIcon: { size: 16px }
+      prefixText: { typography: $text-t4 }
+      suffixText: { typography: $text-t4 }
+      suffixIcon: { size: 16px }
+      clearButton: { size: 18px }
+  - when: { size: responsive }
+    enabled:
+      root:
+        breakpoint: { value: 1280px, note: "미만은 large, 이상은 medium 의 값을 쓴다(SEED lg) — 앱은 늘 large" }
+
+motion:
+  "누름 · 호버 — 바탕":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color]
+  "누름 — 콘텐츠":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "값 · 붙이개만 2px 거리 축소 — 모션 줄이기면 하지 않는다"
+  "오류 — 테두리":
+    duration: $motion-duration-d2
+    easing: $motion-ease-easing
+    properties: [border-color]
+    note: "안쪽에 덧그린 2px 의 색이 나타나고 사라진다. SEED 는 0.1s"

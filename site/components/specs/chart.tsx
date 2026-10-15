@@ -11,7 +11,7 @@ import { DonutLegendView, DonutView, HeatmapView, LegendTilesView, TrendChartVie
 import { contrastPair } from './data-contrast';
 import { HEAT_DAYS, HEAT_DAYS_FULL, HEAT_ROWS, HUE_KO, MONTH_DAYS, PALETTE_DEMO, TODAY_DAY, TREND, TREND_MONTH, TREND_TOTAL, TREND_YEAR } from './data-data';
 import { CHL, CL, DimH, DimV, MODES, ModeLabel, PINK, TL, TREND_TILES, Tip, dayHead, dayLabel, pinkFill, won, type Fig } from './data-screens';
-import { assignChartColors, formatDay, type ChartHue } from './data-shared';
+import { assignChartColors, donutFits, donutThickness, formatDay, type ChartHue } from './data-shared';
 import { TableView, type TCol, type TRow } from './data-table-view';
 import { Reading } from './display-view';
 import { resultSectionLook } from './feedback-look';
@@ -278,6 +278,83 @@ const LegendTiles: Fig = ({ caption }) => {
   );
 };
 
+// 끌 수 없는 마지막 타일 — 지출이 꺼져 수입 하나만 켜져 있다. 커서는 스크린샷에 찍히지 않아 실제 크기(약 34)로 겹쳐 그린다
+// (그림의 수입 타일에 마우스를 올리면 실제 커서도 not-allowed 다 — Q-012-3 C)
+function NoCursor({ left, top }: { left: number; top: number }) {
+  return (
+    <svg aria-hidden width={34} height={34} viewBox="0 0 34 34" style={{ position: 'absolute', left, top, pointerEvents: 'none', zIndex: 5, filter: 'drop-shadow(0 1px 1px rgba(0,0,0,.3))' }}>
+      <path d="M1.5 1.5v24.2l6.1-5.9 4 9.4 4-1.7-4-9.3h8.6z" fill="#FFFFFF" stroke="#000000" strokeWidth={1.6} strokeLinejoin="round" />
+      <circle cx={24} cy={24} r={8} fill="#FFFFFF" stroke="#000000" strokeWidth={1.2} />
+      <circle cx={24} cy={24} r={6} fill="none" stroke="#D40000" strokeWidth={2.4} />
+      <path d="m19.8 28.2 8.4-8.4" stroke="#D40000" strokeWidth={2.4} />
+    </svg>
+  );
+}
+const LegendLocked: Fig = ({ caption }) => {
+  const t = CHL().tile;
+  return (
+    <Panel caption={caption}>
+      <div className="flex flex-col gap-5">
+        {MODES.map((mode) => (
+          <div key={mode} className="flex flex-col gap-2">
+            <ModeLabel mode={mode} />
+            <div className="flex flex-wrap items-start justify-center gap-3 rounded-xl" style={{ background: rc('bg-layer-basement', mode), paddingTop: 16, paddingBottom: 16, paddingLeft: 16, paddingRight: 16 }}>
+              <div style={{ position: 'relative' }}>
+                <ChartBox title={`${TREND_MONTH}월 수입 · 지출`} mode={mode} width={420}>
+                  <Trend mode={mode} w={420} hidden={['expense']} />
+                </ChartBox>
+                <NoCursor left={CL().surface.pad + 70} top={CL().surface.pad + parseFloat(CL().title.lineHeight) + CL().header.padBottom + 26} />
+              </div>
+            </div>
+          </div>
+        ))}
+        <Cap w={560}>
+          수입 타일은 켠 색({'chart-{색}-subtle'}) 그대로다 — 회색으로 바꾸지 않는다. 마우스를 올리면 커서가 {t.lockedCursor}(v106 비활성 커서), 누르면 아무 일 없음 · 축소 없음(aria-disabled). 지출 타일을 다시 켜면 둘 다 누를 수 있다
+        </Cap>
+      </div>
+    </Panel>
+  );
+};
+
+// 도넛 두께 = 지름 ÷ 10 + 6(정수로) — 지름 여섯 실제 크기, 가장 나쁜 합계 "12,345,678원" 이 구멍에 드는지
+const DONUT_DIAS = [112, 120, 140, 160, 176, 180];
+const DonutThickness: Fig = ({ caption }) => {
+  const look = CHL();
+  const cat = categoryRows(look);
+  const worst = '12,345,678원';
+  return (
+    <Panel caption={caption}>
+      <div className="flex flex-col gap-5">
+        {MODES.map((mode) => (
+          <div key={mode} className="flex flex-col gap-2">
+            <ModeLabel mode={mode} />
+            <div className="flex flex-wrap items-end justify-center gap-x-5 gap-y-4 rounded-xl" style={{ background: rc('bg-layer-default', mode), paddingTop: 16, paddingBottom: 16, paddingLeft: 16, paddingRight: 16 }}>
+              {DONUT_DIAS.map((d) => {
+                const w = donutThickness(look, d);
+                const fits = donutFits(look, worst, d);
+                return (
+                  <div key={d} className="flex flex-col items-center gap-1.5">
+                    <DonutView look={look} mode={mode} slices={cat.slices.slice(0, 5)} diameter={d} centerLabel={fits ? `${TREND_MONTH}월 지출` : undefined} centerAmount={fits ? worst : undefined} label={`지름 ${d} 도넛`} />
+                    <span className="text-[12px] tabular-nums" style={{ color: rc('fg-neutral-subtle', mode) }}>
+                      지름 {d} · 두께 <b style={{ color: rc('fg-neutral', mode) }}>{w}</b> · 구멍 {d - w * 2}
+                    </span>
+                    <span className="text-[11.5px] font-semibold" style={{ color: rc(fits ? 'fg-positive' : 'fg-critical', mode) }}>
+                      {fits ? '가운데 합계' : '가운데 글 뺌 → 목록 위 합계'}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+        <Cap w={560}>
+          두께 = 지름 ÷ {Math.round(1 / look.donut.perDiameter)} + {look.donut.offset} 을 정수로 — 문턱이 없어 지름을 따라 고르게 굵어진다(160 에서 튀지 않는다). 데스크톱 {look.donut.diameter} → {look.donut.thickness} · 폰 {look.donut.phone.diameter} → {look.donut.phone.thickness}. 가운데 합계는 가장 나쁜 값 {worst}(16 / 22 · 700)이 구멍에 들어갈 때만 — 아니면 목록 위 합계로
+        </Cap>
+      </div>
+    </Panel>
+  );
+};
+
 const DonutFig: Fig = ({ caption }) => {
   const look = CHL();
   const d = look.donut;
@@ -288,7 +365,7 @@ const DonutFig: Fig = ({ caption }) => {
           <Donut />
         </ChartBox>
         <Cap w={560}>
-          지름 {d.diameter} · 두께 {d.thickness}(폰 {d.phone.diameter} · {d.phone.thickness}) · 조각 사이 0. 가운데 합계 {parseFloat(d.center.fontSize)} / {parseFloat(d.center.lineHeight)} · {d.center.fontWeight} — 돈은 원까지. 범례는 줄마다 색 네모 {look.legendList.swatch} · 이름 · % · 금액 &quot;원&quot;, 상위 9 + 회색 &quot;기타&quot;. 하위가 있는 줄은 누르는 줄(화살표)
+          지름 {d.diameter} · 두께 {d.thickness}(폰 {d.phone.diameter} · {d.phone.thickness} — 두께 = 지름 ÷ {Math.round(1 / d.perDiameter)} + {d.offset}) · 조각 사이 0. 가운데 합계 {parseFloat(d.center.fontSize)} / {parseFloat(d.center.lineHeight)} · {d.center.fontWeight} — 돈은 원까지. 범례는 줄마다 색 네모 {look.legendList.swatch} · 이름 · % · 금액 &quot;원&quot;, 상위 9 + 회색 &quot;기타&quot;. 하위가 있는 줄은 누르는 줄(화살표)
         </Cap>
       </div>
     </Panel>
@@ -376,7 +453,7 @@ const OrderGuide: Fig = ({ caption }) => {
   const good = assignChartColors(items, look.order).map((c) => ({ key: c.key, label: c.label, hue: c.color, amount: c.amount }));
   const view = (slices: typeof good) => (
     <div className="flex items-center gap-3">
-      <DonutView look={look} slices={slices} diameter={look.donut.phone.diameter} thickness={look.donut.phone.thickness} label="카테고리별 지출" />
+      <DonutView look={look} slices={slices} diameter={look.donut.phone.diameter} label="카테고리별 지출" />
       <div style={{ width: 150 }}>
         <DonutLegendView look={look} rows={slices.map((s) => ({ key: s.key, label: s.label, hue: s.hue, percent: `${Math.round((s.amount / sum) * 100)}%`, amount: '' }))} bleed={0} />
       </div>
@@ -539,7 +616,9 @@ export const chartFigures: Record<string, Fig> = {
   'dual-axis': DualAxis,
   tooltip: TooltipFig,
   'legend-tiles': LegendTiles,
+  'legend-locked': LegendLocked,
   donut: DonutFig,
+  'donut-thickness': DonutThickness,
   heatmap: HeatmapFig,
   states: States,
   'order-guide': OrderGuide,

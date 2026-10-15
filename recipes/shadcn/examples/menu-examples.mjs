@@ -56,9 +56,9 @@ const ITEM = [
 
 // 알약 — 줄은 그대로, 마우스를 올리거나 누르면 좌우 8 들어오며 칠해진다. 막힌 줄에는 없다
 const PILL =
-  "pointer-events-none absolute inset-y-0 inset-x-0 rounded-r3 bg-transparent [transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),inset_var(--motion-duration-color-transition)_var(--motion-ease-easing)]";
+  "pointer-events-none absolute inset-y-0 inset-x-0 rounded-none bg-transparent [transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),inset_var(--motion-duration-color-transition)_var(--motion-ease-easing),border-radius_var(--motion-duration-color-transition)_var(--motion-ease-easing)]";
 const PILL_ON =
-  "group-hover/menu-item:inset-x-x2 group-hover/menu-item:bg-bg-layer-floating-pressed group-active/menu-item:inset-x-x2 group-active/menu-item:bg-bg-layer-floating-pressed";
+  "group-hover/menu-item:inset-x-x2 group-hover/menu-item:rounded-r3 group-hover/menu-item:bg-bg-layer-floating-pressed group-active/menu-item:inset-x-x2 group-active/menu-item:rounded-r3 group-active/menu-item:bg-bg-layer-floating-pressed";
 
 // 콘텐츠 층 — 아이콘 18 ↔ 글 8. 누르는 동안만 준다(알약은 그대로)
 const ITEM_CONTENT =

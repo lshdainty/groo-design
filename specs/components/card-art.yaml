@@ -15,7 +15,8 @@ name: CardArt
 
 slots:
   root: 카드 그림 — Image Frame ratio card(1.586). 그림이 있으면 그림, 없으면 카드 면 또는 대체 그림
-  face: 카드 면 — 그림이 없는 아는 카드사의 카드. 기관 색 한 색, 글은 왼쪽 아래
+  face: 카드 면 — 그림이 없는 아는 카드사의 카드. 기관 색 한 색
+  label: 글 묶음 — 회사 · 카드 이름. 면 왼쪽 아래에 붙는다(레시피 data-slot="card-art-label" — 2026-10-15 구현 세션 질문 Q-013 정리)
   issuer: 회사 이름 — 카드 이름 위 한 줄
   name: 카드 이름 — 회사 이름 아래, medium 한 줄 · large 두 줄까지
   initial: 회사 첫 글자 — 작은 면(폭 96 미만) 가운데. 회사 · 카드 이름 대신
@@ -58,11 +59,11 @@ rules:
       initial: { fontSize: { value: 면 높이의 40%, note: "정수로 반올림하고 가장 작아도 10 — 목록 56(높이 35.3) 14 · 미리보기 68(42.9) 17 · 카탈로그 44(27.7) 11. 회사 · 카드 이름은 두지 않는다" } }
   - when: { size: medium }
     enabled:
-      face: { paddingX: $spacing-x2_5, paddingBottom: $spacing-x2 }
+      label: { paddingX: $spacing-x2_5, paddingBottom: $spacing-x2 }
       issuer: { typography: $text-t2 }
       name: { typography: $text-t4 }
   - when: { size: large }
     enabled:
-      face: { paddingX: $spacing-x4, paddingBottom: $spacing-x3_5 }
+      label: { paddingX: $spacing-x4, paddingBottom: $spacing-x3_5 }
       issuer: { typography: $text-t3 }
       name: { typography: $text-t5, lineClamp: { value: 2, note: "두 줄까지 — 단어 단위로 바꾸고(v114) 넘치면 말줄임" } }

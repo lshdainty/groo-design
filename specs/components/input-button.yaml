@@ -122,6 +122,8 @@ rules:
       suffixText: { typography: $text-t5 }
       suffixIcon: { size: 20px }
       clearButton: { size: 22px }
+    focused:
+      focusRing: { radius: { value: 16px, note: "링 바깥 반지름 = 상자 모서리 12 + 띄움 2 + 두께 2 — 링은 상자 모서리를 따른다(DESIGN.md State › 상태별 표현, 2026-10-15 구현 세션 질문 Q-007-5 정리). 웹은 outline 이 그대로 그리고, 앱은 이 셈으로 그린다" } }
   - when: { size: medium }
     enabled:
       root: { minHeight: 40px, radius: $radius-r2, paddingX: $spacing-x3_5, gap: $spacing-x2 }
@@ -132,6 +134,8 @@ rules:
       suffixText: { typography: $text-t4 }
       suffixIcon: { size: 16px }
       clearButton: { size: 18px }
+    focused:
+      focusRing: { radius: { value: 12px, note: "상자 모서리 8 + 띄움 2 + 두께 2" } }
   - when: { size: responsive }
     enabled:
       root:

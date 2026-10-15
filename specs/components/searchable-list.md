@@ -75,7 +75,7 @@ SEED 에는 이 컴포넌트가 없다 — Select 문서가 "옵션이 매우 �
 
 | 자리 | 고르면 | 근거 |
 |---|---|---|
-| 검색 시트 · 팝오버(`sheet` — 기본) | 고르고 닫힌다 — "완료" 를 두지 않는다. 열면 검색칸에 초점, 지금 값이 보이게 스크롤 | [Input Button](input-button.md) 의 "긴 목록은 검색 시트" · "목록은 누르면 바로" |
+| 검색 시트 · 팝오버(`sheet` — 기본) | 고르고 닫힌다 — "완료" 를 두지 않는다. 열면 검색칸에 초점 — 시트 · 팝오버의 첫 초점으로 받는다(`onOpenAutoFocus`, 열린 뒤 다시 옮기지 않는다). 지금 값이 보이게 스크롤 | [Input Button](input-button.md) 의 "긴 목록은 검색 시트" · "목록은 누르면 바로" |
 | 화면 · 단계 안(`inline`) | 라디오만 바뀐다 — 닫거나 넘기지 않고, 단계의 버튼("다음" · "저장")이 반영한다 | [Select Box](select-box.md) 의 "반영은 버튼" |
 
 시트는 1280 미만, 팝오버는 1280 이상이다(Input Button). 여럿을 고르는 검색 목록은 이 컴포넌트가 아니다 — 다음 차례에 정한다.
@@ -89,8 +89,10 @@ SEED 에는 이 컴포넌트가 없다 — Select 문서가 "옵션이 매우 �
 | 상태 | 모습 |
 |---|---|
 | `enabled` | 줄 바탕 없음 |
-| `highlighted` | ↓ · ↑ 로 짚은 줄 · 마우스를 올린 줄 — 좌우 6 들어온 `bg-layer-default-pressed` · 모서리 10. 한 번에 한 줄, 초점은 검색칸에 그대로 |
+| `highlighted` | ↓ · ↑ 로 짚은 줄 · 마우스를 올린 줄 — 좌우 6 들어온 `bg-layer-default-pressed` · 모서리 10. 한 번에 한 줄, 초점은 검색칸에 그대로. 마우스로 짚은 강조는 포인터가 목록을 떠나면 지운다(키보드로 짚은 강조는 남는다) |
 | `pressed` | 같은 바탕 + 콘텐츠만 2px 거리 축소(List) |
+
+마우스로 짚거나 누르면 바탕이 좌우 0 → 6 들어오며 모서리 0 → 10 으로 둥글어진다(150ms) — [Menu](menu.md) 알약 · [List](list.md) 의 누름 바탕과 같은 움직임이다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-009-3, 안 B. Searchable List 강조도 따라간다). 화살표로 옮길 때는 전환 없이 바로 바뀐다. 마우스가 목록(`listbox`)을 떠나면 마우스로 짚은 강조를 지운다 — Menu · Select · List 의 호버와 같다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-007-2, 안 B). 그래서 마우스로 짚고 `Enter` 를 누르려면 마우스가 목록 위에 있어야 하고, 지운 뒤의 `↓` 는 첫 줄부터다.
 
 [그림: 상태 — 강조(키보드) · 강조(마우스) · 누름](../../site/components/specs/searchable-list.tsx#states)
 
@@ -115,6 +117,12 @@ SEED 에는 이 컴포넌트가 없다 — Select 문서가 "옵션이 매우 �
 | `Tab` | 검색칸을 떠나 다음 자리(시트의 닫기 · 단계의 버튼)로 |
 
 [그림: 직접 눌러 보기 — 검색칸에서 ↓ ↓ Enter](../../site/components/specs/searchable-list.tsx#keyboard)
+
+### 거르는 규칙
+
+검색어와 줄의 이름 · 별칭을 NFC 로 맞추고, 대소문자와 공백을 무시해 이름이나 별칭 하나에 검색어가 들어 있으면 남긴다 — "kx 은행" 은 KX은행을, "모아 카드" 는 모아카드를 찾는다. 들고 있는 목록(은행 · 증권사)과 서버 검색(카드 상품 · 종목)이 같은 규칙이다. 화면마다 규칙을 따로 두지 않는다 — 지금 제품의 규칙을 공용으로 적은 것이다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-007-1, 안 C). 초성 검색은 아직 정하지 않았다(따로 정한다).
+
+[표: 결과 목록](searchable-list.yaml#base.enabled@results)
 
 ### 서버 검색은 300ms 기다렸다
 
@@ -149,7 +157,7 @@ SEED 에는 이 컴포넌트가 없다 — Select 문서가 "옵션이 매우 �
 
 ### 다음 차례
 
-일치하는 글자 강조 · 최근 검색 · 여럿 고르는 검색 목록은 이번에 정하지 않았다 — 기능이 생기는 차례에 정한다.
+일치하는 글자 강조 · 최근 검색 · 여럿 고르는 검색 목록은 이번에 정하지 않았다 — 기능이 생기는 차례에 정한다. 초성 검색("ㅎㄴ" → 하늘은행)도 아직 정하지 않았다(따로 정한다).
 
 ### 글
 
@@ -160,7 +168,9 @@ placeholder 는 "{무엇} 검색"("은행 이름 검색" · "카드 이름 검�
 레시피 `recipes/shadcn/components/ui/searchable-list.tsx` 를 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
 - `SearchableList` — 묶음. `value` · `defaultValue` · `onValueChange(value)`(고르면 — 시트는 여기서 닫는다) · `query` · `defaultQuery` · `onQueryChange(query)`(치는 대로) · `onSearch(query)`(서버 검색 — 마지막 입력 뒤 `searchDelay` 기본 300ms 에 한 번) · `placement`(`"sheet"` 기본 · `"inline"`) · `size`(`"responsive"` 기본 — 1280 미만 large · 이상 medium, 앱은 large).
-- `SearchableListInput` — 검색칸(Input 밑줄형 · 앞 돋보기 · 지우기 — `variant="underline"` 을 스스로 건다). `placeholder` · `aria-label`(기본 "검색"). `role="combobox"` · `aria-controls` · `aria-activedescendant` · 화살표 · `Enter` · `Esc` 를 맡는다. `placement="sheet"` 면 열릴 때 초점.
+- `SearchableListInput` — 검색칸(Input 밑줄형 · 앞 돋보기 · 지우기 — `variant="underline"` 을 스스로 건다). `placeholder` · `aria-label`(기본 "검색"). `role="combobox"` · `aria-controls` · `aria-activedescendant` · 화살표 · `Enter` · `Esc` 를 맡는다. 스스로 초점을 옮기지 않는다 — 시트 · 팝오버가 열릴 때 `focusSearchableList` 로 넘겨받는다.
+- `focusSearchableList(event)` — 시트 · 팝오버의 `onOpenAutoFocus` 에 건다. 첫 초점을 표면 대신 검색칸에 주고, 지금 값이 보이게 가운데로 스크롤한다(열린 뒤 다시 옮기지 않는다).
+- `matchesSearch(query, ...names)` — 거르는 규칙(NFC · 대소문자 · 공백 무시 · 포함). 들고 있는 목록은 이름 · 별칭을 넘겨 거른다. 서버 검색도 같은 규칙이다.
 - `SearchableListResults` — 결과 목록(`role="listbox"`). `aria-label`(대상 — "은행").
 - `SearchableListGroup` — 분류. `label`(List Header `mediumWeak`, `role="group"` 의 이름).
 - `SearchableListItem` — 결과 줄(`role="option"`). `value` · `title` · `detail` · `prefix`(LogoTile · 카드 그림 · Avatar). 라디오는 스스로 그린다.
@@ -179,15 +189,18 @@ import { Field } from "@/components/ui/field"
 import { InputButton } from "@/components/ui/input-button"
 import { LogoTile } from "@/components/ui/logo-tile"
 import {
-  SearchableList, SearchableListEmpty, SearchableListGroup, SearchableListInput, SearchableListItem, SearchableListResults,
+  SearchableList, SearchableListEmpty, SearchableListGroup, SearchableListInput, SearchableListItem, SearchableListResults, focusSearchableList, matchesSearch,
 } from "@/components/ui/searchable-list"
 
-const groups = groupInstitutions(filterByName(INSTITUTIONS, query)) // 시중은행 · 인터넷은행 · 지방은행 · 특수은행 · 저축기관 · 외국계 · 기타
+// 이름 · 별칭에 검색어가 들어 있으면 남긴다(NFC · 대소문자 · 공백 무시 — 거르는 규칙)
+const found = INSTITUTIONS.filter((it) => matchesSearch(query, it.name, ...it.aliases))
+const groups = groupInstitutions(found) // 시중은행 · 인터넷은행 · 지방은행 · 특수은행 · 저축기관 · 외국계 · 기타
 
 <Field label="은행">
   <BottomSheet open={open} onOpenChange={setOpen}>
     <InputButton placeholder="은행 선택" value={bank?.name} suffixIcon={<ChevronDown />} aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(true)} />
-    <BottomSheetContent title="은행 선택">
+    {/* 첫 초점은 시트 대신 검색칸 — 시트가 넘겨준다 */}
+    <BottomSheetContent title="은행 선택" onOpenAutoFocus={focusSearchableList}>
       {/* 본문 좌우 여백을 뺀다 — 검색칸 · 줄이 제 24 를 가진다(bottom-sheet.md) */}
       <BottomSheetBody className="px-0">
         {/* 고르면 닫는다 — "완료" 없음 */}
@@ -254,11 +267,12 @@ import {
 
 | 인터랙션 | 동작 |
 |---|---|
-| 열기(시트 · 팝오버) | 검색칸에 초점 · 지금 값이 보이게 스크롤. 강조는 없다 |
-| 치기 | 들고 있는 목록은 바로 거르고, 서버 검색은 마지막 입력 뒤 300ms 에 한 번 — 강조를 지운다 |
+| 열기(시트 · 팝오버) | 검색칸에 초점(시트 · 팝오버의 `onOpenAutoFocus` 로 받는다) · 지금 값이 보이게 스크롤. 강조는 없다 |
+| 치기 | 들고 있는 목록은 바로 거르고, 서버 검색은 마지막 입력 뒤 300ms 에 한 번 — 강조를 지운다. 거르는 규칙은 둘이 같다(NFC · 대소문자 · 공백 무시) |
 | `↓` · `↑` | 강조를 옮긴다(초점은 검색칸) |
 | `Enter` | 강조한 줄을 고른다 — 시트 · 팝오버는 닫힌다, 단계 안은 라디오만 |
 | 줄 누르기 · 클릭 | 그 줄을 고른다 — 마우스를 올린 줄은 강조와 같은 바탕 |
+| 마우스가 목록을 떠남 | 마우스로 짚은 강조를 지운다 — 키보드로 짚은 강조는 남는다 |
 | 지우기 버튼 | 검색어를 비우고 검색칸에 초점 — 전체 목록으로 |
 | `Esc` | 검색어를 지운다 → 비었으면 닫는다 |
 | 0건 · 실패 | 목록 자리에 Result Section — 바뀌면 한 번 알린다 |
@@ -271,7 +285,7 @@ import {
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 돋보기 `fg-neutral-muted` 7.11 · 6.67 ✓. 라디오 · 검색칸 테두리는 Radio · Input 의 검증. 강조 바탕(1.06 · 다크 1.13)은 장식 — 강조는 `aria-activedescendant` 로 읽힌다 |
 | **WCAG 2.1.1** Keyboard | 치기 · ↓ · ↑ · `Enter` · `Esc` 로 모두 된다 ✓ — 줄마다 `Tab` 이 걸리지 않는다 |
 | **WCAG 4.1.3** Status messages | 0건 · 실패를 `role="status"` 로 한 번 ✓ |
-| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 결과 줄 46 이상 · 지우기 44 ✓ |
+| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 결과 줄 48 이상 · 지우기 44 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 결과 줄 전체 ✓ |
 | **ARIA** | 검색칸 `role="combobox"` · `aria-expanded="true"` · `aria-controls`(목록) · `aria-autocomplete="list"` · `aria-activedescendant`(강조한 줄의 id, 없으면 비움) · 이름 "검색". 목록 `role="listbox"` + 이름, 분류 `role="group"` + `aria-labelledby`(머리), 줄 `role="option"` · `aria-selected`(지금 값). 라디오 · 로고 타일은 `aria-hidden` |
 
@@ -312,6 +326,16 @@ import {
 - **결과 개수를 알리지 않는다** — SEED 문서 검색과 같다(0건만 알린다).
 
 ## Migration notes
+
+### 2026-10-15 — 구현 세션 질문(Q-007 · Q-009-3)
+
+구현 세션이 만들며 찾은 빈칸을 정했다.
+
+- **거르는 규칙**(Q-007-1, 사용자 결정 안 C) — 지금 제품 규칙(이름 · 별칭, NFC · 대소문자 · 공백 무시)을 공용으로 적었다. 웹 · 앱 견본은 별칭을 넣고(앱은 NFC 도), 서버 카드 검색(가운데 공백을 그대로 본다)도 공백을 무시하게 고친다(백엔드). 초성 검색은 아직 정하지 않았다(따로 정한다).
+- **마우스 강조는 목록을 떠나면 지운다**(Q-007-2, 사용자 결정 안 B) — 웹은 목록에 `pointerleave`, 앱은 `MouseRegion.onExit` 를 단다. 키보드로 짚은 강조는 남긴다.
+- **첫 초점은 시트가 넘겨준다**(Q-007-3, 정리 — 두 스펙이 어긋나 있었다) — 검색칸이 스스로 초점을 잡고 한 프레임 뒤 다시 잡지 않는다. 시트 · 팝오버의 `onOpenAutoFocus` 가 검색칸에 준다(앱은 `PBottomSheet` 가 첫 초점 노드를 받는다).
+- **줄 높이 48**(Q-007-4, 정리) — 비고의 46 은 숫자 오류였다. 결과 줄은 늘 라디오(24)가 있어 48 이다(웹 · 앱 그대로).
+- **강조 바탕이 들어오며 둥글어진다**(Q-009-3 안 B 를 따른다) — 좌우 6 · 모서리 10 고정에서 0 → 6 · 0 → 10(150ms). 웹 · 앱 모두 마우스 · 누름일 때 들임 · 모서리도 전환한다(화살표는 바로).
 
 ### 2026-10-08 — List 줄 · 콤보박스 키보드로 다시 쓴다
 

@@ -3124,7 +3124,7 @@ export function renderChipGallery(brand) {
 // Line 탭 — 목록 .ptab-list(role=tablist · --fill · --hug × --small · --medium) > 탭 .ptab(role=tab) > 글 .ptab-label(+ 알림 점 .ptab-dot) · 막대 .ptab-indicator(목록에 하나).
 // Chip Tabs — 목록 .ptab-chips(role=tablist) > 탭 .pchip(role=tab — 03i 의 칩 그대로) > 글 .pchip-label + 알림 점 .ptab-chip-dot. 칩의 고른 모습은 data-selected 가 칠한다.
 // Segmented — 트랙 .pseg(role=radiogroup) > 고른 알약 .pseg-indicator · 칸 .pseg-item(role=radio) > 글 .pseg-label(+ 알림 점 .pseg-dot).
-// 고름은 aria-selected(탭) · aria-checked(칸)에서 읽고, Tab 은 고른 탭 · 칸 하나에만 선다(로빙 tabindex). 알림 점은 보조 기술에 "새 소식" · "새 내용" 을 덧붙인다(.ptab-sr-only).
+// 고름은 aria-selected(탭) · aria-checked(칸)에서 읽고, Tab 은 고른 탭 · 칸 하나에만 선다(로빙 tabindex). 알림 점은 보조 기술에 "새 소식" 을 덧붙인다(.ptab-sr-only).
 // data-ptab-live 목록 · data-pseg-live 트랙은 페이지 끝 스크립트가 누름 · 화살표로 고르기(막대 · 알약이 미끄러진다) · Hug 스크롤 · 내용 칸 바꾸기 · 거르기를 흉내 낸다 —
 // 그 순간을 멈춘 표의 탭 · 칸(.ptab--pressed · --focus, .pseg-item--hover · --pressed · --focus)은 바뀌지 않는다.
 let ptabSeq = 0;
@@ -3224,7 +3224,7 @@ export function segmented({ label = "", items = [], selected = 0, disabled = fal
     ]);
     const dot = it.dot && i !== selected;
     const mark = dot ? '<span class="pseg-dot" aria-hidden="true"></span>' : "";
-    return `<button ${attrs}><span class="pseg-label">${escape(it.label)}${mark}</span>${dot ? '<span class="ptab-sr-only"> 새 내용</span>' : ""}</button>`;
+    return `<button ${attrs}><span class="pseg-label">${escape(it.label)}${mark}</span>${dot ? '<span class="ptab-sr-only"> 새 소식</span>' : ""}</button>`;
   });
   return `<div ${attrsOf([
     'class="pseg"',
@@ -3422,9 +3422,9 @@ export function renderTabsGallery(brand) {
   const todoSet = (disabledAt = -1) => ["오늘", "이번 주", "전체", "완료"].map((l, i) => ({ label: l, disabled: i === disabledAt }));
   const segMorePanel = panel(
     "Segmented Control — 알림 점 · 긴 글 · 막힘",
-    "알림 점은 새 내용이 있는 칸에만 단다 — 6 · fg-brand(브랜드 글자색), 글 끝에서 2 · 글 위쪽에 맞추고 보조 기술에 \"새 내용\" 을 덧붙인다. 고른 칸에는 그리지 않는다 — 고르면 사라진다. 글은 짧게 쓴다(\"이름순\" · \"최근 사용\") — 칸에 비해 길면 단어 단위로 줄을 바꾸고(v114 — keep-all · break-word) 모든 칸이 가장 높은 칸에 맞춰 높아진다. 그러면 다른 컴포넌트(Chip 하나 고르기 · Select)를 쓴다. 칸 하나 또는 트랙 전체를 막을 수 있다 — 막힌 칸은 누를 수 없고 화살표 이동에서 건너뛴다. 늘 하나가 골라져 있어 트랙을 막아도 고른 칸이 보인다.",
+    "알림 점은 새 소식이 있는 칸에만 단다 — 6 · fg-brand(브랜드 글자색), 글 끝에서 2 · 글 위쪽에 맞추고 보조 기술에 \"새 소식\" 을 덧붙인다. 고른 칸에는 그리지 않는다 — 고르면 사라진다. 글은 짧게 쓴다(\"이름순\" · \"최근 사용\") — 칸에 비해 길면 단어 단위로 줄을 바꾸고(v114 — keep-all · break-word) 모든 칸이 가장 높은 칸에 맞춰 높아진다. 그러면 다른 컴포넌트(Chip 하나 고르기 · Select)를 쓴다. 칸 하나 또는 트랙 전체를 막을 수 있다 — 막힌 칸은 누를 수 없고 화살표 이동에서 건너뛴다. 늘 하나가 골라져 있어 트랙을 막아도 고른 칸이 보인다.",
     samples([
-      sample("알림 점 — 받을 돈에 새 요청", "6 · fg-brand · 보조 기술에 \"새 내용\" — 고르면 사라진다", phone(pad(segmented({ label: "더치페이 보기", live: true, selected: 1, items: [{ label: "받을 돈", dot: true }, { label: "보낼 돈" }] })))),
+      sample("알림 점 — 받을 돈에 새 요청", "6 · fg-brand · 보조 기술에 \"새 소식\" — 고르면 사라진다", phone(pad(segmented({ label: "더치페이 보기", live: true, selected: 1, items: [{ label: "받을 돈", dot: true }, { label: "보낼 돈" }] })))),
       sample("긴 글 — 줄이 바뀌면 칸이 모두 높아진다(피한다)", "단어 단위 줄바꿈 · 가장 높은 칸에 맞춘다", phone(pad(segmented({ label: "프리셋 정렬", live: true, items: [{ label: "많이 쓴 순" }, { label: "최근에 사용한 순" }, { label: "이름 가나다순" }] })))),
       sample("칸 하나 막힘 — 완료", "SegmentedControlItem disabled — 화살표가 건너뛴다", phone(pad(segmented({ label: "할 일 보기", live: true, items: todoSet(3) })))),
       sample("트랙 전체 막힘", "SegmentedControl disabled — 고른 칸은 bg-disabled + 1px stroke-neutral-solid", phone(pad(segmented({ label: "할 일 보기", disabled: true, items: todoSet() })))),
@@ -3999,6 +3999,8 @@ export function renderFeedbackGallery(brand) {
   const head = (title, cls = "pfb-phone-head") => `<div class="${cls}"><div class="ptf-screen-title">${escape(title)}</div></div>`;
   // 탭 바 — 03r 의 떠 있는 알약(홈 · 가계부 · + · 캘린더 · 전체, 지금 탭 가계부). 그림이라 보조 기술에 숨긴다. 이 폰은 홈 표시줄이 없어 아래 14 다
   const tabbar = tabBar({ current: "ledger", decorative: true });
+  // 화면 키보드 — 그림(OS 가 그린다). 높이 260 · 글쇠 줄 넷. 보조 기술에 숨긴다
+  const softKeyboard = () => `<div class="pfb-kb" aria-hidden="true">${["ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ", "ㅁㄴㅇㄹㅎㅗㅓㅏㅣ", "ㅋㅌㅊㅍㅠㅜㅡ"].map(row => `<div class="pfb-kb-row">${[...row].map(k => `<span class="pfb-kb-key">${k}</span>`).join("")}</div>`).join("")}<div class="pfb-kb-row"><span class="pfb-kb-key pfb-kb-key--wide">?123</span><span class="pfb-kb-key pfb-kb-key--space">한국어</span><span class="pfb-kb-key pfb-kb-key--wide">검색</span></div></div>`;
   const tile = (color, icon) => `<span class="plst-tile plst-tile--${color}">${LIST_ICON[icon]}</span>`;
   const won = (v) => `<span class="plst-amount">${escape(v)}</span>`;
   const ledgerRows = () => listOf([
@@ -4027,10 +4029,11 @@ export function renderFeedbackGallery(brand) {
 
   // 2. Snackbar — 자리. 폰은 탭 바(03r 의 떠 있는 알약 — 위 끝이 화면 아래에서 14 + 66) 위 8, 데스크톱은 아래 가운데 8 · 최대 464
   const placementPanel = panel(
-    "Snackbar — 자리: 폰은 탭 바 위 8 · 데스크톱은 아래 가운데 최대 464",
-    "어느 폭이든 화면 아래 가운데다 — 자리는 좌우 · 아래 8 을 두고(안전 영역이 있으면 그만큼 더), 탭 바 · 플로팅 버튼 · 바닥 버튼이 있으면 그 위 8 에 선다(SnackbarAvoidOverlap). 띠는 자리 폭을 채우다 464 에서 멈추고 넓은 화면에서는 가운데에 선다. 시트 · 대화상자가 열려 있어도 그 위에 그린다(z L6 400) — 다만 시트 안에서 한 일의 결과는 그 안 Callout 으로 알리고 스낵바는 시트가 닫힌 뒤에 띄운다. 한 번에 하나만 보이고 쌓지 않는다.",
+    "Snackbar — 자리: 폰은 탭 바 위 8 · 키보드 위 8 · 데스크톱은 아래 가운데 최대 464",
+    "어느 폭이든 화면 아래 가운데다 — 자리는 좌우 · 아래 8 을 두고(안전 영역이 있으면 그만큼 더), 탭 바 · 플로팅 버튼 · 바닥 버튼이 있으면 그 위 8 에 선다(SnackbarAvoidOverlap). 화면 키보드가 올라와 있으면 키보드 바로 위 8 이다 — 탭 바가 키보드 뒤로 가도 띠는 보인다(웹 폰 브라우저도 — 레시피가 보이는 화면의 아래 끝을 잰다, 2026-10-15 Q-003-1). 띠는 자리 폭을 채우다 464 에서 멈추고 넓은 화면에서는 가운데에 선다. 시트 · 대화상자가 열려 있어도 그 위에 그린다(z L6 400) — 다만 시트 안에서 한 일의 결과는 그 안 Callout 으로 알리고 스낵바는 시트가 닫힌 뒤에 띄운다. 한 번에 하나만 보이고 쌓지 않는다.",
     samples([
       sample("폰 — 탭 바 위 8", "SnackbarAvoidOverlap 이 탭 바를 피한다 — 띠 344(360 − 좌우 8)", `<div class="pfb-phone pfb-phone--screen pfb-phone--tabbar">${head("가계부")}<div class="pfb-phone-body">${ledgerRows()}</div><div class="psnack-region" role="region" aria-label="알림 — 그림">${snackbar({ message: "거래를 삭제했어요.", action: "되돌리기" })}</div>${tabbar}</div>`),
+      sample("폰 — 화면 키보드 위 8", "키보드도 피할 자리다 — 탭 바는 키보드 뒤로 가고 띠는 키보드 위 8 · 키보드 260 은 그림", `<div class="pfb-phone pfb-phone--screen pfb-phone--tabbar pfb-phone--keyboard">${head("관심 종목")}<div class="pfb-phone-body"><div class="pfb-kb-search" aria-hidden="true"><span>숲길</span><span class="pfb-kb-caret"></span></div>${ledgerRows()}</div>${tabbar}${softKeyboard()}<div class="psnack-region" role="region" aria-label="알림 — 그림">${snackbar({ tone: "critical", message: "관심 종목에 넣지 못했어요. 다시 시도해주세요.", action: "다시 시도" })}</div></div>`),
       sample("데스크톱 웹 — 아래 가운데 · 최대 464", "넓으면 464 에서 멈추고 가운데에 선다", `<div class="pfb-desk pfb-desk--tall">${head("가계부", "pfb-desk-head")}<div class="pfb-desk-body">${ledgerRows()}</div><div class="psnack-region" role="region" aria-label="알림 — 그림">${snackbar({ message: "거래를 삭제했어요.", action: "되돌리기" })}</div></div>`),
     ], "ptf-samples ptf-samples--forms"),
   );
@@ -4582,6 +4585,15 @@ export function renderMenuGallery(brand) {
     page: menuPage({ title: "가계부", action: topNavIcon({ icon: "eye", name: "금액 가리기", attrs: `aria-pressed="false" id="${hideTid}"` }), body: listOf(OVERLAY_LEDGER.map(overlayRow)) }),
     floats: [bubble({ id: hideBid, title: "금액을 가릴 수 있어요", description: "누르면 화면의 금액이 모두 가려져요.", trigger: hideTid, side: "bottom", close: true, live: true })],
   });
+  // 화면 끝 — 화면 왼쪽 끝 0 에 붙은 ⓘ 40. 화살표는 ⓘ 가운데(모서리 14)에 남고 말풍선이 가장자리 16 보다 붙는다(0 — Q-004-1)
+  const edgeTid = nextMenuId("pbub-trigger");
+  const edgeBid = nextMenuId("pbub");
+  const edgeFrame = overlayFrame({
+    device: "phone",
+    height: 300,
+    page: `${menuPage({ title: "연말정산", body: "" })}<div class="pmenu-lead pbub-edge-lead">${helpTrigger({ id: edgeTid, name: "예상 환급액 안내", controls: edgeBid })}예상 환급액</div>`,
+    floats: [bubble({ id: edgeBid, title: "예상 환급액", description: "지난달까지 받은 급여로 계산해요. 12월에 다시 바뀌어요.", trigger: edgeTid, side: "bottom", live: true })],
+  });
   const closeCols = [
     { ko: "기본", en: "enabled" },
     { ko: "누름", en: "pressed — 닫기만 2px 축소", interaction: "pressed" },
@@ -4594,12 +4606,13 @@ export function renderMenuGallery(brand) {
     : `<span class="pbub-demo">${bubble({ title: "안내" })}</span>`);
   const bubblePanel = panel(
     "Help Bubble — ⓘ 를 눌러 여는 도움말 · 닫기 버튼",
-    "몰라도 일은 할 수 있는 설명(규정 · 계산 방법 · 기능 안내)을 ⓘ 아이콘 버튼(이름 \"{무엇} 안내\")을 눌러 띄운다 — 손가락으로도 열려 폰에서도 읽어야 하는 설명은 이것이다. 말풍선은 짙은 바탕(bg-neutral-inverted — 다크에서는 밝은 바탕) · 모서리 12 · 위아래 10 · 좌우 12 · 그림자 없음이고, 폭은 내용만큼 최대 280 이다. 제목 13/18 · 700, 설명 13/18 · 400(사이 2) — 한 줄이면 38, 설명이 있으면 58. 기본은 트리거 위다 — 화살표(12 × 8) 끝과 트리거는 4, 몸통과는 12 떨어진다. 자리가 모자라면 반대편으로 뒤집고 옆으로 밀어 화면 가장자리와 16 을 남긴다 — 화살표는 늘 트리거 가운데를 가리키고 말풍선 모서리와 14 를 남긴다(폰 그림은 밀었다). 비모달이라 뒤 화면을 숨기지 않는다(L4 210). ⓘ 를 다시 누르거나 바깥 · Esc 로 닫힌다. 닫기 버튼은 처음부터 열어 두는 안내에만 둔다 — 오른쪽 위 모서리의 투명 38 상자(아이콘 14 · 위 12 · 오른쪽 12 · 글과 4, 누르는 영역 44)이고, 누르면 아이콘만 2px 거리로 준다. 키보드 링은 말풍선 글자색이다 — 브랜드 링은 짙은 말풍선 위에서 3:1 에 못 미친다. 말풍선 안에 링크 · 버튼을 두지 않는다(닫기 버튼만). 열려 있을 때 트리거에서 Tab 을 누르면 말풍선으로 들어간다 — 닫기 버튼이 있으면 그 버튼으로, 없으면 말풍선 자체로 가고 둘레 바깥 2px 링(띄움 2 · stroke-focus-ring · 모서리를 따라)이 선다(페이지 위에 그려져 브랜드 링이다). 다시 Tab 으로 나가면 닫히고 초점은 트리거 다음 칸으로, Shift+Tab 은 트리거로 간다. 그림의 말풍선도 실제로 닫고 다시 열 수 있다.",
+    "몰라도 일은 할 수 있는 설명(규정 · 계산 방법 · 기능 안내)을 ⓘ 아이콘 버튼(이름 \"{무엇} 안내\")을 눌러 띄운다 — 손가락으로도 열려 폰에서도 읽어야 하는 설명은 이것이다. 말풍선은 짙은 바탕(bg-neutral-inverted — 다크에서는 밝은 바탕) · 모서리 12 · 위아래 10 · 좌우 12 · 그림자 없음이고, 폭은 내용만큼 최대 280 이다. 제목 13/18 · 700, 설명 13/18 · 400(사이 2) — 한 줄이면 38, 설명이 있으면 58. 기본은 트리거 위다 — 화살표(12 × 8) 끝과 트리거는 4, 몸통과는 12 떨어진다. 자리가 모자라면 반대편으로 뒤집고 옆으로 밀어 화면 가장자리와 16 을 남긴다 — 화살표는 늘 트리거 가운데를 가리키고 말풍선 모서리와 14 를 남긴다(폰 그림은 밀었다). 셋이 부딪히면 화살표 → 모서리 14 → 가장자리 16 순서다 — 화면 끝의 트리거면 말풍선이 16 보다 붙는다 — 상단 바 끝 6 의 금액 가리기는 8, 넷째 그림(화면 왼쪽 끝 0 의 ⓘ)은 0 이다. 비모달이라 뒤 화면을 숨기지 않는다(L4 210). 열어도 초점은 트리거에 남고, 제목 · 설명은 열림 알림(role=status · polite)으로 한 번 읽힌다 — 아래 \"열림 알림\" 줄이 그 글이다. ⓘ 를 다시 누르거나 바깥 · Esc 로 닫힌다. 닫기 버튼은 처음부터 열어 두는 안내에만 둔다 — 오른쪽 위 모서리의 투명 38 상자(아이콘 14 · 위 12 · 오른쪽 12 · 글과 4, 누르는 영역 44)이고, 누르면 아이콘만 2px 거리로 준다. 키보드 링은 말풍선 글자색이다 — 브랜드 링은 짙은 말풍선 위에서 3:1 에 못 미친다. 말풍선 안에 링크 · 버튼을 두지 않는다(닫기 버튼만). 열려 있을 때 트리거에서 Tab 을 누르면 말풍선으로 들어간다 — 닫기 버튼이 있으면 그 버튼으로, 없으면 말풍선 자체로 가고 둘레 바깥 2px 링(띄움 2 · stroke-focus-ring · 모서리를 따라)이 선다(페이지 위에 그려져 브랜드 링이다). 다시 Tab 으로 나가면 닫히고 초점은 트리거 다음 칸으로, Shift+Tab 은 트리거로 간다. 그림의 말풍선도 실제로 닫고 다시 열 수 있다.",
     `${samples([
       sample("폰 — ⓘ 연차 사용 규정", "HelpBubble — 손가락으로 눌러 연다 · 가장자리 16 을 남기고 밀었다 · 화살표는 ⓘ 가운데", leaveHelp("phone")),
       sample("데스크톱 — 같은 말풍선", "제목 + 설명 · 트리거 위 · 비모달", leaveHelp("desktop")),
-    ], "ptf-samples ptf-samples--forms")}${samples([
+    ], "ptf-samples ptf-samples--forms")}<p class="pbub-said"><span class="pbub-said-label">열림 알림 — 보조 기술이 읽는 글</span><span class="pbub-said-text" role="status" aria-live="polite" aria-atomic="true" data-pbub-status></span></p>${samples([
       sample("처음부터 열어 두는 안내 — 닫기 버튼", "HelpBubbleAnchor · showCloseButton · side=\"bottom\" — 닫으면 다시 열지 않는다", hideFrame),
+      sample("화면 끝의 ⓘ — 화살표는 가운데, 말풍선이 붙는다", "화면 왼쪽 끝 0 의 ⓘ 40 — 화살표 ↔ 모서리 14 를 지키느라 말풍선이 가장자리 16 을 넘어 0 까지 간다(useBubbleEdgePadding)", edgeFrame),
     ], "ptf-samples pov-samples--next")}
       <div class="cb-matrix pov-close-matrix pbub-close-matrix" style="--cb-cols: ${closeCols.length};">
         <div class="cb-matrix-row cb-matrix-row--head"><div class="cb-matrix-head">Tab 이 서는 자리</div>${
@@ -7577,8 +7590,9 @@ function pchartTiles({ id = nextPdataId("pchart-legend"), items = [], hidden = [
     return `<button ${attrsOf([`class="pchart-tile pchart-tile--${it.color}${on ? "" : " pchart-tile--off"}${st}"`, 'type="button"', `aria-pressed="${on}"`, last && 'aria-disabled="true"', `data-pchart-key="${it.key}"`])}><span class="pchart-tile-name"><span class="pchart-dot" aria-hidden="true"></span>${escape(it.label)}</span><span class="pchart-tile-total">${escape(it.total)}</span></button>`;
   }).join("")}</div>`;
 }
-// 도넛 — 지름 · 두께(160 · 22, 폰 120 · 18) · 조각 사이 0. 조각은 SVG 원의 점선 길이로 그린다(12시부터 시계 방향)
-function pchartDonut({ items = [], size = 160, thickness = 22, center = null, label = "", legendId = "" } = {}) {
+// 도넛 — 두께 = 지름 ÷ 10 + 6(정수로 — 160 · 22, 폰 120 · 18, Q-012-5 C) · 조각 사이 0. 조각은 SVG 원의 점선 길이로 그린다(12시부터 시계 방향)
+const pchartDonutThickness = (size) => Math.round(size / 10 + 6);
+function pchartDonut({ items = [], size = 160, thickness = pchartDonutThickness(size), center = null, label = "", legendId = "" } = {}) {
   const r = (size - thickness) / 2;
   const circ = 2 * Math.PI * r;
   const total = items.reduce((s, it) => s + it.amount, 0);
@@ -7659,8 +7673,9 @@ const PSL_BANK_GROUPS = ["시중은행", "인터넷은행", "지방은행", "특
 const pslRadio = () => '<span class="psl-radio" aria-hidden="true"><span class="psl-radio-dot"></span></span>';
 // 결과 줄(option) — List 줄(위아래 12 · 좌우 24 · 제목 16 / 22 · 설명 13 / 18) + 앞 붙이개 + 오른쪽 라디오. 초점은 받지 않는다(초점은 검색칸).
 // highlighted 는 ↓ · ↑ · 마우스로 짚은 줄(좌우 6 들어온 bg-layer-default-pressed · 모서리 10), pressed 는 누르는 순간(콘텐츠만 2px 축소)
-function pslOption({ id = nextPdataId("psl-opt"), value, title, detail = "", prefix = "", selected = false, highlighted = false, pressed = false } = {}) {
-  return `<div ${attrsOf([`class="psl-option${highlighted ? " psl-option--hl" : ""}${pressed ? " psl-option--pressed" : ""}"`, 'role="option"', `id="${id}"`, `aria-selected="${selected}"`, `data-psl-value="${escape(value)}"`, `data-psl-text="${escape(title)}"`])}><span class="psl-option-content">${prefix ? `<span class="psl-prefix">${prefix}</span>` : ""}<span class="psl-body"><span class="psl-title">${escape(title)}</span>${detail ? `<span class="psl-detail">${detail}</span>` : ""}</span>${pslRadio()}</span></div>`;
+// keys 는 별칭 — 거르기가 이름과 함께 본다(searchable-list.yaml results.filter)
+function pslOption({ id = nextPdataId("psl-opt"), value, title, detail = "", prefix = "", selected = false, highlighted = false, pressed = false, keys = [] } = {}) {
+  return `<div ${attrsOf([`class="psl-option${highlighted ? " psl-option--hl" : ""}${pressed ? " psl-option--pressed" : ""}"`, 'role="option"', `id="${id}"`, `aria-selected="${selected}"`, `data-psl-value="${escape(value)}"`, `data-psl-text="${escape(title)}"`, keys.length && `data-psl-keys="${escape(keys.join("|"))}"`])}><span class="psl-option-content">${prefix ? `<span class="psl-prefix">${prefix}</span>` : ""}<span class="psl-body"><span class="psl-title">${escape(title)}</span>${detail ? `<span class="psl-detail">${detail}</span>` : ""}</span>${pslRadio()}</span></div>`;
 }
 // 분류 — List Header mediumWeak(14 · 500 · fg-neutral-subtle · 위아래 8 · 좌우 24), role="group" 의 이름
 function pslGroup({ label, options = "" } = {}) {
@@ -7682,7 +7697,7 @@ function psl({ size = "large", placeholder = "은행 이름 검색", label = "�
     const opts = g.items.map((it) => {
       const id = nextPdataId("psl-opt");
       if (it.value === highlight) activeId = id;
-      return pslOption({ id, value: it.value, title: it.title, detail: it.detail || "", prefix: it.prefix || "", selected: it.value === value, highlighted: it.value === highlight, pressed: it.value === pressed });
+      return pslOption({ id, value: it.value, title: it.title, detail: it.detail || "", prefix: it.prefix || "", selected: it.value === value, highlighted: it.value === highlight, pressed: it.value === pressed, keys: it.keys || [] });
     }).join("");
     return g.label ? pslGroup({ label: g.label, options: opts }) : opts;
   }).join("");
@@ -7699,7 +7714,7 @@ function psl({ size = "large", placeholder = "은행 이름 검색", label = "�
   const emptySlot = live ? `<div class="psl-status" data-psl-empty hidden>${resultSection({ kind: "empty", size: "medium", icon: "searchX", title: "", description: "은행 이름의 일부로도 찾아보세요." }).replace(' role="status"', "")}</div>` : "";
   return `<div ${attrsOf([`class="psl psl--${size} psl--${placement}"`, live && "data-psl-live"])}>${field}${list}${emptySlot}${live ? '<p class="pdata-sr" role="status" aria-live="polite" data-psl-status></p>' : ""}</div>`;
 }
-const pslBankItems = (names) => names.map((n) => ({ value: n, title: n, prefix: logoTile({ name: n, size: 40 }) }));
+const pslBankItems = (names) => names.map((n) => ({ value: n, title: n, prefix: logoTile({ name: n, size: 40 }), keys: INSTITUTIONS.find((it) => it.name === n)?.aliases ?? [] }));
 
 // ── Swipe Actions ───────────────────────────────────────────────────────
 // 동작 칸 — 원형 배지 36(아이콘 18) + 라벨 12 / 700 / 1.3, 사이 2. 칸 폭은 앞 간격 + 36(첫 칸 20 + 36 = 56 · 다음 12 + 36 = 48), 높이는 줄(56 이상).
@@ -7720,7 +7735,7 @@ function pswipe({ row = "", actions = [], rowLabel = "", open = true, states = {
 }
 // 거래 줄 — 가계부(카테고리 타일 · 제목 · 설명 · 금액 + 줄 끝 ⋮). ⋮ 는 Button ghost · iconOnly · medium(40 · 누르는 44) "{줄 이름} 더보기"
 const pswipeRow = ({ color = "orange", icon = "utensils", title = "스타벅스 강남점", detail = "식비 · 국민카드", amount = -6500, more = true } = {}) =>
-  listOf([listRow({ kind: "button", prefix: listTile(color, icon), title, detail, suffix: `<span class="plst-amount">${escape(pdataWon(amount))}</span>${more ? `<button class="btn btn-ghost btn-icon-only pswipe-more" type="button" aria-label="${escape(title)} 더보기" aria-haspopup="menu">${DATA_ICON.ellipsisVertical}</button>` : ""}` })]);
+  listOf([listRow({ kind: "button", prefix: listTile(color, icon), title, detail, suffix: `<span class="plst-amount">${escape(pdataWon(amount))}</span>${more ? `<button class="btn btn-ghost btn-icon-only pswipe-more" type="button" aria-label="${escape(title)} 더보기" aria-haspopup="dialog">${DATA_ICON.ellipsisVertical}</button>` : ""}` })]);
 
 // 데이터 표시 갤러리 — 표 여섯 · 카드 다섯(순자산 카드는 Desk 만) · 차트 넷 · 검색해서 고르기 둘 · 줄 밀기 하나, 판을 흰 표면(.vignette-card) 위에 그린다.
 // 견본 틀(.ptf-samples · .ptf-cap)과 상태 표(.cb-matrix)는 Text Field 갤러리 것, 라이트 · 다크 나란히 틀(.pdsp-pair · .pdsp-theme)은 03o 것이다 — 나란히 틀에는
@@ -8017,16 +8032,18 @@ export function renderDataGallery(brand) {
   const cats = pchartAssign(PCHART_CATS);
   const donutDesk = (() => {
     const lid = nextPdataId("pchart-cats");
-    return pcard({ head: pcardHead({ title: "카테고리별 지출", action: "전체 보기" }), content: `<div class="pdata-donut">${pchartDonut({ items: cats, size: 160, thickness: 22, center: { label: "10월 지출", amount: "1,240,000원" }, label: "10월 카테고리별 지출, 합계 1,240,000원", legendId: lid })}${pchartLegend({ id: lid, items: cats })}</div>` });
+    return pcard({ head: pcardHead({ title: "카테고리별 지출", action: "전체 보기" }), content: `<div class="pdata-donut">${pchartDonut({ items: cats, size: 160, center: { label: "10월 지출", amount: "1,240,000원" }, label: "10월 카테고리별 지출, 합계 1,240,000원", legendId: lid })}${pchartLegend({ id: lid, items: cats })}</div>` });
   })();
   const donutPhone = (() => {
     const lid = nextPdataId("pchart-cats");
-    return pnavPhone({ height: 832, bg: "basement", inner: `${topNav({ title: "통계" })}<div class="pnav-body pdata-phone-body"><div class="pdata-stack">${pcard({ body: "list", head: pcardHead({ title: "카테고리별 지출" }), list: `<div class="pdata-donut pdata-donut--phone">${pchartDonut({ items: cats, size: 120, thickness: 18, label: "10월 카테고리별 지출, 합계 1,240,000원", legendId: lid })}<div class="pdata-donut-total"><span class="pchart-center-label">10월 지출</span><span class="pchart-center-amount">1,240,000원</span></div></div>${pchartLegend({ id: lid, items: cats })}` })}</div></div>` });
+    return pnavPhone({ height: 832, bg: "basement", inner: `${topNav({ title: "통계" })}<div class="pnav-body pdata-phone-body"><div class="pdata-stack">${pcard({ body: "list", head: pcardHead({ title: "카테고리별 지출" }), list: `<div class="pdata-donut pdata-donut--phone">${pchartDonut({ items: cats, size: 120, label: "10월 카테고리별 지출, 합계 1,240,000원", legendId: lid })}<div class="pdata-donut-total"><span class="pchart-center-label">10월 지출</span><span class="pchart-center-amount">1,240,000원</span></div></div>${pchartLegend({ id: lid, items: cats })}` })}</div></div>` });
   })();
+  // 지름에 따른 두께 — 지름 ÷ 10 + 6(정수로). 문턱 없이 고르게 굵어진다
+  const donutSizes = `<div class="pdata-donut-sizes">${[112, 120, 140, 160, 176, 180].map((d) => `<figure class="pdata-donut-size">${pchartDonut({ items: cats, size: d, label: `지름 ${d} 도넛` })}<figcaption>지름 ${d} · 두께 ${pchartDonutThickness(d)}</figcaption></figure>`).join("")}</div>`;
   const donutPanel = panel(
     "Chart — 도넛: 목록 범례 · 가운데 합계",
-    "도넛의 범례는 카테고리 목록이다 — 줄마다(44 이상) 색 네모 10 + 이름 14 + % 14 · fg-neutral-subtle + 금액 14 · 700 + \"원\". 하위 카테고리가 있는 줄(식비 · 쇼핑 · 생활)만 누르는 줄이다(통계의 카테고리 → 하위로 — 호버 · 누름 바탕). 가운데는 합계 16 / 22 · 700 + 위 라벨 12 · fg-neutral-subtle — 돈은 가운데서도 줄이지 않는다(\"73.3만\" 이 아니라 원까지). 조각 사이는 0, 두께는 지름 160 에서 22 다. 폰의 120 · 18 은 가운데에 \"1,240,000원\" 이 들어가지 않아 가운데 글을 빼고 목록 위에 합계를 둔다(오른쪽). 색은 저장된 색이 먼저(식비 blue · 교통 green · 쇼핑 orange · 경조사 red · 주거 violet · 생활 pink), 색이 없는 항목은 그 차트에서 아직 쓰지 않은 색부터 배정 순서로 받는다 — 구독 indigo · 의료 yellow · 문화 brown(red 는 경조사가 써서 건너뛴다). 항목이 10개를 넘으면 상위 9 + 회색 \"기타\"(선물 · 기부)로 묶는다 — 회색은 \"기타\" 전용이다. 차트 상자는 role=\"img\" + 요약 이름(\"10월 카테고리별 지출, 합계 1,240,000원\"), 목록 범례가 글로 읽히는 대체다.",
-    `${samples([sample("데스크톱 — 160 · 22 · 가운데 합계", "ChartDonutCenter · ChartDonutLegend(9 + 기타)", wide(floor(donutDesk, "pdata-floor--donut")))], WIDE)}${samples([sample("폰 — 120 · 18 · 목록 위 합계", "가운데에 들어가지 않으면 가운데 글을 뺀다", donutPhone)], NEXT)}${status("data-pchart-cat-status", "식비 · 쇼핑 · 생활 줄을 눌러 보세요.")}`,
+    "도넛의 범례는 카테고리 목록이다 — 줄마다(44 이상) 색 네모 10 + 이름 14 + % 14 · fg-neutral-subtle + 금액 14 · 700 + \"원\". 하위 카테고리가 있는 줄(식비 · 쇼핑 · 생활)만 누르는 줄이다(통계의 카테고리 → 하위로 — 호버 · 누름 바탕). 가운데는 합계 16 / 22 · 700 + 위 라벨 12 · fg-neutral-subtle — 돈은 가운데서도 줄이지 않는다(\"73.3만\" 이 아니라 원까지). 조각 사이는 0, 두께는 지름 ÷ 10 + 6 을 정수로 반올림한다(2026-10-15 사용자 결정 — 160 → 22 · 120 → 18 · 180 → 24, 문턱 없이 고르게 — 아래 줄). 폰의 120 · 18 은 가운데에 \"1,240,000원\" 이 들어가지 않아 가운데 글을 빼고 목록 위에 합계를 둔다(오른쪽). 색은 저장된 색이 먼저(식비 blue · 교통 green · 쇼핑 orange · 경조사 red · 주거 violet · 생활 pink), 색이 없는 항목은 그 차트에서 아직 쓰지 않은 색부터 배정 순서로 받는다 — 구독 indigo · 의료 yellow · 문화 brown(red 는 경조사가 써서 건너뛴다). 항목이 10개를 넘으면 상위 9 + 회색 \"기타\"(선물 · 기부)로 묶는다 — 회색은 \"기타\" 전용이다. 차트 상자는 role=\"img\" + 요약 이름(\"10월 카테고리별 지출, 합계 1,240,000원\"), 목록 범례가 글로 읽히는 대체다.",
+    `${samples([sample("데스크톱 — 160 · 22 · 가운데 합계", "ChartDonutCenter · ChartDonutLegend(9 + 기타)", wide(floor(donutDesk, "pdata-floor--donut")))], WIDE)}${samples([sample("폰 — 120 · 18 · 목록 위 합계", "가운데에 들어가지 않으면 가운데 글을 뺀다", donutPhone)], NEXT)}${samples([sample("두께 = 지름 ÷ 10 + 6", "112 · 120 · 140 · 160 · 176 · 180 — chartDonutRadii(지름)", wide(donutSizes))], WIDE)}${status("data-pchart-cat-status", "식비 · 쇼핑 · 생활 줄을 눌러 보세요.")}`,
   );
 
   // 13. 열지도 — 칸 117(1280) 원까지 11 · 700 · 단계마다 글자색 · 81(1024) · 35(폰) 색만 · 툴팁 · 화살표 키. 가장 큰 칸 고리 없음
@@ -8063,7 +8080,7 @@ export function renderDataGallery(brand) {
   const slPanel = panel(
     "Searchable List — 검색 시트: 밑줄 검색칸 · 분류 머리 · 로고 타일 40 + 라디오 · 직접",
     "스크롤만으로 찾기 어려운 긴 목록(은행 · 증권사 · 카드 상품 · 사람)에서 하나를 고르는 묶음이다 — 대개 Input Button 이 여는 검색 시트(1280 미만) · 팝오버(이상)의 내용이다. 검색칸은 Input 의 밑줄형이다(화면에 입력이 하나뿐인 목록 위 검색 — 상자형 52 는 두지 않는다) — large 40(글 18 / 24 · 앞 돋보기 24 · 지우기 22, 누르는 영역 44), 아래 1px stroke-neutral-weak 가 치는 동안 2px stroke-neutral-contrast, 모서리 · 좌우 여백 없음, 이름 \"검색\" · placeholder \"은행 이름 검색\", 좌우 24 안이라 돋보기와 줄의 로고 타일이 한 줄에 선다 · 목록이 스크롤해도 위에 붙어 있다. 아래 8 에 결과 — 분류는 List Header mediumWeak(14 · 500 · fg-neutral-subtle — 시중은행 · 인터넷은행 · 지방은행 …, 줄이 남지 않은 분류는 머리째 숨긴다), 줄은 List 의 줄(위아래 12 · 좌우 24 · 제목 16 / 22) + 앞 Logo Tile 40 + 오른쪽 라디오 24(지금 값만 켬 — 고른 줄의 바탕은 칠하지 않는다, 고름은 aria-selected). 키보드는 콤보박스다 — 초점은 늘 검색칸에 있고 ↓ · ↑ 는 결과 사이의 강조만 옮긴다(좌우 6 들어온 bg-layer-default-pressed · 모서리 10 · aria-activedescendant · 분류 머리는 건너뛴다 · 끝에서 멈춘다), Enter 는 강조한 줄을 고른다(시트는 닫힌다 — \"완료\" 를 두지 않는다), Esc 는 검색어가 있으면 지우고 비었으면 닫는다. 줄은 Tab 으로 들어가지 않는다. 결과가 없으면 Result Section medium \"'{검색어}'에 대한 검색 결과가 없어요\" 를 한 번 알린다. 왼쪽 시트는 직접 쳐서 거르고 ↓ ↑ Enter Esc 로 고를 수 있다.",
-    samples([sample("직접 — 계좌 추가의 은행 선택", "SearchableList · SearchableListInput(밑줄 large) · Group · Item(LogoTile 40)", `${liveSheet}${status("data-psl-live-status", "검색칸에 쳐서 거르고 ↓ ↑ Enter 를 눌러 보세요.")}`)], "ptf-samples pdata-samples--sheet"),
+    samples([sample("직접 — 계좌 추가의 은행 선택", "SearchableList · SearchableListInput(밑줄 large) · Group · Item(LogoTile 40)", `${liveSheet}${status("data-psl-live-status", "검색칸에 쳐서 거르고(\"kx 은행\" 처럼 띄어 쳐도 된다) ↓ ↑ Enter 를 눌러 보세요. 마우스를 줄에 올렸다 목록 밖으로 빼면 강조가 지워진다.")}`)], "ptf-samples pdata-samples--sheet"),
   );
 
   const stateBox = (body) => `<div class="pdata-sl-box">${body}</div>`;
@@ -13775,7 +13792,7 @@ export function pageCss() {
     /* 고른 채 막힌 탭(목록 전체가 막혔을 때) — 막대도 전용 색 fg-disabled(tabs.yaml 고름 × disabled) */
     .ptab-list:has(> .ptab[aria-selected="true"]:disabled) > .ptab-indicator,
     .ptab-list:not([data-ptab-ready]) > .ptab[aria-selected="true"]:disabled::after { background: var(--color-fg-disabled); }
-    /* 보조 기술에만 — 알림 점의 "새 소식" · "새 내용"(Tailwind sr-only) */
+    /* 보조 기술에만 — 알림 점의 "새 소식"(Tailwind sr-only) */
     .ptab-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
     /* 내용 칸 — 고른 탭 것만 보인다. 포커스할 것이 없는 칸은 칸이 Tab 을 받는다(tabindex 0) — 키보드에만 안쪽 링 */
     .ptab-panel[hidden] { display: none; }
@@ -14650,6 +14667,15 @@ export function pageCss() {
     .pfb-phone--tabbar > .psnack-region { bottom: calc(max(14px, var(--pnav-safe-bottom, 0px) - 6px) + 66px); }
     .pfb-phone--tabbar > .pfb-phone-body { padding-bottom: calc(max(14px, var(--pnav-safe-bottom, 0px) - 6px) + 66px + var(--spacing-x6)); }
     .pfb-phone--basement { background: var(--color-bg-layer-basement); }
+    /* 화면 키보드가 올라온 폰 — 키보드(260, 그림)가 탭 바를 덮고(스낵바 바로 아래 층) 스낵바는 키보드 위 8(자리의 아래 여백) */
+    .pfb-phone--keyboard > .psnack-region { bottom: 260px; }
+    .pfb-kb { position: absolute; right: 0; bottom: 0; left: 0; z-index: calc(var(--z-snackbar) - 1); box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 10px; height: 260px; padding: 8px 4px 16px; background: var(--color-bg-neutral-weak); }
+    .pfb-kb-row { display: flex; justify-content: center; gap: 5px; }
+    .pfb-kb-key { display: grid; flex: 0 1 32px; place-items: center; height: 42px; border-radius: 6px; background: var(--color-bg-layer-default); color: var(--color-fg-neutral); font-size: 17px; }
+    .pfb-kb-key--wide { flex-basis: 64px; font-size: 13px; }
+    .pfb-kb-key--space { flex-basis: 160px; font-size: 13px; }
+    .pfb-kb-search { display: flex; align-items: center; height: 40px; margin: 0 var(--spacing-global-gutter) var(--spacing-x2); box-shadow: inset 0 -2px 0 var(--color-stroke-neutral-contrast); color: var(--color-fg-neutral); font-size: var(--text-t6); }
+    .pfb-kb-caret { display: inline-block; width: 1.5px; height: 20px; margin-left: 1px; background: var(--color-fg-neutral); }
     .pfb-desk { box-sizing: border-box; width: 100%; max-width: 760px; }
     .pfb-desk--tall { height: 360px; }
     .pfb-phone-head { padding: var(--spacing-x6) var(--spacing-global-gutter) var(--spacing-x4); }
@@ -14760,8 +14786,8 @@ export function pageCss() {
       user-select: none;
       outline: none;
     }
-    /* 알약(::before) · 링(::after) — 모서리 12. 알약은 쉴 때 줄 폭 그대로 투명하고, 호버 · 누름에 좌우 8 들어오며 칠한다(바탕 · 들임이 함께 —
-       menu.tsx 의 PILL · PILL_ON). 링은 늘 좌우 8 들인 알약 자리다 */
+    /* 알약(::before) · 링(::after) — 모서리 12. 알약은 쉴 때 줄 폭 그대로(모서리 0) 투명하고, 호버 · 누름에 좌우 0 → 8 들어오며 모서리 0 → 12 로
+       둥글어지고 칠한다 — 150ms(바탕 · 들임 · 모서리가 함께, Q-009-3 B — menu.tsx 의 PILL · PILL_ON). 링은 늘 좌우 8 들인 알약 자리다 */
     .pmenu-item::before,
     .pmenu-item::after {
       content: "";
@@ -14773,17 +14799,19 @@ export function pageCss() {
     }
     .pmenu-item::before {
       inset-inline: 0;
+      border-radius: 0;
       background: transparent;
       transition:
         background-color var(--motion-duration-color-transition) var(--motion-ease-easing),
-        inset var(--motion-duration-color-transition) var(--motion-ease-easing);
+        inset var(--motion-duration-color-transition) var(--motion-ease-easing),
+        border-radius var(--motion-duration-color-transition) var(--motion-ease-easing);
     }
     @media (hover: hover) {
-      .pmenu-item:not([aria-disabled="true"]):hover::before { inset-inline: var(--spacing-x2); background: var(--color-bg-layer-floating-pressed); }
+      .pmenu-item:not([aria-disabled="true"]):hover::before { inset-inline: var(--spacing-x2); border-radius: var(--radius-r3); background: var(--color-bg-layer-floating-pressed); }
     }
     .pmenu-item:not([aria-disabled="true"]):active::before,
     .pmenu-item.pmenu-item--hover::before,
-    .pmenu-item.pmenu-item--pressed::before { inset-inline: var(--spacing-x2); background: var(--color-bg-layer-floating-pressed); }
+    .pmenu-item.pmenu-item--pressed::before { inset-inline: var(--spacing-x2); border-radius: var(--radius-r3); background: var(--color-bg-layer-floating-pressed); }
     /* 키보드 링 — 키보드로 옮긴 줄에만 알약 자리 안쪽 2px(바탕은 칠하지 않는다). 마우스로 연 메뉴의 초점에는 그리지 않는다 */
     .pmenu-item:focus-visible::after,
     .pmenu-item.pmenu-item--focus::after { outline: 2px solid var(--pmenu-focus-ring); outline-offset: -2px; }
@@ -15039,6 +15067,8 @@ export function pageCss() {
     .pmenu-page-head > .pov-page-title { margin-bottom: 0; padding: 0; }
     .pov-frame--desktop .pmenu-page-head { padding: 0; }
     .pmenu-card-head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-x3); padding: var(--spacing-x1) var(--spacing-global-gutter); font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; color: var(--color-fg-neutral); }
+    /* 화면 끝의 ⓘ — 화면 여백 없이 왼쪽 끝 0 에 붙인다(help-bubble.md "위치" 의 예) */
+    .pmenu-lead.pbub-edge-lead { padding-left: 0; }
     .pmenu-lead { display: flex; align-items: center; gap: var(--spacing-x1); margin-top: var(--spacing-x4); padding: 0 var(--spacing-global-gutter); font-family: var(--font-sans); font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 500; color: var(--color-fg-neutral); }
     .pov-frame--desktop .pmenu-lead { padding: 0; }
     .pmenu-reason { display: flex; flex-direction: column; align-items: flex-start; gap: var(--spacing-x1_5); }
@@ -15058,6 +15088,11 @@ export function pageCss() {
     .pbub-demo { display: inline-grid; place-items: center; min-height: 76px; padding-bottom: 8px; }
     .pbub-demo > .pbub { position: relative; left: auto; top: auto; }
     .pbub-na { font-size: var(--text-caption); line-height: 1.4; color: var(--color-text-tertiary); }
+    /* 열림 알림 줄 — 말풍선을 열면 보조 기술이 읽는 글(status · polite)을 보여 준다. 닫히면 비고 "—" 만 남는다 */
+    .pbub-said { display: flex; flex-wrap: wrap; gap: var(--spacing-x1) var(--spacing-x2); margin: var(--spacing-x3) 0 0; font-size: var(--text-caption); line-height: 1.4; color: var(--color-text-tertiary); }
+    .pbub-said-label { font-weight: 600; }
+    .pbub-said-text { color: var(--color-fg-neutral); }
+    .pbub-said-text:empty::before { content: "—"; color: var(--color-text-tertiary); }
     @media (max-width: 900px) {
       .pmenu-matrix .cb-matrix-row { grid-template-columns: 120px repeat(var(--cb-cols), minmax(216px, 1fr)); }
       .pmsheet-matrix .cb-matrix-row { grid-template-columns: 120px repeat(var(--cb-cols), minmax(0, 1fr)); }
@@ -17380,15 +17415,18 @@ export function pageCss() {
     @media (hover: hover) {
       .pchart-tile.pchart-tile--off:hover { background: var(--color-bg-layer-default-pressed); }
     }
-    .pchart-tile.pchart-tile--off:active,
-    .pchart-tile.pchart-tile--off.pchart-tile--hover,
-    .pchart-tile.pchart-tile--off.pchart-tile--pressed { background: var(--color-bg-layer-default-pressed); }
+    /* 누름은 색 없이 축소만 — 바탕이 이미 켬 · 끔을 말한다(SEED Feedback Color, Q-012-2) */
+    .pchart-tile.pchart-tile--off.pchart-tile--hover { background: var(--color-bg-layer-default-pressed); }
     .pchart-tile:active:not([aria-disabled="true"]),
     .pchart-tile.pchart-tile--pressed { scale: calc(1 - 2 / var(--press-basis)); }
     .pchart-tile:focus-visible,
     .pchart-tile.pchart-tile--focus { outline: 2px solid var(--pdata-ring); outline-offset: 2px; }
-    .pchart-tile[aria-disabled="true"] { cursor: default; }
-    /* 도넛 — 조각 사이 0 · 두께 22(지름 160) · 18(120). 가운데 합계 t5 · 700 + 위 라벨 t2 · fg-neutral-subtle */
+    /* 끌 수 없는 마지막 타일 — 색 그대로 · 커서 금지 · 축소 없음(Q-012-3 C, v106) */
+    .pchart-tile[aria-disabled="true"] { cursor: not-allowed; }
+    /* 도넛 — 조각 사이 0 · 두께 = 지름 ÷ 10 + 6(160 → 22 · 120 → 18). 가운데 합계 t5 · 700 + 위 라벨 t2 · fg-neutral-subtle */
+    .pdata-donut-sizes { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--spacing-x5) var(--spacing-x4); }
+    .pdata-donut-size { margin: 0; display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x1_5); }
+    .pdata-donut-size figcaption { font-size: var(--text-t2); line-height: var(--text-t2--line-height); color: var(--color-fg-neutral-subtle); font-variant-numeric: tabular-nums; }
     .pchart-donut { flex-shrink: 0; width: var(--pchart-donut); height: var(--pchart-donut); }
     .pchart-donut > svg { display: block; }
     .pchart-slice { fill: none; }
@@ -17492,7 +17530,7 @@ export function pageCss() {
     .pheat-value { display: none; font-size: var(--text-t1); line-height: var(--text-t1--line-height); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .pheat-cell--text > .pheat-value { display: block; }
     .pheat-cell.pheat-cell--key { outline: 2px solid var(--pdata-ring); outline-offset: 2px; }
-    .pheat > .pchart-tip { top: 0; left: 0; }
+    .pheat > .pchart-tip { position: fixed; top: 0; left: 0; z-index: var(--z-floating); }
     .pchart-swatch--heat-0 { background: var(--color-bg-neutral-weak); }
     .pchart-swatch--heat-1 { background: color-mix(in srgb, var(--pheat-brand) 18%, var(--pheat-surface)); }
     .pchart-swatch--heat-2 { background: color-mix(in srgb, var(--pheat-brand) 35%, var(--pheat-surface)); }
@@ -17508,10 +17546,13 @@ export function pageCss() {
     .psl--inline .psl-field { background: var(--color-bg-layer-default); }
     .psl-results { display: flex; flex-direction: column; }
     .psl-option { position: relative; display: flex; cursor: pointer; user-select: none; }
-    .psl-option::before { content: ""; position: absolute; inset-block: 0; inset-inline: var(--spacing-x1_5); border-radius: var(--radius-r2_5); background: transparent; pointer-events: none; }
+    /* 강조 바탕 — 줄 폭 전체(0 · 모서리 0)에서 짚으면 좌우 6 · 모서리 10 으로 들어오며 150ms 에 색과 함께(Menu 알약 · List — Q-009-3 B).
+       화살표로 옮기는 동안(.psl-results[data-hl-source=keyboard])은 전환 없이 바로 */
+    .psl-option::before { content: ""; position: absolute; inset-block: 0; inset-inline: 0; border-radius: 0; background: transparent; pointer-events: none; transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing), inset var(--motion-duration-color-transition) var(--motion-ease-easing), border-radius var(--motion-duration-color-transition) var(--motion-ease-easing); }
+    .psl-results[data-hl-source="keyboard"] .psl-option::before { transition: none; }
     .psl-option.psl-option--hl::before,
     .psl-option.psl-option--pressed::before,
-    .psl-option:not(.psl-option--skeleton):active::before { background: var(--color-bg-layer-default-pressed); }
+    .psl-option:not(.psl-option--skeleton):active::before { inset-inline: var(--spacing-x1_5); border-radius: var(--radius-r2_5); background: var(--color-bg-layer-default-pressed); }
     .psl-option-content { position: relative; display: flex; align-items: center; width: 100%; box-sizing: border-box; padding: var(--spacing-x3) var(--spacing-global-gutter); transition: scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale); }
     .psl-option.psl-option--pressed > .psl-option-content,
     .psl-option:not(.psl-option--skeleton):active > .psl-option-content { scale: calc(1 - 2 / var(--press-basis, 90)); }
@@ -17581,7 +17622,6 @@ export function pageCss() {
     .pswipe-action:focus-visible,
     .pswipe-action.pswipe-action--focus { outline: 2px solid var(--pdata-ring); outline-offset: -2px; }
     .pswipe-action:disabled { cursor: not-allowed; --pswipe-badge: var(--color-bg-disabled); --pswipe-icon: var(--color-fg-disabled); --pswipe-label: var(--color-fg-disabled); }
-    .pswipe-action:disabled .pswipe-badge { box-shadow: none; }
     .pswipe-more::before { content: ""; position: absolute; inset: -2px; }
     @media (prefers-reduced-motion: reduce) {
       .pswipe-row { transition: none; }
@@ -20271,7 +20311,8 @@ function renderHtml(brandName, css, tokens, sourceFile) {
     // 누름 배율의 기준 = max(높이, 폭 ÷ 4, 24) — 줄 폭이 놓인 자리마다 달라 누르는 순간(포인터 · 키) 재서 --press-basis 로 넘긴다. 그 순간을 멈춘 누름 줄은 그릴 때 잰다.
     // 말풍선 자리(Floating UI 의 offset · flip · shift · arrow · size) — 놓인 틀(.pov-viewport)이 경계다. 바라는 쪽(data-pbub-side — 기본 위)에 트리거와 12(화살표 8 + 4)
     // 떨어뜨리고, 그쪽이 모자라면(가장자리 16 을 넘으면) 반대편으로 뒤집는다. 가로는 트리거 가운데에 맞추고 틀 가장자리와 16 을 남기게 민다 — 틀이 좁으면 폭을 그만큼 줄인다.
-    // 화살표는 트리거 가운데를 가리키되 말풍선 모서리와 14 를 남긴다. 틀 폭이 바뀌거나 글꼴이 들어오면 다시 잰다.
+    // 화살표는 늘 트리거 가운데를 가리키고 말풍선 모서리와 14 를 남긴다 — 화면 끝의 트리거면 말풍선을 트리거 쪽으로 더 밀어 가장자리 16 보다
+    // 붙인다(하한 없이 0 까지 — help-bubble.md "위치", 2026-10-15 Q-004-1). 틀 폭이 바뀌거나 글꼴이 들어오면 다시 잰다.
     // data-pmenu-trigger 메뉴 — 누르기 · Enter · Space · ↓ 는 열고 첫 줄로(마우스로 열면 메뉴에 초점만 두고 링이 없다), ↑ 는 마지막 줄로 연다. 열린 메뉴는 ↑ ↓(끝에서 처음으로 돈다) ·
     // Home · End · 글자(그 글자로 시작하는 줄)로 옮기고 막힌 줄은 건너뛴다. 줄 누르기 · Enter · Space 는 닫고 초점을 트리거로 돌려준다(막힌 줄은 아무 일도 없다).
     // Esc 도 같고, Tab 은 닫고 다음 요소로 간다. 바깥을 누르면 닫는다. 마우스를 올린 줄은 알약만 칠하고(CSS) 키보드 위치는 옮기지 않는다. 아래가 모자라면 위로 연다.
@@ -20308,7 +20349,10 @@ function renderHtml(brandName, css, tokens, sourceFile) {
         var side = want === "top" ? (fitsAbove || !fitsBelow ? "top" : "bottom") : (fitsBelow || !fitsAbove ? "bottom" : "top");
         var cx = t.left + t.width / 2 - b.left;
         var x = Math.max(Math.min(cx - w / 2, b.width - EDGE - w), EDGE);
-        var ax = Math.min(Math.max(cx - x, ARROW), w - ARROW);
+        // 화살표 가운데가 말풍선 끝에서 20(모서리 14 + 화살표 폭의 반 6) 안쪽에 오게 — 화살표가 아니라 말풍선이 비킨다
+        if (cx - x < ARROW) x = cx - ARROW;
+        else if (cx - x > w - ARROW) x = cx - (w - ARROW);
+        var ax = cx - x;
         bub.style.left = Math.round(x) + "px";
         bub.style.top = Math.round(side === "top" ? above : below) + "px";
         bub.style.setProperty("--pbub-arrow-x", Math.round(ax) + "px");
@@ -20432,11 +20476,21 @@ function renderHtml(brandName, css, tokens, sourceFile) {
 
       // 말풍선(Help Bubble)
       function triggerFor(bub) { return document.querySelector('[data-pbub-trigger="' + bub.id + '"]'); }
+      // 열림 알림 — 초점은 트리거에 둔 채 제목 · 설명을 status 자리에 넣는다(help-bubble.tsx 의 useOpenAnnouncement). 닫히면 비운다
+      function say(bub, open) {
+        var st = document.querySelector("[data-pbub-status]");
+        if (!st || bub.getAttribute("role") !== "dialog") return;
+        st.textContent = "";
+        if (!open) return;
+        var parts = [bub.querySelector(".pbub-title"), bub.querySelector(".pbub-desc")].filter(Boolean).map(function (el) { return el.textContent.trim(); });
+        requestAnimationFrame(function () { st.textContent = parts.join(" "); });
+      }
       function showBubble(bub) {
         bub.hidden = false;
         bub.setAttribute("data-state", "open");
         place(bub);
         animate(bub, true);
+        say(bub, true);
         var trigger = triggerFor(bub);
         if (trigger) { trigger.setAttribute("aria-expanded", "true"); trigger.setAttribute("aria-controls", bub.id); trigger.setAttribute("data-state", "open"); }
       }
@@ -20445,6 +20499,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
         bub.hidden = true;
         bub.setAttribute("data-state", "closed");
         animate(bub, false);
+        say(bub, false);
         var trigger = triggerFor(bub) || document.getElementById(bub.getAttribute("data-pbub-for"));
         var toggle = triggerFor(bub);
         if (toggle) { toggle.setAttribute("aria-expanded", "false"); toggle.removeAttribute("aria-controls"); toggle.setAttribute("data-state", "closed"); }
@@ -20644,7 +20699,8 @@ function renderHtml(brandName, css, tokens, sourceFile) {
           var goal = e.key === "ArrowUp" ? at - 1 : e.key === "ArrowDown" ? at + 1 : e.key === "Home" ? at - value : e.key === "End" ? at + (n - 1 - value) : null;
           if (goal === null) return;
           e.preventDefault();
-          glide(col, clamp(col, goal), 160);
+          // 키 이동 — 누르기와 같은 200ms(d4 · ease-out cubic — Q-005 A), 누르고 있으면(반복) 바로바로
+          glide(col, clamp(col, goal), e.repeat ? 0 : 200);
         });
         // 끌기 · 누르기 — 손가락 · 마우스 모두 포인터로 받는다(touch-action none)
         col.addEventListener("pointerdown", function (e) {
@@ -20667,10 +20723,10 @@ function renderHtml(brandName, css, tokens, sourceFile) {
             col.removeEventListener("pointerup", up);
             col.removeEventListener("pointercancel", up);
             if (!moved) {
-              // 보이는 항목 누르기 — 그 항목을 가운데로
+              // 보이는 항목 누르기 — 그 항목을 가운데로 200ms(d4 · ease-out cubic — 2026-10-15 Q-005 A, 칸 수와 관계없이)
               var rect = col.getBoundingClientRect();
               var steps = Math.round((ev.clientY - (rect.top + rect.height / 2)) / h);
-              glide(col, clamp(col, Math.round(col._raw) + steps), steps ? 220 + 40 * Math.min(3, Math.abs(steps)) : 0);
+              glide(col, clamp(col, Math.round(col._raw) + steps), steps ? 200 : 0);
               return;
             }
             // 놓을 때 속도(최근 100ms) — 최대 3칸 더 간다. 멈췄다가 놓으면 가까운 칸으로
@@ -22104,16 +22160,25 @@ function renderHtml(brandName, css, tokens, sourceFile) {
           tip.appendChild(head);
           tip.appendChild(row);
           tip.hidden = false;
-          var hb = heat.getBoundingClientRect(), cb = cell.getBoundingClientRect();
-          var w = tip.offsetWidth, h = tip.offsetHeight;
-          var left = Math.min(Math.max(cb.left - hb.left + cb.width / 2 - w / 2, 0), Math.max(hb.width - w, 0));
-          var top = cb.top - hb.top - h - 8;
-          if (top < 0) top = cb.bottom - hb.top + 8;
-          tip.style.left = left + "px";
-          tip.style.top = top + "px";
+          position(cell);
           say(heat, cell.getAttribute("data-pheat-head") + " — 지출 " + cell.getAttribute("data-pheat-value"));
         }
+        function position(cell) {
+          // 칸 위 8 · 칸 가운데 — 화면에 자리가 모자랄 때만 아래 8, 좌우는 화면 끝에서 8 안(Q-012-6 — 열지도 상자가 아니라 화면 기준)
+          //   떠 있는 층(position: fixed)이라 카드 · 가로 스크롤 상자에 갇히지 않는다 — 첫 줄 칸도 카드 머리 위로 뜬다
+          var cb = cell.getBoundingClientRect();
+          var w = tip.offsetWidth, h = tip.offsetHeight;
+          var vw = document.documentElement.clientWidth;
+          var left = Math.min(Math.max(8, cb.left + cb.width / 2 - w / 2), vw - 8 - w);
+          var top = cb.top - 8 - h >= 8 ? cb.top - h - 8 : cb.bottom + 8;
+          tip.style.left = left + "px";
+          tip.style.top = top + "px";
+        }
         function hide() { if (active) active.classList.remove("pheat-cell--key"); active = null; tip.hidden = true; }
+        // 스크롤 · 크기가 바뀌면 지금 칸을 따라간다(레시피와 같다)
+        function follow() { if (active && !tip.hidden) position(active); }
+        window.addEventListener("scroll", follow, true);
+        window.addEventListener("resize", follow);
         var frozenAt = heat.getAttribute("data-pheat-tip");
         if (frozenAt) {
           var rc = frozenAt.split(",");
@@ -22155,6 +22220,10 @@ function renderHtml(brandName, css, tokens, sourceFile) {
         function visible() {
           return Array.prototype.slice.call(list.querySelectorAll(".psl-option")).filter(function (o) { return !o.hidden && !o.closest(".psl-group[hidden]"); });
         }
+        // 거르는 규칙 — NFC · 대소문자 · 공백 무시, 이름 · 별칭 중 하나에 들어 있으면(searchable-list.yaml results.filter)
+        function fold(s) { return String(s == null ? "" : s).normalize("NFC").toLowerCase().replace(/\\s+/g, ""); }
+        // 강조를 짚은 손 — keyboard(↓ ↑ — 전환 없이) · pointer(마우스 — 목록을 떠나면 지운다)
+        function source(by) { list.setAttribute("data-hl-source", by); }
         function highlight(o, scroll) {
           if (hi) hi.classList.remove("psl-option--hl");
           hi = o || null;
@@ -22166,11 +22235,12 @@ function renderHtml(brandName, css, tokens, sourceFile) {
         }
         function filter() {
           var q = input.value.trim();
+          var k = fold(q);
           var any = 0;
           list.querySelectorAll(".psl-group").forEach(function (g) {
             var n = 0;
             g.querySelectorAll(".psl-option").forEach(function (o) {
-              var hit = !q || o.getAttribute("data-psl-text").indexOf(q) >= 0;
+              var hit = !k || [o.getAttribute("data-psl-text")].concat((o.getAttribute("data-psl-keys") || "").split("|")).some(function (t) { return t && fold(t).indexOf(k) >= 0; });
               o.hidden = !hit;
               if (hit) n++;
             });
@@ -22199,6 +22269,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
             if (!opts.length) return;
             var i = hi ? opts.indexOf(hi) : -1;
             var n = e.key === "ArrowDown" ? (i < 0 ? 0 : Math.min(opts.length - 1, i + 1)) : (i < 0 ? opts.length - 1 : Math.max(0, i - 1));
+            source("keyboard");
             highlight(opts[n], true);
             say(root, "강조 — " + opts[n].getAttribute("data-psl-text") + " · 초점은 검색칸");
           } else if (e.key === "Enter") {
@@ -22210,7 +22281,9 @@ function renderHtml(brandName, css, tokens, sourceFile) {
             else say(root, "Esc — 검색어가 비어 시트를 닫는다(값은 그대로)");
           }
         });
-        list.addEventListener("pointermove", function (e) { if (e.pointerType !== "mouse") return; var o = closest(e, ".psl-option"); if (o && o !== hi) highlight(o, false); });
+        list.addEventListener("pointermove", function (e) { if (e.pointerType !== "mouse") return; var o = closest(e, ".psl-option"); if (o && o !== hi) { source("pointer"); highlight(o, false); } });
+        // 마우스가 목록을 떠나면 마우스로 짚은 강조를 지운다 — 키보드로 짚은 강조는 남는다(Q-007-2 B)
+        list.addEventListener("pointerleave", function (e) { if (e.pointerType !== "mouse" || !hi || list.getAttribute("data-hl-source") !== "pointer") return; highlight(null); say(root, "마우스가 목록을 떠났다 — 마우스 강조를 지웠다(키보드 강조는 남는다)"); });
         list.addEventListener("mousedown", function (e) { if (closest(e, ".psl-option")) e.preventDefault(); });
         list.addEventListener("click", function (e) { var o = closest(e, ".psl-option"); if (!o) return; pick(o); input.focus(); });
       });

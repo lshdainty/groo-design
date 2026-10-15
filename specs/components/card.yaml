@@ -41,7 +41,7 @@ slots:
 variants:
   variant:
     default: 바닥 위 흰 면 + 1px 테두리 — 모든 카드(기본)
-    hero: 순자산 — 브랜드 채움 · 흰 글자. Desk 홈 · 자산의 한 자리만
+    hero: 순자산 — 브랜드 채움 · 흰 글자. Desk 홈 · 자산의 한 자리만. 본문은 늘 content — list · accordion 과 곱하지 않는다(순자산 카드는 목록을 담지 않는다 — Q-011-7)
   press:
     none: 누르지 않는 카드 — 안의 버튼 · 줄이 각자 눌린다(기본)
     whole: 카드 전체가 한 곳으로 — 누름 색 + 2px 축소
@@ -105,7 +105,7 @@ rules:
         foreground: $color-fg-neutral-subtle
         iconSize: { value: 16px, note: "lucide chevron-right — 글 뒤 2" }
         gap: $spacing-x0_5
-        touchTarget: { value: 44 × 44, note: "보이는 32 위아래로 6 씩 · 옆은 글 폭 + 여백(44 보다 좁으면 44). AA ✓ · AAA ✓" }
+        touchTarget: { value: 44 × 44, note: "보이는 32 위아래로 6 씩 · 옆은 글 폭 + 여백(44 보다 좁으면 44). AA ✓ · AAA ✓. 앱 — 보이는 자리를 바꾸지 않고 누르는 영역만 위아래 6 넓힌다(부모 상자 밖도 받는다 — 머리 줄 높이 · 여백은 그대로). 6B 44 × 44 의 앱 풀이 — Q-011-8" }
       content:
         gap: { value: $spacing-x3, note: "본문 안 요소 사이 기본 12(spacing-component-default)" }
       list:
@@ -123,7 +123,7 @@ rules:
         typography: $text-t3
         fontWeight: 500
         numerals: tabular-nums
-        marginTop: { value: $spacing-x1, note: "숫자 ↔ 증감 줄" }
+        marginTop: { value: $spacing-x1, note: "지표 카드의 숫자 ↔ 증감 줄(지표 묶음 CardStat 이 준다). 순자산 카드 안에서는 0 — 위 4 는 heroDetail 이 준다" }
       deltaText:
         typography: $text-t3
         fontWeight: 400
@@ -234,6 +234,7 @@ rules:
         gradientEnd: { value: $color-brand-900, dark: $color-brand-300-dark, note: "그라디언트의 끝(오른쪽 아래) — 라이트 brand-900 #002460(지금 #012B68 에 가장 가까운 팔레트 단계, ΔE00 2.4) · 다크 brand-300-dark #1F3A69. 다크도 짙은 채움이다" }
         borderWidth: { value: 0px, note: "테두리 없음 — 채움이 경계다" }
         padding: { value: $spacing-x6, note: "24 — 다른 카드와 같다" }
+        paddingBottom: { value: $spacing-x6, note: "24 — 본문이 늘 content 라 목록 카드의 아래 12 를 받지 않는다(Q-011-7)" }
       heroGlow:
         size: { value: 240px, note: "오른쪽 위 장식 빛 — 원의 오른쪽 −40 · 위 −80(카드 밖으로 나간 부분은 모서리가 자른다)" }
         background: { value: $color-static-white / 22%, note: "가운데 흰 22% → 지름의 70% 에서 투명. 장식이라 보조 기술에 숨긴다 — 흰 글자 대비는 이 빛 위에서도 4.5 이상(가장 낮은 자리 4.88)" }
@@ -252,6 +253,11 @@ rules:
         fontWeight: 400
         foreground: { value: $color-static-white, note: "증감도 흰 글자 + ▲ · ▼ — 빨강 · 파랑은 브랜드 채움 위 1.66 · 1.65(라이트)라 읽히지 않는다" }
         marginTop: $spacing-x1
+      delta:
+        foreground: { value: $color-static-white, note: "방향과 상관없이 흰 ▲ · ▼ + 값(16A) — 증감 방향 색의 하나뿐인 예외. 빨강 · 파랑은 브랜드 채움 위 1.66 · 1.65 라 읽히지 않는다(Q-011-3)" }
+        marginTop: { value: 0px, note: "위 4 는 heroDetail 이 준다" }
+      deltaText:
+        foreground: { value: $color-static-white, note: "기준 글도 흰 글자 — 흐리게(불투명도) 두지 않는다(v106)" }
 
 motion:
   "누름 — 면":

@@ -33,7 +33,8 @@ export function SwipeTrayView({ look, mode = 'auto', actions, height, rowLabel, 
         const badgeBg = disabled ? dcv(look.disabled.badge, mode) : bad?.darkSolid && a.kind !== 'neutral' ? (a.kind === 'destructive' ? `var(--p-bg-critical-solid)` : `var(--p-bg-informative-solid)`) : dcv(k.badge, mode);
         const iconC = disabled ? dcv(look.disabled.icon, mode) : bad?.darkSolid && a.kind !== 'neutral' ? '#FFFFFF' : dcv(k.icon, mode);
         const labelC = disabled ? dcv(look.disabled.label, mode) : bad?.blueLabel && a.kind === 'primary' ? dcv(look.kinds.primary.badge, mode) : dcv(k.label, mode);
-        const border = k.border && !bad?.noBorder && !disabled ? `inset 0 0 0 ${k.border.width}px ${dcv(k.border.color, mode)}` : 'none';
+        // 중립 배지의 안쪽 1px 은 막혀도 남는다 — v106 막힘 테두리 색이 stroke-neutral-weak(Q-012-4)
+        const border = k.border && !bad?.noBorder ? `inset 0 0 0 ${k.border.width}px ${dcv(k.border.color, mode)}` : 'none';
         const I = ICONS[a.icon] ?? Pencil;
         const first = i === 0;
         return (

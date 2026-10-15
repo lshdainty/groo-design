@@ -22,7 +22,7 @@
 | ⓑ Segment | 칸 — 누르는 자리. 모든 칸이 같은 폭 · 같은 높이다. |
 | ⓒ Label | 글 — 짧게. 길면 단어 단위로 줄을 바꾸고 모든 칸이 가장 높은 칸에 맞춘다. |
 | ⓓ Indicator | 고른 알약 — 고른 칸 뒤에 깔리고, 다른 칸을 고르면 미끄러져 옮긴다. |
-| ⓔ Notification | 알림 점 — 새 내용이 있는 칸에만, 글 오른쪽 위. |
+| ⓔ Notification | 알림 점 — 새 소식이 있는 칸에만, 글 오른쪽 위. |
 
 [표: 부위](segmented-control.yaml#slots)
 
@@ -108,7 +108,7 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 링 2px · 띄움 2px — 칸 바깥 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 칸 34 × 칸 폭 ✓(폰 4개면 칸 폭 76) |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 칸 34 ✗(SEED 와 같다) |
-| **ARIA** | 트랙 `role="radiogroup"` + `aria-label`, 칸은 라디오(`aria-checked`) — 고른 칸만 `tabindex="0"`. 막힌 칸 `disabled`. 알림 점은 보조 기술에 "새 내용" 을 덧붙인다(점만으로 알리지 않는다) |
+| **ARIA** | 트랙 `role="radiogroup"` + `aria-label`, 칸은 라디오(`aria-checked`) — 고른 칸만 `tabindex="0"`. 막힌 칸 `disabled`. 알림 점은 보조 기술에 "새 소식" 을 덧붙인다(점만으로 알리지 않는다 — Tabs · Chip Tabs · 하단 탭 바와 같은 말, 2026-10-15 사용자 결정 — 구현 세션 질문 Q-010-4, 안 A) |
 
 ## Do / Don't
 
@@ -139,9 +139,13 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 - **고른 알약의 테두리를 짙게** — SEED 의 옅은 1px(`stroke.neutral-muted`)는 트랙과 1.14:1 이라 고른 칸이 WCAG 1.4.11 에 못 미친다. 짙은 1px `stroke-neutral-contrast`(15.20 · 10.32:1)로 바꿨다 — Chip(Outline Weak 고름) · Select Box 의 고른 표시와 같은 말이다. 고른 채 막히면 `stroke-neutral-solid`(사용자 결정 2026-10-02).
 - **안 고른 칸을 올리거나 누르는 동안 글을 `fg-neutral-muted` 로** — 누름 바탕 위 `fg-neutral-subtle` 이 다크에서 3.91:1 이라서다(List 의 강조 줄과 같은 방법).
 - **줄바꿈은 단어 단위**(v114) — SEED 는 글자 단위(`overflow-wrap: break-word`)다.
-- **알림 점은 브랜드 글자색**(`fg-brand`)이고, 보조 기술에 "새 내용" 을 덧붙인다. SEED 의 `bg.brand-solid` 짝은 porest 다크에서 트랙과 1.33 · 2.20:1 이라 쓰지 않는다. 고른 칸에는 점을 그리지 않는다.
+- **알림 점은 브랜드 글자색**(`fg-brand`)이고, 보조 기술에 "새 소식" 을 덧붙인다. SEED 의 `bg.brand-solid` 짝은 porest 다크에서 트랙과 1.33 · 2.20:1 이라 쓰지 않는다. 고른 칸에는 점을 그리지 않는다.
 
 ## Migration notes
+
+### 2026-10-15 — 알림 점은 "새 소식"
+
+구현 세션 질문 Q-010-4 — 알림 점에 덧붙이는 글이 Tabs 는 "새 소식", Segmented Control 은 "새 내용" 으로 갈려 있었다. 사용자가 "새 소식" 하나로 골랐다(안 A — 컴포넌트마다 따로(B) · "새 내용" 으로 맞추기(C)는 고르지 않았다). 웹은 `segmented-control.tsx` 의 숨은 글을 바꾸고, 앱은 호출부가 `notificationLabel` 로 넘기던 글을 컴포넌트가 갖는다("새 소식").
 
 ### 2026-10-02 — 새로 둔다(SEED Segmented Control)
 

@@ -44,7 +44,7 @@
 |---|---|
 | `enabled` | 투명 바탕 · 안쪽 1px `stroke-neutral-weak` |
 | `pressed` | 바탕 `bg-layer-default-pressed` + 값 · 붙이개 2px 거리 축소(테두리 · 바탕은 그대로). 마우스는 호버에 같은 바탕 |
-| `focused` | 키보드 포커스에만 바깥 링 2px · 띄움 2px `stroke-focus-ring` |
+| `focused` | 키보드 포커스에만 바깥 링 2px · 띄움 2px `stroke-focus-ring` — 링은 상자 모서리를 따른다(바깥 반지름 = 상자 + 4, large 16 · medium 12 — DESIGN.md State) |
 | `invalid` | 안쪽 2px `stroke-critical-solid` — 눌러도 그대로. 오류 글은 Field 가 칸 아래에 |
 | `disabled` | 바탕 `bg-disabled` · 글자 · 아이콘 `fg-disabled`. 흐리게 하지 않는다(v106) |
 | `readonly` | 바탕 `bg-disabled` · 값은 진한 글자 그대로. 포커스는 되고 열리지 않는다 |

@@ -151,7 +151,7 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 
 | 인터랙션 | 동작 |
 |---|---|
-| 열기 | 300ms 로 아래에서 올라온다. 처음 초점은 시트(본문 위)에 간다. |
+| 열기 | 300ms 로 아래에서 올라온다. 처음 초점은 시트(본문 위)에 간다 — 내용이 첫 자리를 정하면(검색 시트의 검색칸 · 아이콘 고르기의 고른 칸) 시트가 그리로 넘겨준다(`onOpenAutoFocus`, 열린 뒤 다시 옮기지 않는다 — 2026-10-15 구현 세션 질문 Q-007-3 정리). |
 | 닫기 버튼 · `Esc` · 뒤로 가기 | 닫는다. 입력 폼에 바뀐 값이 있으면 먼저 묻는다. |
 | 바깥(딤) 누르기 | 조회 · 고르기 시트는 닫는다. **입력 폼은 무시한다.** |
 | 아래로 끌기 | 조회 · 고르기 시트는 놓을 때 빠르게(0.4px/ms 넘게) 끌었거나 높이의 25% 이상 내려왔으면 닫고, 아니면 제자리로 돌아간다. 열린 뒤 0.5초는 끌리지 않는다. 본문을 스크롤하는 중이면 끌지 않는다. **입력 폼은 끌리지 않는다.** |
@@ -204,6 +204,10 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 시트 `z-modal-content` 101) — 그 위에 Popover(L3) · Alert Dialog(L5)가 뜬다.
 
 ## Migration notes
+
+### 2026-10-15 — 첫 초점은 내용이 정할 수 있다
+
+구현 세션 질문 Q-007-3(정리) — "처음 초점은 시트" 와 Searchable List 의 "열면 검색칸에 초점" 이 어긋나 있었다. 끝 모습(검색칸)은 같고, 시트가 `onOpenAutoFocus` 로 내용에 첫 초점을 넘겨주게 적었다 — 검색칸이 스스로 잡은 뒤 한 프레임 뒤에 다시 잡지 않는다(시트를 읽던 낭독기가 끊기지 않게). 앱은 `PBottomSheet` 가 첫 초점 노드를 받는 자리를 둔다.
 
 ### 2026-10-03 — 본문 끝 흐림을 Scroll Fog 로
 

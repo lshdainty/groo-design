@@ -18,11 +18,13 @@ export type SGroup = { label?: string; items: SOption[] };
 export type SearchStatus = 'results' | 'empty' | 'failure' | 'loading';
 export type SearchPart = 'field' | 'header' | 'option' | 'prefix' | 'radio' | 'highlight' | 'title' | 'detail';
 
-// 걸러진 묶음 — 이름 · 별칭에 검색어가 들어 있는 줄만(공백 무시). 줄이 남지 않은 분류는 머리째 숨긴다
+// 거르는 규칙 — NFC 로 맞추고 대소문자 · 공백을 무시해 이름 · 별칭 중 하나에 들어 있으면(searchable-list.yaml results.filter — Q-007-1 C).
+// 초성 검색은 아직 정하지 않았다. 줄이 남지 않은 분류는 머리째 숨긴다
+const fold = (t: string) => t.normalize('NFC').toLowerCase().replace(/\s+/g, '');
 export function filterGroups(groups: SGroup[], q: string) {
-  const k = q.replace(/\s+/g, '').toLowerCase();
+  const k = fold(q);
   if (!k) return groups;
-  return groups.map((g) => ({ ...g, items: g.items.filter((it) => [it.title, it.detailText ?? '', ...(it.keywords ?? [])].some((t) => t.replace(/\s+/g, '').toLowerCase().includes(k))) })).filter((g) => g.items.length > 0);
+  return groups.map((g) => ({ ...g, items: g.items.filter((it) => [it.title, it.detailText ?? '', ...(it.keywords ?? [])].some((t) => fold(t).includes(k))) })).filter((g) => g.items.length > 0);
 }
 
 export type SearchableListProps = {
@@ -233,18 +235,19 @@ export function SearchableListView({
         style={{ position: 'relative', cursor: 'pointer', WebkitTapHighlightColor: 'transparent', ...(first ? marks?.option : undefined) }}
       >
         {first && pins?.option}
-        {/* 강조 바탕 — 좌우 6 들어온 누름 바탕(모서리 10). 화살표로 옮길 때는 전환 없이 */}
+        {/* 강조 바탕 — 줄 폭 전체(0 · 모서리 0)에서 짚으면 좌우 6 · 모서리 10 으로 들어오며 150ms 에(Menu 알약 · List — Q-009-3 B).
+            화살표로 옮길 때는 전환 없이 */}
         <span
           aria-hidden
           style={{
             position: 'absolute',
             top: 0,
             bottom: 0,
-            left: look.highlight.insetX,
-            right: look.highlight.insetX,
-            borderRadius: look.highlight.radius,
+            left: isHl || isPress ? look.highlight.insetX : 0,
+            right: isHl || isPress ? look.highlight.insetX : 0,
+            borderRadius: isHl || isPress ? look.highlight.radius : 0,
             background: bad?.brandTint && on ? `var(--p-bg-brand-weak)` : isHl || isPress ? hlBg : 'transparent',
-            transition: hlByKey ? 'none' : `background-color ${look.color.duration} ${look.color.easing}`,
+            transition: hlByKey ? 'none' : ['background-color', 'left', 'right', 'border-radius'].map((p) => `${p} ${look.color.duration} ${look.color.easing}`).join(', '),
             ...(first ? marks?.highlight : undefined),
           }}
         />
@@ -376,7 +379,14 @@ export function SearchableListView({
           onClear={() => setHl(null)}
         />
       </div>
-      <div ref={listRef} id={listId} role="listbox" aria-label={ariaLabel} style={{ position: 'relative', overflowY: maxHeight ? 'auto' : undefined, maxHeight, minHeight: 0, display: status === 'results' ? 'flex' : 'none', flexDirection: 'column' }}>
+      <div
+        ref={listRef}
+        id={listId}
+        role="listbox"
+        aria-label={ariaLabel}
+        // 마우스가 목록을 떠나면 마우스로 짚은 강조를 지운다 — 키보드로 짚은 강조는 남는다(Q-007-2 B)
+        onPointerLeave={live ? (e) => e.pointerType === 'mouse' && !hlByKey && setHl(null) : undefined}
+        style={{ position: 'relative', overflowY: maxHeight ? 'auto' : undefined, maxHeight, minHeight: 0, display: status === 'results' ? 'flex' : 'none', flexDirection: 'column' }}>
         {status === 'results' && results()}
       </div>
       {status !== 'results' && results()}

@@ -1,0 +1,112 @@
+# Help Bubble · Tooltip 의 수치 원본 — 구조는 SEED Help Bubble · Help Bubble Tooltip(2026-10-02 사용자 결정, 비교 페이지 7 · 8).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 트리거 옆에 뜨는 짙은 말풍선 하나를 두 가지로 연다(SEED 도 두 컴포넌트가 이 스펙 하나를 쓴다).
+#   press  Help Bubble — 눌러서 연다. 제목 + 설명, 닫기 버튼을 둘 수 있다. 터치에서 도움말이 필요하면 이쪽이다.
+#   hover  Tooltip — 마우스를 올리거나 키보드 초점이 오면 연다. 짧은 설명 한 줄, 닫기 버튼 · 누를 것이 없다.
+#          터치에서는 열리지 않는다 — 그래서 이름(aria-label) · 막힌 이유를 툴팁에만 두지 않는다(tooltip.md).
+# 쓰는 규칙은 help-bubble.md(눌러서) · tooltip.md(마우스 · 키보드)에 있다.
+#
+# SEED 와 다른 자리(help-bubble.md · tooltip.md 의 "SEED 와 다른 점")
+#   - 바탕은 porest bg-neutral-inverted(SEED neutral-solid 의 역할 짝) — 다크에서는 밝은 말풍선에 짙은 글자.
+#   - 닫기 버튼의 누르는 영역 44(SEED 38 — 기초의 "누르는 영역 44").
+#   - Tooltip 은 포인터를 말풍선 위로 옮겨도 닫히지 않는다(WCAG 1.4.13 — SEED 기본은 닫힌다).
+#   - 닫기 버튼의 초점 링은 말풍선 글자색(fg-neutral-inverted) — porest 브랜드 링은 짙은 말풍선 위에서 3:1 에 못 미친다.
+#   - z-index: specs/z-index.md 의 L4(z-tooltip 210) — 팝오버 · 메뉴(L3) 위. SEED 99 는 포털 없이 그린다.
+
+name: HelpBubble
+
+slots:
+  root: 말풍선 — 짙은 바탕, 트리거 쪽에 화살표
+  arrow: 화살표 — 늘 트리거 가운데를 가리킨다
+  title: 제목 — 툴팁은 이것 하나
+  description: 설명 — Help Bubble 에서 제목을 풀어 줄 때만
+  closeButton: 닫기 — Help Bubble 에서만, 오른쪽 위 모서리. 이름 "닫기"
+  focusRing: 키보드 포커스 링(웹)
+
+variants:
+  opens:
+    press: Help Bubble — 트리거를 누르면 열고 닫는다(처음부터 열어 둘 수도 있다)
+    hover: Tooltip — 마우스를 올리면 200ms 뒤, 키보드 초점이 오면 바로 연다. 터치로는 열지 않는다
+  closeButton:
+    hidden: 닫기 버튼 없음 — 트리거 · 바깥을 누르면 닫힌다
+    shown: 닫기 버튼 — Help Bubble 에서만. 닫기 전까지 남겨 둘 안내
+
+defaults:
+  opens: press
+  closeButton: hidden
+
+states:
+  enabled: 열림
+  pressed: 닫기 버튼 누름 — 2px 거리 축소(바탕 없음)
+  focused: 웹 — 키보드 포커스에만 링(닫기 버튼 안쪽)
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        maxWidth: { value: 280px, note: "여백을 포함한 폭 — 한 줄 20자 안팎, 2 ~ 3줄이면 넘지 않는다. 쓸 수 있는 폭(화면 − 양쪽 16)이 더 좁으면 그만큼(SEED 와 같다)" }
+        paddingY: $spacing-x2_5
+        paddingX: $spacing-x3
+        radius: $radius-r3
+        background: { value: $color-bg-neutral-inverted, note: "다크에서는 밝은 말풍선" }
+        shadow: none
+        offset: { value: $spacing-x1, note: "화살표 끝 ↔ 트리거 4(말풍선 몸통과는 12)" }
+        margin: { value: $spacing-x4, note: "화면 가장자리와 최소 16 — 모자라면 반대편으로 뒤집고 옆으로 민다" }
+        zIndex: { value: 210, note: "z-tooltip — specs/z-index.md L4" }
+      arrow:
+        width: 12px
+        height: { value: 8px, note: "끝 모서리 2 — 말풍선과 같은 색. 트리거와 4 는 이 상자의 끝에서 잰다 — 둥근 끝 때문에 그림 끝은 1 더 떨어져 보인다(SEED 와 같다)" }
+        margin: { value: 14px, note: "말풍선 모서리에서 최소 14 — 트리거가 작아 모자라면 말풍선을 민다" }
+      title:
+        typography: { value: $text-t3, note: "단어 단위 줄바꿈(v114) · 줄바꿈 문자는 그대로" }
+        fontWeight: 700
+        foreground: $color-fg-neutral-inverted
+      description:
+        typography: $text-t3
+        fontWeight: 400
+        foreground: $color-fg-neutral-inverted
+        gap: { value: $spacing-x0_5, note: "제목 ↔ 설명" }
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: -2px, note: "닫기 버튼 안쪽" }
+        color: { value: $color-fg-neutral-inverted, note: "말풍선 글자색 — 브랜드 링(stroke-focus-ring)은 짙은 말풍선 위에서 Desk 1.96 · HR 3.24 로 3:1 에 못 미친다" }
+        rootOffset: { value: 2px, note: "닫기 버튼이 없는 말풍선에 Tab 으로 들어오면 말풍선 둘레 바깥 2(모서리를 따라)" }
+        rootColor: { value: $color-stroke-focus-ring, note: "페이지 위에 그려지므로 브랜드 링" }
+
+  # ── 여는 방식 ──────────────────────────────────────────
+  - when: { opens: hover }
+    enabled:
+      root:
+        openDelay: { value: 200ms, note: "마우스 — 키보드 초점은 바로(0). 하나가 열린 뒤 옆 트리거로 옮기면 바로 · 모션 없이" }
+        closeDelay: { value: 100ms, note: "트리거와 말풍선을 모두 벗어난 뒤 — 말풍선 위로 옮겨도 닫히지 않는다(WCAG 1.4.13)" }
+        skipDelay: { value: 300ms, note: "하나가 닫힌 뒤 이 시간 안에 옆 트리거로 옮기면 기다리지 않고 모션 없이 바로 연다" }
+
+  # ── 닫기 버튼 ──────────────────────────────────────────
+  - when: { opens: press, closeButton: shown }
+    enabled:
+      closeButton:
+        size: { value: 38px, note: "투명 상자 — 말풍선 오른쪽 위 모서리에 붙는다(위 0 · 오른쪽 0). 글과 이 상자 사이 4(SEED 와 같다)" }
+        touchTarget: { value: 44 × 44, note: "사방 3 넓힌다(SEED 38)" }
+        iconSize: { value: 14px, note: "lucide x — 위 12 · 오른쪽 12 자리" }
+        radius: { value: $radius-r3, note: "바탕이 없어 초점 링에만 보인다(SEED 와 같다)" }
+        color: $color-fg-neutral-inverted
+    pressed:
+      closeButton:
+        scale: { value: 2px 거리 축소, note: "바탕 없이 아이콘만 — 모션 줄이기면 하지 않는다" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+
+motion:
+  "열림":
+    duration: $motion-duration-d4
+    easing: $motion-ease-enter
+    properties: [scale 0.9 → 1, opacity 0 → 1]
+    note: "화살표 끝을 기준점으로 커진다 — 툴팁이 이어서 열리면 모션 없이 바로"
+  "닫힘":
+    duration: $motion-duration-d4
+    easing: $motion-ease-easing
+    properties: [opacity → 0]
+    note: "크기는 그대로, 투명도만"

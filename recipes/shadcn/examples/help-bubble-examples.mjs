@@ -15,7 +15,8 @@
  * 짜임은 레시피가 그리는 DOM 그대로다 — 트리거 <button data-slot="help-bubble-trigger">(aria-haspopup="dialog" · aria-expanded · 열린 동안
  * aria-controls · data-state) 또는 기준 <button data-slot="help-bubble-anchor">(팝업 ARIA 없음 — 누르면 원래 동작), 말풍선 <div role="dialog"
  * data-slot="help-bubble-content">(aria-labelledby 제목 · aria-describedby 설명) > 글 칸 <div>(제목 <div data-slot="help-bubble-title"> · 설명
- * <div data-slot="help-bubble-description">) · 닫기 <button data-slot="help-bubble-close">(있을 때) · 화살표 자리 <span> > <svg data-slot="help-bubble-arrow">.
+ * <div data-slot="help-bubble-description">) · 닫기 <button data-slot="help-bubble-close">(있을 때) · 화살표 자리 <span> > <svg data-slot="help-bubble-arrow">,
+ * 그리고 트리거 옆의 열림 알림 자리 <span role="status" data-slot="help-bubble-status">(STATUS — 열린 동안 제목 · 설명 글).
  * Radix 가 실행 중에 붙이는 것 중 열림(data-state="open") · 자리(data-side · data-align) · id · tabindex="-1" · 화살표 자리(span 의 left · 그 변
  * 0 · 뒤집기 transform)와 폭 계산이 읽는 자리 변수(--radix-popper-available-width — 미리보기는 틀 폭에서 가장자리 16 씩을 뺀 값)를 그린다.
  * 레시피는 말풍선을 body 끝(portal)에 띄우고 Radix 가 감싼 div(position: fixed)로 트리거 위 12(sideOffset 4 + 화살표 8)에 놓는다 — 미리보기는
@@ -46,7 +47,7 @@ const BUBBLE_DESCRIPTION = "m-0 block whitespace-pre-line text-t3 font-normal";
 
 // 화살표 — 12 × 8, 끝 모서리 2(SEED getHelpBubbleArrowTipPath). BubbleArrow 의 경로 · 클래스
 const ARROW_PATH = "M0,0 H12 L8,6 Q6,8 4,6 Z";
-const ARROW = "block fill-bg-neutral-inverted";
+const ARROW = "visible block fill-bg-neutral-inverted";
 
 // 닫기 — 38 투명 상자를 오른쪽 위 모서리로 당긴다(위 10 · 오른쪽 12) · 아이콘 14 · 글과 4 · 누르는 영역 44. 누르면 2px 축소만, 링은 말풍선 글자색
 const CLOSE = [
@@ -64,6 +65,8 @@ const ROOT_RING = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-
 
 // 글 칸 — 제목 ↔ 설명 2. 닫기 버튼이 있으면 말풍선을 cn(BUBBLE, WITH_CLOSE) 로 가로로 — 글 칸과 닫기가 나란하다
 const TEXT = "flex min-w-0 flex-1 flex-col gap-x0_5";
+// 열림 알림 자리 — HelpBubble 이 트리거 옆에 늘 둔다(화면 밖). 열린 동안 제목 · 설명 글이 들어간다
+const STATUS = "sr-only";
 const WITH_CLOSE = "flex items-start";
 
 // ── button.tsx 의 cva 와 같은 값 — ⓘ(ghost · medium · 아이콘만) ─────
@@ -265,6 +268,10 @@ const bubbleClass = (withClose, focused) => {
   return focused ? forced(cls, "focus-visible") : cls;
 };
 
+// <span role="status"> — 열린 말풍선의 제목 · 설명(레시피는 열린 뒤 한 프레임에 넣는다)
+const status = (title, description) =>
+  `<span role="status" aria-live="polite" aria-atomic="true" data-slot="help-bubble-status" class="${STATUS}">${esc([title, description].filter(Boolean).join(" "))}</span>`;
+
 // 닫기 버튼 — force = "pressed" · "focused" 는 미리보기용 강제 상태
 function closeButton(force) {
   const cls = force === "pressed" ? forced(CLOSE, "active") : force === "focused" ? forced(CLOSE, "focus-visible") : CLOSE;
@@ -277,7 +284,7 @@ export const helpBubbleExamples = [
   {
     title: "ⓘ 를 눌러 여는 규정 안내",
     description:
-      "화면에 늘 두기에는 길고, 몰라도 일은 할 수 있는 설명(규정 · 계산 방법 · 기능 안내)은 ⓘ 를 눌러 여는 말풍선에 둔다 — 손가락으로도 열려 폰에서도 읽어야 하는 설명은 이것이다. 트리거는 ⓘ 아이콘 버튼(Button ghost · neutralSubtle · iconOnly)이고 이름은 \"{무엇} 안내\" 다. 말풍선은 짙은 바탕(bg-neutral-inverted — 다크에서는 밝은 바탕) · 모서리 12 · 위아래 10 · 좌우 12 · 그림자 없음, 폭은 내용만큼 최대 280 이다. 제목 13/18 · 700, 설명 13/18 · 400(사이 2). 기본은 트리거 위이고 화살표(12 × 8) 끝과 트리거 사이는 4 다 — 자리가 모자라면 반대편으로 뒤집고 옆으로 밀어 화면 가장자리와 16 을 남기며, 화살표는 늘 트리거 가운데를 가리킨다. 열어도 초점은 트리거에 남고, ⓘ 를 다시 누르거나 바깥 · Esc 로 닫힌다(비모달).",
+      "화면에 늘 두기에는 길고, 몰라도 일은 할 수 있는 설명(규정 · 계산 방법 · 기능 안내)은 ⓘ 를 눌러 여는 말풍선에 둔다 — 손가락으로도 열려 폰에서도 읽어야 하는 설명은 이것이다. 트리거는 ⓘ 아이콘 버튼(Button ghost · neutralSubtle · iconOnly)이고 이름은 \"{무엇} 안내\" 다. 말풍선은 짙은 바탕(bg-neutral-inverted — 다크에서는 밝은 바탕) · 모서리 12 · 위아래 10 · 좌우 12 · 그림자 없음, 폭은 내용만큼 최대 280 이다. 제목 13/18 · 700, 설명 13/18 · 400(사이 2). 기본은 트리거 위이고 화살표(12 × 8) 끝과 트리거 사이는 4 다 — 자리가 모자라면 반대편으로 뒤집고 옆으로 밀어 화면 가장자리와 16 을 남기며, 화살표는 늘 트리거 가운데를 가리킨다 — 화면 끝의 트리거면 화살표를 가운데 · 모서리 14 에 두느라 말풍선이 16 보다 가장자리에 붙는다(레시피가 그쪽 가장자리 여백을 줄인다). 열어도 초점은 트리거에 남고 제목 · 설명은 열림 알림(role=\"status\")으로 한 번 읽힌다. ⓘ 를 다시 누르거나 바깥 · Esc 로 닫힌다(비모달).",
     jsx: `import { HelpBubble, HelpBubbleContent, HelpBubbleTrigger } from "@/components/ui/help-bubble"
 
 <HelpBubble>
@@ -311,7 +318,7 @@ export const helpBubbleExamples = [
         arrowX: "left:calc(50% - 6px);",
         availableWidth: "calc(100cqw - 32px)",
       })}</div>`;
-      const anchor = `<span style="position:relative; display:inline-flex;">${trigger}${wrapper}</span>`;
+      const anchor = `<span style="position:relative; display:inline-flex;">${trigger}${wrapper}</span>${status("연차 사용 규정", "입사 1년 미만은 한 달에 1일씩 생기고, 1년이 지나면 15일이 생겨요.")}`;
       return `<div style="${STAGE(260, "container-type:inline-size;")}"><div style="padding:var(--spacing-x6);"><div aria-hidden="true" style="${PAGE_TITLE}">휴가</div><div style="margin-top:var(--spacing-x6); padding-top:120px;"><div style="${LEAD}"><span>남은 연차 8.5일</span>${anchor}</div></div></div></div>`;
     },
   },
@@ -360,7 +367,7 @@ import { TopNavigationIconButton } from "@/components/ui/top-navigation"
       ]
         .map(([a, b]) => `<div style="${ROW}"><span>${a}</span><span style="font-weight:700;">${b}</span></div>`)
         .join("");
-      return `<div style="${STAGE(300, "container-type:inline-size; max-width:360px; margin:0 auto;")}"><div style="padding:var(--spacing-x6);"><div style="display:flex; align-items:center; justify-content:space-between; gap:var(--spacing-x3);"><div aria-hidden="true" style="${PAGE_TITLE}">가계부</div>${anchor}</div><div aria-hidden="true" style="margin-top:var(--spacing-x4);">${rows}</div></div>${wrapper}</div>`;
+      return `<div style="${STAGE(300, "container-type:inline-size; max-width:360px; margin:0 auto;")}"><div style="padding:var(--spacing-x6);"><div style="display:flex; align-items:center; justify-content:space-between; gap:var(--spacing-x3);"><div aria-hidden="true" style="${PAGE_TITLE}">가계부</div>${anchor}${status("금액을 가릴 수 있어요", "누르면 화면의 금액이 모두 가려져요.")}</div><div aria-hidden="true" style="margin-top:var(--spacing-x4);">${rows}</div></div>${wrapper}</div>`;
     },
   },
 

@@ -20,8 +20,9 @@ import { cn } from "@/lib/utils";
  *   - 마우스 끌기: 3px 넘게 움직이면 끈다(포인터 캡처 · 스냅 끔 · grabbing). 놓을 때 속도 × 180ms 만큼 더 가되 ±3칸까지(속도는 마지막
  *     움직임이 80ms 넘게 묵었으면 0), 가장 가까운 칸으로 220 + 칸당 40ms(최대 360ms) ease-out cubic 으로 맞춘다. 끈 직후의 누름은 삼킨다.
  *   - 마우스 휠 · 트랙패드: 브라우저 스크롤(스냅 끔). 마지막 입력 120ms 뒤 가까운 칸으로 160ms ease-out cubic.
- *   - 보이는 항목 누르기: 그 항목을 가운데로 부드럽게 옮기고, 멈춘 뒤 값을 정한다.
- *   - 키보드: ↑ ↓ 이전 · 다음(누르고 있으면 바로바로), Home · End 처음 · 끝. 칼럼마다 Tab 자리 하나.
+ *   - 보이는 항목 누르기: 그 항목을 가운데로 200ms ease-out cubic(motion-duration-d4)에 옮기고, 멈춘 뒤 값을 정한다 — 브라우저의
+ *     부드러운 스크롤(거리마다 120 ~ 260ms, 브라우저마다 다르다)에 맡기지 않는다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-005, 안 A).
+ *   - 키보드: ↑ ↓ 이전 · 다음(누르고 있으면 바로바로, 아니면 누르기와 같은 200ms), Home · End 처음 · 끝. 칼럼마다 Tab 자리 하나.
  *   - 모션 줄이기면 프로그램이 하는 이동(누르기 · 키 · 맞추기)을 모두 바로 한다.
  *   - 반복(loop): 항목을 앞뒤로 12화면치 이어 그리고, 멈출 때 끝에서 2화면 안이면 같은 값의 가운데 자리로 몰래 옮긴다.
  *   - 막힘: 값은 그대로 · 굴릴 수도 초점이 갈 수도 없다(tabIndex -1 · aria-disabled). 고른 항목도 흐리게, 띠는 남는다.
@@ -56,6 +57,7 @@ const VELOCITY_MAX_AGE = 80; // 마지막 움직임이 이보다 오래되면 �
 const RELEASE_MIN_DURATION = 220; // 놓은 뒤 맞추기 — 220 + 칸당 40, 최대 360
 const RELEASE_PER_ITEM = 40;
 const RELEASE_MAX_DURATION = 360;
+const MOVE_DURATION = 200; // 누르기 · 키로 칸을 옮길 때 — motion-duration-d4 · ease-out cubic(Q-005 A)
 const LOOP_BUFFER_VIEWPORTS = 12; // 반복 칼럼은 앞뒤로 12화면치 이어 그린다
 const LOOP_RECENTER_VIEWPORTS = 2; // 끝에서 2화면 안에 멈추면 가운데로 옮긴다
 
@@ -629,7 +631,19 @@ const WheelPickerColumn = React.forwardRef<HTMLDivElement, WheelPickerColumnProp
       e.stopPropagation();
     };
 
-    // 키 — ↑ ↓ Home End. 누르고 있으면(repeat) 바로바로, 아니면 부드럽게. 빠르게 거듭 누르면 가던 자리에서 이어 간다
+    // 칸 옮기기 — 200ms ease-out cubic(스냅을 끄고 맞춘 뒤 값을 정한다) 또는 바로(모션 줄이기 · 누르고 있는 키 · 반복 칼럼의 몰래 옮기기)
+    const glide = (physical: number, smooth: boolean) => {
+      if (smooth) {
+        api.align(physical, MOVE_DURATION);
+        return;
+      }
+      api.cancelAlign();
+      api.col()?.removeAttribute("data-free");
+      api.scrollToPhysical(physical, "auto");
+      api.scheduleSettle();
+    };
+
+    // 키 — ↑ ↓ Home End. 누르고 있으면(repeat) 바로바로, 아니면 200ms. 빠르게 거듭 누르면 가던 자리에서 이어 간다
     const moveTo = (targetLogical: number, behavior: ScrollBehavior) => {
       const L = latest.current;
       if (L.disabled || L.count === 0) return;
@@ -649,8 +663,7 @@ const WheelPickerColumn = React.forwardRef<HTMLDivElement, WheelPickerColumnProp
         }
       }
       keyboardTargetRef.current = clamp(next, 0, L.total - 1);
-      api.scrollToPhysical(next, how);
-      api.scheduleSettle();
+      glide(next, how === "smooth");
     };
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -680,13 +693,12 @@ const WheelPickerColumn = React.forwardRef<HTMLDivElement, WheelPickerColumnProp
       }
     };
 
-    // 보이는 항목 누르기 — 그 항목을 가운데로(모션 줄이기면 바로), 멈춘 뒤 값을 정한다
+    // 보이는 항목 누르기 — 그 항목을 가운데로 200ms ease-out cubic(모션 줄이기면 바로), 멈춘 뒤 값을 정한다
     const onItemClick = (physical: number) => {
       if (disabled) return;
       notifyRef.current = true;
       keyboardTargetRef.current = null;
-      api.scrollToPhysical(physical, prefersReducedMotion() ? "auto" : "smooth");
-      api.scheduleSettle();
+      glide(physical, !prefersReducedMotion());
     };
 
     // 처음 자리 · 쓰는 쪽이 값을 바꿨을 때 — 사용자가 만지는 동안은 덮어쓰지 않는다

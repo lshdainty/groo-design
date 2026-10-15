@@ -90,7 +90,7 @@ rules:
   - when: { toggled: "on" }
     enabled:
       icon:
-        strokeWidth: { value: 2.5px, note: "v106 — 켜짐 · 선택은 선 2.5" }
+        strokeWidth: { value: 2.5px, note: "v106 — 켜짐 · 선택은 선 2.5. 앱은 lucide 굵기 글꼴 Lucide500 짝으로 낸다(코드로 선 굵기를 걸 수 없다 — 2026-10-15 구현 세션 질문 Q-010-3 정리, 2.5 는 2026-10-09 사용자 결정)" }
         color: { value: $color-fg-neutral, note: "흰 표면 위 16.41 · 다크 13.42 — 끔(7.11 · 7.70)보다 짙다. 브랜드 색으로 칠하지 않는다" }
 
   # ── 브랜드 채움 위 ────────────────────────────────────

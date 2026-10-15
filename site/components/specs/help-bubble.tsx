@@ -6,12 +6,13 @@ import { buttonLook } from './button-look';
 import { HelpBubblePlayground, HideTipDemo, LeaveRuleDemo } from './bubble-demos';
 import { AssetsPhone, Bubble, BubbleAt, EyeToggle, InfoButton, InfoGlyph, LeaveSummary, LeaveWindow, bl } from './bubble-screens';
 import { NK } from './nav-screens';
-import { LEAVE_RULE } from './menu-data';
+import { HIDE_TIP, LEAVE_RULE } from './menu-data';
 import { Board, Scaled, iconBtn, mk } from './menu-screens';
 import { Legend, Note, RuleBody, Shot, ov, pinStyle } from './overlay-screens';
 import { EndButtons, PopoverSurface } from './overlay-view';
 import { Cap } from './select-screens';
-import { Phone, rc } from './kit';
+import { PHONE_W, Phone, rc } from './kit';
+import { TopNavBar } from './nav-view';
 
 type Fig = (p: { caption?: string }) => ReactNode;
 const px = (v: string) => parseFloat(v);
@@ -246,11 +247,65 @@ function Cell({ children, label, h = 150, w = 260 }: { children: ReactNode; labe
     </div>
   );
 }
-const Placement: Fig = ({ caption }) => {
+// 화면 끝의 트리거 — 화살표는 트리거 가운데에 남고(모서리 14) 말풍선이 가장자리 16 보다 붙는다(2026-10-15 Q-004-1).
+// ① 상단 바 오른쪽 끝의 금액 가리기(아이콘 버튼 44 · 화면 끝 6) — 말풍선 끝이 화면 끝에서 8 ② 화면 왼쪽 끝 0 에 붙은 ⓘ 40 — 0
+function EdgeScenes() {
   const b = bl();
-  const small = 24;
-  const at = b.arrow.pad + b.arrow.width / 2;
-  const tx = 20;
+  const top = NK().top;
+  const W = PHONE_W;
+  const reach = b.arrow.pad + b.arrow.width / 2;
+  const hit = top.icon.size;
+  const cx1 = W - top.padX - hit / 2;
+  const edge1 = W - (cx1 + reach);
+  const info = 40;
+  const cx2 = info / 2;
+  const edge2 = cx2 - reach;
+  // 세로 보조선 — 화면 왼쪽(left) · 오른쪽(right)에서 잰다(폭이 좁아져도 그 끝에 붙은 트리거와 함께 간다)
+  const guide = (at: { left: number } | { right: number }) => <span aria-hidden className="pointer-events-none absolute bottom-0 top-0" style={{ ...at, borderLeft: `1px dashed ${MARK_LINE}`, zIndex: 7 }} />;
+  const scene = (label: ReactNode, body: ReactNode) => (
+    <div className="flex w-full flex-col items-center gap-2" style={{ maxWidth: W }}>
+      <div className="relative w-full overflow-hidden rounded-xl" style={{ height: 190, background: rc('bg-layer-default') }}>
+        {body}
+      </div>
+      <Cap>{label}</Cap>
+    </div>
+  );
+  const eye = <EyeToggle />;
+  return (
+    <div className="flex w-full flex-wrap items-start justify-center gap-4">
+      {scene(
+        `① 상단 바 끝의 금액 가리기(${hit} · 화면 끝 ${top.padX}) — 화살표는 버튼 가운데, 말풍선 끝은 화면 끝에서 ${edge1}(가장자리 ${b.edge} 보다 붙는다)`,
+        <>
+          <TopNavBar look={top} type="root" title="자산" trailing={<BubbleAt side="bottom" align="end" triggerSize={hit} trigger={eye} bubble={(p) => <Bubble title={HIDE_TIP.title} description={HIDE_TIP.description} close {...p} />} />} />
+          {guide({ right: b.edge })}
+          {guide({ right: W - cx1 })}
+          <Tag style={{ right: b.edge + 4, bottom: 6 }}>{`가장자리 ${b.edge}`}</Tag>
+          <Tag style={{ right: 4, bottom: 22 }}>{`화면 끝 ${edge1}`}</Tag>
+        </>,
+      )}
+      {scene(
+        `② 화면 왼쪽 끝 0 에 붙은 ⓘ ${info} — 화살표는 ⓘ 가운데, 말풍선은 화면 끝 ${edge2} 까지`,
+        <>
+          <span className="absolute flex items-center" style={{ left: 0, top: 24, height: info }}>
+            <span className="relative flex items-center justify-center" style={{ width: info, height: info, color: rc('fg-neutral-subtle') }}>
+              <InfoGlyph size={20} />
+              <span style={{ position: 'absolute', zIndex: 6, top: `calc(100% + ${b.bodyOffset}px)`, left: cx2 - reach }}>
+                <Bubble title="예상 환급액" description="지난달까지 받은 급여로 계산해요. 12월에 다시 바뀌어요." side="bottom" arrowAt={reach} />
+              </span>
+            </span>
+            <span style={{ fontSize: 16, lineHeight: '22px', fontWeight: 500, color: rc('fg-neutral') }}>예상 환급액</span>
+          </span>
+          {guide({ left: b.edge })}
+          {guide({ left: cx2 })}
+          <Tag style={{ left: b.edge + 4, bottom: 6 }}>{`가장자리 ${b.edge}`}</Tag>
+          <Tag style={{ left: 4, bottom: 22 }}>{`화면 끝 ${edge2}`}</Tag>
+        </>,
+      )}
+    </div>
+  );
+}
+
+const Placement: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex flex-col items-center gap-5">
@@ -261,19 +316,7 @@ const Placement: Fig = ({ caption }) => {
             </Cell>
           ))}
         </div>
-        <Cell w={320} h={130} label={`트리거 ${small} 이 왼쪽 끝에 — 화살표는 모서리에서 ${b.arrow.pad} 를 남기고 트리거 가운데, 말풍선이 민다(가장자리 ${b.edge} 보다 우선)`}>
-          {/* 화면 가장자리 */}
-          <span aria-hidden className="absolute bottom-0 top-0" style={{ left: b.edge, borderLeft: `1px dashed ${MARK_LINE}` }} />
-          <Tag style={{ left: b.edge + 4, bottom: 6 }}>{`가장자리 ${b.edge}`}</Tag>
-          <span className="absolute" style={{ left: tx, top: 84 }}>
-            <span className="relative flex items-center justify-center" style={{ width: small, height: small, ...dashed, color: rc('fg-neutral-subtle') }}>
-              <InfoGlyph />
-              <span style={{ position: 'absolute', zIndex: 6, bottom: `calc(100% + ${b.bodyOffset}px)`, left: small / 2 - at }}>
-                <Bubble title={LEAVE_RULE.title} arrowAt={at} />
-              </span>
-            </span>
-          </span>
-        </Cell>
+        <EdgeScenes />
       </div>
     </Panel>
   );
