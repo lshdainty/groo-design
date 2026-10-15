@@ -27,9 +27,11 @@
 
 const OPTION = [
   "group/sl-option relative flex w-full cursor-pointer select-none outline-none",
-  "before:pointer-events-none before:absolute before:inset-y-0 before:inset-x-x1_5 before:rounded-r2_5 before:bg-transparent before:content-['']",
-  "data-[highlighted]:before:bg-bg-layer-default-pressed active:before:bg-bg-layer-default-pressed",
-  "data-[highlighted=pointer]:before:[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
+  "before:pointer-events-none before:absolute before:inset-y-0 before:inset-x-0 before:rounded-none before:bg-transparent before:content-['']",
+  "data-[highlighted]:before:inset-x-x1_5 data-[highlighted]:before:rounded-r2_5 data-[highlighted]:before:bg-bg-layer-default-pressed",
+  "active:before:inset-x-x1_5 active:before:rounded-r2_5 active:before:bg-bg-layer-default-pressed",
+  "before:[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),inset_var(--motion-duration-color-transition)_var(--motion-ease-easing),border-radius_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
+  "[[data-highlight-source=keyboard]_&]:before:transition-none",
 ].join(" ");
 const OPTION_CONTENT = [
   "relative flex w-full items-center px-global-gutter py-x3",
@@ -453,7 +455,7 @@ function searchInput({ id, placeholder, query = "", activeId = "", placement = "
 }
 
 // <SearchableListItem> — 줄(role="option"). 오른쪽 라디오는 보는 표시(aria-hidden), 고름은 aria-selected 가 알린다.
-// highlighted 는 ↓ ↑("keyboard") · 마우스("pointer")로 짚은 줄 — 좌우 6 들어온 bg-layer-default-pressed · 모서리 10
+// highlighted 는 ↓ ↑("keyboard") · 마우스("pointer")로 짚은 줄 — 줄 폭 전체에서 좌우 6 · 모서리 10 으로 들어온 bg-layer-default-pressed
 function option({ id, value, title, detail, prefix, selected = false, highlighted = "" }) {
   const state = selected ? "checked" : "unchecked";
   return `<div ${attrs([
@@ -474,8 +476,8 @@ function option({ id, value, title, detail, prefix, selected = false, highlighte
 // <SearchableListGroup label> — 분류 머리(List Header mediumWeak)가 묶음(role="group")의 이름
 const group = (id, label, options) =>
   `<div role="group" aria-labelledby="${id}" data-slot="searchable-list-group" class="${GROUP}"><div id="${id}" role="presentation" data-slot="searchable-list-group-label" class="${listHeaderVariants({ variant: "mediumWeak" })}">${esc(label)}</div>${options.join("")}</div>`;
-// <SearchableListResults aria-label> — role="listbox"
-const results = (id, label, html) => `<div id="${id}-listbox" role="listbox" aria-label="${esc(label)}" data-slot="searchable-list-results" class="${RESULTS}">${html}</div>`;
+// <SearchableListResults aria-label> — role="listbox". data-highlight-source 는 강조를 짚은 손(keyboard 면 바탕 전환 없이) — 레시피의 처음 값 keyboard
+const results = (id, label, html) => `<div id="${id}-listbox" role="listbox" aria-label="${esc(label)}" data-slot="searchable-list-results" data-highlight-source="keyboard" class="${RESULTS}">${html}</div>`;
 // <SearchableList placement>
 const searchableList = (placement, html) => `<div data-slot="searchable-list" data-placement="${placement}" class="${SL_ROOT}">${html}</div>`;
 // <SearchableListSkeleton prefix rows> — 줄 높이 그대로(위아래 12 · 좌우 24), 제목 t5 40% + 설명 t3 60%
@@ -533,22 +535,25 @@ export const searchableListExamples = [
   {
     title: "은행 고르기 — 검색 시트",
     description:
-      "스크롤만으로 찾기 어려운 긴 목록(은행 · 증권사 · 카드 상품 · 종목 · 결재자)에서 하나를 고른다 — 대개 Input Button 이 여는 검색 시트(1280 미만) · 팝오버(이상)의 내용이다. 검색칸은 Input 의 밑줄형이다(화면에 입력이 하나뿐인 목록 위 검색 — 상자형 52 는 두지 않는다): large 40(글 18 / 24 · 돋보기 24 · 지우기 22, 누르는 영역 44) · 데스크톱 medium 34(글 16 / 22 · 돋보기 20 · 지우기 18), 아래 1px stroke-neutral-weak 가 치는 동안 2px stroke-neutral-contrast, 모서리 · 좌우 여백 없음. 좌우 24 안이라 돋보기와 줄의 로고 타일이 한 줄에 서고, 목록이 스크롤해도 위에 붙어 있다. 칸 ↔ 목록 8. 결과는 분류(List Header mediumWeak — 14 · 500 · fg-neutral-subtle, 줄이 남지 않은 분류는 머리째 숨긴다) 아래 List 의 줄(위아래 12 · 좌우 24 · 제목 16 / 22) + 앞 Logo Tile 40 + 오른쪽 라디오 24(지금 값만 켬 — 고른 줄의 바탕은 칠하지 않는다, 고름은 aria-selected)다. 고르면 시트가 닫히고 칸에 값이 들어간다(\"완료\" 없음). 시트 본문은 좌우 여백을 뺀다(className=\"px-0\") — 검색칸 · 줄이 제 24 를 가진다. 열면 검색칸에 초점이 간다.",
+      "스크롤만으로 찾기 어려운 긴 목록(은행 · 증권사 · 카드 상품 · 종목 · 결재자)에서 하나를 고른다 — 대개 Input Button 이 여는 검색 시트(1280 미만) · 팝오버(이상)의 내용이다. 검색칸은 Input 의 밑줄형이다(화면에 입력이 하나뿐인 목록 위 검색 — 상자형 52 는 두지 않는다): large 40(글 18 / 24 · 돋보기 24 · 지우기 22, 누르는 영역 44) · 데스크톱 medium 34(글 16 / 22 · 돋보기 20 · 지우기 18), 아래 1px stroke-neutral-weak 가 치는 동안 2px stroke-neutral-contrast, 모서리 · 좌우 여백 없음. 좌우 24 안이라 돋보기와 줄의 로고 타일이 한 줄에 서고, 목록이 스크롤해도 위에 붙어 있다. 칸 ↔ 목록 8. 결과는 분류(List Header mediumWeak — 14 · 500 · fg-neutral-subtle, 줄이 남지 않은 분류는 머리째 숨긴다) 아래 List 의 줄(위아래 12 · 좌우 24 · 제목 16 / 22) + 앞 Logo Tile 40 + 오른쪽 라디오 24(지금 값만 켬 — 고른 줄의 바탕은 칠하지 않는다, 고름은 aria-selected)다. 고르면 시트가 닫히고 칸에 값이 들어간다(\"완료\" 없음). 시트 본문은 좌우 여백을 뺀다(className=\"px-0\") — 검색칸 · 줄이 제 24 를 가진다. 열면 시트가 첫 초점을 검색칸에 넘겨준다(onOpenAutoFocus={focusSearchableList} — 열린 뒤 다시 옮기지 않는다). 거르는 규칙은 matchesSearch — 이름 · 별칭을 NFC 로 맞추고 대소문자 · 공백을 무시해 하나에 들어 있으면 남긴다(\"kx 은행\" → KX은행, 서버 검색도 같은 규칙). 초성 검색은 아직 정하지 않았다.",
     jsx: `import { ChevronDown } from "lucide-react"
 import { BottomSheet, BottomSheetBody, BottomSheetContent } from "@/components/ui/bottom-sheet"
 import { Field } from "@/components/ui/field"
 import { InputButton } from "@/components/ui/input-button"
 import { LogoTile } from "@/components/ui/logo-tile"
 import {
-  SearchableList, SearchableListEmpty, SearchableListGroup, SearchableListInput, SearchableListItem, SearchableListResults,
+  SearchableList, SearchableListEmpty, SearchableListGroup, SearchableListInput, SearchableListItem, SearchableListResults, focusSearchableList, matchesSearch,
 } from "@/components/ui/searchable-list"
 
-const groups = groupInstitutions(filterByName(INSTITUTIONS, query)) // 시중은행 · 인터넷은행 · 지방은행 · 특수은행 · 저축기관 · 외국계 · 기타
+// 이름 · 별칭에 검색어가 들어 있으면 남긴다(NFC · 대소문자 · 공백 무시 — 거르는 규칙)
+const found = INSTITUTIONS.filter((it) => matchesSearch(query, it.name, ...it.aliases))
+const groups = groupInstitutions(found) // 시중은행 · 인터넷은행 · 지방은행 · 특수은행 · 저축기관 · 외국계 · 기타
 
 <Field label="은행">
   <BottomSheet open={open} onOpenChange={setOpen}>
     <InputButton placeholder="은행 선택" value={bank?.name} suffixIcon={<ChevronDown />} aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(true)} />
-    <BottomSheetContent title="은행 선택">
+    {/* 첫 초점은 시트 대신 검색칸 — 시트가 넘겨준다 */}
+    <BottomSheetContent title="은행 선택" onOpenAutoFocus={focusSearchableList}>
       {/* 본문 좌우 여백을 뺀다 — 검색칸 · 줄이 제 24 를 가진다(bottom-sheet.md) */}
       <BottomSheetBody className="px-0">
         {/* 고르면 닫는다 — "완료" 없음 */}
@@ -625,7 +630,7 @@ import {
   {
     title: "강조 · 누름 — 키보드는 콤보박스",
     description:
-      "초점은 늘 검색칸에 있고 ↓ ↑ 는 결과 사이의 강조만 옮긴다 — 강조한 줄은 좌우 6 들어온 bg-layer-default-pressed · 모서리 10(List 의 누름 바탕)이고 검색칸이 aria-activedescendant 로 그 줄을 가리킨다. 분류 머리는 건너뛰고 끝에서 멈춘다. Enter 는 강조한 줄을 고른다(강조가 없으면 아무것도 하지 않는다 — 폼을 제출하지 않는다). Esc 는 검색어가 있으면 지우고, 비었으면 시트 · 팝오버를 닫는다. 글자를 치면 거르고 강조를 지운다. 줄은 Tab 으로 들어가지 않는다 — 라디오 목록처럼 화살표로 고르지 않는다(콤보박스, 사용자 결정 12A). 마우스로 올린 줄도 같은 바탕이고(한 번에 한 줄), 누르면 같은 바탕에 콘텐츠만 2px 거리 축소다. 그림은 \"우\" 를 치고 ↓ 로 우리를 짚은 순간이다.",
+      "초점은 늘 검색칸에 있고 ↓ ↑ 는 결과 사이의 강조만 옮긴다 — 강조한 줄은 좌우 6 들어온 bg-layer-default-pressed · 모서리 10(List 의 누름 바탕)이고 검색칸이 aria-activedescendant 로 그 줄을 가리킨다. 분류 머리는 건너뛰고 끝에서 멈춘다. Enter 는 강조한 줄을 고른다(강조가 없으면 아무것도 하지 않는다 — 폼을 제출하지 않는다). Esc 는 검색어가 있으면 지우고, 비었으면 시트 · 팝오버를 닫는다. 글자를 치면 거르고 강조를 지운다. 줄은 Tab 으로 들어가지 않는다 — 라디오 목록처럼 화살표로 고르지 않는다(콤보박스, 사용자 결정 12A). 마우스로 올린 줄도 같은 바탕이고(한 번에 한 줄), 누르면 같은 바탕에 콘텐츠만 2px 거리 축소다. 마우스 · 누름은 바탕이 줄 폭 전체에서 좌우 6 · 모서리 10 으로 들어오며 150ms 에 둥글어지고(Menu 알약과 같다), 화살표는 전환 없이 바로 옮긴다. 마우스로 짚은 강조는 마우스가 목록을 떠나면 지운다 — 키보드로 짚은 강조는 남는다. 그림은 \"우\" 를 치고 ↓ 로 우리를 짚은 순간이다.",
     jsx: `<SearchableList value={bank?.id} onValueChange={choose} query={query} onQueryChange={setQuery}>
   {/* ↓ ↑ 강조 · Enter 고름 · Esc 지움 — 초점은 검색칸에 그대로(aria-activedescendant) */}
   <SearchableListInput placeholder="은행 이름 검색" />

@@ -17,6 +17,10 @@
 //   - 지속 시간 · 이징 · 그림자 · 그라디언트 · 딤 → CSS 값 문자열("150ms", "cubic-bezier(…)", "0 8px 24px …").
 //   - 그 밖의 글(커서 이름 · "세로 2px 축소" …)은 그대로.
 //   - 비고(note)는 값에서 떼어 notes 에 모은다.
+//   - 같은 규칙 · 같은 상태 · 같은 부위에 typography 와 lineHeight · fontWeight 가 같이 있으면 따로 적은 값이 이긴다
+//     (specs/CLAUDE.md — 2026-10-15 구현 세션 질문 Q-011-2 · Q-012-1 정리). 그 둘을 typography 객체에 접어
+//     "14 / 20 · 500" 같은 한 덩어리로 싣는다 — 따로 적은 lineHeight · fontWeight 도 그대로 둔다(그것만 읽는 쪽이 있다).
+//     배수 줄 높이(1.3 — 단위 없는 수)는 글자 크기를 곱한 px 로 접는다(12 × 1.3 = 15.6).
 //   - 없는 토큰을 가리키면 파일 · 위치와 함께 멈춘다.
 
 import { readFileSync, readdirSync, mkdirSync, writeFileSync } from "node:fs";
@@ -151,6 +155,21 @@ function value(raw, where) {
   return same(light, dark) ? light : { light, dark };
 }
 
+// typography 에 같은 부위의 lineHeight · fontWeight 를 접는다 — 위 머리 주석
+const isType = (v) => v !== null && typeof v === "object" && typeof v.fontSize === "number";
+function foldType(slotOut, rawProps) {
+  const t = slotOut.typography;
+  if (!isType(t)) return;
+  const folded = { ...t };
+  const lh = slotOut.lineHeight;
+  // YAML 에 단위 없는 수로 적었으면 배수, "20px" 처럼 적었으면 px
+  const rawLh = isBox(rawProps.lineHeight) ? rawProps.lineHeight.value : rawProps.lineHeight;
+  if (typeof lh === "number") folded.lineHeight = typeof rawLh === "number" ? Math.round(t.fontSize * lh * 100) / 100 : lh;
+  const fw = slotOut.fontWeight;
+  if (typeof fw === "number") folded.fontWeight = fw;
+  slotOut.typography = folded;
+}
+
 const names = (def) => (Array.isArray(def) ? def.map(String) : Object.keys(def ?? {}));
 
 function convert(file) {
@@ -175,6 +194,7 @@ function convert(file) {
           out[state][slot][prop] = value(raw, where);
           if (isBox(raw) && raw.note) notes.push({ rule: ri, state, slot, prop, note: raw.note });
         }
+        foldType(out[state][slot], props);
       }
     }
     return out;

@@ -121,7 +121,7 @@ function LiveColumn({ look, mode, size, visible, col, disabled, style }: ColumnP
   // 지금 멈춘 자리(깔린 목록의 번호) · 지나는 자리
   const cur = useRef(mid * n + col.index);
   const pass = useRef(cur.current);
-  const st = useRef({ dragging: false, animating: false, wheeling: false, touching: false, programmatic: false, justDragged: false });
+  const st = useRef({ dragging: false, animating: false, wheeling: false, touching: false, programmatic: false, justDragged: false, goal: 0 });
   const timers = useRef<{ settle?: number; wheel?: number; raf?: number }>({});
   const [hydrated, setHydrated] = useState(false);
   const [ring, setRing] = useState(false);
@@ -174,6 +174,7 @@ function LiveColumn({ look, mode, size, visible, col, disabled, style }: ColumnP
     if (timers.current.raf) cancelAnimationFrame(timers.current.raf);
     const from = el.scrollTop;
     const to = Math.max(0, Math.min(total - 1, target)) * item;
+    s.goal = Math.max(0, Math.min(total - 1, target));
     const done = () => {
       s.animating = false;
       snap(true);
@@ -339,26 +340,21 @@ function LiveColumn({ look, mode, size, visible, col, disabled, style }: ColumnP
     api.current.animate(target, Math.min(m.releaseMax, m.releaseMin + m.perItem * moved));
   };
 
-  // 보이는 항목 누르기 — 가운데로(부드럽게), 멈춘 뒤 정한다
+  // 보이는 항목 누르기 — 가운데로 200ms ease-out cubic(Q-005 A — 모션 줄이기면 바로), 멈춘 뒤 정한다
   const onItem = (i: number) => {
     if (disabled || st.current.justDragged) return;
     const el = scroller.current;
     if (!el || i === Math.round(el.scrollTop / item)) return;
-    if (reduce) {
-      el.scrollTop = i * item;
-      paint();
-      api.current.settle();
-      return;
-    }
-    el.scrollTo({ top: i * item, behavior: 'smooth' });
+    api.current.animate(i, look.motion.move);
   };
 
-  // 키보드 — ↑ ↓ 한 칸(누르고 있으면 이어서), Home End 처음 · 끝. 바로 옮기고 바로 정한다
+  // 키보드 — ↑ ↓ 한 칸(누르기와 같은 200ms, 누르고 있으면 바로바로 이어서), Home End 처음 · 끝
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (disabled) return;
     const el = scroller.current;
     if (!el) return;
-    const c = cur.current;
+    // 옮기는 중이면 가던 자리에서 이어 간다(빠르게 거듭 누름)
+    const c = st.current.animating ? st.current.goal : cur.current;
     const base = c - mod(c, n);
     let t: number | null = null;
     if (e.key === 'ArrowUp') t = loop || c > 0 ? c - 1 : c;
@@ -368,13 +364,7 @@ function LiveColumn({ look, mode, size, visible, col, disabled, style }: ColumnP
     if (t === null) return;
     e.preventDefault();
     setRing(e.currentTarget.matches(':focus-visible'));
-    if (timers.current.raf) cancelAnimationFrame(timers.current.raf);
-    st.current.animating = false;
-    snap(false);
-    el.scrollTop = t * item;
-    paint();
-    snap(true);
-    api.current.settle();
+    api.current.animate(t, e.repeat ? 0 : look.motion.move);
   };
 
   const opt = col.options[shown];

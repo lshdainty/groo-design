@@ -51,7 +51,7 @@ const CUT = "data-[cut]:invisible";
 
 // 화살표 — 12 × 8, 끝 모서리 2(SEED getHelpBubbleArrowTipPath). BubbleArrow 의 경로 · 클래스
 const ARROW_PATH = "M0,0 H12 L8,6 Q6,8 4,6 Z";
-const ARROW = "block fill-bg-neutral-inverted";
+const ARROW = "visible block fill-bg-neutral-inverted";
 
 // ── button.tsx 의 cva 와 같은 값 — 막힌 버튼(neutralWeak · medium · 글) ──
 

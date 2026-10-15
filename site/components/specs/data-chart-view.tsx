@@ -5,7 +5,7 @@
 // 인라인 스타일은 단축 속성(padding)과 개별 속성을 섞지 않는다(PR #154).
 import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { formatAxisWon, formatWon, heatStep, niceTicks, pressRatio, shadowOf, textWidth, type ChartHue, type ChartLook, type ViewMode } from './data-shared';
+import { donutThickness, formatAxisWon, formatWon, heatStep, niceTicks, pressRatio, shadowOf, textWidth, type ChartHue, type ChartLook, type ViewMode } from './data-shared';
 import { srOnly, useReducedMotion } from './data-card-view';
 import { dcv } from './display-shared';
 
@@ -81,16 +81,21 @@ export function LegendTilesView({ look, mode = 'auto', items, hidden = [], onHid
     <div id={id} role="group" aria-label={ariaLabel} style={{ display: 'flex', flexWrap: 'wrap', gap: t.gap }}>
       {items.map((it, i) => {
         const off = hidden.includes(it.key);
-        const st = states?.[it.key] ?? (press === it.key ? 'pressed' : hover === it.key ? 'hovered' : 'enabled');
+        // 켠 계열이 하나만 남은 타일 — 끌 수 없다: 색 그대로 · 커서 not-allowed · 축소 없음(Q-012-3 C)
+        const locked = !off && items.length - hidden.length <= 1;
+        const st = states?.[it.key] ?? (press === it.key && !locked ? 'pressed' : hover === it.key ? 'hovered' : 'enabled');
         const focused = states?.[it.key] === 'focused' || ring === it.key;
         const h = parseFloat(t.name.lineHeight) + t.totalGap + parseFloat(t.total.lineHeight) + t.padY * 2;
         const ratio = st === 'pressed' && !reduce ? pressRatio(t.press, 140, h) : 1;
-        const bg = off ? (st === 'hovered' || st === 'pressed' ? dcv(t.hoverBg, mode) : dcv(t.hiddenBg, mode)) : dcv(look.subtle[it.hue], mode);
+        // 끈 타일만 호버 바탕 — 누름은 색 없이 축소만(마우스로 누르면 호버 바탕은 남는다, Q-012-2)
+        const hoverOn = states?.[it.key] ? states[it.key] === 'hovered' : hover === it.key;
+        const bg = off ? (hoverOn ? dcv(t.hoverBg, mode) : dcv(t.hiddenBg, mode)) : dcv(look.subtle[it.hue], mode);
         return (
           <button
             key={it.key}
             type="button"
             aria-pressed={!off}
+            aria-disabled={locked || undefined}
             tabIndex={live ? 0 : -1}
             onClick={live ? () => toggle(it.key, it.label) : undefined}
             onPointerEnter={live ? (e) => e.pointerType === 'mouse' && setHover(it.key) : undefined}
@@ -112,7 +117,7 @@ export function LegendTilesView({ look, mode = 'auto', items, hidden = [], onHid
               borderRadius: t.radius,
               background: bg,
               boxShadow: off ? `inset 0 0 0 ${t.hiddenBorderW}px ${dcv(t.hiddenBorder, mode)}` : 'none',
-              cursor: live ? 'pointer' : 'default',
+              cursor: locked ? t.lockedCursor : live ? 'pointer' : 'default',
               textAlign: 'left',
               transform: ratio !== 1 ? `scale(${ratio})` : undefined,
               transitionProperty: 'background-color, transform',
@@ -387,7 +392,7 @@ export function TrendChartView({ look, mode = 'auto', kind = 'line', series, cou
 export type Slice = { key: string; label: string; hue: ChartHue; amount: number };
 export function DonutView({ look, mode = 'auto', slices, diameter, thickness, centerLabel, centerAmount, label, legendId, active: frozen, live = false, marks, pins, bad }: { look: ChartLook; mode?: ViewMode; slices: Slice[]; diameter?: number; thickness?: number; centerLabel?: string; centerAmount?: string; label: string; legendId?: string; active?: string | null; live?: boolean; marks?: Partial<Record<'slice' | 'center' | 'centerLabel', CSSProperties>>; pins?: Partial<Record<'slice' | 'center' | 'centerLabel', ReactNode>>; bad?: { gaps?: boolean } }) {
   const d = diameter ?? look.donut.diameter;
-  const w = thickness ?? look.donut.thickness;
+  const w = thickness ?? donutThickness(look, d);
   const r = (d - w) / 2;
   const circ = 2 * Math.PI * r;
   const total = slices.reduce((s, x) => s + x.amount, 0) || 1;
@@ -449,7 +454,6 @@ export function DonutView({ look, mode = 'auto', slices, diameter, thickness, ce
     </div>
   );
 }
-export const donutFits = (look: ChartLook, amount: string, diameter?: number, thickness?: number) => textWidth(amount, parseFloat(look.donut.center.fontSize)) <= (diameter ?? look.donut.diameter) - (thickness ?? look.donut.thickness) * 2 - 12;
 
 // 도넛 범례 — 카테고리 목록(색 네모 10 · 이름 14 · % 14 · 금액 14 · 700 + "원"). 하위가 있는 줄만 누르는 줄(List — 화살표)
 export type LegendRow = { key: string; label: string; hue: ChartHue; percent: string; amount: string; pressable?: boolean };

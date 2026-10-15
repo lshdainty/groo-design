@@ -93,7 +93,8 @@ motion:
     easing: ease-out cubic
     properties: [scroll]
     note: "마지막 휠 입력 120ms 뒤 가까운 칸으로"
-  "항목 누르기":
-    duration: { value: 부드러운 스크롤, note: "누른 항목을 가운데로 — 멈춘 뒤 값이 정해진다" }
+  "항목 누르기 · ↑ ↓":
+    duration: { value: $motion-duration-d4, note: "200ms — 누른 항목을 가운데로, 키(↑ ↓ · Home · End)도 같다. 멈춘 뒤 값이 정해진다. 웹도 브라우저의 부드러운 스크롤(거리마다 120 ~ 260ms)에 맡기지 않고 이 시간으로 옮긴다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-005, 안 A). 키를 누르고 있으면(반복) 바로바로" }
+    easing: ease-out cubic
     properties: [scroll]
     note: "모션 줄이기면 모든 이동을 바로(v104)"

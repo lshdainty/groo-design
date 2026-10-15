@@ -34,7 +34,7 @@
 
 라벨 오른쪽에는 필수 · 선택 표시가 붙는다. 필수는 빨간 점(6, `fg-critical`), 선택은 "선택" 글(14 `fg-neutral-subtle`)이다 — 둘을 한 화면에 섞지 않는다(아래 Guidelines › 필수 입력 표시하기).
 
-머리 오른쪽에는 보조 액션을 둘 수 있다 — "예시 보기" 처럼 칸을 채우는 데 돕는 작은 텍스트 버튼(Button ghost · neutralSubtle · xsmall · 오른쪽 `flush`). 머리 높이(22)를 바꾸지 않게 위아래로 넘친다.
+머리 오른쪽에는 보조 액션을 둘 수 있다 — "예시 보기" 처럼 칸을 채우는 데 돕는 작은 텍스트 버튼(Button ghost · neutralSubtle · xsmall · 오른쪽 `flush`). 머리 높이(22)를 바꾸지 않게 위아래로 넘친다. 같은 자리에 [Slider](slider.md) 는 지금 값(머리 값 글 — 줄 높이 22 라 넘치지 않는다)을 둔다 — 이 자리는 버튼 하나 또는 머리 값 하나이고 둘을 함께 두지 않는다(SEED Field 의 Suffix Slot 처럼 버튼만이 아니라 자리다). 앱도 이 자리에 위젯을 받는다(구현 세션 질문 Q-015-1).
 
 [그림: 머리 — 라벨 굵기 medium · bold, 필수 점, "선택", 보조 액션](../../site/components/specs/field.tsx#header)
 
@@ -301,6 +301,10 @@ const form = useForm({ defaultValues: { title: "", reason: "" } })
 - **Fieldset 은 컴포넌트로 두지 않는다** — 구역 제목(List Header)과 Field 로 짠다.
 
 ## Migration notes
+
+### 2026-10-15 — 머리 오른쪽은 자리다
+
+구현 세션 질문 Q-015-1 을 있는 규칙으로 정리했다. field.yaml 은 머리 오른쪽을 "작은 텍스트 버튼" 으로, slider.yaml 은 "그 자리에 두는 머리 값 글" 로 적어 둘이 어긋났다 — 머리 값을 늘 보이게 둔 것은 2026-10-09 사용자 결정이다. `headerAction` 을 "버튼 하나 또는 Slider 머리 값" 자리로 고쳤고, 위아래 −5 넘침은 버튼일 때만이다. 웹 레시피는 이미 아무 노드나 받는다. 앱은 이 자리에 위젯을 받는 길을 둔다(값을 Field 밖 줄로 옮기는 것은 10-09 결정과 어긋나 안 된다).
 
 ### 2026-10-08 — 막힘 · 오류 · 필수를 Checkbox · Radio 묶음에
 

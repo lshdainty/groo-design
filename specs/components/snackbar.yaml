@@ -44,7 +44,10 @@ rules:
     enabled:
       region:
         paddingX: { value: $spacing-x2, note: "화면 끝과 8 — 안전 영역이 있으면 그만큼 더" }
-        paddingBottom: { value: $spacing-x2, note: "아래 8 + 안전 영역 — 탭 바 · 플로팅 버튼 · 바닥 버튼이 있으면 그 위 8(안전 영역과 둘 중 큰 쪽 — 탭 바는 안전 영역을 품고 있다)" }
+        paddingBottom: { value: $spacing-x2, note: "아래 8 + 안전 영역 — 탭 바 · 플로팅 버튼 · 바닥 버튼이 있으면 그 위 8(안전 영역과 둘 중 큰 쪽 — 탭 바는 안전 영역을 품고 있다). 화면 키보드가 올라와 있으면 키보드 바로 위 8 — 웹 폰 브라우저도 보이는 화면의 아래 끝을 잰다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-003-1)" }
+        keyboardGap: { value: $spacing-x2, note: "화면 키보드 위 끝 ↔ 띠 아래 끝 — 키보드도 피할 자리 하나다(안전 영역 · 탭 바 · 바닥 버튼과 넷 중 가장 위)" }
+        offsetDuration: { value: $motion-duration-d4, note: "피할 자리(탭 바 · 바닥 버튼 · 키보드)가 바뀌어 띠가 옮겨 갈 때 — 모션 줄이기면 바로(SEED snackbar.region.offsetDuration)" }
+        offsetEasing: { value: $motion-ease-easing, note: "SEED snackbar.region.offsetTimingFunction" }
         zIndex: { value: 400, note: "z-snackbar — specs/z-index.md L6. 시트 · 대화상자 · 확인창 위" }
       root:
         width: { value: 100%, note: "자리 폭 — 최대 464, 넓으면 가운데" }

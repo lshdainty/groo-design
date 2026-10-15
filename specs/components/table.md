@@ -35,7 +35,7 @@ SEED 에는 표 컴포넌트가 없다. SEED 팀이 코드로 그린 표는 문�
 
 ### 머리 · 줄
 
-머리 줄은 41(위아래 10 + 글 20 + 선 1), 본문 줄은 45(위아래 12 + 글 20 + 선 1)다 — SEED 문서 표 그대로. 칸의 좌우는 16 이고, 표가 카드 안에 가장자리까지 붙으므로 첫 칸 앞 · 끝 칸 뒤만 카드 여백과 같은 24 다(카드 머리 제목과 첫 열 글자가 한 줄에 선다). 머리 글자는 본문과 같은 14 · 짙은 `fg-neutral` 에 굵기만 500 이다 — 작은 대문자 · 회색 · 머리 바탕을 두지 않는다. 글은 `t4`(14 / 19)에 줄 높이만 20 으로 둔다.
+머리 줄은 41(위아래 10 + 글 20 + 선 1), 본문 줄은 45(위아래 12 + 글 20 + 선 1)다 — SEED 문서 표 그대로. 칸의 좌우는 16 이고, 표가 카드 안에 가장자리까지 붙으므로 첫 칸 앞 · 끝 칸 뒤만 카드 여백과 같은 24 다(카드 머리 제목과 첫 열 글자가 한 줄에 선다). 머리 글자는 본문과 같은 14 · 짙은 `fg-neutral` 에 굵기만 500 이다 — 작은 대문자 · 회색 · 머리 바탕을 두지 않는다. 글은 `t4`(14 / 19)에 줄 높이만 20 으로 둔다 — 같은 부위에 따로 적은 줄 높이 · 굵기가 `typography` 의 값을 덮는다(스펙 JSON 은 둘을 접어 14 / 20 · 500 하나로 싣는다 — Q-011-2).
 
 줄 선은 1px `stroke-neutral-subtle` 이고 머리 아래 · 줄마다 · 마지막 줄 아래까지 긋는다 — 마지막 선이 표 끝을 마감한다. 세로 선 · 줄무늬 · 바깥 테두리는 없다.
 
@@ -53,7 +53,7 @@ SEED 에는 표 컴포넌트가 없다. SEED 팀이 코드로 그린 표는 문�
 
 ### 줄 종류 — 45 · 72
 
-줄 높이는 하나다 — 45. 칸 하나라도 썸네일(Image Frame 1:1 48)이나 두 줄 글(윗줄 14 + 둘째 줄 13 · `fg-neutral-subtle`)을 두면 그 표의 모든 줄이 72 다(SEED 그림). 한 표 안에서 줄 높이를 섞지 않고, 촘촘한 · 넉넉한 두 벌(밀도 변형)을 두지 않는다. 사람은 [Avatar](avatar.md) 42, 은행 · 카드 같은 물건은 [Logo Tile](logo-tile.md) 40 을 썸네일 자리에 둔다.
+줄 높이는 하나다 — 45. 칸 하나라도 썸네일(Image Frame 1:1 48)이나 두 줄 글(윗줄 14 + 둘째 줄 13 · `fg-neutral-subtle`)을 두면 그 표의 모든 줄이 72 다(SEED 그림). 72 줄의 칸은 위아래 여백을 두지 않고 내용을 세로 가운데에 둔다 — 썸네일 48 에 위아래 12 를 더하면 선까지 73 이라 높이가 먼저다(Q-011-1). 한 표 안에서 줄 높이를 섞지 않고, 촘촘한 · 넉넉한 두 벌(밀도 변형)을 두지 않는다. 사람은 [Avatar](avatar.md) 42, 은행 · 카드 같은 물건은 [Logo Tile](logo-tile.md) 40 을 썸네일 자리에 둔다.
 
 [그림: 한 줄 표 45 · 썸네일 · 두 줄 표 72](../../site/components/specs/table.tsx#row-kinds)
 
@@ -358,7 +358,7 @@ import { TableBody, TableSkeletonRows, TableStatusRow } from "@/components/ui/ta
 | **WCAG 4.1.3** Status messages | 고른 수("3개 선택됨") · 정렬 결과("남은 휴가 내림차순으로 정렬했어요.")를 `role="status"` 로 ✓ — 고른 수의 status 는 바가 없을 때도 두어 처음 고를 때 읽힌다 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 정렬 버튼 칸 폭 × 41 · 체크 · ⋮ 44 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 체크 · ⋮ 44 × 44 ✓. 정렬 버튼은 위아래로 44 까지 넓힌다 ✓. 768 미만은 List 줄(46 이상) ✓ |
-| **ARIA** | 정렬된 열의 머리 칸에 `aria-sort="ascending"` · `"descending"`(다른 열에는 달지 않는다). 정렬 버튼의 이름은 열 이름. ⋮ 열 머리는 숨긴 "동작", ⋮ 는 "{줄 이름} 더보기" · `aria-haspopup="menu"`. 체크 이름 "{줄 이름} 선택" · 머리 "모두 선택"(일부면 `aria-checked="mixed"`). 일괄 작업 바는 `role="region"` · `aria-label="선택한 항목"` |
+| **ARIA** | 정렬된 열의 머리 칸에 `aria-sort="ascending"` · `"descending"`(다른 열에는 달지 않는다). 정렬 버튼의 이름은 열 이름. ⋮ 열 머리는 숨긴 "동작", ⋮ 는 "{줄 이름} 더보기" · `aria-haspopup` 은 여는 것대로 — 1280 이상 `"menu"`([Menu](menu.md)) · 미만 `"dialog"`([Menu Sheet](menu-sheet.md) — SEED Menu Sheet 트리거와 같다, Q-011-4). 체크 이름 "{줄 이름} 선택" · 머리 "모두 선택"(일부면 `aria-checked="mixed"`). 일괄 작업 바는 `role="region"` · `aria-label="선택한 항목"` |
 
 ## Do / Don't
 
@@ -400,6 +400,14 @@ import { TableBody, TableSkeletonRows, TableStatusRow } from "@/components/ui/ta
 - **768 미만은 List 줄** — SEED 문서 표 · Table Pagination 예제는 감싸개가 가로로 밀린다(사용자 결정 — 가로 스크롤 · 열 숨김은 고르지 않았다).
 
 ## Migration notes
+
+### 2026-10-15 — 구현 세션 질문 정리(Q-011-1 · 2 · 4)
+
+사용자가 [비교 페이지](https://claude.ai/artifact/HCRX5Ds7svjfCLi9Aogpmt)에서 정리 항목을 "추천대로" 정했다(2026-10-15). 보이는 값은 바뀌지 않는다 — 이미 정한 결정(1A 의 41 · 45 · 72 · 14 / 20)을 YAML 이 빠짐없이 적게 했다.
+
+- **Q-011-1 72 줄의 칸 여백** — `row: rich` 규칙에 `cell.paddingY 0` 을 적었다. 레시피 · 웹(`h-[72px] py-0`)은 이미 그렇다 — 웹 측정 스크립트의 "rich 칸 여백은 재지 않음" 예외를 걷을 수 있다.
+- **Q-011-2 `t4` + 줄 높이 20** — 같은 부위에 `lineHeight` · `fontWeight` 가 따로 있으면 그 값이 `typography` 를 덮는다(`specs/CLAUDE.md`). 스펙 JSON 빌더가 그 둘을 `typography` 에 접어 머리 칸은 14 / 20 · 500, 본문 칸은 14 / 20 · 400 하나로 싣는다 — 따로 적은 값도 그대로 남는다.
+- **Q-011-4 ⋮ 의 `aria-haspopup`** — 여는 것대로 1280 이상 `"menu"` · 미만 `"dialog"` 로 고쳐 적었다. 레시피(`ResponsiveMenuTrigger`) · 웹은 이미 그렇다.
 
 ### 2026-10-08 — SEED 문서 표 · 그림으로 다시 쓴다
 

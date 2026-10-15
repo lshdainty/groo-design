@@ -3345,7 +3345,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 | 상태 | 표면 | 글자 · 아이콘 | 테두리 · 링 | 더하는 것 |
 |---|---|---|---|---|
 | `hovered` | `-pressed` 역할 색(누름과 같다) | 그대로 | 그대로 | — |
-| `focused` — 키보드 | 그대로 | 그대로 | 링 2px · 띄움 2px · `stroke-focus-ring` | `outline` 으로 그려 자리가 밀리지 않는다 |
+| `focused` — 키보드 | 그대로 | 그대로 | 링 2px · 띄움 2px · `stroke-focus-ring` | `outline` 으로 그려 자리가 밀리지 않는다. 링은 상자 모서리를 따른다 — 링 바깥 반지름 = 상자 반지름 + 띄움 + 두께(띄움 2 면 + 4, 모서리 12 상자는 16). 모서리 0 이면 0, 원은 원이다. CSS `outline` 이 그리는 그대로라 앱은 이 셈으로 그린다(2026-10-15 구현 세션 질문 Q-007-5 정리) |
 | `focused` — 입력 중 | 그대로 | 그대로 | 안쪽 2px `stroke-neutral-contrast` | 반투명 링은 쓰지 않는다. 안쪽에 덧그려 내용이 밀리지 않는다(Text Field 2026-10-01 — 처음엔 `stroke-focus-ring` 이었다) |
 | `pressed` | `-pressed` 역할 색 | 그대로 | 그대로 | 축소(Feedback) |
 | `selected` | `bg-neutral-inverted` | `fg-neutral-inverted` | — | 칩 · 세그먼트 · 날짜처럼 고르는 요소 |

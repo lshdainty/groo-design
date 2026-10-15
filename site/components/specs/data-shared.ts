@@ -210,11 +210,12 @@ export type ChartLook = {
   grid: { width: number; dash: number[]; color: DColor };
   line: { width: number; areaFrom: number; areaTo: number };
   bar: { maxW: number; radius: number; gap: number };
-  donut: { thickness: number; diameter: number; phone: { diameter: number; thickness: number }; center: DType & { fg: DColor }; label: DType & { fg: DColor } };
+  // 두께 = 지름 × perDiameter + offset 을 정수로(chart.yaml series — Q-012-5 C). thickness · phone.thickness 는 그 식으로 푼 값
+  donut: { perDiameter: number; offset: number; thickness: number; diameter: number; phone: { diameter: number; thickness: number }; center: DType & { fg: DColor }; label: DType & { fg: DColor } };
   point: { size: number; ring: number; ringColor: DColor };
   crosshair: { width: number; color: DColor; dash: number[] };
   tooltip: { minW: number; padY: number; padX: number; radius: number; bg: DColor; shadow: DShadow; gap: number; z: number; head: DType & { fg: DColor }; row: DType & { fg: DColor; gap: number; minGap: number; valueFg: DColor; valueWeight: number }; swatch: { size: number; radius: number } };
-  tile: { radius: number; padY: number; padX: number; gap: number; name: DType & { fg: DColor }; total: DType & { fg: DColor }; dot: number; dotGap: number; totalGap: number; hiddenBg: DColor; hiddenBorder: DColor; hiddenBorderW: number; hoverBg: DColor; press: DPress; color: DMotion };
+  tile: { radius: number; padY: number; padX: number; gap: number; name: DType & { fg: DColor }; total: DType & { fg: DColor }; dot: number; dotGap: number; totalGap: number; hiddenBg: DColor; hiddenBorder: DColor; hiddenBorderW: number; hoverBg: DColor; press: DPress; color: DMotion; lockedCursor: string };
   // 누름 · 호버 바탕은 List 규칙 — 좌우 들임(list.yaml background.insetX) · 카드 안 동심 모서리(card.yaml list.itemRadius)
   // bleed — 카드 본문 안의 범례가 카드 여백(24)만큼 양옆으로 나가 줄이 가장자리까지 간다(List 줄처럼 줄이 제 24 를 가진다)
   legendList: { minH: number; type: DType; gap: number; swatch: number; fg: DColor; sub: DColor; hoverBg: DColor; bgInsetX: number; bgRadius: number; bleed: number };
@@ -320,3 +321,10 @@ export type SwipeKitLook = {
 };
 // 트레이 폭 — 칸 폭의 합(첫 칸 + 다음 칸들)
 export const trayWidth = (s: Pick<SwipeKitLook, 'first' | 'rest'>, n: number) => (n <= 0 ? 0 : s.first.width + s.rest.width * (n - 1));
+
+// 도넛 두께(서버 · 클라이언트 그림이 함께 쓴다) — 지름 ÷ 10 + 6 을 정수로(chart.yaml series.thicknessPerDiameter · thicknessOffset, Q-012-5 C)
+export const donutThickness = (look: ChartLook, diameter: number) => Math.round(diameter * look.donut.perDiameter + look.donut.offset);
+export const donutFits = (look: ChartLook, amount: string, diameter?: number, thickness?: number) => {
+  const d = diameter ?? look.donut.diameter;
+  return textWidth(amount, parseFloat(look.donut.center.fontSize)) <= d - (thickness ?? donutThickness(look, d)) * 2 - 12;
+};

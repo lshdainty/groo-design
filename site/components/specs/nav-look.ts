@@ -521,13 +521,16 @@ function pageLook(brand: Brand): PaginationLook {
 function tableLook(brand: Brand): TablePaginationLook {
   const F = 'table-pagination.yaml';
   const spec = loadComponentSpec('table-pagination');
-  sameSet(axisValues(spec, 'total'), ['known', 'unknown'], `${F} total`);
+  sameSet(axisValues(spec, 'total'), ['known', 'unknown', 'empty'], `${F} total`);
   sameSet(stateNames(spec), ['enabled', 'hovered', 'pressed', 'focused', 'disabled'], `${F} states`);
   const b = resolveState(spec, {}, 'enabled');
   const hov = resolveState(spec, {}, 'hovered');
   const pr = resolveState(spec, {}, 'pressed');
   const fo = resolveState(spec, {}, 'focused');
   const di = resolveState(spec, {}, 'disabled');
+  // 빈 표(0개)는 막힘 상태가 아니라 전체 수의 값 — 화살표 둘 · 범위 "0-0" 이 막힌다(Q-011-5)
+  const empty = resolveState(spec, { total: 'empty' }, 'enabled');
+  if (tok(empty['arrow.color'], brand, `${F} total empty arrow.color`).name !== tok(di['arrow.color'], brand, `${F} disabled arrow.color`).name) throw new Error(`${F} 빈 표의 화살표가 막힌 화살표와 다른 색이다 — 그림은 한 색으로 그린다`);
   const select = selectLook(brand);
   const height = len(b['root.height'], `${F} root.height`);
   // 두 고르기는 Select medium — 그 높이가 줄 높이와 같아야 한다(사용자 결정 2026-10-08)
@@ -544,7 +547,7 @@ function tableLook(brand: Brand): TablePaginationLook {
     options,
     pageSize: { minW: len(b['pageSize.minWidth'], `${F} pageSize.minWidth`), gap: len(b['pageSize.gap'], `${F} pageSize.gap`) },
     suffix: { ...typeOf(b['pageSizeSuffix.typography'], `${F} pageSizeSuffix.typography`), fontWeight: weightOf(b['pageSizeSuffix.fontWeight'], `${F} pageSizeSuffix.fontWeight`), color: tok(b['pageSizeSuffix.foreground'], brand, `${F} pageSizeSuffix.foreground`) },
-    range: { minW: len(b['pageRange.minWidth'], `${F} pageRange.minWidth`), maxH: len(b['pageRange.maxHeight'], `${F} pageRange.maxHeight`), gap: len(b['pageRange.gap'], `${F} pageRange.gap`), disabledFg: tok(di['pageRange.foreground'], brand, `${F} disabled pageRange.foreground`) },
+    range: { minW: len(b['pageRange.minWidth'], `${F} pageRange.minWidth`), maxH: len(b['pageRange.maxHeight'], `${F} pageRange.maxHeight`), gap: len(b['pageRange.gap'], `${F} pageRange.gap`), disabledFg: tok(empty['pageRange.foreground'], brand, `${F} total empty pageRange.foreground`) },
     total: { ...typeOf(b['total.typography'], `${F} total.typography`), fontWeight: weightOf(b['total.fontWeight'], `${F} total.fontWeight`), color: tok(b['total.foreground'], brand, `${F} total.foreground`) },
     arrow: {
       size,

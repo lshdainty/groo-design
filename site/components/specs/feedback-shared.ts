@@ -99,7 +99,8 @@ export type FbScreen = Record<FbScreenTone, FbColor> & { dim: { light: string; d
 
 // ── Snackbar ─────────────────────────────────────────────
 export type SnackbarLook = {
-  region: { padX: number; padBottom: number; zIndex: number };
+  // 화면 키보드 위 거리 · 피할 자리가 바뀌어 옮겨 갈 때의 모션
+  region: { padX: number; padBottom: number; keyboardGap: number; offset: FbMotion; zIndex: number };
   root: { maxWidth: number; minHeight: number; pad: number; radius: number; bg: FbColor; shadow: string };
   // 보이는 시간(ms) — 액션이 없을 때 · 있을 때
   duration: { plain: number; withAction: number };

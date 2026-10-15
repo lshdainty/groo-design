@@ -238,7 +238,7 @@ export function SegmentedView({
   states,
   ariaLabel,
   ariaLabelledby,
-  srNew = '새 내용',
+  srNew = '새 소식',
   zone,
   itemZone,
   itemPins,

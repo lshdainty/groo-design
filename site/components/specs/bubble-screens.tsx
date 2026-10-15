@@ -22,17 +22,20 @@ export function Bubble({ brand = 'desk', ...p }: Omit<BubbleViewProps, 'look'> &
 }
 
 // 트리거에 붙인 말풍선 — side 쪽으로 몸통 거리(화살표 끝 4 + 화살표 8), 화살표는 트리거 가운데.
-// align='end' 면 말풍선 끝 변을 트리거 끝 변에 맞추고 화살표를 트리거 가운데로(가장자리에 붙은 트리거)
+// align='end' 면 화면 끝에 붙은 트리거 — 화살표는 트리거 가운데, 말풍선 끝 변은 화살표 가운데에서 모서리 14 + 화살표 폭의 반(20)만큼만
+// 나간다(말풍선이 가장자리 16 보다 붙는다 — help-bubble.md "위치", 2026-10-15 Q-004-1)
 export function BubbleAt({ trigger, side = 'top', align = 'center', triggerSize = 40, brand = 'desk', bubble, zIndex = 6 }: { trigger: ReactNode; side?: BubbleSide; align?: 'center' | 'end'; triggerSize?: number; brand?: Brand; bubble: (p: { side: BubbleSide; arrowEnd?: number }) => ReactNode; zIndex?: number }) {
-  const off = bl(brand).bodyOffset;
+  const { bodyOffset: off, arrow } = bl(brand);
+  const reach = arrow.pad + arrow.width / 2;
   const vertical = side === 'top' || side === 'bottom';
-  const along: CSSProperties = align === 'end' ? (vertical ? { right: 0 } : { bottom: 0 }) : vertical ? { left: '50%', transform: 'translateX(-50%)' } : { top: '50%', transform: 'translateY(-50%)' };
+  const endInset = triggerSize / 2 - reach;
+  const along: CSSProperties = align === 'end' ? (vertical ? { right: endInset } : { bottom: endInset }) : vertical ? { left: '50%', transform: 'translateX(-50%)' } : { top: '50%', transform: 'translateY(-50%)' };
   const place: CSSProperties =
     side === 'top' ? { bottom: `calc(100% + ${off}px)`, ...along } : side === 'bottom' ? { top: `calc(100% + ${off}px)`, ...along } : side === 'left' ? { right: `calc(100% + ${off}px)`, ...along } : { left: `calc(100% + ${off}px)`, ...along };
   return (
     <span style={{ position: 'relative', display: 'inline-flex', flexShrink: 0 }}>
       {trigger}
-      <span style={{ position: 'absolute', zIndex, ...place }}>{bubble({ side, arrowEnd: align === 'end' ? triggerSize / 2 : undefined })}</span>
+      <span style={{ position: 'absolute', zIndex, ...place }}>{bubble({ side, arrowEnd: align === 'end' ? reach : undefined })}</span>
     </span>
   );
 }

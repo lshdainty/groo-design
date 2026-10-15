@@ -1,0 +1,120 @@
+# Swipe Actions 의 수치 원본 — 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 폰(768 미만) 목록 줄을 왼쪽으로 밀면 오른쪽에서 동작 버튼이 드러나는 지름길(2026-10-02 사용자 결정 — 같은 동작은 줄 끝 ⋮ →
+# Menu Sheet 로도 연다). 2026-10-08 데이터 표시 결정의 "줄 밀기" 로 색 · 글을 고쳤다 — 다크 배지 3:1 · 중립 배지 테두리 ·
+# 라벨 색은 스펙대로 · 줄 높이 1.3 · Esc 뒤 초점은 줄로.
+#
+# 색은 원형 배지만 갖는다(kind 규칙). 배지는 그 동작의 글자색(fg-critical · fg-informative)으로 채우고 아이콘은 반전 글자
+# (fg-neutral-inverted)다 — 라이트는 짙은 배지 + 흰 아이콘, 다크는 밝은 배지 + 짙은 아이콘이라 두 모드 모두 배지가 줄 바탕과
+# 3:1 을 넘는다. 크기는 단일 사이즈(size: default)다. kind · size 에 기본값을 두지 않아 상태 표(#matrix)에는 상태마다 바뀌는
+# 공통 값만 보인다 — 상태와 상관없는 공통 값은 #base.enabled.
+#
+# SEED 에는 줄 밀기가 없다 — 줄의 동작은 늘 보이는 버튼(List suffix 1 ~ 3개 · 표의 ⋮ 열)이고, 원칙은 "복잡한 제스처는 단순한
+# 터치 동작으로도 수행 가능하도록 대체 방법을 제공"(Inclusive Design) 하나다. 값은 모두 porest 가 정했다.
+
+name: Swipe Actions
+
+slots:
+  row: ⓐ 감싸는 목록 줄 — 스펙이 내부를 정의하지 않는다. 닫혔을 때 초점을 받을 수 있다(tabIndex -1)
+  track: ⓑ 줄 뒤에 드러나는 자리 — 바탕을 칠하지 않는다
+  action: ⓒ 동작 한 칸(버튼) — 원형 배지 + 그 아래 라벨, 세로 가운데. 누르는 자리는 이 칸 전체
+  badge: 원형 배지 — 색은 여기만
+  icon: 배지 안 아이콘
+  label: 배지 아래 라벨
+  moreButton: 줄 끝 ⋮ — 같은 동작을 Menu Sheet 로 여는 다른 길
+  focusRing: 키보드 포커스 링
+
+variants:
+  kind:
+    neutral: 곁 동작 — 고정 · 보관 · 공유
+    primary: 주 동작 — 수정
+    destructive: 되돌리기 어려움 — 삭제
+  size: [default]
+
+states:
+  enabled: ""
+  hovered: 웹 — 누름과 같은 모습(v106)
+  focused: (visible)
+  pressed: (active)
+  disabled: 전용 색(v106) — 불투명도로 흐리지 않는다
+
+rules:
+  # ── 상태(공통) ────────────────────────────────────────
+  - when: {}
+    enabled:
+      badge:
+        background: { value: kind 색, note: "바탕은 배지에만 있다 — kind 별 값은 Kinds 표" }
+      action:
+        brightness: 100%
+        shadow: none
+        transform: { value: translateX(0), note: "누를 때 움직이지 않는다 — 손가락으로 밀어 둔 트레이와 이중으로 움직인다" }
+        cursor: pointer
+      moreButton:
+        size: { value: 40px, note: "Button ghost · iconOnly · medium — 아이콘 18(lucide ellipsis-vertical) · 누르는 영역 44 · 이름 \"{줄 이름} 더보기\" · 1280 미만이라 Menu Sheet" }
+    hovered:
+      action: { brightness: 88% }
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: -2px, note: "안쪽 — 트레이 바깥으로 나가면 줄 경계에서 잘린다" }
+        color: $color-stroke-focus-ring
+    pressed:
+      action: { brightness: 88% }
+    disabled:
+      action:
+        cursor: not-allowed
+      badge:
+        background: $color-bg-disabled
+      icon:
+        color: $color-fg-disabled
+      label:
+        color: $color-fg-disabled
+
+  # ── 종류별 색 ─────────────────────────────────────────
+  - when: { kind: neutral }
+    enabled:
+      badge:
+        background: { value: $color-bg-neutral-weak, note: "줄 바탕과 1.08 · 다크 1.30 이라 안쪽 1px 테두리로 둘레를 잡는다(배지는 아이콘 · 라벨로 읽힌다)" }
+        borderWidth: 1px
+        borderColor: $color-stroke-neutral-weak
+      icon: { color: $color-fg-neutral }
+      label: { color: $color-fg-neutral-muted }
+
+  - when: { kind: primary }
+    enabled:
+      badge: { background: { value: $color-fg-informative, note: "라이트 #1D6EC9 · 다크 #69ABFF — 줄 바탕과 5.09 · 다크 6.12(지금 다크 bg-informative-solid #0F65BF 는 2.51)" } }
+      icon: { color: { value: $color-fg-neutral-inverted, note: "라이트 흰 · 다크 짙은 글자 — 배지 위 5.09 · 6.12" } }
+      label: { color: { value: $color-fg-neutral-muted, note: "주 동작도 라벨은 회색 — 색은 배지가 말한다(앱의 파랑 라벨은 스펙과 다르다)" } }
+
+  - when: { kind: destructive }
+    enabled:
+      badge: { background: { value: $color-fg-critical, note: "라이트 #D72323 · 다크 #FF8477 — 줄 바탕과 5.06 · 다크 6.08(지금 다크 bg-critical-solid #CC0E17 은 2.51)" } }
+      icon: { color: { value: $color-fg-neutral-inverted, note: "라이트 흰 · 다크 짙은 글자 — 배지 위 5.06 · 6.08" } }
+      label: { color: { value: $color-fg-critical, note: "줄 바탕 위 5.06 · 다크 6.08 — 라이트 · 다크 한 토큰(옛 error · error-light 두 벌을 걷는다)" } }
+
+  # ── 크기(단일) ────────────────────────────────────────
+  - when: { size: default }
+    enabled:
+      action:
+        height: { value: 줄 높이, note: "min 56 — 줄이 56 보다 낮으면 56" }
+        width: { value: 배지 + 앞 간격, note: "첫 액션 56, 이후 48 — 앞 간격(첫 20 · 다음 12) + 배지 36" }
+        paddingY: 0
+        paddingX: { value: 앞 간격만, note: "첫 동작 앞 20 · 동작끼리 12 — 마지막 동작은 화면 끝에 붙는다" }
+        gap: { value: $spacing-x0_5, note: "배지 ↔ 라벨 2" }
+        touchTarget: { value: 칸 전체, note: "48 ~ 56 × 줄 높이(56 이상) — AA ✓ · AAA ✓" }
+      badge:
+        size: 36px
+        radius: { value: $radius-full, note: "원형" }
+      icon:
+        size: 18px
+      label:
+        typography: { value: $text-t2, note: "12 — 굵기 · 줄 높이는 이 컴포넌트의 값(12 / 700 / 1.3). 칸 폭 48 이 좁아 기본 줄 높이면 두 줄에서 넘친다" }
+        fontWeight: { value: 700, note: "v100 — 600 은 쓰지 않는다. 버튼 글자와 같은 700" }
+        lineHeight: { value: 1.3, note: "웹 · 앱 같은 값 — 앱의 1.5 를 고친다" }
+
+motion:
+  "열림 · 닫힘":
+    duration: $motion-duration-d3
+    easing: { value: $motion-ease-enter, note: "손을 뗀 뒤 자리를 잡는 감속 — 옛 fast · ease-out. 끄는 동안은 손가락을 1:1 로 따라가며 모션이 없다" }
+    properties: [transform]
+    note: "모션 줄이기면 바로 — 끌기 따라가기는 모션이 아니라 그대로"

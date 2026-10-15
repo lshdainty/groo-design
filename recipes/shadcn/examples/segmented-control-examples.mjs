@@ -11,7 +11,7 @@
  * Preview 는 정적 HTML 이다 — 페이지의 Tailwind v4 browser CDN 이 클래스를 utility 로 만든다.
  * 짜임은 레시피가 그리는 DOM 그대로다 — 트랙 <div role="radiogroup" data-slot="segmented-control">(Radix RadioGroup.Root) > 고른 알약
  * <span data-slot="segmented-control-indicator">(첫 자식 — 칸이 그 위에 그려진다) + 칸 <button role="radio" data-slot="segmented-control-item">
- * (Radix RadioGroup.Item) > 글 <span data-slot="segmented-control-label">(+ 알림 점 <span data-slot="segmented-control-notification">) + 화면 밖 "새 내용".
+ * (Radix RadioGroup.Item) > 글 <span data-slot="segmented-control-label">(+ 알림 점 <span data-slot="segmented-control-notification">) + 화면 밖 "새 소식".
  * 고른 알약의 자리는 레시피가 그린 칸을 세어 알약의 style 에 --segmented-count · --segmented-index 로 넣는다 — 미리보기도 같은 두 변수를 style 에 적는다.
  * Radix 가 붙이는 것 중 칸의 aria-checked · data-state · data-disabled · disabled · value 와 트랙의 data-disabled 를 그리고, 트랙의 tabindex · dir ·
  * style 은 그리지 않는다(chip-examples.mjs 의 라디오 묶음과 같다). 칸의 tabindex 는 레시피가 정한다 — 고른 칸만 0, 나머지는 −1 이다(Radix 의 로빙 위치는
@@ -143,7 +143,7 @@ function item({ value, label, checked = false, disabled = false, notification = 
     `tabindex="${checked ? 0 : -1}"`,
   ]);
   const dot = notification && !checked ? `<span aria-hidden="true" data-slot="segmented-control-notification" class="${NOTIFICATION}"></span>` : "";
-  const sr = notification && !checked ? `<span class="${SR_ONLY}">새 내용</span>` : "";
+  const sr = notification && !checked ? `<span class="${SR_ONLY}">새 소식</span>` : "";
   return `<button ${root}><span data-slot="segmented-control-label" class="${labelClass(force)}">${esc(label)}${dot}</span>${sr}</button>`;
 }
 
@@ -294,7 +294,7 @@ export const segmentedControlExamples = [
   {
     title: "알림 점 · 막힘",
     description:
-      "새 내용이 있는 칸에만 notification 을 준다 — 글 끝에서 2 · 글 위쪽에 6 · fg-brand(브랜드 글자색) 점을 띄우고(칸 폭은 그대로) 보조 기술에는 \"새 내용\" 을 덧붙인다. 고른 칸에는 그리지 않고(레시피가 뺀다), 내용을 보면 notification 을 끈다. 칸 하나(SegmentedControlItem disabled) 또는 트랙 전체(SegmentedControl disabled)를 막을 수 있다 — 막힌 칸은 누를 수 없고 화살표 이동에서 건너뛴다. 늘 하나가 골라져 있어 트랙을 막아도 고른 칸이 보인다(bg-disabled + 1px stroke-neutral-solid).",
+      "새 소식이 있는 칸에만 notification 을 준다 — 글 끝에서 2 · 글 위쪽에 6 · fg-brand(브랜드 글자색) 점을 띄우고(칸 폭은 그대로) 보조 기술에는 \"새 소식\" 을 덧붙인다. 고른 칸에는 그리지 않고(레시피가 뺀다), 내용을 보면 notification 을 끈다. 칸 하나(SegmentedControlItem disabled) 또는 트랙 전체(SegmentedControl disabled)를 막을 수 있다 — 막힌 칸은 누를 수 없고 화살표 이동에서 건너뛴다. 늘 하나가 골라져 있어 트랙을 막아도 고른 칸이 보인다(bg-disabled + 1px stroke-neutral-solid).",
     jsx: `<SegmentedControl aria-label="더치페이 보기" value={side} onValueChange={setSide}>
   <SegmentedControlItem value="receive" notification={hasNewRequest}>받을 돈</SegmentedControlItem>
   <SegmentedControlItem value="send">보낼 돈</SegmentedControlItem>

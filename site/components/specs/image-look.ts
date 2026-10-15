@@ -268,7 +268,7 @@ export function cardArtLook(): CardArtLook {
     const v = resolveState(spec, { size: s }, 'enabled');
     const nameClamp = Number(unbox(must(v['name.lineClamp'], F, `${s} name.lineClamp`)));
     if (!Number.isInteger(nameClamp) || nameClamp < 1) throw new Error(`${F} ${s} name.lineClamp(${nameClamp})가 1 이상의 정수가 아니다`);
-    look.sizes[s] = { padX: len(v['face.paddingX'], F, `${s} face.paddingX`), padBottom: len(v['face.paddingBottom'], F, `${s} face.paddingBottom`), issuer: typeOf(v['issuer.typography'], F, `${s} issuer.typography`), name: typeOf(v['name.typography'], F, `${s} name.typography`), nameClamp };
+    look.sizes[s] = { padX: len(v['label.paddingX'], F, `${s} label.paddingX`), padBottom: len(v['label.paddingBottom'], F, `${s} label.paddingBottom`), issuer: typeOf(v['issuer.typography'], F, `${s} issuer.typography`), name: typeOf(v['name.typography'], F, `${s} name.typography`), nameClamp };
   }
   for (const [, w, h, s] of noteOf(small['initial.fontSize']).matchAll(/(\d+)\((\d+(?:\.\d+)?)\)\s*(\d+)/g)) {
     same(Math.round((Number(w) / ratio) * 10) / 10, Number(h), `${F} small 비고의 폭 ${w} 높이`);

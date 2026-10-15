@@ -29,6 +29,7 @@ scripts/build-preview-html.mjs `.<name>` CSS  ← preview.html 시각 (spec 시�
 - 없는 토큰·변형·상태·구역을 가리키면 사이트 빌드(CI `site` 잡)가 파일·줄과 함께 멈춘다.
 - 형식은 `button.yaml` 머리 주석. 아직 YAML 이 없는 컴포넌트는 지금처럼 md 표가 원본이다.
 - 값: `$토큰` · `$토큰 / 12%` · 단위를 붙인 값 · `{ value, dark, note }`(다크 값이 따로 있거나 비고를 붙일 때).
+- 글자: 같은 부위에 `typography` 와 `lineHeight` · `fontWeight` 가 같이 있으면 따로 적은 값이 `typography` 의 그 값을 덮는다(표 14 / 20 · 줄 밀기 라벨 1.3). 스펙 JSON(`export:spec`)은 같은 규칙 · 같은 상태 · 같은 부위의 둘을 `typography` 객체에 접어 싣고, 따로 적은 값도 그대로 둔다 — 배수 줄 높이(1.3)는 글자 크기를 곱한 px 로 접는다(2026-10-15 — 구현 세션 질문 Q-011-2 · Q-012-1 정리).
 - 축·상태: 목록 또는 `{ 값: 설명 }` 맵 — 설명은 표의 '설명' 칸에 나온다.
 - 상태 매트릭스의 한 줄이면 `states` 에 둔다(Input 의 `error` · `readonly` 처럼 오래 가는 것도). 다른 상태와 **곱해지는** 것 — 탭 active × hover, 체크 checked × disabled — 은 **축**으로 둔다.
 - 기본 상태는 `states` 의 첫째다(보통 `enabled`, Input 처럼 `default` 도 된다). 다른 상태에는 기본에서 바뀌는 값만 적는다.

@@ -79,7 +79,7 @@ SEED 에는 차트 컴포넌트도 차트 색도 없다 — 팔레트 7가족과
 
 ### 선 · 막대 범례 — 지표 타일
 
-선 · 막대 차트의 범례는 차트 위의 지표 타일이다(사용자 결정 — SEED 그림). 타일 하나가 계열 하나 — 점 8(계열 색) + 이름 13 · `fg-neutral-muted`, 아래 합계 16 / 22 · 700 · `fg-neutral`. 켠 계열은 바탕이 그 색의 옅은 바탕(`chart-{색}-subtle`, v111), 끈 계열은 흰 면 + 1px `stroke-neutral-weak` 이다. 타일을 누르면 그 계열을 켜고 끈다 — 키보드로도(`Enter` · `Space`). 마지막 하나는 끌 수 없다. 타일 사이 8, 타일과 차트 사이 8. 차트 아래 점 범례는 두지 않는다.
+선 · 막대 차트의 범례는 차트 위의 지표 타일이다(사용자 결정 — SEED 그림). 타일 하나가 계열 하나 — 점 8(계열 색) + 이름 13 · `fg-neutral-muted`, 아래 합계 16 / 22 · 700 · `fg-neutral`. 켠 계열은 바탕이 그 색의 옅은 바탕(`chart-{색}-subtle`, v111), 끈 계열은 흰 면 + 1px `stroke-neutral-weak` 이다. 타일을 누르면 그 계열을 켜고 끈다 — 키보드로도(`Enter` · `Space`). 마우스를 올리면 끈 타일만 바탕이 `bg-layer-default-pressed` 가 되고, 누르면 색 없이 2px 거리 축소만 한다 — 바탕이 이미 켬 · 끔을 말하므로 누름에 색을 쓰지 않는다(SEED Feedback Color, Q-012-2). 마지막 하나는 끌 수 없다 — 그 타일은 켠 색 그대로 두고(회색으로 바꾸지 않는다) `aria-disabled` 로 막는다. 마우스를 올리면 커서가 금지 표시(`not-allowed` — v106 비활성 커서)이고 눌러도 축소하지 않는다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-012-3, 안 C). 타일 사이 8, 타일과 차트 사이 8. 차트 아래 점 범례는 두지 않는다.
 
 [그림: 지표 타일 — 수입 켬 · 지출 끔, 누르면 선이 사라진다](../../site/components/specs/chart.tsx#legend-tiles)
 
@@ -87,9 +87,11 @@ SEED 에는 차트 컴포넌트도 차트 색도 없다 — 팔레트 7가족과
 
 [표: 지표 타일](chart.yaml#base.enabled@legendTile)
 
+[그림: 끌 수 없는 마지막 타일 — 수입만 켜져 있다, 커서 금지 표시 · 누름 없음](../../site/components/specs/chart.tsx#legend-locked)
+
 ### 도넛 — 목록 범례 · 가운데 합계
 
-도넛의 범례는 카테고리 목록이다 — 줄마다 색 네모 10 + 이름 14 + % 14 · `fg-neutral-subtle` + 금액 14 · 700 + "원". 하위 카테고리가 있는 줄은 누르는 줄이다(통계의 카테고리 → 하위로). 가운데는 합계(16 / 22 · 700) + 위 라벨(12) — 돈은 가운데서도 줄이지 않는다("73.3만" 이 아니라 "733,000원"). 가운데에 들어가지 않으면 가운데 글을 빼고 목록 위에 합계를 둔다. 조각 사이는 0, 두께는 지름 160 에서 22(폰 120 에서 18)다.
+도넛의 범례는 카테고리 목록이다 — 줄마다 색 네모 10 + 이름 14 + % 14 · `fg-neutral-subtle` + 금액 14 · 700 + "원". 하위 카테고리가 있는 줄은 누르는 줄이다(통계의 카테고리 → 하위로). 가운데는 합계(16 / 22 · 700) + 위 라벨(12) — 돈은 가운데서도 줄이지 않는다("73.3만" 이 아니라 "733,000원"). 가운데에 들어가지 않으면 가운데 글을 빼고 목록 위에 합계를 둔다. 조각 사이는 0 이다. 두께는 지름에서 나온다 — **지름 ÷ 10 + 6** 을 정수로 반올림한다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-012-5, 안 C). 데스크톱 대시보드 160 은 22, 폰 120 은 18, 자산 180 은 24 다. 문턱이 없어 지름이 바뀌어도 고리가 고르게 굵어지고(160 에서 4 가 튀지 않는다), 화면이 새 지름을 쓰면 두께를 따로 정하지 않는다. 레시피 `chartDonutRadii(지름)` 이 그 두께로 `innerRadius` · `outerRadius` 를 준다.
 
 [그림: 카테고리 도넛 — 가운데 1,240,000원 · 목록 범례 9 + 기타](../../site/components/specs/chart.tsx#donut)
 
@@ -97,13 +99,15 @@ SEED 에는 차트 컴포넌트도 차트 색도 없다 — 팔레트 7가족과
 
 [표: 도넛 가운데](chart.yaml#base.enabled@donutCenter)
 
+[그림: 도넛 두께 = 지름 ÷ 10 + 6 — 지름 112 · 120 · 140 · 160 · 176 · 180, 가운데 합계가 구멍에 드는지](../../site/components/specs/chart.tsx#donut-thickness)
+
 [표: 종류](chart.yaml#grid.kind)
 
 ### 열지도
 
 요일 × 시간처럼 두 축의 세기는 열지도다 — 왼쪽 시간대 라벨 열 56 + 요일 일곱 칸이고, 칸은 정사각형 · 모서리 4 · 사이 6 이다. 세기는 다섯 단계 — 브랜드 채움을 카드 면에 18 · 35 · 55 · 75 · 100% 섞은 지금 제품 단계다(가장 큰 칸 값의 8 · 22 · 45 · 75% 에서 끊는다). 값이 없는 칸은 `bg-neutral-weak` 다. 가장 큰 칸에 고리를 두르지 않는다(사용자 결정) — 가장 짙은 단계가 큰 값을 말하고, 같은 단계 칸이 여럿이면 툴팁 · 표로 보기에서 값을 읽는다. 고리는 키보드 포커스 링(`stroke-focus-ring` — 같은 브랜드 파랑)과 헷갈린다.
 
-칸에 금액을 적는 것은 칸 폭이 112 이상일 때뿐이다 — 원까지, 11 / 15 · 700 · 고정폭 숫자로 쓴다("123,456,789원" 이 84, "99,999,999,999원" 이 107 이라 999억까지 들어간다). 2026-10-08 칸 폭은 1440 에서 140 · 1280 에서 117 이라 글이 보이고, 1024(81) · 768(44) · 폰 390(35)에서는 글 없이 세기 색만 칠한다. 좁다고 돈을 줄여 쓰거나("3.5만") 글자를 줄여 맞추지 않는다(사용자 결정) — 값은 칸을 가리키거나(웹) 누르면(터치) 뜨는 툴팁과 표로 보기에서 읽는다. 툴팁은 머리 "수요일 저녁 18~22시" · 줄 "■ 지출 35,000원"(네모는 그 칸의 세기 색)이고, 넓은 칸에서도 뜬다.
+칸에 금액을 적는 것은 칸 폭이 112 이상일 때뿐이다 — 원까지, 11 / 15 · 700 · 고정폭 숫자로 쓴다("123,456,789원" 이 84, "99,999,999,999원" 이 107 이라 999억까지 들어간다). 2026-10-08 칸 폭은 1440 에서 140 · 1280 에서 117 이라 글이 보이고, 1024(81) · 768(44) · 폰 390(35)에서는 글 없이 세기 색만 칠한다. 좁다고 돈을 줄여 쓰거나("3.5만") 글자를 줄여 맞추지 않는다(사용자 결정) — 값은 칸을 가리키거나(웹) 누르면(터치) 뜨는 툴팁과 표로 보기에서 읽는다. 툴팁은 머리 "수요일 저녁 18~22시" · 줄 "■ 지출 35,000원"(네모는 그 칸의 세기 색)이고, 넓은 칸에서도 뜬다. 툴팁은 칸 위 8 에 칸 가운데로 뜨고, 화면에 자리가 모자랄 때만 칸 아래 8 로 뒤집는다 — 떠 있는 층이라 카드 · 열지도 상자에 갇히지 않으므로 첫 줄 칸도 카드 머리 위로 뜬다. 좌우는 화면 끝에서 8 안으로 밀어 넣는다(Q-012-6).
 
 칸 글자색은 단계마다 칸 바탕 위 4.5 를 넘는 쪽으로 정해 둔다 — Desk 라이트 18 ~ 55% 는 `fg-neutral`(5.69 이상) · 75 · 100% 는 흰 글자(4.62 · 8.38), 다크는 모두 `fg-neutral`(7.74 이상)이다. HR 은 라이트 75% 까지 `fg-neutral`(5.23 이상) · 100% 만 흰 글자(5.06)다. 값이 없는 칸의 "—" 는 `fg-neutral-subtle`(5.09 · 다크 4.68)이다.
 
@@ -118,9 +122,10 @@ SEED 에는 차트 컴포넌트도 차트 색도 없다 — 팔레트 7가족과
 | 상태 | 모습 |
 |---|---|
 | `enabled` | 계열 · 타일 · 범례 줄 그대로 |
-| `hovered` | 가리킴 — 세로 점선 · 점 · 툴팁. 끈 타일 · 범례 줄은 `bg-layer-default-pressed` |
-| `pressed` | 타일 — 2px 거리 축소. 범례 줄 — 누름 바탕 |
+| `hovered` | 가리킴 — 세로 점선 · 점 · 툴팁. 끈 타일 · 범례 줄은 `bg-layer-default-pressed`(켠 타일은 바탕 그대로) |
+| `pressed` | 타일 — 색 없이 2px 거리 축소(마우스면 끈 타일의 호버 바탕이 남는다). 범례 줄 — 누름 바탕 |
 | `focused` | 웹 — 키보드 포커스에만 링(타일 바깥 · 범례 줄 안쪽 · 차트 상자 바깥) |
+| `disabled` | 끌 수 없는 마지막 타일 — 켠 색 그대로 · 커서 `not-allowed` · 누름 없음(`aria-disabled`) |
 
 [그림: 상태 — 가리킴 · 끈 타일 호버 · 누름 · 포커스](../../site/components/specs/chart.tsx#states)
 
@@ -182,9 +187,10 @@ SEED 에는 차트 컴포넌트도 차트 색도 없다 — 팔레트 7가족과
 
 - `Chart` — 차트 상자. `label`(필수 — 요약 이름, `role="img"` 의 이름) · `height`(px) · `legendId`(대체가 되는 범례의 id — `aria-describedby`). 자식은 recharts 차트(`ResponsiveContainer` 를 안에서 감싼다).
 - `chartAxisProps` · `chartGridProps` — recharts `XAxis` · `YAxis` · `CartesianGrid` 에 펼쳐 넣는 값(눈금 11 · `fg-neutral-subtle` · 축 선 · 눈금 선 없음 · 가로 점선 격자 3 3 · `stroke-neutral-subtle`). 이중 축은 `chartAxisProps({ color: "red" })` 처럼 계열 색을 준다.
-- `ChartLegendTiles` — 지표 타일 묶음(`role="group"`). `items`(`{ key, label, color, total }[]` — `color` 는 차트 색 이름, `total` 은 원까지 만든 글) · `hidden`(숨긴 key 의 집합) · `onHiddenChange`. 타일은 `<button aria-pressed>` 이고 마지막 하나는 막는다.
+- `ChartLegendTiles` — 지표 타일 묶음(`role="group"`). `items`(`{ key, label, color, total }[]` — `color` 는 차트 색 이름, `total` 은 원까지 만든 글) · `hidden`(숨긴 key 의 집합) · `onHiddenChange`. 타일은 `<button aria-pressed>` 이고 마지막 하나는 막는다(`aria-disabled` · 커서 `not-allowed`).
 - `ChartTooltip` · `ChartTooltipContent` — 툴팁. `headFormatter(label)` · `valueFormatter(value, key)` · 줄은 "■ 라벨 값".
 - `ChartDonutLegend` — 도넛 목록 범례(`List`). `items`(`{ key, label, color, percent, amount, onClick? }[]` — `onClick` 이 있는 줄만 누르는 줄).
+- `chartDonutRadii(diameter)` — 도넛 지름에서 `{ innerRadius, outerRadius }`(두께 = 지름 ÷ 10 + 6, 정수로). `<Pie {...chartDonutRadii(160)}>` 처럼 펼쳐 넣는다. `chartDonutThickness(diameter)` 는 두께만.
 - `ChartDonutCenter` — 가운데 합계. `label` · `amount` · `onFitChange(fits)`(구멍에 들어가지 않으면 그리지 않고 `false` 를 알린다 — 쓰는 쪽이 목록 위에 합계를 둔다).
 - `ChartHeatmap` — 열지도. `label`(필수 — 요약 이름, `role="img"` 의 이름) · `rows`(`{ key, label, sub }[]` — 시간대, "저녁" · "18~22시") · `columns`(`{ key, label }[]` — 요일) · `values`(`number[][]`, 줄 × 칸) · `formatValue`(기본 원까지 — "35,000원") · `textMinCellWidth`(기본 112 — 칸 폭이 이보다 좁으면 칸에 글을 두지 않는다) · `tooltipLabel(row, column)`(툴팁 머리 — "수요일 저녁 18~22시") · `valueLabel`(툴팁 줄 이름 — 기본 "지출"). 세기 다섯 단계와 단계마다 글자색은 안에서 정한다. 칸 폭은 `ResizeObserver` 로 재고, 가리키면 · 누르면 · 키보드(← → ↑ ↓)로 툴팁을 띄운다.
 - `ChartDataTable` — 표로 보기. `columns` · `rows`, `visuallyHidden`(기본 `true` — 숨긴 표, `false` 면 차트 아래 펼친 표).
@@ -231,13 +237,13 @@ import {
 
 ```tsx
 import { Pie, PieChart } from "recharts"
-import { Chart, ChartDonutCenter, ChartDonutLegend, assignChartColors } from "@/components/ui/chart"
+import { Chart, ChartDonutCenter, ChartDonutLegend, assignChartColors, chartDonutRadii } from "@/components/ui/chart"
 
 const slices = assignChartColors(categories, { colorOf: (c) => c.savedColor })
 
 <Chart label="10월 카테고리별 지출, 합계 1,240,000원" legendId="cat-legend" height={160}>
   <PieChart>
-    <Pie data={slices} dataKey="amount" innerRadius={58} outerRadius={80} paddingAngle={0} />
+    <Pie data={slices} dataKey="amount" {...chartDonutRadii(160)} paddingAngle={0} />
   </PieChart>
   <ChartDonutCenter label="10월 지출" amount="1,240,000원" />
 </Chart>
@@ -274,8 +280,8 @@ import { ChartDataTable } from "@/components/ui/chart"
 | 인터랙션 | 동작 |
 |---|---|
 | 마우스를 올림 · 터치로 짚음 | 그 날짜 · 막대에 세로 점선 · 점 · 툴팁. 터치는 손을 떼도 남고, 다른 곳을 짚으면 옮긴다 |
-| 열지도 칸을 가리킴 · 누름 | 그 칸의 툴팁 — 머리 "수요일 저녁 18~22시", 줄 "■ 지출 35,000원". 칸 폭 112 미만이라 칸에 글이 없을 때 값을 읽는 자리다 |
-| 지표 타일 누르기 | 그 계열을 켜고 끈다(`aria-pressed`) — 마지막 하나는 끌 수 없다 |
+| 열지도 칸을 가리킴 · 누름 | 그 칸의 툴팁 — 머리 "수요일 저녁 18~22시", 줄 "■ 지출 35,000원". 칸 위 8(화면에 모자랄 때만 아래). 칸 폭 112 미만이라 칸에 글이 없을 때 값을 읽는 자리다 |
+| 지표 타일 누르기 | 그 계열을 켜고 끈다(`aria-pressed`) — 마지막 하나는 끌 수 없다(`aria-disabled` · 커서 `not-allowed` · 축소 없음, 눌러도 아무 일 없음) |
 | 도넛 범례 줄 누르기 | 하위 카테고리가 있는 줄만 — 그 카테고리의 하위 도넛으로 |
 | `Tab` | 지표 타일 → 차트 상자 → 범례 줄 차례 |
 | 차트 상자에서 ← · → | 날짜 · 막대를 옮기며 툴팁을 띄운다 · `Esc` 로 툴팁을 닫는다. 열지도는 ← · → 요일, ↑ · ↓ 시간대 |
@@ -335,6 +341,20 @@ import { ChartDataTable } from "@/components/ui/chart"
 - **숫자 줄임은 축만, 소수 한 자리("1.2만")** — SEED 는 유효 숫자 셋("1.23만")이다(International Design).
 
 ## Migration notes
+
+### 2026-10-15 — 구현 세션 질문(Q-012-2 · 3 · 5 · 6)
+
+사용자가 [비교 페이지](https://claude.ai/artifact/HCRX5Ds7svjfCLi9Aogpmt)에서 정했다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-012-3 · Q-012-5, 정리 Q-012-2 · Q-012-6 은 "추천대로").
+
+- **Q-012-3 끌 수 없는 마지막 타일 → 안 C(not-allowed)** — 켠 색은 그대로 두고 커서만 금지 표시, 누름 축소 없음. v106 비활성 커서와 같은 표시다. YAML 에 `disabled` 상태(`legend: shown` 규칙)를 더했다. 커서 화살표(A — 지금 웹 · 옛 레시피 `aria-disabled:cursor-default`) · 손 모양 그대로(B)는 고르지 않았다.
+- **Q-012-5 도넛 두께 → 안 C(지름 ÷ 10 + 6, 정수로)** — 120 → 18 · 160 → 22 · 180 → 24 가 그대로 맞는다. YAML `series` 에 `thickness`(식) · `thicknessPerDiameter 0.1` · `thicknessOffset 6` · `diameter 160` · `diameterPhone 120` 을 적고 레시피에 `chartDonutRadii` · `chartDonutThickness` 를 더했다. 160 에서 뚝 바뀌는 계단(A — 지금 앱) · 지름 비율(B)은 고르지 않았다.
+- **Q-012-2 끈 타일 호버 · 누름** — 호버 바탕은 `legend: hidden` 규칙으로 옮겼다(켠 타일은 바탕 그대로). 누름은 색 없이 축소만이다 — 옛 레시피만 끈 타일에 누름 바탕(`active:bg-…`)을 주던 것을 걷었다. 웹 · 앱은 이미 그렇다.
+- **Q-012-6 열지도 툴팁 자리** — `kind: heatmap` 규칙에 툴팁 `placement`(칸 위) · `offset 8` · `viewportMargin 8` 을 적었다. 화면에 모자랄 때만 아래로 — 떠 있는 층이라 첫 줄 칸도 위로 뜬다. 레시피 · 웹은 이미 그렇다.
+
+제품이 바꿀 것
+
+- **웹** — 마지막 타일 `aria-disabled:cursor-default` → `cursor-not-allowed`(`chart-variants.ts`). 도넛은 화면마다 손으로 적은 두께 대신 지름에서 식으로(대시보드 160 · 120 · 자산 180 은 값이 그대로). 카탈로그 견본 `chart.demo.tsx` 가 120 에서도 22 를 쓰는 것을 18 로.
+- **앱** — 도넛 두께 `diameter >= 160 ? 22 : 18`(`p_chart_values.dart`) → `(diameter / 10 + 6).round()`. 대시보드 112 는 18 → 17, 통계 176 은 28 → 24 로 바뀐다. 열지도 툴팁을 떠 있는 층(Overlay)으로 띄워 화면 기준으로 뒤집는다 — 지금은 열지도 상자 기준이라 첫 줄이 늘 아래로 뒤집힌다(`p_chart_parts.dart`). 마지막 타일의 커서는 폰이라 해당 없다(누름 없음은 이미 그렇다).
 
 ### 2026-10-08 — 축 · 툴팁 · 범례 · 접근성을 정한다
 

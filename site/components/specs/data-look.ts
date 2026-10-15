@@ -205,6 +205,9 @@ export function tableLook(brand: Brand = 'hr'): TableLook {
   const badge = badgeLook(brand);
   if (!String(unbox(b['badge.size'])).includes('Badge medium')) throw new Error(`${F} badge.size 가 Badge medium 이 아니다`);
   const sortNote = noteOf(sortable['sortButton.width']);
+  // 72 줄은 칸 여백 없이 세로 가운데 — 썸네일 48 + 위아래 여백 + 선이 72 를 넘지 않아야 한다(Q-011-1)
+  const richPadY = len(rich['cell.paddingY'], `${F} rich cell.paddingY`);
+  if (len(b['thumbnail.size'], `${F} thumbnail.size`) + richPadY * 2 + rowLineW > len(rich['row.minHeight'], `${F} rich row.minHeight`)) throw new Error(`${F} rich 줄 — 썸네일 + 칸 여백 ${richPadY} × 2 + 선이 줄 높이를 넘는다`);
   const look: TableLook = {
     breakpoint,
     menuBreakpoint: menuKit(brand).menu.breakpoint,
@@ -421,11 +424,16 @@ export function chartLook(brand: Brand = 'desk'): ChartLook {
   sameSet(axisValues(spec, 'legend'), ['shown', 'hidden'], `${F} legend`);
   sameSet(axisValues(spec, 'palette'), CHART_HUES, `${F} palette`);
   sameSet(CHART_ORDER, CHART_HUES, 'DESIGN.md v110 배정 순서(CHART_ORDER)');
-  sameSet(stateNames(spec), ['enabled', 'hovered', 'pressed', 'focused'], `${F} states`);
+  sameSet(stateNames(spec), ['enabled', 'hovered', 'pressed', 'focused', 'disabled'], `${F} states`);
   const b = resolveState(spec, {}, 'enabled');
   const hov = resolveState(spec, {}, 'hovered');
   const pr = resolveState(spec, {}, 'pressed');
   const fo = resolveState(spec, {}, 'focused');
+  // 끈 타일만 호버 바탕(Q-012-2) · 끌 수 없는 마지막 타일은 커서 not-allowed(Q-012-3)
+  const hiddenHov = resolveState(spec, { legend: 'hidden' }, 'hovered');
+  if (hov['legendTile.background'] !== undefined && unbox(hov['legendTile.background']) !== unbox(b['legendTile.background'])) throw new Error(`${F} 켠 타일에 호버 바탕이 있다 — 호버 바탕은 끈 타일(legend hidden)만`);
+  if (pr['legendTile.background'] !== undefined && unbox(pr['legendTile.background']) !== unbox(b['legendTile.background'])) throw new Error(`${F} 타일 누름에 바탕이 있다 — 누름은 색 없이 축소만`);
+  const locked = resolveState(spec, { legend: 'shown' }, 'disabled');
   const lineV = resolveState(spec, { kind: 'line' }, 'enabled');
   const barV = resolveState(spec, { kind: 'bar' }, 'enabled');
   const donutV = resolveState(spec, { kind: 'donut' }, 'enabled');
@@ -463,7 +471,8 @@ export function chartLook(brand: Brand = 'desk'): ChartLook {
     hiddenBg: tok(hiddenV['legendTile.background'], brand, `${F} hidden legendTile.background`),
     hiddenBorder: tok(hiddenV['legendTile.borderColor'], brand, `${F} hidden legendTile.borderColor`),
     hiddenBorderW: len(hiddenV['legendTile.borderWidth'], `${F} hidden legendTile.borderWidth`),
-    hoverBg: tok(hov['legendTile.background'], brand, `${F} hovered legendTile.background`),
+    hoverBg: tok(hiddenHov['legendTile.background'], brand, `${F} legend hidden hovered legendTile.background`),
+    lockedCursor: String(unbox(must(locked['legendTile.cursor'], `${F} legend shown disabled legendTile.cursor`))),
     press: pressOf(pr['legendTile.scale'], `${F} pressed legendTile.scale`, motionPair(pr['legendTile.scaleDuration'], pr['legendTile.scaleEasing'], `${F} 타일 누름`)),
     color: motionPair(b['legendTile.transitionDuration'], b['legendTile.transitionEasing'], `${F} 타일 바탕 전환`),
   };
@@ -471,7 +480,14 @@ export function chartLook(brand: Brand = 'desk'): ChartLook {
   same(tile.padY * 2 + parseFloat(tile.name.lineHeight) + tile.totalGap + parseFloat(tile.total.lineHeight), numIn(noteOf(b['legendTile.touchTarget']), /높이\s*(\d+)/, `${F} legendTile.touchTarget 비고`), `${F} 지표 타일 높이`);
   const pointNote = noteOf(b['point.size']);
   const rowNote = noteOf(b['tooltipRow.foreground']);
-  const donutNote = noteOf(donutV['series.thickness']);
+  // 도넛 두께 = 지름 ÷ 10 + 6(정수로) — 식의 두 수는 YAML 속성, 지름은 series.diameter · diameterPhone
+  const perDiameter = Number(unbox(must(donutV['series.thicknessPerDiameter'], `${F} donut series.thicknessPerDiameter`)));
+  const thickOffset = len(donutV['series.thicknessOffset'], `${F} donut series.thicknessOffset`);
+  const thick = (d: number) => Math.round(d * perDiameter + thickOffset);
+  const donutDia = len(donutV['series.diameter'], `${F} donut series.diameter`);
+  const donutPhone = len(donutV['series.diameterPhone'], `${F} donut series.diameterPhone`);
+  // 비고에 적은 예(지름 → 두께)가 식과 같은지
+  for (const m of noteOf(donutV['series.thickness']).matchAll(/(\d{3})\s*→\s*(\d+)/g)) same(thick(Number(m[1])), Number(m[2]), `${F} donut series.thickness 비고 ${m[1]} → ${m[2]}`);
   const centerNote = noteOf(b['donutCenter.typography']);
   const heatBgV = b['heatmapCell.background'];
   const steps = [...String(unbox(heatBgV)).matchAll(/(\d+)/g)].map((m) => Number(m[1]));
@@ -518,9 +534,11 @@ export function chartLook(brand: Brand = 'desk'): ChartLook {
     line: { width: len(lineV['line.strokeWidth'], `${F} line.strokeWidth`), areaFrom: numIn(noteOf(lineV['line.strokeWidth']), /(\d+)%\s*→/, `${F} line 비고`), areaTo: numIn(noteOf(lineV['line.strokeWidth']), /→\s*(\d+)%/, `${F} line 비고`) },
     bar: { maxW: len(barV['bar.maxWidth'], `${F} bar.maxWidth`), radius: len(barV['bar.radius'], `${F} bar.radius`), gap: len(barV['bar.gap'], `${F} bar.gap`) },
     donut: {
-      thickness: len(donutV['series.thickness'], `${F} donut series.thickness`),
-      diameter: numIn(donutNote, /지름\s*(\d+)/, `${F} donut 비고 지름`),
-      phone: { diameter: numIn(donutNote, /폰\s*(\d+)/, `${F} donut 비고 폰`), thickness: numIn(donutNote, /폰\s*\d+\s*은\s*(\d+)/, `${F} donut 비고 폰 두께`) },
+      perDiameter,
+      offset: thickOffset,
+      thickness: thick(donutDia),
+      diameter: donutDia,
+      phone: { diameter: donutPhone, thickness: thick(donutPhone) },
       center: { ...typeOf(b['donutCenter.typography'], `${F} donutCenter.typography`, b['donutCenter.fontWeight']), fg: tok(b['donutCenter.foreground'], brand, `${F} donutCenter.foreground`) },
       label: { ...textFor(numIn(centerNote, /위 라벨\s*(\d+)/, `${F} donutCenter 비고`), `${F} 도넛 가운데 라벨`), fg: roleIn(centerNote.split('위 라벨')[1] ?? '', `${F} donutCenter 비고 라벨 색`, brand) },
     },
@@ -615,8 +633,12 @@ export function searchLook(): SearchLook {
   same(optPadY, list.faces.none.light.enabled.pad.y, `${F} 결과 줄 위아래 — list.yaml`);
   const optPadX = len(b['option.paddingX'], `${F} option.paddingX`);
   same(optPadX, list.faces.none.light.enabled.pad.x, `${F} 결과 줄 좌우 — list.yaml`);
-  const insetX = len(b['highlight.insetX'], `${F} highlight.insetX`);
+  // 강조 바탕은 줄 폭 전체(0 · 모서리 0)에서 짚으면 들어온다(Menu · List — Q-009-3 B)
+  same(len(b['highlight.insetX'], `${F} highlight.insetX`), 0, `${F} 강조 없는 바탕 들임 0`);
+  same(len(b['highlight.radius'], `${F} highlight.radius`), 0, `${F} 강조 없는 바탕 모서리 0`);
+  const insetX = len(hl['highlight.insetX'], `${F} highlighted highlight.insetX`);
   same(insetX, list.faces.none.light.pressed.bg.insetX, `${F} 강조 바탕 들임 — list.yaml 누름 바탕`);
+  same(len(pr['highlight.insetX'], `${F} pressed highlight.insetX`), insetX, `${F} 누름 바탕 들임 — 강조와 같다`);
   const debounce = numIn(String(unbox(b['results.debounce'])), /(\d+)ms/, `${F} results.debounce`);
   const avatarNote = noteOf(resolveState(spec, { prefix: 'avatar' }, 'enabled')['prefix.size']);
   const look: SearchLook = {
@@ -626,7 +648,7 @@ export function searchLook(): SearchLook {
     option: { padY: optPadY, padX: optPadX },
     title: { ...typeOf(b['title.typography'], `${F} title.typography`, b['title.fontWeight']), fg: tok(b['title.foreground'], brand, `${F} title.foreground`) },
     detail: { ...typeOf(b['detail.typography'], `${F} detail.typography`), fg: tok(b['detail.foreground'], brand, `${F} detail.foreground`) },
-    highlight: { insetX, radius: len(b['highlight.radius'], `${F} highlight.radius`), bg: tok(hl['highlight.background'], brand, `${F} highlighted highlight.background`) },
+    highlight: { insetX, radius: len(hl['highlight.radius'], `${F} highlighted highlight.radius`), bg: tok(hl['highlight.background'], brand, `${F} highlighted highlight.background`) },
     prefix: {
       logo: logoSize(len(resolveState(spec, { prefix: 'logo' }, 'enabled')['prefix.size'], `${F} logo prefix.size`), `${F} logo prefix.size`),
       cardArt: len(resolveState(spec, { prefix: 'cardArt' }, 'enabled')['prefix.width'], `${F} cardArt prefix.width`),

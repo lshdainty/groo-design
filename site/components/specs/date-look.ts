@@ -153,8 +153,14 @@ export function wheelLook(brand: Brand = 'desk'): WheelLook {
       const wheelAlign = numIn(String(wheel.duration), /(\d+)ms/, `${w} motion 휠 정착 시간`);
       same(numIn(wheelRow, /(\d+)ms\s*\|/, 'wheel-picker.md 휠 정착'), wheelAlign, `${w} 휠 정착 — md · yaml`);
       same(numIn(wheelRow, /마지막 입력\s*(\d+)ms/, 'wheel-picker.md 휠 대기'), numIn(String(wheel.note ?? ''), /(\d+)ms 뒤/, `${w} motion 휠 비고`), `${w} 휠 대기 — md · yaml`);
+      // 항목 누르기 · ↑ ↓ — 200ms ease-out cubic(Q-005 A). md 의 누르기 줄과 같아야 한다
+      const press = motionEntry('wheel-picker', '항목 누르기 · ↑ ↓');
+      const move = numIn(String(tokenValue(press.duration)), /(\d+)ms/, `${w} motion 누르기 시간`);
+      same(numIn(mdRow('wheel-picker.md', '| 보이는 항목 누르기 |'), /가운데로\s*(\d+)ms/, 'wheel-picker.md 누르기 시간'), move, `${w} 누르기 시간 — md · yaml`);
+      if (String(press.easing) !== 'ease-out cubic') throw new Error(`${w} motion 누르기 곡선(${String(press.easing)})을 그림이 모른다`);
       return {
         dragThreshold: numIn(dragRow, /(\d+)px 넘게/, 'wheel-picker.md 끌기 문턱'),
+        move,
         releaseMin,
         releaseMax,
         perItem,

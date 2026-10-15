@@ -87,7 +87,7 @@ rules:
         gap: { value: $spacing-x2, note: "묶음 사이(위아래 8 + 선 1px + 8)" }
         marginTop: { value: $spacing-x2, note: "트리거와의 거리 — 아래가 모자라면 위로 뒤집는다" }
         margin: { value: $spacing-x2, note: "화면 가장자리와 최소 거리(안전 영역이 있으면 그 값)" }
-        maxHeight: { value: "min(480px, 남은 화면)", note: "남은 화면이 200 보다 좁아도 200 은 둔다 — 넘치면 목록 안에서 스크롤. 열면 고른 선택지가 보이게 스크롤된다" }
+        maxHeight: { value: "min(480px, 남은 화면)", note: "남은 화면 = 목록이 놓이는 쪽(아래에 다 들어가면 아래, 아니면 아래 · 위 중 넓은 쪽)의 트리거 ~ 화면 가장자리 8. 화면 키보드는 세지 않는다 — 열면 초점이 목록으로 가 키보드가 내려간다(Q-008-1). 남은 화면이 200 보다 좁아도 200 은 둔다 — 넘치면 목록 안에서 스크롤. 열면 고른 선택지가 보이게 스크롤된다" }
       item:
         paddingX: $spacing-x4
         cursor: pointer
@@ -103,7 +103,7 @@ rules:
         foreground: $color-fg-neutral-subtle
         gap: { value: $spacing-x0_5, note: "글 ↔ 설명" }
       indicator:
-        color: { value: $color-fg-neutral, note: "lucide check · 선 2.5" }
+        color: { value: $color-fg-neutral, note: "lucide check · 선 2.5 — 앱은 2.5 굵기 글꼴 LucideIcons.check500(Q-008-2)" }
       highlight:
         background: { value: transparent, note: "누를 때 · 키보드로 옮길 때만 칠한다" }
         radius: $radius-r3

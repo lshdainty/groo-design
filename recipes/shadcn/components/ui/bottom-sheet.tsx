@@ -28,7 +28,8 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *     열린 뒤 0.5초는 끌리지 않고, 본문이 스크롤돼 있으면(맨 위가 아니면) 끌지 않고 스크롤한다.
  *   - dirty 면 어느 길이든 닫기 전에 "작성한 내용이 사라져요" 를 묻는다 — [계속 작성] 이면 그대로(끌던 시트는 제자리로).
  *
- * 열면 초점은 시트(컨테이너)로 가고 열린 동안 시트 안을 돈다. 닫으면 연 자리(트리거, 없으면 열 때 초점이 있던 곳)로 돌아간다.
+ * 열면 초점은 시트(컨테이너)로 가고 열린 동안 시트 안을 돈다 — 내용이 첫 자리를 정하면(검색 시트의 검색칸 — focusSearchableList) onOpenAutoFocus 를
+ * 막고 그리로 옮긴다(열린 뒤 다시 옮기지 않는다 — 2026-10-15 Q-007-3). 닫으면 연 자리(트리거, 없으면 열 때 초점이 있던 곳)로 돌아간다.
  * 뒤 화면은 보조 기술에서 숨기고 스크롤을 잠근다(Radix Dialog). role="dialog" + aria-modal, 제목 aria-labelledby · 설명 aria-describedby.
  *
  * 모양: 최대 480 으로 가운데, 위 두 모서리 r6 24, 그림자 없이 딤(overlay-dim 라이트 0.50 · 다크 0.65)과 표면 색으로 뜬다.
@@ -304,7 +305,7 @@ const BottomSheetSurface = React.forwardRef<React.ElementRef<typeof DrawerPrimit
           data-slot="bottom-sheet-content"
           aria-modal="true"
           className={cn(CONTENT, ctx.snapPoints?.length && "h-[90dvh]", className)}
-          // 처음 초점은 시트(본문 위) — vaul 은 기본으로 아무 데도 두지 않는다
+          // 처음 초점은 시트(본문 위) — vaul 은 기본으로 아무 데도 두지 않는다. 내용이 첫 자리를 정하면(onOpenAutoFocus 에서 막으면) 그쪽이 옮긴다
           onOpenAutoFocus={(e) => {
             openerRef.current = document.activeElement;
             onOpenAutoFocus?.(e);

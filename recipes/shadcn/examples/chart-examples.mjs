@@ -69,10 +69,10 @@ const TOOLTIP_SURFACE = "flex min-w-[128px] flex-col gap-x1 rounded-r3 bg-bg-lay
 const LEGEND_TILE = [
   "flex min-w-[100px] flex-[1_1_0] cursor-pointer flex-col items-start rounded-r3 border-0 px-x3 py-x2_5 text-start font-sans",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
-  "active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1] aria-disabled:cursor-default aria-disabled:active:[scale:1]",
+  "active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1] aria-disabled:cursor-not-allowed aria-disabled:active:[scale:1]",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
-const LEGEND_TILE_HIDDEN = "bg-bg-layer-default shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed";
+const LEGEND_TILE_HIDDEN = "bg-bg-layer-default shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] hover:bg-bg-layer-default-pressed";
 const LEGEND_ROW = "flex min-h-11 w-full items-center gap-x2 text-start font-sans text-t4";
 const LEGEND_ROW_PRESSABLE = [
   "relative isolate -mx-x6 w-[calc(100%+var(--spacing-x6)*2)] cursor-pointer border-0 bg-transparent px-x6",
@@ -497,8 +497,9 @@ function legendTiles({ id, items, hidden = [] }) {
 }
 const TILE_ITEMS = SERIES.map((s) => ({ key: s.key, label: s.label, color: s.color, total: formatWon(total(s.key)) }));
 
-// 도넛 — 지름 · 두께(160 · 22 = innerRadius 58 · outerRadius 80), 조각 사이 0, 12시에서 시계 방향
-function donutSvg(size = 160, thickness = 22) {
+// 도넛 — 두께 = 지름 ÷ 10 + 6(정수로 — chartDonutThickness), 160 이면 22 = innerRadius 58 · outerRadius 80. 조각 사이 0, 12시에서 시계 방향
+const donutThickness = (size) => Math.round(size / 10 + 6);
+function donutSvg(size = 160, thickness = donutThickness(size)) {
   const r = (size - thickness) / 2;
   const circ = 2 * Math.PI * r;
   let off = 0;
@@ -633,15 +634,15 @@ import {
   {
     title: "카테고리 도넛 — 목록 범례",
     description:
-      "도넛의 범례는 카테고리 목록이다 — 줄마다(44 이상) 색 네모 10 + 이름 14 · % 14 · fg-neutral-subtle + 금액 14 · 700 + \"원\". 하위 카테고리가 있는 줄(식비 · 쇼핑 · 생활)만 누르는 줄이다 — List 줄처럼 카드 끝까지 가고 호버 · 누름 바탕은 좌우 6 들어온 모서리 10(카드 16 − 6), 글자는 그대로 선다. 가운데는 합계 16 / 22 · 700 + 위 라벨 12 · fg-neutral-subtle — 돈은 가운데서도 줄이지 않는다(\"73.3만\" 이 아니라 원까지). 구멍에 들어가지 않으면(폰 120 · 18) 가운데 글을 그리지 않고 onFitChange(false) 로 알린다 — 쓰는 쪽이 목록 위에 합계를 둔다. 조각 사이는 0, 12시에서 시계 방향. 색은 assignChartColors 가 정한다 — 저장된 색이 먼저, 색이 없는 항목은 그 차트에서 아직 쓰지 않은 색부터 배정 순서로(구독 indigo · 의료 yellow · 미용 brown), 10개를 넘으면 상위 9 + 회색 \"기타\"(groupOthers) — 회색은 \"기타\" 전용이다.",
+      "도넛의 범례는 카테고리 목록이다 — 줄마다(44 이상) 색 네모 10 + 이름 14 · % 14 · fg-neutral-subtle + 금액 14 · 700 + \"원\". 하위 카테고리가 있는 줄(식비 · 쇼핑 · 생활)만 누르는 줄이다 — List 줄처럼 카드 끝까지 가고 호버 · 누름 바탕은 좌우 6 들어온 모서리 10(카드 16 − 6), 글자는 그대로 선다. 가운데는 합계 16 / 22 · 700 + 위 라벨 12 · fg-neutral-subtle — 돈은 가운데서도 줄이지 않는다(\"73.3만\" 이 아니라 원까지). 구멍에 들어가지 않으면(폰 120 · 18) 가운데 글을 그리지 않고 onFitChange(false) 로 알린다 — 쓰는 쪽이 목록 위에 합계를 둔다. 조각 사이는 0, 12시에서 시계 방향. 두께는 지름 ÷ 10 + 6 을 정수로(160 → 22 · 120 → 18 · 180 → 24) — chartDonutRadii(지름) 이 Pie 의 반지름을 준다. 색은 assignChartColors 가 정한다 — 저장된 색이 먼저, 색이 없는 항목은 그 차트에서 아직 쓰지 않은 색부터 배정 순서로(구독 indigo · 의료 yellow · 미용 brown), 10개를 넘으면 상위 9 + 회색 \"기타\"(groupOthers) — 회색은 \"기타\" 전용이다.",
     jsx: `import { Pie, PieChart } from "recharts"
-import { Chart, ChartDonutCenter, ChartDonutLegend, assignChartColors } from "@/components/ui/chart"
+import { Chart, ChartDonutCenter, ChartDonutLegend, assignChartColors, chartDonutRadii } from "@/components/ui/chart"
 
 const slices = assignChartColors(categories, { colorOf: (c) => c.savedColor })
 
 <Chart label="10월 카테고리별 지출, 합계 1,240,000원" legendId="cat-legend" height={160}>
   <PieChart>
-    <Pie data={slices} dataKey="amount" innerRadius={58} outerRadius={80} paddingAngle={0} />
+    <Pie data={slices} dataKey="amount" {...chartDonutRadii(160)} paddingAngle={0} />
   </PieChart>
   <ChartDonutCenter label="10월 지출" amount="1,240,000원" />
 </Chart>

@@ -68,7 +68,7 @@ export type WheelLook = {
   fog: { ratio: number; maxItems: number; stops: { alpha: number; at: number }[] };
   ring: DRing & { radius: number };
   // wheel-picker.md Behavior · motion — 끌기 문턱 · 정착 시간
-  motion: { dragThreshold: number; releaseMin: number; releaseMax: number; perItem: number; maxItems: number; wheelIdle: number; wheelAlign: number; staleVelocity: number };
+  motion: { dragThreshold: number; move: number; releaseMin: number; releaseMax: number; perItem: number; maxItems: number; wheelIdle: number; wheelAlign: number; staleVelocity: number };
 };
 
 // ── Time Picker(time-picker.yaml) ─────────────────────────

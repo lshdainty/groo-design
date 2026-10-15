@@ -245,6 +245,10 @@ import { InfiniteListEnd } from "@/components/ui/pagination"
 
 ## Migration notes
 
+### 2026-10-15 — 구현 세션 질문 정리(Q-011-6)
+
+사용자가 [비교 페이지](https://claude.ai/artifact/HCRX5Ds7svjfCLi9Aogpmt)에서 정리 항목을 "추천대로" 정했다(2026-10-15). 쪽 번호 칸 · 화살표 칸의 `transitionProperty` 를 `background-color, scale` 로 적었다 — 누를 때 2px 축소가 있으므로 다른 누르는 칸(카드 · 차트 타일)과 같은 표기이고, SEED `pagination-button` 도 색과 축소 둘을 전환한다. 화살표 칸에는 빠져 있던 전환 시간 · 이징도 쪽 번호 칸과 같게 적었다. 보이는 모습은 바뀌지 않는다 — 웹 · 레시피는 이미 둘 다 전환한다.
+
 ### 2026-10-04 — SEED Pagination 으로 다시 쓴다
 
 사용자가 [화면 틀 · 이동 비교 페이지](https://claude.ai/artifact/B6tsgbw356Kf2Zumvm2v6a)에서 정했다 — SEED Pagination(10A: 번호 · 화살표 40 × 40 · 사이 0 · 14 / 19 · 700 · 모서리 8 · 지금 쪽 `bg-neutral-inverted` + `fg-neutral-inverted` 채움 · 이전 · 다음은 아이콘만 16 · 9칸 / 7칸 · 끝 쪽은 화살표 대신 40 빈 칸 + 초점은 지금 쪽 · 1쪽 이하면 그리지 않음) + 데이터 표는 Table Pagination. 같은 날 추가로 — 칸 40 그대로, 누르는 영역 44 규칙(v106)의 예외로 적는다(위아래만 44). 그리고 "따라오는 것" — 폰 긴 목록은 끝없이 불러오기 + 끝 글 · 실패 다시 하기 · 불러오는 동안 표시, 데스크톱은 Pagination, 쪽을 넘기면 목록 맨 위 + 쪽 바뀜 알림. porest 옛 스펙(10B — 지금 쪽 테두리 · 칸 사이 4 · 이전 · 다음 글자 · 끝 막힘 · 좁으면 "이전 · 현재/총 · 다음")과 44 로 키우기는 고르지 않았다. 옛 스펙은 `pagination.history/v-pre-seed-nav.*`.

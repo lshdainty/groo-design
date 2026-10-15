@@ -1,0 +1,124 @@
+# Toggle 의 수치 원본 — 켜고 끄는 아이콘 단추(2026-10-09 사용자 결정, 입력 비교 페이지 5A · 6B · 7A · 8A · "따라오는 것").
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 단추 하나가 한 상태를 켜고 끈다(<button aria-pressed>) — 관심 등록(별) · 메모 고정(핀) · 금액 가리기(눈) · App Key 보기(눈).
+# 이름은 고정이고 켬은 aria-pressed 가 알린다. 바탕은 켬 · 끔에 따라 바뀌지 않는다 — 아이콘만 바뀐다:
+# 켬 = 진한 색(fg-neutral) + 선 2.5, 끔 = 흐린 색(fg-neutral-muted) + 선 2(기초 Iconography v106).
+# 아이콘은 지금 상태를 그린다 — 기능이 꺼지는 단추(눈 · 종)는 lucide -off 아이콘과 짝을 쓰고, 모으기 단추(관심 · 고정)는
+# 사선 없이 같은 아이콘이다(SEED 하트처럼). 글 토글(옛 default · outline 28 · 32 · 40)은 걷었다 — 거르기는 Chip, 설정은 Switch.
+#
+# 축 — toggled(끔 · 켬) · tone(표면 위 · 브랜드 채움 위). 크기는 하나 — 보이는 40 · 누르는 44 · 아이콘 20.
+# 상단 바 안에서는 Top Navigation 의 아이콘 버튼(상자 44 · 아이콘 24)을 쓰고, 끔도 fg-neutral 이다 — 굵기 · 아이콘으로만 가른다
+# (사용자 결정 2026-10-09 19B, top-navigation.yaml iconButton).
+#
+# SEED 와 다른 자리(toggle.md 의 "SEED 와 다른 점")
+#   - 아이콘만 있는 단추다 — SEED Toggle Button 은 글이 있는 알약(32 · 36)이고 디자인 문서가 없다(코드만).
+#   - 켬을 바탕으로 칠하지 않는다 — SEED brandSolid 는 끔이 주황 채움 · 켬이 회색, neutralWeak 는 켬 · 끔 색이 같다.
+#     SEED Iconography 의 켬 = 채움(Fill)은 lucide 에 채움 모양이 없어 진한 색 + 선 2.5 로 대신한다(v106).
+#   - 모으기 단추의 끔은 사선 없이(SEED 하트 — Reaction · Image Frame Reaction Button 과 같은 결), 기능 단추의 끔은 -off(SEED Line + Slash).
+#   - 누르는 영역 44(v106) — SEED 32 · 36 · 하트 40.
+#   - 막힘은 진짜 disabled(Tab 에서 빠진다) — SEED 는 aria-disabled(포커스가 남는다). Button 과 같다.
+
+name: Toggle
+
+slots:
+  root: 단추 — 보이는 40 · 누르는 44. 바탕은 켬 · 끔에 따라 바뀌지 않는다(누름 · 호버에만 칠한다)
+  icon: 아이콘 20 — 지금 상태를 그린다(눈은 가렸으면 eye-off, 모으기 단추는 같은 아이콘)
+  focusRing: 키보드 포커스 링
+
+variants:
+  toggled:
+    "off": 끔 — aria-pressed="false". 흐린 색 + 선 2(기본)
+    "on": 켬 — aria-pressed="true". 진한 색 + 선 2.5
+  tone:
+    default: 흰 표면 · 카드 · 시트 위(기본)
+    inverted: 브랜드 채움 위 — 순자산 카드. 아이콘은 켬 · 끔 모두 흰색이고 모양 · 굵기로 가른다
+
+defaults:
+  toggled: "off"
+  tone: default
+
+states:
+  enabled: 기본
+  hovered: 웹 — 누름과 같은 바탕(v106), 축소는 없다
+  focused: 키보드 포커스에만 링
+  pressed: 누름 바탕 + 단추 전체 2px 거리 축소(v104) — 켬 · 끔은 손을 뗄 때 바뀐다
+  disabled: 전용 색(v106) — 아이콘만 fg-disabled, Tab 순서에서 빠진다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        size: { value: 40px, note: "Button medium · iconOnly 의 보이는 상자와 같다(기초 Iconography — 아이콘 버튼은 보이는 40)" }
+        radius: { value: $radius-r2, note: "누름 · 호버 바탕에만 보인다(Button medium 과 같다)" }
+        background: { value: transparent, note: "켬 · 끔에 따라 바뀌지 않는다 — 켜면 옅은 바탕(5B) · 반전(5C)은 고르지 않았다(사용자 결정 2026-10-09)" }
+        touchTarget: { value: 44 × 44, note: "보이는 40 둘레로 2 씩 넓힌다(v106). AA ✓ · AAA ✓" }
+        cursor: pointer
+        name: { value: 고정, note: "aria-label 은 상태마다 바꾸지 않는다(\"관심 등록\" · \"금액 가리기\") — 켬은 aria-pressed 가 알린다(APG). 이름과 아이콘의 뜻이 반대로 읽히지 않게 아이콘은 지금 상태를 그린다" }
+        transitionProperty: background-color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      icon:
+        size: { value: 20px, note: "lucide 선 아이콘 — v106 가운데 단계" }
+    hovered:
+      root:
+        background: $color-bg-layer-default-pressed
+    pressed:
+      root:
+        background: { value: $color-bg-layer-default-pressed, note: "SEED bg.transparent-pressed 의 불투명 짝 — 켬 · 끔 같은 색" }
+        scale: { value: 단추 전체 2px 거리 축소, note: "기준 40 — Feedback 의 눌림 피드백(v104). 모션 줄이기면 하지 않는다" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: 2px, note: "보이는 40 바깥 — 키보드 포커스에만" }
+        color: $color-stroke-focus-ring
+    disabled:
+      root:
+        cursor: { value: not-allowed, note: "누름 바탕 · 축소 없음" }
+      icon:
+        color: { value: $color-fg-disabled, note: "켬 · 끔 모두 — 켬은 선 2.5 를 그대로 둬 무엇이 켜져 있었는지 보인다" }
+
+  # ── 끔 · 켬 ───────────────────────────────────────────
+  - when: { toggled: "off" }
+    enabled:
+      icon:
+        strokeWidth: { value: 2px, note: "lucide 기본" }
+        color: { value: $color-fg-neutral-muted, note: "흰 표면 위 7.11 · 다크 7.70 — 끔도 흐리게(불투명도) 두지 않는다. 모으기 단추(관심 · 고정)는 사선 없는 같은 아이콘, 기능 단추(눈 · 종)는 지금 상태의 아이콘(-off 짝). 상단 바 안에서는 끔도 fg-neutral(19B)" }
+  - when: { toggled: "on" }
+    enabled:
+      icon:
+        strokeWidth: { value: 2.5px, note: "v106 — 켜짐 · 선택은 선 2.5" }
+        color: { value: $color-fg-neutral, note: "흰 표면 위 16.41 · 다크 13.42 — 끔(7.11 · 7.70)보다 짙다. 브랜드 색으로 칠하지 않는다" }
+
+  # ── 브랜드 채움 위 ────────────────────────────────────
+  - when: { tone: inverted }
+    enabled:
+      icon:
+        color: { value: $color-static-white, note: "켬 · 끔 모두 흰색 — 순자산 카드 그라디언트 위 Desk 8.38 ~ 14.78 · 다크 8.36 ~ 11.25(장식 빛 위 가장 낮은 자리 4.88). 켬 · 끔은 아이콘 모양(eye · eye-off)과 굵기(2.5 · 2)로 가른다" }
+    hovered:
+      root:
+        background: { value: transparent, note: "브랜드 채움에는 누름 색 짝이 없다 — 축소만(Card 의 순자산 카드와 같다)" }
+    pressed:
+      root:
+        background: { value: transparent, note: "축소만 — 바탕은 칠하지 않는다" }
+    focused:
+      focusRing:
+        color: { value: $color-static-white, note: "브랜드 채움 위 — stroke-focus-ring(#0147AD)은 채움(#0147AD → brand-900)에 묻힌다(라이트 1.00). 흰 링은 아이콘과 같은 8.38 ~ 14.78" }
+
+motion:
+  "누름 · 호버 — 바탕":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color]
+  "누름 — 단추":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "단추 전체 2px 거리 축소 — 모션 줄이기면 하지 않는다"
+  "켬 ↔ 끔 — 아이콘":
+    duration: 0ms
+    properties: [icon, stroke-width, color]
+    note: "아이콘 · 굵기 · 색은 바로 바뀐다 — 손을 뗄 때(요청을 기다리지 않는다)"

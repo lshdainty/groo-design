@@ -152,10 +152,16 @@ function menuLook(brand: Brand, breakpoint: number): MenuLook {
   same(len(v['item.height'], `${w} item.height`), height, `${w} 한 줄 높이 — 여백 + 줄 높이`);
   same(numIn(noteOf(v['item.height']), /설명이 있으면\s*(\d+)/, `${w} item.height 비고`), heightDesc, `${w} 설명이 있는 줄 높이`);
 
-  // 알약 · 링 — 링은 알약 자리(좌우 들임 · 모서리)에
-  const insetX = len(v['highlight.insetX'], `${w} highlight.insetX`);
-  const radius = len(v['highlight.radius'], `${w} highlight.radius`);
-  same(numIn(noteOf(v['highlight.insetX']), /좌우\s*(\d+)/, `${w} highlight.insetX 비고`), insetX, `${w} 알약 들임 비고`);
+  // 알약 · 링 — 알약은 줄 폭 전체(0 · 모서리 0)에서 호버 · 누름에 들어온다(Q-009-3 B). 링은 다 들어온 알약 자리(좌우 들임 · 모서리)에 고정
+  same(len(v['highlight.insetX'], `${w} highlight.insetX`), 0, `${w} 알약 없는 자리 들임 0`);
+  same(len(v['highlight.radius'], `${w} highlight.radius`), 0, `${w} 알약 없는 자리 모서리 0`);
+  const insetX = len(hovered['highlight.insetX'], `${w} hovered highlight.insetX`);
+  const radius = len(hovered['highlight.radius'], `${w} hovered highlight.radius`);
+  same(len(pressed['highlight.insetX'], `${w} pressed highlight.insetX`), insetX, `${w} 누름 알약 들임 — 호버와 같다`);
+  same(len(pressed['highlight.radius'], `${w} pressed highlight.radius`), radius, `${w} 누름 알약 모서리 — 호버와 같다`);
+  same(len(focused['focusRing.insetX'], `${w} focusRing.insetX`), insetX, `${w} 링 들임 — 알약 들임`);
+  same(len(focused['focusRing.radius'], `${w} focusRing.radius`), radius, `${w} 링 모서리 — 알약 모서리`);
+  same(numIn(noteOf(hovered['highlight.insetX']), /좌우\s*(\d+)/, `${w} hovered highlight.insetX 비고`), insetX, `${w} 알약 들임 비고`);
   const ringNote = noteOf(focused['focusRing.offset']);
   same(numIn(ringNote, /좌우\s*(\d+)\s*들임/, `${w} focusRing.offset 비고`), insetX, `${w} 링 자리 — 알약 들임`);
   same(numIn(ringNote, /모서리\s*(\d+)/, `${w} focusRing.offset 비고`), radius, `${w} 링 자리 — 알약 모서리`);
@@ -183,7 +189,7 @@ function menuLook(brand: Brand, breakpoint: number): MenuLook {
   const gText = type(v['groupLabel.typography'], v['groupLabel.fontWeight'], `${w} groupLabel`);
   const gPad = len(v['groupLabel.paddingY'], `${w} groupLabel.paddingY`);
   same(motionOf('menu', '호버 알약'), motionPair(v['item.transitionDuration'], v['item.transitionEasing'], `${w} item.transition`), `${w} 호버 알약 모션 — item.transition`);
-  if (String(unbox(v['item.transitionProperty'])) !== 'background-color') throw new Error('menu.yaml item.transitionProperty 가 background-color 가 아니다 — menu-view 를 고친다');
+  if (String(unbox(v['item.transitionProperty'])) !== 'background-color, inset, border-radius') throw new Error('menu.yaml item.transitionProperty 가 "background-color, inset, border-radius" 가 아니다 — menu-view 를 고친다');
 
   return {
     breakpoint,

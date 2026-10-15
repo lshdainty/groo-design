@@ -2,7 +2,7 @@
 # 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
 # 1차 Line 탭 안의 2차 탭. 칩 하나는 chip.yaml 그대로다 — solid 는 Chip Solid, outline 은 Chip Outline Strong,
-# 크기는 Chip medium 36 · large 40. 고르면 짙은 채움(bg-neutral-inverted · fg-neutral-inverted)이고 Outline 은 테두리를 지운다.
+# 크기는 Chip medium · large(높이 · 좌우 · 글 · 최소 폭은 chip.yaml 이 원본 — 여기 다시 적지 않는다, 2026-10-15 구현 세션 질문 Q-010-2 정리). 고르면 짙은 채움(bg-neutral-inverted · fg-neutral-inverted)이고 Outline 은 테두리를 지운다.
 # 이 파일에는 탭으로 쓸 때만 붙는 값(목록 · 알림 점)을 적는다 — 칩의 색 · 크기 · 상태를 여기 다시 적지 않는다.
 #
 # SEED 와 다른 자리(tabs.md 의 "SEED 와 다른 점")
@@ -60,8 +60,8 @@ rules:
   - when: { size: medium }
     enabled:
       trigger:
-        height: { value: 36px, note: "Chip medium — 좌우 14, 글 t4 14 · 500, 최소 폭 48" }
+        chipSize: { value: Chip medium, note: "chip.yaml size=medium — 높이 · 좌우 · 글 · 최소 폭은 그 파일이 원본(36 · 14 · t4 500 · 48)" }
   - when: { size: large }
     enabled:
       trigger:
-        height: { value: 40px, note: "Chip large — 좌우 16, 글 t4 14 · 500, 최소 폭 52" }
+        chipSize: { value: Chip large, note: "chip.yaml size=large — 높이 · 좌우 · 글 · 최소 폭은 그 파일이 원본(40 · 16 · t4 500 · 52)" }

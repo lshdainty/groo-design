@@ -1,10 +1,10 @@
 # Tooltip
 
-> 마우스를 올리거나 키보드 초점이 오면 트리거 옆에 뜨는 짧은 설명 — 아이콘 버튼 · 줄인 글이 무엇인지 보여 주는 **보조**다. 손가락으로 누르면 열리지 않으므로 이름 · 막힌 이유처럼 꼭 알아야 하는 것은 툴팁에만 두지 않는다. 폰에서도 읽어야 하는 설명은 같은 모양의 [Help Bubble](help-bubble.md)(눌러서)이다.
+> 마우스를 올리거나 키보드 초점이 오면 트리거 옆에 뜨는 짧은 설명 — 아이콘 버튼 · 줄인 글이 무엇인지 보여 주는 **보조**다. 손가락으로 누르면 열리지 않으므로 이름 · 막힌 이유처럼 꼭 알아야 하는 것은 툴팁에만 두지 않는다. 폰에서도 읽어야 하는 설명은 같은 모양의 [Help Bubble](help-bubble.md)(눌러서)이다. 앱에도 둔다 — 하드웨어 키보드 초점 · 마우스에서만 열린다. 손가락 누름 · 길게 누르기로는 열지 않는다(2026-10-02 사용자 결정 8A — 길게 누르기 안은 고르지 않았다 · 2026-10-08 "앱도 하드웨어 키보드").
 
 구조는 당근 [SEED Help Bubble Tooltip](https://seed-design.io/react/components/help-bubble-tooltip)(Apache-2.0)을 따른다 — [Help Bubble](help-bubble.md) 과 같은 말풍선(짙은 바탕 · 13 · 모서리 12 · 화살표 · 최대 280)을 마우스 · 키보드로 여는 것이다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
-수치 원본은 [`help-bubble.yaml`](help-bubble.yaml)의 `opens: hover` 다 — 모양은 Help Bubble 과 한 벌이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
+수치 원본은 [`help-bubble.yaml`](help-bubble.yaml)의 `opens: hover` 다 — 모양은 Help Bubble 과 한 벌이다. 툴팁만의 수치 파일(`tooltip.yaml` · 내보낸 `tooltip.json`)은 두지 않는다 — SEED 도 rootage 에 `help-bubble` 하나다. 웹 · 앱의 검사는 툴팁을 `help-bubble` 의 `opens: hover` 로 잰다(구현 세션 질문 Q-009-1). 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
 [그림: 아이콘 버튼 · 접힌 사이드바의 툴팁 — 라이트 · 다크](../../site/components/specs/tooltip.tsx#hero)
 
@@ -160,6 +160,13 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 - **z-index 는 specs/z-index.md 의 L4**(`z-tooltip` 210) — SEED 는 포털 없이 99.
 
 ## Migration notes
+
+### 2026-10-15 — 수치 파일 하나 · 앱에도 둔다
+
+구현 세션 질문 두 가지를 있는 규칙으로 정리했다.
+
+- **`tooltip.json` 을 따로 만들지 않는다**(Q-009-1) — 원본은 `help-bubble.yaml` 하나다(SEED 도 하나). 따로 두면 같은 말풍선을 두 곳에 정의하게 된다. 웹 카탈로그 · 검사기는 툴팁을 `help-bubble` 의 `opens: hover` 로 잡는다.
+- **앱에도 둔다**(Q-009-2) — 2026-10-02 8A(마우스 · 키보드에서만, 터치에 기대지 않음)와 2026-10-08 "앱도 하드웨어 키보드로 옮길 때 누를 수 있는 것은 모두 초점을 받는다" 가 답한다. 손가락 사용자에게는 차이가 없고(길게 누르기 툴팁은 그때 고르지 않았다), 키보드 · 마우스를 붙인 사용자에게는 이름이 보인다. 옛 길게 누르기 툴팁은 옮길 때 걷는다.
 
 ### 2026-10-02 — SEED Help Bubble Tooltip 으로 바꾼다
 

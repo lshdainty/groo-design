@@ -69,9 +69,10 @@ defaults:
 
 states:
   enabled: 기본
-  hovered: 가리킴 — 마우스 · 터치로 짚은 자리(툴팁 · 점 · 세로선). 타일 · 범례 줄은 누름과 같은 바탕
-  pressed: 지표 타일 · 범례 줄 누름 — 바탕 + 2px 거리 축소
+  hovered: 가리킴 — 마우스 · 터치로 짚은 자리(툴팁 · 점 · 세로선). 끈 타일 · 범례 줄은 누름과 같은 바탕
+  pressed: 지표 타일 — 2px 거리 축소만(색은 켬 · 끔이 말한다) · 범례 줄 — 누름 바탕
   focused: 웹 — 키보드 포커스에만 링
+  disabled: 지표 타일 — 켠 계열이 하나만 남아 끌 수 없다(aria-disabled). 색은 켠 타일 그대로, 커서 not-allowed · 누름 없음
 
 rules:
   # ── 공통 ──────────────────────────────────────────────
@@ -148,13 +149,11 @@ rules:
         numerals: tabular-nums
         foreground: { value: 단계마다, note: "칸 바탕 위 4.5 를 넘는 쪽 — Desk 라이트 18 · 35 · 55% 는 fg-neutral(5.69 이상) · 75 · 100% 는 static-white(4.62 · 8.38), 다크는 모두 fg-neutral(7.74 이상). HR 은 라이트 18 ~ 75% 가 fg-neutral(5.23 이상) · 100% 만 static-white(5.06), 다크는 모두 fg-neutral(4.69 이상 — HR 100% 단계). 칸마다 재지 않고 단계마다 정해 둔다" }
     hovered:
-      legendTile:
-        background: { value: $color-bg-layer-default-pressed, note: "끈 타일만 — 켠 타일은 바탕 그대로" }
       legendList:
         background: $color-bg-layer-default-pressed
     pressed:
       legendTile:
-        scale: { value: 2px 거리 축소, note: "모션 줄이기면 하지 않는다" }
+        scale: { value: 2px 거리 축소, note: "색 없이 축소만 — 바탕이 이미 켬 · 끔을 말해 누름에 색을 쓰지 않는다(SEED Feedback Color). 마우스로 누르면 끈 타일의 호버 바탕은 그대로 남는다(Q-012-2). 모션 줄이기면 하지 않는다" }
         scaleDuration: $motion-duration-pressed-scale
         scaleEasing: $motion-ease-pressed-scale
       legendList:
@@ -179,11 +178,19 @@ rules:
   - when: { kind: donut }
     enabled:
       series:
-        thickness: { value: 22px, note: "지름 160 기준 — 폰 120 은 18. 조각 사이 0" }
+        diameter: { value: 160px, note: "데스크톱 대시보드 — 지름은 쓰는 자리가 정한다. 두께는 지름에서 식으로 나온다" }
+        diameterPhone: { value: 120px, note: "폰 대시보드 — 구멍 84 에 가운데 합계가 들어가지 않아 목록 위로 옮긴다" }
+        thickness: { value: 지름 ÷ 10 + 6, note: "정수로 반올림 — 지름 112 → 17 · 120 → 18 · 140 → 20 · 160 → 22 · 176 → 24 · 180 → 24. 문턱 없이 지름을 따라 고르게 굵어진다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-012-5, 안 C). 조각 사이 0" }
+        thicknessPerDiameter: { value: 0.1, note: "두께 식의 기울기 — 지름 ÷ 10" }
+        thicknessOffset: { value: 6px, note: "두께 식의 더하는 값 — + 6" }
   - when: { kind: heatmap }
     enabled:
       heatmapCell:
         gap: { value: $spacing-x1_5, note: "칸 사이 6 — 가로 · 세로 같다. 왼쪽 시간대 라벨 열 56(이름 13 · 700 + 시간 11 · fg-neutral-subtle), 위 요일 머리 12 · fg-neutral-subtle" }
+      tooltip:
+        placement: { value: 칸 위, note: "화면에 자리가 모자랄 때만 칸 아래로 뒤집는다 — 떠 있는 층(z-floating)이라 카드 · 열지도 상자에 갇히지 않고, 첫 줄 칸도 카드 머리 위로 뜬다(Q-012-6). 가운데는 칸 가운데" }
+        offset: { value: 8px, note: "칸 ↔ 툴팁 — 위 · 아래 같다" }
+        viewportMargin: { value: 8px, note: "화면 가장자리와 최소 8 — 좌우로 밀어 넣고, 위에 8 이 남지 않으면 아래로" }
 
   # ── 축 ────────────────────────────────────────────────
   - when: { axis: dual }
@@ -195,13 +202,20 @@ rules:
   - when: { legend: shown }
     enabled:
       legendTile:
-        background: { value: "chart-{색}-subtle", note: "그 계열 색의 넓은 면 옅은 바탕(v111) — 테두리 없음. aria-pressed=\"true\"" }
+        background: { value: "chart-{색}-subtle", note: "그 계열 색의 넓은 면 옅은 바탕(v111) — 테두리 없음. aria-pressed=\"true\". 호버 바탕 없음" }
+    disabled:
+      legendTile:
+        cursor: { value: not-allowed, note: "켠 계열이 하나만 남은 타일 — 끌 수 없다를 커서가 알린다. v106 비활성 커서와 같다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-012-3, 안 C). 포인터 이벤트는 끄지 않는다(끄면 커서가 안 보인다)" }
+        scale: { value: 없음, note: "눌러도 아무 일이 없다 — 축소도 하지 않는다. 바탕 · 글자색은 켠 타일 그대로(회색으로 바꾸지 않는다), aria-disabled=\"true\"" }
   - when: { legend: hidden }
     enabled:
       legendTile:
         background: { value: $color-bg-layer-default, note: "흰 면 + 안쪽 1px stroke-neutral-weak — 계열이 숨었다. aria-pressed=\"false\"" }
         borderWidth: 1px
         borderColor: $color-stroke-neutral-weak
+    hovered:
+      legendTile:
+        background: { value: $color-bg-layer-default-pressed, note: "끈 타일만 — 켠 타일은 바탕이 계열 색이라 호버 바탕을 두지 않는다(Q-012-2)" }
 
   # ── 색(v110) ──────────────────────────────────────────
   - when: { palette: blue }

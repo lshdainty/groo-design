@@ -206,16 +206,14 @@ export function chipTabsLook(brand: Brand = 'desk'): ChipTabsLook {
     if (!m || !(CHIP_VARIANTS as readonly string[]).includes(m[1])) throw new Error(`${F} ${variant} 의 trigger.chip 비고에서 Chip 변형을 찾지 못했다(${noteOf(raw)})`);
     variants[variant] = m[1] as ChipVariant;
   }
-  // 크기 — 높이가 Chip 의 같은 이름 크기와 같아야 한다(비고 "Chip <크기>")
+  // 크기 — "chip.yaml size=<크기>"(비고)를 Chip 의 크기로. 높이 · 좌우 · 글은 chip.yaml 이 원본이다(Q-010-2)
   const sizes = {} as ChipTabsLook['sizes'];
   for (const size of CHIP_TABS_SIZES) {
-    const raw = must(resolveState(spec, { size }, 'enabled')['trigger.height'], `${size} trigger.height`, F);
-    const h = len(raw, `${size} trigger.height`, F);
-    const m = /Chip\s+([a-z]+)/.exec(noteOf(raw));
-    if (!m || !(CHIP_SIZES as readonly string[]).includes(m[1])) throw new Error(`${F} ${size} 의 trigger.height 비고에서 Chip 크기를 찾지 못했다`);
-    const cs = m[1] as ChipSize;
-    if (chip.sizes[cs].h !== h) throw new Error(`${F} ${size} 높이 ${h} 가 chip.yaml ${cs}(${chip.sizes[cs].h})와 다르다`);
-    sizes[size] = cs;
+    const raw = must(resolveState(spec, { size }, 'enabled')['trigger.chipSize'], `${size} trigger.chipSize`, F);
+    const m = /size=([a-z]+)/.exec(noteOf(raw));
+    if (!m || !(CHIP_SIZES as readonly string[]).includes(m[1])) throw new Error(`${F} ${size} 의 trigger.chipSize 비고에서 Chip 크기를 찾지 못했다(${noteOf(raw)})`);
+    if (String(unbox(raw)) !== `Chip ${m[1]}`) throw new Error(`${F} ${size} 의 trigger.chipSize 값(${String(unbox(raw))})과 비고(size=${m[1]})가 다르다`);
+    sizes[size] = m[1] as ChipSize;
   }
   const overflow = String(unbox(must(base['list.overflowX'], 'list.overflowX', F)));
   if (overflow !== 'auto') throw new Error(`${F} list.overflowX(${overflow})를 그림이 모른다`);

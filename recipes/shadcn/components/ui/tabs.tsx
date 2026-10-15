@@ -29,6 +29,8 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  * 호버 모양은 없다. 누르면 탭만 2px 거리로 준다(SEED scaleScope: self · v104) — 배율 = (기준 − 2) ÷ 기준,
  * 기준 = max(높이, 폭 ÷ 4, 24) 를 누르는 순간(포인터 · Space · Enter) 잰다. 색은 그대로다 — 글자색이 이미 고름을 말하므로
  * 누르는 동안 색이 바뀌면 손을 떼기 전에 고른 것처럼 보인다. 모션 줄이기면 축소하지 않는다.
+ * 고름은 손을 뗄 때(click)다 — Radix 는 마우스를 누르는 순간 고르므로 누름(mousedown)을 막고 click 에서 고른다. 누른 채 밖으로
+ * 끌어내면 고르지 않는다. 키보드는 화살표로 바로 고른다(2026-10-15 구현 세션 질문 Q-010-1 정리 — "누름은 축소만").
  * 포커스 링은 키보드 포커스에만 탭 안쪽 2px(띄움 −2 · 각진 모서리 — 이웃 탭 · 바닥 선에 걸리지 않는다). 막대 위에 그린다.
  * 막힌 탭은 fg-disabled · not-allowed · 축소 없음. 고른 탭이 막히면(목록 전체를 막을 때) 막대도 fg-disabled 다.
  * 알림 점(notification)은 6px fg-brand(브랜드 글자색 — bg-brand-solid 는 다크 바탕에서 안 보인다) — 글 끝에서 2 · 글 위쪽에
@@ -154,6 +156,24 @@ const Tabs = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Root>, TabsP
   },
 );
 Tabs.displayName = "Tabs";
+
+// 고름은 손을 뗄 때 — Radix 는 mousedown 에서 고르고 초점을 옮긴다(초점이 오면 automatic 이라 또 고른다). 왼쪽 누름을 막아 둘 다
+// 건너뛰고, click 에서 고른다. 초점은 고른 값이 그려진 다음 프레임에 옮긴다 — 먼저 옮기면 Radix 의 초점 고르기가 한 번 더 부른다.
+// 누른 채 밖으로 끌어내면 click 이 없다. 키보드(화살표 · Enter · Space)는 Radix 그대로
+function useSelectOnRelease(component: string, value: string, disabled: boolean | undefined) {
+  const { value: current, setValue } = useTabsValue(component);
+  return {
+    onMouseDown: (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (e.button === 0 && !e.ctrlKey) e.preventDefault();
+    },
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (disabled || e.defaultPrevented) return;
+      const tab = e.currentTarget;
+      if (current !== value) setValue(value);
+      requestAnimationFrame(() => tab.focus({ preventScroll: true }));
+    },
+  };
+}
 
 // ── 목록 공통 ─────────────────────────────────────────────────
 // 고른 탭이 목록 밖이면 가까운 쪽으로 목록만 스크롤한다 — 가장자리와 scroll-padding(Hug 16 · Chip Tabs 24)만큼 띄운다
@@ -382,13 +402,15 @@ export interface TabsTriggerProps extends Omit<React.ComponentPropsWithoutRef<ty
 
 // Line 탭(role=tab) — 글은 이름만(개수를 붙이지 않는다)
 const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigger>, TabsTriggerProps>(
-  ({ className, value, notification = false, children, onPointerDown, onKeyDown, ...props }, ref) => {
+  ({ className, value, notification = false, children, disabled, onPointerDown, onKeyDown, onMouseDown, onClick, ...props }, ref) => {
     const { layout, size } = React.useContext(TabsListContext);
     const selected = useTabsValue("TabsTrigger").value === value;
+    const release = useSelectOnRelease("TabsTrigger", value, disabled);
     return (
       <TabsPrimitive.Trigger
         ref={ref}
         value={value}
+        disabled={disabled}
         data-slot="tabs-trigger"
         data-value={value}
         data-notification={notification ? "" : undefined}
@@ -401,6 +423,15 @@ const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigg
         onKeyDown={(e) => {
           if (isPressKey(e)) measurePress(e.currentTarget);
           onKeyDown?.(e);
+        }}
+        // 고름은 손을 뗄 때(click) — 누르는 동안은 축소만
+        onMouseDown={(e) => {
+          onMouseDown?.(e);
+          release.onMouseDown(e);
+        }}
+        onClick={(e) => {
+          onClick?.(e);
+          release.onClick(e);
         }}
         {...props}
       >
@@ -472,13 +503,15 @@ ChipTabsList.displayName = "ChipTabsList";
 
 // Chip Tabs 탭(role=tab) — Chip 그대로 그리고 고른 탭에 data-selected 를 단다
 const ChipTabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigger>, TabsTriggerProps>(
-  ({ className, value, notification = false, children, onPointerDown, onKeyDown, ...props }, ref) => {
+  ({ className, value, notification = false, children, disabled, onPointerDown, onKeyDown, onMouseDown, onClick, ...props }, ref) => {
     const { variant, size } = React.useContext(ChipTabsListContext);
     const selected = useTabsValue("ChipTabsTrigger").value === value;
+    const release = useSelectOnRelease("ChipTabsTrigger", value, disabled);
     return (
       <TabsPrimitive.Trigger
         ref={ref}
         value={value}
+        disabled={disabled}
         data-slot="chip-tabs-trigger"
         data-value={value}
         data-selected={selected ? "" : undefined}
@@ -492,6 +525,15 @@ const ChipTabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.T
         onKeyDown={(e) => {
           if (isPressKey(e)) measurePress(e.currentTarget);
           onKeyDown?.(e);
+        }}
+        // 고름은 손을 뗄 때(click) — 누르는 동안은 축소만
+        onMouseDown={(e) => {
+          onMouseDown?.(e);
+          release.onMouseDown(e);
+        }}
+        onClick={(e) => {
+          onClick?.(e);
+          release.onClick(e);
         }}
         {...props}
       >

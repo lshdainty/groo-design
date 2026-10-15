@@ -179,7 +179,14 @@ export function snackbarLook(brand: Brand = 'desk'): SnackbarLook {
   const enterScale = numIn((enter.properties ?? []).map(String).join(' '), /scale\s+([\d.]+)\s*→\s*1/, '나타남 properties', SNACK);
   const exitScale = numIn((exit.properties ?? []).map(String).join(' '), /scale\s*→\s*([\d.]+)/, '사라짐 properties', SNACK);
   const look: SnackbarLook = {
-    region: { padX: len(b['region.paddingX'], 'region.paddingX', SNACK), padBottom: len(b['region.paddingBottom'], 'region.paddingBottom', SNACK), zIndex: Number(unbox(must(b['region.zIndex'], 'region.zIndex', SNACK))) },
+    region: {
+      padX: len(b['region.paddingX'], 'region.paddingX', SNACK),
+      padBottom: len(b['region.paddingBottom'], 'region.paddingBottom', SNACK),
+      // 화면 키보드 위 8 · 피할 자리가 바뀌어 옮겨 가는 시간 — 2026-10-15 Q-003-1
+      keyboardGap: len(b['region.keyboardGap'], 'region.keyboardGap', SNACK),
+      offset: motionPair(b['region.offsetDuration'], b['region.offsetEasing'], 'region.offset', SNACK),
+      zIndex: Number(unbox(must(b['region.zIndex'], 'region.zIndex', SNACK))),
+    },
     root: {
       maxWidth: len(b['root.maxWidth'], 'root.maxWidth', SNACK),
       minHeight: len(b['root.minHeight'], 'root.minHeight', SNACK),

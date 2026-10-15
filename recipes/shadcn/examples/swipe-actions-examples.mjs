@@ -42,7 +42,7 @@ const BADGE_VARIANTS = {
     primary: "bg-fg-informative text-fg-neutral-inverted",
     destructive: "bg-fg-critical text-fg-neutral-inverted",
   },
-  disabled: { true: "bg-bg-disabled text-fg-disabled shadow-none", false: "" },
+  disabled: { true: "bg-bg-disabled text-fg-disabled", false: "" },
 };
 const BADGE_DEFAULTS = { kind: "neutral", disabled: false };
 
@@ -306,7 +306,7 @@ const swipeMenu = (rowLabel) =>
     variant: "ghost",
     layout: "iconOnly",
     size: "medium",
-    extra: 'aria-haspopup="menu" aria-expanded="false" data-state="closed" data-slot="swipe-actions-more"',
+    extra: 'aria-haspopup="dialog" aria-expanded="false" data-state="closed" data-slot="swipe-actions-more"',
   });
 
 // 가계부 줄 — 카테고리 타일 · 제목 · 설명 · 금액(16 · 700) + ⋮

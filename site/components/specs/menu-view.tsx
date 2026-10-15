@@ -181,7 +181,7 @@ function MenuRow({
         ...marks?.item,
       }}
     >
-      {/* 알약 — 호버 · 누름 바탕. 꺼지면 가장자리로 펴지며 투명해진다 */}
+      {/* 알약 — 호버 · 누름 바탕. 줄 폭 전체(0 · 모서리 0)에서 좌우 8 · 모서리 12 로 들어오며 둥글어지고(Q-009-3 B), 꺼지면 가장자리로 펴지며 투명해진다 */}
       <span
         aria-hidden
         data-menu-pill=""
@@ -191,9 +191,9 @@ function MenuRow({
           bottom: 0,
           left: on ? hl.insetX : 0,
           right: on ? hl.insetX : 0,
-          borderRadius: hl.radius,
+          borderRadius: on ? hl.radius : 0,
           background: on ? mcv(hl.bg, mode) : 'transparent',
-          transition: `background-color ${m.duration} ${m.easing}, left ${m.duration} ${m.easing}, right ${m.duration} ${m.easing}`,
+          transition: `background-color ${m.duration} ${m.easing}, left ${m.duration} ${m.easing}, right ${m.duration} ${m.easing}, border-radius ${m.duration} ${m.easing}`,
           ...marks?.pill,
         }}
       />

@@ -47,6 +47,9 @@ import { cn } from "@/lib/utils";
  * 피할 자리 — SnackbarAvoidOverlap 으로 감싼 요소들 중 가장 위 요소의 윗변 + 8 에 띠가 선다(바닥 안전 영역보다
  *   높을 때). 감싼 요소가 붙고 · 떨어지고 · 크기가 바뀌고 · 창 크기가 바뀌고 · 새 띠가 뜰 때 다시 잰다(스크롤은 재지
  *   않는다 — 스크롤하는 본문 요소는 감싸지 않는다). 자리가 옮겨 갈 때는 200ms easing, 모션 줄이기면 바로.
+ *   화면 키보드도 피할 자리다 — 띠는 키보드 바로 위 8 에 선다(2026-10-15 사용자 결정 Q-003-1). 폰 브라우저는 키보드가 올라와도
+ *   레이아웃 화면을 줄이지 않아 position: fixed 의 아래가 키보드 뒤에 남는다 — 보이는 화면(visualViewport)의 아래 끝에서 레이아웃 화면
+ *   아래까지를 재어 피할 자리와 둘 중 큰 쪽을 쓴다. 보이는 화면이 바뀔 때 다시 잰다(손가락으로 확대한 동안은 세지 않는다 — 키보드만).
  */
 
 export type SnackbarTone = "neutral" | "positive" | "critical";
@@ -301,7 +304,8 @@ function SnackbarProvider({ children }: { children?: React.ReactNode }) {
   const avoided = React.useRef(new Set<HTMLElement>());
   const observer = React.useRef<ResizeObserver | null>(null);
 
-  // 피할 자리 — 감싼 요소들 중 가장 위 요소의 윗변에서 화면 아래까지(띠는 그 위 8 — 자리의 아래 여백)
+  // 피할 자리 — 감싼 요소들 중 가장 위 요소의 윗변에서 화면 아래까지(띠는 그 위 8 — 자리의 아래 여백).
+  // 화면 키보드 — 보이는 화면(visualViewport)의 아래 끝이 레이아웃 화면 아래보다 위면 그 차이(키보드가 가린 높이)
   const measure = React.useCallback(() => {
     if (typeof document === "undefined") return;
     const viewport = document.documentElement.clientHeight;
@@ -310,7 +314,9 @@ function SnackbarProvider({ children }: { children?: React.ReactNode }) {
       const r = el.getBoundingClientRect();
       if (r.width > 0 && r.height > 0) top = Math.min(top, r.top);
     }
-    setAvoidOffset(Math.max(0, viewport - top));
+    const vv = window.visualViewport;
+    const keyboard = vv && Math.abs(vv.scale - 1) < 0.01 ? viewport - (vv.offsetTop + vv.height) : 0;
+    setAvoidOffset(Math.max(0, viewport - top, Math.round(keyboard)));
   }, []);
 
   const avoid = React.useCallback(
@@ -333,8 +339,14 @@ function SnackbarProvider({ children }: { children?: React.ReactNode }) {
   React.useEffect(() => {
     setContainer(document.body);
     window.addEventListener("resize", measure);
+    // 화면 키보드가 올라오고 내려갈 때 · 보이는 화면이 밀릴 때
+    const vv = window.visualViewport;
+    vv?.addEventListener("resize", measure);
+    vv?.addEventListener("scroll", measure);
     return () => {
       window.removeEventListener("resize", measure);
+      vv?.removeEventListener("resize", measure);
+      vv?.removeEventListener("scroll", measure);
       observer.current?.disconnect();
       observer.current = null;
     };

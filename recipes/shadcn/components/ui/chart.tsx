@@ -29,6 +29,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRow
  *   ChartDataTable      표로 보기 — caption · columns · rows, visuallyHidden(기본 true — 숨긴 표, false 면 차트 아래 펼친 표)
  *   assignChartColors   저장된 색 먼저, 나머지는 그 차트에서 쓰지 않은 색부터 배정 순서 — 10개를 넘으면 상위 9 + 회색 "기타"(groupOthers)
  *   formatAxisWon       눈금 글자 — "400만" · "1.2만" · "−3,000만"(만 · 억 · 조, 소수 한 자리, 빼기 U+2212)
+ *   chartDonutThickness 도넛 두께 = 지름 ÷ 10 + 6(정수로 — 120 → 18 · 160 → 22 · 180 → 24, 2026-10-15 사용자 결정 Q-012-5 C)
+ *   chartDonutRadii     지름에서 Pie 의 { innerRadius, outerRadius } — <Pie {...chartDonutRadii(160)}>
  *
  * 색: 차트 10색(라이트 팔레트 700 · 다크 800-dark — var(--color-chart-{색})). 배정 순서 blue → green → orange → violet → pink → indigo → red →
  *   yellow → brown, 회색은 "기타" 전용(색이 없다고 주지 않는다). 수입 blue · 지출 red.
@@ -44,7 +46,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRow
  *   닫는다(대화상자 안이어도 Esc 는 툴팁만 닫는다). 포커스 링은 키보드 포커스에만 상자 바깥 2px(띄움 2). 마우스 · 터치로 짚은 자리가 먼저다.
  * 지표 타일: 모서리 12 · 위아래 10 · 좌우 12 · 높이 62 · 폭 100 이상 · 타일 사이 8 · 아래 차트와 8. 점 8 ↔ 이름 6 · 이름 13 fg-neutral-muted,
  *   아래 2 에 합계 16 / 22 · 700 · fg-neutral. 켠 계열 바탕 chart-{색}-subtle(테두리 없음), 끈 계열 흰 면 + 안쪽 1px stroke-neutral-weak
- *   (끈 타일만 호버에 bg-layer-default-pressed). 누르면 2px 거리 축소, 키보드 포커스에만 바깥 2px 링.
+ *   (끈 타일만 호버에 bg-layer-default-pressed). 누르면 색 없이 2px 거리 축소(Q-012-2), 키보드 포커스에만 바깥 2px 링.
+ *   마지막 하나(켠 계열이 하나)는 끌 수 없다 — 색 그대로 · aria-disabled · 커서 not-allowed · 축소 없음(Q-012-3 C, v106 비활성 커서).
  * 도넛 범례 줄: 44 이상 · 색 네모 10 ↔ 8 · 이름 14 fg-neutral · % 14 fg-neutral-subtle · 금액 14 · 700 · "원". 누르는 줄은 List 줄과 같다 —
  *   카드 본문(여백 24) 안에서 줄을 카드 끝까지 내고(글자는 그대로 24 에 선다), 호버 · 누름 바탕 bg-layer-default-pressed 는 좌우 6 들어온
  *   모서리 10(카드 16 − 6 — List 의 동심 모서리). 키보드 포커스에만 안쪽 2px 링. 가운데 합계 16 / 22 · 700 + 위 라벨 12.
@@ -158,6 +161,17 @@ function formatAxisWon(value: number): string {
     unit = bigger;
   }
   return sign + round1(scaled).toLocaleString("ko-KR", { maximumFractionDigits: 1 }) + unit;
+}
+
+/** 도넛 두께 — 지름 ÷ 10 + 6 을 정수로(120 → 18 · 160 → 22 · 180 → 24). 문턱 없이 지름을 따라 고르게 굵어진다 */
+function chartDonutThickness(diameter: number): number {
+  return Math.round(diameter / 10 + 6);
+}
+
+/** 도넛 지름에서 Pie 의 반지름 — 차트 높이를 지름과 같게 두고 <Pie {...chartDonutRadii(160)}> 로 펼친다 */
+function chartDonutRadii(diameter: number): { innerRadius: number; outerRadius: number } {
+  const outerRadius = diameter / 2;
+  return { innerRadius: outerRadius - chartDonutThickness(diameter), outerRadius };
 }
 
 // 돈은 줄이지 않고 원까지(툴팁 · 열지도 칸의 기본)
@@ -496,11 +510,11 @@ export interface ChartLegendTilesProps extends Omit<React.HTMLAttributes<HTMLDiv
 const LEGEND_TILE = [
   "flex min-w-[100px] flex-[1_1_0] cursor-pointer flex-col items-start rounded-r3 border-0 px-x3 py-x2_5 text-start font-sans",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
-  "active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1] aria-disabled:cursor-default aria-disabled:active:[scale:1]",
+  "active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1] aria-disabled:cursor-not-allowed aria-disabled:active:[scale:1]",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
-const LEGEND_TILE_HIDDEN =
-  "bg-bg-layer-default shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed";
+// 끈 타일 — 호버에만 바탕. 누름은 색 없이 축소만(바탕이 이미 켬 · 끔을 말한다 — SEED Feedback Color)
+const LEGEND_TILE_HIDDEN = "bg-bg-layer-default shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] hover:bg-bg-layer-default-pressed";
 
 const ChartLegendTiles = React.forwardRef<HTMLDivElement, ChartLegendTilesProps>(
   ({ items, hidden, onHiddenChange, id, className, "aria-label": ariaLabel = "범례", ...props }, ref) => {
@@ -1048,4 +1062,6 @@ export {
   ChartDataTable,
   assignChartColors,
   formatAxisWon,
+  chartDonutThickness,
+  chartDonutRadii,
 };

@@ -84,7 +84,7 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker"
 | 손가락으로 밀기 | 브라우저 스크롤 · 스냅의 관성으로 굴러 가장 가까운 칸에 멈춘다. 멈춘 뒤 값이 정해진다 |
 | 마우스로 끌기 | 3px 넘게 움직이면 끈다. 놓을 때 속도로 최대 3칸 더 가고 220 ~ 360ms 로 맞춘다. 끈 직후의 누름은 무시한다 |
 | 마우스 휠 · 트랙패드 | 마지막 입력 120ms 뒤 가까운 칸으로 160ms |
-| 보이는 항목 누르기 | 그 항목을 가운데로 — 멈춘 뒤 값이 정해진다 |
+| 보이는 항목 누르기 | 그 항목을 가운데로 200ms(ease-out cubic) — 멈춘 뒤 값이 정해진다. 웹도 브라우저의 부드러운 스크롤에 맡기지 않는다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-005, 안 A) |
 | 굴리는 동안 | 띠를 지나는 항목만 짙게 — 값은 멈춘 뒤 한 번만 바뀐다 |
 | 반복 | 칼럼마다 — 끄면 처음 · 끝에서 멈추고, 켜면 끝 다음에 처음이 이어진다 |
 | 막힘 | 값은 그대로, 굴릴 수도 초점이 갈 수도 없다 |
@@ -94,7 +94,7 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker"
 
 | 키 | 동작 |
 |---|---|
-| `↑` `↓` | 이전 · 다음 항목(누르고 있으면 이어서) |
+| `↑` `↓` | 이전 · 다음 항목 — 누르기와 같은 200ms(누르고 있으면 바로바로 이어서) |
 | `Home` `End` | 처음 · 끝 항목 |
 | `Tab` | 다음 칼럼 |
 
@@ -134,6 +134,10 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker"
 - **링 색은 porest `stroke-focus-ring`**.
 
 ## Migration notes
+
+### 2026-10-15 — 누르기 · 키 이동은 200ms
+
+구현 세션 질문 Q-005 — 항목을 눌러 가운데로 옮기는 시간이 "부드러운 스크롤" 로만 적혀 있어, 앱은 200ms ease-out cubic, 웹(레시피)은 브라우저 기본(크로미움 1칸 122 · 2칸 190 · 3칸 226ms, 브라우저마다 다르다)으로 갈렸다. 사용자가 200ms ease-out cubic(`motion-duration-d4`)으로 골랐다(안 A — 150ms(B) · 브라우저 기본(C) · 끌기 정착과 같은 220 + 칸당 40(D)은 고르지 않았다). 레시피는 `scrollTo({ behavior: "smooth" })` 대신 끌기 정착에 쓰던 맞추기(스냅을 끄고 ease-out cubic)에 200ms 를 준다 — 키(↑ ↓ · Home · End)도 같다. 앱은 그대로다.
 
 ### 2026-10-08 — 글자 값을 고정 px 토큰으로
 

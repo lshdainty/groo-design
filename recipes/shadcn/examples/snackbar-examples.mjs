@@ -210,7 +210,7 @@ snackbar.show({
   {
     title: "피할 자리 — 탭 바 · 바닥 버튼",
     description:
-      "탭 바(Bottom Navigation) · 바닥 버튼 · 떠 있는 버튼(Floating Action Button)처럼 화면 아래에 붙은 것은 SnackbarAvoidOverlap 으로 감싼다 — 감싼 요소들 중 가장 위 요소의 윗변 + 8 에 띠가 선다(바닥 안전 영역보다 높을 때). 레시피가 감싼 요소를 재서 자리의 --snackbar-avoid 로 넘기고, 붙고 · 떨어지고 · 크기가 바뀌고 · 창 크기가 바뀌고 · 새 띠가 뜰 때 다시 잰다(옮겨 갈 때 200ms). 미리보기는 떠 있는 탭 바의 위 끝 80(아래 14 + 높이 66)을 적었다 — 바가 줄어들면(48) 띠도 따라 내려간다. 자리는 body 끝 · z L6(400)이라 시트 · 대화상자 위에 뜨고, 띠 누름이 열린 시트의 바깥 누름으로 잡히지 않는다 — 다만 시트 · 대화상자 안에서 한 일의 결과는 그 안 Callout 으로 알리고 스낵바는 닫힌 뒤에 띄운다.",
+      "탭 바(Bottom Navigation) · 바닥 버튼 · 떠 있는 버튼(Floating Action Button)처럼 화면 아래에 붙은 것은 SnackbarAvoidOverlap 으로 감싼다 — 감싼 요소들 중 가장 위 요소의 윗변 + 8 에 띠가 선다(바닥 안전 영역보다 높을 때). 레시피가 감싼 요소를 재서 자리의 --snackbar-avoid 로 넘기고, 붙고 · 떨어지고 · 크기가 바뀌고 · 창 크기가 바뀌고 · 새 띠가 뜰 때 다시 잰다(옮겨 갈 때 200ms). 화면 키보드도 피할 자리다 — 키보드가 올라오면 띠는 키보드 바로 위 8 로 옮겨 간다(폰 브라우저도 — 레시피가 보이는 화면 visualViewport 의 아래 끝을 잰다). 미리보기는 떠 있는 탭 바의 위 끝 80(아래 14 + 높이 66)을 적었다 — 바가 줄어들면(48) 띠도 따라 내려간다. 자리는 body 끝 · z L6(400)이라 시트 · 대화상자 위에 뜨고, 띠 누름이 열린 시트의 바깥 누름으로 잡히지 않는다 — 다만 시트 · 대화상자 안에서 한 일의 결과는 그 안 Callout 으로 알리고 스낵바는 닫힌 뒤에 띄운다.",
     jsx: `import { SnackbarAvoidOverlap, SnackbarProvider } from "@/components/ui/snackbar"
 
 <SnackbarProvider>
