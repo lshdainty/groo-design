@@ -570,6 +570,11 @@ export function listNestLook(brand: Brand = 'desk'): NestLook {
   k.same(k.str(p['subList.display'], 'parent subList.display'), '숨김', '하위 줄(접힘)');
   k.same(k.str(open['subList.display'], 'expanded subList.display'), '보임', '하위 줄(펼침)');
   k.same(k.str(p['expandButton.rotate'], 'parent expandButton.rotate'), '0deg', '꺾쇠 단추 회전(접힘)');
+  // 늘 펼친 편집 화면(mode fixed — 레시피 collapsible={false}, 2026-10-15 Q-002) — 그림(NestedListView fixed)은 꺾쇠 자리를 같은 폭으로 비우고 하위 줄을 늘 보인다
+  k.sameSet(axisValues(spec, 'mode'), ['foldable', 'fixed'], 'mode');
+  const fixed = resolveState(spec, { nest: 'parent', mode: 'fixed' }, 'enabled');
+  k.same(k.str(fixed['subList.display'], 'fixed subList.display'), '보임', '하위 줄(늘 펼친 편집 화면)');
+  k.same(k.str(fixed['expandButton.display'], 'fixed expandButton.display'), '빈 자리', '꺾쇠 자리(늘 펼친 편집 화면)');
   const sub = k.blockMotion('list', '하위 줄 — 펼침 · 접힘');
   const chev = k.blockMotion('list', '꺾쇠 단추 — 회전');
   const look: NestLook = {

@@ -57,9 +57,49 @@ export const Nested: Fig = ({ caption }) => {
   );
 };
 
+// 늘 펼친 편집 화면(collapsible={false}, list.yaml mode fixed — 2026-10-15 Q-002) — 같은 카테고리를 보통 화면(접는 줄)과 나란히.
+// 꺾쇠 단추가 없어도 그 자리를 같은 폭으로 비워 부모 타일이 같은 자리에 선다
+export const NestedFixed: Fig = ({ caption }) => {
+  const n = NL();
+  const cats = [CATEGORIES[0], CATEGORIES[1], CATEGORIES.find((c) => c.id === 'etc')!];
+  const tileX = n.parentPadL + n.button.size + n.button.marginRight;
+  return (
+    <Panel caption={caption}>
+      <div className="flex flex-col items-center gap-6">
+        <div className="flex max-w-full flex-wrap items-start justify-center gap-6">
+          {([
+            ['보통 화면 — 접는 줄', '꺾쇠 단추 · 이름 "{카테고리} 하위 카테고리" + aria-expanded', false],
+            ['편집 화면 — collapsible={false}', '꺾쇠 자리는 비우고 하위 줄은 늘 보인다 · aria-expanded 없음', true],
+          ] as const).map(([strong, cap, fixed]) => (
+            <div key={strong} className="flex max-w-full flex-col items-center gap-2">
+              <div className="max-w-full overflow-x-auto">
+                <div style={{ position: 'relative', width: 360, marginTop: 20, background: 'var(--p-bg-layer-default)', borderRadius: 12 }}>
+                  <NestedListView list={listLook()} nest={n} categories={cats} open={['food']} width={360} childLimit={2} fixed={fixed} ariaLabel={fixed ? '지출 카테고리 편집' : '지출 카테고리'} />
+                  <Guide x={tileX} label={`타일 ${tileX}`} />
+                </div>
+              </div>
+              <Cap strong={strong}>{cap}</Cap>
+            </div>
+          ))}
+        </div>
+        <Cap w={640}>
+          늘 펼친 편집 화면도 꺾쇠 자리 {n.button.size} + {n.button.marginRight} 를 비워 부모 타일이 {tileX} 에 선다 — 두 화면을 오가도 타일 · 제목이 움직이지 않는다(17B). 하위 줄(그림은 둘까지)은 늘 보이고 펼침 상태가 없다 — Tree View 의 collapsible 과 같은 뜻이다. 접는 줄은 이름(expandLabel)이 필수다
+        </Cap>
+      </div>
+    </Panel>
+  );
+};
+
 // 코드 미리보기 — list.md 의 코드 그대로(식비 하위 6개 펼침 · 기타는 하위 없음)
 export const ExNested: Fig = ({ caption }) => (
   <CodePreview caption={caption} w={360} pad={16} padX={0} bg="bg-layer-default">
     <NestedListView list={listLook()} nest={NL()} categories={[CATEGORIES[0], CATEGORIES.find((c) => c.id === 'etc')!]} width={360} live />
+  </CodePreview>
+);
+
+// 코드 미리보기 — list.md 의 "하위 줄 — 늘 펼친 편집 화면" 코드(collapsible={false})
+export const ExNestedFixed: Fig = ({ caption }) => (
+  <CodePreview caption={caption} w={360} pad={16} padX={0} bg="bg-layer-default">
+    <NestedListView list={listLook()} nest={NL()} categories={[CATEGORIES[0], CATEGORIES.find((c) => c.id === 'etc')!]} width={360} fixed live ariaLabel="지출 카테고리 편집" />
   </CodePreview>
 );

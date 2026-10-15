@@ -28,6 +28,12 @@ function face(v: Record<string, unknown>, focused: Record<string, unknown>, stat
   const t = (k: string, src = v) => tokenValue(src[k], mode, brand);
   const n = (k: string, src = v) => must(num(t(k, src)), k);
   const c = (k: string, src = v) => must(str(t(k, src)), k);
+  // 단위 없는 수(줄어듦 0 · 1)
+  const plain = (k: string) => {
+    const x = Number(c(k));
+    if (Number.isNaN(x)) throw new Error(`list.yaml 의 ${k} 가 수가 아니다`);
+    return x;
+  };
   const boxed = (k: string) => {
     const raw = v[k];
     return raw && typeof raw === 'object' && 'value' in raw ? (raw as { value: unknown }).value : raw;
@@ -44,15 +50,18 @@ function face(v: Record<string, unknown>, focused: Record<string, unknown>, stat
       bg: isColor(t('tile.background')) ? c('tile.background') : undefined,
       fg: isColor(t('tile.color')) ? c('tile.color') : undefined,
     },
-    body: { gap: n('body.gap'), padRight: n('body.paddingRight') },
-    title: { ...type(t('title.typography'), boxed('title.fontWeight')), color: c('title.foreground') },
-    detail: { ...type(t('detail.typography'), boxed('detail.fontWeight')), color: c('detail.foreground') },
+    body: { gap: n('body.gap'), padRight: n('body.paddingRight'), minWidth: c('body.minWidth') },
+    title: { ...type(t('title.typography'), boxed('title.fontWeight')), color: c('title.foreground'), overflowWrap: c('title.overflowWrap') },
+    detail: { ...type(t('detail.typography'), boxed('detail.fontWeight')), color: c('detail.foreground'), overflowWrap: c('detail.overflowWrap') },
     suffix: {
       ...type(t('suffixText.typography'), boxed('suffixText.fontWeight')),
       gap: n('suffix.gap'),
       color: c('suffixText.foreground'),
       iconSize: n('suffixIcon.size'),
       iconColor: c('suffixIcon.color'),
+      shrink: plain('suffix.shrink'),
+      textShrink: plain('suffixText.shrink'),
+      textOverflowWrap: c('suffixText.overflowWrap'),
     },
     ring: { width: n('focusRing.width', focused), offset: n('focusRing.offset', focused), color: c('focusRing.color', focused) },
     divider: { height: n('divider.height'), color: c('divider.background') },

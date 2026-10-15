@@ -127,26 +127,27 @@ const LIST_PREFIX_VARIANTS = {
   disabled: { true: "text-fg-disabled [&_[data-list-tile]]:bg-bg-disabled [&_[data-list-tile]]:text-fg-disabled", false: "" },
 };
 const LIST_PREFIX_DEFAULTS = { disabled: false };
-const LIST_BODY_BASE = "flex min-w-0 flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
-const LIST_TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral";
+const LIST_BODY_BASE = "flex min-w-[calc(1em+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
+const LIST_TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral [overflow-wrap:anywhere]";
 const LIST_TITLE_VARIANTS = { disabled: { true: "text-fg-disabled", false: "" } };
 const LIST_TITLE_DEFAULTS = { disabled: false };
 const LIST_HIGHLIGHT_MUTED =
   "[@media(hover:hover)]:group-has-[[data-list-action]:not([data-disabled]):hover]/list-item:text-fg-neutral-muted group-has-[[data-list-action]:not([data-disabled]):active]/list-item:text-fg-neutral-muted";
-const LIST_DETAIL_BASE = "font-sans text-t3 text-fg-neutral-subtle";
+const LIST_DETAIL_BASE = "font-sans text-t3 text-fg-neutral-subtle [overflow-wrap:anywhere]";
 const LIST_DETAIL_VARIANTS = {
   disabled: { true: "text-fg-disabled", false: "" },
   highlighted: { true: LIST_HIGHLIGHT_MUTED, false: "" },
 };
 const LIST_DETAIL_DEFAULTS = { disabled: false, highlighted: false };
 const LIST_SUFFIX_BASE =
-  "flex shrink-0 items-center gap-x1 font-sans text-t5 text-fg-neutral-subtle [&>svg]:size-[18px] [&_a]:relative [&_a]:z-[1] [&_button]:relative [&_button]:z-[1]";
+  "flex items-center gap-x1 font-sans text-t5 text-fg-neutral-subtle [&>svg]:size-[18px] [&_a]:relative [&_a]:z-[1] [&_button]:relative [&_button]:z-[1]";
 const LIST_SUFFIX_VARIANTS = {
+  value: { node: "shrink-0", text: "min-w-0 shrink [overflow-wrap:anywhere]" },
   disabled: { true: "text-fg-disabled", false: "" },
   highlighted: { true: LIST_HIGHLIGHT_MUTED, false: "" },
 };
 const LIST_SUFFIX_COMPOUND = [{ disabled: false, highlighted: true, class: "[&>svg]:text-fg-neutral-subtle" }];
-const LIST_SUFFIX_DEFAULTS = { disabled: false, highlighted: false };
+const LIST_SUFFIX_DEFAULTS = { value: "node", disabled: false, highlighted: false };
 const LIST_ACTION_BASE = [
   "cursor-pointer appearance-none border-0 bg-transparent p-0 font-[inherit] text-[inherit] no-underline outline-none",
   "after:absolute after:inset-0 after:content-['']",
@@ -293,10 +294,10 @@ function logoTile({ name, face = "institution", size = 40, src, imageType = "log
   return `<span ${root}>${initial}${plate}</span>`;
 }
 
-// <ListButtonItem> — 줄 전체가 버튼(앞 · 제목 · 설명 · 뒤)
+// <ListButtonItem> — 줄 전체가 버튼(앞 · 제목 · 설명 · 뒤). 뒤는 글(formatWon 의 값)이라 레시피처럼 value text — 본문이 1em 이 된 뒤에야 줄고 줄 끝에서 끊는다
 function listButtonItem({ title, detail, prefix, suffix }) {
   const body = `<span class="${listTitleVariants()}">${esc(title)}</span>${detail ? `<span class="${listDetailVariants()}">${esc(detail)}</span>` : ""}`;
-  return `<li class="${listItemVariants()}"><div class="${listContentVariants()}"><span class="${listPrefixVariants()}">${prefix}</span><button type="button" data-list-action="" class="${listActionVariants()} ${listBodyVariants()}">${body}</button>${suffix ? `<span class="${listSuffixVariants()}">${suffix}</span>` : ""}</div></li>`;
+  return `<li class="${listItemVariants()}"><div class="${listContentVariants()}"><span class="${listPrefixVariants()}">${prefix}</span><button type="button" data-list-action="" class="${listActionVariants()} ${listBodyVariants()}">${body}</button>${suffix ? `<span class="${listSuffixVariants({ value: "text" })}">${suffix}</span>` : ""}</div></li>`;
 }
 
 // 흰 표면 · 폰 화면 · 줄 · 이름표 — 미리보기 틀(레시피가 아니다)

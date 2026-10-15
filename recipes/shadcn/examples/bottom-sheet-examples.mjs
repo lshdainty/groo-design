@@ -153,9 +153,9 @@ const LIST_CONTENT_BASE = [
 const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" }, nest: { none: "px-global-gutter", parent: "pl-x1 pr-global-gutter", child: "pl-[104px] pr-global-gutter" } };
 const LIST_CONTENT_DEFAULTS = { align: "center", nest: "none" };
 
-const LIST_BODY_BASE = "flex min-w-0 flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
+const LIST_BODY_BASE = "flex min-w-[calc(1em+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
 
-const LIST_TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral";
+const LIST_TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral [overflow-wrap:anywhere]";
 const LIST_TITLE_VARIANTS = { disabled: { true: "text-fg-disabled", false: "" } };
 const LIST_TITLE_DEFAULTS = { disabled: false };
 
@@ -163,13 +163,14 @@ const LIST_HIGHLIGHT_MUTED =
   "[@media(hover:hover)]:group-has-[[data-list-action]:not([data-disabled]):hover]/list-item:text-fg-neutral-muted group-has-[[data-list-action]:not([data-disabled]):active]/list-item:text-fg-neutral-muted";
 
 const LIST_SUFFIX_BASE =
-  "flex shrink-0 items-center gap-x1 font-sans text-t5 text-fg-neutral-subtle [&>svg]:size-[18px] [&_a]:relative [&_a]:z-[1] [&_button]:relative [&_button]:z-[1]";
+  "flex items-center gap-x1 font-sans text-t5 text-fg-neutral-subtle [&>svg]:size-[18px] [&_a]:relative [&_a]:z-[1] [&_button]:relative [&_button]:z-[1]";
 const LIST_SUFFIX_VARIANTS = {
+  value: { node: "shrink-0", text: "min-w-0 shrink [overflow-wrap:anywhere]" },
   disabled: { true: "text-fg-disabled", false: "" },
   highlighted: { true: LIST_HIGHLIGHT_MUTED, false: "" },
 };
 const LIST_SUFFIX_COMPOUND = [{ disabled: false, highlighted: true, class: "[&>svg]:text-fg-neutral-subtle" }];
-const LIST_SUFFIX_DEFAULTS = { disabled: false, highlighted: false };
+const LIST_SUFFIX_DEFAULTS = { value: "node", disabled: false, highlighted: false };
 
 const LIST_CONTROL_BASE = "cursor-pointer select-none data-[disabled]:cursor-not-allowed";
 
@@ -538,12 +539,12 @@ function radioList({ uid, label, options, value }) {
   return `<div role="radiogroup" class="${listVariants()}" aria-label="${esc(label)}">${rows.join("")}</div>`;
 }
 
-// <List> + <ListItem> — 보기만 하는 줄(제목 + 뒤 값 글자)
+// <List> + <ListItem> — 보기만 하는 줄(제목 + 뒤 값 글자 — 글을 그대로 넘겨 레시피처럼 value text)
 const valueList = (rows) =>
   `<ul class="${listVariants()}">${rows
     .map(
       ([title, value]) =>
-        `<li class="${listItemVariants({ highlight: "none" })}"><div class="${listContentVariants({ align: "center" })}"><span class="${listBodyVariants()}"><span class="${listTitleVariants({ disabled: false })}">${esc(title)}</span></span><span class="${listSuffixVariants({ disabled: false, highlighted: false })}">${esc(value)}</span></div></li>`,
+        `<li class="${listItemVariants({ highlight: "none" })}"><div class="${listContentVariants({ align: "center" })}"><span class="${listBodyVariants()}"><span class="${listTitleVariants({ disabled: false })}">${esc(title)}</span></span><span class="${listSuffixVariants({ value: "text", disabled: false, highlighted: false })}">${esc(value)}</span></div></li>`,
     )
     .join("")}</ul>`;
 

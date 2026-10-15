@@ -19,14 +19,16 @@ import { Switchmark, type SwitchmarkProps } from "@/components/ui/switch";
  *   ListRadioGroup · ListCheckGroup   하나 고르기(role=radiogroup) · 여럿 고르기(fieldset) 묶음 — 줄은 li 대신 div
  *   itemRadius               목록 · 묶음의 누름 바탕 모서리(기본 radius-r2_5) — 카드 안에서는 카드 모서리 − 카드 가장자리에서 바탕까지 거리
  *   ListDivider · ListHeader · ListTile   줄 사이 선(필요할 때만) · 목록 제목 · 내용 줄의 앞 타일
- *   ListParentItem           하위 줄을 접는 부모 줄(2026-10-10 — 카테고리). ListButtonItem 의 속성에 expandLabel(꺾쇠 단추의 고정 이름 —
- *                            "{카테고리} 하위 카테고리", 하위가 있으면 준다) · open · defaultOpen · onOpenChange(open) 를 더 받고, 자식(ListButtonItem …)이
- *                            하위 줄이 된다. 줄 앞 4 · 꺾쇠 단추 44(보이는 상자 = 누르는 영역, 모서리 10 · chevron-right 20 fg-neutral-subtle ·
+ *   ListParentItem           하위 줄을 접는 부모 줄(2026-10-10 — 카테고리). ListButtonItem 의 속성에 collapsible(기본 true) · expandLabel(꺾쇠 단추의
+ *                            고정 이름 — "{카테고리} 하위 카테고리", 접는 줄이면 필수 · 하위가 없는 줄에도 준다) · open · defaultOpen · onOpenChange(open) 를
+ *                            더 받고, 자식(ListButtonItem …)이 하위 줄이 된다. 두 갈래는 유니언 타입이다 — collapsible={false} 없이 expandLabel 을
+ *                            빠뜨리면 타입 오류(2026-10-15 사용자 결정 — 구현 세션 질문 Q-002, 안 B). 줄 앞 4 · 꺾쇠 단추 44(보이는 상자 = 누르는 영역, 모서리 10 · chevron-right 20 fg-neutral-subtle ·
  *                            펼치면 90° 300ms) · 그 뒤 4 를 지나 앞 붙이개가 52 에서 시작한다. 단추는 줄과 따로 눌린다(aria-expanded · aria-controls,
  *                            이름은 상태마다 바꾸지 않는다) — 줄을 누르면 하는 일(편집)은 그대로. 하위 줄은 부모의 제목 자리 104 에서 시작하고
  *                            (누름 바탕은 줄 폭 그대로), 높이 300ms 로 펼치고 접는다(모션 줄이기면 150ms 서서히 — Accordion 과 같다).
- *                            자식이 없거나 expandLabel 이 없으면(늘 펼쳐 두는 편집 모드) 꺾쇠 자리를 같은 폭으로 비운다 — 한 목록의 맨 위 단계 줄은
- *                            모두 ListParentItem 으로 두어 타일 · 제목이 같은 자리에 서게 한다
+ *                            자식이 없거나 collapsible={false}(늘 펼친 편집 화면 — Tree View 의 collapsible 과 같은 뜻)면 꺾쇠 자리를 같은 폭으로 비운다 —
+ *                            collapsible={false} 면 하위 줄이 늘 보이고 aria-expanded 가 없다. 한 목록의 맨 위 단계 줄은 모두 ListParentItem 으로 두어
+ *                            타일 · 제목이 같은 자리에 서게 한다
  *
  * 한 줄은 두 층이다 — 바탕 층(li::before: 누름 · 호버 · 강조 바탕, 줄지 않는다)과 콘텐츠 층(앞 · 본문 · 뒤).
  * 누르면 바탕이 좌우 6 들어와 모서리 10 이 되고(SEED), 콘텐츠 층만 2px 거리로 준다(기초 Feedback v104) —
@@ -35,6 +37,11 @@ import { Switchmark, type SwitchmarkProps } from "@/components/ui/switch";
  * 누르는 줄의 버튼 · 링크는 ::after 로 줄 전체를 덮어 줄 어디를 눌러도 눌리고(포커스 링도 그 안쪽 2px),
  * 뒤 붙이개 안의 버튼 · 링크는 z-index 1 로 그 위에 올라 따로 눌린다(SEED 와 같은 짜임).
  * 글자: 제목 t5 · 400, 설명 t3 · fg-neutral-subtle(사용자 결정 — SEED 그대로). 좌우 여백은 spacing-global-gutter(24).
+ *
+ * 값이 길 때(2026-10-15 사용자 결정 — 구현 세션 질문 Q-001, 안 A): 뒤 붙이개는 줄지 않고(SEED suffix flexShrink 0) 본문이 양보한다(content flexGrow 1).
+ * 겹침만 막는다 — 본문은 한 글자(1em, 뒤 여백 10 은 따로)까지 주고, 제목 · 글 설명은 칸 끝에서 끊는다(overflow-wrap: anywhere). suffix 에 글을 그대로 넘긴
+ * 값 글자(이메일 · 계좌번호 · 긴 이름)는 본문이 1em 이 된 뒤에야 줄고 줄 끝에서 끊는다 — 본문 위로 넘쳐 덮지 않는다. 금액 · 화살표 · 컨트롤 같은
+ * 요소는 한 덩어리 그대로다. 값을 줄여 적는 것(억 단위 등)은 그 화면이 정한다.
  */
 
 const listVariants = cva("flex w-full flex-col");
@@ -90,9 +97,11 @@ const listPrefixVariants = cva("flex shrink-0 items-center pr-x3 text-fg-neutral
   defaultVariants: { disabled: false },
 });
 
-const listBodyVariants = cva("flex min-w-0 flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left");
+// 본문 — 남는 폭을 쓰고 먼저 양보한다. 한 글자(1em) + 뒤 여백 10 아래로는 줄지 않는다(Q-001 A)
+const listBodyVariants = cva("flex min-w-[calc(1em+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left");
 
-const listTitleVariants = cva("font-sans text-t5 font-normal text-fg-neutral", {
+// 제목 — 평소에는 단어 단위로 바꾸고, 본문이 낱말 하나보다 좁아질 때만 글자 사이에서 끊는다(칸 밖으로 넘치지 않게)
+const listTitleVariants = cva("font-sans text-t5 font-normal text-fg-neutral [overflow-wrap:anywhere]", {
   variants: { disabled: { true: "text-fg-disabled", false: "" } },
   defaultVariants: { disabled: false },
 });
@@ -101,7 +110,8 @@ const listTitleVariants = cva("font-sans text-t5 font-normal text-fg-neutral", {
 const HIGHLIGHT_MUTED =
   "[@media(hover:hover)]:group-has-[[data-list-action]:not([data-disabled]):hover]/list-item:text-fg-neutral-muted group-has-[[data-list-action]:not([data-disabled]):active]/list-item:text-fg-neutral-muted";
 
-const listDetailVariants = cva("font-sans text-t3 text-fg-neutral-subtle", {
+// 설명 — 글 설명도 제목처럼 본문이 낱말 하나보다 좁아질 때만 글자 사이에서 끊는다(Q-001 A — 뒤 붙이개에 닿지 않게). Tag Group 설명은 그 스펙대로 한 줄 말줄임
+const listDetailVariants = cva("font-sans text-t3 text-fg-neutral-subtle [overflow-wrap:anywhere]", {
   variants: {
     disabled: { true: "text-fg-disabled", false: "" },
     highlighted: { true: HIGHLIGHT_MUTED, false: "" },
@@ -111,17 +121,23 @@ const listDetailVariants = cva("font-sans text-t3 text-fg-neutral-subtle", {
 
 // 뒤 붙이개 — 값 글자(t5 · 옅은 색) · 화살표 18. 안의 버튼 · 링크는 줄의 ::after 위로 올라 따로 눌린다
 // 강조 줄을 올리거나 누르면 값 글자만 짙어진다 — 화살표는 그대로 옅은 색
+// value: node(기본 — 금액 · 화살표 · 컨트롤 · 작은 버튼, 줄지 않는다) · text(suffix 에 글을 그대로 넘긴 값 글자 — 본문이 1em 이 된 뒤에야 줄고
+// 줄 끝에서 끊는다, Q-001 A). 줄은 suffix 가 글(string · number)이면 text 를 고른다
 const listSuffixVariants = cva(
-  "flex shrink-0 items-center gap-x1 font-sans text-t5 text-fg-neutral-subtle [&>svg]:size-[18px] [&_a]:relative [&_a]:z-[1] [&_button]:relative [&_button]:z-[1]",
+  "flex items-center gap-x1 font-sans text-t5 text-fg-neutral-subtle [&>svg]:size-[18px] [&_a]:relative [&_a]:z-[1] [&_button]:relative [&_button]:z-[1]",
   {
     variants: {
+      value: { node: "shrink-0", text: "min-w-0 shrink [overflow-wrap:anywhere]" },
       disabled: { true: "text-fg-disabled", false: "" },
       highlighted: { true: HIGHLIGHT_MUTED, false: "" },
     },
     compoundVariants: [{ disabled: false, highlighted: true, class: "[&>svg]:text-fg-neutral-subtle" }],
-    defaultVariants: { disabled: false, highlighted: false },
+    defaultVariants: { value: "node", disabled: false, highlighted: false },
   },
 );
+
+// 뒤 붙이개의 갈래 — 글을 그대로 넘긴 값 글자면 text(줄 끝에서 끊는다), 그 밖의 요소는 node(한 덩어리)
+const suffixValue = (suffix: React.ReactNode) => (typeof suffix === "string" || typeof suffix === "number" ? "text" : "node");
 
 // 누르는 줄의 본문 버튼 · 링크 — ::after 가 줄 전체를 덮는다(누르는 영역 · 포커스 링)
 const listActionVariants = cva(
@@ -235,7 +251,7 @@ const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
         <span className={listBodyVariants()}>
           <Body title={title} detail={detail} />
         </span>
-        {suffix && <span className={listSuffixVariants()}>{suffix}</span>}
+        {suffix && <span className={listSuffixVariants({ value: suffixValue(suffix) })}>{suffix}</span>}
       </div>
     </li>
   ),
@@ -263,7 +279,7 @@ const ListButtonItem = React.forwardRef<HTMLButtonElement, ListButtonItemProps>(
         >
           <Body title={title} detail={detail} disabled={disabled} highlighted={highlighted} />
         </button>
-        {suffix && <span className={cn(listSuffixVariants({ disabled, highlighted }))}>{suffix}</span>}
+        {suffix && <span className={cn(listSuffixVariants({ value: suffixValue(suffix), disabled, highlighted }))}>{suffix}</span>}
       </div>
     </li>
   ),
@@ -294,7 +310,7 @@ const ListLinkItem = React.forwardRef<HTMLAnchorElement, ListLinkItemProps>(
               <Body title={title} detail={detail} highlighted={highlighted} />
             </a>
           )}
-          {suffix && <span className={cn(listSuffixVariants({ highlighted }))}>{suffix}</span>}
+          {suffix && <span className={cn(listSuffixVariants({ value: suffixValue(suffix), highlighted }))}>{suffix}</span>}
         </div>
       </li>
     );
@@ -313,20 +329,36 @@ const LIST_EXPAND_BUTTON = [
 ].join(" ");
 // 꺾쇠 20 — 접혀 있으면 오른쪽, 펼치면 아래(90° · 300ms easing, 모션 줄이기면 바로)
 const LIST_EXPAND_ICON = "size-5 shrink-0 [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none";
-// 하위가 없는 부모 줄 · 늘 펼쳐 두는 화면 — 꺾쇠 단추와 같은 폭의 빈 자리
+// 하위가 없는 부모 줄 · 늘 펼친 편집 화면(collapsible={false}) — 꺾쇠 단추와 같은 폭의 빈 자리
 const LIST_EXPAND_SLOT = "-my-x0_5 mr-x1 size-11 shrink-0";
 
-export interface ListParentItemProps extends ListButtonItemProps {
-  /** 꺾쇠 단추의 고정 이름 — "{카테고리} 하위 카테고리". 하위가 있으면 준다(없으면 늘 펼쳐 두고 꺾쇠 자리를 비운다) */
-  expandLabel?: string;
+/** 접는 부모 줄(기본) — 꺾쇠 단추의 이름이 필수다 */
+type ListParentFoldProps = {
+  /** 하위 줄을 접는다(기본 true) — Tree View 의 collapsible 과 같은 이름 · 같은 뜻 */
+  collapsible?: true;
+  /** 꺾쇠 단추의 고정 이름 — "{카테고리} 하위 카테고리". 필수 — 하위가 없는 줄에도 준다(꺾쇠 자리는 비운다) */
+  expandLabel: string;
   /** 하위 줄 펼침 — 쥐고 다룰 때 */
   open?: boolean;
   /** 처음 펼침 — 화면이 정한다(카테고리는 모두 펼친 채 연다) */
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  /** 하위 줄(ListButtonItem …) */
-  children?: React.ReactNode;
-}
+};
+
+/** 늘 펼친 편집 화면 — 꺾쇠 자리는 비우고 하위 줄이 늘 보인다(aria-expanded 없음). 이름 · 펼침 상태를 받지 않는다 */
+type ListParentFixedProps = {
+  collapsible: false;
+  expandLabel?: never;
+  open?: never;
+  defaultOpen?: never;
+  onOpenChange?: never;
+};
+
+export type ListParentItemProps = ListButtonItemProps &
+  (ListParentFoldProps | ListParentFixedProps) & {
+    /** 하위 줄(ListButtonItem …) */
+    children?: React.ReactNode;
+  };
 
 // 하위 줄을 접는 부모 줄 — li > 줄(바탕 층 · 콘텐츠 층) + 하위 줄 묶음(ul). 줄을 누르면 onClick(편집), 꺾쇠 단추는 펼치고 접기만
 const ListParentItem = React.forwardRef<HTMLButtonElement, ListParentItemProps>(
@@ -342,6 +374,7 @@ const ListParentItem = React.forwardRef<HTMLButtonElement, ListParentItemProps>(
       disabled,
       rootProps: { className: rootClassName, ...rootRest } = {},
       type = "button",
+      collapsible = true,
       expandLabel,
       open: openProp,
       defaultOpen = false,
@@ -352,9 +385,9 @@ const ListParentItem = React.forwardRef<HTMLButtonElement, ListParentItemProps>(
     ref,
   ) => {
     const hasChildren = React.Children.toArray(children).length > 0;
-    const foldable = hasChildren && expandLabel != null;
+    const foldable = hasChildren && collapsible;
     const [inner, setInner] = React.useState(defaultOpen);
-    // 꺾쇠 단추가 없으면(늘 펼쳐 두는 화면) 하위 줄은 늘 보인다
+    // 늘 펼친 편집 화면(collapsible={false})이면 하위 줄은 늘 보인다
     const open = foldable ? (openProp ?? inner) : hasChildren;
     const setOpen = (next: boolean) => {
       if (openProp === undefined) setInner(next);
@@ -394,7 +427,7 @@ const ListParentItem = React.forwardRef<HTMLButtonElement, ListParentItemProps>(
             >
               <Body title={title} detail={detail} disabled={disabled} highlighted={highlighted} />
             </button>
-            {suffix && <span className={cn(listSuffixVariants({ disabled, highlighted }))}>{suffix}</span>}
+            {suffix && <span className={cn(listSuffixVariants({ value: suffixValue(suffix), disabled, highlighted }))}>{suffix}</span>}
           </div>
         </div>
         {hasChildren && (
@@ -440,7 +473,7 @@ function ControlRow({
         <span className={listBodyVariants()}>
           <Body title={title} detail={detail} disabled={disabled} highlighted={highlighted} />
         </span>
-        {suffix && <span className={cn(listSuffixVariants({ disabled, highlighted }))}>{suffix}</span>}
+        {suffix && <span className={cn(listSuffixVariants({ value: suffixValue(suffix), disabled, highlighted }))}>{suffix}</span>}
       </label>
     </Comp>
   );
