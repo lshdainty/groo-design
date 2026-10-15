@@ -1424,7 +1424,8 @@ export function listRow({ kind = "item", title, detail = "", prefix = "", suffix
   const off = disabled && (kind === "button" || kind === "control");
   const body = `<span class="plst-title">${escape(title)}</span>${detail ? `<span class="plst-detail">${escape(detail)}</span>` : ""}`;
   const pre = prefix ? `<span class="plst-prefix">${prefix}</span>` : "";
-  const suf = suffix ? `<span class="plst-suffix">${suffix}</span>` : "";
+  // 글을 그대로 넘긴 값 글자(태그 없는 글)는 .plst-suffix--text — list.tsx 의 suffix value text(본문이 1em 이 된 뒤에야 줄고 줄 끝에서 끊는다, Q-001 A)
+  const suf = suffix ? `<span class="plst-suffix${/</.test(suffix) ? "" : " plst-suffix--text"}">${suffix}</span>` : "";
   let inner;
   if (kind === "button") inner = `<div class="${contentCls}">${pre}<button type="button" class="plst-body plst-action" data-list-action=""${off ? ' disabled data-disabled=""' : ""}>${body}</button>${suf}</div>`;
   // 링크는 미리보기라 옮기지 않는다 — 섹션 끝 스크립트가 누름을 막는다
@@ -1448,10 +1449,11 @@ const radioGroup = (rows, attrs) => `<div class="plst" role="radiogroup"${attrs}
 const checkGroup = (rows, attrs) => `<fieldset class="plst"${attrs}>${rows.join("")}</fieldset>`;
 const listDivider = (inset = false, as = "li") => `<${as} class="plst-divider${inset ? " plst-divider--inset" : ""}" aria-hidden="true"></${as}>`;
 // 줄은 실제 화면처럼 흰 바탕(bg-layer-default)의 틀 안에 둔다 — 틀은 갤러리 것이고 List 의 일부가 아니다
-const listFrame = (cap, en, body) => `
+//   width — 화면 폭을 정해 그릴 때(가장 나쁜 값 — 320 · 360). 틀은 그 폭 그대로이고 좁은 미리보기에서만 줄어든다
+const listFrame = (cap, en, body, width = 0) => `
         <div class="plst-sample">
           <div class="plst-cap">${escape(cap)}<span>${escape(en)}</span></div>
-          <div class="plst-frame">${body}</div>
+          <div class="plst-frame${width ? " plst-frame--fixed" : ""}"${width ? ` style="--plst-frame-w: ${width}px;"` : ""}>${body}</div>
         </div>`;
 
 // 줄 종류 · 앞 · 뒤 · 설명과 맞춤 · 강조 · 상태 · 직접 눌러 보기 · 목록 제목 · 줄 사이 선 아홉 판을 흰 표면(.vignette-card) 위에 그린다 — 상태 표는 Checkbox 갤러리의 .cb-* 를 쓴다.
@@ -1728,6 +1730,25 @@ export function renderListGallery(brand) {
     ]),
   );
 
+  // 3-1. 값이 길 때 — 가장 나쁜 값(list.md Suffix "값이 길 때" — 2026-10-15 사용자 결정 Q-001 A). 이름은 지어낸 것이다
+  const longPanel = panel(
+    "값이 길 때 — 가장 나쁜 값(폭 320 · 360)",
+    "뒤 붙이개는 줄지 않고 본문이 양보한다(SEED 와 같다). 겹침만 막는다 — 본문은 한 글자(1em, 뒤 여백 10 은 따로)까지 주고, 제목 · 설명은 칸 끝에서 끊는다(overflow-wrap: anywhere — Tag Group 설명은 한 줄 말줄임). 글을 그대로 넘긴 값 글자(이메일 · 계좌번호 · 긴 이름)는 본문이 한 글자 폭이 된 뒤에야 줄고 줄 끝에서 끊는다 — 본문 위로 넘쳐 덮지 않는다. 금액은 한 줄 그대로다 — 줄여 적는 것(억 단위 등)은 그 화면이 정한다. 폭 320 · 360 은 줄 폭이다(좌우 24 를 빼면 272 · 312).",
+    `
+      <div class="plst-frames plst-frames--fixed">${[
+      listFrame("320 · 거래 줄 — 긴 제목 · 아주 큰 금액", "ListButtonItem + ListTile · 금액(화면의 16 · 700)", listOf([
+        listRow({ kind: "button", prefix: listTile("violet", "bag"), title: "동네 정육점 본점 지하 1층 식품관 명절 한우 선물세트 · 추석 대량 구매", detail: "쇼핑 · 체크카드 · 해외결제", suffix: amount("−1,234,567,890,123원") }),
+        listRow({ kind: "button", prefix: listTile("indigo", "wallet"), title: "입출금 통장", suffix: amount("−1,234,567,890,123원") }),
+        listRow({ kind: "button", prefix: listTile("orange", "utensils"), title: "점심", detail: "식비 · 현금", suffix: amount("−12,000원") }),
+      ]), 320),
+      listFrame("360 · 키-값 줄 — 52자 이메일", "ListItem suffix=\"…\"(글 그대로 — 줄 끝에서 끊는다)", listOf([
+        listRow({ title: "이메일", suffix: escape("porest.desk.design.system@example-company-domain.com") }),
+        listRow({ title: "가입일", suffix: escape("2026년 3월 2일") }),
+      ]), 360),
+    ].join("")}
+      </div>`,
+  );
+
   const lede = "SEED List 구조 — 목록(List) · 한 줄(List Item) · 목록 제목(List Header) · 줄 사이 선(ListDivider). 한 줄은 바탕 층과 콘텐츠 층 둘이다 — 올리거나 누르면 바탕이 좌우 6 들어와 모서리 10 으로 둥글어지고, 누르면 콘텐츠 층만 2px 거리로 준다. 제목 16 · 400, 설명 13, 위아래 12 · 좌우 24. 하나 고르기 목록(옛 RadioList)은 라디오 줄로 그린다."
     + (brand.key === "shared" ? " 공유 토큰에는 브랜드 역할 색이 없어 강조 바탕이 여기서는 중립으로 보인다 — HR · Desk 미리보기에서 브랜드 색이다." : "");
 
@@ -1777,6 +1798,7 @@ export function renderListGallery(brand) {
     ${kindsPanel}
     ${prefixPanel}
     ${suffixPanel}
+    ${longPanel}
     ${detailPanel}
     ${highlightPanel}
     ${statePanel}
@@ -9216,19 +9238,21 @@ const pnestTile = (c) => `<span class="plst-tile plst-tile--${c.hue}">${colSvg(c
 // 누르는 줄(편집) — 03e 의 줄 짜임. child 면 하위 줄(콘텐츠 층 왼쪽 104)
 const pnestRow = ({ title, detail, prefix, child = false, state = "" }) =>
   `<li class="plst-row${PCOL_STATES.includes(state) ? ` plst-row--${state}` : ""}"><div class="plst-content${child ? " pnest-content--child" : ""}"><span class="plst-prefix">${prefix}</span><button type="button" class="plst-body plst-action" data-list-action=""><span class="plst-title">${escape(title)}</span><span class="plst-detail">${escape(detail)}</span></button></div></li>`;
-// 부모 줄 — 줄 앞 꺾쇠 단추 44(이름 고정 "{카테고리} 하위 카테고리" + aria-expanded) · 하위가 없으면 같은 폭의 빈 자리. 하위 줄 묶음은 접히면 hidden
-function pnestParent({ c, open = true, live = false, buttonState = "" }) {
+// 부모 줄 — 줄 앞 꺾쇠 단추 44(이름 고정 "{카테고리} 하위 카테고리" + aria-expanded) · 하위가 없으면 같은 폭의 빈 자리. 하위 줄 묶음은 접히면 hidden.
+//   collapsible  false 면 늘 펼친 편집 화면(list.tsx 의 collapsible={false}) — 꺾쇠 단추 없이 같은 폭의 빈 자리, 하위 줄은 늘 보이고 aria-expanded 가 없다
+function pnestParent({ c, open = true, live = false, buttonState = "", collapsible = true }) {
   const subId = nextPcolId("pnest-sub");
   const has = c.children.length > 0;
-  const lead = has
+  if (!collapsible) open = true;
+  const lead = has && collapsible
     ? `<button ${attrsOf([`class="pnest-expand${PCOL_STATES.includes(buttonState) ? ` pnest-expand--${buttonState}` : ""}"`, 'type="button"', `aria-expanded="${open ? "true" : "false"}"`, `aria-controls="${subId}"`, `aria-label="${escape(`${c.name} 하위 카테고리`)}"`, live && "data-pnest-toggle"])}>${colSvg("chevron-right", "pnest-chevron")}</button>`
     : '<span class="pnest-slot" aria-hidden="true"></span>';
   const row = `<div class="plst-row pnest-row"><div class="plst-content pnest-content--parent">${lead}<span class="plst-prefix">${pnestTile(c)}</span><button type="button" class="plst-body plst-action" data-list-action=""><span class="plst-title">${escape(c.name)}</span><span class="plst-detail">${escape(`지출 · ${has ? `하위 ${c.children.length}개` : "하위 없음"}`)}</span></button></div></div>`;
   const sub = has ? `<ul class="plst pnest-sub" id="${subId}"${open ? "" : " hidden"}>${c.children.map((k) => pnestRow({ title: k, detail: "지출", prefix: pnestTile(c), child: true })).join("")}</ul>` : "";
   return `<li class="pnest-parent">${row}${sub}</li>`;
 }
-const pnestList = ({ open = ["food"], live = false, label = "지출 카테고리", states = {} } = {}) =>
-  `<ul class="plst pnest"${live ? " data-pnest-live" : ""} aria-label="${escape(label)}">${PCOL_CATEGORIES.map((c) => pnestParent({ c, open: open.includes(c.id), live, buttonState: states[c.id] || "" })).join("")}</ul>`;
+const pnestList = ({ open = ["food"], live = false, label = "지출 카테고리", states = {}, collapsible = true } = {}) =>
+  `<ul class="plst pnest"${live ? " data-pnest-live" : ""} aria-label="${escape(label)}">${PCOL_CATEGORIES.map((c) => pnestParent({ c, open: open.includes(c.id), live, buttonState: states[c.id] || "", collapsible })).join("")}</ul>`;
 
 // ── Tree View ────────────────────────────────────────────────────────────
 // 나무 — role=tree. 줄 전체가 누르는 자리(16D — 부모는 고르면서 펴고 접는다), 꺾쇠는 표시만. Tab 정지점은 고른 항목(없으면 첫 항목) 하나다.
@@ -9488,10 +9512,11 @@ export function renderCollapseGallery(brand) {
 
   // ── List 하위 줄 ───────────────────────────────────────────────────────
   const nestLook = panel(
-    "List 하위 줄 — 줄 앞 꺾쇠 단추 44 · 하위 104 · 하위 없는 부모는 빈 자리",
-    "카테고리처럼 부모 · 하위 두 단계에서 줄 자체는 편집을 열고 하위 줄만 접을 때는 부모 줄 앞에 꺾쇠 단추를 둔다(ListParentItem — 사용자 결정 7C). 단추는 보이는 상자가 곧 누르는 영역 44(모서리 10)이고, 줄 앞 4 · 단추 뒤 4 를 지나 앞 붙이개가 52 에서 시작한다. 꺾쇠는 chevron-right 20 · fg-neutral-subtle — 접혀 있으면 오른쪽, 펼치면 아래로 90°(300ms — Accordion 과 같다). 이름은 \"{카테고리} 하위 카테고리\" 로 고정하고 펼침은 aria-expanded 가 알린다. 단추는 줄과 따로 눌린다 — 올리거나 누르면 단추만 bg-layer-default-pressed · 2px 축소이고 줄을 누르면 편집이 열린다. 하위 줄은 부모의 제목 자리 104 에서 시작해 하위 타일이 부모 제목 아래에 서고, 하위가 없는 부모(기타)도 꺾쇠 자리를 비워 부모 타일이 모두 52 에 선다 — 타일이 두 세로줄(52 · 104)로 정리된다(17B). 꺾쇠 단추는 실제로 하위 줄을 펼치고 접는다.",
+    "List 하위 줄 — 줄 앞 꺾쇠 단추 44 · 하위 104 · 하위 없는 부모는 빈 자리 · 늘 펼친 편집 화면",
+    "카테고리처럼 부모 · 하위 두 단계에서 줄 자체는 편집을 열고 하위 줄만 접을 때는 부모 줄 앞에 꺾쇠 단추를 둔다(ListParentItem — 사용자 결정 7C). 단추는 보이는 상자가 곧 누르는 영역 44(모서리 10)이고, 줄 앞 4 · 단추 뒤 4 를 지나 앞 붙이개가 52 에서 시작한다. 꺾쇠는 chevron-right 20 · fg-neutral-subtle — 접혀 있으면 오른쪽, 펼치면 아래로 90°(300ms — Accordion 과 같다). 이름은 \"{카테고리} 하위 카테고리\" 로 고정하고 펼침은 aria-expanded 가 알린다. 단추는 줄과 따로 눌린다 — 올리거나 누르면 단추만 bg-layer-default-pressed · 2px 축소이고 줄을 누르면 편집이 열린다. 하위 줄은 부모의 제목 자리 104 에서 시작해 하위 타일이 부모 제목 아래에 서고, 하위가 없는 부모(기타)도 꺾쇠 자리를 비워 부모 타일이 모두 52 에 선다 — 타일이 두 세로줄(52 · 104)로 정리된다(17B). 꺾쇠 단추는 실제로 하위 줄을 펼치고 접는다. 늘 펼쳐 두는 편집 화면은 collapsible={false} 로 켠다 — 꺾쇠 단추 없이 그 자리를 같은 폭으로 비우고 하위 줄이 늘 보인다(aria-expanded 없음 — Tree View 의 collapsible 과 같은 뜻, 2026-10-15 Q-002). 접는 줄은 이름(expandLabel)이 필수다.",
     `${pair(() => phone(pnestList({ open: ["food"], live: true }), "pcol-phone--360 pcol-phone--list"))}${samples([
       sample("꺾쇠 단추 — 호버 · 누름", "단추만 바탕 · 줄은 그대로", phone(pnestList({ open: [], states: { food: "hover", home: "pressed" } }), "pcol-phone--360 pcol-phone--list")),
+      sample("늘 펼친 편집 화면", "collapsible={false} — 꺾쇠 자리는 비우고 하위 줄은 늘 보인다 · aria-expanded 없음", phone(pnestList({ collapsible: false, label: "지출 카테고리 편집" }), "pcol-phone--360 pcol-phone--list")),
     ], NEXT)}`,
   );
 
@@ -12373,14 +12398,14 @@ export function pageCss() {
     .plst-tile--indigo { --plst-tile-bg: var(--color-chart-indigo-weak); --plst-tile-fg: var(--color-chart-indigo); }
     .plst-tile--violet { --plst-tile-bg: var(--color-chart-violet-weak); --plst-tile-fg: var(--color-chart-violet); }
     .plst-tile--gray { --plst-tile-bg: var(--color-chart-gray-weak); --plst-tile-fg: var(--color-chart-gray); }
-    /* 본문 — 제목 + 설명(사이 2), 뒤 붙이개와 10 */
+    /* 본문 — 제목 + 설명(사이 2), 뒤 붙이개와 10. 남는 폭을 쓰고 먼저 양보한다 — 한 글자(1em) + 뒤 여백 10 아래로는 줄지 않는다(Q-001 A) */
     .plst-body {
       display: flex;
       flex: 1;
       flex-direction: column;
       align-items: flex-start;
       gap: var(--spacing-x0_5);
-      min-width: 0;
+      min-width: calc(1em + var(--spacing-x2_5));
       padding-right: var(--spacing-x2_5);
       text-align: left;
     }
@@ -12403,13 +12428,14 @@ export function pageCss() {
     .plst-action:focus-visible::after,
     .plst-row--focus .plst-action::after { outline: 2px solid var(--plst-focus-ring); outline-offset: -2px; }
     .plst-action[data-disabled] { cursor: not-allowed; }
-    /* 제목 t5 · 400 · fg-neutral, 설명 t3 · fg-neutral-subtle(SEED 그대로) */
+    /* 제목 t5 · 400 · fg-neutral, 설명 t3 · fg-neutral-subtle(SEED 그대로). 제목 · 설명은 본문이 낱말 하나보다 좁아질 때만 글자 사이에서 끊는다(칸 밖으로 넘치지 않게) */
     .plst-title {
       font-family: var(--font-sans);
       font-size: var(--text-t5);
       line-height: var(--text-t5--line-height);
       font-weight: 400;
       color: var(--color-fg-neutral);
+      overflow-wrap: anywhere;
     }
     .plst-detail {
       font-family: var(--font-sans);
@@ -12417,6 +12443,7 @@ export function pageCss() {
       line-height: var(--text-t3--line-height);
       font-weight: var(--text-t3--font-weight);
       color: var(--color-fg-neutral-subtle);
+      overflow-wrap: anywhere;
     }
     /* 뒤 붙이개 — 값 글자 t5 · fg-neutral-subtle, 화살표 18(같은 색), 사이 4. 안의 버튼 · 링크는 줄의 ::after 위로 올라 따로 눌린다 */
     .plst-suffix {
@@ -12432,6 +12459,9 @@ export function pageCss() {
     }
     .plst-suffix > svg { width: 18px; height: 18px; }
     .plst-suffix :is(a, button) { position: relative; z-index: 1; }
+    /* 글 값(이메일 · 계좌번호 · 긴 이름 — 글을 그대로 넘긴 값 글자) — 본문이 1em 이 된 뒤에야 줄고 줄 끝에서 끊는다. 본문 위로 넘쳐 덮지 않는다(Q-001 A).
+       금액 · 화살표 · 컨트롤 · 작은 버튼은 위 .plst-suffix 그대로 줄지 않는다(SEED suffix flexShrink 0) */
+    .plst-suffix--text { flex-shrink: 1; min-width: 0; overflow-wrap: anywhere; }
     /* 가계부 금액 — List 의 값 글자가 아니라 그 화면이 정한 자리다(list.md Suffix — 16 · 700) */
     .plst-amount { font-weight: 700; color: var(--color-fg-neutral); }
     /* 강조 줄을 올리거나 누르는 동안 — 설명 · 값 글자를 fg-neutral-muted 로 짙게(fg-neutral-subtle 은 짙은 강조 바탕 위 4.32:1). 제목 · 화살표는 그대로다 */
@@ -12499,6 +12529,10 @@ export function pageCss() {
     .plst-cap { margin-bottom: var(--spacing-xs); font-size: var(--text-caption); font-weight: 600; line-height: 1.4; color: var(--color-text-secondary); }
     .plst-cap span { display: block; font-family: ui-monospace, monospace; font-size: 11px; font-weight: 400; color: var(--color-text-tertiary); }
     .plst-frame { overflow: hidden; border: 1px solid var(--color-border-default); border-radius: var(--radius-r4); background: var(--color-surface-default); }
+    /* 화면 폭을 정한 틀(가장 나쁜 값 — 320 · 360) — 테두리 1 을 더해 줄 폭이 그 화면 폭이 되게 한다 */
+    .plst-frame--fixed { box-sizing: content-box; width: var(--plst-frame-w); max-width: calc(100% - 2px); }
+    .plst-frames--fixed { display: flex; flex-wrap: wrap; align-items: flex-start; }
+    .plst-frames--fixed > .plst-sample { max-width: 100%; }
     /* 상태 표 — 칸마다 줄 하나를 실제 폭(280 이상)으로 그린다. 칸이 그보다 좁아지면 판(.cb-panel)이 가로로 밀린다 */
     .plst-matrix .cb-matrix-row { grid-template-columns: 168px repeat(var(--cb-cols), minmax(280px, 1fr)); }
     .plst-cell { align-items: stretch; }

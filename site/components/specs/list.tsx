@@ -5,7 +5,7 @@ import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { listLook, LIST_STATES, type ListState, type RowSpec } from './list-look';
 import { ListHeaderView, ListView, type ViewMode } from './list-view';
 import { ListPlayground } from './list-playground';
-import { ExNested, Nested } from './list-nest';
+import { ExNested, ExNestedFixed, Nested, NestedFixed } from './list-nest';
 import { Card, Phone, Verdict, rc, type Mode } from './kit';
 import { PhoneBoard, T, TX, items, txRow, type Tx } from './display-screens';
 import { Card as CardArt, LTL, Logo } from './image-screens';
@@ -314,6 +314,45 @@ const Suffix: Fig = ({ caption }) => (
     </div>
   </Panel>
 );
+
+// 값이 길 때 — 가장 나쁜 값(list.md Suffix "값이 길 때", 2026-10-15 사용자 결정 Q-001 A). 이름은 지어낸 것이다
+const LONG_TX: RowSpec[] = [
+  { kind: 'button', prefix: { tile: 'violet', icon: 'shopping-bag' }, title: '동네 정육점 본점 지하 1층 식품관 명절 한우 선물세트 · 추석 대량 구매', detail: '쇼핑 · 체크카드 · 해외결제', suffix: { amount: '−1,234,567,890,123원' } },
+  { kind: 'button', prefix: { tile: 'indigo', icon: 'wallet' }, title: '입출금 통장', suffix: { amount: '−1,234,567,890,123원' } },
+  { kind: 'button', prefix: { tile: 'orange', icon: 'utensils' }, title: '점심', detail: '식비 · 현금', suffix: { amount: '−12,000원' } },
+];
+const LONG_KV: RowSpec[] = [
+  { kind: 'view', title: '이메일', suffix: { text: 'porest.desk.design.system@example-company-domain.com' } },
+  { kind: 'view', title: '가입일', suffix: { text: '2026년 3월 2일' } },
+];
+const LongValues: Fig = ({ caption }) => {
+  const f = look().faces.none.light.enabled;
+  const block = (w: number, rows: RowSpec[], m: 'light' | 'dark', strong: string, cap: string) => (
+    <div className="flex max-w-full flex-col items-center gap-2">
+      <div className="max-w-full overflow-x-auto">
+        <Surface mode={m} style={{ width: w }}>
+          <L rows={rows} mode={m} live={false} width={w} />
+        </Surface>
+      </div>
+      <Cap strong={`${strong} · ${m === 'light' ? '라이트' : '다크'}`}>{cap}</Cap>
+    </div>
+  );
+  return (
+    <Panel caption={caption}>
+      <div className="flex flex-col items-center gap-6">
+        {(['light', 'dark'] as const).map((m) => (
+          <div key={m} className="flex max-w-full flex-wrap items-start justify-center gap-6">
+            {block(320, LONG_TX, m, '320 · 거래 줄', '금액은 한 줄 그대로 — 본문이 양보하고 제목 · 설명은 칸 끝에서 끊긴다')}
+            {block(360, LONG_KV, m, '360 · 키-값 줄', '52자 이메일은 줄 끝에서 끊긴다 — "이메일" 은 한 글자 폭까지 눌린다')}
+          </div>
+        ))}
+        <Cap>
+          값은 줄지 않고 본문이 양보한다(SEED 와 같다) — 본문은 {f.body.minWidth}(뒤 여백 {f.body.padRight} 은 따로)까지 주고, 제목 · 설명은 overflow-wrap: {f.title.overflowWrap}(Tag Group 설명은 한 줄 말줄임). 글을 그대로 넘긴 값 글자만 본문이 한 글자 폭이 된 뒤에 줄 끝에서 끊긴다 — 겹치지 않는다. 값을 줄여 적는 것은 그 화면이 정한다
+        </Cap>
+      </div>
+    </Panel>
+  );
+};
 
 const Detail: Fig = ({ caption }) => (
   <Panel caption={caption}>
@@ -663,10 +702,12 @@ export const listFigures: Record<string, Fig> = {
   live: Live,
   prefix: Prefix,
   suffix: Suffix,
+  'long-values': LongValues,
   detail: Detail,
   header: Header,
   divider: Divider,
   nested: Nested,
+  'nested-fixed': NestedFixed,
   'all-rows': AllRows,
   'group-guide': GroupGuide,
   'chevron-guide': ChevronGuide,
@@ -684,4 +725,5 @@ export const listFigures: Record<string, Fig> = {
   'ex-select': ExSelect,
   'ex-states': ExStates,
   'ex-nested': ExNested,
+  'ex-nested-fixed': ExNestedFixed,
 };

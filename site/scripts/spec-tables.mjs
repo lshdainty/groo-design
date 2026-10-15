@@ -263,6 +263,7 @@ export const PROP_LABEL = {
   flexGrow: '늘어남',
   bleedX: '가장자리까지',
   wordBreak: '줄바꿈',
+  overflowWrap: '넘칠 때 끊기',
   maxLines: '최대 줄',
   format: '형식',
   keys: '키',
@@ -929,13 +930,14 @@ function checkCombo(spec, combo) {
 
 // ── 구역 ────────────────────────────────────────────────────────
 
-// base[.<상태>] — 조건 없는 규칙(상태를 적으면 그 상태만). 부위·상태·비고 칸은 필요할 때만 둔다.
+// base[.<상태>] — 조건 없는 규칙(상태를 적으면 그 상태만). 부위·상태·비고 칸은 필요할 때만 둔다. 부위는 + 로 여럿을 고른다(@body+title)
 function baseTable(spec, tokens, only, pick) {
   const rows = [];
+  const picks = pick ? pick.split('+') : null;
   for (const rule of spec.rules.filter(isBase)) {
     for (const state of only ? [only] : stateNames(spec)) {
       for (const [slot, props] of Object.entries(rule[state] ?? {})) {
-        if (pick && slot !== pick) continue;
+        if (picks && !picks.includes(slot)) continue;
         for (const [prop, pv] of Object.entries(props)) rows.push({ slot, state, prop, ...cell(tokens, pv, fmt(spec, `${slot}.${prop}`)) });
       }
     }

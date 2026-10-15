@@ -187,13 +187,13 @@ const LIST_PREFIX_VARIANTS = {
   disabled: { true: "text-fg-disabled [&_[data-list-tile]]:bg-bg-disabled [&_[data-list-tile]]:text-fg-disabled", false: "" },
 };
 const LIST_PREFIX_DEFAULTS = { disabled: false };
-const LIST_BODY_BASE = "flex min-w-0 flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
-const LIST_TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral";
+const LIST_BODY_BASE = "flex min-w-[calc(1em+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
+const LIST_TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral [overflow-wrap:anywhere]";
 const LIST_TITLE_VARIANTS = { disabled: { true: "text-fg-disabled", false: "" } };
 const LIST_TITLE_DEFAULTS = { disabled: false };
 const LIST_HIGHLIGHT_MUTED =
   "[@media(hover:hover)]:group-has-[[data-list-action]:not([data-disabled]):hover]/list-item:text-fg-neutral-muted group-has-[[data-list-action]:not([data-disabled]):active]/list-item:text-fg-neutral-muted";
-const LIST_DETAIL_BASE = "font-sans text-t3 text-fg-neutral-subtle";
+const LIST_DETAIL_BASE = "font-sans text-t3 text-fg-neutral-subtle [overflow-wrap:anywhere]";
 const LIST_DETAIL_VARIANTS = {
   disabled: { true: "text-fg-disabled", false: "" },
   highlighted: { true: LIST_HIGHLIGHT_MUTED, false: "" },

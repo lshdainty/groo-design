@@ -210,6 +210,8 @@ function Row({ look, row, mode, live, selected, onSelect, onArrow, tabIndex, reg
   const prefixNode = control && markAt === 'prefix' ? markBox : prefix ? <Prefix spec={prefix} f={f} look={look} mode={mode} twoLine={!!(detail || detailNode)} /> : null;
   // 합계에 안 드는 줄 — 제목 · 금액만 설명 글자색(fg-neutral-subtle)
   const suffixMark = control && markAt === 'suffix' ? markBox : null;
+  // 뒤 붙이개가 글 값 하나뿐인가(레시피는 suffix 에 글을 그대로 넘기면 value text) — 본문이 1em 이 된 뒤에야 줄고 줄 끝에서 끊는다(Q-001 A)
+  const textOnly = !!suffix?.text && !suffix.chevron && !suffix.amount && !suffix.buttons?.length && !suffix.icon && !suffixMark && !suffixNode;
 
   const role = kind === 'switch' ? 'switch' : kind === 'check' ? 'checkbox' : kind === 'radio' ? 'radio' : kind === 'link' ? 'link' : kind === 'button' ? 'button' : undefined;
   const contentStyle: CSSProperties = {
@@ -298,25 +300,26 @@ function Row({ look, row, mode, live, selected, onSelect, onArrow, tabIndex, reg
         }
       >
         {prefixNode && <span style={{ display: 'flex', flexShrink: 0, alignItems: 'center', paddingRight: f.prefix.padRight }}>{prefixNode}</span>}
-        <span style={{ display: 'flex', flex: 1, minWidth: 0, flexDirection: 'column', alignItems: 'flex-start', gap: f.body.gap, paddingRight: f.body.padRight }}>
+        {/* 본문 — 남는 폭을 쓰고 먼저 양보한다. 한 글자(1em) + 뒤 여백 아래로는 줄지 않는다(list.yaml body.minWidth — Q-001 A) */}
+        <span style={{ display: 'flex', flex: 1, minWidth: `calc(${f.body.minWidth} + ${f.body.padRight}px)`, flexDirection: 'column', alignItems: 'flex-start', gap: f.body.gap, paddingRight: f.body.padRight }}>
           {titleBadge ? (
             <span style={{ display: 'flex', alignItems: 'center', gap: look.titleGap, maxWidth: '100%', minWidth: 0 }}>
               <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: f.title.fontSize, lineHeight: f.title.lineHeight, fontWeight: f.title.fontWeight, color: excluded ? 'var(--pl-detail)' : 'var(--pl-title)', transition: `color ${f.motion.bg.duration} ${f.motion.bg.easing}` }}>{title}</span>
               {titleBadge}
             </span>
           ) : (
-            <span style={{ fontSize: f.title.fontSize, lineHeight: f.title.lineHeight, fontWeight: f.title.fontWeight, color: excluded ? 'var(--pl-detail)' : 'var(--pl-title)', transition: `color ${f.motion.bg.duration} ${f.motion.bg.easing}` }}>{title}</span>
+            <span style={{ fontSize: f.title.fontSize, lineHeight: f.title.lineHeight, fontWeight: f.title.fontWeight, overflowWrap: f.title.overflowWrap as CSSProperties['overflowWrap'], color: excluded ? 'var(--pl-detail)' : 'var(--pl-title)', transition: `color ${f.motion.bg.duration} ${f.motion.bg.easing}` }}>{title}</span>
           )}
           {detailNode ? (
             <span style={{ display: 'flex', maxWidth: '100%', minWidth: 0, fontSize: f.detail.fontSize, lineHeight: f.detail.lineHeight, fontWeight: f.detail.fontWeight, color: 'var(--pl-detail)' }}>{detailNode}</span>
           ) : (
             detail && (
-              <span style={{ fontSize: f.detail.fontSize, lineHeight: f.detail.lineHeight, fontWeight: f.detail.fontWeight, color: 'var(--pl-detail)', transition: `color ${f.motion.bg.duration} ${f.motion.bg.easing}` }}>{detail}</span>
+              <span style={{ fontSize: f.detail.fontSize, lineHeight: f.detail.lineHeight, fontWeight: f.detail.fontWeight, overflowWrap: f.detail.overflowWrap as CSSProperties['overflowWrap'], color: 'var(--pl-detail)', transition: `color ${f.motion.bg.duration} ${f.motion.bg.easing}` }}>{detail}</span>
             )
           )}
         </span>
         {(suffix || suffixMark || suffixNode) && (
-          <span style={{ display: 'flex', flexShrink: 0, alignItems: 'center', gap: f.suffix.gap, fontSize: f.suffix.fontSize, lineHeight: f.suffix.lineHeight, fontWeight: f.suffix.fontWeight, color: 'var(--pl-stext)' }}>
+          <span style={{ display: 'flex', ...(textOnly ? { flexShrink: f.suffix.textShrink, minWidth: 0, overflowWrap: f.suffix.textOverflowWrap as CSSProperties['overflowWrap'] } : { flexShrink: f.suffix.shrink }), alignItems: 'center', gap: f.suffix.gap, fontSize: f.suffix.fontSize, lineHeight: f.suffix.lineHeight, fontWeight: f.suffix.fontWeight, color: 'var(--pl-stext)' }}>
             {suffix?.text}
             {suffix?.amount && (
               <span style={{ fontSize: f.title.fontSize, lineHeight: f.title.lineHeight, fontWeight: 700, color: excluded ? 'var(--pl-detail)' : 'var(--pl-title)', fontVariantNumeric: 'tabular-nums', textDecoration: excluded === 'refunded' ? 'line-through' : 'none' }}>{suffix.amount}</span>

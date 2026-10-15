@@ -88,11 +88,11 @@ const PREFIX_VARIANTS = {
 };
 const PREFIX_DEFAULTS = { disabled: false };
 
-// 본문(listBodyVariants) — 제목 + 설명
-const BODY_BASE = "flex min-w-0 flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
+// 본문(listBodyVariants) — 제목 + 설명. 남는 폭을 쓰고 먼저 양보한다 — 한 글자(1em) + 뒤 여백 10 아래로는 줄지 않는다(Q-001 A)
+const BODY_BASE = "flex min-w-[calc(1em+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
 
-// 제목(listTitleVariants)
-const TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral";
+// 제목(listTitleVariants) — 본문이 낱말 하나보다 좁아질 때만 글자 사이에서 끊는다
+const TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral [overflow-wrap:anywhere]";
 const TITLE_VARIANTS = { disabled: { true: "text-fg-disabled", false: "" } };
 const TITLE_DEFAULTS = { disabled: false };
 
@@ -101,7 +101,7 @@ const HIGHLIGHT_MUTED =
   "[@media(hover:hover)]:group-has-[[data-list-action]:not([data-disabled]):hover]/list-item:text-fg-neutral-muted group-has-[[data-list-action]:not([data-disabled]):active]/list-item:text-fg-neutral-muted";
 
 // 설명(listDetailVariants)
-const DETAIL_BASE = "font-sans text-t3 text-fg-neutral-subtle";
+const DETAIL_BASE = "font-sans text-t3 text-fg-neutral-subtle [overflow-wrap:anywhere]";
 
 const DETAIL_VARIANTS = {
   disabled: { true: "text-fg-disabled", false: "" },
@@ -110,18 +110,20 @@ const DETAIL_VARIANTS = {
 
 const DETAIL_DEFAULTS = { disabled: false, highlighted: false };
 
-// 뒤 붙이개(listSuffixVariants) — 값 글자 · 화살표 18. 강조 줄을 올리거나 누르면 값 글자만 짙어지고 화살표는 그대로
+// 뒤 붙이개(listSuffixVariants) — 값 글자 · 화살표 18. 강조 줄을 올리거나 누르면 값 글자만 짙어지고 화살표는 그대로.
+// value: node(금액 · 화살표 · 컨트롤 · 작은 버튼 — 줄지 않는다) · text(글을 그대로 넘긴 값 글자 — 본문이 1em 이 된 뒤에야 줄고 줄 끝에서 끊는다, Q-001 A)
 const SUFFIX_BASE =
-  "flex shrink-0 items-center gap-x1 font-sans text-t5 text-fg-neutral-subtle [&>svg]:size-[18px] [&_a]:relative [&_a]:z-[1] [&_button]:relative [&_button]:z-[1]";
+  "flex items-center gap-x1 font-sans text-t5 text-fg-neutral-subtle [&>svg]:size-[18px] [&_a]:relative [&_a]:z-[1] [&_button]:relative [&_button]:z-[1]";
 
 const SUFFIX_VARIANTS = {
+  value: { node: "shrink-0", text: "min-w-0 shrink [overflow-wrap:anywhere]" },
   disabled: { true: "text-fg-disabled", false: "" },
   highlighted: { true: HIGHLIGHT_MUTED, false: "" },
 };
 
 const SUFFIX_COMPOUND = [{ disabled: false, highlighted: true, class: "[&>svg]:text-fg-neutral-subtle" }];
 
-const SUFFIX_DEFAULTS = { disabled: false, highlighted: false };
+const SUFFIX_DEFAULTS = { value: "node", disabled: false, highlighted: false };
 
 // 누르는 줄의 본문 버튼 · 링크(listActionVariants) — ::after 가 줄 전체를 덮는다(누르는 영역 · 포커스 링)
 const ACTION_BASE = [
@@ -169,7 +171,7 @@ const LIST_EXPAND_BUTTON = [
 ].join(" ");
 // 꺾쇠 20 — 접혀 있으면 오른쪽, 펼치면 아래(90° · 300ms easing, 모션 줄이기면 바로)
 const LIST_EXPAND_ICON = "size-5 shrink-0 [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none";
-// 하위가 없는 부모 줄 · 늘 펼쳐 두는 화면 — 꺾쇠 단추와 같은 폭의 빈 자리
+// 하위가 없는 부모 줄 · 늘 펼친 편집 화면(collapsible={false}) — 꺾쇠 단추와 같은 폭의 빈 자리
 const LIST_EXPAND_SLOT = "-my-x0_5 mr-x1 size-11 shrink-0";
 // 부모 줄의 li · 하위 줄 묶음(ul — listVariants 뒤에 붙인다) — list.tsx 의 JSX
 const PARENT_ITEM = "flex w-full flex-col";
@@ -660,6 +662,9 @@ function body({ title, detail, disabled, highlighted }) {
 
 const part = (html, cls) => (html ? `<span class="${cls}">${html}</span>` : "");
 
+// 뒤 붙이개의 갈래(레시피의 suffixValue) — 레시피는 suffix 가 글(string · number)이면 text 를 고른다. 여기서는 태그 없는 글이 그 자리다
+const suffixValue = (html) => (/</.test(html ?? "") ? "node" : "text");
+
 // 목록 · 묶음의 itemRadius — 누름 · 호버 바탕의 모서리를 --list-item-radius 로 넘긴다(레시피의 radiusStyle)
 const radius = (itemRadius) => itemRadius && `style="--list-item-radius:${itemRadius}"`;
 
@@ -669,7 +674,7 @@ const list = (rows, { ariaLabel, labelledBy, itemRadius } = {}) =>
 
 // <ListItem> — 보기만 하는 줄. 레시피는 앞 · 본문 · 뒤에 cn() 을 쓰지 않고 막힘 · 강조도 넘기지 않는다
 function listItem({ title, detail, prefix, suffix, align, highlighted }) {
-  const content = `${part(prefix, listPrefixVariants())}<span class="${listBodyVariants()}">${body({ title, detail })}</span>${part(suffix, listSuffixVariants())}`;
+  const content = `${part(prefix, listPrefixVariants())}<span class="${listBodyVariants()}">${body({ title, detail })}</span>${part(suffix, listSuffixVariants({ value: suffixValue(suffix) }))}`;
   return `<li class="${merge(listItemVariants({ highlight: hl(highlighted) }))}"><div class="${listContentVariants({ align })}">${content}</div></li>`;
 }
 
@@ -682,15 +687,17 @@ function listButtonItem({ title, detail, prefix, suffix, align, highlighted, dis
     disabled && 'data-disabled=""',
     `class="${merge(`${listActionVariants()} ${listBodyVariants()}`)}"`,
   ]);
-  const content = `${part(prefix, merge(listPrefixVariants({ disabled })))}<button ${button}>${body({ title, detail, disabled, highlighted })}</button>${part(suffix, merge(listSuffixVariants({ disabled, highlighted })))}`;
+  const content = `${part(prefix, merge(listPrefixVariants({ disabled })))}<button ${button}>${body({ title, detail, disabled, highlighted })}</button>${part(suffix, merge(listSuffixVariants({ value: suffixValue(suffix), disabled, highlighted })))}`;
   return `<li class="${merge(listItemVariants({ highlight: hl(highlighted) }))}"><div class="${listContentVariants({ align, nest })}">${content}</div></li>`;
 }
 
 // <ListParentItem expandLabel open> — 하위 줄을 접는 부모 줄. li > 줄(바탕 층 · 콘텐츠 층 — 앞 4 · 꺾쇠 단추 44 · 앞 붙이개 52) + 하위 줄 묶음(ul — 접히면 hidden).
-// 자식(children — 이미 그린 하위 줄)이 없거나 expandLabel 이 없으면 꺾쇠 자리를 같은 폭으로 비운다(하위가 없으면 묶음도 없다)
-function listParentItem({ uid, title, detail, prefix, suffix, align, highlighted, disabled = false, expandLabel, open = false, children = [] }) {
+// 자식(children — 이미 그린 하위 줄)이 없거나 collapsible 이 false(늘 펼친 편집 화면 — 하위 줄이 늘 보인다)면 꺾쇠 자리를 같은 폭으로 비운다(하위가 없으면 묶음도 없다).
+// 접는 줄(collapsible 기본 true)은 expandLabel 이 필수다 — 레시피의 유니언 타입
+function listParentItem({ uid, title, detail, prefix, suffix, align, highlighted, disabled = false, collapsible = true, expandLabel, open = false, children = [] }) {
   const hasChildren = children.length > 0;
-  const foldable = hasChildren && expandLabel != null;
+  const foldable = hasChildren && collapsible;
+  if (collapsible && expandLabel == null) throw new Error(`listParentItem(${title}) — 접는 줄은 expandLabel 이 필수다(collapsible={false} 가 아니면)`);
   const isOpen = foldable ? open : hasChildren;
   const subId = `${uid}-sub`;
   const lead = foldable
@@ -711,7 +718,7 @@ function listParentItem({ uid, title, detail, prefix, suffix, align, highlighted
     disabled && 'data-disabled=""',
     `class="${merge(`${listActionVariants()} ${listBodyVariants()}`)}"`,
   ]);
-  const content = `${lead}${part(prefix, merge(listPrefixVariants({ disabled })))}<button ${button}>${body({ title, detail, disabled, highlighted })}</button>${part(suffix, merge(listSuffixVariants({ disabled, highlighted })))}`;
+  const content = `${lead}${part(prefix, merge(listPrefixVariants({ disabled })))}<button ${button}>${body({ title, detail, disabled, highlighted })}</button>${part(suffix, merge(listSuffixVariants({ value: suffixValue(suffix), disabled, highlighted })))}`;
   const sub = hasChildren
     ? `<ul id="${subId}" data-slot="list-sub-list" data-state="${isOpen ? "open" : "closed"}"${isOpen ? "" : ' hidden=""'} class="${merge(`${listVariants()} ${SUB_LIST}`)}">${children.join("")}</ul>`
     : "";
@@ -725,7 +732,7 @@ function listLinkItem({ href, title, detail, prefix, suffix, align, highlighted 
     `class="${merge(`${listActionVariants()} ${listBodyVariants()}`)}"`,
     `href="${href}"`,
   ]);
-  const content = `${part(prefix, listPrefixVariants())}<a ${link}>${body({ title, detail, highlighted })}</a>${part(suffix, merge(listSuffixVariants({ highlighted })))}`;
+  const content = `${part(prefix, listPrefixVariants())}<a ${link}>${body({ title, detail, highlighted })}</a>${part(suffix, merge(listSuffixVariants({ value: suffixValue(suffix), highlighted })))}`;
   return `<li class="${merge(listItemVariants({ highlight: hl(highlighted) }))}"><div class="${listContentVariants({ align })}">${content}</div></li>`;
 }
 
@@ -737,7 +744,7 @@ function controlRow({ as = "li", htmlFor, title, detail, prefix, suffix, align, 
     disabled && 'data-disabled=""',
     `class="${merge(`${listContentVariants({ align })} ${listControlVariants()}`)}"`,
   ]);
-  const content = `${part(prefix, merge(listPrefixVariants({ disabled })))}<span class="${listBodyVariants()}">${body({ title, detail, disabled, highlighted })}</span>${part(suffix, merge(listSuffixVariants({ disabled, highlighted })))}`;
+  const content = `${part(prefix, merge(listPrefixVariants({ disabled })))}<span class="${listBodyVariants()}">${body({ title, detail, disabled, highlighted })}</span>${part(suffix, merge(listSuffixVariants({ value: suffixValue(suffix), disabled, highlighted })))}`;
   return `<${as} class="${merge(listItemVariants({ highlight: hl(highlighted) }))}"><label ${label}>${content}</label></${as}>`;
 }
 
@@ -855,15 +862,15 @@ const CATEGORIES = [
   { id: "etc", name: "기타", icon: "tag", hue: "gray", children: [] },
 ];
 const categoryTile = (c) => listTile(ICONS[c.icon], `bg-chart-${c.hue}-weak text-chart-${c.hue}`);
-const categoryRows = (uid, open = ["food"]) =>
+// collapsible 이 false 면 늘 펼친 편집 화면 — 꺾쇠 자리는 비우고 하위 줄이 늘 보인다(이름 · 펼침을 넘기지 않는다)
+const categoryRows = (uid, open = ["food"], { collapsible = true } = {}) =>
   CATEGORIES.map((c) =>
     listParentItem({
       uid: `${uid}-${c.id}`,
       prefix: categoryTile(c),
       title: c.name,
       detail: `지출 · ${c.children.length ? `하위 ${c.children.length}개` : "하위 없음"}`,
-      expandLabel: c.children.length ? `${c.name} 하위 카테고리` : undefined,
-      open: open.includes(c.id),
+      ...(collapsible ? { expandLabel: `${c.name} 하위 카테고리`, open: open.includes(c.id) } : { collapsible: false }),
       children: c.children.map((k) => listButtonItem({ nest: "child", prefix: categoryTile(c), title: k, detail: "지출" })),
     }),
   );
@@ -1030,15 +1037,42 @@ import { List, ListButtonItem, ListParentItem, ListTile } from "@/components/ui/
       <ListButtonItem key={c.id} prefix={renderTile(c)} title={c.name} detail="지출" onClick={() => editCategory(c.id)} />
     ))}
   </ListParentItem>
-  {/* 하위가 없으면 꺾쇠 자리만 비운다 — 타일 · 제목이 같은 자리 */}
+  {/* 하위가 없으면 꺾쇠 자리만 비운다 — 타일 · 제목이 같은 자리. 이름은 같이 준다(하위가 생기면 단추가 선다) */}
   <ListParentItem
     prefix={<ListTile className="bg-chart-gray-weak text-chart-gray"><Tag /></ListTile>}
     title="기타"
     detail="지출 · 하위 없음"
     onClick={() => editCategory(etc.id)}
+    expandLabel="기타 하위 카테고리"
   />
 </List>`,
     render: () => screen(list(categoryRows("list-ex-nest"), { ariaLabel: "지출 카테고리" })),
+  },
+
+  {
+    title: "하위 줄 — 늘 펼친 편집 화면",
+    description:
+      "카테고리를 고치는 편집 화면처럼 하위 줄을 늘 펼쳐 두면 collapsible={false} 로 켠다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-002, 안 B). Tree View 의 collapsible 과 같은 이름 · 같은 뜻이다. 꺾쇠 단추를 그리지 않고 그 자리를 같은 폭(44 + 4)으로 비워 부모 타일이 접는 화면과 같은 52 에 서고, 하위 줄은 늘 보이며 aria-expanded 가 없다. 이름(expandLabel) · 펼침(open · defaultOpen · onOpenChange)을 받지 않는다 — 접는 줄(collapsible 기본 true)은 expandLabel 이 필수라 빠뜨리면 타입 오류다. 줄을 누르면 편집이 열리는 것은 같다.",
+    jsx: `import { List, ListButtonItem, ListParentItem } from "@/components/ui/list"
+
+<List aria-label="지출 카테고리 편집">
+  {/* 늘 펼친 편집 화면 — 꺾쇠 단추 없이 하위 줄이 늘 보인다(Tree View 의 collapsible 과 같은 뜻) */}
+  {categories.map((c) => (
+    <ListParentItem
+      key={c.id}
+      collapsible={false}
+      prefix={renderTile(c)}
+      title={c.name}
+      detail={c.children.length ? \`지출 · 하위 \${c.children.length}개\` : "지출 · 하위 없음"}
+      onClick={() => editCategory(c.id)}
+    >
+      {c.children.map((k) => (
+        <ListButtonItem key={k.id} prefix={renderTile(k)} title={k.name} detail="지출" onClick={() => editCategory(k.id)} />
+      ))}
+    </ListParentItem>
+  ))}
+</List>`,
+    render: () => screen(list(categoryRows("list-ex-nest-fixed", [], { collapsible: false }), { ariaLabel: "지출 카테고리 편집" })),
   },
 
   {
