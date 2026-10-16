@@ -61,6 +61,26 @@ const breakpoints = parseBreakpoints(content);
 const layout = parseLayout(content);
 const gradients = parseGradients(content);
 const touchTargets = parseTouchTargets(content);
+
+// 옛 그림자 이름(shadow-sm · md · lg · xl 과 -dark)은 v104 의 s1 ~ s4 와 같은 값의 별칭이다. 값을 다시 적지 않고
+// var(--shadow-sN) 으로 내보낸다 — Tailwind v4 는 그림자 값을 클래스(.shadow-lg) 안에 박아 넣어서, 값을 적으면 다크 블록이
+// 옛 클래스에 닿지 않는다. var 로 적으면 클래스에도 var(--shadow-s3) 가 박혀 다크 블록이 바꾼 s3 를 따라간다
+// (2026-10-16 사용자 결정 — 기초 웹 01-003 A). 별칭의 값이 가리키는 새 이름과 다르면 별칭이 아니므로 멈춘다.
+const SHADOW_ALIAS = { "shadow-sm": "shadow-s1", "shadow-md": "shadow-s2", "shadow-lg": "shadow-s3", "shadow-xl": "shadow-s4" };
+// 새 이름(shadow-s1 ~ s4)도 같은 이유로 값 대신 var(--porest-shadow-sN) 으로 적고, 값은 @theme 밖 :root 의
+// --porest-shadow-sN 에 둔다 — 다크 블록이 그 값을 바꾸면 .shadow-s3 · shadow-lg · var(--shadow-s3) 가 모두 따라간다
+// (2026-10-17 사용자 결정 — 01-003 A 를 새 이름에도). -dark 짝(--shadow-s3-dark)은 값 그대로 둔다.
+const SHADOW_HOLD = /^shadow-s\d+$/;
+const holdOf = (name) => (SHADOW_HOLD.test(name) && `${name}-dark` in shadows ? `porest-${name}` : null);
+const shadowAliasOf = (name) => {
+  const dark = name.endsWith("-dark");
+  const target = SHADOW_ALIAS[dark ? name.slice(0, -"-dark".length) : name];
+  if (!target) return null;
+  const t = dark ? `${target}-dark` : target;
+  if (!(t in shadows)) throw new Error(`옛 그림자 ${name} 이 가리킬 ${t} 가 ${source} 에 없다`);
+  if (shadows[t] !== shadows[name]) throw new Error(`옛 그림자 ${name} 의 값이 ${t} 와 다르다 — 별칭이 아니다`);
+  return t;
+};
 const zIndex = parseZIndex(content);
 // keyframes는 baseline shared — DESIGN.md에서만 정의(brand-neutral). brand 파일 빌드 시도 fallback.
 let keyframes = parseKeyframes(content);
@@ -121,8 +141,10 @@ out += "\n";
 
 out += "  /* Shadow (from prose-token table — DESIGN*.md '## Elevation & Depth') */\n";
 for (const [name, val] of Object.entries(shadows)) {
-  // shadow-sm → --shadow-sm, shadow-md-dark → --shadow-md-dark
-  out += `  --${name}: ${val};\n`;
+  // shadow-s1 → --shadow-s1 (값), 옛 shadow-sm → --shadow-sm: var(--shadow-s1), shadow-md-dark → var(--shadow-s2-dark)
+  const alias = shadowAliasOf(name);
+  const hold = holdOf(name);
+  out += `  --${name}: ${alias ? `var(--${alias})` : hold ? `var(--${hold})` : val};\n`;
 }
 out += "\n";
 
@@ -176,6 +198,14 @@ for (const [name, val] of Object.entries(zIndex)) {
 }
 out += "}\n";
 
+// 그림자 값 — @theme 의 --shadow-s1 ~ s4 가 가리키는 자리(위 SHADOW_HOLD). 다크 블록이 이 값을 바꾼다
+const holds = Object.keys(shadows).filter((n) => holdOf(n));
+if (holds.length > 0) {
+  out += "\n/* Shadow values — --shadow-s1 ~ s4 가 var() 로 가리킨다(Tailwind 클래스도 다크를 따라가게). 다크는 아래 다크 블록 */\n:root {\n";
+  for (const n of holds) out += `  --${holdOf(n)}: ${shadows[n]};\n`;
+  out += "}\n";
+}
+
 // 다크 — 다크 값(-dark)이 따로 있는 토큰을 그 값으로 바꾼다(색 · 그림자 · 그라디언트). 쓰는 쪽은 <html> 에
 // data-theme="dark" 나 class="dark" 를 단다. 팔레트도 SEED 처럼 모드마다 다르므로(v108) 함께 바꾼다.
 // 값은 hex 로 풀어 적는다 — var() 사슬로 적으면 반대 모드 팔레트를 일부러 가리키는 반전 역할 색
@@ -191,7 +221,11 @@ for (const name of colorTable.keys()) {
 for (const table of [shadows, gradients]) {
   for (const [name] of Object.entries(table)) {
     if (name.endsWith("-dark") || !(`${name}-dark` in table)) continue;
-    darkDecls.push(`  --${name}: ${table[`${name}-dark`]};`);
+    // 옛 그림자 이름은 var(--shadow-sN) 이라 s1 ~ s4 를 바꾸면 따라온다 — 따로 다크 값을 적지 않는다
+    if (table === shadows && shadowAliasOf(name)) continue;
+    // 새 그림자 이름은 값을 든 --porest-shadow-sN 을 바꾼다
+    const target = table === shadows && holdOf(name) ? holdOf(name) : name;
+    darkDecls.push(`  --${target}: ${table[`${name}-dark`]};`);
   }
 }
 if (darkDecls.length > 0) {

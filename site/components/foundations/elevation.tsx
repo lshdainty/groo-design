@@ -1,7 +1,7 @@
 // Elevation 페이지 — 층 색은 역할 색(bg-layer-*), 그림자 · 딤은 DESIGN.md 의 prose 토큰, 층 이름은 "쌓임 맥락" 표에서 온다
 import type { CSSProperties, ReactNode } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
-import { color, proseValue, roleAliases, roleColors, sectionTable, type Brand } from '@/lib/design-tokens';
+import { color, contrast, proseValue, roleAliases, roleColors, sectionTable, type Brand } from '@/lib/design-tokens';
 import { Figure, Swatch, Table, Token } from './ui';
 
 type Mode = 'light' | 'dark';
@@ -341,6 +341,149 @@ export function BasementVsWeakFigure() {
             {cell(m, 'weak')}
           </div>
         ))}
+      </div>
+    </Figure>
+  );
+}
+
+// ── 화면 바탕 — 카드 화면 · 띠 화면 · 흰 화면(DESIGN.md Layout "화면 바탕", 2026-10-16 Q-019-3 C) ─────
+// 투명한 색(#RRGGBBAA)을 바탕에 섞은 불투명 hex — 대비를 잴 때
+function over(fg: string, bg: string) {
+  const h = fg.replace('#', '');
+  const a = h.length === 8 ? parseInt(h.slice(6, 8), 16) / 255 : 1;
+  const mix = [0, 2, 4].map((i) => Math.round(parseInt(h.slice(i, i + 2), 16) * a + parseInt(bg.replace('#', '').slice(i, i + 2), 16) * (1 - a)));
+  return `#${mix.map((v) => v.toString(16).padStart(2, '0')).join('')}`;
+}
+const ratio = (fg: string, bg: string) => contrast(over(fg, bg), bg).toFixed(2);
+function Rows({ mode, n, top = 0 }: { mode: Mode; n: number; top?: number }) {
+  return (
+    <div className="flex flex-col gap-[7px] px-2.5" style={{ paddingTop: top }}>
+      {Array.from({ length: n }, (_, i) => (
+        <div key={i} className="flex items-center gap-1.5">
+          <span className="block h-2.5 w-2.5 shrink-0 rounded" style={{ background: rc('stroke-neutral-weak', mode) }} />
+          <span className="block h-1.5 rounded" style={{ width: 44 - (i % 3) * 8, background: rc('fg-neutral-muted', mode) }} />
+        </div>
+      ))}
+    </div>
+  );
+}
+function GroupHead({ mode }: { mode: Mode }) {
+  return <span className="mx-2.5 block h-1 w-8 rounded" style={{ background: rc('fg-neutral-subtle', mode) }} />;
+}
+export function ScreenFloorFigure() {
+  const gapL = contrast(rc('bg-layer-default'), rc('bg-layer-basement'));
+  const gapD = contrast(rc('bg-layer-default', 'dark'), rc('bg-layer-basement', 'dark'));
+  const kinds: { key: string; name: string; what: string; draw: (m: Mode) => ReactNode }[] = [
+    {
+      key: 'card',
+      name: '카드 화면',
+      what: '홈 · 자산 · 통계 · 예산 · 상세',
+      draw: (m) => (
+        <Phone mode={m}>
+          <Nav mode={m} />
+          <Cards mode={m} />
+        </Phone>
+      ),
+    },
+    {
+      key: 'band',
+      name: '띠 화면',
+      what: '설정 · 전체 · 캘린더 · 알림',
+      draw: (m) => (
+        <Phone mode={m}>
+          <Nav mode={m} />
+          <div className="absolute inset-x-0 flex flex-col gap-2" style={{ top: 36 }}>
+            {[3, 2, 3].map((n, i) => (
+              <div key={i} className="flex flex-col gap-1.5 pb-2 pt-1.5" style={{ background: rc('bg-layer-default', m) }}>
+                <GroupHead mode={m} />
+                <Rows mode={m} n={n} />
+              </div>
+            ))}
+          </div>
+        </Phone>
+      ),
+    },
+    {
+      key: 'white',
+      name: '흰 화면',
+      what: '가계부 거래',
+      draw: (m) => (
+        <Phone mode={m}>
+          <div className="absolute inset-0" style={{ background: rc('bg-layer-default', m) }} />
+          <Nav mode={m} />
+          <div className="absolute inset-x-0 flex flex-col gap-1.5" style={{ top: 34 }}>
+            <GroupHead mode={m} />
+            <Rows mode={m} n={4} />
+            <GroupHead mode={m} />
+            <Rows mode={m} n={4} />
+          </div>
+        </Phone>
+      ),
+    },
+  ];
+  return (
+    <Figure caption={`폰 화면의 바닥은 늘 회색이고, 그 위에 흰 층을 화면 종류대로 놓는다. 띠 사이 틈은 라이트 ${gapL.toFixed(2)}:1 · 다크 ${gapD.toFixed(2)}:1 로 옅다 — 묶음은 목록 제목이 가른다`}>
+      <div className="flex flex-col gap-4">
+        {(['light', 'dark'] as Mode[]).map((m) => (
+          <div key={m} className="flex gap-4">
+            {kinds.map((k) => (
+              <div key={k.key} className="flex w-[124px] flex-col items-center gap-2">
+                {k.draw(m)}
+                {m === 'dark' && (
+                  <>
+                    <b className="text-[13px] text-fd-foreground">{k.name}</b>
+                    <span className="text-center text-[11px] leading-4 text-fd-muted-foreground">{k.what}</span>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </Figure>
+  );
+}
+
+// ── 바닥 위의 채움 — neutral-weak · disabled 는 흰 표면 위에만, 바닥 위 칩 · 세그먼트 트랙은 투명 짝(01-040 B) ─────
+export function FloorFillFigure() {
+  const chip = (bg: string, label: string, m: Mode) => (
+    <span className="inline-flex h-8 items-center rounded-full px-3 text-[13px] font-medium" style={{ background: bg, color: rc('fg-neutral', m) }}>
+      {label}
+    </span>
+  );
+  const btn = (m: Mode, outline: boolean) => (
+    <span
+      className="inline-flex h-8 items-center rounded-lg px-3 text-[13px] font-bold"
+      style={{ background: outline ? 'transparent' : rc('bg-neutral-weak', m), boxShadow: outline ? `inset 0 0 0 1px ${rc('stroke-neutral-weak', m)}` : undefined, color: rc('fg-neutral', m) }}
+    >
+      지난달 보기
+    </span>
+  );
+  const cell = (m: Mode) => {
+    const floor = rc('bg-layer-basement', m);
+    const alpha = rc('bg-neutral-weak-alpha', m);
+    const weak = rc('bg-neutral-weak', m);
+    const row = (ok: boolean, node: ReactNode, note: string) => (
+      <div className="flex items-center justify-between gap-3">
+        {node}
+        <span className="text-[11px] leading-4" style={{ color: ok ? rc('fg-neutral-muted', m) : rc('fg-critical', m) }}>{note}</span>
+      </div>
+    );
+    return (
+      <div className="flex w-[280px] flex-col gap-3 rounded-2xl p-4" style={{ background: floor }}>
+        <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral', m) }}>{m === 'light' ? '라이트' : '다크'} · 회색 바닥</span>
+        {row(false, btn(m, false), `neutralWeak ${contrast(weak, floor).toFixed(2)}:1`)}
+        {row(true, btn(m, true), 'neutralOutline — 테두리')}
+        {row(false, chip(weak, '식비', m), `bg-neutral-weak ${contrast(weak, floor).toFixed(2)}:1`)}
+        {row(true, chip(alpha, '식비', m), `bg-neutral-weak-alpha ${ratio(alpha, floor)}:1`)}
+      </div>
+    );
+  };
+  return (
+    <Figure caption="회색 바닥 위 — 약한 배경은 라이트에서 바닥과 같은 색이다. 버튼은 테두리로, 칩 · 세그먼트 트랙은 투명 짝으로 칠한다">
+      <div className="flex flex-col gap-4 sm:flex-row">
+        {cell('light')}
+        {cell('dark')}
       </div>
     </Figure>
   );

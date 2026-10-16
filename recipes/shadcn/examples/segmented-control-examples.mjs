@@ -23,7 +23,7 @@
 // ── segmented-control.tsx 의 cva · 상수와 같은 값 ─────────────────────────
 
 // 트랙(segmentedControlVariants) — 놓인 자리 폭을 채우는 알약. 칸이 칸 수로 똑같이 나눈다(최소 폭 없음) · 모든 칸이 가장 높은 칸에 맞춘다
-const TRACK = "relative grid w-full grid-flow-col auto-cols-fr rounded-full bg-bg-neutral-weak p-x1 font-sans";
+const TRACK = "relative grid w-full grid-flow-col auto-cols-fr rounded-full bg-bg-neutral-weak-alpha p-x1 font-sans";
 
 // 고른 알약(SEGMENTED_INDICATOR) — 칸 뒤. 폭 (트랙 − 8) ÷ 칸 수, 고른 칸 번호만큼 옮긴다(200ms)
 const INDICATOR = [
@@ -35,7 +35,7 @@ const INDICATOR = [
 // 칸(segmentedControlItemVariants) — 바탕 · 글자 · 테두리는 color-transition. 호버는 마우스 있는 기기에서만(누름과 같은 바탕, 축소 없음).
 // 막힌 칸은 호버 · 누름이 없다(enabled 에서만 칠한다)
 const ITEM = [
-  "group/segmented-item relative flex min-h-[34px] min-w-0 cursor-pointer select-none items-center justify-center rounded-full px-x3 py-x1_5 font-sans text-t5 font-bold text-fg-neutral-subtle [--press-basis:34]",
+  "group/segmented-item relative flex min-h-[34px] min-w-0 cursor-pointer select-none items-center justify-center rounded-full px-x3 py-x1_5 font-sans text-t5 font-bold text-fg-neutral-subtle dark:text-fg-neutral-muted [--press-basis:34]",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing),box-shadow_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
   "data-[state=unchecked]:enabled:hover:bg-bg-neutral-weak-pressed data-[state=unchecked]:enabled:hover:shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] data-[state=unchecked]:enabled:hover:text-fg-neutral-muted",
@@ -166,8 +166,8 @@ function segmented({ ariaLabel, items, value, disabled = false, force = {} }) {
   return `<div ${root}>${pill}${cells.join("")}</div>`;
 }
 
-// 화면 틀 — 폰은 안쪽 360, 트랙은 화면 여백 24 안. 사이트 미리보기 칸의 바탕(bg-page = bg-layer-basement)은 트랙(bg-neutral-weak)과 같은
-// gray-200 이라 그 위에 바로 두면 트랙이 사라진다 — 화면처럼 흰 바탕 위에 둔다
+// 화면 틀 — 폰은 안쪽 360, 트랙은 화면 여백 24 안. 트랙은 투명한 bg-neutral-weak-alpha(v120)라 회색 바닥 위에서도 보이지만,
+// 미리보기는 시트 · 흰 띠 안의 모습으로 흰 바탕 위에 둔다
 const PHONE =
   "box-sizing:content-box; max-width:360px; overflow:hidden; background:var(--color-bg-layer-default); border:1px solid var(--color-stroke-neutral-subtle); border-radius:var(--radius-r4);";
 const phone = (html) => `<div style="${PHONE}">${html}</div>`;
@@ -228,7 +228,7 @@ export const segmentedControlExamples = [
   {
     title: "보기 — 할 일",
     description:
-      "같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게 보는 자리다 — 할 일 목록을 오늘 · 이번 주 · 전체 · 완료로 거른다. 그 내용 바로 위에, 한 화면에 하나만 둔다. 다른 구역 · 페이지로 옮기면 Tabs, 저장할 폼 값은 Chip · Select 다. 트랙(bg-neutral-weak · 안쪽 4)이 놓인 자리 폭을 채우고 칸이 그 폭을 칸 수로 똑같이 나눈다 — 칸 34 · 글 16 · 700 이고, 고른 칸은 흰 알약(bg-layer-default + 안쪽 짙은 1px stroke-neutral-contrast) 위 fg-neutral 이다. 라디오 묶음이라 ← → ↑ ↓ 로 옮기면 바로 고르고(끝에서 처음으로 돈다) Tab 은 고른 칸 하나에만 선다. 늘 하나가 골라져 있어야 하므로 value(또는 defaultValue)를 주고, 이름은 aria-label 로 단다 — 둘 중 하나가 없으면 레시피가 개발 중에 경고한다.",
+      "같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게 보는 자리다 — 할 일 목록을 오늘 · 이번 주 · 전체 · 완료로 거른다. 그 내용 바로 위에, 한 화면에 하나만 둔다. 다른 구역 · 페이지로 옮기면 Tabs, 저장할 폼 값은 Chip · Select 다. 트랙(투명한 bg-neutral-weak-alpha · 안쪽 4 — 회색 바닥 위에서도 보인다)이 놓인 자리 폭을 채우고 칸이 그 폭을 칸 수로 똑같이 나눈다 — 칸 34 · 글 16 · 700 이고, 고른 칸은 흰 알약(bg-layer-default + 안쪽 짙은 1px stroke-neutral-contrast) 위 fg-neutral 이다. 라디오 묶음이라 ← → ↑ ↓ 로 옮기면 바로 고르고(끝에서 처음으로 돈다) Tab 은 고른 칸 하나에만 선다. 늘 하나가 골라져 있어야 하므로 value(또는 defaultValue)를 주고, 이름은 aria-label 로 단다 — 둘 중 하나가 없으면 레시피가 개발 중에 경고한다.",
     jsx: `import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmented-control"
 
 <SegmentedControl aria-label="할 일 보기" value={view} onValueChange={setView}>

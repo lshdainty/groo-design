@@ -1,0 +1,248 @@
+# Checkbox 의 수치 원본 — 구조는 SEED Checkbox(Checkmark · Checkbox · Checkbox Group, 2026-09-30 사용자 결정).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 부위: root 는 Checkbox 한 줄(칸 + 라벨), checkmark 는 칸(SEED Checkmark — 따로 쓸 수 있다), group 은 묶음.
+# 체크 여부(checked)는 hover · pressed · disabled 와 곱해지므로 상태가 아니라 축이다(specs/CLAUDE.md).
+#
+# SEED 와 다른 자리(checkbox.md 의 "SEED 와 다른 점")
+#   - 선택 안 된 칸의 테두리는 stroke-neutral-solid(3:1 이상 — v109). SEED 는 옅은 선(stroke.neutral-weak).
+#   - 투명한 누름 · 옅은 테두리는 SEED 가 투명도 있는 색(bg.transparent-pressed · stroke.neutral-muted)이라
+#     불투명한 가장 가까운 역할(bg-layer-default-pressed · stroke-neutral-weak)을 쓴다.
+#   - 웹의 hovered · focused 상태를 더한다(v106). 오류 상태는 두지 않는다 — 묶음 아래 안내 글(사용자 결정).
+#   - 묶음 줄 사이는 12(사용자 결정) — SEED 는 4 다. 4 면 이웃 줄의 44 영역과 겹쳐 한 줄이 36 · 40 만 받는다.
+
+name: Checkbox
+
+slots:
+  root: Checkbox 한 줄 — 칸 + 라벨, 누르는 영역
+  checkmark: 칸(Checkmark) — 배경 · 테두리 · 모양. 목록 행에는 이것만 넣어 쓴다
+  icon: 체크 · 가로줄(lucide `Check` · `Minus`)
+  label: 글자(Label)
+  focusRing: 키보드 포커스 링(웹)
+  group: 묶음(Checkbox Group) — 세로로 쌓는다
+
+variants:
+  size:
+    medium: 칸 20 · 라벨 14 — 기본
+    large: 칸 24 · 라벨 16 — 한 화면의 중심 선택 · 모바일 단독
+  shape:
+    square: 칸 + 체크 — 여러 개를 고르는 목록 · 알아야 하는 선택(기본)
+    ghost: 칸 없이 체크만 — 필수가 아니고 셋 이하
+  tone:
+    neutral: 선택 = 짙은 회색(기본)
+    brand: 선택 = 브랜드 색 — 서비스 핵심 흐름에서만
+  weight:
+    regular: 라벨 400(기본)
+    bold: 라벨 700 — 강조 · 묶음의 부모
+  checked:
+    unchecked: 선택 안 됨
+    checked: 선택
+    indeterminate: 일부 선택 — 묶음의 부모
+
+defaults:
+  size: medium
+  shape: square
+  tone: neutral
+  weight: regular
+  checked: unchecked
+
+states:
+  enabled: 기본
+  hovered: 웹 — 누름 색과 같다(v106), 축소는 없다
+  focused: 웹 — 키보드 포커스에만 링
+  pressed: 누름 색 + 칸 세로 2px 거리 축소(v104)
+  disabled: 전용 색(v106) — 불투명도로 흐리게 하지 않는다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        gap: $spacing-x2
+        cursor: pointer
+        alignSelf: { value: flex-start, note: "줄은 칸 + 라벨만큼만 차지한다 — 묶음 폭으로 늘이지 않는다(직접 짠 줄은 묶음 폭을 쓴다)" }
+        touchTarget: { value: 44 × 44, note: "라벨까지 묶어 44 — 목록 행에서 칸만 쓰면 줄 전체가 누르는 영역(SEED touch target · 기초 Inclusive)" }
+      checkmark:
+        radius: $radius-r1
+        transitionProperty: background-color, border-color, color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      icon:
+        glyph: { value: Check, note: "lucide `Check` · 선 3" }
+      label:
+        fontFamily: $font-sans
+        foreground: $color-fg-neutral
+      group:
+        gap: { value: $spacing-x3, note: "묶음 안 줄 사이(세로) — 줄 32 · 36 에 12 를 더해 44 · 48 마다 한 줄이라 이웃 줄과 누르는 영역(44)이 겹치지 않는다(사용자 결정 — SEED 는 4)" }
+    pressed:
+      checkmark:
+        scale: { value: 세로 2px 축소, note: "칸만 준다 — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px(Feedback 의 눌림 피드백, v104)" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+    focused:
+      focusRing:
+        width: 2px
+        offset: 2px
+        color: $color-stroke-focus-ring
+    disabled:
+      root:
+        cursor: { value: not-allowed, note: "포인터 이벤트는 켜 둔다 — 끄면 이 커서가 안 보인다(SEED 와 같다)" }
+      label:
+        foreground: $color-fg-disabled
+
+  # ── 크기 ──────────────────────────────────────────────
+  - when: { size: medium }
+    enabled:
+      root: { minHeight: 32px }
+      checkmark: { size: 20px }
+      label: { typography: $text-t4 }
+  - when: { size: large }
+    enabled:
+      root: { minHeight: 36px }
+      checkmark: { size: 24px }
+      label: { typography: $text-t5 }
+
+  # 크기 × 모양 — 아이콘(Ghost 는 칸이 없어 아이콘이 크다)
+  - when: { size: medium, shape: square }
+    enabled:
+      icon: { size: 12px }
+  - when: { size: large, shape: square }
+    enabled:
+      icon: { size: 14px }
+  - when: { size: medium, shape: ghost }
+    enabled:
+      icon: { size: 14px }
+  - when: { size: large, shape: ghost }
+    enabled:
+      icon: { size: 18px }
+
+  # ── 라벨 굵기 ─────────────────────────────────────────
+  - when: { weight: regular }
+    enabled:
+      label: { fontWeight: 400 }
+  - when: { weight: bold }
+    enabled:
+      label: { fontWeight: 700 }
+
+  # ── Square — 칸 + 체크 ────────────────────────────────
+  - when: { shape: square, checked: unchecked }
+    enabled:
+      checkmark: { background: transparent, borderColor: { value: $color-stroke-neutral-solid, note: "3:1 이상 — v109(SEED 는 옅은 선)" }, borderWidth: 1px }
+      icon: { glyph: { value: none, note: "선택 안 된 칸에는 아이콘이 없다" } }
+    hovered:
+      checkmark: { background: $color-bg-layer-default-pressed }
+    pressed:
+      checkmark: { background: { value: $color-bg-layer-default-pressed, note: "SEED bg.transparent-pressed 의 불투명 짝" } }
+    disabled:
+      checkmark: { background: $color-bg-disabled, borderColor: { value: $color-stroke-neutral-weak, note: "SEED stroke.neutral-muted 의 불투명 짝" } }
+
+  - when: { shape: square, checked: checked }
+    enabled:
+      checkmark: { borderWidth: 0px }
+    disabled:
+      checkmark: { background: $color-bg-disabled }
+      icon: { color: $color-fg-disabled }
+  - when: { shape: square, checked: indeterminate }
+    enabled:
+      checkmark: { borderWidth: 0px }
+      icon: { glyph: { value: Minus, note: "lucide `Minus` · 선 3" } }
+    disabled:
+      checkmark: { background: $color-bg-disabled }
+      icon: { color: $color-fg-disabled }
+
+  - when: { shape: square, tone: neutral, checked: checked }
+    enabled:
+      checkmark: { background: $color-bg-neutral-inverted }
+      icon: { color: $color-fg-neutral-inverted }
+    hovered:
+      checkmark: { background: $color-bg-neutral-inverted-pressed }
+    pressed:
+      checkmark: { background: $color-bg-neutral-inverted-pressed }
+  - when: { shape: square, tone: neutral, checked: indeterminate }
+    enabled:
+      checkmark: { background: $color-bg-neutral-inverted }
+      icon: { color: $color-fg-neutral-inverted }
+    hovered:
+      checkmark: { background: $color-bg-neutral-inverted-pressed }
+    pressed:
+      checkmark: { background: $color-bg-neutral-inverted-pressed }
+  - when: { shape: square, tone: brand, checked: checked }
+    enabled:
+      checkmark: { background: $color-bg-brand-solid }
+      icon: { color: $color-static-white }
+    hovered:
+      checkmark: { background: $color-bg-brand-solid-pressed }
+    pressed:
+      checkmark: { background: $color-bg-brand-solid-pressed }
+  - when: { shape: square, tone: brand, checked: indeterminate }
+    enabled:
+      checkmark: { background: $color-bg-brand-solid }
+      icon: { color: $color-static-white }
+    hovered:
+      checkmark: { background: $color-bg-brand-solid-pressed }
+    pressed:
+      checkmark: { background: $color-bg-brand-solid-pressed }
+
+  # ── Ghost — 칸 없이 체크만 ────────────────────────────
+  - when: { shape: ghost }
+    enabled:
+      checkmark: { background: transparent, borderWidth: 0px }
+      icon: { color: { value: $color-fg-placeholder, note: "선택 안 됨도 옅은 체크로 보인다" } }
+    hovered:
+      checkmark: { background: $color-bg-layer-default-pressed }
+    pressed:
+      checkmark: { background: $color-bg-layer-default-pressed }
+    disabled:
+      icon: { color: $color-fg-disabled }
+  - when: { shape: ghost, checked: indeterminate }
+    enabled:
+      icon: { glyph: { value: Minus, note: "lucide `Minus` · 선 3" } }
+
+  - when: { shape: ghost, tone: neutral, checked: checked }
+    enabled:
+      icon: { color: $color-fg-neutral }
+    hovered:
+      checkmark: { background: $color-bg-neutral-weak }
+    pressed:
+      checkmark: { background: { value: $color-bg-neutral-weak, note: "SEED palette.gray-200" } }
+    disabled:
+      icon: { color: $color-fg-disabled }
+  - when: { shape: ghost, tone: neutral, checked: indeterminate }
+    enabled:
+      icon: { color: $color-fg-neutral }
+    hovered:
+      checkmark: { background: $color-bg-neutral-weak }
+    pressed:
+      checkmark: { background: $color-bg-neutral-weak }
+    disabled:
+      icon: { color: $color-fg-disabled }
+  - when: { shape: ghost, tone: brand, checked: checked }
+    enabled:
+      icon: { color: $color-fg-brand }
+    hovered:
+      checkmark: { background: $color-bg-brand-weak-pressed }
+    pressed:
+      checkmark: { background: { value: $color-bg-brand-weak-pressed, note: "SEED palette.carrot-200 자리 — 브랜드 200" } }
+    disabled:
+      icon: { color: $color-fg-disabled }
+  - when: { shape: ghost, tone: brand, checked: indeterminate }
+    enabled:
+      icon: { color: $color-fg-brand }
+    hovered:
+      checkmark: { background: $color-bg-brand-weak-pressed }
+    pressed:
+      checkmark: { background: $color-bg-brand-weak-pressed }
+    disabled:
+      icon: { color: $color-fg-disabled }
+
+motion:
+  "선택 안 됨 ↔ 선택 ↔ 일부 선택":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background, border, icon color]
+    note: "칸의 채움 · 테두리 · 아이콘 색이 함께 바뀐다(SEED Checkmark 와 같다) — 아이콘은 커지거나 줄지 않는다"
+  누름:
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "칸만 세로 2px 거리 축소 — 라벨은 줄지 않는다(v104)"

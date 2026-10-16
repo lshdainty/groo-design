@@ -117,19 +117,27 @@ export function NeutralExample() {
   return (
     <Pair
       caption="중립 역할 — 일반 콘텐츠. 글자는 neutral · muted · subtle 세 단계로 위계를 준다"
-      tokens={['fg-neutral', 'fg-neutral-muted', 'fg-neutral-subtle', 'fg-placeholder', 'fg-disabled', 'bg-neutral-weak', 'bg-disabled', 'bg-neutral-inverted', 'fg-neutral-inverted']}
+      tokens={['fg-neutral', 'fg-neutral-muted', 'fg-neutral-subtle', 'fg-placeholder', 'fg-disabled', 'bg-neutral-weak', 'bg-neutral-weak-alpha', 'bg-disabled', 'bg-neutral-inverted', 'fg-neutral-inverted']}
       render={(m) => (
         <div className="flex flex-col gap-3">
-          {/* 글자 역할(Typography) — 줄 제목 R6(t5 · 400 · neutral) · 설명 문장 R7(t4 · muted) · 메타 R9(t3 · subtle) · 자리 글 R19(t4 · placeholder) */}
-          <div style={card(m)}>
-            <div style={{ ...ts('t5'), color: rc('fg-neutral', m) }}>점심 · 지어낸분식</div>
-            <div style={{ ...ts('t4'), color: rc('fg-neutral-muted', m) }}>세 명이 나눠 냈어요</div>
-            <div style={{ ...ts('t3'), color: rc('fg-neutral-subtle', m) }}>식비 · 카드 · 오늘 12:40</div>
+          {/* 회색 바닥 위 칩 — 투명한 bg-neutral-weak-alpha(v120). 불투명 약한 배경 · 비활성은 흰 표면(카드) 안에만(Elevation "바닥 위의 채움") */}
+          <div className="flex gap-2">
+            {['전체', '식비', '카페'].map((t) => (
+              <span key={t} className="rounded-full px-3 py-1.5" style={{ ...ts('t4'), fontWeight: 500, background: rc('bg-neutral-weak-alpha', m), color: rc('fg-neutral', m) }}>{t}</span>
+            ))}
           </div>
-          <span className="rounded-lg px-3 py-2" style={{ ...ts('t4'), background: rc('bg-neutral-weak', m), color: rc('fg-placeholder', m) }}>검색어를 입력하세요</span>
-          <div className="flex items-center gap-2">
-            <span style={{ ...btn, background: rc('bg-disabled', m), color: rc('fg-disabled', m) }}>저장</span>
-            <span style={{ ...btn, fontWeight: 500, background: rc('bg-neutral-inverted', m), color: rc('fg-neutral-inverted', m) }}>저장했어요</span>
+          {/* 글자 역할(Typography) — 줄 제목 R6(t5 · 400 · neutral) · 설명 문장 R7(t4 · muted) · 메타 R9(t3 · subtle) · 자리 글 R19(t4 · placeholder) */}
+          <div className="flex flex-col gap-3" style={card(m)}>
+            <div>
+              <div style={{ ...ts('t5'), color: rc('fg-neutral', m) }}>점심 · 지어낸분식</div>
+              <div style={{ ...ts('t4'), color: rc('fg-neutral-muted', m) }}>세 명이 나눠 냈어요</div>
+              <div style={{ ...ts('t3'), color: rc('fg-neutral-subtle', m) }}>식비 · 카드 · 오늘 12:40</div>
+            </div>
+            <span className="rounded-lg px-3 py-2" style={{ ...ts('t4'), background: rc('bg-neutral-weak', m), color: rc('fg-placeholder', m) }}>검색어를 입력하세요</span>
+            <div className="flex items-center gap-2">
+              <span style={{ ...btn, background: rc('bg-disabled', m), color: rc('fg-disabled', m) }}>저장</span>
+              <span style={{ ...btn, fontWeight: 500, background: rc('bg-neutral-inverted', m), color: rc('fg-neutral-inverted', m) }}>저장했어요</span>
+            </div>
           </div>
         </div>
       )}

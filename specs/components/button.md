@@ -181,7 +181,7 @@
 
 [그림: 나란히 둘 수 있는 것과 없는 것](../../site/components/specs/button.tsx#side-by-side)
 
-**놓는 바탕** — `neutralWeak` 의 채움과 비활성 채움(`bg-disabled`)은 라이트에서 페이지 바탕(`bg-page`)과 같은 색(gray-200)이다(v108). 흰 표면(카드 · 시트 · 모달 — `bg-layer-default`) 위에 두고, 페이지 바탕에 바로 둘 땐 `neutralOutline` 을 쓴다 — 바탕 위의 `neutralWeak` 는 채움이 사라져 글자만 남는다.
+**놓는 바탕** — `neutralWeak` 의 채움과 비활성 채움(`bg-disabled`)은 라이트에서 회색 바닥(`bg-layer-basement`)과 같은 색(gray-200)이다(v108). 흰 표면(카드 · 흰 띠 · 흰 화면 · 시트 · 모달 — `bg-layer-default` · `bg-layer-floating`) 위에 두고, 회색 바닥에 바로 둘 땐 `neutralOutline` 을 쓴다 — 바닥 위의 `neutralWeak` 는 채움이 사라져 글자만 남는다(1.00:1). 데스크톱 화면 제목 줄의 버튼이 그 자리다. 기초 규칙은 DESIGN.md Elevation 의 "바닥 위의 채움"(2026-10-16 사용자 결정 — 기초 웹 01-040 B)이다.
 
 [그림: neutralWeak 를 놓는 바탕 — 라이트에서만 생기는 문제라 라이트로 그렸다](../../site/components/specs/button.tsx#surface)
 
@@ -205,6 +205,8 @@
 ### 긴 라벨
 
 긴 라벨 · 번역 · 큰 글자로 나란한 두 버튼이 넘치면 **세로로 쌓는다**(주 버튼이 위). 한 줄에 억지로 줄이지 않는다.
+
+짝 버튼은 SEED ResponsivePair 를 따른다 — 어느 한 버튼의 라벨이 짝 폭의 절반을 넘으면 둘 다 세로로 쌓고, 라벨은 한 줄을 지킨다(버튼 안에서 줄을 바꾸지 않는다). 대가 — 글자 크기 200% 에서는 가장 긴 라벨이 한 줄을 지키느라 버튼 밖으로 넘칠 수 있다(약 170). 2026-10-17 사용자 결정 — 03A-013 A.
 
 [그림: 넘칠 땐 세로로](../../site/components/specs/button.tsx#long-label)
 

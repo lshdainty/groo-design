@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
  *                          defaultValue)를 준다 — 없으면 개발 중에 경고한다(칸이 2 ~ 4개가 아닐 때도)
  *   SegmentedControlItem   칸 — 라디오(role=radio · aria-checked). value · disabled · notification
  *
- * 크기 · 변형이 하나다. 트랙은 놓인 자리 폭을 채우는 알약(안쪽 4 · bg-neutral-weak)이고 칸이 그 폭을 칸 수로 똑같이 나눈다
+ * 크기 · 변형이 하나다. 트랙은 놓인 자리 폭을 채우는 알약(안쪽 4 · 투명한 bg-neutral-weak-alpha — 회색 바닥 위에서도 보인다, v120)이고 칸이 그 폭을 칸 수로 똑같이 나눈다
  * (최소 폭 없음 — 폰 콘텐츠 폭 312 에도 4개가 들어간다). 넓은 화면에서는 놓는 자리를 좁힌다.
  * 칸은 34 이상 · 좌우 12 · 위아래 6 · 알약 모서리. 글은 t5 16 · 700(고르든 안 고르든) · 가운데이고, 단어 단위로 줄을 바꾼다
  * (v114 — keep-all + break-word). 글이 길어 여러 줄이 되면 모든 칸이 가장 높은 칸에 맞춘다(트랙의 줄 높이).
@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
  * 고른 칸이 없으면 알약을 숨긴다.
  *
  * 상태(바탕 · 글자 · 테두리는 color-transition 150ms):
- *   안 고른 칸   글 fg-neutral-subtle. 올리거나(마우스 있는 기기) 누르면 bg-neutral-weak-pressed + 안쪽 1px stroke-neutral-weak,
+ *   안 고른 칸   글 fg-neutral-subtle(다크는 fg-neutral-muted — 투명 트랙 위 4.5:1, 2026-10-17). 올리거나(마우스 있는 기기) 누르면 bg-neutral-weak-pressed + 안쪽 1px stroke-neutral-weak,
  *                글 fg-neutral-muted(누름 바탕 위 fg-neutral-subtle 은 다크 3.91:1)
  *   고른 칸      글 fg-neutral. 올리거나 누르면 칸에 bg-layer-default-pressed + 짙은 1px 를 칠해 알약을 덮는다
  *   막힘         글 fg-disabled · not-allowed · 누름 바탕 · 축소 없음(흐리게 하지 않는다 — v106). 고른 채 막히면 칸에
@@ -62,7 +62,7 @@ const isPressKey = (e: React.KeyboardEvent) => e.key === " " || e.key === "Enter
 
 // 트랙 — 놓인 자리 폭을 채우는 알약. 칸이 칸 수로 똑같이 나눈다(최소 폭 없음) · 모든 칸이 가장 높은 칸에 맞춘다
 const segmentedControlVariants = cva(
-  "relative grid w-full grid-flow-col auto-cols-fr rounded-full bg-bg-neutral-weak p-x1 font-sans",
+  "relative grid w-full grid-flow-col auto-cols-fr rounded-full bg-bg-neutral-weak-alpha p-x1 font-sans",
 );
 
 // 고른 알약 — 칸 뒤(트랙의 첫 자식 · 칸은 relative 라 그 위에 그려진다). 폭 (트랙 − 8) ÷ 칸 수, 고른 칸 번호만큼 옮긴다.
@@ -77,7 +77,7 @@ const SEGMENTED_INDICATOR = [
 // 막힌 칸은 호버 · 누름이 없다(enabled 에서만 칠한다)
 const segmentedControlItemVariants = cva(
   [
-    "group/segmented-item relative flex min-h-[34px] min-w-0 cursor-pointer select-none items-center justify-center rounded-full px-x3 py-x1_5 font-sans text-t5 font-bold text-fg-neutral-subtle [--press-basis:34]",
+    "group/segmented-item relative flex min-h-[34px] min-w-0 cursor-pointer select-none items-center justify-center rounded-full px-x3 py-x1_5 font-sans text-t5 font-bold text-fg-neutral-subtle dark:text-fg-neutral-muted [--press-basis:34]",
     "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing),box-shadow_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
     // 안 고른 칸 — 올리거나 누르면 바탕 + 안쪽 1px + 한 단계 짙은 글

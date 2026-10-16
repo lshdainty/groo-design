@@ -1,0 +1,164 @@
+# Radio Group 의 수치 원본 — 구조는 SEED Radio(Radiomark · Radio · Radio Group, 2026-09-30 사용자 결정).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 부위: root 는 Radio 한 줄(동그라미 + 라벨), radiomark 는 동그라미(SEED Radiomark — 따로 쓸 수 있다),
+# dot 은 가운데 점, group 은 묶음.
+# 선택 여부(checked)는 hover · pressed · disabled 와 곱해지므로 상태가 아니라 축이다(specs/CLAUDE.md).
+# 점은 선택 안 됨에도 자리에 있고 색만 투명하다 — 채움과 함께 색으로 전환된다(SEED Radiomark 의 color transition).
+#
+# SEED 와 다른 자리(radio-group.md 의 "SEED 와 다른 점")
+#   - 선택 안 된 동그라미의 테두리는 stroke-neutral-solid(3:1 이상 — v109). SEED 는 옅은 선(stroke.neutral-weak).
+#   - 누름 바탕(SEED bg.transparent-pressed)은 불투명한 가장 가까운 역할(bg-layer-default-pressed).
+#   - 비활성은 Checkbox 와 같게(사용자 결정) — 선택 안 됨은 bg-disabled + stroke-neutral-weak, 선택은 bg-disabled
+#     채움 + fg-disabled 점. SEED 는 palette.gray-300 채움, 선택이면 채움을 빼고 테두리 + 커진 점(8 → 10).
+#   - 묶음은 세로만(사용자 결정) — SEED 는 가로를 피하되, 꼭 필요하면 간격을 넉넉히 두라고 한다.
+#   - 묶음 줄 사이는 12(사용자 결정) — SEED 는 4 다. 4 면 이웃 줄의 44 영역과 겹쳐 한 줄이 36 · 40 만 받는다.
+#   - 웹의 hovered · focused 상태를 더한다(v106). 오류 상태는 두지 않는다 — 묶음 아래 안내 글(Checkbox 와 같다).
+
+name: Radio Group
+
+slots:
+  root: Radio 한 줄 — 동그라미 + 라벨, 누르는 영역
+  radiomark: 동그라미(Radiomark) — 배경 · 테두리. 라벨이 따로 서는 자리에는 이것만 넣어 쓴다
+  dot: 가운데 점 — 선택을 나타낸다
+  label: 글자(Label)
+  focusRing: 키보드 포커스 링(웹)
+  group: 묶음(Radio Group) — 세로로 쌓는다
+
+variants:
+  size:
+    medium: 동그라미 20 · 라벨 14 — 기본
+    large: 동그라미 24 · 라벨 16 — 한 화면의 중심 선택 · 모바일 단독
+  tone:
+    neutral: 선택 = 짙은 회색(기본)
+    brand: 선택 = 브랜드 색 — 서비스 핵심 흐름에서만
+  weight:
+    regular: 라벨 400(기본)
+    bold: 라벨 700 — 강조
+  checked:
+    unchecked: 선택 안 됨
+    checked: 선택
+
+defaults:
+  size: medium
+  tone: neutral
+  weight: regular
+  checked: unchecked
+
+states:
+  enabled: 기본
+  hovered: 웹 — 누름 색과 같다(v106), 축소는 없다
+  focused: 웹 — 키보드 포커스에만 링
+  pressed: 누름 색 + 동그라미 세로 2px 거리 축소(v104)
+  disabled: 전용 색(v106) — 불투명도로 흐리게 하지 않는다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        gap: $spacing-x2
+        cursor: pointer
+        alignSelf: { value: flex-start, note: "줄은 동그라미 + 라벨만큼만 차지한다 — 묶음 폭으로 늘이지 않는다(직접 짠 줄은 묶음 폭을 쓴다)" }
+        touchTarget: { value: 44 × 44, note: "라벨까지 묶어 44 — 라벨이 따로 서는 자리에서 동그라미만 쓰면 그 줄 전체가 누르는 영역(SEED touch target · 기초 Inclusive)" }
+      radiomark:
+        radius: $radius-full
+        transitionProperty: background-color, border-color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      dot:
+        radius: $radius-full
+        transitionProperty: background-color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      label:
+        fontFamily: $font-sans
+        foreground: $color-fg-neutral
+      group:
+        gap: { value: $spacing-x3, note: "묶음 안 줄 사이(세로) — 줄 32 · 36 에 12 를 더해 44 · 48 마다 한 줄이라 이웃 줄과 누르는 영역(44)이 겹치지 않는다(사용자 결정 — SEED 는 4). 가로 배치는 두지 않는다" }
+    pressed:
+      radiomark:
+        scale: { value: 세로 2px 축소, note: "동그라미만 준다 — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px(Feedback 의 눌림 피드백, v104)" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+    focused:
+      focusRing:
+        width: 2px
+        offset: 2px
+        color: $color-stroke-focus-ring
+    disabled:
+      root:
+        cursor: { value: not-allowed, note: "포인터 이벤트는 켜 둔다 — 끄면 이 커서가 안 보인다(SEED 와 같다)" }
+      label:
+        foreground: $color-fg-disabled
+
+  # ── 크기 ──────────────────────────────────────────────
+  - when: { size: medium }
+    enabled:
+      root: { minHeight: 32px }
+      radiomark: { size: 20px }
+      dot: { size: 8px }
+      label: { typography: $text-t4 }
+  - when: { size: large }
+    enabled:
+      root: { minHeight: 36px }
+      radiomark: { size: 24px }
+      dot: { size: 10px }
+      label: { typography: $text-t5 }
+
+  # ── 라벨 굵기 ─────────────────────────────────────────
+  - when: { weight: regular }
+    enabled:
+      label: { fontWeight: 400 }
+  - when: { weight: bold }
+    enabled:
+      label: { fontWeight: 700 }
+
+  # ── 선택 안 됨 ────────────────────────────────────────
+  - when: { checked: unchecked }
+    enabled:
+      radiomark: { background: transparent, borderColor: { value: $color-stroke-neutral-solid, note: "3:1 이상 — v109(SEED 는 옅은 선)" }, borderWidth: 1px }
+      dot: { color: { value: transparent, note: "선택 안 됨에는 점이 보이지 않는다" } }
+    hovered:
+      radiomark: { background: $color-bg-layer-default-pressed }
+    pressed:
+      radiomark: { background: { value: $color-bg-layer-default-pressed, note: "SEED bg.transparent-pressed 의 불투명 짝" } }
+    disabled:
+      radiomark: { background: { value: $color-bg-disabled, note: "SEED palette.gray-300 자리" }, borderColor: { value: $color-stroke-neutral-weak, note: "SEED stroke.neutral-weak(gray-400)" } }
+
+  # ── 선택 — 테두리 없이 채운 원 + 가운데 점 ─────────────
+  - when: { checked: checked }
+    enabled:
+      radiomark: { borderWidth: 0px }
+    disabled:
+      radiomark: { background: { value: $color-bg-disabled, note: "Checkbox 와 같게 — 켜진 모양 그대로 색만(사용자 결정). SEED 는 채움을 빼고 테두리 + 커진 점" } }
+      dot: { color: $color-fg-disabled }
+
+  - when: { tone: neutral, checked: checked }
+    enabled:
+      radiomark: { background: $color-bg-neutral-inverted }
+      dot: { color: $color-fg-neutral-inverted }
+    hovered:
+      radiomark: { background: $color-bg-neutral-inverted-pressed }
+    pressed:
+      radiomark: { background: $color-bg-neutral-inverted-pressed }
+  - when: { tone: brand, checked: checked }
+    enabled:
+      radiomark: { background: $color-bg-brand-solid }
+      dot: { color: $color-static-white }
+    hovered:
+      radiomark: { background: $color-bg-brand-solid-pressed }
+    pressed:
+      radiomark: { background: $color-bg-brand-solid-pressed }
+
+motion:
+  "선택 안 됨 ↔ 선택":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background, border, dot color]
+    note: "채움 · 테두리 · 점이 색으로 함께 바뀐다(SEED Radiomark 와 같다) — 점은 커지거나 줄지 않는다"
+  누름:
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "동그라미만 세로 2px 거리 축소 — 라벨은 줄지 않는다(v104)"

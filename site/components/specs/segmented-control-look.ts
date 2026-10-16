@@ -41,6 +41,13 @@ function tok(raw: unknown, brand: Brand, what: string): SegColor {
   const v = String(unbox(must(raw, what))).trim();
   const m = /^\$color-([a-z0-9-]+)$/.exec(v);
   if (!m) throw new Error(`${F} 의 ${what} 이 색 토큰이 아니다(${v})`);
+  // { value, dark } — 다크만 다른 토큰(안 고른 글: 라이트 fg-neutral-subtle · 다크 fg-neutral-muted, 2026-10-17).
+  // 사이트 모드를 따르는 변수는 tokens-style 이 YAML 에서 모아 까는 --p-pair-<라이트>--<다크> 다
+  const d = raw && typeof raw === 'object' && 'dark' in raw ? /^\$color-([a-z0-9-]+)$/.exec(String((raw as { dark: unknown }).dark).trim()) : null;
+  if (d && d[1] !== m[1]) {
+    const dark = design(brand).front.colors[`${d[1]}-dark`] ? color(`${d[1]}-dark`, brand) : color(d[1], brand);
+    return { name: `pair-${m[1]}--${d[1]}`, light: color(m[1], brand), dark };
+  }
   return named(m[1], brand);
 }
 function type(raw: unknown, weight: unknown, what: string): SegType {

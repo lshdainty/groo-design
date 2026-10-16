@@ -408,6 +408,12 @@ colors:
   bg-neutral-weak-dark: "{colors.gray-300-dark}"
   bg-neutral-weak-pressed: "{colors.gray-300}"
   bg-neutral-weak-pressed-dark: "{colors.gray-400-dark}"
+  # v120 — 회색 바닥(bg-layer-basement) 위 칩 · 세그먼트 트랙의 투명 짝. SEED bg.neutral-weak-alpha(-pressed) 의 값 그대로 —
+  # 검정 4.7% · 6.3% / 다크 흰 12.5% · 18%. 투명도가 있어 팔레트 단계가 없다(사용자 결정 2026-10-16 기초 웹 01-040 B)
+  bg-neutral-weak-alpha: "#0000000C"
+  bg-neutral-weak-alpha-dark: "#FFFFFF20"
+  bg-neutral-weak-alpha-pressed: "#00000010"
+  bg-neutral-weak-alpha-pressed-dark: "#FFFFFF2E"
   bg-neutral-inverted: "{colors.gray-1000}"
   bg-neutral-inverted-dark: "{colors.gray-1000-dark}"
   # v112 — neutralSolid 버튼의 누름(SEED bg.neutral-inverted-pressed = gray-800)
@@ -1222,6 +1228,15 @@ components:
     backgroundColor: "{colors.stroke-neutral-overlay}"
   role-stroke-neutral-overlay-dark:
     backgroundColor: "{colors.stroke-neutral-overlay-dark}"
+  # v120 — 회색 바닥 위 칩 · 세그먼트 트랙의 투명 바탕
+  role-bg-neutral-weak-alpha-light:
+    backgroundColor: "{colors.bg-neutral-weak-alpha}"
+  role-bg-neutral-weak-alpha-dark:
+    backgroundColor: "{colors.bg-neutral-weak-alpha-dark}"
+  role-bg-neutral-weak-alpha-pressed-light:
+    backgroundColor: "{colors.bg-neutral-weak-alpha-pressed}"
+  role-bg-neutral-weak-alpha-pressed-dark:
+    backgroundColor: "{colors.bg-neutral-weak-alpha-pressed-dark}"
   role-stroke-critical-solid-light:
     backgroundColor: "{colors.stroke-critical-solid}"
   role-stroke-critical-solid-dark:
@@ -1737,7 +1752,7 @@ v108 에서 미뤄 둔 차트 10색을 팔레트 단계로 옮긴다. 사용자�
 
 v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `porest-tokens.css` · 앱 `colors.dart` 가 복사해 쓰는 v108 직전 값) · v108 · 대안으로 나란히 그린 점검 페이지(https://claude.ai/artifact/RsFYD1ZoqgnBzDJ2irHm6r)에서 사용자가 정했다. 역할 → 단계와 SEED 에서 옮긴 이유는 아래 v108 절에 반영했다(`(v109)` 표시).
 
-**아직 두 웹 · 앱에는 들어가지 않았다.** v108 과 함께 앱 적용 단계에서 옮긴다.
+**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `porest-tokens.css` · 앱 `porest_tokens.g.dart` — 2026-10-06 가져오기, 옛 색 이름은 역할 색에 이어 두었다). 화면은 아직 옛 이름을 쓰고 화면 이관 때 옮긴다. HR 은 아직이다(앱 적용 단계).
 
 | 무엇 | 바꾼 것 | 왜 |
 |---|---|---|
@@ -1757,7 +1772,7 @@ v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `porest-tokens.css` · 
 
 당근 SEED 처럼 색에 팔레트 층을 둔다. 팔레트는 가족마다 차례 번호를 붙인 색이고, 역할 색(v102)은 hex 대신 그 단계를 가리킨다. 사용자가 2026-09-30 SEED 와 나란히 놓은 비교 페이지에서 구조(SEED 식 모드별) · 채우기(가족마다 차례로) · 값(SEED 규칙대로 새로 뽑음)을 정하고, 값 제안표를 보고 그대로 넣기로 했다. 출처: seed-design.io Foundations › Color › Palette(Apache-2.0).
 
-**아직 두 웹 · 앱에는 들어가지 않았다.** 역할 색과 함께 앱 적용 단계에서 옮긴다.
+**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `porest-tokens.css` · 앱 `porest_tokens.g.dart` — 2026-10-06 가져오기, 옛 색 이름은 역할 색에 이어 두었다). 화면은 역할 색 이름으로 이관할 때 이 단계를 따른다. HR 은 아직이다(앱 적용 단계).
 
 | 자리 | 값 |
 |---|---|
@@ -1796,6 +1811,8 @@ v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `porest-tokens.css` · 
 | `bg-layer-floating-pressed` | gray-100 | gray-300 | — |
 | `bg-neutral-weak` | gray-200 | gray-300 | — |
 | `bg-neutral-weak-pressed` | gray-300 | gray-400 | — |
+| `bg-neutral-weak-alpha` | 검정 4.7%(`#0000000C`) | 흰 12.5%(`#FFFFFF20`) | — (v120 — SEED bg.neutral-weak-alpha 의 값. 투명도가 있어 팔레트 단계가 아니다) |
+| `bg-neutral-weak-alpha-pressed` | 검정 6.3%(`#00000010`) | 흰 18%(`#FFFFFF2E`) | — (v120 — SEED bg.neutral-weak-alpha-pressed 의 값) |
 | `bg-neutral-inverted` | gray-1000 | gray-1000 | gray-900 / gray-1000 (v109) |
 | `bg-disabled` | gray-200 | gray-300 | — |
 | `fg-neutral` | gray-1000 | gray-1000 | — |
@@ -1846,6 +1863,7 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 - 의미 색 글자 · 선(fg-* · stroke-*-solid)의 다크 — SEED 700 → 800. 다크 700 은 어두운 표면 위 2.9:1 안팎이다 — 흰 글자를 얹는 채움 눌림 자리라 어두워야 한다.
 - stroke-neutral-subtle — SEED 는 투명도 있는 검정 · 흰색이다. 검사기가 8자리 hex 를 받지 않아 gray-300 에 둔다.
 - (v118) stroke-neutral-overlay — SEED stroke.neutral-subtle 의 투명한 값(검정 4.7% · 흰 5%)을 이미지 · 아바타 · 로고 타일 위 1px 윤곽에만 쓰는 역할로 따로 둔다. porest 의 stroke-neutral-subtle 은 구분선 · 목록 선이라 불투명 그대로다 — 같은 이름에 두 값을 둘 수 없어 이름을 나눴다. 이름의 overlay 는 "내용 위에 얹는"(SEED bg.overlay 와 같은 뜻)이다 — 굵기 단계(subtle · weak · solid · contrast)가 아니라 자리를 말한다. 불투명한 선을 그림 둘레에 그리면 어두운 사진 · 카드 둘레에 옅은 테가 생긴다(사용자 결정 2026-10-04 이미지 비교 1A). 검사기(`@google/design.md`)를 0.4 로 올려 8자리 hex 를 받는다 — 위 줄의 "받지 않아" 는 0.1 때 이유다.
+- (v120) bg-neutral-weak-alpha · -pressed — SEED 의 투명한 약한 배경(검정 4.7% · 6.3% / 다크 흰 12.5% · 18%)을 그대로 들인다. 라이트에서 바닥 `bg-layer-basement` · 약한 배경 `bg-neutral-weak` · 비활성 `bg-disabled` 가 모두 gray-200 이라(SEED 도 같다) 회색 바닥 위에 놓인 채움이 바닥과 1.00:1 로 사라진다. SEED 처럼 바닥 위에 자주 놓이는 두 부품 — Chip `solid` 바탕 · Segmented Control 트랙 — 만 투명 짝을 쓰고(어느 바탕에서나 보인다 — 회색 위 1.11 · 흰 위 1.11 · 다크 1.47), 나머지 약한 배경 · 비활성 채움은 흰 표면 위에만 둔다(Elevation 의 "바닥 위의 채움"). 불투명 `bg-neutral-weak` 는 그대로다(사용자 결정 2026-10-16 기초 웹 01-040 B — 비교 페이지 https://claude.ai/artifact/U33bUxZkgQoHfAgdp2DEVK).
 - warning — SEED 의 주의 색은 노랑이고 채움 위 글자가 검정이다. porest 는 주황 + 흰 글자를 그대로 두고, 단계는 다른 의미 색과 같은 규칙으로 앉혔다.
 - bg-positive-solid 의 다크 — SEED 는 500(눌림 600)이다. 다른 의미 색과 맞춰 600(눌림 700)에 둔다.
 - 브랜드 채움의 다크 — Desk 는 브랜드 색이 어두워(L* 33) 채움을 지금 값(#0147AD)과 같은 무게인 500 에 둔다(ΔE 1.4). 눌림은 SEED 의 800 이 흰 글자 3.76:1 이라 700 이다. HR 은 채움이 SEED 대로 700 이고, 눌림은 800 이 흰 글자 3.61:1 이라 600(더 어둡게)이다.
@@ -1865,7 +1883,7 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 
 당근 SEED 의 역할 기반 색 체계를 들인다. 사용자가 2026-09-29 porest 와 SEED 를 나란히 놓은 비교 페이지에서 네 가지(구조 · 값 · AA 미달 · HR 웹)를 정하고, 역할 색 제안표를 보고 그대로 넣기로 했다.
 
-**아직 두 웹 · 앱에는 들어가지 않았다.** Desk 웹 · 앱은 같은 역할을 각자 정의해 쓰고 있고(웹 68개 · 앱 67개, 합쳐 4,700여 곳), 앱 PR 에서 그 정의를 이 표에서 만들어 쓰게 바꾼다.
+**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `porest-tokens.css` · 앱 `porest_tokens.g.dart` — 2026-10-06 가져오기, 옛 색 이름은 역할 색에 이어 두었다). 화면은 아직 옛 이름(웹 · 앱 합쳐 4,700여 곳)을 쓰고 화면 이관 때 새 이름으로 옮긴다. HR 은 아직이다(앱 적용 단계).
 
 이름은 SEED 처럼 속성 · 역할 · 변형 · 상태 순이다 — 예: fg-critical-contrast, bg-brand-solid-pressed.
 
@@ -1914,6 +1932,8 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 | `bg-layer-floating-pressed` | `#F7F8FD` | `#353B4D` | — | — |
 | `bg-neutral-weak` | `#F5F6FA` | `#353B4D` | surface-input | bg-sunken · bg-muted |
 | `bg-neutral-weak-pressed` | `#EDEFF3` | `#404757` | — | bg-warm-press |
+| `bg-neutral-weak-alpha` | `#0000000C` | `#FFFFFF20` | — | — |
+| `bg-neutral-weak-alpha-pressed` | `#00000010` | `#FFFFFF2E` | — | — |
 | `bg-neutral-inverted` | `#1A1F2E` | `#F5F6FA` | — | bg-inverse |
 | `bg-disabled` | `#F5F6FA` | `#353B4D` | — | bg-disabled |
 | `bg-critical-solid` | `#D72323` | `#CC0E17` | error | status-danger |
@@ -1971,7 +1991,7 @@ v102 때의 규칙이다. v108 부터 값은 팔레트 단계에서 온다 — �
 porest 화면에 아직 쓰는 자리가 없다. 자리가 생기면 위 규칙으로 더한다.
 
 - bg.neutral-solid — 짙은 회색 채움(bg.neutral-inverted-pressed 는 v112 에 Button 의 누름으로 들였다)
-- bg.neutral-weak-alpha · bg.transparent-*(4) — 투명도 있는 배경. 필요하면 v118 의 stroke-neutral-overlay 처럼 역할 색으로 둔다(검사기 0.4 부터 8자리 hex 를 받는다)
+- bg.transparent-*(4) — 투명도 있는 배경. 필요하면 v118 의 stroke-neutral-overlay 처럼 역할 색으로 둔다(검사기 0.4 부터 8자리 hex 를 받는다). bg.neutral-weak-alpha(-pressed)는 v120 에 회색 바닥 위 칩 · 세그먼트 트랙의 바탕으로 들였다
 - bg.overlay · bg.overlay-muted — Elevation 의 overlay-dim 이 같은 자리다
 - stroke.neutral-muted — 구분선은 stroke-neutral-subtle 하나로 그린다(Divider 2026-10-03 — SEED 기본 neutral-muted 와 같은 진하기 1.15). stroke.neutral-contrast 는 v113 에 Select Box 의 고른 테두리로, stroke.*-weak(4)는 v117 에 Badge outline 의 옅은 테두리로, stroke.neutral-subtle 의 투명한 값은 v118 에 이미지 위 윤곽(stroke-neutral-overlay)으로 들였다
 - bg.magic-weak · bg.layer-fill — 당근 AI 기능 전용 · SEED 에서도 없어질 이름
@@ -1989,7 +2009,7 @@ porest 화면에 아직 쓰는 자리가 없다. 자리가 생기면 위 규칙�
 - 마스크는 방향 없이 적었다(위 → 아래). 쓰는 자리에서 방향을 붙인다(`to right` 등).
 - 반짝임은 `motion-duration-loop`(1500ms) · `motion-ease-easing` 으로 지나가고(SEED Skeleton 의 곡선 — 2026-10-03, `specs/components/skeleton.yaml`), 모션 줄이기 모드에서는 멈춘다.
 
-### Surface (v1 추가)
+### Surface (v1 추가 · 기록 — 기준은 v102 역할 색 `bg-layer-*`)
 
 `bg-page` 위에 카드·시트·입력을 그리기 위한 최소 표면 페어. 라이트·다크 모드 모두 동일한 시맨틱(`default` = 콘텐츠 표면, `input` = 입력·recessed 표면)을 유지하며, 시각적 elevation 방향만 모드에 따라 반전됩니다.
 
@@ -2012,7 +2032,7 @@ porest 화면에 아직 쓰는 자리가 없다. 자리가 생기면 위 규칙�
 - 두 accent 모두 라이트 모드 표면 위에서 본문 4.5:1 또는 그에 준하는 대비를 확보 — 단일 표면 페어로 양 브랜드 호환.
 - 어두운 표면용 accent 변형(`accent-*-light`)은 추후 별도 토큰으로 분리 예정 — 현재 surface 토큰은 lightened accent 도입 시 재계산 없이 그대로 유효.
 
-### Text (v2 추가)
+### Text (v2 추가 · 기록 — 기준은 v102 역할 색 `fg-*` 와 Typography 의 "글자 역할")
 
 surface 페어 위에서 본문 가독성을 확보하기 위한 최소 텍스트 역할 5종. 모드별 페어(primary/secondary)와 모드 무관(on-accent)으로 구성하며, tertiary·disabled는 사용 사례가 명확해진 후 v3에서 추가합니다.
 
@@ -2046,7 +2066,7 @@ surface 페어 위에서 본문 가독성을 확보하기 위한 최소 텍스�
 - `text-on-accent` 단일 값(`#FFFFFF`)이 양 브랜드 primary에서 본문 4.5:1 통과 (각 brand 파일에서 자체 검증) — 브랜드별 분기 불필요.
 - primary·secondary는 neutral 토큰으로 양 브랜드 공유. accent 색상에 의존하지 않음.
 
-### Border (v3 추가)
+### Border (v3 추가 · 기록 — 기준은 v102 역할 색 `stroke-*`)
 
 border는 시맨틱 계층을 둘로 분리합니다 — 장식적 외곽선과 필수 UI 외곽선은 WCAG 1.4.11 (Non-text contrast 3:1) 적용 대상이 다르기 때문입니다.
 
@@ -2084,7 +2104,7 @@ border는 시맨틱 계층을 둘로 분리합니다 — 장식적 외곽선과 
 - 모든 border는 neutral 토큰 — 브랜드 accent에 의존하지 않음, 양 브랜드 공유.
 - 미래 `border-focus`는 accent 기반(브랜드 분기) 또는 neutral 기반 단일 토큰 중 선택 — 다크 모드 accent 변형 결정 후 일관 적용.
 
-### Text tertiary (v11 추가)
+### Text tertiary (v11 추가 · 기록 — 기준은 v102 `fg-neutral-subtle`)
 
 3차 텍스트 위계 — placeholder, hint, caption-tertiary 등 본문보다 낮은 강조의 read-only 정보. 라이트/다크 페어 2개.
 
@@ -2117,7 +2137,7 @@ border는 시맨틱 계층을 둘로 분리합니다 — 장식적 외곽선과 
 #### HR / Desk 듀얼 브랜드
 - neutral 토큰, 양 브랜드 동일 사용. accent에 의존하지 않음.
 
-### Text disabled (v13 추가)
+### Text disabled (v13 추가 · 기록 — 기준은 v102 `fg-disabled` 와 v106 상태)
 
 비활성(disabled) 상태의 라벨·버튼 텍스트·입력값 등 — WCAG 1.4.3 *incidental text exception* 적용 대상으로, 색 대비 4.5:1 요건이 면제되는 시맨틱.
 
@@ -2162,7 +2182,7 @@ design.md `contrastCheck` 룰은 incidental 인지 없이 모든 `backgroundColo
 #### HR / Desk 듀얼 브랜드
 - neutral 토큰 — 양 브랜드 공유. accent에 의존 없음.
 
-### Semantic colors (v10 추가)
+### Semantic colors (v10 추가 · 기록 — 기준은 v102 역할 색 · v108 팔레트)
 
 상태 전달을 위한 functional palette — 브랜드 정체성과 분리된 4개 status. HR/Desk 양 브랜드 공유, 라이트 표면 base만 이번 배치에서 확정.
 
@@ -2202,7 +2222,7 @@ design.md `contrastCheck` 룰은 incidental 인지 없이 모든 `backgroundColo
 - 다크 표면 위 semantic 표시: ~v19까지 `success`/`error` base 색은 다크 표면 위 contrast 미달 → **v20에서 `-light` 변형 도입으로 해소** (아래 v20 섹션 참조).
 - `border-vs-surface` 패턴은 spec에 borderColor 없어 영구 자동 검증 불가 (v9 한계 그대로).
 
-### Semantic refresh — vivid tone (v51 추가)
+### Semantic refresh — vivid tone (v51 추가 · 기록 — 기준은 v102 역할 색 · v108 팔레트)
 
 base 4개 vivid 갱신. light 변형은 v20에서 검증된 다크 alert contrast 회귀 회피 위해 보존.
 
@@ -2236,7 +2256,7 @@ v10 base는 본문 4.5:1 안전 마진을 위해 L 0.13~0.17로 어둡게 잡혀
 #### light 변형 보존 이유 (v51 시점)
 v51에서는 `success-light`/`error-light`/`warning-light`/`info-light`를 v20 검증 hex 그대로 유지 — 변경 시 다크 alert contrast 회귀 위험을 우선 고려. **v53에서 vivid 톤으로 갱신** — 아래 `Semantic light refresh` 섹션 참조.
 
-### Semantic light refresh — vivid tone (v53 추가)
+### Semantic light refresh — vivid tone (v53 추가 · 기록 — 기준은 v102 역할 색 · v108 팔레트)
 
 v51에서 보류했던 light 변형 4개를 base와 hue 일관성 + 시각 통일감 위해 vivid 톤으로 갱신. Tailwind 400 톤 채택 (base는 600/700, light는 400 — 표준 lighter scale).
 
@@ -2268,7 +2288,7 @@ v51에서 보류했던 light 변형 4개를 base와 hue 일관성 + 시각 통�
 #### 채움 fill 비호환 유지
 v20과 동일 — light 위에 white 올리면 contrast 2~3:1 미달. 다크 모드 채움 badge는 여전히 base 색 + 외곽선 보강 또는 별도 패턴(향후 검토).
 
-### Chart palette (v21 도입, 4 배치 완료)
+### Chart palette (v21 도입, 4 배치 완료 · 기록 — 기준은 v110 차트 10색)
 
 **v110 에서 팔레트 단계로 옮겼다** — 아래 표는 v21 ~ v24 값의 기록이다. 지금 값은 Colors 의 v110 절(라이트 700 · 다크 800-dark)에 있다.
 
@@ -2346,7 +2366,7 @@ v21 동일 정책 — light 표면 위 chart fill, UI 1.4.11 (3:1) 기준 통과
 - 시각 차별화: `success`(forest)는 HR primary(emerald 계열)와 미세 hue 분리, `info`(deep navy)는 Desk primary(vibrant blue 계열)와 채도 분리. 단 단독 노출 시 식별성을 위해 컴포넌트 레벨에서 아이콘(✓/✕/!/i) 동반을 권장(prose 가이드 영역).
 - 컴포넌트는 brand 컨텍스트(HR vs Desk) × 모드 컨텍스트(light vs dark) 매트릭스로 4값 분기 — 토큰 자체에 분기 표현됨.
 
-### Brand history (v7~v16) — brand 파일로 이전 (v17 분리)
+### Brand history (v7~v16) — brand 파일로 이전 (v17 분리 · 기록 — 기준은 v102 브랜드 역할)
 
 v7 (brand light variants) · v14 (brand refresh + temporary bg-page fork) · v16 (border-focus) prose는 모두 brand-specific이므로 v17 file split 시 `DESIGN.hr.md` / `DESIGN.desk.md`로 이전. 본 파일은 brand-agnostic이라 history도 보유하지 않음.
 
@@ -2549,7 +2569,7 @@ CSS 패턴 (mobile-first, `@media (min-width)`):
 
 당근 SEED 의 Layout 문서를 기준으로 중단점 · 콘텐츠 폭 · 여백 · 사이드바를 정한다. 사용자가 2026-09-29 porest 와 SEED 를 나란히 놓은 비교 페이지를 보고 네 가지 모두 SEED 쪽을 골랐다. 앱 화면 가장자리만 porest 값(24px)을 둔다 — 2026-09-14 에 정한 앱 규칙이다.
 
-**아직 두 웹 · 앱에는 들어가지 않았다.** 앱마다 PR 을 따로 낸다. 그 전까지는 제품 코드의 값(Desk 웹 중단점 736 · 좌우 여백 28 · 사이드바 256, HR 웹 Tailwind 기본 중단점 · 사이드바 288 등)이 이 표와 다른 게 정상이다.
+**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `porest-tokens.css` · 앱 `porest_tokens.g.dart` — 2026-10-06 가져오기). 화면은 아직 옛 값을 쓰고 화면 이관 때 이 이름으로 옮긴다 — 그 전까지는 화면 코드의 값(Desk 웹 좌우 여백 28 · 사이드바 256 등)이 이 표와 다른 게 정상이다. 중단점만은 화면 이관을 기다리지 않는다(아래 "중단점"). HR 은 아직이다(HR 웹 Tailwind 기본 중단점 · 사이드바 288 — 앱 적용 단계).
 
 출처: seed-design.io Foundations › Layout, `@seed-design/qvism-preset` 의 layout · side-navigation 레시피, rootage `dimension`(역할 간격). SEED 는 Apache-2.0 이다.
 
@@ -2574,6 +2594,7 @@ CSS 패턴 (mobile-first, `@media (min-width)`):
 - 화면 틀을 JS 로 바꾸는 기준도 이 값을 쓴다 — 모바일 틀(하단 탭바) ↔ 사이드바 틀은 `breakpoint-md`. 스타일(`md:`)과 화면 틀이 다른 폭에서 바뀌면 그 사이에서 모바일 틀 안에 태블릿 스타일이 켜진다(v101 전 Desk 웹의 736 – 767).
 - 옛 `2xl`(1441px)은 없앴다 — 두 웹 모두 쓰는 곳이 없었다. Tailwind 로 내보낼 때 기본 중단점을 먼저 지운다(`--breakpoint-*: initial`). 안 지우면 Tailwind 기본 2xl(1536px)이 살아남는다.
 - v54 의 Apple Store 기준(640 · 736 · 834 · 1069 · 1441)은 아래 기록 절과 `DESIGN.history/v101-seed-layout.md` 에 있다.
+- **Desk 웹은 옛 중단점을 지금 모두 옮긴다**(2026-10-16 사용자 결정 — 기초 웹 비교 페이지 https://claude.ai/artifact/U33bUxZkgQoHfAgdp2DEVK 01-024 C). 화면에 남은 옛 값 — `min-[640px]:` → `sm`(480) · `min-[736px]:` · `min-[834px]:` → `md`(768) · `min-[1069px]:` → `lg`(1280), 화면 틀의 1100 문턱(`useDeviceSize`)은 위 "화면 틀" 의 768 · 1280 — 을 화면 이관을 기다리지 않고 한 번에 이 표의 이름으로 바꾼다. 대가로 그 사이 폭(480 ~ 639 · 768 ~ 833 · 1069 ~ 1279)의 겉모습이 바뀐다. desk-front `CLAUDE.md` 의 "겉모습이 바뀌지 않게 옛 값(640 · 736 · 834 · 1069)을 적어 고정" 규칙은 "이름 있는 중단점(`sm` · `md` · `lg` · `xl`)만 쓰고 `min-[NNNpx]:` 를 적지 않는다" 로 바꾼다.
 
 #### 콘텐츠 폭 — 밀도
 
@@ -2674,7 +2695,7 @@ SEED 가 자리에 이름을 붙인 간격이다(SEED 이름은 `spacing-x.*` �
 
 - 머리(상단 바)는 높이 56 — 폰 · 데스크톱 모든 화면이 같다. 스크롤해도 선 · 그림자를 긋지 않는다(Elevation).
 - 폰은 상단 바의 제목이 화면 제목(`h1`)이다 — 탭 첫 화면은 22 / 30(`text-t8`), 그 아래 화면은 18 / 24(`text-t6`), 둘 다 700 · 왼쪽.
-- 데스크톱은 머리에 제목을 두지 않는다 — 본문 맨 위 `h1` 이 화면 제목이다. `text-screen-title`(26 / 35 · 700), 머리 아래 `spacing-nav-to-title`(20). 모든 화면에 하나다(홈 · 캘린더도). 제목 줄은 한 줄 — 제목(설명은 그 아래)이 왼쪽, 그 화면의 동작 버튼(Button small)이 오른쪽이다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-018-2 A).
+- 데스크톱은 머리에 제목을 두지 않는다 — 본문 맨 위 `h1` 이 화면 제목이다. `text-screen-title`(26 / 35 · 700), 머리 아래 `spacing-nav-to-title`(20). 모든 화면에 하나다(홈 · 캘린더도). 제목 줄은 한 줄 — 제목(설명은 그 아래)이 왼쪽, 그 화면의 동작 버튼(Button small · `neutralOutline` — 회색 바닥 위, 2026-10-16 사용자 결정 174-3 A)이 오른쪽이다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-018-2 A).
 - HR 은 데스크톱 머리를 두지 않는다 — 접기 버튼은 사이드바 머리로, 테마는 설정으로 갔고, 위치는 사이드바의 지금 항목이 알린다(빵부스러기는 걷었다).
 
 #### 화면을 옮길 때
@@ -2691,12 +2712,30 @@ SEED 가 자리에 이름을 붙인 간격이다(SEED 이름은 `spacing-x.*` �
 - 문서 제목은 화면마다 "{화면 제목} - Porest Desk" · "{화면 제목} - Porest HR" 이다.
 - ← 는 들어온 화면으로(History), 앞 화면이 없으면 상위 화면으로 — 주소를 고쳐 쓴다. ✕ 는 모달 · 독립 흐름을 닫을 때만.
 
+#### 화면 바탕 — 회색 바닥 위 흰 층
+
+Desk 폰 화면(앱 · 768 미만 웹)의 바닥은 늘 `bg-layer-basement`(회색)다 — 셸이 칠하고, 화면은 바탕을 따로 칠하지 않는다. 그 위에 화면 종류에 따라 흰 층(`bg-layer-default`)을 놓는다(2026-10-16 사용자 결정 — 틀 앱 비교 페이지 https://claude.ai/artifact/CrbAnPAzjv5gAcTf3Mtu9m 02-005 · Q-019-3 C).
+
+| 화면 | 바닥 위에 놓는 것 | 예 |
+|---|---|---|
+| 카드 화면 | 카드(Card — 모서리 16 · 1px `stroke-neutral-weak`) — 화면 끝 24 · 카드 사이 8 · 맨 위 8 | 홈 · 자산 · 통계 · 예산 · 카드 상세 |
+| 띠 화면(기본) | 화면 폭 흰 띠 — 묶음(목록 제목 + 줄)마다 띠 하나. 띠 사이 8 은 바닥이 그대로 보이는 틈이다(SEED Divider "강함" — Basement 위에 Default 를 8 띄워 쌓는다). 띠는 화면 끝까지 닿고 모서리 · 테두리 · 그림자가 없다. 맨 위 8 · 띠 안 위 4 · 아래 8 | 설정 · 전체 · 캘린더(달력 띠 + 그날 일정 띠) · 알림 · 폼 |
+| 흰 화면 | 화면 전체가 흰 층 하나 — 날짜 묶음은 목록 제목으로만 가른다 | 가계부 거래(그 달 거래 목록)만 |
+
+- 한 화면은 한 방식만 쓴다 — 띠 안에 카드를 두거나, 카드 화면에 띠를 섞지 않는다.
+- 줄 목록(List)은 바닥에 바로 두지 않는다 — 카드 · 띠 · 흰 화면 · 시트 위에 둔다. 누른 줄의 바탕(`bg-layer-default-pressed`)은 흰 면 위에서만 보인다(회색 위 1.02:1).
+- 대가: 띠 사이 틈은 흰 띠와 바닥의 대비가 라이트 1.08:1 · 다크 1.13:1 이라 거의 안 보인다 — 띠가 하나로 붙어 보이고 묶음은 목록 제목으로 갈린다(라이트가 더 옅다). 카드(모서리 · 테두리) · 흰 화면과 다른 셋째 모양이 하나 는다.
+- 가계부 묶음(거래 · 자산 · 통계 · 예산)을 좌우로 밀면 흰 화면(거래)과 회색 카드 화면(자산)이 이어 붙어 바탕이 바뀐다 — 그대로 둔다.
+- 데스크톱(768 이상)은 이 표 밖이다 — 회색 바닥 위 카드다(Card).
+
 #### 랜드마크
 
 - 머리는 `header` — `main` 밖에 둔다.
 - 주 메뉴는 이름 있는 `nav` — 하단 탭 바 · 사이드바 · 옆 패널의 주 메뉴 모두 "주 메뉴".
 - 본문은 `main` 하나.
 - 화면 맨 앞에 "본문 바로가기" 링크 — 키보드 초점이 오면 보이고, 누르면 `main` 으로 간다.
+- 앱은 랜드마크가 없다(Flutter 의 `main` · `navigation` 역할은 웹 엔진만 쓴다). 그래서 상단 바의 제목을 머리말로 두고(`Semantics(header: true, headingLevel: 1)` — iOS 는 `header` 를, 안드로이드는 `headingLevel` 을 읽는다) 목록 제목(List Header) · 카드 머리는 단계 2 로 단다. 상단 바의 버튼마다 이름을 단다. 주 메뉴는 이름 있는 묶음(`Semantics(container: true, label)` — "주 메뉴", 번역 문구 `navMainMenu` · en "Main menu")이다. 본문 바로가기는 두지 않는다 — 화면 읽기는 제목 단위로 건너뛰고, 상단 바의 누를 것은 셋 이하다(2026-10-16 사용자 결정 — 틀 앱 비교 페이지 02-004).
+- 이름은 모두 번역 문구다 — 코드에 한국어 상수를 두지 않는다(International Design). 알림 벨의 이름은 새 알림이 있으면 "알림, 새 알림 있음"(en "Notifications, new notifications"), 없으면 "알림"이다(Notification Badge — 점은 `aria-hidden` · 낭독 제외, 02-003).
 
 ### Safe Area — 안전 영역 (2026-10-04)
 
@@ -2843,7 +2882,7 @@ HR (B2B 데이터 밀도) / Desk (B2C 모바일 우선) 모두 동일 5단계. �
 #### 자동 검증 미적용
 breakpoint는 functional layout token — contrast 룰 무관. spec 외부(prose-token)라 lint missingPrimary/contrast 영향 0.
 
-### Touch targets (v59 추가, prose-token)
+### Touch targets (v59 추가, prose-token · 기록 — 기준은 Inclusive Design 의 누르는 영역 44 × 44(`touch-min`) — 표는 내보내기 원본으로 남는다)
 
 WCAG 2.5.5 AAA (Target Size 44×44 minimum) + Apple Store reference 톤을 정형 토큰화. spec이 layout/component size 카테고리 미지원이라 prose-token 패턴(shadow/motion/overlay/breakpoint와 동일). 5 토큰. v54 Breakpoints sub-sub의 reference 가이드를 토큰으로 격상.
 
@@ -2852,8 +2891,8 @@ WCAG 2.5.5 AAA (Target Size 44×44 minimum) + Apple Store reference 톤을 정�
 | `touch-min` | `44px` | WCAG 2.5.5 AAA minimum (default, 모든 hit target 권장) |
 | `touch-pill-w` | `100px` | Pill CTA min-width (Apple Store: ~44 × 100) |
 | `touch-circular` | `44px` | Circular chip / icon button (= touch-min, explicit alias) |
-| `touch-nav-h` | `32px` | Precision desktop nav height (`breakpoint-lg` 이상, mouse pointer 가정) |
-| `touch-nav-w` | `80px` | Precision desktop nav min-width |
+
+> `touch-nav-h`(32) · `touch-nav-w`(80) 은 쓰지 않아 이 표와 내보내기(웹 CSS · 앱 Dart)에서 뺐다(2026-10-16 사용자 결정 — 기초 웹 01-039 B). 데스크톱에서도 누르는 영역은 44 다(Inclusive Design). `touch-pill-w` · `touch-circular` 는 쓰는 곳이 없지만 그대로 둔다.
 
 #### 추가 이유
 1. v33-v48 컴포넌트 batch에 size prose 있으나 *어떤 토큰 값 기준* 인지 명시 부재 — 컴포넌트별 각자 hex/px 기재. 통합 토큰화로 시스템 일관성 ↑.
@@ -2864,7 +2903,7 @@ WCAG 2.5.5 AAA (Target Size 44×44 minimum) + Apple Store reference 톤을 정�
 - 모든 hit target: `min-height: var(--touch-min); min-width: var(--touch-min);` (44 × 44 충족).
 - Pill CTA: `height: var(--touch-min); min-width: var(--touch-pill-w); border-radius: var(--radius-full);`.
 - Circular icon button: `width: var(--touch-circular); height: var(--touch-circular); border-radius: var(--radius-full);`.
-- Precision desktop nav (`@media (min-width: var(--breakpoint-lg))`): `height: var(--touch-nav-h); min-width: var(--touch-nav-w);`.
+- ~~Precision desktop nav — `touch-nav-h` · `touch-nav-w`~~ — 쓰지 않는다(2026-10-16 01-039 B).
 
 #### 단위·명명
 - **px**: 한국 디자이너 친화적 + Figma frame 단위 일치.
@@ -2872,19 +2911,19 @@ WCAG 2.5.5 AAA (Target Size 44×44 minimum) + Apple Store reference 톤을 정�
 
 #### 듀얼 브랜드 — unified
 - HR (B2B 데이터 밀도) / Desk (B2C 모바일 우선) 모두 동일 5 토큰. brand-agnostic.
-- 사용 강도 차이: HR은 `breakpoint-lg` 이상 정밀 desktop에서 `touch-nav-h`/`-w` 적극 (데이터 그리드 inline action), Desk는 모든 viewport에서 `touch-min`/`touch-circular` 우선 (모바일 hit target).
+- 사용 강도 차이: HR은 `breakpoint-lg` 이상 정밀 desktop에서 `touch-nav-h`/`-w` 적극(2026-10-16 걷었다 — 44), Desk는 모든 viewport에서 `touch-min`/`touch-circular` 우선 (모바일 hit target).
 
 #### 4px 베이스 호환
 - 44/100/80/32 모두 4의 배수 (11×4, 25×4, 20×4, 8×4). v4 spacing 정신과 일치.
 - spacing 카테고리 추가 안 함 — touch target은 padding/margin/gap과 의미적으로 다름(컴포넌트 outer size).
 
 #### export 통합 (build-tailwind-v4.mjs)
-v59에서 `parseTouchTargets` 추가, prose 표 직접 추출. CSS variable: `--touch-min`, `--touch-pill-w`, `--touch-circular`, `--touch-nav-h`, `--touch-nav-w`.
+v59에서 `parseTouchTargets` 추가, prose 표 직접 추출. CSS variable: `--touch-min`, `--touch-pill-w`, `--touch-circular`(`--touch-nav-h` · `--touch-nav-w` 는 2026-10-16 에 뺐다).
 
 #### 자동 검증 미적용
 touch target은 functional layout token — contrast 룰 무관. spec 외부(prose-token)라 lint 영향 0.
 
-### Z-index (v65 추가, prose-token)
+### Z-index (v65 추가, prose-token · 기록 — 기준은 `specs/z-index.md`(v116 층 이름))
 
 v116(2026-10-03) — 층 이름으로 다시 정했다. 값은 `specs/z-index.md` 의 층 표(L0 ~ L9) 그대로이고, 이름은 그 층을 부른다. 이 표가 원본이다 — 층 표 · 컴포넌트 YAML · 레시피는 여기 값을 따른다. 사용자 결정(2026-10-03 — porest 층 표를 정본으로, 새 토큰은 층 이름으로). spec 이 z-index 카테고리를 지원하지 않아 prose-token 이다(shadow · motion · overlay · breakpoint · touch-target 과 같다).
 
@@ -2931,7 +2970,7 @@ HR / Desk 모두 같은 10 토큰. brand-agnostic.
 
 `parseZIndex` 가 이 표를 읽어 `--z-base` · `--z-sticky` · `--z-modal` · `--z-modal-content` · `--z-floating` · `--z-tooltip` · `--z-alert` · `--z-alert-content` · `--z-snackbar` · `--z-dev` 를 내보낸다. 값은 정수나 `auto` 만 받는다.
 
-### RTL support (v76 추가, prose-only)
+### RTL support (v76 추가, prose-only · 기록 — 기준은 v106 국제화 디자인)
 
 CSS logical properties로 LTR(좌→우, 한국어/영어/일본어) ↔ RTL(우→좌, 아랍어/히브리어) 자동 분기. 컴포넌트 spec의 `padding-left`/`right` 같은 physical property를 `padding-inline-start`/`end` 로 일괄 치환하는 패턴.
 
@@ -3052,6 +3091,14 @@ Tailwind v4는 `me-*`/`ms-*` (margin-end/start), `pe-*`/`ps-*`, `text-start`/`te
 - **그림자** — 떠 있는 높이를 그림자의 크기 · 퍼짐 · 투명도로. 다크 모드에서 잘 안 보이므로 **화면에서 주목도가 높은 몇 안 되는 요소에만** 쓴다(떠 있는 탭 바 · 떠 있는 버튼 · 메뉴 · 팝오버 — `shadow-s3`).
 - **선** — 가장자리에 테두리를 둬 영역을 나눈다(사이드바의 오른쪽 선 · 떠 있는 탭 바의 안쪽 테두리 — 2026-10-04, 카드의 1px `stroke-neutral-weak` — 2026-10-08). 카드는 그림자 없이 선과 바닥(`bg-layer-basement`)으로 가른다.
 
+#### 바닥 위의 채움 (2026-10-16)
+
+라이트에서 바닥 `bg-layer-basement` · 약한 배경 `bg-neutral-weak` · 비활성 `bg-disabled` 는 모두 gray-200 이다(SEED 도 같다 — "layer-basement 와 neutral-weak 는 라이트에서 비슷하게 보일 수 있다"). 그래서 회색 바닥 위에 바로 놓인 채움은 바닥과 1.00:1 로 사라진다(다크는 1.47:1 로 갈린다). 사용자 결정 2026-10-16(기초 웹 비교 페이지 https://claude.ai/artifact/U33bUxZkgQoHfAgdp2DEVK 01-040 B):
+
+- **`bg-neutral-weak` · `bg-disabled` 로 칠하는 것은 흰 표면(`bg-layer-default` · `bg-layer-floating`) 위에만 둔다** — neutralWeak 버튼 · 안내 상자(Callout) · 스켈레톤 · 막힌 칸의 바탕. 화면 바탕은 Layout 의 "화면 바탕" 이 정한다(카드 · 띠 · 흰 화면).
+- 회색 바닥 위에 바로 놓이는 버튼은 neutralOutline 이다 — 데스크톱 화면 제목 줄의 버튼처럼. 입력칸은 테두리가 모양을 맡아 바닥 위에서도 보인다(막혀 바탕이 바닥과 같아도).
+- 바닥 위에 자주 놓이는 두 부품 — Chip `solid` 바탕 · Segmented Control 트랙 — 은 투명 짝 `bg-neutral-weak-alpha`(누름 `bg-neutral-weak-alpha-pressed`)로 칠한다. 놓인 바탕에 섞여 어느 바탕에서나 보인다 — 회색 위 1.11:1 · 흰 위 1.11:1 · 다크 1.47:1(SEED 도 이 두 부품만 투명 짝을 쓴다). 흰 면 위에서는 불투명 `bg-neutral-weak`(1.08:1)보다 조금 짙다.
+
 #### 그림자
 
 | 토큰 | 값 | 쓰는 곳 |
@@ -3066,12 +3113,12 @@ Tailwind v4는 `me-*`/`ms-*` (margin-end/start), `pe-*`/`ps-*`, `text-start`/`te
 | `shadow-s4-dark` | `0 24px 48px -8px rgba(0, 0, 0, 0.60), 0 8px 16px -4px rgba(0, 0, 0, 0.30), inset 0 1px 0 0 rgba(255, 255, 255, 0.10)` | 다크 — s4 |
 
 - SEED 는 3단계(s1 ~ s3, 검정 한 겹)다. porest 는 큰 모달 · 서랍용 한 단계를 더 둔다.
-- 옛 이름(`shadow-sm` · `md` · `lg` · `xl` 과 `-dark`)은 같은 값의 별칭이다 — 아래 v12 · v25 표.
+- 옛 이름(`shadow-sm` · `md` · `lg` · `xl` 과 `-dark`)은 같은 값의 별칭이다 — 아래 v12 · v25 표(기록). 웹 내보내기(`export:tailwind`)는 옛 이름을 값 대신 `var(--shadow-s1)` ~ `var(--shadow-s4)` 로 적는다 — Tailwind 가 그림자 값을 클래스 안에 박아 넣어 다크 블록이 옛 클래스(`shadow-lg` …)에 닿지 않던 것을, 옛 클래스도 s1 ~ s4 의 다크 값을 따라가게 한다(2026-10-16 사용자 결정 — 기초 웹 01-003 A). 새 이름도 같다 — `--shadow-s1` ~ `s4` 는 `var(--porest-shadow-s1)` ~ `s4` 를 가리키고 값은 @theme 밖 `:root` 에 두며, 다크 블록이 그 값을 바꾼다 — `shadow-s3` 클래스도 다크 값이 된다(2026-10-17 사용자 결정 — 01-003 A 를 새 이름에도). xs 단계 그림자는 두지 않는다(01-006 A — 웹의 shadow-xs 는 Tailwind 기본값이라 내보내기에 없다, 쓰는 곳을 걷는다).
 - 모달 · 시트 뒤를 덮는 딤은 v43 의 `overlay-dim-light` · `overlay-dim-dark` 를 그대로 쓴다(SEED 의 overlay 0.45 · overlay-muted 0.17 은 들이지 않았다).
 
 Porest는 **Tonal Layers**(표면 휘도 차)를 1차 elevation 수단으로, **Layered Shadow**를 2차 보조 수단으로 사용합니다 — Toss 톤의 절제된 깊이감.
 
-### v12 추가 — 4단계 shadow 레시피 (prose-token)
+### v12 추가 — 4단계 shadow 레시피 (prose-token · 기록 — 기준은 v104 그림자 표 — 옛 이름은 별칭)
 
 > **spec 한계 명시**: design.md spec은 shadow를 공식 YAML 토큰 타입으로 형식화하지 않습니다(`### Design Tokens` 서브섹션 부재). 따라서 본 절의 토큰은 **prose-token** 형태로 markdown 표에 정의 — `colors:`/`typography:` 등의 정형 토큰과 달리 `npm run lint` 자동 검증 비대상. **export 통합(v30)**: `scripts/build-tailwind-v4.mjs`가 DESIGN\*.md를 직접 파싱해 **Tailwind v4 `@theme` CSS**로 빌드 — colors / typography(`--text-*` + `--line-height` / `--font-weight` modifier) / radius / spacing + prose shadow 8종을 모두 포함. 결과는 `exports/tokens.css` / `tokens.hr.css` / `tokens.desk.css`. DTCG export(`npm run export:dtcg`)는 design.md 기본 export 사용 — DTCG draft의 shadow `$type`은 단일 shadow object만 지원해 다중 layer/inset shadow는 매핑 손실 → DTCG에서는 shadow 누락, prose 정의를 직접 참조.
 
@@ -3103,7 +3150,7 @@ shadow 추가 전에 surface 휘도 차로 해결 가능한지 확인 — 가능
 - 모든 shadow는 brand-neutral. HR(B2B 절제)·Desk(B2C 친근감) 모두 동일 스케일 사용.
 - 다만 적용 강도 분기 권장: HR은 `shadow-sm`/`shadow-md` 위주(평면적 데이터 밀도), Desk는 `shadow-md`/`shadow-lg` 위주(친근한 입체감). 토큰 자체 분기 불필요.
 
-### v25 추가 — 다크 모드 4단계 shadow (prose-token)
+### v25 추가 — 다크 모드 4단계 shadow (prose-token · 기록 — 기준은 v104 그림자 표 — 옛 이름은 별칭)
 
 v12 시점에는 다크 모드 사용 사례가 적어 `shadow-*-dark` 변형 도입을 보류했으나, v23~v24에서 다크 차트 표면(`chart-color-*-on-dark` 10색)·다크 모달 케이스가 본격화되며 다크 elevation 솔루션이 필요해졌습니다. Material Design 3 dark elevation 가이드(2021~)·Apple Big Sur 패턴을 참고한 절충안을 채택합니다.
 
@@ -3233,7 +3280,7 @@ modal/sheet/drawer 등 floating surface가 페이지 위에 떠 있을 때 배�
 
 지금 이 모드를 따르는 곳은 웹 2곳 · 앱 스켈레톤 1곳이다(2026-09-29) — 앱 PR 에서 모든 모션이 따르게 한다.
 
-### v32 추가 — 4단계 duration + ease-out (prose-token · v104 에서 SEED 모션으로 바뀜 — 옛 이름은 별칭)
+### v32 추가 — 4단계 duration + ease-out (prose-token · 기록 — 기준은 v104 모션, 옛 이름은 별칭)
 
 > **spec 한계**: design.md spec은 motion(transition) 토큰 타입을 정형화하지 않습니다. shadow와 동일한 **prose-token** — `npm run lint` 자동 검증 비대상이며, `scripts/build-tailwind-v4.mjs`가 prose 표에서 추출해 v4 `@theme` CSS의 `--motion-duration-*` / `--motion-ease-*`로 출력.
 
@@ -3258,7 +3305,7 @@ modal/sheet/drawer 등 floating surface가 페이지 위에 떠 있을 때 배�
 - motion은 brand-neutral. HR/Desk 동일 스케일.
 - 적용 강도 분기 권장: HR(B2B)은 `fast`/`base` 위주(절제), Desk(B2C)는 `base`/`slow` 위주(친근감).
 
-### Loop motion (v63 추가, prose-token)
+### Loop motion (v63 추가, prose-token · 기록 — 기준은 v104 모션 — `motion-duration-loop` · `motion-ease-linear` 는 이 표가 원본)
 
 skeleton shimmer · spinner · pulse 등 **반복 애니메이션** 용 토큰 2종. v32는 단발 전환(hover/modal entrance) 위주 → 반복 사용 사례(loading 상태) 등장으로 보완.
 
@@ -3277,7 +3324,7 @@ skeleton shimmer · spinner · pulse 등 **반복 애니메이션** 용 토큰 2
 - **2.3.3**: `prefers-reduced-motion: reduce` 시 shimmer/spinner는 단순 색상 변화 또는 정지 — 컴포넌트 spec에서 명시.
 - prose-token이라 lint 비대상.
 
-### Animation library (v74 추가, prose-token)
+### Animation library (v74 추가, prose-token · 기록 — 기준은 v104 모션과 각 컴포넌트 스펙의 motion — 키프레임 CSS 는 이 절이 원본)
 
 > **v105(2026-09-29)**: 권장 지속 시간 · 이징을 v104 이름으로 옮겼다. 같은 값의 별칭은 새 이름으로(`motion-duration-fast` → `motion-duration-d3` · `base` → `d4` · `slow` → `d6`), 나타나는 키프레임은 `motion-ease-enter`, 사라지는 키프레임은 `motion-ease-exit`, 걷는 500ms 는 `motion-duration-d6` 로. 모션 줄이기는 v104 표를 따른다.
 
@@ -4083,7 +4130,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 - 기본은 장식(보조 기술에 숨김) — 이름 있는 구획을 나눌 때만 `role="separator"`(SEED 는 `<hr>` 가 기본).
 - 웹 · 앱의 border-subtle 과 border-default 가 같은 값이라 "옅은 구분선" 이 효과가 없다 — 구분선은 이 한 색으로 정리한다.
 
-### Outline (border 시각 요소)
+### Outline (border 시각 요소 · 기록 — 기준은 Dialog · Popover 스펙과 v104 의 선)
 
 `border-strong` 토큰을 1px element의 배경색으로 사용 — 외곽선이 카드/section의 외곽 식별 강도를 높일 때.
 
@@ -4114,7 +4161,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 - [ ] 1.4.11: 위 contrast 충족 — outline-strong은 외곽선 **단독 식별** 가능 (`border-default` 1.16:1과 다름)
 - [ ] 다크 모드에서 modal에 `outline-strong-dark` + `shadow-xl-dark` 동시 사용 권장 (다크 표면 위 elevation 보강)
 
-### Disabled label
+### Disabled label (기록 — 기준은 v106 상태 — 막힌 글자 `fg-disabled` · 바탕 `bg-disabled`, 불투명도를 쓰지 않는다)
 
 비활성 상태 컴포넌트(disabled button/input/menu item)의 텍스트 라벨. **WCAG 1.4.3 incidental 예외** 명시 — 사용 불가 컴포넌트 텍스트는 본문 4.5:1 비대상.
 
@@ -4378,7 +4425,7 @@ red → orange → yellow → green → blue → indigo → violet → pink → 
 | 요소 | 값 |
 |---|---|
 | 크기 | 트랙 안쪽 4 + 칸 34 = 42, 글 `t5` 16 · 700, 칸 좌우 12 — 칸이 트랙 폭을 똑같이 나눈다(최소 폭 없음 — 폰에서도 4개) |
-| 색 | 트랙 `bg-neutral-weak`, 안 고른 글 `fg-neutral-subtle`, 고른 칸은 흰 알약 `bg-layer-default` + 안쪽 짙은 1px `stroke-neutral-contrast` 위 `fg-neutral`(`motion-duration-d4` 로 미끄러진다 — SEED 의 옅은 1px 은 트랙과 1.14:1 이라 바꿨다) |
+| 색 | 트랙 `bg-neutral-weak-alpha`(투명 — 회색 바닥 위에서도 보인다, v120), 안 고른 글 `fg-neutral-subtle`, 고른 칸은 흰 알약 `bg-layer-default` + 안쪽 짙은 1px `stroke-neutral-contrast` 위 `fg-neutral`(`motion-duration-d4` 로 미끄러진다 — SEED 의 옅은 1px 은 트랙과 1.14:1 이라 바꿨다) |
 | 누름 · 호버 | 안 고름 `bg-neutral-weak-pressed` + 1px `stroke-neutral-weak`(글 `fg-neutral-muted`) · 고름 `bg-layer-default-pressed` + 짙은 1px 그대로, 칸 안의 글만 2px 거리 축소 |
 | 비활성 | 글 `fg-disabled`, 고른 채 막히면 칸에 `bg-disabled` + 1px `stroke-neutral-solid`(흐림 없음 — v106) |
 
@@ -4896,7 +4943,7 @@ Toggle Group 은 두지 않는다 — 하나 고르기는 Segmented Control(2 ~ 
 
 > 2026-10-03 걷었다 — 스피너는 Progress Circle, 막대는 미터인 Progress 다(위 "기다림" 절, `specs/components/progress-circle.md` · `progress.md`). 옛 스펙은 `spinner.history` · `progress.history` 의 `v-pre-seed-loading.*`.
 
-### Stepper (v67 추가)
+### Stepper (v67 추가 · 기록 — 아직 SEED 와 다시 정하지 않았다)
 
 다단계 form / 결재 흐름 / onboarding 시각화. **새 토큰 0** — primary + semantic + spacing 합성.
 
@@ -5111,7 +5158,7 @@ spec brand-neutral. brand 파일 — HR(Sonner top-right 결재 알림 stack / C
 | 요소 | 값 |
 |---|---|
 | 크기 | `small` 32 · `medium` 36(기본) · `large` 40, 모서리 `radius-full`, 글 `t4` 14 · 500(세 크기 같다), 좌우 12 · 14 · 16, 앞 아이콘 14 · 16 · 16 과 글 사이 6 |
-| Solid | 안 고름 `bg-neutral-weak` · 고름 `bg-neutral-inverted` + `fg-neutral-inverted` — 흰 표면 위에서만(회색 바탕 `bg-layer-basement` 과 같은 색) |
+| Solid | 안 고름 `bg-neutral-weak-alpha`(투명 — 회색 바닥 · 흰 표면 어디서나, v120) · 고름 `bg-neutral-inverted` + `fg-neutral-inverted` |
 | Outline Strong | 안 고름 투명 + 안쪽 1px `stroke-neutral-weak` · 고름 `bg-neutral-inverted`(테두리 없음) |
 | Outline Weak(기본) | 안 고름 투명 + 1px `stroke-neutral-weak` · 고름 `bg-neutral-weak` + 1px `stroke-neutral-contrast`(글자 그대로) |
 | 누름 · 호버 | `bg-neutral-weak-pressed` · `bg-layer-default-pressed` · `bg-neutral-inverted-pressed`, 칩 전체 2px 거리 축소(v104) |

@@ -1,6 +1,6 @@
 // List 페이지의 그림 — specs/components/list.md 의 `[그림: …](../../site/components/specs/list.tsx#<id>)` 자리.
 // 줄 · 목록 제목은 list.yaml · list-header.yaml 을 푼 값(listLook)으로, 화면 예시는 kit 의 Desk 화면 조각으로 그린다.
-import type { CSSProperties, ReactNode } from 'react';
+import { Children, isValidElement, type CSSProperties, type ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { listLook, LIST_STATES, type ListState, type RowSpec } from './list-look';
 import { ListHeaderView, ListView, type ViewMode } from './list-view';
@@ -78,11 +78,31 @@ const ALERTS: RowSpec[] = [
   { kind: 'button', prefix: { tile: 'violet', icon: 'receipt' }, title: '주간 리포트가 도착했어요', detail: '9월 넷째 주 · 어제' },
 ];
 
-// 화면 — 흰 바탕 화면(목록은 흰 바탕 위에 둔다)
-function Screen({ title, children, mode = 'auto', scale = 0.56, h = 600 }: { title: string; children: ReactNode; mode?: Mode; scale?: number; h?: number }) {
+// 화면 — DESIGN.md Layout 의 "화면 바탕"(2026-10-16 Q-019-3 C). 묶음 목록 화면(설정 · 알림 …)은 회색 바닥 위에 묶음(목록 제목 + 줄)마다
+// 화면 폭 흰 띠를 8 띄워 쌓는다 — 맨 위 8 · 띠 안 위 4 · 아래 8. 가계부 거래 목록만 흰 화면(floor="white")이다
+function Screen({ title, children, mode = 'auto', scale = 0.56, h = 600, floor = 'bands' }: { title: string; children: ReactNode; mode?: Mode; scale?: number; h?: number; floor?: 'bands' | 'white' }) {
+  if (floor === 'white') {
+    return (
+      <Phone title={title} mode={mode} scale={scale} h={h} bg="bg-layer-default">
+        <div className="flex flex-col pt-1">{children}</div>
+      </Phone>
+    );
+  }
+  // 목록 제목(H)이 나올 때마다 새 띠
+  const bands: ReactNode[][] = [];
+  for (const c of Children.toArray(children)) {
+    if (!bands.length || (isValidElement(c) && c.type === H && bands[bands.length - 1].length)) bands.push([]);
+    bands[bands.length - 1].push(c);
+  }
   return (
-    <Phone title={title} mode={mode} scale={scale} h={h} bg="bg-layer-default">
-      <div className="flex flex-col pt-1">{children}</div>
+    <Phone title={title} mode={mode} scale={scale} h={h} bg="bg-layer-basement">
+      <div className="flex flex-col gap-2 pt-2">
+        {bands.map((b, i) => (
+          <div key={i} className="flex flex-col pb-2 pt-1" style={{ background: rc('bg-layer-default', mode) }}>
+            {b}
+          </div>
+        ))}
+      </div>
     </Phone>
   );
 }
@@ -413,7 +433,7 @@ const AllRows: Fig = ({ caption }) => (
         <H title="알림" />
         <L rows={NOTI} live={false} />
       </Screen>
-      <Screen title="가계부" scale={0.7} h={560}>
+      <Screen title="가계부" scale={0.7} h={560} floor="white">
         <H title="오늘" variant="boldSolid" />
         <L rows={LEDGER} live={false} />
         <H title="어제" variant="boldSolid" />
@@ -561,7 +581,7 @@ const SurfaceGuide: Fig = ({ caption }) => (
           <L rows={pressedMiddle(SETTINGS)} />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="회색 바탕(bg-layer-basement) 위 — 누름 바탕이 바탕과 거의 같아 보이지 않는다. 카드에 담는다">
+      <Verdict ok={false} note="회색 바탕(bg-layer-basement) 위 — 누름 바탕이 바탕과 거의 같아 보이지 않는다. 카드 · 흰 띠에 담는다">
         <Surface className="w-full" bg="bg-layer-basement">
           <L rows={pressedMiddle(SETTINGS)} />
         </Surface>

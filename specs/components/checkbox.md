@@ -81,7 +81,7 @@ Desk 할 일 완료의 동그라미 체크는 Checkbox 의 모양이 아니다 �
 |---|---|
 | `enabled` | 기본 |
 | `hovered` | 웹. 누름 색과 같다(v106), 축소는 없다 |
-| `focused` | 웹. 키보드 포커스에만 링 2px · 띄움 2px(v106) |
+| `focused` | 웹 · 앱. 키보드 포커스에만 링 2px · 띄움 2px(v106). 앱은 하드웨어 키보드로 옮길 때만 그리고 손가락으로 누를 때는 없다(2026-10-08) |
 | `pressed` | 누름 색 + 칸 세로 2px 거리 축소(v104). 라벨은 줄지 않는다 |
 | `disabled` | 전용 색(`bg-disabled` · `fg-disabled`, v106). 불투명도로 흐리게 하지 않는다 |
 
@@ -245,10 +245,10 @@ import { Checkmark } from "@/components/ui/checkbox"
 |---|---|
 | **WCAG 1.4.3** Color contrast(라벨 ≥ 4.5:1) | 라벨 `fg-neutral` × 흰 표면 16:1+ ✓ |
 | **WCAG 1.4.11** Non-text contrast(UI ≥ 3:1) | 선택 안 된 칸 테두리 `stroke-neutral-solid` × 표면 4.2:1(다크 4.1:1) ✓ · 선택 채움 `bg-neutral-inverted` 16:1+ ✓ · Ghost 선택 안 됨은 `fg-placeholder` 4.18:1(다크 4.13:1) ✓ — v119 에서 gray-600 으로 옅어졌다(2026-10-16 글자 역할 D7) |
-| **WCAG 2.4.7** Focus visible | 키보드 포커스에만 링 2px · 띄움 2px(`stroke-focus-ring`) |
+| **WCAG 2.4.7** Focus visible | 키보드 포커스에만 링 2px · 띄움 2px(`stroke-focus-ring`) — 앱도 키보드로 옮길 때만 같은 링(2026-10-08) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 칸 20 · 24 + 라벨까지 묶은 줄 32 · 36 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 라벨까지 묶어 위아래 44 로 넓힌다 ✓. 묶음 안에서도 줄 사이 12 라 줄마다 44 · 48 을 받는다(줄 사이가 4 면 이웃과 겹쳐 36 · 40 이 된다) — 목록 행에서 칸만 쓰면 행 전체 |
-| **ARIA** | `role="checkbox"` + `aria-checked="true · false · mixed"`(mixed = 일부 선택). 라벨은 `<label>` 로 묶거나 `aria-labelledby`. 칸만 쓰면 `aria-label` 필수. 묶음은 `<fieldset>` + `<legend>`(또는 `role="group"` + `aria-labelledby`), 오류 글은 묶음에 `aria-describedby`. 오류면 칸마다 `aria-invalid`, 막히면 묶음 `aria-disabled` + 칸마다 `disabled` — `role="group"` 은 `aria-invalid` · `aria-required` 를 받지 않아 묶음에는 달지 않는다(Field 로 감싸면 레시피가 건다). |
+| **ARIA** | `role="checkbox"` + `aria-checked="true · false · mixed"`(mixed = 일부 선택). 라벨은 `<label>` 로 묶거나 `aria-labelledby`. 칸만 쓰면 `aria-label` 필수. 묶음은 `<fieldset>` + `<legend>`(또는 `role="group"` + `aria-labelledby`), 오류 글은 묶음에 `aria-describedby`. 오류면 칸마다 `aria-invalid`, 막히면 묶음 `aria-disabled` + 칸마다 `disabled` — `role="group"` 은 `aria-invalid` · `aria-required` 를 받지 않아 묶음에는 달지 않는다(Field 로 감싸면 레시피가 건다). 앱은 묶음에 이름 노드만 둔다 — 묶음 제목을 `Semantics(label)` 로 단 노드 하나, 묶음 역할(`group`)은 없다(Flutter 3.44 에 그 역할이 없다 — 2026-10-17 사용자 결정 03A-014 A). |
 | **Reduced motion** | 모션 줄이기면 누름 축소를 빼고 색만 바꾼다(기초 Motion). |
 
 ## Do / Don't
@@ -281,7 +281,7 @@ import { Checkmark } from "@/components/ui/checkbox"
 - 투명한 누름(SEED bg.transparent-pressed) · 비활성 테두리(stroke.neutral-muted)는 불투명한 가장 가까운 역할(`bg-layer-default-pressed` · `stroke-neutral-weak`)로 — 8자리 hex 를 lint 가 거부한다.
 - Ghost 의 누름 바탕(SEED palette.gray-200 · carrot-200)은 역할 색 `bg-neutral-weak` · `bg-brand-weak-pressed` 로.
 - **묶음 줄 사이는 12**(사용자 결정) — SEED 는 4 다. 4 면 이웃 줄의 누르는 영역(44)과 겹쳐 한 줄이 실제로 36 · 40 만 받는다. porest 는 기초에서 44 를 반드시로 정했다(Inclusive Design).
-- 웹의 `hovered` · `focused` 를 더한다(v106).
+- 웹의 `hovered` · `focused` 를 더한다(v106). `focused` 는 앱의 키보드 포커스에도 그린다(2026-10-08).
 - 아이콘은 lucide(선 3) — SEED 는 채운 체크 아이콘.
 
 ## Migration notes

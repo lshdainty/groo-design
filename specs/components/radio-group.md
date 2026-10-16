@@ -66,7 +66,7 @@
 |---|---|
 | `enabled` | 기본 |
 | `hovered` | 웹. 누름 색과 같다(v106), 축소는 없다 |
-| `focused` | 웹. 키보드 포커스에만 링 2px · 띄움 2px(v106) |
+| `focused` | 웹 · 앱. 키보드 포커스에만 링 2px · 띄움 2px(v106). 앱은 하드웨어 키보드로 옮길 때만 그리고 손가락으로 누를 때는 없다(2026-10-08) |
 | `pressed` | 누름 색 + 동그라미 세로 2px 거리 축소(v104). 라벨은 줄지 않는다 |
 | `disabled` | 전용 색(`bg-disabled` · `fg-disabled`, v106). 선택도 채운 원 그대로 색만 바뀐다 — 불투명도로 흐리게 하지 않는다 |
 
@@ -255,10 +255,10 @@ import { Radiomark, RadioGroup } from "@/components/ui/radio-group"
 |---|---|
 | **WCAG 1.4.3** Color contrast(라벨 ≥ 4.5:1) | 라벨 `fg-neutral` × 흰 표면 16:1+ ✓ |
 | **WCAG 1.4.11** Non-text contrast(UI ≥ 3:1) | 선택 안 된 동그라미 테두리 `stroke-neutral-solid` × 표면 4.2:1(다크 4.1:1) ✓ · 선택 채움 `bg-neutral-inverted` × 표면 16.4:1(다크 13.4:1) ✓ · 가운데 점 × 채움 — neutral 16.4:1(다크 13.4:1), brand Desk 8.4:1 · HR 5.1:1 ✓. 다크의 brand 채움은 표면과 1.7:1(Desk) · 2.9:1(HR)이라 채움만으로는 3:1 이 안 된다 — 선택은 가운데 흰 점(표면과 14.5:1)과 테두리가 사라지는 모양이 알린다 |
-| **WCAG 2.4.7** Focus visible | 키보드 포커스에만 링 2px · 띄움 2px(`stroke-focus-ring`) |
+| **WCAG 2.4.7** Focus visible | 키보드 포커스에만 링 2px · 띄움 2px(`stroke-focus-ring`) — 앱도 키보드로 옮길 때만 같은 링(2026-10-08) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 동그라미 20 · 24 + 라벨까지 묶은 줄 32 · 36 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 라벨까지 묶어 위아래 44 로 넓힌다 ✓. 묶음 안에서도 줄 사이 12 라 줄마다 44 · 48 을 받는다(줄 사이가 4 면 이웃과 겹쳐 36 · 40 이 된다) — 동그라미만 쓰면 그 줄 전체 |
-| **ARIA** | Radix 가 `role="radiogroup"`(묶음) + `role="radio"` · `aria-checked`(선택지)를 단다. 묶음 제목은 `aria-labelledby`(또는 `<fieldset>` + `<legend>`), 오류 글은 묶음에 `aria-describedby`. 오류 · 필수는 묶음의 `aria-invalid` · `aria-required`, 막히면 묶음 `aria-disabled` + 선택지마다 `disabled` — Field 로 감싸면 레시피가 건다. 동그라미만 쓰면 `<label>` 로 감싸거나 `aria-label` 필수. |
+| **ARIA** | Radix 가 `role="radiogroup"`(묶음) + `role="radio"` · `aria-checked`(선택지)를 단다. 묶음 제목은 `aria-labelledby`(또는 `<fieldset>` + `<legend>`), 오류 글은 묶음에 `aria-describedby`. 오류 · 필수는 묶음의 `aria-invalid` · `aria-required`, 막히면 묶음 `aria-disabled` + 선택지마다 `disabled` — Field 로 감싸면 레시피가 건다. 동그라미만 쓰면 `<label>` 로 감싸거나 `aria-label` 필수. 앱은 묶음에 이름 노드만 둔다 — 묶음 제목을 `Semantics(label)` 로 단 노드 하나, 묶음 역할(`radiogroup`)은 없다(Flutter 3.44 에 그 역할이 없다 — 2026-10-17 사용자 결정 03A-014 A). |
 | **Reduced motion** | 모션 줄이기면 누름 축소를 빼고 색만 바꾼다(기초 Motion). |
 
 ## Do / Don't
@@ -293,7 +293,7 @@ import { Radiomark, RadioGroup } from "@/components/ui/radio-group"
 - 투명한 누름(SEED bg.transparent-pressed)은 불투명한 가장 가까운 역할(`bg-layer-default-pressed`)로 — 8자리 hex 를 lint 가 거부한다.
 - **묶음은 세로만**(사용자 결정) — SEED 는 가로를 피하라고 하되, 꼭 가로로 놓아야 하면 간격을 넉넉히 두라고 한다. porest 는 가로 자리에 Segmented · Chip 을 쓴다.
 - **묶음 줄 사이는 12**(사용자 결정) — SEED 는 4 다. 4 면 이웃 줄의 누르는 영역(44)과 겹쳐 한 줄이 실제로 36 · 40 만 받는다. porest 는 기초에서 44 를 반드시로 정했다(Inclusive Design).
-- 웹의 `hovered` · `focused` 를 더한다(v106).
+- 웹의 `hovered` · `focused` 를 더한다(v106). `focused` 는 앱의 키보드 포커스에도 그린다(2026-10-08).
 
 ## Migration notes
 

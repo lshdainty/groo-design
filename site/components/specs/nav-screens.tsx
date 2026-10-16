@@ -186,6 +186,18 @@ export function TxCard({ mode = 'auto', title = '최근 거래', action = '전�
     </CardSurface>
   );
 }
+// 띠 화면 — 회색 바닥 위 화면 폭 흰 띠(묶음마다 하나), 띠 사이 8 · 맨 위 8 · 띠 안 위 4 · 아래 8(DESIGN.md Layout 의 "화면 바탕", 2026-10-16 Q-019-3 C)
+export function FloorBands({ mode = 'auto', children }: { mode?: Mode; children: ReactNode }) {
+  return (
+    <div className="flex flex-col gap-2 pt-2">
+      {(Array.isArray(children) ? children : [children]).map((c, i) => (
+        <div key={i} className="pb-2 pt-1" style={{ background: rc('bg-layer-default', mode) }}>
+          {c}
+        </div>
+      ))}
+    </div>
+  );
+}
 // 알림 줄 — 둥근 사각 아이콘 타일 + 제목 · 설명
 export function NoticeRows({ mode = 'auto', n = 5, pad = 24 }: { mode?: Mode; n?: number; pad?: number }) {
   const hues = ['blue', 'orange', 'green', 'violet', 'red'];
@@ -223,23 +235,25 @@ export function HomeScreen({ mode = 'auto', h = 600, scale = 0.62, tabSize = 're
 // 알림(그 아래 화면) — ← · 제목 · "모두 읽음"
 export function NoticeScreen({ mode = 'auto', h = 600, scale = 0.62, bar }: { mode?: Mode; h?: number; scale?: number; bar?: ReactNode }) {
   return (
-    <NPhone mode={mode} h={h} scale={scale} bar={bar ?? <Bar mode={mode} title="알림" actions={[{ kind: 'text', label: '모두 읽음' }]} />}>
-      <div className="pt-2">
+    <NPhone mode={mode} h={h} scale={scale} bg="bg-layer-basement" bar={bar ?? <Bar mode={mode} title="알림" actions={[{ kind: 'text', label: '모두 읽음' }]} />}>
+      <FloorBands mode={mode}>
         <NoticeRows mode={mode} />
-      </div>
+      </FloorBands>
     </NPhone>
   );
 }
 // 가계부(탭 첫 화면) — 큰 제목 + 위 Line Tabs, 탭 바는 그대로
 export function LedgerScreen({ mode = 'auto', h = 600, scale = 0.62, tabSize = 'regular', value = 'ledger', from = 0 }: { mode?: Mode; h?: number; scale?: number; tabSize?: TabSize; value?: string; from?: number }) {
   return (
-    <NPhone mode={mode} h={h} scale={scale} tabs tab="ledger" tabSize={tabSize} bar={<Bar mode={mode} type="root" title="가계부" actions={[{ icon: 'search', label: '검색' }]} />}>
+    <NPhone mode={mode} h={h} scale={scale} tabs tab="ledger" tabSize={tabSize} bg={value === 'assets' ? 'bg-layer-basement' : 'bg-layer-default'} bar={<Bar mode={mode} type="root" title="가계부" actions={[{ icon: 'search', label: '검색' }]} />}>
       <MoneyTabs mode={mode} value={value} />
       {value === 'assets' ? (
-        <>
-          <DayHead mode={mode} day="자산 합계" total="12,067,700원" />
-          <TxRows mode={mode} n={4} rows={ASSET_ROWS} />
-        </>
+        // 자산은 카드 화면 — 회색 바닥 위 카드(화면 바탕 2026-10-16). 거래는 흰 화면이라 둘을 밀면 바탕이 바뀐다
+        <div style={cardStack()}>
+          <TxCard mode={mode} title="계좌" action="관리">
+            <TxRows mode={mode} n={4} rows={ASSET_ROWS} />
+          </TxCard>
+        </div>
       ) : (
         <>
           <DayHead mode={mode} />

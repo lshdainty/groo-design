@@ -9,6 +9,7 @@ import { ButtonView } from './button-view';
 import { Card, Verdict, rc, type Mode } from './kit';
 import { DeskHeaderLive, TopNavPlayground } from './nav-playground';
 import {
+  FloorBands,
   Arrow,
   Band,
   Bar,
@@ -437,8 +438,10 @@ const HistoryGuide: Fig = ({ caption }) => (
             <Arrow label="←" />
             <div className="flex flex-col items-center gap-1.5">
               <Url>/desk/more 쌓임</Url>
-              <NPhone scale={0.3} h={560} tabs tab="more" bar={<Bar type="root" title="전체" />}>
-                <TxRows n={5} />
+              <NPhone scale={0.3} h={560} tabs tab="more" bg="bg-layer-basement" bar={<Bar type="root" title="전체" />}>
+                <FloorBands>
+                  <TxRows n={5} />
+                </FloorBands>
               </NPhone>
             </div>
           </div>
