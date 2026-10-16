@@ -35,7 +35,7 @@ export const srOnly: CSSProperties = { position: 'absolute', width: 1, height: 1
 export const NAV_ICONS = [
   'house', 'ledger', 'calendar', 'menu', 'plus', 'bell', 'search', 'settings', 'eye', 'eye-off', 'chevron-left', 'chevron-right', 'chevron-down', 'x', 'more',
   'panel-left', 'grid', 'wallet', 'trend', 'pie', 'target', 'todo', 'users', 'memo', 'card', 'plane', 'briefcase', 'heart', 'shield', 'megaphone', 'pencil',
-  'user', 'clock', 'file-text', 'filter', 'download', 'book', 'help',
+  'user', 'clock', 'file-text', 'filter', 'download', 'book', 'help', 'share', 'sliders', 'star',
 ] as const;
 export type NavIcon = (typeof NAV_ICONS)[number];
 
@@ -54,6 +54,10 @@ export type TopNavLook = {
   title: { fg: NColor; weight: number; gap: number };
   types: Record<'root' | 'standard', { text: NType; left: number }>;
   desktop: { padLeft: number; padRight: number; primarySize: string; primaryGap: number; screenTitle: NType; navToTitle: number };
+  // 검색칸(searchField — Text Field outline medium) — 높이 · 데스크톱 머리 왼쪽 폭(2026-10-16 Q-017-3a C)
+  search: { height: number; desktopWidth: number };
+  // 데스크톱 화면 제목 줄(screenTitle · screenDescription · screenActions — Q-018-2 A)
+  screenRow: { gap: number; description: NType; descriptionFg: NColor; descriptionGap: number; actionsGap: number; buttonSize: string };
   // 선 굵기 — 켜고 끄는 단추(aria-pressed)의 켬만 pressedStroke(v106). 색은 켬 · 끔 모두 fg(사용자 결정 2026-10-09 19B)
   icon: { size: number; radius: number; icon: number; stroke: number; pressedStroke: number; fg: NColor; hoverBg: NColor; pressBg: NColor; disabledFg: NColor };
   text: { height: number; padX: number; radius: number; type: NType; fg: NColor; hoverBg: NColor; pressBg: NColor; disabledFg: NColor };

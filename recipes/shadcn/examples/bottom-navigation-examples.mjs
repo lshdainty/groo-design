@@ -159,12 +159,13 @@ import { SnackbarAvoidOverlap } from "@/components/ui/snackbar"
 
 <SnackbarAvoidOverlap>
   <BottomNavigation>
-    <BottomNavigationItem href="/desk" icon={<House />} label="홈" current={tab === "home"} />
-    <BottomNavigationItem href="/desk/ledger" icon={<ClipboardList />} label="가계부" current={tab === "ledger"} />
+    {/* 다른 탭에서 누르면 그 탭의 마지막 화면(resumeHref — 셸이 탭마다 기억), 지금 탭을 다시 누르면 첫 화면(href) · 맨 위 */}
+    <BottomNavigationItem href="/desk" resumeHref={lastPath.home} icon={<House />} label="홈" current={tab === "home"} />
+    <BottomNavigationItem href="/desk/ledger" resumeHref={lastPath.ledger} icon={<ClipboardList />} label="가계부" current={tab === "ledger"} />
     {/* 탭이 아니라 이 화면의 추가 — 이름은 화면마다 */}
     <BottomNavigationAddButton aria-label={tab === "calendar" ? "일정 추가" : "거래 추가"} onClick={openAdd} />
-    <BottomNavigationItem href="/desk/calendar" icon={<CalendarDays />} label="캘린더" current={tab === "calendar"} />
-    <BottomNavigationItem href="/desk/more" icon={<Menu />} label="전체" current={tab === "more"} />
+    <BottomNavigationItem href="/desk/calendar" resumeHref={lastPath.calendar} icon={<CalendarDays />} label="캘린더" current={tab === "calendar"} />
+    <BottomNavigationItem href="/desk/more" resumeHref={lastPath.more} icon={<Menu />} label="전체" current={tab === "more"} />
   </BottomNavigation>
 </SnackbarAvoidOverlap>`,
     render: () => screen({ title: "홈", list: LEDGER, tab: "home" }),

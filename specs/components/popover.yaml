@@ -21,6 +21,7 @@ slots:
   body: 본문 — 넘치면 이 안에서 스크롤
   footer: 바닥 — 버튼(없어도 된다)
   focusRing: 키보드 포커스 링(웹)
+  notificationList: 알림 목록 — Desk 데스크톱 머리 벨이 여는 팝오버(1280 이상). 같은 내용을 1280 미만은 Bottom Sheet
 
 variants: {}
 
@@ -70,6 +71,12 @@ rules:
         paddingTop: { value: $spacing-x6, note: "머리가 없을 때만 — 머리가 있으면 0" }
         paddingBottom: { value: $spacing-x6, note: "바닥이 없을 때만 — 바닥이 있으면 0" }
         overflowY: { value: auto, note: "넘칠 수 있는 본문은 끝 흐림(Scroll Fog overlayBody — 늘 켜진 위 20 · 아래 80, 본문 안 여백도 그만큼 · 2026-10-03) · 위로 스크롤하면 머리 아래 1px stroke-neutral-subtle — Dialog 와 같다(dialog.yaml scrollFog)" }
+      notificationList:
+        width: { value: 380px, note: "벨 아래 — 머리 \"알림\" · 설명 \"읽지 않은 알림 N개\" · 목록 · 바닥 \"알림 설정\" · \"모두 읽음\"(2026-10-16 사용자 결정 Q-017-3b B)" }
+        maxHeight: { value: 600px, note: "이 스펙의 최대 높이 그대로 — 넘치면 목록(본문)만 스크롤 · 끝 흐림. 지금 제품은 min(640, 화면 − 80)" }
+        align: { value: 오른쪽 끝, note: "벨 오른쪽 끝에 맞추고 화면 끝 16 을 남긴다(align end)" }
+        below1280: { value: Bottom Sheet, note: "768 ~ 1279 는 같은 내용을 Bottom Sheet 로 — 이 스펙의 1280 경계 그대로. 폰(768 미만)의 벨은 알림 화면" }
+        rowPress: { value: 읽음 표시, note: "줄을 누르면 읽음으로 — 이동하지 않는다(지금 그대로)" }
       footer:
         paddingTop: $spacing-x4
         paddingX: $spacing-x6

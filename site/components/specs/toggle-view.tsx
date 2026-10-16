@@ -36,6 +36,10 @@ export type ToggleViewProps = {
   disabled?: boolean;
   ariaLabel: string;
   onPressedChange?: (pressed: boolean) => void;
+  // 상태를 그리는 이동 단추(순자산 카드의 금액 가리기 눈 — Toggle 이 아니다, 2026-10-16 Q-017-2b A · 3c B) — aria-pressed 를 두지 않고
+  // 누르면 onActivate(설정으로 간다). 아이콘은 icon(그 카드가 가려졌는지), 선은 끔 굵기 그대로
+  link?: boolean;
+  onActivate?: () => void;
   // 누르는 영역(44)을 점선으로 보이기(그림 전용)
   showHit?: { fill: string; line: string };
   // 툴팁 · 말풍선 트리거 — 단추 요소와 aria · 포인터 처리를 넘긴다
@@ -46,7 +50,8 @@ export type ToggleViewProps = {
   decor?: ReactNode;
 };
 
-export function ToggleView({ look, mode = 'auto', pressed = false, icon, pressedIcon, tone = 'default', state, disabled = false, ariaLabel, onPressedChange, showHit, buttonRef, rootProps, style, decor }: ToggleViewProps) {
+export function ToggleView({ look, mode = 'auto', pressed: pressedProp = false, icon, pressedIcon, tone = 'default', state, disabled = false, ariaLabel, onPressedChange, link = false, onActivate, showHit, buttonRef, rootProps, style, decor }: ToggleViewProps) {
+  const pressed = link ? false : pressedProp;
   const live = state === undefined;
   const [hover, setHover] = useState(false);
   const [press, setPress] = useState(false);
@@ -119,7 +124,7 @@ export function ToggleView({ look, mode = 'auto', pressed = false, icon, pressed
       }}
       type="button"
       aria-label={ariaLabel}
-      aria-pressed={pressed}
+      aria-pressed={link ? undefined : pressed}
       disabled={off}
       data-toggle={pressed ? 'on' : 'off'}
       style={box}
@@ -151,8 +156,9 @@ export function ToggleView({ look, mode = 'auto', pressed = false, icon, pressed
       }}
       onClick={(e) => {
         rootProps?.onClick?.(e);
-        // 손을 뗄 때 바로 바뀐다 — 요청을 기다리지 않는다
-        onPressedChange?.(!pressed);
+        // 손을 뗄 때 바로 바뀐다 — 요청을 기다리지 않는다. 이동 단추는 켜고 끄지 않고 onActivate
+        if (link) onActivate?.();
+        else onPressedChange?.(!pressed);
       }}
     >
       {hit}

@@ -1,5 +1,5 @@
 'use client';
-// Toggle 플레이그라운드 · 코드 미리보기 — 단추(관심 등록 · 메모 고정 · 금액 가리기 · App Key 보기) · 켬 · 끔 · 표면 · 막힘을 고르면
+// Toggle 플레이그라운드 · 코드 미리보기 — 단추(관심 등록 · 메모 고정 · App Key 보기) · 켬 · 끔 · 막힘을 고르면
 // 스펙대로 그린 단추(toggle-view — toggle.yaml)와 그 코드가 바뀐다. 실제로 누르면 아이콘과 보조 기술이 읽는 말이 함께 바뀐다.
 // 코드는 toggle.md 의 "코드" 절과 같은 API 로 쓴다. 화면 속 카드 · 순자산 카드는 card.yaml(data-card-view), 실패 알림은 snackbar.yaml.
 import { useMemo, useRef, useState, type ReactNode } from 'react';
@@ -50,14 +50,9 @@ function Context({ kind, pressed, toggle, card, mode }: { kind: ToggleKind; pres
         {head('장보기 목록')}
         {line('우유 · 계란 · 두부 · 대파')}
       </>
-    ) : kind === 'hide' ? (
-      <>
-        {head('자산')}
-        {line(pressed ? '국민 주계좌 ••••••원' : '국민 주계좌 1,250,000원')}
-      </>
     ) : (
       <>
-        {head('나무증권 연결')}
+        {head('가나증권 연결')}
         {line(pressed ? 'App Key PSq7·Kx2m·9WdA·tL4e' : 'App Key ••••••••••••••••')}
       </>
     );
@@ -71,23 +66,20 @@ function Context({ kind, pressed, toggle, card, mode }: { kind: ToggleKind; pres
 export function TogglePlayground({ looks, cards }: { looks: Record<Brand, ToggleLook>; cards: Record<Brand, CardLook> }) {
   const [kind, setKind] = useState<ToggleKind>('watch');
   const [pressed, setPressed] = useState(false);
-  const [surface, setSurface] = useState<'surface' | 'hero'>('surface');
   const [disabled, setDisabled] = useState<'no' | 'yes'>('no');
   const [mode, setMode] = useState<ViewMode>('auto');
   const [brand, setBrand] = useState<Brand>('desk');
   const look = looks[brand];
   const card = cards[brand];
   const k = TOGGLES[kind];
-  const hero = surface === 'hero';
   const off = disabled === 'yes';
-  const toggle = <ToggleView key={`${kind}${brand}`} look={look} mode={mode} ariaLabel={k.label} pressed={pressed} onPressedChange={setPressed} icon={k.icon} pressedIcon={k.pressedIcon} tone={hero ? 'inverted' : 'default'} disabled={off} />;
+  const toggle = <ToggleView key={`${kind}${brand}`} look={look} mode={mode} ariaLabel={k.label} pressed={pressed} onPressedChange={setPressed} icon={k.icon} pressedIcon={k.pressedIcon} tone="default" disabled={off} />;
   const code = useMemo(() => {
     const [a, b] = k.jsx;
     const icons = [...new Set([a, ...(b ? [b] : [])])].sort();
     const [st, set] = k.state;
     const label = k.memo ? 'aria-label={`${memo.title} 고정`}' : `aria-label="${k.label}"`;
     const attrs = [
-      ...(hero ? ['tone="inverted"'] : []),
       label,
       `pressed={${st}}`,
       `onPressedChange={${set}}`,
@@ -96,16 +88,12 @@ export function TogglePlayground({ looks, cards }: { looks: Record<Brand, Toggle
       ...(off ? ['disabled'] : []),
     ];
     return [`import { ${icons.join(', ')} } from "lucide-react"`, 'import { Toggle } from "@/components/ui/toggle"', '', `const [${st}, ${set}] = useState(${pressed})`, '', `<Toggle ${attrs.join(' ')} />`].join('\n');
-  }, [k, hero, off, pressed]);
+  }, [k, off, pressed]);
   // 판 — 카드를 놓는 바닥(bg-layer-basement — card.yaml)
   const surfaceColor = dcv(card.floor, mode);
   const stage = (
     <div className="flex flex-col items-stretch gap-3" style={{ fontFamily: FONT }}>
-      {hero ? (
-        <HeroCardView look={card} mode={mode} label="순자산 · 2026년 10월" amount={kind === 'hide' && pressed ? '••••••원' : '42,898,100원'} detail="총 자산 52,320,000원 · 총 부채 9,421,900원" labelEnd={toggle} />
-      ) : (
-        <Context kind={kind} pressed={pressed} toggle={toggle} card={card} mode={mode} />
-      )}
+      <Context kind={kind} pressed={pressed} toggle={toggle} card={card} mode={mode} />
       <Readout text={toggleReadout(k.label, pressed, off)} mode={mode} />
     </div>
   );
@@ -122,7 +110,6 @@ export function TogglePlayground({ looks, cards }: { looks: Record<Brand, Toggle
             options={[
               ['watch', '관심 등록 — 모으기'],
               ['pin', '메모 고정 — 모으기'],
-              ['hide', '금액 가리기 — 기능'],
               ['key', 'App Key 보기 — 기능'],
             ]}
             onChange={(v) => (setKind(v), setPressed(false))}
@@ -135,15 +122,6 @@ export function TogglePlayground({ looks, cards }: { looks: Record<Brand, Toggle
               ['on', '켬'],
             ]}
             onChange={(v) => setPressed(v === 'on')}
-          />
-          <Seg
-            label="표면 tone"
-            value={surface}
-            options={[
-              ['surface', '흰 표면 — default'],
-              ['hero', '순자산 카드 — inverted'],
-            ]}
-            onChange={setSurface}
           />
           <Seg
             label="막힘 disabled"
@@ -188,16 +166,13 @@ export function ExWatchDemo({ look, card }: { look: ToggleLook; card: CardLook }
   );
 }
 
-// 금액 가리기 · App Key 보기 — 기능 단추(아이콘은 지금 상태)
+// App Key 보기 — 기능 단추(아이콘은 지금 상태 — 가려져 있으면 eye-off)
 export function ExEyeDemo({ look, card }: { look: ToggleLook; card: CardLook }) {
-  const [hidden, setHidden] = useState(false);
   const [shown, setShown] = useState(false);
-  const [said, setSaid] = useState(toggleReadout('금액 가리기', false));
   return (
     <ToggleDemoFrame>
-      <Context kind="hide" pressed={hidden} card={card} mode="auto" toggle={<ToggleView look={look} ariaLabel="금액 가리기" pressed={hidden} onPressedChange={(p) => (setHidden(p), setSaid(toggleReadout('금액 가리기', p)))} icon="eye" pressedIcon="eye-off" />} />
-      <Context kind="key" pressed={shown} card={card} mode="auto" toggle={<ToggleView look={look} ariaLabel="App Key 보기" pressed={shown} onPressedChange={(p) => (setShown(p), setSaid(toggleReadout('App Key 보기', p)))} icon="eye-off" pressedIcon="eye" />} />
-      <Readout text={said} />
+      <Context kind="key" pressed={shown} card={card} mode="auto" toggle={<ToggleView look={look} ariaLabel="App Key 보기" pressed={shown} onPressedChange={setShown} icon="eye-off" pressedIcon="eye" />} />
+      <Readout text={toggleReadout('App Key 보기', shown)} />
     </ToggleDemoFrame>
   );
 }
@@ -273,7 +248,9 @@ export function ExPinDemo({ look, card, snack, gutter }: { look: ToggleLook; car
 
 // 순자산 카드 위 — 흰 아이콘만(바탕 · 원 없음, 21A). 누르면 축소만
 export function ExInvertedDemo({ look, card }: { look: ToggleLook; card: CardLook }) {
+  // 순자산 카드의 금액 가리기 눈 — Toggle 이 아니다. 켜고 끄지 않고 설정의 홈 묶음으로 간다(aria-pressed 없음, 2026-10-16 Q-017-2b A · 3c B)
   const [hidden, setHidden] = useState(false);
+  const [went, setWent] = useState(false);
   return (
     <ToggleDemoFrame>
       <HeroCardView
@@ -281,9 +258,13 @@ export function ExInvertedDemo({ look, card }: { look: ToggleLook; card: CardLoo
         label="순자산 · 2026년 10월"
         amount={hidden ? '••••••원' : '42,898,100원'}
         detail={hidden ? '총 자산 •••••• · 총 부채 ••••••' : '총 자산 52,320,000원 · 총 부채 9,421,900원'}
-        labelEnd={<ToggleView look={look} tone="inverted" ariaLabel="금액 가리기" pressed={hidden} onPressedChange={setHidden} icon="eye" pressedIcon="eye-off" />}
+        labelEnd={<ToggleView look={look} tone="inverted" link ariaLabel="금액 가리기 설정" icon={hidden ? 'eye-off' : 'eye'} onActivate={() => setWent(true)} />}
       />
-      <Readout text={toggleReadout('금액 가리기', hidden)} />
+      <Readout text={went ? '→ 설정 › 금액 가리기 › 홈 묶음이 열린다' : '금액 가리기 설정, 버튼'} />
+      <label className="flex items-center justify-center gap-2 text-[12px] text-fd-muted-foreground">
+        <input type="checkbox" checked={hidden} onChange={(e) => (setHidden(e.target.checked), setWent(false))} />
+        설정에서 이 카드를 가렸다(아이콘은 지금 상태 — eye-off)
+      </label>
     </ToggleDemoFrame>
   );
 }

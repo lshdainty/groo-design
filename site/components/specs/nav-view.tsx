@@ -35,7 +35,10 @@ import {
   Plus,
   Search,
   Settings,
+  Share2,
   Shield,
+  SlidersHorizontal,
+  Star,
   Target,
   TrendingUp,
   User,
@@ -90,6 +93,9 @@ export const NAV_GLYPHS: Record<NavIcon, LucideIcon> = {
   download: Download,
   book: BookOpen,
   help: CircleHelp,
+  share: Share2,
+  sliders: SlidersHorizontal,
+  star: Star,
 };
 export function NavGlyph({ name, size, color, strokeWidth = 2, style }: { name: NavIcon; size: number; color?: string; strokeWidth?: number; style?: CSSProperties }) {
   const I = NAV_GLYPHS[name];
@@ -332,6 +338,8 @@ export type TopNavBarProps = {
   actions?: TopAction[];
   // 오른쪽 자리에 직접 그린 것(다른 그림이 쓰던 버튼) — 아이콘 버튼 뒤에 붙는다
   trailing?: ReactNode;
+  // 검색칸(Text Field outline medium — 부르는 쪽이 그린다). standard 는 제목 자리(← 다음 6 부터 오른쪽 자리 앞 8 까지), desktop 은 머리 왼쪽 look.search.desktopWidth
+  search?: ReactNode;
   primary?: { label: string; icon?: 'plus'; state?: 'enabled' | 'hovered' | 'pressed' | 'focused' };
   live?: boolean;
   width?: number | string;
@@ -360,6 +368,7 @@ export function TopNavBar({
   title,
   actions = [],
   trailing,
+  search,
   primary,
   live = false,
   width = '100%',
@@ -415,7 +424,19 @@ export function TopNavBar({
           </span>
         )}
         {desktop ? (
-          <span style={{ flex: '1 1 auto' }} />
+          search ? (
+            <span data-nav-search style={{ position: 'relative', display: 'flex', alignItems: 'center', flex: `0 1 ${look.search.desktopWidth}px`, minWidth: 0, marginRight: 'auto', paddingRight: look.title.gap, ...zone?.title }}>
+              {search}
+              {pins?.title}
+            </span>
+          ) : (
+            <span style={{ flex: '1 1 auto' }} />
+          )
+        ) : search ? (
+          <span data-nav-search style={{ position: 'relative', display: 'flex', alignItems: 'center', flex: '1 1 auto', minWidth: 0, marginLeft: titleLeft, marginRight: actions.length || trailing ? look.title.gap : 0, ...zone?.title }}>
+            {search}
+            {pins?.title}
+          </span>
         ) : (
           <span
             data-nav-title

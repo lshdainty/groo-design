@@ -32,6 +32,7 @@ import {
   type Fig,
 } from './nav-screens';
 import { collapsedTop, type SideGroup } from './nav-shared';
+import { NavGlyph } from './nav-view';
 
 const S = (brand: 'desk' | 'hr' = 'desk') => NK(brand).side;
 const MODES = ['light', 'dark'] as const;
@@ -93,7 +94,7 @@ const Anatomy: Fig = ({ caption }) => {
               open={['stocks']}
               markItem="assets"
               markSub="toss"
-              footer={<AccountRow />}
+              footer={<HelpLinkRow />}
               zone={{ root: markLine, header: markLine, trigger: markBox, content: markLine, group: markLine, item: markBox, sub: markBox, footer: markLine }}
             />
             {/* 핀 — 내용 상자는 넘친 것을 자르므로 사이드바 바깥(판 위)에 둔다 */}
@@ -292,11 +293,11 @@ const Scroll: Fig = ({ caption }) => {
     <Figure caption={caption}>
       <div className="flex items-start gap-8">
         <SideBox h={H} label="맨 위 — 선 없음 · 아래 끝 흐림">
-          <Side current="ledger" height={H} footer={<AccountRow />} />
-          <Band style={{ right: -14, bottom: s.footer.pad * 2 + s.item.minH, width: 6, height: s.fog.bottom }} label={`${s.fog.bottom}`} vertical tag="right" />
+          <Side current="ledger" height={H} />
+          <Band style={{ right: -14, bottom: 0, width: 6, height: s.fog.bottom }} label={`${s.fog.bottom}`} vertical tag="right" />
         </SideBox>
         <SideBox h={H} label={`스크롤함 — 머리 아래 ${s.divider.h}px 선`}>
-          <Side current="ledger" height={H} scrollTop={120} footer={<AccountRow />} />
+          <Side current="ledger" height={H} scrollTop={120} />
           <span aria-hidden className="absolute" style={{ left: -6, right: -6, top: s.header.minH - 3, height: 6, outline: '1px dashed #DB2777', outlineOffset: 0, borderRadius: 3 }} />
         </SideBox>
       </div>
@@ -392,6 +393,73 @@ const MobileGuide: Fig = ({ caption }) => (
     </Pair>
   </Plate>
 );
+
+// 바닥의 보조 링크(설명서) — Anatomy 의 바닥 자리 그림. Desk 웹에는 지금 보조 링크가 없어 바닥을 그리지 않는다(Q-018-1 C)
+function HelpLinkRow({ mode = 'auto' }: { mode?: Mode }) {
+  const s = S();
+  return (
+    <div className="flex items-center" style={{ columnGap: s.item.gap, minHeight: s.item.minH, paddingLeft: s.item.padX, paddingRight: s.item.padX, color: rc('fg-neutral-muted', mode), fontSize: 14, fontWeight: 500 }}>
+      <NavGlyph name="book" size={20} color={rc('fg-neutral-subtle', mode)} />
+      설명서
+    </div>
+  );
+}
+
+// 하위가 사람마다 다른 증권 — 연결한 증권사 0 · 1 은 단독 항목(꺾쇠 없음), 2 · 3 은 부모(펼치기만). 이름은 지어낸 것(Q-017-4 정리)
+const BROKERS = [
+  { value: 'ga', label: '가나증권' },
+  { value: 'da', label: '다라투자증권' },
+  { value: 'ma', label: '마바사 글로벌증권' },
+];
+const withBrokers = (n: number): SideGroup[] => [
+  {
+    label: '워크스페이스',
+    items: DESK_NAV[0].items.slice(0, 4).map((i) => (i.value === 'stocks' ? (n >= 2 ? { ...i, children: BROKERS.slice(0, n) } : { value: 'stocks', label: '증권', icon: 'trend' as const }) : i)),
+  },
+];
+const DynamicGuide: Fig = ({ caption }) => {
+  const H = 330;
+  const cases: [number, string, string][] = [
+    [0, 'stocks', '연결 0 — 단독 항목 · 누르면 연결 안내'],
+    [1, 'stocks', '연결 1 — 단독 항목 · 누르면 가나증권'],
+    [2, 'ga', '연결 2 — 부모(펼치기만) · 하위 둘'],
+    [3, 'ma', '연결 3 — 긴 이름은 줄을 바꾼다'],
+  ];
+  return (
+    <Figure caption={caption}>
+      <div className="max-w-full overflow-x-auto">
+        <div className="mx-auto flex w-max items-start gap-4">
+          {cases.map(([n, current, label]) => (
+            <SideBox key={n} h={H} label={label}>
+              <Side current={current} height={H} groups={withBrokers(n)} open={n >= 2 ? ['stocks'] : []} />
+            </SideBox>
+          ))}
+        </div>
+      </div>
+    </Figure>
+  );
+};
+
+// 바닥 — 지금(이름 줄, 눌러도 아무 일 없음) · 뒤(바닥을 그리지 않는다, 설정 · 로그아웃은 머리 ⚙ — Q-018-1 C)
+const FooterGuide: Fig = ({ caption }) => {
+  const H = 520;
+  return (
+    <Plate caption={caption}>
+      <Pair>
+        <Verdict ok note="바닥을 그리지 않는다 — 설정 · 로그아웃은 머리의 ⚙">
+          <SideBox h={H}>
+            <Side current="ledger" height={H} />
+          </SideBox>
+        </Verdict>
+        <Verdict ok={false} note="누르는 것처럼 보이는 이름 줄 — 눌러도 아무 일이 없다(지금 Desk 웹)">
+          <SideBox h={H}>
+            <Side current="ledger" height={H} footer={<AccountRow />} />
+          </SideBox>
+        </Verdict>
+      </Pair>
+    </Plate>
+  );
+};
 
 const ParentGuide: Fig = ({ caption }) => {
   const groupsBad: SideGroup[] = DESK_NAV;
@@ -489,6 +557,8 @@ export const sideNavigationFigures: Record<string, Fig> = {
   'width-guide': WidthGuide,
   'mobile-guide': MobileGuide,
   'parent-guide': ParentGuide,
+  'dynamic-guide': DynamicGuide,
+  'footer-guide': FooterGuide,
   'position-guide': PositionGuide,
   'ex-desk': ExDesk,
   'ex-collapsed': ExCollapsed,

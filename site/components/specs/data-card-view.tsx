@@ -283,7 +283,7 @@ export function StatView({ look, mode = 'auto', label, value, size = 'large', de
 // ── 순자산 카드(hero) ──────────────────────────────────────
 export type HeroPart = 'root' | 'glow' | 'label' | 'amount' | 'detail';
 // press="whole" — 누르면 2px 거리 축소만 한다. 브랜드 채움 그라디언트에는 누름 색 짝이 없어 면 색은 그대로다(card.md 누름 · SEED Feedback)
-// labelEnd — 라벨 줄 오른쪽(순자산 카드의 금액 가리기 Toggle — 흰 아이콘). 상자 40 은 라벨 줄 높이 안에서 위아래로 넘치고(줄을 밀지 않는다), 오른쪽은 카드 머리 간격만큼 당긴다
+// labelEnd — 라벨 줄 오른쪽(순자산 카드의 금액 가리기 눈 — Toggle 이 아니라 상자 · 색만 빌린 설정으로 가는 버튼, 흰 아이콘). 상자 40 은 라벨 줄 높이 안에서 위아래로 넘치고(줄을 밀지 않는다), 오른쪽은 카드 머리 간격만큼 당긴다
 export function HeroCardView({ look, mode = 'auto', label, amount, delta, detail, width = '100%', press = 'none', state: frozen, live = false, onClick, marks, pins, override, labelEnd }: { look: CardLook; mode?: ViewMode; label: string; amount: string; delta?: DeltaSpec; detail?: string; width?: number | string; press?: 'none' | 'whole'; state?: CardState; live?: boolean; onClick?: () => void; marks?: Partial<Record<HeroPart, CSSProperties>>; pins?: Partial<Record<HeroPart, ReactNode>>; override?: { end?: string; radius?: number; deltaColor?: 'direction'; dimText?: boolean }; labelEnd?: ReactNode }) {
   const h = look.hero;
   const end = splitVars(mode, [{ slot: 't', c: h.end }]);

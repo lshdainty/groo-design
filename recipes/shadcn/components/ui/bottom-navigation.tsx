@@ -11,7 +11,8 @@ import { NotificationBadge } from "@/components/ui/notification-badge";
  *   BottomNavigation           바(<nav aria-label="주 메뉴">) — Desk 앱 · Desk 웹 768 미만의 주 메뉴. 칸 다섯(홈 · 가계부 · + · 캘린더 · 전체)이
  *                              어느 화면에서나 같다. compact · defaultCompact · onCompactChange(손으로 다룰 때), scrollRoot(줄어들기를 셀
  *                              스크롤 상자 — 주지 않으면 화면 안의 세로 스크롤 모두). 줄어든 바를 누르면 펴진다
- *   BottomNavigationItem       탭 칸(<a>) — href · icon(lucide) · label(한글 5자 이내) · current(aria-current="page") ·
+ *   BottomNavigationItem       탭 칸(<a>) — href(그 탭의 첫 화면) · resumeHref(그 탭의 마지막 화면 — 셸이 기억한 주소) · icon(lucide) ·
+ *                              label(한글 5자 이내) · current(aria-current="page") ·
  *                              notification(알림 점 — 칸 이름 뒤에 "새 소식") · onReselect(지금 탭을 다시 눌렀을 때)
  *   BottomNavigationAddButton  가운데 +(<button type="button">) — 그 화면의 추가. aria-label 필수("거래 추가" · "일정 추가")
  *   BOTTOM_NAVIGATION_INSET    본문 아래 여백 CSS 식 — 셸이 본문 스크롤의 padding-bottom 에 쓴다(마지막 줄이 바 위 24 에서 끝난다)
@@ -23,7 +24,10 @@ import { NotificationBadge } from "@/components/ui/notification-badge";
  *   화면 키보드가 열리면 바를 가린다(visualViewport 가 화면보다 150 넘게 작을 때).
  * 다시 누르기 — 지금 탭(current)을 누르면 링크로 옮기지 않고(같은 주소를 쌓지 않는다) onReselect 를 부른다(그 칸의 onClick 대신).
  *   onReselect 를 주지 않으면: 맨 위로 스크롤하고, 지금 주소가 그 탭의 첫 화면(href)이 아니면 주소를 href 로 고쳐 간다(location.replace).
- *   라우터를 쓰는 셸은 onReselect 에서 navigate(href, { replace: true }) 와 받은 scrollToTop() 을 부른다. 탭마다 스크롤을 기억하는 것은 셸의 몫이다.
+ *   라우터를 쓰는 셸은 onReselect 에서 navigate(href, { replace: true }) 와 받은 scrollToTop() 을 부른다.
+ * 탭마다 기억 — 다른 탭에서 누르면 그 탭의 마지막 화면(resumeHref, 없으면 href)으로 간다. 웹 · 앱 같다(2026-10-16 사용자 결정 Q-018-4 A).
+ *   마지막 화면 · 스크롤을 기억하고 돌려놓는 것은 셸의 몫이다 — 웹은 돌아온 화면의 목록이 그려진 뒤 스크롤을 돌려놓고, 못 하면 맨 위다.
+ *   초점은 그 화면의 제목으로 옮기되 스크롤은 건드리지 않는다(top-navigation.tsx 의 focusScreenTitle({ resetScroll: false })).
  *
  * 바: 떠 있는 알약 — 펼침 66(위아래 6 · 좌우 10) · 화면 끝에서 좌우 14 · 아래 max(14, 아래 안전 영역 − 6), 줄어듦 48(위아래 4 · 좌우 8) ·
  *   좌우 36 · 아래 max(12, 아래 안전 영역 − 8). 좌우 안전 영역을 더한다. 최대 480 으로 가운데. 칸 다섯을 똑같이 나눈다(사이 2).
@@ -250,7 +254,10 @@ const ITEM_OTHER = "text-fg-neutral-subtle [&_svg]:[stroke-width:2]";
 const LABEL = "block max-w-full truncate whitespace-nowrap text-t1-static font-medium";
 
 export interface BottomNavigationItemProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "children"> {
+  /** 그 탭의 첫 화면 — 지금 탭을 다시 누르면 여기로(주소를 고쳐 쓴다) */
   href: string;
+  /** 그 탭의 마지막 화면(셸이 탭마다 기억한 주소) — 다른 탭에서 누르면 여기로. 없으면 href */
+  resumeHref?: string;
   /** lucide 선 아이콘 — 24, 선 2(지금 탭 2.5) */
   icon: React.ReactNode;
   /** 라벨 — 한글 5자 이내의 명사. 줄어든 바에서도 칸의 이름으로 남는다 */
@@ -271,12 +278,12 @@ function isAt(href: string) {
 }
 
 const BottomNavigationItem = React.forwardRef<HTMLAnchorElement, BottomNavigationItemProps>(
-  ({ href, icon, label, current = false, notification = false, onReselect, className, onClick, onPointerDown, onKeyDown, ...props }, ref) => {
+  ({ href, resumeHref, icon, label, current = false, notification = false, onReselect, className, onClick, onPointerDown, onKeyDown, ...props }, ref) => {
     const ctx = useBottomNavigation("BottomNavigationItem");
     return (
       <a
         ref={ref}
-        href={href}
+        href={current ? href : (resumeHref ?? href)}
         aria-current={current ? "page" : undefined}
         data-slot="bottom-navigation-item"
         data-current={current || undefined}

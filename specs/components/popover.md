@@ -51,7 +51,7 @@
 
 ### 트리거에 붙는 짧은 것
 
-팝오버는 그 트리거에 대한 것만 담는다 — 칸 옆 안내 · 그 칸에 넣을 값 고르기(달력 · 시각 · 아이콘 격자 · 목록) · 짧은 동작. 같은 내용이 1280 미만에서는 [Bottom Sheet](bottom-sheet.md) 로 뜬다(Input Button 이 폭으로 고른다). 폼 · 상세는 [Dialog](dialog.md), 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md), 줄의 동작 목록은 Menu(그 차례에)다.
+팝오버는 그 트리거에 대한 것만 담는다 — 칸 옆 안내 · 그 칸에 넣을 값 고르기(달력 · 시각 · 아이콘 격자 · 목록) · 짧은 동작, 그리고 그 버튼이 여는 목록 하나(Desk 데스크톱 머리 벨의 알림 목록 — 아래). 같은 내용이 1280 미만에서는 [Bottom Sheet](bottom-sheet.md) 로 뜬다(Input Button 이 폭으로 고른다). 폼 · 상세는 [Dialog](dialog.md), 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md), 줄의 동작 목록은 Menu(그 차례에)다.
 
 [그림: 쓰임 — 칸 옆 안내 · 고르는 패널 · 팝오버에 폼](../../site/components/specs/popover.tsx#role-guide)
 
@@ -60,6 +60,14 @@
 열면 초점이 팝오버 안으로 가지만 가두지 않는다 — 마지막 칸에서 Tab 을 누르면 페이지로 나가고 팝오버는 닫힌다. 딤 · 스크롤 잠금이 없고 뒤 화면을 숨기지 않는다. `Esc` 로 닫으면 초점이 트리거로 돌아가고, 바깥을 눌러 닫으면 누른 자리로 간다(그 자리가 초점을 받지 못하면 트리거로).
 
 [그림: 닫기 — 바깥 · Esc · Tab 으로 빠져나가기](../../site/components/specs/popover.tsx#dismiss-guide)
+
+### 알림 목록 — 벨 아래(1280 이상) · 시트(미만)
+
+Desk 데스크톱 머리의 벨을 누르면 1280 이상에서는 벨 아래 팝오버로, 768 ~ 1279 에서는 [Bottom Sheet](bottom-sheet.md) 로 알림 목록을 연다 — 이 스펙의 1280 경계 그대로다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-017-3b B). 목록이 길고 개수가 정해지지 않았어도 트리거(벨) 하나가 여는 목록이라 팝오버에 둔다 — 폼 · 상세를 담지 않는다. 폭은 380, 높이는 이 스펙대로 600 과 남은 공간 중 작은 쪽까지이고 넘치면 본문(목록)만 스크롤하며 끝을 흐린다. 머리는 제목 "알림" · 설명 "읽지 않은 알림 N개" · 닫기, 바닥은 "알림 설정" · "모두 읽음"(Button small) — 시트도 같은 내용이다(시트의 바닥 버튼은 large 반씩). 줄을 누르면 읽음으로 표시한다(지금 그대로 — 이동하지 않는다). 폰(768 미만)의 벨은 알림 화면으로 간다.
+
+[그림: 알림 목록 — 1280 벨 아래 팝오버 · 1024 Bottom Sheet · 알림 0개](../../site/components/specs/popover.tsx#notification-guide)
+
+[표: 알림 목록](popover.yaml#base.enabled@notificationList)
 
 ### 머리는 있을 때 제목 + 닫기
 
@@ -91,6 +99,52 @@ import { Popover, PopoverBody, PopoverContent, PopoverTrigger } from "@/componen
 </Popover>
 ```
 
+### 알림 목록 — 1280 이상 팝오버 · 미만 시트
+
+[그림: 알림 목록 — 벨 아래 팝오버](../../site/components/specs/popover.tsx#ex-notifications)
+
+```tsx
+import { Bell } from "lucide-react"
+import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter, BottomSheetTrigger } from "@/components/ui/bottom-sheet"
+import { Button } from "@/components/ui/button"
+import { useInputButtonSurface } from "@/components/ui/input-button"
+import { Popover, PopoverBody, PopoverContent, PopoverFooter, PopoverTrigger } from "@/components/ui/popover"
+import { TopNavigationIconButton } from "@/components/ui/top-navigation"
+
+const surface = useInputButtonSurface() // 1280 미만 "sheet" · 이상 "popover"
+const bell = (
+  <TopNavigationIconButton notification={unread > 0} aria-label={unread > 0 ? "알림, 새 알림 있음" : "알림"}>
+    <Bell />
+  </TopNavigationIconButton>
+)
+const description = unread > 0 ? `읽지 않은 알림 ${unread}개` : "새 알림이 없어요"
+
+{/* 같은 내용 — 넓으면 벨 아래 팝오버(폭 380), 좁으면 아래 시트. 줄을 누르면 읽음 표시 */}
+{surface === "popover" ? (
+  <Popover>
+    <PopoverTrigger asChild>{bell}</PopoverTrigger>
+    <PopoverContent title="알림" description={description} align="end" className="w-[380px]">
+      <PopoverBody scrollFog>{notificationList}</PopoverBody>
+      <PopoverFooter>
+        <Button variant="neutralWeak" size="small" onClick={openNotificationSettings}>알림 설정</Button>
+        <Button variant="neutralSolid" size="small" onClick={markAllRead} disabled={unread === 0}>모두 읽음</Button>
+      </PopoverFooter>
+    </PopoverContent>
+  </Popover>
+) : (
+  <BottomSheet>
+    <BottomSheetTrigger asChild>{bell}</BottomSheetTrigger>
+    <BottomSheetContent title="알림" description={description}>
+      <BottomSheetBody scrollFog>{notificationList}</BottomSheetBody>
+      <BottomSheetFooter>
+        <Button variant="neutralWeak" onClick={openNotificationSettings}>알림 설정</Button>
+        <Button variant="neutralSolid" onClick={markAllRead} disabled={unread === 0}>모두 읽음</Button>
+      </BottomSheetFooter>
+    </BottomSheetContent>
+  </BottomSheet>
+)}
+```
+
 ## Behavior
 
 | 인터랙션 | 동작 |
@@ -117,7 +171,7 @@ import { Popover, PopoverBody, PopoverContent, PopoverTrigger } from "@/componen
 
 ### ✅ Do
 
-- 트리거에 대한 짧은 안내 · 값 고르기를 1280 이상에서 팝오버로 — 1280 미만은 같은 내용을 시트로.
+- 트리거에 대한 짧은 안내 · 값 고르기 · 그 버튼이 여는 목록(벨의 알림)을 1280 이상에서 팝오버로 — 1280 미만은 같은 내용을 시트로.
 - 열면 초점을 안으로, 닫으면 트리거로.
 - 안내 팝오버는 제목 + 닫기.
 
@@ -143,6 +197,12 @@ import { Popover, PopoverBody, PopoverContent, PopoverTrigger } from "@/componen
 
 ## Migration notes
 
+### 2026-10-16 — 알림 목록(Q-017-3b B)
+
+사용자가 [구현 질문 Q-017 · Q-018 비교 페이지](https://claude.ai/artifact/6R7NBc4ByvxGyLy6E6tvKf)에서 정했다 — Desk 데스크톱 벨의 알림 목록은 1280 이상 팝오버 · 768 ~ 1279 Bottom Sheet(B). 지금 팝오버를 768 이상 모두에 두기(A — 1280 규칙의 예외) · 알림 화면으로 가기(C)는 고르지 않았다. "트리거에 대한 것만" 문장에 벨이 여는 목록을 더했다.
+
+- **Desk 웹** — `widgets/notification-manage/ui/NotificationsPopover.tsx` 는 화면 고정 top 58 · right 20 · 380 × min(640, 화면 − 80), z-index auto · `Esc` 로 안 닫힘이다. 1280 이상은 이 Popover 부품(벨 아래 8 · 화면 끝 16 · 높이 600 까지 · `Esc` · 바깥 · z-floating)으로, 768 ~ 1279 는 Bottom Sheet 로 같은 내용을 연다(머리 "알림" · 읽지 않은 알림 N개 · 목록 · "알림 설정" · "모두 읽음").
+
 ### 2026-10-15 — 첫 칸에서 Shift+Tab
 
 구현 세션 질문 Q-006 을 사용자가 정했다 — 지금대로 내용 첫 칸 → 머리 닫기 버튼 → 트리거. Behavior 에 줄을 더했다(레시피 · 웹은 이미 그렇다). 바로 트리거로 가는 안(닫기 버튼에 키보드로 못 닿는다) · 닫기 버튼을 DOM 뒤로 옮기는 안은 고르지 않았다.
@@ -155,4 +215,4 @@ import { Popover, PopoverBody, PopoverContent, PopoverTrigger } from "@/componen
 
 - **Desk 웹** — Popover 부품 6종(날짜 14 · 시각 6 · 아이콘 2 · 캘린더 3)이 360 폭에서도 팝오버로 뜬다(→ 1280 미만은 시트). 날짜 팝오버는 이름이 없고 첫 초점이 영어 "Go to the Previous Month" 버튼이다. 손으로 만든 월 고르기(데스크톱 5곳) · 알림 팝오버는 z-index 가 auto 라 다른 층 아래로 들어가고 `Esc` 로 닫히지 않는다.
 - **HR 웹** — Popover 14곳(규정 안내 12 · 일정 필터 · 역할 고르기) + 날짜 · 시각 피커 21곳. 규정 안내는 이름이 없다.
-- 앱 적용 때 화면마다 정할 자리 — HR 규정 안내 12(Popover · Help Bubble), 알림 팝오버 · 데스크톱 필터(Popover · Dialog · Side Panel).
+- 앱 적용 때 화면마다 정할 자리 — HR 규정 안내 12(Popover · Help Bubble), 데스크톱 필터(Popover · Dialog · Side Panel). 알림 팝오버는 2026-10-16 정했다(위).

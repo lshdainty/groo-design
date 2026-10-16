@@ -7,8 +7,8 @@
  * (BubbleArrow 의 경로 · 클래스)와, CUT 은 tooltip.tsx 의 상수와 글자 하나까지 같아야 한다 — help-bubble-examples.mjs 의 것과도 같다(help-bubble.tsx 를
  * 고치면 셋을 함께).
  * 트리거 BUTTON_* 는 button.tsx 의 cva 와 같다(button-examples.mjs 의 것 — 이 파일이 쓰는 변형 · 크기 · 배치와 그에 걸리는 compound 만 옮겼다).
- * 금액 가리기 · 알림 · 설정은 Desk 웹 데스크톱 머리의 아이콘 버튼(TopNavigationIconButton — 44 · 24)이다. 금액 가리기는 켜고 끄는 단추라
- * 이름 고정 · aria-pressed · 지금 상태 아이콘이고 끔도 fg-neutral 이다 — TN_* 는 top-navigation.tsx 의 상수(top-navigation-examples.mjs 의 것),
+ * 알림 · 설정은 Desk 웹 데스크톱 머리의 아이콘 버튼(TopNavigationIconButton — 44 · 24)이다(금액 가리기 눈은 2026-10-16 머리에서 뺐다) —
+ * TN_* 는 top-navigation.tsx 의 상수(top-navigation-examples.mjs 의 것),
  * NB_TARGET 은 notification-badge.tsx 의 것과 같다(2026-10-09).
  * 규칙은 specs/components/tooltip.md, 수치 원본은 specs/components/help-bubble.yaml 의 opens: hover.
  *
@@ -226,21 +226,20 @@ export const tooltipExamples = [
     title: "아이콘 버튼의 이름",
     description:
       "툴팁은 마우스를 올리거나 키보드 초점이 오면 트리거 옆에 뜨는 짧은 설명 — 보조다. 아이콘 버튼의 이름은 늘 aria-label 에 두고, 툴팁은 그 이름을 마우스 · 키보드 사용자에게 보여 줄 뿐 대신하지 않는다(같은 글). 모양은 Help Bubble 과 한 벌이다 — 짙은 바탕(다크에서는 밝은 바탕) · 모서리 12 · 위아래 10 · 좌우 12 · 글 13/18 · 700, 화살표 12 × 8 · 트리거 위 4(몸통과는 12). 마우스를 올리면 200ms 뒤에 열고, 트리거와 말풍선을 모두 벗어나면 100ms 뒤에 닫는다 — 말풍선 위로 옮겨도 닫히지 않는다(WCAG 1.4.13). 키보드 초점이면 바로 열고, 손가락으로 누르면 열지 않는다. 네이티브 title 은 쓰지 않는다.",
-    jsx: `import { Eye, EyeOff } from "lucide-react"
+    jsx: `mport { Settings } from "lucide-react"
 import { TopNavigationIconButton } from "@/components/ui/top-navigation"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
-{/* Desk 웹 데스크톱 머리의 아이콘 버튼(금액 가리기 · 알림 · 설정) */}
+{/* Desk 웹 데스크톱 머리의 아이콘 버튼(알림 · 설정) */}
 <Tooltip>
   <TooltipTrigger asChild>
-    {/* 이름은 aria-label — 툴팁은 그 이름을 마우스 · 키보드 사용자에게 보여 준다.
-        켜고 끄는 단추는 이름이 고정이라 툴팁도 그대로다 — 켬은 aria-pressed 가 알린다 */}
-    <TopNavigationIconButton aria-label="금액 가리기" aria-pressed={hidden} onClick={toggleHidden}>{hidden ? <EyeOff /> : <Eye />}</TopNavigationIconButton>
+    {/* 이름은 aria-label — 툴팁은 그 이름을 마우스 · 키보드 사용자에게 보여 준다 */}
+    <TopNavigationIconButton aria-label="설정" onClick={openSettings}><Settings /></TopNavigationIconButton>
   </TooltipTrigger>
-  <TooltipContent>금액 가리기</TooltipContent>
+  <TooltipContent>설정</TooltipContent>
 </Tooltip>`,
-    // 데스크톱 머리의 금액 가리기(끔 — 금액이 보이니 eye · 이름 고정 + aria-pressed · 끔도 fg-neutral 선 2)
-    render: () => `<div style="${STAGE}">${iconButton({ uid: "tooltip-ex-icon", icon: ICONS.eye, name: "금액 가리기", open: true, pressed: false })}</div>`,
+    // 데스크톱 머리의 설정 — 이름(aria-label)과 같은 글의 툴팁
+    render: () => `<div style="${STAGE}">${iconButton({ uid: "tooltip-ex-icon", icon: ICONS.settings, name: "설정", open: true })}</div>`,
   },
 
   {
@@ -262,19 +261,13 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
   {
     title: "이어서 옮기기 — TooltipProvider",
     description:
-      "화면에 TooltipProvider 를 한 번 두면, 하나가 열려 있거나 닫힌 지 300ms 안에 옆 트리거로 옮긴 툴팁은 기다리지 않고 모션 없이 바로 연다(data-instant) — 앞의 툴팁은 그때 바로 닫히고 한 번에 하나만 열린다. 그림은 데스크톱 머리의 금액 가리기에서 옆으로 옮겨 알림의 툴팁이 바로 열린 순간이다. 지연 값(200 · 100 · 300ms)은 고정이라 바꾸지 않는다. 글자가 이미 보이는 버튼에는 같은 말의 툴팁을 두지 않는다.",
-    jsx: `import { Bell, Eye, EyeOff, Settings } from "lucide-react"
+      "화면에 TooltipProvider 를 한 번 두면, 하나가 열려 있거나 닫힌 지 300ms 안에 옆 트리거로 옮긴 툴팁은 기다리지 않고 모션 없이 바로 연다(data-instant) — 앞의 툴팁은 그때 바로 닫히고 한 번에 하나만 열린다. 그림은 데스크톱 머리의 알림에서 옆으로 옮겨 설정의 툴팁이 바로 열린 순간이다. 지연 값(200 · 100 · 300ms)은 고정이라 바꾸지 않는다. 글자가 이미 보이는 버튼에는 같은 말의 툴팁을 두지 않는다.",
+    jsx: `import { Bell, Settings } from "lucide-react"
 import { TopNavigationIconButton } from "@/components/ui/top-navigation"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
-{/* 화면에 한 번 — 옆 트리거로 옮기면 기다리지 않는다. Desk 웹 데스크톱 머리의 아이콘 버튼(금액 가리기 · 알림 · 설정) */}
+{/* 화면에 한 번 — 옆 트리거로 옮기면 기다리지 않는다. Desk 웹 데스크톱 머리의 아이콘 버튼(알림 · 설정) */}
 <TooltipProvider>
-  <Tooltip>
-    <TooltipTrigger asChild>
-      <TopNavigationIconButton aria-label="금액 가리기" aria-pressed={hidden} onClick={toggleHidden}>{hidden ? <EyeOff /> : <Eye />}</TopNavigationIconButton>
-    </TooltipTrigger>
-    <TooltipContent>금액 가리기</TooltipContent>
-  </Tooltip>
   <Tooltip>
     <TooltipTrigger asChild>
       <TopNavigationIconButton aria-label="알림"><Bell /></TopNavigationIconButton>
@@ -288,12 +281,11 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
     <TooltipContent>설정</TooltipContent>
   </Tooltip>
 </TooltipProvider>`,
-    // 상단 바 아이콘 버튼은 서로 붙는다(사이 0) — 금액 가리기에서 옆으로 옮겨 알림의 툴팁이 바로 열린 순간
+    // 상단 바 아이콘 버튼은 서로 붙는다(사이 0) — 알림에서 옆으로 옮겨 설정의 툴팁이 바로 열린 순간
     render: () =>
       `<div style="${STAGE}"><div style="display:flex;">${[
-        iconButton({ uid: "tooltip-ex-chain-hide", icon: ICONS.eye, name: "금액 가리기", pressed: false }),
-        iconButton({ uid: "tooltip-ex-chain-bell", icon: ICONS.bell, name: "알림", open: true, instant: true }),
-        iconButton({ uid: "tooltip-ex-chain-settings", icon: ICONS.settings, name: "설정" }),
+        iconButton({ uid: "tooltip-ex-chain-bell", icon: ICONS.bell, name: "알림" }),
+        iconButton({ uid: "tooltip-ex-chain-settings", icon: ICONS.settings, name: "설정", open: true, instant: true }),
       ].join("")}</div></div>`,
   },
 ];

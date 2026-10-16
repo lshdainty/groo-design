@@ -80,6 +80,7 @@ export const SWIPE_SHEET: MenuGroup[] = [{ items: [PIN, EDIT] }, { items: [DELET
 
 // ── Help Bubble · Tooltip ─────────────────────────────────
 export const LEAVE_RULE = { title: '연차 사용 규정', description: '입사 1년 미만은 한 달에 1일씩 생기고, 1년이 지나면 15일이 생겨요.' };
-export const HIDE_TIP = { title: '금액을 가릴 수 있어요', description: '누르면 화면의 금액이 모두 가려져요.' };
+// 처음부터 열어 두는 안내(help-bubble.md 코드) — 홈 상단 바의 검색(2026-10-16 Q-017-2a A 로 더해진 자리). 예전 예시(상단 바의 금액 가리기)는 걷었다
+export const SEARCH_TIP = { title: '거래를 찾아보세요', description: '가맹점 이름 · 메모 · 금액으로 찾을 수 있어요.' };
 export const COPY_REASON = '복사할 지난달 예산이 없어요.';
-// 툴팁 — 아이콘 버튼의 이름은 Desk 웹 데스크톱 머리(금액 가리기 · 알림 · 설정)의 것을 쓴다(bubble-screens · bubble-demos). 본문 툴바는 제품에 없다
+// 툴팁 — 아이콘 버튼의 이름은 Desk 웹 데스크톱 머리(알림 · 설정 — 2026-10-16 눈은 뺐다)의 것을 쓴다(bubble-screens · bubble-demos). 본문 툴바는 제품에 없다

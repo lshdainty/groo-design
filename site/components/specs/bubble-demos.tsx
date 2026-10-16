@@ -1,10 +1,10 @@
 'use client';
-// Help Bubble · Tooltip 페이지의 실제로 여닫는 미리보기 — 코드 절(규정 안내 · 금액 가리기 안내 · 아이콘 버튼 · 막힌 버튼)과 플레이그라운드.
+// Help Bubble · Tooltip 페이지의 실제로 여닫는 미리보기 — 코드 절(규정 안내 · 거래 검색 안내 · 아이콘 버튼 · 막힌 버튼)과 플레이그라운드.
 // 말풍선은 help-bubble.yaml(menu-view 의 BubbleView · HelpBubbleControl · TooltipControl), 버튼은 button.yaml(button-view)이다.
 import { useState, type ReactNode } from 'react';
 import type { ButtonLook } from './button-look';
 import { ButtonView, type IconName } from './button-view';
-import { COPY_REASON, HIDE_TIP, LEAVE_RULE } from './menu-data';
+import { COPY_REASON, LEAVE_RULE, SEARCH_TIP } from './menu-data';
 import { mcv, type BubbleSide, type MTone, type MenuKit, type ViewMode } from './menu-shared';
 import { HelpBubbleControl, TooltipControl, TooltipGroup, type TriggerRender } from './menu-view';
 import { BRANDS, MODES, Seg } from './select-playground';
@@ -15,11 +15,9 @@ import { TopIconButton, TopNavBar } from './nav-view';
 type Brand = 'desk' | 'hr';
 const FONT = "'Pretendard Variable', Pretendard, sans-serif";
 const tone = (kit: MenuKit, name: MTone, mode: ViewMode) => mcv(kit.tone[name], mode);
-// 금액 가리기는 제품에서 상단 바(폰 머리 · Desk 웹 데스크톱 머리)에만 있는 켜고 끄는 단추다 — Top Navigation 아이콘 버튼 + aria-pressed,
-// 이름은 고정, 아이콘은 지금 상태(보이면 eye · 가렸으면 eye-off), 끔도 이웃과 같은 fg-neutral(19B)
+// Desk 웹 데스크톱 머리의 아이콘 버튼 — 알림 · 설정(2026-10-16 금액 가리기 눈은 뺐다 — Q-017-3c = Q-018-3 B)
 type HeadBtn = { key: string; icon: NavIcon; label: string };
 const HEAD_BUTTONS: HeadBtn[] = [
-  { key: 'hide', icon: 'eye', label: '금액 가리기' },
   { key: 'bell', icon: 'bell', label: '알림' },
   { key: 'settings', icon: 'settings', label: '설정' },
 ];
@@ -60,7 +58,7 @@ const AMOUNTS: [string, string][] = [
   ['토스뱅크 통장', '820,000원'],
 ];
 export function HideTipDemo({ kit, top, mode = 'auto' }: { kit: MenuKit; top: TopNavLook; mode?: ViewMode }) {
-  const [hidden, setHidden] = useState(false);
+  const [pressed, setPressed] = useState('');
   const [seen, setSeen] = useState(false);
   const [round, setRound] = useState(0);
   const [box, setBox] = useState<HTMLDivElement | null>(null);
@@ -68,22 +66,23 @@ export function HideTipDemo({ kit, top, mode = 'auto' }: { kit: MenuKit; top: To
     <DemoFrame kit={kit} mode={mode} w={400}>
       {/* 처음부터 열린 안내 — 화면이 자리를 잡는 동안에도 트리거를 따라가게 이 판 안에 띄운다 */}
       <div ref={setBox} style={{ position: 'relative' }}>
-        {/* 상단 바(탭 첫 화면 — 큰 제목) 오른쪽의 금액 가리기. Anchor 는 자리만 잡는다 — 누르면 원래 동작(help-bubble.md 코드) */}
+        {/* 상단 바(탭 첫 화면 — 큰 제목) 오른쪽의 검색(오른쪽 끝은 알림). Anchor 는 자리만 잡는다 — 누르면 원래 동작(help-bubble.md 코드) */}
         <TopNavBar
           look={top}
           mode={mode}
           type="root"
-          title="자산"
+          title="홈"
           // 카드 위 끝 · 양 끝까지 — 화면의 상단 바처럼
           width={`calc(100% + ${kit.card.pad * 2}px)`}
           style={{ marginTop: -kit.card.pad, marginLeft: -kit.card.pad, marginRight: -kit.card.pad }}
           trailing={
+            <>
             <HelpBubbleControl
               key={round}
               look={kit.bubble}
               mode={mode}
-              title={HIDE_TIP.title}
-              description={HIDE_TIP.description}
+              title={SEARCH_TIP.title}
+              description={SEARCH_TIP.description}
               closeButton
               side="bottom"
               defaultOpen={!seen}
@@ -91,15 +90,17 @@ export function HideTipDemo({ kit, top, mode = 'auto' }: { kit: MenuKit; top: To
               anchorOnly
               container={box}
               onOpenChange={(o) => !o && setSeen(true)}
-              trigger={(r) => <TopIconButton look={top} mode={mode} live icon={hidden ? 'eye-off' : 'eye'} label="금액 가리기" pressed={hidden} onClick={() => setHidden((h) => !h)} buttonRef={r.ref} rootProps={r.props} />}
+              trigger={(r) => <TopIconButton look={top} mode={mode} live icon="search" label="검색" onClick={() => setPressed('검색 — 거래 검색 화면으로')} buttonRef={r.ref} rootProps={r.props} />}
             />
+            <TopIconButton look={top} mode={mode} live icon="bell" label="알림" onClick={() => setPressed('알림 — 알림 화면으로')} />
+            </>
           }
         />
         <div style={{ paddingTop: 96 }}>
           {AMOUNTS.map(([name, amount], i) => (
             <div key={name} style={{ display: 'flex', justifyContent: 'space-between', gap: 12, padding: '10px 0', borderBottom: i === AMOUNTS.length - 1 ? 'none' : `1px solid ${tone(kit, 'stroke-neutral-subtle', mode)}` }}>
               <span style={{ fontSize: 15, lineHeight: '20px', color: tone(kit, 'fg-neutral', mode) }}>{name}</span>
-              <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 600, fontVariantNumeric: 'tabular-nums', color: tone(kit, 'fg-neutral', mode) }}>{hidden ? '••••••원' : amount}</span>
+              <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 600, fontVariantNumeric: 'tabular-nums', color: tone(kit, 'fg-neutral', mode) }}>{amount}</span>
             </div>
           ))}
         </div>
@@ -120,16 +121,16 @@ export function HideTipDemo({ kit, top, mode = 'auto' }: { kit: MenuKit; top: To
             </button>
           </>
         ) : (
-          '닫기 버튼으로만 닫혀요 — 바깥을 눌러도 남아 있어요.'
+          pressed || '닫기 버튼으로만 닫혀요 — 바깥을 눌러도 남아 있어요.'
         )}
       </Status>
     </DemoFrame>
   );
 }
 
-// ── Tooltip 코드 — 아이콘 버튼의 이름(Desk 웹 데스크톱 머리 — 내역 추가 · 금액 가리기 · 알림 · 설정) ─────
-// 머리의 아이콘 버튼마다 툴팁 — 금액 가리기는 켜고 끄는 단추라 이름이 고정이고 툴팁도 그대로다(tooltip.md 코드)
-function HeaderTips({ kit, top, mode, hidden, onHide, onTap, tips, side = 'bottom', container, width }: { kit: MenuKit; top: TopNavLook; mode: ViewMode; hidden: boolean; onHide: () => void; onTap?: (label: string) => void; tips?: Partial<Record<string, string>>; side?: BubbleSide; container?: HTMLElement | null; width?: string | number }) {
+// ── Tooltip 코드 — 아이콘 버튼의 이름(Desk 웹 데스크톱 머리 — 내역 추가 · 알림 · 설정) ─────
+// 머리의 아이콘 버튼마다 툴팁 — 이름(aria-label)과 같은 글(tooltip.md 코드)
+function HeaderTips({ kit, top, mode, onTap, tips, side = 'bottom', container, width }: { kit: MenuKit; top: TopNavLook; mode: ViewMode; onTap?: (label: string) => void; tips?: Partial<Record<string, string>>; side?: BubbleSide; container?: HTMLElement | null; width?: string | number }) {
   return (
     <TopNavBar
       look={top}
@@ -150,13 +151,7 @@ function HeaderTips({ kit, top, mode, hidden, onHide, onTap, tips, side = 'botto
                 text={tips?.[b.key] ?? b.label}
                 side={side}
                 container={container}
-                trigger={(r) =>
-                  b.key === 'hide' ? (
-                    <TopIconButton look={top} mode={mode} live icon={hidden ? 'eye-off' : 'eye'} label={b.label} pressed={hidden} onClick={onHide} buttonRef={r.ref} rootProps={r.props} />
-                  ) : (
-                    <TopIconButton look={top} mode={mode} live icon={b.icon} label={b.label} onClick={() => onTap?.(b.label)} buttonRef={r.ref} rootProps={r.props} />
-                  )
-                }
+                trigger={(r) => <TopIconButton look={top} mode={mode} live icon={b.icon} label={b.label} onClick={() => onTap?.(b.label)} buttonRef={r.ref} rootProps={r.props} />}
               />
             ))}
           </span>
@@ -166,7 +161,6 @@ function HeaderTips({ kit, top, mode, hidden, onHide, onTap, tips, side = 'botto
   );
 }
 export function ToolbarTooltipDemo({ kit, top, mode = 'auto' }: { kit: MenuKit; top: TopNavLook; mode?: ViewMode }) {
-  const [hidden, setHidden] = useState(false);
   const [status, setStatus] = useState('');
   const st = top.desktop.screenTitle;
   return (
@@ -177,18 +171,13 @@ export function ToolbarTooltipDemo({ kit, top, mode = 'auto' }: { kit: MenuKit; 
           kit={kit}
           top={top}
           mode={mode}
-          hidden={hidden}
-          onHide={() => {
-            setHidden((h) => !h);
-            setStatus(hidden ? '금액을 보여줘요.' : '금액을 가렸어요.');
-          }}
           onTap={(label) => setStatus(`${label} — 누름`)}
         />
       </div>
       <div style={{ paddingTop: top.desktop.navToTitle, fontFamily: st.fontFamily, fontSize: st.fontSize, lineHeight: st.lineHeight, fontWeight: st.fontWeight, color: tone(kit, 'fg-neutral', mode) }}>가계부</div>
       <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 12, fontSize: 15, lineHeight: '20px', color: tone(kit, 'fg-neutral', mode) }}>
         <span>이번 달 지출</span>
-        <span style={{ fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>{hidden ? '••••••원' : '1,240,000원'}</span>
+        <span style={{ fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>1,240,000원</span>
       </div>
       <Status kit={kit} mode={mode}>
         {status || '마우스를 올리면 잠시 뒤, Tab 으로 옮기면 바로 이름이 떠요. 손가락으로 누르면 뜨지 않아요.'}
@@ -321,7 +310,6 @@ export function HelpBubblePlayground({ kits, infos }: { kits: Record<Brand, Menu
 // ── Tooltip 플레이그라운드 ────────────────────────────────
 export function TooltipPlayground({ kits, tops }: { kits: Record<Brand, MenuKit>; tops: Record<Brand, TopNavLook> }) {
   const [brand, setBrand] = useState<Brand>('desk');
-  const [hidden, setHidden] = useState(false);
   const [mode, setMode] = useState<ViewMode>('auto');
   const [len, setLen] = useState<'short' | 'long'>('short');
   const [side, setSide] = useState<BubbleSide>('top');
@@ -350,7 +338,7 @@ export function TooltipPlayground({ kits, tops }: { kits: Record<Brand, MenuKit>
       stage={
         <div ref={setStage} data-brand={brand} className="relative w-full max-w-[560px] overflow-hidden rounded-xl" style={{ isolation: 'isolate', height: 260, background: tone(kit, 'bg-layer-basement', mode), fontFamily: FONT }}>
           <div style={{ position: 'absolute', borderRadius: 12, background: ncv(top.bg, mode), ...place }}>
-            <HeaderTips kit={kit} top={top} mode={mode} hidden={hidden} onHide={() => setHidden((h) => !h)} tips={{ settings: len === 'long' ? LONG_SETTINGS_TIP : '설정' }} side={side} container={stage} width="max-content" />
+            <HeaderTips kit={kit} top={top} mode={mode} tips={{ settings: len === 'long' ? LONG_SETTINGS_TIP : '설정' }} side={side} container={stage} width="max-content" />
           </div>
         </div>
       }

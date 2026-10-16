@@ -12,9 +12,13 @@ import { CardHeaderView, CardSurface, StatView } from './data-card-view';
 import { TableView, type TBadge, type TCol, type TRow } from './data-table-view';
 import { ASSET_ROWS, DESK_NAV, DESK_TABS, HR_NAV, LEDGER_ROWS, MONEY_TABS, NOTICE_ROWS, addLabelFor, type NavRow } from './nav-data';
 import { navKit } from './nav-look';
-import { tabBottom, type Brand, type NavKit, type SideGroup, type TabSize, type TopAction } from './nav-shared';
+import { ncv, tabBottom, type Brand, type NavKit, type SideGroup, type TabSize, type TopAction } from './nav-shared';
 import { SideNav, SidePanelView, type SideNavProps, type SidePanelViewProps } from './nav-side-view';
 import { FabView, NavGlyph, TabBar, TopNavBar, type TabBarProps, type TopNavBarProps } from './nav-view';
+import { buttonLook } from './button-look';
+import { ButtonView, type IconName } from './button-view';
+import { textFieldLook } from './text-field-look';
+import { TfInputView } from './text-field-view';
 
 export type Fig = (p: { caption?: string }) => ReactNode;
 export const NK = (brand: Brand = 'desk'): NavKit => navKit(brand);
@@ -274,27 +278,58 @@ export function Shell({ mode = 'auto', brand = 'desk', side, header, children, b
     </div>
   );
 }
-// 금액 가리기는 켜고 끄는 단추 — 이름 고정 · 아이콘은 지금 상태(금액이 보이면 eye), 끔도 이웃과 같은 fg-neutral(Toggle · 19B)
+// 데스크톱 머리 — 왼쪽 검색칸 · 오른쪽 주 버튼 + 알림 · 설정(금액 가리기 눈은 두지 않는다 — 2026-10-16 Q-017-3c = Q-018-3 B)
 export const DESK_HEADER_ACTIONS: TopAction[] = [
-  { icon: 'eye', label: '금액 가리기', pressed: false },
   { icon: 'bell', label: '알림, 새 알림 있음', notification: true },
   { icon: 'settings', label: '설정' },
 ];
-export function DeskHeader({ mode = 'auto', live = false, state }: { mode?: Mode; live?: boolean; state?: 'hovered' | 'pressed' }) {
-  return <Bar mode={mode} type="desktop" actions={DESK_HEADER_ACTIONS.map((a, i) => (i === 1 && state ? { ...a, state } : a))} primary={{ label: '내역 추가', icon: 'plus' }} live={live} />;
+// 검색칸 — Text Field outline medium 40 · 앞 돋보기 · 지우기(값이 있을 때). 상단 바 안이라 폰에서도 medium(top-navigation.yaml searchField)
+export function SearchBox({ mode = 'auto', value, placeholder = '거래 검색', focused = false }: { mode?: Mode; value?: string; placeholder?: string; focused?: boolean }) {
+  return <TfInputView look={textFieldLook().input} mode={mode} size="medium" state={focused ? 'focused' : 'enabled'} value={value} placeholder={placeholder} prefixIcon="search" clearable ariaLabel="거래 검색" width="100%" />;
 }
-// 본문 맨 위 화면 제목(h1 — text-screen-title) — 머리 아래 nav-to-title
-export function ScreenTitle({ mode = 'auto', brand = 'desk', children, top, style }: { mode?: Mode; brand?: Brand; children: ReactNode; top?: number; style?: CSSProperties }) {
+export function DeskHeader({ mode = 'auto', live = false, state, search = true, value }: { mode?: Mode; live?: boolean; state?: 'hovered' | 'pressed'; search?: boolean; value?: string }) {
+  return (
+    <Bar
+      mode={mode}
+      type="desktop"
+      search={search ? <SearchBox mode={mode} value={value} /> : undefined}
+      actions={DESK_HEADER_ACTIONS.map((a, i) => (i === 0 && state ? { ...a, state } : a))}
+      primary={{ label: '내역 추가', icon: 'plus' }}
+      live={live}
+    />
+  );
+}
+// 본문 맨 위 화면 제목(h1 — text-screen-title) — 머리 아래 nav-to-title. description · actions 를 주면 한 줄 제목 줄(Q-018-2 A) —
+// 제목(설명은 그 아래 t3 · fg-neutral-subtle) 왼쪽, 동작 버튼(Button neutralOutline small) 오른쪽 · 제목 덩어리 아래 끝 맞춤
+export function ScreenTitle({ mode = 'auto', brand = 'desk', children, top, style, description, actions }: { mode?: Mode; brand?: Brand; children: ReactNode; top?: number; style?: CSSProperties; description?: string; actions?: [IconName, string][] }) {
   const k = NK(brand);
   const t = k.top.desktop.screenTitle;
+  const r = k.top.screenRow;
+  const title = <span style={{ display: 'block', fontFamily: t.fontFamily, fontSize: t.fontSize, lineHeight: t.lineHeight, fontWeight: t.fontWeight, color: rc('fg-neutral', mode, brand) }}>{children}</span>;
   return (
-    <div style={{ paddingTop: top ?? k.top.desktop.navToTitle, paddingLeft: k.margin, paddingRight: k.margin, fontFamily: t.fontFamily, fontSize: t.fontSize, lineHeight: t.lineHeight, fontWeight: t.fontWeight, color: rc('fg-neutral', mode, brand), ...style }}>
-      {children}
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: r.gap, paddingTop: top ?? k.top.desktop.navToTitle, paddingLeft: k.margin, paddingRight: k.margin, ...style }}>
+      <div style={{ flex: '1 1 auto', minWidth: 0 }}>
+        {title}
+        {description && (
+          <span style={{ display: 'block', marginTop: r.descriptionGap, fontFamily: r.description.fontFamily, fontSize: r.description.fontSize, lineHeight: r.description.lineHeight, fontWeight: r.description.fontWeight, color: ncv(r.descriptionFg, mode), wordBreak: 'keep-all', overflowWrap: 'break-word' }}>
+            {description}
+          </span>
+        )}
+      </div>
+      {actions && actions.length > 0 && (
+        <div style={{ display: 'flex', flexShrink: 0, flexWrap: 'wrap', justifyContent: 'flex-end', gap: r.actionsGap }}>
+          {actions.map(([icon, label]) => (
+            <ButtonView key={label} look={buttonLook({ variant: 'neutralOutline', size: r.buttonSize }, brand)} mode={mode} state="enabled" prefix={icon} label={label} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
+export const LEDGER_TITLE = { description: '모든 거래 내역', actions: [['filter', '필터 · 3'], ['download', '내보내기']] as [IconName, string][] };
 // 데스크톱 본문 — 작은 지표 카드 셋(데스크톱 격자 · stat small) + 거래 목록 카드. 칸 사이는 layout-gutter(card.yaml root.gap 비고)
 export function DeskMain({ mode = 'auto', title = '가계부', rows = 6, top }: { mode?: Mode; title?: string; rows?: number; top?: number }) {
+  const row = title === '가계부' ? LEDGER_TITLE : undefined;
   const k = NK('desk');
   const c = cardLook();
   const stat = (label: string, value: string) => (
@@ -304,7 +339,7 @@ export function DeskMain({ mode = 'auto', title = '가계부', rows = 6, top }: 
   );
   return (
     <div className="flex flex-col">
-      <ScreenTitle mode={mode} top={top}>{title}</ScreenTitle>
+      <ScreenTitle mode={mode} top={top} description={row?.description} actions={row?.actions}>{title}</ScreenTitle>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: c.gutter, paddingTop: 20, paddingLeft: k.margin, paddingRight: k.margin }}>
         {stat('10월 지출', '1,240,000원')}
         {stat('10월 수입', '3,200,000원')}
@@ -478,7 +513,7 @@ export function CodePreview({ children, caption, w = 360, pad = 24, bg = 'bg-lay
   );
 }
 
-// 사이드바 바닥 — 계정(이니셜 원 · 이름). 누르면 무엇이 열리는지는 앱 적용 때 정한다
+// 사이드바 바닥의 계정 줄(이니셜 원 · 이름) — 두지 않는다(2026-10-16 Q-018-1 C). footer-guide 의 '지금' 그림에만 쓴다
 export function AccountRow({ mode = 'auto', brand = 'desk', collapsed = false, name = '김민수' }: { mode?: Mode; brand?: Brand; collapsed?: boolean; name?: string }) {
   const k = NK(brand).side;
   return (

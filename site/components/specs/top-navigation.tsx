@@ -23,6 +23,7 @@ import {
   HomeScreen,
   HrDrawer,
   HrLeavePhone,
+  LEDGER_TITLE,
   Legend,
   NK,
   NPhone,
@@ -31,6 +32,7 @@ import {
   Reading,
   Scaled,
   ScreenTitle,
+  SearchBox,
   Shell,
   Shot,
   Side,
@@ -44,6 +46,8 @@ import {
 } from './nav-screens';
 import type { TopAction } from './nav-shared';
 import { TopIconButton, TopTextButton } from './nav-view';
+import { NotifyDesk } from './nav-notify';
+import { CardBenefitPhone, SEARCH_ROW_H, SearchBar, SearchPhone } from './nav-search';
 
 const T = () => NK().top;
 const MODES = ['light', 'dark'] as const;
@@ -79,7 +83,7 @@ const Hero: Fig = ({ caption }) => (
   </Figure>
 );
 
-const Playground: Fig = () => <TopNavPlayground looks={{ desk: NK('desk').top, hr: NK('hr').top }} tones={{ desk: NK('desk').tone, hr: NK('hr').tone }} />;
+const Playground: Fig = () => <TopNavPlayground looks={{ desk: NK('desk').top, hr: NK('hr').top }} tones={{ desk: NK('desk').tone, hr: NK('hr').tone }} search={{ desk: <SearchBox />, hr: <SearchBox /> }} />;
 
 // ── Anatomy ───────────────────────────────────────────────
 const Anatomy: Fig = ({ caption }) => {
@@ -135,12 +139,14 @@ const Types: Fig = ({ caption }) => (
       <BarBoard label="Standard — ← + 제목 + 글 버튼">
         <Bar title="알림" actions={[{ kind: 'text', label: '모두 읽음' }]} />
       </BarBoard>
-      <div className="flex flex-col items-center gap-2">
-        <div className="overflow-hidden" style={{ width: 560, background: rc('bg-layer-basement'), boxShadow: `0 0 0 1px ${rc('stroke-neutral-subtle')}` }}>
-          <DeskHeader />
-          <ScreenTitle style={{ paddingBottom: 20 }}>가계부</ScreenTitle>
-        </div>
-        <Cap>데스크톱 머리 — 주 버튼 + 아이콘 버튼, 화면 제목은 본문 맨 위 h1</Cap>
+      <div className="flex max-w-full flex-col items-center gap-2">
+        <Wide>
+          <div className="overflow-hidden" style={{ width: 720, background: rc('bg-layer-basement'), boxShadow: `0 0 0 1px ${rc('stroke-neutral-subtle')}` }}>
+            <DeskHeader />
+            <ScreenTitle style={{ paddingBottom: 20 }} {...LEDGER_TITLE}>가계부</ScreenTitle>
+          </div>
+        </Wide>
+        <Cap>데스크톱 머리 — 왼쪽 검색칸 · 주 버튼 + 알림 · 설정, 화면 제목은 본문 맨 위 h1(제목 줄 — 설명 · 동작 버튼)</Cap>
       </div>
     </div>
   </Figure>
@@ -289,7 +295,7 @@ const TrailingGuide: Fig = ({ caption }) => {
   const four: TopAction[] = [
     { icon: 'search', label: '검색' },
     { icon: 'bell', label: '알림' },
-    { icon: 'eye', label: '금액 가리기', pressed: false },
+    { icon: 'share', label: '공유' },
     { icon: 'settings', label: '설정' },
   ];
   return (
@@ -488,12 +494,13 @@ const DesktopGuide: Fig = ({ caption }) => {
   const k = NK();
   const s = 0.45;
   const W = 1280;
-  // 오른쪽 끝을 실제 크기로 — 주 버튼 · 8 · 아이콘 셋 · 6
+  // 오른쪽 끝을 실제 크기로 — 주 버튼 · 8 · 아이콘 둘 · 6. 왼쪽 끝 — 본문 여백 32 · 검색칸 360
   const crop = 280;
+  const n = 2;
   return (
     <Figure caption={caption}>
       <div className="flex flex-col items-center gap-6">
-        <Shot cap={`1280 — 사이드바 ${k.side.width} 오른쪽 · 본문 위 머리 ${t.height}, 선 없음. 화면 제목은 본문 맨 위 h1`}>
+        <Shot cap={`1280 — 사이드바 ${k.side.width} 오른쪽 · 본문 위 머리 ${t.height}, 선 없음. 왼쪽 검색칸 ${t.search.desktopWidth} · 오른쪽 주 버튼 + 알림 · 설정 · 화면 제목은 본문 맨 위 h1`}>
           <DeskDesktop s={s} h={720} />
         </Shot>
         <div className="flex items-start justify-center gap-6">
@@ -503,11 +510,11 @@ const DesktopGuide: Fig = ({ caption }) => {
                 <DeskHeader />
               </div>
               <Band style={{ right: 0, top: t.height + 6, width: t.desktop.padRight, height: 6 }} label={`${t.desktop.padRight}`} tag="below" />
-              <Band style={{ right: t.desktop.padRight + t.icon.size * 3, top: 6, width: t.desktop.primaryGap, height: t.height - 12 }} label={`${t.desktop.primaryGap}`} tag="below" />
-              <Band style={{ right: t.desktop.padRight, top: t.height + 22, width: t.icon.size * 3, height: 6 }} label={`${t.icon.size} × 3`} tag="below" />
+              <Band style={{ right: t.desktop.padRight + t.icon.size * n, top: 6, width: t.desktop.primaryGap, height: t.height - 12 }} label={`${t.desktop.primaryGap}`} tag="below" />
+              <Band style={{ right: t.desktop.padRight, top: t.height + 22, width: t.icon.size * n, height: 6 }} label={`${t.icon.size} × ${n}`} tag="below" />
               <Band style={{ left: 0, top: 0, width: 6, height: t.height }} label={`${t.height}`} vertical tag="right" />
             </div>
-            <Cap>머리 오른쪽 끝(실제 크기) — 주 버튼 small · {t.desktop.primaryGap} · 아이콘 버튼 {t.icon.size} 셋 · 화면 끝 {t.desktop.padRight}</Cap>
+            <Cap>머리 오른쪽 끝(실제 크기) — 주 버튼 small · {t.desktop.primaryGap} · 아이콘 버튼 {t.icon.size} 둘(알림 · 설정) · 화면 끝 {t.desktop.padRight}</Cap>
           </div>
           <div className="flex flex-col items-center gap-2" style={{ width: crop }}>
             <div className="relative overflow-hidden" style={{ width: crop, height: t.height + 90, background: rc('bg-layer-basement'), boxShadow: `0 0 0 1px ${rc('stroke-neutral-subtle')}` }}>
@@ -643,9 +650,9 @@ const ExStandard: Fig = ({ caption }) => (
 const ExDesktop: Fig = ({ caption }) => (
   <CodePreview caption={caption} w={720} pad={16} bg="bg-layer-basement" padX={0}>
     <div style={{ paddingBottom: 12 }}>
-      {/* 금액 가리기는 켜고 끄는 단추 — 누르면 아이콘이 지금 상태(eye ↔ eye-off)로, 이름은 그대로 · aria-pressed(top-navigation.md 코드) */}
-      <DeskHeaderLive look={NK('desk').top} />
-      <ScreenTitle>가계부</ScreenTitle>
+      {/* 머리 — 왼쪽 검색칸 · 주 버튼 + 알림 · 설정(금액 가리기 눈은 두지 않는다 — top-navigation.md 코드). 본문 제목 줄 */}
+      <DeskHeaderLive look={NK('desk').top} search={<SearchBox />} />
+      <ScreenTitle {...LEDGER_TITLE}>가계부</ScreenTitle>
     </div>
   </CodePreview>
 );
@@ -655,7 +662,138 @@ const ExMenu: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// ── 검색칸 · 탭 첫 화면 오른쪽 · 거래 검색 · 알림 · 제목 줄(2026-10-16 Q-017 · Q-018) ──────
+// 검색칸 — 검색 화면의 제목 자리(← 다음 56 부터 오른쪽 자리 앞 8 까지) · 데스크톱 머리 왼쪽 360(본문 여백 32 에서)
+const SearchField: Fig = ({ caption }) => {
+  const t = T();
+  const k = NK();
+  const H = t.height;
+  const trailStart = PHONE - t.padX - t.icon.size;
+  return (
+    <Figure caption={caption}>
+      <div className="flex flex-col items-center gap-8 pt-4">
+        <BarBoard label={`거래 검색 — 제목 자리 · 화면 끝에서 ${t.types.standard.left} · 높이 ${t.search.height} · 오른쪽 자리 앞 ${t.title.gap}`}>
+          <SearchBar />
+          <Band style={{ left: 0, top: H - 6, width: t.types.standard.left, height: 4 }} label={`${t.types.standard.left}`} tag="below" />
+          <Band style={{ left: trailStart - t.title.gap, top: 8, width: t.title.gap, height: H - 16 }} label={`${t.title.gap}`} tag="above" />
+          <Band style={{ right: -22, top: (H - t.search.height) / 2, width: 6, height: t.search.height }} label={`${t.search.height}`} vertical tag="right" />
+        </BarBoard>
+        <Wide>
+          <div className="flex flex-col items-center gap-2">
+            <div className="relative overflow-hidden" style={{ width: 560, height: H + 26, background: rc('bg-layer-basement'), boxShadow: `0 0 0 1px ${rc('stroke-neutral-subtle')}` }}>
+              <div style={{ width: 1280 - k.side.width }}>
+                <DeskHeader />
+              </div>
+              <Band style={{ left: 0, top: H + 8, width: k.margin, height: 4 }} label={`${k.margin}`} tag="below" />
+              <Band style={{ left: k.margin, top: H + 8, width: t.search.desktopWidth, height: 4 }} label={`${t.search.desktopWidth}`} tag="below" />
+            </div>
+            <Cap>데스크톱 머리 왼쪽(실제 크기) — 본문 여백 {k.margin} 에서 검색칸 {t.search.desktopWidth} · 높이 {t.search.height}</Cap>
+          </div>
+        </Wide>
+      </div>
+    </Figure>
+  );
+};
+
+// 탭 첫 화면 넷 — 홈 = 검색 · 알림, 가계부 · 캘린더 · 전체 = 검색(Q-017-2a A). 금액 가리기는 순자산 카드의 눈(Q-017-2b A)
+const RootGuide: Fig = ({ caption }) => (
+  <Figure caption={caption}>
+    <div className="flex flex-col items-center gap-4">
+      {[
+        ['홈', HOME_ACTIONS, '홈 — 검색 · 알림(점)'],
+        ['가계부', [{ icon: 'search', label: '검색' }], '가계부 — 검색'],
+        ['캘린더', [{ icon: 'search', label: '검색' }], '캘린더 — 검색(거래 검색)'],
+        ['전체', [{ icon: 'search', label: '검색' }], '전체 — 검색(거래 검색)'],
+      ].map(([title, actions, label]) => (
+        <BarBoard key={title as string} label={label as string}>
+          <Bar type="root" title={title as string} actions={actions as TopAction[]} />
+        </BarBoard>
+      ))}
+      <Cap>검색은 어느 탭에서나 같은 거래 검색 화면 · 벨은 알림 화면 · 금액 가리기 눈은 머리에 두지 않는다(홈 · 자산 순자산 카드)</Cap>
+    </div>
+  </Figure>
+);
+
+// 거래 검색 — 맨 위 · 600 내림(거르는 줄 숨음) · 30 올림(줄 40 의 75% — 손을 떼면 다 드러남). 카드 혜택은 140 줄
+const SearchGuide: Fig = ({ caption }) => (
+  <Figure caption={caption}>
+    <Wide>
+      <div className="flex items-start gap-3">
+        <Shot cap="맨 위 — 거르는 줄 40 · 목록">
+          <SearchPhone scale={0.46} h={600} />
+        </Shot>
+        <Shot cap="600 내림 — 줄이 다 숨고 목록이 바 아래를 다 쓴다">
+          <SearchPhone scale={0.46} h={600} scroll={600} hidden={SEARCH_ROW_H} />
+        </Shot>
+        <Shot cap="30 올림 — 줄 40 의 75% 가 나와 손을 떼면 다 드러난다">
+          <SearchPhone scale={0.46} h={600} scroll={570} hidden={0} />
+        </Shot>
+        <Shot cap="카드 혜택 — 거르는 줄 140(검색칸 + 칩 두 줄)">
+          <CardBenefitPhone scale={0.46} h={600} />
+        </Shot>
+      </div>
+    </Wide>
+  </Figure>
+);
+
+// 벨 — 1280 벨 아래 Popover · 1024 Bottom Sheet(Q-017-3b B)
+const NotificationGuide: Fig = ({ caption }) => (
+  <Figure caption={caption}>
+    <Wide>
+      <div className="flex items-start gap-4">
+        <Shot cap="1280 — 벨 아래 8 · 오른쪽 끝 맞춤 · 폭 380 · 높이 600 까지, 넘치면 목록만 스크롤">
+          <NotifyDesk w={1280} h={760} s={0.42} />
+        </Shot>
+        <Shot cap="1024 — 사이드바 접힘 · 같은 내용을 아래 시트로(딤)">
+          <NotifyDesk w={1024} h={760} s={0.42} />
+        </Shot>
+      </div>
+    </Wide>
+  </Figure>
+);
+
+// 제목 줄 — 제목 · 설명 왼쪽, 버튼 오른쪽(아래 끝 맞춤). 768(본문 648)의 긴 영어 설명 · 필터 12
+const ScreenTitleGuide: Fig = ({ caption }) => {
+  const k = NK();
+  return (
+    <Figure caption={caption}>
+      <div className="flex w-full flex-col items-center gap-5">
+        <Wide>
+          <div className="flex flex-col items-center gap-2">
+            <div style={{ width: 1280 - k.side.width, paddingBottom: 20, background: rc('bg-layer-basement'), boxShadow: `0 0 0 1px ${rc('stroke-neutral-subtle')}` }}>
+              <ScreenTitle {...LEDGER_TITLE}>가계부</ScreenTitle>
+            </div>
+            <Cap>1280 — 본문 {1280 - k.side.width - k.margin * 2}</Cap>
+          </div>
+        </Wide>
+        <Wide>
+          <div className="flex flex-col items-center gap-2">
+            <div style={{ width: 768 - k.side.collapsedWidth, paddingBottom: 20, background: rc('bg-layer-basement'), boxShadow: `0 0 0 1px ${rc('stroke-neutral-subtle')}` }}>
+              <ScreenTitle description="All accounts, cards, and investments in one place" actions={[['filter', 'Filter · 12'], ['download', 'Export']]}>
+                Assets
+              </ScreenTitle>
+            </div>
+            <Cap>768 — 본문 {768 - k.side.collapsedWidth - k.margin * 2} · 가장 긴 영어 설명도 버튼 옆 한 줄 · 더 길면 설명이 줄을 바꾸고 버튼은 그 자리</Cap>
+          </div>
+        </Wide>
+      </div>
+    </Figure>
+  );
+};
+
+const ExSearch: Fig = ({ caption }) => (
+  <CodePreview caption={caption} pad={16}>
+    <SearchBar />
+  </CodePreview>
+);
+
 export const topNavigationFigures: Record<string, Fig> = {
+  'search-field': SearchField,
+  'root-guide': RootGuide,
+  'search-guide': SearchGuide,
+  'notification-guide': NotificationGuide,
+  'screen-title-guide': ScreenTitleGuide,
+  'ex-search': ExSearch,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

@@ -35,7 +35,7 @@
 |---|---|---|---|---|
 | `root` | 탭 첫 화면(홈 · 가계부 · 캘린더 · 전체) | 없음 | 큰 제목 22 / 30 · 화면 끝에서 16 | 아이콘 버튼 |
 | `standard` | 그 아래 화면 · HR 폰의 모든 화면 | ← · ✕ · ☰ | 18 / 24 · 화면 끝에서 56 | 아이콘 버튼 또는 글 버튼 하나 |
-| `desktop` | 데스크톱(768 이상)의 머리 — Desk | 없음(왼쪽 자리는 검색 입구 — 앱 적용 때) | 없음 — 본문 맨 위 `h1` | 주 버튼 하나 + 아이콘 버튼 |
+| `desktop` | 데스크톱(768 이상)의 머리 — Desk | 검색칸 — 거래 검색 화면의 입구 | 없음 — 본문 맨 위 `h1` | 주 버튼 하나 + 아이콘 버튼 둘(알림 · 설정) |
 
 탭 첫 화면은 큰 제목으로 "이 탭의 맨 위" 가 보이고, 그 아래 화면은 ← 와 작은 제목이다(SEED Root · Standard). 제목은 늘 왼쪽이다 — 가운데 제목(iOS)은 두지 않는다. 굵기는 둘 다 700 이다(지금 하위 화면의 600 은 쓰지 않는 굵기다 — v100).
 
@@ -64,6 +64,14 @@
 오른쪽 자리에 하나만 둔다("완료" · "모두 읽음") — 높이 44 · 좌우 10 · 16 / 22 · 500. 글 버튼과 아이콘 버튼을 함께 두지 않는다.
 
 [표: 글 버튼](top-navigation.yaml#base.enabled@textButton)
+
+### 검색칸
+
+거래 검색 화면의 제목 자리와 데스크톱 머리의 왼쪽 자리에는 검색칸을 둔다 — [Text Field](input.md) 상자형(`outline`) `medium` 40 · 앞 돋보기 · 지우기 버튼. 바 56 안이라 폰에서도 `medium` 이다(`large` 52 를 두지 않는다). 검색 화면에서는 ← 다음 6 에서 시작해 오른쪽 자리 앞 8 까지 늘어난다 — 화면 이름 대신 칸이 서므로 보이지 않는 `h1` "검색" 을 둔다(SEED — "Standard Top Navigation 의 경우 Title 영역을 Slot 으로 구성"). 데스크톱 머리에서는 본문 여백 32 에서 시작하는 폭 360 이다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-017-3a C · Q-017-5 정리).
+
+[그림: 검색칸 — 검색 화면의 제목 자리 · 데스크톱 머리 왼쪽 360](../../site/components/specs/top-navigation.tsx#search-field)
+
+[표: 검색칸](top-navigation.yaml#base.enabled@searchField)
 
 ### 왼쪽 버튼
 
@@ -115,6 +123,20 @@
 
 [그림: 오른쪽 — 아이콘 둘 · 넷을 늘어놓은 바 · ⋯ 에 모은 바](../../site/components/specs/top-navigation.tsx#trailing-guide)
 
+### 탭 첫 화면의 오른쪽 — 홈은 검색 · 알림, 나머지는 검색
+
+Desk 폰(앱 · 웹 768 미만)의 탭 첫 화면은 오른쪽에 홈 = 검색 · 알림, 가계부 · 캘린더 · 전체 = 검색을 둔다 — 어느 탭에서나 머리에 검색이 있어 탭을 옮기지 않고 검색으로 간다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-017-2a A). 검색은 어느 탭에서 누르든 같은 거래 검색 화면으로 가고, 벨은 알림 화면(`standard` — ← · "알림" · "모두 읽음")으로 간다. 웹도 같은 자리다 — 웹은 거래 검색 화면을 먼저 만들고 입구를 단다. "준비 중" 으로 가는 입구는 두지 않는다(Q-017-3a C).
+
+금액 가리기는 탭 첫 화면의 머리에 두지 않는다 — 홈 · 자산 순자산 카드의 눈이 그 자리다. 그 눈은 그 카드가 가려졌는지를 그리고, 누르면 금액 가리기 설정의 그 화면 묶음(홈 · 자산)으로 간다(Q-017-2b A — 켜고 끄는 단추가 아니다, [Toggle](toggle.md) 의 "금액 가리기 눈은 Toggle 이 아니다").
+
+[그림: 탭 첫 화면 넷 — 홈 검색 · 알림 · 가계부 · 캘린더 · 전체 검색](../../site/components/specs/top-navigation.tsx#root-guide)
+
+### 거래 검색 화면 — 제목 자리 검색칸 · 숨는 거르는 줄
+
+거래 검색 화면은 `standard` 다 — ← · 제목 자리의 검색칸 · 오른쪽 고급 필터 아이콘 버튼 하나. 검색칸 아래 거르는 줄(전체 · 지출 · 수입 [Chip](chip.md) — 줄 40)은 바 아래 스크롤 상자 맨 위의 [Scroll Auto Hide](scroll-auto-hide.md) 다 — 목록을 내리면 숨고, 올려서 반 넘게 나오면 다 드러난다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-017-5 C). 카드 혜택 화면의 거르는 줄(카드 이름 검색칸 + 칩 두 줄 — 140)도 같다. 바 자체는 숨지 않는다. 웹의 거래 검색 화면도 앱과 같은 화면이다 — 데스크톱(768 이상)에서는 머리 왼쪽 검색칸이 그 화면의 입력이다(Q-017-3a C).
+
+[그림: 거래 검색 — ← · 제목 자리 검색칸 · 고급 필터, 거르는 줄은 내리면 숨는다](../../site/components/specs/top-navigation.tsx#search-guide)
+
 ### ← 와 ✕
 
 두 버튼은 다른 동작이다(SEED — 표는 원문 그대로).
@@ -150,9 +172,21 @@
 
 ### 데스크톱 머리(Desk)
 
-768 이상의 Desk 웹은 [Side Navigation](side-navigation.md) 오른쪽 · 본문 위에 머리(`desktop`)를 둔다 — 높이 56, 선 없음, 오른쪽에 주 버튼 하나([Button](button.md) `brandSolid` small — "내역 추가")와 아이콘 버튼 3개까지(금액 가리기 · 알림 · 설정), 맨 끝 아이콘 버튼의 상자가 화면 끝에서 6. 화면 제목은 머리가 아니라 본문 맨 위 `h1` 이다(`text-screen-title` 26 / 35 · 700, 머리 아래 `spacing-nav-to-title` 20). 접기 버튼은 Side Navigation 머리에, 테마는 설정에 있다. HR 은 데스크톱 머리를 두지 않는다 — 접기 버튼은 Side Navigation 머리로, 테마는 설정으로 갔고 위치는 Side Navigation 의 지금 항목이 알린다(빵부스러기는 걷었다). 머리가 없으면 본문은 화면 위 32(`layout-margin` — 본문 좌우 여백과 같다)에서 화면 제목부터 시작한다.
+768 이상의 Desk 웹은 [Side Navigation](side-navigation.md) 오른쪽 · 본문 위에 머리(`desktop`)를 둔다 — 높이 56, 선 없음. 왼쪽은 검색칸(본문 여백 32 에서 · 폭 360 — 거래 검색 화면의 입구, Q-017-3a C), 오른쪽은 주 버튼 하나([Button](button.md) `brandSolid` small — "내역 추가")와 아이콘 버튼 둘(알림 · 설정)이고 맨 끝 아이콘 버튼의 상자가 화면 끝에서 6 이다. 금액 가리기 눈은 머리에 두지 않는다 — 홈 · 자산 순자산 카드의 눈이 맡는다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-017-3c = Q-018-3 B). 접기 버튼은 Side Navigation 머리에, 테마는 설정에 있다. HR 은 데스크톱 머리를 두지 않는다 — 접기 버튼은 Side Navigation 머리로, 테마는 설정으로 갔고 위치는 Side Navigation 의 지금 항목이 알린다(빵부스러기는 걷었다). 머리가 없으면 본문은 화면 위 32(`layout-margin` — 본문 좌우 여백과 같다)에서 화면 제목부터 시작한다.
 
-[그림: Desk 데스크톱 — 사이드바 오른쪽 머리 56 · 주 버튼 + 아이콘 셋 · 본문 h1](../../site/components/specs/top-navigation.tsx#desktop-guide)
+벨을 누르면 알림 목록이 뜬다 — 1280 이상은 벨 아래 [Popover](popover.md), 768 ~ 1279 는 [Bottom Sheet](bottom-sheet.md) 다(Q-017-3b B — Popover 의 "1280 미만은 Bottom Sheet" 그대로). 머리 "알림" · "모두 읽음" · 목록 · 바닥 "알림 설정" 은 두 표면이 같다. 폰(768 미만)의 벨은 알림 화면으로 간다.
+
+[그림: Desk 데스크톱 — 사이드바 오른쪽 머리 56 · 검색칸 · 주 버튼 + 알림 · 설정 · 본문 h1](../../site/components/specs/top-navigation.tsx#desktop-guide)
+
+[그림: 벨 — 1280 Popover · 1024 Bottom Sheet](../../site/components/specs/top-navigation.tsx#notification-guide)
+
+### 데스크톱 화면 제목 — 한 줄
+
+화면 제목은 머리가 아니라 본문 맨 위 `h1` 이다(`text-screen-title` 26 / 35 · 700, 머리 아래 `spacing-nav-to-title` 20). 모든 데스크톱 화면에 하나 둔다 — 홈 · 캘린더도 "홈" · "캘린더" 다(Q-018-2 정리 — 위치는 사이드바의 지금 항목과 이 제목이 알린다). 제목 줄은 한 줄이다 — 제목(설명은 그 아래 13 / 18 `fg-neutral-subtle`)이 왼쪽, 그 화면의 동작 버튼([Button](button.md) small)이 오른쪽이고 버튼은 제목 덩어리 아래 끝에 맞춘다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-018-2 A). 글이 길면 설명이 줄을 바꾸고 버튼은 그 자리에 남는다. 화면을 옮기면 초점이 이 제목으로 온다(아래 "화면을 옮길 때").
+
+[그림: 제목 줄 — 가계부 · 설명 + 필터 · 내보내기, 768 의 긴 영어 설명](../../site/components/specs/top-navigation.tsx#screen-title-guide)
+
+[표: 화면 제목 줄](top-navigation.yaml#base.enabled@screenTitle+screenDescription+screenActions)
 
 ### HR 폰 — ☰ 와 주 메뉴
 
@@ -162,7 +196,7 @@ HR 웹 768 미만은 하단 탭 바가 없다 — 모든 화면이 `standard` �
 
 ### 화면을 옮길 때
 
-다른 화면으로 옮기면(링크 · 탭 · 사이드바 항목) 스크롤을 맨 위로 보내고 초점을 그 화면의 제목(`h1`)으로 옮긴다 — 키보드 · 스크린리더가 새 화면의 처음에서 시작한다. 문서 제목(브라우저 탭)은 화면마다 "{화면 제목} - Porest Desk" · "{화면 제목} - Porest HR" 이다. 뒤로 가기로 돌아오면 그 화면의 스크롤 위치를 돌려놓는다. 하단 탭을 오갈 때의 스크롤은 [Bottom Navigation](bottom-navigation.md) 이 정한다(탭마다 기억).
+다른 화면으로 옮기면(링크 · 탭 · 사이드바 항목) 스크롤을 맨 위로 보내고 초점을 그 화면의 제목(`h1`)으로 옮긴다 — 키보드 · 스크린리더가 새 화면의 처음에서 시작한다. 문서 제목(브라우저 탭)은 화면마다 "{화면 제목} - Porest Desk" · "{화면 제목} - Porest HR" 이다. 뒤로 가기로 돌아오면 그 화면의 스크롤 위치를 돌려놓는다. 하단 탭을 오갈 때는 [Bottom Navigation](bottom-navigation.md) 이 정한다(탭마다 마지막 화면 · 스크롤을 기억 — 웹도), 가계부 묶음의 1차 탭을 오갈 때는 [Tabs](tabs.md) 가 정한다(탭마다 기억 — 초점은 고른 탭에 남는다).
 
 [그림: 가계부 900 에서 캘린더로 — 캘린더는 맨 위에서, 초점은 제목](../../site/components/specs/top-navigation.tsx#route-guide)
 
@@ -179,13 +213,14 @@ HR 웹 768 미만은 하단 탭 바가 없다 — 모든 화면이 `standard` �
 - `TopNavigationCloseButton` — ✕ (이름 "닫기"). `onClick` 필수 — 흐름의 처음 자리로. `dirty` 면 닫기 전에 "작성한 내용이 사라져요" 를 묻는다.
 - `TopNavigationMenuButton` — ☰ (이름 "주 메뉴", `aria-haspopup="dialog"` · `aria-expanded` · `aria-controls`). HR 폰의 주 메뉴 Side Panel 을 연다.
 - `TopNavigationTitle` — 제목(`<h1 tabIndex={-1} data-screen-title>`). 한 줄 말줄임.
+- `TopNavigationSearch` — 검색칸 자리. 자식은 [Input](input.md) 하나(`size="medium"` · `prefixIcon` 돋보기 · `clearable`). `standard` 에서는 제목 자리 — ← 다음 6 부터 오른쪽 자리 앞 8 까지 늘어나고 보이지 않는 `h1`(`title`, 기본 "검색")을 스스로 둔다. `desktop` 에서는 머리 왼쪽 폭 360.
 - `TopNavigationActions` — 오른쪽 자리. 자식은 `TopNavigationIconButton` 3개까지 또는 `TopNavigationTextButton` 하나, `desktop` 이면 맨 앞에 `TopNavigationPrimaryButton` 하나.
-- `TopNavigationIconButton` — 상자 44 · 아이콘 24. `aria-label` 필수, `notification`(벨의 알림 점 — 이름에 "새 알림 있음" 을 넣는 것은 부르는 쪽), `<button type="button">` 속성. `aria-pressed` 를 주면 켜고 끄는 단추다 — 이름은 그대로 두고, 아이콘은 지금 상태를 넘긴다. 켬은 선 2.5, 끔은 선 2 이고 색은 켬 · 끔 모두 이웃 버튼과 같은 `fg-neutral` 이다 — [Toggle](toggle.md) 의 흐린 끔(`fg-neutral-muted`)은 상단 바에서 쓰지 않는다. 아이콘 줄에서 하나만 흐리면 막힌 단추처럼 보인다(사용자 결정 2026-10-09 19B).
+- `TopNavigationIconButton` — 상자 44 · 아이콘 24. `aria-label` 필수, `notification`(벨의 알림 점 — 이름에 "새 알림 있음" 을 넣는 것은 부르는 쪽), `<button type="button">` 속성. `aria-pressed` 는 그 자리에서 켜지고 꺼지는 단추에만 준다 — 이름은 그대로 두고, 아이콘은 지금 상태를 넘긴다. 켬은 선 2.5, 끔은 선 2 이고 색은 켬 · 끔 모두 이웃 버튼과 같은 `fg-neutral` 이다 — [Toggle](toggle.md) 의 흐린 끔(`fg-neutral-muted`)은 상단 바에서 쓰지 않는다. 아이콘 줄에서 하나만 흐리면 막힌 단추처럼 보인다(사용자 결정 2026-10-09 19B). 다른 화면으로 가는 버튼에는 `aria-pressed` 를 달지 않는다 — 낭독기가 "눌림" 을 읽고 누르면 화면이 바뀐다.
 - `TopNavigationTextButton` — 글 버튼(`<button type="button">`).
 - `TopNavigationPrimaryButton` — 데스크톱 머리의 주 버튼([Button](button.md) `brandSolid` · `small` 그대로 + 오른쪽 8).
-- `ScreenTitle` — 데스크톱 본문 맨 위 제목(`<h1 tabIndex={-1} data-screen-title>` · `text-screen-title`).
+- `ScreenTitle` — 데스크톱 본문 맨 위 제목(`<h1 tabIndex={-1} data-screen-title>` · `text-screen-title`). `description`(제목 아래 설명 — t3 `fg-neutral-subtle`) · `actions`(그 화면의 동작 버튼 — Button small)를 주면 한 줄 제목 줄(제목 덩어리 왼쪽 · 버튼 오른쪽 아래 끝 맞춤)로 그린다. `ref` 는 늘 `h1` 이다.
 - `TopNavigationProvider` — `product`("Porest Desk" · "Porest HR"). `useScreenTitle(title)` 가 문서 제목을 "{title} - {product}" 로 쓴다.
-- `focusScreenTitle()` — 셸이 화면을 옮긴 뒤 부른다: 본문 스크롤을 맨 위로, `[data-screen-title]` 에 초점(링은 키보드로 왔을 때만).
+- `focusScreenTitle()` — 셸이 화면을 옮긴 뒤 부른다: 본문 스크롤을 맨 위로, `[data-screen-title]` 에 초점(링은 키보드로 왔을 때만). `{ resetScroll: false }` 면 초점만 옮긴다 — 하단 탭 · 가계부 묶음 탭을 오갈 때 셸이 기억한 스크롤을 돌려놓는다(목록이 그려진 뒤).
 
 앱은 같은 값을 Dart 로 둔다(`PTopNavigation` — `AppBar` 대신, 제목은 `Semantics(header: true)`).
 
@@ -226,25 +261,73 @@ import { TopNavigation, TopNavigationActions, TopNavigationBackButton, TopNaviga
 </TopNavigation>
 ```
 
-### 데스크톱 머리 — Desk
+### 거래 검색 화면 — 제목 자리 검색칸
 
-[그림: Desk 데스크톱 머리 — 주 버튼 + 아이콘 셋, 본문 제목](../../site/components/specs/top-navigation.tsx#ex-desktop)
+[그림: 거래 검색 — ← · 제목 자리 검색칸 · 고급 필터](../../site/components/specs/top-navigation.tsx#ex-search)
 
 ```tsx
-import { Bell, Eye, EyeOff, Plus, Settings } from "lucide-react"
-import { ScreenTitle, TopNavigation, TopNavigationActions, TopNavigationIconButton, TopNavigationPrimaryButton } from "@/components/ui/top-navigation"
+import { useRef } from "react"
+import { Search, SlidersHorizontal } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { ScrollAutoHide } from "@/components/ui/scroll-auto-hide"
+import { TopNavigation, TopNavigationActions, TopNavigationBackButton, TopNavigationIconButton, TopNavigationSearch } from "@/components/ui/top-navigation"
+
+const scrollRef = useRef<HTMLDivElement>(null)
+
+{/* 제목 자리에 검색칸 — 보이지 않는 h1 "검색" 은 TopNavigationSearch 가 둔다. 상단 바 안이라 폰에서도 medium 40 */}
+<TopNavigation>
+  <TopNavigationBackButton fallbackHref="/desk" />
+  <TopNavigationSearch>
+    <Input size="medium" prefixIcon={<Search />} clearable aria-label="거래 검색" placeholder="거래 검색" value={query} onChange={(e) => setQuery(e.target.value)} />
+  </TopNavigationSearch>
+  <TopNavigationActions>
+    <TopNavigationIconButton aria-label="고급 필터" aria-haspopup="dialog" onClick={openFilters}><SlidersHorizontal /></TopNavigationIconButton>
+  </TopNavigationActions>
+</TopNavigation>
+{/* 거르는 줄은 바 아래 스크롤 상자 맨 위 — 내리면 숨고, 올려서 반 넘게 나오면 다 드러난다(scroll-auto-hide.md) */}
+<div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
+  <ScrollAutoHide scrollContainerRef={scrollRef} className="z-[2] bg-bg-layer-default">
+    {kindChips}
+  </ScrollAutoHide>
+  {results}
+</div>
+```
+
+### 데스크톱 머리 — Desk
+
+[그림: Desk 데스크톱 머리 — 검색칸 · 주 버튼 + 알림 · 설정, 본문 제목 줄](../../site/components/specs/top-navigation.tsx#ex-desktop)
+
+```tsx
+import { Bell, Download, Filter, Plus, Search, Settings } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { ScreenTitle, TopNavigation, TopNavigationActions, TopNavigationIconButton, TopNavigationPrimaryButton, TopNavigationSearch } from "@/components/ui/top-navigation"
 
 <TopNavigation type="desktop">
+  {/* 왼쪽 — 거래 검색의 입구(폭 360). Enter 로 거래 검색 화면에 간다 */}
+  <TopNavigationSearch>
+    <Input size="medium" prefixIcon={<Search />} clearable aria-label="거래 검색" placeholder="거래 검색" value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && openSearch(query)} />
+  </TopNavigationSearch>
   <TopNavigationActions>
     <TopNavigationPrimaryButton onClick={openAddTransaction}><Plus />내역 추가</TopNavigationPrimaryButton>
-    {/* 켜고 끄는 단추 — 이름은 고정, 아이콘은 지금 상태(가렸으면 eye-off — Toggle) */}
-    <TopNavigationIconButton aria-label="금액 가리기" aria-pressed={hidden} onClick={toggleHidden}>{hidden ? <EyeOff /> : <Eye />}</TopNavigationIconButton>
-    <TopNavigationIconButton notification={hasUnread} aria-label={hasUnread ? "알림, 새 알림 있음" : "알림"} onClick={openNotifications}><Bell /></TopNavigationIconButton>
+    {/* 벨 — 1280 이상 Popover · 768 ~ 1279 Bottom Sheet 의 알림 목록(popover.md 의 코드). 금액 가리기 눈은 머리에 두지 않는다 */}
+    <TopNavigationIconButton notification={hasUnread} aria-label={hasUnread ? "알림, 새 알림 있음" : "알림"} aria-haspopup="dialog" aria-expanded={notificationsOpen} onClick={toggleNotifications}><Bell /></TopNavigationIconButton>
     <TopNavigationIconButton aria-label="설정" onClick={openSettings}><Settings /></TopNavigationIconButton>
   </TopNavigationActions>
 </TopNavigation>
 <main id="main">
-  <ScreenTitle>가계부</ScreenTitle>
+  {/* 제목 줄 — 제목 · 설명 왼쪽, 그 화면의 동작 버튼(small) 오른쪽 */}
+  <ScreenTitle
+    description="모든 거래 내역"
+    actions={
+      <>
+        <Button variant="neutralOutline" size="small" onClick={openFilters}><Filter />필터 · 3</Button>
+        <Button variant="neutralOutline" size="small" onClick={exportLedger}><Download />내보내기</Button>
+      </>
+    }
+  >
+    가계부
+  </ScreenTitle>
   …
 </main>
 ```
@@ -272,6 +355,8 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 | ✕ 누르기 | 흐름을 닫고 처음 자리로 — 입력한 값이 있으면 먼저 묻는다 |
 | ☰ 누르기 | 왼쪽 Side Panel(주 메뉴)을 연다 — 지금 묶음이 펼쳐진 채 |
 | 아이콘 · 글 버튼 누르기 | 그 동작. 누르는 동안 바탕 + 2px 축소 |
+| 벨 누르기 | 폰 — 알림 화면으로. 데스크톱 — 1280 이상 벨 아래 Popover · 768 ~ 1279 Bottom Sheet 로 알림 목록 |
+| 검색칸에 치기 | 검색 화면 — 결과가 바로 바뀐다. 데스크톱 머리 — `Enter` 로 거래 검색 화면에 간다(그 화면에서는 칸이 지금 검색어) |
 | 마우스 호버(웹) | 버튼에 누름과 같은 바탕 — 축소 없음 |
 | `Tab` | 왼쪽 버튼 → 오른쪽 버튼 순서. 제목은 `Tab` 으로 서지 않는다(`tabindex="-1"` — 화면을 옮길 때 초점만 받는다) |
 | 화면을 옮김 | 스크롤 맨 위 + 초점을 새 화면의 제목으로 · 문서 제목을 바꾼다 |
@@ -286,10 +371,10 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 | **WCAG 1.4.1** Use of color | 알림 점은 이름에도 들어간다("알림, 새 알림 있음") ✓ |
 | **WCAG 2.4.2** Page Titled | 문서 제목이 화면마다 "{화면 제목} - Porest Desk" ✓ |
 | **WCAG 2.4.3** Focus order | 화면을 옮기면 초점이 새 화면의 제목으로 — 앞 화면에서 누른 자리에 남지 않는다 ✓ |
-| **WCAG 2.4.6** Headings and Labels | 제목은 화면의 `h1` ✓(SEED 웹은 제목이 `span` 이다) |
+| **WCAG 2.4.6** Headings and Labels | 제목은 화면의 `h1` ✓(SEED 웹은 제목이 `span` 이다). 검색 화면은 보이지 않는 `h1` "검색" · 데스크톱은 모든 화면에 본문 `h1` 하나(홈 · 캘린더도) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 아이콘 버튼 44 · 글 버튼 높이 44 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 아이콘 버튼 44 × 44 ✓ · 글 버튼 44 × (글 + 20) ✓ |
-| **ARIA** | 바는 `header`(`banner` — `main` 밖). 아이콘 버튼 `aria-label` 필수("뒤로" · "닫기" · "주 메뉴" · "검색" · "알림"), 아이콘 SVG 는 `aria-hidden`. ☰ 는 `aria-haspopup="dialog"` · `aria-expanded` · `aria-controls`. 알림 점은 `aria-hidden` 이고 버튼 이름에 넣는다. 앱은 제목 `Semantics(header: true)` · 버튼 `Semantics(button: true, label)` |
+| **ARIA** | 바는 `header`(`banner` — `main` 밖). 아이콘 버튼 `aria-label` 필수("뒤로" · "닫기" · "주 메뉴" · "검색" · "알림"), 아이콘 SVG 는 `aria-hidden`. ☰ 와 데스크톱 벨은 `aria-haspopup="dialog"` · `aria-expanded`(☰ 는 `aria-controls` 도). 검색칸은 `aria-label`("거래 검색"). 다른 화면으로 가는 버튼에 `aria-pressed` 를 달지 않는다. 알림 점은 `aria-hidden` 이고 버튼 이름에 넣는다. 앱은 제목 `Semantics(header: true)` · 버튼 `Semantics(button: true, label)` |
 
 ## Do / Don't
 
@@ -300,6 +385,8 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 - ← 는 들어온 화면으로, 앞 화면이 없을 때만 상위 화면으로.
 - 오른쪽은 아이콘 둘(셋까지) 또는 글 버튼 하나 — 넘치면 ⋯.
 - 화면을 옮기면 맨 위 + 초점을 제목으로, 문서 제목도 바꾼다.
+- 탭 첫 화면 오른쪽은 홈 = 검색 · 알림, 나머지 = 검색. 데스크톱 머리는 검색칸 · 주 버튼 · 알림 · 설정.
+- 데스크톱 화면 제목 줄은 한 줄 — 제목 · 설명 왼쪽, 동작 버튼 오른쪽.
 
 ### ❌ Don't
 
@@ -309,6 +396,8 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 - ← 가 늘 같은 화면(예: "전체")으로 새로 이동하기.
 - 일반 화면에 ✕, 아이콘 버튼과 글 버튼을 함께.
 - 상단 바에 알림 숫자.
+- 금액 가리기 눈을 머리에(폰 탭 첫 화면 · 데스크톱) — 순자산 카드의 눈이 맡는다.
+- 누르면 "준비 중" 화면으로 가는 검색 입구 · 다른 화면으로 가는 버튼에 `aria-pressed`.
 
 ## Specification
 
@@ -328,10 +417,29 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 - **알림은 점만** — SEED 는 Small · Large 둘 다 쓴다. 숫자는 맨 오른쪽 버튼에서 화면 밖으로 나간다.
 - **← 의 동작을 정한다** — SEED 는 History · Hierarchy 를 사용처 정책으로 남기고, 웹 snippet 은 `pop()` 만 한다. porest 는 History 를 기본으로, 앞 화면이 없을 때만 상위 화면(주소를 고쳐 씀)이다.
 - **제목이 `h1` 이고 바가 `header` 다** — SEED 웹 App Bar 는 `div` · 제목 `span` 이라 랜드마크 · 제목이 없다.
-- **데스크톱 머리를 더한다** — SEED 는 GNB 를 Layout 의 영역 이름으로만 둔다(그림 약 56 + 선).
+- **데스크톱 머리를 더한다** — SEED 는 GNB 를 Layout 의 영역 이름으로만 둔다(그림 약 56 + 선). 왼쪽 검색칸은 SEED React App Bar 의 `AppBarSlot` 예(머리 안 검색 막대)와 같은 자리다.
+- **검색칸은 상단 바 안에서 늘 `medium` 40** — Text Field 의 "`medium` 은 1280 이상" 의 예외다(바 56 안에 `large` 52 를 두지 않는다).
 - **z-index 는 specs/z-index.md 의 L1**(`z-sticky` 50).
 
 ## Migration notes
+
+### 2026-10-16 — 구현 세션 질문 Q-017 · Q-018(화면 틀)
+
+사용자가 [구현 질문 Q-017 · Q-018 비교 페이지](https://claude.ai/artifact/6R7NBc4ByvxGyLy6E6tvKf)에서 정했다(2026-10-16).
+
+- **탭 첫 화면의 오른쪽**(Q-017-2a A) — 홈 = 검색 · 알림, 가계부 · 캘린더 · 전체 = 검색. 지금대로(홈 = 알림만, B) · 그 탭의 것만(캘린더 · 전체 비움, C)은 고르지 않았다.
+- **폰 금액 가리기**(Q-017-2b A) — 순자산 카드의 눈 그대로(누르면 그 화면 묶음의 금액 가리기 설정). 홈 머리에 더하기(B)는 고르지 않았다.
+- **웹 검색**(Q-017-3a C) — 웹에도 앱과 같은 거래 검색 화면을 만든 뒤 입구를 둔다(데스크톱 머리 왼쪽 검색칸 · 폰 돋보기). 입구 걷기(A) · 준비 중 화면으로 가는 입구 유지(B)는 고르지 않았다.
+- **데스크톱 알림**(Q-017-3b B) — 1280 이상 Popover · 768 ~ 1279 Bottom Sheet. 지금 팝오버를 768 이상 모두(A) · 알림 화면으로(C)는 고르지 않았다.
+- **머리의 눈**(Q-017-3c = Q-018-3 B) — 데스크톱 머리에서 뺀다(머리는 검색칸 · 주 버튼 · 알림 · 설정). 이름만 고친 이동 버튼(A) · 진짜 켜고 끄기(C)는 고르지 않았다. 예시 코드의 `aria-pressed` 눈을 걷었다.
+- **거르는 줄**(Q-017-5 C) — 검색 · 카드 혜택 화면의 거르는 줄은 Scroll Auto Hide. 본문 맨 위(A) · 바 아래 고정(B)은 고르지 않았다.
+- **데스크톱 화면 제목 줄**(Q-018-2 A) — 한 줄(제목 · 설명 아래 왼쪽, 버튼 오른쪽), 글자 24 → 26. 두 줄(B) · 설명 걷기(C)는 고르지 않았다.
+- **정리**(추천대로) — 검색 화면의 검색칸은 제목 자리(SEED Standard Title Slot) · 데스크톱 모든 화면에 `h1` 하나(홈 · 캘린더 포함). 테마 단추는 걷고(메뉴 결정 ④) 접기 버튼은 사이드바 머리로, 주 버튼은 "내역 추가".
+
+제품이 할 일.
+
+- **Desk 웹** — 거래 검색 화면(`/desk/search` — 지금은 "검색 기능 준비 중")을 앱 `search_screen.dart` 와 같은 화면으로 새로 만든다: 제목 자리 검색칸 · 고급 필터 · 전체 · 지출 · 수입 칩 줄(Scroll Auto Hide) · 결과 목록(서버 `keyword` 인자는 이미 있다 — `expenseApi.ts:26`). 그 뒤 데스크톱 머리 왼쪽 검색칸(360 · `Enter` 로 그 화면)과 폰 탭 첫 화면 돋보기를 단다. 데스크톱 머리에서 눈(`PorestTopBar.tsx:44-52`)을 걷는다. 알림 팝오버(`NotificationsPopover.tsx` — 화면 고정 top 58 · right 20 · 380 × min(640, 화면 − 80))를 1280 이상 Popover 부품(벨 아래 8 · 높이 600 까지)으로, 768 ~ 1279 는 Bottom Sheet 로. 데스크톱 화면 머리 `.page__head`(h1 24) 15자리를 `ScreenTitle`(26 · `description` · `actions`)로, 홈 · 캘린더에 `h1` 을 더한다.
+- **Desk 앱** — 검색 화면의 검색칸을 `PTopNavigation` 의 제목 자리로(지금 `title` 이 `String` 이라 둘 자리가 없다 — 제목 위젯 슬롯 + 보이지 않는 머리말 "검색"), 칩 줄과 카드 혜택 화면의 거르는 줄 140(`card_screen.dart`)을 AppBar `bottom` 에서 Scroll Auto Hide 로.
 
 ### 2026-10-04 — SEED Top Navigation 으로 새로 둔다
 
@@ -344,8 +452,8 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 - **제목** — 루트 24 / 700(웹 · 앱) → 22 / 30, 하위 18 / 600(웹 x 46 · 앱 x 46) → 18 / 24 · 700 · x 56. 앱 머리 주석은 22 인데 실제 24 다(`mobile_header.dart:14-16 · 56`).
 - **← 가 늘 "전체" 로 새로 이동한다** — `MobileBackHeader` 의 `to` 기본값 `/desk/more`(push), 호출 14곳 중 `to` 를 준 곳이 0(`mobile-back-header.tsx:14 · 48`) — 홈 벨 → 알림 → ← 가 전체로 간다(F8). History 로.
 - **설정 하위 화면의 ← 에 이름이 없고 제목이 `h2`**(`pages/settings/ui/SettingsPage.tsx:504-521 · 523`, F7). 설정 하위 · 밤하늘 · 리포트는 기기 · 브라우저 뒤로가 페이지를 떠난다(`SettingsPage.tsx:388-395` · `NightSkyPanel.tsx:70` · `ForestReport.tsx:523`, F9).
-- **데스크톱 머리** — Desk 웹 `header.top` 이 `main` 안에 있고 아래 1px 선이 늘 있다(`widgets/layout/ui/PorestTopBar.tsx:22-89` · `shared/styles/porest.css:214-268`). 접기 버튼은 Side Navigation 머리로, 테마는 설정으로(메뉴 결정 ④), 아이콘은 금액 가리기 · 알림 · 설정 셋 + "내역 추가"(지금 80.7 × 32 · 12 / 500 → Button small). HR 헤더(접기 28 "Toggle Sidebar" · 빵부스러기 · 테마 36 "Toggle theme")는 걷는다.
+- **데스크톱 머리** — Desk 웹 `header.top` 이 `main` 안에 있고 아래 1px 선이 늘 있다(`widgets/layout/ui/PorestTopBar.tsx:22-89` · `shared/styles/porest.css:214-268`). 접기 버튼은 Side Navigation 머리로, 테마는 설정으로(메뉴 결정 ④), 아이콘은 알림 · 설정 둘 + "내역 추가"(지금 80.7 × 32 · 12 / 500 → Button small) — 금액 가리기 눈은 걷는다(2026-10-16 위). HR 헤더(접기 28 "Toggle Sidebar" · 빵부스러기 · 테마 36 "Toggle theme")는 걷는다.
 - **알림 점** — 데스크톱 7 × 7 에 2px 테두리를 둘러 빨강 3 × 3 이 아이콘 위로 4 튀어나오고(`PorestTopBar.tsx:62-67`, F20), 폰 6 · 앱 7 빨강이다(`mobile_header.dart:82-118`). 브랜드 점 6 · 아이콘 상자 x 17 ~ 23 · y 1 ~ 7 로(Notification Badge).
 - **랜드마크 · 문서 제목** — 웹 머리가 `main` 안이라 `banner` 가 0, 모바일 웹은 `main` 0, 본문 바로가기 0, 문서 제목 고정("POREST Desk" · HR "porest" · `lang="en"` — `index.html:2 · 7`, F16). 앱 셸 제목은 머리말(header)이 아니다(F6).
 - **화면을 옮겨도 스크롤 위치가 따라온다** — 웹 셸의 스크롤 상자가 하나라 900 내려 둔 가계부에서 캘린더로 가면 캘린더가 900 에서 열린다(`widgets/layout/ui/AppLayout.tsx:93 · 122`, F3). 화면을 옮기면 맨 위 + 제목에 초점으로.
-- **가짜 검색 입구** — 웹 데스크톱 readOnly 검색칸(`PorestTopBar.tsx:27-42`)과 폰 검색 아이콘(`MobileHeader.tsx:63-70`)이 "준비 중" 화면으로 간다(F21). 앱은 진짜 검색이다. 데스크톱 머리 왼쪽 자리와 함께 앱 적용 때 정한다.
+- **가짜 검색 입구** — 웹 데스크톱 readOnly 검색칸(`PorestTopBar.tsx:27-42`)과 폰 검색 아이콘(`MobileHeader.tsx:63-70`)이 "준비 중" 화면으로 간다(F21). 앱은 진짜 검색이다. → 2026-10-16 정했다(위 — 웹 검색 화면을 만든 뒤 입구를 둔다).

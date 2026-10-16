@@ -76,6 +76,7 @@
 |---|---|---|
 | 입력 폼 · 상세 | **Bottom Sheet** | [Dialog](dialog.md) |
 | 날짜 · 시각 · 아이콘 격자 · 긴 목록 고르기 | **Bottom Sheet**(Input Button) | [Popover](popover.md) |
+| Desk 데스크톱 벨의 알림 목록(768 이상) | **Bottom Sheet**(768 ~ 1279) | [Popover](popover.md) — 벨 아래 380(2026-10-16 사용자 결정 Q-017-3b B) |
 | 되돌릴 수 없는 확인 | [Alert Dialog](alert-dialog.md) | [Alert Dialog](alert-dialog.md) |
 | 줄의 동작 목록 | Menu Sheet(그 차례에) | Menu(그 차례에) |
 | 화면 높이의 90% 를 넘는 내용 | 페이지 | 페이지 |
@@ -204,6 +205,10 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 시트 `z-modal-content` 101) — 그 위에 Popover(L3) · Alert Dialog(L5)가 뜬다.
 
 ## Migration notes
+
+### 2026-10-16 — 알림 목록
+
+Desk 데스크톱 머리 벨의 알림 목록은 768 ~ 1279 에서 이 시트로 연다 — 1280 이상은 벨 아래 Popover(구현 세션 질문 Q-017-3b B, [Popover](popover.md) 의 "알림 목록"). 머리 "알림" · 설명 "읽지 않은 알림 N개" · 목록(끝 흐림) · 바닥 "알림 설정" · "모두 읽음". 지금 Desk 웹은 이 폭에서도 380 팝오버다(`NotificationsPopover.tsx`).
 
 ### 2026-10-15 — 첫 초점은 내용이 정할 수 있다
 

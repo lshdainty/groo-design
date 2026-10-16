@@ -382,10 +382,10 @@ export const sideNavigationExamples = [
   {
     title: "Desk — 묶음 둘 · 하위가 있는 증권",
     description:
-      "데스크톱(768 이상)의 주 메뉴(<nav aria-label=\"주 메뉴\">)다 — 화면 왼쪽 높이 전체의 흰 면(bg-layer-default) + 오른쪽 안쪽 1px stroke-neutral-subtle 이고 본문과 따로 스크롤된다. 1280 이상은 펼침 240, 768 ~ 1279 는 아이콘만 56 으로 저절로 접힌다(처음 열 때도 창 폭을 본다) — 손으로 접고 펼 수 있고 1280 이상에서 손으로 정한 것은 localStorage(porest:side-navigation-collapsed)에 기억한다. 768 미만에서는 그리지 않는다. 머리는 64 · 안쪽 8 — 서비스 마크 24 + 이름 16/22 · 700(누르지 않는다)과 접기 버튼(40 · 아이콘 18 · 누르는 영역 44 · 이름 \"사이드바\" + aria-expanded)이다. 묶음 이름은 14/19 · 700 · fg-neutral-muted(목록의 aria-labelledby), 항목은 최소 44 · 좌우 8 · 모서리 10 · 아이콘 20 · 이름 14/19 · 500 이다. 지금 화면의 항목(가계부)은 한 단계 짙은 옅은 회색 bg-neutral-weak-pressed + 짙은 아이콘 · 이름 fg-neutral 이고 굵기는 그대로다(aria-current=\"page\"). 하위가 있는 항목(증권)은 펼치기만 하는 버튼이다(aria-expanded · 꺾쇠 16). 내용 아래 끝 24 는 늘 흐리다.",
-    jsx: `import { CalendarDays, ClipboardList, LayoutGrid, Wallet, TrendingUp } from "lucide-react"
+      "데스크톱(768 이상)의 주 메뉴(<nav aria-label=\"주 메뉴\">)다 — 화면 왼쪽 높이 전체의 흰 면(bg-layer-default) + 오른쪽 안쪽 1px stroke-neutral-subtle 이고 본문과 따로 스크롤된다. 1280 이상은 펼침 240, 768 ~ 1279 는 아이콘만 56 으로 저절로 접힌다(처음 열 때도 창 폭을 본다) — 손으로 접고 펼 수 있고 1280 이상에서 손으로 정한 것은 localStorage(porest:side-navigation-collapsed)에 기억한다. 768 미만에서는 그리지 않는다. 머리는 64 · 안쪽 8 — 서비스 마크 24 + 이름 16/22 · 700(누르지 않는다)과 접기 버튼(40 · 아이콘 18 · 누르는 영역 44 · 이름 \"사이드바\" + aria-expanded)이다. 묶음 이름은 14/19 · 700 · fg-neutral-muted(목록의 aria-labelledby), 항목은 최소 44 · 좌우 8 · 모서리 10 · 아이콘 20 · 이름 14/19 · 500 이다. 지금 화면의 항목(가계부)은 한 단계 짙은 옅은 회색 bg-neutral-weak-pressed + 짙은 아이콘 · 이름 fg-neutral 이고 굵기는 그대로다(aria-current=\"page\"). 하위가 있는 항목(증권)은 펼치기만 하는 버튼이다(aria-expanded · 꺾쇠 16) — 하위가 사람마다 다른 증권은 연결한 증권사가 둘 이상일 때만 부모이고, 하나 · 없으면 SideNavigationItem 이 스스로 /desk/stocks 단독 링크로 그린다(2026-10-16 Q-017-4 정리). 구독이 없으면 두지 않는다. 내용 아래 끝 24 는 늘 흐리다. 바닥은 보조 링크만 두고 비면 그리지 않는다 — 계정은 두지 않는다(Q-018-1 C).",
+    jsx: `mport { CalendarDays, ClipboardList, LayoutGrid, Wallet, TrendingUp } from "lucide-react"
 import {
-  SideNavigation, SideNavigationContent, SideNavigationFooter, SideNavigationGroup,
+  SideNavigation, SideNavigationContent, SideNavigationGroup,
   SideNavigationHeader, SideNavigationItem, SideNavigationSubItem,
 } from "@/components/ui/side-navigation"
 
@@ -395,18 +395,21 @@ import {
     <SideNavigationGroup label="워크스페이스">
       <SideNavigationItem href="/desk" icon={<LayoutGrid />} label="홈" current={path === "/desk"} />
       <SideNavigationItem href="/desk/assets" icon={<Wallet />} label="자산" current={path === "/desk/assets"} />
-      {/* 부모 — 펼치기만 한다. 하위가 지금이면 저절로 펼쳐진다 */}
-      <SideNavigationItem icon={<TrendingUp />} label="증권">
-        <SideNavigationSubItem href="/desk/stocks/namu" label="나무증권" current={broker === "namu"} />
-        <SideNavigationSubItem href="/desk/stocks/toss" label="토스증권" current={broker === "toss"} />
-      </SideNavigationItem>
+      {/* 증권 — 구독이 없으면 두지 않는다. 연결한 증권사가 둘 이상이면 부모(펼치기만), 하나 · 없으면 /desk/stocks 단독 링크 */}
+      {subscribed && (
+        <SideNavigationItem href="/desk/stocks" icon={<TrendingUp />} label="증권" current={path.startsWith("/desk/stocks")}>
+          {brokers.map((b) => (
+            <SideNavigationSubItem key={b.id} href={\`/desk/stocks/\${b.id}\`} label={b.name} current={broker === b.id} />
+          ))}
+        </SideNavigationItem>
+      )}
       <SideNavigationItem href="/desk/ledger" icon={<ClipboardList />} label="가계부" current={path === "/desk/ledger"} />
     </SideNavigationGroup>
     <SideNavigationGroup label="기록">
       <SideNavigationItem href="/desk/calendar" icon={<CalendarDays />} label="캘린더" current={path === "/desk/calendar"} />
     </SideNavigationGroup>
   </SideNavigationContent>
-  <SideNavigationFooter>{/* 계정 — 앱 적용 때 */}</SideNavigationFooter>
+  {/* 바닥 — Desk 는 보조 링크가 없어 두지 않는다(계정은 바닥에 두지 않는다) */}
 </SideNavigation>`,
     render: () => frame(`${sideNavigation({ uid: ":desk:", groups: DESK_GROUPS, current: "가계부", height: 420 })}${main("가계부")}`, 420),
   },

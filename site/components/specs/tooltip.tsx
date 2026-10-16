@@ -5,7 +5,7 @@ import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { buttonLook } from './button-look';
 import { ButtonView } from './button-view';
 import { DisabledReasonDemo, ToolbarTooltipDemo, TooltipPlayground } from './bubble-demos';
-import { Bubble, BubbleAt, DeskToolWindow, EyeToggle, LeaveSummary, NativeTitle, bl } from './bubble-screens';
+import { BellButton, Bubble, BubbleAt, DeskToolWindow, LeaveSummary, NativeTitle, bl } from './bubble-screens';
 import { NK } from './nav-screens';
 import { COPY_REASON } from './menu-data';
 import { Board, Scaled, mk } from './menu-screens';
@@ -47,10 +47,10 @@ const Anatomy: Fig = ({ caption }) => {
       <div className="flex flex-col items-center gap-6">
         <Board style={{ padding: `${32 + b.height + b.bodyOffset}px 80px 28px` }}>
           <BubbleAt
-            trigger={<EyeToggle state="hovered" />}
+            trigger={<BellButton state="hovered" />}
             bubble={(p) => (
               <Bubble
-                title="금액 가리기"
+                title="알림"
                 marks={{ root: dashed, title: markBox }}
                 decor={
                   <>
@@ -137,18 +137,18 @@ const Timing: Fig = ({ caption }) => {
       <div className="flex flex-col gap-5">
         <Lane name="마우스" note={`올리고 ${open}ms 뒤에 연다 · 트리거와 말풍선을 모두 벗어나면 ${close}ms 뒤에 닫는다(말풍선 위로 옮기는 동안은 열어 둔다)`}>
           <Tick at={0} label="올림" />
-          <Shown from={open} to={leave + close} fade={motion} label="금액 가리기" />
+          <Shown from={open} to={leave + close} fade={motion} label="알림" />
           <Tick at={open} label={`${open}ms`} below />
           <Tick at={leave} label="벗어남" />
           <Tick at={leave + close} label={`+${close}ms`} below />
         </Lane>
         <Lane name="키보드" note="Tab 으로 초점이 오면 기다리지 않고 바로 연다 · 초점이 떠나면 닫는다">
           <Tick at={0} label="Tab" />
-          <Shown from={0} to={leave} fade={motion} label="금액 가리기" />
+          <Shown from={0} to={leave} fade={motion} label="알림" />
           <Tick at={leave} label="초점 떠남" />
         </Lane>
         <Lane name="이어서" note={`하나가 열린 동안이나 닫힌 뒤 ${skip}ms 안에 옆 트리거로 옮기면 기다리지 않고 모션 없이 바로 연다`}>
-          <Shown from={0} to={closedAt} fade={0} label="검색" />
+          <Shown from={0} to={closedAt} fade={0} label="알림" />
           <Tick at={closedAt} label="닫힘" />
           {/* 이어 열기 시간 — 닫힌 뒤 이 안에 옮기면 바로 */}
           <span aria-hidden className="absolute flex items-center justify-center" style={{ left: closedAt * SCALE, width: skip * SCALE, top: BAR_TOP + BAR_H + 4, height: 12, borderLeft: `1px solid ${MARK_LINE}`, borderRight: `1px solid ${MARK_LINE}` }}>
@@ -156,7 +156,7 @@ const Timing: Fig = ({ caption }) => {
             <span className="relative rounded px-1 text-[10px] font-semibold leading-3 text-white" style={{ background: MARK_LINE }}>{`${skip}ms`}</span>
           </span>
           <Tick at={movedAt} label="옆으로 옮김" />
-          <Shown from={movedAt} to={SPAN} fade={0} label="금액 가리기" />
+          <Shown from={movedAt} to={SPAN} fade={0} label="설정" />
         </Lane>
         {/* 시간 축 */}
         <div className="flex items-start gap-3">
@@ -192,9 +192,9 @@ const AssistGuide: Fig = ({ caption }) => {
       <div className="grid w-full gap-4 md:grid-cols-2">
         <Verdict ok note="아이콘 버튼의 이름은 aria-label — 툴팁은 그 이름을 마우스 · 키보드 사용자에게 보여 줄 뿐이다" bg={BASEMENT}>
           <div className="flex flex-col items-center gap-3" style={{ paddingTop: b.height + b.bodyOffset }}>
-            <BubbleAt trigger={<EyeToggle state="focused" />} bubble={(p) => <Bubble title="금액 가리기" {...p} />} />
+            <BubbleAt trigger={<BellButton state="focused" />} bubble={(p) => <Bubble title="알림" {...p} />} />
             <code className="rounded px-1.5 py-0.5 text-[12px]" style={{ background: rc('bg-layer-default'), color: rc('fg-neutral') }}>
-              aria-label=&quot;금액 가리기&quot;
+              aria-label=&quot;알림&quot;
             </code>
           </div>
         </Verdict>

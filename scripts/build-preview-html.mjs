@@ -4581,9 +4581,9 @@ export function renderMenuGallery(brand) {
   const hideFrame = overlayFrame({
     device: "phone",
     height: 440,
-    // 기준(Anchor)은 자리만 잡는다 — 누르면 원래 동작(상단 바의 금액 가리기 — 03r 의 아이콘 버튼 44 · 24, 이름 고정 · aria-pressed · 지금 상태 아이콘 · 끔도 fg-neutral)
-    page: menuPage({ title: "가계부", action: topNavIcon({ icon: "eye", name: "금액 가리기", attrs: `aria-pressed="false" id="${hideTid}"` }), body: listOf(OVERLAY_LEDGER.map(overlayRow)) }),
-    floats: [bubble({ id: hideBid, title: "금액을 가릴 수 있어요", description: "누르면 화면의 금액이 모두 가려져요.", trigger: hideTid, side: "bottom", close: true, live: true })],
+    // 기준(Anchor)은 자리만 잡는다 — 누르면 원래 동작(홈 상단 바의 검색 — 03r 의 아이콘 버튼 44 · 24, 오른쪽 끝 알림과 붙는다)
+    page: menuPage({ title: "홈", action: `<span class="pmenu-nav-actions" style="display:flex">${topNavIcon({ icon: "search", name: "검색", attrs: `id="${hideTid}"` })}${topNavIcon({ icon: "bell", name: "알림" })}</span>`, body: listOf(OVERLAY_LEDGER.map(overlayRow)) }),
+    floats: [bubble({ id: hideBid, title: "거래를 찾아보세요", description: "가맹점 이름 · 메모 · 금액으로 찾을 수 있어요.", trigger: hideTid, side: "bottom", close: true, live: true })],
   });
   // 화면 끝 — 화면 왼쪽 끝 0 에 붙은 ⓘ 40. 화살표는 ⓘ 가운데(모서리 14)에 남고 말풍선이 가장자리 16 보다 붙는다(0 — Q-004-1)
   const edgeTid = nextMenuId("pbub-trigger");
@@ -4606,7 +4606,7 @@ export function renderMenuGallery(brand) {
     : `<span class="pbub-demo">${bubble({ title: "안내" })}</span>`);
   const bubblePanel = panel(
     "Help Bubble — ⓘ 를 눌러 여는 도움말 · 닫기 버튼",
-    "몰라도 일은 할 수 있는 설명(규정 · 계산 방법 · 기능 안내)을 ⓘ 아이콘 버튼(이름 \"{무엇} 안내\")을 눌러 띄운다 — 손가락으로도 열려 폰에서도 읽어야 하는 설명은 이것이다. 말풍선은 짙은 바탕(bg-neutral-inverted — 다크에서는 밝은 바탕) · 모서리 12 · 위아래 10 · 좌우 12 · 그림자 없음이고, 폭은 내용만큼 최대 280 이다. 제목 13/18 · 700, 설명 13/18 · 400(사이 2) — 한 줄이면 38, 설명이 있으면 58. 기본은 트리거 위다 — 화살표(12 × 8) 끝과 트리거는 4, 몸통과는 12 떨어진다. 자리가 모자라면 반대편으로 뒤집고 옆으로 밀어 화면 가장자리와 16 을 남긴다 — 화살표는 늘 트리거 가운데를 가리키고 말풍선 모서리와 14 를 남긴다(폰 그림은 밀었다). 셋이 부딪히면 화살표 → 모서리 14 → 가장자리 16 순서다 — 화면 끝의 트리거면 말풍선이 16 보다 붙는다 — 상단 바 끝 6 의 금액 가리기는 8, 넷째 그림(화면 왼쪽 끝 0 의 ⓘ)은 0 이다. 비모달이라 뒤 화면을 숨기지 않는다(L4 210). 열어도 초점은 트리거에 남고, 제목 · 설명은 열림 알림(role=status · polite)으로 한 번 읽힌다 — 아래 \"열림 알림\" 줄이 그 글이다. ⓘ 를 다시 누르거나 바깥 · Esc 로 닫힌다. 닫기 버튼은 처음부터 열어 두는 안내에만 둔다 — 오른쪽 위 모서리의 투명 38 상자(아이콘 14 · 위 12 · 오른쪽 12 · 글과 4, 누르는 영역 44)이고, 누르면 아이콘만 2px 거리로 준다. 키보드 링은 말풍선 글자색이다 — 브랜드 링은 짙은 말풍선 위에서 3:1 에 못 미친다. 말풍선 안에 링크 · 버튼을 두지 않는다(닫기 버튼만). 열려 있을 때 트리거에서 Tab 을 누르면 말풍선으로 들어간다 — 닫기 버튼이 있으면 그 버튼으로, 없으면 말풍선 자체로 가고 둘레 바깥 2px 링(띄움 2 · stroke-focus-ring · 모서리를 따라)이 선다(페이지 위에 그려져 브랜드 링이다). 다시 Tab 으로 나가면 닫히고 초점은 트리거 다음 칸으로, Shift+Tab 은 트리거로 간다. 그림의 말풍선도 실제로 닫고 다시 열 수 있다.",
+    "몰라도 일은 할 수 있는 설명(규정 · 계산 방법 · 기능 안내)을 ⓘ 아이콘 버튼(이름 \"{무엇} 안내\")을 눌러 띄운다 — 손가락으로도 열려 폰에서도 읽어야 하는 설명은 이것이다. 말풍선은 짙은 바탕(bg-neutral-inverted — 다크에서는 밝은 바탕) · 모서리 12 · 위아래 10 · 좌우 12 · 그림자 없음이고, 폭은 내용만큼 최대 280 이다. 제목 13/18 · 700, 설명 13/18 · 400(사이 2) — 한 줄이면 38, 설명이 있으면 58. 기본은 트리거 위다 — 화살표(12 × 8) 끝과 트리거는 4, 몸통과는 12 떨어진다. 자리가 모자라면 반대편으로 뒤집고 옆으로 밀어 화면 가장자리와 16 을 남긴다 — 화살표는 늘 트리거 가운데를 가리키고 말풍선 모서리와 14 를 남긴다(폰 그림은 밀었다). 셋이 부딪히면 화살표 → 모서리 14 → 가장자리 16 순서다 — 화면 끝의 트리거면 말풍선이 16 보다 붙는다 — 상단 바 끝 6 의 알림은 8, 넷째 그림(화면 왼쪽 끝 0 의 ⓘ)은 0 이다. 비모달이라 뒤 화면을 숨기지 않는다(L4 210). 열어도 초점은 트리거에 남고, 제목 · 설명은 열림 알림(role=status · polite)으로 한 번 읽힌다 — 아래 \"열림 알림\" 줄이 그 글이다. ⓘ 를 다시 누르거나 바깥 · Esc 로 닫힌다. 닫기 버튼은 처음부터 열어 두는 안내에만 둔다 — 오른쪽 위 모서리의 투명 38 상자(아이콘 14 · 위 12 · 오른쪽 12 · 글과 4, 누르는 영역 44)이고, 누르면 아이콘만 2px 거리로 준다. 키보드 링은 말풍선 글자색이다 — 브랜드 링은 짙은 말풍선 위에서 3:1 에 못 미친다. 말풍선 안에 링크 · 버튼을 두지 않는다(닫기 버튼만). 열려 있을 때 트리거에서 Tab 을 누르면 말풍선으로 들어간다 — 닫기 버튼이 있으면 그 버튼으로, 없으면 말풍선 자체로 가고 둘레 바깥 2px 링(띄움 2 · stroke-focus-ring · 모서리를 따라)이 선다(페이지 위에 그려져 브랜드 링이다). 다시 Tab 으로 나가면 닫히고 초점은 트리거 다음 칸으로, Shift+Tab 은 트리거로 간다. 그림의 말풍선도 실제로 닫고 다시 열 수 있다.",
     `${samples([
       sample("폰 — ⓘ 연차 사용 규정", "HelpBubble — 손가락으로 눌러 연다 · 가장자리 16 을 남기고 밀었다 · 화살표는 ⓘ 가운데", leaveHelp("phone")),
       sample("데스크톱 — 같은 말풍선", "제목 + 설명 · 트리거 위 · 비모달", leaveHelp("desktop")),
@@ -4628,9 +4628,8 @@ export function renderMenuGallery(brand) {
   );
 
   // 5. Tooltip — 아이콘 버튼의 이름(그 순간) · 이어서 옮기기(그 순간) · 직접 올려 보기 · 막힌 버튼의 이유
-  // 트리거는 Desk 웹 데스크톱 머리의 아이콘 버튼(03r — 44 · 24, 버튼끼리 붙는다)이다(tooltip.md 코드). 금액 가리기는 켜고 끄는 단추라
-  // 이름이 고정이고 툴팁도 그대로다 — 켬은 aria-pressed 가 알린다
-  const TOOLS = [{ icon: "eye", name: "금액 가리기", pressed: false }, { icon: "bell", name: "알림" }, { icon: "settings", name: "설정" }];
+  // 트리거는 Desk 웹 데스크톱 머리의 아이콘 버튼(03r — 44 · 24, 버튼끼리 붙는다)이다(tooltip.md 코드). 머리는 알림 · 설정(금액 가리기 눈은 2026-10-16 뺐다)
+  const TOOLS = [{ icon: "bell", name: "알림" }, { icon: "settings", name: "설정" }];
   const toolFrame = ({ open = "", live = false }) => {
     const ids = TOOLS.map(() => nextMenuId("ptip-trigger"));
     const tips = TOOLS.map(() => nextMenuId("ptip"));
@@ -4653,9 +4652,9 @@ export function renderMenuGallery(brand) {
   const reason = `<div class="pmenu-reason"><button class="btn btn-neutral-weak" type="button" disabled aria-describedby="${reasonId}"><span>지난달 예산 복사</span></button><p class="pmenu-reason-text" id="${reasonId}">복사할 지난달 예산이 없어요.</p></div>`;
   const tooltipPanel = panel(
     "Tooltip — 아이콘 버튼의 이름 · 이어서 옮기기",
-    "툴팁은 Help Bubble 과 같은 말풍선을 마우스 · 키보드로 여는 보조다 — 글 하나(13/18 · 700)만 두고 누를 것이 없다(role=tooltip · 트리거의 aria-describedby). 마우스를 올리면 200ms 뒤에 열고, 트리거와 말풍선을 모두 벗어나면 100ms 뒤에 닫는다 — 말풍선 위로 옮겨도 닫히지 않는다(WCAG 1.4.13). 키보드 초점이 오면 바로 열고, 하나가 열린 뒤 옆 트리거로 옮기면 기다리지 않고 모션 없이 바로 바꿔 연다. 트리거를 누르거나 Esc 로 닫는다. 손가락으로 누르면 열지 않는다 — 그래서 아이콘 버튼의 이름은 늘 aria-label 에 두고 툴팁은 그 이름을 보여 줄 뿐이며, 막힌 버튼의 이유는 툴팁이 아니라 가까운 글로 보인다(막힌 버튼은 초점을 받지 못해 키보드로 툴팁을 열 수 없다). 글자가 이미 보이는 버튼에는 두지 않고, 네이티브 title 은 쓰지 않는다. 폰에서도 읽어야 하는 설명은 Help Bubble 이다. 셋째 그림의 머리 버튼(금액 가리기 · 알림 · 설정)은 직접 올리고 Tab 으로 옮겨 볼 수 있다.",
+    "툴팁은 Help Bubble 과 같은 말풍선을 마우스 · 키보드로 여는 보조다 — 글 하나(13/18 · 700)만 두고 누를 것이 없다(role=tooltip · 트리거의 aria-describedby). 마우스를 올리면 200ms 뒤에 열고, 트리거와 말풍선을 모두 벗어나면 100ms 뒤에 닫는다 — 말풍선 위로 옮겨도 닫히지 않는다(WCAG 1.4.13). 키보드 초점이 오면 바로 열고, 하나가 열린 뒤 옆 트리거로 옮기면 기다리지 않고 모션 없이 바로 바꿔 연다. 트리거를 누르거나 Esc 로 닫는다. 손가락으로 누르면 열지 않는다 — 그래서 아이콘 버튼의 이름은 늘 aria-label 에 두고 툴팁은 그 이름을 보여 줄 뿐이며, 막힌 버튼의 이유는 툴팁이 아니라 가까운 글로 보인다(막힌 버튼은 초점을 받지 못해 키보드로 툴팁을 열 수 없다). 글자가 이미 보이는 버튼에는 두지 않고, 네이티브 title 은 쓰지 않는다. 폰에서도 읽어야 하는 설명은 Help Bubble 이다. 셋째 그림의 머리 버튼(알림 · 설정)은 직접 올리고 Tab 으로 옮겨 볼 수 있다.",
     `${samples([
-      sample("아이콘 버튼의 이름 — 데스크톱 머리", "TooltipContent — aria-label 과 같은 글 · 200ms 뒤 · 머리라 위에 자리가 없어 아래로 뒤집는다", toolFrame({ open: "금액 가리기" })),
+      sample("아이콘 버튼의 이름 — 데스크톱 머리", "TooltipContent — aria-label 과 같은 글 · 200ms 뒤 · 머리라 위에 자리가 없어 아래로 뒤집는다", toolFrame({ open: "설정" })),
       sample("이어서 옮기기 — 옆 트리거로", "TooltipProvider — 하나가 열린 뒤 옆으로 옮기면 기다리지 않고 모션 없이 바로", toolFrame({ open: "알림" })),
       sample("직접 올려 보기", "마우스 200ms · 키보드 바로 · 옆으로 옮기면 바로 · 손가락은 열지 않는다", toolFrame({ live: true })),
       sample("막힌 버튼 — 이유는 툴팁이 아니라 가까운 글", "disabled · aria-describedby — 툴팁에만 두지 않는다", reason),
@@ -6671,6 +6670,9 @@ const NAV_ICON = {
   shield: LIST_ICON.shield,
   panelLeft: listSvg('<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/>'),
   share: listSvg('<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>'),
+  filter: listSvg('<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>'),
+  download: listSvg('<path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/>'),
+  slidersHorizontal: listSvg('<line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/>'),
 };
 let pnavSeq = 0;
 const nextPnavId = (prefix = "pnav") => `${prefix}-${(pnavSeq += 1)}`;
@@ -6693,13 +6695,18 @@ const TOP_NAV_LEADING = { back: ["chevronLeft", "뒤로"], close: ["x", "닫기"
 //   actions  [{ icon, name, dot, disabled, interaction }] — 2개 권장 · 3개까지 · text  { label, disabled } 글 버튼 하나(아이콘 버튼과 함께 두지 않는다)
 //   primary  desktop 의 주 버튼 글(Button brandSolid small + 앞 +) · menu  ☰ 의 aria-expanded · aria-controls(직접 여는 서랍)
 //   safeTop  위 안전 영역(상태 표시줄) — 바가 그만큼 높아지고 내용은 그 아래 56 에 놓인다
-function topNav({ type = "standard", leading = "back", title = "", actions = [], text = null, primary = "", menu = null, safeTop = 0, attrs = "" } = {}) {
+//   search   검색칸(Text Field 상자형 medium 40 · 앞 돋보기 · 지우기 — { value, placeholder }). standard 는 제목 자리(← 다음 6 · 보이지 않는 h1 "검색"),
+//            desktop 은 머리 왼쪽 폭 360 — 거래 검색 화면의 입구(2026-10-16 Q-017-3a C)
+function topNav({ type = "standard", leading = "back", title = "", actions = [], text = null, primary = "", menu = null, safeTop = 0, search = null, attrs = "" } = {}) {
   const lead = type === "standard" ? (() => {
     const [icon, name] = TOP_NAV_LEADING[leading];
     const extra = leading === "menu" ? attrsOf(['aria-haspopup="dialog"', `aria-expanded="${menu && menu.open ? "true" : "false"}"`, menu && menu.controls && `aria-controls="${menu.controls}"`, menu && menu.live && "data-pspanel-open"]) : "";
     return topNavIcon({ icon, name, attrs: extra });
   })() : "";
-  const head = type === "desktop" ? "" : `<div class="ptnav-title">${escape(title)}</div>`;
+  const field = search
+    ? `<div class="ptnav-search">${type === "standard" ? '<h1 class="pnav-sr-only" tabindex="-1">검색</h1>' : ""}${textInput({ size: "medium", prefixIcon: "search", clearable: true, value: search.value || "", placeholder: search.placeholder || "거래 검색", label: "거래 검색" })}</div>`
+    : "";
+  const head = field || (type === "desktop" ? "" : `<div class="ptnav-title">${escape(title)}</div>`);
   const prim = primary ? `<span class="ptnav-primary"><button class="btn btn-brand-solid btn-size-small" type="button">${NAV_ICON.plus}<span>${escape(primary)}</span></button></span>` : "";
   const right = text ? topNavText(text) : actions.map(topNavIcon).join("");
   const tail = prim || right ? `<div class="ptnav-actions">${prim}${right}</div>` : "";
@@ -6922,6 +6929,9 @@ const pnavDesk = ({ width = 0, minWidth = 760, height = 520, side = "", header =
   `<div class="pnav-wide"><div ${attrsOf(['class="pnav-desk"', `style="${width ? `width: ${width}px;` : `min-width: ${minWidth}px;`} --pnav-h: ${height}px;"`, attrs])}><div class="pnav-desk-bar" aria-hidden="true"><span></span><span></span><span></span></div><div class="pnav-desk-view">${side}<div class="pnav-desk-main">${header}<div class="pnav-desk-scroll" data-pnav-scroll>${main}</div></div>${overlay}</div></div></div>`;
 // 본문 맨 위 제목(ScreenTitle — 데스크톱 h1 · text-screen-title 26/35 · 머리 아래 20) · 흰 카드 · 줄(제목 · 설명 · 금액)
 const pnavScreenTitle = (t) => `<div class="pnav-screen-title">${escape(t)}</div>`;
+// 제목 줄(ScreenTitle description · actions — 2026-10-16 Q-018-2 A) — 버튼은 [아이콘, 글] 쌍(Button neutralOutline small — neutralWeak 는 본문 바탕과 같은 gray-200)
+const pnavTitleRow = (t, desc, buttons) =>
+  `<div class="pnav-title-row"><div>${pnavScreenTitle(t)}<p class="pnav-title-desc">${escape(desc)}</p></div><div class="pnav-title-actions">${buttons.map(([icon, label]) => `<button class="btn btn-neutral-outline btn-size-small" type="button">${NAV_ICON[icon] || ""}<span>${escape(label)}</span></button>`).join("")}</div></div>`;
 const pnavCard = (body, cls = "") => `<div class="pnav-card${cls ? ` ${cls}` : ""}">${body}</div>`;
 const pnavRow = ([title, detail, value]) => `<div class="pnav-row"><span class="pnav-row-body"><span class="pnav-row-title">${escape(title)}</span>${detail ? `<span class="pnav-row-detail">${escape(detail)}</span>` : ""}</span>${value ? `<span class="pnav-row-value">${escape(value)}</span>` : ""}</div>`;
 const PNAV_LEDGER = [
@@ -7011,14 +7021,14 @@ export function renderNavGallery(brand) {
     : topNavText({ label: "모두 읽음", interaction: c.i, disabled: c.i === "disabled" })}</span>`);
   const dotZoom = `<span class="pnav-zoom" aria-hidden="true"><span class="pnav-zoom-in">${topNavIcon({ icon: "bell", name: "알림, 새 알림 있음", dot: true })}</span></span>`;
   const longTitle = pnavPhone({ height: 56, home: false, cls: "pnav-phone--bar", inner: topNav({ title: "현대카드 M Edition3 카드 혜택 자세히 보기", actions: [{ icon: "share", name: "공유" }, { icon: "ellipsis", name: "카드 혜택 더보기" }] }) });
-  const threeIcons = pnavPhone({ height: 56, home: false, cls: "pnav-phone--bar", inner: topNav({ type: "root", title: "가계부", actions: [{ icon: "search", name: "검색" }, { icon: "eye", name: "금액 가리기", attrs: 'aria-pressed="false"' }, { icon: "ellipsis", name: "가계부 더보기" }] }) });
+  const threeIcons = pnavPhone({ height: 56, home: false, cls: "pnav-phone--bar", inner: topNav({ title: "카드 혜택", actions: [{ icon: "search", name: "검색" }, { icon: "share", name: "공유" }, { icon: "ellipsis", name: "카드 혜택 더보기" }] }) });
   const buttonPanel = panel(
     "Top Navigation — 버튼 상태 · 알림 점 · 긴 제목 · 넘치면 ⋯",
     "버튼의 바탕은 누를 때 · 마우스를 올릴 때만 보인다 — 누름은 bg-layer-default-pressed + 2px 거리 축소(배율 (44 − 2) ÷ 44, 150ms pressed-scale — 모션 줄이기면 색만), 호버는 같은 바탕이고 축소가 없다(웹). 모서리는 8(r2)이다. 키보드 포커스에만 상자 안쪽 2px 링(stroke-focus-ring) — 버튼끼리 붙어 바깥 링이 이웃에 걸리기 때문이다. 막힌 버튼은 아이콘 · 글이 fg-disabled 이고 흐리게 하지 않는다. 알림 점은 벨에 Notification Badge small(점 6 · fg-brand)을 붙인다 — 24 아이콘 상자의 x 17 ~ 23 · y 1 ~ 7 이고(오른쪽 그림은 3배), 상단 바에는 점만 둔다(숫자는 두지 않는다). 새 알림이 있는지는 버튼 이름에 넣는다(\"알림, 새 알림 있음\"). 제목은 한 줄 — 길면 말줄임(…)하고 오른쪽 자리 앞 8 을 비운다. 오른쪽 아이콘이 셋을 넘으면 자주 쓰는 것만 남기고 나머지는 ⋯ 하나에 모은다(이름 \"{화면 이름} 더보기\" — 1280 이상 Menu, 미만 Menu Sheet). 표는 그 순간을 멈춰 그렸다.",
     `${stateMatrix}${samples([
       sample("알림 점 — 24 아이콘 상자 × 3", "Notification Badge small · x 17 ~ 23 · y 1 ~ 7 · fg-brand", `<div class="pnav-surface pnav-surface--zoom">${dotZoom}</div>`),
       sample("긴 제목 — 말줄임 · 오른쪽 자리 앞 8", "한 줄 · 글자 크기 설정은 1.2배까지 — 바 높이 56 그대로", longTitle),
-      sample("셋까지 — 넘치면 ⋯", "검색 · 금액 가리기 · ⋯(가계부 더보기)", threeIcons),
+      sample("셋까지 — 넘치면 ⋯", "검색 · 공유 · ⋯(카드 혜택 더보기)", threeIcons),
     ], NEXT)}`,
   );
 
@@ -7035,16 +7045,20 @@ export function renderNavGallery(brand) {
   );
 
   // 4. Top Navigation — 데스크톱 머리(Desk) · HR 은 머리 없음. 창 1024 — 가로로 밀린다
-  const deskHeader = topNav({ type: "desktop", primary: "내역 추가", actions: [{ icon: "eye", name: "금액 가리기", attrs: 'aria-pressed="false"' }, { icon: "bell", name: "알림, 새 알림 있음", dot: true }, { icon: "settings", name: "설정" }] });
-  const deskMain = `${pnavScreenTitle("가계부")}<div class="pnav-desk-cards">${pnavCard(`<div class="pnav-card-cap">이번 달 지출</div><div class="pnav-card-num">1,240,000원</div>`)}${pnavCard(`<div class="pnav-card-cap">수입</div><div class="pnav-card-num">3,200,000원</div>`)}${pnavCard(`<div class="pnav-card-cap">남은 예산</div><div class="pnav-card-num">360,000원</div>`)}</div>${pnavCard(pnavRows(PNAV_LEDGER, 6), "pnav-card--list")}`;
+  const deskHeader = topNav({ type: "desktop", primary: "내역 추가", search: {}, actions: [{ icon: "bell", name: "알림, 새 알림 있음", dot: true, attrs: 'aria-haspopup="dialog" aria-expanded="false"' }, { icon: "settings", name: "설정" }] });
+  const deskMain = `${pnavTitleRow("가계부", "모든 거래 내역", [["filter", "필터 · 3"], ["download", "내보내기"]])}<div class="pnav-desk-cards">${pnavCard(`<div class="pnav-card-cap">이번 달 지출</div><div class="pnav-card-num">1,240,000원</div>`)}${pnavCard(`<div class="pnav-card-cap">수입</div><div class="pnav-card-num">3,200,000원</div>`)}${pnavCard(`<div class="pnav-card-cap">남은 예산</div><div class="pnav-card-num">360,000원</div>`)}</div>${pnavCard(pnavRows(PNAV_LEDGER, 6), "pnav-card--list")}`;
   const deskFrame = pnavDesk({ height: 480, side: sideNav({ groups: PNAV_DESK_NAV, current: "가계부", collapsed: true }), header: deskHeader, main: deskMain });
   const hrMain = `<div class="pnav-desk-top">${pnavScreenTitle("휴가 현황")}</div>${pnavCard(pnavRows(PNAV_LEAVE), "pnav-card--list")}`;
   const hrFrame = pnavDesk({ height: 420, side: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", collapsed: true, logo: "Porest HR" }), main: hrMain });
+  // 거래 검색 화면(폰) — ← · 제목 자리 검색칸 · 고급 필터, 거르는 줄(전체 · 지출 · 수입 칩 40)은 스크롤 상자 맨 위의 숨는 머리(.psah — 03p 의 Scroll Auto Hide 스크립트)
+  const searchRows = [["지어낸마트 장보기", "식비 · 10월 3일", "−42,300원"], ["지어낸마트 환불", "식비 · 10월 5일", "+12,000원"], ["지어낸마트 정기 배송", "생활 · 10월 9일", "−18,900원"], ["지어낸마트 월간 정기 결제 환불 확인", "식비 · 10월 12일", "+8,800원"]];
+  const searchPhone = pnavPhone({ height: 420, inner: `${topNav({ search: { value: "지어낸마트" }, actions: [{ icon: "slidersHorizontal", name: "고급 필터", attrs: 'aria-haspopup="dialog"' }] })}<div class="pnav-body psah-scroll" data-pnav-scroll data-psah-live="nav-search" tabindex="0" role="region" aria-label="검색 결과"><div class="psah pnav-filter-row">${chipGroup({ role: "radiogroup", label: "거래 종류", items: chipRadios(["전체", "지출", "수입"], "전체", { variant: "solid", size: "small" }) })}</div>${pnavRows(searchRows, 16)}</div>` });
   const deskPanel = panel(
-    "Top Navigation — 데스크톱 머리(Desk) · HR 은 머리 없음",
-    "768 이상의 Desk 웹은 사이드바 오른쪽 · 본문 위에 머리(desktop)를 둔다 — 높이 56 · 선 없음 · 바탕 bg-layer-default 이고, 오른쪽에 주 버튼 하나(Button brandSolid small 36 — \"내역 추가\")와 아이콘 버튼 3개까지(금액 가리기 · 알림 · 설정)를 둔다. 주 버튼과 첫 아이콘 버튼 상자는 8 떨어지고, 맨 끝 아이콘 버튼의 상자는 화면 끝에서 6 — 폰과 같은 규칙이다. 왼쪽 자리는 본문 여백 32 에서 시작한다(검색 입구 — 앱 적용 때 정한다). 화면 제목은 머리가 아니라 본문 맨 위 h1 이다(text-screen-title 26/35 · 700, 머리 아래 spacing-nav-to-title 20). 접기 버튼은 사이드바 머리에, 테마는 설정에 있다. HR 은 데스크톱 머리를 두지 않는다 — 위치는 사이드바의 지금 항목(휴가 › 휴가 현황 — 접힌 사이드바에서는 부모 휴가)과 본문 제목이 알린다. 두 창 모두 768 ~ 1279(사이드바 접힘 56)이고, 좁은 화면에서는 가로로 밀린다.",
-    `${samples([sample("Desk — 768 ~ 1279 · 머리 56 · 주 버튼 + 아이콘 셋 · 본문 h1", "<TopNavigation type=\"desktop\"> · <ScreenTitle>가계부</ScreenTitle>", deskFrame)], DESKTOP)}${samples([
+    "Top Navigation — 데스크톱 머리(Desk) · 검색칸 · HR 은 머리 없음",
+    "768 이상의 Desk 웹은 사이드바 오른쪽 · 본문 위에 머리(desktop)를 둔다 — 높이 56 · 선 없음 · 바탕 bg-layer-default. 왼쪽은 본문 여백 32 에서 시작하는 검색칸(Text Field 상자형 medium 40 · 폭 360 — 거래 검색 화면의 입구), 오른쪽은 주 버튼 하나(Button brandSolid small 36 — \"내역 추가\")와 아이콘 버튼 둘(알림 · 설정)이다 — 금액 가리기 눈은 머리에 두지 않는다(2026-10-16 사용자 결정 Q-017-3c = Q-018-3 B, 순자산 카드의 눈이 맡는다). 벨은 1280 이상 Popover · 768 ~ 1279 Bottom Sheet 로 알림 목록을 연다(Q-017-3b B). 주 버튼과 첫 아이콘 버튼 상자는 8 떨어지고, 맨 끝 아이콘 버튼의 상자는 화면 끝에서 6 — 폰과 같은 규칙이다. 화면 제목은 머리가 아니라 본문 맨 위 h1 이다(text-screen-title 26/35 · 700, 머리 아래 spacing-nav-to-title 20) — 모든 화면에 하나, 제목 줄은 한 줄(제목 · 설명 t3 왼쪽, 동작 버튼 small 오른쪽 — Q-018-2 A). 접기 버튼은 사이드바 머리에, 테마는 설정에 있다. HR 은 데스크톱 머리를 두지 않는다 — 위치는 사이드바의 지금 항목(휴가 › 휴가 현황 — 접힌 사이드바에서는 부모 휴가)과 본문 제목이 알린다. 두 창 모두 768 ~ 1279(사이드바 접힘 56)이고, 좁은 화면에서는 가로로 밀린다. 폰의 거래 검색 화면은 검색칸이 제목 자리에 서고(보이지 않는 h1 \"검색\"), 거르는 줄은 스크롤 상자 맨 위의 Scroll Auto Hide 다 — 직접 스크롤하면 내리면 숨고 올려서 반 넘게 나오면 다 드러난다(Q-017-5 C).",
+    `${samples([sample("Desk — 768 ~ 1279 · 머리 56 · 검색칸 360 · 주 버튼 + 알림 · 설정 · 본문 제목 줄", "<TopNavigation type=\"desktop\"> · <TopNavigationSearch> · <ScreenTitle description actions>", deskFrame)], DESKTOP)}${samples([
       sample("HR — 머리 없음 · 사이드바 + 본문 h1", "접기 버튼은 사이드바 머리 · 위치는 사이드바의 지금 항목", hrFrame),
+      sample("거래 검색 — ← · 제목 자리 검색칸 · 고급 필터 · 거르는 줄 숨김", "직접 스크롤 — 칩 줄 40 이 1:1 로 숨고 50% 에서 스냅", searchPhone),
     ], `${DESKTOP} pov-samples--next`)}`,
   );
 
@@ -8517,14 +8531,17 @@ function ptoggle({ name, icon, pressedIcon = "", pressed = false, tone = "defaul
     attrs,
   ])}><span class="ptgl-icon ptgl-icon--off">${inputSvg(icon)}</span><span class="ptgl-icon ptgl-icon--on">${inputSvg(pressedIcon || icon)}</span></button>`;
 }
-// 단추 넷 — 이름(고정) · 끔 · 켬 아이콘(toggle.md 의 표). 눈은 지금 상태를 그린다 — 금액이 가려져 있으면(켬) eye-off, 키가 보이면(켬) eye
+// 단추 셋 — 이름(고정) · 끔 · 켬 아이콘(toggle.md 의 표). 눈은 지금 상태를 그린다 — 키가 보이면(켬) eye
 const PTGL_KINDS = {
   watch: { name: "관심 등록", icon: "star", said: ["관심에 넣지 않음", "관심에 넣었다"] },
   pin: { name: "장보기 목록 고정", icon: "pin", said: ["고정하지 않음", "고정했다"] },
-  hide: { name: "금액 가리기", icon: "eye", pressedIcon: "eye-off", said: ["금액이 보인다 — eye", "금액을 가렸다 — eye-off"] },
   key: { name: "App Key 보기", icon: "eye-off", pressedIcon: "eye", said: ["키가 가려져 있다 — eye-off", "키를 보였다 — eye"] },
 };
 const ptoggleOf = (kind, opts = {}) => ptoggle({ ...PTGL_KINDS[kind], ...opts });
+// 순자산 카드의 금액 가리기 눈 — Toggle 이 아니다(2026-10-16 Q-017-2b A · 3c B). 같은 상자 · 표면 색(.ptgl)만 빌린 <button>, aria-pressed 없음 ·
+// 이름 "금액 가리기 설정" · 아이콘은 그 카드가 가려졌는지(가렸으면 eye-off — 선 2 그대로). 누르면 금액 가리기 설정으로 간다
+const peyeButton = ({ hidden = false, tone = "inverted", interaction = "" } = {}) =>
+  `<button ${attrsOf([`class="${["ptgl", tone === "inverted" && "ptgl--inverted", PTGL_INTERACTIONS.includes(interaction) && `ptgl--${interaction}`].filter(Boolean).join(" ")}"`, 'type="button"', 'aria-label="금액 가리기 설정"'])}><span class="ptgl-icon">${inputSvg(hidden ? "eye-off" : "eye")}</span></button>`;
 
 // ── Input OTP ────────────────────────────────────────────────────────────
 // 인증 코드 칸 — 03g 의 Field + 입력칸 한 칸(Input 상자형). 숫자 키보드(inputmode numeric) · 받은 코드 제안(autocomplete one-time-code) · 고정폭 숫자 ·
@@ -8649,7 +8666,7 @@ function pipkTrigger({ value = "", size = "responsive", interaction = "", expand
 // 입력 갤러리 — Slider 다섯 · Toggle 다섯(순자산 카드 위는 Desk 만) · Input OTP 셋 · Color Swatch 넷 · Icon Picker 넷, 판을 흰 표면(.vignette-card) 위에 그린다.
 // 견본 틀(.ptf-samples · .ptf-cap)과 상태 표(.cb-matrix)는 Text Field 갤러리 것, 라이트 · 다크 나란히 틀(.pdsp-pair · .pdsp-theme)은 03o 것이다 — 나란히 틀에는
 // 이 블록의 부품과 03g 의 Field · 입력칸 · 03h 의 Input Button · 03r 의 상단 바 · 03s 의 카드만 담는다(시트 · 팝오버 · 스낵바는 페이지 테마를 따른다).
-// 글은 각 스펙 md 의 코드 예와 같은 자리다 — Desk(예산 알림 임계값 · 관심 등록 · 금액 가리기 · 메모 고정 · 이용 해지 본인 확인 · 카테고리 추가)와 만족도 · 예산 사용률.
+// 글은 각 스펙 md 의 코드 예와 같은 자리다 — Desk(예산 알림 임계값 · 관심 등록 · 메모 고정 · 이용 해지 본인 확인 · 카테고리 추가)와 만족도 · 예산 사용률.
 export function renderInputGallery(brand) {
   const desk = brand.key === "desk";
   const panel = (title, sub, body) => `
@@ -8766,46 +8783,40 @@ export function renderInputGallery(brand) {
   );
 
   // ── Toggle ─────────────────────────────────────────────────────────────
-  const TGL_WHERE = { watch: "증권 상세 머리 — star", hide: "상단 바 · 홈 · 자산 — eye ↔ eye-off", pin: "메모 카드 — pin", key: "연결 설정 — eye-off ↔ eye" };
+  const TGL_WHERE = { watch: "증권 상세 머리 — star", pin: "메모 카드 — pin", key: "연결 설정 — eye-off ↔ eye" };
   const tglRead = (kind, on) => `"${PTGL_KINDS[kind].name}, ${on ? "눌림" : "안 눌림"}"`;
-  const tglTable = () => `<div class="pinp-tgl-table"><div class="pinp-tgl-row pinp-tgl-row--head"><span></span><span>끔</span><span>켬</span></div>${["watch", "hide", "pin", "key"].map((k) => `<div class="pinp-tgl-row"><span class="pinp-tgl-name">${escape(PTGL_KINDS[k].name)}<span>${escape(TGL_WHERE[k])}</span></span>${[false, true].map((on) => `<span class="pinp-tgl-cell">${ptoggleOf(k, { pressed: on })}<span class="pinp-tgl-read">${escape(tglRead(k, on))}</span></span>`).join("")}</div>`).join("")}</div>`;
-  const tglLive = `<div class="pinp-live" data-ptgl-host="">${`<div class="pinp-tgl-strip">${["watch", "hide", "pin", "key"].map((k) => ptoggleOf(k, { live: "local" })).join("")}</div>`}${status("data-ptgl-status", "눌러 보세요 — 이름은 그대로이고 aria-pressed 만 바뀐다.")}</div>`;
+  const tglTable = () => `<div class="pinp-tgl-table"><div class="pinp-tgl-row pinp-tgl-row--head"><span></span><span>끔</span><span>켬</span></div>${["watch", "pin", "key"].map((k) => `<div class="pinp-tgl-row"><span class="pinp-tgl-name">${escape(PTGL_KINDS[k].name)}<span>${escape(TGL_WHERE[k])}</span></span>${[false, true].map((on) => `<span class="pinp-tgl-cell">${ptoggleOf(k, { pressed: on })}<span class="pinp-tgl-read">${escape(tglRead(k, on))}</span></span>`).join("")}</div>`).join("")}</div>`;
+  const tglLive = `<div class="pinp-live" data-ptgl-host="">${`<div class="pinp-tgl-strip">${["watch", "pin", "key"].map((k) => ptoggleOf(k, { live: "local" })).join("")}</div>`}${status("data-ptgl-status", "눌러 보세요 — 이름은 그대로이고 aria-pressed 만 바뀐다.")}</div>`;
 
   // 1. 켬 · 끔 · 아이콘 · 이름
   const toggleLook = panel(
-    "Toggle — 켬 · 끔은 아이콘만: 관심 · 금액 가리기 · 고정 · App Key 보기",
-    "단추 하나가 한 상태를 켜고 끄는 아이콘 단추다(<button aria-pressed>). 켬 · 끔은 아이콘이 말한다 — 켬은 진한 색 fg-neutral + 선 2.5, 끔은 흐린 색 fg-neutral-muted + 선 2(기초 Iconography v106 — lucide 에 채움 모양이 없어 SEED 의 켬 = 채움을 굵기와 색으로 대신한다). 바탕은 켬 · 끔 모두 투명하다 — 켜면 옅은 바탕 · 반전 상자는 고르지 않았다. 아이콘은 누르면 할 일이 아니라 지금 상태를 그린다. 기능 단추(눈)는 lucide 의 -off 짝으로 지금 상태 쪽을 보인다 — 금액을 가렸으면(켬) eye-off, App Key 가 가려져 있으면(끔) eye-off. 모으기 단추(관심 · 고정)는 끔에도 사선을 두지 않는다 — 같은 아이콘이 흐린 선 2 · 진한 선 2.5 로만 갈린다(SEED 하트처럼, 채우지 않는다). 이름은 고정이다 — \"관심 등록\" 이 켜지면 \"관심 등록, 눌림\" 이고 \"관심 해제\" 로 바꾸지 않는다. 글이 있는 켜고 끄기 단추 · Toggle Group 은 걷었다 — 거르기는 Chip, 누르는 순간 적용되는 설정은 Switch 다.",
+    "Toggle — 켬 · 끔은 아이콘만: 관심 · 고정 · App Key 보기",
+    "단추 하나가 한 상태를 켜고 끄는 아이콘 단추다(<button aria-pressed>). 켬 · 끔은 아이콘이 말한다 — 켬은 진한 색 fg-neutral + 선 2.5, 끔은 흐린 색 fg-neutral-muted + 선 2(기초 Iconography v106 — lucide 에 채움 모양이 없어 SEED 의 켬 = 채움을 굵기와 색으로 대신한다). 바탕은 켬 · 끔 모두 투명하다 — 켜면 옅은 바탕 · 반전 상자는 고르지 않았다. 아이콘은 누르면 할 일이 아니라 지금 상태를 그린다. 기능 단추(눈)는 lucide 의 -off 짝으로 지금 상태 쪽을 보인다 — App Key 가 가려져 있으면(끔) eye-off. 순자산 카드의 금액 가리기 눈은 설정으로 가는 버튼이라 Toggle 이 아니다(아래 Tone 판). 모으기 단추(관심 · 고정)는 끔에도 사선을 두지 않는다 — 같은 아이콘이 흐린 선 2 · 진한 선 2.5 로만 갈린다(SEED 하트처럼, 채우지 않는다). 이름은 고정이다 — \"관심 등록\" 이 켜지면 \"관심 등록, 눌림\" 이고 \"관심 해제\" 로 바꾸지 않는다. 글이 있는 켜고 끄기 단추 · Toggle Group 은 걷었다 — 거르기는 Chip, 누르는 순간 적용되는 설정은 Switch 다.",
     `${pair(tglTable)}${samples([sample("직접 — 눌러 보기", "켬 ↔ 끔은 손을 뗄 때 · 아이콘 · 굵기 · 색이 바로 바뀐다", phone(tglLive))], NEXT)}`,
   );
 
   // 2. 크기 · 자리 — 40 · 44 · 20, 상단 바 44 · 24(끔도 fg-neutral — 19B), 증권 머리 · 메모 카드 · App Key
-  const topBar = (hidden) => pnavPhone({ height: 56, home: false, cls: "pnav-phone--bar", inner: topNav({ type: "root", title: "가계부", actions: [{ icon: "search", name: "검색" }, { icon: hidden ? "eyeOff" : "eye", name: "금액 가리기", attrs: `aria-pressed="${hidden ? "true" : "false"}"` }, { icon: "ellipsis", name: "가계부 더보기" }] }) });
-  const deskBar = pnavDesk({ minWidth: 640, height: 132, header: topNav({ type: "desktop", primary: "내역 추가", actions: [{ icon: "eye", name: "금액 가리기", attrs: 'aria-pressed="false"' }, { icon: "bell", name: "알림, 새 알림 있음", dot: true }, { icon: "settings", name: "설정" }] }), main: pnavScreenTitle("가계부") });
   const stockHead = (on, opts = {}) => `<div class="pinp-stock">${logoTile({ name: "삼성전자", size: 40 })}<div class="pinp-stock-body"><span class="pinp-stock-name">삼성전자</span><span class="pinp-stock-meta">005930 · 71,200원</span></div>${ptoggleOf("watch", { pressed: on, ...opts })}</div>`;
   const memoCard = (title, body, on, opts = {}) => pcard({ press: "peers", link: `<div class="pdata-memo">${pcardLink(title)}${ptoggle({ name: `${title} 고정`, icon: "pin", pressed: on, ...opts })}</div>`, content: `<div class="pdata-note">${escape(body)}</div>` });
   // App Key 칸 — 03g 의 입력칸(상자형 large)에 끝 단추로 Toggle 을 둔다. 가려져 있으면 password(끔 · eye-off), 보이면 text(켬 · eye)
   const secret = (on) => textField({ label: "App Key", control: { kind: "input", size: "large", type: on ? "text" : "password", value: "PSmd8b3x7K2qL9vR", rootClass: "pinp-secret" } }).replace(/(<input [^>]*>)/, `$1${ptoggleOf("key", { pressed: on })}`);
   const toggleSize = panel(
-    "크기 · 자리 — 보이는 40 · 누르는 44 · 아이콘 20 · 상단 바는 44 · 24",
-    "크기는 하나다 — 보이는 상자 40(누름 · 호버 바탕에만 보인다 · 모서리 8) · 누르는 영역 44(둘레로 2 씩) · 아이콘 20, Button medium 의 아이콘만 있는 단추와 같은 상자다. 상단 바 안에서는 Top Navigation 의 아이콘 버튼(상자 44 = 누르는 영역 · 아이콘 24)을 쓴다 — 이름 고정 · aria-pressed · 지금 상태의 아이콘 · 굵기(끔 2 · 켬 2.5)는 같지만 끔도 이웃 버튼과 같은 fg-neutral 이다. 알림 · 설정 사이에서 눈만 흐리면 막힌 단추처럼 보이기 때문이다(19B). 자리 — 증권 상세 머리의 관심 등록, 메모 카드 제목 줄의 고정(카드를 누르면 열리고 고정은 따로 눌린다 — 고정 단추 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다), 연결 설정의 App Key 보기(가려져 있으면 끔 · eye-off). 보이는 크기를 40 보다 작게 두지 않는다(지금 18 · 21 · 26 · 28 · 32 · 36).",
+    "크기 · 자리 — 보이는 40 · 누르는 44 · 아이콘 20",
+    "크기는 하나다 — 보이는 상자 40(누름 · 호버 바탕에만 보인다 · 모서리 8) · 누르는 영역 44(둘레로 2 씩) · 아이콘 20, Button medium 의 아이콘만 있는 단추와 같은 상자다. 상단 바 안에 둘 때는 Top Navigation 의 아이콘 버튼(상자 44 = 누르는 영역 · 아이콘 24)을 쓴다 — 이름 고정 · aria-pressed · 지금 상태의 아이콘 · 굵기(끔 2 · 켬 2.5)는 같지만 끔도 이웃 버튼과 같은 fg-neutral 이다(19B). 지금 상단 바에 켜고 끄는 단추를 두는 화면은 없다 — 머리의 금액 가리기 눈은 2026-10-16 뺐다. 자리 — 증권 상세 머리의 관심 등록, 메모 카드 제목 줄의 고정(카드를 누르면 열리고 고정은 따로 눌린다 — 고정 단추 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다), 연결 설정의 App Key 보기(가려져 있으면 끔 · eye-off). 보이는 크기를 40 보다 작게 두지 않는다(지금 18 · 21 · 26 · 28 · 32 · 36).",
     `${samples([
-      sample("보이는 40 · 누르는 44(점선) · 아이콘 20", "끔 · 켬 — 바탕은 칠하지 않는다", `<div class="pinp-surface pinp-surface--tgl-guide">${ptoggleOf("watch", { attrs: 'data-ptgl-guide=""' })}${ptoggleOf("watch", { pressed: true, attrs: 'data-ptgl-guide=""' })}${ptoggleOf("hide", { attrs: 'data-ptgl-guide=""' })}${ptoggleOf("hide", { pressed: true, attrs: 'data-ptgl-guide=""' })}</div>`),
-      sample("상단 바 — 끔(eye)", "TopNavigationIconButton aria-pressed=\"false\" — 끔도 fg-neutral · 선 2", topBar(false)),
-      sample("상단 바 — 켬(eye-off)", "aria-pressed=\"true\" — 선 2.5 · 이웃과 같은 색", topBar(true)),
-    ])}${samples([
-      sample("데스크톱 머리 — 주 버튼 + 금액 가리기 · 알림 · 설정", "상자 44 · 아이콘 24 — 끔도 이웃과 같은 색", deskBar),
-    ], WIDE)}${pair(() => `<div class="pinp-stack pinp-stack--floor">${cap("증권 상세 머리 — 관심 등록 끔 · 켬", "star — 끔도 사선 없이")}${stockHead(false)}${stockHead(true)}${cap("메모 카드 — 위 하나만 고정", "press peers — 카드를 누르면 열리고 고정은 따로")}${memoCard("장보기 목록", "우유 · 계란 · 두부 · 대파", true)}${memoCard("이번 달 고정비", "월세 · 통신 · 보험", false)}${cap("연결 설정 — App Key 보기 끔 · 켬", "가려져 있으면 끔 · eye-off, 보이면 켬 · eye")}${secret(false)}${secret(true)}</div>`, "pinp-pair--next")}`,
+      sample("보이는 40 · 누르는 44(점선) · 아이콘 20", "끔 · 켬 — 바탕은 칠하지 않는다", `<div class="pinp-surface pinp-surface--tgl-guide">${ptoggleOf("watch", { attrs: 'data-ptgl-guide=""' })}${ptoggleOf("watch", { pressed: true, attrs: 'data-ptgl-guide=""' })}${ptoggleOf("key", { attrs: 'data-ptgl-guide=""' })}${ptoggleOf("key", { pressed: true, attrs: 'data-ptgl-guide=""' })}</div>`),
+    ])}${pair(() => `<div class="pinp-stack pinp-stack--floor">${cap("증권 상세 머리 — 관심 등록 끔 · 켬", "star — 끔도 사선 없이")}${stockHead(false)}${stockHead(true)}${cap("메모 카드 — 위 하나만 고정", "press peers — 카드를 누르면 열리고 고정은 따로")}${memoCard("장보기 목록", "우유 · 계란 · 두부 · 대파", true)}${memoCard("이번 달 고정비", "월세 · 통신 · 보험", false)}${cap("연결 설정 — App Key 보기 끔 · 켬", "가려져 있으면 끔 · eye-off, 보이면 켬 · eye")}${secret(false)}${secret(true)}</div>`, "pinp-pair--next")}`,
   );
 
   // 3. 순자산 카드 위(Desk) — 흰 아이콘만
   const heroCard = (hidden, interaction = "") => pcard({
     variant: "hero",
-    content: `<div class="pinp-hero-head"><div class="pcard-hero-label">순자산</div>${ptoggleOf("hide", { tone: "inverted", pressed: hidden, interaction })}</div><div class="pcard-hero-amount">${hidden ? "••••••원" : "42,898,100원"}</div><div class="pcard-hero-detail">${pdelta({ direction: "up", value: "1.8%", text: "지난달보다" })}</div>`,
+    content: `<div class="pinp-hero-head"><div class="pcard-hero-label">순자산</div>${peyeButton({ hidden, interaction })}</div><div class="pcard-hero-amount">${hidden ? "••••••원" : "42,898,100원"}</div><div class="pcard-hero-detail">${pdelta({ direction: "up", value: "1.8%", text: "지난달보다" })}</div>`,
   });
   const toggleTone = desk ? panel(
-    "Tone — 순자산 카드 위: 흰 아이콘만(Desk)",
-    "브랜드 채움 위(tone=\"inverted\" — 순자산 카드의 금액 가리기)에서는 아이콘이 켬 · 끔 모두 흰색(static-white)이고 모양(eye · eye-off)과 굵기(2 · 2.5)로만 갈린다 — 그라디언트 위 라이트 8.38 ~ 14.78 · 다크 8.36 ~ 11.25(장식 빛 위 가장 낮은 자리 4.88). 단추 둘레에 원 · 바탕을 두지 않는다 — 흰 아이콘만이다(21A — 늘 흰 12% 원은 고르지 않았다). 브랜드 채움에는 누름 색 짝이 없어 누르면 축소만 한다(Card 의 순자산 카드와 같다). 키보드 포커스 링은 흰색(static-white) 2px · 띄움 2 다 — stroke-focus-ring 은 채움에 묻힌다. 이름은 다른 자리와 같은 \"금액 가리기\" · 가렸으면 눌림 · eye-off 다.",
-    pair(() => `<div class="pinp-stack pinp-stack--floor">${heroCard(false)}${cap("끔 — 보임 · eye · 선 2", "\"금액 가리기, 안 눌림\"")}${heroCard(true)}${cap("켬 — 가림 · eye-off · 선 2.5", "\"금액 가리기, 눌림\" — 금액은 ••••••")}${heroCard(false, "focus")}${cap("키보드 포커스 — 흰 링 2 · 띄움 2", "브랜드 채움 위에서는 stroke-focus-ring 대신 static-white(채움에 묻히지 않게)")}</div>`),
+    "Tone — 순자산 카드 위: 흰 아이콘만 · 금액 가리기 눈은 Toggle 이 아니다(Desk)",
+    "브랜드 채움 위(tone=\"inverted\")에서는 아이콘이 켬 · 끔 모두 흰색(static-white)이고 모양과 굵기(2 · 2.5)로만 갈린다. 지금 이 위에 놓이는 단추는 순자산 카드의 금액 가리기 눈 하나이고, 그 눈은 Toggle 이 아니다 — 누르면 금액 가리기 설정의 그 화면 묶음으로 가는 버튼이라 aria-pressed 없이 이름 \"금액 가리기 설정\" 이고 이 상자 · 색만 빌린다(2026-10-16 Q-017-2b A · Q-017-3c = Q-018-3 B). 아이콘은 그 카드가 가려졌는지(가렸으면 eye-off — 7A)이고 선은 2 그대로다 — 그라디언트 위 라이트 8.38 ~ 14.78 · 다크 8.36 ~ 11.25(장식 빛 위 가장 낮은 자리 4.88). 단추 둘레에 원 · 바탕을 두지 않는다 — 흰 아이콘만이다(21A — 늘 흰 12% 원은 고르지 않았다). 브랜드 채움에는 누름 색 짝이 없어 누르면 축소만 한다(Card 의 순자산 카드와 같다). 키보드 포커스 링은 흰색(static-white) 2px · 띄움 2 다 — stroke-focus-ring 은 채움에 묻힌다. 낭독은 \"금액 가리기 설정, 버튼\" 이다.",
+    pair(() => `<div class="pinp-stack pinp-stack--floor">${heroCard(false)}${cap("보임 — eye · 선 2", "\"금액 가리기 설정, 버튼\" — 누르면 설정의 홈 묶음")}${heroCard(true)}${cap("가림 — eye-off · 선 2", "같은 이름 · aria-pressed 없음 — 금액은 ••••••")}${heroCard(false, "focus")}${cap("키보드 포커스 — 흰 링 2 · 띄움 2", "브랜드 채움 위에서는 stroke-focus-ring 대신 static-white(채움에 묻히지 않게)")}</div>`),
   ) : "";
 
   // 4. 상태
@@ -8819,13 +8830,13 @@ export function renderInputGallery(brand) {
   const tglRows = [
     { ko: "끔", en: "관심 등록 — star 선 2", k: "watch", on: false },
     { ko: "켬", en: "관심 등록 — star 선 2.5", k: "watch", on: true },
-    { ko: "켬 — 기능 단추", en: "금액 가리기 — eye-off 선 2.5", k: "hide", on: true },
-    ...(desk ? [{ ko: "순자산 카드 위", en: "tone inverted — 흰 아이콘", k: "hide", on: false, tone: "inverted" }] : []),
+    { ko: "켬 — 기능 단추", en: "App Key 보기 — eye 선 2.5", k: "key", on: true },
+    ...(desk ? [{ ko: "순자산 카드의 눈", en: "Toggle 아님 — 흰 아이콘 · aria-pressed 없음", eye: true, tone: "inverted" }] : []),
   ];
   const toggleStates = panel(
     "상태 — 기본 · 호버 · 포커스 · 누름 · 막힘 × 끔 · 켬",
     "호버(웹)는 누름과 같은 바탕 bg-layer-default-pressed 이고 축소는 없다. 누르는 동안은 같은 바탕 + 단추 전체 2px 거리 축소(배율 38 ÷ 40)이고, 켬 · 끔은 손을 뗄 때 바뀐다. 키보드 포커스에만 링 2px · 띄움 2(stroke-focus-ring). 막힘은 아이콘만 fg-disabled — 켬은 선 2.5 를 그대로 둬 켜져 있던 것이 보이고, 흐리게 하지 않으며 Tab 순서에서 빠진다(진짜 disabled). 순자산 카드 위는 바탕을 칠하지 않고 축소만 한다. 모션 줄이기면 축소를 뺀다.",
-    matrix("pinp-matrix pinp-matrix--tgl", "단추", TGL_STATES, tglRows, (r, c) => `<span class="pinp-surface${r.tone ? " pinp-surface--hero" : ""}">${ptoggleOf(r.k, { pressed: r.on, tone: r.tone || "default", interaction: c.i === "disabled" ? "" : c.i, disabled: c.i === "disabled" })}</span>`),
+    matrix("pinp-matrix pinp-matrix--tgl", "단추", TGL_STATES, tglRows, (r, c) => `<span class="pinp-surface${r.tone ? " pinp-surface--hero" : ""}">${r.eye ? (c.i === "disabled" ? "—" : peyeButton({ interaction: c.i })) : ptoggleOf(r.k, { pressed: r.on, tone: r.tone || "default", interaction: c.i === "disabled" ? "" : c.i, disabled: c.i === "disabled" })}</span>`),
   );
 
   // 5. 직접 — 바로 바꾸고 보낸다 · 실패하면 되돌리고 스낵바(20A)
@@ -16449,6 +16460,18 @@ export function pageCss() {
     /* 데스크톱 머리(Desk) — 제목 없음(본문 h1), 왼쪽 자리는 본문 여백 32 에서, 오른쪽 끝은 아이콘 버튼 상자가 화면 끝에서 6. 주 버튼 ↔ 첫 아이콘 버튼 8 */
     .ptnav--desktop { padding-left: var(--layout-margin); }
     .ptnav-primary { display: inline-flex; margin-right: var(--spacing-x2); }
+    /* 검색칸 — Text Field 상자형 medium 40(바 안이라 폰에서도). 검색 화면은 제목 자리(← 다음 6 부터 오른쪽 자리 앞 8 까지), 데스크톱 머리는 왼쪽 폭 360 */
+    .ptnav-search { display: flex; flex: 1 1 auto; align-items: center; min-width: 0; margin-left: var(--spacing-x1_5); }
+    .ptnav-search > .ptf-input { width: 100%; }
+    .ptnav--desktop .ptnav-search { flex: 0 1 360px; width: 360px; margin-left: 0; }
+    /* 거래 검색의 거르는 줄 — 칩 small 32 · 줄 40 · 좌우 화면 여백 24. 숨는 머리(.psah)라 바탕을 칠한다 */
+    .pnav-filter-row { display: flex; align-items: center; height: 40px; box-sizing: border-box; padding: 0 var(--spacing-global-gutter); background: var(--color-bg-layer-default); }
+    /* 데스크톱 화면 제목 줄 — 제목(설명은 아래 t3 · fg-neutral-subtle · 위 2) 왼쪽 · 동작 버튼(small · 사이 8) 오른쪽, 사이 16 · 버튼은 아래 끝 맞춤 */
+    .pnav-title-row { display: flex; align-items: flex-end; gap: var(--spacing-x4); margin: var(--spacing-nav-to-title) 0 var(--spacing-x4); }
+    .pnav-title-row > div:first-child { flex: 1 1 auto; min-width: 0; }
+    .pnav-title-row .pnav-screen-title { margin: 0; }
+    .pnav-title-desc { margin: var(--spacing-x0_5) 0 0; font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); word-break: keep-all; overflow-wrap: break-word; }
+    .pnav-title-actions { display: flex; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; gap: var(--spacing-x2); }
     /* 아이콘 버튼 — 상자 44 = 누르는 영역 · 아이콘 24 · 모서리 8 · fg-neutral. 바탕은 누를 때 · 마우스를 올릴 때만 */
     .ptnav-icon,
     .ptnav-text {
@@ -16474,7 +16497,7 @@ export function pageCss() {
     }
     .ptnav-icon { width: 44px; }
     .ptnav-icon svg { display: block; width: 24px; height: 24px; }
-    /* 켜고 끄는 아이콘 버튼(aria-pressed — 금액 가리기) — 켬은 선 2.5, 끔은 선 2. 색은 켬 · 끔 모두 이웃 버튼과 같은 fg-neutral 이다(Toggle 의 흐린 끔은 상단 바에서 쓰지 않는다 — 19B) */
+    /* 켜고 끄는 아이콘 버튼(aria-pressed — 그 자리에서 켜고 끄는 단추만, 다른 화면으로 가는 버튼에는 달지 않는다) — 켬은 선 2.5, 끔은 선 2. 색은 켬 · 끔 모두 이웃 버튼과 같은 fg-neutral 이다(Toggle 의 흐린 끔은 상단 바에서 쓰지 않는다 — 19B) */
     .ptnav-icon[aria-pressed="true"] svg { stroke-width: 2.5; }
     /* 글 버튼 — 높이 44 · 좌우 10 · 16/22 · 500(글자 크기 설정은 1.2배까지) */
     .ptnav-text { padding: 0 var(--spacing-x2_5); font-size: clamp(var(--text-t5-static), var(--text-t5), calc(var(--text-t5-static) * 1.2)); line-height: clamp(var(--text-t5-static--line-height), var(--text-t5--line-height), calc(var(--text-t5-static--line-height) * 1.2)); font-weight: 500; white-space: nowrap; }

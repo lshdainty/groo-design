@@ -4,17 +4,19 @@
  * specs/components/top-navigation.md 의 "코드" 절과 같고, 뒤의 둘(✕ 독립 흐름 · 오른쪽 셋까지와 긴 제목)은 md 의 Properties · Guidelines 를
  * 코드로 더 보인다. porest 에 처음 두는 컴포넌트다.
  *
- * ROOT · ROOT_LEFT · TEXT_T8 · TEXT_T6 · TEXT_T5 · TITLE · TITLE_TYPE · PRESS_TRANSITION · FOCUS_INSIDE · ICON_BUTTON · TEXT_BUTTON 은
- * recipes/shadcn/components/ui/top-navigation.tsx 의 상수와, ROW · ACTIONS · PRIMARY · SCREEN_TITLE 은 그 파일의 JSX 에 적힌 클래스와
- * 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 알림 점 NB_* 는 notification-badge.tsx(notification-badge-examples.mjs)의 것, 주 버튼
- * BUTTON_* 는 button.tsx 의 cva 와 같다 — 이 파일이 쓰는 변형 · 크기(brandSolid · small)와 그에 걸리는 compound 만 옮겼다.
+ * ROOT · ROOT_LEFT · TEXT_T8 · TEXT_T6 · TEXT_T5 · TITLE · TITLE_TYPE · PRESS_TRANSITION · FOCUS_INSIDE · ICON_BUTTON · TEXT_BUTTON · SEARCH ·
+ * SCREEN_TITLE · SCREEN_TITLE_ROW · SCREEN_DESCRIPTION · SCREEN_ACTIONS 는 recipes/shadcn/components/ui/top-navigation.tsx 의 상수와, ROW · ACTIONS · PRIMARY 는
+ * 그 파일의 JSX 에 적힌 클래스와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 검색칸 INPUT_* 는 input.tsx 의 cva(outline · medium 만)와
+ * 같다 — input-examples.mjs 의 ROOT_* · AFFIX_* · VALUE_* · CLEAR 와 같은 글이다. 알림 점 NB_* 는 notification-badge.tsx(notification-badge-examples.mjs)의 것, 주 버튼
+ * BUTTON_* 는 button.tsx 의 cva 와 같다 — 이 파일이 쓰는 변형 · 크기(brandSolid · neutralOutline · small)와 그에 걸리는 compound 만 옮겼다.
  * 규칙은 specs/components/top-navigation.md, 수치 원본은 specs/components/top-navigation.yaml.
  *
  * Preview 는 정적 HTML 이다 — 페이지의 Tailwind v4 browser CDN 이 클래스를 utility 로 만든다.
  * 짜임은 레시피가 그리는 DOM 그대로다 — 바 <header data-slot="top-navigation" data-type> > 줄 <div data-slot="top-navigation-row"> > 왼쪽 버튼 ·
  * 제목 <h1 tabindex="-1" data-screen-title data-slot="top-navigation-title"> · 오른쪽 자리 <div data-slot="top-navigation-actions"> >
  * 아이콘 버튼 <button data-slot="top-navigation-icon-button">(아이콘을 감싼 <span data-slot="notification-badge-target"> + 알림 점) · 글 버튼.
- * 데스크톱 머리는 제목 없이 주 버튼 + 아이콘 버튼이고, 본문 맨 위 제목은 <h1 data-slot="screen-title"> 이다.
+ * 데스크톱 머리는 제목 없이 왼쪽 검색칸 <div data-slot="top-navigation-search"> + 주 버튼 + 아이콘 버튼이고, 본문 맨 위 제목은 <h1 data-slot="screen-title"> —
+ * 설명 · 버튼이 있으면 제목 줄 <div data-slot="screen-title-row"> 안이다. 검색 화면의 제목 자리는 검색칸 + 보이지 않는 <h1 class="sr-only"> 다.
  * 제목 <h1> 의 style 은 사이트의 `.content h1` 을 누르는 미리보기용 덧칠이다(H1_FIX — 클래스와 같은 값).
  * 레시피의 스크립트(← 의 들어온 화면 · 상위 화면 고르기 · ✕ 의 묻기 · 누르는 순간 --press-basis 재기 · 문서 제목)는 정적 HTML 에 없다 —
  * 버튼에 마우스를 올리면 바탕은 레시피 그대로 바뀌지만 아무 데로도 가지 않는다. 폰 화면 · 데스크톱 창 · 목록 줄은 미리보기 틀(레시피가 아니다)이고,
@@ -86,8 +88,46 @@ const ROW = "flex h-[56px] items-center";
 const ACTIONS = "ml-auto flex shrink-0 items-center pl-x2";
 // 데스크톱 머리의 주 버튼 — Button brandSolid small + 첫 아이콘 버튼 상자와 8
 const PRIMARY = "mr-x2";
-// 본문 맨 위 제목(ScreenTitle) — cn(SCREEN_TITLE, FOCUS_INSIDE)
-const SCREEN_TITLE = "m-0 mt-nav-to-title font-sans text-screen-title font-bold text-fg-neutral";
+
+// ── top-navigation.tsx 의 상수와 같은 값 — 검색칸 자리 · 화면 제목 줄 ──────────
+
+// 검색칸 자리 — standard 는 제목 자리(← 다음 6), desktop 은 머리 왼쪽 360
+const SEARCH = {
+  standard: "ml-x1_5 first:ml-[50px] flex min-w-0 flex-1 items-center",
+  desktop: "flex w-[360px] min-w-0 shrink items-center",
+};
+// 본문 맨 위 제목(ScreenTitle) — 홀로 서면 cn(SCREEN_TITLE, "mt-nav-to-title", FOCUS_INSIDE), 제목 줄 안에서는 cn(SCREEN_TITLE, FOCUS_INSIDE)
+const SCREEN_TITLE = "m-0 font-sans text-screen-title font-bold text-fg-neutral";
+const SCREEN_TITLE_ROW = "mt-nav-to-title flex items-end gap-x4";
+const SCREEN_DESCRIPTION = "m-0 mt-x0_5 text-t3 font-normal text-fg-neutral-subtle break-keep [overflow-wrap:break-word]";
+const SCREEN_ACTIONS = "flex shrink-0 flex-wrap items-center justify-end gap-x2";
+
+// ── input.tsx 의 cva 와 같은 값 — 검색칸(outline · medium)만 ──────────────────
+
+const INPUT_ROOT_BASE = [
+  "relative flex w-full min-w-0 items-center overflow-hidden bg-transparent font-sans",
+  "cursor-text data-[disabled]:cursor-not-allowed",
+  "after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:border-solid after:border-transparent after:content-['']",
+  "after:[transition:border-color_var(--motion-duration-d2)_var(--motion-ease-easing)]",
+  "[&:has(input:focus):not([data-invalid]):not([data-readonly])]:after:border-stroke-neutral-contrast",
+  "data-[invalid]:after:border-stroke-critical-solid",
+].join(" ");
+const INPUT_ROOT_OUTLINE = "shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] after:border-2 data-[disabled]:bg-bg-disabled data-[readonly]:bg-bg-disabled";
+const INPUT_ROOT_OUTLINE_MEDIUM = "min-h-10 gap-x2 rounded-r2 text-t4 [--text-input-px:var(--spacing-x3_5)] [--text-input-icon:16px] [--text-input-clear:18px]";
+const INPUT_AFFIX_EDGE = "first:ml-[var(--text-input-px)] last:mr-[var(--text-input-px)]";
+const INPUT_AFFIX_ICON = "flex shrink-0 [&>svg]:size-[var(--text-input-icon)]";
+const INPUT_ICON_COLOR = "text-fg-neutral-muted";
+const INPUT_VALUE_BASE = [
+  "min-w-0 flex-1 self-stretch border-0 bg-transparent p-0 caret-fg-neutral outline-none [font:inherit]",
+  "first:pl-[var(--text-input-px)] last:pr-[var(--text-input-px)] disabled:cursor-not-allowed",
+  "[&:-webkit-autofill]:bg-clip-text [&:-webkit-autofill]:[-webkit-text-fill-color:var(--color-fg-neutral)] [&:-webkit-autofill]:[transition:background-color_9999s_9999s]",
+].join(" ");
+const INPUT_VALUE_COLOR = "text-fg-neutral placeholder:text-fg-placeholder";
+const INPUT_CLEAR = [
+  "relative flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-fg-neutral-subtle",
+  "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "[&>svg]:size-[var(--text-input-clear)]",
+].join(" ");
 
 // ── notification-badge.tsx 의 상수 · cva 와 같은 값 — 점(small · icon)만 ───────
 
@@ -117,6 +157,8 @@ const BUTTON_VARIANTS = {
   variant: {
     brandSolid:
       "bg-bg-brand-solid text-static-white hover:bg-bg-brand-solid-pressed active:bg-bg-brand-solid-pressed aria-busy:bg-bg-brand-solid-pressed [--progress-track:color-mix(in_srgb,var(--color-static-white)_30%,transparent)] [--progress-range:var(--color-static-white)]",
+    neutralOutline:
+      "border border-stroke-neutral-weak bg-transparent text-fg-neutral hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed aria-busy:bg-transparent disabled:bg-transparent [--progress-track:var(--color-gray-500)] [--progress-range:var(--color-fg-neutral)]",
   },
   size: {
     small: "h-9 rounded-r2 [--press-basis:36] [--progress-size:14px]",
@@ -163,11 +205,14 @@ const ICONS = {
   menu: svg('<line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>'),
   search: svg('<path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/>'),
   bell: svg('<path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>'),
-  eye: svg('<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/>'),
   settings: svg('<path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/>'),
   plus: svg('<path d="M5 12h14"/><path d="M12 5v14"/>'),
   share: svg('<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>'),
   ellipsis: svg('<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>'),
+  sliders: svg('<line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/>'),
+  filter: svg('<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>'),
+  download: svg('<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>'),
+  circleX: svg('<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>'),
 };
 
 // <TopNavigation type> — 바 + 줄
@@ -181,6 +226,7 @@ const H1_FIX = {
   root: `margin:0 0 0 10px; letter-spacing:normal; ${clampText("t8")}`,
   standard: `margin:0 0 0 var(--spacing-x1_5); letter-spacing:normal; ${clampText("t6")}`,
   screen: "margin:var(--spacing-nav-to-title) 0 0; letter-spacing:normal; font-size:var(--text-screen-title); line-height:var(--text-screen-title--line-height);",
+  row: "margin:0; letter-spacing:normal; font-size:var(--text-screen-title); line-height:var(--text-screen-title--line-height);",
 };
 // <TopNavigationTitle> — root · standard
 const title = (type, text) =>
@@ -202,6 +248,21 @@ const textButton = (label, disabled = false) =>
   `<button ${attrs(['type="button"', 'data-slot="top-navigation-text-button"', `class="${TEXT_BUTTON}"`, disabled && "disabled"])}>${esc(label)}</button>`;
 const primaryButton = (label) =>
   `<button class="${buttonVariants({ variant: "brandSolid", size: "small" })} ${PRIMARY}" data-slot="top-navigation-primary-button">${ICONS.plus}${esc(label)}</button>`;
+// <Input size="medium" prefixIcon={<Search />} clearable> — 상자 · 앞 돋보기 · 입력 · (값이 있으면) 지우기
+function searchInput({ value = "", placeholder = "거래 검색", ariaLabel = "거래 검색" } = {}) {
+  const clear = value
+    ? `<button type="button" aria-label="지우기" tabindex="-1" data-slot="text-input-clear" class="${INPUT_CLEAR} ${INPUT_AFFIX_EDGE}">${ICONS.circleX}</button>`
+    : "";
+  return `<div data-slot="text-input" data-variant="outline" data-size="medium" class="${INPUT_ROOT_BASE} ${INPUT_ROOT_OUTLINE} ${INPUT_ROOT_OUTLINE_MEDIUM}"><span data-slot="text-input-prefix-icon" aria-hidden="true" class="${INPUT_AFFIX_ICON} ${INPUT_AFFIX_EDGE} ${INPUT_ICON_COLOR}">${ICONS.search}</span><input type="text" data-slot="text-input-value" class="${INPUT_VALUE_BASE} ${INPUT_VALUE_COLOR}" placeholder="${esc(placeholder)}"${value ? ` value="${esc(value)}"` : ""} aria-label="${esc(ariaLabel)}">${clear}</div>`;
+}
+// <TopNavigationSearch> — standard 는 보이지 않는 h1 "검색" 을 앞에 둔다
+const search = (type, inner) =>
+  `<div data-slot="top-navigation-search" class="${SEARCH[type]}">${type === "standard" ? '<h1 tabindex="-1" data-screen-title="" data-slot="top-navigation-search-title" class="sr-only">검색</h1>' : ""}${inner}</div>`;
+// Button neutralOutline small(아이콘 + 글) — 화면 제목 줄의 동작(neutralWeak 는 본문 바탕과 같은 gray-200 이라 묻힌다)
+const smallButton = (icon, label) => `<button type="button" class="${buttonVariants({ variant: "neutralOutline", size: "small" })}">${ICONS[icon]}${esc(label)}</button>`;
+// <ScreenTitle description actions> — 제목 줄
+const screenTitleRow = (text, description, buttons) =>
+  `<div data-slot="screen-title-row" class="${SCREEN_TITLE_ROW}"><div class="min-w-0 flex-1"><h1 tabindex="-1" data-screen-title="" data-slot="screen-title" class="${SCREEN_TITLE} ${FOCUS_INSIDE}" style="${H1_FIX.row}">${esc(text)}</h1><p data-slot="screen-title-description" class="${SCREEN_DESCRIPTION}">${esc(description)}</p></div><div data-slot="screen-title-actions" class="${SCREEN_ACTIONS}">${buttons}</div></div>`;
 
 // 폰 화면 · 데스크톱 창 · 목록 줄 — 미리보기 틀(레시피가 아니다). 폰은 360 까지, 바 아래 몸만 스크롤된다
 const PHONE =
@@ -243,7 +304,7 @@ export const topNavigationExamples = [
   {
     title: "탭 첫 화면 — Root",
     description:
-      "하단 탭의 첫 화면(홈 · 가계부 · 캘린더 · 전체)은 type=\"root\" 다 — 왼쪽 큰 제목(t8 22/30 · 700, 화면 끝에서 16)이고 뒤로 버튼이 없다. 바는 높이 56 · 불투명 bg-layer-default 이고 맨 위에 붙어(sticky · z-sticky 50) 스크롤해도 그 자리에 있으며, 목록이 그 밑으로 지나가도 선 · 그림자를 긋지 않는다. 오른쪽 아이콘 버튼은 상자 44 가 곧 누르는 영역이고 아이콘은 24 다 — 맨 끝 상자가 화면 끝에서 6, 버튼끼리 붙는다. 벨의 알림 점은 Notification Badge small(점 6 · fg-brand — 24 아이콘 상자의 x 17 ~ 23 · y 1 ~ 7)이고, 상단 바에는 점만 둔다 — 새 알림이 있는지는 버튼 이름에도 넣는다(\"알림, 새 알림 있음\"). 미리보기의 목록은 실제로 스크롤된다.",
+      "하단 탭의 첫 화면(홈 · 가계부 · 캘린더 · 전체)은 type=\"root\" 다 — 왼쪽 큰 제목(t8 22/30 · 700, 화면 끝에서 16)이고 뒤로 버튼이 없다. 바는 높이 56 · 불투명 bg-layer-default 이고 맨 위에 붙어(sticky · z-sticky 50) 스크롤해도 그 자리에 있으며, 목록이 그 밑으로 지나가도 선 · 그림자를 긋지 않는다. 오른쪽 아이콘 버튼은 상자 44 가 곧 누르는 영역이고 아이콘은 24 다 — 맨 끝 상자가 화면 끝에서 6, 버튼끼리 붙는다. 벨의 알림 점은 Notification Badge small(점 6 · fg-brand — 24 아이콘 상자의 x 17 ~ 23 · y 1 ~ 7)이고, 상단 바에는 점만 둔다 — 새 알림이 있는지는 버튼 이름에도 넣는다(\"알림, 새 알림 있음\"). Desk 탭 첫 화면의 오른쪽은 홈 = 검색 · 알림, 가계부 · 캘린더 · 전체 = 검색이다 — 검색은 어느 탭에서나 같은 거래 검색 화면, 벨은 알림 화면으로 간다. 금액 가리기는 머리에 두지 않는다(순자산 카드의 눈). 미리보기의 목록은 실제로 스크롤된다.",
     jsx: `import { Bell, Search } from "lucide-react"
 import { TopNavigation, TopNavigationActions, TopNavigationIconButton, TopNavigationTitle } from "@/components/ui/top-navigation"
 
@@ -292,32 +353,74 @@ import { TopNavigation, TopNavigationActions, TopNavigationIconButton, TopNaviga
   },
 
   {
+    title: "거래 검색 화면 — 제목 자리 검색칸",
+    description:
+      "거래 검색 화면은 standard 다 — ← · 제목 자리의 검색칸(TopNavigationSearch) · 오른쪽 고급 필터 아이콘 버튼 하나. 검색칸은 Input outline medium 40(앞 돋보기 16 · 지우기 18)이고, 바 56 안이라 폰에서도 medium 이다(Text Field 의 '1280 이상' 규칙의 예외). ← 다음 6 에서 시작해 오른쪽 자리 앞 8 까지 늘어나고, 화면 이름 대신 칸이 서므로 보이지 않는 h1 \"검색\" 을 TopNavigationSearch 가 둔다(SEED — Standard 는 Title 영역을 Slot 으로). 검색칸 아래 거르는 줄(전체 · 지출 · 수입 칩 — 줄 40)은 바 아래 스크롤 상자 맨 위의 Scroll Auto Hide 다 — 목록을 내리면 숨고, 올려서 반 넘게 나오면 다 드러난다(2026-10-16 사용자 결정 Q-017-5 C). 웹의 거래 검색 화면도 같은 화면이다(Q-017-3a C). 미리보기는 바만 레시피 그대로이고 목록은 틀이다.",
+    jsx: `import { Bell, Search } from "lucide-react"
+import { TopNavigation, TopNavigationActions, TopNavigationIconButton, TopNavigationTitle } from "@/components/ui/top-navigation"
+
+<TopNavigation type="root">
+  <TopNavigationTitle>홈</TopNavigationTitle>
+  <TopNavigationActions>
+    <TopNavigationIconButton aria-label="검색" onClick={openSearch}><Search /></TopNavigationIconButton>
+    {/* 점은 이름에도 넣는다 — 소리로 알 수 있게 */}
+    <TopNavigationIconButton notification={hasUnread} aria-label={hasUnread ? "알림, 새 알림 있음" : "알림"} onClick={openNotifications}>
+      <Bell />
+    </TopNavigationIconButton>
+  </TopNavigationActions>
+</TopNavigation>`,
+    render: () =>
+      phone(
+        topNavigation(
+          "standard",
+          `${iconButton({ icon: "chevronLeft", name: "뒤로", slot: "top-navigation-back-button" })}${search("standard", searchInput({ value: "지어낸마트" }))}${actions(iconButton({ icon: "sliders", name: "고급 필터", extra: ['aria-haspopup="dialog"'] }))}`,
+        ),
+        [["지어낸마트 장보기", "식비 · 10월 3일", "−42,300원"], ["지어낸마트 환불", "식비 · 10월 5일", "+12,000원"], ["지어낸마트 정기 배송", "생활 · 10월 9일", "−18,900원"]],
+        220,
+      ),
+  },
+
+  {
     title: "데스크톱 머리 — Desk",
     description:
-      "768 이상의 Desk 웹은 사이드바 오른쪽 · 본문 위에 type=\"desktop\" 머리를 둔다 — 높이 56 · 선 없음, 왼쪽은 본문 여백 32 에서 시작하고 맨 끝 아이콘 버튼의 상자는 화면 끝에서 6 이다(폰과 같은 규칙). 오른쪽에 주 버튼 하나(TopNavigationPrimaryButton — Button brandSolid small 36 그대로 + 첫 아이콘 버튼과 8)와 아이콘 버튼 3개까지(금액 가리기 · 알림 · 설정)다. 금액 가리기는 켜고 끄는 단추다 — 이름은 고정하고 aria-pressed 를 주며 아이콘은 지금 상태(보이면 eye · 가렸으면 eye-off)이고, 켬은 선 2.5 · 끔은 선 2 이며 끔도 이웃 버튼과 같은 fg-neutral 이다(Toggle 의 흐린 끔은 상단 바에서 쓰지 않는다). 머리에는 제목을 두지 않는다 — 화면 제목은 본문 맨 위 ScreenTitle(h1 · text-screen-title 26/35 · 700, 머리 아래 spacing-nav-to-title 20)이다. 머리는 header 라 main 밖에 둔다. HR 은 데스크톱 머리를 두지 않는다 — 접기 버튼은 사이드바 머리에, 테마는 설정에 있다. 미리보기는 사이드바를 뺀 머리 · 본문이다.",
-    jsx: `import { Bell, Eye, EyeOff, Plus, Settings } from "lucide-react"
-import { ScreenTitle, TopNavigation, TopNavigationActions, TopNavigationIconButton, TopNavigationPrimaryButton } from "@/components/ui/top-navigation"
+      "768 이상의 Desk 웹은 사이드바 오른쪽 · 본문 위에 type=\"desktop\" 머리를 둔다 — 높이 56 · 선 없음, 왼쪽은 본문 여백 32 에서 시작하는 검색칸(TopNavigationSearch — 폭 360, 거래 검색 화면의 입구)이고 맨 끝 아이콘 버튼의 상자는 화면 끝에서 6 이다(폰과 같은 규칙). 오른쪽은 주 버튼 하나(TopNavigationPrimaryButton — Button brandSolid small 36 그대로 + 첫 아이콘 버튼과 8)와 아이콘 버튼 둘(알림 · 설정)이다 — 금액 가리기 눈은 머리에 두지 않는다(2026-10-16 사용자 결정 Q-017-3c = Q-018-3 B, 순자산 카드의 눈이 맡는다). 벨은 1280 이상 벨 아래 Popover · 768 ~ 1279 Bottom Sheet 로 알림 목록을 연다(Q-017-3b B). 머리에는 제목을 두지 않는다 — 화면 제목은 본문 맨 위 ScreenTitle(h1 · text-screen-title 26/35 · 700, 머리 아래 spacing-nav-to-title 20)이고, description · actions 를 주면 한 줄 제목 줄이다 — 제목 · 설명(t3 · fg-neutral-subtle) 왼쪽, 동작 버튼(Button small · 사이 8) 오른쪽이고 버튼은 제목 덩어리 아래 끝에 맞춘다(Q-018-2 A). 머리는 header 라 main 밖에 둔다. HR 은 데스크톱 머리를 두지 않는다. 미리보기는 사이드바를 뺀 머리 · 본문이다.",
+    jsx: `import { Bell, Download, Filter, Plus, Search, Settings } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { ScreenTitle, TopNavigation, TopNavigationActions, TopNavigationIconButton, TopNavigationPrimaryButton, TopNavigationSearch } from "@/components/ui/top-navigation"
 
 <TopNavigation type="desktop">
+  {/* 왼쪽 — 거래 검색의 입구(폭 360). Enter 로 거래 검색 화면에 간다 */}
+  <TopNavigationSearch>
+    <Input size="medium" prefixIcon={<Search />} clearable aria-label="거래 검색" placeholder="거래 검색" value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && openSearch(query)} />
+  </TopNavigationSearch>
   <TopNavigationActions>
     <TopNavigationPrimaryButton onClick={openAddTransaction}><Plus />내역 추가</TopNavigationPrimaryButton>
-    {/* 켜고 끄는 단추 — 이름은 고정, 아이콘은 지금 상태(가렸으면 eye-off — Toggle) */}
-    <TopNavigationIconButton aria-label="금액 가리기" aria-pressed={hidden} onClick={toggleHidden}>{hidden ? <EyeOff /> : <Eye />}</TopNavigationIconButton>
-    <TopNavigationIconButton notification={hasUnread} aria-label={hasUnread ? "알림, 새 알림 있음" : "알림"} onClick={openNotifications}><Bell /></TopNavigationIconButton>
+    {/* 벨 — 1280 이상 Popover · 768 ~ 1279 Bottom Sheet 의 알림 목록(popover.md 의 코드). 금액 가리기 눈은 머리에 두지 않는다 */}
+    <TopNavigationIconButton notification={hasUnread} aria-label={hasUnread ? "알림, 새 알림 있음" : "알림"} aria-haspopup="dialog" aria-expanded={notificationsOpen} onClick={toggleNotifications}><Bell /></TopNavigationIconButton>
     <TopNavigationIconButton aria-label="설정" onClick={openSettings}><Settings /></TopNavigationIconButton>
   </TopNavigationActions>
 </TopNavigation>
 <main id="main">
-  <ScreenTitle>가계부</ScreenTitle>
+  {/* 제목 줄 — 제목 · 설명 왼쪽, 그 화면의 동작 버튼(small) 오른쪽 */}
+  <ScreenTitle
+    description="모든 거래 내역"
+    actions={
+      <>
+        <Button variant="neutralOutline" size="small" onClick={openFilters}><Filter />필터 · 3</Button>
+        <Button variant="neutralOutline" size="small" onClick={exportLedger}><Download />내보내기</Button>
+      </>
+    }
+  >
+    가계부
+  </ScreenTitle>
   …
 </main>`,
     render: () =>
-      `<div style="max-width:100%; overflow-x:auto;"><div style="${DESK}">${topNavigation(
+      `<div style="max-width:100%; overflow-x:auto;"><div style="${DESK} min-width:720px;">${topNavigation(
         "desktop",
-        actions(
-          `${primaryButton("내역 추가")}${iconButton({ icon: "eye", name: "금액 가리기", extra: ['aria-pressed="false"'] })}${iconButton({ icon: "bell", name: "알림, 새 알림 있음", notification: true })}${iconButton({ icon: "settings", name: "설정" })}`,
-        ),
-      )}<div style="padding:0 var(--layout-margin);"><h1 tabindex="-1" data-screen-title="" data-slot="screen-title" class="${SCREEN_TITLE} ${FOCUS_INSIDE}" style="${H1_FIX.screen}">가계부</h1><div style="${CARD}">${rows(LEDGER.slice(0, 3))}</div></div></div></div>`,
+        `${search("desktop", searchInput())}${actions(`${primaryButton("내역 추가")}${iconButton({ icon: "bell", name: "알림, 새 알림 있음", notification: true, extra: ['aria-haspopup="dialog"', 'aria-expanded="false"'] })}${iconButton({ icon: "settings", name: "설정" })}`)}`,
+      )}<div style="padding:0 var(--layout-margin);">${screenTitleRow("가계부", "모든 거래 내역", `${smallButton("filter", "필터 · 3")}${smallButton("download", "내보내기")}`)}<div style="${CARD}">${rows(LEDGER.slice(0, 3))}</div></div></div></div>`,
   },
 
   {
@@ -365,27 +468,27 @@ import { ScreenTitle, TopNavigation, TopNavigationActions, TopNavigationIconButt
     title: "오른쪽 — 셋까지 · 넘치면 ⋯ · 긴 제목",
     description:
       "오른쪽 아이콘 버튼은 2개를 권장하고 3개까지 둔다(SEED) — 더 있으면 자주 쓰는 것만 남기고 나머지를 ⋯ 하나에 모은다(이름 \"{화면 이름} 더보기\" — 1280 이상 Menu, 미만 Menu Sheet). 제목은 한 줄이다 — 길면 말줄임(…)하고 오른쪽 자리 앞 8 을 비운다(TopNavigationActions 의 왼쪽 8). 글자 크기 설정은 1.2배까지만 따른다 — 더 커져도 바 높이 56 을 넘지 않는다.",
-    jsx: `import { Ellipsis, Eye, EyeOff, Search } from "lucide-react"
+    jsx: `import { Ellipsis, Search, Share2 } from "lucide-react"
 
-<TopNavigation type="root">
-  <TopNavigationTitle>가계부</TopNavigationTitle>
+<TopNavigation>
+  <TopNavigationBackButton fallbackHref="/desk/more" />
+  <TopNavigationTitle>카드 혜택</TopNavigationTitle>
   <TopNavigationActions>
     <TopNavigationIconButton aria-label="검색" onClick={openSearch}><Search /></TopNavigationIconButton>
-    {/* 켜고 끄는 단추 — 이름은 고정, 아이콘은 지금 상태(가렸으면 eye-off). 끔도 이웃과 같은 fg-neutral */}
-    <TopNavigationIconButton aria-label="금액 가리기" aria-pressed={hidden} onClick={toggleHidden}>{hidden ? <EyeOff /> : <Eye />}</TopNavigationIconButton>
+    <TopNavigationIconButton aria-label="공유" onClick={share}><Share2 /></TopNavigationIconButton>
     {/* 나머지는 ⋯ 하나에 — 1280 미만은 Menu Sheet */}
-    <TopNavigationIconButton aria-label="가계부 더보기" onClick={openMore}><Ellipsis /></TopNavigationIconButton>
+    <TopNavigationIconButton aria-label="카드 혜택 더보기" onClick={openMore}><Ellipsis /></TopNavigationIconButton>
   </TopNavigationActions>
 </TopNavigation>`,
     render: () =>
       grid([
         labeled(
           phone(
-            topNavigation("root", `${title("root", "가계부")}${actions(`${iconButton({ icon: "search", name: "검색" })}${iconButton({ icon: "eye", name: "금액 가리기", extra: ['aria-pressed="false"'] })}${iconButton({ icon: "ellipsis", name: "가계부 더보기" })}`)}`),
-            LEDGER,
+            topNavigation("standard", `${iconButton({ icon: "chevronLeft", name: "뒤로", slot: "top-navigation-back-button" })}${title("standard", "카드 혜택")}${actions(`${iconButton({ icon: "search", name: "검색" })}${iconButton({ icon: "share", name: "공유" })}${iconButton({ icon: "ellipsis", name: "카드 혜택 더보기" })}`)}`),
+            [["지어낸카드 플러스", "할인 · 연회비 1만원", ""], ["지어낸카드 포인트", "포인트 · 연회비 없음", ""], ["지어낸카드 캐시백", "캐시백 · 연회비 2만원", ""]],
             220,
           ),
-          "셋까지 — 검색 · 금액 가리기 · ⋯",
+          "셋까지 — 검색 · 공유 · ⋯",
         ),
         labeled(
           phone(

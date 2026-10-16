@@ -92,20 +92,21 @@ const PlayRows = ({ tones, mode, n = 6, from = 0 }: { tones: Tones; mode: ViewMo
 const surfaceOf = (t: Tones, mode: ViewMode) => (mode === 'auto' ? `var(--p-${t['bg-layer-basement'].name})` : t['bg-layer-basement'][mode]);
 
 // ══ Top Navigation ═════════════════════════════════════════
-// 금액 가리기는 켜고 끄는 단추 — 이름은 고정, 아이콘은 지금 상태(보임 eye · 가림 eye-off), 켬은 aria-pressed(Toggle · 19B)
-const TOP_ICONS: { icon: 'search' | 'bell' | 'settings' | 'eye'; label: string; jsx: string; on: string }[] = [
+// 폰 오른쪽 자리의 아이콘 — 홈은 검색 · 알림(2026-10-16 Q-017-2a A). 데스크톱 머리는 알림 · 설정(금액 가리기 눈은 두지 않는다 — Q-017-3c B)
+const TOP_ICONS: { icon: 'search' | 'bell' | 'settings' | 'share'; label: string; jsx: string; on: string }[] = [
   { icon: 'search', label: '검색', jsx: 'Search', on: 'openSearch' },
   { icon: 'bell', label: '알림', jsx: 'Bell', on: 'openNotifications' },
   { icon: 'settings', label: '설정', jsx: 'Settings', on: 'openSettings' },
-  { icon: 'eye', label: '금액 가리기', jsx: 'Eye', on: 'toggleHidden' },
+  { icon: 'share', label: '공유', jsx: 'Share2', on: 'share' },
 ];
+const DESK_ICONS = TOP_ICONS.slice(1, 3);
 const TITLES: Record<'root' | 'standard', [string, string]> = {
   root: ['홈', '이번 달 카드 결제 예정 금액 모아 보기'],
   standard: ['알림', '현대카드 M 결제 예정 금액과 받을 혜택 자세히 보기'],
 };
 type Right = 'none' | '1' | '2' | '3' | '4' | 'text';
 
-export function TopNavPlayground({ looks, tones }: { looks: Record<Brand, TopNavLook>; tones: Record<Brand, Tones> }) {
+export function TopNavPlayground({ looks, tones, search }: { looks: Record<Brand, TopNavLook>; tones: Record<Brand, Tones>; search?: Record<Brand, ReactNode> }) {
   const [type, setType] = useState<TopType>('root');
   const [leading, setLeading] = useState<TopLeading>('back');
   const [right, setRight] = useState<Right>('2');
@@ -114,7 +115,6 @@ export function TopNavPlayground({ looks, tones }: { looks: Record<Brand, TopNav
   const [mode, setMode] = useState<ViewMode>('auto');
   const [brand, setBrand] = useState<Brand>('desk');
   const [said, setSaid] = useState('');
-  const [hidden, setHidden] = useState(false);
   const look = looks[brand];
   const t = tones[brand];
   const desktop = type === 'desktop';
@@ -123,16 +123,12 @@ export function TopNavPlayground({ looks, tones }: { looks: Record<Brand, TopNav
   const textBtn = right === 'text' && !desktop;
   const count = right === 'text' || right === 'none' ? 0 : Number(right);
   const overflow = count > 3;
-  const shown = overflow ? TOP_ICONS.slice(0, 2) : TOP_ICONS.slice(0, desktop ? Math.max(count, 0) : count);
+  const shown = desktop ? (right === 'none' ? [] : DESK_ICONS) : overflow ? TOP_ICONS.slice(0, 2) : TOP_ICONS.slice(0, count);
   const actions: TopAction[] = textBtn
     ? [{ kind: 'text', label: '모두 읽음' }]
     : [
-        ...shown.map((a) =>
-          a.icon === 'eye'
-            ? { icon: hidden ? ('eye-off' as const) : ('eye' as const), label: a.label, pressed: hidden }
-            : { icon: a.icon, label: a.icon === 'bell' && dot === 'on' ? '알림, 새 알림 있음' : a.label, notification: a.icon === 'bell' && dot === 'on' },
-        ),
-        ...(overflow ? [{ icon: 'more' as const, label: `${desktop ? '가계부' : title.split(' ')[0]} 더보기` }] : []),
+        ...shown.map((a) => ({ icon: a.icon, label: a.icon === 'bell' && dot === 'on' ? '알림, 새 알림 있음' : a.label, notification: a.icon === 'bell' && dot === 'on' })),
+        ...(overflow && !desktop ? [{ icon: 'more' as const, label: `${title.split(' ')[0]} 더보기` }] : []),
       ];
   const code = useMemo(() => {
     const comps = new Set(['TopNavigation']);
@@ -140,8 +136,9 @@ export function TopNavPlayground({ looks, tones }: { looks: Record<Brand, TopNav
     const lines: string[] = [];
     const act: string[] = [];
     if (desktop) {
-      comps.add('TopNavigationActions').add('TopNavigationPrimaryButton').add('ScreenTitle');
-      icons.add('Plus');
+      comps.add('TopNavigationActions').add('TopNavigationPrimaryButton').add('ScreenTitle').add('TopNavigationSearch');
+      icons.add('Plus').add('Search');
+      lines.push('  {/* 왼쪽 — 거래 검색의 입구(폭 360) */}', '  <TopNavigationSearch>', '    <Input size="medium" prefixIcon={<Search />} clearable aria-label="거래 검색" placeholder="거래 검색" value={query} onChange={(e) => setQuery(e.target.value)} />', '  </TopNavigationSearch>');
       act.push('    <TopNavigationPrimaryButton onClick={openAddTransaction}><Plus />내역 추가</TopNavigationPrimaryButton>');
     }
     if (textBtn) {
@@ -152,10 +149,7 @@ export function TopNavPlayground({ looks, tones }: { looks: Record<Brand, TopNav
         comps.add('TopNavigationActions').add('TopNavigationIconButton');
         icons.add(a.jsx);
         if (a.icon === 'bell' && dot === 'on') act.push(`    <TopNavigationIconButton notification={hasUnread} aria-label={hasUnread ? "알림, 새 알림 있음" : "알림"} onClick={${a.on}}><${a.jsx} /></TopNavigationIconButton>`);
-        else if (a.icon === 'eye') {
-          icons.add('EyeOff');
-          act.push(`    <TopNavigationIconButton aria-label="${a.label}" aria-pressed={hidden} onClick={${a.on}}>{hidden ? <EyeOff /> : <Eye />}</TopNavigationIconButton>`);
-        } else act.push(`    <TopNavigationIconButton aria-label="${a.label}" onClick={${a.on}}><${a.jsx} /></TopNavigationIconButton>`);
+        else act.push(`    <TopNavigationIconButton aria-label="${a.label}" onClick={${a.on}}><${a.jsx} /></TopNavigationIconButton>`);
       }
       if (overflow) {
         icons.add('Ellipsis');
@@ -172,22 +166,16 @@ export function TopNavPlayground({ looks, tones }: { looks: Record<Brand, TopNav
       lines.push(`  <TopNavigationTitle>${title}</TopNavigationTitle>`);
     }
     if (act.length) lines.push('  <TopNavigationActions>', ...act, '  </TopNavigationActions>');
-    const imp = `${icons.size ? `import { ${[...icons].sort().join(', ')} } from "lucide-react"\n` : ''}import { ${[...comps].sort().join(', ')} } from "@/components/ui/top-navigation"\n\n`;
+    const imp = `${icons.size ? `import { ${[...icons].sort().join(', ')} } from "lucide-react"\n` : ''}${desktop ? 'import { Input } from "@/components/ui/input"\n' : ''}import { ${[...comps].sort().join(', ')} } from "@/components/ui/top-navigation"\n\n`;
     const open = desktop ? '<TopNavigation type="desktop">' : type === 'root' ? '<TopNavigation type="root">' : '<TopNavigation>';
     const tail = desktop ? '\n<main id="main">\n  <ScreenTitle>가계부</ScreenTitle>\n  …\n</main>' : '';
     return `${imp}${open}\n${lines.join('\n')}\n</TopNavigation>${tail}`;
   }, [desktop, textBtn, shown, dot, overflow, actions, type, leading, title]);
   const tap = (what: string) => setSaid(what);
-  const onAction = (i: number) => {
-    const a = actions[i];
-    if (a.kind !== 'text' && a.pressed !== undefined) {
-      setHidden((h) => !h);
-      setSaid(`금액 가리기, ${hidden ? '안 눌림' : '눌림'}`);
-    } else tap(a.label);
-  };
+  const onAction = (i: number) => tap(actions[i].label);
   const stage = desktop ? (
     <div style={{ overflow: 'hidden', borderRadius: 16, boxShadow: `inset 0 0 0 1px ${tc(t, 'stroke-neutral-subtle', mode)}`, background: tc(t, 'bg-layer-basement', mode), fontFamily: FONT }}>
-      <TopNavBar look={look} mode={mode} type="desktop" actions={actions} primary={{ label: '내역 추가', icon: 'plus' }} live onAction={onAction} onPrimary={() => tap('내역 추가')} />
+      <TopNavBar look={look} mode={mode} type="desktop" search={search?.[brand]} actions={actions} primary={{ label: '내역 추가', icon: 'plus' }} live onAction={onAction} onPrimary={() => tap('내역 추가')} />
       <div style={{ paddingTop: look.desktop.navToTitle, paddingLeft: look.desktop.padLeft, paddingBottom: 24, ...{ fontFamily: look.desktop.screenTitle.fontFamily, fontSize: look.desktop.screenTitle.fontSize, lineHeight: look.desktop.screenTitle.lineHeight, fontWeight: look.desktop.screenTitle.fontWeight }, color: tc(t, 'fg-neutral', mode) }}>가계부</div>
     </div>
   ) : (
@@ -206,7 +194,7 @@ export function TopNavPlayground({ looks, tones }: { looks: Record<Brand, TopNav
         <>
           <Seg label="타입" value={type} options={[['root', 'Root — 탭 첫 화면'], ['standard', 'Standard — 그 아래'], ['desktop', '데스크톱 머리']]} onChange={(v) => setType(v as TopType)} />
           {type === 'standard' ? <Seg label="왼쪽 버튼" value={leading} options={[['back', '← 뒤로'], ['close', '✕ 닫기'], ['menu', '☰ 주 메뉴']]} onChange={(v) => setLeading(v as TopLeading)} /> : <div className="text-[12px] leading-5 text-fd-muted-foreground">왼쪽 버튼은 Standard 만 둔다 — Root 는 큰 제목, 데스크톱 머리는 제목이 본문 h1 이다.</div>}
-          <Seg label="오른쪽" value={right} options={desktop ? [['none', '주 버튼만'], ['1', '아이콘 1'], ['2', '아이콘 2'], ['3', '아이콘 3'], ['4', '넷 → ⋯']] : [['none', '없음'], ['1', '아이콘 1'], ['2', '아이콘 2'], ['3', '아이콘 3'], ['4', '넷 → ⋯'], ['text', '글 버튼']]} onChange={(v) => setRight(v as Right)} />
+          <Seg label="오른쪽" value={right} options={desktop ? [['none', '주 버튼만'], ['2', '주 버튼 + 알림 · 설정']] : [['none', '없음'], ['1', '아이콘 1'], ['2', '아이콘 2'], ['3', '아이콘 3'], ['4', '넷 → ⋯'], ['text', '글 버튼']]} onChange={(v) => setRight(v as Right)} />
           <Seg label="알림 점(벨)" value={dot} options={[['on', '있음'], ['off', '없음']]} onChange={setDot} />
           {!desktop && <Seg label="제목" value={long} options={[['short', '짧게'], ['long', '길게 — 말줄임']]} onChange={setLong} />}
           <Seg label="모드" value={mode} options={MODES} onChange={setMode} />
@@ -218,15 +206,13 @@ export function TopNavPlayground({ looks, tones }: { looks: Record<Brand, TopNav
   );
 }
 
-// ── Top Navigation 코드 — Desk 데스크톱 머리(주 버튼 + 아이콘 셋). 금액 가리기는 켜고 끄는 단추 ─────
-export function DeskHeaderLive({ look }: { look: TopNavLook }) {
-  const [hidden, setHidden] = useState(false);
+// ── Top Navigation 코드 — Desk 데스크톱 머리(검색칸 · 주 버튼 + 알림 · 설정 — 2026-10-16 Q-017-3a C · 3c B) ─────
+export function DeskHeaderLive({ look, search }: { look: TopNavLook; search?: ReactNode }) {
   const actions: TopAction[] = [
-    { icon: hidden ? 'eye-off' : 'eye', label: '금액 가리기', pressed: hidden },
     { icon: 'bell', label: '알림, 새 알림 있음', notification: true },
     { icon: 'settings', label: '설정' },
   ];
-  return <TopNavBar look={look} type="desktop" actions={actions} primary={{ label: '내역 추가', icon: 'plus' }} live as="header" onAction={(i) => i === 0 && setHidden((h) => !h)} />;
+  return <TopNavBar look={look} type="desktop" search={search} actions={actions} primary={{ label: '내역 추가', icon: 'plus' }} live as="header" />;
 }
 
 // ══ Bottom Navigation ══════════════════════════════════════

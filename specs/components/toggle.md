@@ -1,16 +1,16 @@
 # Toggle
 
-> 단추 하나가 한 상태를 켜고 끄는 아이콘 단추 — 관심 등록 · 메모 고정 · 금액 가리기 · 비밀값 보기. 이름은 그대로 두고 켬은 `aria-pressed` 가 알린다. 여럿 가운데 고르거나 거르는 것은 [Chip](chip.md), 누르는 순간 적용되는 설정 줄은 [Switch](switch.md), 저장해야 적용되는 켜고 끄기는 [Checkbox](checkbox.md) 다.
+> 단추 하나가 한 상태를 그 자리에서 켜고 끄는 아이콘 단추 — 관심 등록 · 메모 고정 · 비밀값 보기. 이름은 그대로 두고 켬은 `aria-pressed` 가 알린다. 금액 가리기 눈은 설정으로 가는 버튼이라 Toggle 이 아니다(아래). 여럿 가운데 고르거나 거르는 것은 [Chip](chip.md), 누르는 순간 적용되는 설정 줄은 [Switch](switch.md), 저장해야 적용되는 켜고 끄기는 [Checkbox](checkbox.md) 다.
 
 SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 Toggle Button(32 · 36, `aria-pressed`)이 코드에만 있고, 아이콘 켜고 끄기는 Iconography 의 규칙("OFF, ON 개념이 있는 버튼의 상태 전환을 표현할 때는 Default(Line), On(Fill), Off(Line+Slash)을 사용합니다")과 하트 단추(Reaction Button · Image Frame Reaction Button)뿐이다(당근 SEED, Apache-2.0). porest 는 켜고 끄는 단추를 아이콘 단추 하나로 두고(2026-10-09 사용자 결정) 켬 · 끔을 아이콘의 모양 · 굵기 · 색으로만 가른다 — 바탕은 칠하지 않는다. 글 토글(옛 Toggle 의 `default` · `outline` 28 · 32 · 40)과 Toggle Group 은 걷었다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다.
 
 수치 원본은 [`toggle.yaml`](toggle.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
-[그림: 증권 상세 머리의 관심 등록 · 메모 카드의 고정 · 상단 바의 금액 가리기 — 라이트 · 다크](../../site/components/specs/toggle.tsx#hero)
+[그림: 종목 머리의 관심 등록 · 메모 카드의 고정 · 증권 연결의 App Key 보기 — 라이트 · 다크](../../site/components/specs/toggle.tsx#hero)
 
 ### 직접 골라 보기
 
-단추(관심 등록 · 메모 고정 · 금액 가리기 · App Key 보기) · 켬 · 끔 · 표면(흰 표면 · 순자산 카드) · 막힘을 고르면 스펙대로 그린 단추와 그 코드가 바뀐다. 실제로 눌러 보면 아이콘과 보조 기술이 읽는 말("관심 등록, 눌림")이 함께 바뀐다.
+단추(관심 등록 · 메모 고정 · App Key 보기) · 켬 · 끔 · 막힘을 고르면 스펙대로 그린 단추와 그 코드가 바뀐다. 실제로 눌러 보면 아이콘과 보조 기술이 읽는 말("관심 등록, 눌림")이 함께 바뀐다.
 
 [그림: 플레이그라운드](../../site/components/specs/toggle.tsx#playground)
 
@@ -30,7 +30,7 @@ SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 To
 
 켬 · 끔은 아이콘이 말한다 — 켬은 진한 색(`fg-neutral`) + 선 2.5, 끔은 흐린 색(`fg-neutral-muted`) + 선 2 다(기초 Iconography v106 — lucide 에 채움 모양이 없어 SEED 의 "켬 = 채움" 을 굵기와 색으로 대신한다). 바탕은 켬 · 끔 모두 투명하다 — 상단 바 · 카드 위에서 조용하고, 켬이 "고른 칸" 처럼 무거워지지 않는다(사용자 결정 5A — 켜면 옅은 바탕 · 반전은 고르지 않았다). 상단 바 안에서만 끔도 진한 색이다(아래 Size).
 
-[그림: 켬 · 끔 — 관심 등록 · 메모 고정 · 금액 가리기 · App Key 보기, 라이트 · 다크](../../site/components/specs/toggle.tsx#toggled)
+[그림: 켬 · 끔 — 관심 등록 · 메모 고정 · App Key 보기, 라이트 · 다크](../../site/components/specs/toggle.tsx#toggled)
 
 [표: 끔 · 켬](toggle.yaml#toggled)
 
@@ -38,31 +38,30 @@ SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 To
 
 아이콘은 누르면 할 일이 아니라 **지금 상태**를 그린다(사용자 결정 7A). 단추는 둘로 나뉜다.
 
-- **기능 단추** — 무언가를 보이거나 숨기고, 켜거나 끈다(눈 · 종). 아이콘은 lucide 의 짝이고 지금 상태 쪽을 보인다 — 금액이 가려져 있으면 `eye-off`, 보이면 `eye`. 꺼진 기능은 사선(`-off`)이다.
+- **기능 단추** — 무언가를 보이거나 숨기고, 켜거나 끈다(눈 · 종). 아이콘은 lucide 의 짝이고 지금 상태 쪽을 보인다 — 키가 가려져 있으면 `eye-off`, 보이면 `eye`. 꺼진 기능은 사선(`-off`)이다.
 - **모으기 단추** — 항목을 모아 둔다(관심 · 고정). 끔에도 사선을 두지 않는다 — 같은 아이콘이 흐린 선 2 · 진한 선 2.5 로만 갈린다(사용자 결정 6B — SEED 하트처럼). 관심에 넣지 않은 종목마다 사선 별이 깔리지 않는다. 채우지 않는다 — 앱의 lucide 글꼴은 채울 수 없다.
 
 | 단추 | 이름(고정) | 눌림의 뜻 | 끔 | 켬 |
 |---|---|---|---|---|
 | 관심 등록 | "관심 등록" | 관심에 넣었다 | `star` 흐린 선 2 | `star` 진한 선 2.5 |
 | 메모 고정 | "{메모 제목} 고정" | 고정했다 | `pin` 흐린 선 2 | `pin` 진한 선 2.5 |
-| 금액 가리기 | "금액 가리기" | 금액을 가렸다 | `eye`(보임) | `eye-off`(가림) |
 | App Key 보기 | "App Key 보기" | 키를 보였다 | `eye-off`(가림) | `eye`(보임) |
 
 [그림: 기능 단추는 -off 짝 · 모으기 단추는 사선 없이 — 종목 머리 · 메모 카드](../../site/components/specs/toggle.tsx#icon-guide)
 
 ### Size
 
-크기는 하나다 — 보이는 40 · 누르는 44 · 아이콘 20 · 모서리 8(Button medium 의 아이콘만 있는 단추와 같은 상자). 상단 바 안에서는 [Top Navigation](top-navigation.md) 의 아이콘 버튼(상자 44 · 아이콘 24)을 쓴다. 이름 고정 · `aria-pressed` · 지금 상태의 아이콘 · 굵기(끔 2 · 켬 2.5)는 같고 색만 다르다 — 끔도 이웃 버튼과 같은 진한 색(`fg-neutral`)이다. 알림 · 설정 사이에서 눈만 흐리면 막힌 단추처럼 보이기 때문이다(사용자 결정 2026-10-09 19B — 상단 바에서도 흐린 끔은 고르지 않았다).
+크기는 하나다 — 보이는 40 · 누르는 44 · 아이콘 20 · 모서리 8(Button medium 의 아이콘만 있는 단추와 같은 상자). 상단 바 안에 켜고 끄는 단추를 둘 때는 [Top Navigation](top-navigation.md) 의 아이콘 버튼(상자 44 · 아이콘 24)을 쓴다. 이름 고정 · `aria-pressed` · 지금 상태의 아이콘 · 굵기(끔 2 · 켬 2.5)는 같고 색만 다르다 — 끔도 이웃 버튼과 같은 진한 색(`fg-neutral`)이다. 아이콘 줄에서 하나만 흐리면 막힌 단추처럼 보이기 때문이다(사용자 결정 2026-10-09 19B — 상단 바에서도 흐린 끔은 고르지 않았다). 지금 상단 바에 켜고 끄는 단추를 두는 화면은 없다 — 상단 바에 있던 금액 가리기 눈은 2026-10-16 머리에서 뺐다(Top Navigation).
 
-[그림: 보이는 40 · 누르는 44 · 아이콘 20 · 상단 바의 44 · 24](../../site/components/specs/toggle.tsx#size)
+[그림: 보이는 40 · 누르는 44 · 아이콘 20 · 상단 바 안이라면 44 · 24](../../site/components/specs/toggle.tsx#size)
 
 [표: 공통](toggle.yaml#base.enabled)
 
 ### Tone
 
-흰 표면 · 카드 · 시트 위가 기본(`default`)이다. 브랜드 채움 위(`inverted` — 순자산 카드의 금액 가리기)에서는 아이콘이 켬 · 끔 모두 흰색이고 모양(`eye` · `eye-off`)과 굵기(2 · 2.5)로만 갈린다. 브랜드 채움에는 누름 색 짝이 없어 누르면 축소만 한다([Card](card.md) 의 순자산 카드와 같다). 단추 둘레에 원 · 바탕을 두지 않는다 — 흰 아이콘만이다(사용자 결정 2026-10-09 21A — 늘 흰 12% 원은 고르지 않았다).
+흰 표면 · 카드 · 시트 위가 기본(`default`)이다. 브랜드 채움 위(`inverted`)에서는 아이콘이 켬 · 끔 모두 흰색이고 모양과 굵기(2 · 2.5)로만 갈린다. 브랜드 채움에는 누름 색 짝이 없어 누르면 축소만 한다([Card](card.md) 의 순자산 카드와 같다). 단추 둘레에 원 · 바탕을 두지 않는다 — 흰 아이콘만이다(사용자 결정 2026-10-09 21A — 늘 흰 12% 원은 고르지 않았다). 지금 브랜드 채움 위의 단추는 순자산 카드의 금액 가리기 눈 하나이고, 그 눈은 Toggle 이 아니라 이 상자 · 색만 빌린 설정으로 가는 버튼이다(아래 "금액 가리기 눈은 Toggle 이 아니다").
 
-[그림: 순자산 카드 위 금액 가리기 — 끔 · 켬, 라이트 · 다크](../../site/components/specs/toggle.tsx#tone)
+[그림: 순자산 카드 위 금액 가리기 눈 — 보임 · 가림, 라이트 · 다크](../../site/components/specs/toggle.tsx#tone)
 
 [표: 표면](toggle.yaml#tone)
 
@@ -90,15 +89,19 @@ SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 To
 
 ### 이름은 고정, 켬은 aria-pressed
 
-이름은 단추가 켜고 끄는 것 하나로 두고 상태마다 바꾸지 않는다 — "관심 등록" 이 켜지면 "관심 등록, 눌림" 이다("관심 해제" 로 바꾸면 "관심 해제, 눌림" 처럼 이름과 상태가 겹쳐 읽힌다 — APG Button). 지금 상태를 이름에 넣지 않는다. 이름은 짧은 명사 · 동사구("금액 가리기")이고, 같은 줄에 단추가 여럿이면 줄 이름을 앞에 붙인다("장보기 목록 고정").
+이름은 단추가 켜고 끄는 것 하나로 두고 상태마다 바꾸지 않는다 — "관심 등록" 이 켜지면 "관심 등록, 눌림" 이다("관심 해제" 로 바꾸면 "관심 해제, 눌림" 처럼 이름과 상태가 겹쳐 읽힌다 — APG Button). 지금 상태를 이름에 넣지 않는다. 이름은 짧은 명사 · 동사구("관심 등록" · "App Key 보기")이고, 같은 줄에 단추가 여럿이면 줄 이름을 앞에 붙인다("장보기 목록 고정").
 
 [그림: 읽기 — "관심 등록, 눌림" · 이름이 바뀌는 "관심 해제, 눌림"](../../site/components/specs/toggle.tsx#name-guide)
 
 ### 눈은 지금 상태
 
-금액 가리기는 이름이 늘 "금액 가리기" 이고, 가렸으면 눌림 · `eye-off` 다 — 상단 바 · 홈 · 자산 · 설정 어디서나 같다. 누르면 할 일(가렸으면 `eye` · "금액 표시")을 그리지 않는다(사용자 결정 7A — 같은 화면에서 두 단추가 반대 아이콘을 보이던 것을 걷는다). App Key 보기도 같은 규칙이라 키가 가려져 있으면 끔 · `eye-off` 다.
+눈 아이콘은 늘 지금 상태다 — 가려져 있으면 `eye-off`, 보이면 `eye`. 누르면 할 일(가렸으면 `eye` · "금액 표시")을 그리지 않는다(사용자 결정 7A — 같은 화면에서 두 단추가 반대 아이콘을 보이던 것을 걷는다). App Key 보기는 키가 가려져 있으면 끔 · `eye-off` 다.
 
-[그림: 상단 바 · 순자산 카드 · 자산 상세 바닥 — 보임 · 가림이 같은 아이콘](../../site/components/specs/toggle.tsx#eye-guide)
+### 금액 가리기 눈은 Toggle 이 아니다
+
+홈 · 자산 순자산 카드의 눈은 켜고 끄지 않는다 — 누르면 금액 가리기 설정의 그 화면 묶음(홈 · 자산)으로 간다. 2026-08-06 부터 가리기는 화면 · 카드 단위라 단추 하나로는 무엇을 가릴지 정할 수 없다. 그래서 `aria-pressed` 를 달지 않고 이름은 "금액 가리기 설정" 이다 — 낭독은 "금액 가리기 설정, 버튼" 이고 누르면 설정 화면이 열린다. 모양은 Toggle 의 상자(보이는 40 · 누르는 44 · 아이콘 20)와 표면 색(`toggleVariants` 의 `tone`)을 빌리고, 아이콘은 그 카드가 가려졌는지를 그린다(가렸으면 `eye-off` — 7A, 선은 2 그대로). 순자산 카드 위는 흰 아이콘만이다(21A). 폰 탭 첫 화면 · 데스크톱 머리에는 두지 않는다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-017-2b A · Q-017-3c = Q-018-3 B).
+
+[그림: 눈 — 홈 · 자산 순자산 카드, 아이콘은 그 카드의 지금 상태 · 누르면 설정](../../site/components/specs/toggle.tsx#eye-guide)
 
 ### 글 토글은 두지 않는다
 
@@ -106,7 +109,8 @@ SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 To
 
 | 이런 자리 | 쓰는 것 |
 |---|---|
-| 단추 하나가 한 상태를 켜고 끈다(관심 · 고정 · 가리기) | **Toggle**(`aria-pressed`) |
+| 단추 하나가 한 상태를 그 자리에서 켜고 끈다(관심 · 고정 · 키 보기) | **Toggle**(`aria-pressed`) |
+| 지금 상태를 그리되 누르면 다른 화면으로(순자산 카드의 금액 가리기 눈 → 설정) | Toggle 의 상자를 빌린 버튼 — `aria-pressed` 없음 |
 | 여럿 가운데 거르거나 고른다(계좌 거르기 · 알림 시각) | [Chip](chip.md) — 체크박스 · 라디오 의미 |
 | 누르는 순간 적용되는 설정 줄 | [Switch](switch.md) · List 의 스위치 줄 |
 | 저장해야 적용되는 켜고 끄기 · 할 일 완료 | [Checkbox](checkbox.md) |
@@ -139,15 +143,14 @@ import { Toggle } from "@/components/ui/toggle"
 <Toggle aria-label="관심 등록" pressed={watched} onPressedChange={setWatched} icon={<Star />} />
 ```
 
-### 금액 가리기 — 기능 단추
+### App Key 보기 — 기능 단추
 
-[그림: 금액 가리기 — 보임(eye) · 가림(eye-off)](../../site/components/specs/toggle.tsx#ex-eye)
+[그림: App Key 보기 — 가림(eye-off) · 보임(eye)](../../site/components/specs/toggle.tsx#ex-eye)
 
 ```tsx
 import { Eye, EyeOff } from "lucide-react"
 import { Toggle } from "@/components/ui/toggle"
 
-<Toggle aria-label="금액 가리기" pressed={hidden} onPressedChange={setHidden} icon={<Eye />} pressedIcon={<EyeOff />} />
 <Toggle aria-label="App Key 보기" pressed={shown} onPressedChange={setShown} icon={<EyeOff />} pressedIcon={<Eye />} />
 ```
 
@@ -167,15 +170,18 @@ import { Toggle } from "@/components/ui/toggle"
 />
 ```
 
-### 순자산 카드 위
+### 순자산 카드의 눈 — Toggle 이 아니다
 
-[그림: 순자산 카드 — 흰 아이콘, 가림 · 보임](../../site/components/specs/toggle.tsx#ex-inverted)
+[그림: 순자산 카드 — 흰 아이콘, 누르면 금액 가리기 설정](../../site/components/specs/toggle.tsx#ex-inverted)
 
 ```tsx
 import { Eye, EyeOff } from "lucide-react"
-import { Toggle } from "@/components/ui/toggle"
+import { toggleVariants } from "@/components/ui/toggle"
 
-<Toggle tone="inverted" aria-label="금액 가리기" pressed={hidden} onPressedChange={setHidden} icon={<Eye />} pressedIcon={<EyeOff />} />
+{/* 켜고 끄지 않는다 — 금액 가리기 설정의 이 화면 묶음으로 간다. aria-pressed 없음, 아이콘은 이 카드가 가려졌는지 */}
+<button type="button" aria-label="금액 가리기 설정" className={toggleVariants({ tone: "inverted" })} onClick={() => openHideAmountsSettings("home")}>
+  {hidden ? <EyeOff aria-hidden /> : <Eye aria-hidden />}
+</button>
 ```
 
 ## Behavior
@@ -206,9 +212,10 @@ import { Toggle } from "@/components/ui/toggle"
 
 ### ✅ Do
 
-- 단추 하나가 한 상태를 켜고 끌 때 쓴다 — 관심 · 고정 · 가리기 · 보기.
+- 단추 하나가 한 상태를 그 자리에서 켜고 끌 때 쓴다 — 관심 · 고정 · 키 보기.
 - 이름은 고정하고 켬은 `aria-pressed` 로.
 - 아이콘은 지금 상태를 그린다 — 가렸으면 `eye-off`.
+- 다른 화면으로 가는 눈(금액 가리기 설정)은 `aria-pressed` 없는 버튼으로.
 - 모으기 단추(관심 · 고정)의 끔은 사선 없이, 기능 단추(눈 · 종)의 끔은 `-off`.
 - 누르면 바로 바꾸고, 실패하면 되돌려 알린다.
 
@@ -219,6 +226,7 @@ import { Toggle } from "@/components/ui/toggle"
 - 관심 · 고정의 끔을 사선(`star-off` · `pin-off`)으로 · 별을 채우기.
 - 글이 있는 켜고 끄기 단추 · 거르기에 Toggle 쓰기(Chip).
 - 요청 중에 단추를 막기.
+- 설정으로 가는 버튼에 Toggle · `aria-pressed` 쓰기 — "눌림" 이라 읽히고 화면이 바뀐다.
 - 보이는 크기를 40 보다 작게(지금 18 · 21 · 26 · 28 · 32 · 36).
 
 ## Specification
@@ -237,6 +245,12 @@ import { Toggle } from "@/components/ui/toggle"
 - **막힘은 진짜 `disabled`**(Tab 에서 빠진다 — Button 과 같다). SEED 는 `aria-disabled`(포커스가 남는다)다. 불러오는 중(loading)은 두지 않는다 — 누르면 바로 바뀐다.
 
 ## Migration notes
+
+### 2026-10-16 — 금액 가리기 눈은 Toggle 이 아니다
+
+금액 가리기 눈은 2026-08-06 부터 실제 제품에서 켜고 끄지 않고 금액 가리기 설정으로 간다(가리기는 화면 · 카드 단위). 이 스펙은 그 눈을 켜고 끄는 단추로 적어 왔다 — 사용자가 [구현 질문 Q-017 · Q-018 비교 페이지](https://claude.ai/artifact/6R7NBc4ByvxGyLy6E6tvKf)에서 데스크톱 머리의 눈을 빼고(Q-017-3c = Q-018-3 B) 폰은 순자산 카드의 눈 그대로(Q-017-2b A)로 정해, 눈을 Toggle 목록에서 빼고 "금액 가리기 눈은 Toggle 이 아니다" 를 더했다. 모양 결정(7A 지금 상태 · 21A 흰 아이콘만)은 그대로 산다. 19B(상단 바에서는 끔도 진한 색)는 상단 바에 켜고 끄는 단추를 둘 때의 규칙으로 남는다.
+
+- **Desk 웹 · 앱** — 순자산 카드 눈(웹 `DashboardPage.tsx:1185 · 2186` · `AssetPage.tsx:1678 · 1972`, 앱 `dashboard_screen.dart:561` · `asset_screen.dart:648`)의 이름을 "금액 가리기 설정" 으로, `aria-pressed` · 앱 `toggled` 는 달지 않는다. 데스크톱 머리의 눈(`PorestTopBar.tsx:44-52`)은 걷는다.
 
 ### 2026-10-09 — 켜고 끄는 아이콘 단추로 다시 쓴다
 

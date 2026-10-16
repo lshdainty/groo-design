@@ -1,6 +1,7 @@
 // Toggle 페이지의 그림 — specs/components/toggle.md 의 `[그림: …](../../site/components/specs/toggle.tsx#<id>)` 자리.
-// 단추는 toggle.yaml 을 푼 값(toggleLook — toggle-view)으로, 상단 바의 금액 가리기는 Top Navigation 아이콘 버튼(top-navigation.yaml — 44 · 24,
-// 끔도 fg-neutral · 19B)으로, 카드 · 순자산 카드는 card.yaml(data-card-view)로 그린다. 종목 · 메모 · 금액은 지어낸 것이다.
+// 단추는 toggle.yaml 을 푼 값(toggleLook — toggle-view)으로, 상단 바 안의 단추는 Top Navigation 아이콘 버튼(top-navigation.yaml — 44 · 24,
+// 끔도 fg-neutral · 19B)으로, 카드 · 순자산 카드는 card.yaml(data-card-view)로 그린다. 순자산 카드의 금액 가리기 눈은 Toggle 이 아니다 —
+// 같은 상자 · 색을 빌린 이동 단추(ToggleView link — aria-pressed 없음, 2026-10-16 Q-017-2b A · 3c B). 종목 · 메모 · 금액은 지어낸 것이다.
 import type { CSSProperties, ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { buttonLook } from './button-look';
@@ -37,9 +38,13 @@ function Tg({ kind, pressed = false, state = 'enabled', mode = 'auto', tone = 'd
   const k = TOGGLES[kind];
   return <ToggleView look={T(brand)} mode={mode} state={state} pressed={pressed} icon={icon ?? k.icon} pressedIcon={icon ? undefined : k.pressedIcon} tone={tone} ariaLabel={k.label} style={style} />;
 }
-// 상단 바의 금액 가리기 — Top Navigation 아이콘 버튼(44 · 24) · 끔도 fg-neutral
-const TopEye = ({ hidden = false, mode = 'auto', state }: { hidden?: boolean; mode?: Mode; state?: 'hovered' | 'pressed' | 'focused' }) => <TopIconButton look={NK().top} mode={mode} icon={hidden ? 'eye-off' : 'eye'} label="금액 가리기" pressed={hidden} state={state} />;
+// 상단 바 안에 둔다면 — Top Navigation 아이콘 버튼(44 · 24) · 끔도 fg-neutral(19B). 지금 상단 바에 켜고 끄는 단추를 두는 화면은 없다
+const TopStar = ({ on = false, mode = 'auto' }: { on?: boolean; mode?: Mode }) => <TopIconButton look={NK().top} mode={mode} icon="star" label="관심 등록" pressed={on} />;
 const TopBell = ({ mode = 'auto' }: { mode?: Mode }) => <TopIconButton look={NK().top} mode={mode} icon="bell" label="알림" />;
+// 순자산 카드의 금액 가리기 눈 — Toggle 이 아니다(설정으로 가는 버튼 · aria-pressed 없음 · 아이콘은 그 카드가 가려졌는지 · 흰 아이콘만)
+const EyeLink = ({ hidden = false, mode = 'auto', tone = 'inverted', state }: { hidden?: boolean; mode?: Mode; tone?: 'default' | 'inverted'; state?: ToggleState }) => (
+  <ToggleView look={T()} mode={mode} tone={tone} link ariaLabel="금액 가리기 설정" icon={hidden ? 'eye-off' : 'eye'} state={state} />
+);
 
 // 카드 한 장 — 제목 줄 오른쪽에 단추(위 · 오른쪽 8 당김 — card.md 의 peers 코드), 아래 한 줄
 function ToggleCard({ title, sub, toggle, mode = 'auto' }: { title: string; sub: string; toggle: ReactNode; mode?: Mode }) {
@@ -103,25 +108,13 @@ function MemoPhone({ mode, scale = 0.5, h = 500 }: { mode: Mode; scale?: number;
     </Phone>
   );
 }
-function HomePhone({ mode, scale = 0.5, h = 500, hidden = false }: { mode: Mode; scale?: number; h?: number; hidden?: boolean }) {
+// 증권 연결 — App Key 보기(기능 단추 — 가려져 있으면 끔 · eye-off)
+function KeyPhone({ mode, scale = 0.5, h = 500 }: { mode: Mode; scale?: number; h?: number }) {
   return (
-    <Phone
-      title="홈"
-      back={false}
-      mode={mode}
-      scale={scale}
-      h={h}
-      screenW={360}
-      right={
-        <>
-          <TopEye mode={mode} hidden={hidden} />
-          <TopBell mode={mode} />
-        </>
-      }
-    >
+    <Phone title="증권 연결" mode={mode} scale={scale} h={h} screenW={360}>
       <div style={stack()}>
-        <HeroCardView look={CL()} mode={mode} label="순자산 · 2026년 10월" amount={hidden ? '••••••원' : '42,898,100원'} detail={hidden ? '총 자산 •••••• · 총 부채 ••••••' : '총 자산 52,320,000원 · 총 부채 9,421,900원'} />
-        <ToggleCard mode={mode} title="이번 달 지출" sub={hidden ? '•••••• · 예산 77%' : '1,240,000원 · 예산 77%'} toggle={null} />
+        <ToggleCard mode={mode} title="가나증권" sub="App Key ••••••••••••••••" toggle={<Tg kind="key" mode={mode} />} />
+        <ToggleCard mode={mode} title="다라투자증권" sub="App Key PSq7·Kx2m·9WdA·tL4e" toggle={<Tg kind="key" pressed mode={mode} />} />
       </div>
     </Phone>
   );
@@ -135,7 +128,7 @@ const Hero: Fig = ({ caption }) => (
         <div key={mode} className="flex items-start gap-4">
           <StockPhone mode={mode} />
           <MemoPhone mode={mode} />
-          <HomePhone mode={mode} />
+          <KeyPhone mode={mode} />
         </div>
       ))}
     </div>
@@ -256,17 +249,17 @@ const Size: Fig = ({ caption }) => {
               </div>
             </Surface>
           </Shot>
-          <Shot strong="상단 바 — Top Navigation 아이콘 버튼" cap={`상자 ${top.size} · 아이콘 ${top.icon} — 끔 eye 선 ${top.stroke} · 켬 eye-off 선 ${top.pressedStroke}, 둘 다 fg-neutral`}>
+          <Shot strong="상단 바 안이라면 — Top Navigation 아이콘 버튼" cap={`상자 ${top.size} · 아이콘 ${top.icon} — 끔 선 ${top.stroke} · 켬 선 ${top.pressedStroke}, 둘 다 fg-neutral`}>
             <Surface>
               <div className="flex items-center gap-1" style={{ padding: '8px 4px' }}>
-                <TopEye />
-                <TopEye hidden />
+                <TopStar />
+                <TopStar on />
                 <TopBell />
               </div>
             </Surface>
           </Shot>
         </div>
-        <Cap>상단 바에서는 이웃 버튼과 같은 진한 색 — 알림 · 설정 사이에서 눈만 흐리면 막힌 단추처럼 보인다(19B). 켬 · 끔은 굵기와 아이콘으로만 가른다</Cap>
+        <Cap>상단 바에서는 이웃 버튼과 같은 진한 색 — 아이콘 줄에서 하나만 흐리면 막힌 단추처럼 보인다(19B). 켬 · 끔은 굵기와 아이콘으로만 가른다. 지금 상단 바에 켜고 끄는 단추를 두는 화면은 없다</Cap>
       </div>
     </Panel>
   );
@@ -284,7 +277,7 @@ function HeroWithEye({ mode, hidden, focused = false }: { mode: Mode; hidden: bo
       label="순자산 · 2026년 10월"
       amount={hidden ? '••••••원' : '42,898,100원'}
       detail={hidden ? '총 자산 •••••• · 총 부채 ••••••' : '총 자산 52,320,000원 · 총 부채 9,421,900원'}
-      labelEnd={<Tg kind="hide" pressed={hidden} mode={mode} tone="inverted" state={focused ? 'focused' : 'enabled'} />}
+      labelEnd={<EyeLink hidden={hidden} mode={mode} state={focused ? 'focused' : 'enabled'} />}
     />
   );
 }
@@ -299,7 +292,7 @@ const Tone: Fig = ({ caption }) => {
               <HeroWithEye mode={mode} hidden={false} />
               <HeroWithEye mode={mode} hidden focused />
             </div>
-            <Cap strong={mode === 'light' ? '라이트' : '다크'}>{`끔(보임 — eye · 선 ${l.stroke.off}) · 켬(가림 — eye-off · 선 ${l.stroke.on}) · 흰 아이콘만, 원 · 바탕 없음. 켬 카드는 키보드 포커스 — 링도 흰색(${l.ring.width}px · 띄움 ${l.ring.offset})`}</Cap>
+            <Cap strong={mode === 'light' ? '라이트' : '다크'}>{`금액 가리기 눈 — Toggle 이 아니다(aria-pressed 없음 · 이름 "금액 가리기 설정"). 보임 eye · 가림 eye-off(선 ${l.stroke.off} 그대로) · 흰 아이콘만, 원 · 바탕 없음. 가림 카드는 키보드 포커스 — 링도 흰색(${l.ring.width}px · 띄움 ${l.ring.offset})`}</Cap>
           </div>
         ))}
       </div>
@@ -352,13 +345,13 @@ const States: Fig = ({ caption }) => {
 const IconGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="모으기 단추(관심 · 고정)의 끔은 같은 아이콘이 흐린 선 2 — 관심에 넣지 않은 종목마다 사선 별이 깔리지 않는다. 눈은 지금 상태(보이면 eye)">
+      <Verdict ok note="모으기 단추(관심 · 고정)의 끔은 같은 아이콘이 흐린 선 2 — 관심에 넣지 않은 종목마다 사선 별이 깔리지 않는다. 눈은 지금 상태(키가 가려져 있으면 eye-off)">
         <div className="flex w-full max-w-[300px] flex-col gap-2">
           <Surface style={{ padding: 0 }}>
             <StockHead watched={false} />
           </Surface>
           <ToggleCard title="제주 여행 준비" sub="숙소 예약 · 렌터카 · 우산" toggle={<Tg kind="pin" />} />
-          <ToggleCard title="자산" sub="국민 주계좌 1,250,000원" toggle={<Tg kind="hide" />} />
+          <ToggleCard title="가나증권" sub="App Key ••••••••••••" toggle={<Tg kind="key" />} />
         </div>
       </Verdict>
       <Verdict ok={false} note="모으기 단추의 끔을 사선(star-off · pin-off)으로 — 목록의 칸마다 사선이 깔려 '꺼진 기능' 처럼 읽힌다">
@@ -367,7 +360,7 @@ const IconGuide: Fig = ({ caption }) => (
             <StockHead watched={false} icon="star-off" />
           </Surface>
           <ToggleCard title="제주 여행 준비" sub="숙소 예약 · 렌터카 · 우산" toggle={<Tg kind="pin" icon="pin-off" />} />
-          <ToggleCard title="자산" sub="국민 주계좌 1,250,000원" toggle={<Tg kind="hide" />} />
+          <ToggleCard title="가나증권" sub="App Key ••••••••••••" toggle={<Tg kind="key" />} />
         </div>
       </Verdict>
     </Pair>
@@ -399,22 +392,6 @@ const NameGuide: Fig = ({ caption }) => (
 );
 
 // 눈은 지금 상태 — 상단 바 · 순자산 카드 · 자산 상세 바닥이 같은 아이콘
-function AssetFooter({ action = false, mode = 'auto' }: { action?: boolean; mode?: Mode }) {
-  return (
-    <div className="flex items-center justify-between rounded-xl px-4 py-2" style={{ background: rc('bg-layer-default', mode), border: `1px solid ${rc('stroke-neutral-weak', mode)}` }}>
-      <span className="text-[13px] leading-[18px]" style={{ color: rc('fg-neutral-subtle', mode) }}>
-        국민 주계좌 · 잔액 ••••••원
-      </span>
-      {action ? (
-        <ButtonView look={buttonLook({ variant: 'ghost', size: 'xsmall' })} mode={mode} state="enabled" prefix="eye" label="보기" />
-      ) : (
-        <span style={{ display: 'flex', marginRight: -CL().header.gap }}>
-          <Tg kind="hide" pressed mode={mode} />
-        </span>
-      )}
-    </div>
-  );
-}
 function EyePlaces({ action = false }: { action?: boolean }) {
   const place = (cap: string, el: ReactNode) => (
     <div className="flex w-full flex-col gap-1.5">
@@ -424,30 +401,18 @@ function EyePlaces({ action = false }: { action?: boolean }) {
   );
   return (
     <div className="flex w-full max-w-[312px] flex-col gap-3">
-      {place(
-        '상단 바',
-        <div className="flex w-full items-center justify-between rounded-xl py-1.5 pl-4 pr-1" style={{ background: rc('bg-layer-default') }}>
-          <span className="text-[17px] font-bold" style={{ color: rc('fg-neutral') }}>
-            홈
-          </span>
-          <span className="flex">
-            <TopEye hidden />
-            <TopBell />
-          </span>
-        </div>,
-      )}
-      {place('순자산 카드', <HeroCardView look={CL()} width="100%" label="순자산 · 2026년 10월" amount="••••••원" labelEnd={<Tg kind="hide" pressed tone="inverted" />} />)}
-      {place('자산 상세 바닥', <AssetFooter action={action} />)}
+      {place('홈 순자산 카드 — 가림', <HeroCardView look={CL()} width="100%" label="순자산 · 2026년 10월" amount="••••••원" labelEnd={<EyeLink hidden={!action} />} />)}
+      {place('자산 순자산 카드 — 보임', <HeroCardView look={CL()} width="100%" label="순자산 · 자산" amount="42,898,100원" labelEnd={<EyeLink hidden={action} />} />)}
     </div>
   );
 }
 const EyeGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="가렸으면 어디서나 eye-off · 눌림 — 이름은 늘 '금액 가리기'">
+      <Verdict ok note="아이콘은 그 카드의 지금 상태 — 가렸으면 eye-off, 보이면 eye. 누르면 금액 가리기 설정(이름 '금액 가리기 설정' · aria-pressed 없음)">
         <EyePlaces />
       </Verdict>
-      <Verdict ok={false} note="한 자리만 누르면 할 일(eye · '보기')을 그린다 — 같은 화면에서 두 단추가 반대 아이콘을 보인다(지금 자산 상세)">
+      <Verdict ok={false} note="누르면 할 일을 그린다 — 가린 카드에 eye, 보이는 카드에 eye-off. 같은 화면에서 두 눈이 반대로 읽힌다(7A)">
         <EyePlaces action />
       </Verdict>
     </Pair>
@@ -471,7 +436,7 @@ const RoleGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="grid w-full gap-4 md:grid-cols-2">
-        <Verdict ok note="단추 하나가 한 상태를 켜고 끈다 — 관심 등록 · 고정 · 금액 가리기는 Toggle">
+        <Verdict ok note="단추 하나가 한 상태를 그 자리에서 켜고 끈다 — 관심 등록 · 고정 · 키 보기는 Toggle">
           <div className="w-full max-w-[300px]">
             <Surface style={{ padding: 0 }}>
               <StockHead watched />

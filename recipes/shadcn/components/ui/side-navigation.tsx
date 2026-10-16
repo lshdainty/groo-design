@@ -19,10 +19,13 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  *                            스크롤 · 흐림은 Side Panel 본문이 맡는다
  *   SideNavigationGroup      묶음 — label(있을 때만 — 목록 ul 의 aria-labelledby). 접히면 이름은 보이지 않게 남고 묶음 사이에 1px 선
  *   SideNavigationItem       항목 — 하위가 없으면 링크: href · icon · label · current(aria-current="page") · disabled.
- *                            자식으로 SideNavigationSubItem 을 주면 부모(버튼 — 펼치기만, 이동하지 않는다): aria-expanded · aria-controls,
- *                            defaultOpen, 하위가 current 면 저절로 펼친다
+ *                            자식으로 SideNavigationSubItem 을 둘 이상 주면 부모(버튼 — 펼치기만, 이동하지 않는다): aria-expanded · aria-controls,
+ *                            defaultOpen, 하위가 current 면 저절로 펼친다. 하위가 하나 이하이면 부모를 만들지 않고 href 의 단독 링크다
+ *                            (href 가 없으면 그 하나의 href · 하위가 current 면 current) — 하위가 사람마다 다른 항목(Desk 증권 — 연결한
+ *                            증권사)을 그대로 넘겨도 하나짜리 나무가 생기지 않는다(2026-10-16 Q-017-4 정리 — SEED Standalone Menu)
  *   SideNavigationSubItem    하위 항목(링크) — href · label · current · disabled. 아이콘 없이 이름만
- *   SideNavigationFooter     바닥 — 계정 · 보조 링크. 비면 그리지 않는다
+ *   SideNavigationFooter     바닥 — 보조 링크(설명서 · 문의)만. 비면 그리지 않는다. 계정은 두지 않는다(2026-10-16 Q-018-1 C —
+ *                            Desk 는 설정 · 로그아웃이 머리 ⚙ 에 있다)
  *
  * 폭 — 기본은 창 폭으로 정하고, 창 폭이 1280 을 넘나들면 다시 정한다(처음 열 때도 본다 — SEED 코드는 넘나들 때만). 1280 이상에서
  *   손으로 접고 펴면 기억해 다음에도 그 모양으로 연다. 768 ~ 1279 에서 손으로 편 것은 기억하지 않는다(다시 열면 접힌 채).
@@ -484,14 +487,17 @@ export interface SideNavigationItemProps extends Omit<React.AnchorHTMLAttributes
   disabled?: boolean;
   /** 부모 — 처음부터 펼친다(하위가 지금이면 주지 않아도 펼친다) */
   defaultOpen?: boolean;
-  /** 하위 항목(SideNavigationSubItem) — 주면 부모가 된다(펼치기만, 이동하지 않는다) */
+  /** 하위 항목(SideNavigationSubItem) — 둘 이상이면 부모가 된다(펼치기만, 이동하지 않는다). 하나 이하이면 단독 링크 */
   children?: React.ReactNode;
 }
 
 const SideNavigationItem = React.forwardRef<HTMLElement, SideNavigationItemProps>((props, ref) => {
   const subs = subItemsOf(props.children);
-  if (subs.length > 0) return <ParentItem ref={ref} {...props} subs={subs} />;
-  return <LeafItem ref={ref as React.Ref<HTMLAnchorElement>} {...props} />;
+  if (subs.length >= 2) return <ParentItem ref={ref} {...props} subs={subs} />;
+  // 하위가 하나 · 없으면 단독 항목 — 고를 것이 없는 나무를 만들지 않는다. href 가 없으면 그 하나의 주소로, 하위가 지금이면 지금 항목
+  const only = subs[0]?.props;
+  const { children: _children, ...leaf } = props;
+  return <LeafItem ref={ref as React.Ref<HTMLAnchorElement>} {...leaf} href={props.href ?? only?.href} current={props.current ?? only?.current} />;
 });
 SideNavigationItem.displayName = "SideNavigationItem";
 
