@@ -1,6 +1,6 @@
 /*
  * shadcn Tag Group 예제 — docs site components/tag-group.html 에서 Preview + Code 토글로 보인다.
- * 각 예제 = { title, description, jsx, render() }. 앞의 셋(목록 줄의 설명 · 앞세울 항목과 아이콘 · 줄어드는 차례)은 차례 · 제목 · 코드가
+ * 각 예제 = { title, description, jsx, render() }. 앞의 셋(목록 줄의 설명 · 앞세울 항목과 아이콘 · 줄어드는 정도)은 차례 · 제목 · 코드가
  * specs/components/tag-group.md 의 "코드" 절과 같고, 뒤의 셋(크기 · 줄바꿈 · 톤과 뒤 아이콘)은 md 의 Properties 를 코드로 더 보인다.
  * porest 에 처음 두는 컴포넌트다 — 웹의 2px 점 · HR 의 "•" 로 가르던 메타 줄을 대신한다.
  *
@@ -13,7 +13,7 @@
  * 짜임은 레시피가 그리는 DOM 그대로다 — 묶음 <span data-slot="tag-group"> > 칸 <span data-slot="tag-group-unit">(항목 + 뒤 구분) >
  * 항목 <span data-slot="tag-group-item">(앞 · 뒤 아이콘 <span aria-hidden data-slot="tag-group-item-prefix-icon | -suffix-icon"> ·
  * 글 <span data-slot="tag-group-item-label"> · 읽을 글 <span class="sr-only">) · 구분 <span data-slot="tag-group-separator">(보이는 " · " <span aria-hidden> +
- * 보이지 않는 ", " <span class="sr-only">). truncate 면 항목에 style 의 flex-shrink(기본 1)가 붙는다(React 의 style={{ flexShrink }}).
+ * 보이지 않는 ", " <span class="sr-only">). truncate 면 항목에 style 의 flex-shrink(기본 1) · min-width(첫 글자 + "…" 2.1em + 아이콘, 두 글자 이하는 max-content)가 붙는다(React 의 style={{ flexShrink, minWidth }}).
  * 줄바꿈(wrap)의 뒤 아이콘은 글 안으로 들어가 마지막 낱말과 함께 줄이 안 바뀌는 칸(GLUED)에 놓인다 — 레시피의 withSuffixIcon 과 같다
  * (truncate 는 아이콘이 글 밖 — 글만 말줄임하고 아이콘은 잘리지 않는다).
  * tag-group.tsx 는 cva 결과를 cn() 에 넣지만 지워지는 클래스가 없다 — 그래서 그대로 잇는다. 묶음은 누르지 않아 스크립트가 없다.
@@ -144,7 +144,10 @@ function tagItem({ text, tone, weight, prefixIcon, suffixIcon, shrink = 1, srLab
     body = `${esc(text.slice(0, cut))}<span class="${GLUED}">${esc(text.slice(cut))}${icon(suffixIcon, "suffix")}</span>`;
   }
   const cls = tagGroupItemVariants({ tone: tone ?? group.tone, weight: weight ?? group.weight, truncate: group.truncate });
-  const style = group.truncate ? ` style="flex-shrink:${shrink}"` : "";
+  // 최소 폭 — 첫 글자 + "…"(2.1em) + 아이콘 · 사이, 두 글자 이하는 글 폭(레시피의 itemMinWidth — React 의 style={{ flexShrink, minWidth }})
+  const short = [...new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(String(text).trim())].length <= 2;
+  const minWidth = short ? "max-content" : prefixIcon != null || suffixIcon != null ? `calc(2.1em + ${{ t2: 12, t3: 13, t4: 14 }[group.size]}px + var(--spacing-x0_5))` : "2.1em";
+  const style = group.truncate ? ` style="flex-shrink:${shrink}; min-width:${minWidth}"` : "";
   return `<span data-slot="tag-group-item" class="${cls}"${style}>${prefixIcon != null ? icon(prefixIcon, "prefix") : ""}<span data-slot="tag-group-item-label"${hideText ? ' aria-hidden="true"' : ""} class="${LABEL[mode]}">${body}</span>${suffixIcon != null && !glued ? icon(suffixIcon, "suffix") : ""}${hideText ? `<span class="sr-only">${esc(srLabel)}</span>` : ""}</span>`;
 }
 
@@ -234,9 +237,9 @@ export const tagGroupExamples = [
   },
 
   {
-    title: "줄어드는 차례",
+    title: "줄어드는 정도",
     description:
-      "truncate 는 한 줄이다 — 넘치면 항목 글이 각자 말줄임(…)하고 구분은 줄지 않는다. 줄어드는 차례는 항목의 shrink — 기본 1, 0 은 줄지 않고 수가 클수록 먼저 · 많이 준다. 좁은 폭에서 긴 자산 이름(shrink={2})만 먼저 줄고 분류 · 시각(shrink={0})은 그대로다. 말줄임해도 보조 기술은 글 전체를 읽는다. 가게 이름 · 주소처럼 말줄임하면 읽기 어려운 자리는 줄바꿈(기본)이 낫다. 미리보기 칸은 폭 240 이다.",
+      "truncate 는 한 줄이다 — 넘치면 항목 글이 각자 말줄임(…)하고 구분은 줄지 않는다. 줄어드는 정도는 항목의 shrink — 기본 1, 0 은 줄지 않고 1 이상은 넘친 폭을 '글 폭 × shrink' 비율로 나눠 함께 준다(차례대로가 아니다). 줄어드는 항목도 첫 글자 + \"…\"(2.1em) 까지만 준다 — 두 글자 이하 항목은 글 폭 그대로다. 좁은 폭에서 긴 자산 이름(shrink={2})만 줄고 분류 · 시각(shrink={0})은 그대로다. 말줄임해도 보조 기술은 글 전체를 읽는다. 가게 이름 · 주소처럼 말줄임하면 읽기 어려운 자리는 줄바꿈(기본)이 낫다. 미리보기 칸은 폭 240 이다.",
     jsx: `<TagGroup size="t3" truncate>
   <TagGroupItem shrink={0}>교통</TagGroupItem>
   <TagGroupItem shrink={2}>신한카드 Deep Dream 체크(1234)</TagGroupItem>
@@ -245,7 +248,7 @@ export const tagGroupExamples = [
     render: () =>
       surface(
         stack([
-          labeled(`<div style="display:flex; max-width:240px;">${tagGroup({ size: "t3", truncate: true, items: LONG_ASSET })}</div>`, "shrink={0} · {2} · {0} — 긴 자산 이름만 먼저", CODE),
+          labeled(`<div style="display:flex; max-width:240px;">${tagGroup({ size: "t3", truncate: true, items: LONG_ASSET })}</div>`, "shrink={0} · {2} · {0} — 긴 자산 이름만 준다", CODE),
           labeled(
             `<div style="display:flex; max-width:240px;">${tagGroup({ size: "t3", truncate: true, items: LONG_ASSET.map(({ shrink, ...it }) => it) })}</div>`,
             "모두 shrink 1(기본) — 함께 준다",

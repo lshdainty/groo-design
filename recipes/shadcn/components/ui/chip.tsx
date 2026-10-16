@@ -7,6 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 import { useFieldGroup } from "@/components/ui/field";
+import { ignoreRadioJumpKeys } from "@/components/ui/radio-group";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
@@ -32,8 +33,9 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  * 누르면 누름 바탕 + 칩 전체가 2px 거리로 준다(SEED scaleScope: self · v104) — 배율 = (기준 − 2) ÷ 기준,
  * 기준 = max(높이, 폭 ÷ 4, 24). 누르는 순간(포인터 · Space · Enter) 칩을 재서 --press-basis 로 넘기고, 크기마다 높이를
  * 기본값으로 둔다. 모션 줄이기면 축소하지 않는다. 포커스 링은 키보드 포커스에만 바깥 2px · 띄움 2px.
- * 비활성은 전용 색(bg-disabled · fg-disabled — 흐리게 하지 않는다, v106)이고 호버 · 누름 · 축소가 없다. 고른 채 막히면
- * 안쪽 1px stroke-neutral-solid 를 남겨 무엇을 골랐는지 보인다(사용자 결정 2026-10-02).
+ * 비활성은 전용 색(bg-disabled · fg-disabled — 흐리게 하지 않는다, v106)이고 호버 · 누름 · 축소가 없다. 안 고른 Solid 는 바탕
+ * bg-neutral-weak-alpha 를 그대로 두고 글 · 아이콘만 fg-disabled 다 — bg-disabled 는 회색 바닥과 같은 gray-200 이라 알약이 사라진다
+ * (사용자 결정 2026-10-17 — 03-B 결정 1 A). 고른 채 막히면 안쪽 1px stroke-neutral-solid 를 남겨 무엇을 골랐는지 보인다(사용자 결정 2026-10-02).
  * 누르는 영역은 보이는 칩과 따로 44 까지 넓힌다(::before — Button 과 같다. 아이콘만 있는 칩은 가로도 44).
  *
  * 묶음은 칩 사이 · 줄 사이 8(spacing-between-chips). scroll 은 두 겹이다 — 바깥 묶음(이름 · 포커스 · bleed) 안에 스크롤 칸
@@ -80,6 +82,8 @@ const chipVariants = cva(
       variant: {
         solid: [
           "bg-bg-neutral-weak-alpha text-fg-neutral hover:bg-bg-neutral-weak-alpha-pressed active:bg-bg-neutral-weak-alpha-pressed",
+          // 막혀도 안 고른 Solid 는 바탕 그대로 — 글 · 아이콘만 fg-disabled(bg-disabled 는 회색 바닥과 같은 색, 사용자 결정 2026-10-17 — 03-B 결정 1 A)
+          "[&:not([data-state=checked],[data-selected])]:disabled:bg-bg-neutral-weak-alpha",
           "[&:is([data-state=checked],[data-selected])]:bg-bg-neutral-inverted [&:is([data-state=checked],[data-selected])]:text-fg-neutral-inverted [&:is([data-state=checked],[data-selected])]:hover:bg-bg-neutral-inverted-pressed [&:is([data-state=checked],[data-selected])]:active:bg-bg-neutral-inverted-pressed",
         ].join(" "),
         // 고르면 짙은 채움 — 테두리는 지운다(SEED Chip Tabs 와 같다)
@@ -330,15 +334,16 @@ export interface ChipRadioGroupProps
   extends Omit<React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>, "orientation">,
     VariantProps<typeof chipGroupVariants> {}
 
-// 라디오 묶음(role=radiogroup) — ← → ↑ ↓ 모두 옮기며 고른다(orientation 을 두지 않는다). 배치는 ChipGroup 과 같다
+// 라디오 묶음(role=radiogroup) — ← → ↑ ↓ 모두 옮기며 고른다(orientation 을 두지 않는다). Home · End 는 받지 않는다(Radio 와 같다). 배치는 ChipGroup 과 같다
 // (scroll 은 radiogroup 안에 스크롤 칸을 한 겹 더 둔다 — Radix 는 칸 너머의 라디오도 DOM 순서로 찾는다)
 const ChipRadioGroup = React.forwardRef<React.ElementRef<typeof RadioGroupPrimitive.Root>, ChipRadioGroupProps>(
-  ({ className, layout, bleed, children, ...props }, ref) => (
+  ({ className, layout, bleed, children, onKeyDownCapture, ...props }, ref) => (
     <RadioGroupPrimitive.Root
       ref={ref}
       data-slot="chip-radio-group"
       className={cn(chipGroupVariants({ layout, bleed }), className)}
       {...useFieldGroup(props)}
+      onKeyDownCapture={ignoreRadioJumpKeys(onKeyDownCapture)}
     >
       {rowOf(layout, children)}
     </RadioGroupPrimitive.Root>

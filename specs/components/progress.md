@@ -32,6 +32,8 @@ SEED 에는 선형 막대 컴포넌트가 없다 — [Loading 패턴](https://se
 
 높이 8 · 모서리 full, 트랙 `bg-neutral-weak`, 채움은 브랜드 글자색(`fg-brand` — 다크는 밝은 짝)이다. 화면의 요약 머리든 목록 줄이든 같다 — 크게 보일 것은 막대가 아니라 위의 금액(제목)이다. 위에 이름(14 · 500)과 오른쪽 글(13), 아래에 금액 줄(12 · `fg-neutral-subtle`)을 두고 사이는 6 이다. 이름과 오른쪽 글은 양 끝에 두고 사이는 적어도 8 — 이름이 길면 줄을 바꿔 오른쪽 글에 붙지 않는다. 트랙이 페이지 바탕과 같은 색이라 흰 면(카드 · 시트) 위에 둔다.
 
+큰 글자에서 글(이름 · 오른쪽 글 · 금액 줄)은 두 플랫폼 모두 글자 크기 설정을 따른다. 막대는 웹이 rem 이라 배율대로 커지고(200% 에서 16), 앱은 8 그대로다 — 같은 설정에서 웹 막대가 앱보다 굵다(2026-10-17 사용자 결정 — 03-E 결정 1 C, Chip 의 큰 글자와 같은 결정).
+
 [그림: 이름 · 오른쪽 글 · 막대 8 · 금액 줄 — 사이 6](../../site/components/specs/progress.tsx#layout)
 
 [표: 공통](progress.yaml#base.enabled)
@@ -137,6 +139,7 @@ import { Progress } from "@/components/ui/progress"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 이름 `fg-neutral` 흰 면 위 16.41 · 다크 13.42, 비율 · 금액 `fg-neutral-subtle` 5.50 · 6.09(떠 있는 면 5.27), "N원 초과" `fg-critical` 5.06 · 6.08 ✓ |
+| **WCAG 1.4.4** Resize text | 이름 · 오른쪽 글 · 금액 줄이 글자 크기 설정을 따른다 ✓ — 막대는 웹 rem(배율대로) · 앱 8 그대로 |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 채움 : 트랙 Desk 7.76 · 다크 4.69, HR 4.69 · 4.79, 넘침 4.68 · 4.68 ✓. 트랙 : 바탕 1.08 · 1.30 — 장식(막대의 끝은 금액 줄이 말한다) |
 | **WCAG 1.4.1** Use of color | 넘침은 색과 함께 "N원 초과" 글, 달성은 글로만 ✓ |
 | **WCAG 4.1.2** Name, Role, Value | `role="meter"` + 이름 "식비 예산 400,000원 중 350,000원" + `aria-valuemin` 0 · `aria-valuemax` 목표 · `aria-valuenow`(목표를 넘으면 목표) + `aria-valuetext`("88%" · "20,000원 초과" · "달성") ✓ |
@@ -174,6 +177,10 @@ import { Progress } from "@/components/ui/progress"
 - 미터는 `role="meter"` 로 읽힌다 — 진행(`progressbar`)과 나눈다.
 
 ## Migration notes
+
+### 2026-10-17 — 큰 글자에서 막대(03-E 결정 1 C)
+
+웹은 그대로(rem — 200% 에서 막대 16), 앱은 8 그대로다. 글이 상자를 넘지 않는다는 규칙 하나만 두 플랫폼이 같다 — 같은 설정에서 웹 막대가 앱보다 굵다. 고칠 것은 없다(웹 `h-2` · 앱 8 고정이 이미 그렇다). 앱도 배율대로(A) · 두 플랫폼 px(B)는 고르지 않았다. 비교 페이지 https://claude.ai/artifact/FKYaqu7zAR5T2HVwFnx5oD · 옛 스펙 `progress.history/v-pre-03e-03b.*`.
 
 ### 2026-10-08 — 이름 ↔ 오른쪽 글 사이를 YAML 에
 

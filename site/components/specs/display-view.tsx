@@ -49,6 +49,8 @@ import {
   dcv,
   formatNotificationCount,
   pxOf,
+  graphemeCount,
+  stackFit,
   stackSlots,
   type AvatarLook,
   type AvatarSize,
@@ -318,8 +320,12 @@ export function TagGroupView({ look, mode = 'auto', size, truncate = false, item
         ) : (
           it.label
         );
+        // 항목 칸의 최소 폭 — 글 칸 첫 글자 + "…"(tag-group.yaml label.minWidth) + 아이콘. 두 글자 이하는 글 폭(넓히지 않는다).
+        // 최소 폭은 항목 칸에 준다 — 글 칸(overflow hidden)의 최소 폭은 항목의 최소 크기로 올라가지 않는다
+        const short = graphemeCount(it.label.trim()) <= 2;
+        const itemMin = short ? 'max-content' : icon ? `calc(${look.labelMin} + ${(s.icon + look.itemGap) * k}px)` : look.labelMin;
         const itemStyle: CSSProperties = truncate
-          ? { position: 'relative', display: 'inline-flex', alignItems: 'center', gap: look.itemGap * k, minWidth: icon ? undefined : 0, flexShrink: it.shrink ?? look.shrink, height: lh, color: dcv(tone, mode), fontWeight: weight }
+          ? { position: 'relative', display: 'inline-flex', alignItems: 'center', gap: look.itemGap * k, minWidth: itemMin, flexShrink: it.shrink ?? look.shrink, height: lh, color: dcv(tone, mode), fontWeight: weight }
           : icon
             ? { position: 'relative', display: 'inline-flex', alignItems: 'center', gap: look.itemGap * k, height: lh, verticalAlign: 'top', color: dcv(tone, mode), fontWeight: weight }
             : { position: 'relative', color: dcv(tone, mode), fontWeight: weight };
@@ -456,16 +462,20 @@ export type AvatarStackViewProps = {
   // 나쁜 예 — 겹침 · 링을 바꿔 그린다
   overlap?: number;
   ring?: number;
+  // 놓인 폭 — 주면 폭에 맞춰 보이는 사람 수를 줄인다(avatar-stack.yaml root.overflow — stackFit)
+  fitWidth?: number;
   style?: CSSProperties;
 };
-// 묶음 — 다음 아바타가 지름의 약 1/4 왼쪽으로 겹치고 바탕색 링으로 앞 아바타를 끊는다. 뒤가 위. 넘치면 앞 max 명 + "+N"
-export function AvatarStackView({ look, stack, mode = 'auto', size, people, max, surface = 'default', ariaLabel, zoom = 1, marks, overlap, ring, style }: AvatarStackViewProps) {
+// 묶음 — 다음 아바타가 지름의 약 1/4 왼쪽으로 겹치고 바탕색 링으로 앞 아바타를 끊는다. 뒤가 위. 넘치면 앞 max 명 + "+N",
+// 폭이 모자라면 폭에 드는 만큼 + "+N"
+export function AvatarStackView({ look, stack, mode = 'auto', size, people, max, surface = 'default', ariaLabel, zoom = 1, marks, overlap, ring, fitWidth, style }: AvatarStackViewProps) {
   const sz = size ?? stack.defaultSize;
   const st = stack.sizes[sz];
   const d = look.sizes[sz].d * zoom;
   const ov = (overlap ?? st.overlap) * zoom;
   const rg = { width: ring ?? st.ring, color: surface === 'floating' ? stack.ring.floating : stack.ring.default };
-  const { shown, more } = stackSlots(people, max ?? stack.max);
+  const limit = max ?? stack.max;
+  const { shown, more } = stackSlots(people, fitWidth === undefined ? limit : stackFit(people.length, d, ov, fitWidth, limit));
   const a11y = ariaLabel ? { role: 'img', 'aria-label': ariaLabel } : { 'aria-hidden': true };
   return (
     <span {...a11y} data-pstack="" style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', flexShrink: 0, verticalAlign: 'middle', ...style }}>

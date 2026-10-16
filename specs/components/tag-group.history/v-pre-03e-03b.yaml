@@ -1,0 +1,112 @@
+# Tag Group 의 수치 원본 — 구조는 SEED Tag Group(2026-10-03 사용자 결정, 표시 비교 페이지 14 "메타 줄 = Tag Group").
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 여러 메타 정보(카테고리 이름 · 자산 · 시각 · 거리 · 개수 · 금액)를 " · " 로 이어 한 줄로 보이는 글줄. 읽기만 한다 — 누르지 않는다.
+# 대상의 상태 · 분류 라벨은 Badge 다. List 줄의 설명 줄 · 카드 · 상세 머리의 메타 줄을 모두 이것으로 그린다.
+#
+# 크기(size)와 줄바꿈 · 말줄임(overflow)은 묶음에 하나, 톤(tone) · 굵기(weight)는 항목마다 고른다(SEED — 크기는 묶음 안에서 같다).
+# 구분 " · " 는 앞 공백이 줄이 안 바뀌는 공백(U+00A0)이라 앞 항목에 붙는다 — 줄이 바뀌면 앞 줄 끝에 남고 다음 줄은 항목으로 시작한다.
+#
+# SEED 와 다른 자리(tag-group.md 의 "SEED 와 다른 점")
+#   - 기본 글자 fg-neutral-subtle 은 porest 값(흰 바탕 5.50:1) — SEED fg.neutral-subtle(#868b94)은 3.42:1.
+#   - 구분 " · " 의 색은 fg-disabled(SEED palette gray-600 의 역할 짝) — 글보다 한 단계 흐리다.
+#   - 줄바꿈은 낱말 단위(v114 keep-all + break-word) — SEED 웹은 한국어를 음절에서 끊고("3시 / 간 전") 구분이 줄 첫머리에 남는다.
+#   - 보조 기술이 항목을 끊어 읽게 항목 사이에 보이지 않는 ", " 를 둔다 — SEED 는 "500m서초4동3분 전" 처럼 붙어 읽힌다.
+#   - 구분 기호는 " · " 하나다(SEED 는 separator 로 바꿀 수 있다).
+
+name: TagGroup
+
+slots:
+  root: 묶음 — 항목을 " · " 로 잇는다. 줄바꿈하거나(기본) 한 줄에서 항목마다 말줄임한다
+  item: 항목 — 글 + 아이콘 하나(앞 또는 뒤)
+  icon: 항목 아이콘 — 앞(prefix) 또는 뒤(suffix) 하나만. 항목 글자색을 따른다
+  separator: 구분 " · " — 보이기만 한다(보조 기술에 숨긴다)
+  srSeparator: 보이지 않는 ", " — 보조 기술이 항목을 끊어 읽게 구분 자리에 둔다
+
+variants:
+  size:
+    t2: 12 / 16 — 기본. 목록 줄의 설명 줄 · 카드의 메타
+    t3: 13 / 18 — 목록 설명이 13 인 자리 · 상세 머리
+    t4: 14 / 19 — 상세 본문 위 · 넓은 화면
+  tone:
+    neutralSubtle: 흐린 글자 — 기본. 대부분의 메타
+    neutral: 본문 글자 — 금액 · 핵심 수치처럼 앞세울 항목
+    brand: 브랜드 글자 — 아껴 쓴다(내 항목 표시처럼 브랜드와 닿는 자리)
+  weight:
+    regular: 400 — 기본
+    bold: 700 — 앞세울 항목 하나(금액)
+  overflow:
+    wrap: 넘치면 낱말 단위로 줄을 바꾼다 — 기본
+    truncate: 한 줄 — 넘치면 항목마다 말줄임, 줄어드는 차례를 정할 수 있다
+
+defaults:
+  size: t2
+  tone: neutralSubtle
+  weight: regular
+  overflow: wrap
+
+states:
+  enabled: 하나뿐 — 누르지 않는다(상태가 없다)
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      item:
+        gap: { value: $spacing-x0_5, note: "아이콘 ↔ 글" }
+      icon:
+        color: { value: currentColor, note: "항목 글자색 — 뜻이 있는 아이콘(갈래 = 분할 · 눈 = 조회)은 그 항목의 읽을 글(srLabel — \"분할 2건\")이 뜻을 말한다. 아이콘 자신은 aria-hidden" }
+      separator:
+        glyph: { value: " · ", note: "앞 공백은 줄이 안 바뀌는 공백(U+00A0) · 가운뎃점(U+00B7) · 뒤 공백 — 앞 항목에 붙어 줄 끝에 남는다. 2px 점 · \"•\" 를 쓰지 않는다" }
+        foreground: { value: $color-fg-disabled, note: "글보다 한 단계 흐리다(흰 바탕 3.16 · 다크 4.13 — 장식, 보조 기술에 숨김)" }
+        fontWeight: 400
+      srSeparator:
+        glyph: { value: ", ", note: "보이지 않는 글(sr-only) — 화면 읽기 프로그램이 \"식비, 신한카드, 오후 2:10\" 처럼 끊어 읽는다. 앱은 묶음 하나의 의미 노드에 항목을 \", \" 로 이어 붙인다" }
+
+  # ── 크기 ──────────────────────────────────────────────
+  - when: { size: t2 }
+    enabled:
+      item: { typography: { value: $text-t2, note: "12 / 16 — 글자 크기 설정을 따른다" } }
+      icon: { size: 12px }
+      separator: { typography: $text-t2 }
+  - when: { size: t3 }
+    enabled:
+      item: { typography: { value: $text-t3, note: "13 / 18 — 글자 크기 설정을 따른다" } }
+      icon: { size: { value: 13px, note: "글자 크기에 맞춘 값(SEED) — Iconography 의 16 · 20 · 24 밖" } }
+      separator: { typography: $text-t3 }
+  - when: { size: t4 }
+    enabled:
+      item: { typography: { value: $text-t4, note: "14 / 19 — 글자 크기 설정을 따른다" } }
+      icon: { size: 14px }
+      separator: { typography: $text-t4 }
+
+  # ── 톤 · 굵기(항목마다) ───────────────────────────────
+  - when: { tone: neutralSubtle }
+    enabled:
+      item: { foreground: { value: $color-fg-neutral-subtle, note: "흰 바탕 5.50 · 다크 6.09, 회색 바탕 5.09 · 6.89" } }
+  - when: { tone: neutral }
+    enabled:
+      item: { foreground: { value: $color-fg-neutral, note: "16.41 · 13.42" } }
+  - when: { tone: brand }
+    enabled:
+      item: { foreground: { value: $color-fg-brand, note: "Desk 8.38 · 6.10 · HR 5.06 · 6.23" } }
+  - when: { weight: regular }
+    enabled:
+      item: { fontWeight: 400 }
+  - when: { weight: bold }
+    enabled:
+      item: { fontWeight: 700 }
+
+  # ── 줄바꿈 · 말줄임 ───────────────────────────────────
+  - when: { overflow: wrap }
+    enabled:
+      root:
+        overflowX: { value: 줄바꿈 — 낱말 단위, note: "word-break keep-all + overflow-wrap break-word(v114) — 항목 사이 · 항목 안 띄어쓰기에서 줄을 바꾸고, 한 줄보다 긴 낱말만 칸 끝에서 끊는다. 앱은 공용 글자 위젯의 이음 문자(U+2060)" }
+  - when: { overflow: truncate }
+    enabled:
+      root:
+        overflowX: { value: 말줄임 — 한 줄, note: "묶음은 한 줄(inline-flex · max-width 100%) — 넘치면 항목 글이 각자 말줄임(…), 구분은 줄지 않는다" }
+      item:
+        shrink: { value: 1, note: "줄어드는 차례 — 0 은 줄지 않고, 수가 클수록 먼저 · 많이 준다(flex-shrink). 금액처럼 꼭 보일 항목은 0. 글 전체는 보조 기술이 읽는다" }
+      separator:
+        shrink: 0

@@ -44,6 +44,8 @@ export type ChipLook = {
   defaults: { variant: ChipVariant; size: ChipSize };
   sizes: Record<ChipSize, ChipSizeLook>;
   radius: number;
+  // 칩의 최대 폭 — 놓인 줄의 폭('100%'). 넘으면 글 끝을 말줄임(…)하고 아이콘 · 지우기는 남는다(2026-10-17 사용자 결정 — 03-E 결정 2 A)
+  maxWidth: string;
   // 아이콘 ↔ 글
   gap: number;
   text: ChipType;

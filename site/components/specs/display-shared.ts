@@ -67,7 +67,9 @@ export type TagLook = {
   // 구분 — 글자(앞 공백은 줄이 안 바뀌는 공백) · 색 · 굵기, 보조 기술이 읽는 보이지 않는 글
   sep: { glyph: string; color: DColor; weight: number };
   srSep: string;
-  // 말줄임일 때 항목이 줄어드는 차례 기본값
+  // 말줄임일 때 줄어드는 항목의 글 칸 최소 폭(em — 첫 글자 + "…")
+  labelMin: string;
+  // 말줄임일 때 항목이 줄어드는 정도 기본값
   shrink: number;
 };
 // 항목 하나 — 글 · 톤 · 굵기 · 앞 또는 뒤 아이콘 하나 · 줄어드는 차례(말줄임일 때) · 보조 기술이 읽을 글
@@ -128,7 +130,22 @@ export function stackSlots<T>(people: T[], max: number) {
   if (people.length <= max) return { shown: people, more: 0 };
   return { shown: people.slice(0, max), more: Math.min(people.length - max, 99) };
 }
+// 폭에 맞춘 묶음(avatar-stack.yaml root.overflow — 2026-10-17 사용자 결정 03-E 결정 4 B) — 원 c 개의 폭 = 지름 + (c − 1) × (지름 − 겹침).
+// 모두(전체 ≤ max)가 폭에 들면 모두, 아니면 "+N" 원까지 폭에 드는 원 수에서 하나를 뺀 사람(가장 적어도 1명 · max 까지)
+export function stackWidth(circles: number, d: number, overlap: number) {
+  return circles <= 0 ? 0 : d + (circles - 1) * (d - overlap);
+}
+export function stackFit(total: number, d: number, overlap: number, width: number, max: number) {
+  const fits = width >= d ? 1 + Math.floor((width - d) / (d - overlap) + 1e-9) : 1;
+  if (total <= max && total <= fits) return total;
+  return Math.max(1, Math.min(max, fits - 1));
+}
 export type Person = { name: string; photo?: number };
+// 사용자가 보는 글자 수(Tag Group 의 짧은 항목 — 두 글자 이하는 글 폭 그대로)
+export function graphemeCount(text: string) {
+  const Seg = (Intl as unknown as { Segmenter?: new (l?: string, o?: { granularity: string }) => { segment: (s: string) => Iterable<{ segment: string }> } }).Segmenter;
+  return Seg ? [...new Seg('ko', { granularity: 'grapheme' }).segment(text)].length : Array.from(text).length;
+}
 
 // ── Divider ───────────────────────────────────────────────
 export type DividerLook = { thickness: number; color: DColor; inset: number; margin: number };

@@ -1,0 +1,87 @@
+# Progress 의 수치 원본 — porest 만의 막대(SEED 에는 선형 막대가 없다 — 2026-10-03 사용자 결정, 비교 페이지 11 · 14).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# "얼마나 찼나" 를 보이는 미터 — 예산 · 카드 사용(한도), 저축 목표 · 카드 실적(목표). 기다림 · 진행(올리기 · 받기)에는 쓰지 않는다 —
+# 그건 Progress Circle(progress-circle.yaml)이다. 높이 하나(8) · 색 하나(fg-brand)다 — 넘친 한도만 fg-critical + "N원 초과",
+# 목표에 닿으면 글 "달성" 만(색은 그대로). 주의 구간 색 · 높이 둘은 두지 않는다(사용자 결정 — 고르지 않은 안).
+#
+# 채움은 글자 색 계열(fg-brand · fg-critical)이다 — 채움 색(bg-brand-solid)은 다크 트랙 위에서 Desk 1.33 · HR 2.20 으로 묻힌다.
+
+name: Progress
+
+slots:
+  root: 묶음 — 이름 줄 · 막대 · 금액 줄
+  header: 이름 줄 — 이름과 오른쪽 글을 양 끝에, 글자 바탕선 맞춤
+  label: 이름 — 무엇이 얼마나 찼나(식비 예산 · 여행 자금)
+  status: 오른쪽 글 — 비율 · "N원 초과" · "달성"
+  track: 트랙 — 막대 바탕(값이 0 이어도 보인다)
+  fill: 채움 — 값만큼, 넘쳐도 끝까지만
+  amount: 금액 줄 — "현재 / 목표"
+
+variants:
+  meaning:
+    limit: 한도 — 쓸수록 차는 막대(예산 · 카드 한도). 넘으면 위험 색 + "N원 초과"
+    goal: 목표 — 모을수록 차는 막대(저축 목표 · 카드 실적). 닿으면 글 "달성" 만
+
+defaults:
+  meaning: limit
+
+states:
+  enabled: 0 ~ 100%
+  over: 한도를 넘음(limit) — 채움을 끝까지 + 위험 색 + "N원 초과"
+  reached: 목표에 닿음(goal) — 글 "달성", 색은 그대로
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        gap: { value: $spacing-x1_5, note: "이름 줄 ↔ 막대 ↔ 금액 줄 6" }
+      header:
+        gap: { value: $spacing-x2, note: "이름 ↔ 오른쪽 글 — 적어도 8. 이름이 길면 줄을 바꿔 오른쪽 글에 붙지 않는다(2026-10-08 — 전엔 레시피에만 있었다)" }
+      label:
+        typography: $text-t4
+        fontWeight: 500
+        foreground: $color-fg-neutral
+      status:
+        typography: { value: $text-t3, note: "이름 줄 오른쪽 끝, 글자 바탕선 맞춤 — 숫자 폭을 같게(tabular-nums). 비율은 반올림한 정수(\"88%\")" }
+        foreground: $color-fg-neutral-subtle
+      track:
+        height: 8px
+        radius: $radius-full
+        background: { value: $color-bg-neutral-weak, note: "흰 면 위 1.08 · 다크 1.30 — 장식(값은 채움이 보인다). 흰 면 위에 둔다" }
+      fill:
+        width: { value: "값 ÷ 목표(최대 100%)", note: "넘쳐도 끝까지만 채운다. 값이 0 보다 크면 적어도 높이만큼(8) — 둥근 끝이 찌그러지지 않게" }
+        radius: $radius-full
+        background: { value: $color-fg-brand, note: "브랜드 글자색 — 다크는 밝은 짝. 트랙과 Desk 7.76 · 다크 4.69, HR 4.69 · 4.79" }
+        transitionProperty: width
+        transitionDuration: $motion-duration-d6
+        transitionEasing: $motion-ease-enter
+      amount:
+        typography: $text-t2
+        foreground: $color-fg-neutral-subtle
+        numerals: { value: tabular-nums, note: "\"350,000원 / 400,000원\" — 현재 / 목표" }
+
+  # ── 한도 · 목표 ───────────────────────────────────────
+  - when: { meaning: limit }
+    over:
+      fill:
+        width: { value: 100%, note: "끝까지 — 얼마나 넘었는지는 글이 말한다" }
+        background: { value: $color-fg-critical, note: "트랙과 4.68 · 다크 4.68" }
+      status:
+        foreground: { value: $color-fg-critical, note: "\"20,000원 초과\" — 흰 면 위 5.06 · 다크 6.08" }
+        fontWeight: 700
+  - when: { meaning: goal }
+    reached:
+      fill:
+        width: { value: 100%, note: "넘어도 끝까지만 — 색은 그대로 브랜드" }
+      status:
+        foreground: { value: $color-fg-neutral, note: "\"달성\" — 색을 바꾸지 않는다(사용자 결정)" }
+        fontWeight: 700
+
+motion:
+  "채움":
+    duration: $motion-duration-d6
+    easing: $motion-ease-enter
+    properties: [width]
+    note: "값이 바뀔 때만 — 처음 그릴 때는 움직이지 않는다. 모션 줄이기면 바로"

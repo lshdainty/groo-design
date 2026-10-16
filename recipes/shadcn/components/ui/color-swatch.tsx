@@ -4,6 +4,7 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ChartColor } from "@/components/ui/chart";
 import { submitImplicitly, useFieldGroup, useFieldGroupState } from "@/components/ui/field";
+import { ignoreRadioJumpKeys } from "@/components/ui/radio-group";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 /*
@@ -36,7 +37,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  *   가르므로(@container) 묶음은 그 폭을 다 쓴다 — 폭을 내용으로 정하는 자리(팝오버)에서는 321 로 잰다.
  * 키보드(radiogroup): 묶음에 Tab 하나(고른 칸, 없으면 첫 칸). ← → 는 차례대로 옮기며 고른다(줄 끝에서 다음 줄로, 끝에서 처음으로 —
  *   지금 색 칸은 차례의 맨 앞, RTL 은 반대), ↑ ↓ 는 위아래 줄의 같은 칸(두 줄이라 오간다 — 지금 색 칸에서는 위 줄에 있어도 그대로),
- *   Home · End 는 첫 칸 · 마지막 칸. Space 는 초점의 칸을 고르고, Enter 는 폼을 제출한다(진짜 radio 와 같다 — Radio 묶음과 같은 규칙).
+ *   Home · End · PageUp · PageDown 은 받지 않는다(ignoreRadioJumpKeys — 하나 고르기 묶음은 화살표만, 사용자 결정 2026-10-17 — 03-E 결정 3 후속).
+ *   Space 는 초점의 칸을 고르고, Enter 는 폼을 제출한다(진짜 radio 와 같다 — Radio 묶음과 같은 규칙).
  * 막힘: 색은 그대로 두고 누르기만 막는다(진짜 disabled — Tab 에서 빠진다). 고른 칸의 고리는 stroke-neutral-solid 로 남긴다.
  */
 
@@ -84,7 +86,8 @@ const COLUMNS = 5;
 
 // 칸 — 원 40 · 누르는 44. 고른 고리는 바깥 2 띄운 2px outline, 키보드 포커스 링은 그 바깥 6 에 ::after 로(고리와 겹치지 않게)
 const SWATCH = [
-  "relative block size-10 shrink-0 cursor-pointer rounded-full border-0 p-0",
+  // 칸 40 은 px(-static) — 글자 크기 설정을 따르지 않는다(색이 곧 값, 열 · 간격 · 격자 폭 px 와 맞춘다 — 사용자 결정 2026-10-17, 03-B 결정 5 A)
+  "relative block size-[40px] shrink-0 cursor-pointer rounded-full border-0 p-0",
   "before:absolute before:-inset-0.5 before:rounded-full before:content-['']",
   "outline-offset-2 aria-checked:outline-2 aria-checked:outline-solid aria-checked:outline-stroke-neutral-contrast",
   "disabled:aria-checked:outline-stroke-neutral-solid not-aria-checked:focus-visible:outline-none",
@@ -187,7 +190,7 @@ function mergeRefs<T>(...refs: (React.Ref<T> | undefined)[]) {
 }
 
 const ColorSwatchGroup = React.forwardRef<HTMLDivElement, ColorSwatchGroupProps>(
-  ({ value: valueProp, defaultValue = null, onValueChange, currentColor, autoColor, disabled: disabledProp, className, onKeyDown, ...props }, ref) => {
+  ({ value: valueProp, defaultValue = null, onValueChange, currentColor, autoColor, disabled: disabledProp, className, onKeyDown, onKeyDownCapture, ...props }, ref) => {
     const field = useFieldGroupState();
     const labelling = useFieldGroup(props);
     const disabled = disabledProp ?? field.disabled;
@@ -236,12 +239,6 @@ const ColorSwatchGroup = React.forwardRef<HTMLDivElement, ColorSwatchGroupProps>
           j = offset + Math.min(row * COLUMNS + (g % COLUMNS), COLOR_SWATCH_ORDER.length - 1);
           break;
         }
-        case "Home":
-          j = 0;
-          break;
-        case "End":
-          j = n - 1;
-          break;
         case "Enter":
           // 진짜 radio 처럼 폼을 제출한다 — 고르지 않는다(button 의 Enter 누르기를 막는다)
           e.preventDefault();
@@ -314,6 +311,7 @@ const ColorSwatchGroup = React.forwardRef<HTMLDivElement, ColorSwatchGroupProps>
         {...(field.required ? { "aria-required": true } : {})}
         {...labelling}
         onKeyDown={handleKeyDown}
+        onKeyDownCapture={ignoreRadioJumpKeys(onKeyDownCapture)}
       >
         <div data-slot="color-swatch-layout" className={cn("flex w-fit items-start gap-x4", current && "flex-col @min-[321px]:flex-row")}>
           {current && (

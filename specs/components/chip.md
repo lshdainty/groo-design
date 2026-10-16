@@ -18,9 +18,9 @@
 
 [그림: 칩은 알약 · 앞 아이콘 · 글 · 뒤 아이콘으로, 입력값 칩은 뒤에 지우기 버튼을 둔다](../../site/components/specs/chip.tsx#anatomy)
 
-| ⓐ Container | 알약 — 모서리 full. 글만큼 넓어지고 줄바꿈 · 말줄임하지 않는다. |
+| ⓐ Container | 알약 — 모서리 full. 글만큼 넓어지고 줄바꿈하지 않는다. 줄보다 길면 줄 폭에서 멈추고 글 끝을 말줄임한다. |
 | ⓑ Prefix Icon | 앞 아이콘 — 묶음 안에서 모두 두거나 모두 뺀다. 없어도 된다. |
-| ⓒ Label | 글 — 명사로 짧게, 한 줄. |
+| ⓒ Label | 글 — 명사로 짧게, 한 줄. 칩이 줄 폭에 닿을 때만 끝을 "…" 로 줄인다. |
 | ⓓ Suffix Icon | 뒤 아이콘 — 누르면 고르는 자리를 여는 칩의 아래 화살표(필터 바). |
 | ⓔ Remove Button | 입력값 칩의 지우기 — 칩 안에서 따로 눌린다. |
 
@@ -52,6 +52,17 @@
 
 [표: 크기](chip.yaml#size)
 
+#### 큰 글자
+
+글은 글자 크기 설정을 따르고, 글이 상자를 넘지 않는다. 상자가 커지는 방법은 플랫폼마다 다르다(2026-10-17 사용자 결정 — 03-E 결정 1 C).
+
+- **웹** — 높이 · 여백 · 아이콘 · 지우기가 rem 이라 글자 크기 설정의 배율대로 커진다. 200% 에서 medium 칩 72 · 지우기 28.
+- **앱** — 높이가 최소 높이다. 글이 커지면 칩이 글 줄 높이 + 위아래 (높이 − 19) ÷ 2 로 늘어나고(medium 200% 에서 38 + 8.5 × 2 = 55), 좌우 여백 · 아이콘 · 지우기는 그대로다. 높이를 고정해 글이 상자를 넘게 두지 않는다.
+
+같은 설정에서 웹 칩이 앱보다 크다(72 대 55). 보통 글자(100%)에서는 두 플랫폼 모두 32 · 36 · 40 이다. 앱 상자에도 배율을 곱하는 것(A) · 두 플랫폼 모두 px 최소 크기(B — SEED 는 상자 px · 글자 1.5배 상한)는 고르지 않았다.
+
+[그림: 큰 글자 200% — 웹은 상자도 배율대로 · 앱은 최소 높이](../../site/components/specs/chip.tsx#big-text)
+
 ### State
 
 | 상태 | 모습 |
@@ -60,13 +71,15 @@
 | `hovered` | 웹 — 누름과 같은 바탕(축소 없음) |
 | `pressed` | 누름 바탕(Solid `bg-neutral-weak-alpha-pressed` · Outline `bg-layer-default-pressed` · 고른 Outline Weak `bg-neutral-weak-pressed` · 짙은 채움 `bg-neutral-inverted-pressed`) + 칩 전체 2px 거리 축소(v104) |
 | `focused` | 키보드 포커스에만 바깥 링 2px · 띄움 2px `stroke-focus-ring` |
-| `disabled` | 바탕 `bg-disabled` · 글자 `fg-disabled` — 흐리게 하지 않는다(v106). 고른 채 막히면 짙은 1px `stroke-neutral-solid` 를 남겨 무엇을 골랐는지 보인다 |
+| `disabled` | 바탕 `bg-disabled` · 글자 `fg-disabled` — 흐리게 하지 않는다(v106). Solid(안 고름)는 바탕 `bg-neutral-weak-alpha` 를 그대로 두고 글 · 아이콘만 `fg-disabled` 다 — `bg-disabled` 는 회색 바닥과 같은 색이라 알약이 사라진다(2026-10-17 사용자 결정 — 03-B 결정 1 A). 고른 채 막히면 짙은 1px `stroke-neutral-solid` 를 남겨 무엇을 골랐는지 보인다 |
 
 [그림: 상태 — 기본 · 호버 · 누름 · 포커스 · 비활성 × 안 고름 · 고름](../../site/components/specs/chip.tsx#states)
 
 [표: 상태 — Outline Weak](chip.yaml#matrix@root+focusRing)
 
 [표: 상태 — Outline Weak 고름](chip.yaml#matrix.selected.selected@root+focusRing)
+
+[표: 상태 — Solid](chip.yaml#matrix.variant.solid@root+focusRing)
 
 [표: 상태 — Solid 고름](chip.yaml#matrix.variant.solid.selected.selected@root+focusRing)
 
@@ -127,17 +140,23 @@
 
 ### Solid 는 어느 바탕에서나
 
-Solid 의 옅은 바탕은 투명한 `bg-neutral-weak-alpha` 라 흰 표면에서도, 회색 바닥(`bg-layer-basement`) 위에서도 보인다(1.11:1 · 다크 1.47:1 — v120). 불투명 `bg-neutral-weak` 로 칠하면 회색 바닥과 같은 색이라 칩이 사라진다 — 칩 바탕에 불투명 약한 배경을 쓰지 않는다(DESIGN.md Elevation 의 "바닥 위의 채움", 2026-10-16 사용자 결정 — 기초 웹 01-040 B).
+Solid 의 옅은 바탕은 투명한 `bg-neutral-weak-alpha` 라 흰 표면에서도, 회색 바닥(`bg-layer-basement`) 위에서도 보인다(1.11:1 · 다크 1.47:1 — v120). 불투명 `bg-neutral-weak` 로 칠하면 회색 바닥과 같은 색이라 칩이 사라진다 — 칩 바탕에 불투명 약한 배경을 쓰지 않는다(DESIGN.md Elevation 의 "바닥 위의 채움", 2026-10-16 사용자 결정 — 기초 웹 01-040 B). 막힌 Solid 칩도 같다 — 바탕은 그대로 두고 글 · 아이콘만 `fg-disabled` 로 바꾼다(`bg-disabled` 도 회색 바닥과 같은 gray-200 — 2026-10-17 사용자 결정 03-B 결정 1 A). 막힌 칩과 안 고른 칩은 바탕이 아니라 글 색으로 갈린다. 회색 바닥 위 줄에서 막힌 칩을 숨기는 규칙(B) · `bg-disabled` 에 1px 테두리(C)는 고르지 않았다.
 
 [그림: 표면 — 흰 표면 위 Solid · 회색 바닥 위 Solid](../../site/components/specs/chip.tsx#surface-guide)
 
 ### 글
 
-- 명사로 짧게, 한 줄 — 칩은 줄바꿈 · 말줄임하지 않고 글만큼 넓어진다. 한 묶음의 글 길이 · 말투를 맞춘다.
+- 명사로 짧게, 한 줄 — 칩은 줄바꿈하지 않고 글만큼 넓어진다. 한 묶음의 글 길이 · 말투를 맞춘다.
 - 여럿을 한 칩에 줄이면 "식비 외 2개"(첫 값 + 나머지 수 — "외" 는 앞의 값을 뺀 수). 개수만 쓰면 "3개 고름".
 - 코드값(`Y` · `N` · `ADMIN`)을 글로 내지 않는다(Writing).
 
 [그림: 글 — 명사로 짧게 · 문장 · 코드값](../../site/components/specs/chip.tsx#label-guide)
+
+### 줄보다 긴 칩 — 줄 폭에서 말줄임
+
+넣은 값 · 사람 이름처럼 사용자가 친 글은 길이를 고를 수 없고, 큰 글자에서는 짧은 글도 길어진다. 칩이 놓인 줄보다 넓어지면 칩은 줄 폭에서 멈추고 글 끝을 "…" 로 줄인다 — 앞 · 뒤 아이콘과 입력값 칩의 지우기 × 는 줄지 않고 남는다. 가로 스크롤 줄(필터 바 · 제안 줄)과 [Chip Tabs](tabs.md) 도 같다 — 칩 하나는 보이는 줄 폭(화면 여백 안)을 넘지 않는다(2026-10-17 사용자 결정 — 03-E 후속). 여는 칩의 아래 화살표도 남는다. 보조 기술 · 지우기 이름("{글} 지우기")은 글 전체를 읽고, 넣은 값은 입력칸에서 다시 볼 수 있다. 줄보다 짧은 칩은 그대로 글만큼 넓다(2026-10-17 사용자 결정 — 03-E 결정 2 A). 칩 안에서 줄바꿈(B — 칩끼리 높이가 갈린다) · 큰 글자에서 가로 스크롤 줄로 바꾸기(C)는 고르지 않았다.
+
+[그림: 줄보다 긴 칩 — 줄 폭에서 말줄임 · 지우기 × 는 남는다](../../site/components/specs/chip.tsx#long-label)
 
 ### 묶음 배치
 
@@ -242,11 +261,12 @@ import { Chip, ChipGroup, InputChip } from "@/components/ui/chip"
 |---|---|
 | 하나 고르기 Click · Tap | 그 칩을 고른다. 고른 칩을 다시 눌러도 그대로다. |
 | 하나 고르기 `←` `→` `↑` `↓` | 묶음 안에서 옮기며 고른다(라디오). Tab 은 고른 칩 하나에만 선다. |
+| 하나 고르기 `Home` · `End` | 받지 않는다 — 초점도 고른 칩도 그대로, 화면도 스크롤되지 않는다(`PageUp` · `PageDown` 도). 첫 · 끝 칩으로는 화살표로 간다(SEED · 진짜 라디오 · WAI-ARIA APG Radio Group 과 같다 — 2026-10-17 사용자 결정 03-E 결정 3 A). Tabs 는 Home · End 로 옮기며 고른다 — 키가 다르다. |
 | 여럿 고르기 Click · `Space` | 고르거나 푼다. 칩마다 Tab 이 선다. |
 | 제안 · 여는 칩 Click · `Enter` · `Space` | 값을 넣거나(제안) 그 조건의 시트 · 팝오버를 연다. |
 | 입력값 지우기 | 그 값만 뺀다. 포커스는 다음 칩의 지우기(없으면 앞 칩의 지우기, 그것도 없으면 묶음 — 묶음도 키보드 링을 그린다)로 간다. 지우기에 키보드 포커스가 있으면 링은 칩 둘레에 그린다. |
 | 마우스 호버 | 누름과 같은 바탕(축소 없음). |
-| Disabled | 누를 수 없다 · 커서 not-allowed · Tab 이 서지 않는다. 고른 채 막히면 짙은 1px 테두리가 남는다. |
+| Disabled | 누를 수 없다 · 커서 not-allowed · Tab 이 서지 않는다. Solid 는 바탕이 그대로이고 글 · 아이콘만 흐려진다. 고른 채 막히면 짙은 1px 테두리가 남는다. |
 
 ## Accessibility
 
@@ -254,6 +274,7 @@ import { Chip, ChipGroup, InputChip } from "@/components/ui/chip"
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 안 고른 글 `fg-neutral` 흰 표면 위 16.41 · 13.42, Solid 투명 바탕 위 라이트 13.71 ~ 14.79 · 다크 7.84 ~ 10.33(놓인 바탕에 따라 — v120), 고른 짙은 채움 위 `fg-neutral-inverted` 16.41 · 13.42 ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 고름은 짙은 채움(바탕과 16.41 · 13.42) 또는 짙은 1px(16.41 · 13.42)로 안 고름과 가른다 ✓. 고른 채 막힘 `stroke-neutral-solid` 은 `bg-disabled` 위 3.87 · 3.18 ✓(비활성이라 기준 밖이지만 3:1 을 넘긴다). 안 고른 칩의 경계(Solid 바탕 1.11 · 다크 1.47 — 회색 바닥 위에서도 · Outline 1px 1.23)는 칩을 알리는 유일한 표시가 아니다 — 글이 알린다(SEED 와 같다). 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.4** Resize text | 글이 글자 크기 설정을 따르고 상자를 넘지 않는다 ✓ — 웹은 상자도 배율대로(rem), 앱은 최소 높이가 글을 따라 늘어난다. 줄보다 긴 칩은 줄 폭에서 말줄임(글 전체는 보조 기술이 읽는다) |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 바깥 링 2px · 띄움 2px |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 모든 크기 ✓(가장 작은 small 32 · 최소 폭 44). 입력값 칩의 지우기는 누르는 영역 24 × 24 |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 누르는 영역을 가로 · 세로 44 까지 넓힌다 ✓(보이는 칩 32 · 36 · 40, 아이콘만 있는 칩도) — 줄바꿈 묶음에서 small 만 위아래 줄의 영역이 4 겹친다. 입력값 칩의 지우기는 24 × 24 라 AAA 밖이다 |
@@ -288,12 +309,23 @@ import { Chip, ChipGroup, InputChip } from "@/components/ui/chip"
 
 - **반투명 색을 불투명 짝으로**(v102) — Outline 테두리 `stroke-neutral-weak`, 누름 `bg-layer-default-pressed`. Solid 바탕은 SEED 그대로 투명한 `bg-neutral-weak-alpha`(누름 `-pressed`)다 — v102 에는 검사기가 8자리 hex 를 받지 않아 불투명 `bg-neutral-weak` 로 두고 흰 표면 위에서만 썼는데, 회색 바닥 위 필터 바에서 사라져 v120 에 되돌렸다(2026-10-16 사용자 결정 — 기초 웹 01-040 B).
 - **Outline Strong 을 고르면 테두리를 지운다** — SEED 는 짙은 채움 위에 옅은 테두리가 남는다(SEED Chip Tabs 는 지운다).
-- **비활성은 흐리게 하지 않는다**(v106) — SEED 는 불투명도 0.5. 고른 채 막힌 칩은 짙은 1px `stroke-neutral-solid` 로 고른 것을 남긴다(사용자 결정 2026-10-02).
+- **비활성은 흐리게 하지 않는다**(v106) — SEED 는 불투명도 0.5. 막힌 Solid(안 고름)는 SEED 처럼 바탕 `bg-neutral-weak-alpha` 를 그대로 두고, 흐림 대신 글 · 아이콘만 `fg-disabled` 다(2026-10-17 사용자 결정 — 03-B 결정 1 A). 고른 채 막힌 칩은 짙은 1px `stroke-neutral-solid` 로 고른 것을 남긴다(사용자 결정 2026-10-02).
+- **줄보다 긴 칩은 줄 폭에서 말줄임**(2026-10-17 사용자 결정 — 03-E 결정 2 A) — SEED 는 `white-space: nowrap` 만 있고 최대 폭 · 말줄임이 없다(글자를 1.5배에서 묶어 넘침이 드물다).
+- **큰 글자** — SEED 는 상자가 px 이고 글자를 1.5배(일부 1.35)에서 묶는다. porest 는 글자 상한을 두지 않고(03-D 결정 1), 웹은 상자도 rem 으로 커지며 앱은 최소 높이가 글을 따라 늘어난다(2026-10-17 사용자 결정 — 03-E 결정 1 C).
 - **웹의 호버**는 누름과 같은 바탕(v106 — SEED 도 마우스에서는 같다), **누르는 영역**은 가로 · 세로 44 까지 넓힌다(SEED 에 규정 없음 — Button 과 같다).
 - **입력값 칩 · 지우기 버튼 · 필터 바의 걸린 조건 모습**을 정했다 — SEED 는 "Suffix 에 Remove 버튼", "Filter Bar 템플릿" 이라고만 하고 치수 · 모양이 없다.
 - **아이콘은 lucide 선 아이콘**(v106) — 여는 칩 `chevron-down`, 지우기 `x`, 필터 지우기 `rotate-ccw`.
 
 ## Migration notes
+
+### 2026-10-17 — 큰 글자 · 줄보다 긴 칩 · Home · End · 막힌 Solid(03-E · 03-B 사용자 결정)
+
+구현 조사에서 사용자가 정했다(비교 페이지 03-E https://claude.ai/artifact/FKYaqu7zAR5T2HVwFnx5oD · 03-B https://claude.ai/artifact/SZwwW7UK1FxtZynvYBFLLx). 옛 스펙은 `chip.history/v-pre-03e-03b.*`.
+
+- **큰 글자(03-E 결정 1 C)** — 웹은 그대로(rem). 앱 `PChip` 은 높이를 최소 높이로 — 지금 `minHeight: m.height, maxHeight: m.height`(`p_chip.dart:214-217`)라 200% 에서 글 38 이 36 상자를 넘는다. 최대 높이를 걷고 위아래 (높이 − 19) ÷ 2 를 둔다.
+- **줄보다 긴 칩(03-E 결정 2 A · 후속)** — `root.maxWidth` 100% · `label.overflow` 말줄임. 줄바꿈 묶음 · 가로 스크롤 줄 · Chip Tabs 모두(스크롤 줄은 보이는 줄 폭). 웹은 칩이 줄 밖으로 나가 화면이 옆으로 밀리고, 앱은 글이 칩 윤곽 밖으로 넘쳐 지우기 × 가 잘린다(200% · 360 에서 131px). 칩 최대 폭 = 줄 폭, 글만 줄고 아이콘 · 지우기는 남게. 레시피 · 예제는 아직 그리지 않았다 — 칩 글을 따로 감싸는 칸이 입력값 칩에만 있다.
+- **Home · End(03-E 결정 3 A)** — 웹 공용 라디오 묶음(Chip 하나 고르기 · Radio Group · Segmented Control · Select Box 하나 고르기 · List 라디오)은 Radix RovingFocusGroup 이 Home · End 로 초점만 옮겨 초점과 고른 것이 갈렸다. 레시피는 묶음에서 라디오의 Home · End · PageUp · PageDown 을 막는다(`ignoreRadioJumpKeys` — radio-group.tsx). 앱은 바뀌는 것 없음.
+- **막힌 Solid(03-B 결정 1 A)** — 레시피 · 예제 · 미리보기의 Solid 안 고름 막힘 바탕을 `bg-disabled` → `bg-neutral-weak-alpha` 로. 웹 · 앱 ds 의 Chip 도 같게(지금 웹 `chip-variants.ts` 는 v120 전이라 안 고른 칩도 `bg-neutral-weak`).
 
 ### 2026-10-02 — 새로 둔다(SEED Chip)
 

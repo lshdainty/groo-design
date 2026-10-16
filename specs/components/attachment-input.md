@@ -399,6 +399,7 @@ const openViewer = (id: string) => window.open(`/files/${id}`, "_blank", "noopen
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 파일 이름 `fg-neutral` 흰 면 16.41 · 다크 13.42, 크기 · 개수 최대 · 드롭존 안내 · 파일 카드 다시 시도 `fg-neutral-subtle` 5.50 · 6.09(드롭존 끌기 바탕 위 5.18 · 4.68), 사진 위 흰 글(다시 시도 · 대표) 검정 65% 덮개 위 흰 사진에서도 7.00 ✓. 막힘 `fg-disabled` 는 기준 밖(비활성 UI). 읽기 전용 사진의 대표 띠 글은 불투명도 0.5 라 흰 사진 위 라이트 2.27 · 다크 3.38 ⚠ — SEED 그대로 둔 사용자 결정(13B — 비교 페이지가 "읽기 전용인데 읽기 어렵다" 를 알리고 정했다). 읽기 전용 파일 카드의 글 `fg-disabled`(3.16 · 4.13)도 SEED 그대로다 |
+| **WCAG 1.4.4** Resize text | 글과 함께 상자 · 아이콘 · × 도 글자 배율만큼 커진다 ✓ — 웹은 rem, 앱은 크기에 글자 배율(textScaler)을 곱한다. 200% 에서 사진 160 · 파일 카드 320 × 160 이라 이름 네 줄 + 크기가 다 보이고 "다시 시도" 가 잘리지 않는다(2026-10-17 사용자 결정 — 03-B 결정 3 A) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 드롭존 테두리 `stroke-neutral-solid` 4.18 · 4.13(떠 있는 면 4.18 · 3.58), 끌기 테두리 16.41 · 13.42 ✓. 타일 아이콘 `fg-neutral-subtle` 5.50 · 6.09 · × 아이콘 `fg-neutral` 16.41 · 13.42 ✓. 올리는 중 원 — 사진 위 흰 호 3.95 · 19.27, 파일 카드 썸네일 칸 위 `stroke-neutral-solid` 3.87 · 3.18 ✓. 타일 · 카드 테두리 `stroke-neutral-weak`(1.23 · 1.56) · 사진 윤곽은 틀이다 — 아이콘 · 개수 · 사진이 부품을 알린다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
 | **WCAG 1.4.1** Use of color | 끌기는 테두리와 바탕이 함께, 다 참은 색과 함께 "10/10" 으로, 실패는 덮개 · 아이콘 · 글로 알린다 ✓ |
 | **WCAG 2.1.1** Keyboard | 타일 · 파일 선택 · × · 다시 시도는 버튼(`Enter` · `Space`). 드롭존은 끌기만 받는 자리라 그 안의 "파일 선택" 버튼이 키보드 길이다. 순서 바꾸기는 `Space` · `←` `→` · `Esc` ✓ |
@@ -456,6 +457,10 @@ const openViewer = (id: string) => window.open(`/files/${id}`, "_blank", "noopen
 - **앱의 고르기 창은 Menu Sheet** — SEED Lynx 는 호스트의 고르기 어댑터(`onSelectFiles`)만 둔다. 메뉴 시트는 porest 다.
 
 ## Migration notes
+
+### 2026-10-17 — 앱 상자도 글자 배율을 따른다(03-B 결정 3 A)
+
+앱 상자가 80 · 160 고정(`p_attachment_input_parts.dart:4` `_tile = 80` · :5 `_fileWidth = 160`)이라 글자 200% 에서 파일 카드의 이름 · 크기가 46px 넘쳐(RenderFlex overflowed) 아래를 덮거나 잘리고, 실패한 사진의 "다시 시도" 가 "다시 시ㄷ" 로 잘렸다(조사 03B-005 · 008). 웹은 rem(`size-20` · `h-20`)이라 200% 에서 이미 160 이다. 사용자가 [비교 페이지](https://claude.ai/artifact/SZwwW7UK1FxtZynvYBFLLx)에서 "상자도 글자 배율을 따른다"(A — 웹과 같다)를 골랐다. 앱은 타일 · 사진 80 · 파일 카드 160 · 썸네일 48 · 아이콘 24 · × 20 · × 아이콘 10 · × 의 누르는 44 · 위 여백 16 에 `MediaQuery.textScalerOf` 를 곱한다(이름 줄 계산은 이미 배율을 받는다). 80 고정 + 줄 줄이기(B)는 고르지 않았다. 옛 스펙은 `attachment-input.history/v-pre-03e-03b.*`.
 
 ### 2026-10-15 — 앱의 끌기 · 줄 넓히기 · × 의 누르는 44
 

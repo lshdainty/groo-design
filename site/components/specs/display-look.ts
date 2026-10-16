@@ -211,6 +211,12 @@ export const tagLook = brandCache((brand): TagLook => {
   const weights = {} as TagLook['weights'];
   for (const weight of TAG_WEIGHTS) weights[weight] = weightOf(resolveState(spec, { weight }, 'enabled')['item.fontWeight'], F, `${weight} item.fontWeight`);
   const tr = resolveState(spec, { overflow: 'truncate' }, 'enabled');
+  // 글 칸 최소 폭은 em(글자 크기를 따른다) — "2.1em" 꼴이 아니면 멈춘다
+  const emOf = (raw: unknown, file: string, what: string) => {
+    const v = String(unbox(must(raw, file, what)));
+    if (!/^\d+(\.\d+)?em$/.test(v)) throw new Error(`${file} ${what}(${v})가 em 이 아니다`);
+    return v;
+  };
   if (len(tr['separator.shrink'] ?? '0px', F, 'truncate separator.shrink') !== 0) throw new Error(`${F} truncate 의 separator.shrink 가 0 이 아니다`);
   const glyph = String(unbox(must(base['separator.glyph'], F, 'separator.glyph')));
   if (!glyph.startsWith(' ')) throw new Error(`${F} separator.glyph 의 앞 공백이 줄이 안 바뀌는 공백(U+00A0)이 아니다`);
@@ -227,6 +233,7 @@ export const tagLook = brandCache((brand): TagLook => {
     sep: { glyph, color: tok(base['separator.foreground'], brand, F, 'separator.foreground'), weight: weightOf(base['separator.fontWeight'], F, 'separator.fontWeight') },
     srSep: String(unbox(must(base['srSeparator.glyph'], F, 'srSeparator.glyph'))),
     shrink: Number(unbox(must(tr['item.shrink'], F, 'truncate item.shrink'))),
+    labelMin: emOf(tr['label.minWidth'], F, 'truncate label.minWidth'),
   };
 });
 
@@ -283,6 +290,8 @@ export const stackLook = brandCache((brand): StackLook => {
     if (String(unbox(v['item.outlineColor'])) !== String(unbox(v['overflow.outlineColor']))) throw new Error(`${F} surface ${surface} 의 "+N" 링 색이 아바타 링과 다르다`);
     return tok(v['item.outlineColor'], brand, F, `surface ${surface} item.outlineColor`);
   };
+  // 넘침 — 폭에 맞춰 보이는 사람 수를 줄인다(그림은 stackFit 으로 센다 — 규칙 문장이 바뀌면 여기서 멈춘다)
+  if (!String(unbox(must(base['root.overflow'], F, 'root.overflow'))).startsWith('폭에 맞춰')) throw new Error(`${F} root.overflow 가 "폭에 맞춰 …" 가 아니다 — stackFit 을 같이 고친다`);
   return {
     defaultSize: must(spec.defaults?.size, F, 'defaults.size') as AvatarSize,
     max: Number(unbox(must(base['root.items'], F, 'root.items'))),

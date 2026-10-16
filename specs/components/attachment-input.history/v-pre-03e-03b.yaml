@@ -1,0 +1,486 @@
+# Attachment Input 의 수치 원본 — 구조는 SEED Attachment Input(rootage attachment-input · -trigger · -item · -item-action-button ·
+# -item-remove-button · -dropzone, qvism-preset attachment-input recipe, React AttachmentField — Apache-2.0).
+# 2026-10-15 사용자 결정, 마무리 비교 페이지 3A · 4A · 5A · "따라오는 것".
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 사진 · 파일을 골라 붙이는 칸 — 두 모양이다.
+#   tile(4A — 영수증 · 메모 첨부): 첨부 타일(80, "3/10") + 항목 줄. 사진은 80 썸네일(Media), 그 밖의 파일은 160 × 80 카드(File) —
+#     항목의 모양은 파일 종류가 정하고 한 줄에 섞인다. 오른쪽 위 × 20(누르는 44). 올리는 중 · 실패 · 다시 시도.
+#   dropzone(5A — 파일 하나 가져오기): 1280 이상 웹은 드롭존(높이 120 · 1px 실선 · 안내 + "파일 선택" 버튼), 1280 미만 · 앱은
+#     "파일 선택" 버튼만. 고른 파일은 아래 파일 카드로.
+# 올리는 중은 이미 정한 값 있는 Progress Circle 24(progress-circle.md "올리기 · 받기" — 2026-10-03)다 — 막대를 쓰지 않는다.
+# 대표 배지 · 순서 바꾸기는 SEED 그대로 둔다(3A — 지금 쓰는 자리는 없다).
+#
+# 축 — layout(tile · dropzone) · kind(사진 · 파일 — 항목 모양) · status(항목 상태) · capacity(다 찼는지) · screen(드롭존을 그리는 폭).
+# 상태(올림 · 누름 · 포커스)는 누른 그 부품(트리거 · × · 다시 시도 · 순서를 바꾸는 항목)에만 걸린다. dragOver 는 드롭존, dragging 은 끄는 항목이다.
+#
+# SEED 와 다른 자리(attachment-input.md 의 "SEED 와 다른 점")
+#   - 드롭존 테두리 stroke-neutral-solid(SEED palette.gray-500 — 다크 표면 위 2.71 로 3:1 에 못 미친다), 끌어 들어오면 stroke-neutral-contrast +
+#     bg-layer-default-pressed(SEED stroke.neutral-solid — 차이 1.32 · 1.53 으로 거의 안 보인다). 막히면 테두리도 stroke-neutral-weak.
+#   - 사진 윤곽은 stroke-neutral-overlay(v118 — SEED stroke.neutral-subtle 의 투명한 값), 덮개는 overlay-dim(SEED bg.overlay 는 들이지 않았다).
+#     글이 얹히는 덮개(실패 · 대표 띠)는 두 모드 모두 overlay-dim-dark(65%) — 50% 면 흰 사진 위 흰 글이 3.95 로 모자란다(Image Frame Indicator 와 같다).
+#   - 파일 이름은 네 줄까지 — 넘치면 셋째 줄 끝을 "…" 로 줄이고 넷째 줄에 확장자를 남긴다(SEED 는 자르지 않아 다섯 줄부터 상자를 넘는다).
+#     줄바꿈은 SEED 와 같은 글자 단위(break-all) — Typography v114(단어 단위)의 예외다(사용자 결정 2026-10-15 마무리 11D).
+#   - 항목(사진 · 파일 카드)을 누르면 메뉴(1280 미만 · 앱 Menu Sheet · 이상 Menu) — 크게 보기 · 대표로 정하기 · 앞으로 옮기기 · 뒤로 옮기기 | 지우기.
+#     끌지 않고 순서를 바꾸는 포인터 길이다(WCAG 2.5.7 — 사용자 결정 14A). SEED 는 끌기만 있다.
+#   - 사진의 읽기 전용 · 끄는 중 불투명도 0.5 와 파일 카드의 fg-disabled 는 SEED 그대로다 — v106(불투명도로 흐리지 않는다)의 예외로 사용자가
+#     정했다(2026-10-15 마무리 13B). 이 두 상태의 사진 항목에만 쓴다.
+#   - 포커스 링은 모두 안쪽 — 가로 스크롤 줄이 바깥 링을 자른다(SEED 는 항목만 바깥).
+#   - × 는 누르는 자리 44(보이는 20 둘레 12 씩), 항목 줄은 화면 여백까지 넓히고 좌우 끝 흐림 20(Scroll Fog row).
+
+name: AttachmentInput
+
+slots:
+  root: 첨부 칸 전체 — 드롭존(있으면)과 항목 줄을 세로로 담는다. 라벨 · 설명 · 오류는 Field 가 둘레에서 그린다
+  items: 항목 줄 — 첨부 타일 + 항목을 가로로. 넘치면 가로 스크롤(스크롤바 숨김 · 끝 흐림)
+  trigger: 첨부 타일 — 누르면 고르기 창(앱은 Menu Sheet). 다 차면 막힌다
+  triggerIcon: 첨부 타일 아이콘 — 사진을 받으면 lucide image, 파일만 받으면 paperclip
+  count: 지금 개수 — "3/10" 의 3
+  countMax: 최대 개수 — "3/10" 의 /10. 최대가 없으면 개수를 두지 않는다
+  item: 항목 상자 — 사진 80 × 80 · 파일 160 × 80. 모양은 파일 종류가 정한다
+  image: 사진 — 항목을 채운다(cover)
+  thumbnail: 파일 카드의 썸네일 칸 — 파일 아이콘 · 올리는 중 원
+  thumbnailIcon: 파일 아이콘 — PDF file-text · 표 file-spreadsheet · 그 밖 file
+  meta: 파일 카드의 이름 · 크기 묶음
+  name: 파일 이름 — 네 줄까지, 넘치면 확장자를 남기고 줄인다
+  size: 파일 크기 — "9.8MB"
+  backdrop: 사진 위 덮개 — 올리는 중 · 실패
+  progressCircle: 올리는 중 원 — 값 있는 Progress Circle 24
+  actionButton: 다시 시도 — 실패한 항목 가운데(아이콘 + 글)
+  badge: 대표 띠 — 첫 사진 아래(쓰는 자리만)
+  removeButton: 지우기 × — 항목 오른쪽 위에 걸친 원
+  removeMask: × 둘레 구멍 — 항목 모서리를 × 보다 2 크게 파낸다
+  dropzone: 드롭존 — 끌어다 놓는 자리(1280 이상 웹)
+  dropzoneLabel: 드롭존 안내 글
+  pickButton: 파일 선택 버튼 — 드롭존 안(웹 1280 이상) 또는 드롭존 대신(1280 미만 · 앱)
+  itemMenu: 항목 메뉴 — 항목을 누르면 열린다(1280 미만 · 앱 Menu Sheet · 이상 Menu). 크게 보기 · 대표로 정하기 · 앞으로 옮기기 · 뒤로 옮기기 | 지우기
+  focusRing: 키보드 포커스 링 — 모두 부품 안쪽
+
+variants:
+  layout:
+    tile: 첨부 타일 + 항목 줄 — 여럿 · 사진이 있는 첨부(영수증 · 메모, 기본)
+    dropzone: 드롭존 + 파일 카드 — 파일 하나를 골라 바로 넘기는 자리(CSV · Excel 가져오기)
+  kind:
+    image: 사진(Media) — 80 썸네일. image/* 파일
+    file: 파일(File) — 160 × 80 카드(썸네일 48 + 이름 + 크기). 사진이 아닌 파일
+  status:
+    pending: 고른 직후 · 올리기 전 — 보통 모습(기본)
+    uploading: 올리는 중 — 값 있는 원 24
+    success: 올렸다 — 보통 모습
+    error: 올리지 못했다 — 다시 시도
+  capacity:
+    open: 더 붙일 수 있다(기본)
+    full: 최대 개수에 닿았다 — 첨부 타일 · 드롭존 · 파일 선택이 막힌다
+  screen:
+    wide: 1280 이상 웹 — 드롭존을 그린다(기본)
+    narrow: 1280 미만 웹 · 앱 — 드롭존 없이 파일 선택 버튼만
+  position:
+    middle: 줄 가운데 항목 — 메뉴의 옮기기가 둘 다 열린다(기본)
+    first: 맨 앞 항목(대표) — "앞으로 옮기기" · "대표로 정하기" 가 막힌다
+    last: 맨 끝 항목 — "뒤로 옮기기" 가 막힌다
+
+defaults:
+  layout: tile
+  kind: image
+  status: pending
+  capacity: open
+  screen: wide
+  position: middle
+
+states:
+  enabled: 기본
+  hovered: 웹 — 첨부 타일 · × 에 누름과 같은 바탕(v106), 축소는 없다
+  focused: 키보드 포커스에만 부품 안쪽 링
+  pressed: 누른 부품에 바탕 + 그 부품만 2px 거리 축소(v104 — SEED scaleScope self)
+  dragOver: 드롭존 위로 파일을 끌고 들어왔다 — 테두리와 바탕이 바뀐다
+  dragging: 순서를 바꾸려고 항목을 끄는 중 — 2px 줄어든 채 따라가고 × 와 구멍이 사라진다. 사진은 불투명도 0.5 · 파일 카드는 글 · 아이콘 fg-disabled(SEED — 사용자 결정 13B)
+  readonly: 읽기 전용 — 고르기 · 지우기 · 순서 바꾸기가 막힌다. 사진은 불투명도 0.5 · 파일 카드는 글 · 아이콘 fg-disabled(SEED — 13B). 값은 제출된다
+  disabled: 막힘 — 새로 고르지 못하고 값도 제출되지 않는다. 전용 색(v106), 불투명도로 흐리게 하지 않는다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        gap: { value: $spacing-x2, note: "드롭존 ↔ 항목 줄 8 — SEED attachment-input root gap" }
+      items:
+        gap: { value: $spacing-x2, note: "항목 사이 8 — SEED items gap" }
+        overflowX: { value: auto, note: "넘치면 가로 스크롤 — 스크롤바는 숨긴다(가로 줄만 — Scroll Fog)" }
+        paddingTop: { value: $spacing-x4, note: "× 의 누르는 자리 44 가 위로 16(걸침 4 + 보이지 않는 여백 12) 나가도 가로 스크롤 줄(overflow)에 잘리지 않게 — 같은 만큼 위로 당긴다(marginTop −16). SEED container 는 4(× 만 걸치는 만큼)라 누르는 자리 위 12 가 잘려 44 × 32 가 된다" }
+        bleedX: { value: $spacing-global-gutter, note: "줄을 화면(시트 · 대화상자 본문) 가장자리까지 넓히고 같은 만큼 안쪽 여백 — 첫 항목은 다른 칸과 같은 자리에서 시작한다. 앱 — 칸이 제 상자 밖을 받지 못한다(Flutter). 놓는 화면이 칸을 화면 폭에 두고 안쪽 여백 24 를 준다(SEED --seed-attachment-input-extend-x · Chip scroll 줄과 같은 방법). Field 안이면 Field 의 머리 · 꼬리를 24 들여 라벨이 다른 칸과 같은 자리에 선다. 여백 안에 둔 채 쓰지 않는다 — 흐림 20 이 첨부 타일을 깎는다(Q-016-2)" }
+        fog: { value: 좌우 20, note: "Scroll Fog row — 늘 켜 둔다(스크롤 위치와 상관없이). 끝 흐림이 화면 여백 24 안에 든다" }
+      trigger:
+        size: { value: 80px, note: "정사각 — SEED trigger" }
+        radius: $radius-r3
+        borderWidth: { value: 1px, note: "안쪽에 그린다(inset)" }
+        borderColor: $color-stroke-neutral-weak
+        background: { value: transparent, note: "SEED bg.transparent" }
+        gap: { value: $spacing-x1, note: "아이콘 ↔ 개수 4" }
+        cursor: pointer
+        name: { value: "{칸 이름} 첨부, n/최대", note: "\"영수증 첨부, 3/10\" — 아이콘 · 개수는 이름에 함께 읽힌다" }
+        transitionProperty: background-color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      triggerIcon:
+        size: { value: 24px, note: "SEED x6" }
+        color: { value: $color-fg-neutral-subtle, note: "흰 면 5.50 · 다크 6.09" }
+      count:
+        typography: { value: $text-t2, note: "12 / 16" }
+        fontWeight: 400
+        foreground: { value: $color-fg-neutral, note: "지금 개수 — 0 이어도 같은 색" }
+      countMax:
+        typography: $text-t2
+        fontWeight: 400
+        foreground: { value: $color-fg-neutral-subtle, note: "\"/10\" — 최대가 없으면(서버 한도 없음) 개수를 통째로 두지 않는다" }
+      item:
+        height: { value: 80px, note: "사진 · 파일 같은 높이 — 줄이 한 높이다" }
+        radius: $radius-r3
+        borderWidth: { value: 1px, note: "안쪽에 그린다 — 사진은 그림 위에 겹쳐 그린다" }
+        background: transparent
+        gap: { value: $spacing-x2_5, note: "파일 카드의 썸네일 ↔ 이름 10 — SEED x2_5" }
+        name: { value: "파일 이름 · 크기 · 상태", note: "보조 기술에는 늘 전체 이름 — 줄인 이름이 아니다(\"2026-10-15_카드영수증_….pdf, 9.8MB, 올리는 중 40%\")" }
+        press: { value: 메뉴를 연다, note: "순서 바꾸기(onReorder) · 크게 보기(onPreview)를 줄 때만 — 누르는 자리는 항목 전체(× 는 따로). 사진을 누르면 바로 크게 보던 자리는 메뉴 첫 줄 \"크게 보기\" 로 옮긴다(사용자 결정 14A)" }
+        dragStart: { value: "마우스 8px · 터치 250ms", note: "누르기(메뉴)와 끌기를 가른다 — 마우스는 누른 채 8px 넘게 움직이면, 터치는 250ms 누른 채 움직이면 끌기. 그 전에 움직이면 줄이 가로로 스크롤한다(porest — SEED 는 끌기만 있다). 앱도 터치 250ms 길게 누름(SEED Lynx long-press — Q-016-1)" }
+        dragDelayApp: { value: 250ms, note: "앱의 길게 눌러 끌기 문턱 — 웹 터치와 같다(Flutter 기본 길게 누름 500ms 가 아니다)" }
+        keys: { value: "Enter 메뉴 · Space 들기", note: "웹 — 초점이 온 항목에서 Enter 는 메뉴, Space 는 들기 → ← → 로 옮기고 Space · Enter 로 놓기 · Esc 그만두기(dnd-kit 키보드 — 순서 바꾸기를 줄 때만). 앱은 들기 대신 customSemanticsActions(앞으로 옮기기 · 뒤로 옮기기)와 메뉴" }
+      thumbnail:
+        size: { value: 48px, note: "SEED x12" }
+        radius: $radius-r2
+        background: { value: $color-bg-neutral-weak, note: "썸네일 칸 — 파일 아이콘 · 올리는 중 원이 이 위에 놓인다" }
+      thumbnailIcon:
+        size: 24px
+        color: { value: $color-fg-neutral-subtle, note: "썸네일 칸 위 5.09 · 다크 4.68" }
+      meta:
+        gap: { value: 0px, note: "이름 바로 아래 크기" }
+        width: { value: 70px, note: "카드 160 − 좌우 16 × 2 − 썸네일 48 − 사이 10" }
+      name:
+        typography: { value: $text-t2, note: "12 / 16" }
+        fontWeight: 500
+        foreground: { value: $color-fg-neutral, note: "흰 면 16.41 · 다크 13.42" }
+        wordBreak: { value: break-all, note: "글자 단위 — 파일 이름은 문장이 아니라 이름표라 Typography v114(단어 단위)의 예외다(사용자 결정 2026-10-15 마무리 11D). 같은 칸에 이름이 가장 많이 든다 — SEED 레시피와 같다" }
+        maxLines: { value: 4, note: "네 줄(64) + 크기 한 줄(15) = 79 — 80 상자에 든다(따라오는 것). SEED 는 줄을 자르지 않아 다섯 줄부터 상자를 넘는다" }
+        maskClear: { value: 4px, note: "첫 줄만 오른쪽 4 를 비운다(오른쪽 float 4 × 16) — 네 줄이면 이름이 카드 위 0.5 에 붙어, × 구멍(가운데 모서리 안쪽 6 · 반지름 12 → 카드 오른쪽 18 안까지)이 첫 줄 끝 글자를 2 파먹는다(\"사\" 가 \"시\" 처럼). 둘째 줄부터는 70 그대로" }
+        overflow: { value: 확장자를 남기고 줄인다, note: "네 줄에 다 들면 그대로. 넘치면 셋째 줄 끝을 \"…\" 로 줄이고 넷째 줄에 확장자(\".xlsx\")를 둔다 — 끝을 자르면(11B) 확장자가 사라진다. 전체 이름은 항목 이름(보조 기술)에 늘 있다(사용자 결정 11D)" }
+      size:
+        typography: { value: $text-t1, note: "11 / 15" }
+        fontWeight: 400
+        foreground: { value: $color-fg-neutral-subtle, note: "흰 면 5.50 · 다크 6.09" }
+        format: { value: "9.8MB", note: "B · KB · MB, MB 는 소수 한 자리 · 띄어 쓰지 않는다" }
+      backdrop:
+        display: { value: none, note: "사진의 올리는 중 · 실패에만" }
+      progressCircle:
+        display: { value: none, note: "올리는 중에만" }
+        size: { value: 24px, note: "Progress Circle size 24(두께 3) · determinate — progress-circle.md \"올리기 · 받기\"" }
+        mode: { value: determinate, note: "값 있는 원 — 12시부터 올린 만큼. 진행이 10초 동안 멈추면 실패다(Skeleton 의 요청 제한)" }
+      actionButton:
+        display: { value: none, note: "실패에만" }
+        gap: { value: $spacing-x1, note: "아이콘 ↔ 글 4 — SEED item-action-button" }
+        iconSize: { value: 24px, note: "lucide rotate-cw" }
+        typography: { value: $text-t2, note: "12 / 16" }
+        fontWeight: 500
+        label: { value: 다시 시도, note: "이름은 \"{파일 이름} 다시 시도\"" }
+      badge:
+        display: { value: 첫 사진만, note: "badge 를 줄 때만 — 지금 쓰는 자리는 없다(3A — SEED 그대로 둔다)" }
+        height: { value: $spacing-x6, note: "24 — 사진 아래 띠" }
+        paddingX: { value: $spacing-x1, note: "4" }
+        radius: { value: 0 0 12px 12px, note: "아래 두 모서리만 — 사진 모서리(r3 12)를 따른다" }
+        background: { value: $overlay-dim-dark, note: "검정 65% — 두 모드 같다. overlay-dim-light(50%)면 흰 사진 위 흰 글이 3.95 로 모자란다(Image Frame Indicator 와 같은 까닭). SEED bg.overlay 는 들이지 않았다" }
+        typography: { value: $text-t2, note: "12 / 16 · 한 줄" }
+        fontWeight: 500
+        foreground: { value: $color-static-white, note: "흰 사진 위 7.00 · 검은 사진 위 21" }
+        label: { value: 대표, note: "바꿀 수 있다(badgeLabel) — SEED 예제는 \"대표사진\"" }
+      removeButton:
+        size: { value: 20px, note: "원 — SEED x5" }
+        radius: $radius-full
+        background: $color-bg-layer-default
+        borderWidth: { value: 1px, note: "안쪽에 그린다" }
+        borderColor: $color-stroke-neutral-weak
+        offset: { value: $spacing-x1, note: "항목 모서리 밖으로 위 4 · 오른쪽 4 걸친다 — 원의 가운데가 모서리에서 안쪽 6" }
+        iconSize: { value: 10px, note: "lucide x · 선 2.5 — SEED x2_5" }
+        iconColor: $color-fg-neutral
+        touchTarget: { value: 44 × 44, note: "보이는 20 둘레로 12 씩 보이지 않는 여백 — 이웃 항목과는 8 띄어 있어 사진 위로 겹친다(×가 위). AA ✓ · AAA ✓. 앱 — 보이는 자리는 그대로, 누르는 44 는 항목 자리의 위 16 · 끝 항목 오른쪽 16 을 레이아웃에 두어 받는다(부모 상자 밖도 받는다). 칸 위에 라벨이 없어도 위 16 이 잘리지 않는다(Q-016-3)" }
+        hitOrder: { value: × 먼저, note: "이웃 항목과 겹친 8 × 28 도 × 가 받는다 — 웹 z 1, 앱은 줄이 × 를 이웃 항목보다 먼저 묻는다(Q-016-3)" }
+        touchExtend: 12px
+        name: { value: "{파일 이름} 지우기", note: "아이콘만 있는 버튼 — 이름 필수. 누르면 묻지 않고 지운다(되돌리기는 다시 고르기)" }
+        transitionProperty: background-color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      removeMask:
+        size: { value: $spacing-x6, note: "지름 24 — × 20 둘레로 2 띄운 구멍. 사진 · 덮개 · 띠 · 윤곽을 모두 파낸다" }
+        offset: { value: $spacing-x1_5, note: "구멍의 가운데가 모서리에서 안쪽 6 — × 의 가운데와 같다" }
+      dropzone:
+        display: { value: none, note: "layout dropzone · screen wide 에만" }
+      pickButton:
+        display: { value: none, note: "layout dropzone 에만" }
+      itemMenu:
+        surface: { value: "1280 미만 · 앱 Menu Sheet · 1280 이상 Menu", note: "Menu Sheet · Menu 의 값 그대로(menu-sheet.yaml · menu.yaml) — 아이콘 없이 이름만" }
+        title: { value: 파일 이름, note: "메뉴 시트 머리에 전체 파일 이름(\"IMG_20261015_084212.jpg\"). 메뉴(1280 이상)는 머리 없이 같은 이름을 aria-label 로" }
+        groups: { value: "옮기기 묶음 | 지우기 묶음", note: "위 묶음 — 크게 보기 · 대표로 정하기 · 앞으로 옮기기 · 뒤로 옮기기, 아래 위험 묶음 — 지우기(critical, 하나여도 된다 — Menu Sheet 묶음 규칙)" }
+        preview: { value: 크게 보기, note: "첫 줄 — onPreview 를 줄 때만. 파일 카드는 \"열기\"" }
+        makeCover: { value: 대표로 정하기, note: "대표 띠(badgeLabel)를 쓰는 칸의 사진만 — 그 사진을 맨 앞으로 옮긴다. 띠를 안 쓰면 이 줄을 빼고 넷" }
+        moveEarlier: { value: 앞으로 옮기기, note: "한 칸 앞으로 — onReorder" }
+        moveLater: { value: 뒤로 옮기기, note: "한 칸 뒤로 — onReorder" }
+        remove: { value: 지우기, note: "위험 묶음 — × 와 같은 동작, 묻지 않고 지운다. × 는 지름길로 남는다(메뉴에 동작을 다 둔다 — menu-sheet.md \"스와이프의 대신 길\" 과 같은 원칙)" }
+        afterAction: { value: "초점은 그 항목으로", note: "옮긴 뒤 초점은 옮긴 항목에(새 자리), 지운 뒤에는 × 와 같은 규칙(다음 항목 → 앞 항목 → 첨부 타일)" }
+      focusRing:
+        width: { value: 2px, note: "키보드로 옮길 때만" }
+        offset: { value: -2px, note: "부품 안쪽 — 가로 스크롤 줄(overflow)이 바깥 링을 자른다. 트리거 · 항목 · × · 다시 시도 모두" }
+        color: $color-stroke-focus-ring
+    hovered:
+      trigger:
+        background: { value: $color-bg-layer-default-pressed, note: "웹 — 누름과 같은 바탕(v106)" }
+      removeButton:
+        background: $color-bg-layer-default-pressed
+    pressed:
+      trigger:
+        background: { value: $color-bg-layer-default-pressed, note: "SEED bg.transparent-pressed 의 불투명 짝(button.yaml 25-26)" }
+        scale: { value: 2px 거리 축소, note: "타일만(SEED scaleScope self) — 80 은 78/80(v104)" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+      removeButton:
+        background: $color-bg-layer-default-pressed
+        scale: { value: 2px 거리 축소, note: "×만 — 기준 길이 24(v104 — 가장 작은 기준)" }
+      actionButton:
+        scale: { value: 2px 거리 축소, note: "다시 시도만 — SEED scaleScope self" }
+    dragging:
+      item:
+        scale: { value: 2px 거리 축소, note: "끄는 항목이 2px 줄어든 채 손가락을 따라간다(SEED aria-grabbed). 사진은 불투명도 0.5 · 파일 카드는 글 · 아이콘 fg-disabled(아래 kind — SEED 그대로, 사용자 결정 13B)" }
+        cursor: grabbing
+      removeButton:
+        display: { value: none, note: "끄는 동안 × 와 구멍이 사라진다(SEED)" }
+      removeMask:
+        size: 0px
+    readonly:
+      trigger:
+        cursor: not-allowed
+      triggerIcon:
+        color: $color-fg-disabled
+      count:
+        foreground: $color-fg-disabled
+      countMax:
+        foreground: $color-fg-disabled
+      removeButton:
+        cursor: not-allowed
+        iconColor: { value: $color-fg-disabled, note: "SEED 처럼 × 는 막힌 모습으로 남는다 — 지울 수 없다는 것을 보인다" }
+      item:
+        cursor: { value: default, note: "순서를 바꾸지 못한다 · 메뉴를 열지 않는다 — 누르면 바로 크게 보기(onPreview 를 줄 때만). 사진은 불투명도 0.5 · 파일 카드는 글 · 아이콘 fg-disabled(아래 kind — SEED 그대로, 13B)" }
+        press: { value: 크게 보기, note: "메뉴 대신 — 고칠 수 있는 동작이 없다" }
+    disabled:
+      trigger:
+        cursor: not-allowed
+      triggerIcon:
+        color: { value: $color-fg-disabled, note: "SEED trigger disabled" }
+      count:
+        foreground: $color-fg-disabled
+      countMax:
+        foreground: $color-fg-disabled
+      removeButton:
+        cursor: not-allowed
+        iconColor: $color-fg-disabled
+      pickButton:
+        disabled: { value: "true", note: "Button 의 막힘 — bg-disabled · fg-disabled" }
+      item:
+        press: { value: 없음, note: "막히면 누르지 않는다 — 메뉴 · 끌기 없음" }
+
+  # ── 항목 모양 ─────────────────────────────────────────
+  - when: { kind: image }
+    enabled:
+      image:
+        objectFit: cover
+        radius: { value: $radius-r3, note: "항목 모서리 그대로" }
+        alt: { value: "\"\"", note: "항목 이름이 파일 이름을 읽는다 — 그림은 장식" }
+      item:
+        width: { value: 80px, note: "정사각 썸네일" }
+        borderColor: { value: $color-stroke-neutral-overlay, note: "사진 위 투명 윤곽 1px(v118) — 검정 4.7% · 다크 흰 5%. 흰 사진이 바탕에 묻히지 않고 어두운 사진 둘레에 테가 생기지 않는다. SEED stroke.neutral-subtle(투명)과 같은 값" }
+        transitionProperty: { value: "opacity, scale", note: "읽기 전용 · 끄는 중의 흐림이 서서히 — SEED opacity 0.2s" }
+        transitionDuration: $motion-duration-d4
+        transitionEasing: $motion-ease-easing
+    readonly:
+      item:
+        opacity: { value: 0.5, note: "SEED rootage attachment-input-item image readonly — v106(불투명도로 흐리지 않는다)의 예외, 사용자 결정 2026-10-15 마무리 13B. 사진 · 대표 띠 · 윤곽이 함께 흐려진다" }
+    dragging:
+      item:
+        opacity: { value: 0.5, note: "SEED rootage attachment-input-item image dragging — 끄는 사진(13B). 놓으면 1 로 돌아간다" }
+  - when: { kind: file }
+    enabled:
+      item:
+        width: { value: 160px, note: "SEED item file" }
+        paddingX: { value: $spacing-x4, note: "16" }
+        borderColor: { value: $color-stroke-neutral-weak, note: "카드 테두리 — 흰 면 1.23 · 다크 1.56, 이름 · 아이콘이 카드를 알린다" }
+      itemMenu:
+        preview: { value: 열기, note: "파일 카드의 첫 줄 — \"크게 보기\" 대신(onPreview 같은 콜백)" }
+        makeCover: { value: 없음, note: "대표는 사진만 — 파일 카드 메뉴는 열기 · 앞으로 옮기기 · 뒤로 옮기기 | 지우기" }
+    readonly:
+      thumbnailIcon:
+        color: { value: $color-fg-disabled, note: "SEED item file readonly — 글 · 아이콘 색만 바뀐다(불투명도 아님, 사용자 결정 13B)" }
+      name:
+        foreground: $color-fg-disabled
+      size:
+        foreground: $color-fg-disabled
+    dragging:
+      thumbnailIcon:
+        color: { value: $color-fg-disabled, note: "SEED item file dragging — 끄는 카드의 글 · 아이콘. 색만 바뀐다(불투명도 아님)" }
+      name:
+        foreground: $color-fg-disabled
+      size:
+        foreground: $color-fg-disabled
+
+  # ── 항목 상태 ─────────────────────────────────────────
+  - when: { kind: image, status: uploading }
+    enabled:
+      backdrop:
+        display: 보임
+        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "Progress Circle 의 \"사진 위 딤\" — 라이트 50% · 다크 65%(이미 정한 것 2026-10-03)" }
+      progressCircle:
+        display: 보임
+        tone: { value: staticWhite, note: "흰 호 + 흰 30% 트랙 — 딤 위 3.95 · 다크 19.27(3:1 이상)" }
+  - when: { kind: file, status: uploading }
+    enabled:
+      thumbnailIcon:
+        display: { value: none, note: "파일 아이콘 자리에 원" }
+      progressCircle:
+        display: 보임
+        tone: { value: neutral, note: "썸네일 칸(bg-neutral-weak) 위 호 stroke-neutral-solid 3.87 · 다크 3.18 — 이름 옆 회색 원(progress-circle.md)" }
+  - when: { kind: image, status: error }
+    enabled:
+      backdrop:
+        display: 보임
+        background: { value: $overlay-dim-dark, note: "검정 65% — 두 모드 같다. \"다시 시도\" 글(12)이 흰 사진 위 7.00 — 50% 면 3.95 로 모자란다" }
+      actionButton:
+        display: 보임
+        color: { value: $color-static-white, note: "SEED item-action-button image — 아이콘 · 글" }
+  - when: { kind: file, status: error }
+    enabled:
+      thumbnail:
+        display: { value: none, note: "썸네일 · 이름 · 크기 자리를 다시 시도 하나가 채운다(SEED) — 어느 파일인지는 이름(보조 기술)이 읽는다" }
+      meta:
+        display: none
+      actionButton:
+        display: 보임
+        color: { value: $color-fg-neutral-subtle, note: "SEED item-action-button file — 흰 면 5.50 · 다크 6.09" }
+        width: { value: 카드 폭, note: "카드 안을 채운다(가운데 정렬)" }
+
+  # ── 다 참 ─────────────────────────────────────────────
+  - when: { capacity: full }
+    enabled:
+      trigger:
+        ariaDisabled: { value: "true", note: "다 차면 막힌다(SEED maxFiles) — aria-disabled 라 초점은 남아 \"10/10, 사용할 수 없음\" 을 읽는다. 넘친 파일은 고르기 창에서 골라도 하나씩 거절한다" }
+        cursor: not-allowed
+      triggerIcon:
+        color: $color-fg-disabled
+      count:
+        foreground: $color-fg-disabled
+      countMax:
+        foreground: $color-fg-disabled
+      pickButton:
+        disabled: { value: "true", note: "다 차면 파일 선택도 막힌다(최대 1 이면 하나를 고른 뒤) — 바꾸려면 × 로 지우고 다시 고른다" }
+    hovered:
+      trigger:
+        background: { value: transparent, note: "막힌 타일은 바탕이 생기지 않는다" }
+    pressed:
+      trigger:
+        background: transparent
+        scale: 없음
+
+  # ── 드롭존 ────────────────────────────────────────────
+  - when: { layout: dropzone }
+    enabled:
+      items:
+        bleedX: { value: 0px, note: "고른 파일 카드는 칸 안에 — 하나라 넘치지 않는다" }
+        fog: { value: 없음, note: "한 장이라 가로로 넘치지 않는다" }
+  - when: { layout: dropzone, screen: wide }
+    enabled:
+      dropzone:
+        display: 보임
+        height: { value: 120px, note: "SEED dropzone" }
+        gap: { value: $spacing-x2, note: "안내 ↔ 버튼 8" }
+        paddingX: { value: $spacing-x4, note: "16" }
+        radius: $radius-r3
+        borderWidth: { value: 1px, note: "늘 실선(사용자 결정 5A · 12A) — SEED rootage 설명은 평소 점선 · 끄는 동안 실선이지만 고르지 않았다(12B)" }
+        borderStyle: solid
+        borderColor: { value: $color-stroke-neutral-solid, note: "흰 면 4.18 · 다크 4.13(떠 있는 면 4.18 · 3.58) — 3:1 이상. SEED palette.gray-500 은 다크 표면 위 2.71" }
+        background: transparent
+        alignItems: { value: center, note: "안내 · 버튼을 가운데 세로로" }
+        transitionProperty: border-color, background-color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      dropzoneLabel:
+        typography: { value: $text-t4, note: "14 / 19" }
+        fontWeight: 500
+        foreground: { value: $color-fg-neutral-subtle, note: "흰 면 5.50 · 다크 6.09" }
+        text: { value: 파일을 여기로 끌어다 놓으세요, note: "해요체 · 마침표 없는 안내 글(버튼 옆 한 줄)" }
+      pickButton:
+        display: 보임
+        variant: { value: neutralWeak, note: "Button neutralWeak — CTA 가 아닌 보조 동작(고르기 창 열기). 드롭존의 키보드 길이 이 버튼이다" }
+        size: { value: small, note: "Button small 36 — 화면 안 범용 크기, 높이 120 안에 안내와 함께 든다" }
+        label: 파일 선택
+    disabled:
+      dropzone:
+        borderColor: { value: $color-stroke-neutral-weak, note: "막히면 테두리도 옅게 — 짙은 테두리는 받을 수 있는 자리로 읽힌다(porest — SEED 는 테두리를 바꾸지 않는다)" }
+        dropTarget: { value: 받지 않음, note: "끌어 와도 모습이 바뀌지 않고 놓아도 붙지 않는다" }
+      dropzoneLabel:
+        foreground: { value: $color-fg-disabled, note: "SEED dropzone disabled" }
+    dragOver:
+      dropzone:
+        borderColor: { value: $color-stroke-neutral-contrast, note: "흰 면 16.41 · 다크 13.42 — 기본 테두리와 3.93 · 3.25 로 또렷이 갈린다(SEED stroke.neutral-solid 는 gray-500 과 1.32 · 1.53)" }
+        background: { value: $color-bg-layer-default-pressed, note: "SEED 문서 \"드래그 진입 시 영역 테두리와 배경색이 변경\" — 안내 글은 이 바탕 위 5.18 · 4.68" }
+      pickButton:
+        background: { value: $color-bg-neutral-weak, note: "그대로 — 끄는 동안 버튼 면이 끌기 바탕과 1.02 · 1.00:1 로 섞여 글만 남는다. 끄는 중엔 누를 일이 없어 그대로 둔다(사용자 결정 2026-10-15 마무리 12A — 늘 실선, 평소 점선(12B)은 고르지 않았다)" }
+  - when: { layout: dropzone, screen: wide, capacity: full }
+    enabled:
+      dropzone:
+        borderColor: { value: $color-stroke-neutral-weak, note: "다 찬 드롭존은 막힌 모습 — 끌어 와도 받지 않는다(SEED maxFiles)" }
+        dropTarget: 받지 않음
+      dropzoneLabel:
+        foreground: $color-fg-disabled
+    dragOver:
+      dropzone:
+        borderColor: $color-stroke-neutral-weak
+        background: { value: transparent, note: "다 찼으면 끌어 와도 바뀌지 않는다" }
+  - when: { layout: dropzone, screen: narrow }
+    enabled:
+      pickButton:
+        display: 보임
+        variant: neutralWeak
+        size: { value: large, note: "Button large 48 · 칸 폭 전체 · 앞 아이콘 upload — 1280 미만 · 앱은 끌어 놓기가 없어 드롭존을 그리지 않는다" }
+        width: { value: 칸 폭, note: "full" }
+        prefixIcon: upload
+        label: 파일 선택
+
+  # ── 항목 자리(메뉴의 옮기기) ──────────────────────────
+  - when: { position: first }
+    enabled:
+      itemMenu:
+        moveEarlier: { value: 막힘, note: "맨 앞이라 앞으로 갈 수 없다 — 줄은 보이고 누를 수 없다(Menu Sheet · Menu 의 막힌 줄)" }
+        makeCover: { value: 막힘, note: "이미 대표다(대표 띠를 쓸 때)" }
+  - when: { position: last }
+    enabled:
+      itemMenu:
+        moveLater: { value: 막힘, note: "맨 끝이라 뒤로 갈 수 없다" }
+
+motion:
+  "누름 · 올림 — 바탕":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color]
+    note: "첨부 타일 · ×"
+  "누름 — 부품 축소":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "누른 부품만 2px 거리 축소 — 모션 줄이기면 하지 않는다"
+  "끌어 들어옴 — 드롭존":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [border-color, background-color]
+    note: "테두리 · 바탕이 함께 바뀐다"
+  "읽기 전용 · 끄는 중 — 사진 흐림":
+    duration: $motion-duration-d4
+    easing: $motion-ease-easing
+    properties: [opacity]
+    note: "사진 1 → 0.5(SEED opacity 0.2s, 사용자 결정 13B) — 모션 줄이기면 바로"
+  "올리는 중 — 채움":
+    duration: $motion-duration-d6
+    easing: $motion-ease-enter
+    properties: [stroke-dashoffset]
+    note: "Progress Circle 의 채움 그대로 — 모션 줄이기면 바로"

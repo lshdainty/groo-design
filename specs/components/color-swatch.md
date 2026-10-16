@@ -38,7 +38,7 @@ SEED 에는 색을 고르는 부품이 없다 — 사용자가 색을 정하는 
 
 ### 크기 · 배치
 
-칸은 원 40(누르는 44)이고 폭과 상관없이 5개씩 두 줄 · 사이 12 다 — 데스크톱 대화상자에서도 폰 시트에서도 같은 크기 · 같은 줄이다(사용자 결정 13B). 차례는 색상환(빨강 → 주황 → 노랑 → 초록 → 파랑 → 남색 → 보라 → 분홍 → 갈색 → 회색)이라 ↑ ↓ 가 늘 같은 칸으로 간다. 폭을 나눈 네모(지금 88.8 · 62)는 쓰지 않는다.
+칸은 원 40(누르는 44)이고 폭과 상관없이 5개씩 두 줄 · 사이 12 다 — 데스크톱 대화상자에서도 폰 시트에서도 같은 크기 · 같은 줄이다(사용자 결정 13B). 칸 · 사이는 글자 크기 설정을 따르지 않는 px(-static)다 — 웹도 앱과 같다. 색이 곧 값이라 글처럼 읽을 일이 없고, rem 이면 글자 200% 에서 원이 80 으로 커져 40 열 격자에서 서로 겹친다(2026-10-17 사용자 결정 — 03-B 결정 5 A. 폭 안 5열로 키우는 안은 고르지 않았다). 차례는 색상환(빨강 → 주황 → 노랑 → 초록 → 파랑 → 남색 → 보라 → 분홍 → 갈색 → 회색)이라 ↑ ↓ 가 늘 같은 칸으로 간다. 폭을 나눈 네모(지금 88.8 · 62)는 쓰지 않는다.
 
 [그림: 원 40 · 5 × 2 · 사이 12 — 데스크톱 476 · 폰 342 에서 같다](../../site/components/specs/color-swatch.tsx#size)
 
@@ -179,7 +179,7 @@ import { Field } from "@/components/ui/field"
 | `Tab` | 묶음에 한 번 — 고른 칸(없으면 첫 칸)에 선다 |
 | `←` `→` | 차례대로 옮기며 고른다 — 줄 끝에서 다음 줄로, 지금 색 칸은 차례의 맨 앞(RTL 은 반대) |
 | `↑` `↓` | 위아래 줄의 같은 칸으로 옮기며 고른다 |
-| `Home` · `End` | 첫 칸 · 마지막 칸 |
+| `Home` · `End` | 받지 않는다 — 초점도 고른 칸도 그대로, 화면도 스크롤되지 않는다(`PageUp` · `PageDown` 도). 끝 칸으로는 화살표로 간다(← 는 끝에서 처음으로 돈다) — 하나 고르기 묶음은 화살표만이다(SEED · 진짜 라디오 · APG, 2026-10-17 사용자 결정 — 03-E 결정 3 후속. 색 칸만 예외로 두는 안은 고르지 않았다) |
 | `Space` | 초점의 칸을 고른다 |
 | 저장 | 고른 색 이름을 저장 값으로(짝 표) — "current" 면 저장 값을 그대로 둔다 |
 | Disabled | 누르기 · 키보드 불가 — 색은 그대로 보인다 |
@@ -194,7 +194,7 @@ import { Field } from "@/components/ui/field"
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 고리 바깥 링 2px(띄움 6) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 칸 40 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 누르는 영역 44 × 44 ✓ — 칸 사이 12 라 이웃과 겹치지 않는다 |
-| **ARIA** | 묶음 `role="radiogroup"` + 이름(Field 라벨 — `aria-labelledby`), 칸 `role="radio"` · `aria-checked` · 이름 = 색 이름("빨강") · 지금 색 칸 "지금 색" · "자동". 고른 칸만 `tabindex="0"`. 앱은 칸마다 `Semantics(inMutuallyExclusiveGroup: true, checked: …, label: "빨강")` + 키보드 포커스 |
+| **ARIA** | 묶음 `role="radiogroup"` + 이름(Field 라벨 — `aria-labelledby`), 칸 `role="radio"` · `aria-checked` · 이름 = 색 이름("빨강") · 지금 색 칸 "지금 색" · "자동". 고른 칸만 `tabindex="0"`. 앱은 칸마다 `Semantics(inMutuallyExclusiveGroup: true, checked: …, label: "빨강")` + 키보드 포커스, 묶음 노드는 `Semantics(role: SemanticsRole.radioGroup, label: Field 라벨)` — 이름은 라벨("색상")만이다. 칸의 툴팁(색 이름)은 칸의 의미 노드 안에 두거나 의미에서 뺀다 — 칸 이름이 이미 색 이름이고, 툴팁이 칸 밖에 있으면 첫 칸의 "빨강" 이 묶음 이름에 붙어 고른 색과 상관없이 "색상, 빨강" 으로 읽힌다(2026-10-17 사용자 승인 — 03B-004b) |
 
 ## Do / Don't
 
@@ -228,6 +228,15 @@ import { Field } from "@/components/ui/field"
 - **색은 v110 차트 10색** — SEED 팔레트는 사용자가 고르는 색 세트를 두지 않는다.
 
 ## Migration notes
+
+### 2026-10-17 — 웹 칸 -static · Home · End 를 받지 않는다(03-B 결정 5 A · 03-E 결정 3 후속)
+
+- **칸 · 사이 -static(03-B 결정 5 A)** — 웹 칸이 `size-10`(rem)이라 글자 200% 에서 80 원이 `grid-cols-[repeat(5,40px)] gap-x3`(px) 격자에서 서로 겹쳤다(한 색의 1/3 이 가려지고 누르면 옆 색이 골라질 수 있다). 레시피 칸을 `size-[40px]` 로 — 열 · 간격 · 격자 폭(이미 px)과 맞는다. 앱은 이미 40 고정이다. 웹 ds `color-swatch-variants.ts:117` 도 같게.
+- **Home · End(03-E 결정 3 후속)** — 레시피 · 사이트 그림의 Home · End(첫 칸 · 마지막 칸)를 걷고, 묶음이 `ignoreRadioJumpKeys` 로 Home · End · PageUp · PageDown 을 막는다(Radio Group 과 같다). 웹 ds 도 같게, 앱은 바뀌는 것 없음.
+
+### 2026-10-17 — 앱 묶음의 역할 · 툴팁(03B-004b)
+
+구현 조사에서 앱 묶음 노드(`p_color_swatch.dart:388`)가 container + label 만이고(역할 없음), 첫 칸의 툴팁 "빨강"(`:292` PTooltip 이 칸의 Semantics 밖)이 묶음 노드에 붙어 고른 색이 파랑이어도 "색상, 빨강" 으로 읽히는 것을 찾았다. 스펙(묶음 radiogroup · 칸 이름 = 색 이름)대로 고치는 줄이라 사용자가 승인했다([03-B 페이지](https://claude.ai/artifact/SZwwW7UK1FxtZynvYBFLLx)). Accessibility 의 ARIA 에 앱 줄을 적었다 — 묶음 `SemanticsRole.radioGroup`(앱 Segmented 가 이미 쓴다) · 툴팁은 칸 노드 안(또는 의미에서 뺀다). 옛 스펙은 `color-swatch.history/v-pre-03e-03b.md`.
 
 ### 2026-10-16 — 지금 색 칸 아래 글을 subtle 로(글자 역할 D5)
 

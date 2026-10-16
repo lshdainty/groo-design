@@ -28,7 +28,7 @@
 
 ## Properties
 
-크기 · 변형이 하나다. 트랙 안쪽 4 + 칸 34 = 42, 글 16 · 700(고르든 안 고르든), 칸 좌우 12. 칸은 트랙 폭을 칸 수로 똑같이 나누고 최소 폭이 없어, 폰(콘텐츠 폭 312)에서도 4개가 들어간다. 넓은 화면에서는 트랙이 놓인 자리를 채우므로 자리를 좁혀 둔다.
+크기 · 변형이 하나다. 트랙 안쪽 4 + 칸 34 = 42, 글 16 · 700(고르든 안 고르든 — 글자 크기 설정을 따르지 않는 `t5-static`), 칸 좌우 12. 칸은 트랙 폭을 칸 수로 똑같이 나누고 최소 폭이 없어, 폰(콘텐츠 폭 312)에서도 4개가 들어간다. 넓은 화면에서는 트랙이 놓인 자리를 채우므로 자리를 좁혀 둔다.
 
 [그림: 폭 — 폰에서 2 · 3 · 4개](../../site/components/specs/segmented-control.tsx#width)
 
@@ -95,6 +95,7 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 |---|---|
 | Click · Tap | 그 칸을 고르고 내용을 바로 바꾼다. 고른 알약이 200ms 로 미끄러진다. 고른 칸을 다시 눌러도 그대로다. |
 | `←` `→` · `↑` `↓` | 이웃 칸으로 옮기며 **바로 고른다**(라디오). 막힌 칸은 건너뛴다. |
+| `Home` · `End` | 받지 않는다 — 초점도 고른 칸도 그대로, 화면도 스크롤되지 않는다(`PageUp` · `PageDown` 도). 첫 · 끝 칸으로는 화살표로 간다 — SEED · 진짜 라디오 · WAI-ARIA APG Radio Group 과 같다(2026-10-17 사용자 결정 — 03-E 결정 3 A). Tabs 는 Home · End 로 옮기며 고른다. |
 | `Tab` | 고른 칸 하나에만 선다. |
 | 마우스 호버 | 누름과 같은 바탕(축소 없음). |
 | Disabled | 칸 하나 또는 트랙 전체를 막는다 — 누를 수 없다 · 커서 not-allowed · 화살표 이동에서 건너뛴다. |
@@ -105,6 +106,7 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 안 고른 글 `fg-neutral-subtle` 트랙 위 — 트랙이 투명해 놓인 바탕에 따라 다르다(v120): 라이트 흰 면 4.95 · 회색 바닥 4.59, 다크 바닥 4.68 ✓ · 다크는 `fg-neutral-muted` 로 한 단계 짙게 — 다크 카드(`bg-layer-default`) 5.18 · 다크 시트(`bg-layer-floating`) 4.50 · 다크 바닥 5.93 ✓(subtle 이면 4.09 · 3.56 — 2026-10-17 사용자 결정 — 01-040 B 후속). 올리거나 누르는 동안 `fg-neutral-muted` 6.17 · 4.95, 고른 글 `fg-neutral` 알약 위 16.41 · 13.42 · 누름 15.48 · 10.32 ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 고른 칸은 알약의 짙은 1px `stroke-neutral-contrast`(트랙과 라이트 13.71 ~ 14.79 · 다크 7.84 ~ 10.33) ✓ — SEED 의 옅은 1px(1.14 · 1.20)을 바꿨다. 고른 채 막힘 `stroke-neutral-solid` 은 `bg-disabled` 위 3.87 · 3.18 ✓(비활성이라 기준 밖). 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓. 알림 점 `fg-brand` 트랙 위 Desk 라이트 7.00 ~ 7.55 · 다크 3.56 ~ 4.69 · HR 라이트 4.23 ~ 4.56 · 다크 3.64 ~ 4.79 ✓ — 고른 칸에는 그리지 않는다 |
+| **WCAG 1.4.4** Resize text | 칸 글은 예외다 — `t5-static` 16 이라 글자 크기 설정을 따르지 않는다(웹 `text-t5-static` · 앱 `TextScaler.noScaling`). 칸이 트랙을 나눠 폰 4칸이 76(글 자리 52)이라, 200% 에서 "오 / 늘" · "이 / 번 / 주" 처럼 한 글자씩 세로로 읽혔다. 하단 탭 라벨과 같은 대가(DESIGN v104 -static 목록, 2026-10-17 사용자 결정 — 03-B 결정 4 A). 큰 글자에서 2 × 2 격자로 바꾸는 안은 고르지 않았다 |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 링 2px · 띄움 2px — 칸 바깥 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 칸 34 × 칸 폭 ✓(폰 4개면 칸 폭 76) |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 칸 34 ✗(SEED 와 같다) |
@@ -143,6 +145,14 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 - **알림 점은 브랜드 글자색**(`fg-brand`)이고, 보조 기술에 "새 소식" 을 덧붙인다. SEED 의 `bg.brand-solid` 짝은 porest 다크에서 트랙과 1.33 · 2.20:1 이라 쓰지 않는다. 고른 칸에는 점을 그리지 않는다.
 
 ## Migration notes
+
+### 2026-10-17 — 칸 글은 -static(03-B 결정 4 A)
+
+웹 · 앱 칸 글이 글자 크기 설정을 따라 200% 에서 32 가 되어 4칸이 한 글자씩 쪼개졌다(조사 03B-007 — 앱 `p_segmented_control.dart`, 웹 `segmented-control-variants.ts:21` `text-t5`). 사용자가 [비교 페이지](https://claude.ai/artifact/SZwwW7UK1FxtZynvYBFLLx)에서 "칸 글은 -static 16"(A)을 골랐다 — `segmented-control.yaml` label `$text-t5-static`, DESIGN v104 의 -static 목록에 "Segmented 칸 글". 레시피 · 예제 `text-t5-static`, 미리보기 `--text-t5-static`. 웹 ds 는 `text-t5-static`, 앱은 칸 글에 `TextScaler.noScaling`. 옛 스펙은 `segmented-control.history/v-pre-03e-03b.md`.
+
+### 2026-10-17 — 하나 고르기 묶음은 Home · End 를 받지 않는다(03-E 결정 3 A)
+
+웹 공용 라디오 묶음(Chip 하나 고르기 · Radio Group · Segmented Control · Select Box 하나 고르기 · List 라디오)은 Radix RovingFocusGroup 이 Home · End(· PageUp · PageDown)로 초점만 첫 · 끝으로 옮겨 초점과 고른 것이 갈렸다. 사용자가 [비교 페이지](https://claude.ai/artifact/FKYaqu7zAR5T2HVwFnx5oD)에서 "받지 않는다"(A — 화살표만, SEED · 진짜 라디오 · APG)를 골랐다. 레시피는 묶음이 캡처 단계에서 라디오의 그 키를 막는다(`ignoreRadioJumpKeys` — radio-group.tsx, Segmented Control 도 쓴다). 웹 ds 의 같은 묶음도 같게, 앱은 바뀌는 것 없음. 옮기며 고르는 안(B — Tabs 처럼)은 고르지 않았다. 옛 스펙은 `segmented-control.history/v-pre-03e-03b.md`.
 
 ### 2026-10-15 — 알림 점은 "새 소식"
 

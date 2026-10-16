@@ -279,6 +279,7 @@ const toggle = (code: string, on: boolean) =>
 | Hover(웹) | 누름과 같은 바탕. |
 | Keyboard `Tab` | 하나 고르기 묶음은 고른 상자 하나로 들어온다 · 여럿은 상자마다. |
 | Keyboard `↑` `↓` `←` `→` | 하나 고르기 묶음 안에서 옮기며 고른다(Radix). |
+| Keyboard `Home` · `End` | 하나 고르기 묶음은 받지 않는다 — 초점도 고른 상자도 그대로, 화면도 스크롤되지 않는다(`PageUp` · `PageDown` 도). 첫 · 끝 상자로는 화살표로 간다 — SEED · 진짜 라디오 · WAI-ARIA APG Radio Group 과 같다(2026-10-17 사용자 결정 — 03-E 결정 3 A). 펼침 안의 입력칸에서는 글 처음 · 끝으로 가는 그대로다. |
 | Keyboard `Space` | 고른다 · 켜고 끈다. 누르고 있는 동안은 누름 모습이다. |
 | Keyboard `Enter` | 폼을 제출한다 — 진짜 input 처럼 폼의 기본 버튼을 누른다. 고르지 않는다(Checkbox · Radio 와 같다, 2026-10-08). |
 | 반영 | 저장 · 다음 같은 버튼이 한다 — 상자를 고르는 것만으로 반영하지 않는다. |
@@ -330,6 +331,10 @@ const toggle = (code: string, on: boolean) =>
 - 고른 테두리 `stroke-neutral-contrast` 는 v113 에 더한 역할이다(SEED 와 같은 gray-1000).
 
 ## Migration notes
+
+### 2026-10-17 — 하나 고르기 묶음은 Home · End 를 받지 않는다(03-E 결정 3 A)
+
+웹 공용 라디오 묶음(Chip 하나 고르기 · Radio Group · Segmented Control · Select Box 하나 고르기 · List 라디오)은 Radix RovingFocusGroup 이 Home · End(· PageUp · PageDown)로 초점만 첫 · 끝으로 옮겨 초점과 고른 것이 갈렸다. 사용자가 [비교 페이지](https://claude.ai/artifact/FKYaqu7zAR5T2HVwFnx5oD)에서 "받지 않는다"(A — 화살표만, SEED · 진짜 라디오 · APG)를 골랐다. 레시피는 묶음이 캡처 단계에서 라디오의 그 키를 막는다(`ignoreRadioJumpKeys` — radio-group.tsx, Select Box 하나 고르기 도 쓴다). 웹 ds 의 같은 묶음도 같게, 앱은 바뀌는 것 없음. 옮기며 고르는 안(B — Tabs 처럼)은 고르지 않았다. 옛 스펙은 `select-box.history/v-pre-03e-03b.md`.
 
 ### 2026-10-15 — HR 역할 고르기는 여럿 고르기 상자 + 저장
 

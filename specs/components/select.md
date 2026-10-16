@@ -325,7 +325,7 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
 | **WCAG 2.4.7** Focus visible | 트리거는 키보드 포커스에 링. 목록 안 키보드 위치는 알약(SEED — 위 1.4.11 의 ⚠) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 트리거 · 선택지 모든 크기 ✓(가장 작은 선택지 medium 39) |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 트리거 large 52 ✓ · 선택지 large 46 ✓. medium 40 · 39 ⚠ — 1280 이상 데스크톱 웹(마우스)에서만(예외 — Table Pagination 의 고르기) |
-| **ARIA** | 트리거 `<button role="combobox" aria-haspopup="listbox" aria-expanded aria-controls>` — 이름은 Field 의 라벨(`<label for>`), 라벨이 없으면 `aria-label`. 오류 `aria-invalid`, 필수 `aria-required`, 읽기 전용 `aria-readonly`. 목록 `role="listbox"`(여럿이면 `aria-multiselectable`) · 짚은 선택지는 `aria-activedescendant`, 선택지 `role="option" aria-selected`(막히면 `aria-disabled`), 묶음 `role="group"` + 제목 `aria-labelledby` |
+| **ARIA** | 트리거 `<button role="combobox" aria-haspopup="listbox" aria-expanded aria-controls>` — 이름은 Field 의 라벨(`<label for>`), 라벨이 없으면 `aria-label`. 오류 `aria-invalid`, 필수 `aria-required`, 읽기 전용 `aria-readonly`. 목록 `role="listbox"`(여럿이면 `aria-multiselectable`) · 짚은 선택지는 `aria-activedescendant`, 선택지 `role="option" aria-selected`(막히면 `aria-disabled`), 묶음 `role="group"` + 제목 `aria-labelledby`. **앱은 listbox · option 대신** — Flutter `SemanticsRole` 에 listbox · option 이 없다. 하나 고르기 선택지는 `Semantics(button: true, selected: 고름, label: 제목 + 설명)`("원, 선택됨, 버튼"), 여럿 고르기는 `checked: 고름`("체크됨 · 체크 안 됨")을 더한다. 목록 노드는 역할을 지어내지 않고 이름만 둔다("목록 안 · n개 중 m번째" 는 스크롤 자식 수로 OS 가 붙인다). 이 꼴을 앱 테스트로 고정한다 — 선택지를 라디오(`checked` + `inMutuallyExclusiveGroup`)로 바꾸는 안은 고르지 않았다(2026-10-17 사용자 결정 — 03-B 결정 2 A) |
 
 ## Do / Don't
 
@@ -362,6 +362,10 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
 - **트리거 이름은 라벨 하나** — SEED React 는 트리거에 고른 값을 따로 읽히지 않는다. porest 는 `role="combobox"` 의 값으로 고른 글이 읽힌다(라벨 + 값).
 
 ## Migration notes
+
+### 2026-10-17 — 앱 선택지 낭독(03-B 결정 2 A)
+
+스펙이 웹 ARIA(listbox · option)만 적고 앱의 의미 트리를 말하지 않았다(조사 03B-004 · 005). 사용자가 [비교 페이지](https://claude.ai/artifact/SZwwW7UK1FxtZynvYBFLLx)에서 "지금 그대로"(A)를 골랐다 — 앱 `PSelect` 선택지(`p_select.dart:933~940`)의 `Semantics(container, button: true, selected, checked: multiple ? selected : null, label)` 를 스펙 줄로 적었다(Accessibility 의 ARIA). 코드는 바뀌지 않는다 — 앱은 하나 고르기 선택지가 button + selected · 여럿 고르기가 checked 인지 위젯 테스트로 고정한다. 하나 고르기를 라디오로 바꾸는 안(B)은 고르지 않았다. 옛 스펙은 `select.history/v-pre-03e-03b.md`.
 
 ### 2026-10-15 — 남은 화면 · 앱의 체크 굵기
 
