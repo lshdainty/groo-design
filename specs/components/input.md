@@ -38,7 +38,7 @@
 
 ### Size
 
-`large`(52 · 밑줄 40)는 폰 · 앱에서, `medium`(40 · 밑줄 34)은 1280 이상 데스크톱 웹(마우스)에서만 쓴다. 웹의 기본은 `responsive` 다 — 1280 미만은 large, 이상은 medium(SEED `lg`). 앱은 늘 large 다. 한 폼 안에서 크기를 섞지 않는다.
+`large`(52 · 밑줄 40)는 폰 · 앱에서, `medium`(40 · 밑줄 34)은 1280 이상 데스크톱 웹(마우스)에서만 쓴다. 웹의 기본은 `responsive` 다 — 1280 미만은 large, 이상은 medium(SEED `lg`). 앱은 늘 large 다. 한 폼 안에서 크기를 섞지 않는다. 예외 하나 — 상단 바 안의 검색칸(거래 검색 화면의 제목 자리 · 데스크톱 머리 왼쪽)은 바 56 안이라 폰 · 앱에서도 `medium` 40 이다([Top Navigation](top-navigation.md) 의 검색칸, 2026-10-16 구현 세션 질문 Q-017-5 정리).
 
 [그림: 크기 — large · medium, 반응형은 1280 에서 바뀐다](../../site/components/specs/input.tsx#size)
 

@@ -1,14 +1,15 @@
 # Toggle 의 수치 원본 — 켜고 끄는 아이콘 단추(2026-10-09 사용자 결정, 입력 비교 페이지 5A · 6B · 7A · 8A · "따라오는 것").
 # 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
-# 단추 하나가 한 상태를 켜고 끈다(<button aria-pressed>) — 관심 등록(별) · 메모 고정(핀) · 금액 가리기(눈) · App Key 보기(눈).
+# 단추 하나가 한 상태를 그 자리에서 켜고 끈다(<button aria-pressed>) — 관심 등록(별) · 메모 고정(핀) · App Key 보기(눈).
+# 순자산 카드의 금액 가리기 눈은 Toggle 이 아니다 — 설정으로 가는 버튼이 이 상자 · 표면 색(inverted)만 빌린다(aria-pressed 없음, 2026-10-16 Q-017-2b A · 3c B).
 # 이름은 고정이고 켬은 aria-pressed 가 알린다. 바탕은 켬 · 끔에 따라 바뀌지 않는다 — 아이콘만 바뀐다:
 # 켬 = 진한 색(fg-neutral) + 선 2.5, 끔 = 흐린 색(fg-neutral-muted) + 선 2(기초 Iconography v106).
 # 아이콘은 지금 상태를 그린다 — 기능이 꺼지는 단추(눈 · 종)는 lucide -off 아이콘과 짝을 쓰고, 모으기 단추(관심 · 고정)는
 # 사선 없이 같은 아이콘이다(SEED 하트처럼). 글 토글(옛 default · outline 28 · 32 · 40)은 걷었다 — 거르기는 Chip, 설정은 Switch.
 #
 # 축 — toggled(끔 · 켬) · tone(표면 위 · 브랜드 채움 위). 크기는 하나 — 보이는 40 · 누르는 44 · 아이콘 20.
-# 상단 바 안에서는 Top Navigation 의 아이콘 버튼(상자 44 · 아이콘 24)을 쓰고, 끔도 fg-neutral 이다 — 굵기 · 아이콘으로만 가른다
+# 상단 바 안에 둘 때는 Top Navigation 의 아이콘 버튼(상자 44 · 아이콘 24)을 쓰고, 끔도 fg-neutral 이다 — 굵기 · 아이콘으로만 가른다
 # (사용자 결정 2026-10-09 19B, top-navigation.yaml iconButton).
 #
 # SEED 와 다른 자리(toggle.md 의 "SEED 와 다른 점")
@@ -23,7 +24,7 @@ name: Toggle
 
 slots:
   root: 단추 — 보이는 40 · 누르는 44. 바탕은 켬 · 끔에 따라 바뀌지 않는다(누름 · 호버에만 칠한다)
-  icon: 아이콘 20 — 지금 상태를 그린다(눈은 가렸으면 eye-off, 모으기 단추는 같은 아이콘)
+  icon: 아이콘 20 — 지금 상태를 그린다(키 보기는 가렸으면 eye-off, 모으기 단추는 같은 아이콘)
   focusRing: 키보드 포커스 링
 
 variants:
@@ -32,7 +33,7 @@ variants:
     "on": 켬 — aria-pressed="true". 진한 색 + 선 2.5
   tone:
     default: 흰 표면 · 카드 · 시트 위(기본)
-    inverted: 브랜드 채움 위 — 순자산 카드. 아이콘은 켬 · 끔 모두 흰색이고 모양 · 굵기로 가른다
+    inverted: 브랜드 채움 위 — 아이콘은 켬 · 끔 모두 흰색이고 모양 · 굵기로 가른다. 순자산 카드의 금액 가리기 눈(설정으로 가는 버튼 — Toggle 이 아니다)이 이 상자 · 색을 빌린다
 
 defaults:
   toggled: "off"
@@ -55,7 +56,7 @@ rules:
         background: { value: transparent, note: "켬 · 끔에 따라 바뀌지 않는다 — 켜면 옅은 바탕(5B) · 반전(5C)은 고르지 않았다(사용자 결정 2026-10-09)" }
         touchTarget: { value: 44 × 44, note: "보이는 40 둘레로 2 씩 넓힌다(v106). AA ✓ · AAA ✓" }
         cursor: pointer
-        name: { value: 고정, note: "aria-label 은 상태마다 바꾸지 않는다(\"관심 등록\" · \"금액 가리기\") — 켬은 aria-pressed 가 알린다(APG). 이름과 아이콘의 뜻이 반대로 읽히지 않게 아이콘은 지금 상태를 그린다" }
+        name: { value: 고정, note: "aria-label 은 상태마다 바꾸지 않는다(\"관심 등록\" · \"App Key 보기\") — 켬은 aria-pressed 가 알린다(APG). 이름과 아이콘의 뜻이 반대로 읽히지 않게 아이콘은 지금 상태를 그린다. 설정으로 가는 금액 가리기 눈은 aria-pressed 없이 \"금액 가리기 설정\"" }
         transitionProperty: background-color
         transitionDuration: $motion-duration-color-transition
         transitionEasing: $motion-ease-easing
@@ -97,7 +98,7 @@ rules:
   - when: { tone: inverted }
     enabled:
       icon:
-        color: { value: $color-static-white, note: "켬 · 끔 모두 흰색 — 순자산 카드 그라디언트 위 Desk 8.38 ~ 14.78 · 다크 8.36 ~ 11.25(장식 빛 위 가장 낮은 자리 4.88). 켬 · 끔은 아이콘 모양(eye · eye-off)과 굵기(2.5 · 2)로 가른다" }
+        color: { value: $color-static-white, note: "켬 · 끔 모두 흰색 — 순자산 카드 그라디언트 위 Desk 8.38 ~ 14.78 · 다크 8.36 ~ 11.25(장식 빛 위 가장 낮은 자리 4.88). 켬 · 끔은 아이콘 모양과 굵기(2.5 · 2)로 가른다. 금액 가리기 눈(설정으로 가는 버튼)은 aria-pressed 가 없어 선 2 그대로 — eye · eye-off 모양만 바뀐다" }
     hovered:
       root:
         background: { value: transparent, note: "브랜드 채움에는 누름 색 짝이 없다 — 축소만(Card 의 순자산 카드와 같다)" }

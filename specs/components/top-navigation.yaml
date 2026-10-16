@@ -5,7 +5,10 @@
 # 데스크톱(768 이상)의 머리가 이것이다. 높이는 어디서나 56 이다.
 #   root     탭 첫 화면 — 왼쪽 큰 제목(22), 왼쪽 버튼 없음, 오른쪽 아이콘 버튼
 #   standard 그 아래 화면 — 왼쪽 버튼(← · ✕ · ☰) + 제목(18), 오른쪽 아이콘 버튼 또는 글 버튼 하나
-#   desktop  데스크톱 머리(Desk) — 제목은 본문 h1 이 맡는다. 오른쪽에 주 버튼 하나 + 아이콘 버튼
+#   desktop  데스크톱 머리(Desk) — 제목은 본문 h1 이 맡는다. 왼쪽 검색칸, 오른쪽에 주 버튼 하나 + 아이콘 버튼 둘(알림 · 설정)
+# 검색칸(searchField)은 거래 검색 화면의 제목 자리와 데스크톱 머리 왼쪽에 둔다 — Text Field outline medium 40(바 안이라 폰에서도).
+# 데스크톱 본문 맨 위 화면 제목 줄(screenTitle · screenDescription · screenActions)은 ScreenTitle 이 그린다 — 모든 데스크톱 화면에 하나.
+# 2026-10-16 사용자 결정 — 구현 세션 질문 Q-017 · Q-018(top-navigation.md Migration notes).
 # 상단 바의 아이콘 버튼은 상자 44 가 곧 누르는 영역이고 아이콘은 24 다 — 본문의 Button iconOnly(medium 40 · 18)와 다른 부품이다.
 # 버튼끼리 붙고(아이콘 중심 간격 44), 맨 끝 버튼의 상자가 화면 끝에서 6(아이콘은 16)이다.
 #
@@ -29,6 +32,10 @@ slots:
   textButton: 글 버튼 — 오른쪽 자리에 하나만("완료" · "모두 읽음")
   notification: 알림 점 — 벨 아이콘의 오른쪽 위(Notification Badge small). 숫자는 두지 않는다
   primaryButton: 주 버튼 — desktop 만. Button brandSolid small 하나("내역 추가")
+  searchField: 검색칸 — 거래 검색 화면의 제목 자리(보이지 않는 h1 "검색") · desktop 왼쪽. Text Field outline medium
+  screenTitle: 화면 제목 — desktop 본문 맨 위 h1(ScreenTitle). 모든 데스크톱 화면에 하나
+  screenDescription: 화면 설명 — 제목 아래 한 줄(있을 때만). 길면 줄을 바꾼다
+  screenActions: 화면 동작 — 제목 줄 오른쪽 Button small 묶음(있을 때만)
   focusRing: 키보드 포커스 링(웹) — 버튼 상자 안쪽
 
 variants:
@@ -72,12 +79,13 @@ rules:
       trailing:
         gap: { value: 0px, note: "버튼끼리 붙는다 — 아이콘 중심 간격 44" }
         items: { value: "아이콘 2개 권장 · 3개까지 · 또는 글 버튼 1개", note: "넘치면 덜 쓰는 것을 ⋯ 하나에 모은다 — 1280 이상 Menu · 미만 Menu Sheet" }
+        bell: { value: "폰 — 알림 화면 · 데스크톱 — 1280 이상 Popover · 768 ~ 1279 Bottom Sheet", note: "알림 목록을 여는 곳(2026-10-16 사용자 결정 Q-017-3b B — Popover 의 1280 미만 Bottom Sheet 그대로). 데스크톱 벨은 aria-haspopup=\"dialog\" · aria-expanded" }
       iconButton:
         size: { value: 44px, note: "보이는 상자 = 누르는 영역(SEED top-navigation-icon-button). 본문 아이콘 버튼(Button medium iconOnly 40 · 18)과 따로" }
         radius: { value: $radius-r2, note: "rootage r2 8 — 누를 때만 보인다" }
         iconSize: { value: 24px, note: "lucide 선 아이콘(v106 — 상단은 선 아이콘)" }
         strokeWidth: { value: 2px, note: "lucide 기본" }
-        strokeWidthOn: { value: 2.5px, note: "켜고 끄는 단추(aria-pressed=\"true\" — 금액 가리기)의 켬(v106). 끔은 2" }
+        strokeWidthOn: { value: 2.5px, note: "그 자리에서 켜고 끄는 단추(aria-pressed=\"true\")의 켬(v106). 끔은 2. 다른 화면으로 가는 버튼에는 aria-pressed 를 달지 않는다 — 금액 가리기 눈은 상단 바에 두지 않는다(2026-10-16 Q-017-2b A · 3c B)" }
         color: { value: $color-fg-neutral, note: "켜고 끄는 단추도 켬 · 끔 모두 이 색 — 끔을 흐리게(Toggle 의 fg-neutral-muted) 두지 않아 아이콘 줄이 고르다. 켬 · 끔은 굵기(2 · 2.5)와 아이콘(eye · eye-off)으로만 갈린다(사용자 결정 2026-10-09 19B)" }
         background: { value: transparent, note: "누를 때 · 마우스를 올릴 때만 칠한다 — 켜고 끄는 단추도 켬 · 끔에 따라 바뀌지 않는다" }
         touchTarget: { value: 44 × 44, note: "AA ✓ · AAA ✓ — 보이지 않는 여백을 더하지 않는다" }
@@ -100,6 +108,26 @@ rules:
         background: { value: $color-fg-brand, note: "브랜드 글자색 — 바 위 Desk 8.38 · 다크 6.10 · HR 5.06 · 6.23" }
         top: { value: 1px, note: "아이콘(24) 상자 위에서 1 — y 1 ~ 7" }
         right: { value: 1px, note: "아이콘 상자 오른쪽에서 1 — x 17 ~ 23(notification-badge.yaml 의 icon · small)" }
+      searchField:
+        textField: { value: outline medium, note: "Text Field(input.yaml) 상자형 medium 40 · 앞 돋보기 16 · 지우기 18 — 바 56 안이라 폰에서도 medium(Text Field 의 '1280 이상' 규칙의 예외). 2026-10-16 Q-017-3a C · Q-017-5 정리" }
+        height: { value: 40px, note: "바 56 의 가운데 — 위아래 8" }
+        width: { value: 남은 폭, note: "검색 화면 — ← 다음 6(화면 끝에서 56)부터 오른쪽 자리 앞 8 까지(제목 자리 — SEED Standard Title Slot)" }
+        heading: { value: 보이지 않는 h1 "검색", note: "화면 이름 대신 칸이 서므로 머리말은 보조 기술에만 — 화면을 옮기면 초점이 이 h1 로 온다" }
+      screenTitle:
+        typography: { value: $text-screen-title, note: "26 / 35 — 데스크톱 본문 맨 위 h1. 모든 데스크톱 화면에 하나(홈 · 캘린더도 — 2026-10-16 Q-018-2 정리)" }
+        fontWeight: 700
+        foreground: $color-fg-neutral
+        marginTop: { value: $spacing-nav-to-title, note: "머리 아래 20 — 제목 줄 전체의 위" }
+        gap: { value: $spacing-x4, note: "제목 덩어리(제목 + 설명) ↔ 버튼 줄 16 — 한 줄(2026-10-16 사용자 결정 Q-018-2 A)" }
+      screenDescription:
+        typography: { value: $text-t3, note: "13 / 18 — 제목 아래. 길면 줄을 바꾸고 버튼은 그 자리에 남는다" }
+        fontWeight: 400
+        foreground: $color-fg-neutral-subtle
+        marginTop: $spacing-x0_5
+      screenActions:
+        buttonSize: { value: small 36, note: "Button small — 그 화면의 동작(필터 · 내보내기). 본문 바탕 bg-layer-basement 는 bg-neutral-weak 와 같은 gray-200 이라 neutralWeak 는 바탕에 묻힌다 — 테두리가 있는 neutralOutline 이 보인다" }
+        gap: $spacing-x2
+        align: { value: 아래 끝, note: "제목 덩어리의 아래 끝에 맞춘다(flex-end) — 설명이 있으면 설명 줄, 없으면 제목 줄과 같은 높이" }
     hovered:
       iconButton:
         background: { value: $color-bg-layer-default-pressed, note: "누름과 같은 색(v106), 축소 없음" }
@@ -132,6 +160,8 @@ rules:
   # ── 타입 ──────────────────────────────────────────────
   - when: { type: root }
     enabled:
+      trailing:
+        items: { value: "홈 = 검색 · 알림 / 가계부 · 캘린더 · 전체 = 검색", note: "Desk 탭 첫 화면(2026-10-16 사용자 결정 Q-017-2a A) — 검색은 어느 탭에서나 같은 거래 검색 화면, 벨은 알림 화면. 금액 가리기는 두지 않는다(순자산 카드의 눈 — Q-017-2b A)" }
       title:
         typography: { value: $text-t8, note: "22 / 30 — 탭 첫 화면의 큰 제목(SEED Root 그림 약 22). 글자 크기 설정을 1.2배까지" }
         marginLeft: { value: 16px, note: "화면 끝 → 제목 16(바의 6 을 포함한 거리) — 왼쪽 버튼이 없다" }
@@ -143,11 +173,15 @@ rules:
   - when: { type: desktop }
     enabled:
       root:
-        paddingLeft: { value: $layout-margin, note: "왼쪽 자리(검색 입구 — 앱 적용 때 정한다)는 본문 여백 32 에서 시작한다" }
+        paddingLeft: { value: $layout-margin, note: "왼쪽 자리(검색칸)는 본문 여백 32 에서 시작한다" }
         paddingRight: { value: $spacing-x1_5, note: "맨 끝은 아이콘 버튼 — 상자가 화면 끝에서 6(폰과 같은 규칙)" }
         position: { value: "사이드바 오른쪽 · 본문 위(main 밖 header)", note: "본문이 그 아래에서 스크롤된다 — 머리는 그 자리" }
       title:
         display: { value: none, note: "화면 제목은 본문 맨 위 h1(text-screen-title 26 / 35 700)이 맡는다" }
+      trailing:
+        items: { value: "주 버튼 하나 + 아이콘 버튼 둘(알림 · 설정)", note: "금액 가리기 눈은 두지 않는다 — 홈 · 자산 순자산 카드의 눈이 맡는다(2026-10-16 사용자 결정 Q-017-3c = Q-018-3 B). 테마는 설정(메뉴 결정 ④)" }
+      searchField:
+        width: { value: 360px, note: "머리 왼쪽 — 본문 여백 32 에서. 거래 검색 화면의 입구(Enter 로 그 화면, 그 화면에서는 지금 검색어 — Q-017-3a C)" }
       primaryButton:
         buttonSize: { value: small 36, note: "Button brandSolid small — 화면의 핵심 동작 하나. 아이콘 버튼 왼쪽에 둔다" }
         marginRight: { value: $spacing-x2, note: "주 버튼 ↔ 첫 아이콘 버튼 상자 8" }

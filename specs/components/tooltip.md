@@ -66,7 +66,7 @@
 
 ### 짧게
 
-한 줄이 원칙이다 — "검색" · "금액 가리기" · "필터 초기화". 최대 280 을 넘기면 줄을 바꾸지만, 두 줄이 넘는 설명은 [Help Bubble](help-bubble.md) 로 옮긴다. 이름이면 명사 · 동사구 그대로, 문장이면 해요체에 마침표.
+한 줄이 원칙이다 — "검색" · "알림" · "필터 초기화". 최대 280 을 넘기면 줄을 바꾸지만, 두 줄이 넘는 설명은 [Help Bubble](help-bubble.md) 로 옮긴다. 이름이면 명사 · 동사구 그대로, 문장이면 해요체에 마침표.
 
 ## 코드
 
@@ -77,18 +77,17 @@
 [그림: 아이콘 버튼 툴팁](../../site/components/specs/tooltip.tsx#ex-icon)
 
 ```tsx
-import { Eye, EyeOff } from "lucide-react"
+import { Settings } from "lucide-react"
 import { TopNavigationIconButton } from "@/components/ui/top-navigation"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
-{/* Desk 웹 데스크톱 머리의 아이콘 버튼(금액 가리기 · 알림 · 설정) */}
+{/* Desk 웹 데스크톱 머리의 아이콘 버튼(알림 · 설정) */}
 <Tooltip>
   <TooltipTrigger asChild>
-    {/* 이름은 aria-label — 툴팁은 그 이름을 마우스 · 키보드 사용자에게 보여 준다.
-        켜고 끄는 단추는 이름이 고정이라 툴팁도 그대로다 — 켬은 aria-pressed 가 알린다 */}
-    <TopNavigationIconButton aria-label="금액 가리기" aria-pressed={hidden} onClick={toggleHidden}>{hidden ? <EyeOff /> : <Eye />}</TopNavigationIconButton>
+    {/* 이름은 aria-label — 툴팁은 그 이름을 마우스 · 키보드 사용자에게 보여 준다 */}
+    <TopNavigationIconButton aria-label="설정" onClick={openSettings}><Settings /></TopNavigationIconButton>
   </TooltipTrigger>
-  <TooltipContent>금액 가리기</TooltipContent>
+  <TooltipContent>설정</TooltipContent>
 </Tooltip>
 ```
 
@@ -160,6 +159,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 - **z-index 는 specs/z-index.md 의 L4**(`z-tooltip` 210) — SEED 는 포털 없이 99.
 
 ## Migration notes
+
+### 2026-10-16 — 머리의 예시를 알림 · 설정으로
+
+데스크톱 머리에서 금액 가리기 눈을 뺐다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-017-3c = Q-018-3 B, Top Navigation). 툴팁 예시 · 그림의 트리거를 머리에 남은 알림 · 설정으로 바꿨다. 규칙은 그대로다.
 
 ### 2026-10-15 — 수치 파일 하나 · 앱에도 둔다
 

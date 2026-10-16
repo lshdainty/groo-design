@@ -4,7 +4,8 @@
 # 스크롤 상자 맨 위에 붙은 영역이 아래로 스크롤하면 그 거리만큼 위로 숨고, 위로 스크롤하면 같은 거리만큼 드러난다.
 # 스크롤이 끝나면 영역 높이의 50% 를 기준으로 다 숨거나 다 드러나며(200ms · SEED enter 곡선), 높이를 바꾸지 않고 translate3d 로만
 # 옮긴다. 모션 줄이기면 자동 숨김을 끄고(늘 보임), 숨은 영역 안으로 키보드 초점이 오면 바로 드러낸다. 바탕 · z-index 는 쓰는 쪽이 정한다.
-# porest 의 자리는 폰 가계부 · 할 일 원장 머리(월 · 총액 · 주 달력 — 필터를 걸면 그 자리의 필터 칩 줄)다 — Desk 웹 · 앱.
+# porest 의 자리는 폰 가계부 · 할 일 원장 머리(월 · 총액 · 주 달력 — 필터를 걸면 그 자리의 필터 칩 줄)와 거래 검색 · 카드 혜택 화면의
+# 거르는 줄(40 · 140 — 2026-10-16 사용자 결정 Q-017-5 C)이다 — Desk 웹 · 앱.
 # 상단 바 · Line Tabs 는 숨지 않고(top-navigation.yaml), 하단 탭 바는 제 규칙으로 줄어든다(bottom-navigation.yaml).
 #
 # 상태는 숨은 정도다 — shown(다 드러남) · hidden(다 숨음). 그 사이는 스크롤 거리를 1:1 로 따라간다.
@@ -42,7 +43,7 @@ rules:
         top: 0px
         transform: { value: "translate3d(0, 0, 0)", note: "옮기기만 한다 — 높이(레이아웃)를 바꾸지 않아 목록이 튀지 않는다. 루트의 transform 은 이 일에 쓰고, 다른 transform 은 자식에(SEED)" }
         follow: { value: 1:1, note: "스크롤하는 동안 거리를 그대로 따라간다 — 아래로 숨고 위로 같은 거리만큼 드러난다" }
-        snapThreshold: { value: 50%, note: "스크롤이 끝나면(scrollend) 영역 높이의 절반을 넘게 숨었으면 다 숨고, 아니면 다 드러난다" }
+        snapThreshold: { value: 50%, note: "스크롤이 끝나면(scrollend) 영역 높이의 절반을 넘게 숨었으면 다 숨고, 아니면 다 드러난다 — 거래 검색의 칩 줄 40 은 20, 카드 혜택의 거르는 줄 140 은 70 이상 올려야 다 드러난다" }
         snapDuration: { value: $motion-duration-d4, note: "200ms — SEED 스냅과 같은 값" }
         snapEasing: { value: $motion-ease-enter, note: "cubic-bezier(0, 0, 0.15, 1) — SEED enter 와 같은 값(v104)" }
         focus: { value: 초점이 들어오면 드러냄, note: "숨은 영역 안으로 키보드 초점이 오면 바로 다 드러낸다 — 보이지 않는 단추에 초점이 머물지 않는다(SEED)" }

@@ -6,7 +6,7 @@
 
 수치 원본은 [`help-bubble.yaml`](help-bubble.yaml)이다(Tooltip 과 같은 파일). 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
-[그림: 연차 사용 규정 · 금액 가리기 안내 — 라이트 · 다크](../../site/components/specs/help-bubble.tsx#hero)
+[그림: 연차 사용 규정 · 거래 검색 안내 — 라이트 · 다크](../../site/components/specs/help-bubble.tsx#hero)
 
 ### 직접 골라 보기
 
@@ -46,7 +46,7 @@
 2. **화살표 ↔ 말풍선 모서리 14** — 화살표 가운데가 말풍선 끝에서 20(14 + 화살표 폭의 반 6) 안쪽에 오도록 말풍선을 트리거 쪽으로 민다.
 3. **화면 가장자리 16** — 위 둘을 지키느라 모자라면 16 보다 가장자리에 붙는다. 붙는 만큼에 하한은 없다 — 화면 끝(0)까지 간다. 트리거가 화면 끝에 붙어도 누르는 자리가 40 이상이면 가운데가 끝에서 20 이상이라 말풍선은 화면 밖으로 나가지 않는다.
 
-상단 바 오른쪽 끝의 금액 가리기(아이콘 버튼 44 · 화면 끝 6)에서는 말풍선 오른쪽이 화면 끝에서 8, 화면 왼쪽 끝 0 에 붙은 ⓘ 40 에서는 0 이다. 위 · 아래로 뒤집어도 가로 자리는 같으므로 뒤집기로 풀지 않는다.
+상단 바 오른쪽 끝의 알림(아이콘 버튼 44 · 화면 끝 6)에서는 말풍선 오른쪽이 화면 끝에서 8, 화면 왼쪽 끝 0 에 붙은 ⓘ 40 에서는 0 이다. 위 · 아래로 뒤집어도 가로 자리는 같으므로 뒤집기로 풀지 않는다.
 
 [그림: 위 · 아래 · 옆 — 화살표는 늘 트리거 가운데, 화면 끝에서는 말풍선이 민다](../../site/components/specs/help-bubble.tsx#placement)
 
@@ -122,20 +122,20 @@ import { HelpBubble, HelpBubbleContent, HelpBubbleTrigger } from "@/components/u
 
 ### 처음부터 열어 두는 안내 — 닫기 버튼
 
-[그림: 금액 가리기 안내](../../site/components/specs/help-bubble.tsx#ex-close)
+[그림: 거래 검색 안내](../../site/components/specs/help-bubble.tsx#ex-close)
 
 ```tsx
-import { Eye, EyeOff } from "lucide-react"
+import { Search } from "lucide-react"
 import { HelpBubble, HelpBubbleAnchor, HelpBubbleContent } from "@/components/ui/help-bubble"
 import { TopNavigationIconButton } from "@/components/ui/top-navigation"
 
-{/* 처음 쓰는 사람에게 한 번 — 닫으면 다시 열지 않는다. Anchor 는 자리만 잡는다(누르면 원래 동작 — 상단 바의 금액 가리기).
+{/* 처음 쓰는 사람에게 한 번 — 닫으면 다시 열지 않는다. Anchor 는 자리만 잡는다(누르면 원래 동작 — 홈 상단 바의 검색).
     closeOnInteractOutside={false} — 바깥 누르기 · 바깥으로 간 초점(Tab)에 닫히지 않는다. 닫기 버튼 · Esc · 말풍선에서 Tab 으로 나가기로 닫는다 */}
 <HelpBubble defaultOpen={!seen} onOpenChange={(open) => !open && markSeen()}>
   <HelpBubbleAnchor asChild>
-    <TopNavigationIconButton aria-label="금액 가리기" aria-pressed={hidden} onClick={toggleHidden}>{hidden ? <EyeOff /> : <Eye />}</TopNavigationIconButton>
+    <TopNavigationIconButton aria-label="검색" onClick={openSearch}><Search /></TopNavigationIconButton>
   </HelpBubbleAnchor>
-  <HelpBubbleContent title="금액을 가릴 수 있어요" description="누르면 화면의 금액이 모두 가려져요." showCloseButton closeOnInteractOutside={false} side="bottom" />
+  <HelpBubbleContent title="거래를 찾아보세요" description="가맹점 이름 · 메모 · 금액으로 찾을 수 있어요." showCloseButton closeOnInteractOutside={false} side="bottom" />
 </HelpBubble>
 ```
 
@@ -193,6 +193,10 @@ import { TopNavigationIconButton } from "@/components/ui/top-navigation"
 - **z-index 는 specs/z-index.md 의 L4**(`z-tooltip` 210) — 팝오버 · 메뉴 안에서 열어도 그 위에 뜬다. SEED 는 포털 없이 99 로 그려 둘레 상자가 자를 수 있다.
 
 ## Migration notes
+
+### 2026-10-16 — 예시의 트리거를 검색 · 알림으로
+
+상단 바에서 금액 가리기 눈을 뺐다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-017-2b A · Q-017-3c = Q-018-3 B — 그 눈은 켜고 끄지 않고 설정으로 가는 버튼이었다). 처음부터 열어 두는 안내의 예시를 홈 상단 바의 검색(Q-017-2a A 로 더해진 자리)으로, 화면 끝 자리의 예시를 오른쪽 끝 알림으로 바꿨다. 규칙 · 수치는 그대로다.
 
 ### 2026-10-15 — 화면 끝 화살표 · 열림 알림
 

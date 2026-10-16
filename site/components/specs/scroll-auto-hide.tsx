@@ -13,6 +13,7 @@ import { Phone, Verdict, type Mode } from './kit';
 import { Cap, CodePreview, MoneyTabs, pinAt } from './nav-screens';
 import { Legend } from './collapse-screens';
 import type { TabSize } from './nav-shared';
+import { CARD_ROW_H, CardBenefitPhone, SEARCH_ROW_H, SearchPhone } from './nav-search';
 
 type Fig = (p: { caption?: string }) => ReactNode;
 const MODES = ['light', 'dark'] as const;
@@ -185,7 +186,54 @@ const ExLedger: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 거르는 줄 — 거래 검색(40) · 카드 혜택(140). 600 내림 → 다 숨음, 조금 올리고 손을 떼면 50% 를 기준으로 다 숨거나 다 드러난다(Q-017-5 C)
+function Frame({ cap, children }: { cap: string; children: ReactNode }) {
+  return (
+    <div className="flex w-[180px] shrink-0 flex-col items-center gap-2">
+      {children}
+      <Cap>{cap}</Cap>
+    </div>
+  );
+}
+const FilterGuide: Fig = ({ caption }) => {
+  const sc = 0.46;
+  const H = 600;
+  return (
+    <Figure caption={caption}>
+      <div className="flex w-full flex-col items-center gap-6">
+        <div className="max-w-full overflow-x-auto">
+          <div className="mx-auto flex w-max items-start gap-3">
+            <Frame cap={`거래 검색 맨 위 — 줄 ${SEARCH_ROW_H}`}>
+              <SearchPhone scale={sc} h={H} />
+            </Frame>
+            <Frame cap="600 내림 — 줄이 다 숨는다">
+              <SearchPhone scale={sc} h={H} scroll={600} hidden={SEARCH_ROW_H} />
+            </Frame>
+            <Frame cap={`30 올림 — ${Math.round((30 / SEARCH_ROW_H) * 100)}% 나옴 · 손을 떼면 다 드러난다`}>
+              <SearchPhone scale={sc} h={H} scroll={570} hidden={0} />
+            </Frame>
+          </div>
+        </div>
+        <div className="max-w-full overflow-x-auto">
+          <div className="mx-auto flex w-max items-start gap-3">
+            <Frame cap={`카드 혜택 맨 위 — 줄 ${CARD_ROW_H}`}>
+              <CardBenefitPhone scale={sc} h={H} />
+            </Frame>
+            <Frame cap={`30 올림 — ${Math.round((30 / CARD_ROW_H) * 100)}% · 손을 떼면 다시 숨는다`}>
+              <CardBenefitPhone scale={sc} h={H} scroll={570} hidden={CARD_ROW_H} />
+            </Frame>
+            <Frame cap={`${CARD_ROW_H / 2} 올림 — 50% · 손을 떼면 200ms 에 다 드러난다`}>
+              <CardBenefitPhone scale={sc} h={H} scroll={600 - CARD_ROW_H / 2} hidden={0} />
+            </Frame>
+          </div>
+        </div>
+      </div>
+    </Figure>
+  );
+};
+
 export const scrollAutoHideFigures: Record<string, Fig> = {
+  'filter-guide': FilterGuide,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

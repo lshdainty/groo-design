@@ -102,11 +102,11 @@
 
 ### 탭을 옮길 때 — 탭마다 기억
 
-탭마다 마지막 화면과 스크롤 위치를 기억한다 — 홈을 600 내려 두고 캘린더를 다녀와도 홈은 600 이다. 지금 탭을 다시 누르면 그 탭의 첫 화면으로 가고 맨 위로 올라간다(같은 주소를 쌓지 않는다 — 지금 주소를 고쳐 쓴다). 다른 화면으로 들어갈 때의 초점 · 문서 제목은 [Top Navigation](top-navigation.md) 의 "화면을 옮길 때" 다.
+탭마다 마지막 화면과 스크롤 위치를 기억한다 — 홈을 600 내려 두고 캘린더를 다녀와도 홈은 600 이고, 가계부 칸은 마지막에 보던 통계로 돌아온다. 웹도 앱과 같다 — 웹은 돌아온 화면의 목록이 그려진 뒤 스크롤을 돌려놓고, 돌려놓지 못하면(그 자리까지 내용이 없으면) 맨 위에서 시작한다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-018-4 A). 지금 탭을 다시 누르면 그 탭의 첫 화면으로 가고 맨 위로 올라간다(같은 주소를 쌓지 않는다 — 지금 주소를 고쳐 쓴다). 다른 화면으로 들어갈 때의 초점 · 문서 제목은 [Top Navigation](top-navigation.md) 의 "화면을 옮길 때" 다.
 
 | 누르는 것 | 동작 |
 |---|---|
-| 다른 탭 | 그 탭의 마지막 화면 · 스크롤 위치로 |
+| 다른 탭 | 그 탭의 마지막 화면 · 스크롤 위치로(웹은 목록이 그려진 뒤) |
 | 지금 탭(첫 화면) | 맨 위로 |
 | 지금 탭(그 아래 화면) | 그 탭의 첫 화면으로 · 맨 위 — 주소를 고쳐 쓴다 |
 
@@ -135,7 +135,7 @@
 레시피 `recipes/shadcn/components/ui/bottom-navigation.tsx` 를 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
 - `BottomNavigation` — 바(`<nav aria-label="주 메뉴">`). `compact` · `defaultCompact` · `onCompactChange`(손으로 다룰 때), `scrollRoot`(줄어들기를 셀 스크롤 상자 — 기본은 셸 안의 세로 스크롤 모두). 줄어든 바를 누르면 펴진다.
-- `BottomNavigationItem` — 탭 칸(`<a>`). `href` · `icon`(lucide 아이콘) · `label`(5자 이내) · `current`(지금 탭 — `aria-current="page"`) · `notification`(점 — 이름에 "새 소식" 을 덧붙인다) · `onReselect`(지금 탭을 다시 눌렀을 때 — 기본은 그 탭의 첫 화면으로 주소를 고쳐 쓰고 맨 위로).
+- `BottomNavigationItem` — 탭 칸(`<a>`). `href`(그 탭의 첫 화면) · `resumeHref`(그 탭의 마지막 화면 — 셸이 탭마다 기억한 주소. 다른 탭에서 누르면 여기로, 없으면 `href`) · `icon`(lucide 아이콘) · `label`(5자 이내) · `current`(지금 탭 — `aria-current="page"`) · `notification`(점 — 이름에 "새 소식" 을 덧붙인다) · `onReselect`(지금 탭을 다시 눌렀을 때 — 기본은 그 탭의 첫 화면으로 주소를 고쳐 쓰고 맨 위로).
 - `BottomNavigationAddButton` — 가운데 +(`<button type="button">`). `aria-label` 필수("거래 추가" · "일정 추가").
 - `BOTTOM_NAVIGATION_INSET` — 본문 아래 여백 CSS 식(`calc(max(14px, env(safe-area-inset-bottom) - 6px) + 90px)`). 셸이 본문 스크롤의 `padding-bottom` 에 쓴다.
 
@@ -152,12 +152,13 @@ import { SnackbarAvoidOverlap } from "@/components/ui/snackbar"
 
 <SnackbarAvoidOverlap>
   <BottomNavigation>
-    <BottomNavigationItem href="/desk" icon={<House />} label="홈" current={tab === "home"} />
-    <BottomNavigationItem href="/desk/ledger" icon={<ClipboardList />} label="가계부" current={tab === "ledger"} />
+    {/* 다른 탭에서 누르면 그 탭의 마지막 화면(resumeHref — 셸이 탭마다 기억), 지금 탭을 다시 누르면 첫 화면(href) · 맨 위 */}
+    <BottomNavigationItem href="/desk" resumeHref={lastPath.home} icon={<House />} label="홈" current={tab === "home"} />
+    <BottomNavigationItem href="/desk/ledger" resumeHref={lastPath.ledger} icon={<ClipboardList />} label="가계부" current={tab === "ledger"} />
     {/* 탭이 아니라 이 화면의 추가 — 이름은 화면마다 */}
     <BottomNavigationAddButton aria-label={tab === "calendar" ? "일정 추가" : "거래 추가"} onClick={openAdd} />
-    <BottomNavigationItem href="/desk/calendar" icon={<CalendarDays />} label="캘린더" current={tab === "calendar"} />
-    <BottomNavigationItem href="/desk/more" icon={<Menu />} label="전체" current={tab === "more"} />
+    <BottomNavigationItem href="/desk/calendar" resumeHref={lastPath.calendar} icon={<CalendarDays />} label="캘린더" current={tab === "calendar"} />
+    <BottomNavigationItem href="/desk/more" resumeHref={lastPath.more} icon={<Menu />} label="전체" current={tab === "more"} />
   </BottomNavigation>
 </SnackbarAvoidOverlap>
 ```
@@ -205,7 +206,7 @@ import { BOTTOM_NAVIGATION_INSET } from "@/components/ui/bottom-navigation"
 - 지금 탭은 짙은 색 + 선 2.5, 브랜드 색은 + 에만.
 - + 의 이름을 화면마다 단다(웹 · 앱).
 - 줄어도 이름을 남기고, 누르면 편다.
-- 탭마다 스크롤을 기억하고, 지금 탭을 다시 누르면 맨 위로.
+- 탭마다 마지막 화면 · 스크롤을 기억하고(웹도), 지금 탭을 다시 누르면 맨 위로.
 
 ### ❌ Don't
 
@@ -214,6 +215,7 @@ import { BOTTOM_NAVIGATION_INSET } from "@/components/ui/bottom-navigation"
 - + 를 라벨 붙은 칸으로 · 떠 있는 버튼으로 빼기.
 - 화면마다 칸을 바꾸기(← · 4칸) · 6칸 이상.
 - 지금 탭을 다시 누를 때마다 같은 주소를 쌓기.
+- 웹에서만 탭을 옮길 때마다 첫 화면 맨 위로 — 앱과 같게 기억한다.
 - 탭 바 위 목록에 끝 흐림(Scroll Fog).
 
 ## Specification
@@ -233,6 +235,12 @@ import { BOTTOM_NAVIGATION_INSET } from "@/components/ui/bottom-navigation"
 - **z-index 는 specs/z-index.md 의 L1**(`z-sticky` 50).
 
 ## Migration notes
+
+### 2026-10-16 — 웹도 탭마다 기억
+
+구현 세션 질문 Q-018-4 를 사용자가 정했다([비교 페이지](https://claude.ai/artifact/6R7NBc4ByvxGyLy6E6tvKf)) — 웹 하단 탭도 앱처럼 그 탭의 마지막 화면 + 스크롤로 돌아온다(A). 목록이 그려진 뒤 돌려놓고, 못 하면 맨 위다. 늘 맨 위 · 첫 화면(B) · 마지막 화면만(C)은 고르지 않았다. 가계부 묶음 안의 1차 탭(가계부 · 자산 · 통계 · 예산)을 오갈 때의 기억은 [Tabs](tabs.md) 7A 대로다(정리).
+
+- **Desk 웹** — 칸의 `href` 가 늘 그 탭의 첫 화면이다(가계부 칸은 `/desk/expense`). 탭마다 마지막 경로 · 스크롤(경로별)을 기억하고, 돌아오면 데이터가 그려진 뒤 돌려놓는다. 하단 탭을 옮길 때는 초점만 그 화면의 제목으로 옮기고(`focusScreenTitle({ resetScroll: false })` — Top Navigation 레시피) 스크롤은 기억한 자리로 돌려놓는다 — 지금 임시 셸은 경로가 바뀔 때마다 맨 위로 보낸다.
 
 ### 2026-10-08 — 글자 값을 고정 px 토큰으로
 

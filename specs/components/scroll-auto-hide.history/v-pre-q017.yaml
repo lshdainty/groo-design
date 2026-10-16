@@ -1,0 +1,67 @@
+# Scroll Auto Hide 의 수치 원본 — 구조는 SEED Breeze Scroll Auto Hide(seed-design.io/breeze/components/scroll-auto-hide —
+# Apache-2.0, 2026-10-10 사용자 결정, 펼치고 접기 · 나누기 비교 페이지 15A). 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 스크롤 상자 맨 위에 붙은 영역이 아래로 스크롤하면 그 거리만큼 위로 숨고, 위로 스크롤하면 같은 거리만큼 드러난다.
+# 스크롤이 끝나면 영역 높이의 50% 를 기준으로 다 숨거나 다 드러나며(200ms · SEED enter 곡선), 높이를 바꾸지 않고 translate3d 로만
+# 옮긴다. 모션 줄이기면 자동 숨김을 끄고(늘 보임), 숨은 영역 안으로 키보드 초점이 오면 바로 드러낸다. 바탕 · z-index 는 쓰는 쪽이 정한다.
+# porest 의 자리는 폰 가계부 · 할 일 원장 머리(월 · 총액 · 주 달력 — 필터를 걸면 그 자리의 필터 칩 줄)다 — Desk 웹 · 앱.
+# 상단 바 · Line Tabs 는 숨지 않고(top-navigation.yaml), 하단 탭 바는 제 규칙으로 줄어든다(bottom-navigation.yaml).
+#
+# 상태는 숨은 정도다 — shown(다 드러남) · hidden(다 숨음). 그 사이는 스크롤 거리를 1:1 로 따라간다.
+# 축 — motionSetting(보통 · 모션 줄이기).
+#
+# SEED 와 다른 자리(scroll-auto-hide.md 의 "SEED 와 다른 점")
+#   - 스냅 200ms · cubic-bezier(0, 0, 0.15, 1) 을 porest 이름으로 — motion-duration-d4 · motion-ease-enter(값이 같다, v104).
+#   - 바탕 · z-index 를 원장 머리 값으로 정해 둔다(SEED 는 쓰는 쪽에 맡긴다).
+
+name: ScrollAutoHide
+
+slots:
+  root: 숨는 영역 — 스크롤 상자 맨 위에 붙고(sticky) 스크롤 거리만큼 위로 옮겨 숨는다
+  scrollContainer: 스크롤 상자 — 쓰는 쪽(높이 · overflow). 숨는 영역은 이 안에 둔다
+
+variants:
+  motionSetting:
+    normal: 보통 — 스크롤 거리를 1:1 로 따라 숨고 드러난다(기본)
+    reduced: 모션 줄이기 — 자동 숨김을 끈다, 늘 보인다
+
+defaults:
+  motionSetting: normal
+
+states:
+  shown: 다 드러남(기본) — 맨 위 · 위로 스크롤 · 스냅 · 초점이 들어옴
+  hidden: 다 숨음 — 아래로 영역 높이 이상 스크롤했다
+
+rules:
+  - when: {}
+    shown:
+      scrollContainer:
+        overflowY: { value: auto, note: "숨는 영역은 이 상자 안에 둔다 — 상단 바 · 탭 아래부터가 스크롤 상자다(SEED — 스크롤 컨테이너 안에 배치)" }
+      root:
+        position: { value: sticky, note: "스크롤 상자 맨 위에 붙는다(SEED)" }
+        top: 0px
+        transform: { value: "translate3d(0, 0, 0)", note: "옮기기만 한다 — 높이(레이아웃)를 바꾸지 않아 목록이 튀지 않는다. 루트의 transform 은 이 일에 쓰고, 다른 transform 은 자식에(SEED)" }
+        follow: { value: 1:1, note: "스크롤하는 동안 거리를 그대로 따라간다 — 아래로 숨고 위로 같은 거리만큼 드러난다" }
+        snapThreshold: { value: 50%, note: "스크롤이 끝나면(scrollend) 영역 높이의 절반을 넘게 숨었으면 다 숨고, 아니면 다 드러난다" }
+        snapDuration: { value: $motion-duration-d4, note: "200ms — SEED 스냅과 같은 값" }
+        snapEasing: { value: $motion-ease-enter, note: "cubic-bezier(0, 0, 0.15, 1) — SEED enter 와 같은 값(v104)" }
+        focus: { value: 초점이 들어오면 드러냄, note: "숨은 영역 안으로 키보드 초점이 오면 바로 다 드러낸다 — 보이지 않는 단추에 초점이 머물지 않는다(SEED)" }
+        background: { value: $color-bg-layer-default, note: "쓰는 쪽이 정한다 — 원장 머리는 목록과 같은 흰 면. 바탕이 없으면 숨는 동안 아래 줄이 비친다(SEED)" }
+        zIndex: { value: 2, note: "스크롤 상자 안의 겹침 값 — List 줄 뒤 붙이개의 단추 · 링크(z 1) 위. 층 토큰(z-sticky)이 아니다(specs/z-index.md 쓰는 법). 지금 웹 원장 머리는 5" }
+    hidden:
+      root:
+        transform: { value: "translate3d(0, −영역 높이, 0)", note: "다 숨음 — 레이아웃 높이는 그대로이고 스크롤 상자가 자른다" }
+  - when: { motionSetting: reduced }
+    shown:
+      root:
+        follow: { value: 끔, note: "모션 줄이기 — 위치 이동을 피하려 자동 숨김을 끈다(SEED). 머리는 늘 보이고 목록이 그 아래에서 스크롤한다" }
+
+motion:
+  "스크롤 중 — 따라가기":
+    properties: [transform]
+    note: "스크롤 거리 1:1 — 시간 · 곡선이 없다(ScrollTimeline 이 있으면 브라우저가 잇고, 없으면 scroll 이벤트로)"
+  "스크롤 끝 — 스냅":
+    duration: $motion-duration-d4
+    easing: $motion-ease-enter
+    properties: [transform]
+    note: "50% 를 기준으로 다 숨거나 다 드러난다(SEED). 모션 줄이기면 없다(자동 숨김이 꺼진다)"

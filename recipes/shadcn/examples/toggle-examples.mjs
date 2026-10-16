@@ -1,6 +1,6 @@
 /*
  * shadcn Toggle 예제 — docs site components/toggle.html 에서 Preview + Code 토글로 보인다.
- * 각 예제 = { title, description, jsx, render() }. 넷(관심 등록 · 금액 가리기 · 메모 고정 · 순자산 카드 위)은 차례 · 제목 · 코드가
+ * 각 예제 = { title, description, jsx, render() }. 넷(관심 등록 · App Key 보기 · 메모 고정 · 순자산 카드의 눈)은 차례 · 제목 · 코드가
  * specs/components/toggle.md 의 "코드" 절과 같다. 켜고 끄는 아이콘 단추 하나다(2026-10-09) — 옛 글 토글(default · outline 28 · 32 · 40,
  * 굵게 · 기울임 툴바)과 Toggle Group 은 걷었다. 거르기 · 고르기는 Chip · Segmented Control, 누르는 순간 적용되는 설정은 Switch 다.
  * SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 Toggle Button 은 코드에만 있고, 켬 · 끔 아이콘은 SEED Iconography 의 규칙과
@@ -198,19 +198,16 @@ import { Toggle } from "@/components/ui/toggle"
   },
 
   {
-    title: "금액 가리기 — 기능 단추",
+    title: "App Key 보기 — 기능 단추",
     description:
-      "아이콘은 누르면 할 일이 아니라 지금 상태를 그린다. 기능 단추(눈 · 종)는 lucide 의 -off 짝을 쓴다 — 금액 가리기는 이름이 늘 \"금액 가리기\" 이고, 가렸으면 눌림 · eye-off, 보이면 eye 다(icon={<Eye />} pressedIcon={<EyeOff />}). App Key 보기도 같은 규칙이라 키가 가려져 있으면 끔 · eye-off, 보이면 켬 · eye 다(icon 과 pressedIcon 이 반대). 상단 바 안에서는 Top Navigation 의 아이콘 버튼(aria-pressed — 상자 44 · 아이콘 24)을 쓰고 끔도 fg-neutral 이다.",
-    jsx: `import { Eye, EyeOff } from "lucide-react"
+      "아이콘은 누르면 할 일이 아니라 지금 상태를 그린다. 기능 단추(눈 · 종)는 lucide 의 -off 짝을 쓴다 — App Key 보기는 키가 가려져 있으면 끔 · eye-off, 보이면 켬 · eye 다(icon={<EyeOff />} pressedIcon={<Eye />}). 상단 바 안에 둘 때는 Top Navigation 의 아이콘 버튼(aria-pressed — 상자 44 · 아이콘 24)을 쓰고 끔도 fg-neutral 이다. 금액 가리기 눈은 Toggle 이 아니다 — 설정으로 가는 버튼이다(마지막 예제).",
+    jsx: `mport { Eye, EyeOff } from "lucide-react"
 import { Toggle } from "@/components/ui/toggle"
 
-<Toggle aria-label="금액 가리기" pressed={hidden} onPressedChange={setHidden} icon={<Eye />} pressedIcon={<EyeOff />} />
 <Toggle aria-label="App Key 보기" pressed={shown} onPressedChange={setShown} icon={<EyeOff />} pressedIcon={<Eye />} />`,
     render: () =>
       surface(
         row([
-          item(toggle({ name: "금액 가리기", icon: "eye", pressedIcon: "eyeOff" }), "금액 보임 — 끔 · eye"),
-          item(toggle({ name: "금액 가리기", pressed: true, icon: "eye", pressedIcon: "eyeOff" }), "금액 가림 — 켬 · eye-off"),
           item(toggle({ name: "App Key 보기", icon: "eyeOff", pressedIcon: "eye" }), "키 가림 — 끔 · eye-off"),
           item(toggle({ name: "App Key 보기", pressed: true, icon: "eyeOff", pressedIcon: "eye" }), "키 보임 — 켬 · eye"),
         ]),
@@ -245,19 +242,22 @@ import { Toggle } from "@/components/ui/toggle"
   },
 
   {
-    title: "순자산 카드 위",
+    title: "순자산 카드의 눈 — Toggle 이 아니다",
     description:
-      "브랜드 채움 위(tone=\"inverted\" — 순자산 카드의 금액 가리기)에서는 아이콘이 켬 · 끔 모두 흰색(static-white)이고 모양(eye · eye-off)과 굵기(2 · 2.5)로만 갈린다. 단추 둘레에 원 · 바탕을 두지 않는다 — 흰 아이콘만이다. 브랜드 채움에는 누름 색 짝이 없어 누르면 축소만 한다(Card 의 순자산 카드와 같다). 이름은 다른 자리와 같은 \"금액 가리기\" 이고, 가렸으면 금액이 •••••• 로 바뀐다.",
-    jsx: `import { Eye, EyeOff } from "lucide-react"
-import { Toggle } from "@/components/ui/toggle"
+      "홈 · 자산 순자산 카드의 금액 가리기 눈은 켜고 끄지 않는다 — 누르면 금액 가리기 설정의 그 화면 묶음으로 간다(가리기는 화면 · 카드 단위, 2026-08-06). 그래서 Toggle 을 쓰지 않고 aria-pressed 없는 <button aria-label=\"금액 가리기 설정\"> 에 toggleVariants({ tone: \"inverted\" }) 의 상자만 빌린다 — 보이는 40 · 누르는 44 · 아이콘 20, 브랜드 채움 위라 흰 아이콘만(원 · 바탕 없음 — 21A)이고 누르면 축소만 한다. 아이콘은 이 카드가 가려졌는지를 그린다(가렸으면 eye-off — 7A). aria-pressed 가 없어 선은 2 그대로다. 낭독은 \"금액 가리기 설정, 버튼\" 이다(2026-10-16 Q-017-2b A · Q-017-3c = Q-018-3 B).",
+    jsx: `mport { Eye, EyeOff } from "lucide-react"
+import { toggleVariants } from "@/components/ui/toggle"
 
-<Toggle tone="inverted" aria-label="금액 가리기" pressed={hidden} onPressedChange={setHidden} icon={<Eye />} pressedIcon={<EyeOff />} />`,
+{/* 켜고 끄지 않는다 — 금액 가리기 설정의 이 화면 묶음으로 간다. aria-pressed 없음, 아이콘은 이 카드가 가려졌는지 */}
+<button type="button" aria-label="금액 가리기 설정" className={toggleVariants({ tone: "inverted" })} onClick={() => openHideAmountsSettings("home")}>
+  {hidden ? <EyeOff aria-hidden /> : <Eye aria-hidden />}
+</button>`,
     render: () =>
       floor(
         `<div style="display:flex; flex-direction:column; gap:var(--spacing-x2);">${[false, true]
           .map(
             (hidden) =>
-              `<div data-slot="card" data-variant="hero" data-body="content" data-press="none" class="${merge(`${CARD_ROOT} ${CARD_VARIANT.hero} ${CARD_HERO_PADDING}`)}"><span aria-hidden="true" data-slot="card-hero-glow" class="${CARD_HERO_GLOW}"></span><div style="display:flex; align-items:center; justify-content:space-between; gap:var(--spacing-x2);"><div data-slot="card-hero-label" class="${CARD_HERO_LABEL}">순자산</div>${toggle({ name: "금액 가리기", pressed: hidden, icon: "eye", pressedIcon: "eyeOff", tone: "inverted", className: "-my-[11px] -mr-x2" })}</div><div data-slot="card-hero-amount" class="${CARD_HERO_AMOUNT}">${hidden ? "••••••원" : "42,898,100원"}</div></div>`,
+              `<div data-slot="card" data-variant="hero" data-body="content" data-press="none" class="${merge(`${CARD_ROOT} ${CARD_VARIANT.hero} ${CARD_HERO_PADDING}`)}"><span aria-hidden="true" data-slot="card-hero-glow" class="${CARD_HERO_GLOW}"></span><div style="display:flex; align-items:center; justify-content:space-between; gap:var(--spacing-x2);"><div data-slot="card-hero-label" class="${CARD_HERO_LABEL}">순자산</div><button type="button" aria-label="금액 가리기 설정" class="${merge(`${toggleVariants({ tone: "inverted" })} -my-[11px] -mr-x2`)}">${svg(PATHS[hidden ? "eyeOff" : "eye"]).replace("<svg ", '<svg aria-hidden="true" ')}</button></div><div data-slot="card-hero-amount" class="${CARD_HERO_AMOUNT}">${hidden ? "••••••원" : "42,898,100원"}</div></div>`,
           )
           .join("")}</div>`,
       ),

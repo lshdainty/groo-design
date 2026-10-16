@@ -25,7 +25,7 @@
 | ⓔ Group | 묶음 — 이름(있을 때만)과 항목 여럿. |
 | ⓕ Item | 항목 — 아이콘 + 이름. 하위가 있으면 꺾쇠. |
 | ⓖ Sub Item | 하위 항목 — 아이콘 없이 이름만. |
-| ⓗ Footer | 바닥 — 계정 · 보조 링크. 고정. |
+| ⓗ Footer | 바닥 — 보조 링크(설명서 · 문의). 고정, 비면 없다. 계정은 두지 않는다. |
 
 [표: 부위](side-navigation.yaml#slots)
 
@@ -160,6 +160,12 @@
 
 [그림: 증권 — 이동 + 펼침 · 펼치기만](../../site/components/specs/side-navigation.tsx#parent-guide)
 
+### 하위가 사람마다 다르면 — 둘 이상일 때만 부모
+
+하위가 사용자마다 달라지는 항목(Desk 증권 — 연결한 증권사)은 하위가 둘 이상일 때만 부모다(펼치기만, 하위 = 연결한 증권사). 하나 · 없으면 하위 없는 단독 항목이 되어 누르면 바로 그 화면으로 간다 — 꺾쇠가 없다(SEED Standalone Menu — "하위 항목이 없는 경우 … 아이템 클릭 시 즉시 해당 페이지로 이동"). 증권 화면은 연결이 하나면 그 증권사를, 없으면 연결 안내를 연다. 구독이 없으면 항목을 두지 않는다(지금 그대로 — Pro 는 증권뿐). 하위 하나짜리 나무는 만들지 않는다 — 고를 것이 없다(2026-10-16 구현 세션 질문 Q-017-4 정리). 접힌 사이드바에서는 둘 이상이면 펼침 메뉴, 하나 · 없으면 이름 말풍선이다.
+
+[그림: 증권사 0 · 1 · 2 · 3 — 단독 항목 · 부모](../../site/components/specs/side-navigation.tsx#dynamic-guide)
+
 ### 위치는 사이드바가 알린다
 
 데스크톱에서 지금 어디에 있는지는 사이드바의 지금 항목(부모는 저절로 펼침)과 본문 맨 위 제목이 알린다 — 빵부스러기(Breadcrumb)는 두지 않는다(SEED 에도 없다 — 2026-10-04 결정 9). 지금 HR 의 경로 19개는 모두 사이드바 항목이라 빵부스러기가 같은 정보를 두 번 보였다. 사이드바에 없는 깊은 화면(사용자 상세 같은)이 생기면 그 화면이 어디로 돌아가는지는 그때 정한다.
@@ -173,9 +179,11 @@
 - 항목 이름은 화면 이름과 같게 — 사이드바 "통계 · 분석" 과 화면 제목 "통계" 처럼 갈리지 않게.
 - 아이콘은 모든 항목에 두고(하위 항목은 없음), lucide 선 아이콘 20 이다.
 
-### 바닥 — 계정
+### 바닥 — 보조 링크만, 비면 그리지 않는다
 
-바닥에는 계정(아바타 · 이름)과 보조 링크(설명서 · 문의)를 둔다 — 비면 그리지 않는다. 계정을 누르면 무엇이 열리는지(계정 메뉴 · 설정)는 앱 적용 때 정한다(Desk 의 ⇕ 사용자 버튼 · HR 의 계정 메뉴). 누르는 것으로 보이는 줄은 반드시 무언가를 한다.
+바닥에는 보조 링크(설명서 · 문의 — SEED Footer "'가이드북', '지원센터'와 같이 서비스의 보조적인 링크")만 둔다 — 비면 그리지 않는다. 계정(아바타 · 이름)은 바닥에 두지 않는다 — Desk 는 계정이 하나라 바꿀 일이 없고 설정 · 로그아웃은 머리의 ⚙ 가 맡는다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-018-1 C). 지금 Desk 웹에는 보조 링크가 없어 바닥을 그리지 않는다. HR 은 데스크톱 머리(⚙)가 없어 바닥의 계정 메뉴가 로그아웃 길이다 — HR 적용 때 정한다. 누르는 것으로 보이는 줄은 반드시 무언가를 한다.
+
+[그림: 바닥 — 지금(눌러도 아무 일 없는 이름 줄) · 뒤(바닥을 그리지 않는다)](../../site/components/specs/side-navigation.tsx#footer-guide)
 
 ### 두지 않는 것
 
@@ -197,9 +205,9 @@ shadcn Sidebar 에 있던 것 가운데 다음은 두지 않는다 — SEED 에 
 - `SideNavigationHeader` — 머리. `logo`(마크 + 서비스 이름). 접기 버튼(이름 "사이드바" · `aria-expanded` · `aria-controls`)을 스스로 그린다.
 - `SideNavigationContent` — 내용(스크롤 · 머리 아래 선 · 끝 흐림). 768 미만의 주 메뉴 서랍(Side Panel)에는 이것만 넣는다 — `SideNavigation` 밖에서 쓰면 스스로 `<nav aria-label="주 메뉴">` 가 되고, 펼친 모양으로 그린다(서랍의 스크롤 · 흐림은 Side Panel 본문이 맡는다). `onNavigate`(항목을 눌러 이동할 때 — 서랍을 닫는다).
 - `SideNavigationGroup` — 묶음. `label`(있을 때만).
-- `SideNavigationItem` — 항목. 하위가 없으면 링크 — `href` · `icon` · `label` · `current`(`aria-current="page"`) · `disabled`. 자식으로 `SideNavigationSubItem` 을 주면 부모(버튼 — `aria-expanded` · `aria-controls`, 하위가 `current` 면 저절로 펼침, `defaultOpen`)가 된다. 접히면 하위가 없는 항목은 이름 말풍선, 부모는 펼침 메뉴를 스스로 그린다.
+- `SideNavigationItem` — 항목. 하위가 없으면 링크 — `href` · `icon` · `label` · `current`(`aria-current="page"`) · `disabled`. 자식으로 `SideNavigationSubItem` 을 둘 이상 주면 부모(버튼 — `aria-expanded` · `aria-controls`, 하위가 `current` 면 저절로 펼침, `defaultOpen`)가 된다. 하위가 하나 이하이면 부모를 만들지 않고 `href` 의 단독 링크로 그린다(`href` 가 없으면 그 하나의 `href` — 하위가 지금이면 지금 항목) — 하위가 사람마다 다른 항목(증권)을 그대로 넘겨도 된다. 접히면 하위가 없는 항목은 이름 말풍선, 부모는 펼침 메뉴를 스스로 그린다.
 - `SideNavigationSubItem` — 하위 항목(링크). `href` · `label` · `current` · `disabled`.
-- `SideNavigationFooter` — 바닥. 비면 그리지 않는다.
+- `SideNavigationFooter` — 바닥 — 보조 링크(설명서 · 문의). 비면 그리지 않는다. 계정을 넣지 않는다.
 
 앱은 사이드바가 없다(늘 폰 틀).
 
@@ -210,7 +218,7 @@ shadcn Sidebar 에 있던 것 가운데 다음은 두지 않는다 — SEED 에 
 ```tsx
 import { CalendarDays, ClipboardList, LayoutGrid, Wallet, TrendingUp } from "lucide-react"
 import {
-  SideNavigation, SideNavigationContent, SideNavigationFooter, SideNavigationGroup,
+  SideNavigation, SideNavigationContent, SideNavigationGroup,
   SideNavigationHeader, SideNavigationItem, SideNavigationSubItem,
 } from "@/components/ui/side-navigation"
 
@@ -220,18 +228,21 @@ import {
     <SideNavigationGroup label="워크스페이스">
       <SideNavigationItem href="/desk" icon={<LayoutGrid />} label="홈" current={path === "/desk"} />
       <SideNavigationItem href="/desk/assets" icon={<Wallet />} label="자산" current={path === "/desk/assets"} />
-      {/* 부모 — 펼치기만 한다. 하위가 지금이면 저절로 펼쳐진다 */}
-      <SideNavigationItem icon={<TrendingUp />} label="증권">
-        <SideNavigationSubItem href="/desk/stocks/namu" label="나무증권" current={broker === "namu"} />
-        <SideNavigationSubItem href="/desk/stocks/toss" label="토스증권" current={broker === "toss"} />
-      </SideNavigationItem>
+      {/* 증권 — 구독이 없으면 두지 않는다. 연결한 증권사가 둘 이상이면 부모(펼치기만), 하나 · 없으면 /desk/stocks 단독 링크 */}
+      {subscribed && (
+        <SideNavigationItem href="/desk/stocks" icon={<TrendingUp />} label="증권" current={path.startsWith("/desk/stocks")}>
+          {brokers.map((b) => (
+            <SideNavigationSubItem key={b.id} href={`/desk/stocks/${b.id}`} label={b.name} current={broker === b.id} />
+          ))}
+        </SideNavigationItem>
+      )}
       <SideNavigationItem href="/desk/ledger" icon={<ClipboardList />} label="가계부" current={path === "/desk/ledger"} />
     </SideNavigationGroup>
     <SideNavigationGroup label="기록">
       <SideNavigationItem href="/desk/calendar" icon={<CalendarDays />} label="캘린더" current={path === "/desk/calendar"} />
     </SideNavigationGroup>
   </SideNavigationContent>
-  <SideNavigationFooter>{/* 계정 — 앱 적용 때 */}</SideNavigationFooter>
+  {/* 바닥 — Desk 는 보조 링크가 없어 두지 않는다(계정은 바닥에 두지 않는다) */}
 </SideNavigation>
 ```
 
@@ -278,7 +289,7 @@ import {
 ### ✅ Do
 
 - 1280 이상 펼침 · 768 ~ 1279 접힘 — 손으로 접은 것은 기억.
-- 부모는 펼치기만, 하위가 지금이면 저절로 펼침.
+- 부모는 펼치기만, 하위가 지금이면 저절로 펼침. 하위가 사람마다 다르면 둘 이상일 때만 부모.
 - 긴 이름은 줄을 바꾼다 — 그래도 짧게.
 - 흰 면 + 오른쪽 선 하나, 지금 항목은 한 단계 짙은 옅은 회색(`bg-neutral-weak-pressed`) + 짙은 글자 — 굵기는 그대로.
 - 접힌 사이드바 — 하위 없는 항목은 이름 말풍선, 부모는 아이콘 옆 펼침 메뉴(1280 미만이어도).
@@ -291,7 +302,8 @@ import {
 - 떠 있는 상자 · 본문 상자(inset) · 그림자.
 - 빵부스러기로 위치를 한 번 더.
 - 접힌 사이드바의 하위를 Menu Sheet 로 띄우기 · 지금 항목을 굵게(700).
-- 아무 일도 하지 않는 로고 버튼 · 사용자 버튼.
+- 아무 일도 하지 않는 로고 버튼 · 사용자 버튼 · 바닥의 계정 줄(Desk).
+- 하위 하나짜리 부모 — 하나면 단독 항목.
 
 ## Specification
 
@@ -313,6 +325,16 @@ import {
 
 ## Migration notes
 
+### 2026-10-16 — 바닥 계정 · 증권 부모 · 홈 두 칸
+
+사용자가 [구현 질문 Q-017 · Q-018 비교 페이지](https://claude.ai/artifact/6R7NBc4ByvxGyLy6E6tvKf)에서 정했다(2026-10-16).
+
+- **바닥 계정**(Q-018-1 C) — 두지 않는다. 바닥은 보조 링크만, 비면 그리지 않는다. 설정으로 가는 항목(A) · 계정 메뉴(B) · SEED 처럼 머리에 계정(D)은 고르지 않았다.
+- **증권 부모**(Q-017-4 정리) — 연결한 증권사가 둘 이상일 때만 부모(펼치기만), 하나 · 없으면 `/desk/stocks` 단독 링크(꺾쇠 없음), 구독이 없으면 숨김.
+- **홈 두 칸 경계**(Q-017-6 A) — Desk 데스크톱 홈의 두 칸도 1280 부터다(사이드바가 펼쳐지는 폭 — DESIGN.md "문턱 — 768 · 1280"). 768 ~ 1279 는 한 칸.
+
+- **Desk 웹** — 바닥 사용자 버튼(⇕ · 임시 브랜치의 설정으로 가는 이름 줄)을 걷는다. 증권은 부모가 이동 + 펼침(`PorestSidebar.tsx:96-101`)이다 — 둘 이상이면 펼치기만 · 하위 링크로. `porest.css` 의 `@media (max-width: 1100px) { .dash-grid … }` 를 1279 로(1280 부터 두 칸), `useDeviceSize` 는 mobile · desktop 둘로(`"tablet"` 을 읽는 코드는 0).
+
 ### 2026-10-10 — 하위 펼침 300ms
 
 [펼치고 접기 · 나누기 비교 페이지](https://claude.ai/artifact/9uvjeFyjFXc7TaWnpnnQ6H) 3번에서 사용자가 아코디언의 꺾쇠 · 펼침을 SEED d6 300ms `ease-easing` 으로 정하며 사이드바 하위 펼침도 같게 했다(3A) — 그전의 d4 200ms 는 화면 틀 라운드에서 스펙 초안이 둔 값이었고 사용자가 고른 값이 아니다. 하위 펼침 · 꺾쇠 회전이 300ms 다. 모션 줄이기면 높이 움직임 없이 150ms 서서히, 꺾쇠는 바로다(v104). 사이드바 폭이 바뀌는 펼침 ↔ 접힘은 그대로 200ms 다. 지금 Desk 웹 증권 하위는 꺾쇠 150ms · 하위 목록 움직임 0, HR 은 200ms 이고 모션 줄이기를 따르지 않는다(2026-10-09 조사 §7.1 · D9).
@@ -332,4 +354,4 @@ import {
 - **접힘 기억** — 두 웹 모두 쿠키 `sidebar_state` 를 쓰기만 하고 읽지 않아 새로 고치면 펼쳐진다(웹 `sidebar.tsx:60-77` · HR `shadcn/sidebar.tsx:69-86`, F14). localStorage 로.
 - **접힌 사이드바** — Desk 는 말풍선만(하위는 숨김), HR 은 말풍선 + 눌러 여는 하위 메뉴(`SidebarContent.tsx:134-172`)다. 말풍선 · 펼침 메뉴로.
 - **이름이 영어** — "Toggle Sidebar"(접기 · 레일) · 모바일 시트 "Sidebar" · "Displays the mobile sidebar."(F26). "사이드바" · "주 메뉴" 로.
-- 앱 적용 때 정할 자리 — Desk 사이드바 사용자 버튼(⇕) · HR 계정 메뉴(바닥), 사이드바 항목 이름과 화면 제목 맞추기("통계 · 분석" · "통계").
+- 앱 적용 때 정할 자리 — HR 계정 메뉴(바닥 — HR 적용 때), 사이드바 항목 이름과 화면 제목 맞추기("통계 · 분석" · "통계"). Desk 사용자 버튼(⇕)은 2026-10-16 걷기로 정했다(위).

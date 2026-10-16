@@ -4,9 +4,9 @@ import type { CSSProperties, ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { buttonLook } from './button-look';
 import { HelpBubblePlayground, HideTipDemo, LeaveRuleDemo } from './bubble-demos';
-import { AssetsPhone, Bubble, BubbleAt, EyeToggle, InfoButton, InfoGlyph, LeaveSummary, LeaveWindow, bl } from './bubble-screens';
+import { AssetsPhone, BellButton, Bubble, BubbleAt, InfoButton, InfoGlyph, LeaveSummary, LeaveWindow, bl } from './bubble-screens';
 import { NK } from './nav-screens';
-import { HIDE_TIP, LEAVE_RULE } from './menu-data';
+import { LEAVE_RULE } from './menu-data';
 import { Board, Scaled, iconBtn, mk } from './menu-screens';
 import { Legend, Note, RuleBody, Shot, ov, pinStyle } from './overlay-screens';
 import { EndButtons, PopoverSurface } from './overlay-view';
@@ -32,7 +32,7 @@ const Tag = ({ children, style }: { children: ReactNode; style: CSSProperties })
 );
 
 // ── Overview ──────────────────────────────────────────────
-// HR 연차 사용 규정(ⓘ 를 눌러서) · Desk 금액 가리기 안내(처음부터 열린 안내 — 닫기 버튼) — 라이트 줄 · 다크 줄
+// HR 연차 사용 규정(ⓘ 를 눌러서) · Desk 거래 검색 안내(처음부터 열린 안내 — 닫기 버튼, 홈 상단 바의 검색) — 라이트 줄 · 다크 줄
 const Hero: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex flex-col items-center gap-4">
@@ -135,10 +135,10 @@ const Layout: Fig = ({ caption }) => {
             {/* 한 줄 — 제목만 */}
             <LayoutRow top={b.height + b.bodyOffset}>
               <BubbleAt
-                trigger={<EyeToggle />}
+                trigger={<BellButton />}
                 bubble={(p) => (
                   <Bubble
-                    title="금액 가리기"
+                    title="알림"
                     decor={
                       <>
                         {pads}
@@ -160,7 +160,7 @@ const Layout: Fig = ({ caption }) => {
                 bubble={(p) => (
                   <Bubble
                     title="금액 가리기"
-                    description="누르면 금액이 가려져요."
+                    description="가릴 카드는 설정에서 골라요."
                     close
                     marks={{ closeHit: dashed, close: markBox }}
                     decor={
@@ -185,7 +185,7 @@ const Layout: Fig = ({ caption }) => {
                   bubble={(p) => (
                     <Bubble
                       title="금액 가리기"
-                      description="누르면 금액이 가려져요."
+                      description="가릴 카드는 설정에서 골라요."
                       close
                       closeState="focused"
                       decor={<Tag style={{ right: -grow, bottom: `calc(100% + ${grow + 4}px)` }}>{`닫기 링 — 안쪽 ${-b.ring.offset} · 글자색`}</Tag>}
@@ -248,7 +248,7 @@ function Cell({ children, label, h = 150, w = 260 }: { children: ReactNode; labe
   );
 }
 // 화면 끝의 트리거 — 화살표는 트리거 가운데에 남고(모서리 14) 말풍선이 가장자리 16 보다 붙는다(2026-10-15 Q-004-1).
-// ① 상단 바 오른쪽 끝의 금액 가리기(아이콘 버튼 44 · 화면 끝 6) — 말풍선 끝이 화면 끝에서 8 ② 화면 왼쪽 끝 0 에 붙은 ⓘ 40 — 0
+// ① 상단 바 오른쪽 끝의 알림(아이콘 버튼 44 · 화면 끝 6) — 말풍선 끝이 화면 끝에서 8 ② 화면 왼쪽 끝 0 에 붙은 ⓘ 40 — 0
 function EdgeScenes() {
   const b = bl();
   const top = NK().top;
@@ -270,13 +270,15 @@ function EdgeScenes() {
       <Cap>{label}</Cap>
     </div>
   );
-  const eye = <EyeToggle />;
+  const bell = <BellButton />;
+  // 오른쪽 끝 알림의 안내 — 지어낸 글
+  const BELL_TIP = { title: '알림을 모아 봐요', description: '카드 결제 · 예산 알림이 오면 점이 생겨요.' };
   return (
     <div className="flex w-full flex-wrap items-start justify-center gap-4">
       {scene(
-        `① 상단 바 끝의 금액 가리기(${hit} · 화면 끝 ${top.padX}) — 화살표는 버튼 가운데, 말풍선 끝은 화면 끝에서 ${edge1}(가장자리 ${b.edge} 보다 붙는다)`,
+        `① 상단 바 끝의 알림(${hit} · 화면 끝 ${top.padX}) — 화살표는 버튼 가운데, 말풍선 끝은 화면 끝에서 ${edge1}(가장자리 ${b.edge} 보다 붙는다)`,
         <>
-          <TopNavBar look={top} type="root" title="자산" trailing={<BubbleAt side="bottom" align="end" triggerSize={hit} trigger={eye} bubble={(p) => <Bubble title={HIDE_TIP.title} description={HIDE_TIP.description} close {...p} />} />} />
+          <TopNavBar look={top} type="root" title="홈" trailing={<BubbleAt side="bottom" align="end" triggerSize={hit} trigger={bell} bubble={(p) => <Bubble title={BELL_TIP.title} description={BELL_TIP.description} close {...p} />} />} />
           {guide({ right: b.edge })}
           {guide({ right: W - cx1 })}
           <Tag style={{ right: b.edge + 4, bottom: 6 }}>{`가장자리 ${b.edge}`}</Tag>
@@ -312,7 +314,7 @@ const Placement: Fig = ({ caption }) => {
         <div className="grid gap-4 sm:grid-cols-2">
           {(['top', 'bottom', 'left', 'right'] as const).map((side) => (
             <Cell key={side} label={side === 'top' ? '위(기본)' : side === 'bottom' ? '아래 — 위에 자리가 없으면' : side === 'left' ? '왼쪽' : '오른쪽'}>
-              <BubbleAt side={side} trigger={<EyeToggle />} bubble={(p) => <Bubble title="금액 가리기" {...p} />} />
+              <BubbleAt side={side} trigger={<BellButton />} bubble={(p) => <Bubble title="알림" {...p} />} />
             </Cell>
           ))}
         </div>
@@ -333,7 +335,7 @@ const RoleGuide: Fig = ({ caption }) => {
         <Shot strong="Tooltip — 마우스 · 키보드" cap="아이콘 버튼의 이름 · 줄인 글 — 손가락으로는 열리지 않는다">
           <Board pad={24} style={{ width: 280, paddingTop: 24 + bl().height + bl().bodyOffset }}>
             <div className="flex justify-center">
-              <BubbleAt trigger={<EyeToggle state="hovered" />} bubble={(p) => <Bubble title="금액 가리기" {...p} />} />
+              <BubbleAt trigger={<BellButton state="hovered" />} bubble={(p) => <Bubble title="알림" {...p} />} />
             </div>
           </Board>
         </Shot>

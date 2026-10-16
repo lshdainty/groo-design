@@ -3,7 +3,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { Info } from 'lucide-react';
 import { ButtonView } from './button-view';
-import { HIDE_TIP, LEAVE_RULE } from './menu-data';
+import { LEAVE_RULE, SEARCH_TIP } from './menu-data';
 import type { BubbleSide } from './menu-look';
 import { iconBtn, mk, type Brand } from './menu-screens';
 import { BubbleView, type BubbleViewProps } from './menu-view';
@@ -43,10 +43,9 @@ export function BubbleAt({ trigger, side = 'top', align = 'center', triggerSize 
 export const InfoButton = ({ mode = 'auto', brand = 'hr', label = '연차 사용 규정 안내', state = 'enabled' }: { mode?: Mode; brand?: Brand; label?: string; state?: 'enabled' | 'pressed' | 'focused' | 'hovered' }) => (
   <ButtonView look={iconBtn(brand, 'neutralSubtle')} mode={mode} state={state} icon="info" ariaLabel={label} />
 );
-// 금액 가리기 — 제품에서는 상단 바(폰 머리 · Desk 웹 데스크톱 머리)에만 있는 켜고 끄는 단추다. Top Navigation 아이콘 버튼(44 · 24) +
-// aria-pressed, 이름은 늘 "금액 가리기", 아이콘은 지금 상태(금액이 보이면 eye · 가렸으면 eye-off), 끔도 이웃과 같은 fg-neutral(19B)
-export const EyeToggle = ({ mode = 'auto', brand = 'desk', state, hidden = false }: { mode?: Mode; brand?: Brand; state?: 'pressed' | 'focused' | 'hovered'; hidden?: boolean }) => (
-  <TopIconButton look={NK(brand).top} mode={mode} state={state} pressed={hidden} icon={hidden ? 'eye-off' : 'eye'} label="금액 가리기" />
+// 상단 바의 알림(벨) — Top Navigation 아이콘 버튼(44 · 24). 말풍선 · 툴팁 그림의 트리거(머리 오른쪽 끝 — 화면 끝에서 6)
+export const BellButton = ({ mode = 'auto', brand = 'desk', state }: { mode?: Mode; brand?: Brand; state?: 'pressed' | 'focused' | 'hovered' }) => (
+  <TopIconButton look={NK(brand).top} mode={mode} state={state} icon="bell" label="알림" />
 );
 
 // HR 휴가 요약 — 남은 연차 + ⓘ(눌러서 여는 규정 안내). ⓘ 를 판 가운데에 두어 말풍선이 가운데로 열린다
@@ -85,24 +84,30 @@ export function LeaveWindow({ mode = 'auto', w = 460, h = 280, overlay, gesture 
   );
 }
 
-// Desk 자산(폰) — 머리 오른쪽 금액 가리기 버튼 아래에 처음부터 열린 안내(닫기 버튼)
+// Desk 홈(폰) — 머리 오른쪽 검색 버튼(오른쪽 끝은 알림) 아래에 처음부터 열린 안내(닫기 버튼)
 const ASSETS: [string, string][] = [
   ['국민 주계좌', '1,250,000원'],
   ['현대카드 M', '−352,400원'],
   ['토스뱅크 통장', '820,000원'],
 ];
 export function AssetsPhone({ mode = 'auto', scale = 0.62, h = 560, bubble = true }: { mode?: Mode; scale?: number; h?: number; bubble?: boolean }) {
-  // 상단 바 안 — Top Navigation 아이콘 버튼(44 · 24). 켜고 끄는 단추라도 끔은 이웃과 같은 fg-neutral(19B), 금액이 보이니 eye
-  const btn = <TopIconButton look={NK().top} mode={mode} icon="eye" label="금액 가리기" pressed={false} />;
+  // 상단 바 안 — Top Navigation 아이콘 버튼(44 · 24) — 검색 · 알림이 붙는다
+  const btn = <TopIconButton look={NK().top} mode={mode} icon="search" label="검색" />;
+  const bell = <TopIconButton look={NK().top} mode={mode} icon="bell" label="알림" />;
   return (
     <Phone
-      title="자산"
+      title="홈"
       back={false}
       mode={mode}
       scale={scale}
       h={h}
       bg="bg-layer-default"
-      right={bubble ? <BubbleAt side="bottom" align="end" triggerSize={NK().top.icon.size} trigger={btn} bubble={(p) => <Bubble mode={mode} title={HIDE_TIP.title} description={HIDE_TIP.description} close {...p} />} /> : btn}
+      right={
+        <>
+          {bubble ? <BubbleAt side="bottom" align="end" triggerSize={NK().top.icon.size} trigger={btn} bubble={(p) => <Bubble mode={mode} title={SEARCH_TIP.title} description={SEARCH_TIP.description} close {...p} />} /> : btn}
+          {bell}
+        </>
+      }
     >
       <div style={{ display: 'flex', flexDirection: 'column', padding: '12px 24px 0' }}>
         {ASSETS.map(([name, amount], i) => (
@@ -116,20 +121,20 @@ export function AssetsPhone({ mode = 'auto', scale = 0.62, h = 560, bubble = tru
   );
 }
 
-// Desk 웹 — 접힌 사이드바(Side Navigation 56 — side-navigation.yaml) + 데스크톱 머리(top-navigation.yaml desktop — 내역 추가 · 금액 가리기 ·
-// 알림 · 설정) + 본문 맨 위 화면 제목. tip 은 툴팁이 뜬 자리 — 'header' 는 머리의 금액 가리기(호버), 'sidebar' 는 접힌 사이드바의 자산
+// Desk 웹 — 접힌 사이드바(Side Navigation 56 — side-navigation.yaml) + 데스크톱 머리(top-navigation.yaml desktop — 내역 추가 · 알림 · 설정,
+// 2026-10-16 금액 가리기 눈은 뺐다) + 본문 맨 위 화면 제목. tip 은 툴팁이 뜬 자리 — 'header' 는 머리의 설정(호버), 'sidebar' 는 접힌 사이드바의 자산
 export const DESK_HEADER: TopAction[] = [
-  { icon: 'eye', label: '금액 가리기', pressed: false },
   { icon: 'bell', label: '알림' },
   { icon: 'settings', label: '설정' },
 ];
+const TIP_AT = 1;
 export function DeskToolWindow({ mode = 'auto', tip, w = 460, h = 300 }: { mode?: Mode; tip: 'header' | 'sidebar'; w?: number; h?: number }) {
   const b = bl();
-  const actions = DESK_HEADER.map((a, i) => (i === 0 && tip === 'header' ? { ...a, state: 'hovered' as const } : a));
-  // 툴팁 — 금액 가리기 아래(머리 아래 본문 위로), 화살표는 단추 가운데
+  const actions = DESK_HEADER.map((a, i) => (i === TIP_AT && tip === 'header' ? { ...a, state: 'hovered' as const } : a));
+  // 툴팁 — 설정 아래(머리 아래 본문 위로), 화살표는 단추 가운데
   const below = (
     <span aria-hidden style={{ position: 'absolute', zIndex: 6, top: `calc(100% + ${b.bodyOffset}px)`, left: '50%', transform: 'translateX(-50%)' }}>
-      <Bubble mode={mode} title="금액 가리기" side="bottom" />
+      <Bubble mode={mode} title="설정" side="bottom" />
     </span>
   );
   return (
@@ -137,7 +142,7 @@ export function DeskToolWindow({ mode = 'auto', tip, w = 460, h = 300 }: { mode?
       <Shell
         mode={mode}
         side={<Side mode={mode} collapsed current="ledger" height="100%" tip={tip === 'sidebar' ? 'assets' : undefined} states={tip === 'sidebar' ? { assets: 'hovered' } : undefined} />}
-        header={<Bar mode={mode} type="desktop" actions={actions} primary={{ label: '내역 추가', icon: 'plus' }} actionPins={tip === 'header' ? { 0: below } : undefined} />}
+        header={<Bar mode={mode} type="desktop" actions={actions} primary={{ label: '내역 추가', icon: 'plus' }} actionPins={tip === 'header' ? { [TIP_AT]: below } : undefined} />}
       >
         <ScreenTitle mode={mode}>가계부</ScreenTitle>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, paddingTop: 16, paddingLeft: NK().margin, paddingRight: NK().margin }}>

@@ -114,11 +114,11 @@ export type ToggleLook = {
 export const TOGGLE_ICONS = ['star', 'star-off', 'pin', 'pin-off', 'eye', 'eye-off', 'bell', 'bell-off', 'heart'] as const;
 export type ToggleIcon = (typeof TOGGLE_ICONS)[number];
 // 단추 넷 — 이름(고정) · 끔 · 켬 아이콘 · 코드의 상태 이름(toggle.md 의 표)
-export type ToggleKind = 'watch' | 'pin' | 'hide' | 'key';
+// 금액 가리기 눈은 Toggle 이 아니다 — 설정으로 가는 버튼(2026-10-16 Q-017-2b A · 3c B, toggle.md)이라 단추 목록에 두지 않는다
+export type ToggleKind = 'watch' | 'pin' | 'key';
 export const TOGGLES: Record<ToggleKind, { label: string; icon: ToggleIcon; pressedIcon?: ToggleIcon; jsx: [string, string?]; state: [string, string]; memo?: boolean }> = {
   watch: { label: '관심 등록', icon: 'star', jsx: ['Star'], state: ['watched', 'setWatched'] },
   pin: { label: '장보기 목록 고정', icon: 'pin', jsx: ['Pin'], state: ['pinned', 'setPinned'], memo: true },
-  hide: { label: '금액 가리기', icon: 'eye', pressedIcon: 'eye-off', jsx: ['Eye', 'EyeOff'], state: ['hidden', 'setHidden'] },
   key: { label: 'App Key 보기', icon: 'eye-off', pressedIcon: 'eye', jsx: ['EyeOff', 'Eye'], state: ['shown', 'setShown'] },
 };
 // 화면 읽기 프로그램이 읽는 말 — "관심 등록, 토글 버튼, 눌림"

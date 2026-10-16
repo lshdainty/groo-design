@@ -13,6 +13,7 @@ import { EndButtons, PopoverSurface, type OvDecor, type OvMarks } from './overla
 import { F, Form, desk, hr, tf } from './select-screens';
 import { InputButtonView, SelectTriggerView } from './select-view';
 import { TfInputView } from './text-field-view';
+import { NotifyDesk, NotifyPopover } from './nav-notify';
 import { Verdict, WebWindow, rc, type Mode } from './kit';
 
 type Fig = (p: { caption?: string }) => ReactNode;
@@ -336,7 +337,37 @@ const DismissGuide: Fig = ({ caption }) => (
 // ── 코드 미리보기(실제로 열고 Tab 으로 빠져나간다 — 1280 미만은 같은 내용을 시트로) ─────
 const ExInfo: Fig = () => <RulePopoverDemo kit={overlayKit('hr')} text={RULE_TEXT} field={tf().field} />;
 
+// 알림 목록 — Desk 데스크톱 벨(Q-017-3b B): 1280 벨 아래 팝오버 · 1024 아래 시트 · 알림 0개
+const NotificationGuide: Fig = ({ caption }) => (
+  <Figure caption={caption}>
+    <div className="max-w-full overflow-x-auto">
+      <div className="mx-auto flex w-max items-start gap-4">
+        <Shot cap="1280 — 벨 아래 8 · 벨 오른쪽 끝 맞춤 · 폭 380 · 높이 600 까지(목록만 스크롤 · 끝 흐림)">
+          <NotifyDesk w={1280} h={760} s={0.42} />
+        </Shot>
+        <Shot cap="1024 — 같은 내용을 Bottom Sheet 로(딤 · 최대 480)">
+          <NotifyDesk w={1024} h={760} s={0.42} />
+        </Shot>
+        <Shot cap="알림 0개 — 설명 '새 알림이 없어요' · 모두 읽음 막힘">
+          <div className="rounded-xl p-4" style={{ background: rc('bg-layer-basement') }}>
+            <NotifyPopover empty />
+          </div>
+        </Shot>
+      </div>
+    </div>
+  </Figure>
+);
+const ExNotifications: Fig = () => (
+  <figure className="not-prose mb-0 mt-6">
+    <div className="flex items-start justify-center overflow-x-auto rounded-t-xl border border-b-0 border-fd-border p-6" style={{ background: rc('bg-layer-basement') }}>
+      <NotifyPopover maxHeight={460} />
+    </div>
+  </figure>
+);
+
 export const popoverFigures: Record<string, Fig> = {
+  'notification-guide': NotificationGuide,
+  'ex-notifications': ExNotifications,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

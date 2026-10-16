@@ -1,0 +1,162 @@
+# Bottom Navigation 의 수치 원본 — porest 의 떠 있는 알약(2026-10-04 사용자 결정, 화면 틀 · 이동 비교 페이지 4B · 5A · 6B · 7A ·
+# "따라오는 것"). 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 폰 화면 아래에 떠 있는 탭 바(하단 탭 바) — Desk 앱 · Desk 웹 768 미만의 주 메뉴. 칸은 다섯이다 —
+# 홈 · 가계부 · + · 캘린더 · 전체. 어느 화면에서나 같은 다섯이고(가계부 · 자산 · 통계 · 예산은 가계부 화면 위 Tabs),
+# 가운데 + 는 탭이 아니라 그 화면의 추가 동작(거래 추가 · 일정 추가)이다.
+# 아래로 스크롤하면 줄어들고(48, 라벨은 숨기되 이름은 남긴다) 위로 · 맨 위로 오면 펴진다. 줄어든 바를 누르면 펴진다.
+#
+# 수치의 출처 — SEED Bottom Navigation 은 디자인 문서 · 그림뿐이다(rootage · 코드 없음). 바의 모양(알약 · 66 · 48 · 좌우 14 · 36 ·
+# 아래 자리 · 줄어드는 기준)은 지금 Desk 웹 · 앱 값(shared/ui/porest/tabbar.tsx · shared/widgets/p_tab_bar.dart)이고,
+# 칸 · 라벨 · 아이콘 · 5칸 · 라벨 5자 · 최대 480 · 배지 2칸 · 글자 크기 설정을 따르지 않음은 SEED 다.
+#
+# SEED 와 다른 자리(bottom-navigation.md 의 "SEED 와 다른 점")
+#   - 화면 아래에 붙은 바(48 + 안전 영역 · 위 1px 선) 대신 떠 있는 알약 — 사용자 결정(4B). 붙은 바(4A)는 고르지 않았다.
+#   - 바탕은 불투명한 bg-layer-floating(흐림 걷음), 그림자는 porest shadow-s3, 안쪽 테두리는 stroke-neutral-subtle —
+#     지금 제품의 손으로 쓴 그림자(0 10 30 18% + 0 2 8 8%)와 border-subtle 70% 를 가장 가까운 토큰으로 옮겼다(새 토큰 없음).
+#   - 아이콘은 채움(Fill) 대신 lucide 선 아이콘 — 고름은 짙은 색 + 선 2.5, 안 고름은 fg-neutral-subtle + 선 2(v106 · 5A).
+#     SEED 그림의 안 고른 색(#B0B3BA 2.10:1 · #868B94 3.42:1)은 대비가 모자라 쓰지 않는다.
+#   - 가운데 + 는 브랜드 원 44(라벨 없음) — SEED 글로벌 앱의 "탭 칸 하나 + 라벨"(6A)이 아니다(6B).
+#   - 줄어든다(48) — SEED 에 없는 동작. 줄어도 칸마다 이름이 남고, 누르면 펴진다.
+
+name: BottomNavigation
+
+slots:
+  root: 바 — 화면 아래에 떠 있는 알약. 칸 다섯을 똑같이 나눈다
+  item: 탭 칸 — 아이콘 + 라벨. 누르면 그 탭으로(지금 탭이면 맨 위 + 그 탭의 첫 화면)
+  icon: 탭 아이콘 — lucide 선 아이콘
+  label: 탭 라벨 — 한글 5자 이내 · 글자 크기 설정을 따르지 않는다
+  addButton: 가운데 + — 브랜드 원. 그 화면의 추가(거래 추가 · 일정 추가) — 탭이 아니다
+  addIcon: + 아이콘 — 흰색
+  notification: 탭의 알림 — Notification Badge(점 · 숫자). 2칸까지
+  bodyInset: 본문 아래 여백 — 셸이 본문 스크롤에 준다. 마지막 줄이 바 위로 올라온다
+  focusRing: 키보드 포커스 링(웹)
+
+variants:
+  size:
+    regular: 펼침 66 — 기본 · 맨 위 근처 · 위로 스크롤할 때
+    compact: 줄어듦 48 — 아래로 스크롤할 때. 라벨은 숨기고 칸마다 이름은 남긴다
+  selected:
+    unselected: 다른 탭
+    selected: 지금 탭
+
+defaults:
+  size: regular
+  selected: unselected
+
+states:
+  enabled: 기본 — 마우스 호버 모양은 없다(Tabs 와 같다)
+  pressed: 누름 — 탭 칸은 2px 거리 축소만(색은 그대로), +는 누름 색 + 축소
+  focused: 웹 — 키보드 포커스에만 링
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        maxWidth: { value: 480px, note: "넓은 화면에서는 480 으로 가운데에 선다(SEED — 칸이 지나치게 퍼지지 않게)" }
+        radius: $radius-full
+        background: { value: $color-bg-layer-floating, note: "불투명 — 흐림(backdrop-blur)을 걷었다(결정 4). 뒤로 짙은 카드가 지나가도 라벨 대비가 그대로다" }
+        shadow: { value: $shadow-s3, dark: $shadow-s3-dark, note: "떠 있는 높이 — 지금 손으로 쓴 0 10 30 18% + 0 2 8 8% 의 가장 가까운 토큰(Elevation Local 2 · 떠 있는 동작)" }
+        borderColor: { value: $color-stroke-neutral-subtle, note: "안쪽 1px — 흰 바가 흰 화면 위에서 가장자리를 갖는다(지금 border-subtle 70% 의 불투명 짝)" }
+        borderWidth: 1px
+        columns: { value: 5, note: "탭 넷 + 가운데 + — 칸 폭은 똑같이 나눈다. 5칸을 넘지 않는다" }
+        gap: 2px
+        zIndex: { value: 50, note: "z-sticky — specs/z-index.md L1. 스낵바(L6)가 위에 뜬다" }
+        transitionProperty: { value: "height, margin, padding", note: "펼침 ↔ 줄어듦" }
+        transitionDuration: $motion-duration-d4
+        transitionEasing: $motion-ease-easing
+      item:
+        direction: { value: 세로, note: "아이콘 위 · 라벨 아래, 가운데" }
+        gap: 2px
+        cursor: pointer
+        touchTarget: { value: 칸 전체, note: "펼침 약 61 × 54 · 줄어듦 약 53 × 48(360 폭) — AA ✓ · AAA ✓(줄어든 바는 칸이 바 높이를 다 채운다)" }
+      icon:
+        size: { value: 24px, note: "lucide 선 아이콘(v106 단계 — 지금 22 를 24 로)" }
+        color: $color-fg-neutral-subtle
+        strokeWidth: { value: 2px, note: "lucide 기본" }
+      label:
+        typography: { value: $text-t1-static, note: "11 / 15 — 글자 크기 설정을 따르지 않는다(웹 text-t1-static, 앱 TextScaler.noScaling — SEED). 지금 10.5 를 11 로" }
+        fontWeight: { value: 500, note: "고르든 안 고르든 500 — 고를 때 폭이 흔들리지 않는다" }
+        foreground: $color-fg-neutral-subtle
+        lineClamp: { value: 1, note: "한 줄 — 라벨은 한글 5자 이내로 쓴다" }
+      addButton:
+        size: { value: 44px, note: "원 — 칸 가운데. 누르는 영역은 칸 전체" }
+        radius: $radius-full
+        background: { value: $color-bg-brand-solid, note: "브랜드 채움 — 두 모드 같다. 탭 바에서 브랜드 색은 + 하나뿐이다" }
+        shadow: none
+      addIcon:
+        size: { value: 24px, note: "lucide plus(v106 단계 — 지금 22 를 24 로)" }
+        color: $color-static-white
+        strokeWidth: { value: 2.5px, note: "채운 원 위의 흰 + — 지금 값 그대로" }
+      notification:
+        position: { value: "아이콘 상자 기준", note: "Notification Badge — 점은 x 17 ~ 23 · y 1 ~ 7, 숫자는 왼쪽 아래 (16, 14). 2칸까지 · 99+(SEED). 지금 쓰는 칸은 없다" }
+      bodyInset:
+        paddingBottom: { value: 바의 아래 자리 + 66 + 24, note: "마지막 줄이 바 위 24 에서 끝난다 — 안전 영역이 없으면 14 + 66 + 24 = 104, 34 면 28 + 66 + 24 = 118(지금 값). 줄어도 그대로 둔다" }
+    pressed:
+      item:
+        scale: { value: 칸 2px 거리 축소, note: "색은 그대로 — 손을 떼기 전에 고른 것처럼 보이지 않게(v104 · Tabs). 모션 줄이기면 하지 않는다" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+      addButton:
+        background: $color-bg-brand-solid-pressed
+        scale: { value: 2px 거리 축소, note: "기준은 원 지름 — 펼침 44 → 0.955 · 줄어듦 36 → 0.944(v104)" }
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: -2px, note: "칸 안쪽 — 붙은 이웃 칸 · 바 가장자리에 걸리지 않는다. + 는 원 바깥 2" }
+        radius: $radius-r3
+        color: $color-stroke-focus-ring
+
+  # ── 크기 ──────────────────────────────────────────────
+  - when: { size: regular }
+    enabled:
+      root:
+        height: 66px
+        marginX: { value: $spacing-x3_5, note: "화면 끝 → 바 14(좌우 안전 영역을 더한다)" }
+        marginBottom: { value: "max(14px, 아래 안전 영역 − 6px)", note: "홈 표시줄이 있으면 34 − 6 = 28 — 바의 아래 여백 6 만 안전 영역에 걸치고 누르는 칸은 안전 영역 위에서 끝난다" }
+        paddingX: $spacing-x2_5
+        paddingY: $spacing-x1_5
+      addButton:
+        size: 44px
+      addIcon:
+        size: 24px
+  - when: { size: compact }
+    enabled:
+      root:
+        height: 48px
+        marginX: { value: $spacing-x9, note: "화면 끝 → 바 36" }
+        marginBottom: { value: "max(12px, 아래 안전 영역 − 8px)", note: "홈 표시줄이 있으면 26 — 칸(48)은 안전 영역 위에서 끝난다" }
+        paddingX: $spacing-x2
+        paddingY: { value: 0px, note: "칸이 바 높이 48 을 다 채운다 — 누르는 영역 44 이상(v106). 보이는 모양은 그대로" }
+      label:
+        display: { value: 보이지 않게(sr-only), note: "보이는 라벨만 숨긴다 — 글은 남아 칸의 이름이 된다(앱 Semantics label 그대로)" }
+      addButton:
+        size: { value: 36px, note: "원 36" }
+      addIcon:
+        size: { value: 20px, note: "v106 단계 — 지금 18 을 20 으로" }
+
+  # ── 고름 ──────────────────────────────────────────────
+  - when: { selected: selected }
+    enabled:
+      icon:
+        color: { value: $color-fg-neutral, note: "짙은 글자색 — 브랜드 색이 아니다(결정 5A · Tabs 와 같은 '고름 = 짙은 색')" }
+        strokeWidth: { value: 2.5px, note: "v106 — 켜짐 · 선택은 선 2.5" }
+      label:
+        foreground: $color-fg-neutral
+
+motion:
+  "펼침 ↔ 줄어듦":
+    duration: $motion-duration-d4
+    easing: $motion-ease-easing
+    properties: [height, margin, padding]
+    note: "라벨은 줄어들기 시작할 때 사라지고 다 펴진 뒤 나타난다. 모션 줄이기면 바로 바뀐다"
+  "누름 — 칸":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "2px 거리 축소 — 모션 줄이기면 하지 않는다"
+  "누름 — +":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [background-color, scale]

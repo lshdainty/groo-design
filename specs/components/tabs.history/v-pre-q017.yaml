@@ -1,0 +1,147 @@
+# Tabs 의 수치 원본 — 구조는 SEED Tabs 의 Line 타입(2026-10-02 사용자 결정, 비교 페이지 여덟 — Tabs 쪽은 모두 SEED).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 다른 구역으로 옮기는 탭. 화면 · 구역 맨 위의 1차 탭은 Line(이 파일), 그 안 2차 탭은 Chip Tabs(chip-tabs.yaml —
+# 칩 하나는 chip.yaml 그대로). 같은 내용을 2 ~ 4가지로 바로 거르거나 다르게 보는 자리는 Segmented Control
+# (segmented-control.yaml), 폼 값은 Chip · Select, 목록 조건은 Chip 필터 바다.
+#
+# 고름(selected)은 누름 · 비활성과 곱해지므로 상태가 아니라 축이다(specs/CLAUDE.md).
+# 막대(indicator)는 목록에 하나 있고 고른 탭 아래로 미끄러진다 — 값은 공통 규칙에, 들임은 layout 규칙에 있다.
+#
+# SEED 와 다른 자리(tabs.md 의 "SEED 와 다른 점")
+#   - 목록 바닥 선: SEED stroke.neutral-muted(반투명) → 불투명 구획 선 stroke-neutral-subtle(v102).
+#   - 막대 들임 · Hug 목록 좌우는 SEED 처럼 16 이다 — porest 의 화면 여백 24(spacing-global-gutter)를 쓰지 않는다.
+#     탭이 제 좌우 10 을 더해 Hug 의 첫 글이 26 에서 시작한다(목록 · 본문 글의 24 와 거의 맞는다).
+#   - 알림 점은 브랜드 글자색(fg-brand — 다크에서 밝은 짝, Desk · HR 이 다르다) — Notification Badge small 과 같다(notification-badge.yaml).
+#     SEED 는 bg.brand-solid 이고, porest 다크에서는 그 색이 바탕에 묻힌다.
+
+name: Tabs
+
+slots:
+  list: 목록 — 탭을 담는 줄. 놓인 화면 · 구역 폭을 채우고 바닥에 구획 선
+  trigger: 탭 하나 — 누르는 자리
+  label: 글 — 이름만(개수를 붙이지 않는다). 줄바꿈 · 말줄임하지 않고 탭이 넓어진다
+  indicator: 막대 — 고른 탭 아래 2px. 다른 탭을 고르면 미끄러져 옮긴다
+  notification: 알림 점 — 새 소식이 있는 탭 하나에만, 글 오른쪽 위. 내용을 보면 사라진다
+  focusRing: 키보드 포커스 링(웹) — 탭 안쪽
+  content: 내용 칸(tabpanel) — 고른 탭의 내용. 바로 바뀌고 다른 탭의 상태(스크롤 · 입력)를 남긴다
+
+variants:
+  layout:
+    fill: 칸을 똑같이 나눠 꽉 채운다 — 5개 이하 · 짧은 글
+    hug: 글만큼 — 6개 이상이거나 글이 길 때. 넘치면 가로 스크롤
+  size:
+    small: 40 · 글 14
+    medium: 44 · 글 16
+  selected:
+    unselected: 안 고름
+    selected: 고름
+
+defaults:
+  layout: fill
+  size: small
+  selected: unselected
+
+states:
+  enabled: 기본 — 마우스 호버 모양은 없다(SEED)
+  pressed: 탭을 2px 거리로 축소만 — 색은 그대로(이미 색이 고름을 말한다)
+  focused: 웹 — 키보드 포커스에만 링
+  disabled: 막힌 탭 — 누를 수 없고 키보드 이동에서 건너뛴다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      list:
+        background: { value: $color-bg-layer-default, note: "불투명 — 위에 붙어 있어도 아래 내용이 비치지 않는다" }
+        borderBottomColor: { value: $color-stroke-neutral-subtle, note: "안쪽 1px(inset) — 선이 탭 높이를 밀지 않는다. SEED stroke.neutral-muted 의 불투명 구획 선(v102)" }
+        borderBottomWidth: 1px
+      trigger:
+        paddingX: $spacing-x2_5
+        paddingY: $spacing-x2_5
+        alignItems: { value: flex-end, note: "글을 아래로 붙인다 — 아래 10, 남는 높이는 위로(SEED)" }
+        cursor: pointer
+        touchTarget: { value: 탭 전체, note: "목록 높이가 곧 누르는 높이 — small 40 · medium 44. 가로는 탭 폭(Hug 는 글 + 20)" }
+      label:
+        fontWeight: { value: 700, note: "고르든 안 고르든 700 — 고를 때 폭이 흔들리지 않는다" }
+        foreground: $color-fg-neutral-subtle
+      indicator:
+        height: 2px
+        background: { value: $color-fg-neutral, note: "글자색과 같은 짙은 중립색 — 브랜드 색이 아니다" }
+        radius: { value: 0px, note: "끝이 각지다(SEED)" }
+        transitionProperty: { value: "left, width", note: "고른 탭의 자리 · 폭으로 미끄러진다. 글자색은 전환 없이 바로 바뀐다" }
+        transitionDuration: $motion-duration-d4
+        transitionEasing: $motion-ease-easing
+      notification:
+        size: 6px
+        radius: $radius-full
+        background: { value: $color-fg-brand, note: "브랜드 글자색 — 목록 바탕과 Desk 8.38 · 6.10 · HR 5.06 · 6.23(bg-brand-solid 는 다크에서 1.73 · 2.86 이라 안 보인다). 고른 탭에는 없다 — 내용을 보면 사라진다" }
+        gap: { value: 2px, note: "글 끝에서 2, 글 위쪽에 맞춘다 — 탭 폭을 넓히지 않는다" }
+    pressed:
+      trigger:
+        scale: { value: 탭 2px 거리 축소, note: "기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px(SEED scaleScope: self · v104) — 모션 줄이기면 하지 않는다" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: -2px, note: "탭 안쪽 — 이웃 탭 · 바닥 선에 걸리지 않는다. 모서리는 각지다(SEED)" }
+        color: $color-stroke-focus-ring
+    disabled:
+      trigger:
+        cursor: { value: not-allowed, note: "축소 없음" }
+      label:
+        foreground: $color-fg-disabled
+
+  # ── 고름 ──────────────────────────────────────────────
+  - when: { selected: selected }
+    enabled:
+      label:
+        foreground: { value: $color-fg-neutral, note: "글자색만 바뀐다 — 굵기 · 크기 그대로" }
+    disabled:
+      indicator:
+        background: { value: $color-fg-disabled, note: "목록 전체가 막혔을 때 고른 탭의 막대도 전용 색" }
+
+  # ── 폭 ────────────────────────────────────────────────
+  - when: { layout: fill }
+    enabled:
+      list:
+        paddingX: 0px
+      trigger:
+        grow: { value: 1, note: "칸을 똑같이 나눈다 — 글이 칸보다 길면 그 탭만 넓어진다(그러면 Hug 로)" }
+      indicator:
+        insetX: { value: $spacing-x4, note: "탭 폭에서 좌우 16 씩 들인다 — 막대 = 탭 폭 − 32. 360 폰 2 · 3 · 4 · 5개면 148 · 88 · 58 · 40" }
+  - when: { layout: hug }
+    enabled:
+      list:
+        paddingX: { value: $spacing-x4, note: "SEED 16 — 탭의 좌우 10 이 더해져 첫 글이 26 에서 시작한다" }
+        overflowX: { value: auto, note: "넘치면 가로 스크롤 — 스크롤바는 숨긴다" }
+        scrollPadding: { value: $spacing-x4, note: "고른 탭이 화면 밖이면 16 여유를 두고 가까운 쪽으로 스크롤한다" }
+      trigger:
+        grow: { value: 0, note: "글 + 좌우 10" }
+      indicator:
+        insetX: { value: 0px, note: "탭 폭 그대로(좌우 10 포함) — 글보다 20 길다" }
+
+  # ── 크기 ──────────────────────────────────────────────
+  - when: { size: small }
+    enabled:
+      list: { minHeight: 40px }
+      trigger: { minHeight: 40px }
+      label: { typography: { value: $text-t4, note: "14 / 19 — 글은 아래 10, 위 11" } }
+  - when: { size: medium }
+    enabled:
+      list: { minHeight: 44px }
+      trigger: { minHeight: 44px }
+      label: { typography: { value: $text-t5, note: "16 / 22 — 글은 아래 10, 위 12" } }
+
+motion:
+  "막대 — 미끄러짐":
+    duration: $motion-duration-d4
+    easing: $motion-ease-easing
+    properties: [left, width]
+    note: "글자색은 전환 없이 바로 — 내용 칸도 애니메이션 없이 바로 바뀐다(폰 1차 탭의 밀어 넘기기는 손을 따라 움직인다)"
+  "누름 — 탭":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "탭 2px 거리 축소 — 모션 줄이기면 하지 않는다"
