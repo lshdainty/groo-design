@@ -40,11 +40,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRow
  *   계열 색 점 r 4 + 카드 면 색 테두리 2 = 10), Area 의 면은 같은 색 25% → 0% 세로 그라디언트 · Bar 최대 폭 28 · 위 모서리 4 ·
  *   Pie 조각 사이 0 · 12시에서 시계 방향. 그려짐은 300ms 한 번(ease-out) — 모션 줄이기면 바로(라이브러리 기본 "auto" — 강제로 켜지 않는다).
  * 툴팁: bg-layer-floating · shadow-s3 · 모서리 12 · 위아래 10 · 좌우 12 · 최소 128 · 테두리 없음. 머리 12 · fg-neutral-subtle, 줄은 색 네모 8
- *   (모서리 2) ↔ 라벨 6 · 라벨 13 fg-neutral-muted ↔ 값 12 이상 · 값 13 · 700 · fg-neutral · 고정폭 숫자(오른쪽). 보조 기술에는 숨긴다 —
+ *   (모서리 2) ↔ 라벨 6 · 라벨 13 fg-neutral-subtle(글자 역할 D5) ↔ 값 12 이상 · 값 13 · 700 · fg-neutral · 고정폭 숫자(오른쪽). 보조 기술에는 숨긴다 —
  *   같은 값은 범례 · 표로 보기가 준다. 가리킴 선은 1px 점선(3 · 3) stroke-neutral-weak.
  * 키보드: 차트 상자(Tab 한 칸, role="img")에서 ← · → 로 날짜 · 막대를 옮기며 툴팁을 띄운다 — 처음 누르면 첫 날짜, Esc 로 닫고 상자를 떠나면
  *   닫는다(대화상자 안이어도 Esc 는 툴팁만 닫는다). 포커스 링은 키보드 포커스에만 상자 바깥 2px(띄움 2). 마우스 · 터치로 짚은 자리가 먼저다.
- * 지표 타일: 모서리 12 · 위아래 10 · 좌우 12 · 높이 62 · 폭 100 이상 · 타일 사이 8 · 아래 차트와 8. 점 8 ↔ 이름 6 · 이름 13 fg-neutral-muted,
+ * 지표 타일: 모서리 12 · 위아래 10 · 좌우 12 · 높이 62 · 폭 100 이상 · 타일 사이 8 · 아래 차트와 8. 점 8 ↔ 이름 6 · 이름 13 fg-neutral-subtle(글자 역할 D5),
  *   아래 2 에 합계 16 / 22 · 700 · fg-neutral. 켠 계열 바탕 chart-{색}-subtle(테두리 없음), 끈 계열 흰 면 + 안쪽 1px stroke-neutral-weak
  *   (끈 타일만 호버에 bg-layer-default-pressed). 누르면 색 없이 2px 거리 축소(Q-012-2), 키보드 포커스에만 바깥 2px 링.
  *   마지막 하나(켠 계열이 하나)는 끌 수 없다 — 색 그대로 · aria-disabled · 커서 not-allowed · 축소 없음(Q-012-3 C, v106 비활성 커서).
@@ -440,7 +440,7 @@ function TooltipRow({ swatch, name, value }: { swatch: string | undefined; name:
   return (
     <div data-slot="chart-tooltip-row" className="flex items-center text-t3">
       <span aria-hidden data-slot="chart-tooltip-swatch" className="mr-x1_5 size-2 shrink-0 rounded-[2px]" style={{ background: swatch }} />
-      <span data-slot="chart-tooltip-label" className="text-fg-neutral-muted">
+      <span data-slot="chart-tooltip-label" className="text-fg-neutral-subtle">
         {name}
       </span>
       <span data-slot="chart-tooltip-value" className="ml-auto pl-x3 font-bold tabular-nums text-fg-neutral">
@@ -549,7 +549,7 @@ const ChartLegendTiles = React.forwardRef<HTMLDivElement, ChartLegendTilesProps>
                   onHiddenChange?.(next);
                 }}
               >
-                <span className="flex items-center gap-x1_5 text-t3 text-fg-neutral-muted">
+                <span className="flex items-center gap-x1_5 text-t3 text-fg-neutral-subtle">
                   <span aria-hidden data-slot="chart-legend-dot" className={cn("size-2 shrink-0 rounded-full", DOT_BG[item.color])} />
                   {item.label}
                 </span>

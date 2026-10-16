@@ -536,7 +536,7 @@ const GridGuide: Fig = ({ caption }) => {
         <Verdict ok={false} note="div 격자 — 보이는 것은 같지만 보조 기술이 열 이름을 모른다">
           <div className="flex flex-col items-center gap-2">
             <div style={{ width: 320, boxSizing: 'border-box', borderRadius: CL().surface.radius, borderWidth: 1, borderStyle: 'solid', borderColor: rc('stroke-neutral-weak'), background: rc('bg-layer-default'), paddingTop: 14, paddingBottom: 12, paddingLeft: t.edge, paddingRight: t.edge, fontFamily: t.cell.type.fontFamily }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', fontSize: 11, fontWeight: 600, color: rc('fg-neutral-subtle'), paddingBottom: 6 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', fontSize: 11, fontWeight: 700, color: rc('fg-neutral-subtle'), paddingBottom: 6 }}>
                 {['날짜', '종가', '등락률', '거래량'].map((h) => (
                   <span key={h} style={{ textAlign: h === '날짜' ? 'left' : 'right' }}>{h}</span>
                 ))}

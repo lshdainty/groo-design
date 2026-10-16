@@ -220,7 +220,7 @@ function LayoutStrip({ tone, message, action, note }: { tone?: 'positive'; messa
         {/* 최소 높이 */}
         <span aria-hidden className="absolute flex items-center" style={{ left: '100%', top: 0, bottom: 0, marginLeft: 6 }}>
           <span style={{ width: 1, height: '100%', background: MARK_LINE }} />
-          <span className="ml-1 whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+          <span className="ml-1 whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
             {l.root.minHeight}
           </span>
         </span>
@@ -246,7 +246,7 @@ const Layout: Fig = ({ caption }) => {
         </div>
         {/* 상태 — 키보드 포커스 링(띠 글자색, 어느 링이든 띠 위) · 액션 누름 */}
         <div className="flex flex-col gap-3">
-          <span className="text-[12px] font-semibold pk-text">상태 — 실제 크기</span>
+          <span className="text-[12px] font-bold pk-text">상태 — 실제 크기</span>
           {(
             [
               ['focused', 'root', `띠 포커스 — 안쪽 ${-l.ring.offset}`],
@@ -454,7 +454,7 @@ const PlacementGuide: Fig = ({ caption }) => {
             <SnackDock>
               <div className="relative flex w-full justify-center">
                 <S message="거래를 삭제했어요." action={{ label: '되돌리기' }} />
-                <span aria-hidden className="absolute -top-5 flex items-center justify-center text-[10px] font-semibold" style={{ width: l.root.maxWidth }}>
+                <span aria-hidden className="absolute -top-5 flex items-center justify-center text-[10px] font-bold" style={{ width: l.root.maxWidth }}>
                   <span className="absolute inset-x-0 top-1/2 h-px" style={{ background: MARK_LINE }} />
                   <span className="relative rounded px-1 leading-4 text-white" style={{ background: MARK_LINE }}>
                     최대 {l.root.maxWidth}
@@ -501,7 +501,7 @@ const TimingGuide: Fig = ({ caption }) => {
       <Surface className="mx-auto flex w-full max-w-[640px] flex-col gap-5">
         {rows.map((r) => (
           <div key={r.title} className="flex flex-col gap-1.5">
-            <span className="text-[13px] font-semibold leading-5 pk-text">{r.title}</span>
+            <span className="text-[13px] font-bold leading-5 pk-text">{r.title}</span>
             <div className="relative h-7">
               {r.bars.map(({ label, ...st }) => (
                 <span key={label} className="absolute top-0 flex h-7 items-center overflow-hidden whitespace-nowrap rounded-md px-2 text-[11px] font-medium" style={{ ...st, color: rc('fg-neutral-inverted'), boxShadow: `inset -1px 0 0 ${rc('bg-layer-default')}` }}>

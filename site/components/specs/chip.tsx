@@ -311,7 +311,7 @@ const Variant: Fig = ({ caption }) => {
           <Muted mode={mode}>고름</Muted>
           {CHIP_VARIANTS.map((v) => (
             <Fragment key={v}>
-              <span className="justify-self-start text-[13px] font-semibold" style={{ color: rc('fg-neutral', mode) }}>
+              <span className="justify-self-start text-[13px] font-bold" style={{ color: rc('fg-neutral', mode) }}>
                 {VARIANT_KO[v]}
                 {v === lk.defaults.variant && (
                   <span className="block" style={{ color: rc('fg-neutral-subtle', mode), fontWeight: 400 }}>
@@ -771,7 +771,7 @@ function GapMark({ w, h, label, mark = true }: { w: number; h: number; label?: s
   return (
     <span aria-hidden className="relative flex shrink-0 justify-center" style={{ width: w, height: h, background: mark ? MARK : undefined }}>
       {label && (
-        <span className="absolute -top-5 rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+        <span className="absolute -top-5 rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
           {label}
         </span>
       )}
@@ -806,7 +806,7 @@ const LayoutGuide: Fig = ({ caption }) => {
             <div className="mt-6 flex w-max flex-col">
               <MarkedRow first={String(g.gap)} items={[['식비', true], ['카페', true], ['교통'], ['쇼핑']]} />
               <div className="relative" style={{ height: g.rowGap, background: MARK }}>
-                <span className="absolute left-full top-1/2 ml-1.5 -translate-y-1/2 rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+                <span className="absolute left-full top-1/2 ml-1.5 -translate-y-1/2 rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
                   {g.rowGap}
                 </span>
               </div>

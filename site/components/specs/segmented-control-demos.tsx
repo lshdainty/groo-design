@@ -42,7 +42,7 @@ function Row({ look, mode, title, sub, amount, hue, lead }: { look: SegLook; mod
         )}
       </span>
       {amount && (
-        <span className="text-[15px] font-semibold tabular-nums" style={{ color: t(look, 'fg-neutral', mode) }}>
+        <span className="text-[15px] font-bold tabular-nums" style={{ color: t(look, 'fg-neutral', mode) }}>
           {amount}
         </span>
       )}

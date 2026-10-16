@@ -168,7 +168,7 @@ function Measured({ size }: { size: string }) {
   const f = look.faces.light.enabled;
   const band = (w: number, label: string) => (
     <span className="relative flex h-full shrink-0 items-center justify-center" style={{ width: w, background: MARK }}>
-      <span className="absolute -bottom-6 rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+      <span className="absolute -bottom-6 rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
         {label}
       </span>
     </span>
@@ -192,7 +192,7 @@ function Measured({ size }: { size: string }) {
           <span className="flex h-full w-3 flex-col items-center justify-center" style={{ borderTop: `1px solid ${MARK_LINE}`, borderBottom: `1px solid ${MARK_LINE}` }}>
             <span className="h-full w-px" style={{ background: MARK_LINE }} />
           </span>
-          <span className="ml-1 rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+          <span className="ml-1 rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
             {f.height}
           </span>
         </span>
@@ -264,7 +264,7 @@ const VariantCards: Fig = ({ caption }) => (
             <B variant={v} label={v === 'criticalSolid' ? '삭제' : v === 'neutralWeak' ? '취소' : '라벨'} />
           </div>
           <div className="flex min-w-0 flex-col gap-0.5">
-            <code className="text-[13px] font-semibold pk-text">{v}</code>
+            <code className="text-[13px] font-bold pk-text">{v}</code>
             <span className="text-[12px] leading-[18px] pk-muted">{axisDesc(spec(), 'variant', v)}</span>
           </div>
         </div>

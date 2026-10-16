@@ -285,7 +285,7 @@ export function TableView({
     const foc = hs === 'focused' || ring === `h:${col.key}`;
     const grey = bad?.head;
     const txt: CSSProperties = grey
-      ? { fontSize: 12, lineHeight: '20px', fontWeight: 600, color: `var(--p-fg-neutral-subtle)`, textTransform: grey === 'upper' ? 'uppercase' : undefined, letterSpacing: grey === 'upper' ? '0.04em' : undefined }
+      ? { fontSize: 12, lineHeight: '20px', fontWeight: 700, color: `var(--p-fg-neutral-subtle)`, textTransform: grey === 'upper' ? 'uppercase' : undefined, letterSpacing: grey === 'upper' ? '0.04em' : undefined }
       : { fontFamily: h.type.fontFamily, fontSize: h.type.fontSize, lineHeight: h.type.lineHeight, fontWeight: h.type.fontWeight, color: dcv(h.fg, mode) };
     const inner: CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: end ? 'flex-end' : 'flex-start', gap: look.sort.gap, minHeight: parseFloat(h.type.lineHeight), boxSizing: 'border-box', paddingTop: h.padY, paddingBottom: h.padY, paddingLeft: padL(i), paddingRight: padR(i), ...txt };
     const thStyle: CSSProperties = {

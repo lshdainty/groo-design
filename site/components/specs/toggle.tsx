@@ -69,7 +69,7 @@ function StockHead({ watched, mode = 'auto', state, icon }: { watched: boolean; 
   return (
     <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8, padding: `16px ${gutter()}px 12px` }}>
       <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-        <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 600, color: rc('fg-neutral-subtle', mode) }}>삼성전자 · 005930</span>
+        <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 700, color: rc('fg-neutral-subtle', mode) }}>삼성전자 · 005930</span>
         <span style={{ fontSize: 26, lineHeight: '35px', fontWeight: 700, color: rc('fg-neutral', mode), fontVariantNumeric: 'tabular-nums' }}>71,500원</span>
         <span style={{ fontSize: 14, lineHeight: '19px', fontWeight: 500, color: rc('fg-critical', mode), fontVariantNumeric: 'tabular-nums' }}>+850원(1.2%)</span>
       </div>
@@ -202,7 +202,7 @@ const Toggled: Fig = ({ caption }) => {
           ))}
           {(Object.keys(TOGGLES) as ToggleKind[]).map((kind) => (
             <div key={kind} className="contents">
-              <span className="text-[12px] font-semibold leading-4" style={{ color: rc('fg-neutral', mode) }}>
+              <span className="text-[12px] font-bold leading-4" style={{ color: rc('fg-neutral', mode) }}>
                 {kind === 'pin' ? '메모 고정' : TOGGLES[kind].label}
               </span>
               {[false, true].map((on) => (
@@ -242,9 +242,9 @@ const Size: Fig = ({ caption }) => {
                 <span className="relative inline-flex">
                   <ToggleView look={l} state="hovered" icon="pin" ariaLabel="장보기 목록 고정" showHit={{ fill: MARK, line: MARK_LINE }} />
                   <Band style={{ left: 0, right: 0, top: -ext - 14, height: 3 }} />
-                  <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-semibold leading-4" style={{ left: '50%', top: -ext - 30, transform: 'translateX(-50%)', color: MARK_LINE }}>{l.size}</span>
+                  <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-bold leading-4" style={{ left: '50%', top: -ext - 30, transform: 'translateX(-50%)', color: MARK_LINE }}>{l.size}</span>
                   <Band style={{ right: -ext - 14, top: -ext, bottom: -ext, width: 3 }} />
-                  <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-semibold leading-4" style={{ right: -ext - 36, top: '50%', transform: 'translateY(-50%)', color: MARK_LINE }}>{l.touch}</span>
+                  <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-bold leading-4" style={{ right: -ext - 36, top: '50%', transform: 'translateY(-50%)', color: MARK_LINE }}>{l.touch}</span>
                 </span>
               </div>
             </Surface>
@@ -315,7 +315,7 @@ const States: Fig = ({ caption }) => {
           ))}
           {order.map((st) => (
             <div key={st} className="contents">
-              <span className="text-[12px] font-semibold leading-4" style={{ color: rc('fg-neutral', mode) }}>
+              <span className="text-[12px] font-bold leading-4" style={{ color: rc('fg-neutral', mode) }}>
                 {STATE_KO[st]}
               </span>
               {[false, true].map((on) => (

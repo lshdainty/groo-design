@@ -125,7 +125,7 @@ export function TabsPlayground({ looks, chips }: { looks: Record<'desk' | 'hr', 
   const panels = (base: string, prefix = '') =>
     items.map((it) => (
       <TabPanel key={it.value} idBase={base} value={it.value} active={cur === it.value} style={panelPad}>
-        <div className="pb-3 text-[15px] font-semibold" style={{ color: tcv(look.tone['fg-neutral'], mode) }}>
+        <div className="pb-3 text-[15px] font-bold" style={{ color: tcv(look.tone['fg-neutral'], mode) }}>
           {prefix}
           {it.label}
         </div>

@@ -82,7 +82,7 @@ export function DayTimeline({ tones, mode = 'auto' }: { tones: Tones; mode?: Vie
       ))}
       {EVENTS.map(([a, b, t, hue]) => (
         <div key={t} style={{ position: 'absolute', left: 76, right: 12, top: a * HOUR_H + 2, height: (b - a) * HOUR_H - 4, borderRadius: 8, background: c(`chart-${hue}-weak`), borderLeft: `3px solid ${c(`chart-${hue}`)}`, paddingTop: 4, paddingLeft: 10, paddingRight: 8, boxSizing: 'border-box', overflow: 'hidden' }}>
-          <span style={{ display: 'block', fontSize: 13, lineHeight: '18px', fontWeight: 600, color: c('fg-neutral') }}>{t}</span>
+          <span style={{ display: 'block', fontSize: 13, lineHeight: '18px', fontWeight: 700, color: c('fg-neutral') }}>{t}</span>
           <span style={{ display: 'block', fontSize: 12, lineHeight: '16px', color: c('fg-neutral-subtle') }}>
             {hourLabel(Math.floor(a))} ~ {hourLabel(Math.floor(b))}
           </span>

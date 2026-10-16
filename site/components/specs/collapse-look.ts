@@ -202,8 +202,6 @@ export function accordionLook(brand: Brand = 'desk'): AccLook {
       radius: k.len(b['expandAll.radius'], 'expandAll.radius'),
       type: k.type(b['expandAll.typography'], b['expandAll.fontWeight'], 'expandAll.typography'),
       fg: k.tok(b['expandAll.foreground'], brand, 'expandAll.foreground'),
-      icon: k.len(b['expandAll.iconSize'], 'expandAll.iconSize'),
-      gap: k.len(b['expandAll.gap'], 'expandAll.gap'),
       touch: touch.h,
       bg: k.tok(hov['expandAll.background'], brand, 'hovered expandAll.background'),
       press: k.press(pr['expandAll.scale'], k.blockMotion('accordion', '누름 — 콘텐츠'), 'pressed expandAll.scale'),

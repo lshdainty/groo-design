@@ -64,7 +64,7 @@ const Hero: Fig = ({ caption }) => (
     <div className="flex flex-col gap-4">
       {MODES.map((mode) => (
         <Board key={mode} mode={mode}>
-          <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
+          <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
           {mode === 'light' ? <TableBlock mode={mode} title="사용자 21명" /> : <TableBlock mode={mode} title="휴가 내역" head={['날짜', '종류', '일수', '상태']} data={HR_LEAVES} rows={4} total={23} page={1} pageSize={10} />}
         </Board>
       ))}

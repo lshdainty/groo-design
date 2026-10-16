@@ -1,7 +1,8 @@
 # List Header 의 수치 원본 — SEED List Header(2026-10-01 사용자 결정). 문서는 list.md 의 "목록 제목" 절.
 # 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
-# 목록(List) 밖, 바로 위에 둔다. 오른쪽에 작은 버튼(도움말 · 전체 보기)을 둘 수 있다.
+# 목록(List) 밖, 바로 위에 둔다. 오른쪽에 작은 버튼(도움말 · 전체 보기)을 둘 수 있다 — 글이면 글 버튼(SEED Text Button,
+# 2026-10-16 사용자 결정 글자 역할 D2 — Card 머리 동작과 같은 값).
 # SEED 와 다른 자리: 좌우 여백은 화면 가장자리 규칙 spacing-global-gutter 24(SEED 16).
 
 name: ListHeader
@@ -29,6 +30,15 @@ rules:
         paddingY: $spacing-x2
         gap: { value: $spacing-x2_5, note: "제목과 오른쪽 버튼 사이" }
         typography: $text-t4
+      action:
+        height: { value: 36px, note: "글 버튼(SEED Text Button minHeight x9) — 누름 바탕 bg-layer-default-pressed · 모서리 8. 2026-10-16 사용자 결정 글자 역할 D2. 아이콘만인 버튼(도움말)은 Button ghost small iconOnly" }
+        paddingX: { value: $spacing-x3_5, note: "좌우 14 — 오른쪽 14 만큼 바깥으로 내어(margin-right −14) 글자 끝이 줄의 오른쪽 24 에 선다" }
+        marginY: { value: -8px, note: "위아래로 블리드 — 목록 제목 줄 높이(위아래 8 + 19)를 바꾸지 않는다" }
+        radius: $radius-r2
+        typography: $text-t4
+        fontWeight: 700
+        foreground: $color-fg-neutral-muted
+        touchTarget: { value: 44 × 44, note: "보이는 36 위아래로 4 씩. AA ✓ · AAA ✓" }
   - when: { variant: mediumWeak }
     enabled:
       root: { fontWeight: 500, foreground: $color-fg-neutral-subtle }

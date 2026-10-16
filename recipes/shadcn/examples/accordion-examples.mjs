@@ -46,10 +46,10 @@ const ACCORDION_BODY = "flex min-w-0 flex-1 flex-col items-start gap-x0_5";
 // 펼친 내용의 글 — 좌우 24 · 아래 16(위 0), text-article-note 14 / 22 · fg-neutral-muted, 줄바꿈 문자를 지킨다
 const ACCORDION_PANEL_TEXT = "px-global-gutter pb-x4 pt-0 font-sans text-article-note font-normal text-fg-neutral-muted whitespace-pre-line break-keep [overflow-wrap:break-word]";
 
-// 모두 펼치기 — Card 머리 동작과 같은 모양: 보이는 상자 32 · 왼쪽 8 · 오른쪽 4 · 모서리 8, 글 t4 · 500 · fg-neutral-subtle + 아이콘 16, 누르는 영역 44
+// 모두 펼치기 — Card 머리 동작과 같은 글 버튼(SEED Text Button): 보이는 상자 36 · 좌우 14 · 모서리 8, 글 t4 · 700 · fg-neutral-muted · 아이콘 없음, 누르는 영역 44
 const EXPAND_ALL = [
-  "relative inline-flex h-8 shrink-0 cursor-pointer items-center gap-x0_5 rounded-r2 border-0 bg-transparent pl-x2 pr-x1",
-  "font-sans text-t4 font-medium text-fg-neutral-subtle [&_svg]:size-4 [&_svg]:shrink-0",
+  "relative -mr-x3_5 inline-flex h-9 shrink-0 cursor-pointer items-center rounded-r2 border-0 bg-transparent px-x3_5",
+  "font-sans text-t4 font-bold text-fg-neutral-muted",
   "before:absolute before:left-1/2 before:top-1/2 before:h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "[@media(hover:hover)]:hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
@@ -102,7 +102,7 @@ const HEADING = "m-0 flex";
 // 상세가 없는 항목 — 콘텐츠 층과 같은 짜임에 높이 54
 const PLAIN_MIN = "min-h-[54px]";
 // 목록 머리(AccordionHeader) — 높이 32 · 아래 8 · 제목 t5 · 700
-const HEADER = "mb-x2 flex min-h-8 items-center justify-between gap-x2";
+const HEADER = "mb-x2 flex min-h-9 items-center justify-between gap-x2";
 const HEADER_TITLE = "min-w-0 font-sans text-t5 font-bold text-fg-neutral break-keep [overflow-wrap:break-word]";
 
 // ── card.tsx 의 값 — 카드 상세의 카드 면(default · body accordion) · 머리 ──
@@ -134,8 +134,6 @@ const svg = (paths, cls = "") =>
   `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"${cls ? ` class="${cls}"` : ""} aria-hidden="true">${paths}</svg>`;
 const PATHS = {
   chevronDown: '<path d="m6 9 6 6 6-6"/>',
-  chevronsUpDown: '<path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/>',
-  chevronsDownUp: '<path d="m7 20 5-5 5 5"/><path d="m7 4 5 5 5-5"/>',
   coffee: '<path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/>',
   creditCard: '<rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>',
   ticket: '<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>',
@@ -210,7 +208,7 @@ const accordion = ({ id, variant, rows }) => `<div data-slot="accordion" data-va
 
 // <AccordionExpandAll controls values expandable> — 상세가 있는 항목이 모두 펼쳐져 있으면 "모두 접기"
 const expandAll = ({ controls, allOpen }) =>
-  `<button type="button" aria-controls="${controls}" data-slot="accordion-expand-all" data-state="${allOpen ? "expanded" : "collapsed"}" class="${EXPAND_ALL}"><span>${allOpen ? "모두 접기" : "모두 펼치기"}</span>${svg(allOpen ? PATHS.chevronsDownUp : PATHS.chevronsUpDown)}</button>`;
+  `<button type="button" aria-controls="${controls}" data-slot="accordion-expand-all" data-state="${allOpen ? "expanded" : "collapsed"}" class="${EXPAND_ALL}"><span>${allOpen ? "모두 접기" : "모두 펼치기"}</span></button>`;
 
 // <AccordionHeader title> — 시트 · 대화상자의 목록 머리
 const header = (title, right) => `<div data-slot="accordion-header" class="${HEADER}"><div data-slot="accordion-header-title" class="${HEADER_TITLE}">${esc(title)}</div>${right}</div>`;

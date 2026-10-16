@@ -19,7 +19,7 @@ const markBox: CSSProperties = { ...dashed, background: MARK };
 const BASEMENT = 'var(--p-bg-layer-basement)';
 // 높이 표시 — 부위 오른쪽 안쪽의 수
 const Tag = ({ label, style }: { label: string; style: CSSProperties }) => (
-  <span aria-hidden className="pointer-events-none absolute whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE, zIndex: 5, ...style }}>
+  <span aria-hidden className="pointer-events-none absolute whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE, zIndex: 5, ...style }}>
     {label}
   </span>
 );

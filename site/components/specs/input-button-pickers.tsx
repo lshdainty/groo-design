@@ -79,7 +79,7 @@ export function CategoryGrid({ look, mode = 'auto', items = CATEGORIES, selected
                         </span>
                       )}
                     </span>
-                    <span className="text-[13px] leading-[18px]" style={{ color: tone(look, 'fg-neutral', mode), fontWeight: on ? 600 : 400 }}>
+                    <span className="text-[13px] leading-[18px]" style={{ color: tone(look, 'fg-neutral', mode), fontWeight: on ? 700 : 400 }}>
                       {i.label}
                     </span>
                   </>

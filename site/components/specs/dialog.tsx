@@ -235,7 +235,7 @@ const Scroll: Fig = ({ caption }) => {
     </>
   );
   const lineTag = (
-    <span aria-hidden className="pointer-events-none absolute right-3 rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ top: 4, background: MARK_LINE, zIndex: 5 }}>
+    <span aria-hidden className="pointer-events-none absolute right-3 rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ top: 4, background: MARK_LINE, zIndex: 5 }}>
       ↑ {d.scroll.divider.height}px 선
     </span>
   );

@@ -132,7 +132,7 @@ export function SplitRows({ mode = 'auto', n = SPLITS.length }: { mode?: Mode; n
             <span style={{ fontSize: 15, lineHeight: '21px', fontWeight: 500, color: rc('fg-neutral', mode) }}>{s.title}</span>
             <span style={{ fontSize: 13, lineHeight: '18px', color: rc('fg-neutral-subtle', mode) }}>{s.category}</span>
           </span>
-          <span style={{ fontSize: 15, lineHeight: '21px', fontWeight: 600, color: rc('fg-neutral', mode), fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{won(-s.amount)}</span>
+          <span style={{ fontSize: 15, lineHeight: '21px', fontWeight: 700, color: rc('fg-neutral', mode), fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{won(-s.amount)}</span>
         </div>
       ))}
     </div>

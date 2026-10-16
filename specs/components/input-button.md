@@ -253,7 +253,7 @@ const done = <Button disabled={!draft} onClick={() => { setDate(draft); setOpen(
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 값 `fg-neutral` 16.41 · 13.42(누름 바탕 위 15.48 · 10.32), placeholder · 붙이개 글자 5.50 · 6.09(누름 바탕 위 5.18 · 4.68), 읽기 전용 값 15.20 · 10.32 ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 값 `fg-neutral` 16.41 · 13.42(누름 바탕 위 15.48 · 10.32), 붙이개 글자 5.50 · 6.09(누름 바탕 위 5.18 · 4.68), 읽기 전용 값 15.20 · 10.32 ✓. placeholder 4.18 · 4.13(누름 바탕 위 3.94 · 3.18) — 4.5:1 밑, 사용자가 대가를 알고 SEED 값을 골랐다(2026-10-16 글자 역할 D7, DESIGN v119). 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 키보드 포커스 링 `stroke-focus-ring` Desk 8.38 · 6.10 · HR 5.06 · 6.23, 오류 테두리 5.06 · 6.08, 뒤 아이콘 `fg-neutral-muted` 7.11 · 7.70 ✓. 기본 1px 테두리(1.23 · 1.56)는 칸을 알리는 유일한 표시가 아니다 — 라벨 · 뒤 아이콘이 함께 알린다(SEED 와 같다) |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 바깥 링 2px · 띄움 2px |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 모든 크기 ✓. 지우기 버튼 22 · 18 은 보이는 크기이고 누르는 영역은 24 이상으로 넓힌다 |

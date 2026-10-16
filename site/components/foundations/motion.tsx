@@ -37,7 +37,7 @@ export function MacroMicroFigure() {
           <div className="relative flex items-center justify-center" style={{ width: w, height: lg.height }}>
             <span className="absolute inset-0 rounded-lg border border-dashed" style={{ borderColor: color('stroke-neutral-solid') }} />
             <span
-              className="flex items-center justify-center rounded-lg text-[14px] font-semibold"
+              className="flex items-center justify-center rounded-lg text-[14px] font-bold"
               style={{ width: w, height: lg.height, background: color('bg-brand-solid-pressed'), color: color('static-white'), transform: `scale(${ratio(w, lg.height)})` }}
             >
               저장

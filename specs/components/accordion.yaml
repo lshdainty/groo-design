@@ -136,7 +136,7 @@ rules:
         fontWeight: 400
         foreground: { value: $color-fg-neutral-muted, note: "흰 면 7.11 · 다크 7.70(시트 6.67)" }
       header:
-        minHeight: { value: 32px, note: "모두 펼치기의 보이는 상자와 같은 높이 — 제목과 한 줄" }
+        minHeight: { value: 36px, note: "모두 펼치기의 보이는 상자와 같은 높이 — 제목과 한 줄(2026-10-16 글자 역할 D2 — 글 버튼 36, 전 32)" }
         alignItems: center
         justifyContent: space-between
         gap: $spacing-x2
@@ -146,16 +146,14 @@ rules:
         fontWeight: 700
         foreground: $color-fg-neutral
       expandAll:
-        height: { value: 32px, note: "보이는 상자 — Card 머리 동작과 같은 모양(card.yaml headerAction)" }
-        paddingLeft: $spacing-x2
-        paddingRight: $spacing-x1
+        height: { value: 36px, note: "보이는 상자 — SEED Text Button(minHeight x9), Card 머리 동작과 같은 모양(card.yaml headerAction). 2026-10-16 사용자 결정 — 글자 역할 D2" }
+        paddingLeft: $spacing-x3_5
+        paddingRight: { value: $spacing-x3_5, note: "좌우 14 — 줄 끝에서는 오른쪽 14 만큼 바깥으로 내어 글자 끝이 머리 여백에 선다" }
         radius: $radius-r2
         typography: $text-t4
-        fontWeight: 500
-        foreground: $color-fg-neutral-subtle
-        iconSize: { value: 16px, note: "글 뒤 — 펼치기는 lucide chevrons-up-down, 접기는 chevrons-down-up" }
-        gap: { value: $spacing-x0_5, note: "글 ↔ 아이콘 — Card 머리 동작과 같다" }
-        touchTarget: { value: 44 × 44, note: "보이는 32 위아래로 6 씩 · 옆은 글 폭 + 여백. AA ✓ · AAA ✓" }
+        fontWeight: { value: 700, note: "SEED Text Button t4 · bold — 2026-10-16 사용자 결정 글자 역할 D2(전 500)" }
+        foreground: { value: $color-fg-neutral-muted, note: "SEED Text Button fg.neutral-muted — 2026-10-16 사용자 결정 글자 역할 D2(전 subtle). 아이콘은 두지 않는다(전 chevrons-up-down · chevrons-down-up 16) — 글이 \"모두 펼치기\" · \"모두 접기\" 로 바뀌며 상태를 말한다" }
+        touchTarget: { value: 44 × 44, note: "보이는 36 위아래로 4 씩 · 옆은 글 폭 + 여백. AA ✓ · AAA ✓" }
         label: { value: 모두 펼치기 · 모두 접기, note: "상세가 있는 항목이 모두 펼쳐져 있으면 \"모두 접기\" — 하나라도 접혀 있으면 \"모두 펼치기\"" }
         position: { value: 목록 머리 오른쪽, note: "시트 · 대화상자 목록 머리, 카드 머리의 오른쪽 동작 자리" }
         transitionProperty: background-color

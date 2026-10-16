@@ -182,7 +182,7 @@ Desk 폰(앱 · 웹 768 미만)의 탭 첫 화면은 오른쪽에 홈 = 검색 �
 
 ### 데스크톱 화면 제목 — 한 줄
 
-화면 제목은 머리가 아니라 본문 맨 위 `h1` 이다(`text-screen-title` 26 / 35 · 700, 머리 아래 `spacing-nav-to-title` 20). 모든 데스크톱 화면에 하나 둔다 — 홈 · 캘린더도 "홈" · "캘린더" 다(Q-018-2 정리 — 위치는 사이드바의 지금 항목과 이 제목이 알린다). 제목 줄은 한 줄이다 — 제목(설명은 그 아래 13 / 18 `fg-neutral-subtle`)이 왼쪽, 그 화면의 동작 버튼([Button](button.md) small)이 오른쪽이고 버튼은 제목 덩어리 아래 끝에 맞춘다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-018-2 A). 글이 길면 설명이 줄을 바꾸고 버튼은 그 자리에 남는다. 화면을 옮기면 초점이 이 제목으로 온다(아래 "화면을 옮길 때").
+화면 제목은 머리가 아니라 본문 맨 위 `h1` 이다(`text-screen-title` 26 / 35 · 700, 머리 아래 `spacing-nav-to-title` 20). 모든 데스크톱 화면에 하나 둔다 — 홈 · 캘린더도 "홈" · "캘린더" 다(Q-018-2 정리 — 위치는 사이드바의 지금 항목과 이 제목이 알린다). 제목 줄은 한 줄이다 — 제목(설명 — 화면 부제는 그 아래 16 / 22 · 400 · `fg-neutral-muted`, 2026-10-16 사용자 결정 글자 역할 D6)이 왼쪽, 그 화면의 동작 버튼([Button](button.md) small)이 오른쪽이고 버튼은 제목 덩어리 아래 끝에 맞춘다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-018-2 A). 글이 길면 설명이 줄을 바꾸고 버튼은 그 자리에 남는다. 화면을 옮기면 초점이 이 제목으로 온다(아래 "화면을 옮길 때").
 
 [그림: 제목 줄 — 가계부 · 설명 + 필터 · 내보내기, 768 의 긴 영어 설명](../../site/components/specs/top-navigation.tsx#screen-title-guide)
 
@@ -422,6 +422,10 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 - **z-index 는 specs/z-index.md 의 L1**(`z-sticky` 50).
 
 ## Migration notes
+
+### 2026-10-16 — 화면 부제(글자 역할 D6)
+
+사용자가 [글자 역할 비교 페이지](https://claude.ai/artifact/X9n6tDZbKSP7GeLtodtz8N)에서 화면 제목 아래 한 줄(부제)을 16 / 22 · 400 · `fg-neutral-muted` 로 정했다(D6 A — 떠 있는 표면 설명과 같은 뜻. 14 · subtle(B) · 두지 않음(C)은 고르지 않았다). Q-018-2 에서 둔 `screenDescription`(13 / 18 · subtle)을 이 값으로 바꾼다. 폰 탭 첫 화면에서 바 아래 부제를 두면 같은 값이다(DESIGN.md Typography 의 "글자 역할" R2). 옛 스펙은 `top-navigation.history/v-pre-text-roles.*`.
 
 ### 2026-10-16 — 구현 세션 질문 Q-017 · Q-018(화면 틀)
 

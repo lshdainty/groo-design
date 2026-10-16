@@ -45,7 +45,7 @@ export function LedgerHeadView({ tones, mode = 'auto', summaryOpen = false, cale
     const spent = n !== null ? SPENT[n] : undefined;
     return (
       <span key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, paddingTop: 4, paddingBottom: 4, minWidth: 0, lineHeight: '13px' }}>
-        <span style={{ display: 'grid', placeItems: 'center', width: 28, height: 28, borderRadius: 9999, fontSize: 14, lineHeight: '28px', fontWeight: 600, background: today ? c('bg-brand-solid') : 'transparent', color: today ? c('static-white') : future ? c('fg-disabled') : n === null ? 'transparent' : c('fg-neutral') }}>{n ?? ''}</span>
+        <span style={{ display: 'grid', placeItems: 'center', width: 28, height: 28, borderRadius: 9999, fontSize: 14, lineHeight: '28px', fontWeight: 700, background: today ? c('bg-brand-solid') : 'transparent', color: today ? c('static-white') : future ? c('fg-disabled') : n === null ? 'transparent' : c('fg-neutral') }}>{n ?? ''}</span>
         <span style={{ height: 13, fontSize: 9, lineHeight: '13px', color: c('fg-critical'), whiteSpace: 'nowrap', overflow: 'hidden', maxWidth: '100%', fontVariantNumeric: 'tabular-nums' }}>{spent ? Math.round(-spent / 1000).toLocaleString('ko-KR') + '천' : ''}</span>
       </span>
     );
@@ -78,7 +78,7 @@ export function LedgerHeadView({ tones, mode = 'auto', summaryOpen = false, cale
           tabIndex={live ? undefined : -1}
           onClick={live ? onSummary : undefined}
           data-ledger="summary"
-          style={{ flexShrink: 0, height: 40, paddingLeft: 14, paddingRight: 14, borderRadius: 9999, borderWidth: 1, borderStyle: 'solid', borderColor: c('stroke-neutral-weak'), background: summaryOpen ? c('bg-neutral-weak') : 'transparent', fontSize: 13, fontWeight: 600, color: c('fg-neutral'), cursor: live ? 'pointer' : 'default', ...marks?.summary }}
+          style={{ flexShrink: 0, height: 40, paddingLeft: 14, paddingRight: 14, borderRadius: 9999, borderWidth: 1, borderStyle: 'solid', borderColor: c('stroke-neutral-weak'), background: summaryOpen ? c('bg-neutral-weak') : 'transparent', fontSize: 13, fontWeight: 700, color: c('fg-neutral'), cursor: live ? 'pointer' : 'default', ...marks?.summary }}
         >
           소비 요약
         </button>
@@ -148,7 +148,7 @@ export function LedgerListView({ tones, mode = 'auto', days = LEDGER40, limit }:
               <div key={i} data-ledger-row="" style={{ display: 'flex', alignItems: 'center', gap: 12, paddingTop: 10, paddingRight: 24, paddingBottom: 10, paddingLeft: 24 }}>
                 <span aria-hidden style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, background: c(`chart-${r.hue}-weak`) }} />
                 <span style={{ flex: 1, minWidth: 0 }}>
-                  <span style={{ display: 'block', fontSize: 15, lineHeight: '21px', fontWeight: 600, color: c('fg-neutral') }}>{r.title}</span>
+                  <span style={{ display: 'block', fontSize: 15, lineHeight: '21px', fontWeight: 700, color: c('fg-neutral') }}>{r.title}</span>
                   <span style={{ display: 'block', fontSize: 12, lineHeight: '17px', color: c('fg-neutral-subtle') }}>{r.sub}</span>
                 </span>
                 <b style={{ fontSize: 15, color: c('fg-neutral'), whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>{won(r.amount)}</b>

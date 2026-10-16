@@ -23,7 +23,7 @@ function Cell({ label, sub, children }: { label: string; sub?: string; children:
 function Button({ bg, fg, style, children, w = 112 }: { bg: string; fg: string; style?: CSSProperties; children: ReactNode; w?: number }) {
   const h = specSize('button', 'medium').height;
   return (
-    <span className="relative inline-flex items-center justify-center rounded-lg text-[14px] font-semibold" style={{ width: w, height: h, background: bg, color: fg, ...style }}>
+    <span className="relative inline-flex items-center justify-center rounded-lg text-[14px] font-bold" style={{ width: w, height: h, background: bg, color: fg, ...style }}>
       {children}
     </span>
   );
@@ -70,8 +70,8 @@ export function OptionStatesFigure() {
       <div className="grid grid-cols-3 gap-4 rounded-xl bg-white px-6 pb-5 pt-6">
         <Cell label="selected" sub="반전 — 고르는 요소">
           <span className="flex gap-1.5">
-            <span className="inline-flex h-8 items-center rounded-full px-3 text-[13px] font-semibold" style={{ background: rc('bg-neutral-inverted'), color: rc('fg-neutral-inverted') }}>식비</span>
-            <span className="inline-flex h-8 items-center rounded-full px-3 text-[13px] font-semibold" style={{ background: rc('bg-neutral-weak'), color: rc('fg-neutral') }}>교통</span>
+            <span className="inline-flex h-8 items-center rounded-full px-3 text-[13px] font-bold" style={{ background: rc('bg-neutral-inverted'), color: rc('fg-neutral-inverted') }}>식비</span>
+            <span className="inline-flex h-8 items-center rounded-full px-3 text-[13px] font-bold" style={{ background: rc('bg-neutral-weak'), color: rc('fg-neutral') }}>교통</span>
           </span>
         </Cell>
         <Cell label="disabled" sub="배경 · 글자 전용 색, 불투명도 없음">
@@ -133,11 +133,11 @@ export function OverlapFigure() {
   const chip = (bg: string, fg: string, scaled: boolean) => (
     <span className="relative inline-flex" style={{ width: 64, height: 32 }}>
       {scaled && <span className="absolute inset-0 rounded-full border border-dashed" style={{ borderColor: rc('stroke-neutral-solid') }} />}
-      <span className="inline-flex h-8 w-16 items-center justify-center rounded-full text-[13px] font-semibold" style={{ background: bg, color: fg, transform: scaled ? `scale(${ratio(64, 32)})` : undefined }}>식비</span>
+      <span className="inline-flex h-8 w-16 items-center justify-center rounded-full text-[13px] font-bold" style={{ background: bg, color: fg, transform: scaled ? `scale(${ratio(64, 32)})` : undefined }}>식비</span>
     </span>
   );
   const disabledBtn = (hover: boolean) => (
-    <span className="inline-flex h-10 w-[104px] items-center justify-center rounded-lg text-[14px] font-semibold" style={{ background: hover ? rc('bg-neutral-weak-pressed') : rc('bg-disabled'), color: rc('fg-disabled') }}>
+    <span className="inline-flex h-10 w-[104px] items-center justify-center rounded-lg text-[14px] font-bold" style={{ background: hover ? rc('bg-neutral-weak-pressed') : rc('bg-disabled'), color: rc('fg-disabled') }}>
       저장
     </span>
   );

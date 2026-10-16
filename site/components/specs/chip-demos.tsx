@@ -251,7 +251,7 @@ function TxRows({ look, mode, f }: { look: ChipLook; mode: ViewMode; f: FilterSt
                 {labelOf(cat, x.cat)} · {labelOf(pay, x.pay)} · {x.month}월
               </span>
             </span>
-            <span className="text-[15px] font-semibold tabular-nums" style={{ color: t(look, 'fg-neutral', mode) }}>
+            <span className="text-[15px] font-bold tabular-nums" style={{ color: t(look, 'fg-neutral', mode) }}>
               -{comma(x.amount)}원
             </span>
           </li>

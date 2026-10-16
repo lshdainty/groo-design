@@ -169,3 +169,13 @@ export function buttonParts(brand: Brand = 'desk'): ButtonParts {
   const surface = { light: c['bg-layer-default'], dark: c['bg-layer-default-dark'] ?? c['bg-layer-default'] };
   return { colors, sizes: sizeParts, press: base.press, textPressedFg: base.textPressedFg, surface };
 }
+
+// 글 버튼(SEED Text Button) — Button ghost small 의 상자(36 · 좌우 14 · 모서리 8 · 누름 bg-layer-default-pressed)에 글자색만 바꾼다.
+// Card 머리 동작 · 모두 펼치기 · Result Section 둘째 버튼 · List Header 오른쪽 버튼(2026-10-16 글자 역할 D2). 막힘 · 로딩은 Button 그대로
+export function recolorButton(look: ButtonLook, fg: Record<Mode, string>): ButtonLook {
+  const faces = {} as ButtonLook['faces'];
+  for (const m of ['light', 'dark'] as const) {
+    faces[m] = Object.fromEntries(Object.entries(look.faces[m]).map(([st, f]) => [st, st === 'disabled' || st === 'loading' ? f : { ...f, fg: fg[m] }])) as ButtonLook['faces'][typeof m];
+  }
+  return { ...look, faces };
+}

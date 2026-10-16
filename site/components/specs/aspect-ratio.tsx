@@ -97,12 +97,12 @@ const Anatomy: Fig = ({ caption }) => {
               <VideoChild frame={v('16:9')} label="자산 연결 안내 동영상" />
             </AR>
             <span aria-hidden className="absolute flex items-center" style={{ left: '100%', top: 0, bottom: 0, marginLeft: 10, borderLeft: `2px solid ${MARK_LINE}`, paddingLeft: 4 }}>
-              <span className="rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+              <span className="rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
                 {H.toFixed(1)}
               </span>
             </span>
             <span aria-hidden className="absolute flex justify-center" style={{ left: 0, right: 0, top: '100%', marginTop: 10, borderTop: `2px solid ${MARK_LINE}`, paddingTop: 4 }}>
-              <span className="rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+              <span className="rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
                 {W}
               </span>
             </span>
@@ -133,7 +133,7 @@ const Ratio: Fig = ({ caption }) => {
           <div key={r} className="flex w-[112px] flex-col items-center gap-2">
             <AR ratio={r} width={w} zone={{ root: { outline: `1px dashed ${MARK_LINE}`, outlineOffset: 0 } }}>
               <div className="grid h-full w-full place-items-center" style={{ background: MARK }}>
-                <span className="text-[11px] font-semibold tabular-nums" style={{ color: MARK_LINE }}>
+                <span className="text-[11px] font-bold tabular-nums" style={{ color: MARK_LINE }}>
                   {r}
                 </span>
               </div>

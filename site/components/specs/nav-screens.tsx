@@ -73,7 +73,7 @@ export function Band({ style, label, vertical = false, tag = 'center' }: { style
   return (
     <span aria-hidden className="pointer-events-none absolute flex items-center justify-center" style={{ background: MARK, zIndex: 25, ...style }}>
       {label && (
-        <span className="whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE, writingMode: vertical ? 'vertical-rl' : undefined, ...t }}>
+        <span className="whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE, writingMode: vertical ? 'vertical-rl' : undefined, ...t }}>
           {label}
         </span>
       )}
@@ -129,7 +129,7 @@ export function Reading({ children, tone = 'neutral' }: { children: ReactNode; t
   const c = tone === 'ok' ? '#15803D' : tone === 'bad' ? '#B91C1C' : undefined;
   return (
     <span className="inline-flex items-center gap-1.5 rounded-md border border-fd-border bg-fd-card px-2 py-1 text-[12px] leading-4 text-fd-foreground">
-      <span aria-hidden className="text-[10px] font-semibold text-fd-muted-foreground">읽는 글</span>
+      <span aria-hidden className="text-[10px] font-bold text-fd-muted-foreground">읽는 글</span>
       <span style={{ color: c }}>{children}</span>
     </span>
   );
@@ -481,7 +481,7 @@ export function Tap({ x, y, note }: { x: number | string; y: number | string; no
     <span aria-hidden className="pointer-events-none absolute flex flex-col items-center" style={{ left: x, top: y, zIndex: 140, transform: 'translate(-50%, -50%)' }}>
       <span className="block h-9 w-9 rounded-full border-2" style={{ borderColor: MARK_LINE, background: 'rgba(219, 39, 119, 0.18)' }} />
       {note && (
-        <span className="mt-1 whitespace-nowrap rounded px-1.5 text-[11px] font-semibold leading-5 text-white" style={{ background: MARK_LINE }}>
+        <span className="mt-1 whitespace-nowrap rounded px-1.5 text-[11px] font-bold leading-5 text-white" style={{ background: MARK_LINE }}>
           {note}
         </span>
       )}
@@ -490,7 +490,7 @@ export function Tap({ x, y, note }: { x: number | string; y: number | string; no
 }
 export function Arrow({ label }: { label?: string }) {
   return (
-    <span aria-hidden className="flex shrink-0 flex-col items-center gap-1 self-center px-1 text-[11px] font-semibold pk-muted">
+    <span aria-hidden className="flex shrink-0 flex-col items-center gap-1 self-center px-1 text-[11px] font-bold pk-muted">
       <NavGlyph name="chevron-right" size={28} strokeWidth={2.5} color="currentColor" />
       {label}
     </span>

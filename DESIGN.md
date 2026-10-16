@@ -367,8 +367,8 @@ colors:
   fg-neutral-subtle-dark: "{colors.gray-700-dark}"
   fg-neutral-inverted: "{colors.gray-00}"
   fg-neutral-inverted-dark: "{colors.gray-100-dark}"
-  fg-placeholder: "{colors.gray-700}"
-  fg-placeholder-dark: "{colors.gray-700-dark}"
+  fg-placeholder: "{colors.gray-600}"
+  fg-placeholder-dark: "{colors.gray-600-dark}"
   fg-disabled: "{colors.gray-500}"
   fg-disabled-dark: "{colors.gray-600-dark}"
   static-white: "#FFFFFF"
@@ -571,7 +571,10 @@ typography:
     fontSize: 14px
     fontWeight: 400
     lineHeight: 22px
-  # 옛 15단계(v82) — 컴포넌트가 새 스케일로 옮기는 동안 값 그대로 둔다(본문 15px 은 자리마다 14 · 16 으로).
+  # 옛 15단계(v82) — 쓰지 않는다(deprecated). 컴포넌트 스펙(YAML)은 모두 t1 ~ t14 · 역할 스타일로 옮겼다(2026-10-16 확인 0곳).
+  # 걷지 못한 까닭: 아직 부르는 곳이 있다 — scripts/build-preview-html.mjs · build-site.mjs(옛 미리보기 · 사이트 HTML),
+  # scripts/build-examples-html.mjs, recipes/shadcn/components/ui/typography.tsx · examples/typography-examples.mjs,
+  # 사이트 Typography 의 "옛 이름" 표. 그곳들을 옮긴 뒤 걷는다. 새 자리에서 부르지 않는다.
   # v82 — Airbnb 태그명(display/title/body/label/caption/badge/overline) 채택,
   # 사양은 한국어 본문 가독성 우선(Pretendard, lh 본문 1.5+). 21 → 15.
   display-xl:
@@ -716,6 +719,9 @@ components:
   # === Brand-specific 컴포넌트(button-primary, button-outline-on-dark)는
   # === DESIGN.hr.md / DESIGN.desk.md로 분리 (v17)
   
+  # === 옛 이름 짝(card · page-text · input · caption-on-card · caption-tertiary-on-card · placeholder-on-input ·
+  # disabled-label · alert-text-*) — v102 의 role-* 짝이 같은 일을 새 이름으로 한다. 새 자리에서 부르지 않는다(2026-10-16).
+  # 걷지 않은 까닭: 본문의 기록 절(v11 · v13 · v53 등)과 Card 절이 이 이름을 가리킨다 — 기록 절을 정리할 때 함께 걷는다.
   # === 카드 (surface 위 primary 텍스트) ===
   card-light:
     backgroundColor: "{colors.surface-default}"
@@ -1013,11 +1019,11 @@ components:
   role-neutral-subtle-on-basement-dark:
     backgroundColor: "{colors.bg-layer-basement-dark}"
     textColor: "{colors.fg-neutral-subtle-dark}"
-  role-placeholder-on-neutral-weak-light:
-    backgroundColor: "{colors.bg-neutral-weak}"
+  # v119 — 자리 글은 SEED 처럼 gray-600(사용자 결정 2026-10-16 글자 역할 D7). 입력칸 위 3.87:1 · 다크 3.18:1 로 4.5:1 밑이라
+  # 막힘 글자(role-disabled-label)처럼 textColor 만 두어 대비 검사에서 뺀다 — 대가는 Typography "글자 역할" 절 · v102 표 비고.
+  role-placeholder-light:
     textColor: "{colors.fg-placeholder}"
-  role-placeholder-on-neutral-weak-dark:
-    backgroundColor: "{colors.bg-neutral-weak-dark}"
+  role-placeholder-dark:
     textColor: "{colors.fg-placeholder-dark}"
   role-neutral-on-default-pressed-light:
     backgroundColor: "{colors.bg-layer-default-pressed}"
@@ -1795,7 +1801,7 @@ v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `porest-tokens.css` · 
 | `fg-neutral` | gray-1000 | gray-1000 | — |
 | `fg-neutral-muted` | gray-800 | gray-800 | — |
 | `fg-neutral-subtle` | gray-700 | gray-700 | — |
-| `fg-placeholder` | gray-700 | gray-700 | gray-600 / gray-600 |
+| `fg-placeholder` | gray-600 | gray-600 | — (v119 — SEED 값으로 되돌림, 사용자 결정 2026-10-16 글자 역할 D7) |
 | `fg-disabled` | gray-500 | gray-600 | gray-500 / gray-500 (v109) |
 | `fg-neutral-inverted` | gray-00 | gray-100 | — |
 | `fg-positive-inverted` | green-800(다크 팔레트) | green-700 | — (v115, SEED 에 없음 — 스낵바 아이콘) |
@@ -1836,7 +1842,7 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 
 #### SEED 에서 옮긴 자리
 
-- fg-placeholder — SEED 600 → 700. 600 은 입력칸(bg-neutral-weak) 위에서 3.87:1(다크 3.18:1)이다.
+- (v119) fg-placeholder — v102 에서 SEED 600 → 700 으로 옮겼다가(600 은 입력칸 bg-neutral-weak 위 3.87:1 · 다크 3.18:1), 2026-10-16 사용자 결정(글자 역할 D7 B)으로 SEED 처럼 gray-600 에 되돌렸다. 자리 글이 앞뒤 글자 · 칸 아래 설명(gray-700)보다 한 단계 옅어 "아직 비었다" 가 색으로도 보인다. **대가** — 흰 면 4.18:1 · 다크 시트(bg-layer-floating) 3.58:1 로 4.5:1 밑이고(입력칸 위 3.87 · 다크 3.18), 다크 값 `#838997` 이 `fg-disabled` 다크와 같은 값이다 — 빈 칸과 막힌 칸은 글자색이 아니라 칸 바탕(`bg-disabled`) · 커서로 갈린다. 대비 짝은 막힘 글자처럼 textColor 만 둔다(`role-placeholder-*`). SEED 는 APCA 로 재고 자리 글을 AA 대상으로 보지 않는다.
 - 의미 색 글자 · 선(fg-* · stroke-*-solid)의 다크 — SEED 700 → 800. 다크 700 은 어두운 표면 위 2.9:1 안팎이다 — 흰 글자를 얹는 채움 눌림 자리라 어두워야 한다.
 - stroke-neutral-subtle — SEED 는 투명도 있는 검정 · 흰색이다. 검사기가 8자리 hex 를 받지 않아 gray-300 에 둔다.
 - (v118) stroke-neutral-overlay — SEED stroke.neutral-subtle 의 투명한 값(검정 4.7% · 흰 5%)을 이미지 · 아바타 · 로고 타일 위 1px 윤곽에만 쓰는 역할로 따로 둔다. porest 의 stroke-neutral-subtle 은 구분선 · 목록 선이라 불투명 그대로다 — 같은 이름에 두 값을 둘 수 없어 이름을 나눴다. 이름의 overlay 는 "내용 위에 얹는"(SEED bg.overlay 와 같은 뜻)이다 — 굵기 단계(subtle · weak · solid · contrast)가 아니라 자리를 말한다. 불투명한 선을 그림 둘레에 그리면 어두운 사진 · 카드 둘레에 옅은 테가 생긴다(사용자 결정 2026-10-04 이미지 비교 1A). 검사기(`@google/design.md`)를 0.4 로 올려 8자리 hex 를 받는다 — 위 줄의 "받지 않아" 는 0.1 때 이유다.
@@ -1879,17 +1885,17 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 
 | 역할 | 라이트 | 다크 | 옛 이름 | Desk 웹 이름 |
 |---|---|---|---|---|
-| `fg-neutral` | `#1A1F2E` | `#F5F6FA` | text-primary | fg-primary |
+| `fg-neutral` | `#1A1F2E` | `#F5F6FA` | text-primary | fg-primary · fg-expense · fg-transfer |
 | `fg-neutral-muted` | `#535866` | `#B7BDCC` | text-secondary | fg-secondary |
 | `fg-neutral-subtle` | `#62697A` | `#A2A8B7` | text-tertiary | fg-tertiary |
 | `fg-neutral-inverted` | `#FFFFFF` | `#242938` | — | — |
-| `fg-placeholder` | `#62697A` | `#A2A8B7` | — | fg-placeholder |
+| `fg-placeholder` | `#767C8B` | `#838997` | — | fg-placeholder |
 | `fg-disabled` | `#8A91A0` | `#838997` | text-disabled | fg-disabled |
 | `static-white` | `#FFFFFF` | — | text-on-accent | fg-on-brand · fg-on-danger · fg-on-success |
-| `fg-critical` | `#D72323` | `#FF8477` | error · error-light | status-danger-fg · fg-expense |
+| `fg-critical` | `#D72323` | `#FF8477` | error · error-light | status-danger-fg |
 | `fg-positive` | `#167F3F` | `#25C062` | success · success-light | status-success-fg |
 | `fg-warning` | `#BE490D` | `#FF8758` | warning · warning-light | status-warning-fg |
-| `fg-informative` | `#1D6EC9` | `#69ABFF` | info · info-light | status-info-fg · fg-transfer |
+| `fg-informative` | `#1D6EC9` | `#69ABFF` | info · info-light | status-info-fg |
 | `fg-critical-contrast` | `#C01016` | `#FFBCB3` | — | — |
 | `fg-positive-contrast` | `#026E33` | `#AED6B6` | — | — |
 | `fg-warning-contrast` | `#A53E0A` | `#F9BFA9` | — | — |
@@ -2355,7 +2361,7 @@ v7 (brand light variants) · v14 (brand refresh + temporary bg-page fork) · v16
 
 ## Typography
 
-한국어 본문 가독성 우선. Pretendard를 기본 패밀리, 영문 fallback Inter. v82에서 21 토큰을 15로 정리 — Airbnb 태그 명명 컨벤션(`display`/`title`/`body`/`label`/`caption`/`badge`/`overline`)을 채택, 사양은 한국어 본문 가독성을 기준으로 재정의.
+한국어 본문 가독성 우선. Pretendard를 기본 패밀리, 영문 fallback Inter. 크기 · 줄 높이 · 굵기는 v100(SEED t1 ~ t14 + 역할 스타일 셋), 자리마다 어느 크기 · 굵기 · 색을 쓰는지는 아래 "글자 역할"(2026-10-16)이 정한다. v82 의 15단계는 기록이다.
 
 ### v100 — SEED 타입 스케일 (2026-09-29)
 
@@ -2388,7 +2394,7 @@ v7 (brand light variants) · v14 (brand refresh + temporary bg-page fork) · v16
 
 - **굵기**: 토큰의 굵기는 400 이다. 강조는 `font-medium`(500) · `font-bold`(700) 인라인 modifier 로 준다 — SEED 의 t5Medium · t5Bold 와 같다. 600 은 쓰지 않는다. 옛 title-md · badge 가 쓰던 600 은 옮길 때 500 이나 700 으로 정한다.
 - **줄 높이**: UI 글자는 SEED 값(×1.35 안팎), 긴 글은 article-body · article-note(×1.5 안팎). v82 의 "한국어 본문 줄 높이 1.5+" 는 이제 긴 글에만 적용한다.
-- **옛 15단계**(아래 v82)는 값 그대로 둔다. 컴포넌트는 2단계에서 SEED 와 하나씩 비교할 때 옮긴다. 본문 body-md(15px)는 자리마다 다르게 옮긴다 — 긴 글은 16(article-body), UI 는 14(t4).
+- **옛 15단계**(아래 v82 — 기록)는 쓰지 않는다. 컴포넌트 스펙은 모두 새 스케일로 옮겼고(2026-10-16 확인 — YAML 에 옛 이름 0), 머리말의 값은 아직 부르는 스크립트 · 레시피(옛 미리보기 · 사이트 HTML 생성기, `typography.tsx`)를 옮길 때까지만 둔다. 본문 body-md(15px)는 자리마다 옮겼다 — 긴 글은 16(article-body), UI 는 14(t4) · 16(t5).
 - **옛 이름 → 가까운 새 이름**(옮길 때 참고): display-lg → t13 · display-md → t12 · display-sm → t9 · title-lg → t7 + bold · title-md → t6 + 500 또는 700 · title-sm → t5 + medium · body-lg → t5 또는 article-body · body-md → 자리마다 t4 · t5 · article-body · body-sm → t4 · label-md → t4 + medium · label-sm → t3 · caption → t2 · badge → t1 + 500 또는 700. display-xl(56px) · overline(10px)은 SEED 범위 밖이고 스펙에서 쓰는 곳이 없어 걷을 후보다.
 - **단위(v104)**: 값은 여기 px 로 적고, 웹에는 rem(÷16)으로 내보낸다 — 사용자의 글자 크기 설정을 따른다. 커지면 깨지는 자리(배지 · 탭 라벨 · 좁은 칸의 숫자)는 `-static`(px 그대로)을 쓴다(text-t5-static 처럼 — 내보낼 때 생긴다). 앱은 OS 글자 크기를 따르고(Flutter 기본), 같은 자리만 `TextScaler.noScaling` 으로 고정한다. SEED 의 rem · static 두 벌과 같다 — 사용자 결정(2026-09-29).
 - 사용자 결정(2026-09-29 — 글자 A: SEED 스케일 그대로, 본문 15px 은 자리마다). "한 번에 토큰 5개" 규칙의 예외다.
@@ -2419,7 +2425,46 @@ html {
 - 당근(SEED)은 전역 규칙 없이 읽는 글(게시글 본문 · 시트 · 패널 제목 · 도움말 말풍선)만 단어 단위이고, 컴포넌트 라벨 · 설명은 글자 단위다(daangn.com CSS · SEED 레시피, 2026-10-01). porest 는 컴포넌트 라벨 · 설명까지 단어 단위로 한다 — 사용자 결정(2026-10-01).
 - 제품은 앱 적용 단계에서 옮긴다 — Desk 웹은 4곳(카드 혜택 2 · 일정 상세 2)에만 손으로 `keep-all` 을 걸었고 HR 웹 · Desk 앱은 없다. 전역 규칙을 걸고 그 4곳은 걷는다.
 
-### v82 — 15단계 타입 스케일 (v100 에서 SEED 스케일로 옮기는 중 — 값은 그대로)
+### 글자 역할 (2026-10-16)
+
+v100 은 크기 · 줄 높이 · 굵기의 토큰을 정했고, v102 는 글자색의 이름을 정했다. 이 절은 그 둘을 **자리마다 어떻게 묶어 쓰는지**를 정한다 — 컴포넌트 스펙의 글자 부위 148곳(60 컴포넌트)을 뜻으로 묶은 열아홉 역할이다. 값 대부분은 SEED 컴포넌트 값을 옮긴 것이고(묶음마다 "SEED 구조 그대로" 를 고른 비교 페이지), SEED 에 짝이 없던 자리와 규칙이 없던 자리는 사용자가 정했다(2026-10-16 글자 역할 비교 페이지 https://claude.ai/artifact/X9n6tDZbKSP7GeLtodtz8N — D1 ~ D7). 새 자리를 그릴 때는 이 표에서 역할을 고르고, 표에 없는 (크기 · 굵기 · 색) 조합을 새로 만들지 않는다.
+
+| 역할 | 글자 · 굵기 · 색 | 쓰는 자리 | 출처 |
+|---|---|---|---|
+| R1 화면 제목 | 데스크톱 `text-screen-title` 26/35 · 700 · `fg-neutral` / 폰 탭 첫 화면 t8 · 700 / 폰 들어간 화면 t6 · 700 | 데스크톱 본문 맨 위 h1 · 폰 상단 바. 폰 바 제목은 글자 크기 설정 1.2배까지 | 사용자 결정(화면 틀 2026-10-04) |
+| R2 화면 부제 | t5 · 400 · `fg-neutral-muted` | 데스크톱 화면 제목 아래 · 폰 탭 첫 화면 바 아래 한 줄 | 사용자 결정 D6 |
+| R3 떠 있는 표면 제목 | t8(시트 · 대화상자 · 옆 패널) / t7(팝오버 · 확인창) / t6(메뉴 시트) · 700 · `fg-neutral` | Bottom Sheet · Dialog · Side Panel · Popover · Alert Dialog · Menu Sheet — 표면이 클수록 크다 | SEED 값 |
+| R4 구역 · 카드 · 목록 머리 제목 | t5 · 700 · `fg-neutral` | Card 머리 · 아코디언 목록 머리 · 페이지 안 카드 밖 구역 제목(데스크톱 h2) · 나무 패널 머리 | 사용자 결정(Card 6B · D3) |
+| R5 묶음 이름 | 큰 목록 t4 · 500 · `fg-neutral-subtle` / 작은 목록 · 메뉴 t3 · 400 · `fg-neutral-subtle` / 사이드바 묶음 t4 · 700 · `fg-neutral-muted` / 푸터 열 제목 t3 · 500 · `fg-neutral-muted` | List Header mediumWeak · Select · Icon Picker / Menu · Select medium / Side Navigation / Footer | SEED 값(사이드바 · 푸터는 SEED 레시피 · 블록 값 — 사용자 결정 D4) |
+| R6 줄 제목 | 목록 t5 · 400 · `fg-neutral` / 메뉴 · 표 · 나무 t4 · 400 / 고르는 상자 · 여닫는 머리 t5 · 500 / 사이드바 항목 t4 · 500 · `fg-neutral-muted` | List · Menu · Table · Tree View / Select Box · Accordion · Collapsible · Switch / Side Navigation | SEED 값 · 사용자 결정(List 400 · Select Box 500) |
+| R7 표면 머리 설명 | 시트 · 대화상자 · 옆 패널 · 결과 t5 · 400 · `fg-neutral-muted` / 팝오버 · 메뉴 시트 t4 · 400 · `fg-neutral-muted` | 떠 있는 표면 · Result Section 머리. Select Box 설명(t3)도 muted | SEED 값 |
+| R8 확인창 설명 | t5 · 400 · `fg-neutral` | Alert Dialog 만 — 꼭 읽어야 할 말 | SEED 값 |
+| R9 줄 · 칸 안 설명 · 메타 | 줄 t3 · 400 · `fg-neutral-subtle` / 칸 t4 / 작은 메뉴 t2 | List 설명 · Tag Group · Field 설명 · Menu 설명 · 표 둘째 줄. 강조 · 누름 바탕 위에서만 muted | SEED 값 · 사용자 결정(강조 줄 2026-10-01) |
+| R10 보조 숫자 · 축 · 단위 · 캡션 | 차트 축 t1 · 400 · `fg-neutral-subtle` / 툴팁 머리 t2 / 지표 라벨 t3 · 500 / 범례 이름 · 툴팁 줄 이름 · 색 칸 이름 t3(색 칸 t2) · 400 | Chart · Card 지표 라벨 · 파일 크기 · 증감 기준 글 · Color Swatch | 사용자 결정 D5 |
+| R11 긴 글 본문 · 보조 | `text-article-body` 16/24 · 400 · `fg-neutral` / `text-article-note` 14/22 · 400 · `fg-neutral-muted` | 공지 · 약관 · 혜택 상세(Accordion 본문) · 메모 본문 | v100 |
+| R12 값 | 큰 칸 t5 · 400 · `fg-neutral` / 작은 칸 t4 / 막힌 칸 `fg-disabled` | Input · Select · Input Button · Textarea | SEED 값 |
+| R13 금액 · 큰 숫자 | 줄 금액 t5 · 700 · `fg-neutral`(수입만 브랜드 파일의 fg-brand) / 지표 카드 t9(데스크톱 격자 t7) · 700 · `fg-neutral` / 순자산 t12 · 700 · `static-white` | 거래 줄 · 상세 · 합계 · 지표 카드 · 도넛 가운데. 고정폭 숫자 · 빼기 U+2212 · 원까지 | 크기는 기존 값, 색은 사용자 결정 D1 |
+| R14 증감 | t3 · 500 · ▲ `fg-critical` / ▼ `fg-informative` / 그대로 `fg-neutral-subtle` | Card 증감 · 통계 · 증권 · 예산. 브랜드 채움 위는 `static-white` | 사용자 결정(2026-10-08) |
+| R15 버튼 글 | Button t3 ~ t6 · 700 / Chip t4 · 500 / 탭 · Segmented 700(쉬는 탭 `fg-neutral-subtle`) / 하단 탭 t1-static · 500 | Button · Chip · Tabs · Segmented Control · Bottom Navigation — 글자만, 색은 변형이 정한다 | SEED 값 |
+| R16 글 버튼 | t4 · 700 · `fg-neutral-muted` — SEED Text Button | Card 머리 동작("전체 보기") · 아코디언 "모두 펼치기" · Result Section 둘째 버튼 · List Header 오른쪽 버튼 | 사용자 결정 D2 |
+| R17 링크 | 글 안 링크 t4 · 400 · `fg-neutral` · 밑줄 / 푸터 사이트맵 t5 · 500 · `fg-neutral` / 푸터 정책 t4 · 500 · `fg-neutral-muted`(밑줄 없음) | Callout 링크 · Footer | SEED 값 |
+| R18 칸 라벨 | t5 · 500(굵게 700) · `fg-neutral` | Field 라벨 — "라벨" 은 이 뜻 하나로 부른다(지표 라벨은 R10, 진행 막대 이름은 R6) | SEED 값 |
+| R19 오류 · 자리 글 · 막힘 | 오류 t4 · 400 · `fg-critical`(+ 아이콘) / 자리 글 t5(작은 칸 t4) · 400 · `fg-placeholder` / 막힘 `fg-disabled` | Field 오류 · 입력칸 placeholder · 막힌 컨트롤. 도움말은 R9 | SEED 값 · 사용자 결정 D7 |
+
+표에 없는 크기 — Button 은 크기마다 t3 ~ t6, 하단 탭 이름 t1-static 11/15 · 500, 순자산 t12 32/42 · 700, 열지도 칸 t1 · 700. 굵기는 400 · 500 · 700 셋이고 600 은 없다(v100).
+
+- **muted 와 subtle(D5)** — `fg-neutral-subtle` 은 덧붙인 정보(축 · 시각 · 단위 · 범례 이름 · 메타 줄), `fg-neutral-muted` 는 문장으로 된 보조 글(떠 있는 표면 설명 · "더 불러오지 못했어요." 같은 상태 문구 · 긴 글 보조)이다. 같은 차트 안의 글자(축 · 툴팁 머리 · 범례 이름 · 툴팁 줄 이름)는 모두 subtle 한 색이다. 흰 면 위 muted 7.11 · subtle 5.50 이라 눈으로 잘 갈리지 않는다 — 고를 때 값이 아니라 이 규칙으로 고른다. SEED 에는 이 지침이 없고(색 이름 설명뿐), 규칙은 SEED 컴포넌트 값에서 읽었다.
+- **금액 색(D1)** — 지출 · 이체 금액은 `fg-neutral`, 수입만 fg-brand("+" 부호와 함께)다. 빨강(`fg-critical`)은 증감(▲ 올랐다) 한 뜻으로만 쓰고, 금액을 빨갛게 칠하지 않는다 — 거래 종류는 부호 · 아이콘 타일 · 배지가 말한다. **대가**(Desk) — 파랑이 둘이다(수입 fg-brand · ▼ 내림 `fg-informative`). 라이트는 #0147AD · #1D6EC9(서로 1.65:1)로 갈리지만 다크는 #7AA9F6 · #69ABFF 로 **1.00:1** — 다크 통계 화면에서 수입 금액과 ▼ 증감이 같은 색으로 보인다.
+- **구역 제목(D3)** — 페이지 안 카드 밖 구역 제목(데스크톱 h2 — "자산" 화면의 "입출금 · 저축" 같은)은 카드 머리와 같은 t5 · 700 · `fg-neutral` 한 벌이다. 위계는 크기가 아니라 자리(바닥 위 · 카드 밖)와 여백이 말한다 — 화면 제목 26 → 구역 16 → 카드 머리 16 → 카드 안 목록 제목 14. 나무 패널 머리도 t5 다(전 t6). 폼 안 묶음 제목(Fieldset)은 그대로 List Header 다(`specs/components/field.md`).
+- **화면 부제(D6)** — 화면 제목 아래 한 줄은 t5 · 400 · `fg-neutral-muted` 다(바닥 위 6.58:1 · 다크 8.73:1). 떠 있는 표면 설명(R7)과 같은 뜻이다. 길면 줄을 바꾼다 — 폰에서는 바 아래 한 줄을 더 차지한다.
+- **글 버튼(D2)** — SEED Text Button 값 그대로다: 글 t4 · 700 · `fg-neutral-muted`, 보이는 높이 36(`spacing-x9`) · 좌우 14(`spacing-x3_5`) · 위아래 8 · 모서리 8(`radius-r2`), 누름 바탕 `bg-layer-default-pressed`, 아이콘 · 꺾쇠 없음. 누르는 영역은 44 × 44(보이는 36 위아래로 4 씩 — WCAG 2.5.5 AAA ✓ · 2.5.8 AA ✓). 줄 끝에 둘 때는 오른쪽 여백만큼 바깥으로 내어(−14) 글자가 줄 끝 글자와 맞게 한다. 2026-10-08 Card 머리 동작 6B(14 · 500 · `fg-neutral-subtle` · 32 + 꺾쇠 16)를 사용자가 이 값으로 바꿨다. 상단 바 글 버튼(t5 · 500) · 스낵바 동작 · 페이지 배너 버튼 · 첨부 다시 시도 · 메뉴 시트 닫기는 SEED 가 각자 정한 값이라 이 역할에 들지 않는다.
+- **자리 글(D7)** — `fg-placeholder` 는 SEED 처럼 gray-600 이다(v119 — v102 의 gray-700 을 바꿨다). 앞뒤 글자 · 칸 아래 설명(`fg-neutral-subtle`, gray-700)보다 한 단계 옅어 빈 칸이 색으로도 보인다. **대가** — 흰 면 4.18:1 · 다크 시트 3.58:1 로 4.5:1 밑이고, 다크 값(#838997)이 `fg-disabled` 다크와 같다. 빈 칸과 막힌 칸은 칸 바탕(`bg-disabled`)과 커서로 갈린다.
+- **묶음 이름(D4)** — 사이드바 묶음(t4 · 700 · muted)과 푸터 열 제목(t3 · 500 · muted)은 List Header 규칙(subtle)과 다르지만 SEED 레시피(`side-navigation.css`) · 블록(footer-04) 값 그대로 둔다.
+- **500 을 쓰는 줄 제목** — 고르는 상자 · 여닫는 머리 · 내비 항목 · 스위치 라벨만 500 이다. 나머지 줄 제목은 400 이고, 굵기는 목록 제목 · 금액에 남긴다.
+
+### v82 — 15단계 타입 스케일 (기록 — 지금 스케일은 위 v100, 자리마다 쓰는 값은 위 "글자 역할")
+
+> 기록이다 — 아래는 v82 때 적은 그대로다. body-md 15 "기본 본문" · 600(`font-semibold`) 강조 · display-xl hero 는 지금 쓰지 않는다. 지금 규칙은 v100(600 없음 · 큰 제목 t11 ~ t14) 과 "글자 역할" 이다.
 
 | 토큰 | size | weight | lh | letter-spacing | 주 용도 |
 |---|---|---|---|---|---|
@@ -3828,7 +3873,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 
 덧그린 2px 의 색만 `motion-duration-d2` (100ms) · `motion-ease-easing` 로 바뀐다 — 두께는 바로 바뀐다(SEED).
 
-대비(라이트 · 다크, `bg-layer-default` 위): 값 16.41 · 13.42, placeholder · 앞뒤 글자 5.50 · 6.09, 포커스 테두리 16.41 · 13.42, 오류 테두리 5.06 · 6.08. 1px `stroke-neutral-weak`(1.23 · 1.56)는 칸을 알리는 유일한 표시가 아니다 — 라벨 · placeholder 가 함께 알린다(SEED 와 같다). lint 대비 쌍 `input-light` · `input-dark`(본문 × `surface-input`)는 읽기 전용 칸(값 × `bg-disabled` — 같은 색)을 잰다.
+대비(라이트 · 다크, `bg-layer-default` 위): 값 16.41 · 13.42, 앞뒤 글자 5.50 · 6.09, placeholder 4.18 · 4.13(v119 — 4.5:1 밑, 사용자 결정 2026-10-16 글자 역할 D7), 포커스 테두리 16.41 · 13.42, 오류 테두리 5.06 · 6.08. 1px `stroke-neutral-weak`(1.23 · 1.56)는 칸을 알리는 유일한 표시가 아니다 — 라벨 · placeholder 가 함께 알린다(SEED 와 같다). lint 대비 쌍 `input-light` · `input-dark`(본문 × `surface-input`)는 읽기 전용 칸(값 × `bg-disabled` — 같은 색)을 잰다.
 
 #### 크기
 
@@ -3918,7 +3963,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 | 모서리 | 16(`radius-r4`) — 카드 안 목록의 누름 바탕은 10(동심 모서리) |
 | 여백 | 24(`spacing-x6`) — 폭과 상관없이. List 줄 · Bottom Sheet 와 같은 값이다(카드 24 = 줄 24 = 시트 24). 목록 카드는 좌우 0 — 줄이 제 좌우 24 를 갖고, 머리 위 · 좌우 24, 카드 아래 12(줄 12 와 합쳐 24) |
 | 카드 사이 | 위아래로 쌓으면 8(`spacing-x2` — SEED "8px Gap"), 데스크톱 격자 칸 사이는 `layout-gutter` 24 |
-| 머리 | 제목 16 / 22 · 700 · `fg-neutral` + 오른쪽 동작 하나("전체 보기" 14 · 500 · `fg-neutral-subtle` + chevron 16, 누르는 영역 44) |
+| 머리 | 제목 16 / 22 · 700 · `fg-neutral` + 오른쪽 동작 하나("전체 보기" — 글 버튼: 14 · 700 · `fg-neutral-muted` · 보이는 36 · 꺾쇠 없음, 누르는 영역 44. Typography 의 "글자 역할" R16 — 2026-10-16 사용자 결정 D2 로 6B 의 14 · 500 · subtle + 꺾쇠를 바꿨다) |
 | 누름 | 면 `bg-layer-default-pressed` + 2px 거리 축소 — 안에 대등한 동작이 있으면 색만(SEED Feedback). 그림자 상승 · 위로 뜨기 없음 |
 | 지표 카드 | 라벨 13 · 500 · `fg-neutral-subtle` · 숫자 24(데스크톱 격자에 셋 · 넷씩이면 20) · 700 · 고정폭 숫자 · 증감 줄(Colors 의 "증감 — 방향 색") — 폰은 한 줄에 하나, 숫자 굴림 애니메이션 없음 |
 | 순자산 카드 | Desk 홈 · 자산 한 자리 — 브랜드 채움 135° + 흰 글자, 다크도 짙은 채움 · 증감도 흰 ▲ · ▼(Desk 파일의 Card 절) |
@@ -3930,60 +3975,11 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 
 ### Page text
 
-`bg-page` 위에 직접 놓이는 본문 텍스트 — 카드 외곽 영역(layout 본문, 빈 영역 등). 사이드바는 2026-10-04 부터 흰 면(`bg-layer-default`) 위다.
-
-#### Mode pair
-- **page-text-light** (`page-text-light`): `bg-page` (`#F5F6FA`) + `text-primary` (`#1A1F2E`)
-- **page-text-dark** (`page-text-dark`): `bg-page-dark` (`#1A1F2E`) + `text-primary-dark` (`#F5F6FA`)
-
-contrast 확인:
-- light: `#1A1F2E` × `#F5F6FA` = **15.04:1** ✅ AAA
-- dark: `#F5F6FA` × `#1A1F2E` = **15.04:1** ✅ AAA
-
-#### Typography 적용
-- 본문: `body-md` (15/400/1.6)
-- 강조: `body-md` (15/600/1.6)
-- 보조 본문: `caption` (12/400/1.5) — `text-secondary` 또는 `text-tertiary` 색상 권장
-- 헤딩 위계: `title-sm`(16) → `title-sm`(18) → `display-sm`(24) → `title-md`(32)
-
-#### Layout
-- 본문 줄간격은 typography token의 `lineHeight` 1.6에서 처리
-- 단락 간 `md` (12px) 또는 `lg` (16px)
-- 본문 max-width: 640~720px (한국어 기준 1줄 35~45자) — 가독성 우선
-
-#### A11y
-- 1.4.3: 본문 텍스트 4.5:1 — 위 contrast 충족
-- 1.4.12 text spacing: `lineHeight` 1.5 이상 (현 1.6 OK), letter-spacing 자유 조정 가능 디자인
-- 1.4.4 resize: 200% 확대 시 가로 스크롤 없이 reflow 가능해야 — max-width + responsive
+> 기록 — 기준은 Typography 의 "글자 역할"(2026-10-16)이다: 화면 제목 R1 · 화면 부제 R2 · 구역 제목 R4 · 긴 글 R11. 옛 내용(body-md 15 · 600 강조 · title-sm ~ title-md 헤딩 위계)은 `DESIGN.history/v119-text-roles.md` 에 있다.
 
 ### Caption
 
-`surface-default` (카드) 위에 놓이는 보조 텍스트 — meta 정보, 타임스탬프, 부가 설명. 위계 2단계 (secondary / tertiary).
-
-#### 위계 / Mode pair
-| Token | 배경 | text | contrast |
-|---|---|---|---|
-| `caption-on-card-light` | `surface-default` (`#FFFFFF`) | `text-secondary` (`#535866`) | **6.78:1** ✅ |
-| `caption-on-card-dark` | `surface-default-dark` (`#242938`) | `text-secondary-dark` (`#B7BDCC`) | **6.85:1** ✅ |
-| `caption-tertiary-on-card-light` | `surface-default` | `text-tertiary` (`#62697A`) | **5.36:1** ✅ |
-| `caption-tertiary-on-card-dark` | `surface-default-dark` | `text-tertiary-dark` (`#A2A8B7`) | **5.13:1** ✅ |
-
-**위계 규칙**:
-- **secondary** (caption): 일반 보조 텍스트(닉네임, 카테고리, 카드 부제) — 본문보다 한 단계 약하지만 정보로서 의미 있음
-- **tertiary** (caption-tertiary): 부가 메타(타임스탬프, "방금", "수정됨" 등) — 정보 우선순위 가장 낮음, hint 톤
-- 둘 다 본문 4.5:1 통과 — 1.4.3 incidental 예외 없이 정상 본문
-
-#### Typography 적용
-- text: `caption` (12/400/1.5)
-- 강조 caption은 `caption-strong`(가칭, 미정) 또는 inline `body-lg` 활용 — 향후 토큰화 후보
-
-#### Layout
-- 본문 텍스트와 `xs` (4px) 간격
-- 메타 줄(예: 닉네임 · 시간, 분류 · 자산 · 시각)은 Tag Group 이다(2026-10-03 SEED — `specs/components/tag-group.md`) — 항목 사이 " · " 글자(앞 항목에 붙는다), 기본 12/16 `fg-neutral-subtle`, 구분 `fg-disabled`. 2px 점 · "•" 를 쓰지 않는다
-
-#### A11y
-- semantic HTML: 메타 정보는 `<small>` 또는 `<span>` 클래스로
-- 타임스탬프는 `<time datetime="...">` 사용 (스크린 리더 + 검색엔진 친화)
+> 기록 — 기준은 Typography 의 "글자 역할"(2026-10-16)이다: 줄 · 칸 안 설명 · 메타는 R9(`fg-neutral-subtle` 한 색 — 메타 줄은 Tag Group, `specs/components/tag-group.md`), 축 · 단위 · 범례 같은 덧붙인 정보는 R10. 옛 secondary / tertiary 위계(카테고리 muted · 시각 subtle)는 쓰지 않는다 — `DESIGN.history/v119-text-roles.md`.
 
 ### Badge · Notification Badge · Tag Group
 
@@ -4025,47 +4021,7 @@ contrast 확인:
 
 ### Alert text
 
-surface 위 inline 상태 텍스트 — form validation error, status notification, 변경 사항 안내. icon + text 조합 권장.
-
-#### Variant (semantic 4 × 2 mode)
-**Light surface (`surface-default` 위)**:
-| Token | text | contrast |
-|---|---|---|
-| `alert-text-success` | `success` (`#167F3F`) | **5.07:1** ✅ |
-| `alert-text-error` | `error` (`#D72323`) | **5.06:1** ✅ |
-| `alert-text-warning` | `warning` (`#BE490D`) | **5.06:1** ✅ |
-| `alert-text-info` | `info` (`#1D6EC9`) | **5.09:1** ✅ |
-
-**Dark surface (`surface-default-dark` 위)** — `*-light` semantic 사용:
-| Token | text | contrast |
-|---|---|---|
-| `alert-text-success-on-dark` | `success-light` (`#25C062`) | **6.07:1** ✅ |
-| `alert-text-error-on-dark` | `error-light` (`#FF8477`) | **6.08:1** ✅ |
-| `alert-text-warning-on-dark` | `warning-light` (`#FF8758`) | **6.11:1** ✅ |
-| `alert-text-info-on-dark` | `info-light` (`#69ABFF`) | **6.12:1** ✅ |
-
-모두 본문 4.5:1 통과 — 1.4.3 통과.
-
-#### Typography
-- 본문 길이 alert: `body-md` (15/400/1.6)
-- inline form helper: `caption` (12/400/1.5)
-- alert 제목 (있을 시): `body-md` (15/600)
-
-#### Layout
-- icon + text 페어: icon `xs` (4px) 간격, icon size 16~20px (text height에 맞춤)
-- alert 영역 padding: `sm` (8px) ~ `md` (12px)
-- 여러 alert 누적 시 `xs` 간격 + 시각적 grouping
-
-#### Motion
-- 등장: `motion-duration-base` × `motion-ease-out` (slide-in + fade)
-- dismiss/사라짐: `motion-duration-fast` × `motion-ease-out` (fade out)
-- `prefers-reduced-motion: reduce` 시 즉시 표시
-
-#### Accessibility
-- [ ] 1.4.1: 색상에만 의존 금지 — 아이콘(`✓`/`!`/`⚠`/`ℹ`) + 텍스트 항상 동반
-- [ ] aria-live: 동적 alert는 `role="alert"` (assertive) 또는 `aria-live="polite"`. error는 `assertive`, info는 `polite` 권장
-- [ ] form validation: input의 `aria-describedby="error-id"`로 alert text 연결
-- [ ] dismissable alert는 `<button aria-label="알림 닫기">` 동반
+> 기록 — 기준은 Callout(`specs/components/callout.md` — 2026-10-02, 본문 t4 · 제목 700 · 톤 contrast 색)과 Field 오류(Typography 의 "글자 역할" R19 — t4 · `fg-critical` + 아이콘)다. 옛 alert-text 짝 · body-md 15 · 600 제목은 `DESIGN.history/v119-text-roles.md` 에 있다.
 
 ### Focus ring
 
@@ -4075,7 +4031,7 @@ surface 위 inline 상태 텍스트 — form validation error, status notificati
 - **focus-ring-on-light** (`focus-ring-on-light`): 라이트 표면 위 focus
 - **focus-ring-on-dark** (`focus-ring-on-dark`): 다크 표면 위 focus
 
-(brand 파일에서 실제 색상 정의 — `focus-ring-on-light` → `border-focus`, `focus-ring-on-dark` → `border-focus-light`로 매핑.)
+(색은 역할 색 `stroke-focus-ring` 하나다(v102) — 라이트 · 다크 값은 brand 파일의 v102 표. 옛 `border-focus` · `border-focus-light` 는 같은 값의 별칭이다.)
 
 #### Spec
 - **두께**: 2px outline (1px은 시인성 부족)
@@ -4092,12 +4048,8 @@ surface 위 inline 상태 텍스트 — form validation error, status notificati
 #### 사용 예시 (CSS 의사코드)
 ```css
 .button:focus-visible {
-  outline: 2px solid var(--color-border-focus);
+  outline: 2px solid var(--color-stroke-focus-ring); /* 다크 값은 다크 블록이 바꾼다 */
   outline-offset: 2px;
-  border-radius: var(--radius-sm); /* 동일 라운드 */
-}
-.button-on-dark:focus-visible {
-  outline-color: var(--color-border-focus-light);
 }
 ```
 
@@ -4113,7 +4065,7 @@ surface 위 inline 상태 텍스트 — form validation error, status notificati
 - [ ] 2.4.11: 모든 컴포넌트의 focus state는 `focus-ring-on-{light,dark}` 토큰 사용
 - [ ] `focus-visible`만 사용 — 마우스 사용자 방해 없음 (`:focus`로 일관 적용 시 클릭 후에도 ring 표시되어 산만)
 - [ ] 2.4.12: focus 가려짐 방지 — sticky header 아래 focus 받으면 자동 scroll 보강 (`scroll-margin-top: <header height>`)
-- [ ] 다크 모드 자동 전환: `[data-theme="dark"]` 또는 `prefers-color-scheme: dark`로 `--color-border-focus-light` 자동 적용
+- [ ] 다크 모드 자동 전환: `[data-theme="dark"]` 또는 `prefers-color-scheme: dark` 블록이 `--color-stroke-focus-ring` 을 다크 값으로 바꾼다
 
 ### Divider
 
@@ -4183,17 +4135,16 @@ WCAG 1.4.3 (Contrast Minimum)의 명시적 예외:
 #### Spec
 - text color: `text-disabled` / `text-disabled-dark`
 - 추가 시각(v106): 불투명도를 쓰지 않는다 — 배경이 있으면 `bg-disabled`, 테두리는 `stroke-neutral-weak`, cursor:not-allowed (State 절)
-- 컴포넌트 외곽선/배경은 default 유지 — text만 disabled 색상
 
 #### Layout
-- disabled 컴포넌트 그룹의 인접 텍스트(예: "비활성화됨" 부가 설명)는 `caption` (12/400) + `text-tertiary` 조합으로 정상 contrast(4.5:1) 유지 — 이 부가 설명은 incidental 예외 비대상
+- disabled 컴포넌트 옆의 이유 글(예: "비활성화됨" 부가 설명)은 Field 설명과 같은 t4 · 400 · `fg-neutral-subtle`(Typography 의 "글자 역할" R9)로 4.5:1 을 지킨다 — 이 글은 incidental 예외 비대상
 
 #### Accessibility
 - [ ] 1.4.3 incidental 예외 — text 자체 contrast는 비대상
 - [ ] **그러나** 시각적 비활성 표현 보강 필수: 전용 색(`bg-disabled` · `fg-disabled` · `stroke-neutral-weak`) + cursor:not-allowed (v106 — 불투명도 0.5 는 걷음)
 - [ ] aria: `disabled` HTML 속성 (form 제어) 또는 `aria-disabled="true"` (focus 가능, 메뉴 아이템 등)
 - [ ] screen reader가 "비활성화됨"이라고 읽음 — 시각적 강조 없이도 전달
-- [ ] **disabled 컴포넌트 옆에 reason text 권장** (예: "권한 없음", "기간 만료") — `caption` 정상 contrast로
+- [ ] **disabled 컴포넌트 옆에 reason text 권장** (예: "권한 없음", "기간 만료") — 글자 역할 R9 값으로
 
 ### Chart color (palette)
 

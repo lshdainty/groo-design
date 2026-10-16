@@ -239,7 +239,7 @@ export function SplitRowsLive({ n = SPLITS.length, fg = 'var(--p-fg-neutral)', s
             <span style={{ fontSize: 15, lineHeight: '21px', fontWeight: 500, color: c('fg-neutral') }}>{s.title}</span>
             <span style={{ fontSize: 13, lineHeight: '18px', color: c('fg-neutral-subtle') }}>{s.category}</span>
           </span>
-          <span style={{ fontSize: 15, lineHeight: '21px', fontWeight: 600, color: c('fg-neutral'), fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{won(-s.amount)}</span>
+          <span style={{ fontSize: 15, lineHeight: '21px', fontWeight: 700, color: c('fg-neutral'), fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{won(-s.amount)}</span>
         </div>
       ))}
     </div>
@@ -249,7 +249,7 @@ const tone = (mode: ViewMode, name: string, look: ColLook) => (mode === 'auto' ?
 export function ShortfallMessage({ mode = 'auto', look }: { mode?: ViewMode; look: ColLook }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <span style={{ fontSize: 15, lineHeight: '21px', fontWeight: 600, color: tone(mode, 'fg-neutral', look) }}>분할 합계가 {won(SHORTFALL)} 모자라요.</span>
+      <span style={{ fontSize: 15, lineHeight: '21px', fontWeight: 700, color: tone(mode, 'fg-neutral', look) }}>분할 합계가 {won(SHORTFALL)} 모자라요.</span>
       <span style={{ fontSize: 13, lineHeight: '18px', color: tone(mode, 'fg-neutral-subtle', look), fontVariantNumeric: 'tabular-nums' }}>
         거래 {won(SPLIT_TOTAL)} · 분할 합계 {won(SPLIT_TOTAL - SHORTFALL)}
       </span>

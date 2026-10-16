@@ -91,7 +91,7 @@ function Ruler({ top, h, label, side }: { top: number; h: number; label: string;
   return (
     <span aria-hidden className="pointer-events-none absolute flex items-center" style={{ top, height: h, [side]: -18, flexDirection: side === 'left' ? 'row-reverse' : 'row', zIndex: 4 }}>
       <span style={{ width: 10, height: h, background: MARK, boxShadow: `inset 0 0 0 1px ${MARK_LINE}` }} />
-      <span className="whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE, margin: '0 4px' }}>
+      <span className="whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE, margin: '0 4px' }}>
         {label}
       </span>
     </span>

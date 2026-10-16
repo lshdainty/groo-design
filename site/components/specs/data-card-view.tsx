@@ -4,7 +4,6 @@
 // 색은 사이트 모드를 따르면(auto) --p-<토큰> 변수, 모드를 정하면 그 모드의 값이다. 순자산 카드의 끝 색은 모드마다 다른 토큰이라 .pdat 가 고른다.
 // 인라인 스타일은 단축 속성(padding)과 개별 속성을 섞지 않는다 — 링크로 들어올 때 값이 지워진다(PR #154).
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
-import { ChevronRight } from 'lucide-react';
 import { pressRatio, splitVars, sv, type CardLook, type CardPress, type CardState, type CardStatSize, type DeltaDir, type ViewMode } from './data-shared';
 import { dcv } from './display-shared';
 
@@ -172,7 +171,7 @@ export function CardHeaderView({ look, mode = 'auto', title, action, body = 'con
   );
 }
 
-// 머리 동작 — 보이는 상자 32 · 누르는 영역 44, 이름 "{제목} {글}"
+// 머리 동작 — 글 버튼(SEED Text Button): 보이는 상자 36 · 누르는 영역 44, 이름 "{제목} {글}"
 export function CardActionView({ look, mode = 'auto', label, title, live = false, state: frozen, marks, pins, showHit = false, onClick }: { look: CardLook; mode?: ViewMode; label: string; title?: string; live?: boolean; state?: CardState; marks?: CardMarks; pins?: CardPins; showHit?: boolean; onClick?: () => void }) {
   const a = look.action;
   const ref = useRef<HTMLButtonElement>(null);
@@ -206,8 +205,9 @@ export function CardActionView({ look, mode = 'auto', label, title, live = false
         display: 'inline-flex',
         flexShrink: 0,
         alignItems: 'center',
-        gap: a.gap,
         height: a.h,
+        // 줄 끝 글 버튼 — 오른쪽 여백만큼 바깥으로 내어 글자 끝이 카드 여백에 선다(card.yaml headerAction.paddingRight 비고)
+        marginRight: -a.padR,
         boxSizing: 'border-box',
         paddingTop: 0,
         paddingBottom: 0,
@@ -232,11 +232,10 @@ export function CardActionView({ look, mode = 'auto', label, title, live = false
         ...marks?.action,
       }}
     >
-      {/* 누르는 영역 44 — 보이는 32 위아래로 6 씩, 옆은 글 폭(44 보다 좁으면 44) */}
+      {/* 누르는 영역 44 — 보이는 36 위아래로 4 씩, 옆은 글 폭(44 보다 좁으면 44) */}
       <span aria-hidden style={{ position: 'absolute', top: -ext, bottom: -ext, left: 0, right: 0, minWidth: a.touch, ...(showHit ? { background: 'rgba(236, 72, 153, 0.18)', outline: '1px dashed #DB2777', outlineOffset: -1 } : {}) }} />
       {pins?.action}
       <span style={{ position: 'relative' }}>{label}</span>
-      <ChevronRight aria-hidden size={a.icon} strokeWidth={2} style={{ position: 'relative', flexShrink: 0 }} />
     </button>
   );
 }

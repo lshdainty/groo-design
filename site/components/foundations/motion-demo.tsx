@@ -85,7 +85,7 @@ export function EasingPlayer({ items, demoMs, palette: p }: { items: EaseItem[];
                 style={{ background: p.brand, transform: `translateX(${right[it.name] ? TRACK : 0}px)`, transition: `transform ${demoMs}ms ${it.value}` }}
               />
             </div>
-            <code className="text-[12px] font-semibold">{short(it.name)}</code>
+            <code className="text-[12px] font-bold">{short(it.name)}</code>
             <span className="text-center text-[11px] leading-4 text-[#62697A]">{it.note.replace(/`/g, '')}</span>
           </button>
         ))}
@@ -147,7 +147,7 @@ export function KeyframePlayer({ single, loop, reduced, shimmer, palette: p }: {
                   onAnimationEnd={() => stop(k.name)}
                 />
               </div>
-              <code className="text-[12px] font-semibold">{k.name}</code>
+              <code className="text-[12px] font-bold">{k.name}</code>
               <span className="text-center text-[11px] leading-4 text-[#62697A]">{pl ? pl.label : '표에 없는 움직임 — 컴포넌트 스펙에서 정한다'}</span>
             </button>
           );
@@ -176,7 +176,7 @@ export function KeyframePlayer({ single, loop, reduced, shimmer, palette: p }: {
                 </span>
               )}
             </div>
-            <code className="text-[12px] font-semibold">{k.name}</code>
+            <code className="text-[12px] font-bold">{k.name}</code>
             <span className="text-center text-[11px] leading-4 text-[#62697A]">{short(k.durationToken) ?? k.duration} · {short(k.easeToken) ?? k.ease}</span>
           </div>
         ))}

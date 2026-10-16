@@ -1,5 +1,4 @@
 import * as React from "react";
-import { ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -16,8 +15,9 @@ import { cn } from "@/lib/utils";
  *                   열리고 안에 대등한 동작이 더 있다 — 카드 위에 깐 CardLink 가 누르는 자리, 색만 바뀐다). href · onClick 을 주면 "whole"
  *   CardHeader      머리 — 제목과 오른쪽 동작 한 줄, 아래 8(목록 · 아코디언 카드 4)
  *   CardTitle       제목 16 / 22 · 700 · fg-neutral — as(기본 h2)
- *   CardAction      머리 동작("전체 보기") — href · onClick. 14 · 500 · fg-neutral-subtle + chevron-right 16(사이 2), 보이는 상자 32 ·
- *                   왼쪽 8 · 오른쪽 4 · 모서리 8, 누르는 영역 44. 이름은 "{제목} {글}"(aria-labelledby — 제목이 있을 때)
+ *   CardAction      머리 동작("전체 보기") — href · onClick. 글 버튼(SEED Text Button, 2026-10-16 글자 역할 D2): 14 · 700 · fg-neutral-muted,
+ *                   꺾쇠 없음, 보이는 상자 36 · 좌우 14 · 모서리 8(오른쪽 −14 로 내어 글자 끝이 카드 여백에), 누르는 영역 44.
+ *                   이름은 "{제목} {글}"(aria-labelledby — 제목이 있을 때)
  *   CardContent     본문 — 여백 안, 요소 사이 12. 목록 카드는 CardContent 없이 List 를 바로 넣는다
  *   CardLink        peers 카드의 누르는 자리 — 카드 전체를 덮는 링크(href) · 버튼(onClick), 글은 제목 모양(이름은 카드 제목)
  *   CardStat        지표 — label(13 · 500 · fg-neutral-subtle) · value(700 · 고정폭 숫자 — large 24 / 32 · small 20 / 27) · delta
@@ -243,10 +243,10 @@ const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(({ as: He
 });
 CardTitle.displayName = "CardTitle";
 
-// 머리 동작 — 보이는 상자 32 · 누르는 영역 44(::before), 누르면 바탕 + 2px 거리 축소
+// 머리 동작 — 글 버튼(SEED Text Button): 보이는 상자 36 · 누르는 영역 44(::before), 누르면 바탕 + 2px 거리 축소
 const CARD_ACTION = [
-  "relative inline-flex h-8 shrink-0 cursor-pointer items-center gap-x0_5 rounded-r2 border-0 bg-transparent pl-x2 pr-x1",
-  "font-sans text-t4 font-medium text-fg-neutral-subtle no-underline [&_svg]:size-4 [&_svg]:shrink-0",
+  "relative -mr-x3_5 inline-flex h-9 shrink-0 cursor-pointer items-center rounded-r2 border-0 bg-transparent px-x3_5",
+  "font-sans text-t4 font-bold text-fg-neutral-muted no-underline",
   "before:absolute before:left-1/2 before:top-1/2 before:h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
@@ -269,7 +269,6 @@ const CardAction = React.forwardRef<HTMLElement, CardActionProps>(
     const inner = (
       <>
         <span id={textId}>{children}</span>
-        <ChevronRight aria-hidden strokeWidth={2} />
       </>
     );
     const shared = {

@@ -179,7 +179,7 @@ export function ColumnSpanFigure() {
         ))}
         {rows.map((row, r) =>
           row.map(([o, n, label]) => (
-            <div key={`${r}-${o}`} className="absolute flex items-center justify-center rounded-md text-[12px] font-semibold text-white" style={{ left: x(o), width: w(n), top: 8 + r * 52, height: 40, background: fill }}>
+            <div key={`${r}-${o}`} className="absolute flex items-center justify-center rounded-md text-[12px] font-bold text-white" style={{ left: x(o), width: w(n), top: 8 + r * 52, height: 40, background: fill }}>
               {label}
             </div>
           )),
@@ -202,7 +202,7 @@ export function BreakpointFigure() {
           {segs.map((sg, i) => {
             const to = segs[i + 1]?.from ?? MAX;
             return (
-              <div key={sg.short} className="absolute inset-y-0 flex items-center justify-center text-[12px] font-semibold text-[#0B3B75]" style={{ left: x(sg.from), width: x(to - sg.from), background: tone[i % tone.length] }}>
+              <div key={sg.short} className="absolute inset-y-0 flex items-center justify-center text-[12px] font-bold text-[#0B3B75]" style={{ left: x(sg.from), width: x(to - sg.from), background: tone[i % tone.length] }}>
                 {sg.short}
               </div>
             );
@@ -242,7 +242,7 @@ export function RegionsFigure() {
   const head = navKit().top.height;
   const s = 0.36, W = 1440 * s, H = 520;
   const fg = color('fg-neutral-muted');
-  const cell = 'absolute flex items-center justify-center px-1 text-center text-[12px] font-semibold leading-tight';
+  const cell = 'absolute flex items-center justify-center px-1 text-center text-[12px] font-bold leading-tight';
   return (
     <Figure caption={`영역 넷 — 사이드 내비게이션 ${side}px(접으면 ${collapsed}px) 오른쪽에 머리 ${head}px · 본문 · 보조 영역. 머리 아래 선은 없다`}>
       <div className="relative overflow-hidden rounded-lg border border-black/10" style={{ width: W, height: H * s + 60, color: fg, background: color('bg-layer-basement') }}>

@@ -157,7 +157,7 @@ const Size: Fig = ({ caption }) => {
           ))}
           {(['desk', 'hr'] as const).map((brand) => (
             <div key={brand} className="contents">
-              <span className="text-[12px] font-semibold" style={{ color: tone('fg-brand', mode, brand) }}>
+              <span className="text-[12px] font-bold" style={{ color: tone('fg-brand', mode, brand) }}>
                 {brand === 'desk' ? 'Desk' : 'HR'}
               </span>
               <span className="flex justify-center">
@@ -212,7 +212,7 @@ function Grid({ children, w = ICON * Z, h = ICON * Z }: { children: ReactNode; w
 }
 function Coord({ children, style }: { children: ReactNode; style: CSSProperties }) {
   return (
-    <span aria-hidden className="pointer-events-none absolute whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE, ...style }}>
+    <span aria-hidden className="pointer-events-none absolute whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE, ...style }}>
       {children}
     </span>
   );

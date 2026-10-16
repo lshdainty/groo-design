@@ -126,7 +126,7 @@ const Anatomy: Fig = ({ caption }) => {
             {pin('ⓑ', { left: S / 2 + r * Math.cos(-Math.PI / 6) + t / 2 + 6, top: S / 2 + r * Math.sin(-Math.PI / 6) - 10 })}
             <span aria-hidden className="absolute rounded-full" style={{ left: end.x - t / 2 - 3, top: end.y - t / 2 - 3, width: t + 6, height: t + 6, outline: `1px dashed ${MARK_LINE}` }} />
           </div>
-          <span className="absolute whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ left: '50%', top: 10, transform: 'translateX(8px)', background: MARK_LINE }}>
+          <span className="absolute whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ left: '50%', top: 10, transform: 'translateX(8px)', background: MARK_LINE }}>
             12시에서 시작
           </span>
         </div>
@@ -166,7 +166,7 @@ const Sizes: Fig = ({ caption }) => {
                     <Band style={{ left: 0, right: 0, bottom: -14, height: 6, background: 'transparent', borderTop: `1px solid ${MARK_LINE}` }} label={String(s.size)} />
                     {/* 두께 — 12시 자리의 선 굵기 */}
                     <span aria-hidden className="absolute" style={{ left: Z / 2 - 1, top: 0, width: 2, height: T, background: MARK_LINE, zIndex: 4 }} />
-                    <span aria-hidden className="absolute whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ left: Z / 2 + 6, top: T / 2 - 8, background: MARK_LINE, zIndex: 4 }}>
+                    <span aria-hidden className="absolute whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ left: Z / 2 + 6, top: T / 2 - 8, background: MARK_LINE, zIndex: 4 }}>
                       두께 {s.thickness}
                     </span>
                   </span>
@@ -249,7 +249,7 @@ const Tones: Fig = ({ caption }) => {
       );
     return (
       <div className="grid h-[132px] place-items-center rounded-xl" style={{ background: rc('bg-layer-default', mode) }}>
-        <span className="flex items-center gap-2 text-[14px] font-semibold" style={{ color: rc('fg-brand', mode) }}>
+        <span className="flex items-center gap-2 text-[14px] font-bold" style={{ color: rc('fg-brand', mode) }}>
           <Circle mode={mode} size="24" tone="inherit" decorative />
           영수증 올리는 중
         </span>
@@ -367,7 +367,7 @@ const PlacementGuide: Fig = ({ caption }) => {
                 </div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-3" style={{ background: 'rgba(120,124,135,0.72)' }}>
                   <Circle size="40" tone="staticWhite" decorative />
-                  <span className="text-[15px] font-semibold text-white">Loading</span>
+                  <span className="text-[15px] font-bold text-white">Loading</span>
                 </div>
               </div>
             </LdPhone>

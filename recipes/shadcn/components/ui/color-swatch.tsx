@@ -30,7 +30,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  * 지금 색 · 자동(14B): 고치는 항목의 색이 팔레트 밖(가져오기의 #9E9E9E)이면 "지금 색" 칸에 그 색을 그대로(두 모드 같은 값 — 체크는
  *   fg-neutral · fg-neutral-inverted 가운데 그 색 위 대비가 큰 쪽, 모드 · 브랜드가 바뀌면 다시 정한다), 색이 없으면 "자동" 칸에 차트가 줄 색을 점선 원(2px
  *   stroke-neutral-solid)으로 격자 앞에 둔다 — 세로 선(1px stroke-neutral-weak, 사이 16)으로 가르고 칸 아래 6 에 같은 이름 글(12 / 16 ·
- *   fg-neutral-muted). 그 칸을 고르면(처음에 골라져 있다) 값은 "current" — 저장 값을 그대로 둔다. 몰래 빨강으로 바꾸지 않는다.
+ *   fg-neutral-subtle — 덧붙인 이름표, 2026-10-16 글자 역할 D5). 그 칸을 고르면(처음에 골라져 있다) 값은 "current" — 저장 값을 그대로 둔다. 몰래 빨강으로 바꾸지 않는다.
  *   칸 · 선 · 격자의 폭은 321(40 + 16 + 1 + 16 + 248)이다. 놓인 자리가 그보다 좁으면(360 폰 본문 312) 지금 색 칸을 격자 위 줄에 두고
  *   선을 가로 1px(격자 폭)로 가른다 — 사이는 그대로 16. 넓으면(390 폰 342 · 대화상자) 옆으로 둔다. 묶음이 놓인 자리의 폭으로
  *   가르므로(@container) 묶음은 그 폭을 다 쓴다 — 폭을 내용으로 정하는 자리(팝오버)에서는 321 로 잰다.
@@ -320,7 +320,7 @@ const ColorSwatchGroup = React.forwardRef<HTMLDivElement, ColorSwatchGroupProps>
             <>
               <div data-slot="color-swatch-current-column" className="flex shrink-0 flex-col items-center gap-[6px]">
                 {item("current", 0)}
-                <span aria-hidden data-slot="color-swatch-current-label" className="whitespace-nowrap font-sans text-t2 text-fg-neutral-muted">
+                <span aria-hidden data-slot="color-swatch-current-label" className="whitespace-nowrap font-sans text-t2 text-fg-neutral-subtle">
                   {current === "custom" ? "지금 색" : "자동"}
                 </span>
               </div>

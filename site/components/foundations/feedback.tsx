@@ -71,14 +71,14 @@ export function FeedbackElementsFigure() {
       <div className="flex gap-3">
         <div className={card}>
           <div className="flex gap-2">
-            <Plain w={60} h={lg.height} style={{ ...brand, fontSize: 13, fontWeight: 600 }}>기본</Plain>
-            <Plain w={60} h={lg.height} style={{ ...pressed, fontSize: 13, fontWeight: 600 }}>눌림</Plain>
+            <Plain w={60} h={lg.height} style={{ ...brand, fontSize: 13, fontWeight: 700 }}>기본</Plain>
+            <Plain w={60} h={lg.height} style={{ ...pressed, fontSize: 13, fontWeight: 700 }}>눌림</Plain>
           </div>
           <b className="text-[14px] text-[#1A1F2E]">색</b>
           <Cap>누르는 동안 표면 색이 바뀐다</Cap>
         </div>
         <div className={card}>
-          <Shrunk w={128} h={lg.height} style={{ ...pressed, fontSize: 13, fontWeight: 600 }}>눌림</Shrunk>
+          <Shrunk w={128} h={lg.height} style={{ ...pressed, fontSize: 13, fontWeight: 700 }}>눌림</Shrunk>
           <b className="text-[14px] text-[#1A1F2E]">크기</b>
           <Cap>누르는 동안 정해진 거리만큼 작아진다</Cap>
         </div>
@@ -116,7 +116,7 @@ export function FeedbackTimingTable() {
 // ── Color ────────────────────────────────────────────────
 export function PressColorFigure() {
   const lg = specSize('button', 'large');
-  const label = { color: rc('static-white'), fontSize: 15, fontWeight: 600 };
+  const label = { color: rc('static-white'), fontSize: 15, fontWeight: 700 };
   return (
     <Figure caption="기본과 눌림 — 표면 색만 bg-brand-solid 에서 bg-brand-solid-pressed 로 바뀌고 글자 색은 그대로다">
       <div className="flex gap-10 rounded-xl bg-white px-10 py-8">
@@ -168,8 +168,8 @@ export function GhostFigure() {
     <div className="flex flex-col gap-1.5">
       <span className="text-[11px]" style={{ color: rc('fg-neutral-subtle', m) }}>{where}</span>
       <div className="flex items-center gap-2 rounded-xl p-2" style={{ background: rc(surface, m), boxShadow: surface === 'bg-layer-floating' ? proseValue(m === 'dark' ? 'shadow-s2-dark' : 'shadow-s2') : undefined }}>
-        <Plain w={92} h={36} style={{ color: rc('fg-neutral', m), fontSize: 13, fontWeight: 600 }}>기본</Plain>
-        <Plain w={92} h={36} style={{ color: rc('fg-neutral', m), fontSize: 13, fontWeight: 600, background: rc(pressed, m) }}>눌림</Plain>
+        <Plain w={92} h={36} style={{ color: rc('fg-neutral', m), fontSize: 13, fontWeight: 700 }}>기본</Plain>
+        <Plain w={92} h={36} style={{ color: rc('fg-neutral', m), fontSize: 13, fontWeight: 700, background: rc(pressed, m) }}>눌림</Plain>
       </div>
       <code className="text-[11px]" style={{ color: rc('fg-neutral-subtle', m) }}>{pressed}</code>
     </div>
@@ -179,7 +179,7 @@ export function GhostFigure() {
       <div className="flex gap-4">
         {(['light', 'dark'] as Mode[]).map((m) => (
           <div key={m} className="flex w-[250px] flex-col gap-4 rounded-2xl p-4" style={{ background: rc('bg-layer-basement', m) }}>
-            <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral', m) }}>{m === 'light' ? '라이트' : '다크'}</span>
+            <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral', m) }}>{m === 'light' ? '라이트' : '다크'}</span>
             {row(m, 'bg-layer-default', 'bg-layer-default-pressed', '화면 위')}
             {row(m, 'bg-layer-floating', 'bg-layer-floating-pressed', '떠 있는 표면(메뉴 · 플로팅 버튼) 위')}
           </div>
@@ -196,7 +196,7 @@ export function NoColorFigure() {
     <div className="flex gap-1 border-b" style={{ borderColor: rc('stroke-neutral-weak') }}>
       {['지출', '수입', '이체'].map((t, i) => {
         const sel = i === 0;
-        const text = <span className="text-[14px] font-semibold" style={{ color: sel ? rc('fg-neutral') : rc('fg-neutral-subtle') }}>{t}</span>;
+        const text = <span className="text-[14px] font-bold" style={{ color: sel ? rc('fg-neutral') : rc('fg-neutral-subtle') }}>{t}</span>;
         const cell = pressed && i === 1 ? <Shrunk w={52} h={36} radius={6} style={{}}>{text}</Shrunk> : <Plain w={52} h={36} style={{}}>{text}</Plain>;
         return (
           <div key={t} className="relative">
@@ -269,7 +269,7 @@ export function ScaleHeroFigure() {
   const lg = specSize('button', 'large');
   const { ratio, distance, widthDivisor } = pressScale();
   const w = lg.height * widthDivisor - 12; // 폭 ÷ 4 가 높이보다 작게 — 기준 길이가 높이라 세로로 축소량만큼 준다
-  const style = { background: rc('bg-brand-solid-pressed'), color: rc('static-white'), fontSize: 15, fontWeight: 600 };
+  const style = { background: rc('bg-brand-solid-pressed'), color: rc('static-white'), fontSize: 15, fontWeight: 700 };
   return (
     <Figure caption={`눌린 쪽은 점선의 원래 크기보다 작다 — 세로로 ${distance}px, 이 버튼에서 배율 ${r3(ratio(w, lg.height))}`}>
       <div className="flex gap-10 rounded-xl bg-white px-10 py-8">
@@ -330,7 +330,7 @@ export function BasisFigure() {
   const md = specSize('button', 'medium');
   const { ratio, distance } = pressScale();
   const tall = 100; // 예 — 높이 100 의 카드형 버튼
-  const style = { background: rc('bg-brand-weak-pressed'), color: rc('fg-brand-contrast'), fontSize: 14, fontWeight: 600 };
+  const style = { background: rc('bg-brand-weak-pressed'), color: rc('fg-brand-contrast'), fontSize: 14, fontWeight: 700 };
   return (
     <Figure caption={`같은 ${distance}px 이라도 요소가 클수록 배율은 1 에 가깝다`}>
       <div className="flex items-end gap-10 rounded-xl bg-white px-10 py-8">
@@ -389,7 +389,7 @@ export function CenterFigure() {
     <Figure caption="축소는 늘 요소의 정가운데를 기준으로 일어난다">
       <div className="rounded-xl bg-white px-12 py-8">
         <span className="relative inline-flex">
-          <Shrunk w={w} h={lg.height} style={{ background: rc('bg-brand-solid-pressed'), color: rc('static-white'), fontSize: 15, fontWeight: 600 }}>
+          <Shrunk w={w} h={lg.height} style={{ background: rc('bg-brand-solid-pressed'), color: rc('static-white'), fontSize: 15, fontWeight: 700 }}>
             <span className="opacity-60">저장</span>
           </Shrunk>
           <span className="absolute inset-x-[-16px] top-1/2 h-px" style={{ background: line }} />
@@ -440,7 +440,7 @@ export function SurfaceTargetFigure() {
     <Figure>
       <div className="flex w-[540px] gap-4">
         <Verdict ok note="면으로 잡히는 요소 — 원래 크기보다 작아진다">
-          <Shrunk w={170} h={lg.height} style={{ background: rc('bg-brand-solid-pressed'), color: rc('static-white'), fontSize: 15, fontWeight: 600 }}>다음</Shrunk>
+          <Shrunk w={170} h={lg.height} style={{ background: rc('bg-brand-solid-pressed'), color: rc('static-white'), fontSize: 15, fontWeight: 700 }}>다음</Shrunk>
         </Verdict>
         <Verdict ok={false} note="줄바꿈되는 글 속 링크를 줄이면 글자 크기가 바뀐 것처럼 보인다">
           <p className="w-[200px] text-[14px] leading-6 text-[#1A1F2E]">
@@ -469,13 +469,13 @@ export function SubActionsFigure() {
     // 카드 — card.yaml 의 면(1px stroke-neutral-weak · 모서리 16 · 여백 24), 회색 바닥 위
     <div className="w-[240px]" style={{ background: rc('bg-layer-default'), border: `1px solid ${rc('stroke-neutral-weak')}`, borderRadius: cardFace().radius, padding: cardFace().pad }}>
       <div className="flex items-start justify-between">
-        <span className="text-[14px] font-semibold text-[#1A1F2E]">9월 가계부 정리</span>
+        <span className="text-[14px] font-bold text-[#1A1F2E]">9월 가계부 정리</span>
         <Plain w={icon.height - 12} h={icon.height - 12} style={{ color: rc('fg-neutral-subtle'), fontSize: 16 }}>✕</Plain>
       </div>
       <p className="mt-1 text-[12px] text-[#62697A]">고정 지출을 한 번 더 확인해요</p>
       <div className="mt-3 flex gap-2">
-        <Shrunk w={60} h={32} radius={16} style={{ background: rc('bg-neutral-weak-pressed'), color: rc('fg-neutral'), fontSize: 12, fontWeight: 600 }}>♡ 저장</Shrunk>
-        <Plain w={60} h={32} radius={16} style={{ background: rc('bg-neutral-weak'), color: rc('fg-neutral'), fontSize: 12, fontWeight: 600 }}>공유</Plain>
+        <Shrunk w={60} h={32} radius={16} style={{ background: rc('bg-neutral-weak-pressed'), color: rc('fg-neutral'), fontSize: 12, fontWeight: 700 }}>♡ 저장</Shrunk>
+        <Plain w={60} h={32} radius={16} style={{ background: rc('bg-neutral-weak'), color: rc('fg-neutral'), fontSize: 12, fontWeight: 700 }}>공유</Plain>
       </div>
     </div>
   );
@@ -529,7 +529,7 @@ export function StatesFigure() {
     <Figure caption="다른 상태에서 눌렀을 때 — 선택된 요소는 준다, 불러오는 중 · 비활성은 줄지 않는다">
       <div className="flex gap-3">
         {col('선택됨', '줄고, 선택 색은 그대로', (
-          <Shrunk w={w} h={btn.height} radius={btn.height} style={{ background: rc('bg-brand-weak-pressed'), color: rc('fg-brand-contrast'), fontSize: 13, fontWeight: 600 }}>✓ 식비</Shrunk>
+          <Shrunk w={w} h={btn.height} radius={btn.height} style={{ background: rc('bg-brand-weak-pressed'), color: rc('fg-brand-contrast'), fontSize: 13, fontWeight: 700 }}>✓ 식비</Shrunk>
         ))}
         {col('불러오는 중', '줄지 않는다 — 입력을 받지 않는다', (
           <Plain w={w} h={btn.height} style={{ background: rc('bg-brand-solid'), color: rc('static-white'), fontSize: 13 }}>
@@ -537,7 +537,7 @@ export function StatesFigure() {
           </Plain>
         ))}
         {col('비활성', '줄지 않는다 — 누름에 반응하지 않는다', (
-          <Plain w={w} h={btn.height} style={{ background: rc('bg-disabled'), color: rc('fg-disabled'), fontSize: 13, fontWeight: 600 }}>저장</Plain>
+          <Plain w={w} h={btn.height} style={{ background: rc('bg-disabled'), color: rc('fg-disabled'), fontSize: 13, fontWeight: 700 }}>저장</Plain>
         ))}
       </div>
     </Figure>

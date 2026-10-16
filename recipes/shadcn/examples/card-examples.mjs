@@ -61,8 +61,8 @@ const PRESS_PEERS = [
 ].join(" ");
 const HERO_GLOW = "pointer-events-none absolute -right-[40px] -top-[80px] -z-10 size-[240px] rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-static-white)_22%,transparent),transparent_70%)]";
 const CARD_ACTION = [
-  "relative inline-flex h-8 shrink-0 cursor-pointer items-center gap-x0_5 rounded-r2 border-0 bg-transparent pl-x2 pr-x1",
-  "font-sans text-t4 font-medium text-fg-neutral-subtle no-underline [&_svg]:size-4 [&_svg]:shrink-0",
+  "relative -mr-x3_5 inline-flex h-9 shrink-0 cursor-pointer items-center rounded-r2 border-0 bg-transparent px-x3_5",
+  "font-sans text-t4 font-bold text-fg-neutral-muted no-underline",
   "before:absolute before:left-1/2 before:top-1/2 before:h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
@@ -262,9 +262,7 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 const svg = (paths, { strokeWidth = 2, cls = "" } = {}) =>
   `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round"${cls ? ` class="${cls}"` : ""} aria-hidden="true">${paths}</svg>`;
 const PATHS = {
-  chevronRight: '<path d="m9 18 6-6-6-6"/>',
   chevronDown: '<path d="m6 9 6 6 6-6"/>',
-  chevronsUpDown: '<path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/>',
   ellipsisVertical: '<circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>',
   x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
@@ -348,8 +346,8 @@ const ACC_CHEVRON = "size-5 shrink-0 [transition:rotate_var(--motion-duration-d6
 const ACC_PANEL_TEXT = "px-global-gutter pb-x4 pt-0 font-sans text-article-note font-normal text-fg-neutral-muted whitespace-pre-line break-keep [overflow-wrap:break-word]";
 const ACC_PLAIN_MIN = "min-h-[54px]";
 const ACC_EXPAND_ALL = [
-  "relative inline-flex h-8 shrink-0 cursor-pointer items-center gap-x0_5 rounded-r2 border-0 bg-transparent pl-x2 pr-x1",
-  "font-sans text-t4 font-medium text-fg-neutral-subtle [&_svg]:size-4 [&_svg]:shrink-0",
+  "relative -mr-x3_5 inline-flex h-9 shrink-0 cursor-pointer items-center rounded-r2 border-0 bg-transparent px-x3_5",
+  "font-sans text-t4 font-bold text-fg-neutral-muted",
   "before:absolute before:left-1/2 before:top-1/2 before:h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "[@media(hover:hover)]:hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
@@ -372,7 +370,7 @@ const accItem = (uid, title, detail) =>
     : `<div data-slot="accordion-plain-item" data-accordion-row="" class="${ACC_ITEM_INLINE}"><div data-slot="accordion-plain-item-content" class="${ACC_CONTENT} ${ACC_PLAIN_MIN}"><span data-slot="accordion-trigger-body" class="${ACC_BODY}"><span data-slot="accordion-title" class="${ACC_TITLE}">${esc(title)}</span></span></div></div>`;
 // <AccordionExpandAll controls> — 하나라도 접혀 있어 "모두 펼치기"
 const accExpandAll = (controls) =>
-  `<button type="button" aria-controls="${controls}" data-slot="accordion-expand-all" data-state="collapsed" class="${ACC_EXPAND_ALL}"><span>모두 펼치기</span>${svg(PATHS.chevronsUpDown)}</button>`;
+  `<button type="button" aria-controls="${controls}" data-slot="accordion-expand-all" data-state="collapsed" class="${ACC_EXPAND_ALL}"><span>모두 펼치기</span></button>`;
 
 // ── <Card> 조각 — card.tsx 가 그리는 DOM ─────────────────────────────────
 
@@ -392,7 +390,7 @@ function card({ variant = "default", body = "content", press = "none", href = "#
 // <CardHeader><CardTitle /><CardAction /></CardHeader> — 머리 동작의 이름은 "{제목} {글}"(aria-labelledby — 제목 id · 글 id)
 function cardHeader({ id, title, action, body = "content" }) {
   const actionHtml = action
-    ? `<a href="#" data-slot="card-action" aria-labelledby="${id}-title ${id}-action" class="${CARD_ACTION}"><span id="${id}-action">${esc(action)}</span>${svg(PATHS.chevronRight)}</a>`
+    ? `<a href="#" data-slot="card-action" aria-labelledby="${id}-title ${id}-action" class="${CARD_ACTION}"><span id="${id}-action">${esc(action)}</span></a>`
     : "";
   return `<div data-slot="card-header" class="${HEADER} ${HEADER_BODY[body]}"><h2 id="${id}-title" data-slot="card-title" class="${TITLE}">${esc(title)}</h2>${actionHtml}</div>`;
 }

@@ -31,7 +31,7 @@ export function ShimmerDemo({ scenes, loop, bone }: { scenes: Scene[]; loop: { m
       <div className="grid gap-4 sm:grid-cols-2">
         {scenes.map((s) => (
           <div key={s.label} className="flex flex-col gap-3 rounded-2xl p-4" style={{ background: s.page }}>
-            <span className="text-[12px] font-semibold" style={{ color: s.fg }}>{s.label}</span>
+            <span className="text-[12px] font-bold" style={{ color: s.fg }}>{s.label}</span>
             <div className="flex items-center gap-3 rounded-xl p-3" style={{ background: s.card }}>
               <span className="relative block h-10 w-10 shrink-0 overflow-hidden" style={{ borderRadius: bone.avatar, background: s.bone }}>
                 <span className="absolute inset-0" style={{ background: s.shimmer, transform: 'translateX(-100%)', animation: run ? `porest-shimmer ${loop.ms}ms ${loop.ease} infinite` : 'none' }} />

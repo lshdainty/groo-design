@@ -190,7 +190,7 @@ function HeightTag({ top, h, label, left }: { top: number; h: number; label: str
   return (
     <span aria-hidden className="pointer-events-none absolute flex items-center" style={{ top, height: h, left, zIndex: 4 }}>
       <span style={{ alignSelf: 'stretch', width: 6, borderTop: `1px solid ${MARK_LINE}`, borderBottom: `1px solid ${MARK_LINE}`, borderRight: `1px solid ${MARK_LINE}` }} />
-      <span className="ml-1 whitespace-nowrap text-[11px] font-semibold leading-4" style={{ color: MARK_LINE }}>
+      <span className="ml-1 whitespace-nowrap text-[11px] font-bold leading-4" style={{ color: MARK_LINE }}>
         {label}
       </span>
     </span>

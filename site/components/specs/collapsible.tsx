@@ -211,7 +211,7 @@ const States: Fig = ({ caption }) => {
                 ))}
                 {STATES.map((st) => (
                   <div key={st} className="contents">
-                    <span className="text-[12px] font-semibold leading-4" style={{ color: rc('fg-neutral', mode) }}>
+                    <span className="text-[12px] font-bold leading-4" style={{ color: rc('fg-neutral', mode) }}>
                       {STATE_KO[st]}
                     </span>
                     <StateCell mode={mode} state={st} surface="default" />
@@ -274,7 +274,7 @@ function NowSplitHead({ mode = 'auto' }: { mode?: Mode }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, paddingTop: 16, paddingBottom: 16, paddingLeft: 24, paddingRight: 24 }}>
       <span style={{ fontSize: 14, fontWeight: 700, color: rc('fg-neutral', mode) }}>{SPLIT_TITLE}</span>
-      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2, height: 18, fontSize: 12, fontWeight: 600, color: rc('fg-brand', mode), outline: `1px dashed ${MARK_LINE}`, outlineOffset: 2 }}>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2, height: 18, fontSize: 12, fontWeight: 700, color: rc('fg-brand', mode), outline: `1px dashed ${MARK_LINE}`, outlineOffset: 2 }}>
         합계 {Math.abs(SPLIT_TOTAL).toLocaleString('ko-KR')}원 ⌄
       </span>
     </div>
@@ -329,7 +329,7 @@ function RuleCards({ lang, clamp = false }: { lang: 'ko' | 'en'; clamp?: boolean
           >
             {card.body}
           </span>
-          {clamp && <span style={{ marginTop: 4, fontSize: 13, fontWeight: 600, color: 'var(--p-fg-brand)' }}>더 보기</span>}
+          {clamp && <span style={{ marginTop: 4, fontSize: 13, fontWeight: 700, color: 'var(--p-fg-brand)' }}>더 보기</span>}
         </CardSurface>
       ))}
     </div>

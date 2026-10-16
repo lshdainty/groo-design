@@ -3,7 +3,7 @@
 import { axisDesc, axisValues, loadComponentSpec, num, resolveState, tokenValue, type TypeValue } from '@/lib/component-spec';
 import type { Mode } from '@/lib/component-spec';
 import { CHART_ORDER, color, design, pressScale, type Brand } from '@/lib/design-tokens';
-import { buttonLook } from './button-look';
+import { buttonLook, recolorButton } from './button-look';
 import { checkLook } from './checkbox-look';
 import { radioLook } from './radio-group-look';
 import { switchLook } from './switch-look';
@@ -127,7 +127,7 @@ export function listLook(brand: Brand = 'desk'): ListLook {
       switch: switchLook({ size: '32' }, brand),
       check: checkLook({ size: 'large' }, brand),
       radio: radioLook({ size: 'large' }, brand),
-      headerAction: buttonLook({ variant: 'ghost', ghostColor: 'neutralSubtle', size: 'xsmall' }, brand),
+      headerAction: headerActionLook(hspec, brand),
       iconButton: buttonLook({ variant: 'ghost', ghostColor: 'neutralSubtle', size: 'xsmall', layout: 'iconOnly' }, brand),
     },
     surface: { default: pick('bg-layer-default'), basement: pick('bg-layer-basement'), floating: pick('bg-layer-floating') },
@@ -137,4 +137,16 @@ export function listLook(brand: Brand = 'desk'): ListLook {
   };
   cache.set(brand, look);
   return look;
+}
+
+// 목록 제목 오른쪽 글 버튼 — list-header.yaml action(SEED Text Button, 2026-10-16 글자 역할 D2).
+// 상자는 Button ghost small 과 같은지 확인하고(높이 · 좌우 · 모서리 · 글자), 글자색만 action.foreground 로 바꾼다
+function headerActionLook(hspec: ReturnType<typeof loadComponentSpec>, brand: Brand) {
+  const v = resolveState(hspec, {}, 'enabled');
+  const base = buttonLook({ variant: 'ghost', size: 'small' }, brand);
+  const f = base.faces.light.enabled;
+  const want = { height: num(tokenValue(v['action.height'])), padX: num(tokenValue(v['action.paddingX'])), radius: tokenValue(v['action.radius']) };
+  if (want.height !== f.height || want.padX !== f.padX || want.radius !== f.radius) throw new Error(`list-header.yaml action(${JSON.stringify(want)})이 Button ghost small(${f.height} · ${f.padX} · ${f.radius})과 다르다 — list-look 의 글 버튼을 고친다`);
+  const fg = { light: String(tokenValue(v['action.foreground'], 'light', brand)), dark: String(tokenValue(v['action.foreground'], 'dark', brand)) };
+  return recolorButton(base, fg);
 }

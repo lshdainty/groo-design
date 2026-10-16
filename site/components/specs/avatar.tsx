@@ -88,7 +88,7 @@ const Anatomy: Fig = ({ caption }) => {
           </span>
           <span className="relative inline-flex flex-col items-center gap-3">
             <AvatarStackView look={lk} stack={sl()} size={ringSize} zoom={z} people={SIX.slice(0, 3)} marks={{ overlap: { background: MARK, outline: `1px dashed ${MARK_LINE}` } }} />
-            <span className="text-[11px] font-semibold leading-4" style={{ color: MARK_LINE }}>
+            <span className="text-[11px] font-bold leading-4" style={{ color: MARK_LINE }}>
               겹침 {ring.overlap} · 바탕색 링 {ring.ring}(2배)
             </span>
           </span>
@@ -230,7 +230,7 @@ const Stack: Fig = ({ caption }) => {
         <div className="flex min-w-0 flex-col gap-2">
           <Board className="flex min-h-[220px] flex-col items-center justify-center gap-4 overflow-x-auto">
             <AvatarStackView look={lk} stack={st} size={big} zoom={z} people={SIX} marks={{ overlap: { background: MARK, outline: `1px dashed ${MARK_LINE}` } }} />
-            <span className="text-center text-[11px] font-semibold leading-4" style={{ color: MARK_LINE }}>
+            <span className="text-center text-[11px] font-bold leading-4" style={{ color: MARK_LINE }}>
               {big} 을 3배로 — 겹침 {g.overlap}(분홍) · 링 {g.ring} · 뒤가 위 · 앞 {st.max}명 + &ldquo;+{SIX.length - st.max}&rdquo;
             </span>
           </Board>

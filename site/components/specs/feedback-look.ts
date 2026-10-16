@@ -3,7 +3,7 @@
 // 비고 글의 수(액션 6초 · 닫기 −12 · 링크 밑줄 2 …)도 여기서 읽는다 — 문장이 바뀌면 빌드가 멈춰 그림이 낡지 않게.
 import { axisValues, loadComponentSpec, num, resolveState, stateNames, tokenValue, type TypeValue } from '@/lib/component-spec';
 import { color, design, pressScale, proseValue, type Brand } from '@/lib/design-tokens';
-import { buttonLook } from './button-look';
+import { buttonLook, recolorButton } from './button-look';
 import { navKit } from './nav-look';
 import { cardFace } from './card-face';
 import {
@@ -409,6 +409,16 @@ function resultButton(raw: unknown, what: string, brand: Brand) {
   if (f.height !== height) throw new Error(`${RESULT} 의 ${what} 높이 ${height} 가 button.yaml ${variant} · ${size}(${f.height})와 다르다`);
   return { variant, size, height, look, lineHeight: parseFloat(f.lineHeight ?? '0'), padY: f.padY };
 }
+// 둘째 버튼 — 글 버튼(SEED Text Button): Button ghost small 의 상자에 글자색만 바꾼다(result-section.yaml secondaryButton.foreground)
+function secondaryFg(raw: unknown, brand: Brand) {
+  const out = {} as Record<'light' | 'dark', string>;
+  for (const m of ['light', 'dark'] as const) {
+    const fg = tokenValue(unbox(must(raw, 'secondaryButton.foreground', RESULT)), m, brand);
+    if (typeof fg !== 'string') throw new Error(`${RESULT} 의 secondaryButton.foreground 를 색으로 풀지 못했다`);
+    out[m] = fg;
+  }
+  return out;
+}
 export function resultSectionLook(brand: Brand = 'desk'): ResultSectionLook {
   const hit = resultCache.get(brand);
   if (hit) return hit;
@@ -448,7 +458,10 @@ export function resultSectionLook(brand: Brand = 'desk'): ResultSectionLook {
     sizes,
     actions: { gap: len(b['actions.gap'], 'actions.gap', RESULT) },
     primary: resultButton(b['primaryButton.buttonSize'], 'primaryButton.buttonSize', brand),
-    secondary: resultButton(b['secondaryButton.buttonSize'], 'secondaryButton.buttonSize', brand),
+    secondary: (() => {
+      const r = resultButton(b['secondaryButton.buttonSize'], 'secondaryButton.buttonSize', brand);
+      return { ...r, look: recolorButton(r.look, secondaryFg(b['secondaryButton.foreground'], brand)) };
+    })(),
     motion: { enter: motionPair(enter.duration, enter.easing, '결과로 바뀜', RESULT) },
     screen: screen(brand),
   };

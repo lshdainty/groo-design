@@ -22,7 +22,7 @@
 | ⓑ Title | 제목 — 무슨 상태인지 한 줄. |
 | ⓒ Description | 설명 — 왜 · 무엇을 하면 되는지, 최대 두 줄. |
 | ⓓ First Button | 첫 버튼 — 해결 · 다음 동작(다시 시도 · 거래 추가). |
-| ⓔ Second Button | 둘째 버튼 — 보조 동작(홈으로 · 다른 파일 가져오기). 글 버튼. |
+| ⓔ Second Button | 둘째 버튼 — 보조 동작(홈으로 · 다른 파일 가져오기). 글 버튼(SEED Text Button — 14 · 700 · `fg-neutral-muted` · 36). |
 
 [표: 부위](result-section.yaml#slots)
 
@@ -136,7 +136,7 @@ import { ResultSection } from "@/components/ui/result-section"
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 16.41 · 13.42(바탕 `bg-layer-default`), 설명 `fg-neutral-muted` 7.11 · 6.67 ✓ |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 16.41 · 13.42(바탕 `bg-layer-default`), 설명 · 둘째 버튼 `fg-neutral-muted` 7.11 · 6.67 ✓ |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 아이콘은 장식 — 상태는 제목이 말한다(실패 `fg-critical` 5.06 · 6.08, 완료 `fg-positive`) |
 | **WCAG 1.3.1** Info and relationships | 제목은 제목 태그(화면 전체면 그 화면의 제목 단계) |
 | **WCAG 4.1.3** Status messages | 결과로 바뀌면 `role="status"` 로 알린다 |
@@ -173,6 +173,10 @@ import { ResultSection } from "@/components/ui/result-section"
 - **404 · 화면 오류도 이 틀로** — SEED 에는 없는 쓰임이다.
 
 ## Migration notes
+
+### 2026-10-16 — 둘째 버튼을 SEED Text Button 으로(글자 역할 D2)
+
+사용자가 [글자 역할 비교 페이지](https://claude.ai/artifact/X9n6tDZbKSP7GeLtodtz8N)에서 글 버튼을 SEED Text Button 한 벌로 정했다(D2 A). 둘째 버튼은 Button ghost small(14 · 700 · `fg-neutral`)에서 글자색만 `fg-neutral-muted` 로 바뀐다 — 상자(36 · 좌우 14 · 모서리 8 · 누름 바탕)는 그대로 SEED Text Button 과 같다. Card 머리 동작 · 아코디언 모두 펼치기 · List Header 오른쪽 버튼과 한 벌이다(DESIGN.md Typography 의 "글자 역할" R16). 옛 스펙은 `result-section.history/v-pre-text-roles.*`.
 
 ### 2026-10-02 — 새로 둔다(SEED Result Section)
 

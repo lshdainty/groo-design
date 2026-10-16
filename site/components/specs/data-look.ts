@@ -345,8 +345,6 @@ export function cardLook(): CardLook {
       radius: len(b['headerAction.radius'], `${F} headerAction.radius`),
       type: typeOf(b['headerAction.typography'], `${F} headerAction.typography`, b['headerAction.fontWeight']),
       fg: tok(b['headerAction.foreground'], brand, `${F} headerAction.foreground`),
-      icon: len(b['headerAction.iconSize'], `${F} headerAction.iconSize`),
-      gap: len(b['headerAction.gap'], `${F} headerAction.gap`),
       touch: touchOf(b['headerAction.touchTarget'], `${F} headerAction.touchTarget`),
       bg: tok(hov['headerAction.background'], brand, `${F} hovered headerAction.background`),
       press: pressOf(pr['headerAction.scale'], `${F} pressed headerAction.scale`, motionOf('card', '누름 — 축소')),

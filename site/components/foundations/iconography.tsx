@@ -108,7 +108,7 @@ export function IconStateFigure() {
   );
   const row = (title: string, children: ReactNode) => (
     <div className="flex flex-col gap-3">
-      <span className="text-[12px] font-semibold text-[#62697A]">{title}</span>
+      <span className="text-[12px] font-bold text-[#62697A]">{title}</span>
       <div className="grid grid-cols-4 gap-4">{children}</div>
     </div>
   );
@@ -179,7 +179,7 @@ export function IconTextFigure() {
           9월 30일 (수)
           <Measure style={{ left: s16, top: -6, width: gap, height: 32 }} label={`x2 ${gap}`} />
         </span>
-        <span className="inline-flex items-center text-[14px] font-semibold text-[#1A1F2E]" style={{ gap }}>
+        <span className="inline-flex items-center text-[14px] font-bold text-[#1A1F2E]" style={{ gap }}>
           카드 결제 예정
           <ChevronRight size={s16} strokeWidth={baseStroke()} color={color('fg-neutral-subtle')} aria-hidden />
         </span>

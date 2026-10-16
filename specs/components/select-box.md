@@ -324,7 +324,7 @@ const toggle = (code: string, on: boolean) =>
 - **누름 · 호버 바탕은 불투명한 `bg-layer-default-pressed`** — SEED 의 transparent-pressed 는 투명도가 있어 검사기가 받지 않는다(v102).
 - **웹의 호버 · 포커스 상태를 둔다**(v106) — 호버는 누름과 같은 바탕.
 - **펼침 안쪽 여백을 컴포넌트가 정한다**(좌우 20 · 아래 16) — SEED 는 쓰는 쪽이 정한다(예제 값이 이것이다).
-- **여럿 고르기의 체크는 Checkbox 의 Ghost 칸**(체크 14) — SEED 는 선택 상자 전용 체크(15)이고 호버에 색이 한 단계 진해진다. porest 는 `fg-placeholder` 와 `fg-neutral-subtle` 이 같은 색이라 호버 색 변화가 없다.
+- **여럿 고르기의 체크는 Checkbox 의 Ghost 칸**(체크 14) — SEED 는 선택 상자 전용 체크(15)이고 호버에 색이 한 단계 진해진다. porest 는 호버에 색을 바꾸지 않는다 — 정할 때 `fg-placeholder` 와 `fg-neutral-subtle` 이 같은 색이었다. v119(2026-10-16 글자 역할 D7)에서 `fg-placeholder` 가 SEED 처럼 gray-600 으로 옅어져 두 색은 이제 갈리지만, 호버 색은 이 결정 밖이라 그대로 둔다.
 - **칸이 비지 않게 한다** — 5개를 2열에 두는 것처럼 빈 칸이 생기면 1열로 쌓거나 열 수를 맞춘다(제품 조사에서 더했다).
 - 묶음의 칸 이름 · 설명 · 오류는 묶음이 아니라 [Field](field.md) 가 그린다(2026-10-01 — SEED 의 Select Box Group Field 자리). SEED 의 Fieldset 은 따로 두지 않는다.
 - 고른 테두리 `stroke-neutral-contrast` 는 v113 에 더한 역할이다(SEED 와 같은 gray-1000).

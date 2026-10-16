@@ -95,7 +95,7 @@ export function Phone({
           color: fg,
         }}
       >
-        <div className="flex h-10 shrink-0 items-center justify-between px-6 text-[13px] font-semibold" style={{ background: rc('bg-layer-default', mode) }}>
+        <div className="flex h-10 shrink-0 items-center justify-between px-6 text-[13px] font-bold" style={{ background: rc('bg-layer-default', mode) }}>
           <span>9:41</span>
           <span className="flex items-center gap-1">
             <Signal size={14} />
@@ -196,7 +196,7 @@ export function Row({
         )}
       </span>
       {amount && (
-        <span className="text-[15px] font-semibold tabular-nums" style={{ color: rc('fg-neutral', mode) }}>
+        <span className="text-[15px] font-bold tabular-nums" style={{ color: rc('fg-neutral', mode) }}>
           {amount}
         </span>
       )}

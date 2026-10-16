@@ -229,6 +229,10 @@ import { Field } from "@/components/ui/field"
 
 ## Migration notes
 
+### 2026-10-16 — 지금 색 칸 아래 글을 subtle 로(글자 역할 D5)
+
+사용자가 [글자 역할 비교 페이지](https://claude.ai/artifact/X9n6tDZbKSP7GeLtodtz8N)에서 보조 글의 규칙을 정했다(D5 A — 덧붙인 정보는 `fg-neutral-subtle`, 문장으로 된 보조 글은 `fg-neutral-muted`). 지금 색 칸 아래 색 이름(12)은 이름표라 muted → subtle(흰 표면 5.50 · 다크 6.09 · 시트 5.27). 옛 스펙은 `color-swatch.history/v-pre-text-roles.*`.
+
 ### 2026-10-09 — 진한 원 칸 · 지금 색 칸으로 다시 쓴다
 
 사용자가 [입력 비교 페이지](https://claude.ai/artifact/CwVJDATSmLtwQoH67wh1zj)에서 정했다 — 칸은 진한 색(12C — v110 700 · 다크 800-dark, 체크는 라이트 흰 · 다크 `fg-neutral-inverted`), 원 40(누르는 44) · 5 × 2 고정 · 고르면 2px 짙은 고리(띄움 2) + 체크 · ↑ ↓ 는 위아래 줄(13B), 새 항목은 쓰지 않은 첫 색 · 편집은 고르지 않으면 바꾸지 않고 팔레트 밖 색은 "지금 색" 칸(14B). 그리고 "따라오는 것" — 색 이름 · 색상환 차례 5 × 2 · radiogroup 2차원 화살표 · 웹 · 앱 같은 v110 색 · HR 부서 색은 HR 적용 때. 옅게 섞기(12A) · v111 weak(12B) · 폭 나누기 네모(13A) · 44 둥근 네모(13C) · 늘 빨강(14A)은 고르지 않았고, 색 필수는 데이터 결정(9C)에서 고르지 않았다. 옛 스펙은 `color-swatch.history/v-pre-seed-input.*` 에 남겼다.

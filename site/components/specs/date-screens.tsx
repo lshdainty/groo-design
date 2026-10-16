@@ -143,7 +143,7 @@ export function HeightTag({ top, h, label, side = 'right', gap = 10 }: { top: nu
   return (
     <span aria-hidden className="pointer-events-none absolute flex items-center" style={right ? { top, height: h, left: `calc(100% + ${gap}px)`, zIndex: 5 } : { top, height: h, right: `calc(100% + ${gap}px)`, zIndex: 5, flexDirection: 'row-reverse' }}>
       <span style={right ? { alignSelf: 'stretch', width: 6, borderTop: line, borderBottom: line, borderRight: line } : { alignSelf: 'stretch', width: 6, borderTop: line, borderBottom: line, borderLeft: line }} />
-      <span className="whitespace-nowrap text-[11px] font-semibold leading-4" style={right ? { color: MARK_LINE, marginLeft: 4 } : { color: MARK_LINE, marginRight: 4 }}>
+      <span className="whitespace-nowrap text-[11px] font-bold leading-4" style={right ? { color: MARK_LINE, marginLeft: 4 } : { color: MARK_LINE, marginRight: 4 }}>
         {label}
       </span>
     </span>

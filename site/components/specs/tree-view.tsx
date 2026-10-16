@@ -54,7 +54,7 @@ export function OrgChart({ mode = 'auto', dept = '경영지원팀' }: { mode?: M
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderRadius: 12, border: `1px solid ${rc('stroke-neutral-weak', mode, 'hr')}`, background: rc('bg-layer-default', mode, 'hr'), minWidth: 160 }}>
       <span style={{ width: 32, height: 32, borderRadius: 9999, display: 'grid', placeItems: 'center', fontSize: 13, fontWeight: 700, background: rc(lead ? 'chart-green-weak' : 'chart-blue-weak', mode, 'hr'), color: rc(lead ? 'chart-green-contrast' : 'chart-blue-contrast', mode, 'hr') }}>{name.slice(0, 1)}</span>
       <span style={{ display: 'flex', flexDirection: 'column' }}>
-        <span style={{ fontSize: 14, fontWeight: 600, color: rc('fg-neutral', mode, 'hr') }}>{name}</span>
+        <span style={{ fontSize: 14, fontWeight: 700, color: rc('fg-neutral', mode, 'hr') }}>{name}</span>
         <span style={{ fontSize: 12, color: rc('fg-neutral-subtle', mode, 'hr') }}>{role}</span>
       </span>
     </div>
@@ -178,7 +178,7 @@ const Row: Fig = ({ caption }) => {
       <RowNote
         lineHeight={lh}
         template={lv === 1 ? `{h} — 이름 {n}줄 · 왼쪽 ${padL(lv)}` : `{h} · 왼쪽 ${padL(lv)} = ${l.row.padL} + ${lv - 1} × ${l.row.indent}`}
-        style={{ position: 'absolute', left: right + l.root.padX + 20, top: '50%', transform: 'translateY(-50%)', whiteSpace: 'nowrap', fontSize: 11, lineHeight: '16px', fontWeight: 600, color: MARK_LINE }}
+        style={{ position: 'absolute', left: right + l.root.padX + 20, top: '50%', transform: 'translateY(-50%)', whiteSpace: 'nowrap', fontSize: 11, lineHeight: '16px', fontWeight: 700, color: MARK_LINE }}
       />
     </span>
   );

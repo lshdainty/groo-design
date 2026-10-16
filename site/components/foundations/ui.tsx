@@ -138,7 +138,7 @@ export function SourceTable({ heading, n = 0, minWidth }: { heading: string; n?:
       {rows.map((r, i) =>
         r.slice(1).every((c) => c === '') ? (
           <tr key={i}>
-            <td colSpan={head.length} className="bg-fd-secondary/40 font-semibold">
+            <td colSpan={head.length} className="bg-fd-secondary/40 font-bold">
               <Inline text={r[0]} />
             </td>
           </tr>
@@ -168,7 +168,7 @@ export function Measure({ style, label, vertical = false }: { style: CSSProperti
     <div className="absolute flex items-center justify-center" style={{ background: MARK, ...style }}>
       {label && (
         <span
-          className="rounded px-1 text-[10px] font-semibold leading-4 text-white"
+          className="rounded px-1 text-[10px] font-bold leading-4 text-white"
           style={{ background: MARK_LINE, writingMode: vertical ? 'vertical-rl' : undefined }}
         >
           {label}

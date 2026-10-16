@@ -234,7 +234,7 @@ const TextHeight: Fig = ({ caption }) => (
             <span className="relative shrink-0">
               <Bone text={t} width={150} />
               <span aria-hidden className="absolute flex items-center" style={{ left: '100%', top: 0, bottom: 0, marginLeft: 6, borderLeft: `2px solid ${MARK_LINE}`, paddingLeft: 4 }}>
-                <span className="rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+                <span className="rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
                   {v.lineHeight}
                 </span>
               </span>
@@ -354,7 +354,7 @@ const SurfaceGuide: Fig = ({ caption }) => {
         <Verdict ok={false} note={`회색 페이지 바탕 위에 바로 — 바탕과 ${on('basement', 'light')}:1, 같은 색이라 사라진다. 카드 면을 먼저 그린다`} bg={BASEMENT}>
           <div className="relative w-[300px]" style={{ paddingBottom: 4, outline: `1px dashed ${MARK_LINE}`, outlineOffset: -1 }}>
             <TxSkeletonRows n={3} widths={{ ...SK_ROW, title: 110, detail: 70 }} />
-            <span className="absolute right-2 top-2 rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+            <span className="absolute right-2 top-2 rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
               스켈레톤 세 줄이 여기 있다
             </span>
           </div>

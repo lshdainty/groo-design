@@ -320,7 +320,7 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 트리거 값 `fg-neutral` 16.41 · 13.42, placeholder 5.50 · 6.09(누름 바탕 위 5.18 · 4.68), 읽기 전용 값 15.20 · 10.32. 목록 글 `fg-neutral` 16.41 · 11.62, 묶음 제목 · 설명 `fg-neutral-subtle` 5.50 · 5.27(알약 위 5.18 · 4.68) ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 트리거 값 `fg-neutral` 16.41 · 13.42, 읽기 전용 값 15.20 · 10.32. placeholder 4.18 · 4.13(누름 바탕 위 3.94 · 3.18) — 4.5:1 밑, 사용자가 대가를 알고 SEED 값을 골랐다(2026-10-16 글자 역할 D7, DESIGN v119). 목록 글 `fg-neutral` 16.41 · 11.62, 묶음 제목 · 설명 `fg-neutral-subtle` 5.50 · 5.27(알약 위 5.18 · 4.68) ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 트리거 키보드 포커스 링 `stroke-focus-ring` Desk 8.38 · 6.10 · HR 5.06 · 6.23, 오류 테두리 5.06 · 6.08, 고른 표시 체크 16.41 · 11.62 ✓. 누름 · 호버 · 키보드 위치 알약은 목록 바탕과 1.06 · 1.13 ⚠ — SEED 그대로 둔다(2026-10-01 사용자 결정, 키보드 위치에 링을 더하는 안은 고르지 않았다). 짚은 선택지는 화면 읽기 프로그램에 `aria-activedescendant` 로 알린다. 기본 1px 테두리(1.23 · 1.56)는 라벨 · 셰브론이 칸을 함께 알린다(SEED 와 같다) |
 | **WCAG 2.4.7** Focus visible | 트리거는 키보드 포커스에 링. 목록 안 키보드 위치는 알약(SEED — 위 1.4.11 의 ⚠) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 트리거 · 선택지 모든 크기 ✓(가장 작은 선택지 medium 39) |

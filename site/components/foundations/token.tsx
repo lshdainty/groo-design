@@ -5,7 +5,7 @@ import { Figure, Swatch, Table, Token } from './ui';
 function Box({ title, children, tone }: { title: string; children: React.ReactNode; tone: string }) {
   return (
     <div className="flex flex-col gap-2 rounded-xl bg-white p-3">
-      <span className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: tone }}>{title}</span>
+      <span className="text-[11px] font-bold uppercase tracking-wide" style={{ color: tone }}>{title}</span>
       {children}
     </div>
   );
@@ -39,7 +39,7 @@ export function TokenTierFigure() {
         {cols.map((c, i) => <b key={c} className="text-center text-[12px]" style={{ color: tones[i] }}>{c}</b>)}
         {rows.map(([label, raw, scale, sem, use]) => (
           <div key={label} className="contents">
-            <span className="text-[12px] font-semibold text-fd-foreground">{label}</span>
+            <span className="text-[12px] font-bold text-fd-foreground">{label}</span>
             <Box title="값" tone={tones[0]}>{raw}</Box>
             <Box title="이름" tone={tones[1]}>{scale}</Box>
             <Box title="뜻" tone={tones[2]}>{sem}</Box>
@@ -63,7 +63,7 @@ export function TokenModesTable() {
     <Table head={['모드', '갈래', '토큰', '값']} minWidth={640}>
       {rows.map(([m, w, t, v]) => (
         <tr key={m}>
-          <td className="whitespace-nowrap font-semibold">{m}</td>
+          <td className="whitespace-nowrap font-bold">{m}</td>
           <td className="whitespace-nowrap text-fd-muted-foreground">{w}</td>
           <td>{t}</td>
           <td className="tabular-nums">{v}</td>

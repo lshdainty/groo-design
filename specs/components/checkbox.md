@@ -244,7 +244,7 @@ import { Checkmark } from "@/components/ui/checkbox"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(라벨 ≥ 4.5:1) | 라벨 `fg-neutral` × 흰 표면 16:1+ ✓ |
-| **WCAG 1.4.11** Non-text contrast(UI ≥ 3:1) | 선택 안 된 칸 테두리 `stroke-neutral-solid` × 표면 4.2:1(다크 4.1:1) ✓ · 선택 채움 `bg-neutral-inverted` 16:1+ ✓ · Ghost 선택 안 됨은 `fg-placeholder` 5.5:1 ✓ |
+| **WCAG 1.4.11** Non-text contrast(UI ≥ 3:1) | 선택 안 된 칸 테두리 `stroke-neutral-solid` × 표면 4.2:1(다크 4.1:1) ✓ · 선택 채움 `bg-neutral-inverted` 16:1+ ✓ · Ghost 선택 안 됨은 `fg-placeholder` 4.18:1(다크 4.13:1) ✓ — v119 에서 gray-600 으로 옅어졌다(2026-10-16 글자 역할 D7) |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에만 링 2px · 띄움 2px(`stroke-focus-ring`) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 칸 20 · 24 + 라벨까지 묶은 줄 32 · 36 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 라벨까지 묶어 위아래 44 로 넓힌다 ✓. 묶음 안에서도 줄 사이 12 라 줄마다 44 · 48 을 받는다(줄 사이가 4 면 이웃과 겹쳐 36 · 40 이 된다) — 목록 행에서 칸만 쓰면 행 전체 |

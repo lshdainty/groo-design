@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronDown, ChevronsDownUp, ChevronsUpDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
  *   AccordionPlainItem   상세가 없는 항목 — title · description · prefixIcon. 단추 · 머리말 · 꺾쇠가 없고 높이 · 글 시작은 트리거와 같다
  *   AccordionHeader      시트 · 대화상자의 목록 머리 — title(건수를 붙인다) + 오른쪽 자식(모두 펼치기). 카드 안이면 CardHeader 가 이 자리다
  *   AccordionExpandAll   모두 펼치기 — controls(아코디언 id) · values · expandable(상세가 있는 항목의 value) · onValuesChange.
- *                        모두 펼쳐져 있으면 "모두 접기" — 글 · 아이콘은 단추가 정한다. 이름은 보이는 글, aria-controls 만(aria-expanded 없음)
+ *                        모두 펼쳐져 있으면 "모두 접기" — 글은 단추가 정한다(글 버튼 — SEED Text Button, 아이콘 없음). 이름은 보이는 글, aria-controls 만(aria-expanded 없음)
  *
  *   useExpandMotion      펼침 · 접힘 모션 — Collapsible · Tree View 의 하위 묶음 · List 의 하위 줄도 이것을 쓴다(모두 "Accordion 과 같다")
  *   accordionTriggerVariants · accordionTriggerContentVariants · accordionTitleVariants · accordionDescriptionVariants ·
@@ -439,9 +439,9 @@ export interface AccordionHeaderProps extends Omit<React.HTMLAttributes<HTMLDivE
   title: React.ReactNode;
 }
 
-// 목록 머리 — 시트 · 대화상자에서 아코디언 위 한 줄. 높이 32 · 아래 8 · 제목 t5 · 700(카드 머리와 같은 글) + 오른쪽 모두 펼치기
+// 목록 머리 — 시트 · 대화상자에서 아코디언 위 한 줄. 높이 36 · 아래 8 · 제목 t5 · 700(카드 머리와 같은 글) + 오른쪽 모두 펼치기
 const AccordionHeader = React.forwardRef<HTMLDivElement, AccordionHeaderProps>(({ title, className, children, ...props }, ref) => (
-  <div ref={ref} data-slot="accordion-header" className={cn("mb-x2 flex min-h-8 items-center justify-between gap-x2", className)} {...props}>
+  <div ref={ref} data-slot="accordion-header" className={cn("mb-x2 flex min-h-9 items-center justify-between gap-x2", className)} {...props}>
     <div data-slot="accordion-header-title" className="min-w-0 font-sans text-t5 font-bold text-fg-neutral break-keep [overflow-wrap:break-word]">
       {title}
     </div>
@@ -450,11 +450,11 @@ const AccordionHeader = React.forwardRef<HTMLDivElement, AccordionHeaderProps>((
 ));
 AccordionHeader.displayName = "AccordionHeader";
 
-// 모두 펼치기 — Card 머리 동작과 같은 모양: 보이는 상자 32 · 왼쪽 8 · 오른쪽 4 · 모서리 8, 글 t4 · 500 · fg-neutral-subtle + 아이콘 16(글 뒤 2),
-// 누르는 영역 44(::before). 누르면 바탕 + 2px 거리 축소
+// 모두 펼치기 — Card 머리 동작과 같은 글 버튼(SEED Text Button, 2026-10-16 글자 역할 D2): 보이는 상자 36 · 좌우 14 · 모서리 8,
+// 글 t4 · 700 · fg-neutral-muted · 아이콘 없음, 오른쪽 −14 로 내어 글자 끝이 머리 여백에. 누르는 영역 44(::before). 누르면 바탕 + 2px 거리 축소
 const EXPAND_ALL = [
-  "relative inline-flex h-8 shrink-0 cursor-pointer items-center gap-x0_5 rounded-r2 border-0 bg-transparent pl-x2 pr-x1",
-  "font-sans text-t4 font-medium text-fg-neutral-subtle [&_svg]:size-4 [&_svg]:shrink-0",
+  "relative -mr-x3_5 inline-flex h-9 shrink-0 cursor-pointer items-center rounded-r2 border-0 bg-transparent px-x3_5",
+  "font-sans text-t4 font-bold text-fg-neutral-muted",
   "before:absolute before:left-1/2 before:top-1/2 before:h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "[@media(hover:hover)]:hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
@@ -499,7 +499,6 @@ const AccordionExpandAll = React.forwardRef<HTMLButtonElement, AccordionExpandAl
         {...props}
       >
         <span>{allOpen ? "모두 접기" : "모두 펼치기"}</span>
-        {allOpen ? <ChevronsDownUp aria-hidden strokeWidth={2} /> : <ChevronsUpDown aria-hidden strokeWidth={2} />}
       </button>
     );
   },

@@ -53,7 +53,7 @@ export function Band({ style, label, vertical = false }: { style: CSSProperties;
   return (
     <span aria-hidden className="pointer-events-none absolute flex items-center justify-center" style={{ background: MARK, zIndex: 4, ...style }}>
       {label && (
-        <span className="rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE, writingMode: vertical ? 'vertical-rl' : undefined }}>
+        <span className="rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE, writingMode: vertical ? 'vertical-rl' : undefined }}>
           {label}
         </span>
       )}

@@ -111,7 +111,7 @@ export function PressDemo({ c, t, colors: k, heights }: { c: PressConst; t: Pres
             <Pressable
               label="버튼"
               {...common}
-              className="mx-auto flex items-center justify-center rounded-lg px-5 text-[14px] font-semibold"
+              className="mx-auto flex items-center justify-center rounded-lg px-5 text-[14px] font-bold"
               style={{ height: heights.button, background: k.brand, color: k.onBrand }}
               pressedStyle={{ background: k.brandPressed }}
             >
@@ -122,7 +122,7 @@ export function PressDemo({ c, t, colors: k, heights }: { c: PressConst; t: Pres
         <Pressable
           label="가로로 긴 버튼"
           {...common}
-          className="flex w-full items-center justify-center rounded-xl text-[15px] font-semibold"
+          className="flex w-full items-center justify-center rounded-xl text-[15px] font-bold"
           style={{ height: heights.wide, background: k.brand, color: k.onBrand }}
           pressedStyle={{ background: k.brandPressed }}
         >

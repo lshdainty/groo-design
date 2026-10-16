@@ -31,7 +31,7 @@ export function MeasureH({ children, prefix = '', suffix = '', side = 'right', s
       {size && (
         <span aria-hidden className="pointer-events-none absolute flex items-center" style={{ top: 0, height: size.h, [side]: -gap - 6, flexDirection: side === 'right' ? 'row' : 'row-reverse', zIndex: 4 } as CSSProperties}>
           <span style={{ alignSelf: 'stretch', width: 6, borderTop: `1px solid ${MARK_LINE}`, borderBottom: `1px solid ${MARK_LINE}`, [side === 'right' ? 'borderRight' : 'borderLeft']: `1px solid ${MARK_LINE}` } as CSSProperties} />
-          <span className="whitespace-nowrap px-1 text-[11px] font-semibold leading-4" style={{ color: MARK_LINE, position: 'absolute', [side === 'right' ? 'left' : 'right']: 10 } as CSSProperties}>
+          <span className="whitespace-nowrap px-1 text-[11px] font-bold leading-4" style={{ color: MARK_LINE, position: 'absolute', [side === 'right' ? 'left' : 'right']: 10 } as CSSProperties}>
             {`${prefix}${Math.round(size.h / scale).toLocaleString('ko-KR')}${suffix}`}
           </span>
         </span>

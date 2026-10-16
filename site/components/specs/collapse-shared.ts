@@ -42,7 +42,7 @@ export type AccLook = TriggerLook & {
   separated: { gap: number; borderW: number; border: IColor; radius: number; ringRadius: number };
   // 시트 · 대화상자의 목록 머리 — 제목 + 모두 펼치기
   header: { minH: number; gap: number; marginBottom: number; title: IType & { fg: IColor } };
-  expandAll: { h: number; padL: number; padR: number; radius: number; type: IType; fg: IColor; icon: number; gap: number; touch: number; bg: IColor; press: IPress; motion: IMotion; labels: { expand: string; collapse: string }; ring: { width: number; offset: number; color: IColor } };
+  expandAll: { h: number; padL: number; padR: number; radius: number; type: IType; fg: IColor; touch: number; bg: IColor; press: IPress; motion: IMotion; labels: { expand: string; collapse: string }; ring: { width: number; offset: number; color: IColor } };
   // 놓인 면 — 화면 · 카드(bg-layer-default) · 시트 · 대화상자(bg-layer-floating) · 바닥
   surfaces: { default: IColor; floating: IColor; basement: IColor };
 };

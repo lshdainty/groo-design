@@ -113,7 +113,7 @@ export function AssetsPhone({ mode = 'auto', scale = 0.62, h = 560, bubble = tru
         {ASSETS.map(([name, amount], i) => (
           <div key={name} style={{ display: 'flex', justifyContent: 'space-between', gap: 12, padding: '12px 0', borderBottom: i === ASSETS.length - 1 ? 'none' : `1px solid ${rc('stroke-neutral-subtle', mode)}` }}>
             <span style={{ fontSize: 15, lineHeight: '20px', color: rc('fg-neutral', mode) }}>{name}</span>
-            <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 600, color: rc('fg-neutral', mode) }}>{amount}</span>
+            <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 700, color: rc('fg-neutral', mode) }}>{amount}</span>
           </div>
         ))}
       </div>

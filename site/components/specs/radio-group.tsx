@@ -52,7 +52,7 @@ function Surface({ mode = 'auto', children, className = '' }: { mode?: Mode; chi
 }
 function Title({ children, mode = 'auto', id }: { children: ReactNode; mode?: Mode; id?: string }) {
   return (
-    <span id={id} className="mb-1 block text-[13px] font-semibold" style={{ color: rc('fg-neutral-muted', mode) }}>
+    <span id={id} className="mb-1 block text-[13px] font-bold" style={{ color: rc('fg-neutral-muted', mode) }}>
       {children}
     </span>
   );
@@ -226,7 +226,7 @@ const States: Fig = ({ caption }) => (
         ] as [string, RadioCombo][]
       ).map(([name, combo]) => (
         <div key={name} className="overflow-x-auto rounded-xl pk-surface p-5">
-          <div className="mb-3 text-[12px] font-semibold pk-text">{name}</div>
+          <div className="mb-3 text-[12px] font-bold pk-text">{name}</div>
           <table className="w-full border-collapse">
             <thead>
               <tr>

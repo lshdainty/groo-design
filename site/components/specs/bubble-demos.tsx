@@ -100,7 +100,7 @@ export function HideTipDemo({ kit, top, mode = 'auto' }: { kit: MenuKit; top: To
           {AMOUNTS.map(([name, amount], i) => (
             <div key={name} style={{ display: 'flex', justifyContent: 'space-between', gap: 12, padding: '10px 0', borderBottom: i === AMOUNTS.length - 1 ? 'none' : `1px solid ${tone(kit, 'stroke-neutral-subtle', mode)}` }}>
               <span style={{ fontSize: 15, lineHeight: '20px', color: tone(kit, 'fg-neutral', mode) }}>{name}</span>
-              <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 600, fontVariantNumeric: 'tabular-nums', color: tone(kit, 'fg-neutral', mode) }}>{amount}</span>
+              <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: tone(kit, 'fg-neutral', mode) }}>{amount}</span>
             </div>
           ))}
         </div>
@@ -177,7 +177,7 @@ export function ToolbarTooltipDemo({ kit, top, mode = 'auto' }: { kit: MenuKit; 
       <div style={{ paddingTop: top.desktop.navToTitle, fontFamily: st.fontFamily, fontSize: st.fontSize, lineHeight: st.lineHeight, fontWeight: st.fontWeight, color: tone(kit, 'fg-neutral', mode) }}>가계부</div>
       <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 12, fontSize: 15, lineHeight: '20px', color: tone(kit, 'fg-neutral', mode) }}>
         <span>이번 달 지출</span>
-        <span style={{ fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>1,240,000원</span>
+        <span style={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>1,240,000원</span>
       </div>
       <Status kit={kit} mode={mode}>
         {status || '마우스를 올리면 잠시 뒤, Tab 으로 옮기면 바로 이름이 떠요. 손가락으로 누르면 뜨지 않아요.'}
@@ -278,7 +278,7 @@ export function HelpBubblePlayground({ kits, infos }: { kits: Record<Brand, Menu
         >
           {/* 옆으로 열 때는 그쪽에 자리가 남게 트리거를 반대편으로 둔다(모자라면 뒤집힌다) */}
           <div style={{ position: 'absolute', display: 'flex', alignItems: 'center', gap: 2, ...(side === 'right' ? { left: 24, top: '50%', transform: 'translateY(-50%)' } : side === 'left' ? { right: 24, top: '50%', transform: 'translateY(-50%)' } : { left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }) }}>
-            <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 600, color: tone(kit, 'fg-neutral', mode) }}>남은 연차 11일</span>
+            <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 700, color: tone(kit, 'fg-neutral', mode) }}>남은 연차 11일</span>
             <HelpBubbleControl
               key={`${desc}${close}${side}${brand}`}
               look={kit.bubble}

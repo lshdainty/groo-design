@@ -120,7 +120,7 @@ export function MemoMenuDemo({ kit, ov, kebab, mode = 'auto' }: { kit: MenuKit; 
       <div>
         {memos.map((m, i) => (
           <div key={m.id} style={rowLine(kit, mode, i === memos.length - 1)}>
-            <RowText kit={kit} mode={mode} title={m.title} sub={m.sub} badge={m.pinned ? <span style={{ fontSize: 12, lineHeight: '16px', fontWeight: 600, color: tone(kit, 'fg-brand', mode) }}>고정됨</span> : undefined} />
+            <RowText kit={kit} mode={mode} title={m.title} sub={m.sub} badge={m.pinned ? <span style={{ fontSize: 12, lineHeight: '16px', fontWeight: 700, color: tone(kit, 'fg-brand', mode) }}>고정됨</span> : undefined} />
             <ResponsiveMenu kit={kit} ov={ov} mode={mode} groups={groups(m)} title={m.title} label={`${m.title} 더보기`} onAction={act(m)} trigger={(r) => <KebabTrigger look={kebab} mode={mode} label={`${m.title} 더보기`} render={r} />} />
           </div>
         ))}

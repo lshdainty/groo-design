@@ -229,7 +229,9 @@ const Header: Fig = ({ caption }) => {
   const b = c.surface.borderW;
   const p = c.surface.pad;
   const tl = parseFloat(c.title.lineHeight);
-  const top = b + p + (tl - a.h) / 2;
+  // 머리 줄 높이는 제목과 글 버튼 중 큰 쪽 — 작은 쪽이 가운데에 선다
+  const row = Math.max(tl, a.h);
+  const top = b + p + (row - a.h) / 2;
   return (
     <Panel caption={caption}>
       <div className="flex flex-col items-center gap-4">
@@ -241,14 +243,14 @@ const Header: Fig = ({ caption }) => {
             </CardSurface>
             <DimV at={{ left: W + 12, top }} h={a.h} label={`보이는 ${a.h}`} />
             <DimV at={{ left: W + 70, top: top - (a.touch - a.h) / 2 }} h={a.touch} label={`${a.touch}`} />
-            <DimV at={{ left: b + p + 132, top: b + p + tl }} h={c.header.padBottom} label={`${c.header.padBottom}`} />
+            <DimV at={{ left: b + p + 132, top: b + p + row }} h={c.header.padBottom} label={`${c.header.padBottom}`} />
           </div>
         </Floor>
         <Legend
           items={[
             ['제목', `${parseFloat(c.title.fontSize)} / ${tl} · ${c.title.fontWeight} · fg-neutral`],
-            ['전체 보기', `${parseFloat(a.type.fontSize)} · ${a.type.fontWeight} · fg-neutral-subtle + chevron ${a.icon}`],
-            ['보이는 상자', `${a.h} · 모서리 ${a.radius} · 왼쪽 ${a.padL} · 오른쪽 ${a.padR}`],
+            ['전체 보기', `글 버튼(SEED Text Button) ${parseFloat(a.type.fontSize)} · ${a.type.fontWeight} · fg-neutral-muted · 꺾쇠 없음`],
+            ['보이는 상자', `${a.h} · 모서리 ${a.radius} · 좌우 ${a.padL} — 오른쪽 ${a.padR} 만큼 바깥으로 내어 글자 끝이 여백 선에`],
             ['누르는 영역', `${a.touch}(분홍 칸)`],
             ['머리 ↔ 본문', `${c.header.padBottom}`],
           ]}

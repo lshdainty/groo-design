@@ -99,7 +99,7 @@ const SEARCH = {
 // 본문 맨 위 제목(ScreenTitle) — 홀로 서면 cn(SCREEN_TITLE, "mt-nav-to-title", FOCUS_INSIDE), 제목 줄 안에서는 cn(SCREEN_TITLE, FOCUS_INSIDE)
 const SCREEN_TITLE = "m-0 font-sans text-screen-title font-bold text-fg-neutral";
 const SCREEN_TITLE_ROW = "mt-nav-to-title flex items-end gap-x4";
-const SCREEN_DESCRIPTION = "m-0 mt-x0_5 text-t3 font-normal text-fg-neutral-subtle break-keep [overflow-wrap:break-word]";
+const SCREEN_DESCRIPTION = "m-0 mt-x0_5 text-t5 font-normal text-fg-neutral-muted break-keep [overflow-wrap:break-word]";
 const SCREEN_ACTIONS = "flex shrink-0 flex-wrap items-center justify-end gap-x2";
 
 // ── input.tsx 의 cva 와 같은 값 — 검색칸(outline · medium)만 ──────────────────

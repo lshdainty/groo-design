@@ -46,7 +46,7 @@ rules:
       message:
         typography: $text-t4
         fontWeight: 400
-        foreground: { value: $color-fg-neutral-muted, note: "\"더 불러오지 못했어요.\" — 이미 받은 줄은 그대로 둔다" }
+        foreground: { value: $color-fg-neutral-muted, note: "\"더 불러오지 못했어요.\" — 이미 받은 줄은 그대로 둔다. 문장으로 된 상태 문구라 muted(2026-10-16 사용자 결정 글자 역할 D5 — 그대로 둔다)" }
       retryButton:
         buttonSize: { value: small 36, note: "Button neutralWeak small \"다시 시도\" — 누르면 그 쪽을 다시 받는다(로딩을 건다)" }
         marginTop: $spacing-x3

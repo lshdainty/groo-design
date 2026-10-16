@@ -219,7 +219,7 @@ const States: Fig = ({ caption }) => (
         ] as [string, SwitchCombo][]
       ).map(([name, combo]) => (
         <div key={name} className="overflow-x-auto rounded-xl pk-surface p-5">
-          <div className="mb-3 text-[12px] font-semibold pk-text">{name}</div>
+          <div className="mb-3 text-[12px] font-bold pk-text">{name}</div>
           <table className="w-full border-collapse">
             <thead>
               <tr>

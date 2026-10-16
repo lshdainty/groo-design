@@ -236,7 +236,7 @@ function CatRows({ cat, rows }: { cat: string; rows: Institution[] }) {
   return (
     <>
       <tr>
-        <td colSpan={5} className="border-b border-fd-border bg-fd-secondary/30 px-3 py-1.5 text-[12px] font-semibold text-fd-foreground">
+        <td colSpan={5} className="border-b border-fd-border bg-fd-secondary/30 px-3 py-1.5 text-[12px] font-bold text-fd-foreground">
           {cat} <span className="font-normal text-fd-muted-foreground">{rows.length}</span>
         </td>
       </tr>

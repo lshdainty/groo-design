@@ -161,7 +161,7 @@ function Inset({ w, label, vertical = false }: { w: number; label?: string; vert
   return (
     <span aria-hidden className="relative flex shrink-0 items-center justify-center" style={vertical ? { height: w, width: 12, background: MARK } : { width: w, height: 12, background: MARK }}>
       {label && (
-        <span className="absolute rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE, ...(vertical ? { left: 14 } : { top: 14 }) }}>
+        <span className="absolute rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE, ...(vertical ? { left: 14 } : { top: 14 }) }}>
           {label}
         </span>
       )}

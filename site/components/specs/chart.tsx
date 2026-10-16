@@ -338,7 +338,7 @@ const DonutThickness: Fig = ({ caption }) => {
                     <span className="text-[12px] tabular-nums" style={{ color: rc('fg-neutral-subtle', mode) }}>
                       지름 {d} · 두께 <b style={{ color: rc('fg-neutral', mode) }}>{w}</b> · 구멍 {d - w * 2}
                     </span>
-                    <span className="text-[11.5px] font-semibold" style={{ color: rc(fits ? 'fg-positive' : 'fg-critical', mode) }}>
+                    <span className="text-[11.5px] font-bold" style={{ color: rc(fits ? 'fg-positive' : 'fg-critical', mode) }}>
                       {fits ? '가운데 합계' : '가운데 글 뺌 → 목록 위 합계'}
                     </span>
                   </div>

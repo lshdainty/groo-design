@@ -1,0 +1,37 @@
+# List Header 의 수치 원본 — SEED List Header(2026-10-01 사용자 결정). 문서는 list.md 의 "목록 제목" 절.
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 목록(List) 밖, 바로 위에 둔다. 오른쪽에 작은 버튼(도움말 · 전체 보기)을 둘 수 있다.
+# SEED 와 다른 자리: 좌우 여백은 화면 가장자리 규칙 spacing-global-gutter 24(SEED 16).
+
+name: ListHeader
+
+slots:
+  root: 목록 제목 — 글자 + 오른쪽 작은 버튼 자리
+  action: 오른쪽 작은 버튼(도움말 · 전체 보기) — 있을 때만
+
+variants:
+  variant:
+    mediumWeak: 기본 — 옅은 500. 줄보다 앞서지 않는다
+    boldSolid: 화면을 크게 나누는 묶음 — 짙은 700
+
+defaults:
+  variant: mediumWeak
+
+states:
+  enabled: 기본
+
+rules:
+  - when: {}
+    enabled:
+      root:
+        paddingX: { value: $spacing-global-gutter, note: "줄과 같은 24 — 제목과 줄의 왼쪽이 맞는다" }
+        paddingY: $spacing-x2
+        gap: { value: $spacing-x2_5, note: "제목과 오른쪽 버튼 사이" }
+        typography: $text-t4
+  - when: { variant: mediumWeak }
+    enabled:
+      root: { fontWeight: 500, foreground: $color-fg-neutral-subtle }
+  - when: { variant: boldSolid }
+    enabled:
+      root: { fontWeight: 700, foreground: $color-fg-neutral }

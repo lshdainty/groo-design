@@ -387,7 +387,7 @@ function ChipGroups() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 280 }}>
       {groups.map((g) => (
         <div key={g.label} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <span style={{ fontSize: 10.5, fontWeight: 600, letterSpacing: '0.04em', color: rc('fg-neutral-subtle') }}>{g.label}</span>
+          <span style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '0.04em', color: rc('fg-neutral-subtle') }}>{g.label}</span>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {g.items.map((n) => {
               const on = n === '신한';
