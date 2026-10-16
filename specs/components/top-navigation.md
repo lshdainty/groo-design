@@ -182,7 +182,7 @@ Desk 폰(앱 · 웹 768 미만)의 탭 첫 화면은 오른쪽에 홈 = 검색 �
 
 ### 데스크톱 화면 제목 — 한 줄
 
-화면 제목은 머리가 아니라 본문 맨 위 `h1` 이다(`text-screen-title` 26 / 35 · 700, 머리 아래 `spacing-nav-to-title` 20). 모든 데스크톱 화면에 하나 둔다 — 홈 · 캘린더도 "홈" · "캘린더" 다(Q-018-2 정리 — 위치는 사이드바의 지금 항목과 이 제목이 알린다). 제목 줄은 한 줄이다 — 제목(설명 — 화면 부제는 그 아래 16 / 22 · 400 · `fg-neutral-muted`, 2026-10-16 사용자 결정 글자 역할 D6)이 왼쪽, 그 화면의 동작 버튼([Button](button.md) small)이 오른쪽이고 버튼은 제목 덩어리 아래 끝에 맞춘다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-018-2 A). 글이 길면 설명이 줄을 바꾸고 버튼은 그 자리에 남는다. 화면을 옮기면 초점이 이 제목으로 온다(아래 "화면을 옮길 때").
+화면 제목은 머리가 아니라 본문 맨 위 `h1` 이다(`text-screen-title` 26 / 35 · 700, 머리 아래 `spacing-nav-to-title` 20). 모든 데스크톱 화면에 하나 둔다 — 홈 · 캘린더도 "홈" · "캘린더" 다(Q-018-2 정리 — 위치는 사이드바의 지금 항목과 이 제목이 알린다). 제목 줄은 한 줄이다 — 제목(설명 — 화면 부제는 그 아래 16 / 22 · 400 · `fg-neutral-muted`, 2026-10-16 사용자 결정 글자 역할 D6)이 왼쪽, 그 화면의 동작 버튼([Button](button.md) small · `neutralOutline` — 회색 바닥 위라 neutralWeak 은 바닥과 같은 색이다, 2026-10-16 사용자 결정 174-3 A · 기초 웹 01-040 B)이 오른쪽이고 버튼은 제목 덩어리 아래 끝에 맞춘다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-018-2 A). 글이 길면 설명이 줄을 바꾸고 버튼은 그 자리에 남는다. 화면을 옮기면 초점이 이 제목으로 온다(아래 "화면을 옮길 때").
 
 [그림: 제목 줄 — 가계부 · 설명 + 필터 · 내보내기, 768 의 긴 영어 설명](../../site/components/specs/top-navigation.tsx#screen-title-guide)
 
@@ -222,7 +222,7 @@ HR 웹 768 미만은 하단 탭 바가 없다 — 모든 화면이 `standard` �
 - `TopNavigationProvider` — `product`("Porest Desk" · "Porest HR"). `useScreenTitle(title)` 가 문서 제목을 "{title} - {product}" 로 쓴다.
 - `focusScreenTitle()` — 셸이 화면을 옮긴 뒤 부른다: 본문 스크롤을 맨 위로, `[data-screen-title]` 에 초점(링은 키보드로 왔을 때만). `{ resetScroll: false }` 면 초점만 옮긴다 — 하단 탭 · 가계부 묶음 탭을 오갈 때 셸이 기억한 스크롤을 돌려놓는다(목록이 그려진 뒤).
 
-앱은 같은 값을 Dart 로 둔다(`PTopNavigation` — `AppBar` 대신, 제목은 `Semantics(header: true)`).
+앱은 같은 값을 Dart 로 둔다(`PTopNavigation` — `AppBar` 대신, 제목은 `Semantics(header: true, headingLevel: 1)` — iOS 는 `header` 를, 안드로이드는 `headingLevel` 을 읽는다). 앱에는 랜드마크가 없어 이 제목이 화면 읽기의 첫 정거장이다 — DESIGN.md Layout 의 "랜드마크"(2026-10-16 사용자 결정 — 틀 앱 02-004).
 
 ### 탭 첫 화면 — Root
 
@@ -374,7 +374,7 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 | **WCAG 2.4.6** Headings and Labels | 제목은 화면의 `h1` ✓(SEED 웹은 제목이 `span` 이다). 검색 화면은 보이지 않는 `h1` "검색" · 데스크톱은 모든 화면에 본문 `h1` 하나(홈 · 캘린더도) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 아이콘 버튼 44 · 글 버튼 높이 44 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 아이콘 버튼 44 × 44 ✓ · 글 버튼 44 × (글 + 20) ✓ |
-| **ARIA** | 바는 `header`(`banner` — `main` 밖). 아이콘 버튼 `aria-label` 필수("뒤로" · "닫기" · "주 메뉴" · "검색" · "알림"), 아이콘 SVG 는 `aria-hidden`. ☰ 와 데스크톱 벨은 `aria-haspopup="dialog"` · `aria-expanded`(☰ 는 `aria-controls` 도). 검색칸은 `aria-label`("거래 검색"). 다른 화면으로 가는 버튼에 `aria-pressed` 를 달지 않는다. 알림 점은 `aria-hidden` 이고 버튼 이름에 넣는다. 앱은 제목 `Semantics(header: true)` · 버튼 `Semantics(button: true, label)` |
+| **ARIA** | 바는 `header`(`banner` — `main` 밖). 아이콘 버튼 `aria-label` 필수("뒤로" · "닫기" · "주 메뉴" · "검색" · "알림"), 아이콘 SVG 는 `aria-hidden`. ☰ 와 데스크톱 벨은 `aria-haspopup="dialog"` · `aria-expanded`(☰ 는 `aria-controls` 도). 검색칸은 `aria-label`("거래 검색"). 다른 화면으로 가는 버튼에 `aria-pressed` 를 달지 않는다. 알림 점은 `aria-hidden` 이고 버튼 이름에 넣는다. 앱은 제목 `Semantics(header: true, headingLevel: 1)` · 버튼 `Semantics(button: true, label)` — 이름은 모두 번역 문구다(코드에 한국어 상수를 두지 않는다). 알림 벨의 이름은 새 알림이 있으면 "알림, 새 알림 있음"(en "Notifications, new notifications") · 없으면 "알림"(2026-10-16 사용자 결정 — 틀 앱 02-003) |
 
 ## Do / Don't
 

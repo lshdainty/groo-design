@@ -49,7 +49,7 @@ const CHIP_BASE = [
 const CHIP_VARIANTS = {
   variant: {
     solid: [
-      "bg-bg-neutral-weak text-fg-neutral hover:bg-bg-neutral-weak-pressed active:bg-bg-neutral-weak-pressed",
+      "bg-bg-neutral-weak-alpha text-fg-neutral hover:bg-bg-neutral-weak-alpha-pressed active:bg-bg-neutral-weak-alpha-pressed",
       "[&:is([data-state=checked],[data-selected])]:bg-bg-neutral-inverted [&:is([data-state=checked],[data-selected])]:text-fg-neutral-inverted [&:is([data-state=checked],[data-selected])]:hover:bg-bg-neutral-inverted-pressed [&:is([data-state=checked],[data-selected])]:active:bg-bg-neutral-inverted-pressed",
     ].join(" "),
     outlineStrong: [
@@ -521,8 +521,8 @@ function inputChip({ uid, label, size, prefixIcon, disabled = false, force }) {
   return `<span ${root}>${prefixSlot(s, prefixIcon)}<span id="${uid}-label" data-slot="input-chip-label">${esc(label)}</span><button ${remove}>${LUCIDE.x}</button></span>`;
 }
 
-// 칩은 흰 표면(bg-layer-default) 위에 놓는다. 사이트 미리보기 칸의 바탕(bg-page = bg-layer-basement)은 Solid 의 옅은 바탕(bg-neutral-weak)과
-// 같은 색이라 그 위에 바로 그리면 Solid 칩이 사라진다(chip.md "Solid 는 흰 표면 위에서")
+// 미리보기는 흰 표면(bg-layer-default) 위에 그린다 — 폼 · 시트 안의 모습. Solid 의 바탕은 투명한 bg-neutral-weak-alpha(v120)라
+// 회색 바닥(bg-layer-basement) 위에서도 보인다(chip.md "Solid 는 어느 바탕에서나")
 const SURFACE =
   "background:var(--color-bg-layer-default); border:1px solid var(--color-stroke-neutral-subtle); border-radius:var(--radius-r4); padding:var(--spacing-x5) var(--spacing-x6);";
 const surface = (html) => `<div style="${SURFACE}">${html}</div>`;
@@ -729,7 +729,7 @@ import { Chip, ChipGroup } from "@/components/ui/chip"
   {
     title: "변형 — solid · outlineStrong · outlineWeak",
     description:
-      "변형은 셋이다. 안 고른 Outline Strong 과 Outline Weak 는 똑같고(투명 + 안쪽 1px stroke-neutral-weak), 고르면 갈린다 — Solid · Outline Strong 은 짙은 채움(bg-neutral-inverted · fg-neutral-inverted, Outline Strong 은 테두리를 지운다), Outline Weak 는 옅은 바탕 bg-neutral-weak + 짙은 1px stroke-neutral-contrast(글자 그대로)다. Solid 는 제안 · 필터 바, Outline Strong 은 하나 고르기를 분명하게 보일 때, Outline Weak(기본)는 고른 칩이 여럿 보이는 고르기 · 시트 안 고르기 · 입력값이다. Solid 의 옅은 바탕(bg-neutral-weak)은 회색 바탕(bg-layer-basement)과 같은 색이라 흰 표면 위에서만 쓴다. 테두리는 안쪽 1px(inset shadow)이라 고르거나 풀어도 칩 크기가 변하지 않는다. 미리보기는 모습만 견주려고 Chip 의 selected(data-selected)로 그렸다 — 하나 고르기 · 여럿 고르기는 ChipRadio · ChipToggle 의 고름(data-state=\"checked\")이 같은 규칙으로 같은 모습을 단다.",
+      "변형은 셋이다. 안 고른 Outline Strong 과 Outline Weak 는 똑같고(투명 + 안쪽 1px stroke-neutral-weak), 고르면 갈린다 — Solid · Outline Strong 은 짙은 채움(bg-neutral-inverted · fg-neutral-inverted, Outline Strong 은 테두리를 지운다), Outline Weak 는 옅은 바탕 bg-neutral-weak + 짙은 1px stroke-neutral-contrast(글자 그대로)다. Solid 는 제안 · 필터 바, Outline Strong 은 하나 고르기를 분명하게 보일 때, Outline Weak(기본)는 고른 칩이 여럿 보이는 고르기 · 시트 안 고르기 · 입력값이다. Solid 의 옅은 바탕은 투명한 bg-neutral-weak-alpha(누름 bg-neutral-weak-alpha-pressed)라 흰 표면 · 회색 바닥(bg-layer-basement) 어디서나 보인다. 테두리는 안쪽 1px(inset shadow)이라 고르거나 풀어도 칩 크기가 변하지 않는다. 미리보기는 모습만 견주려고 Chip 의 selected(data-selected)로 그렸다 — 하나 고르기 · 여럿 고르기는 ChipRadio · ChipToggle 의 고름(data-state=\"checked\")이 같은 규칙으로 같은 모습을 단다.",
     jsx: `// 안 고름 · 고름 — 고름은 쓰임의 칩이 단다. ChipRadio · ChipToggle 은 checked(data-state="checked"),
 // 필터 바의 Chip 은 selected(data-selected) — 두 표식을 한 규칙으로 칠해 모습이 같다
 <Chip variant="solid">이번 달</Chip>
@@ -794,7 +794,7 @@ import { Chip, ChipGroup } from "@/components/ui/chip"
   {
     title: "상태",
     description:
-      "상태는 enabled · hovered · pressed · focused · disabled 다. 호버(웹 — 마우스 있는 기기에서만)는 누름과 같은 바탕이고 축소가 없다. 누르면 누름 바탕(bg-neutral-weak-pressed · bg-layer-default-pressed · bg-neutral-inverted-pressed)에 칩 전체가 2px 거리로 준다 — 배율은 (기준 − 2) ÷ 기준, 기준은 max(높이, 폭 ÷ 4, 24) 이고 모션 줄이기면 줄지 않는다. 포커스는 키보드 포커스에만 바깥 링 2px · 띄움 2px stroke-focus-ring 이다. 비활성은 바탕 bg-disabled · 글자 fg-disabled 이고 흐리게(불투명도) 그리지 않는다 — 고른 채 막히면 안쪽 1px stroke-neutral-solid 를 남겨 무엇을 골랐는지 보인다. 하나 고르기는 ChipRadioGroup 에 disabled 를 주면 모든 칩이 막히고, 여럿 고르기 · 버튼 칩은 칩마다 준다. 입력값 칩은 누르지 않는다 — 호버 바탕이 없고 누름은 지우기만 준다(기준 24), 지우기에 키보드 포커스가 있으면 링은 칩 둘레에 그린다. 정적 미리보기라 hovered · pressed · focused 는 hover: · active: · focus-visible: · has-[…:focus-visible]: 클래스에서 접두어만 뗀 사본을 덧붙여 그렸다 — 축소 기준(--press-basis)은 레시피가 누르는 순간 재고, 여기서는 크기의 기본값(높이 36)이다.",
+      "상태는 enabled · hovered · pressed · focused · disabled 다. 호버(웹 — 마우스 있는 기기에서만)는 누름과 같은 바탕이고 축소가 없다. 누르면 누름 바탕(Solid bg-neutral-weak-alpha-pressed · Outline bg-layer-default-pressed · 고른 Outline Weak bg-neutral-weak-pressed · 짙은 채움 bg-neutral-inverted-pressed)에 칩 전체가 2px 거리로 준다 — 배율은 (기준 − 2) ÷ 기준, 기준은 max(높이, 폭 ÷ 4, 24) 이고 모션 줄이기면 줄지 않는다. 포커스는 키보드 포커스에만 바깥 링 2px · 띄움 2px stroke-focus-ring 이다. 비활성은 바탕 bg-disabled · 글자 fg-disabled 이고 흐리게(불투명도) 그리지 않는다 — 고른 채 막히면 안쪽 1px stroke-neutral-solid 를 남겨 무엇을 골랐는지 보인다. 하나 고르기는 ChipRadioGroup 에 disabled 를 주면 모든 칩이 막히고, 여럿 고르기 · 버튼 칩은 칩마다 준다. 입력값 칩은 누르지 않는다 — 호버 바탕이 없고 누름은 지우기만 준다(기준 24), 지우기에 키보드 포커스가 있으면 링은 칩 둘레에 그린다. 정적 미리보기라 hovered · pressed · focused 는 hover: · active: · focus-visible: · has-[…:focus-visible]: 클래스에서 접두어만 뗀 사본을 덧붙여 그렸다 — 축소 기준(--press-basis)은 레시피가 누르는 순간 재고, 여기서는 크기의 기본값(높이 36)이다.",
     jsx: `// 호버 · 누름 · 포커스는 고르는 prop 이 없다 — 마우스를 올린 동안 · 누르는 동안 · 키보드 포커스에 그렇게 그린다
 <Chip variant="solid">식비</Chip>                     // enabled · hovered · pressed · focused
 <Chip variant="solid" selected>식비</Chip>

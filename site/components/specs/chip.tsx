@@ -692,38 +692,46 @@ const SuggestionGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 표면 — 라이트에서 Solid 의 옅은 바탕(bg-neutral-weak)과 회색 바탕(bg-layer-basement)이 같은 색이라 라이트로 그린다
+// 표면 — Solid 의 바탕은 투명한 bg-neutral-weak-alpha(v120)라 회색 바닥 · 흰 표면 어디서나 보인다. 불투명 bg-neutral-weak 는
+// 라이트에서 회색 바닥과 같은 gray-200 이라 사라진다 — 그 차이가 라이트에서만 보여 라이트로 그린다
 const SurfaceGuide: Fig = ({ caption }) => {
   const m: Mode = 'light';
   const basement = rc('bg-layer-basement', m);
-  const row = (v: ChipVariant) => (
-    <G mode={m}>
-      <C mode={m} v={v} l="기간" suf="chevron-down" />
-      <C mode={m} v={v} l="카테고리" suf="chevron-down" />
-      <C mode={m} v={v} l="금액" suf="chevron-down" />
-    </G>
+  const row = (v: ChipVariant, brand: Brand = 'desk', look = cl(brand)) => (
+    <ChipGroupView look={look} mode={m} layout="wrap">
+      {['기간', '카테고리', '금액'].map((l) => (
+        <ChipView key={l} look={look} variant={v} selected={false} state="enabled" label={l} suffixIcon="chevron-down" mode={m} />
+      ))}
+    </ChipGroupView>
   );
+  // 하지 않는 것 — Solid 바탕을 불투명 약한 배경(bg-neutral-weak)으로 칠한 칩
+  const base = cl('desk');
+  const weak = { name: 'bg-neutral-weak', light: rc('bg-neutral-weak', 'light'), dark: rc('bg-neutral-weak', 'dark') };
+  const opaque = {
+    ...base,
+    faces: { ...base.faces, solid: { ...base.faces.solid, unselected: { ...base.faces.solid.unselected, enabled: { ...base.faces.solid.unselected.enabled, bg: weak } } } },
+  };
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok bg={basement} note="흰 표면 위에서 Solid, 회색 바탕 위 줄은 Outline">
+        <Verdict ok bg={basement} note="Solid 는 투명한 bg-neutral-weak-alpha — 회색 바닥 위에서도, 흰 표면 위에서도 보인다(1.11:1)">
           <div className="flex w-full max-w-[320px] flex-col gap-4">
+            <div className="flex flex-col gap-1.5 px-1">
+              <Muted mode={m}>회색 바닥(bg-layer-basement) — Solid</Muted>
+              {row('solid')}
+            </div>
             <div className="rounded-xl p-4" style={{ background: rc('bg-layer-default', m) }}>
               <div className="flex flex-col gap-1.5">
                 <Muted mode={m}>흰 표면(bg-layer-default) — Solid</Muted>
                 {row('solid')}
               </div>
             </div>
-            <div className="flex flex-col gap-1.5 px-1">
-              <Muted mode={m}>회색 바탕(bg-layer-basement) — Outline Weak</Muted>
-              {row('outlineWeak')}
-            </div>
           </div>
         </Verdict>
-        <Verdict ok={false} bg={basement} note="회색 바탕 위 Solid — 바탕과 같은 색이라 칩의 자리가 사라진다">
+        <Verdict ok={false} bg={basement} note="칩 바탕을 불투명 bg-neutral-weak 로 — 라이트에서 회색 바닥과 같은 색(1.00:1)이라 칩의 자리가 사라진다">
           <div className="flex w-full max-w-[320px] flex-col gap-1.5 px-1">
-            <Muted mode={m}>회색 바탕(bg-layer-basement) — Solid</Muted>
-            {row('solid')}
+            <Muted mode={m}>회색 바닥(bg-layer-basement) — 불투명 bg-neutral-weak</Muted>
+            {row('solid', 'desk', opaque)}
           </div>
         </Verdict>
       </Pair>

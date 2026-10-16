@@ -1,0 +1,165 @@
+# Switch 의 수치 원본 — 구조는 SEED Switch(Switchmark · Switch, 2026-09-30 사용자 결정).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 부위: root 는 Switch 한 줄(스위치 + 라벨), switchmark 는 스위치(SEED Switchmark — 트랙. 따로 쓸 수 있다),
+# thumb 은 엄지.
+# 켬 · 끔(checked)은 pressed · disabled 와 곱해지므로 상태가 아니라 축이다(specs/CLAUDE.md).
+# 크기 이름은 SEED 처럼 트랙 높이다 — "16" · "24" · "32"(글자로 적는다).
+#
+# SEED 와 다른 자리(switch.md 의 "SEED 와 다른 점")
+#   - 기본 크기는 24(사용자 결정) — SEED 는 32.
+#   - 비활성은 흐리게 하지 않고 전용 색(v106 · 사용자 결정) — 끔은 bg-disabled 트랙 + 옅은 테두리 + fg-disabled 엄지,
+#     켬은 켜진 모양 그대로 fg-disabled 채움 + bg-disabled 엄지. SEED 는 트랙 38% · 라벨 58% 불투명도.
+#   - 꺼진 트랙은 stroke-neutral-solid(표면과 3:1 이상 — v109). SEED 는 palette.gray-600(2.1:1).
+#   - 웹의 focused 상태를 더한다(v106). hovered 는 색이 바뀌지 않는다 — 켜짐 색이 상태를 뜻한다(v104).
+
+name: Switch
+
+slots:
+  root: Switch 한 줄 — 스위치 + 라벨, 누르는 영역
+  switchmark: 스위치(Switchmark) — 트랙. 설정 줄에는 이것만 끼워 쓴다
+  thumb: 엄지 — 켜면 오른쪽으로 가고 커진다
+  label: 글자(Label)
+  focusRing: 키보드 포커스 링(웹)
+
+variants:
+  size:
+    "16": 트랙 26 × 16 · 라벨 13 — 촘촘한 자리
+    "24": 트랙 38 × 24 · 라벨 14 — 기본
+    "32": 트랙 52 × 32 · 라벨 16 — 제목이 큰 줄 · 모바일에서 홀로 서는 스위치
+  tone:
+    neutral: 켬 = 짙은 회색(기본)
+    brand: 켬 = 브랜드 색 — 서비스 핵심 흐름에서만
+  checked:
+    unchecked: 끔
+    checked: 켬
+
+defaults:
+  size: "24"
+  tone: neutral
+  checked: unchecked
+
+states:
+  enabled: 기본
+  hovered: 웹 — 색이 바뀌지 않는다(켜짐 색이 상태를 뜻해서, v104)
+  focused: 웹 — 키보드 포커스에만 링
+  pressed: 색은 그대로, 스위치만 세로 2px 거리 축소(v104)
+  disabled: 전용 색(v106) — 불투명도로 흐리게 하지 않는다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        cursor: pointer
+        alignSelf: { value: flex-start, note: "줄은 스위치 + 라벨만큼만 차지한다 — 세로로 쌓아도 폭으로 늘이지 않는다" }
+        touchTarget: { value: 44 × 44, note: "라벨까지 묶어 44 — 설정 줄에 스위치만 끼우면 그 줄 전체가 누르는 영역(SEED touch target · 기초 Inclusive)" }
+      switchmark:
+        radius: $radius-full
+        transitionProperty: background-color
+        transitionDuration: $motion-duration-d1
+        transitionEasing: $motion-ease-easing
+        transitionDelay: { value: 20ms, note: "엄지가 움직이기 시작한 뒤에 색이 바뀐다(SEED)" }
+      thumb:
+        radius: $radius-full
+        transitionProperty: { value: "translate, scale", note: "색은 트랙과 같이 50ms · 20ms 뒤" }
+        transitionDuration: $motion-duration-d3
+        transitionEasing: $motion-ease-easing
+      label:
+        fontFamily: $font-sans
+        fontWeight: 500
+        foreground: $color-fg-neutral
+    pressed:
+      switchmark:
+        scale: { value: 세로 2px 축소, note: "스위치만 준다 — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px. 색은 바뀌지 않는다(Feedback 의 눌림 피드백, v104)" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+    focused:
+      focusRing:
+        width: 2px
+        offset: 2px
+        color: $color-stroke-focus-ring
+    disabled:
+      root:
+        cursor: { value: not-allowed, note: "포인터 이벤트는 켜 둔다 — 끄면 이 커서가 안 보인다(SEED 와 같다)" }
+      label:
+        foreground: $color-fg-disabled
+
+  # ── 크기 ──────────────────────────────────────────────
+  - when: { size: "16" }
+    enabled:
+      root: { minHeight: { value: 24px, note: "트랙(16)보다 크다 — 누르는 영역의 바닥(SEED)" }, gap: $spacing-x1_5 }
+      switchmark: { width: 26px, height: 16px, padding: 2px }
+      thumb: { size: 12px }
+      label: { typography: $text-t3 }
+  - when: { size: "24" }
+    enabled:
+      root: { minHeight: 24px, gap: $spacing-x2 }
+      switchmark: { width: 38px, height: 24px, padding: 2px }
+      thumb: { size: 20px }
+      label: { typography: $text-t4 }
+  - when: { size: "32" }
+    enabled:
+      root: { minHeight: 32px, gap: $spacing-x2_5 }
+      switchmark: { width: 52px, height: 32px, padding: 3px }
+      thumb: { size: 26px }
+      label: { typography: $text-t5 }
+
+  # ── 끔 ────────────────────────────────────────────────
+  - when: { checked: unchecked }
+    enabled:
+      switchmark: { background: { value: $color-stroke-neutral-solid, note: "표면과 3:1 이상(v109). SEED 는 palette.gray-600" } }
+      thumb: { scale: { value: 0.8, note: "끄면 엄지가 작아진다 — 색 말고도 자리 · 크기로 켬 · 끔이 갈린다(SEED)" }, translateX: 0px }
+    disabled:
+      switchmark: { background: $color-bg-disabled, borderColor: { value: $color-stroke-neutral-weak, note: "안쪽 선 — 트랙 크기는 그대로" }, borderWidth: 1px }
+      thumb: { color: $color-fg-disabled }
+
+  # ── 켬 ────────────────────────────────────────────────
+  - when: { checked: checked }
+    enabled:
+      thumb: { scale: 1 }
+    disabled:
+      switchmark: { background: { value: $color-fg-disabled, note: "켜진 모양 그대로 색만(사용자 결정) — 채운 트랙 + 밝은 엄지" } }
+      thumb: { color: $color-bg-disabled }
+
+  # 크기 × 켬 — 엄지가 가는 거리(트랙 폭 − 트랙 높이)
+  - when: { size: "16", checked: checked }
+    enabled:
+      thumb: { translateX: 10px }
+  - when: { size: "24", checked: checked }
+    enabled:
+      thumb: { translateX: 14px }
+  - when: { size: "32", checked: checked }
+    enabled:
+      thumb: { translateX: 20px }
+
+  # ── 톤 ────────────────────────────────────────────────
+  - when: { tone: neutral }
+    enabled:
+      thumb: { color: $color-fg-neutral-inverted }
+  - when: { tone: neutral, checked: checked }
+    enabled:
+      switchmark: { background: $color-bg-neutral-inverted }
+  - when: { tone: brand }
+    enabled:
+      thumb: { color: $color-static-white }
+  - when: { tone: brand, checked: checked }
+    enabled:
+      switchmark: { background: $color-bg-brand-solid }
+
+motion:
+  "끔 ↔ 켬 — 엄지":
+    duration: $motion-duration-d3
+    easing: $motion-ease-easing
+    properties: [translate, scale]
+    note: "엄지가 옆으로 가며 0.8 ↔ 1 로 바뀐다(SEED)"
+  "끔 ↔ 켬 — 색":
+    duration: $motion-duration-d1
+    easing: $motion-ease-easing
+    properties: [track background, thumb color]
+    note: "20ms 뒤에 시작한다 — 엄지가 움직이기 시작한 뒤에 색이 바뀐다"
+  누름:
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "스위치만 세로 2px 거리 축소 — 색은 바뀌지 않는다(v104)"

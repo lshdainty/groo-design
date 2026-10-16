@@ -1,0 +1,216 @@
+# Chip 의 수치 원본 — 구조는 SEED Chip(2026-10-01 · 02 사용자 결정, 비교 페이지 여덟 모두 SEED).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 고르거나 넣은 값을 보이는 작은 알약 — 쓰임 넷: 고르기(하나 = 라디오 · 여럿 = 체크박스) · 제안(누르면 값을 넣는 버튼,
+# 고른 표시 없음) · 거르기(목록 위 필터 바 — 조건마다 칩, 누르면 그 조건만 연다) · 입력값(넣은 값 + 뒤 지우기 버튼).
+# 탭(Tabs 칩 모양) · 바로 거르는 2 ~ 4개(Segmented Control) · 켜고 끄는 단추 하나(Toggle — 아이콘 단추) · 표시(Badge · Tag Group)는 칩이 아니다.
+#
+# 고름(selected)은 누름 · 호버 · 비활성과 곱해지므로 상태가 아니라 축이다(specs/CLAUDE.md).
+#
+# SEED 와 다른 자리(chip.md 의 "SEED 와 다른 점")
+#   - 반투명 색(bg.neutral-weak-alpha · stroke.neutral-muted · bg.transparent-pressed)을 불투명 짝으로(v102):
+#     bg-neutral-weak · stroke-neutral-weak · bg-layer-default-pressed. 그래서 Solid 는 흰 표면 위에서만 쓴다.
+#   - Outline Strong 을 고르면 테두리를 지운다(SEED 는 짙은 채움 위에 옅은 테두리가 남는다 — Chip Tabs 는 지운다).
+#   - 비활성은 흐리게 하지 않는다(v106 — SEED 는 불투명도 0.5). 고른 채 막힌 칩은 고른 모양을 회색으로 남긴다.
+#   - 웹의 hovered 상태를 둔다(누름과 같은 바탕, 축소 없음 — v106). 누르는 영역은 44 까지 넓힌다(Button 과 같다).
+#   - 아이콘은 lucide 선 아이콘(v106) — 여는 칩은 chevron-down, 지우기는 x.
+
+name: Chip
+
+slots:
+  root: 알약 — 모서리 full. 글만큼 넓어지고 줄바꿈 · 말줄임하지 않는다
+  label: 글 — 명사로 짧게, 한 줄
+  prefixIcon: 앞 아이콘 — 묶음 안에서 모두 두거나 모두 뺀다
+  suffixIcon: 뒤 아이콘 — 여는 칩의 아래 화살표
+  removeButton: 입력값 칩의 지우기 — 이름 "{글} 지우기", 칩 안에서 따로 눌린다
+  icon: 아이콘만 있는 칩의 아이콘 — 이름(aria-label) 필수
+  focusRing: 키보드 포커스 링(웹)
+  group: 묶음(Chip Group) — 줄바꿈(폼 · 시트 안) 또는 한 줄 가로 스크롤(목록 위 필터 바 · 제안 줄)
+  scrollRow: 가로 스크롤 줄 — 목록 위 필터 바 · 제안 줄만(줄바꿈 묶음에는 없다). 줄을 화면 끝까지 낸다
+
+variants:
+  variant:
+    solid: 옅은 회색 채움 — 제안 · 필터 바(흰 표면 위에서만), 고르면 짙은 채움
+    outlineStrong: 테두리 — 하나 고르기를 분명하게, 고르면 짙은 채움. 필터 바 맨 앞 지우기(↺)도 이 모양
+    outlineWeak: 테두리 — 고르기의 기본(고른 칩이 여럿 보일 때), 고르면 옅은 바탕 + 짙은 1px 테두리
+  size:
+    small: 32 — 촘촘한 줄(1280 이상 데스크톱의 필터 · 표 위)
+    medium: 36 — 기본(폰 폼 포함)
+    large: 40 — 화면의 주인공 고르기
+  layout:
+    withText: 글 — 앞 아이콘 · 뒤 아이콘을 하나씩 더할 수 있다
+    iconOnly: 아이콘만 — 원, 이름(aria-label) 필수
+  selected:
+    unselected: 안 고름
+    selected: 고름 — 하나 고르기 · 여럿 고르기 · 걸린 필터
+
+defaults:
+  variant: outlineWeak
+  size: medium
+  layout: withText
+  selected: unselected
+
+states:
+  enabled: 기본
+  hovered: 웹 — 누름 바탕과 같다(v106), 축소는 없다
+  pressed: 누름 바탕 + 칩 전체를 2px 거리로 축소(v104)
+  focused: 웹 — 키보드 포커스에만 링
+  disabled: 전용 색(v106) — 불투명도로 흐리게 하지 않는다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        radius: $radius-full
+        gap: { value: $spacing-x1_5, note: "아이콘 ↔ 글(SEED label paddingX 6)" }
+        cursor: pointer
+        touchTarget: { value: 44 × 44, note: "보이는 칩과 따로 누르는 영역을 가로 · 세로 44 까지 넓힌다(Button 과 같다 — 글이 있는 칩은 최소 폭 44 · 48 · 52 라 가로는 이미 44 이상이고, 아이콘만 있는 칩 32 · 36 · 40 은 가로도 44 로). AA ✓ · AAA ✓. 줄바꿈 묶음(줄 사이 8)에서 small 만 위아래 줄의 영역이 4 겹친다" }
+        transitionProperty: background-color, color, box-shadow
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      label:
+        typography: { value: $text-t4, note: "세 크기 모두 14 / 19 — 폰트 크기 설정을 따른다" }
+        fontWeight: 500
+      removeButton:
+        color: { value: currentColor, note: "글자색 그대로 — 이름 \"{글} 지우기\", 누르는 영역 24 × 24, 칩 안에서 따로 눌린다(칩 자체는 버튼이 아니다). 호버 바탕은 없고 누르면 지우기만 따로 준다(아래 pressed — Input Button 의 지우기와 같다). 키보드 포커스 링은 지우기가 아니라 칩 둘레에 그린다" }
+      group:
+        gap: { value: $spacing-between-chips, note: "칩 사이 — 줄바꿈 묶음은 줄 사이도 8(SEED 예제)" }
+        rowGap: $spacing-between-chips
+        minHeight: { value: 36px, note: "비었을 때만 — 입력값을 다 지우면 포커스가 묶음으로 오므로 링이 납작한 선이 되지 않게 칩 한 줄(medium) 높이를 남긴다" }
+      scrollRow:
+        paddingX: { value: $spacing-global-gutter, note: "줄을 화면 끝까지 내고 안쪽 여백을 화면 여백만큼 — 스크롤해도 첫 칩이 여백에서 시작한다. 이미 화면 여백 안에 있으면 바깥 −24 로 화면 끝까지 낸다(bleed)" }
+        paddingY: { value: $spacing-x1_5, note: "스크롤 칸은 넘친 것을 자르므로 — 누르는 영역 44 · 포커스 링이 잘리지 않게" }
+        marginY: { value: −6px, note: "안쪽 위아래 6 을 바깥에서 되돌려 줄 높이는 칩 그대로다. 줄을 두 겹(바깥 묶음 · 안쪽 스크롤 칸)으로 둬 부모의 위아래 간격(space-y · gap)이 지워지지 않게 한다" }
+        overflowX: { value: auto, note: "스크롤바는 숨긴다" }
+        fog: { value: 좌우 20px, note: "Scroll Fog row(scroll-fog.yaml) — gradient-fade-mask 마스크, 늘 켜짐. 안쪽 여백 24 가 흐림보다 넓어 처음 · 끝의 칩은 흐리지 않는다(2026-10-03)" }
+        scrollPadding: { value: $spacing-global-gutter, note: "키보드로 칩을 옮겨도 화면 여백 안에 멈춘다" }
+    pressed:
+      root:
+        scale: { value: 칩 전체 2px 거리 축소, note: "기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px(SEED scaleScope: self · v104) — 모션 줄이기면 하지 않는다" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+      removeButton:
+        scale: { value: 지우기 2px 거리 축소, note: "입력값 칩의 지우기만 따로 준다(기준 24 — SEED scaleScope: self, Input Button 의 지우기와 같다). 칩은 누름이 아니다" }
+    focused:
+      focusRing:
+        width: 2px
+        offset: 2px
+        color: $color-stroke-focus-ring
+      group:
+        outlineWidth: { value: 2px, note: "묶음이 포커스를 받았을 때(입력값을 다 지운 뒤) — 키보드 포커스에만, 모서리 없이 묶음 둘레" }
+        outlineOffset: 2px
+        outlineColor: $color-stroke-focus-ring
+    disabled:
+      root:
+        cursor: { value: not-allowed, note: "누름 축소 · 누름 바탕 없음" }
+        background: $color-bg-disabled
+        foreground: $color-fg-disabled
+
+  # ── 크기 ──────────────────────────────────────────────
+  - when: { size: small }
+    enabled:
+      root: { height: 32px, paddingX: { value: $spacing-x3, note: "SEED 루트 6 + 글 6 — 아이콘이 있어도 가장자리 ↔ 아이콘 12" } }
+      prefixIcon: { size: 14px }
+      suffixIcon: { size: 14px }
+      removeButton: { size: { value: 14px, note: "누르는 영역 24 × 24" } }
+      icon: { size: 14px }
+  - when: { size: medium }
+    enabled:
+      root: { height: 36px, paddingX: { value: $spacing-x3_5, note: "SEED 루트 8 + 글 6" } }
+      prefixIcon: { size: 16px }
+      suffixIcon: { size: 14px }
+      removeButton: { size: { value: 14px, note: "누르는 영역 24 × 24" } }
+      icon: { size: 16px }
+  - when: { size: large }
+    enabled:
+      root: { height: 40px, paddingX: { value: $spacing-x4, note: "SEED 루트 10 + 글 6" } }
+      prefixIcon: { size: 16px }
+      suffixIcon: { size: 16px }
+      removeButton: { size: { value: 16px, note: "누르는 영역 24 × 24" } }
+      icon: { size: 16px }
+  - when: { size: small, layout: withText }
+    enabled:
+      root: { minWidth: 44px }
+  - when: { size: medium, layout: withText }
+    enabled:
+      root: { minWidth: 48px }
+  - when: { size: large, layout: withText }
+    enabled:
+      root: { minWidth: 52px }
+  - when: { size: small, layout: iconOnly }
+    enabled:
+      root: { width: 32px, paddingX: 0px }
+  - when: { size: medium, layout: iconOnly }
+    enabled:
+      root: { width: 36px, paddingX: 0px }
+  - when: { size: large, layout: iconOnly }
+    enabled:
+      root: { width: 40px, paddingX: 0px }
+
+  # ── 변형 × 고름 ───────────────────────────────────────
+  - when: { variant: solid, selected: unselected }
+    enabled:
+      root: { background: { value: $color-bg-neutral-weak, note: "SEED bg.neutral-weak-alpha 의 불투명 짝 — 회색 바탕(bg-layer-basement) 위에서는 사라져 흰 표면 위에서만 쓴다" }, foreground: $color-fg-neutral }
+    hovered:
+      root: { background: $color-bg-neutral-weak-pressed }
+    pressed:
+      root: { background: $color-bg-neutral-weak-pressed }
+  - when: { variant: solid, selected: selected }
+    enabled:
+      root: { background: $color-bg-neutral-inverted, foreground: $color-fg-neutral-inverted }
+    hovered:
+      root: { background: $color-bg-neutral-inverted-pressed }
+    pressed:
+      root: { background: $color-bg-neutral-inverted-pressed }
+    disabled:
+      root: { borderColor: { value: $color-stroke-neutral-solid, note: "고른 채 막힘 — 회색 채움에 짙은 1px 를 남겨 안 고른 칩과 가른다" }, borderWidth: 1px }
+
+  - when: { variant: outlineStrong }
+    enabled:
+      root: { background: transparent, borderColor: { value: $color-stroke-neutral-weak, note: "SEED stroke.neutral-muted 의 불투명 짝 — 안쪽 1px(inset)" }, borderWidth: 1px, foreground: $color-fg-neutral }
+    hovered:
+      root: { background: $color-bg-layer-default-pressed }
+    pressed:
+      root: { background: $color-bg-layer-default-pressed }
+    disabled:
+      root: { background: $color-bg-disabled }
+  - when: { variant: outlineStrong, selected: selected }
+    enabled:
+      root: { background: $color-bg-neutral-inverted, borderWidth: { value: 0px, note: "짙은 채움 위 테두리는 지운다(SEED Chip Tabs 와 같다)" }, foreground: $color-fg-neutral-inverted }
+    hovered:
+      root: { background: $color-bg-neutral-inverted-pressed }
+    pressed:
+      root: { background: $color-bg-neutral-inverted-pressed }
+    disabled:
+      root: { background: $color-bg-disabled, borderColor: { value: $color-stroke-neutral-solid, note: "고른 채 막힘 — 짙은 1px 로 안 고른 칩과 가른다" }, borderWidth: 1px }
+
+  - when: { variant: outlineWeak }
+    enabled:
+      root: { background: transparent, borderColor: { value: $color-stroke-neutral-weak, note: "SEED stroke.neutral-muted 의 불투명 짝 — 안쪽 1px(inset)" }, borderWidth: 1px, foreground: $color-fg-neutral }
+    hovered:
+      root: { background: $color-bg-layer-default-pressed }
+    pressed:
+      root: { background: $color-bg-layer-default-pressed }
+    disabled:
+      root: { background: $color-bg-disabled }
+  - when: { variant: outlineWeak, selected: selected }
+    enabled:
+      root: { background: $color-bg-neutral-weak, borderColor: { value: $color-stroke-neutral-contrast, note: "고름 — 짙은 1px(v113)" } }
+    hovered:
+      root: { background: $color-bg-neutral-weak-pressed }
+    pressed:
+      root: { background: $color-bg-neutral-weak-pressed }
+    disabled:
+      root: { background: $color-bg-disabled, borderColor: { value: $color-stroke-neutral-solid, note: "고른 채 막힘 — 짙은 1px 를 회색으로 남긴다" } }
+
+motion:
+  "누름 · 호버 · 고름 — 색":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color, color, box-shadow]
+  "누름 — 칩":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "칩 전체 2px 거리 축소 — 모션 줄이기면 하지 않는다"

@@ -3048,14 +3048,14 @@ export function renderChipGallery(brand) {
     ]),
   );
 
-  // 4. 표면 · 묶음 — Solid 는 흰 표면 위에서만(회색 바탕 위에서는 바탕과 같은 색이다). 줄바꿈은 좁은 칸(220)에서 보인다
+  // 4. 표면 · 묶음 — Solid 는 어느 바탕에서나(투명한 bg-neutral-weak-alpha — v120). 줄바꿈은 좁은 칸(220)에서 보인다
   const amounts = () => quick.map(([label]) => chip({ variant: "solid", label }));
   const surfacePanel = panel(
     "표면 · 묶음",
-    "Solid 의 옅은 바탕(bg-neutral-weak)은 흰 표면(bg-layer-default) 위에서만 보인다 — 라이트의 회색 바탕(bg-layer-basement)과 같은 gray-200 이라 거기서는 칩이 사라진다. 회색 바탕 위 줄은 Outline Strong · Outline Weak 를 쓴다(다크는 두 색이 달라 보이지만 규칙은 같다). 칩 사이는 8(spacing-between-chips)이다 — 폼 · 시트 안의 고르기 묶음은 줄바꿈하고 줄 사이도 8 이다. 목록 위 필터 바 · 제안 줄은 한 줄 가로 스크롤이고(쓰임의 필터 바 · 화면의 가계부), 줄을 화면 끝까지 내고 안쪽 여백을 화면 여백(spacing-global-gutter 24)만큼 둬 스크롤해도 첫 칩이 여백에서 시작한다. 줄의 양 끝은 늘 흐린다 — Scroll Fog row(좌우 20 마스크 · 스크롤 위치와 상관없이 켜져 있다), 안쪽 여백 24 가 흐림보다 넓어 처음 · 끝 칩은 흐리지 않는다(03p).",
+    "Solid 의 옅은 바탕은 투명한 bg-neutral-weak-alpha(검정 4.7% · 다크 흰 12.5%)라 흰 표면(bg-layer-default)에서도 회색 바닥(bg-layer-basement) 위에서도 보인다(1.11:1 · 다크 1.47:1 — v120). 불투명 bg-neutral-weak 는 라이트의 회색 바닥과 같은 gray-200 이라 칩 바탕에 쓰지 않는다. 칩 사이는 8(spacing-between-chips)이다 — 폼 · 시트 안의 고르기 묶음은 줄바꿈하고 줄 사이도 8 이다. 목록 위 필터 바 · 제안 줄은 한 줄 가로 스크롤이고(쓰임의 필터 바 · 화면의 가계부), 줄을 화면 끝까지 내고 안쪽 여백을 화면 여백(spacing-global-gutter 24)만큼 둬 스크롤해도 첫 칩이 여백에서 시작한다. 줄의 양 끝은 늘 흐린다 — Scroll Fog row(좌우 20 마스크 · 스크롤 위치와 상관없이 켜져 있다), 안쪽 여백 24 가 흐림보다 넓어 처음 · 끝 칩은 흐리지 않는다(03p).",
     samples([
-      sample("흰 표면 위 — Solid", "bg-layer-default — 옅은 회색 채움이 보인다", frame(chipGroup({ label: "빠른 금액", items: amounts() }))),
-      sample("회색 바탕 위 — Solid(하지 않는다)", "bg-layer-basement — 라이트에서 bg-neutral-weak 와 같은 gray-200", frame(chipGroup({ label: "빠른 금액", items: amounts() }), " pchip-frame--basement")),
+      sample("흰 표면 위 — Solid", "bg-layer-default — 투명 바탕(bg-neutral-weak-alpha)이 보인다", frame(chipGroup({ label: "빠른 금액", items: amounts() }))),
+      sample("회색 바닥 위 — Solid", "bg-layer-basement — 투명 바탕이 바닥에 섞여 보인다", frame(chipGroup({ label: "빠른 금액", items: amounts() }), " pchip-frame--basement")),
       sample("회색 바탕 위 — Outline", "outlineStrong · outlineWeak — 테두리 · 짙은 채움이 칩을 알린다", frame(`<div class="pchip-rows">${chipGroup({ role: "radiogroup", label: "거래 종류", live: true, items: chipRadios(["지출", "수입", "이체"], "지출", { variant: "outlineStrong" }) })}${chipGroup({ label: "알림", live: true, items: chipToggles(["당일", "1일 전", "3일 전"], ["당일"]) })}</div>`, " pchip-frame--basement")),
       sample("줄바꿈 — 폼 · 시트 안", "칩 사이 8 · 줄 사이 8 — 좁은 칸(220)", frame(chipGroup({ label: "알림", live: true, items: chipToggles(["당일", "1일 전", "3일 전", "1주 전"], ["당일", "1일 전"]) }), " pchip-frame--narrow")),
     ]),
@@ -3101,7 +3101,7 @@ export function renderChipGallery(brand) {
     ]),
   );
 
-  const lede = "SEED Chip 구조 — 고르거나 넣은 값을 보이는 작은 알약이다. 하나 고르기(라디오) · 여럿 고르기(체크박스) · 제안(누르면 칸에 값을 넣는 버튼) · 필터 바(조건마다 여는 칩) · 입력값(글 + 지우기)을 맡는다 — 2 ~ 4개 짧은 폼 값이 칩이고, 5개 이상은 Select 다. 크기는 small 32 · medium 36(기본) · large 40, 모서리 full, 글 14 · 500. 변형은 Solid(옅은 회색 채움 — 흰 표면 위에서만) · Outline Strong · Outline Weak(기본) 셋이고, 고른 칩은 브랜드 색이 아니라 중립색이다 — 세 미리보기가 같은 모습이다. 누르면 누름 바탕에 칩 전체가 2px 거리로 준다. 포커스는 키보드에만 바깥 링 2px 이다. 옛 Tag / Chip(브랜드 10% 바탕 · 칩 안의 입력칸)은 없다."
+  const lede = "SEED Chip 구조 — 고르거나 넣은 값을 보이는 작은 알약이다. 하나 고르기(라디오) · 여럿 고르기(체크박스) · 제안(누르면 칸에 값을 넣는 버튼) · 필터 바(조건마다 여는 칩) · 입력값(글 + 지우기)을 맡는다 — 2 ~ 4개 짧은 폼 값이 칩이고, 5개 이상은 Select 다. 크기는 small 32 · medium 36(기본) · large 40, 모서리 full, 글 14 · 500. 변형은 Solid(옅은 투명 채움 — 어느 바탕에서나) · Outline Strong · Outline Weak(기본) 셋이고, 고른 칩은 브랜드 색이 아니라 중립색이다 — 세 미리보기가 같은 모습이다. 누르면 누름 바탕에 칩 전체가 2px 거리로 준다. 포커스는 키보드에만 바깥 링 2px 이다. 옛 Tag / Chip(브랜드 10% 바탕 · 칩 안의 입력칸)은 없다."
     + (brand.key === "shared" ? " 공유 토큰에는 브랜드 역할 색이 없어 포커스 링이 여기서는 중립(fg-neutral)으로 보인다 — HR · Desk 미리보기에서 브랜드 색이다." : "");
 
   return `
@@ -13565,11 +13565,11 @@ export function pageCss() {
     .pchip--large { --pchip-h: 40px; --pchip-px: var(--spacing-x4); --pchip-min-w: 52px; --pchip-prefix: 16px; --pchip-suffix: 16px; --pchip-remove: 16px; --pchip-icon: 16px; --press-basis: 40; }
     /* 아이콘만 — 원(폭 = 높이 32 · 36 · 40), 좌우 여백 0. 이름(aria-label)은 칩이 단다 */
     .pchip--icon-only { width: var(--pchip-h); min-width: 0; padding: 0; }
-    /* Solid — 안 고름 bg-neutral-weak(흰 표면 위에서만 — 회색 바탕 bg-layer-basement 와 같은 색) · 누름 bg-neutral-weak-pressed, 테두리 없음 */
+    /* Solid — 안 고름 bg-neutral-weak-alpha(투명 — 회색 바닥 · 흰 표면 어디서나, v120) · 누름 bg-neutral-weak-alpha-pressed, 테두리 없음 */
     .pchip--solid {
-      --pchip-bg: var(--color-bg-neutral-weak);
+      --pchip-bg: var(--color-bg-neutral-weak-alpha);
       --pchip-stroke-w: 0px;
-      --pchip-bg-pressed: var(--color-bg-neutral-weak-pressed);
+      --pchip-bg-pressed: var(--color-bg-neutral-weak-alpha-pressed);
       --pchip-stroke-w-off: 0px;
     }
     /* 고름 — Solid · Outline Strong: 짙은 채움 bg-neutral-inverted · fg-neutral-inverted, 테두리 없음(Outline Strong 도 지운다), 누름 bg-neutral-inverted-pressed.
@@ -13830,7 +13830,7 @@ export function pageCss() {
     .ptab-chip-dot { flex-shrink: 0; width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--ptab-dot); }
 
     /* Segmented Control — 트랙 .pseg(role=radiogroup) > 고른 알약 .pseg-indicator · 칸 .pseg-item(role=radio) > 글 .pseg-label(+ 알림 점 .pseg-dot).
-       트랙은 안쪽 4 · 모서리 full · bg-neutral-weak 이고 놓인 자리 폭을 채운다 — 칸이 그 폭을 칸 수(--pseg-n)로 똑같이 나눈다(최소 폭 없음). 모든 칸이 같은 폭 · 같은 높이다(가장 높은 칸에 맞춘다).
+       트랙은 안쪽 4 · 모서리 full · bg-neutral-weak-alpha(투명 — v120)이고 놓인 자리 폭을 채운다 — 칸이 그 폭을 칸 수(--pseg-n)로 똑같이 나눈다(최소 폭 없음). 모든 칸이 같은 폭 · 같은 높이다(가장 높은 칸에 맞춘다).
        칸은 34 이상 · 위아래 6 · 좌우 12 · 모서리 full, 글 t5 16/22 · 700 · 가운데 — 길면 단어 단위로 줄을 바꾼다(v114).
        고른 알약은 트랙에 하나다 — bg-layer-default + 안쪽 짙은 1px stroke-neutral-contrast, 폭 = (트랙 − 8) ÷ 칸 수이고 고른 칸 번호(--pseg-i)만큼 옮긴다(transform · d4 · easing).
        안 고른 칸을 올리거나(웹) 누르면 bg-neutral-weak-pressed + 안쪽 1px stroke-neutral-weak · 글 fg-neutral-muted, 고른 칸은 bg-layer-default-pressed + 짙은 1px 그대로 — 칸에 칠해 알약을 덮는다.
@@ -13847,7 +13847,7 @@ export function pageCss() {
       margin: 0;
       padding: var(--spacing-x1);
       border-radius: var(--radius-full);
-      background: var(--color-bg-neutral-weak);
+      background: var(--color-bg-neutral-weak-alpha);
       isolation: isolate;
     }
     .pseg-indicator {
@@ -13898,6 +13898,8 @@ export function pageCss() {
       overflow-wrap: break-word;
       transition: scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale);
     }
+    /* 다크의 안 고른 글은 fg-neutral-muted — 투명 트랙(v120) 위 subtle 이 카드 4.09 · 시트 3.56 이다(2026-10-17 사용자 결정 — 01-040 B 후속) */
+    [data-theme="dark"] .pseg-item:not([aria-checked="true"], :disabled) { color: var(--color-fg-neutral-muted); }
     .pseg-item[aria-checked="true"] { color: var(--color-fg-neutral); }
     /* 호버(마우스 있는 기기에서만) = 누름 바탕, 축소 없음 */
     @media (hover: hover) {

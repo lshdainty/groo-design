@@ -4,7 +4,7 @@ description: 층 · 쌓임 맥락 · 표면 색 · 그림자 · 선 · 딤
 source: DESIGN.md
 ---
 
-import { BasementVsWeakFigure, ElevationHeroFigure, GlobalLevelsFigure, LayerTokenTable, LocalLevelsFigure, PageOverPageFigure, SameLevelFigure, ShadowFigure, ThreeWaysFigure } from '@/components/foundations/elevation';
+import { BasementVsWeakFigure, ElevationHeroFigure, FloorFillFigure, GlobalLevelsFigure, LayerTokenTable, LocalLevelsFigure, PageOverPageFigure, SameLevelFigure, ScreenFloorFigure, ShadowFigure, ThreeWaysFigure } from '@/components/foundations/elevation';
 import { Note, SourceTable } from '@/components/foundations/ui';
 
 고도(Elevation)는 UI 요소 사이의 깊이와 층을 눈으로 보여 주는 원칙이다.
@@ -36,6 +36,18 @@ import { Note, SourceTable } from '@/components/foundations/ui';
 - **1 · 기본** — 페이지의 기본 짜임. 카드 · 목록 · 입력칸 같은 콘텐츠 덩어리와 상단 내비게이션이 여기 있다.
 - **2 · 시트** — 화면을 덮으며 새 쌓임 맥락을 만든다. 시트는 그 자체로 새 Global 층이 되어, 그 위의 목록은 시트를 바닥으로 한 Local 콘텐츠가 된다.
 - **3 · 경고창** — 가장 급한 정보를 다루는 맨 위의 모달이다. 사용자의 즉각적이고 온전한 주의를 요구하므로, 이미 열린 시트를 포함해 모든 요소보다 위에 온다.
+
+## 화면 바탕
+
+<ScreenFloorFigure />
+
+폰 화면(Desk 앱 · 768 미만 웹)의 바닥은 늘 0 층 `bg-layer-basement` 다. 셸이 바닥을 칠하고, 화면은 그 위에 1 층(`bg-layer-default`)을 화면 종류대로 놓는다.
+
+- **카드 화면** — 홈 · 자산 · 통계 · 예산 · 상세처럼 내용을 카드로 짠 화면. 바닥 위에 [Card](/docs/components/card) 를 쌓는다.
+- **띠 화면** — 설정 · 전체 · 캘린더 · 알림처럼 묶음이 있는 목록 화면. 묶음(목록 제목 + 줄)마다 화면 폭 흰 띠를 하나씩 두고, 띠 사이는 바닥이 보이는 틈으로 가른다([Divider](/docs/components/divider) 의 "강함"). 띠는 모서리 · 테두리 · 그림자가 없다.
+- **흰 화면** — 가계부 거래만. 화면 전체가 흰 층 하나이고 날짜 묶음은 목록 제목으로 가른다.
+
+한 화면에는 한 방식만 쓴다. 목록은 바닥에 바로 두지 않는다 — 누른 줄의 바탕이 회색 위에서는 보이지 않는다. 띠 사이 틈은 옅어서(그림 아래 숫자) 띠가 하나로 붙어 보일 수 있다 — 묶음은 목록 제목이 가른다. 값은 Layout 의 "화면 바탕" 이 정한다.
 
 ## 페이지 위 페이지
 
@@ -97,6 +109,16 @@ Global 과 Local 의 구분이 페이지 위에 페이지가 쌓이는 짜임을
 
 - `bg-layer-basement` — 다크에서 가장 낮은 0 층의 바닥색이다. 기본 화면의 배경으로 쓴다.
 - `bg-neutral-weak` — 라이트의 밝기 톤에 맞춰 다크에서도 대응하는 톤으로 보인다. 카드 안의 입력칸 · 칩처럼 배경이 놓인 층에 맞춰 조정돼야 할 때 쓴다.
+
+### 바닥 위의 채움
+
+<FloorFillFigure />
+
+라이트에서 바닥 · 약한 배경(`bg-neutral-weak`) · 비활성(`bg-disabled`)은 같은 단계라, 회색 바닥 위에 바로 놓인 채움은 바닥에 묻힌다.
+
+- 약한 배경 · 비활성으로 칠하는 것 — neutralWeak 버튼 · 안내 상자 · 스켈레톤 · 막힌 칸의 바탕 — 은 흰 표면(`bg-layer-default` · `bg-layer-floating`) 위에만 둔다.
+- 회색 바닥 위에 바로 놓이는 버튼은 neutralOutline 이다. 입력칸은 테두리가 모양을 맡아 바닥 위에서도 보인다.
+- 바닥 위에 자주 놓이는 [Chip](/docs/components/chip) `solid` 바탕과 [Segmented Control](/docs/components/segmented-control) 트랙은 투명한 `bg-neutral-weak-alpha`(누름 `bg-neutral-weak-alpha-pressed`)로 칠한다 — 놓인 바탕에 섞여 어느 바탕에서나 보인다.
 
 ## 딤
 

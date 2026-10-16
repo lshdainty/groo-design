@@ -65,7 +65,7 @@
 |---|---|
 | `enabled` | 기본 |
 | `hovered` | 웹. 색이 바뀌지 않는다 — 켜짐 색이 상태를 뜻해서다(v104) |
-| `focused` | 웹. 키보드 포커스에만 링 2px · 띄움 2px(v106) |
+| `focused` | 웹 · 앱. 키보드 포커스에만 링 2px · 띄움 2px(v106). 앱은 하드웨어 키보드로 옮길 때만 그리고 손가락으로 누를 때는 없다(2026-10-08) |
 | `pressed` | 색은 그대로, 스위치만 세로 2px 거리 축소(v104). 손을 떼기 전에 상태가 바뀐 것처럼 보이지 않게 |
 | `disabled` | 전용 색(v106). 켜진 채 막히면 켜진 모양 그대로 회색 — 채운 트랙 + 밝은 엄지. 꺼진 채 막히면 옅은 트랙 + 옅은 테두리 + 회색 엄지. 라벨도 `fg-disabled` |
 
@@ -211,7 +211,7 @@ import { Switchmark } from "@/components/ui/switch"
 | **WCAG 1.4.11** Non-text contrast(UI ≥ 3:1) | 꺼진 트랙 `stroke-neutral-solid` × 표면 4.2:1(다크 4.1:1) ✓ · 켜진 트랙 `bg-neutral-inverted` × 표면 16.4:1(다크 13.4:1) ✓ · 엄지 × 트랙 — 끔 4.2:1(다크 4.1:1), 켬 16.4:1(다크 13.4:1) ✓. 다크의 brand 트랙은 표면과 1.7:1(Desk) · 2.9:1(HR)이라 트랙만으로는 3:1 이 안 된다 — 켜짐은 흰 엄지의 자리와 크기가 알린다 |
 | **WCAG 1.4.1** Use of color | 켬 · 끔은 색만으로 갈리지 않는다 — 엄지의 자리(왼쪽 · 오른쪽)와 크기(0.8 · 1)가 함께 바뀐다 ✓ |
 | 비활성 | 대비 기준(1.4.3 · 1.4.11)의 예외다. 켜진 채 막힌 트랙(`fg-disabled`)은 꺼진 트랙(`stroke-neutral-solid`)과 비슷한 회색이고 다크에서는 같은 값이다 — 켬 · 끔은 엄지의 자리 · 크기로, 막힘은 라벨의 비활성 색으로 읽힌다. 그래서 막을 때는 라벨까지 바꾼다 |
-| **WCAG 2.4.7** Focus visible | 키보드 포커스에만 링 2px · 띄움 2px(`stroke-focus-ring`) |
+| **WCAG 2.4.7** Focus visible | 키보드 포커스에만 링 2px · 띄움 2px(`stroke-focus-ring`) — 앱도 키보드로 옮길 때만 같은 링(2026-10-08) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 줄 최소 높이 24 · 24 · 32 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 라벨까지 묶어 44 로 넓힌다 ✓ — 스위치만 쓰면 그 줄 전체 |
 | **ARIA** | Radix 가 `role="switch"` + `aria-checked` 를 단다. `Switch` 는 `<label htmlFor>` 로 스위치와 라벨을 잇는다. 스위치만 쓰면 이름은 줄을 `<label>` 로 묶거나 `aria-labelledby` · `aria-label` — 반드시. |
@@ -247,7 +247,7 @@ import { Switchmark } from "@/components/ui/switch"
 - **기본 크기는 `24`**(사용자 결정) — SEED 는 `32`. 제품의 스위치가 모두 높이 24 이고 줄 제목이 13 ~ 14 라서다.
 - **비활성은 전용 색**(v106 · 사용자 결정) — 켜진 채 막히면 켜진 모양 그대로 `fg-disabled` 채움 + `bg-disabled` 엄지, 꺼진 채 막히면 `bg-disabled` 트랙 + `stroke-neutral-weak` 안쪽 선 + `fg-disabled` 엄지. SEED 는 트랙 38% · 라벨 58% 불투명도로 흐리게 한다.
 - **꺼진 트랙은 `stroke-neutral-solid`**(표면과 3:1 이상, v109). SEED 는 palette.gray-600(흰 바탕 2.1:1)이다.
-- 웹의 `focused` 를 더한다(v106).
+- 웹의 `focused` 를 더한다(v106). 앱의 키보드 포커스에도 그린다(2026-10-08).
 - 줄 안의 맞춤은 가운데다 — SEED 는 긴 라벨의 첫 줄에 스위치를 맞춘다.
 
 ## Migration notes

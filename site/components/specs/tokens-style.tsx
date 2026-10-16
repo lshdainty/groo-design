@@ -4,6 +4,20 @@
 import { design, proseValue } from '@/lib/design-tokens';
 import { loadingCss } from './loading-look';
 import { scrollAreaCss } from './collapse-look';
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+// specs/components/*.yaml 에서 { value: $color-a, dark: $color-b }(a ≠ b) 짝을 모은다
+function pairsInSpecs() {
+  const dir = join(process.cwd(), '..', 'specs', 'components');
+  const seen = new Map<string, [string, string, string]>();
+  for (const f of readdirSync(dir).filter((n) => n.endsWith('.yaml'))) {
+    for (const m of readFileSync(join(dir, f), 'utf8').matchAll(/value: \$color-([a-z0-9-]+), dark: \$color-([a-z0-9-]+)/g)) {
+      if (m[1] !== m[2]) seen.set(`${m[1]}--${m[2]}`, [f, m[1], m[2]]);
+    }
+  }
+  return [...seen.values()];
+}
 
 function build() {
   const desk = design('desk').front.colors;
@@ -18,6 +32,11 @@ function build() {
       light.push(`--p-hr-${name}:${hr[name]}`);
       dark.push(`--p-hr-${name}:${hr[`${name}-dark`] ?? hr[name]}`);
     }
+  }
+  // 컴포넌트 YAML 의 { value: $color-a, dark: $color-b } — 다크만 다른 토큰을 쓰는 자리(Segmented 안 고른 글 …)
+  for (const [, a, b] of pairsInSpecs()) {
+    light.push(`--p-pair-${a}--${b}:${desk[a]}`);
+    dark.push(`--p-pair-${a}--${b}:${desk[`${b}-dark`] ?? desk[b]}`);
   }
   light.push(`--p-overlay-dim:${proseValue('overlay-dim-light')}`);
   dark.push(`--p-overlay-dim:${proseValue('overlay-dim-dark')}`);

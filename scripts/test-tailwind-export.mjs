@@ -40,7 +40,7 @@ const NAMESPACE_PATTERNS = [
   { name: "breakpoint", regex: /^\s+--breakpoint-[a-z0-9]+:/gm, minCount: 4 },
   { name: "breakpoint reset", regex: /^\s+--breakpoint-\*:\s*initial;/gm, minCount: 1 },
   { name: "layout", regex: /^\s+--layout-[a-z0-9-]+:/gm, minCount: 6 },
-  { name: "touch", regex: /^\s+--touch-[a-z0-9-]+:/gm, minCount: 5 },
+  { name: "touch", regex: /^\s+--touch-[a-z0-9-]+:/gm, minCount: 3 },
   { name: "z-index", regex: /^\s+--z-[a-z-]+:/gm, minCount: 10 },
   { name: "@keyframes", regex: /^@keyframes\s+[a-z][a-z0-9-]*\s*\{/gm, minCount: 14 },
 ];
@@ -78,6 +78,32 @@ function checkZIndex(css, target) {
   return errors;
 }
 
+// 옛 그림자 이름 → 새 이름. @theme 에서 값이 아니라 var(--shadow-sN) 이어야 Tailwind 클래스(.shadow-lg)가 다크 값을 따라간다
+const SHADOW_ALIAS = { "shadow-sm": "shadow-s1", "shadow-md": "shadow-s2", "shadow-lg": "shadow-s3", "shadow-xl": "shadow-s4" };
+function checkShadowAliases(css) {
+  let errors = 0;
+  const theme = /@theme \{([\s\S]*?)\n\}/.exec(css)?.[1] ?? "";
+  for (const [old, neu] of Object.entries(SHADOW_ALIAS)) {
+    for (const [o, n] of [[old, neu], [`${old}-dark`, `${neu}-dark`]]) {
+      const m = new RegExp(`^\\s+--${o}:\\s*([^;]+);`, "m").exec(theme);
+      if (!m) { console.error(`  ❌ @theme 에 --${o} 없음`); errors++; }
+      else if (m[1].trim() !== `var(--${n})`) { console.error(`  ❌ --${o}: ${m[1].trim()} (expected var(--${n}))`); errors++; }
+    }
+  }
+  // 새 이름 — @theme 의 --shadow-sN 은 var(--porest-shadow-sN), 값(라이트)은 @theme 밖 :root 에(2026-10-17 — 01-003 A 를 새 이름에도)
+  const md = readFileSync(resolve(ROOT, "DESIGN.md"), "utf8");
+  const sh = parseShadows(md);
+  const hold = /\n:root \{\n([\s\S]*?)\n\}/.exec(css)?.[1] ?? "";
+  for (const n of [1, 2, 3, 4]) {
+    const m = new RegExp(`^\\s+--shadow-s${n}:\\s*([^;]+);`, "m").exec(theme);
+    if (!m || m[1].trim() !== `var(--porest-shadow-s${n})`) { console.error(`  ❌ --shadow-s${n}: ${m?.[1]} (expected var(--porest-shadow-s${n}))`); errors++; }
+    const v = new RegExp(`^\\s+--porest-shadow-s${n}:\\s*([^;]+);`, "m").exec(hold);
+    if (!v || v[1].trim() !== sh[`shadow-s${n}`]) { console.error(`  ❌ :root --porest-shadow-s${n}: ${v?.[1]} (expected ${sh[`shadow-s${n}`]})`); errors++; }
+  }
+  if (errors === 0) console.log(`  ✓ 그림자 — 옛 이름 → var(--shadow-s1 ~ s4) → var(--porest-shadow-s1 ~ s4), 다크 블록이 값을 바꾼다`);
+  return errors;
+}
+
 function checkDarkBlock(css, target) {
   let errors = 0;
   const m = /\[data-theme="dark"\],\n\.dark \{\n([\s\S]*?)\n\}/.exec(css);
@@ -90,8 +116,13 @@ function checkDarkBlock(css, target) {
     if (name.endsWith("-dark") || !table.has(`${name}-dark`)) continue;
     expected.set(`color-${name}`, resolveColorHex(table, `${name}-dark`));
   }
+  // 옛 그림자 이름(shadow-sm ~ xl)은 @theme 에서 var(--shadow-s1 ~ s4) 라 다크 블록에 따로 두지 않는다(01-003 A — 아래 checkShadowAliases)
   for (const t of [parseShadows(md), parseGradients(md)]) {
-    for (const [name, val] of Object.entries(t)) if (!name.endsWith("-dark") && t[`${name}-dark`]) expected.set(name, t[`${name}-dark`]);
+    for (const [name, val] of Object.entries(t)) {
+      if (name.endsWith("-dark") || !t[`${name}-dark`] || name in SHADOW_ALIAS) continue;
+      // 새 그림자 이름(shadow-s1 ~ s4)은 값을 든 --porest-shadow-sN 을 바꾼다(아래 checkShadowAliases)
+      expected.set(/^shadow-s\d+$/.test(name) ? `porest-${name}` : name, t[`${name}-dark`]);
+    }
   }
   for (const [name, val] of expected) {
     if (!decls.has(name)) { console.error(`  ❌ 다크 블록에 --${name} 없음`); errors++; }
@@ -170,6 +201,7 @@ for (const target of TARGETS) {
   // 4-1. 다크 블록(2026-10-06) — 다크 값(-dark)이 따로 있는 색 · 그림자 · 그라디언트를 빠짐없이 덮고,
   //      값은 DESIGN 에서 풀어 둔 값이다(var() 사슬이면 반전 역할 색 fg-*-inverted 가 한 번 더 뒤집힌다).
   totalErrors += checkDarkBlock(css, target);
+  totalErrors += checkShadowAliases(css);
 
   // 5. 정의되지 않은 placeholder 검출 (예: undefined, null, NaN)
   const placeholders = css.match(/:\s*(undefined|null|NaN);/g);

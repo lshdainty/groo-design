@@ -34,11 +34,11 @@
 
 | 변형 | 안 고름 | 고름 | 쓰는 자리 |
 |---|---|---|---|
-| `solid` | 옅은 회색 채움(`bg-neutral-weak`) | 짙은 채움(`bg-neutral-inverted` · `fg-neutral-inverted`) | 제안 · 필터 바 — 흰 표면(`bg-layer-default`) 위에서만 |
+| `solid` | 옅은 투명 채움(`bg-neutral-weak-alpha`) | 짙은 채움(`bg-neutral-inverted` · `fg-neutral-inverted`) | 제안 · 필터 바 — 회색 바닥 · 흰 표면 어디서나 |
 | `outlineStrong` | 투명 + 안쪽 1px `stroke-neutral-weak` | 짙은 채움(테두리 없음) | 하나 고르기를 분명하게 — 거래 종류처럼 고른 값이 곧 화면의 갈래일 때. 필터 바 맨 앞 지우기(↺, 고르지 않는 칩)도 이 모양 — Solid 조건 칩과 갈린다 |
 | `outlineWeak` *(기본)* | 투명 + 안쪽 1px `stroke-neutral-weak` | 옅은 바탕 `bg-neutral-weak` + 짙은 1px `stroke-neutral-contrast`(글자 그대로) | 고르기의 기본 — 고른 칩이 여럿 보일 때(여럿 고르기 · 시트 안 고르기 · 입력값) |
 
-고른 칩은 브랜드 색이 아니라 중립색으로 칠한다 — 고른 칩이 여럿 보여도 브랜드 버튼(주요 동작)과 다투지 않고, Desk · HR 이 같다. Solid 의 옅은 바탕(`bg-neutral-weak`)은 회색 바탕(`bg-layer-basement`)과 같은 색이라 거기서는 사라진다 — 회색 바탕 위 줄은 Outline 을 쓴다.
+고른 칩은 브랜드 색이 아니라 중립색으로 칠한다 — 고른 칩이 여럿 보여도 브랜드 버튼(주요 동작)과 다투지 않고, Desk · HR 이 같다. Solid 의 옅은 바탕은 투명한 `bg-neutral-weak-alpha`(검정 4.7% · 다크 흰 12.5%)라 놓인 바탕에 섞여 회색 바닥(`bg-layer-basement`) 위에서도 보인다 — 회색 위 1.11:1 · 흰 위 1.11:1 · 다크 1.47:1(v120, 2026-10-16 사용자 결정 — 기초 웹 01-040 B). 불투명 `bg-neutral-weak` 였을 때는 회색 바닥과 같은 색(1.00:1)이라 흰 표면 위에서만 썼다.
 
 [그림: 변형 — Solid · Outline Strong · Outline Weak 의 안 고름 · 고름](../../site/components/specs/chip.tsx#variant)
 
@@ -58,7 +58,7 @@
 |---|---|
 | `enabled` | 변형 · 고름의 바탕 |
 | `hovered` | 웹 — 누름과 같은 바탕(축소 없음) |
-| `pressed` | 누름 바탕(`bg-neutral-weak-pressed` · `bg-layer-default-pressed` · `bg-neutral-inverted-pressed`) + 칩 전체 2px 거리 축소(v104) |
+| `pressed` | 누름 바탕(Solid `bg-neutral-weak-alpha-pressed` · Outline `bg-layer-default-pressed` · 고른 Outline Weak `bg-neutral-weak-pressed` · 짙은 채움 `bg-neutral-inverted-pressed`) + 칩 전체 2px 거리 축소(v104) |
 | `focused` | 키보드 포커스에만 바깥 링 2px · 띄움 2px `stroke-focus-ring` |
 | `disabled` | 바탕 `bg-disabled` · 글자 `fg-disabled` — 흐리게 하지 않는다(v106). 고른 채 막히면 짙은 1px `stroke-neutral-solid` 를 남겨 무엇을 골랐는지 보인다 |
 
@@ -125,11 +125,11 @@
 
 [그림: 제안 — 칸이 값을 보인다 · 칸 값과 같은 칩이 골라져 보인다](../../site/components/specs/chip.tsx#suggestion-guide)
 
-### Solid 는 흰 표면 위에서
+### Solid 는 어느 바탕에서나
 
-Solid 의 옅은 바탕은 흰 표면 위에서만 보인다 — 회색 바탕(`bg-layer-basement`) 위에서는 바탕과 같은 색이라 칩이 사라진다. 회색 바탕 위 줄은 Outline Strong · Outline Weak 를 쓴다.
+Solid 의 옅은 바탕은 투명한 `bg-neutral-weak-alpha` 라 흰 표면에서도, 회색 바닥(`bg-layer-basement`) 위에서도 보인다(1.11:1 · 다크 1.47:1 — v120). 불투명 `bg-neutral-weak` 로 칠하면 회색 바닥과 같은 색이라 칩이 사라진다 — 칩 바탕에 불투명 약한 배경을 쓰지 않는다(DESIGN.md Elevation 의 "바닥 위의 채움", 2026-10-16 사용자 결정 — 기초 웹 01-040 B).
 
-[그림: 표면 — 흰 표면 위 Solid · 회색 바탕 위 Solid](../../site/components/specs/chip.tsx#surface-guide)
+[그림: 표면 — 흰 표면 위 Solid · 회색 바닥 위 Solid](../../site/components/specs/chip.tsx#surface-guide)
 
 ### 글
 
@@ -252,8 +252,8 @@ import { Chip, ChipGroup, InputChip } from "@/components/ui/chip"
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 안 고른 글 `fg-neutral` 흰 표면 위 16.41 · 13.42, Solid 바탕 위 15.20 · 10.32, 고른 짙은 채움 위 `fg-neutral-inverted` 16.41 · 13.42 ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 고름은 짙은 채움(바탕과 16.41 · 13.42) 또는 짙은 1px(16.41 · 13.42)로 안 고름과 가른다 ✓. 고른 채 막힘 `stroke-neutral-solid` 은 `bg-disabled` 위 3.87 · 3.18 ✓(비활성이라 기준 밖이지만 3:1 을 넘긴다). 안 고른 칩의 경계(Solid 바탕 1.08 · Outline 1px 1.23)는 칩을 알리는 유일한 표시가 아니다 — 글이 알린다(SEED 와 같다). 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 안 고른 글 `fg-neutral` 흰 표면 위 16.41 · 13.42, Solid 투명 바탕 위 라이트 13.71 ~ 14.79 · 다크 7.84 ~ 10.33(놓인 바탕에 따라 — v120), 고른 짙은 채움 위 `fg-neutral-inverted` 16.41 · 13.42 ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 고름은 짙은 채움(바탕과 16.41 · 13.42) 또는 짙은 1px(16.41 · 13.42)로 안 고름과 가른다 ✓. 고른 채 막힘 `stroke-neutral-solid` 은 `bg-disabled` 위 3.87 · 3.18 ✓(비활성이라 기준 밖이지만 3:1 을 넘긴다). 안 고른 칩의 경계(Solid 바탕 1.11 · 다크 1.47 — 회색 바닥 위에서도 · Outline 1px 1.23)는 칩을 알리는 유일한 표시가 아니다 — 글이 알린다(SEED 와 같다). 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 바깥 링 2px · 띄움 2px |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 모든 크기 ✓(가장 작은 small 32 · 최소 폭 44). 입력값 칩의 지우기는 누르는 영역 24 × 24 |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 누르는 영역을 가로 · 세로 44 까지 넓힌다 ✓(보이는 칩 32 · 36 · 40, 아이콘만 있는 칩도) — 줄바꿈 묶음에서 small 만 위아래 줄의 영역이 4 겹친다. 입력값 칩의 지우기는 24 × 24 라 AAA 밖이다 |
@@ -267,7 +267,7 @@ import { Chip, ChipGroup, InputChip } from "@/components/ui/chip"
 - 하나 고르기의 "전체" 는 맨 앞 선택지로, 폼은 기본값을 골라 둔다.
 - 필터 바는 조건마다 칩 하나, 걸린 조건은 고른 모습 + 값 요약.
 - 고른 칩은 중립색으로.
-- 회색 바탕 위 줄은 Outline 으로.
+- Solid 바탕은 투명한 `bg-neutral-weak-alpha` 로 — 회색 바닥 위에서도 보인다.
 
 ### ❌ Don't
 
@@ -286,7 +286,7 @@ import { Chip, ChipGroup, InputChip } from "@/components/ui/chip"
 
 ## SEED 와 다른 점
 
-- **반투명 색을 불투명 짝으로**(v102) — Solid 바탕 `bg-neutral-weak`, Outline 테두리 `stroke-neutral-weak`, 누름 `bg-layer-default-pressed`. 그래서 Solid 는 흰 표면 위에서만 쓴다(SEED 의 반투명 바탕은 어느 표면에서나 조금 짙어진다).
+- **반투명 색을 불투명 짝으로**(v102) — Outline 테두리 `stroke-neutral-weak`, 누름 `bg-layer-default-pressed`. Solid 바탕은 SEED 그대로 투명한 `bg-neutral-weak-alpha`(누름 `-pressed`)다 — v102 에는 검사기가 8자리 hex 를 받지 않아 불투명 `bg-neutral-weak` 로 두고 흰 표면 위에서만 썼는데, 회색 바닥 위 필터 바에서 사라져 v120 에 되돌렸다(2026-10-16 사용자 결정 — 기초 웹 01-040 B).
 - **Outline Strong 을 고르면 테두리를 지운다** — SEED 는 짙은 채움 위에 옅은 테두리가 남는다(SEED Chip Tabs 는 지운다).
 - **비활성은 흐리게 하지 않는다**(v106) — SEED 는 불투명도 0.5. 고른 채 막힌 칩은 짙은 1px `stroke-neutral-solid` 로 고른 것을 남긴다(사용자 결정 2026-10-02).
 - **웹의 호버**는 누름과 같은 바탕(v106 — SEED 도 마우스에서는 같다), **누르는 영역**은 가로 · 세로 44 까지 넓힌다(SEED 에 규정 없음 — Button 과 같다).

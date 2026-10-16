@@ -19,7 +19,7 @@ slots:
 
 variants:
   variant:
-    solid: 화면 전체 내용을 바꾸는 2차 탭 — Chip Solid(흰 표면 위에서만)
+    solid: 화면 전체 내용을 바꾸는 2차 탭 — Chip Solid(투명 바탕 — 회색 바닥 · 흰 표면 어디서나, v120)
     outline: 일부 내용을 바꾸는 2차 탭 — Chip Outline Strong
   size:
     medium: 36 — 기본. 좁은 자리 · 스크롤 중간의 서브 내용

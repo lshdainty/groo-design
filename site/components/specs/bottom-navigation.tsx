@@ -6,10 +6,12 @@ import { Figure, Panel as Plate } from '../foundations/ui';
 import { snackbarLook } from './feedback-look';
 import { SnackDock } from './feedback-screens';
 import { SnackbarView } from './feedback-view';
-import { Sheet, Verdict, rc, type Mode } from './kit';
+import { Sheet, Verdict, cardStack, rc, type Mode } from './kit';
 import { ASSET_ROWS, DESK_TABS } from './nav-data';
 import { BottomNavPlayground } from './nav-playground';
 import {
+  FloorBands,
+  TxCard,
   Arrow,
   Band,
   Bar,
@@ -286,9 +288,12 @@ const MoneyGuide: Fig = ({ caption }) => (
         <LedgerScreen scale={0.46} h={600} value="assets" />
       </Verdict>
       <Verdict ok={false} note="가계부에 들어가면 탭 바 칸을 ← · 넷으로 바꾼다 — 캘린더 · 전체로 바로 못 간다">
-        <NPhone scale={0.46} h={600} bar={<Bar type="root" title="자산" actions={[{ icon: 'search', label: '검색' }]} />} overlay={<Pill items={MONEY_BAD} tab="assets" noAdd />}>
-          <DayHead day="자산 합계" total="12,067,700원" />
-          <TxRows n={4} rows={ASSET_ROWS} />
+        <NPhone scale={0.46} h={600} bg="bg-layer-basement" bar={<Bar type="root" title="자산" actions={[{ icon: 'search', label: '검색' }]} />} overlay={<Pill items={MONEY_BAD} tab="assets" noAdd />}>
+          <div style={cardStack()}>
+            <TxCard title="계좌" action="관리">
+              <TxRows n={4} rows={ASSET_ROWS} />
+            </TxCard>
+          </div>
         </NPhone>
       </Verdict>
     </Pair>
@@ -349,9 +354,13 @@ const RetapGuide: Fig = ({ caption }) => {
               <Tap x={cell(3)} y={tapY} />
             </div>
             <Arrow label="캘린더" />
-            <NPhone scale={s} h={600} tabs tab="calendar" bar={<Bar type="root" title="캘린더" />}>
-              <DayHead day="10월 8일 (목)" total="일정 2" />
-              <TxRows n={5} from={4} />
+            <NPhone scale={s} h={600} tabs tab="calendar" bg="bg-layer-basement" bar={<Bar type="root" title="캘린더" />}>
+              <FloorBands>
+                <>
+                  <DayHead day="10월 8일 (목)" total="일정 2" />
+                  <TxRows n={5} from={4} />
+                </>
+              </FloorBands>
             </NPhone>
             <Arrow label="홈" />
             <div className="relative">
@@ -390,9 +399,13 @@ const AddGuide: Fig = ({ caption }) => (
         </Verdict>
         <Verdict ok note="캘린더 — 같은 자리 + 의 이름이 &ldquo;일정 추가&rdquo;">
           <div className="flex flex-col items-center gap-2">
-            <NPhone scale={0.42} h={600} tabs tab="calendar" bar={<Bar type="root" title="캘린더" />}>
-              <DayHead day="10월 8일 (목)" total="일정 2" />
-              <TxRows n={6} from={4} />
+            <NPhone scale={0.42} h={600} tabs tab="calendar" bg="bg-layer-basement" bar={<Bar type="root" title="캘린더" />}>
+              <FloorBands>
+                <>
+                  <DayHead day="10월 8일 (목)" total="일정 2" />
+                  <TxRows n={6} from={4} />
+                </>
+              </FloorBands>
             </NPhone>
             <Reading tone="ok">일정 추가, 버튼</Reading>
           </div>

@@ -13,7 +13,7 @@
 #     채움 + fg-disabled 점. SEED 는 palette.gray-300 채움, 선택이면 채움을 빼고 테두리 + 커진 점(8 → 10).
 #   - 묶음은 세로만(사용자 결정) — SEED 는 가로를 피하되, 꼭 필요하면 간격을 넉넉히 두라고 한다.
 #   - 묶음 줄 사이는 12(사용자 결정) — SEED 는 4 다. 4 면 이웃 줄의 44 영역과 겹쳐 한 줄이 36 · 40 만 받는다.
-#   - 웹의 hovered · focused 상태를 더한다(v106). 오류 상태는 두지 않는다 — 묶음 아래 안내 글(Checkbox 와 같다).
+#   - hovered(웹) · focused(웹 · 앱의 키보드 포커스) 상태를 더한다(v106 · 앱은 2026-10-08). 오류 상태는 두지 않는다 — 묶음 아래 안내 글(Checkbox 와 같다).
 
 name: Radio Group
 
@@ -22,7 +22,7 @@ slots:
   radiomark: 동그라미(Radiomark) — 배경 · 테두리. 라벨이 따로 서는 자리에는 이것만 넣어 쓴다
   dot: 가운데 점 — 선택을 나타낸다
   label: 글자(Label)
-  focusRing: 키보드 포커스 링(웹)
+  focusRing: 키보드 포커스 링(웹 · 앱 — 키보드로 옮길 때만)
   group: 묶음(Radio Group) — 세로로 쌓는다
 
 variants:
@@ -48,7 +48,7 @@ defaults:
 states:
   enabled: 기본
   hovered: 웹 — 누름 색과 같다(v106), 축소는 없다
-  focused: 웹 — 키보드 포커스에만 링
+  focused: 키보드 포커스에만 링 — 웹 · 앱(앱은 2026-10-08 부터, 손가락으로 누를 때는 없다)
   pressed: 누름 색 + 동그라미 세로 2px 거리 축소(v104)
   disabled: 전용 색(v106) — 불투명도로 흐리게 하지 않는다
 
@@ -83,7 +83,7 @@ rules:
         scaleEasing: $motion-ease-pressed-scale
     focused:
       focusRing:
-        width: 2px
+        width: { value: 2px, note: "웹 · 앱 같다 — 앱은 하드웨어 키보드로 옮길 때만 그린다(Flutter FocusHighlightMode.traditional), 손가락으로 누를 때는 없다(2026-10-08 — DESIGN.md State · Button 과 같다)" }
         offset: 2px
         color: $color-stroke-focus-ring
     disabled:

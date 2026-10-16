@@ -238,7 +238,7 @@
 
 ### 목록을 두는 바탕
 
-목록은 흰 바탕(`bg-layer-default`)이나 시트 · 대화상자(`bg-layer-floating`) 위에 둔다. 누름 · 호버 바탕(`bg-layer-default-pressed`)이 불투명한 색이라, 회색 바탕(`bg-layer-basement`) 위에서는 바탕과 거의 같아(라이트 1.02:1) 눌러도 보이지 않는다. 회색 바탕 화면에서는 목록을 카드에 담는다.
+목록은 흰 바탕(`bg-layer-default`)이나 시트 · 대화상자(`bg-layer-floating`) 위에 둔다. 누름 · 호버 바탕(`bg-layer-default-pressed`)이 불투명한 색이라, 회색 바탕(`bg-layer-basement`) 위에서는 바탕과 거의 같아(라이트 1.02:1) 눌러도 보이지 않는다. 회색 바탕 화면에서는 목록을 카드에 담거나(카드 화면), 묶음마다 화면 폭 흰 띠에 담는다(설정 · 전체 · 캘린더 같은 묶음 목록 — 띠 사이 8 은 바닥이 보인다). 가계부 거래처럼 화면 전체가 목록이면 흰 화면이다(DESIGN.md Layout 의 "화면 바탕" — 2026-10-16 사용자 결정 Q-019-3 C).
 
 [그림: 흰 바탕 위의 목록 · 회색 바탕 위의 목록 — 둘 다 가운데 줄을 누른 순간](../../site/components/specs/list.tsx#surface-guide)
 
@@ -417,7 +417,7 @@ import { List, ListButtonItem, ListParentItem } from "@/components/ui/list"
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에만 줄 안쪽 링 2px(`stroke-focus-ring`). 컨트롤 줄은 끼운 컨트롤이 포커스를 받고 그 컨트롤의 링이 보인다 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 줄 높이 46 이상 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 누르는 줄은 줄 전체 — 한 줄짜리도 46 ✓ |
-| **ARIA** | `List` 는 `<ul>` · 줄은 `<li>`. 누르는 줄의 버튼 · 링크 이름은 제목 + 설명. 컨트롤 줄은 `<label>` 이 줄 전체라 제목 + 설명이 컨트롤의 이름이다. 목록 제목이 있으면 `List` 에 `aria-labelledby` 로 잇는다. 하나 고르기(`ListRadioGroup`)는 `role="radiogroup"`, 여럿 고르기(`ListCheckGroup`)는 `<fieldset>` 이고 둘 다 이름(`aria-label` · `aria-labelledby`) 필수 — 묶음 안의 줄 · 선은 `<div>` 다(SEED 와 같다). 줄 사이 선은 `aria-hidden` 이라 줄 수에 들지 않는다. 하위 줄을 접는 꺾쇠 단추는 이름 "{카테고리} 하위 카테고리"(고정 — `expandLabel`, 접는 줄이면 타입이 빠뜨림을 막는다) + `aria-expanded` · `aria-controls`(하위 줄 `ul`) — 누르는 영역 44 ✓ ✓. 늘 펼친 편집 화면(`collapsible={false}`)은 단추 · `aria-expanded` 를 두지 않는다 — 접히지 않는데 펼침 상태가 남으면 누를 수 있는 것처럼 읽힌다(Tree View 와 같다). 빈 꺾쇠 자리는 `aria-hidden` |
+| **ARIA** | `List` 는 `<ul>` · 줄은 `<li>`. 누르는 줄의 버튼 · 링크 이름은 제목 + 설명. 컨트롤 줄은 `<label>` 이 줄 전체라 제목 + 설명이 컨트롤의 이름이다. 목록 제목이 있으면 `List` 에 `aria-labelledby` 로 잇는다. 하나 고르기(`ListRadioGroup`)는 `role="radiogroup"`, 여럿 고르기(`ListCheckGroup`)는 `<fieldset>` 이고 둘 다 이름(`aria-label` · `aria-labelledby`) 필수 — 묶음 안의 줄 · 선은 `<div>` 다(SEED 와 같다). 줄 사이 선은 `aria-hidden` 이라 줄 수에 들지 않는다. 하위 줄을 접는 꺾쇠 단추는 이름 "{카테고리} 하위 카테고리"(고정 — `expandLabel`, 접는 줄이면 타입이 빠뜨림을 막는다) + `aria-expanded` · `aria-controls`(하위 줄 `ul`) — 누르는 영역 44 ✓ ✓. 늘 펼친 편집 화면(`collapsible={false}`)은 단추 · `aria-expanded` 를 두지 않는다 — 접히지 않는데 펼침 상태가 남으면 누를 수 있는 것처럼 읽힌다(Tree View 와 같다). 빈 꺾쇠 자리는 `aria-hidden`. 앱은 목록 제목을 `Semantics(header: true, headingLevel: 2)` 로 단다 — 안드로이드는 `headingLevel` 이 있어야 제목 이동에 걸린다(상단 바 제목이 1, 2026-10-16 사용자 결정 — 틀 앱 02-004) |
 | **Reduced motion** | 모션 줄이기면 콘텐츠 축소를 뺀다 — 바탕 색 전환은 그대로(기초 Motion) |
 
 ## Do / Don't

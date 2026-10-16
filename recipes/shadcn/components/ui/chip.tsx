@@ -20,7 +20,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *   InputChip                    넣은 값 — 버튼이 아닌 알약(Outline Weak 고른 모습) + 뒤 지우기 버튼("{글} 지우기")
  *   ChipGroup                    묶음 — wrap(폼 · 시트 안) · scroll(목록 위 필터 바 · 제안 줄)
  *
- *   variant  solid(옅은 회색 채움 — 흰 표면 위에서만) · outlineStrong(고르면 짙은 채움) ·
+ *   variant  solid(옅은 투명 채움 bg-neutral-weak-alpha — 어느 바탕에서나, v120) · outlineStrong(고르면 짙은 채움) ·
  *            outlineWeak(기본 — 고르면 옅은 바탕 + 짙은 1px, 글자 그대로)
  *   size     small 32 · medium 36(기본) · large 40. 글은 세 크기 모두 t4 14 · 500, 가장자리 ↔ 글 12 · 14 · 16, 아이콘 ↔ 글 6
  *   layout   withText(기본) · iconOnly(원 — 아이콘을 children 으로, aria-label 필수 · 없으면 개발 중에 경고)
@@ -79,7 +79,7 @@ const chipVariants = cva(
       // Radix 칩의 data-state · Chip 의 data-selected 를 한 규칙으로 받는다
       variant: {
         solid: [
-          "bg-bg-neutral-weak text-fg-neutral hover:bg-bg-neutral-weak-pressed active:bg-bg-neutral-weak-pressed",
+          "bg-bg-neutral-weak-alpha text-fg-neutral hover:bg-bg-neutral-weak-alpha-pressed active:bg-bg-neutral-weak-alpha-pressed",
           "[&:is([data-state=checked],[data-selected])]:bg-bg-neutral-inverted [&:is([data-state=checked],[data-selected])]:text-fg-neutral-inverted [&:is([data-state=checked],[data-selected])]:hover:bg-bg-neutral-inverted-pressed [&:is([data-state=checked],[data-selected])]:active:bg-bg-neutral-inverted-pressed",
         ].join(" "),
         // 고르면 짙은 채움 — 테두리는 지운다(SEED Chip Tabs 와 같다)

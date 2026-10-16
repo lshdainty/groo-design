@@ -196,7 +196,7 @@ import { BOTTOM_NAVIGATION_INSET } from "@/components/ui/bottom-navigation"
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 칸 약 61 × 54 · 줄어듦 약 53 × 48 · + 44 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 펼침 칸 54 ✓ · 줄어듦 칸 48 ✓ — 줄어든 바는 칸이 바 높이를 다 채운다(위아래 안쪽 여백 0) · + 44 ✓ |
 | **WCAG 4.1.2** Name, Role, Value | 줄어든 바의 칸도 이름이 있다(라벨이 보이지 않게만 남는다). + 이름은 화면마다("거래 추가" · "일정 추가") ✓ |
-| **ARIA** | 바 `<nav aria-label="주 메뉴">` · 칸은 링크 + 지금 탭 `aria-current="page"`, 아이콘은 `aria-hidden`. + 는 `<button type="button">`. 알림 점은 `aria-hidden` 이고 칸 이름 뒤에 "새 소식". 앱은 칸 `Semantics(button: true, selected, label)` |
+| **ARIA** | 바 `<nav aria-label="주 메뉴">` · 칸은 링크 + 지금 탭 `aria-current="page"`, 아이콘은 `aria-hidden`. + 는 `<button type="button">`. 알림 점은 `aria-hidden` 이고 칸 이름 뒤에 "새 소식". 앱은 바 `Semantics(container: true, label)` — 이름 "주 메뉴" 는 번역 문구(`navMainMenu` · en "Main menu", 코드에 한국어 상수를 두지 않는다 — 2026-10-16 사용자 결정 틀 앱 02-003) · 칸 `Semantics(button: true, selected, label)`. 칸 뒤의 "새 소식" 도 번역 문구다 |
 
 ## Do / Don't
 

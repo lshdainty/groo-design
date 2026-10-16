@@ -10,13 +10,15 @@
 # SEED 와 다른 자리(segmented-control.md 의 "SEED 와 다른 점")
 #   - 칸 폭: SEED 는 칸 최소 86 · 좌우 24 라 4개(352)가 폰에 들어가지 않는다 → 칸이 트랙 폭을 똑같이 나누고
 #     최소 폭이 없다 · 좌우 12(비교 페이지 5 — B, 사용자 결정 2026-10-02). 높이 · 글 · 알약은 SEED 그대로.
-#   - 반투명 색을 불투명 짝으로(v102): 트랙 bg-neutral-weak, 테두리 stroke-neutral-weak.
+#   - 트랙은 SEED 그대로 투명한 bg-neutral-weak-alpha(v120 — 2026-10-16 사용자 결정 기초 웹 01-040 B) — 회색 바닥 위에서도 보인다.
+#     안 고른 칸 누름 테두리는 불투명 짝 stroke-neutral-weak(v102).
 #     고른 알약 SEED palette.gray-00(라이트 흰 · 다크 검정) → bg-layer-default(다크도 트랙보다 어둡다).
 #   - 고른 알약의 테두리는 짙은 stroke-neutral-contrast — SEED 의 옅은 1px 은 트랙과 1.14:1 이라 고른 칸이 3:1 에 못 미친다
 #     (사용자 결정 2026-10-02). 고른 채 막히면 stroke-neutral-solid.
 #     고른 칸 누름 SEED palette.gray-100 → bg-layer-default-pressed.
 #   - 웹의 hovered 상태는 누름과 같은 바탕(축소 없음 — v106). SEED 도 마우스 호버에 같은 바탕을 칠한다.
 #   - 안 고른 칸을 올리거나 누르는 동안 글을 fg-neutral-muted 로 — 누름 바탕 위 fg-neutral-subtle 이 다크에서 3.91:1 이다.
+#   - 다크의 안 고른 글은 늘 fg-neutral-muted — 투명 트랙(v120) 위 subtle 이 다크 카드 4.09 · 시트 3.56 이다(2026-10-17 사용자 결정 — 01-040 B 후속).
 #   - 줄바꿈은 단어 단위(v114) — 긴 글은 여러 줄이 되고 모든 칸이 가장 높은 칸에 맞춘다(SEED).
 #   - 알림 점은 브랜드 글자색(fg-brand — 다크에서 밝은 짝, Desk · HR 이 다르다) — Notification Badge small 과 같다(notification-badge.yaml).
 #     SEED 는 bg.brand-solid 이고, porest 다크에서는 그 색이 바탕에 묻힌다.
@@ -53,7 +55,7 @@ rules:
       root:
         padding: $spacing-x1
         radius: $radius-full
-        background: { value: $color-bg-neutral-weak, note: "SEED bg.neutral-weak-alpha 의 불투명 짝" }
+        background: { value: $color-bg-neutral-weak-alpha, note: "SEED 그대로 투명(검정 4.7% · 다크 흰 12.5%) — 놓인 바탕에 섞여 회색 바닥 · 흰 면 위 1.11 · 다크 1.47:1(v120)" }
         width: { value: 놓인 자리 폭, note: "트랙이 자리를 채우고 칸 수로 똑같이 나눈다(최소 폭 없음) — 넓은 화면에서는 놓는 자리를 좁힌다" }
         columns: { value: 칸 수(2 ~ 4), note: "모든 칸이 같은 폭 · 같은 높이(가장 높은 칸에 맞춘다)" }
       item:
@@ -69,11 +71,11 @@ rules:
       label:
         typography: { value: $text-t5, note: "16 / 22 — 고르든 안 고르든 같다" }
         fontWeight: { value: 700, note: "고르든 안 고르든 700" }
-        foreground: $color-fg-neutral-subtle
+        foreground: { value: $color-fg-neutral-subtle, dark: $color-fg-neutral-muted, note: "다크는 한 단계 짙게 — 투명 트랙이 다크 표면에 섞여 밝아져 fg-neutral-subtle 이 카드 위 4.09 · 시트 위 3.56 이다. muted 는 카드 5.18 · 시트 4.50 · 바닥 5.93, 라이트는 subtle 그대로 4.59 ~ 4.95(2026-10-17 사용자 결정 — 01-040 B 후속)" }
         textAlign: { value: center, note: "길면 단어 단위로 줄을 바꾼다(v114)" }
       indicator:
         background: { value: $color-bg-layer-default, note: "흰 알약 — 다크에서는 트랙보다 어둡다(SEED 도 다크 알약이 검정)" }
-        borderColor: { value: $color-stroke-neutral-contrast, note: "안쪽 1px(inset) 짙은 테두리 — 고른 칸을 트랙과 15.20 · 10.32:1 로 가른다(SEED 옅은 1px 은 1.14 · 1.20 — 사용자 결정 2026-10-02)" }
+        borderColor: { value: $color-stroke-neutral-contrast, note: "안쪽 1px(inset) 짙은 테두리 — 고른 칸을 트랙과 라이트 13.71 ~ 14.79 · 다크 7.84 ~ 10.33:1 로 가른다(SEED 옅은 1px 은 1.14 · 1.20 — 사용자 결정 2026-10-02)" }
         borderWidth: 1px
         radius: $radius-full
         inset: { value: 4px, note: "트랙 안쪽 4 — 폭 = (트랙 − 8) ÷ 칸 수, 고른 칸 번호만큼 옆으로 옮긴다" }
@@ -83,7 +85,7 @@ rules:
       notification:
         size: 6px
         radius: $radius-full
-        background: { value: $color-fg-brand, note: "브랜드 글자색 — 트랙 위 Desk 7.76 · 4.69 · HR 4.69 · 4.79(bg-brand-solid 는 다크에서 1.33 · 2.20 이라 안 보인다). 고른 칸에는 없다 — 고르면 사라진다" }
+        background: { value: $color-fg-brand, note: "브랜드 글자색 — 트랙 위 Desk 라이트 7.00 ~ 7.55 · 다크 3.56 ~ 4.69 · HR 4.23 ~ 4.56 · 3.64 ~ 4.79(v120 투명 트랙 — 놓인 바탕에 따라, bg-brand-solid 는 다크에서 1.33 · 2.20 이라 안 보인다). 고른 칸에는 없다 — 고르면 사라진다" }
         gap: { value: 2px, note: "글 끝에서 2, 글 위쪽에 맞춘다" }
     pressed:
       label:

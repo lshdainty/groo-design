@@ -36,7 +36,7 @@
 
 | 상태 | 모습 |
 |---|---|
-| `enabled` | 트랙 `bg-neutral-weak` 위 안 고른 글 `fg-neutral-subtle`, 고른 칸은 흰 알약(`bg-layer-default` + 안쪽 짙은 1px `stroke-neutral-contrast`) 위 `fg-neutral` |
+| `enabled` | 트랙 `bg-neutral-weak-alpha`(투명 — 어느 바탕에서나 보인다, v120) 위 안 고른 글 `fg-neutral-subtle`(다크는 `fg-neutral-muted` — 투명 트랙 위 4.5:1 을 지키려고, 2026-10-17 사용자 결정 — 01-040 B 후속), 고른 칸은 흰 알약(`bg-layer-default` + 안쪽 짙은 1px `stroke-neutral-contrast`) 위 `fg-neutral` |
 | `hovered` | 웹 — 누름과 같은 바탕(축소 없음) |
 | `pressed` | 안 고른 칸 `bg-neutral-weak-pressed` + 1px `stroke-neutral-weak`(글은 `fg-neutral-muted`), 고른 칸 `bg-layer-default-pressed` + 짙은 1px 그대로. 칸 바탕은 그대로 두고 안의 글만 2px 거리로 축소한다 |
 | `focused` | 키보드 포커스에만 링 2px · 띄움 2px — 칸 바깥 |
@@ -103,8 +103,8 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 안 고른 글 `fg-neutral-subtle` 트랙 위 5.09 · 4.68, 올리거나 누르는 동안 `fg-neutral-muted` 6.17 · 4.95, 고른 글 `fg-neutral` 알약 위 16.41 · 13.42 · 누름 15.48 · 10.32 ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 고른 칸은 알약의 짙은 1px `stroke-neutral-contrast`(트랙과 15.20 · 10.32) ✓ — SEED 의 옅은 1px(1.14 · 1.20)을 바꿨다. 고른 채 막힘 `stroke-neutral-solid` 은 `bg-disabled` 위 3.87 · 3.18 ✓(비활성이라 기준 밖). 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓. 알림 점 `fg-brand` 트랙 위 Desk 7.76 · 4.69 · HR 4.69 · 4.79 ✓ — 고른 칸에는 그리지 않는다 |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 안 고른 글 `fg-neutral-subtle` 트랙 위 — 트랙이 투명해 놓인 바탕에 따라 다르다(v120): 라이트 흰 면 4.95 · 회색 바닥 4.59, 다크 바닥 4.68 ✓ · 다크는 `fg-neutral-muted` 로 한 단계 짙게 — 다크 카드(`bg-layer-default`) 5.18 · 다크 시트(`bg-layer-floating`) 4.50 · 다크 바닥 5.93 ✓(subtle 이면 4.09 · 3.56 — 2026-10-17 사용자 결정 — 01-040 B 후속). 올리거나 누르는 동안 `fg-neutral-muted` 6.17 · 4.95, 고른 글 `fg-neutral` 알약 위 16.41 · 13.42 · 누름 15.48 · 10.32 ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 고른 칸은 알약의 짙은 1px `stroke-neutral-contrast`(트랙과 라이트 13.71 ~ 14.79 · 다크 7.84 ~ 10.33) ✓ — SEED 의 옅은 1px(1.14 · 1.20)을 바꿨다. 고른 채 막힘 `stroke-neutral-solid` 은 `bg-disabled` 위 3.87 · 3.18 ✓(비활성이라 기준 밖). 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓. 알림 점 `fg-brand` 트랙 위 Desk 라이트 7.00 ~ 7.55 · 다크 3.56 ~ 4.69 · HR 라이트 4.23 ~ 4.56 · 다크 3.64 ~ 4.79 ✓ — 고른 칸에는 그리지 않는다 |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 링 2px · 띄움 2px — 칸 바깥 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 칸 34 × 칸 폭 ✓(폰 4개면 칸 폭 76) |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 칸 34 ✗(SEED 와 같다) |
@@ -135,9 +135,10 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 ## SEED 와 다른 점
 
 - **칸이 트랙 폭을 똑같이 나눈다** — SEED 는 칸 최소 86 · 좌우 24 라 4개(352)가 360 · 375 폰에 들어가지 않는다(SEED 안에서 2 ~ 4개를 허용하는 규칙과 어긋난다). porest 는 최소 폭 없이 칸 수로 나누고 좌우 12 다 — 높이 · 글 · 알약은 SEED 그대로(사용자 결정 2026-10-02).
-- **반투명 색을 불투명 짝으로**(v102) — 트랙 `bg-neutral-weak`, 안 고른 칸 누름 테두리 `stroke-neutral-weak`. 고른 알약은 SEED `palette.gray-00`(라이트 흰 · 다크 검정) 대신 `bg-layer-default` — 다크에서도 트랙보다 어둡다. 고른 칸 누름은 `bg-layer-default-pressed`.
-- **고른 알약의 테두리를 짙게** — SEED 의 옅은 1px(`stroke.neutral-muted`)는 트랙과 1.14:1 이라 고른 칸이 WCAG 1.4.11 에 못 미친다. 짙은 1px `stroke-neutral-contrast`(15.20 · 10.32:1)로 바꿨다 — Chip(Outline Weak 고름) · Select Box 의 고른 표시와 같은 말이다. 고른 채 막히면 `stroke-neutral-solid`(사용자 결정 2026-10-02).
+- **반투명 색을 불투명 짝으로**(v102) — 안 고른 칸 누름 테두리 `stroke-neutral-weak`. 트랙은 SEED 그대로 투명한 `bg-neutral-weak-alpha` 다 — v102 에는 검사기가 8자리 hex 를 받지 않아 불투명 `bg-neutral-weak` 로 두었는데, 회색 바닥 위에서 트랙이 바닥과 같은 색(1.00:1)이라 흰 알약만 떠 보여 v120 에 되돌렸다(2026-10-16 사용자 결정 — 기초 웹 01-040 B). 고른 알약은 SEED `palette.gray-00`(라이트 흰 · 다크 검정) 대신 `bg-layer-default` — 다크에서도 트랙보다 어둡다. 고른 칸 누름은 `bg-layer-default-pressed`.
+- **고른 알약의 테두리를 짙게** — SEED 의 옅은 1px(`stroke.neutral-muted`)는 트랙과 1.14:1 이라 고른 칸이 WCAG 1.4.11 에 못 미친다. 짙은 1px `stroke-neutral-contrast`(트랙과 라이트 13.71 ~ 14.79 · 다크 7.84 ~ 10.33:1)로 바꿨다 — Chip(Outline Weak 고름) · Select Box 의 고른 표시와 같은 말이다. 고른 채 막히면 `stroke-neutral-solid`(사용자 결정 2026-10-02).
 - **안 고른 칸을 올리거나 누르는 동안 글을 `fg-neutral-muted` 로** — 누름 바탕 위 `fg-neutral-subtle` 이 다크에서 3.91:1 이라서다(List 의 강조 줄과 같은 방법).
+- **다크의 안 고른 글은 늘 `fg-neutral-muted`** — SEED 는 `fg.neutral-subtle` 이다. 투명 트랙(v120)이 다크 표면에 섞여 밝아지면서 subtle 이 카드 위 4.09 · 시트 위 3.56 이 돼, 다크만 한 단계 짙게 둔다(카드 5.18 · 시트 4.50). 라이트는 subtle 그대로(4.59 ~ 4.95)다(2026-10-17 사용자 결정 — 01-040 B 후속).
 - **줄바꿈은 단어 단위**(v114) — SEED 는 글자 단위(`overflow-wrap: break-word`)다.
 - **알림 점은 브랜드 글자색**(`fg-brand`)이고, 보조 기술에 "새 소식" 을 덧붙인다. SEED 의 `bg.brand-solid` 짝은 porest 다크에서 트랙과 1.33 · 2.20:1 이라 쓰지 않는다. 고른 칸에는 점을 그리지 않는다.
 
