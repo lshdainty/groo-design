@@ -67,7 +67,8 @@ export function SortIcon({ look, mode = 'auto', dir, style }: { look: TableLook;
 }
 
 // ── 일괄 작업 바 ───────────────────────────────────────────
-export type BulkAction = { label: string; tone?: 'critical'; onClick?: () => void };
+// 바 안 동작은 모두 ghost neutral — 지우기의 빨강은 누른 뒤의 확인창에서(table.yaml bulkBar.actions, 2026-10-17 01T-033 A)
+export type BulkAction = { label: string; onClick?: () => void };
 export function TableBulkBarView({ look, mode = 'auto', count, actions, onClear, live = false, marks, pins }: { look: TableLook; mode?: ViewMode; count: number; actions: BulkAction[]; onClear?: () => void; live?: boolean; marks?: TableMarks; pins?: TablePins }) {
   const b = look.bulk;
   if (count <= 0) return null;
@@ -84,7 +85,7 @@ export function TableBulkBarView({ look, mode = 'auto', count, actions, onClear,
       </span>
       <span style={{ display: 'flex', alignItems: 'center', gap: b.gap }}>
         {actions.map((a) => (
-          <ButtonView key={a.label} look={a.tone === 'critical' ? b.critical : b.action} mode={mode} label={a.label} state={live ? 'live' : 'enabled'} onClick={a.onClick} />
+          <ButtonView key={a.label} look={b.action} mode={mode} label={a.label} state={live ? 'live' : 'enabled'} onClick={a.onClick} />
         ))}
         <ButtonView look={b.clear} mode={mode} icon="x" ariaLabel="선택 해제" state={live ? 'live' : 'enabled'} onClick={onClear} />
       </span>

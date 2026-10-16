@@ -130,6 +130,12 @@ function pressOf(raw: unknown, what: string, motion: DMotion): DPress {
 }
 const ringOf = (v: Vals, brand: Brand, what: string): DRing => ({ width: len(v['focusRing.width'], `${what} focusRing.width`), offset: len(v['focusRing.offset'], `${what} focusRing.offset`), color: tok(v['focusRing.color'], brand, `${what} focusRing.color`) });
 const touchOf = (raw: unknown, what: string) => numIn(String(unbox(must(raw, what))), /^(\d+)\s*×/, what);
+// 일괄 작업 바의 동작 버튼 — table.yaml bulkBar.actions 가 "Button ghost small · neutral" 인지 확인하고 그 버튼으로(바뀌면 여기서 멈춘다)
+function bulkActionLook(raw: unknown, brand: Brand) {
+  const v = String(unbox(must(raw, 'table.yaml bulkBar.actions')));
+  if (v !== 'Button ghost small · neutral') throw new Error(`table.yaml bulkBar.actions(${v})가 "Button ghost small · neutral" 이 아니다 — data-look 의 일괄 작업 바 버튼을 고친다`);
+  return buttonLook({ variant: 'ghost', size: 'small', ghostColor: 'neutral' }, brand);
+}
 // 앞 붙이개 크기 — Avatar · Logo Tile 의 크기 이름(그 YAML 에 있는 크기만)
 function avatarSize(n: number, what: string): AvatarSize {
   const v = String(n) as AvatarSize;
@@ -246,8 +252,8 @@ export function tableLook(brand: Brand = 'hr'): TableLook {
       // 고른 수 글 — 비고의 "t4 14 · 500", 색은 table.md 접근성 표의 "일괄 작업 바 글 fg-neutral"
       text: textToken(`t${numIn(bulkNote, /t(\d+)\s/, `${F} bulkBar 비고 글자`)}`, `${F} bulkBar 글자`, numIn(bulkNote, /·\s*(\d{3})/, `${F} bulkBar 비고 굵기`)),
       fg: named('fg-neutral', brand),
-      action: buttonLook({ variant: 'ghost', size: 'small' }, brand),
-      critical: buttonLook({ variant: 'ghost', size: 'small', ghostColor: 'critical' }, brand),
+      // 바 안 동작 — 모두 ghost neutral(table.yaml bulkBar.actions — 빨강은 확인창에서, 2026-10-17 01T-033 A)
+      action: bulkActionLook(b['bulkBar.actions'], brand),
       clear: buttonLook({ variant: 'ghost', size: 'small', layout: 'iconOnly' }, brand),
     },
     ring: ringOf(fo, brand, F),

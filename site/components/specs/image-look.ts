@@ -276,6 +276,8 @@ export function cardArtLook(): CardArtLook {
     if (cardArtSize(Number(w), bands) !== 'small') throw new Error(`${F} small 비고의 폭 ${w} 가 small 이 아니다`);
   }
   if (String(unbox(base['initial.textTransform'])) !== 'uppercase') throw new Error(`${F} initial.textTransform 이 uppercase 가 아니다`);
+  // 글이 안 드는 면 — 첫 글자 면(label.fit, 2026-10-17 03-D 결정 3 A). 판단 식은 CardFaceView 의 fits 다
+  if (String(unbox(base['label.fit'])) !== '안 들면 첫 글자 면') throw new Error(`${F} label.fit 이 "안 들면 첫 글자 면" 이 아니다 — CardFaceView 를 고친다`);
   caCache = look;
   return look;
 }

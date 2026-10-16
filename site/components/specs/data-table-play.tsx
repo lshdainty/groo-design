@@ -130,7 +130,7 @@ export function TablePlayground({ look, card, menu }: { look: TableLook; card: C
                   selectable={select}
                   selected={selected}
                   onSelectedChange={(ids) => (setSelected(ids), setSaid(ids.length ? `${ids.length}개 선택됨` : '고른 것을 모두 풀었어요.'))}
-                  bulkActions={[{ label: '내보내기', onClick: () => setSaid('내보내기') }, { label: '삭제', tone: 'critical', onClick: () => setSaid('삭제 — 확인 창을 연다') }]}
+                  bulkActions={[{ label: '내보내기', onClick: () => setSaid('내보내기') }, { label: '삭제', onClick: () => setSaid('삭제 — 확인 창을 연다') }]}
                   more
                   menu={{ ...menu, groups: USER_MENU }}
                   onMenuAction={(r, v) => setSaid(`${r.name} ${v === 'edit' ? '수정' : '삭제'}`)}
@@ -199,7 +199,7 @@ export function ExSelectDemo({ look, card }: { look: TableLook; card: CardLook }
     <div className="flex flex-col items-center gap-3">
       <div className="w-full overflow-x-auto">
         <CardBox card={card} mode="auto" title="업무 보고">
-          <TableView look={look} caption="업무 보고" columns={cols} rows={rows} defaultSort={{ key: 'date', dir: 'descending' }} selectable defaultSelected={['r1', 'r3']} onSelectedChange={(ids) => setSaid(ids.length ? `${ids.length}개 선택됨` : '고른 것을 모두 풀었어요.')} bulkActions={[{ label: '내보내기', onClick: () => setSaid('내보내기') }, { label: '삭제', tone: 'critical', onClick: () => setSaid('삭제 — 확인 창을 연다') }]} live minWidth={600} />
+          <TableView look={look} caption="업무 보고" columns={cols} rows={rows} defaultSort={{ key: 'date', dir: 'descending' }} selectable defaultSelected={['r1', 'r3']} onSelectedChange={(ids) => setSaid(ids.length ? `${ids.length}개 선택됨` : '고른 것을 모두 풀었어요.')} bulkActions={[{ label: '내보내기', onClick: () => setSaid('내보내기') }, { label: '삭제', onClick: () => setSaid('삭제 — 확인 창을 연다') }]} live minWidth={600} />
         </CardBox>
       </div>
       <Said text={said} />

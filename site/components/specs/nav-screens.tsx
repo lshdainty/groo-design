@@ -423,7 +423,8 @@ export function tableCardH(n: number, paging = true, brand: Brand = 'hr') {
   const header = c.header.list.top + parseFloat(c.title.lineHeight ?? c.title.fontSize) + c.header.list.bottom;
   return c.surface.borderW * 2 + header + t.head.minH + t.row.minH.text * n + (paging ? pg.marginTop + pg.height : 0) + c.list.padBottom;
 }
-// 넘김 줄 자리 — 표와 같은 상자 안, 표 아래 12 · 좌우는 표의 첫 칸 앞 · 끝 칸 뒤와 같은 24(table.yaml root.paddingX)
+// 넘김 줄 자리 — 표와 같은 상자 안, 좌우는 표의 첫 칸 앞 · 끝 칸 뒤와 같은 24(table.yaml root.paddingX). 표 아래 12 는 넘김 줄의 위 여백
+// (table-pagination.yaml root.marginTop — 자리는 위 여백을 더하지 않는다, 2026-10-17 03-D 결정 5 B)
 // above — 나쁜 예(표 위에 둔 줄)
 export function PagingSlot({ children, brand = 'hr', above = false }: { children: ReactNode; brand?: Brand; above?: boolean }) {
   const e = tableLook(brand).edge;

@@ -300,8 +300,9 @@ function Row({ look, row, mode, live, selected, onSelect, onArrow, tabIndex, reg
         }
       >
         {prefixNode && <span style={{ display: 'flex', flexShrink: 0, alignItems: 'center', paddingRight: f.prefix.padRight }}>{prefixNode}</span>}
-        {/* 본문 — 남는 폭을 쓰고 먼저 양보한다. 한 글자(1em) + 뒤 여백 아래로는 줄지 않는다(list.yaml body.minWidth — Q-001 A) */}
-        <span style={{ display: 'flex', flex: 1, minWidth: `calc(${f.body.minWidth} + ${f.body.padRight}px)`, flexDirection: 'column', alignItems: 'flex-start', gap: f.body.gap, paddingRight: f.body.padRight }}>
+        {/* 본문 — 남는 폭을 쓰고 먼저 양보한다. 한 글자(1em) + 뒤 여백 아래로는 줄지 않는다(list.yaml body.minWidth — Q-001 A).
+            1em 은 제목 글자 — 본문 칸의 글자 크기를 제목(t5)으로 두어 em 을 잰다(03D-005). 제목 · 설명은 저마다 크기를 건다 */}
+        <span style={{ display: 'flex', flex: 1, fontSize: f.title.fontSize, minWidth: `calc(${f.body.minWidth} + ${f.body.padRight}px)`, flexDirection: 'column', alignItems: 'flex-start', gap: f.body.gap, paddingRight: f.body.padRight }}>
           {titleBadge ? (
             <span style={{ display: 'flex', alignItems: 'center', gap: look.titleGap, maxWidth: '100%', minWidth: 0 }}>
               <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: f.title.fontSize, lineHeight: f.title.lineHeight, fontWeight: f.title.fontWeight, color: excluded ? 'var(--pl-detail)' : 'var(--pl-title)', transition: `color ${f.motion.bg.duration} ${f.motion.bg.easing}` }}>{title}</span>

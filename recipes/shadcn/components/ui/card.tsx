@@ -408,7 +408,7 @@ Delta.displayName = "Delta";
 export interface CardStatProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
   /** 무엇의 숫자인지 — "이번 달 지출" */
   label: React.ReactNode;
-  /** 숫자 — 쓰는 쪽이 원까지 만든다("1,240,000원" · 빼기는 U+2212) */
+  /** 숫자 — 쓰는 쪽이 원까지 만든다("1,240,000원" · 빼기는 U+2212). 카드보다 길면 쉼표 뒤에서만 줄을 바꾼다 — 금액 함수가 쉼표 뒤마다 <wbr /> 를 넣어 넘긴다(card.yaml statValue.lineBreak) */
   value: React.ReactNode;
   /** "large"(기본 — 24 / 32, 카드 하나에 숫자 하나) · "small"(20 / 27 — 데스크톱 격자에 셋 · 넷씩) */
   size?: "large" | "small";

@@ -88,8 +88,8 @@ const PREFIX_VARIANTS = {
 };
 const PREFIX_DEFAULTS = { disabled: false };
 
-// 본문(listBodyVariants) — 제목 + 설명. 남는 폭을 쓰고 먼저 양보한다 — 한 글자(1em) + 뒤 여백 10 아래로는 줄지 않는다(Q-001 A)
-const BODY_BASE = "flex min-w-[calc(1em+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
+// 본문(listBodyVariants) — 제목 + 설명. 남는 폭을 쓰고 먼저 양보한다 — 한 글자(제목 글자 t5) + 뒤 여백 10 아래로는 줄지 않는다(Q-001 A · 03D-005)
+const BODY_BASE = "flex min-w-[calc(var(--text-t5)+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
 
 // 제목(listTitleVariants) — 본문이 낱말 하나보다 좁아질 때만 글자 사이에서 끊는다
 const TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral [overflow-wrap:anywhere]";

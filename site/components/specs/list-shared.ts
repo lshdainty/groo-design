@@ -61,6 +61,8 @@ export type ListLook = {
   avatarSize: { one: '36'; two: '42' };
   // 제목 ↔ 제목 옆 배지(badge.md 코드의 gap-x1_5)
   titleGap: number;
+  // 좁은 줄(width narrow) — 줄 안 폭이 below × 제목 글자보다 좁으면 값을 본문 아래로(설명 ↔ 값 = 본문 사이 + marginTop)
+  narrow: { below: number; marginTop: number; bodyPadRight: number; alignItems: string };
 };
 
 // 그림의 아이콘 — 이름으로 넘긴다(서버 그림 → 브라우저 그림)

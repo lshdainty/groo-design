@@ -7453,7 +7453,8 @@ function ptbl({ caption = "", head = [], rows = [], rich = false, sticky = false
 // 일괄 작업 바 — 고른 줄이 있을 때만 표 위. 바탕 bg-brand-weak 한 값 · 48 · 모서리 12 · 왼쪽 16 · 오른쪽 8. "{n}개 선택됨" 을 알린다(role="status").
 // 동작은 Button ghost small, 끝은 선택 해제 ✕(ghost · 아이콘만 small). live 면 페이지 끝 스크립트가 고른 수에 따라 띄우고 감춘다
 function ptblBulkBar({ count = 0, actions = [], live = false, hidden = false } = {}) {
-  const buttons = actions.map((a) => `<button class="btn btn-ghost${a.critical ? " btn-ghost-critical" : ""} btn-size-small" type="button">${escape(a.label)}</button>`).join("");
+  // 바 안 동작은 모두 ghost neutral — 지우기의 빨강은 누른 뒤의 확인창에서(table.yaml bulkBar.actions, 2026-10-17 01T-033 A)
+  const buttons = actions.map((a) => `<button class="btn btn-ghost btn-size-small" type="button">${escape(a.label)}</button>`).join("");
   return `<div ${attrsOf(['class="ptbl-bulk"', 'role="region"', 'aria-label="선택한 항목"', live && "data-ptbl-bulk", hidden && "hidden"])}><span class="ptbl-bulk-count" role="status" aria-live="polite">${count}개 선택됨</span><span class="ptbl-bulk-actions">${buttons}<button class="btn btn-ghost btn-icon-only btn-size-small ptbl-bulk-clear" type="button" aria-label="선택 해제"${live ? " data-ptbl-clear" : ""}>${DATA_ICON.x}</button></span></div>`;
 }
 // 불러오는 동안의 줄 — 줄 높이 그대로 · 글 자리 t4(19). columns 는 열마다 { w, end }(폭은 칸 안의 비율)
@@ -7907,10 +7908,10 @@ export function renderDataGallery(brand) {
     head: reportHead("indeterminate"),
     rows: [...PTBL_REPORTS].reverse().map((r) => ptblRow([ptblSelectCell(r.title, picked.includes(r.id), true), ptblRowHeader(r.title, { link: true }), ptblCell(escape(r.author)), ptblCell(escape(r.date)), ptblCell(badge({ text: r.status, tone: r.tone }))], { press: true, attrs: `data-ptbl-id="${r.id}"` })),
   });
-  const selectLive = `<div class="pdata-select" data-ptbl-select>${wide(floor(pcard({ body: "list", head: pcardHead({ title: "업무 보고" }), list: `<div class="pdata-bulk-slot">${ptblBulkBar({ count: picked.length, live: true, actions: [{ label: "내보내기" }, { label: "삭제", critical: true }] })}</div>${reportTable}`, cls: "pcard--table" })))}</div>`;
+  const selectLive = `<div class="pdata-select" data-ptbl-select>${wide(floor(pcard({ body: "list", head: pcardHead({ title: "업무 보고" }), list: `<div class="pdata-bulk-slot">${ptblBulkBar({ count: picked.length, live: true, actions: [{ label: "내보내기" }, { label: "삭제" }] })}</div>${reportTable}`, cls: "pcard--table" })))}</div>`;
   const selectPanel = panel(
     "Table — 고르기 · 일괄 작업 바: 고른 줄은 체크로만",
-    "여럿을 골라 한 번에 다루는 표만 첫 열에 Checkbox large(24 · 누르는 44)를 둔다 — 열 폭은 24 + 앞 24 · 뒤 16. 머리 칸의 체크는 지금 쪽의 줄 전부를 고르고 풀며 일부만 골랐으면 일부(mixed)다(이름 \"모두 선택\" · 줄은 \"{줄 이름} 선택\"). 한 줄 이상 고르면 표 위(아래 8)에 일괄 작업 바가 뜬다 — 바탕 bg-brand-weak 한 값 · 높이 48 · 모서리 12 · 왼쪽 16 · 오른쪽 8, 왼쪽에 \"2개 선택됨\"(14 · 500 · fg-neutral — role=\"status\" 로 알린다), 오른쪽에 동작(Button ghost small — 삭제는 위험 글자)과 선택 해제 ✕. 고른 줄 자체에는 바탕을 칠하지 않는다 — 체크가 고른 것을 말하고(List 의 여럿 고르기와 같다), 브랜드 옅은 바탕은 일괄 작업 바에만 있다. 줄을 누르는 것(상세)과 체크는 따로다. 아래 표는 직접 고를 수 있다 — ✕ 를 누르면 모두 풀리고 초점이 머리 체크로 간다." + (hasBrand ? "" : " 공유 토큰에는 브랜드 역할 색이 없어 바가 여기서는 중립(bg-neutral-weak)으로 보인다 — HR · Desk 미리보기에서 브랜드 옅은 바탕이다."),
+    "여럿을 골라 한 번에 다루는 표만 첫 열에 Checkbox large(24 · 누르는 44)를 둔다 — 열 폭은 24 + 앞 24 · 뒤 16. 머리 칸의 체크는 지금 쪽의 줄 전부를 고르고 풀며 일부만 골랐으면 일부(mixed)다(이름 \"모두 선택\" · 줄은 \"{줄 이름} 선택\"). 한 줄 이상 고르면 표 위(아래 8)에 일괄 작업 바가 뜬다 — 바탕 bg-brand-weak 한 값 · 높이 48 · 모서리 12 · 왼쪽 16 · 오른쪽 8, 왼쪽에 \"2개 선택됨\"(14 · 500 · fg-neutral — role=\"status\" 로 알린다), 오른쪽에 동작(Button ghost small — 모두 neutral, \"삭제\" 도 회색 글이고 빨강은 누른 뒤의 확인창에서)과 선택 해제 ✕. 고른 줄 자체에는 바탕을 칠하지 않는다 — 체크가 고른 것을 말하고(List 의 여럿 고르기와 같다), 브랜드 옅은 바탕은 일괄 작업 바에만 있다. 줄을 누르는 것(상세)과 체크는 따로다. 아래 표는 직접 고를 수 있다 — ✕ 를 누르면 모두 풀리고 초점이 머리 체크로 간다." + (hasBrand ? "" : " 공유 토큰에는 브랜드 역할 색이 없어 바가 여기서는 중립(bg-neutral-weak)으로 보인다 — HR · Desk 미리보기에서 브랜드 옅은 바탕이다."),
     samples([sample("직접 — 업무 보고 · 두 줄 고름", "TableSelectHead · TableSelectCell · TableBulkBar(count) — 바탕 없이 체크로만", `${selectLive}${status("data-ptbl-select-status", "줄의 체크 · 머리 체크 · ✕ 를 눌러 보세요.")}`)], WIDE),
   );
 
@@ -12433,7 +12434,7 @@ export function pageCss() {
       flex-direction: column;
       align-items: flex-start;
       gap: var(--spacing-x0_5);
-      min-width: calc(1em + var(--spacing-x2_5));
+      min-width: calc(var(--text-t5) + var(--spacing-x2_5)); /* 1em = 제목 글자(t5) — 03D-005 */
       padding-right: var(--spacing-x2_5);
       text-align: left;
     }
@@ -17968,6 +17969,8 @@ export function pageCss() {
 
     /* 인증 코드 칸 — 03g 의 입력칸 한 칸 + 고정폭 숫자. 다시 받기는 칸 꼬리 아래 12 · 왼쪽(Button neutralWeak medium 40) */
     .potp-input .ptf-input-value { font-variant-numeric: tabular-nums; }
+    /* 막혀도 자리 글은 fg-placeholder 그대로 — Input 의 막힘 색을 덮는다(input-otp.yaml disabled › placeholder, 2026-10-17 01T-013) */
+    .potp-input[data-disabled] .ptf-input-value::placeholder { color: var(--color-fg-placeholder); }
     .potp-resend { align-self: flex-start; margin-top: var(--spacing-x3); font-variant-numeric: tabular-nums; }
     .pinp-otp { display: flex; flex-direction: column; min-height: 520px; background: var(--color-bg-layer-default); color: var(--color-fg-neutral); font-family: var(--font-sans); }
     .pinp-otp-body { display: flex; flex: 1; flex-direction: column; align-items: stretch; padding: var(--spacing-x2) var(--spacing-x6) var(--spacing-x6); }

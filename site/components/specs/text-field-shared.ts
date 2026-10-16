@@ -40,6 +40,8 @@ export type TfInputLook = {
     bgDisabled: TfColor;
     value: TfColor;
     placeholder: TfColor;
+    // 막힌 칸의 placeholder(input.yaml disabled › placeholder — Input OTP 는 fg-placeholder 그대로)
+    placeholderDisabled: TfColor;
     affix: TfColor;
     icon: TfColor;
     clear: TfColor;

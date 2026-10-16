@@ -116,6 +116,7 @@ rules:
         fontWeight: 700
         foreground: $color-fg-neutral
         numerals: { value: tabular-nums, note: "돈은 줄이지 않고 원까지 · 빼기는 U+2212. 숫자가 굴러가는 애니메이션을 두지 않는다" }
+        lineBreak: { value: 쉼표 뒤, note: "카드보다 긴 금액(큰 글자 · 큰 수)은 쉼표 뒤에서만 줄을 바꾼다 — 세 자리 묶음을 가르지 않는다. 금액 글을 만드는 함수가 보이는 글의 쉼표 뒤마다 웹 <wbr> · 앱 U+200B 를 넣는다(읽는 이름 · 복사에는 넣지 않는다). 묶음 하나가 칸보다 길 때만 v114 의 칸 끝 끊기. 글자를 줄여 맞추지 않는다(2026-10-17 사용자 결정 03-D 결정 2 B — Typography v114 의 예외)" }
         marginTop: { value: $spacing-x1, note: "라벨 ↔ 숫자" }
       delta:
         typography: $text-t3
@@ -245,6 +246,7 @@ rules:
         fontWeight: { value: 700, note: "v100 — 지금 800" }
         foreground: $color-static-white
         numerals: tabular-nums
+        lineBreak: { value: 쉼표 뒤, note: "지표 숫자와 같다(statValue.lineBreak) — 글자 200% 에서 18자리 금액이 3 → 4줄이 될 수 있다" }
         marginTop: $spacing-x1_5
       heroDetail:
         typography: $text-t3

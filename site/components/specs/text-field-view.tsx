@@ -137,7 +137,7 @@ export function TfInputView({
   const c = look.color;
   const bg = variant === 'outline' && (disabled || readOnly) ? cv(c.bgDisabled, mode) : 'transparent';
   const valueColor = disabled ? cv(c.disabled, mode) : variant === 'underline' && readOnly ? cv(c.underlineReadonly, mode) : cv(c.value, mode);
-  const phColor = disabled ? cv(c.disabled, mode) : variant === 'underline' && readOnly ? cv(c.underlineReadonly, mode) : cv(c.placeholder, mode);
+  const phColor = disabled ? cv(c.placeholderDisabled, mode) : variant === 'underline' && readOnly ? cv(c.underlineReadonly, mode) : cv(c.placeholder, mode);
   const vars = {
     ...sizeVars('ptf', inputSizeVars(L), inputSizeVars(M)),
     '--ptf-bd': cv(c.border, mode),
@@ -351,7 +351,7 @@ export function TfTextareaView({
     '--ptf-invalid': cv(c.invalid, mode),
     '--ptf-bg': disabled || readOnly ? cv(c.bgDisabled, mode) : 'transparent',
     '--ptf-value': disabled ? cv(c.disabled, mode) : cv(c.value, mode),
-    '--ptf-ph': disabled ? cv(c.disabled, mode) : cv(c.placeholder, mode),
+    '--ptf-ph': disabled ? cv(c.placeholderDisabled, mode) : cv(c.placeholder, mode),
     '--ptf-caret-c': cv(c.caret, mode),
     '--ptf-base': `${input.stroke.base}px`,
     '--ptf-active': `${input.stroke.active}px`,

@@ -28,7 +28,7 @@
 
 ### 줄
 
-높이 40 · 한 줄 · 양 끝 정렬이고, 왼쪽 묶음과 오른쪽 묶음 · 범위 묶음과 화살표 사이는 16 이다. 고르기 둘은 Select medium(40 · 최소 폭 96)이고 고르기와 글 사이는 8, 글은 14 / 19 · 400 이다. 고르기는 화면 폭과 상관없이 medium 이다 — 줄이 한 높이 40 을 지키도록 [Select](select.md) 의 "1280 미만 large 52" 규칙에서 뺐다(사용자 결정 2026-10-08). 표 아래 12 에 둔다.
+높이 40 · 한 줄 · 양 끝 정렬이고, 왼쪽 묶음과 오른쪽 묶음 · 범위 묶음과 화살표 사이는 16 이다. 고르기 둘은 Select medium(40 · 최소 폭 96)이고 고르기와 글 사이는 8, 글은 14 / 19 · 400 이다. 고르기는 화면 폭과 상관없이 medium 이다 — 줄이 한 높이 40 을 지키도록 [Select](select.md) 의 "1280 미만 large 52" 규칙에서 뺐다(사용자 결정 2026-10-08). 표 아래 12 에 둔다 — 이 12 는 넘김 줄이 갖는다(Table 의 자리는 좌우 24 만).
 
 [그림: 줄의 간격 — 40 · 사이 16 · 8 · 화살표 40 둘](../../site/components/specs/table-pagination.tsx#layout)
 
@@ -166,9 +166,13 @@ import { TablePagination } from "@/components/ui/table-pagination"
 - **고르기는 porest Select medium** — 화면 폭과 상관없이 40 이다. Select 의 "1280 미만 large 52" 규칙의 예외다(사용자 결정 2026-10-08 — 줄 한 높이, 52 는 고르지 않았다). 범위 목록의 최대 높이 240 은 SEED 그대로.
 - **줄이 줄어 범위가 없어지면 마지막 범위로 옮기고, 넘기면 알린다** — SEED 는 `constraint` 로 범위를 맞추고, 결과 안내는 사용처의 몫이다.
 - **막힌 화살표는 `aria-disabled`** — 초점이 그 자리에 남는다. SEED 는 `disabled` 라 끝에 닿으면 초점이 떨어진다.
-- **표 아래 12**(`spacing-component-default`) — SEED 는 간격을 적지 않았다.
+- **표 아래 12**(`spacing-component-default`) — SEED 는 간격을 적지 않았다. 12 는 넘김 줄의 위 여백이다 — Table 의 `pagination` 자리는 좌우 24 만 두고 위 여백을 더하지 않아, 자리에 넣어도 표 바로 뒤에 두어도 12 다(2026-10-17 사용자 결정 — [03-D 비교 페이지](https://claude.ai/artifact/7TVGy8o47HBg4R3SefDmf6) 결정 5 B. 두 스펙이 같은 12 를 각자 적어 함께 쓰면 24 였다).
 
 ## Migration notes
+
+### 2026-10-17 — 표 아래 12 는 이 줄이 갖는다
+
+사용자가 [03-D 비교 페이지](https://claude.ai/artifact/7TVGy8o47HBg4R3SefDmf6) 결정 5 B 로 정했다 — 넘김 줄의 위 12(`root.marginTop`)는 그대로이고, Table 의 `pagination` 자리는 좌우 24 만 둔다(그 자리의 위 12 를 걷었다 — `table.md`). 지금 웹 ds 는 자리에 넣으면 24 다(`table.tsx:164` `pt-x3`).
 
 ### 2026-10-15 — 구현 세션 질문 정리(Q-011-5 · 6)
 

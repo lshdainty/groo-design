@@ -81,6 +81,8 @@ const VALUE_COLOR = {
 //    상자(rootClassName)에 건다 — 입력은 상자의 글꼴을 통째로 이어받는다(Input 의 [font:inherit]) ──
 
 const OTP_VALUE = "tabular-nums";
+// 막혀도 자리 글은 fg-placeholder 그대로 — 입력의 className 으로 Input 의 막힘 색을 덮는다(input-otp.yaml disabled › placeholder)
+const OTP_PLACEHOLDER = "placeholder:text-fg-placeholder";
 
 // ── button.tsx 의 cva 와 같은 값 — 다시 받기(neutralWeak · medium) · 확인(neutralSolid · large) ─────────
 
@@ -179,7 +181,7 @@ function otpField({ id, size = "responsive", value = "", invalid = false, error 
   const input = attrs([
     'type="text"',
     'data-slot="text-input-value"',
-    `class="${VALUE_BASE} ${disabled ? VALUE_COLOR.disabled : VALUE_COLOR.enabled}"`,
+    `class="${VALUE_BASE} ${disabled ? VALUE_COLOR.disabled.replace("placeholder:text-fg-disabled", OTP_PLACEHOLDER) : VALUE_COLOR.enabled}"`,
     'inputmode="numeric"',
     'autocomplete="one-time-code"',
     'spellcheck="false"',

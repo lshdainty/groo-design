@@ -29,7 +29,9 @@ export type OtpFieldViewProps = {
   marks?: Partial<Record<'header' | 'input' | 'footer', CSSProperties>>;
 };
 
-export function OtpFieldView({ look, field, input, mode = 'auto', size = 'responsive', label, value, onValue, invalid = false, error, disabled = false, state, id, inputRef, marks }: OtpFieldViewProps) {
+export function OtpFieldView({ look, field, input: inputLook, mode = 'auto', size = 'responsive', label, value, onValue, invalid = false, error, disabled = false, state, id, inputRef, marks }: OtpFieldViewProps) {
+  // 막혀도 자리 글은 켜진 칸의 색 — input-otp.yaml disabled › placeholder(Input 의 막힘 색을 덮는다)
+  const input = look.placeholderKeep ? { ...inputLook, color: { ...inputLook.color, placeholderDisabled: inputLook.color.placeholder } } : inputLook;
   const live = state === undefined;
   const bad = invalid || state === 'invalid';
   const errorMessage = error ?? look.error;
