@@ -106,7 +106,7 @@ function Band({ style, label, side = 'top' }: { style: CSSProperties; label?: st
   return (
     <span aria-hidden className="absolute" style={{ background: MARK, ...style }}>
       {label && (
-        <span className="absolute whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE, ...tag }}>
+        <span className="absolute whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE, ...tag }}>
           {label}
         </span>
       )}
@@ -195,7 +195,7 @@ function HrLeaveWindow({ mode, w = 480, value = 'mine', items = LEAVE_TABS }: { 
           <div style={{ paddingTop: 4, paddingBottom: 8, paddingLeft: g, paddingRight: g }}>
             {rows.map(([a, b, c, d], i) => (
               <div key={i} className="flex items-center gap-3 py-2.5 text-[13px]" style={{ borderTop: i ? `1px solid ${rc('stroke-neutral-subtle', mode, 'hr')}` : undefined }}>
-                <span className="w-[72px] shrink-0 font-semibold" style={{ color: rc('fg-neutral', mode, 'hr') }}>
+                <span className="w-[72px] shrink-0 font-bold" style={{ color: rc('fg-neutral', mode, 'hr') }}>
                   {a}
                 </span>
                 <span className="min-w-0 flex-1 truncate" style={{ color: rc('fg-neutral-muted', mode, 'hr') }}>
@@ -311,7 +311,7 @@ function FillMarked() {
         <Band style={{ left: 0, width: tabW, top: -14, height: 3 }} label={`칸 ${Math.round(tabW * 10) / 10}`} />
         <Band style={{ left: 0, width: L.inset, top: h + 6, height: 10 }} label={String(L.inset)} side="bottom" />
         <Band style={{ left: L.inset + bar, width: L.inset, top: h + 6, height: 10 }} label={String(L.inset)} side="bottom" />
-        <span aria-hidden className="absolute text-center text-[10px] font-semibold leading-4" style={{ left: L.inset, width: bar, top: h + 3, color: MARK_LINE }}>
+        <span aria-hidden className="absolute text-center text-[10px] font-bold leading-4" style={{ left: L.inset, width: bar, top: h + 3, color: MARK_LINE }}>
           막대 {Math.round(bar * 10) / 10}
         </span>
       </div>
@@ -329,13 +329,13 @@ function HugMarked() {
         <T items={SCREEN_TABS} value="all" layout="hug" style={{ width: 'max-content', overflowX: 'visible', overflowY: 'visible' }} />
         <Band style={{ left: 0, width: L.padX, top: 0, height: h }} label={String(L.padX)} side="top" />
         <Band style={{ left: L.padX, width: P, top: 0, height: h, opacity: 0.6 }} />
-        <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-semibold leading-4" style={{ left: L.padX + P, top: h + 6, color: MARK_LINE }}>
+        <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-bold leading-4" style={{ left: L.padX + P, top: h + 6, color: MARK_LINE }}>
           ↑ 첫 글 {L.padX + P}(목록 {L.padX} + 탭 {P})
         </span>
         {/* 화면 밖 — 가로로 스크롤해 본다 */}
         <span aria-hidden className="absolute top-0 pk-basement" style={{ left: SCREEN, right: 0, height: h, opacity: 0.72 }} />
         <span aria-hidden className="absolute" style={{ left: SCREEN, top: -18, height: h + 30, borderLeft: `1px dashed ${MARK_LINE}` }} />
-        <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-semibold leading-4" style={{ left: SCREEN + 6, top: -18, color: MARK_LINE }}>
+        <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-bold leading-4" style={{ left: SCREEN + 6, top: -18, color: MARK_LINE }}>
           화면 끝 {SCREEN} — 넘친 탭은 가로 스크롤
         </span>
       </div>
@@ -361,7 +361,7 @@ function HrAuthorityWindow({ mode = 'auto' }: { mode?: Mode }) {
           <div style={{ paddingTop: 2, paddingBottom: 8, paddingLeft: g, paddingRight: g }}>
             {roles.map(([a, b], i) => (
               <div key={a} className="flex items-center gap-4 py-2.5 text-[13px]" style={{ borderTop: i ? `1px solid ${rc('stroke-neutral-subtle', mode, 'hr')}` : undefined }}>
-                <span className="w-[56px] shrink-0 font-semibold" style={{ color: rc('fg-neutral', mode, 'hr') }}>
+                <span className="w-[56px] shrink-0 font-bold" style={{ color: rc('fg-neutral', mode, 'hr') }}>
                   {a}
                 </span>
                 <span style={{ color: rc('fg-neutral-muted', mode, 'hr') }}>{b}</span>
@@ -482,7 +482,7 @@ const States: Fig = ({ caption }) => {
           ))}
           {TABS_STATES.map((st) => (
             <Fragment key={st}>
-              <span className="col-span-2 pt-1 text-[12px] font-semibold leading-4 sm:col-span-1 sm:pt-0" style={{ color: rc('fg-neutral', mode) }}>
+              <span className="col-span-2 pt-1 text-[12px] font-bold leading-4 sm:col-span-1 sm:pt-0" style={{ color: rc('fg-neutral', mode) }}>
                 {STATE_KO[st]}
               </span>
               {[false, true].map((on) => (
@@ -555,7 +555,7 @@ const ChipTabsFig: Fig = ({ caption }) => {
                   <Band style={{ left: 0, right: 0, bottom: 0, height: c.padY, opacity: 0.6 }} label={String(c.padY)} side="end" />
                   <div className="flex items-center">
                     <span aria-hidden className="relative block shrink-0" style={{ width: c.padX, height: h, background: MARK }}>
-                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+                      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
                         {c.padX}
                       </span>
                     </span>
@@ -564,7 +564,7 @@ const ChipTabsFig: Fig = ({ caption }) => {
                         {i > 0 && (
                           <span aria-hidden className="relative block shrink-0" style={{ width: c.gap, height: h, background: i === 1 ? MARK : undefined }}>
                             {i === 1 && (
-                              <span className="absolute left-1/2 -translate-x-1/2 rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ top: h + c.padY - 2, background: MARK_LINE }}>
+                              <span className="absolute left-1/2 -translate-x-1/2 rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ top: h + c.padY - 2, background: MARK_LINE }}>
                                 {c.gap}
                               </span>
                             )}

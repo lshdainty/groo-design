@@ -10,7 +10,7 @@ export function ColorOnlyFigure() {
   const row = (label: string, amount: string, up: boolean, withText: boolean) => (
     <div className="flex w-[210px] items-center justify-between py-1.5 text-[13px]" style={{ color: rc('fg-neutral') }}>
       <span>{label}</span>
-      <span className="inline-flex items-center gap-1 font-semibold" style={{ color: up ? rc('fg-critical') : rc('fg-positive') }}>
+      <span className="inline-flex items-center gap-1 font-bold" style={{ color: up ? rc('fg-critical') : rc('fg-positive') }}>
         {withText && (up ? <TrendingUp size={16} aria-hidden /> : <TrendingDown size={16} aria-hidden />)}
         {amount}
         {withText && <span className="font-normal">{up ? '늘었어요' : '줄었어요'}</span>}
@@ -103,7 +103,7 @@ export function ErrorAnnounceFigure() {
     <Figure caption="오류는 테두리 색과 함께 글자로, 입력칸 바로 아래에, 고칠 방법까지 — 보조 기술에도 바로 알린다">
       <div className="flex items-start gap-8 rounded-xl bg-white px-8 py-6">
         <div className="flex w-[220px] flex-col gap-1.5">
-          <label className="text-[13px] font-semibold" style={{ color: rc('fg-neutral') }}>카드 이름</label>
+          <label className="text-[13px] font-bold" style={{ color: rc('fg-neutral') }}>카드 이름</label>
           <span className="flex items-center rounded-lg px-[11px] text-[14px]" style={{ height: h, border: `2px solid ${rc('stroke-critical-solid')}`, color: rc('fg-neutral') }}>
             현대카드
           </span>

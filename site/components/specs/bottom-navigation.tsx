@@ -257,7 +257,7 @@ const States: Fig = ({ caption }) => (
     <div className="flex flex-col gap-4">
       {MODES.map((mode) => (
         <div key={mode} className="flex flex-col gap-2 rounded-xl" style={{ background: rc('bg-layer-default', mode), paddingTop: 12, paddingBottom: 12, paddingLeft: 14, paddingRight: 14 }}>
-          <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
+          <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
           <div className="flex gap-4">
             <CellCrop mode={mode} cell={1} label="칸 — 기본" />
             <CellCrop mode={mode} cell={1} state="pressed" label="칸 — 누름(축소만)" />
@@ -329,7 +329,7 @@ const CompactGuide: Fig = ({ caption }) => {
 
 function ScrollMark({ y, label }: { y: string; label: string }) {
   return (
-    <span className="absolute right-1 rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ top: y, background: '#DB2777', zIndex: 150 }}>
+    <span className="absolute right-1 rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ top: y, background: '#DB2777', zIndex: 150 }}>
       {label}
     </span>
   );

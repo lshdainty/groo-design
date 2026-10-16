@@ -171,7 +171,7 @@ export function SpecSheet({ component }: { component: string }) {
         if (!rows.length) return null;
         return (
           <section key={i} className="flex flex-col gap-2">
-            <h4 className="font-mono text-[13px] font-semibold text-fd-foreground">{title}</h4>
+            <h4 className="font-mono text-[13px] font-bold text-fd-foreground">{title}</h4>
             <div className="overflow-x-auto rounded-xl border border-fd-border">
               <table className="w-full min-w-[560px] border-collapse text-[13px]">
                 <thead>

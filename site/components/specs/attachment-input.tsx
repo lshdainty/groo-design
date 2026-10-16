@@ -274,7 +274,7 @@ const Trigger: Fig = ({ caption }) => {
 // ── Item ──────────────────────────────────────────────────
 const box = (label: string, style?: CSSProperties) => (
   <span aria-hidden className="pointer-events-none absolute" style={{ top: 0, left: 0, right: 0, bottom: 0, outline: `1px dashed ${MARK_LINE}`, outlineOffset: -1, background: MARK, zIndex: 4, ...style }}>
-    <span className="absolute rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE, left: '50%', bottom: -18, transform: 'translateX(-50%)', whiteSpace: 'nowrap' }}>
+    <span className="absolute rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE, left: '50%', bottom: -18, transform: 'translateX(-50%)', whiteSpace: 'nowrap' }}>
       {label}
     </span>
   </span>
@@ -550,7 +550,7 @@ const States: Fig = ({ caption }) => {
   const table = (mode: 'light' | 'dark') => {
     const c = (n: string) => rc(n, mode);
     const head = (t: string) => (
-      <span className="text-[12px] font-semibold leading-4" style={{ color: c('fg-neutral') }}>
+      <span className="text-[12px] font-bold leading-4" style={{ color: c('fg-neutral') }}>
         {t}
       </span>
     );

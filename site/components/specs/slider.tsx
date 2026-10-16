@@ -238,13 +238,13 @@ function LookRow({ mode, state }: { mode: Mode; state: SliderState }) {
       {/* 손잡이 줄 44 — 줄 전체가 누르는 자리(위 여백 — 말풍선 자리 — 아래에서 시작한다) */}
       <span aria-hidden className="pointer-events-none absolute left-0 right-0" style={{ top: T0, height: H, outline: `1px dashed ${MARK_LINE}`, background: MARK, opacity: 0.6 }} />
       <Band style={{ right: -16, top: T0, height: H, width: 3 }} />
-      <span aria-hidden className="absolute text-[10px] font-semibold leading-4" style={{ right: -38, top: T0 + H / 2 - 8, color: MARK_LINE }}>
+      <span aria-hidden className="absolute text-[10px] font-bold leading-4" style={{ right: -38, top: T0 + H / 2 - 8, color: MARK_LINE }}>
         {H}
       </span>
-      <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-semibold leading-4" style={{ left: x - t / 2, top: T0 + H / 2 + t / 2 + 2, width: t, textAlign: 'center', color: MARK_LINE }}>
+      <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-bold leading-4" style={{ left: x - t / 2, top: T0 + H / 2 + t / 2 + 2, width: t, textAlign: 'center', color: MARK_LINE }}>
         {t}
       </span>
-      <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-semibold leading-4" style={{ left: W - 70, top: T0 + H / 2 - l.track.height / 2 - 18, color: MARK_LINE }}>
+      <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-bold leading-4" style={{ left: W - 70, top: T0 + H / 2 - l.track.height / 2 - 18, color: MARK_LINE }}>
         {`트랙 ${l.track.height}`}
       </span>
     </div>
@@ -289,7 +289,7 @@ const Value: Fig = ({ caption }) => {
                 {band && (
                   <>
                     <Band style={{ left: -14, width: 3, top: headH, height: gapAll }} />
-                    <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-semibold leading-4" style={{ left: -16, top: headH + gapAll / 2 - 8, transform: 'translateX(-100%)', color: MARK_LINE }}>
+                    <span aria-hidden className="absolute whitespace-nowrap text-[10px] font-bold leading-4" style={{ left: -16, top: headH + gapAll / 2 - 8, transform: 'translateX(-100%)', color: MARK_LINE }}>
                       {gapAll}
                     </span>
                   </>
@@ -339,7 +339,7 @@ const States: Fig = ({ caption }) => {
         <div className="mx-auto grid w-max grid-cols-[max-content_max-content] items-end gap-x-5 gap-y-2">
           {order.map((st) => (
             <div key={st} className="contents">
-              <span className="pb-6 text-[12px] font-semibold leading-4" style={{ color: rc('fg-neutral', mode) }}>
+              <span className="pb-6 text-[12px] font-bold leading-4" style={{ color: rc('fg-neutral', mode) }}>
                 {STATE_KO[st]}
               </span>
               <div style={{ paddingTop: Math.max(0, top) + 4 }}>

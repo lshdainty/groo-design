@@ -80,7 +80,7 @@ SEED 에는 나무가 없다 — Accordion 은 중첩 · 고르기를 다루지 
 
 ### 노드 동작 — ⋮ 하나
 
-노드마다 단추를 두지 않는다 — 항목 안에 단추를 넣으면 단추 안 단추가 되고 `Tab` 정지점이 늘어난다. 추가 · 수정 · 삭제는 나무 밖 패널 머리의 ⋮ 하나([Button](button.md) `ghost` · `iconOnly` · `medium` — 보이는 40 · 누르는 44 · 아이콘 18)가 고른 항목에 건다. 이름은 "{고른 부서} 더보기" — 고른 부서가 바뀌면 이름도 바뀐다. 1280 이상은 [Menu](menu.md), 미만은 [Menu Sheet](menu-sheet.md) 다. 패널 머리는 나무의 이름(제목 18 / 24 · 700)과 ⋮ 한 줄이고, 제목은 나무 줄의 글과 같은 16 에서 시작한다.
+노드마다 단추를 두지 않는다 — 항목 안에 단추를 넣으면 단추 안 단추가 되고 `Tab` 정지점이 늘어난다. 추가 · 수정 · 삭제는 나무 밖 패널 머리의 ⋮ 하나([Button](button.md) `ghost` · `iconOnly` · `medium` — 보이는 40 · 누르는 44 · 아이콘 18)가 고른 항목에 건다. 이름은 "{고른 부서} 더보기" — 고른 부서가 바뀌면 이름도 바뀐다. 1280 이상은 [Menu](menu.md), 미만은 [Menu Sheet](menu-sheet.md) 다. 패널 머리는 나무의 이름(제목 16 / 22 · 700 — 구역 제목과 한 벌, 글자 역할 D3)과 ⋮ 한 줄이고, 제목은 나무 줄의 글과 같은 16 에서 시작한다.
 
 [그림: 패널 머리 "부서" + ⋮ — "경영지원팀 더보기" → 하위 부서 추가 · 수정 · 삭제](../../site/components/specs/tree-view.tsx#actions)
 
@@ -273,6 +273,10 @@ import { TreeView } from "@/components/ui/tree-view"
 - **줄 전체가 누르는 자리** — SEED Accordion 의 "터치 영역은 Chevron 아이콘뿐만 아니라 Trigger 전체" 를 나무 줄에 옮겼다(16D). Accordion 줄은 여닫기만 하지만 나무 줄은 고르기도 한다 — 부모 줄은 고르면서 펴고 접는다.
 
 ## Migration notes
+
+### 2026-10-16 — 패널 머리 제목 16(글자 역할 D3)
+
+사용자가 [글자 역할 비교 페이지](https://claude.ai/artifact/X9n6tDZbKSP7GeLtodtz8N)에서 카드 밖 구역 제목을 카드 머리와 같은 16 / 22 · 700 · `fg-neutral` 한 벌로 정했다(D3 B — List Header 14(A) · 18(C)은 고르지 않았다). 나무 패널 머리 제목도 그 한 벌이라 18 / 24 → 16 / 22 다(DESIGN.md Typography 의 "글자 역할" R4). 옛 스펙은 `tree-view.history/v-pre-text-roles.*`.
 
 ### 2026-10-10 — 새로 둔다(APG Treeview)
 

@@ -222,7 +222,7 @@ const States: Fig = ({ caption }) => (
     <div className="grid gap-3">
       {COMBOS.map(([name, combo]) => (
         <div key={name} className="overflow-x-auto rounded-xl pk-surface p-5">
-          <div className="mb-3 text-[12px] font-semibold pk-text">{name}</div>
+          <div className="mb-3 text-[12px] font-bold pk-text">{name}</div>
           <table className="w-full border-collapse">
             <thead>
               <tr>
@@ -302,7 +302,7 @@ const TouchTarget: Fig = ({ caption }) => (
               {i === 0 && <span className="absolute inset-0 z-0" style={{ background: MARK, outline: `1px dashed ${MARK_LINE}` }} />}
               <C checked={on ? 'checked' : 'unchecked'} ariaLabel={`${t} 선택`} style={{ position: 'relative', zIndex: 1 }} />
               <span className="relative z-[1] flex-1 text-[15px] pk-text">{t}</span>
-              <span className="relative z-[1] text-[15px] font-semibold tabular-nums pk-text">{a}</span>
+              <span className="relative z-[1] text-[15px] font-bold tabular-nums pk-text">{a}</span>
             </div>
           ))}
         </div>
@@ -319,7 +319,7 @@ function ExportGroup({ picked, bordered = false, message, mode = 'auto', tone = 
   const redBox = { border: `1px solid ${rc('stroke-critical-solid', mode)}` } as CSSProperties;
   return (
     <div className="flex flex-col">
-      <span className="mb-1 text-[13px] font-semibold" style={{ color: rc('fg-neutral-muted', mode) }}>
+      <span className="mb-1 text-[13px] font-bold" style={{ color: rc('fg-neutral-muted', mode) }}>
         내보낼 데이터
       </span>
       <div className="flex flex-col" style={{ gap: GROUP_GAP() }}>
@@ -364,7 +364,7 @@ const ShapeGuide: Fig = ({ caption }) => (
     <Pair>
       <Verdict ok note="필수가 아니고 셋 이하 — 가벼운 보기 옵션은 Ghost">
         <div className="flex w-[240px] flex-col">
-          <span className="mb-1 text-[13px] font-semibold" style={{ color: rc('fg-neutral-muted') }}>
+          <span className="mb-1 text-[13px] font-bold" style={{ color: rc('fg-neutral-muted') }}>
             보기
           </span>
           <div className="flex flex-col" style={{ gap: GROUP_GAP() }}>
@@ -375,7 +375,7 @@ const ShapeGuide: Fig = ({ caption }) => (
       </Verdict>
       <Verdict ok={false} note="하나 이상 꼭 골라야 하는 긴 목록에 Ghost — 고른 것과 안 고른 것이 잘 안 갈린다">
         <div className="flex w-[240px] flex-col">
-          <span className="mb-1 text-[13px] font-semibold" style={{ color: rc('fg-neutral-muted') }}>
+          <span className="mb-1 text-[13px] font-bold" style={{ color: rc('fg-neutral-muted') }}>
             내보낼 데이터(하나 이상)
           </span>
           <div className="flex flex-col" style={{ gap: GROUP_GAP() }}>
@@ -534,7 +534,7 @@ const ExCheckmark: Fig = ({ caption }) => (
         <div key={t} className="flex items-center gap-3 px-6 py-3" style={{ borderTop: i ? `1px solid ${rc('stroke-neutral-subtle')}` : undefined }}>
           <C checked={ch as Checked} ariaLabel={`${t} 선택`} />
           <span className="flex-1 text-[15px] pk-text">{t}</span>
-          <span className="text-[15px] font-semibold tabular-nums pk-text">{a}</span>
+          <span className="text-[15px] font-bold tabular-nums pk-text">{a}</span>
         </div>
       ))}
     </div>

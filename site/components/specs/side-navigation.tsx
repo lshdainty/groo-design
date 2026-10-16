@@ -130,7 +130,7 @@ function Ruler({ parts, s }: { parts: [number, string][]; s: number }) {
   return (
     <div className="flex" style={{ height: 18 }}>
       {parts.map(([w, label], i) => (
-        <span key={i} className="flex items-center justify-center text-[10px] font-semibold text-white" style={{ width: w * s, background: i % 2 ? '#DB2777' : 'rgba(219, 39, 119, 0.55)', boxShadow: 'inset -1px 0 0 #ffffff' }}>
+        <span key={i} className="flex items-center justify-center text-[10px] font-bold text-white" style={{ width: w * s, background: i % 2 ? '#DB2777' : 'rgba(219, 39, 119, 0.55)', boxShadow: 'inset -1px 0 0 #ffffff' }}>
           {label}
         </span>
       ))}
@@ -333,7 +333,7 @@ const States: Fig = ({ caption }) => {
       <div className="flex gap-5">
         {MODES.map((mode) => (
           <div key={mode} className="flex flex-col gap-1 rounded-xl" style={{ background: rc('bg-layer-default', mode), paddingTop: 12, paddingBottom: 12, paddingLeft: 8, paddingRight: 12 }}>
-            <span className="pb-1 pl-2 text-[12px] font-semibold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
+            <span className="pb-1 pl-2 text-[12px] font-bold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
             {list.map((st) => (
               <div key={st} className="flex items-center gap-2">
                 <div style={{ width: 176, marginTop: -s.content.padTop }}>

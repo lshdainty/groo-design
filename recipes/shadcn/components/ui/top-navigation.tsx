@@ -30,7 +30,7 @@ import { useLeaveConfirm } from "@/components/ui/alert-dialog";
  *   TopNavigationTextButton     글 버튼("완료" · "모두 읽음") — 오른쪽 자리에 하나, 아이콘 버튼과 섞지 않는다
  *   TopNavigationPrimaryButton  데스크톱 머리의 주 버튼 — Button brandSolid · small 그대로 + 오른쪽 8. 데스크톱 머리 오른쪽은 이것 + 알림 · 설정
  *   ScreenTitle                 데스크톱 본문 맨 위 제목 <h1 tabIndex={-1} data-screen-title> — text-screen-title 26 / 35 · 700, 머리 아래 20.
- *                               모든 데스크톱 화면에 하나(홈 · 캘린더도). description(제목 아래 t3 · fg-neutral-subtle · 위 2) · actions(Button small
+ *                               모든 데스크톱 화면에 하나(홈 · 캘린더도). description(화면 부제 — 제목 아래 t5 · 400 · fg-neutral-muted · 위 2, 2026-10-16 글자 역할 D6) · actions(Button small
  *                               묶음 · 사이 8)를 주면 한 줄 제목 줄 — 제목 덩어리 왼쪽 · 버튼 오른쪽(사이 16), 버튼은 제목 덩어리 아래 끝에 맞춘다.
  *                               글이 길면 설명이 줄을 바꾸고 버튼은 그 자리(2026-10-16 사용자 결정 Q-018-2 A). ref 는 늘 h1
  *   TopNavigationProvider       product("Porest Desk" · "Porest HR") — useScreenTitle(title) 가 문서 제목을 "{title} - {product}" 로 쓴다
@@ -328,7 +328,7 @@ TopNavigationMenuButton.displayName = "TopNavigationMenuButton";
 const SCREEN_TITLE = "m-0 font-sans text-screen-title font-bold text-fg-neutral";
 // 제목 줄 — 제목 덩어리(제목 + 설명) 왼쪽 · 버튼 오른쪽(사이 16), 버튼은 덩어리 아래 끝에 맞춘다(Q-018-2 A)
 const SCREEN_TITLE_ROW = "mt-nav-to-title flex items-end gap-x4";
-const SCREEN_DESCRIPTION = "m-0 mt-x0_5 text-t3 font-normal text-fg-neutral-subtle break-keep [overflow-wrap:break-word]";
+const SCREEN_DESCRIPTION = "m-0 mt-x0_5 text-t5 font-normal text-fg-neutral-muted break-keep [overflow-wrap:break-word]";
 const SCREEN_ACTIONS = "flex shrink-0 flex-wrap items-center justify-end gap-x2";
 
 export interface ScreenTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {

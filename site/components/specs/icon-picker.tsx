@@ -334,7 +334,7 @@ const GridFig: Fig = ({ caption }) => {
             <Band style={{ left: 0, right: 0, top: headH - l.header.padBottom, height: l.header.padBottom }} label={String(l.header.padBottom)} />
             {cols > 1 && <Band style={{ left: l.cell.size, width: gap, top: headH, height: l.cell.size }} label={gap % 1 ? gap.toFixed(1) : String(gap)} />}
             <Band style={{ left: -12, width: 3, top: headH, height: l.cell.size }} />
-            <span aria-hidden className="absolute text-[10px] font-semibold leading-4" style={{ left: -18, top: headH + l.cell.size / 2 - 8, transform: 'translateX(-100%)', color: MARK_LINE }}>{`${l.cell.size}`}</span>
+            <span aria-hidden className="absolute text-[10px] font-bold leading-4" style={{ left: -18, top: headH + l.cell.size / 2 - 8, transform: 'translateX(-100%)', color: MARK_LINE }}>{`${l.cell.size}`}</span>
           </div>
         </Surface>
         <Cap strong={label}>{`${cols}열 · 칸 사이 ${gap % 1 ? gap.toFixed(1) : gap} · 줄 사이 ${l.grid.rowGap} · 머리 위 ${l.header.padTop} 아래 ${l.header.padBottom}`}</Cap>
@@ -415,7 +415,7 @@ const States: Fig = ({ caption }) => {
           ))}
           {order.map((st) => (
             <div key={st} className="contents">
-              <span className="text-[12px] font-semibold leading-4" style={{ color: rc('fg-neutral', mode) }}>
+              <span className="text-[12px] font-bold leading-4" style={{ color: rc('fg-neutral', mode) }}>
                 {STATE_KO[st]}
               </span>
               {[false, true].map((sel) => (

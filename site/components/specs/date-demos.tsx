@@ -406,7 +406,7 @@ function PhoneStage({ ov, mode, title, h, children, overlay }: { ov: OvKit; mode
   const fg = tone(ov, 'fg-neutral', mode);
   return (
     <div style={{ position: 'relative', width: PHONE_SCREEN + BORDER * 2, height: h, boxSizing: 'border-box', borderRadius: 36, border: `${BORDER}px solid ${deco(mode, FRAME, 'frame')}`, background: tone(ov, 'bg-layer-default', mode), overflow: 'hidden', display: 'flex', flexDirection: 'column', fontFamily: FONT, color: fg, isolation: 'isolate' }}>
-      <div className="flex h-10 shrink-0 items-center justify-between px-6 text-[13px] font-semibold">
+      <div className="flex h-10 shrink-0 items-center justify-between px-6 text-[13px] font-bold">
         <span>9:41</span>
         <span className="flex items-center gap-1">
           <Signal size={14} />

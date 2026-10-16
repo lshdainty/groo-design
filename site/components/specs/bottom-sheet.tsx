@@ -237,11 +237,11 @@ function SnapPhone({ mode = 'auto' }: { mode?: Mode }) {
         <DimView dim={s.dim} mode={mode} place="end">
           {/* 가득 — 화면 높이의 90%(시트의 상한) */}
           <span aria-hidden className="absolute left-0 right-0" style={{ top: `${(1 - s.maxHeight) * 100}%`, borderTop: `2px dashed ${MARK_LINE}`, zIndex: 3 }}>
-            <span className="absolute right-3 top-1 rounded px-1.5 text-[12px] font-semibold leading-5 text-white" style={{ background: MARK_LINE }}>
+            <span className="absolute right-3 top-1 rounded px-1.5 text-[12px] font-bold leading-5 text-white" style={{ background: MARK_LINE }}>
               가득 {Math.round(s.maxHeight * 100)}%
             </span>
           </span>
-          <SheetSurface look={s} mode={mode} title="현대카드 M" description="10월 결제 예정 352,400원" handle safe={PHONE_SAFE} style={{ height: `${snap * 100}%` }} decor={{ root: <span className="absolute right-3 rounded px-1.5 text-[12px] font-semibold leading-5 text-white" style={{ top: -26, background: MARK_LINE, zIndex: 3 }}>절반 {snap * 100}%</span> }}>
+          <SheetSurface look={s} mode={mode} title="현대카드 M" description="10월 결제 예정 352,400원" handle safe={PHONE_SAFE} style={{ height: `${snap * 100}%` }} decor={{ root: <span className="absolute right-3 rounded px-1.5 text-[12px] font-bold leading-5 text-white" style={{ top: -26, background: MARK_LINE, zIndex: 3 }}>절반 {snap * 100}%</span> }}>
             <div className="-mt-1">
               {MONTH_TX.map(([t, sub, a, hue]) => (
                 <Row key={t} mode={mode} title={t} sub={sub} amount={a} hue={hue} />
@@ -402,7 +402,7 @@ function TallSheet({ mode = 'auto' }: { mode?: Mode }) {
   return (
     <DimView dim={s.dim} mode={mode} place="end">
       <span aria-hidden className="absolute left-0 right-0" style={{ top: `${(1 - s.maxHeight) * 100}%`, borderTop: `2px dashed ${MARK_LINE}`, zIndex: 3 }}>
-        <span className="absolute right-3 -top-6 rounded px-1.5 text-[12px] font-semibold leading-5 text-white" style={{ background: MARK_LINE }}>
+        <span className="absolute right-3 -top-6 rounded px-1.5 text-[12px] font-bold leading-5 text-white" style={{ background: MARK_LINE }}>
           {Math.round(s.maxHeight * 100)}%
         </span>
       </span>

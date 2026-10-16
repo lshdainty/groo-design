@@ -21,7 +21,7 @@ SEED 에는 카드 컴포넌트가 없다. 그래도 SEED 가 그린 카드는 �
 | ⓐ Root | 카드 면 — 바닥 위 흰 면 + 1px 테두리, 모서리 16, 그림자 없음. |
 | ⓑ Header | 머리 — 제목과 오른쪽 동작 한 줄. 없어도 된다. |
 | ⓒ Title | 제목 — 16 / 22 · 700. 무엇의 카드인지. |
-| ⓓ Header Action | 머리 동작 — "전체 보기" 14 · 500 + chevron 16, 누르는 영역 44. |
+| ⓓ Header Action | 머리 동작 — "전체 보기" 글 버튼(SEED Text Button 14 · 700 · `fg-neutral-muted`), 보이는 36 · 누르는 영역 44. |
 | ⓔ Content | 본문 — 글 · 숫자 · 차트 · 표. 카드 여백 안. |
 | ⓕ List | 카드 안 목록 — [List](list.md) 줄이 가장자리까지, 누름 바탕 모서리 10. |
 
@@ -55,9 +55,9 @@ SEED 에는 카드 컴포넌트가 없다. 그래도 SEED 가 그린 카드는 �
 
 ### 머리
 
-머리는 제목 16 / 22 · 700 · `fg-neutral` 하나에 오른쪽 동작 하나다. 동작은 "전체 보기" 같은 글 버튼 — 14 · 500 · `fg-neutral-subtle` + chevron-right 16, 보이는 상자 32(누를 때 바탕 · 모서리 8)에 누르는 영역 44 다. 앱도 같다 — 보이는 자리 · 머리 줄 높이는 그대로 두고 누르는 영역만 위아래 6 넓힌다(머리 줄 밖의 점도 받는다 — 6B 44 × 44 의 앱 풀이, Q-011-8). 폰 · 데스크톱 · 웹 · 앱이 같은 머리다 — 작은 회색 머리 · 18 제목은 두지 않는다(사용자 결정). 머리 아래 본문까지 8, 목록 카드는 4(줄이 제 위 여백을 가진다).
+머리는 제목 16 / 22 · 700 · `fg-neutral` 하나에 오른쪽 동작 하나다. 동작은 "전체 보기" 같은 글 버튼이다 — SEED Text Button 값 그대로 14 · 700 · `fg-neutral-muted`, 꺾쇠 없이 보이는 상자 36(좌우 14 · 누를 때 바탕 · 모서리 8)에 누르는 영역 44 다(2026-10-16 사용자 결정 — 글자 역할 D2, DESIGN.md Typography 의 "글자 역할" R16). 머리 줄 끝에서는 오른쪽 14 만큼 바깥으로 내어 글자 끝이 카드 여백 24 에 선다. 앱도 같다 — 보이는 자리 · 머리 줄 높이는 그대로 두고 누르는 영역만 위아래 4 넓힌다(머리 줄 밖의 점도 받는다 — 44 × 44 의 앱 풀이, Q-011-8). 폰 · 데스크톱 · 웹 · 앱이 같은 머리다 — 작은 회색 머리 · 18 제목은 두지 않는다(사용자 결정). 머리 아래 본문까지 8, 목록 카드는 4(줄이 제 위 여백을 가진다).
 
-[그림: 머리 — 제목 16 · 700 + 전체 보기(보이는 32 · 누르는 44)](../../site/components/specs/card.tsx#header)
+[그림: 머리 — 제목 16 · 700 + 전체 보기(보이는 36 · 누르는 44)](../../site/components/specs/card.tsx#header)
 
 [표: 머리](card.yaml#base.enabled@header)
 
@@ -160,7 +160,7 @@ Desk 홈 · 자산 맨 위의 순자산은 브랜드 색으로 채운 카드다(
 
 ### 머리 동작은 하나, 누르는 영역 44
 
-머리 오른쪽 동작은 하나다("전체 보기" · "관리"). 글 버튼은 보이는 상자가 32 라도 누르는 영역이 44 다 — 글자 높이(18.6)짜리 링크로 두지 않는다. 이름은 "{제목} 전체 보기" 처럼 무엇의 동작인지 넣는다.
+머리 오른쪽 동작은 하나다("전체 보기" · "관리"). 글 버튼은 보이는 상자가 36 이라도 누르는 영역이 44 다 — 글자 높이(18.6)짜리 링크로 두지 않는다. 이름은 "{제목} 전체 보기" 처럼 무엇의 동작인지 넣는다.
 
 [그림: 머리 동작 — 누르는 영역 44 · 글자만큼인 링크](../../site/components/specs/card.tsx#header-guide)
 
@@ -185,7 +185,7 @@ Desk 홈 · 자산 맨 위의 순자산은 브랜드 색으로 채운 카드다(
 레시피 `recipes/shadcn/components/ui/card.tsx` 를 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
 - `Card` — 카드 면. `variant`(`"default"` 기본 · `"hero"`) · `body`(`"content"` 기본 · `"list"` — 좌우 여백 0, 머리 24 · `"accordion"` — 좌우 0, 아래 8, 머리 24) · `press`(`"none"` 기본 · `"whole"` · `"peers"`) · `onClick` · `href`(주면 `press` 를 `"whole"` 로 본다 — 카드 전체가 버튼 · 링크). `"peers"` 는 카드를 누르는 자리를 카드 위에 깐 링크(`CardLink`)로 만들고, 안의 버튼은 그 위에 놓는다 — 버튼을 눌러도 카드가 열리지 않는다. 여백은 폭과 상관없이 24 다.
-- `CardHeader` — 머리. `CardTitle`(`as` — 기본 `h2`) · `CardAction`(머리 동작 — `href` · `onClick`, 자식 글 뒤에 chevron 을 붙인다 · `aria-label` 기본 "{제목} {글}").
+- `CardHeader` — 머리. `CardTitle`(`as` — 기본 `h2`) · `CardAction`(머리 동작 — `href` · `onClick`, 글만 · `aria-label` 기본 "{제목} {글}").
 - `CardContent` — 본문(여백 안). 목록 카드는 `CardContent` 없이 `List` 를 바로 넣는다. 머리 설명(`CardDescription`) · 아래 버튼 줄(`CardFooter`)은 두지 않는다 — 머리는 제목 하나, 버튼은 본문 끝에 둔다.
 - `CardLink` — `peers` 카드의 누르는 자리(카드 전체를 덮는 링크 · 버튼, 이름은 카드 제목).
 - `CardStat` — 지표. `label` · `value`(글 — 쓰는 쪽이 원까지 만든다) · `size`(`"large"` 기본 · `"small"`) · `delta`.
@@ -285,7 +285,7 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 · 숫자 `fg-neutral` 카드 면 위 16.41 · 다크 13.42, 누름 면 위 15.48 · 10.32 ✓. 라벨 · 머리 동작 · 증감 글 `fg-neutral-subtle` 5.50 · 6.09(누름 바탕 위 5.18 · 4.68) ✓. 증감 ▲ `fg-critical` 5.06 · 다크 6.08, ▼ `fg-informative` 5.09 · 6.12 ✓. 순자산 흰 글자 — 라이트 8.38(#0147AD) ~ 14.78(#002460) · 다크 8.36(#1049A4) ~ 11.25(#1F3A69), 장식 빛 위 가장 낮은 자리 4.88 ✓ |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 · 숫자 `fg-neutral` 카드 면 위 16.41 · 다크 13.42, 누름 면 위 15.48 · 10.32 ✓. 라벨 · 증감 글 `fg-neutral-subtle` 5.50 · 6.09 ✓. 머리 동작 `fg-neutral-muted` 7.11 · 7.70(누름 바탕 위 6.70 · 5.93) ✓. 증감 ▲ `fg-critical` 5.06 · 다크 6.08, ▼ `fg-informative` 5.09 · 6.12 ✓. 순자산 흰 글자 — 라이트 8.38(#0147AD) ~ 14.78(#002460) · 다크 8.36(#1049A4) ~ 11.25(#1F3A69), 장식 빛 위 가장 낮은 자리 4.88 ✓ |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 카드 테두리(바닥 위 1.14 · 다크 1.76)는 장식 — 카드는 제목 · 내용으로 읽힌다. 누르는 카드는 이름(제목)으로 알 수 있다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
 | **WCAG 1.4.1** Use of color | 증감은 ▲ · ▼ 모양과 값 · 글이 함께 — 색만으로 알리지 않는다 ✓ |
 | **WCAG 1.3.1** Info and relationships | 카드 제목은 제목 태그(`h2` 기본 — 화면 제목 아래 단계) |
@@ -334,6 +334,10 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 - **증감 색** — SEED 에 증감 규칙이 없다. porest 는 방향 색(▲ 빨강 · ▼ 파랑)이다.
 
 ## Migration notes
+
+### 2026-10-16 — 머리 동작을 SEED Text Button 으로(글자 역할 D2)
+
+사용자가 [글자 역할 비교 페이지](https://claude.ai/artifact/X9n6tDZbKSP7GeLtodtz8N)에서 글 버튼을 SEED Text Button 한 벌로 정했다(D2 A — 추천 B "6B 를 표준으로" 는 고르지 않았다). 2026-10-08 6B 의 머리 동작(14 · 500 · `fg-neutral-subtle` · 보이는 32 · chevron 16)을 이 값으로 바꾼다 — 14 · **700** · **`fg-neutral-muted`** · 보이는 **36**(좌우 14) · 꺾쇠 없음 · 누르는 44(위아래 4). 아코디언 "모두 펼치기" · Result Section 둘째 버튼 · List Header 오른쪽 버튼이 같은 값이다(DESIGN.md Typography 의 "글자 역할" R16). 옛 스펙은 `card.history/v-pre-text-roles.*`. 웹 · 앱은 머리 동작의 글 굵기 · 색 · 높이를 바꾸고 꺾쇠를 뗀다.
 
 ### 2026-10-15 — 구현 세션 질문 정리(Q-011-3 · 7 · 8 · 9)
 

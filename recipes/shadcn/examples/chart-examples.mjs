@@ -103,11 +103,11 @@ const HEAT_STEP_SWATCH = [
 const CROSSHAIR = "stroke-stroke-neutral-weak";
 const TIP_ROW = "flex items-center text-t3";
 const TIP_SWATCH = "mr-x1_5 size-2 shrink-0 rounded-[2px]";
-const TIP_LABEL = "text-fg-neutral-muted";
+const TIP_LABEL = "text-fg-neutral-subtle";
 const TIP_VALUE = "ml-auto pl-x3 font-bold tabular-nums text-fg-neutral";
 const TIP_HEAD = "text-t2 text-fg-neutral-subtle";
 const TILES_ROW = "mb-x2 flex flex-wrap gap-x2";
-const TILE_NAME = "flex items-center gap-x1_5 text-t3 text-fg-neutral-muted";
+const TILE_NAME = "flex items-center gap-x1_5 text-t3 text-fg-neutral-subtle";
 const TILE_DOT = "size-2 shrink-0 rounded-full";
 const TILE_TOTAL = "mt-x0_5 text-t5 font-bold tabular-nums text-fg-neutral";
 const DONUT_LEGEND = "m-0 flex list-none flex-col p-0";
@@ -600,7 +600,7 @@ export const chartExamples = [
   {
     title: "수입 · 지출 추이 — 이중 축",
     description:
-      "차트는 카드 본문 안에 둔다. 수입 · 지출처럼 두 계열의 크기가 열 배 넘게 다르면 왼쪽 · 오른쪽 축을 따로 두고(이중 축) 눈금 글자를 그 축이 맡은 계열의 색으로 칠한다 — 왼쪽 수입 chart-blue · 오른쪽 지출 chart-red(라이트 700 · 다크 800-dark — 글자 기준 4.5 이상). 눈금 글자는 11 / 15 · 고정폭 숫자이고 돈 축은 \"만\" 으로 줄인다(formatAxisWon — 400만 · 빼기 U+2212, 줄임은 축만). 격자는 가로 점선(3 · 3) stroke-neutral-subtle 만 — 세로 격자 · 축 선 · 눈금 선은 없다. 선은 2 · 영역은 같은 색 25% → 0% 세로 그라디언트, 점은 가리킨 자리에만. 오늘(8일)까지만 그린다 — 남은 날을 0 으로 채우지 않는다. 범례는 차트 위의 지표 타일이다 — 점 8 + 이름 13 · fg-neutral-muted, 아래 2 에 합계 16 / 22 · 700(돈은 원까지), 켠 계열은 chart-{색}-subtle 바탕 · 끈 계열은 흰 면 + 안쪽 1px stroke-neutral-weak, 모서리 12 · 위아래 10 · 좌우 12 · 사이 8 · 높이 62. 누르면(Enter · Space) 계열을 켜고 끈다(aria-pressed) — 마지막 하나는 끌 수 없다. 차트 상자는 role=\"img\" + 요약 이름이고 타일이 글로 읽히는 대체다(aria-describedby).",
+      "차트는 카드 본문 안에 둔다. 수입 · 지출처럼 두 계열의 크기가 열 배 넘게 다르면 왼쪽 · 오른쪽 축을 따로 두고(이중 축) 눈금 글자를 그 축이 맡은 계열의 색으로 칠한다 — 왼쪽 수입 chart-blue · 오른쪽 지출 chart-red(라이트 700 · 다크 800-dark — 글자 기준 4.5 이상). 눈금 글자는 11 / 15 · 고정폭 숫자이고 돈 축은 \"만\" 으로 줄인다(formatAxisWon — 400만 · 빼기 U+2212, 줄임은 축만). 격자는 가로 점선(3 · 3) stroke-neutral-subtle 만 — 세로 격자 · 축 선 · 눈금 선은 없다. 선은 2 · 영역은 같은 색 25% → 0% 세로 그라디언트, 점은 가리킨 자리에만. 오늘(8일)까지만 그린다 — 남은 날을 0 으로 채우지 않는다. 범례는 차트 위의 지표 타일이다 — 점 8 + 이름 13 · fg-neutral-subtle, 아래 2 에 합계 16 / 22 · 700(돈은 원까지), 켠 계열은 chart-{색}-subtle 바탕 · 끈 계열은 흰 면 + 안쪽 1px stroke-neutral-weak, 모서리 12 · 위아래 10 · 좌우 12 · 사이 8 · 높이 62. 누르면(Enter · Space) 계열을 켜고 끈다(aria-pressed) — 마지막 하나는 끌 수 없다. 차트 상자는 role=\"img\" + 요약 이름이고 타일이 글로 읽히는 대체다(aria-describedby).",
     jsx: `import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   Chart, ChartLegendTiles, ChartTooltip, ChartTooltipContent, chartAxisProps, chartGridProps, formatAxisWon,
@@ -713,7 +713,7 @@ import { ChartDataTable } from "@/components/ui/chart"
   {
     title: "툴팁 — 오늘을 짚은 순간",
     description:
-      "차트를 짚으면(마우스 · 터치 · 상자에 초점을 두고 ← →) 그 자리에 세로 점선(1px · 3 · 3 · stroke-neutral-weak)과 점(r 4 계열 색 + 카드 면 색 테두리 2 = 10)이 서고 툴팁이 뜬다 — 떠 있는 표면(bg-layer-floating · shadow-s3 · 모서리 12 · 위아래 10 · 좌우 12 · 최소 128 · 테두리 없음), 머리 12 · fg-neutral-subtle(\"10월 8일 (목)\"), 줄은 \"■ 라벨 값\"(색 네모 8 · 모서리 2 ↔ 라벨 6 · 라벨 13 fg-neutral-muted ↔ 값 12 이상 · 값 13 · 700 · 고정폭 숫자 · 오른쪽). 툴팁은 보조 기술에 숨긴다 — 같은 값은 범례 · 표로 보기가 준다. 처음 ← → 를 누르면 첫 날짜, Esc 로 닫는다. 오른쪽 끝에서는 툴팁이 점의 왼쪽에 선다.",
+      "차트를 짚으면(마우스 · 터치 · 상자에 초점을 두고 ← →) 그 자리에 세로 점선(1px · 3 · 3 · stroke-neutral-weak)과 점(r 4 계열 색 + 카드 면 색 테두리 2 = 10)이 서고 툴팁이 뜬다 — 떠 있는 표면(bg-layer-floating · shadow-s3 · 모서리 12 · 위아래 10 · 좌우 12 · 최소 128 · 테두리 없음), 머리 12 · fg-neutral-subtle(\"10월 8일 (목)\"), 줄은 \"■ 라벨 값\"(색 네모 8 · 모서리 2 ↔ 라벨 6 · 라벨 13 fg-neutral-subtle ↔ 값 12 이상 · 값 13 · 700 · 고정폭 숫자 · 오른쪽). 툴팁은 보조 기술에 숨긴다 — 같은 값은 범례 · 표로 보기가 준다. 처음 ← → 를 누르면 첫 날짜, Esc 로 닫는다. 오른쪽 끝에서는 툴팁이 점의 왼쪽에 선다.",
     jsx: `<ChartTooltip content={<ChartTooltipContent headFormatter={formatDay} valueFormatter={formatWon} />} />`,
     render: () => floor(scroll(`<div style="position:relative;">${trendCard({ id: "chart-ex-tip", tip: 7 })}</div>`)),
   },

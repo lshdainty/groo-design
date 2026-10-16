@@ -1,0 +1,58 @@
+# 끝없이 불러오기(목록 끝)의 수치 원본 — 폰의 긴 목록(2026-10-04 사용자 결정, 화면 틀 · 이동 비교 페이지 "따라오는 것" —
+# "폰 긴 목록은 끝없이 불러오기 + 끝 글 · 실패 다시 하기 · 불러오는 동안 표시"). 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# 쓰는 규칙은 pagination.md 의 "폰은 끝없이 불러오기" 다 — 쪽 넘김(Pagination)의 폰 짝이라 그 스펙에 둔다.
+#
+# 768 미만의 긴 목록은 쪽을 나누지 않고, 목록 끝이 가까워지면 다음 쪽을 받아 아래에 잇는다. 목록 맨 아래 한 자리가
+# 지금 상태를 보인다 — 불러오는 중(원 24) · 못 불러옴(글 + "다시 시도") · 끝(글). 기다리는 시간표(1 · 5 · 10초)와 요청 제한 ·
+# 저절로 다시 하기는 skeleton.md 의 "기다리는 동안" 그대로다.
+#
+# SEED 에는 끝없이 불러오기 · "더 보기" 의 규칙이 없다 — 이 값은 porest 가 정했다(받는 시점 300 은 지금 Desk 앱 값).
+
+name: InfiniteList
+
+slots:
+  root: 목록 끝 자리 — 목록 맨 아래 가운데. 상태 하나를 보인다
+  sentinel: 다음 쪽을 부르는 자리 — 목록 끝이 화면 아래에서 이만큼 안으로 오면 받는다
+  progress: 불러오는 중 — Progress Circle 24
+  message: 글 — 못 불러옴 · 끝
+  retryButton: 다시 시도 — 못 불러왔을 때만
+
+variants:
+  status:
+    loading: 다음 쪽을 받는 중 — 원
+    error: 못 불러옴 — "더 불러오지 못했어요." + 다시 시도
+    end: 끝 — "모두 봤어요."
+
+defaults:
+  status: loading
+
+states:
+  enabled: 하나뿐 — 상태는 status 축이다
+
+rules:
+  - when: {}
+    enabled:
+      root:
+        paddingY: { value: $spacing-x6, note: "목록 마지막 줄 아래 24 · 그 아래는 화면 바닥 여백(탭 바가 있으면 그 여백)" }
+        justifyContent: center
+      sentinel:
+        threshold: { value: 300px, note: "목록 끝이 화면 아래 끝에서 300 안으로 오면 다음 쪽을 받는다(지금 Desk 앱 값). 받는 중이거나 끝이면 부르지 않는다" }
+  - when: { status: loading }
+    enabled:
+      progress:
+        size: { value: 24px, note: "Progress Circle 24 · neutral — skeleton.md 의 '목록 끝 더 불러오기'. 1초가 지나야 보인다(그 전에 오면 깜빡이지 않는다)" }
+  - when: { status: error }
+    enabled:
+      message:
+        typography: $text-t4
+        fontWeight: 400
+        foreground: { value: $color-fg-neutral-muted, note: "\"더 불러오지 못했어요.\" — 이미 받은 줄은 그대로 둔다" }
+      retryButton:
+        buttonSize: { value: small 36, note: "Button neutralWeak small \"다시 시도\" — 누르면 그 쪽을 다시 받는다(로딩을 건다)" }
+        marginTop: $spacing-x3
+  - when: { status: end }
+    enabled:
+      message:
+        typography: $text-t4
+        fontWeight: 400
+        foreground: { value: $color-fg-neutral-subtle, note: "\"모두 봤어요.\"(목록마다 \"카드를 모두 봤어요.\" 처럼 바꿀 수 있다) — 바탕 위 5.50 · 다크 6.09. 한 쪽만으로 끝나는 짧은 목록에는 두지 않는다" }

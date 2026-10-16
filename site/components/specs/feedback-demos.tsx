@@ -104,7 +104,7 @@ export function DemoRowView({ screen, mode = 'auto', row, trailing, highlight = 
         <span style={{ fontSize: 15, lineHeight: '21px', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{row.title}</span>
         <span style={{ fontSize: 13, lineHeight: '18px', color: c(screen, 'fg-neutral-subtle', mode), overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{row.sub}</span>
       </span>
-      <span style={{ fontSize: 15, fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>{row.amount}</span>
+      <span style={{ fontSize: 15, fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{row.amount}</span>
       {trailing}
     </li>
   );
@@ -376,11 +376,11 @@ export function CalloutInteractiveDemo({ look }: { look: CalloutLook }) {
             <div style={{ display: 'flex', flexDirection: 'column', paddingTop: 8 }}>
               <button ref={after} type="button" style={rowBtn}>
                 <span>현금 · 계좌</span>
-                <span style={{ fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>4,120,000원</span>
+                <span style={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>4,120,000원</span>
               </button>
               <button type="button" style={rowBtn}>
                 <span>카드</span>
-                <span style={{ fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>−412,300원</span>
+                <span style={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>−412,300원</span>
               </button>
             </div>
           </div>

@@ -345,7 +345,7 @@ const Overlay: Fig = ({ caption }) => {
   const W = 280;
   const H = W / l.ratios['4:3'].value;
   const slot = (p: (typeof IF_PLACEMENTS)[number]) => (
-    <span key={p} aria-hidden className="absolute flex items-center justify-center text-[10px] font-semibold" style={{ ...(p.startsWith('top') ? { top: off } : { bottom: off }), ...(p.endsWith('start') ? { left: off } : { right: off }), width: 66, height: 24, outline: `1px dashed ${MARK_LINE}`, background: 'rgba(255, 255, 255, 0.86)', color: MARK_LINE, zIndex: 1 }}>
+    <span key={p} aria-hidden className="absolute flex items-center justify-center text-[10px] font-bold" style={{ ...(p.startsWith('top') ? { top: off } : { bottom: off }), ...(p.endsWith('start') ? { left: off } : { right: off }), width: 66, height: 24, outline: `1px dashed ${MARK_LINE}`, background: 'rgba(255, 255, 255, 0.86)', color: MARK_LINE, zIndex: 1 }}>
       {PLACEMENT_KO[p]}
     </span>
   );
@@ -374,7 +374,7 @@ const Overlay: Fig = ({ caption }) => {
               <Band style={{ left: 0, top: 0, width: ind.padX * z, height: ind.minH * z }} label={String(ind.padX)} vertical />
               <Band style={{ left: ind.padX * z, right: ind.padX * z, top: 0, height: ind.padY * z }} />
               <span aria-hidden className="absolute flex items-center" style={{ left: '100%', top: 0, bottom: 0, marginLeft: 6, borderLeft: `2px solid ${MARK_LINE}`, paddingLeft: 4 }}>
-                <span className="rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+                <span className="rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
                   {ind.minH}
                 </span>
               </span>

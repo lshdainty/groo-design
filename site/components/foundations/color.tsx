@@ -1,6 +1,6 @@
 // Color 페이지 — 색 값은 DESIGN*.md colors 블록에서만 온다
 import type { CSSProperties, ReactNode } from 'react';
-import { BRAND_ROLES, CHART_ORDER, color, colorStep, contrast, design, palette, roleAliases, roleColors, type Brand } from '@/lib/design-tokens';
+import { BRAND_ROLES, CHART_ORDER, color, colorStep, contrast, design, palette, roleAliases, roleColors, typeScale, type Brand } from '@/lib/design-tokens';
 import { Chip, Figure, Swatch, Table, Token } from './ui';
 import { cardFace } from '../specs/card-face';
 
@@ -9,6 +9,12 @@ type Mode = 'light' | 'dark';
 function rc(name: string, mode: Mode, brand: Brand = 'desk') {
   if (name === 'static-white') return color('static-white', brand);
   return color(mode === 'dark' ? `${name}-dark` : name, brand);
+}
+// 글자 크기 · 줄 높이 — v100 스케일 토큰 그대로(그림의 글자도 Typography "글자 역할" 값으로 그린다)
+function ts(name: string): CSSProperties {
+  const t = typeScale().scale.find((x) => x.name === name);
+  if (!t) throw new Error(`글자 토큰 ${name} 이 없다`);
+  return { fontSize: t.fontSize, lineHeight: t.lineHeight };
 }
 
 // ── 이름 규칙 ─────────────────────────────────────────────
@@ -26,7 +32,7 @@ export function RoleNamingFigure() {
         <div className="grid grid-cols-4 gap-3">
           {NAMING.map(([h, items]) => (
             <div key={h} className="flex flex-col gap-2">
-              <div className="rounded-md bg-[#2B3140] px-3 py-2 text-[14px] font-semibold text-white">{h}</div>
+              <div className="rounded-md bg-[#2B3140] px-3 py-2 text-[14px] font-bold text-white">{h}</div>
               {items.map((it) => (
                 <code key={it} className="w-fit rounded-md bg-white px-2.5 py-1.5 text-[13px] text-[#1A1F2E] shadow-sm">-{it.split(' ')[0]}{it.includes(' ') && <span className="font-sans text-[11px] text-[#62697A]"> {it.slice(it.indexOf(' ') + 1)}</span>}</code>
               ))}
@@ -77,8 +83,8 @@ function Pair({ render, caption, tokens }: { render: (m: Mode) => ReactNode; cap
   );
 }
 
-const btn: CSSProperties = { display: 'inline-block', fontSize: 14, fontWeight: 600, lineHeight: '20px', padding: '8px 14px', borderRadius: 8 };
-const badge: CSSProperties = { display: 'inline-block', fontSize: 12, fontWeight: 600, lineHeight: '20px', padding: '0 8px', borderRadius: 4 };
+const btn: CSSProperties = { display: 'inline-block', fontSize: 14, fontWeight: 700, lineHeight: '20px', padding: '8px 14px', borderRadius: 8 };
+const badge: CSSProperties = { display: 'inline-block', fontSize: 12, fontWeight: 700, lineHeight: '20px', padding: '0 8px', borderRadius: 4 };
 // 카드 — card.yaml 의 면(흰 면 + 1px stroke-neutral-weak · 모서리 16 · 여백 24, 바닥 위)
 const card = (m: Mode): CSSProperties => ({ background: rc('bg-layer-default', m), border: `1px solid ${rc('stroke-neutral-weak', m)}`, borderRadius: cardFace().radius, padding: cardFace().pad });
 
@@ -91,7 +97,7 @@ export function BrandExample({ brand = 'desk' }: { brand?: 'desk' | 'hr' }) {
       render={(m) => (
         <div className="flex flex-col gap-3" style={card(m)}>
           <div className="flex items-center justify-between">
-            <span className="text-[15px] font-semibold">{brand === 'desk' ? '카드 청구서' : '연차 신청'}</span>
+            <span style={{ ...ts('t5'), fontWeight: 700 }}>{brand === 'desk' ? '카드 청구서' : '연차 신청'}</span>
             <span style={{ ...badge, background: b('bg-brand-weak', m), color: b('fg-brand-contrast', m) }}>{brand === 'desk' ? '이번 달' : '대기'}</span>
           </div>
           <span className="text-[14px] font-medium" style={{ color: b('fg-brand', m) }}>자세히 보기 ›</span>
@@ -114,12 +120,13 @@ export function NeutralExample() {
       tokens={['fg-neutral', 'fg-neutral-muted', 'fg-neutral-subtle', 'fg-placeholder', 'fg-disabled', 'bg-neutral-weak', 'bg-disabled', 'bg-neutral-inverted', 'fg-neutral-inverted']}
       render={(m) => (
         <div className="flex flex-col gap-3">
+          {/* 글자 역할(Typography) — 줄 제목 R6(t5 · 400 · neutral) · 설명 문장 R7(t4 · muted) · 메타 R9(t3 · subtle) · 자리 글 R19(t4 · placeholder) */}
           <div style={card(m)}>
-            <div className="text-[15px] font-semibold">점심 · 김밥천국</div>
-            <div className="text-[13px]" style={{ color: rc('fg-neutral-muted', m) }}>식비 · 카드</div>
-            <div className="text-[12px]" style={{ color: rc('fg-neutral-subtle', m) }}>오늘 12:40</div>
+            <div style={{ ...ts('t5'), color: rc('fg-neutral', m) }}>점심 · 지어낸분식</div>
+            <div style={{ ...ts('t4'), color: rc('fg-neutral-muted', m) }}>세 명이 나눠 냈어요</div>
+            <div style={{ ...ts('t3'), color: rc('fg-neutral-subtle', m) }}>식비 · 카드 · 오늘 12:40</div>
           </div>
-          <span className="rounded-lg px-3 py-2 text-[13px]" style={{ background: rc('bg-neutral-weak', m), color: rc('fg-placeholder', m) }}>검색어를 입력하세요</span>
+          <span className="rounded-lg px-3 py-2" style={{ ...ts('t4'), background: rc('bg-neutral-weak', m), color: rc('fg-placeholder', m) }}>검색어를 입력하세요</span>
           <div className="flex items-center gap-2">
             <span style={{ ...btn, background: rc('bg-disabled', m), color: rc('fg-disabled', m) }}>저장</span>
             <span style={{ ...btn, fontWeight: 500, background: rc('bg-neutral-inverted', m), color: rc('fg-neutral-inverted', m) }}>저장했어요</span>
@@ -149,7 +156,7 @@ export function StatusExample({ role }: { role: 'critical' | 'positive' | 'warni
             <div className="flex items-center gap-2">
               <span style={{ ...badge, background: rc(`bg-${role}-solid`, m), color: '#FFFFFF' }}>{w}</span>
               <span style={{ ...badge, background: weak, color: ctr }}>{w}</span>
-              <span className="text-[14px] font-semibold" style={{ color: rc(`fg-${role}`, m) }}>{inline}</span>
+              <span className="text-[14px] font-bold" style={{ color: rc(`fg-${role}`, m) }}>{inline}</span>
             </div>
             <div className="rounded-lg px-3 py-2.5 text-[13px] font-medium" style={{ background: weak, color: ctr }}>
               {sentence} <span className="tabular-nums opacity-80">· {contrast(ctr, weak).toFixed(2)}:1</span>
@@ -278,7 +285,7 @@ export function PaletteRamp({ family, brand = 'shared' }: { family: string; bran
             {steps.map((s) => (
               <div key={s.step} className="flex min-w-0 flex-col items-center gap-1" title={`${family}-${s.step}${m === 'dark' ? '-dark' : ''} ${s[m]}`}>
                 <span className="block h-10 w-full rounded-md" style={{ background: s[m], boxShadow: `inset 0 0 0 1px ${rc('stroke-neutral-subtle', m)}` }} />
-                <span className="text-[10px] font-semibold tabular-nums sm:text-[11px]" style={{ color: rc('fg-neutral', m) }}>{s.step}</span>
+                <span className="text-[10px] font-bold tabular-nums sm:text-[11px]" style={{ color: rc('fg-neutral', m) }}>{s.step}</span>
                 <span className="hidden text-[10px] tabular-nums lg:block" style={{ color: rc('fg-neutral-subtle', m) }}>{s[m].slice(1).toUpperCase()}</span>
               </div>
             ))}
@@ -338,7 +345,7 @@ export function ChartRamp() {
               return (
                 <div key={h} className="flex min-w-0 flex-col items-center gap-1" title={`${name} ${c[name]}`}>
                   <span className="block h-10 w-full rounded-md" style={{ background: c[name] }} />
-                  <span className="text-[10px] font-semibold tabular-nums sm:text-[11px]" style={{ color: rc('fg-neutral', m) }}>{i + 1}</span>
+                  <span className="text-[10px] font-bold tabular-nums sm:text-[11px]" style={{ color: rc('fg-neutral', m) }}>{i + 1}</span>
                   <span className="hidden text-[10px] lg:block" style={{ color: rc('fg-neutral-subtle', m) }}>{h}</span>
                 </div>
               );
@@ -391,13 +398,13 @@ export function ChartTintExample() {
           </div>
           <div className="flex flex-wrap gap-1.5">
             {([['팀 회의', 'blue'], ['병원', 'pink'], ['월세 이체', 'green'], ['친구 생일', 'orange']] as [string, string][]).map(([t, h]) => (
-              <span key={t} className="rounded-md px-2 py-0.5 text-[12px] font-semibold" style={{ background: v(`chart-${h}-weak`, m), color: v(`chart-${h}-contrast`, m) }}>{t}</span>
+              <span key={t} className="rounded-md px-2 py-0.5 text-[12px] font-bold" style={{ background: v(`chart-${h}-weak`, m), color: v(`chart-${h}-contrast`, m) }}>{t}</span>
             ))}
           </div>
           <div className="flex flex-col gap-0.5 rounded-xl px-3.5 py-3 text-[13.5px]" style={{ background: v('chart-yellow-subtle', m) }}>
             <b className="text-[14.5px]">장보기</b>
             <span>우유 · 달걀 · 양파</span>
-            <span className="text-[12px] font-semibold" style={{ color: v('chart-yellow-contrast', m) }}>#노랑</span>
+            <span className="text-[12px] font-bold" style={{ color: v('chart-yellow-contrast', m) }}>#노랑</span>
           </div>
         </div>
       ))}

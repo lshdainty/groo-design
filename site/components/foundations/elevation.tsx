@@ -139,7 +139,7 @@ export function PageOverPageFigure() {
           <Cards />
           <Dim />
           <Sheet h={170}>
-            <span className="mt-2.5 block text-[8px] font-semibold leading-[8px]" style={{ color: rc('fg-neutral') }}>
+            <span className="mt-2.5 block text-[8px] font-bold leading-[8px]" style={{ color: rc('fg-neutral') }}>
               카테고리
             </span>
             <span className="mt-1.5 flex h-4 items-center justify-between rounded px-1.5 text-[9px] leading-none" style={{ boxShadow: `inset 0 0 0 1px ${rc('stroke-neutral-weak')}`, color: rc('fg-neutral') }}>
@@ -253,7 +253,7 @@ export function ThreeWaysFigure() {
         </div>
         <div className={card}>
           <div className={stage} style={{ background: rc('bg-layer-basement') }}>
-            <span className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full text-[18px] font-semibold" style={{ background: rc('bg-brand-solid'), color: rc('static-white'), boxShadow: shadow(3) }}>＋</span>
+            <span className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full text-[18px] font-bold" style={{ background: rc('bg-brand-solid'), color: rc('static-white'), boxShadow: shadow(3) }}>＋</span>
           </div>
           <b className="text-[13px] text-[#1A1F2E]">그림자</b>
           <Cap>떠 있는 높이를 그림자로 — 떠 있는 버튼 · 탭 바 · 메뉴</Cap>
@@ -282,7 +282,7 @@ export function ShadowFigure() {
       <div className="flex gap-4">
         {(['light', 'dark'] as Mode[]).map((m) => (
           <div key={m} className="flex w-[264px] flex-col gap-3 rounded-2xl p-5" style={{ background: rc('bg-layer-basement', m) }}>
-            <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral', m) }}>{m === 'light' ? '라이트' : '다크'}</span>
+            <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral', m) }}>{m === 'light' ? '라이트' : '다크'}</span>
             <div className="grid grid-cols-2 gap-5">
               {([1, 2, 3, 4] as const).map((n) => (
                 <div key={n} className="flex h-[72px] flex-col justify-end rounded-xl p-2.5" style={{ background: rc(m === 'dark' ? 'bg-layer-floating' : 'bg-layer-default', m), boxShadow: shadow(n, m) }}>
@@ -336,7 +336,7 @@ export function BasementVsWeakFigure() {
       <div className="flex gap-4">
         {(['light', 'dark'] as Mode[]).map((m) => (
           <div key={m} className="flex flex-col gap-3 rounded-2xl p-4" style={{ background: m === 'dark' ? rc('bg-layer-default', 'dark') : '#FFFFFF' }}>
-            <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral', m) }}>{m === 'light' ? '라이트' : '다크'}</span>
+            <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral', m) }}>{m === 'light' ? '라이트' : '다크'}</span>
             {cell(m, 'basement')}
             {cell(m, 'weak')}
           </div>

@@ -225,7 +225,7 @@ function HeightTag({ h }: { h: number }) {
   return (
     <span aria-hidden className="relative flex shrink-0 items-center" style={{ height: h, marginLeft: 6 }}>
       <span style={{ width: 6, alignSelf: 'stretch', borderTop: `1px solid ${MARK_LINE}`, borderBottom: `1px solid ${MARK_LINE}`, borderRight: `1px solid ${MARK_LINE}` }} />
-      <span className="pl-1 text-[11px] font-semibold leading-4" style={{ color: MARK_LINE }}>
+      <span className="pl-1 text-[11px] font-bold leading-4" style={{ color: MARK_LINE }}>
         {h}
       </span>
     </span>
@@ -370,13 +370,13 @@ const States: Fig = ({ caption }) => {
         <div className="mx-auto grid w-max items-center gap-x-5 gap-y-3 px-5 py-5" style={{ gridTemplateColumns: 'max-content repeat(3, max-content)' }}>
           <span />
           {(['small', 'medium', 'large'] as const).map((s) => (
-            <span key={s} className="text-center text-[12px] font-semibold" style={{ color: rc('fg-neutral-subtle', mode) }}>
+            <span key={s} className="text-center text-[12px] font-bold" style={{ color: rc('fg-neutral-subtle', mode) }}>
               {s} {l.sizes[s].h}
             </span>
           ))}
           {STATE_ROWS.map((r) => (
             <div key={r.key} className="contents">
-              <span className="text-[12px] font-semibold leading-4" style={{ color: rc('fg-neutral', mode) }}>
+              <span className="text-[12px] font-bold leading-4" style={{ color: rc('fg-neutral', mode) }}>
                 {r.ko}
               </span>
               {(['small', 'medium', 'large'] as const).map((s) => (
@@ -459,7 +459,7 @@ const StepsGuide: Fig = ({ caption }) => {
             <TfFieldView look={tf.field} label="반복 횟수">
               <TfInputView look={tf.input} size="large" state="focused" prefix="총" value="36" suffix="회" />
             </TfFieldView>
-            <span className="text-[12px] font-semibold" style={{ color: rc('fg-positive') }}>
+            <span className="text-[12px] font-bold" style={{ color: rc('fg-positive') }}>
               두 글자
             </span>
           </div>
@@ -492,7 +492,7 @@ const SizeGuide: Fig = ({ caption }) => {
       <QpField look={look} field={tf.field} preset={QP_PRESETS.interval} size="large" layout="fill" frozen />
       {mark && (
         <span aria-hidden className="pointer-events-none absolute" style={{ left: 0, right: 0, bottom: l.sizes.large.h - bh, height: 0, borderTop: `1px dashed ${MARK_LINE}` }}>
-          <span className="absolute rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ right: 0, top: 2, background: MARK_LINE }}>
+          <span className="absolute rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ right: 0, top: 2, background: MARK_LINE }}>
             {l.sizes.large.h - bh}
           </span>
         </span>

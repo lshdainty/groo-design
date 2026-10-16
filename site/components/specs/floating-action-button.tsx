@@ -40,7 +40,7 @@ function DutchRows({ mode = 'auto' }: { mode?: Mode }) {
             <span className="truncate text-[15px] font-medium" style={{ color: rc('fg-neutral', mode) }}>{t}</span>
             <span className="truncate text-[13px]" style={{ color: rc('fg-neutral-subtle', mode) }}>{s}</span>
           </span>
-          <span className="text-[15px] font-semibold tabular-nums" style={{ color: rc('fg-neutral', mode) }}>{a}</span>
+          <span className="text-[15px] font-bold tabular-nums" style={{ color: rc('fg-neutral', mode) }}>{a}</span>
         </div>
       ))}
     </div>
@@ -246,7 +246,7 @@ const StackGuide: Fig = ({ caption }) => {
               <TodoRows n={9} from={3} />
               <div className="relative" style={{ height: pad }}>
                 <span aria-hidden className="absolute" style={{ left: 24, top: 0, bottom: 0, width: 8, background: 'rgba(236, 72, 153, 0.22)' }}>
-                  <span className="absolute left-[12px] top-1/2 -translate-y-1/2 whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: '#DB2777' }}>
+                  <span className="absolute left-[12px] top-1/2 -translate-y-1/2 whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: '#DB2777' }}>
                     {pad}
                   </span>
                 </span>

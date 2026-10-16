@@ -53,7 +53,7 @@ export function PlayScreen({ tones, mode, h = 520, children, bg = 'bg-layer-defa
         ...style,
       }}
     >
-      <div aria-hidden style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, height: 24, paddingLeft: 22, paddingRight: 22, fontSize: 11, fontWeight: 600, background: tc(tones, 'bg-layer-default', mode), color: tc(tones, 'fg-neutral', mode) }}>
+      <div aria-hidden style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, height: 24, paddingLeft: 22, paddingRight: 22, fontSize: 11, fontWeight: 700, background: tc(tones, 'bg-layer-default', mode), color: tc(tones, 'fg-neutral', mode) }}>
         <span>9:41</span>
         <span style={{ letterSpacing: 1 }}>●●●</span>
       </div>
@@ -78,7 +78,7 @@ export function PlayRow({ tones, mode, title, sub, amount, hue = 'blue', check =
         <span style={{ fontSize: 15, lineHeight: '21px', fontWeight: 500, color: tc(tones, 'fg-neutral', mode), overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</span>
         {sub && <span style={{ fontSize: 13, lineHeight: '18px', color: tc(tones, 'fg-neutral-subtle', mode), overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sub}</span>}
       </span>
-      {amount && <span style={{ fontSize: 15, fontWeight: 600, fontVariantNumeric: 'tabular-nums', color: tc(tones, 'fg-neutral', mode) }}>{amount}</span>}
+      {amount && <span style={{ fontSize: 15, fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: tc(tones, 'fg-neutral', mode) }}>{amount}</span>}
     </div>
   );
 }

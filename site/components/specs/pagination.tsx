@@ -63,7 +63,7 @@ const Hero: Fig = ({ caption }) => (
     <div className="flex flex-col gap-4">
       {MODES.map((mode) => (
         <Board key={mode} mode={mode} pad={20}>
-          <span className="self-start text-[12px] font-semibold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
+          <span className="self-start text-[12px] font-bold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
           <div className="flex flex-col items-center gap-1.5">
             <Row mode={mode} page={5} total={12} />
             <Cap mode={mode}>카드 혜택(데스크톱) — 5 / 12쪽, {G().slots.regular}칸</Cap>
@@ -228,7 +228,7 @@ const States: Fig = ({ caption }) => {
         {MODES.map((mode) => (
           <Board key={mode} mode={mode}>
             <div className="grid items-center gap-x-3 gap-y-3" style={{ gridTemplateColumns: `72px repeat(${states.length}, 76px)` }}>
-              <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
+              <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
               {states.map((st) => (
                 <span key={st} className="text-center text-[11px]" style={{ color: rc('fg-neutral-subtle', mode) }}>{STATE_KO[st]}</span>
               ))}

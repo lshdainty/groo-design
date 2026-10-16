@@ -112,7 +112,7 @@ rules:
         foreground: $color-fg-neutral-subtle
       tooltipRow:
         typography: $text-t3
-        foreground: { value: $color-fg-neutral-muted, note: "라벨 — 값은 fg-neutral · 700 · 고정폭 숫자, 오른쪽 맞춤. 돈은 줄이지 않고 원까지" }
+        foreground: { value: $color-fg-neutral-subtle, note: "라벨(계열 이름) — 덧붙인 정보라 축 · 툴팁 머리와 같은 subtle(2026-10-16 사용자 결정 글자 역할 D5, 전 muted). 떠 있는 면 위 5.50 · 다크 5.27. 값은 fg-neutral · 700 · 고정폭 숫자, 오른쪽 맞춤. 돈은 줄이지 않고 원까지" }
         gap: { value: $spacing-x1_5, note: "네모 ↔ 라벨 · 라벨 ↔ 값은 12 이상" }
       swatch:
         size: { value: 8px, note: "툴팁 — 도넛 범례는 10" }
@@ -122,8 +122,8 @@ rules:
         paddingY: $spacing-x2_5
         paddingX: $spacing-x3
         gap: { value: $spacing-x2, note: "타일 사이 8 — 차트 위 한 줄, 넘치면 줄바꿈. 타일 ↔ 차트 8" }
-        typography: { value: $text-t3, note: "이름 13 — fg-neutral-muted, 앞 점 8(계열 색) · 점 ↔ 이름 6. 아래 2 에 합계 16 / 22 · 700 · fg-neutral · 고정폭 숫자, 돈은 원까지" }
-        foreground: $color-fg-neutral-muted
+        typography: { value: $text-t3, note: "이름 13 — fg-neutral-subtle, 앞 점 8(계열 색) · 점 ↔ 이름 6. 아래 2 에 합계 16 / 22 · 700 · fg-neutral · 고정폭 숫자, 돈은 원까지" }
+        foreground: { value: $color-fg-neutral-subtle, note: "이름 — 덧붙인 정보라 subtle(2026-10-16 사용자 결정 글자 역할 D5, 전 muted). chart-{색}-subtle 위 4.77 이상 · 다크 4.68 이상(회색 타일이 가장 낮다)" }
         cursor: pointer
         touchTarget: { value: 타일 전체, note: "높이 62(10 + 이름 18 + 2 + 합계 22 + 10) · 폭 100 이상 — AA ✓ · AAA ✓" }
         transitionProperty: background-color, scale

@@ -310,7 +310,7 @@ const CURRENCY: SelGroup = {
 function GutterMark({ top, h, side = 'below' }: { top: number; h: number; side?: 'below' | 'above' }) {
   return (
     <span aria-hidden className="pointer-events-none absolute left-1/2 z-10 flex w-24 -translate-x-1/2 items-center justify-center" style={{ ...(side === 'below' ? { top } : { bottom: top }), height: h, background: MARK }}>
-      <span className="rounded px-1 text-[10px] font-semibold leading-3 text-white" style={{ background: MARK_LINE }}>
+      <span className="rounded px-1 text-[10px] font-bold leading-3 text-white" style={{ background: MARK_LINE }}>
         {h}
       </span>
     </span>

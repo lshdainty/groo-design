@@ -720,7 +720,7 @@ export function GestureMark({ kind, x, y, note, drag = 0, ok }: { kind: 'tap' | 
         {kind === 'drag' && drag > 0 && <span className="absolute left-1/2 top-full -translate-x-1/2" style={{ width: 0, height: drag, borderLeft: '2px dashed rgba(26,31,46,0.7)' }} />}
       </span>
       {note && (
-        <span className="mt-1.5 whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-semibold leading-4" style={{ marginTop: kind === 'drag' ? drag + 6 : 6, background: ok === undefined ? 'rgba(26,31,46,0.86)' : ok ? '#0B7A55' : '#C2261D', color: '#FFFFFF' }}>
+        <span className="mt-1.5 whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-bold leading-4" style={{ marginTop: kind === 'drag' ? drag + 6 : 6, background: ok === undefined ? 'rgba(26,31,46,0.86)' : ok ? '#0B7A55' : '#C2261D', color: '#FFFFFF' }}>
           {note}
         </span>
       )}

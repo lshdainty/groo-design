@@ -223,14 +223,14 @@ const Size: Fig = ({ caption }) => {
       <Surface style={{ width: w, paddingLeft: 0, paddingRight: 0 }}>
         <div className="relative" style={{ marginLeft: 20, marginRight: 20, paddingTop: 22 }}>
           <Band style={{ left: 0, width: l.width, top: 0, height: 3 }} />
-          <span aria-hidden className="absolute text-[10px] font-semibold leading-4" style={{ left: l.width / 2 - 20, top: 4, color: MARK_LINE }}>
+          <span aria-hidden className="absolute text-[10px] font-bold leading-4" style={{ left: l.width / 2 - 20, top: 4, color: MARK_LINE }}>
             {`${l.width}`}
           </span>
           <div className="relative" style={{ paddingTop: 14 }}>
             <SwatchGroupView look={l} value="green" />
             <Band style={{ left: l.size, width: l.gap, top: 14, height: l.size }} label={String(l.gap)} />
             <Band style={{ left: 0, width: l.size, top: 14 + l.size + l.gap + l.size + 4, height: 3 }} />
-            <span aria-hidden className="absolute text-[10px] font-semibold leading-4" style={{ left: l.size / 2 - 8, top: 14 + l.size * 2 + l.gap + 8, color: MARK_LINE }}>
+            <span aria-hidden className="absolute text-[10px] font-bold leading-4" style={{ left: l.size / 2 - 8, top: 14 + l.size * 2 + l.gap + 8, color: MARK_LINE }}>
               {l.size}
             </span>
           </div>
@@ -304,7 +304,7 @@ const Current: Fig = ({ caption }) => {
             <Surface style={{ width: STACK_PHONE, paddingLeft: padX, paddingRight: padX }}>
               <div className="relative" style={{ paddingTop: TOP }}>
                 <Band style={{ left: 0, width: body, top: 0, height: 3 }} />
-                <span aria-hidden className="absolute text-[10px] font-semibold leading-4" style={{ left: body / 2 - 24, top: 4, color: MARK_LINE }}>
+                <span aria-hidden className="absolute text-[10px] font-bold leading-4" style={{ left: body / 2 - 24, top: 4, color: MARK_LINE }}>
                   {`본문 ${body}`}
                 </span>
                 <G value={CURRENT} current={{ kind: 'custom', hex: l.custom.hex }} stack />
@@ -337,7 +337,7 @@ const States: Fig = ({ caption }) => {
           ))}
           {order.map((st) => (
             <div key={st} className="contents">
-              <span className="text-[12px] font-semibold leading-4" style={{ color: rc('fg-neutral', mode) }}>
+              <span className="text-[12px] font-bold leading-4" style={{ color: rc('fg-neutral', mode) }}>
                 {STATE_KO[st]}
               </span>
               {['orange', 'blue'].map((c) => (

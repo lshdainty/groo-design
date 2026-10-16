@@ -1,6 +1,6 @@
 // Typography 페이지 — 값은 DESIGN.md typography 블록에서만 온다
 import type { CSSProperties } from 'react';
-import { color, design, sectionCode, sectionTable, typeScale } from '@/lib/design-tokens';
+import { color, design, sectionCode, sectionTable, sectionText, typeScale } from '@/lib/design-tokens';
 import { Figure, Inline, MARK, MARK_LINE, Table, Token } from './ui';
 
 // "쓰는 곳" · "배수" 는 DESIGN.md v100 표에서 읽는다
@@ -181,7 +181,7 @@ export function LineBreakFigure() {
       <div className="flex flex-col gap-5 rounded-2xl bg-[#E9E9EC] p-5 text-fd-foreground dark:bg-fd-muted sm:p-8">
         {BREAK_SAMPLES.map((s) => (
           <div key={s.where} className="flex flex-col gap-1.5">
-            <span className="text-[12px] font-semibold">{s.where}</span>
+            <span className="text-[12px] font-bold">{s.where}</span>
             <div className="flex flex-wrap items-start gap-3">
               {(
                 [
@@ -218,5 +218,113 @@ export function LineBreakTable() {
         </tr>
       ))}
     </Table>
+  );
+}
+
+// ── 글자 역할(2026-10-16) ─────────────────────────────────
+// DESIGN.desk.md "글자 역할" 표를 그대로 — 값 칸의 " / " 로 나뉜 자리마다 견본을 그 크기 · 굵기 · 색으로 그린다(라이트 · 다크).
+// Desk 표를 읽는다 — 공유 DESIGN.md 는 수입 금액 색(fg-brand)을 브랜드 파일로 미룬다
+const ROLES = '글자 역할 (2026-10-16)';
+// 역할마다 견본 글 — 값이 아니라 그림의 글이다(실제 자리의 말투)
+const ROLE_SAMPLE: Record<string, string> = {
+  R1: '가계부', R2: '이번 달 모든 거래 내역이에요', R3: '카테고리 고르기', R4: '최근 거래', R5: '자주 쓰는 계좌', R6: '점심 식사',
+  R7: '고른 거래 12건을 옮겨요', R8: '지운 거래는 되돌릴 수 없어요', R9: '식비 · 다온은행 · 12:30', R10: '1,200만', R11: '전월 실적 30만 원 이상이면 혜택을 받아요',
+  R12: '1,234,567원', R13: '1,482,300원', R14: '▲ 12%', R15: '저장', R16: '전체 보기', R17: '자세히 보기', R18: '금액', R19: '금액을 입력해 주세요',
+};
+type RoleSpec = { label: string; size: string; weight: number; color: string };
+function roleSpecs(cell: string): RoleSpec[] {
+  const { scale, semantic } = typeScale();
+  const out: RoleSpec[] = [];
+  let weight = 400, fg = 'fg-neutral', size = '';
+  for (const raw of cell.split(' / ')) {
+    const part = raw.trim();
+    const sem = /`text-(screen-title|article-body|article-note)`/.exec(part)?.[1];
+    const t = /\b(t\d+)(?:-static)?\b/.exec(part)?.[1];
+    // 크기가 없는 자리("막힘 `fg-disabled`")는 앞 자리의 크기를 잇는다
+    const token = sem ? semantic.find((s) => s.name === sem) : t ? scale.find((s) => s.name === t) : size ? (scale.find((s) => s.name === size) ?? semantic.find((s) => s.name === size)) : undefined;
+    if (!token) continue;
+    size = token.name;
+    const w = /·\s*(400|500|700)\b/.exec(part)?.[1];
+    weight = w ? Number(w) : sem ? Number(token.fontWeight ?? 400) : weight;
+    fg = /`((?:fg|static)-[a-z-]+)`/.exec(part)?.[1] ?? fg;
+    const at = part.search(/`text-|\bt\d+|`fg-|`static-/);
+    // 이름표 — 값 앞의 글("데스크톱"), 없으면 크기 바로 뒤 괄호("t8(시트 · 대화상자)")
+    const label = (at > 0 ? part.slice(0, at) : /^`?[\w-]+`?\(([^)]*)\)/.exec(part)?.[1] ?? '')
+      .replace(/[(（].*$/, '')
+      .replace(/\s*\d{3}$/, '')
+      .trim();
+    out.push({ label, size: token.name, weight, color: fg });
+  }
+  if (!out.length) throw new Error(`DESIGN.md "${ROLES}" 의 값 칸에서 글자 토큰을 읽지 못했다: ${cell}`);
+  return out;
+}
+// 역할 한 줄의 견본 — 라이트 · 다크 면 위에 자리마다 실제 크기 · 굵기 · 색으로
+function RoleSpecimens({ no, cell }: { no: string; cell: string }) {
+  const { scale, semantic } = typeScale();
+  const tok = (n: string) => scale.find((s) => s.name === n) ?? semantic.find((s) => s.name === n)!;
+  const dark = (n: string) => (n === 'static-white' ? color('static-white') : color(`${n}-dark`, 'desk'));
+  const surface = { light: color('bg-layer-default', 'desk'), dark: color('bg-layer-default-dark', 'desk') };
+  const specs = roleSpecs(cell);
+  const brandFill = specs.some((s) => s.color === 'static-white');
+  return (
+    <>
+      <div className="flex flex-col gap-2 sm:flex-row">
+        {(['light', 'dark'] as const).map((m) => (
+          <div key={m} className="flex min-w-0 flex-1 flex-col gap-2 overflow-hidden rounded-lg p-3" style={{ background: surface[m], boxShadow: 'inset 0 0 0 1px rgba(128,128,128,0.2)' }}>
+            {specs.map((s, i) => {
+              const t = tok(s.size);
+              const fg = m === 'light' ? color(s.color, 'desk') : dark(s.color);
+              const onFill = s.color === 'static-white';
+              return (
+                <div key={i} className="flex min-w-0 flex-col">
+                  {s.label && no !== 'R14' && <span className="text-[11px] leading-[14px]" style={{ color: m === 'light' ? color('fg-neutral-subtle', 'desk') : dark('fg-neutral-subtle') }}>{s.label}</span>}
+                  <span
+                    className={no === 'R11' || no === 'R2' ? 'max-w-[240px]' : 'whitespace-nowrap'}
+                    style={{ fontSize: t.fontSize, lineHeight: t.lineHeight, fontWeight: s.weight, color: fg, fontVariantNumeric: no === 'R12' || no === 'R13' || no === 'R14' ? 'tabular-nums' : undefined, textDecoration: no === 'R17' && i === 0 ? 'underline' : undefined, ...(onFill ? { background: color('bg-brand-solid', 'desk'), borderRadius: 8, padding: '0 6px', alignSelf: 'flex-start' } : {}) }}
+                  >
+                    {no === 'R14' ? (s.label.includes('▼') ? '▼ 3%' : s.label.includes('그대로') ? '변화 없음' : '▲ 12%') : (ROLE_SAMPLE[no] ?? '가나다')}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+      {brandFill && <span className="mt-1 block text-[12px] text-fd-muted-foreground">흰 글자는 브랜드 채움 위에 그렸다</span>}
+    </>
+  );
+}
+
+// 역할마다 한 덩어리 — 값 · 견본(라이트 · 다크, 폰에서는 위아래) · 쓰는 자리 · 출처. 표로 두면 본문 폭(약 700)에서 견본이 가로 스크롤 뒤에 숨는다
+export function RoleTable() {
+  const { head, rows } = sectionTable(ROLES, 0, 'desk');
+  return (
+    <div className="not-prose my-6 flex flex-col gap-3">
+      {rows.map((r) => {
+        const no = r[0].split(' ')[0];
+        return (
+          <section key={no} className="flex flex-col gap-2 rounded-xl border border-fd-border p-4 text-sm">
+            <h4 className="m-0 text-[15px] font-bold">{r[0]}</h4>
+            <div><Inline text={r[1]} /></div>
+            <RoleSpecimens no={no} cell={r[1]} />
+            <div><span className="text-fd-muted-foreground">{head[2]} — </span><Inline text={r[2]} /></div>
+            <div className="text-fd-muted-foreground">{head[3]} — <Inline text={r[3]} /></div>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+// "글자 역할" 절의 규칙 줄(표 아래 목록)을 그대로 — 굵은 머리 글자가 있는 줄만
+export function RoleRules() {
+  const lines = sectionText(ROLES, 'desk').split('\n').filter((l) => /^- \*\*/.test(l));
+  if (!lines.length) throw new Error(`DESIGN.desk.md "${ROLES}" 에 규칙 줄이 없다`);
+  return (
+    <ul>
+      {lines.map((l, i) => (
+        <li key={i}><Inline text={l.replace(/^- /, '')} /></li>
+      ))}
+    </ul>
   );
 }

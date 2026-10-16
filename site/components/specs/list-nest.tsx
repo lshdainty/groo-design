@@ -15,7 +15,7 @@ const NL = () => listNestLook();
 function Guide({ x, label, row = 0 }: { x: number; label: string; row?: number }) {
   return (
     <span aria-hidden className="pointer-events-none absolute" style={{ left: x, top: -18 - row * 18, bottom: 0, borderLeft: `1px dashed ${MARK_LINE}`, zIndex: 5 }}>
-      <span className="absolute whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ left: -1, top: 0, transform: 'translateX(-50%)', background: MARK_LINE }}>
+      <span className="absolute whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ left: -1, top: 0, transform: 'translateX(-50%)', background: MARK_LINE }}>
         {label}
       </span>
     </span>

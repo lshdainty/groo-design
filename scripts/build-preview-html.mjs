@@ -3870,7 +3870,7 @@ export function renderOverlayGallery(brand) {
 //   액션 .psnack-action, 끝에 보조 기술용 닫기 .psnack-close(보이지 않고 키보드 초점이 오면 띠 오른쪽 끝에 보인다). 자리 .psnack-region 은 화면 아래 가운데다.
 // 콜아웃 — 상자 .pcallout(보이기 · 닫기는 div, 전체 누르기는 button) > 앞 아이콘 · 한 문단 .pcallout-content(제목 · 본문 · 링크 — 사이 띄어쓰기 두 칸) · 뒤 화살표 · 닫기.
 // 페이지 배너 — 띠 .pbanner(화면 폭 · 옅음 weak · 짙음 solid) > 안 .pbanner-inner(전체 누르기면 이것만 준다) > 앞 아이콘 · 글과 버튼 .pbanner-content · 뒤 화살표 · 닫기.
-// 결과 — .presult(large · medium) > 아이콘 40 · 제목(제목 태그) · 설명 · 버튼 둘(Button neutralWeak medium 40 · ghost small 36 — 03 의 .btn 그대로).
+// 결과 — .presult(large · medium) > 아이콘 40 · 제목(제목 태그) · 설명 · 버튼 둘(Button neutralWeak medium 40 · 글 버튼 = ghost small 36 + 글자 fg-neutral-muted — 03 의 .btn + .presult-secondary).
 // 아이콘은 lucide 선 아이콘이다(v106 — 채운 원은 쓰지 않는다). 누름 · 호버 · 포커스는 그 순간을 멈춘 클래스(--pressed · --hover · --focus)로 그렸다.
 // data-psnack-show 버튼(띄우기) · data-pfb-live 안의 닫기 · data-presult-retry(다시 시도)는 페이지 끝 스크립트가 흉내 낸다.
 let pfbSeq = 0;
@@ -4219,7 +4219,7 @@ export function renderFeedbackGallery(brand) {
   ], ' aria-label="이번 달 거래"')}</template></div>`;
   const resultPanel = panel(
     "Result Section — large · medium × 비어 있음 · 실패 · 완료 · 404",
-    "놓인 자리의 가로 · 세로 가운데에 선다 — 좌우 48 · 위아래 16, 아이콘 40(lucide 선 아이콘 · 굵기 1.5)과 제목 사이 16. large(화면 전체)는 제목 22 / 30 · 설명 16 / 22(사이 12) · 버튼 위 28, medium(카드 · 섹션 · 시트 안)은 제목 16 / 22 · 설명 14 / 19(사이 8) · 버튼 위 24 다. 제목은 700 · fg-neutral(큰 글씨라 마침표 없이), 설명은 fg-neutral-muted · 최대 두 줄이다. 아이콘 색은 결과가 정한다 — 비어 있음은 그 내용을 말하는 아이콘을 fg-neutral-subtle, 실패는 circle-alert 를 fg-critical, 완료는 circle-check 를 fg-positive 로. 버튼은 위아래로 최대 둘(사이 20) — 첫 버튼은 해결 · 다음 동작(Button neutralWeak medium 40), 둘째는 보조(Button ghost small 36 — 위아래로 8 블리드해 글 자리만 차지하므로 보이는 상자 사이는 12)다. 불러오기에 실패하면 \"내역이 없어요\" 가 아니라 실패를 보이고 \"다시 시도\" 를 둔다 — 카드의 다시 시도를 누르면 버튼에 로딩을 걸고 내용으로 바뀐다. 없는 주소는 몰래 돌리지 않고 \"페이지를 찾을 수 없어요\" + \"홈으로\" 를 보인다. 결과로 바뀌면 role=\"status\" 로 보조 기술에 알린다.",
+    "놓인 자리의 가로 · 세로 가운데에 선다 — 좌우 48 · 위아래 16, 아이콘 40(lucide 선 아이콘 · 굵기 1.5)과 제목 사이 16. large(화면 전체)는 제목 22 / 30 · 설명 16 / 22(사이 12) · 버튼 위 28, medium(카드 · 섹션 · 시트 안)은 제목 16 / 22 · 설명 14 / 19(사이 8) · 버튼 위 24 다. 제목은 700 · fg-neutral(큰 글씨라 마침표 없이), 설명은 fg-neutral-muted · 최대 두 줄이다. 아이콘 색은 결과가 정한다 — 비어 있음은 그 내용을 말하는 아이콘을 fg-neutral-subtle, 실패는 circle-alert 를 fg-critical, 완료는 circle-check 를 fg-positive 로. 버튼은 위아래로 최대 둘(사이 20) — 첫 버튼은 해결 · 다음 동작(Button neutralWeak medium 40), 둘째는 보조(글 버튼 — Button ghost small 36 + 글자 fg-neutral-muted, 위아래로 8 블리드해 글 자리만 차지하므로 보이는 상자 사이는 12)다. 불러오기에 실패하면 \"내역이 없어요\" 가 아니라 실패를 보이고 \"다시 시도\" 를 둔다 — 카드의 다시 시도를 누르면 버튼에 로딩을 걸고 내용으로 바뀐다. 없는 주소는 몰래 돌리지 않고 \"페이지를 찾을 수 없어요\" + \"홈으로\" 를 보인다. 결과로 바뀌면 role=\"status\" 로 보조 기술에 알린다.",
     samples([
       sample("비어 있음 · large — 폰", "kind=\"empty\" · icon={<ReceiptText />} · 거래 추가", `<div class="pfb-phone pfb-phone--screen pfb-phone--tabbar">${head("가계부")}<div class="pfb-phone-body pfb-phone-body--center">${resultSection({ kind: "empty", icon: "receiptText", title: "이번 달 거래가 없어요", description: "거래를 기록하면 여기에 모여요.", primary: "거래 추가" })}</div>${tabbar}</div>`),
       sample("실패 · medium — 카드 안 · 다시 시도", "kind=\"failure\" size=\"medium\" — 눌러 보면 로딩 → 내용", `<div class="pfb-phone pfb-phone--basement">${head("홈")}<div class="pfb-phone-body"><div class="pfb-card-title">이번 달 거래</div>${retryHost}</div></div>`),
@@ -7488,7 +7488,7 @@ function pdelta({ direction = "up", value = "", text = "", srText = "" } = {}) {
 }
 // 머리 — 제목 16 / 22 · 700 + 오른쪽 동작 하나("전체 보기" 14 · 500 · fg-neutral-subtle + chevron 16, 보이는 32 · 누르는 44). 이름 "{제목} {글}"
 function pcardHead({ title = "", action = "", interaction = "" } = {}) {
-  const act = action ? `<a ${attrsOf([`class="pcard-action${pdataState("pcard-action", interaction)}"`, 'href="#"', "data-pdata-link", `aria-label="${escape(title)} ${escape(action)}"`])}><span>${escape(action)}</span>${DATA_ICON.chevronRight}</a>` : "";
+  const act = action ? `<a ${attrsOf([`class="pcard-action${pdataState("pcard-action", interaction)}"`, 'href="#"', "data-pdata-link", `aria-label="${escape(title)} ${escape(action)}"`])}><span>${escape(action)}</span></a>` : "";
   return `<div class="pcard-head"><div class="pcard-title">${escape(title)}</div>${act}</div>`;
 }
 // 카드 — variant default(바닥 위 흰 면 + 1px stroke-neutral-weak · 모서리 16 · 그림자 없음) · hero(순자산 — 브랜드 채움 · 흰 글자).
@@ -7587,13 +7587,13 @@ function pchartTrend({ width = 560, height = 200, dual = true, tip = -1, live = 
   return `<div ${attrsOf([`class="pchart pchart--trend"`, `id="${id}"`, 'role="img"', `aria-label="${escape(label)}"`, legendId && `aria-describedby="${legendId}"`, live && 'tabindex="0"', `style="--pchart-w: ${width}px; --pchart-h: ${height}px;"`])}${data}>${svg}${tipBox}</div>`;
 }
 // 툴팁 — 떠 있는 표면(bg-layer-floating · shadow-s3 · 모서리 12 · 위아래 10 · 좌우 12 · 테두리 없음). 머리(12 · fg-neutral-subtle) + "■ 라벨 값" 줄
-// (네모 8 + 라벨 13 · fg-neutral-muted + 값 13 · 700 · fg-neutral — 오른쪽 · 고정폭 숫자 · 원까지). x 는 가리킨 자리 — 오른쪽으로 넘치면 왼쪽에 둔다
+// (네모 8 + 라벨 13 · fg-neutral-subtle + 값 13 · 700 · fg-neutral — 오른쪽 · 고정폭 숫자 · 원까지). x 는 가리킨 자리 — 오른쪽으로 넘치면 왼쪽에 둔다
 function pchartTip({ head = "", rows = [], x = 0, width = 0, cls = "" } = {}) {
   const side = width && x > width / 2 ? "left" : "right";
   const style = width ? ` style="--pchart-tip-x: ${x.toFixed(1)}px;"` : "";
   return `<div class="pchart-tip pchart-tip--${side}${cls ? ` ${cls}` : ""}"${style}><div class="pchart-tip-head">${escape(head)}</div>${rows.map((r) => `<div class="pchart-tip-row"><span class="pchart-swatch pchart-swatch--${r.color}"${r.swatch ? ` style="background: ${r.swatch};"` : ""}></span><span class="pchart-tip-label">${escape(r.label)}</span><span class="pchart-tip-value">${escape(r.value)}</span></div>`).join("")}</div>`;
 }
-// 지표 타일 — 선 · 막대 범례(차트 위). 점 8(계열 색) + 이름 13 · fg-neutral-muted, 아래 2 에 합계 16 / 22 · 700. 켠 계열 chart-{색}-subtle 바탕, 끈 계열 흰 면 + 안쪽 1px.
+// 지표 타일 — 선 · 막대 범례(차트 위). 점 8(계열 색) + 이름 13 · fg-neutral-subtle, 아래 2 에 합계 16 / 22 · 700. 켠 계열 chart-{색}-subtle 바탕, 끈 계열 흰 면 + 안쪽 1px.
 // <button aria-pressed> — 마지막 하나는 끌 수 없다(aria-disabled). interaction 은 그 순간을 멈춘 타일
 function pchartTiles({ id = nextPdataId("pchart-legend"), items = [], hidden = [], live = false, label = "계열", interaction = null } = {}) {
   const shown = items.filter((it) => !hidden.includes(it.key));
@@ -8035,7 +8035,7 @@ export function renderDataGallery(brand) {
   ], (r, c) => `<span class="pdata-surface pdata-surface--tile">${pchartTiles({ items: [tileItems[0]], hidden: r.off ? ["income"] : [], label: "수입", interaction: { at: "income", interaction: c.i } }).replace(' aria-disabled="true"', "")}</span>`);
   const trendPanel = panel(
     "Chart — 추이: 이중 축 · 지표 타일 · 툴팁",
-    "차트는 카드 본문 안에 둔다. 수입 · 지출처럼 두 계열의 크기가 열 배 넘게 다르면 왼쪽 · 오른쪽 축을 따로 두고(이중 축) 눈금 글자를 그 축이 맡은 계열의 색으로 칠한다 — 왼쪽 수입 chart-blue · 오른쪽 지출 chart-red(라이트 700 · 다크 800-dark — 글자 기준 4.5 이상). 축이 하나면 눈금 글자는 fg-neutral-subtle 이다(아래). 눈금 글자는 11 / 15 · 고정폭 숫자이고 돈 축은 \"만\" 으로 줄인다(400만 · 빼기 U+2212 — 줄임은 축만). 격자는 가로 점선(3 · 3) stroke-neutral-subtle 만 — 세로 격자 · 축 선은 없다. 선은 2 · 영역은 같은 색 25% → 0%. 범례는 차트 위의 지표 타일이다 — 점 8 + 이름 13 · fg-neutral-muted, 아래 2 에 합계 16 / 22 · 700(돈은 원까지), 켠 계열은 chart-{색}-subtle 바탕 · 끈 계열은 흰 면 + 안쪽 1px stroke-neutral-weak · 모서리 12 · 위아래 10 · 좌우 12 · 사이 8 · 높이 62. 누르면(Enter · Space) 계열을 켜고 끈다(aria-pressed) — 마지막 하나는 끌 수 없다. 차트를 짚으면(마우스 · 터치 · ← →) 그 자리에 세로 점선(stroke-neutral-weak)과 점(10 — 계열 색 + 카드 면 테두리 2)이 서고 툴팁이 뜬다 — 떠 있는 표면(bg-layer-floating · shadow-s3 · 모서리 12 · 위아래 10 · 좌우 12 · 테두리 없음), 머리 12 · fg-neutral-subtle, 줄은 \"■ 라벨 값\"(네모 8 · 라벨 13 · fg-neutral-muted · 값 13 · 700 · 오른쪽). 차트 상자는 role=\"img\" + 요약 이름이고 타일이 글로 읽히는 대체다. 위 차트는 직접 짚고 타일을 누를 수 있다(모션 줄이기면 바로).",
+    "차트는 카드 본문 안에 둔다. 수입 · 지출처럼 두 계열의 크기가 열 배 넘게 다르면 왼쪽 · 오른쪽 축을 따로 두고(이중 축) 눈금 글자를 그 축이 맡은 계열의 색으로 칠한다 — 왼쪽 수입 chart-blue · 오른쪽 지출 chart-red(라이트 700 · 다크 800-dark — 글자 기준 4.5 이상). 축이 하나면 눈금 글자는 fg-neutral-subtle 이다(아래). 눈금 글자는 11 / 15 · 고정폭 숫자이고 돈 축은 \"만\" 으로 줄인다(400만 · 빼기 U+2212 — 줄임은 축만). 격자는 가로 점선(3 · 3) stroke-neutral-subtle 만 — 세로 격자 · 축 선은 없다. 선은 2 · 영역은 같은 색 25% → 0%. 범례는 차트 위의 지표 타일이다 — 점 8 + 이름 13 · fg-neutral-subtle, 아래 2 에 합계 16 / 22 · 700(돈은 원까지), 켠 계열은 chart-{색}-subtle 바탕 · 끈 계열은 흰 면 + 안쪽 1px stroke-neutral-weak · 모서리 12 · 위아래 10 · 좌우 12 · 사이 8 · 높이 62. 누르면(Enter · Space) 계열을 켜고 끈다(aria-pressed) — 마지막 하나는 끌 수 없다. 차트를 짚으면(마우스 · 터치 · ← →) 그 자리에 세로 점선(stroke-neutral-weak)과 점(10 — 계열 색 + 카드 면 테두리 2)이 서고 툴팁이 뜬다 — 떠 있는 표면(bg-layer-floating · shadow-s3 · 모서리 12 · 위아래 10 · 좌우 12 · 테두리 없음), 머리 12 · fg-neutral-subtle, 줄은 \"■ 라벨 값\"(네모 8 · 라벨 13 · fg-neutral-subtle · 값 13 · 700 · 오른쪽). 차트 상자는 role=\"img\" + 요약 이름이고 타일이 글로 읽히는 대체다. 위 차트는 직접 짚고 타일을 누를 수 있다(모션 줄이기면 바로).",
     `${samples([sample("직접 — 타일 · 마우스 · ← →", "ChartLegendTiles · Chart(이중 축) · ChartTooltipContent", `${floor(trendCard)}${status("data-pchart-status", "차트를 짚거나 ← → 를 눌러 보세요.")}`)], WIDE)}${samples([
       sample("툴팁 — 오늘(8일)을 짚은 순간", "세로 점선 · 점 10 · 떠 있는 표면 · \"■ 라벨 값\"", wide(floor(frozenTip))),
       sample("축 하나 — 눈금 글자 회색", "계열 하나 · 단위가 같은 두 계열", wide(floor(singleAxis))),
@@ -8914,7 +8914,7 @@ export function renderInputGallery(brand) {
   // 3. 지금 색 · 자동
   const swatchCurrent = panel(
     "지금 색 · 자동 — 격자 앞 칸 + 세로 선(좁으면 위 줄 + 가로 선)",
-    "고치는 항목의 색이 팔레트 밖이거나(가져오기가 만드는 #9E9E9E) 색이 없으면 격자 앞에 칸 하나를 따로 둔다 — 세로 선(1px stroke-neutral-weak · 양옆 16)으로 격자와 가르고, 처음에는 그 칸이 골라져 있다. 지금 색은 저장된 색을 그대로 칠하고(두 모드 같은 값) 체크는 fg-neutral · fg-neutral-inverted 가운데 그 색 위 대비가 큰 쪽이다(모드마다 그 자리에서 잰다 — #9E9E9E 는 라이트 fg-neutral 6.13 · 다크 fg-neutral-inverted 5.41). 칸 · 선 · 격자의 폭은 321 이다 — 놓인 자리가 그보다 좁으면(360 폰 본문 312) 지금 색 칸을 격자 위 줄에 두고 선을 가로 1px 로 바꾼다(사이는 그대로 16). 자동은 색이 없는 항목이다 — 차트가 그 항목에 줄 색(아직 쓰지 않은 색)을 2px 점선 원(stroke-neutral-solid)으로 보인다. 칸 아래 글 12 · fg-neutral-muted(아래 6). 격자에서 색을 고르면 그 색으로 바뀌고, 지금 색 칸을 다시 고르면 저장 값을 그대로 둔다 — 아무것도 고르지 않고 저장하면 색은 바뀌지 않는다(몰래 빨강으로 바꾸지 않는다). 새 항목은 같은 목록이 쓰지 않은 첫 색으로 시작한다(v110 배정 순서 — 기본 지출 카테고리 여덟이 여덟 색을 쓰고 있어 아홉 번째는 갈색).",
+    "고치는 항목의 색이 팔레트 밖이거나(가져오기가 만드는 #9E9E9E) 색이 없으면 격자 앞에 칸 하나를 따로 둔다 — 세로 선(1px stroke-neutral-weak · 양옆 16)으로 격자와 가르고, 처음에는 그 칸이 골라져 있다. 지금 색은 저장된 색을 그대로 칠하고(두 모드 같은 값) 체크는 fg-neutral · fg-neutral-inverted 가운데 그 색 위 대비가 큰 쪽이다(모드마다 그 자리에서 잰다 — #9E9E9E 는 라이트 fg-neutral 6.13 · 다크 fg-neutral-inverted 5.41). 칸 · 선 · 격자의 폭은 321 이다 — 놓인 자리가 그보다 좁으면(360 폰 본문 312) 지금 색 칸을 격자 위 줄에 두고 선을 가로 1px 로 바꾼다(사이는 그대로 16). 자동은 색이 없는 항목이다 — 차트가 그 항목에 줄 색(아직 쓰지 않은 색)을 2px 점선 원(stroke-neutral-solid)으로 보인다. 칸 아래 글 12 · fg-neutral-subtle(아래 6). 격자에서 색을 고르면 그 색으로 바뀌고, 지금 색 칸을 다시 고르면 저장 값을 그대로 둔다 — 아무것도 고르지 않고 저장하면 색은 바뀌지 않는다(몰래 빨강으로 바꾸지 않는다). 새 항목은 같은 목록이 쓰지 않은 첫 색으로 시작한다(v110 배정 순서 — 기본 지출 카테고리 여덟이 여덟 색을 쓰고 있어 아홉 번째는 갈색).",
     `${pair(() => phone(`<div class="pinp-stack">${pcswField({ group: { value: "current", current: { kind: "custom", color: "#9E9E9E" } } })}${pcswField({ group: { value: "current", current: { kind: "auto", color: "brown" } } })}</div>`))}${samples([
       sample("새 카테고리 — 쓰지 않은 첫 색", "firstUnusedColor(기본 여덟) → 갈색 · 늘 빨강이 아니다", phone(newCategory())),
       sample("격자에서 고르면 바뀐다", "가져온 분류 — 주황을 고른 뒤", phone(pcswField({ group: { value: "orange", current: { kind: "custom", color: "#9E9E9E" } } }))),
@@ -9224,9 +9224,9 @@ const paccPlain = ({ title, description = "", icon = "" } = {}) =>
 // 아코디언 — rows 는 그린 줄(paccItem · paccPlain). live 면 누르기 · 키보드 · 모션(페이지 끝 스크립트)
 const pacc = ({ id = nextPcolId("pacc-root"), variant = "inline", rows = [], live = false } = {}) =>
   `<div ${attrsOf([`class="pacc"`, `id="${id}"`, `data-variant="${variant}"`, live && "data-pacc-live"])}>${rows.join("")}</div>`;
-// 모두 펼치기 — 글 단추(보이는 32 · 누르는 44). 상세가 있는 항목이 모두 펼쳐져 있으면 "모두 접기"
+// 모두 펼치기 — 글 버튼(SEED Text Button — 보이는 36 · 누르는 44). 상세가 있는 항목이 모두 펼쳐져 있으면 "모두 접기"
 const paccAll = ({ controls, allOpen = false, live = false, state = "" } = {}) =>
-  `<button ${attrsOf([`class="pacc-all${PCOL_STATES.includes(state) ? ` pacc-all--${state}` : ""}"`, 'type="button"', `aria-controls="${controls}"`, live && "data-pacc-all", `data-state="${allOpen ? "expanded" : "collapsed"}"`])}><span>${allOpen ? "모두 접기" : "모두 펼치기"}</span>${colSvg(allOpen ? "chevrons-down-up" : "chevrons-up-down")}</button>`;
+  `<button ${attrsOf([`class="pacc-all${PCOL_STATES.includes(state) ? ` pacc-all--${state}` : ""}"`, 'type="button"', `aria-controls="${controls}"`, live && "data-pacc-all", `data-state="${allOpen ? "expanded" : "collapsed"}"`])}><span>${allOpen ? "모두 접기" : "모두 펼치기"}</span></button>`;
 // 목록 머리 — 시트 · 대화상자에서 아코디언 위 한 줄(높이 32 · 아래 8 · 제목 16 / 22 · 700)
 const paccHeader = (title, right = "") => `<div class="pacc-header"><div class="pacc-header-title">${escape(title)}</div>${right}</div>`;
 // 혜택 · 유의사항 줄 — 상세가 있으면 항목, 없으면 그냥 줄
@@ -9482,7 +9482,7 @@ export function renderCollapseGallery(brand) {
   // 상세 없는 항목 · 모두 펼치기
   const accPlain = panel(
     "상세가 없는 항목 · 모두 펼치기(여럿 열기)",
-    "목록 가운데 상세가 없는 항목(대중교통 · 편의점 — 요약뿐)은 트리거가 아닌 그냥 줄이다 — 꺾쇠 · 단추 · 머리말 없이 같은 위아래 16 · 좌우 24 · 같은 글이라 높이와 글 시작이 같고, Tab 이 건너뛰며, 눌러도 바탕이 생기지 않는다(막힌 트리거 · 꺾쇠만 뒤집히는 줄로 그리지 않는다). 여럿을 함께 열고 다른 항목을 열어도 앞 항목은 닫히지 않는다 — 하나만 여는 모드는 없다. 목록 머리 오른쪽 \"모두 펼치기\"(14 · 500 · fg-neutral-subtle + chevrons-up-down 16 · 보이는 32 · 누르는 44 — Card 머리 동작과 같은 모양)는 상세가 있는 항목을 모두 펼치고 글이 \"모두 접기\"(chevrons-down-up)로 바뀐다 — 하나라도 접히면 다시 \"모두 펼치기\". 이름은 보이는 글, aria-controls 는 아코디언이다.",
+    "목록 가운데 상세가 없는 항목(대중교통 · 편의점 — 요약뿐)은 트리거가 아닌 그냥 줄이다 — 꺾쇠 · 단추 · 머리말 없이 같은 위아래 16 · 좌우 24 · 같은 글이라 높이와 글 시작이 같고, Tab 이 건너뛰며, 눌러도 바탕이 생기지 않는다(막힌 트리거 · 꺾쇠만 뒤집히는 줄로 그리지 않는다). 여럿을 함께 열고 다른 항목을 열어도 앞 항목은 닫히지 않는다 — 하나만 여는 모드는 없다. 목록 머리 오른쪽 \"모두 펼치기\"(글 버튼 — 14 · 700 · fg-neutral-muted · 아이콘 없음 · 보이는 36 · 누르는 44, Card 머리 동작과 같은 모양)는 상세가 있는 항목을 모두 펼치고 글이 \"모두 접기\"로 바뀐다 — 하나라도 접히면 다시 \"모두 펼치기\". 이름은 보이는 글, aria-controls 는 아코디언이다.",
     samples([
       sample("그냥 줄 — 대중교통 · 편의점", "같은 높이 · 같은 글 시작 · 꺾쇠 없음", phone(benefitCard({ list: PCOL_BENEFITS.slice(1, 5), title: "혜택 · 4건" }), "pcol-phone--pad")),
       sample("모두 펼친 뒤 — \"모두 접기\"", "상세가 있는 항목만 열렸다 · 셋째 유의사항은 그냥 줄", phone(benefitCard({ list: PCOL_CAUTIONS, title: `유의사항 · ${PCOL_CAUTIONS.length}건`, describe: false, open: expandable(PCOL_CAUTIONS), allOpen: true }), "pcol-phone--pad")),
@@ -14583,7 +14583,7 @@ export function pageCss() {
     .presult--medium .presult-title { font-size: var(--text-t5); line-height: var(--text-t5--line-height); }
     .presult--medium .presult-desc { margin-top: var(--spacing-x2); font-size: var(--text-t4); line-height: var(--text-t4--line-height); }
     .presult--medium .presult-actions { margin-top: var(--spacing-x6); }
-    .presult-secondary { margin-block: calc(-1 * var(--spacing-x2)); }
+    .presult-secondary { margin-block: calc(-1 * var(--spacing-x2)); color: var(--color-fg-neutral-muted); } /* 글 버튼(SEED Text Button) — ghost small 상자 + 글자 muted */
 
     /* 모션 줄이기 — 축소하지 않고, 띠는 투명도로만 나타나고 사라진다 */
     @media (prefers-reduced-motion: reduce) {
@@ -16470,7 +16470,7 @@ export function pageCss() {
     .pnav-title-row { display: flex; align-items: flex-end; gap: var(--spacing-x4); margin: var(--spacing-nav-to-title) 0 var(--spacing-x4); }
     .pnav-title-row > div:first-child { flex: 1 1 auto; min-width: 0; }
     .pnav-title-row .pnav-screen-title { margin: 0; }
-    .pnav-title-desc { margin: var(--spacing-x0_5) 0 0; font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); word-break: keep-all; overflow-wrap: break-word; }
+    .pnav-title-desc { margin: var(--spacing-x0_5) 0 0; font-size: var(--text-t5); line-height: var(--text-t5--line-height); color: var(--color-fg-neutral-muted); word-break: keep-all; overflow-wrap: break-word; }
     .pnav-title-actions { display: flex; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; gap: var(--spacing-x2); }
     /* 아이콘 버튼 — 상자 44 = 누르는 영역 · 아이콘 24 · 모서리 8 · fg-neutral. 바탕은 누를 때 · 마우스를 올릴 때만 */
     .ptnav-icon,
@@ -17245,28 +17245,28 @@ export function pageCss() {
     .pcard-head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-x2); padding-bottom: var(--spacing-x2); }
     .pcard--list > .pcard-head { padding: var(--spacing-x6) var(--spacing-x6) var(--spacing-x1); }
     .pcard-title { min-width: 0; font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; color: var(--color-fg-neutral); }
-    /* 머리 동작 — 글 버튼: 보이는 상자 32 · 왼쪽 8 · 오른쪽 4 · 모서리 8 · t4 500 · fg-neutral-subtle + chevron-right 16(사이 2). 누르는 영역 44(위아래 6 씩 넓힌다) */
+    /* 머리 동작 — 글 버튼(SEED Text Button, 2026-10-16 글자 역할 D2): 보이는 상자 36 · 좌우 14 · 모서리 8 · t4 700 · fg-neutral-muted, 꺾쇠 없음.
+       오른쪽 −14 로 내어 글자 끝이 카드 여백에 선다. 누르는 영역 44(위아래 4 씩 넓힌다) */
     .pcard-action {
-      --press-basis: 32;
+      --press-basis: 36;
       position: relative;
       display: inline-flex;
       flex-shrink: 0;
       align-items: center;
-      gap: var(--spacing-x0_5);
-      height: 32px;
+      height: 36px;
       box-sizing: border-box;
-      padding: 0 var(--spacing-x1) 0 var(--spacing-x2);
+      margin-right: calc(-1 * var(--spacing-x3_5));
+      padding: 0 var(--spacing-x3_5);
       border-radius: var(--radius-r2);
       font-size: var(--text-t4);
       line-height: var(--text-t4--line-height);
-      font-weight: 500;
-      color: var(--color-fg-neutral-subtle);
+      font-weight: 700;
+      color: var(--color-fg-neutral-muted);
       text-decoration: none;
       white-space: nowrap;
       transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing), scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale);
     }
-    .pcard-action > svg { width: 16px; height: 16px; flex-shrink: 0; }
-    .pcard-action::before { content: ""; position: absolute; inset: -6px 0; min-width: 44px; }
+    .pcard-action::before { content: ""; position: absolute; inset: -4px 0; min-width: 44px; }
     @media (hover: hover) {
       .pcard-action:hover { background: var(--color-bg-layer-default-pressed); }
     }
@@ -17394,7 +17394,7 @@ export function pageCss() {
     .pchart-tip-row { display: flex; align-items: center; font-size: var(--text-t3); line-height: var(--text-t3--line-height); }
     .pchart-swatch { flex-shrink: 0; width: 8px; height: 8px; border-radius: 2px; }
     .pchart-tip-row > .pchart-swatch { margin-right: var(--spacing-x1_5); }
-    .pchart-tip-label { color: var(--color-fg-neutral-muted); }
+    .pchart-tip-label { color: var(--color-fg-neutral-subtle); }
     .pchart-tip-value { margin-left: auto; padding-left: var(--spacing-x3); font-weight: 700; color: var(--color-fg-neutral); font-variant-numeric: tabular-nums; }
     .pchart-swatch--blue { background: var(--color-chart-blue); }
     .pchart-swatch--green { background: var(--color-chart-green); }
@@ -17432,7 +17432,7 @@ export function pageCss() {
     .pchart-tile--blue { --pchart-tile-bg: var(--color-chart-blue-subtle); --pchart-dot: var(--color-chart-blue); }
     .pchart-tile--red { --pchart-tile-bg: var(--color-chart-red-subtle); --pchart-dot: var(--color-chart-red); }
     .pchart-tile.pchart-tile--off { --pchart-tile-bg: var(--color-bg-layer-default); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-weak); }
-    .pchart-tile-name { display: inline-flex; align-items: center; gap: var(--spacing-x1_5); font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-muted); }
+    .pchart-tile-name { display: inline-flex; align-items: center; gap: var(--spacing-x1_5); font-size: var(--text-t3); line-height: var(--text-t3--line-height); color: var(--color-fg-neutral-subtle); }
     .pchart-dot { flex-shrink: 0; width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--pchart-dot); }
     .pchart-tile-total { margin-top: var(--spacing-x0_5); font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; color: var(--color-fg-neutral); font-variant-numeric: tabular-nums; white-space: nowrap; }
     @media (hover: hover) {
@@ -18032,7 +18032,7 @@ export function pageCss() {
       .pcsw-swatch:not(:disabled):active, .pcsw-swatch--pressed { scale: 1; }
     }
     .pcsw-current { display: flex; flex-shrink: 0; flex-direction: column; align-items: center; gap: var(--spacing-x1_5); }
-    .pcsw-current-label { font-size: var(--text-t2); line-height: var(--text-t2--line-height); color: var(--color-fg-neutral-muted); white-space: nowrap; }
+    .pcsw-current-label { font-size: var(--text-t2); line-height: var(--text-t2--line-height); color: var(--color-fg-neutral-subtle); white-space: nowrap; }
     .pcsw-divider { flex-shrink: 0; width: 1px; margin: 0 var(--spacing-x4); background: var(--color-stroke-neutral-weak); }
     /* 지금 색 칸이 있는 묶음 — 놓인 자리가 321(칸 40 + 16 + 선 1 + 16 + 격자 248)보다 좁으면(360 폰 본문 312) 지금 색 칸 · 선 · 격자를 세로로 둔다.
        선은 가로 1px, 사이는 그대로 16(color-swatch.yaml divider.stackBelow — 레시피는 묶음에 @container 를 걸고 321 로 가른다) */
@@ -18310,14 +18310,14 @@ export function pageCss() {
     /* 펼친 내용 — 위 0 · 좌우 24 · 아래 16, 14 / 22(text-article-note) · fg-neutral-muted · 줄바꿈 문자를 지킨다. 안에서 스크롤하지 않는다 */
     .pacc-panel-text { padding: 0 var(--spacing-global-gutter) var(--spacing-x4); font-size: var(--text-article-note); line-height: var(--text-article-note--line-height); font-weight: 400; color: var(--color-fg-neutral-muted); white-space: pre-line; }
     /* 목록 머리 — 높이 32 · 아래 8 · 제목 t5 700(카드 머리와 같은 글) + 오른쪽 모두 펼치기 */
-    .pacc-header { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-x2); min-height: 32px; margin-bottom: var(--spacing-x2); }
+    .pacc-header { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-x2); min-height: 36px; margin-bottom: var(--spacing-x2); }
     .pacc-header-title { min-width: 0; font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; color: var(--color-fg-neutral); }
     /* 모두 펼치기 — 보이는 32 · 왼쪽 8 · 오른쪽 4 · 모서리 8 · t4 500 · fg-neutral-subtle + 아이콘 16(사이 2), 누르는 영역 44(::before) */
-    .pacc-all { position: relative; display: inline-flex; flex-shrink: 0; align-items: center; gap: var(--spacing-x0_5); box-sizing: border-box; height: 32px; margin: 0; padding: 0 var(--spacing-x1) 0 var(--spacing-x2); border: 0; border-radius: var(--radius-r2); background: transparent; font-family: var(--font-sans); font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 500; color: var(--color-fg-neutral-subtle); cursor: pointer; transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing), scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale); }
+    /* 모두 펼치기 — 글 버튼(SEED Text Button, 2026-10-16 글자 역할 D2): 36 · 좌우 14 · t4 700 · fg-neutral-muted · 아이콘 없음, 오른쪽 −14 */
+    .pacc-all { --press-basis: 36; position: relative; display: inline-flex; flex-shrink: 0; align-items: center; box-sizing: border-box; height: 36px; margin: 0 calc(-1 * var(--spacing-x3_5)) 0 0; padding: 0 var(--spacing-x3_5); border: 0; border-radius: var(--radius-r2); background: transparent; font-family: var(--font-sans); font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 700; color: var(--color-fg-neutral-muted); cursor: pointer; transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing), scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale); }
     .pacc-all::before { content: ""; position: absolute; left: 50%; top: 50%; width: 100%; min-width: 44px; height: 44px; translate: -50% -50%; }
-    .pacc-all > svg { flex-shrink: 0; width: 16px; height: 16px; }
     @media (hover: hover) { .pacc-all:hover { background: var(--color-bg-layer-default-pressed); } }
-    .pacc-all:active, .pacc-all--pressed { background: var(--color-bg-layer-default-pressed); scale: calc(1 - 2 / var(--press-basis, 32)); }
+    .pacc-all:active, .pacc-all--pressed { background: var(--color-bg-layer-default-pressed); scale: calc(1 - 2 / var(--press-basis, 36)); }
     .pacc-all:focus { outline: none; }
     .pacc-all:focus-visible, .pacc-all--focus { outline: 2px solid var(--pcol-ring); outline-offset: 2px; }
     /* 카드 상세 — Card body="accordion": 좌우 0 · 머리 위 24 · 좌우 24 · 아래 4 · 카드 아래 8(마지막 트리거 16 과 합쳐 보이는 24) */
@@ -18407,7 +18407,7 @@ export function pageCss() {
     /* 부서 패널 248(1280 에서 본문 992 의 25% — resizable.yaml) — 머리는 위 12 · 오른쪽 8 · 아래 8 · 왼쪽 16(나무 줄의 글 시작), 제목 18 / 24 · 700 + ⋮(Button ghost · iconOnly · medium) */
     .ptree-panel { box-sizing: border-box; display: flex; flex-direction: column; width: 248px; max-width: 100%; height: var(--pcol-h, auto); overflow-y: auto; border-radius: var(--radius-r4); background: var(--color-bg-layer-default); box-shadow: inset 0 0 0 1px var(--color-stroke-neutral-subtle); color: var(--color-fg-neutral); font-family: var(--font-sans); }
     .ptree-head { display: flex; flex-shrink: 0; align-items: center; justify-content: space-between; gap: var(--spacing-x2); min-height: 40px; padding: var(--spacing-x3) var(--spacing-x2) var(--spacing-x2) var(--spacing-x4); }
-    .ptree-title { margin: 0; font-size: var(--text-t6); line-height: var(--text-t6--line-height); font-weight: 700; color: var(--color-fg-neutral); }
+    .ptree-title { margin: 0; font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; color: var(--color-fg-neutral); }
     .pcol-split-demo { display: flex; height: 600px; }
     .pcol-split-demo > .ptree-panel { flex-shrink: 0; height: 100%; border-radius: 0; box-shadow: inset -1px 0 0 var(--color-stroke-neutral-weak); }
     .pcol-orgchart { flex: 1 1 auto; min-width: 0; }
@@ -22976,7 +22976,6 @@ function renderHtml(brandName, css, tokens, sourceFile) {
     // 아래 글(.pcol-measure)은 이 미리보기에서 잰 값이다 — 트리거 높이 · 스크롤바 막대 폭.
     (function () {
       if (!document.querySelector(".pcol-section")) return;
-      var ICON_ALL = ${JSON.stringify({ more: colSvg("chevrons-up-down"), less: colSvg("chevrons-down-up") })};
       var SIZES = ${JSON.stringify(PRSZ_SIZES)};
       var mq = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
       function closest(e, sel) { return e.target && e.target.closest ? e.target.closest(sel) : null; }
@@ -23046,7 +23045,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
         var allOpen = ts.length > 0 && ts.every(function (t) { return t.getAttribute("aria-expanded") === "true"; });
         if (all) {
           all.setAttribute("data-state", allOpen ? "expanded" : "collapsed");
-          all.innerHTML = "<span>" + (allOpen ? "모두 접기" : "모두 펼치기") + "</span>" + (allOpen ? ICON_ALL.less : ICON_ALL.more);
+          all.innerHTML = "<span>" + (allOpen ? "모두 접기" : "모두 펼치기") + "</span>";
         }
         var open = ts.filter(function (t) { return t.getAttribute("aria-expanded") === "true"; }).length;
         return "펼친 항목 " + open + " / " + ts.length + " · 머리 단추 “" + (allOpen ? "모두 접기" : "모두 펼치기") + "”";

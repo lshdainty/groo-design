@@ -95,7 +95,7 @@ const DIVIDER = "h-px shrink-0 self-stretch bg-stroke-neutral-weak @min-[321px]:
 const LAYOUT = "flex w-fit items-start gap-x4";
 const LAYOUT_STACK = "flex-col @min-[321px]:flex-row";
 const CURRENT_COLUMN = "flex shrink-0 flex-col items-center gap-[6px]";
-const CURRENT_LABEL = "whitespace-nowrap font-sans text-t2 text-fg-neutral-muted";
+const CURRENT_LABEL = "whitespace-nowrap font-sans text-t2 text-fg-neutral-subtle";
 const GRID = "grid w-[248px] shrink-0 grid-cols-[repeat(5,40px)] gap-x3";
 // 자동 — 차트가 쓸 색을 2px 점선 원으로
 const AUTO = "border-2 border-dashed border-stroke-neutral-solid";
@@ -193,7 +193,7 @@ const [color, setColor] = useState<ChartColor | "current">(() => firstUnusedColo
   {
     title: "고치기 — 팔레트 밖 색",
     description:
-      "고치는 항목의 색이 팔레트 밖이면(가져오기가 만드는 #9E9E9E) 격자 앞에 \"지금 색\" 칸을 따로 두고 처음에는 그 칸이 골라져 있다 — 세로 선(1px stroke-neutral-weak · 양옆 16)으로 격자와 가르고, 칸 아래 6 에 같은 이름 글(12 · fg-neutral-muted)을 둔다. 저장된 색을 그대로 칠하고(두 모드 같은 값) 체크는 흰색 · 짙은 글자 가운데 그 색 위 대비가 큰 쪽이다. 고르지 않고 저장하면 값은 \"current\" — 저장 값을 그대로 둔다. 몰래 빨강으로 바꾸지 않는다. 지금 색 칸은 차례의 맨 앞이라 ← 로 회색에서 돌아온다.",
+      "고치는 항목의 색이 팔레트 밖이면(가져오기가 만드는 #9E9E9E) 격자 앞에 \"지금 색\" 칸을 따로 두고 처음에는 그 칸이 골라져 있다 — 세로 선(1px stroke-neutral-weak · 양옆 16)으로 격자와 가르고, 칸 아래 6 에 같은 이름 글(12 · fg-neutral-subtle)을 둔다. 저장된 색을 그대로 칠하고(두 모드 같은 값) 체크는 흰색 · 짙은 글자 가운데 그 색 위 대비가 큰 쪽이다. 고르지 않고 저장하면 값은 \"current\" — 저장 값을 그대로 둔다. 몰래 빨강으로 바꾸지 않는다. 지금 색 칸은 차례의 맨 앞이라 ← 로 회색에서 돌아온다.",
     jsx: `import { ColorSwatchGroup } from "@/components/ui/color-swatch"
 import { Field } from "@/components/ui/field"
 

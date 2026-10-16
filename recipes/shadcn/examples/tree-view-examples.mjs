@@ -228,7 +228,7 @@ const moreButton = ({ id, name }) =>
 const panel = (html, height = 0) =>
   `<div style="width:248px; max-width:100%;${height ? ` height:${height}px; overflow-y:auto;` : ""} border-radius:var(--radius-r4); background:var(--color-bg-layer-default); box-shadow:inset 0 0 0 1px var(--color-stroke-neutral-subtle); font-family:var(--font-sans); color:var(--color-fg-neutral);">${html}</div>`;
 const panelHead = (titleId, right = "") =>
-  `<div class="flex items-center justify-between" style="padding:var(--spacing-x3) var(--spacing-x2) var(--spacing-x2) var(--spacing-x4); gap:var(--spacing-x2);"><h2 id="${titleId}" style="margin:0; font-size:var(--text-t6); line-height:var(--text-t6--line-height); font-weight:700;">부서</h2>${right}</div>`;
+  `<div class="flex items-center justify-between" style="padding:var(--spacing-x3) var(--spacing-x2) var(--spacing-x2) var(--spacing-x4); gap:var(--spacing-x2);"><h2 id="${titleId}" style="margin:0; font-size:var(--text-t5); line-height:var(--text-t5--line-height); font-weight:700;">부서</h2>${right}</div>`;
 const CAPTION = "display:block; margin-top:var(--spacing-x2); font-size:var(--text-t2); line-height:var(--text-t2--line-height); color:var(--color-fg-neutral-subtle);";
 const labeled = (html, caption) => `<div style="min-width:0;">${html}<span style="${CAPTION}">${esc(caption)}</span></div>`;
 

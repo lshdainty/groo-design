@@ -116,7 +116,7 @@ rules:
         paddingBottom: $spacing-x2
         paddingLeft: { value: $spacing-x4, note: "16 — 나무 줄의 글 시작(8 + 8)과 같은 자리" }
       title:
-        typography: $text-t6
+        typography: { value: $text-t5, note: "16 / 22 — 구역 · 카드 머리 제목과 한 벌(2026-10-16 사용자 결정 글자 역할 D3, 전 t6 18 / 24)" }
         fontWeight: 700
         foreground: $color-fg-neutral
       moreButton:

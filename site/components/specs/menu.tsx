@@ -26,7 +26,7 @@ const BASEMENT = 'var(--p-bg-layer-basement)';
 function Band({ style, label }: { style: CSSProperties; label?: string }) {
   return (
     <span aria-hidden className="pointer-events-none absolute flex items-center justify-center" style={{ background: MARK, zIndex: 4, ...style }}>
-      {label && <span className="rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>{label}</span>}
+      {label && <span className="rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>{label}</span>}
     </span>
   );
 }
@@ -35,7 +35,7 @@ function HeightTag({ label, gap = 12 }: { label: string; gap?: number }) {
   return (
     <span aria-hidden className="pointer-events-none absolute flex items-center" style={{ top: 0, bottom: 0, left: `calc(100% + ${gap}px)`, zIndex: 4 }}>
       <span style={{ alignSelf: 'stretch', width: 6, borderTop: `1px solid ${MARK_LINE}`, borderBottom: `1px solid ${MARK_LINE}`, borderRight: `1px solid ${MARK_LINE}` }} />
-      <span className="ml-1 whitespace-nowrap text-[11px] font-semibold leading-4" style={{ color: MARK_LINE }}>
+      <span className="ml-1 whitespace-nowrap text-[11px] font-bold leading-4" style={{ color: MARK_LINE }}>
         {label}
       </span>
     </span>
@@ -135,7 +135,7 @@ const Anatomy: Fig = ({ caption }) => {
 const LAYOUT_MENU: MenuGroup[] = [{ items: [EDIT, { value: 'refund', label: '환불 기록', description: '돌려받은 돈을 붙여요.', icon: 'undo' }] }, { items: [DELETE] }];
 // 판 바깥 왼쪽의 수(메뉴 위아래 여백)
 const SideTag = ({ label, style }: { label: string; style: CSSProperties }) => (
-  <span aria-hidden className="pointer-events-none absolute flex items-center whitespace-nowrap text-[10px] font-semibold leading-3" style={{ right: 'calc(100% + 6px)', color: MARK_LINE, zIndex: 4, ...style }}>
+  <span aria-hidden className="pointer-events-none absolute flex items-center whitespace-nowrap text-[10px] font-bold leading-3" style={{ right: 'calc(100% + 6px)', color: MARK_LINE, zIndex: 4, ...style }}>
     {label}
   </span>
 );
@@ -188,7 +188,7 @@ const Layout: Fig = ({ caption }) => {
                       <Band style={{ left: 0, right: 0, bottom: '100%', height: d.marginY }} />
                       <Band style={{ left: 0, right: 0, top: '100%', height: d.marginY }} />
                       <Band style={{ right: '100%', top: -d.marginY, height: d.marginY * 2 + d.height, width: d.marginX }} label={String(d.marginX)} />
-                      <span aria-hidden className="pointer-events-none absolute flex items-center whitespace-nowrap text-[11px] font-semibold leading-4" style={{ left: `calc(100% + ${d.marginX + 12}px)`, top: -8, color: MARK_LINE }}>
+                      <span aria-hidden className="pointer-events-none absolute flex items-center whitespace-nowrap text-[11px] font-bold leading-4" style={{ left: `calc(100% + ${d.marginX + 12}px)`, top: -8, color: MARK_LINE }}>
                         {`${d.marginY} + 선 ${d.height} + ${d.marginY}`}
                       </span>
                     </>
@@ -237,7 +237,7 @@ function Cursor() {
 }
 function KeyCap({ children }: { children: ReactNode }) {
   return (
-    <span aria-hidden className="pointer-events-none absolute flex h-5 min-w-5 items-center justify-center rounded px-1 text-[11px] font-semibold leading-none" style={{ left: -40, top: '50%', marginTop: -10, zIndex: 5, background: '#FFFFFF', color: '#1A1F2E', boxShadow: '0 0 0 1px #C9CED8, 0 1px 0 1px #C9CED8' }}>
+    <span aria-hidden className="pointer-events-none absolute flex h-5 min-w-5 items-center justify-center rounded px-1 text-[11px] font-bold leading-none" style={{ left: -40, top: '50%', marginTop: -10, zIndex: 5, background: '#FFFFFF', color: '#1A1F2E', boxShadow: '0 0 0 1px #C9CED8, 0 1px 0 1px #C9CED8' }}>
       {children}
     </span>
   );

@@ -121,7 +121,7 @@
 - **값 글자**(16 · `fg-neutral-subtle`) — 지금 고른 값(기본 통화 "대한민국 원").
 - **오른쪽 화살표**(18 · `fg-neutral-subtle`) — 화면을 옮기는 줄에만.
 - **스위치 32** · **체크 24** · **라디오 24** — 컨트롤 줄. 스위치는 제목 16 줄이라 32 다(Switch 스펙).
-- **작은 버튼** · **금액** — 금액은 그 화면이 정한다(가계부 금액 16 · 700).
+- **작은 버튼** · **금액** — 금액은 16 / 22 · 700 · 고정폭 숫자(DESIGN.md Typography 의 "글자 역할" R13). 색은 지출 · 이체 `fg-neutral`, 수입만 `fg-brand`("+" 와 함께) — 금액을 빨갛게 칠하지 않는다. 빨강은 증감(▲) 한 뜻이다(2026-10-16 사용자 결정 — 글자 역할 D1). 합계에 안 드는 줄(예정 · 환불)은 아래처럼 `fg-neutral-subtle`.
 
 [그림: 뒤 붙이개 — 값 글자 · 화살표 · 스위치 · 체크 · 라디오 · 작은 버튼](../../site/components/specs/list.tsx#suffix)
 
@@ -152,7 +152,7 @@
 - `mediumWeak`(기본) — 14 · 500 · `fg-neutral-subtle`. 줄보다 앞서지 않는다.
 - `boldSolid` — 14 · 700 · `fg-neutral`. 화면을 크게 나누는 묶음에만.
 
-오른쪽에 작은 버튼(도움말 · 전체 보기)을 둘 수 있다. 화면 맨 위 제목 · 카드 제목은 목록 제목이 아니다 — 카드 제목은 [Card](card.md) 의 머리(16 / 22 · 700, 2026-10-08)다.
+오른쪽에 작은 버튼(도움말 · 전체 보기)을 둘 수 있다 — 글이면 글 버튼(SEED Text Button 14 · 700 · `fg-neutral-muted` · 보이는 36 · 위아래로 블리드해 줄 높이를 바꾸지 않는다, 2026-10-16 사용자 결정 — 글자 역할 D2). Card 머리 동작과 같은 값이다. 화면 맨 위 제목 · 카드 제목은 목록 제목이 아니다 — 카드 제목은 [Card](card.md) 의 머리(16 / 22 · 700, 2026-10-08)다.
 
 [그림: 목록 제목 두 가지](../../site/components/specs/list.tsx#header)
 
@@ -465,6 +465,10 @@ import { List, ListButtonItem, ListParentItem } from "@/components/ui/list"
 - **긴 값의 겹침만 막는다** — 본문 최소 1em · 제목 · 글 설명 `overflow-wrap: anywhere` · 글 값은 줄 끝에서 끊는다(2026-10-15 Q-001). SEED 는 뒤 붙이개 `flexShrink 0` · 본문 `flexGrow 1` 만 두고 최소 폭 · 줄바꿈 규칙을 두지 않는다 — 줄지 않는 값 · 양보하는 본문은 SEED 와 같다.
 
 ## Migration notes
+
+### 2026-10-16 — 금액 색 · 목록 제목 버튼(글자 역할 D1 · D2)
+
+사용자가 [글자 역할 비교 페이지](https://claude.ai/artifact/X9n6tDZbKSP7GeLtodtz8N)에서 정했다. 금액 색은 수입만 `fg-brand`, 지출 · 이체는 `fg-neutral`(D1 B — 모두 neutral · 지금 Desk 별칭대로는 고르지 않았다). 대가 — 다크에서 수입 파랑(#7AA9F6)과 ▼ 내림 파랑(#69ABFF)이 1.00:1 로 같아 보인다. 지금 Desk 웹 · 앱은 지출을 빨강(`fg-expense` = `fg-critical`) · 이체를 파랑으로 칠한다 — 앱 적용 때 금액 글자를 `fg-neutral` 로 옮긴다. 목록 제목 오른쪽 글 버튼은 SEED Text Button 값(D2 A)으로 적었다 — 전에는 값이 없었다(사이트 그림은 Button ghost xsmall + 꺾쇠). 옛 스펙은 `list.history/v-pre-text-roles.md` · `list-header.history/v-pre-text-roles.yaml`.
 
 ### 2026-10-15 — 긴 값 · 늘 펼친 편집 화면(Q-001 · Q-002)
 

@@ -243,7 +243,7 @@ export function ProgressCirclePlayground({ kits, screens }: { kits: Record<Brand
                 <span aria-hidden className="absolute inset-0" style={{ background: lcv(screen.dim, mode) }} />
               </>
             )}
-            <span className="relative flex items-center gap-2" style={{ color: tone(screen, 'fg-brand', mode), fontSize: 15, fontWeight: 600 }}>
+            <span className="relative flex items-center gap-2" style={{ color: tone(screen, 'fg-brand', mode), fontSize: 15, fontWeight: 700 }}>
               <ProgressCircleView look={pc} mode={mode} size={size} tone={toneV} value={det ? value : undefined} still={still === 'on'} />
               {toneV === 'inherit' && <span>영수증 올리는 중</span>}
             </span>

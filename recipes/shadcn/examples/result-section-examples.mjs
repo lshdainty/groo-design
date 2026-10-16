@@ -10,7 +10,7 @@
  * Preview 는 정적 HTML 이다 — 페이지의 Tailwind v4 browser CDN 이 클래스를 utility 로 만든다.
  * 짜임은 레시피가 그리는 DOM 그대로다 — 묶음 <div role="status" data-slot="result-section" data-kind data-size> > 아이콘
  * <span data-slot="result-section-asset"> · 제목 <h2 data-slot="result-section-title">(as — 기본 h2) · 설명 <p data-slot="result-section-description"> ·
- * 버튼 <div data-slot="result-section-actions"> > Button(첫 버튼 neutralWeak medium 40 · 둘째 ghost small 36 + 위아래 −8). href 를 준 버튼은
+ * 버튼 <div data-slot="result-section-actions"> > Button(첫 버튼 neutralWeak medium 40 · 둘째 글 버튼 = ghost small 36 + 글자 fg-neutral-muted + 위아래 −8). href 를 준 버튼은
  * Button asChild 의 <a> 다 — 미리보기는 옮기지 않게 "#" 로 그렸다(코드는 "/").
  * 레시피는 처음 한 프레임 내용을 감췄다가([&>*]:invisible) 보인다 — status 에 나중에 들어온 내용이어야 보조 기술이 읽는다. 미리보기는 보인 뒤의 모습이다.
  * 나타나는 애니메이션(tw-animate-css)과 다시 시도의 로딩은 정적 HTML 에 없다.
@@ -44,8 +44,8 @@ const TITLE = "font-bold text-fg-neutral break-keep [overflow-wrap:break-word]";
 const DESCRIPTION = "font-normal text-fg-neutral-muted break-keep [overflow-wrap:break-word]";
 // 버튼 묶음 — 위아래로, 사이 20. 둘째 버튼이 위아래 −8 블리드해 상자 사이는 12 다(SEED 와 같다)
 const ACTIONS = "flex flex-col items-center gap-x5";
-// 둘째 버튼(ghost small 36)은 위아래 −8(Button small 의 위아래 여백) — 글 자리만 차지한다
-const SECONDARY = "-my-x2";
+// 둘째 버튼 — 글 버튼(SEED Text Button = ghost small 36 + 글자 fg-neutral-muted). 위아래 −8(Button small 의 위아래 여백) — 글 자리만 차지한다
+const SECONDARY = "-my-x2 text-fg-neutral-muted";
 
 // ── button.tsx 의 cva 와 같은 값 — 첫 버튼(neutralWeak · medium) · 둘째 버튼(ghost · small) ─────────
 
@@ -272,7 +272,7 @@ export const resultSectionExamples = [
   {
     title: "완료 · 찾을 수 없는 페이지",
     description:
-      "완료(kind=\"done\" — circle-check · fg-positive)는 다음 동작과 보조 동작 둘까지 둔다 — 둘째 버튼은 Button ghost small 36 이고 위아래로 −8 블리드해 글 자리만 차지한다 — 버튼 사이는 20 이라 보이는 상자 사이는 12 다(SEED 와 같다). 버튼에 href 를 주면 링크로 그린다(Button asChild). 없는 주소는 몰래 다른 곳으로 돌리지 않고 \"페이지를 찾을 수 없어요\" + \"홈으로\" 를 large 로 보인다 — 화면이 그리다 멈추면 빈 화면 대신 \"문제가 생겼어요\" + \"다시 시도\" 다. 버튼은 셋 이상 두지 않는다. 설명은 문장이면 해요체 + 마침표, \"건너뛴 줄 3 · 실패 0\" 처럼 요약이면 마침표 없이 쓴다.",
+      "완료(kind=\"done\" — circle-check · fg-positive)는 다음 동작과 보조 동작 둘까지 둔다 — 둘째 버튼은 글 버튼(SEED Text Button — Button ghost small 36 + 글자 fg-neutral-muted)이고 위아래로 −8 블리드해 글 자리만 차지한다 — 버튼 사이는 20 이라 보이는 상자 사이는 12 다(SEED 와 같다). 버튼에 href 를 주면 링크로 그린다(Button asChild). 없는 주소는 몰래 다른 곳으로 돌리지 않고 \"페이지를 찾을 수 없어요\" + \"홈으로\" 를 large 로 보인다 — 화면이 그리다 멈추면 빈 화면 대신 \"문제가 생겼어요\" + \"다시 시도\" 다. 버튼은 셋 이상 두지 않는다. 설명은 문장이면 해요체 + 마침표, \"건너뛴 줄 3 · 실패 0\" 처럼 요약이면 마침표 없이 쓴다.",
     jsx: `<ResultSection
   kind="done"
   title="1,204건을 가져왔어요"

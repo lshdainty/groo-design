@@ -41,7 +41,7 @@ export function SpacingRolesFigure() {
   const cardBox = (top: number, h = 40, left = 16, right = 16) => (
     <div className="absolute rounded-lg" style={{ left, right, top, height: h, background: surf, border: `1px solid ${line}` }} />
   );
-  const navBar = <div className="absolute inset-x-0 top-0 flex h-9 items-center justify-center text-[12px] font-semibold" style={{ background: surf, borderBottom: `1px solid ${line}` }}>가계부</div>;
+  const navBar = <div className="absolute inset-x-0 top-0 flex h-9 items-center justify-center text-[12px] font-bold" style={{ background: surf, borderBottom: `1px solid ${line}` }}>가계부</div>;
   return (
     <Figure caption="역할 간격 여섯 — 분홍 띠가 그 간격입니다">
       <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -70,13 +70,13 @@ export function SpacingRolesFigure() {
           ))}
           <Measure style={{ left: 16 + 56, width: chips, top: 64, height: 40 }} label="" />
           <Measure style={{ left: 16 + 56 * 2 + chips, width: chips, top: 64, height: 40 }} label="" />
-          <span className="absolute rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ left: 16 + 56 - 2, top: 108, background: MARK_LINE }}>{chips}</span>
+          <span className="absolute rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ left: 16 + 56 - 2, top: 108, background: MARK_LINE }}>{chips}</span>
         </Mini>
         <Mini title="between-text" value={text}>
           <div className="absolute text-[16px] font-bold leading-[22px]" style={{ left: 16, top: 56 }}>점심 · 김밥천국</div>
           <Measure style={{ left: 16, width: 180, top: 56 + 22, height: text }} label="" />
           <div className="absolute text-[13px] leading-[18px]" style={{ left: 16, top: 56 + 22 + text, color: subtle }}>식비 · 카드 · 오늘 12:40</div>
-          <span className="absolute rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ left: 200, top: 56 + 22 - 5, background: MARK_LINE }}>{text}</span>
+          <span className="absolute rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ left: 200, top: 56 + 22 - 5, background: MARK_LINE }}>{text}</span>
         </Mini>
         <Mini title="screen-bottom" value={bottom}>
           {cardBox(170 - bottom - 40 - comp - 40)}

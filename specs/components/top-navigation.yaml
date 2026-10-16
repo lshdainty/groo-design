@@ -120,9 +120,9 @@ rules:
         marginTop: { value: $spacing-nav-to-title, note: "머리 아래 20 — 제목 줄 전체의 위" }
         gap: { value: $spacing-x4, note: "제목 덩어리(제목 + 설명) ↔ 버튼 줄 16 — 한 줄(2026-10-16 사용자 결정 Q-018-2 A)" }
       screenDescription:
-        typography: { value: $text-t3, note: "13 / 18 — 제목 아래. 길면 줄을 바꾸고 버튼은 그 자리에 남는다" }
+        typography: { value: $text-t5, note: "16 / 22 — 제목 아래. 길면 줄을 바꾸고 버튼은 그 자리에 남는다. 2026-10-16 사용자 결정 글자 역할 D6(화면 부제 — 전 13 / 18 · subtle)" }
         fontWeight: 400
-        foreground: $color-fg-neutral-subtle
+        foreground: { value: $color-fg-neutral-muted, note: "떠 있는 표면 설명(R7)과 같은 뜻 — 바닥 위 6.58 · 다크 8.73. 2026-10-16 사용자 결정 글자 역할 D6" }
         marginTop: $spacing-x0_5
       screenActions:
         buttonSize: { value: small 36, note: "Button small — 그 화면의 동작(필터 · 내보내기). 본문 바탕 bg-layer-basement 는 bg-neutral-weak 와 같은 gray-200 이라 neutralWeak 는 바탕에 묻힌다 — 테두리가 있는 neutralOutline 이 보인다" }

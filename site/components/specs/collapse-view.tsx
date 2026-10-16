@@ -5,7 +5,7 @@
 // 멈춘 그림은 머리말을 div 로 그리고 초점을 받지 않는다(문서의 머리말 차례를 어지럽히지 않게) — 살아 있는 그림만 h3 > button 이다.
 // 인라인 스타일은 단축 속성(padding)과 개별 속성을 섞지 않는다 — 링크로 들어올 때 값이 지워진다(PR #154).
 import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
-import { Armchair, Bus, ChevronDown, ChevronsDownUp, ChevronsUpDown, Clapperboard, Coffee, CreditCard, Fuel, Globe, ShoppingBag, Stethoscope, Store, Tv, Smartphone, type LucideIcon } from 'lucide-react';
+import { Armchair, Bus, ChevronDown, Clapperboard, Coffee, CreditCard, Fuel, Globe, ShoppingBag, Stethoscope, Store, Tv, Smartphone, type LucideIcon } from 'lucide-react';
 import { useReducedMotion } from './data-card-view';
 import { icv, pressRatio, type AccIcon, type AccItem, type AccLook, type TriggerMarks, type ColLook, type ColSurface, type IColor, type TriggerLook, type TriggerState, type ViewMode } from './collapse-shared';
 
@@ -448,7 +448,7 @@ export function AccordionView({ look, mode = 'auto', variant = 'inline', items, 
 }
 
 // ── 모두 펼치기 ───────────────────────────────────────────
-// 글 단추 — 보이는 32 · 누르는 44(위아래로 6 씩). 모두 펼쳐져 있으면 "모두 접기"
+// 글 버튼(SEED Text Button) — 보이는 36 · 누르는 44(위아래로 4 씩). 모두 펼쳐져 있으면 "모두 접기"
 export function ExpandAllView({
   look,
   mode = 'auto',
@@ -484,7 +484,6 @@ export function ExpandAllView({
   const tinted = st === 'hovered' || st === 'pressed';
   const focused = st === 'focused' || (live && ring);
   const ratio = st === 'pressed' && !red ? pressRatio(a.press, w, a.h) : 1;
-  const Icon = allOpen ? ChevronsDownUp : ChevronsUpDown;
   const ext = (a.touch - a.h) / 2;
   return (
     <button
@@ -507,11 +506,14 @@ export function ExpandAllView({
         display: 'inline-flex',
         flexShrink: 0,
         alignItems: 'center',
-        gap: a.gap,
         height: a.h,
         boxSizing: 'border-box',
         ...pad(0, a.padR, 0, a.padL),
-        margin: 0,
+        // 줄 끝 글 버튼 — 오른쪽 여백만큼 바깥으로 내어 글자 끝이 머리 여백에 선다(accordion.yaml expandAll.paddingRight 비고)
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: -a.padR,
         borderWidth: 0,
         borderRadius: a.radius,
         background: tinted ? icv(a.bg, mode) : 'transparent',
@@ -532,10 +534,9 @@ export function ExpandAllView({
         ...style,
       }}
     >
-      {/* 누르는 영역 44 — 보이는 32 위아래로 6 씩 */}
+      {/* 누르는 영역 44 — 보이는 36 위아래로 4 씩 */}
       <span aria-hidden style={{ position: 'absolute', top: -ext, bottom: -ext, left: 0, right: 0, ...(showHit ? { background: 'rgba(236, 72, 153, 0.18)', outline: '1px dashed #DB2777', outlineOffset: -1 } : {}) }} />
       <span style={{ position: 'relative' }}>{allOpen ? a.labels.collapse : a.labels.expand}</span>
-      <Icon aria-hidden size={a.icon} strokeWidth={2} style={{ position: 'relative', flexShrink: 0 }} />
     </button>
   );
 }

@@ -88,9 +88,9 @@ SEED 의 두 변형을 그대로 둔다(사용자 결정 1B).
 
 ### 모두 펼치기
 
-여럿을 함께 열고(사용자 결정 4A), 목록 머리 오른쪽에 "모두 펼치기" 글 단추를 둔다 — porest 확장이다(SEED 에 없다). 상세가 있는 항목을 모두 펼치고, 모두 펼쳐져 있으면 글이 "모두 접기" 로 바뀐다. 모양은 [Card](card.md) 머리 동작과 같다 — 14 · 500 · `fg-neutral-subtle` + 아이콘 16(펼치기 `chevrons-up-down` · 접기 `chevrons-down-up`), 보이는 32 · 누르는 44. 머리가 카드 머리면 그 오른쪽 동작 자리에, 시트 · 대화상자면 목록 머리 줄(제목 16 / 22 · 700 + 건수 — 카드 머리와 같은 글, 높이 32 · 아래 8)의 오른쪽에 둔다. 하나만 여는 모드(4C — 다른 항목을 열면 앞 항목이 닫힌다)와 단추 없이 하나씩 여는 안(4B)은 고르지 않았다.
+여럿을 함께 열고(사용자 결정 4A), 목록 머리 오른쪽에 "모두 펼치기" 글 단추를 둔다 — porest 확장이다(SEED 에 없다). 상세가 있는 항목을 모두 펼치고, 모두 펼쳐져 있으면 글이 "모두 접기" 로 바뀐다. 모양은 [Card](card.md) 머리 동작과 같은 글 버튼(SEED Text Button)이다 — 14 · 700 · `fg-neutral-muted`, 아이콘 없이 보이는 36(좌우 14) · 누르는 44(2026-10-16 사용자 결정 — 글자 역할 D2, DESIGN.md Typography 의 "글자 역할" R16). 머리가 카드 머리면 그 오른쪽 동작 자리에, 시트 · 대화상자면 목록 머리 줄(제목 16 / 22 · 700 + 건수 — 카드 머리와 같은 글, 높이 36 · 아래 8)의 오른쪽에 둔다. 하나만 여는 모드(4C — 다른 항목을 열면 앞 항목이 닫힌다)와 단추 없이 하나씩 여는 안(4B)은 고르지 않았다.
 
-[그림: 혜택 상세 · 12건 — 모두 펼치기 · 모두 접기, 보이는 32 · 누르는 44](../../site/components/specs/accordion.tsx#expand-all)
+[그림: 혜택 상세 · 12건 — 모두 펼치기 · 모두 접기, 보이는 36 · 누르는 44](../../site/components/specs/accordion.tsx#expand-all)
 
 [표: 목록 머리](accordion.yaml#base.enabled@header)
 
@@ -178,7 +178,7 @@ SEED 의 두 변형을 그대로 둔다(사용자 결정 1B).
 - `AccordionContent` — 펼친 내용. 0 / 24 / 16 · 14 / 22 · `fg-neutral-muted` · 줄바꿈 문자를 지킨다. 접혀 있으면 그리지 않는다. 높이 300ms · 모션 줄이기면 150ms 서서히.
 - `AccordionPlainItem` — 상세가 없는 항목. `title`(필수) · `description` · `prefixIcon`. 단추 · 머리말 · 꺾쇠가 없고 높이 · 글 시작은 트리거와 같다.
 - `AccordionHeader` — 시트 · 대화상자의 목록 머리. `title`(필수 — 건수를 붙인다) · 자식(오른쪽 — 모두 펼치기). 카드 안이면 쓰지 않고 `CardHeader` 가 그 자리다.
-- `AccordionExpandAll` — 모두 펼치기. `controls`(아코디언의 `id`) · `values` · `expandable`(상세가 있는 항목의 `value` 목록) · `onValuesChange(values)`. 모두 펼쳐져 있으면 "모두 접기" — 글 · 아이콘은 단추가 정한다. 아코디언과 같은 `values` 를 쥔다.
+- `AccordionExpandAll` — 모두 펼치기. `controls`(아코디언의 `id`) · `values` · `expandable`(상세가 있는 항목의 `value` 목록) · `onValuesChange(values)`. 모두 펼쳐져 있으면 "모두 접기" — 글은 단추가 정한다. 아코디언과 같은 `values` 를 쥔다.
 
 ### 혜택 상세 — 시트 · 대화상자(separated)
 
@@ -274,14 +274,14 @@ const expandable = benefits.filter((b) => b.detail).map((b) => b.id)
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 흰 면 16.41 · 다크 13.42(시트 11.62), 설명 · 모두 펼치기 `fg-neutral-subtle` 5.50 · 6.09(시트 5.27, 누름 바탕 5.18 · 4.68), 펼친 내용 `fg-neutral-muted` 7.11 · 7.70(시트 6.67) ✓. 막힘 `fg-disabled` 는 기준 밖(비활성 UI) |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 흰 면 16.41 · 다크 13.42(시트 11.62), 설명 `fg-neutral-subtle` 5.50 · 6.09(시트 5.27, 누름 바탕 5.18 · 4.68), 모두 펼치기 `fg-neutral-muted` 7.11 · 7.70(시트 6.67, 누름 바탕 6.70 · 5.93), 펼친 내용 `fg-neutral-muted` 7.11 · 7.70(시트 6.67) ✓. 막힘 `fg-disabled` 는 기준 밖(비활성 UI) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 꺾쇠 `fg-neutral-subtle` 5.50 · 6.09 ✓. 사이 선(1.15 · 1.30) · `separated` 테두리(1.23 · 1.56)는 묶음을 나눌 뿐이다 — 펼침은 꺾쇠 · 내용이 알린다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
 | **WCAG 1.4.1** Use of color | 펼침은 꺾쇠 방향과 보이는 내용으로 알린다 ✓ |
 | **WCAG 2.1.1** Keyboard | `Tab` · `Enter` · `Space` · `↓` `↑` · `Home` · `End` ✓ |
 | **WCAG 2.4.3** Focus order | 펼쳐도 초점은 트리거에 — 펼친 내용은 트리거 바로 뒤 차례 ✓ |
 | **WCAG 2.4.7** Focus visible | 트리거 안쪽 링 2px — 카드 · 시트의 `overflow: hidden` 에 잘리지 않는다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 트리거 줄 전체 54 이상 · 모두 펼치기 44 ✓ |
-| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 트리거 54 이상 · 모두 펼치기 44(보이는 32 위아래 6 씩) ✓ |
+| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 트리거 54 이상 · 모두 펼치기 44(보이는 36 위아래 4 씩) ✓ |
 | **WCAG 4.1.2** Name, Role, Value | 트리거는 `heading > button` — 이름은 제목 + 설명, `aria-expanded` · `aria-controls`(펼친 내용의 `id`). 모두 펼치기는 `aria-controls`(아코디언 `id`)이고 이름은 보이는 글("모두 펼치기" · "모두 접기") ✓ |
 | **ARIA** | APG Accordion — 머리말 단계는 놓인 자리를 따른다(기본 `h3`). 펼친 내용에 `role="region"` 을 두지 않는다 — 함께 열리는 항목이 많아 랜드마크가 늘어난다(APG). 상세가 없는 줄은 머리말 · 단추가 아닌 글이다. 앱은 트리거를 `Semantics(button: true, expanded: …)` 로, 접힌 내용은 의미 트리에서 뺀다 — 이름은 제목 + 설명뿐이다 |
 | **Reduced motion** | 높이 움직임 없이 150ms 서서히(v104) · 꺾쇠는 바로 · 누름 축소 없음 |
@@ -325,6 +325,10 @@ const expandable = benefits.filter((b) => b.detail).map((b) => b.id)
 - **포커스 링(웹)은 porest 가 정했다** — 트리거 안쪽 2px(`separated` 는 모서리 14). SEED 는 아코디언의 포커스 링을 적지 않았다.
 
 ## Migration notes
+
+### 2026-10-16 — 모두 펼치기를 SEED Text Button 으로(글자 역할 D2)
+
+사용자가 [글자 역할 비교 페이지](https://claude.ai/artifact/X9n6tDZbKSP7GeLtodtz8N)에서 글 버튼을 SEED Text Button 한 벌로 정했다(D2 A). 모두 펼치기는 Card 머리 동작과 같은 모양이라 함께 바뀐다 — 14 · 500 · `fg-neutral-subtle` · 보이는 32 · 아이콘 16 → 14 · **700** · **`fg-neutral-muted`** · 보이는 **36**(좌우 14) · 아이콘 없음 · 누르는 44(위아래 4). 시트 · 대화상자의 목록 머리 줄도 32 → 36. 옛 스펙은 `accordion.history/v-pre-text-roles.*`.
 
 ### 2026-10-10 — SEED Accordion 으로 다시 쓴다
 

@@ -252,7 +252,7 @@ function FormPopoverWindow() {
   return (
     <WebWindow mode="auto" w={w} h={h} url="hr.porest.app">
       <Page mode="auto" title="휴가">
-        <span className="absolute left-8 flex h-8 items-center rounded-lg px-3 text-[14px] font-semibold text-white" style={{ top: TRIG_TOP, background: rc('bg-brand-solid', 'auto', 'hr') }}>
+        <span className="absolute left-8 flex h-8 items-center rounded-lg px-3 text-[14px] font-bold text-white" style={{ top: TRIG_TOP, background: rc('bg-brand-solid', 'auto', 'hr') }}>
           휴가 신청
         </span>
       </Page>

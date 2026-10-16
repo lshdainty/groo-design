@@ -195,7 +195,7 @@ import { Search } from "lucide-react"
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 값 `fg-neutral` 16.41 · 13.42, placeholder `fg-placeholder` · 붙이개 글자 `fg-neutral-subtle` 5.50 · 6.09(시트 다크 5.27), 읽기 전용 바탕 위 값 15.20 · 10.32 · placeholder 5.09 · 4.68 ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 값 `fg-neutral` 16.41 · 13.42, 붙이개 글자 `fg-neutral-subtle` 5.50 · 6.09(시트 다크 5.27), 읽기 전용 바탕 위 값 15.20 · 10.32 ✓. placeholder `fg-placeholder` 4.18 · 4.13(시트 다크 3.58, 읽기 전용 바탕 위 3.87 · 3.18) — 4.5:1 밑, 사용자가 대가를 알고 SEED 값을 골랐다(2026-10-16 글자 역할 D7, DESIGN v119). 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 포커스 테두리 `stroke-neutral-contrast` 16.41 · 13.42, 오류 `stroke-critical-solid` 5.06 · 6.08 ✓. 기본 1px `stroke-neutral-weak`(1.23 · 1.56)는 칸을 알리는 유일한 표시가 아니다 — 라벨 · placeholder 가 칸을 알린다(SEED 와 같다) |
 | **WCAG 2.4.7** Focus visible | 편집 칸 — 포커스하면 테두리가 2px 짙어진다(키보드 · 마우스 모두) ✓. 읽기 전용 — 포커스 표시가 없다 ⚠. 사용자 결정(2026-10-08 — [비교 페이지](https://claude.ai/artifact/9qbK3fj8SL3RmTeiujoJZ6) A1): SEED 처럼 편집 칸의 테두리를 주지 않는다. 읽기 전용은 값을 보이는 자리라 편집 칸과 같은 표시를 주면 쓸 수 있는 칸으로 읽힌다(짙은 테두리 안은 고르지 않았다), 다른 컨트롤과 같은 바깥 링도 두지 않는다. 크로미움은 읽기 전용 칸에 캐럿도 그리지 않아 Tab 으로 들어가도 보이는 변화가 없다는 것을 알고 정했다 — 읽기 전용 칸은 복사 · 읽기를 위해 Tab 순서에 남는다 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 모든 크기 ✓(가장 작은 밑줄 medium 34). 지우기 버튼 44 ✓ |

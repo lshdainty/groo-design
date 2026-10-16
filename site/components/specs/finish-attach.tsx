@@ -462,7 +462,7 @@ type AtItemViewItemProps = NonNullable<Parameters<typeof AtItemView>[0]['itemPro
 function Log({ items, empty }: { items: string[]; empty: string }) {
   return (
     <div className="flex min-h-[44px] flex-col items-center gap-0.5 text-center text-[12px] leading-5 text-fd-muted-foreground">
-      {items.length ? items.map((t, i) => <span key={`${i}${t}`} className={i === 0 ? 'font-semibold text-fd-foreground' : undefined}>{t}</span>) : <span>{empty}</span>}
+      {items.length ? items.map((t, i) => <span key={`${i}${t}`} className={i === 0 ? 'font-bold text-fd-foreground' : undefined}>{t}</span>) : <span>{empty}</span>}
     </div>
   );
 }

@@ -86,7 +86,7 @@ const BAR_H = 22;
 function Lane({ name, children, note }: { name: string; children: ReactNode; note: string }) {
   return (
     <div className="flex items-start gap-3">
-      <span className="w-[56px] shrink-0 text-right text-[13px] font-semibold pk-text" style={{ paddingTop: BAR_TOP + 2 }}>
+      <span className="w-[56px] shrink-0 text-right text-[13px] font-bold pk-text" style={{ paddingTop: BAR_TOP + 2 }}>
         {name}
       </span>
       <div className="flex flex-col gap-1" style={{ width: SPAN * SCALE }}>
@@ -116,9 +116,9 @@ function Shown({ from, to, fade, label }: { from: number; to: number; fade: numb
 function Tick({ at, label, below = false }: { at: number; label: string; below?: boolean }) {
   return (
     <span className="absolute flex flex-col items-center" style={{ left: at * SCALE, top: below ? BAR_TOP + BAR_H / 2 : 0, transform: 'translateX(-50%)' }}>
-      {!below && <span className="whitespace-nowrap text-[10px] font-semibold leading-3" style={{ color: MARK_LINE }}>{label}</span>}
+      {!below && <span className="whitespace-nowrap text-[10px] font-bold leading-3" style={{ color: MARK_LINE }}>{label}</span>}
       <span style={{ width: 0, height: below ? BAR_H / 2 + 6 : BAR_TOP - 12 + BAR_H / 2, borderLeft: `2px solid ${MARK_LINE}` }} />
-      {below && <span className="whitespace-nowrap text-[10px] font-semibold leading-3" style={{ color: MARK_LINE }}>{label}</span>}
+      {below && <span className="whitespace-nowrap text-[10px] font-bold leading-3" style={{ color: MARK_LINE }}>{label}</span>}
     </span>
   );
 }
@@ -153,7 +153,7 @@ const Timing: Fig = ({ caption }) => {
           {/* 이어 열기 시간 — 닫힌 뒤 이 안에 옮기면 바로 */}
           <span aria-hidden className="absolute flex items-center justify-center" style={{ left: closedAt * SCALE, width: skip * SCALE, top: BAR_TOP + BAR_H + 4, height: 12, borderLeft: `1px solid ${MARK_LINE}`, borderRight: `1px solid ${MARK_LINE}` }}>
             <span className="absolute left-0 right-0 top-1/2" style={{ borderTop: `1px dashed ${MARK_LINE}` }} />
-            <span className="relative rounded px-1 text-[10px] font-semibold leading-3 text-white" style={{ background: MARK_LINE }}>{`${skip}ms`}</span>
+            <span className="relative rounded px-1 text-[10px] font-bold leading-3 text-white" style={{ background: MARK_LINE }}>{`${skip}ms`}</span>
           </span>
           <Tick at={movedAt} label="옆으로 옮김" />
           <Shown from={movedAt} to={SPAN} fade={0} label="설정" />

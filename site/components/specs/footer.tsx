@@ -125,7 +125,7 @@ function FrameMarks({ width, mode = 'auto', fs = 10 }: { width: number; mode?: M
   const px = narrow ? l.root.padXNarrow : l.root.padXWide;
   const bg = rc('bg-layer-default', mode);
   const tag = (t: string, style: CSSProperties) => (
-    <span aria-hidden className="pointer-events-none absolute rounded px-1 font-semibold text-white" style={{ background: MARK_LINE, zIndex: 5, fontSize: fs, lineHeight: `${fs * 1.5}px`, ...style }}>
+    <span aria-hidden className="pointer-events-none absolute rounded px-1 font-bold text-white" style={{ background: MARK_LINE, zIndex: 5, fontSize: fs, lineHeight: `${fs * 1.5}px`, ...style }}>
       {t}
     </span>
   );
@@ -223,15 +223,15 @@ const Link: Fig = ({ caption }) => {
       <div className="overflow-x-auto rounded-xl" style={{ background: rc('bg-layer-default', mode) }}>
         <div className="mx-auto grid w-max items-center gap-x-6 gap-y-4 px-5 py-5" style={{ gridTemplateColumns: 'max-content max-content max-content' }}>
           <span />
-          <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral-subtle', mode) }}>
+          <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral-subtle', mode) }}>
             large · 사이트맵
           </span>
-          <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral-subtle', mode) }}>
+          <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral-subtle', mode) }}>
             medium · 정책
           </span>
           {LINK_STATES.map(([st, ko]) => (
             <div key={ko} className="contents">
-              <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral', mode) }}>
+              <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral', mode) }}>
                 {ko}
               </span>
               <span>
@@ -242,7 +242,7 @@ const Link: Fig = ({ caption }) => {
               </span>
             </div>
           ))}
-          <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral', mode) }}>
+          <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral', mode) }}>
             새 탭 ↗
           </span>
           <span>

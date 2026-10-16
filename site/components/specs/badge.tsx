@@ -97,7 +97,7 @@ const Anatomy: Fig = ({ caption }) => {
               신용
             </BadgeView>
             <span aria-hidden className="relative flex shrink-0 justify-center" style={{ width: lk.groupGap * g, height: m.minH * g, background: MARK }}>
-              <span className="absolute -top-6 rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+              <span className="absolute -top-6 rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
                 {lk.groupGap}
               </span>
             </span>

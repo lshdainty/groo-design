@@ -231,7 +231,7 @@ const States: Fig = ({ caption }) => {
         <div className="grid gap-x-6 gap-y-5 sm:grid-cols-2">
           {order.map((st) => (
             <div key={st} className="flex flex-col gap-1.5" style={{ width: 260 }}>
-              <span className="text-[12px] font-semibold leading-4" style={{ color: rc('fg-neutral-subtle', mode) }}>
+              <span className="text-[12px] font-bold leading-4" style={{ color: rc('fg-neutral-subtle', mode) }}>
                 {STATE_KO[st]}
               </span>
               <Otp mode={mode} value={st === 'enabled' ? '' : '4821'} state={st} showResend={false} />
@@ -265,7 +265,7 @@ function SixCells() {
       </span>
       <div className="flex gap-1.5">
         {['4', '8', '2', '1', '', ''].map((d, i) => (
-          <span key={i} className="flex flex-1 items-center justify-center text-[20px] font-semibold" style={{ height: s.height, borderRadius: s.radius, boxShadow: `inset 0 0 0 ${i === 4 ? stroke.active : stroke.base}px ${rc(i === 4 ? 'stroke-neutral-contrast' : 'stroke-neutral-weak')}`, color: rc('fg-neutral') }}>
+          <span key={i} className="flex flex-1 items-center justify-center text-[20px] font-bold" style={{ height: s.height, borderRadius: s.radius, boxShadow: `inset 0 0 0 ${i === 4 ? stroke.active : stroke.base}px ${rc(i === 4 ? 'stroke-neutral-contrast' : 'stroke-neutral-weak')}`, color: rc('fg-neutral') }}>
             {d}
           </span>
         ))}

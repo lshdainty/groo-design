@@ -227,7 +227,7 @@ const ToneGuide: Fig = ({ caption }) => {
 // 폰 — 딤을 눌러도 그대로. 데스크톱 — Esc 는 취소와 같다(1280 이상은 버튼 small)
 function EscBadge() {
   return (
-    <span aria-hidden className="pointer-events-none absolute left-1/2 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold text-white" style={{ bottom: 28, background: 'rgba(26,31,46,0.86)', zIndex: 5 }}>
+    <span aria-hidden className="pointer-events-none absolute left-1/2 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-bold text-white" style={{ bottom: 28, background: 'rgba(26,31,46,0.86)', zIndex: 5 }}>
       <Keyboard size={14} aria-hidden /> Esc — 취소와 같다
     </span>
   );

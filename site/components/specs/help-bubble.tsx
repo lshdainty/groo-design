@@ -21,12 +21,12 @@ const markBox: CSSProperties = { ...dashed, background: MARK };
 function Band({ style, label }: { style: CSSProperties; label?: string }) {
   return (
     <span aria-hidden className="pointer-events-none absolute flex items-center justify-center" style={{ background: MARK, zIndex: 4, ...style }}>
-      {label && <span className="rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>{label}</span>}
+      {label && <span className="rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>{label}</span>}
     </span>
   );
 }
 const Tag = ({ children, style }: { children: ReactNode; style: CSSProperties }) => (
-  <span aria-hidden className="pointer-events-none absolute whitespace-nowrap text-[11px] font-semibold leading-4" style={{ color: MARK_LINE, zIndex: 5, ...style }}>
+  <span aria-hidden className="pointer-events-none absolute whitespace-nowrap text-[11px] font-bold leading-4" style={{ color: MARK_LINE, zIndex: 5, ...style }}>
     {children}
   </span>
 );
@@ -102,7 +102,7 @@ const Anatomy: Fig = ({ caption }) => {
 const HeightTag = ({ label }: { label: string }) => (
   <span aria-hidden className="pointer-events-none absolute flex items-center" style={{ top: 0, bottom: 0, left: 'calc(100% + 10px)', zIndex: 4 }}>
     <span style={{ alignSelf: 'stretch', width: 6, borderTop: `1px solid ${MARK_LINE}`, borderBottom: `1px solid ${MARK_LINE}`, borderRight: `1px solid ${MARK_LINE}` }} />
-    <span className="ml-1 whitespace-nowrap text-[11px] font-semibold leading-4" style={{ color: MARK_LINE }}>
+    <span className="ml-1 whitespace-nowrap text-[11px] font-bold leading-4" style={{ color: MARK_LINE }}>
       {label}
     </span>
   </span>
@@ -212,7 +212,7 @@ const Layout: Fig = ({ caption }) => {
                     decor={
                       <span aria-hidden className="pointer-events-none absolute left-0 right-0 flex items-center justify-center" style={{ bottom: 'calc(100% + 6px)', height: 12, borderLeft: `1px solid ${MARK_LINE}`, borderRight: `1px solid ${MARK_LINE}` }}>
                         <span className="absolute left-0 right-0 top-1/2" style={{ borderTop: `1px dashed ${MARK_LINE}` }} />
-                        <span className="relative rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>{`최대 ${b.maxWidth}`}</span>
+                        <span className="relative rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>{`최대 ${b.maxWidth}`}</span>
                       </span>
                     }
                     {...p}
@@ -347,7 +347,7 @@ const RoleGuide: Fig = ({ caption }) => {
         <Shot strong="화면 안 글" cap="일을 하려면 꼭 읽어야 하는 안내 — 숨기지 않는다">
           <Board brand="hr" pad={24} style={{ width: 280 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <span style={{ fontSize: 14, lineHeight: '19px', fontWeight: 600, color: rc('fg-neutral', 'auto', 'hr') }}>휴가 시작일</span>
+              <span style={{ fontSize: 14, lineHeight: '19px', fontWeight: 700, color: rc('fg-neutral', 'auto', 'hr') }}>휴가 시작일</span>
               <span style={{ display: 'block', height: 44, borderRadius: 12, background: rc('bg-layer-default', 'auto', 'hr'), boxShadow: `inset 0 0 0 1px ${rc('stroke-neutral-weak', 'auto', 'hr')}` }} />
               <span style={{ fontSize: 13, lineHeight: '18px', color: rc('fg-neutral-muted', 'auto', 'hr') }}>연차는 하루 전까지 신청해야 해요.</span>
             </div>

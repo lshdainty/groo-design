@@ -28,7 +28,7 @@ export function DemoRow({ look, mode, title, sub, amount, hue = 'blue', trailing
         )}
       </span>
       {amount && (
-        <span className="text-[15px] font-semibold tabular-nums" style={{ color: t(look, 'fg-neutral', mode) }}>
+        <span className="text-[15px] font-bold tabular-nums" style={{ color: t(look, 'fg-neutral', mode) }}>
           {amount}
         </span>
       )}
@@ -115,7 +115,7 @@ function ComparePanel({ look, mode }: { look: TabsLook; mode: ViewMode }) {
   const max = Math.max(prev, now);
   return (
     <>
-      <div className="text-[15px] font-semibold" style={{ color: t(look, 'fg-neutral', mode) }}>
+      <div className="text-[15px] font-bold" style={{ color: t(look, 'fg-neutral', mode) }}>
         지난달보다 {won(prev - now)} 덜 썼어요.
       </div>
       <div className="mt-5 flex flex-col gap-4">
@@ -177,7 +177,7 @@ export function HideAmountsDemo({ look, mode = 'auto' }: { look: TabsLook; mode?
       <LineTabsView look={look} mode={mode} layout="hug" items={SCREEN_TABS} value={tab} onValue={setTab} ariaLabel="금액 가리기" idBase={id} />
       {SCREEN_TABS.map((s) => (
         <TabPanel key={s.value} idBase={id} value={s.value} active={tab === s.value} style={{ paddingTop: 20, paddingBottom: 24, paddingLeft: look.gutter, paddingRight: look.gutter }}>
-          <div className="pb-3 text-[15px] font-semibold" style={{ color: t(look, 'fg-neutral', mode) }}>
+          <div className="pb-3 text-[15px] font-bold" style={{ color: t(look, 'fg-neutral', mode) }}>
             {s.label}
           </div>
           <Skeleton look={look} mode={mode} />
@@ -193,7 +193,7 @@ function LeaveRows({ look, mode, rows, label }: { look: TabsLook; mode: ViewMode
     <ul aria-label={label} className="flex flex-col">
       {rows.map(([a, b, c, d], i) => (
         <li key={i} className="flex items-center gap-3 py-3 text-[14px]" style={{ borderTop: i ? `1px solid ${t(look, 'stroke-neutral-subtle', mode)}` : undefined }}>
-          <span className="w-[76px] shrink-0 font-semibold" style={{ color: t(look, 'fg-neutral', mode) }}>
+          <span className="w-[76px] shrink-0 font-bold" style={{ color: t(look, 'fg-neutral', mode) }}>
             {a}
           </span>
           <span className="min-w-0 flex-1 truncate" style={{ color: t(look, 'fg-neutral-muted', mode) }}>

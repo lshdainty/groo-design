@@ -78,7 +78,7 @@ function Rows({ kit, mode, n = 4 }: { kit: OvKit; mode: ViewMode; n?: number }) 
               {s}
             </span>
           </span>
-          <span className="text-[15px] font-semibold tabular-nums" style={{ color: tone(kit, 'fg-neutral', mode) }}>
+          <span className="text-[15px] font-bold tabular-nums" style={{ color: tone(kit, 'fg-neutral', mode) }}>
             {a}
           </span>
         </div>

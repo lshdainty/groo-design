@@ -137,7 +137,7 @@ const Variant: Fig = ({ caption }) => {
             <div style={{ position: 'relative' }}>
               <BenefitList items={VARIANT_ITEMS()} />
               <Band style={{ left: '40%', width: 40, top: sHead + item, height: l.separated.gap }} label={String(l.separated.gap)} tag="right" />
-              <span aria-hidden className="pointer-events-none absolute text-[10px] font-semibold leading-4 text-white" style={{ left: -18, top: sHead - 14, background: MARK_LINE, borderRadius: 4, padding: '0 4px' }}>
+              <span aria-hidden className="pointer-events-none absolute text-[10px] font-bold leading-4 text-white" style={{ left: -18, top: sHead - 14, background: MARK_LINE, borderRadius: 4, padding: '0 4px' }}>
                 r{l.separated.radius}
               </span>
             </div>
@@ -280,7 +280,7 @@ const ExpandAll: Fig = ({ caption }) => {
       </div>
       <div className="mt-4 flex justify-center">
         <Cap w={620}>
-          목록 머리 오른쪽 글 단추 — {parseFloat(a.type.fontSize)} · {a.type.fontWeight} · 아이콘 {a.icon}(펼치기 chevrons-up-down · 접기 chevrons-down-up) · 보이는 {a.h} · 누르는 {a.touch}(분홍). 머리는 제목 {parseFloat(l.header.title.fontSize)} / {parseFloat(l.header.title.lineHeight)} · {l.header.title.fontWeight} + 건수 · 높이 {l.header.minH} · 아래 {l.header.marginBottom}
+          목록 머리 오른쪽 글 버튼(SEED Text Button) — {parseFloat(a.type.fontSize)} · {a.type.fontWeight} · fg-neutral-muted · 아이콘 없음 · 보이는 {a.h} · 누르는 {a.touch}(분홍). 머리는 제목 {parseFloat(l.header.title.fontSize)} / {parseFloat(l.header.title.lineHeight)} · {l.header.title.fontWeight} + 건수 · 높이 {l.header.minH} · 아래 {l.header.marginBottom}
         </Cap>
       </div>
     </Panel>
@@ -316,7 +316,7 @@ const States: Fig = ({ caption }) => {
                 ))}
                 {STATES.map((st) => (
                   <div key={st} className="contents">
-                    <span className="text-[12px] font-semibold leading-4" style={{ color: rc('fg-neutral', mode) }}>
+                    <span className="text-[12px] font-bold leading-4" style={{ color: rc('fg-neutral', mode) }}>
                       {STATE_KO[st]}
                     </span>
                     <StateCell mode={mode} state={st} variant="inline" />
@@ -384,7 +384,7 @@ const MultiGuide: Fig = ({ caption }) => {
           <ScaledAuto w={390} s={0.6}>
             <div style={{ position: 'relative', background: rc('bg-layer-floating'), borderRadius: 24, paddingTop: 24, paddingBottom: 24, paddingLeft: 24, paddingRight: 24 }}>
               <BenefitList open={['coffee']} items={benefitItems({ only: ['pay', 'coffee', 'transit', 'telecom', 'store', 'movie'] })} />
-              <span aria-hidden className="absolute rounded-md px-2 py-1 text-[13px] font-semibold text-white" style={{ right: 32, top: 150, background: '#B91C1C' }}>
+              <span aria-hidden className="absolute rounded-md px-2 py-1 text-[13px] font-bold text-white" style={{ right: 32, top: 150, background: '#B91C1C' }}>
                 ↑ 앞 항목이 닫히며 밀려 올라감
               </span>
             </div>

@@ -54,7 +54,7 @@ function Cell({ label, children, mode = 'auto' }: { label?: ReactNode; children:
 // 묶음의 칸 이름 — 묶음 바로 위(aria-labelledby 로 잇는다)
 function Label({ children, mode = 'auto', id }: { children: ReactNode; mode?: Mode; id?: string }) {
   return (
-    <span id={id} className="mb-2 block text-[13px] font-semibold" style={{ color: rc('fg-neutral-muted', mode) }}>
+    <span id={id} className="mb-2 block text-[13px] font-bold" style={{ color: rc('fg-neutral-muted', mode) }}>
       {children}
     </span>
   );
@@ -289,8 +289,8 @@ const States: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="grid gap-x-4 gap-y-3 sm:grid-cols-[72px_1fr_1fr]">
       <span className="hidden sm:block" />
-      <span className="hidden text-center text-[12px] font-semibold pk-text sm:block">고르지 않음</span>
-      <span className="hidden text-center text-[12px] font-semibold pk-text sm:block">고름 selected</span>
+      <span className="hidden text-center text-[12px] font-bold pk-text sm:block">고르지 않음</span>
+      <span className="hidden text-center text-[12px] font-bold pk-text sm:block">고름 selected</span>
       {SB_STATES.map((st) => (
         <div key={st} className="contents">
           <span className="self-center text-[12px] pk-text">

@@ -42,7 +42,7 @@ export function Band({ style, label, vertical = false, below = false }: { style:
     <span aria-hidden className="absolute flex items-center justify-center" style={{ background: MARK, pointerEvents: 'none', ...style }}>
       {label && (
         <span
-          className="absolute whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white"
+          className="absolute whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white"
           style={vertical ? { left: '100%', marginLeft: 4, background: MARK_LINE } : below ? { top: '100%', marginTop: 3, background: MARK_LINE } : { bottom: '100%', marginBottom: 3, background: MARK_LINE }}
         >
           {label}

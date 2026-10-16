@@ -479,7 +479,8 @@ export function ListHeaderView({ look, variant = 'mediumWeak', title, action, mo
       }
     >
       <span>{title}</span>
-      {action && <ButtonView look={look.marks.headerAction} mode={mode} label={action} suffix="chevron-right" flush="right" />}
+      {/* 글 버튼 — 위아래로 블리드해 줄 높이를 바꾸지 않고, 오른쪽 여백만큼 바깥으로 내어 글자 끝이 줄 여백에 선다(list-header.yaml action) */}
+      {action && <ButtonView look={look.marks.headerAction} mode={mode} label={action} style={{ marginTop: -look.marks.headerAction.faces.light.enabled.padY, marginBottom: -look.marks.headerAction.faces.light.enabled.padY, marginRight: -look.marks.headerAction.faces.light.enabled.padX }} />}
     </div>
   );
 }

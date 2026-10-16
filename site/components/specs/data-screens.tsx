@@ -50,7 +50,7 @@ export function Floor({ children, mode = 'auto', brand = 'desk', pad = EDGE, gap
 }
 export function ModeLabel({ mode }: { mode: Mode }) {
   return (
-    <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral-subtle', mode) }}>
+    <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral-subtle', mode) }}>
       {modeKo(mode)}
     </span>
   );

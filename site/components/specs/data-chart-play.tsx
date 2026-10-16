@@ -20,7 +20,7 @@ const FONT = "'Pretendard Variable', Pretendard, sans-serif";
 function Said({ text }: { text: string }) {
   return (
     <span role="status" className="inline-flex min-h-[26px] items-center gap-1.5 rounded-md border border-fd-border bg-fd-card px-2 py-1 text-[12px] leading-4 text-fd-foreground">
-      <span className="text-[10px] font-semibold text-fd-muted-foreground">읽는 글</span>
+      <span className="text-[10px] font-bold text-fd-muted-foreground">읽는 글</span>
       {text || '—'}
     </span>
   );

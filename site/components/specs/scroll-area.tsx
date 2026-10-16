@@ -94,7 +94,7 @@ const Anatomy: Fig = ({ caption }) => {
             <span style={{ position: 'absolute', left: 0, top: 24, width: l.bar.width * k, height: thumbH * k * 0.6, borderRadius: 9999, background: 'var(--p-stroke-neutral-solid)' }} />
             {pinAt('ⓒ', { left: l.bar.width * k + 8, top: 40 })}
             {pinAt('ⓓ', { left: l.bar.width * k + 8, top: 170 })}
-            <span aria-hidden className="pointer-events-none absolute text-[10px] font-semibold leading-4 text-white" style={{ left: 0, top: -22, background: MARK_LINE, borderRadius: 4, padding: '0 4px', whiteSpace: 'nowrap' }}>
+            <span aria-hidden className="pointer-events-none absolute text-[10px] font-bold leading-4 text-white" style={{ left: 0, top: -22, background: MARK_LINE, borderRadius: 4, padding: '0 4px', whiteSpace: 'nowrap' }}>
               {l.bar.width}px({k}배)
             </span>
           </div>
@@ -159,7 +159,7 @@ const Context: Fig = ({ caption }) => {
               overlay={
                 <DimView dim={s.dim} place="end">
                   <SheetSurface look={s} title="휴가 신청" safe={PHONE_SAFE} maxHeight={`${s.maxHeight * 100}%`}>
-                    <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 8, color: 'var(--p-fg-neutral)' }}>휴가 정책</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 8, color: 'var(--p-fg-neutral)' }}>휴가 정책</div>
                     <ScrollBox look={scrollAreaLook('hr')} label="휴가 정책" contain height={200} style={{ borderRadius: 12, background: 'var(--p-bg-layer-basement)' }}>
                       <p style={{ margin: 0, padding: 14, fontSize: 13, lineHeight: '20px', color: 'var(--p-fg-neutral-muted)', whiteSpace: 'pre-line' }}>{VACATION_POLICY}</p>
                     </ScrollBox>

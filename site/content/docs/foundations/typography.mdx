@@ -4,7 +4,7 @@ description: 글자 크기 · 줄 높이 · 굵기와 텍스트 스타일
 source: DESIGN.md
 ---
 
-import { LegacyTypeTable, LineBreakFigure, LineBreakTable, SemanticStyleTable, TypePreviewFigure, TypeScaleTable, UnitTable, WeightFigure } from '@/components/foundations/typography';
+import { LegacyTypeTable, LineBreakFigure, LineBreakTable, RoleRules, RoleTable, SemanticStyleTable, TypePreviewFigure, TypeScaleTable, UnitTable, WeightFigure } from '@/components/foundations/typography';
 
 글자는 콘텐츠를 또렷하고 빠르게 읽히게 하는 요소다. 크기 · 줄 높이 · 굵기를 토큰으로 두고, 그 조합으로 제목 · 본문 같은 위계를 만든다.
 
@@ -71,6 +71,14 @@ SEED 는 크기와 굵기를 묶어 `t5Medium` 처럼 부른다. porest 는 크�
 
 UI 글자는 줄 높이 ×1.35 안팎, 긴 글은 ×1.5 안팎이다 — 한국어 본문은 줄 사이가 넉넉해야 읽힌다.
 
+## 글자 역할
+
+스케일과 역할 스타일은 크기를 정하고, 색은 Color 의 역할 색이 정한다. 아래 표는 그 둘을 **자리마다 어떻게 묶어 쓰는지**다 — 컴포넌트 스펙의 글자 부위를 뜻으로 묶은 열아홉 역할이다. 새 자리를 그릴 때는 이 표에서 역할을 고르고, 표에 없는 크기 · 굵기 · 색 조합을 새로 만들지 않는다. 값 대부분은 SEED 컴포넌트 값이고, SEED 에 짝이 없던 자리는 사용자가 정했다(2026-10-16).
+
+<RoleTable />
+
+<RoleRules />
+
 ## 줄바꿈
 
 한국어는 띄어쓰기 단위(어절)로 줄을 바꾼다. 브라우저와 Flutter 의 기본값은 글자 사이 어디서나 끊어서 좁은 칸에서 낱말이 두 줄로 갈린다 — porest 는 웹 · 앱 모두 단어 단위로 끊는다.
@@ -90,12 +98,12 @@ UI 글자는 줄 높이 ×1.35 안팎, 긴 글은 ×1.5 안팎이다 — 한국�
 - **일관성** — 정해 둔 토큰과 스타일만 쓴다. 자리마다 새 크기를 만들지 않는다.
 - **분명한 위계** — 제목과 본문을 또렷이 나눠, 정보가 빨리 읽히게 한다.
 - **단위** — 웹은 rem 이라 사용자의 글자 크기 설정을 따른다. 커지면 깨지는 자리에만 `-static` 을 쓴다.
-- **역할 먼저** — 화면 제목 · 긴 글처럼 자리가 정해져 있으면 역할 스타일을 쓴다. 뜻이 코드에 남는다.
+- **역할 먼저** — 화면 제목 · 긴 글처럼 자리가 정해져 있으면 역할 스타일을 쓴다. 뜻이 코드에 남는다. 그 밖의 자리는 위 "글자 역할" 표에서 고른다.
 - **단어 단위 줄바꿈** — 맨 바깥 한 곳에서만 건다. 화면마다 `word-break` 를 따로 걸지 않는다.
 
 ## 옛 이름
 
-컴포넌트는 아직 옛 15단계 이름을 쓴다. 값은 그대로이고, 컴포넌트마다 SEED 와 비교할 때 아래 새 이름으로 옮긴다.
+컴포넌트 스펙은 모두 새 스케일로 옮겼다 — 옛 15단계 이름을 쓰는 컴포넌트는 없다. 옛 이름은 아직 부르는 도구(옛 미리보기 · 레시피 일부)를 옮길 때까지만 남겨 두었고, 새 자리에서 쓰지 않는다. 아래는 옛 이름이 어느 새 이름에 가까운지다.
 
 <LegacyTypeTable />
 

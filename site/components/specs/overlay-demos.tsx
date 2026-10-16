@@ -48,7 +48,7 @@ function TxRow({ kit, mode, tx }: { kit: OvKit; mode: ViewMode; tx: Pick<Tx, 'ti
           {tx.sub}
         </span>
       </span>
-      <span className="text-[15px] font-semibold tabular-nums" style={{ color: tone(kit, 'fg-neutral', mode) }}>
+      <span className="text-[15px] font-bold tabular-nums" style={{ color: tone(kit, 'fg-neutral', mode) }}>
         {tx.amount > 0 ? '+' : ''}
         {comma(tx.amount)}원
       </span>

@@ -235,8 +235,8 @@ const States: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="grid gap-x-4 gap-y-2 sm:grid-cols-[72px_1fr_1fr]">
       <span className="hidden sm:block" />
-      <span className="hidden text-center text-[12px] font-semibold pk-text sm:block">기본</span>
-      <span className="hidden text-center text-[12px] font-semibold pk-text sm:block">강조 highlighted</span>
+      <span className="hidden text-center text-[12px] font-bold pk-text sm:block">기본</span>
+      <span className="hidden text-center text-[12px] font-bold pk-text sm:block">강조 highlighted</span>
       {LIST_STATES.map((st) => (
         <div key={st} className="contents">
           <span className="self-center text-[12px] pk-text">
@@ -442,7 +442,7 @@ const GroupGuide: Fig = ({ caption }) => (
             일반
           </div>
           <L rows={SETTINGS.slice(1)} live={false} />
-          <div className="px-6 pb-1 pt-4 text-[12px] font-semibold uppercase tracking-wide" style={{ color: rc('fg-brand') }}>
+          <div className="px-6 pb-1 pt-4 text-[12px] font-bold uppercase tracking-wide" style={{ color: rc('fg-brand') }}>
             알림
           </div>
           <L rows={NOTI.slice(0, 2)} live={false} />

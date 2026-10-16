@@ -134,7 +134,7 @@ const Layout: Fig = ({ caption }) => {
           <Band style={{ left: z.root.pad + z.icon, top: z.root.pad, bottom: z.root.pad, width: z.root.gap }} label={String(l.root.gap)} below />
           <span aria-hidden className="absolute flex items-center" style={{ left: '100%', top: 0, bottom: 0, marginLeft: 6 }}>
             <span style={{ width: 1, height: '100%', background: MARK_LINE }} />
-            <span className="ml-1 whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+            <span className="ml-1 whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
               최소 {l.root.minHeight}
             </span>
           </span>

@@ -149,7 +149,7 @@ const [error, setError] = useState<string | null>(null)
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | Input · Field 의 검증 그대로 — 값 `fg-neutral` 16.41 · 13.42, placeholder · 설명 `fg-placeholder` · `fg-neutral-subtle` 5.50 · 6.09(시트 다크 5.27), 오류 `fg-critical` 5.06 · 6.08 ✓. 다시 받기 글 `fg-neutral` · `bg-neutral-weak` 위 15.20 · 10.32 ✓ — 막힌 동안 `fg-disabled` 는 기준 밖 |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | Input · Field 의 검증 그대로 — 값 `fg-neutral` 16.41 · 13.42, 설명 `fg-neutral-subtle` 5.50 · 6.09(시트 다크 5.27), 오류 `fg-critical` 5.06 · 6.08 ✓. placeholder `fg-placeholder` 4.18 · 4.13(시트 다크 3.58) — 4.5:1 밑, 사용자가 대가를 알고 SEED 값을 골랐다(2026-10-16 글자 역할 D7, DESIGN v119). 다시 받기 글 `fg-neutral` · `bg-neutral-weak` 위 15.20 · 10.32 ✓ — 막힌 동안 `fg-disabled` 는 기준 밖 |
 | **WCAG 1.3.5** Identify input purpose | `autocomplete="one-time-code"` ✓ |
 | **WCAG 3.3.1** Error identification | 틀린 코드를 글로 알리고 칸에 `aria-invalid` ✓ |
 | **WCAG 2.2.1** Timing adjustable | 유효 시간(10분)을 설명 줄로 미리 알리고, 지나면 다시 받을 수 있다 ✓ |

@@ -19,7 +19,8 @@ import { Button } from "@/components/ui/button";
  *   title           무슨 상태인지 한 줄(큰 글씨라 마침표 없이) — 제목 태그(as, 기본 h2 — 화면 전체면 그 화면의 제목 단계)
  *   description     왜 · 무엇을 하면 되는지, 해요체 + 마침표, 최대 두 줄을 권한다(fg-neutral-muted · 단어 단위 줄바꿈)
  *   primaryAction   첫 버튼 — 해결 · 다음 동작(다시 시도 · 거래 추가). Button neutralWeak medium 40
- *   secondaryAction 둘째 버튼 — 보조 동작(홈으로 · 다른 파일 가져오기). Button ghost small 36 — 위아래로 블리드(−8)해
+ *   secondaryAction 둘째 버튼 — 보조 동작(홈으로 · 다른 파일 가져오기). 글 버튼(SEED Text Button — Button ghost small 36 의 상자에
+ *                   글자 fg-neutral-muted, 2026-10-16 글자 역할 D2) — 위아래로 블리드(−8)해
  *                   글 자리만 차지한다. 버튼은 위아래로, 사이 20 — 블리드 때문에 상자 사이는 12(SEED 와 같다)
  *   (버튼: { label, onClick?, href?, loading? } — href 면 링크, loading 이면 Button 의 로딩 — "다시 시도" 하는 동안)
  *
@@ -103,8 +104,8 @@ const TITLE = "font-bold text-fg-neutral break-keep [overflow-wrap:break-word]";
 const DESCRIPTION = "font-normal text-fg-neutral-muted break-keep [overflow-wrap:break-word]";
 // 버튼 묶음 — 위아래로, 사이 20. 둘째 버튼이 위아래 −8 블리드해 상자 사이는 12 다(SEED 와 같다)
 const ACTIONS = "flex flex-col items-center gap-x5";
-// 둘째 버튼(ghost small 36)은 위아래 −8(Button small 의 위아래 여백) — 글 자리만 차지한다
-const SECONDARY = "-my-x2";
+// 둘째 버튼 — 글 버튼(SEED Text Button = ghost small 36 + 글자 fg-neutral-muted). 위아래 −8(Button small 의 위아래 여백) — 글 자리만 차지한다
+const SECONDARY = "-my-x2 text-fg-neutral-muted";
 
 function ActionButton({ action, variant, size, className }: { action: ResultSectionAction; variant: "neutralWeak" | "ghost"; size: "medium" | "small"; className?: string }) {
   if (action.href != null) {

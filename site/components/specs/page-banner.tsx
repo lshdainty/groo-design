@@ -152,7 +152,7 @@ const Anatomy: Fig = ({ caption }) => {
 // 띠의 여백 — 데스크톱(한 줄 — 버튼은 오른쪽 끝) · 폰(버튼이 다음 줄 본문 시작선으로) · 닫기
 const Layout: Fig = ({ caption }) => {
   const l = bl();
-  const tag = (s: string) => <span className="text-[12px] font-semibold pk-text">{s}</span>;
+  const tag = (s: string) => <span className="text-[12px] font-bold pk-text">{s}</span>;
   return (
     <Figure caption={caption}>
       <div className="flex w-[550px] flex-col gap-7 rounded-xl pk-surface px-6 py-8">
@@ -166,7 +166,7 @@ const Layout: Fig = ({ caption }) => {
             <Band style={{ left: l.root.padX + l.icon.size, top: l.root.padY, width: l.root.gap, height: px(l.description.lineHeight) }} label={String(l.root.gap)} below />
             <span aria-hidden className="absolute flex items-center" style={{ left: '100%', top: 0, bottom: 0, marginLeft: 6 }}>
               <span style={{ width: 1, height: '100%', background: MARK_LINE }} />
-              <span className="ml-1 whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE }}>
+              <span className="ml-1 whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
                 최소 {l.root.minHeight}
               </span>
             </span>
@@ -234,7 +234,7 @@ const Tones: Fig = ({ caption }) => {
         <div className="grid grid-cols-1 gap-px md:grid-cols-2" style={{ background: rc('stroke-neutral-subtle', mode) }}>
           {(['weak', 'solid'] as const).map((variant) => (
             <div key={variant} className="flex flex-col gap-3 pb-4 pt-3" style={{ background: rc('bg-layer-default', mode) }}>
-              <span className="px-4 text-[12px] font-semibold" style={{ color: rc('fg-neutral', mode) }}>
+              <span className="px-4 text-[12px] font-bold" style={{ color: rc('fg-neutral', mode) }}>
                 {variant === 'weak' ? 'weak(기본) — 옅은 바탕' : 'solid — 짙은 바탕, 무거운 상태에만'}
               </span>
               {tones.map((tone) => {

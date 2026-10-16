@@ -241,7 +241,7 @@ const States: Fig = ({ caption }) => {
         {MODES.map((mode) => (
           <div key={mode} className="rounded-xl" style={{ background: rc('bg-layer-default', mode), paddingTop: 14, paddingBottom: 14, paddingLeft: 14, paddingRight: 14 }}>
             <div className="grid items-center gap-x-2 gap-y-3" style={{ gridTemplateColumns: `64px repeat(${states.length}, minmax(92px, auto))` }}>
-              <span className="text-[12px] font-semibold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
+              <span className="text-[12px] font-bold" style={{ color: rc('fg-neutral-subtle', mode) }}>{modeKo(mode)}</span>
               {states.map((st) => (
                 <span key={st} className="text-center text-[11px]" style={{ color: rc('fg-neutral-subtle', mode) }}>
                   {STATE_KO[st]}
@@ -335,7 +335,7 @@ function ImportScreen({ scale = 0.42, h = 560 }: { scale?: number; h?: number })
   return (
     <NPhone scale={scale} h={h} bar={<Bar leading="close" title="거래 가져오기" />}>
       <div className="flex flex-col gap-3 pt-4" style={{ paddingLeft: 24, paddingRight: 24 }}>
-        <span className="text-[13px] font-semibold" style={{ color: rc('fg-brand') }}>2 / 3</span>
+        <span className="text-[13px] font-bold" style={{ color: rc('fg-brand') }}>2 / 3</span>
         <span className="text-[20px] font-bold leading-7" style={{ color: rc('fg-neutral') }}>가져올 파일을 골라 주세요</span>
         <div className="flex flex-col gap-2 pt-2">
           {['국민카드_2026_09.xlsx', '현대카드_2026_09.csv'].map((f, i) => (

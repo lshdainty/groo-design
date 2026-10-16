@@ -52,7 +52,7 @@ const dashed = (offset = 0): CSSProperties => ({ outlineStyle: 'dashed', outline
 const markBox: CSSProperties = { ...dashed(), background: MARK };
 function Tag({ children, style }: { children: ReactNode; style: CSSProperties }) {
   return (
-    <span aria-hidden className="absolute whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ background: MARK_LINE, ...style }}>
+    <span aria-hidden className="absolute whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE, ...style }}>
       {children}
     </span>
   );
@@ -249,7 +249,7 @@ const States: Fig = ({ caption }) => {
           ))}
           {SEG_STATES.map((st) => (
             <Fragment key={st}>
-              <span className="col-span-2 pt-1 text-[12px] font-semibold leading-4 sm:col-span-1 sm:pt-0" style={{ color: rc('fg-neutral', mode) }}>
+              <span className="col-span-2 pt-1 text-[12px] font-bold leading-4 sm:col-span-1 sm:pt-0" style={{ color: rc('fg-neutral', mode) }}>
                 {STATE_KO[st]}
               </span>
               {[b, a].map((value) => (

@@ -121,7 +121,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 값 `fg-neutral` 16.41 · 13.42, placeholder `fg-placeholder` 5.50 · 6.09(시트 다크 5.27), 읽기 전용 바탕 위 값 15.20 · 10.32 ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 값 `fg-neutral` 16.41 · 13.42, 읽기 전용 바탕 위 값 15.20 · 10.32 ✓. placeholder `fg-placeholder` 4.18 · 4.13(시트 다크 3.58) — 4.5:1 밑, 사용자가 대가를 알고 SEED 값을 골랐다(2026-10-16 글자 역할 D7, DESIGN v119). 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 포커스 테두리 16.41 · 13.42, 오류 5.06 · 6.08 ✓. 기본 1px 테두리(1.23 · 1.56)는 라벨 · placeholder 와 함께 칸을 알린다 |
 | **WCAG 1.4.10** Reflow | 자동 높이라 가로 스크롤 없이 글이 감긴다 |
 | **WCAG 2.4.7** Focus visible | 편집 칸은 포커스하면 테두리가 2px 짙어진다 ✓. 읽기 전용은 포커스 표시가 없다 ⚠ — 사용자 결정(2026-10-08), 까닭은 [Input](input.md) 의 같은 줄 |

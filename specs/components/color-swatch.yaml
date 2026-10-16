@@ -86,7 +86,7 @@ rules:
         display: 숨김
       currentLabel:
         typography: $text-t2
-        foreground: { value: $color-fg-neutral-muted, note: "흰 표면 7.11 · 다크 7.70" }
+        foreground: { value: $color-fg-neutral-subtle, note: "색 이름은 덧붙인 정보라 subtle(2026-10-16 사용자 결정 글자 역할 D5, 전 muted). 흰 표면 5.50 · 다크 6.09(시트 5.27)" }
         marginTop: { value: $spacing-x1_5, note: "지금 색 칸 아래 6" }
       divider:
         width: 1px

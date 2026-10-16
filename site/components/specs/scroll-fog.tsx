@@ -32,7 +32,7 @@ const pin = (n: string, style: CSSProperties) => (
 function Depth({ style, label, below = false }: { style: CSSProperties; label: string; below?: boolean }) {
   return (
     <span aria-hidden className="pointer-events-none absolute" style={{ boxShadow: `inset 0 0 0 1px ${MARK_LINE}`, zIndex: 4, ...style }}>
-      <span className="absolute whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ right: 4, ...(below ? { bottom: 3 } : { top: 3 }), background: MARK_LINE }}>
+      <span className="absolute whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ right: 4, ...(below ? { bottom: 3 } : { top: 3 }), background: MARK_LINE }}>
         {label}
       </span>
     </span>

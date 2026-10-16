@@ -204,7 +204,7 @@ const Sizes: Fig = ({ caption }) => {
                 </div>
                 {/* 그림의 한 변 — 줄여 그려도 수는 실제 값 */}
                 <span aria-hidden className="absolute" style={{ left: ((w - size) / 2) * s, width: size * s, top: ((h - size) / 2) * s - 6, height: 2, background: MARK_LINE }} />
-                <span aria-hidden className="absolute whitespace-nowrap rounded px-1 text-[10px] font-semibold leading-4 text-white" style={{ left: (w / 2) * s, top: ((h - size) / 2) * s - 24, transform: 'translateX(-50%)', background: MARK_LINE }}>
+                <span aria-hidden className="absolute whitespace-nowrap rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ left: (w / 2) * s, top: ((h - size) / 2) * s - 24, transform: 'translateX(-50%)', background: MARK_LINE }}>
                   {Math.round(size)}
                 </span>
               </div>
