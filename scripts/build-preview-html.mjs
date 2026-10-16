@@ -13614,6 +13614,8 @@ export function pageCss() {
       color: var(--color-fg-disabled);
       cursor: not-allowed;
     }
+    /* 안 고른 Solid 의 막힘 — 바탕은 bg-neutral-weak-alpha 그대로, 글 · 아이콘만 fg-disabled(bg-disabled 는 회색 바닥과 같은 gray-200 — 사용자 결정 2026-10-17, 03-B 결정 1 A) */
+    .pchip--solid:not([aria-checked="true"], [data-selected]):disabled { background: var(--color-bg-neutral-weak-alpha); }
     /* 입력값 칩 — 글 + 지우기(lucide x · 14 · 14 · 16 · 글자색 그대로 — 사이 6). 지우기는 누르는 영역 24 × 24 이고 이름은 "{글} 지우기" 다.
        지우기는 호버 바탕이 없고, 누르면 지우기만 2px 거리로 준다(기준 24 — SEED scaleScope self, Input Button 의 지우기 .pib-clear 와 같다). 칩은 누름이 아니다.
        키보드 링은 지우기가 아니라 칩 둘레에 그린다(위 포커스 규칙) */
@@ -13880,8 +13882,9 @@ export function pageCss() {
       box-shadow: inset 0 0 0 1px transparent;
       color: var(--color-fg-neutral-subtle);
       font-family: var(--font-sans);
-      font-size: var(--text-t5);
-      line-height: var(--text-t5--line-height);
+      /* 칸 글은 -static 16 — 글자 크기 설정을 따르지 않는다(4칸이 한 글자씩 쪼개지지 않게 — 2026-10-17 사용자 결정, 03-B 결정 4 A) */
+      font-size: var(--text-t5-static);
+      line-height: var(--text-t5-static--line-height);
       font-weight: 700;
       text-align: center;
       cursor: pointer;

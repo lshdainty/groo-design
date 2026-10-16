@@ -3,6 +3,7 @@ import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import { ignoreRadioJumpKeys } from "@/components/ui/radio-group";
 
 /*
  * Porest Segmented Control — 구조는 SEED Segmented Control(2026-10-02). 수치 원본은 specs/components/segmented-control.yaml.
@@ -77,7 +78,7 @@ const SEGMENTED_INDICATOR = [
 // 막힌 칸은 호버 · 누름이 없다(enabled 에서만 칠한다)
 const segmentedControlItemVariants = cva(
   [
-    "group/segmented-item relative flex min-h-[34px] min-w-0 cursor-pointer select-none items-center justify-center rounded-full px-x3 py-x1_5 font-sans text-t5 font-bold text-fg-neutral-subtle dark:text-fg-neutral-muted [--press-basis:34]",
+    "group/segmented-item relative flex min-h-[34px] min-w-0 cursor-pointer select-none items-center justify-center rounded-full px-x3 py-x1_5 font-sans text-t5-static font-bold text-fg-neutral-subtle dark:text-fg-neutral-muted [--press-basis:34]",
     "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing),box-shadow_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
     // 안 고른 칸 — 올리거나 누르면 바탕 + 안쪽 1px + 한 단계 짙은 글
@@ -109,9 +110,9 @@ const SegmentedValueContext = React.createContext<string | null>(null);
 export interface SegmentedControlProps
   extends Omit<React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>, "orientation" | "name" | "required"> {}
 
-// 트랙(role=radiogroup) — ← → ↑ ↓ 모두 옮기며 고른다(orientation 을 두지 않는다)
+// 트랙(role=radiogroup) — ← → ↑ ↓ 모두 옮기며 고른다(orientation 을 두지 않는다). Home · End 는 받지 않는다(Radio 와 같다)
 const SegmentedControl = React.forwardRef<React.ElementRef<typeof RadioGroupPrimitive.Root>, SegmentedControlProps>(
-  ({ className, children, value: valueProp, defaultValue, onValueChange, ...props }, ref) => {
+  ({ className, children, value: valueProp, defaultValue, onValueChange, onKeyDownCapture, ...props }, ref) => {
     const own = React.useRef<HTMLDivElement>(null);
     const pill = React.useRef<HTMLSpanElement>(null);
     const [inner, setInner] = React.useState(defaultValue ?? "");
@@ -162,6 +163,7 @@ const SegmentedControl = React.forwardRef<React.ElementRef<typeof RadioGroupPrim
           {...props}
           value={value}
           onValueChange={setValue}
+          onKeyDownCapture={ignoreRadioJumpKeys(onKeyDownCapture)}
         >
           <span ref={pill} aria-hidden data-slot="segmented-control-indicator" className={SEGMENTED_INDICATOR} />
           {children}

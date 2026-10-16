@@ -92,12 +92,13 @@ export function SwatchGroupView({ look, mode = 'auto', value, onValueChange, cur
       case 'ArrowUp':
         to = gi >= 0 ? grid[gi - look.columns] ?? grid[grid.length - look.columns + (gi % look.columns)] : undefined;
         break;
+      // 하나 고르기 묶음은 화살표만 — Home · End · PageUp · PageDown 은 받지 않는다(화면도 스크롤되지 않는다 — 2026-10-17 사용자 결정 03-E 결정 3 후속)
       case 'Home':
-        to = order[0];
-        break;
       case 'End':
-        to = order[order.length - 1];
-        break;
+      case 'PageUp':
+      case 'PageDown':
+        e.preventDefault();
+        return;
       case ' ':
         e.preventDefault();
         pick(from);

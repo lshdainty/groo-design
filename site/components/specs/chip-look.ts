@@ -173,10 +173,15 @@ export function chipLook(brand: Brand = 'desk'): ChipLook {
   // 비었을 때 높이는 비고대로 칩 한 줄(medium) — 크기가 바뀌면 같이 고친다
   if (group.minHeight !== sizes.medium.h) throw new Error(`chip.yaml 의 group.minHeight(${group.minHeight})가 medium 칩 높이(${sizes.medium.h})와 다르다`);
 
+  // 최대 폭 — 줄 폭(100%)에서 말줄임. 값이 바뀌면 그림(chip-view 의 말줄임)을 같이 고친다
+  if (String(unbox(base['root.maxWidth'])) !== '100%') throw new Error(`chip.yaml 의 root.maxWidth(${String(unbox(base['root.maxWidth']))})가 100% 가 아니다 — 그림은 줄 폭에서 말줄임한다`);
+  if (!String(unbox(must(base['label.overflow'], 'label.overflow'))).startsWith('말줄임')) throw new Error('chip.yaml 의 label.overflow 가 말줄임이 아니다');
+
   const look: ChipLook = {
     defaults: { variant: must(spec.defaults?.variant, 'defaults.variant') as ChipVariant, size: must(spec.defaults?.size, 'defaults.size') as ChipSize },
     sizes,
     radius: len(base['root.radius'], 'root.radius'),
+    maxWidth: String(unbox(must(base['root.maxWidth'], 'root.maxWidth'))),
     gap: len(base['root.gap'], 'root.gap'),
     text: type(base['label.typography'], base['label.fontWeight'], 'label.typography'),
     faces,

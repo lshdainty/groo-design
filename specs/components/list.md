@@ -417,6 +417,7 @@ import { List, ListButtonItem, ListParentItem } from "@/components/ui/list"
 | Hover(웹) | 누르는 줄만 — 누름과 같은 바탕. |
 | Keyboard `Tab` | 누르는 줄 · 컨트롤로 간다. 보기만 하는 줄은 건너뛴다. |
 | Keyboard `Enter` · `Space` | 누르는 줄은 누르기와 같다. 컨트롤 줄은 그 컨트롤의 키(스위치 · 체크 Space, 라디오 화살표). 체크 · 라디오 줄의 `Enter` 는 폼을 제출한다 — 진짜 input 처럼 폼의 기본 버튼을 누른다(Checkbox · Radio 와 같다, 2026-10-08). 키를 누르고 있는 동안은 포인터로 누를 때와 같은 누름 모습(바탕 · 콘텐츠 축소)이다. |
+| Keyboard `Home` · `End`(라디오 줄) | 하나 고르기 묶음(`ListRadioGroup`)은 받지 않는다 — 초점도 고른 줄도 그대로, 화면도 스크롤되지 않는다(`PageUp` · `PageDown` 도). 첫 · 끝 줄로는 화살표로 간다 — SEED · 진짜 라디오 · WAI-ARIA APG Radio Group 과 같다(2026-10-17 사용자 결정 — 03-E 결정 3 A). |
 | Disabled | 누르기 · 키보드 불가, 포커스에서 빠진다. 값은 그대로 보인다. |
 | 꺾쇠 단추(하위 줄) | 누르기 · `Enter` · `Space` 로 하위 줄을 펼치고 접는다 — 줄의 편집은 열리지 않는다. 초점은 단추에 그대로. `Tab` 은 꺾쇠 단추 → 그 줄 → 펼친 하위 줄 → 다음 부모의 꺾쇠 단추. 모션 줄이기면 높이 움직임 없이 150ms 서서히 · 꺾쇠는 바로. `collapsible={false}`(늘 펼친 편집 화면)면 단추가 없고 하위 줄이 늘 보인다 — `Tab` 은 줄 → 하위 줄 → 다음 부모 줄 |
 
@@ -480,6 +481,10 @@ import { List, ListButtonItem, ListParentItem } from "@/components/ui/list"
 - **긴 값의 겹침만 막는다** — 본문 최소 1em · 제목 · 글 설명 `overflow-wrap: anywhere` · 글 값은 줄 끝에서 끊는다(2026-10-15 Q-001). SEED 는 뒤 붙이개 `flexShrink 0` · 본문 `flexGrow 1` 만 두고 최소 폭 · 줄바꿈 규칙을 두지 않는다 — 줄지 않는 값 · 양보하는 본문은 SEED 와 같다.
 
 ## Migration notes
+
+### 2026-10-17 — 하나 고르기 묶음은 Home · End 를 받지 않는다(03-E 결정 3 A)
+
+웹 공용 라디오 묶음(Chip 하나 고르기 · Radio Group · Segmented Control · Select Box 하나 고르기 · List 라디오)은 Radix RovingFocusGroup 이 Home · End(· PageUp · PageDown)로 초점만 첫 · 끝으로 옮겨 초점과 고른 것이 갈렸다. 사용자가 [비교 페이지](https://claude.ai/artifact/FKYaqu7zAR5T2HVwFnx5oD)에서 "받지 않는다"(A — 화살표만, SEED · 진짜 라디오 · APG)를 골랐다. 레시피는 묶음이 캡처 단계에서 라디오의 그 키를 막는다(`ignoreRadioJumpKeys` — radio-group.tsx, List 라디오 줄 도 쓴다). 웹 ds 의 같은 묶음도 같게, 앱은 바뀌는 것 없음. 옮기며 고르는 안(B — Tabs 처럼)은 고르지 않았다. 옛 스펙은 `list.history/v-pre-03e-03b.md`.
 
 ### 2026-10-17 — 큰 글자 · 앱 낭독 · 본문 최소 폭(03-D 결정 1 · 4 · 03D-005)
 

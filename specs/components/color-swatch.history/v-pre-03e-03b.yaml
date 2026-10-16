@@ -1,0 +1,178 @@
+# Color Swatch 의 수치 원본 — 카테고리 · 태그 · 라벨 색 고르기(2026-10-09 사용자 결정, 입력 비교 페이지 12C · 13B · 14B · "따라오는 것").
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 차트 10색(v110 — 라이트 700 · 다크 800-dark)을 원 40 칸에 진하게 칠해 5 × 2 로 늘어놓고 하나를 고른다(radiogroup).
+# 차례는 색상환(빨강 → 주황 → 노랑 → 초록 → 파랑 → 남색 → 보라 → 분홍 → 갈색 → 회색) — 폭과 상관없이 5개씩 두 줄이다.
+# 고른 칸은 2px 짙은 고리(띄움 2) + 가운데 체크(라이트 흰 · 다크 짙은 — fg-neutral-inverted). 칸마다 색 이름("빨강")이 있다.
+# 팔레트 밖 색(가져온 #9E9E9E)이거나 색이 없는 항목을 고칠 때는 격자 앞에 "지금 색" · "자동" 칸을 따로 둔다 — 고르지 않으면 저장 값을 바꾸지 않는다.
+# 새 항목은 v110 배정 순서에서 아직 쓰지 않은 첫 색으로 시작한다(데이터 결정 9A 를 새 항목에도).
+#
+# 축 — color(칸의 색) · selected(고름) · current(지금 색 칸). 상태는 칸의 상태다.
+#
+# SEED 와 다른 자리(color-swatch.md 의 "SEED 와 다른 점")
+#   - SEED 에는 색 고르기 부품이 없다 — "색상 선택" 은 글자 칩 · 색 점 12 + 이름(Wheel Picker 예)뿐이다. 칸 · 고리 · 2차원 화살표 ·
+#     지금 색 칸 · 새 항목의 첫 색은 porest 가 정했다. 색 이름을 칸마다 두는 것은 SEED Wheel Picker 예(항목마다 ariaLabel)와 같다.
+
+name: Color Swatch
+
+slots:
+  group: 묶음 — radiogroup, 5 × 2 격자. 이름은 Field 라벨("색상")
+  swatch: 색 칸 — 원 40, 누르는 44. 이름은 색 이름
+  check: 체크 — 고른 칸 가운데
+  ring: 고른 고리 — 칸 바깥 2 띄워 2px
+  current: 지금 색 칸 — 팔레트 밖 색("지금 색") · 색 없음("자동"). 격자 앞, 묶음의 첫 칸
+  currentLabel: 지금 색 칸 아래 글
+  divider: 지금 색 칸 ↔ 격자 사이 세로 선
+  focusRing: 키보드 포커스 링 — 고리 바깥
+
+variants:
+  color:
+    red: 빨강
+    orange: 주황
+    yellow: 노랑
+    green: 초록
+    blue: 파랑
+    indigo: 남색
+    violet: 보라
+    pink: 분홍
+    brown: 갈색
+    gray: 회색
+  selected:
+    unselected: 안 고름
+    selected: 고름 — 고리 + 체크
+  current:
+    none: 지금 색 칸 없음 — 저장된 색이 팔레트에 있다(기본)
+    custom: 팔레트 밖 지금 색 — "지금 색"
+    auto: 색 없음 — "자동", 차트가 쓸 색을 점선 원으로
+
+defaults:
+  color: red
+  selected: unselected
+  current: none
+
+states:
+  enabled: 기본
+  hovered: 웹 — 바뀌지 않는다(칸의 색이 곧 값이다)
+  focused: 키보드 포커스 — 고리 바깥 링
+  pressed: 칸 2px 거리 축소(v104)
+  disabled: 누르기만 막는다 — 색은 그대로, 고른 고리는 stroke-neutral-solid
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      group:
+        columns: { value: 5, note: "늘 5개씩 두 줄 — 폭과 상관없이(폭을 나눈 네모 · 줄바꿈은 고르지 않았다, 13B). ↑ ↓ 가 늘 같은 칸으로 간다" }
+        gap: { value: $spacing-x3, note: "칸 사이 · 줄 사이 12 — 누르는 영역 44 가 겹치지 않는다" }
+        width: { value: 248px, note: "40 × 5 + 12 × 4" }
+        order: { value: 색상환, note: "빨강 → 주황 → 노랑 → 초록 → 파랑 → 남색 → 보라 → 분홍 → 갈색 → 회색(DESIGN.md 차트 색 표의 차례)" }
+        keyboard: { value: "← → · ↑ ↓ · Home · End", note: "radiogroup — 묶음에 Tab 하나(고른 칸, 없으면 첫 칸), 화살표로 옮기며 고른다. ← → 는 차례대로(줄 끝에서 다음 줄로), ↑ ↓ 는 위아래 줄의 같은 칸. 끝에서 처음으로 돈다(APG radiogroup). 지금 색 칸은 차례의 맨 앞(그 칸에서 ↑ ↓ 는 그대로). Enter 는 고르지 않고 폼을 보낸다(Radio Group 과 같다)" }
+      swatch:
+        size: 40px
+        radius: { value: $radius-full, note: "원 — 색 점(아바타 · 범례)과 같은 모양이라 \"색\" 으로 읽힌다" }
+        touchTarget: { value: 44 × 44, note: "보이는 40 둘레로 2 씩 — 칸 사이 12 라 겹치지 않는다. AA ✓ · AAA ✓" }
+        cursor: pointer
+        name: { value: 색 이름, note: "\"빨강\" — 라디오의 이름. \"색상 N\" · hex 를 이름으로 두지 않는다" }
+        tooltip: { value: 색 이름, note: "마우스를 올리면 porest Tooltip 으로 같은 이름(네이티브 title 은 쓰지 않는다) — 색으로 가리기 어려운 사람도 이름을 본다. Icon Picker 의 칸 툴팁과 같다" }
+      check:
+        size: { value: 16px, note: "lucide check" }
+        strokeWidth: { value: 2.5px, note: "v106 — 선택은 선 2.5" }
+        color: { value: $color-fg-neutral-inverted, note: "라이트 흰 · 다크 짙은 글자 — 칸 위 라이트 4.55 ~ 5.50 · 다크 6.07 ~ 7.70(다크 800-dark 칸 위 흰 체크는 1.88 ~ 2.39 라 쓰지 않는다 — 아바타 이니셜과 같은 규칙)" }
+        display: 숨김
+      ring:
+        outlineWidth: { value: 2px, note: "칸 바깥에 두르는 고리 — 칸 크기를 바꾸지 않는다" }
+        outlineOffset: { value: 2px, note: "칸과 고리 사이 2 는 놓인 표면 색 — 칸 색과 고리가 붙지 않는다" }
+        outlineColor: { value: $color-stroke-neutral-contrast, note: "Select Box(v113)의 고른 테두리와 같은 짙은 색 — 흰 표면 16.41 · 다크 13.42(시트 11.62)" }
+        display: 숨김
+      currentLabel:
+        typography: $text-t2
+        foreground: { value: $color-fg-neutral-subtle, note: "색 이름은 덧붙인 정보라 subtle(2026-10-16 사용자 결정 글자 역할 D5, 전 muted). 흰 표면 5.50 · 다크 6.09(시트 5.27)" }
+        marginTop: { value: $spacing-x1_5, note: "지금 색 칸 아래 6" }
+      divider:
+        width: 1px
+        color: $color-stroke-neutral-weak
+        gap: { value: $spacing-x4, note: "지금 색 칸 ↔ 선 ↔ 격자 16" }
+        stackBelow: { value: 321px, note: "지금 색 칸 · 선 · 격자의 폭(40 + 16 + 1 + 16 + 248). 놓인 자리가 이보다 좁으면(360 폰 본문 312) 지금 색 칸을 격자 위 줄에 두고 선을 가로 1px 로 — 사이는 그대로 16. 390 폰(342) · 대화상자는 옆으로 둔다" }
+    pressed:
+      swatch:
+        scale: { value: 칸 2px 거리 축소, note: "기준 40 — Feedback 의 눌림 피드백(v104). 모션 줄이기면 하지 않는다" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: 6px, note: "고른 고리(띄움 2 + 2px) 바깥 — 키보드 포커스에만" }
+        color: $color-stroke-focus-ring
+    disabled:
+      swatch:
+        cursor: { value: not-allowed, note: "칸의 색은 그대로 둔다 — 색이 곧 값이다(Logo Tile · Avatar 처럼)" }
+
+  # ── 칸의 색(v110 — 라이트 700 · 다크 800-dark) ────────
+  - when: { color: red }
+    enabled:
+      swatch: { background: $color-chart-red }
+  - when: { color: orange }
+    enabled:
+      swatch: { background: $color-chart-orange }
+  - when: { color: yellow }
+    enabled:
+      swatch: { background: { value: $color-chart-yellow, note: "흰 표면과 가장 낮은 4.55 · 흰 체크 4.55" } }
+  - when: { color: green }
+    enabled:
+      swatch: { background: $color-chart-green }
+  - when: { color: blue }
+    enabled:
+      swatch: { background: $color-chart-blue }
+  - when: { color: indigo }
+    enabled:
+      swatch: { background: $color-chart-indigo }
+  - when: { color: violet }
+    enabled:
+      swatch: { background: $color-chart-violet }
+  - when: { color: pink }
+    enabled:
+      swatch: { background: $color-chart-pink }
+  - when: { color: brown }
+    enabled:
+      swatch: { background: $color-chart-brown }
+  - when: { color: gray }
+    enabled:
+      swatch: { background: { value: $color-chart-gray, note: "고를 수 있지만 새 항목의 첫 색으로는 주지 않는다 — 회색은 차트의 \"기타\" 전용(v110)" } }
+
+  # ── 고름 ──────────────────────────────────────────────
+  - when: { selected: selected }
+    enabled:
+      check: { display: 보임 }
+      ring: { display: 보임 }
+    disabled:
+      ring: { outlineColor: { value: $color-stroke-neutral-solid, note: "고른 채 막히면 고리를 회색으로 남겨 무엇을 골랐는지 보인다(Chip 의 고른 채 막힘과 같다)" } }
+
+  # ── 지금 색 칸 ────────────────────────────────────────
+  - when: { current: custom }
+    enabled:
+      current:
+        size: 40px
+        background: { value: 저장된 색 그대로, note: "팔레트 밖 hex(가져오기의 #9E9E9E) — 다크 짝이 없어 두 모드 같은 값" }
+        name: { value: 지금 색, note: "아래 글도 \"지금 색\" — 고르면(처음에는 골라져 있다) 저장 값을 그대로 둔다" }
+      check:
+        color: { value: "fg-neutral · fg-neutral-inverted 가운데 대비가 큰 쪽", note: "두 모드 모두 하나는 짙고 하나는 밝다 — 어떤 색 위에서도 라이트 4.06 · 다크 3.67 이상(#9E9E9E 위 라이트 6.13 · 다크 5.41). 흰색 고정 후보는 다크에서 밝은 둘이 되어 #9E9E9E 위 2.68 이라 걷었다" }
+  - when: { current: auto }
+    enabled:
+      current:
+        size: 40px
+        background: { value: 차트가 쓸 색, note: "색이 없는 항목은 차트에서 쓰지 않은 색을 받는다(데이터 결정 9A) — 그 색을 칠해 보인다" }
+        borderWidth: 2px
+        borderStyle: dashed
+        borderColor: { value: $color-stroke-neutral-solid, note: "점선 — 정해진 색이 아니라는 표시" }
+        name: { value: 자동, note: "아래 글도 \"자동\" — 고르면 색 없음 그대로 둔다" }
+
+motion:
+  "누름 — 칸":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "칸 2px 거리 축소 — 모션 줄이기면 하지 않는다"
+  "고름 — 고리 · 체크":
+    duration: 0ms
+    properties: [box-shadow, opacity]
+    note: "바로 나타난다 — 옛 hover 1.05배 확대는 걷었다"

@@ -74,7 +74,7 @@ export function Header({ title, mode = 'auto', brand = 'desk', variant }: { titl
   return <ListHeaderView look={listLook(brand)} title={title} variant={variant} mode={mode} />;
 }
 // 가계부 줄 — 타일 · 제목(+ 상태 배지) · 설명 줄 Tag Group(t3 · 한 줄 말줄임) · 금액.
-// 설명 줄은 분류 · 자산 · 시각(tag-group.md 의 같은 순서) — 분류 · 시각은 줄지 않고(shrink 0) 자산이 먼저 준다. 카드 상세처럼 자산이 화면 제목이면 뺀다
+// 설명 줄은 분류 · 자산 · 시각(tag-group.md 의 같은 순서) — 분류 · 시각은 줄지 않고(shrink 0) 자산만 준다. 카드 상세처럼 자산이 화면 제목이면 뺀다
 export type Tx = { title: string; hue: string; icon: ListIcon; cat: string; asset?: string; when: string; amount: string; badge?: { l: string; t?: BadgeTone; v?: BadgeVariant }; excluded?: 'scheduled' | 'refunded' };
 export function txMeta(tx: Tx, asset = true): TagItem[] {
   return [{ label: tx.cat, shrink: 0 }, ...(asset && tx.asset ? [{ label: tx.asset }] : []), { label: tx.when, shrink: 0 }];

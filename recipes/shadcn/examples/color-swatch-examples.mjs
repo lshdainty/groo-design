@@ -69,7 +69,7 @@ const COLUMNS = 5;
 
 // 칸 — 원 40 · 누르는 44. 고른 고리는 바깥 2 띄운 2px outline, 키보드 포커스 링은 그 바깥 6 에 ::after 로(고리와 겹치지 않게)
 const SWATCH = [
-  "relative block size-10 shrink-0 cursor-pointer rounded-full border-0 p-0",
+  "relative block size-[40px] shrink-0 cursor-pointer rounded-full border-0 p-0",
   "before:absolute before:-inset-0.5 before:rounded-full before:content-['']",
   "outline-offset-2 aria-checked:outline-2 aria-checked:outline-solid aria-checked:outline-stroke-neutral-contrast",
   "disabled:aria-checked:outline-stroke-neutral-solid not-aria-checked:focus-visible:outline-none",

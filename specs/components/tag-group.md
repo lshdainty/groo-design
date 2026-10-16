@@ -57,11 +57,13 @@
 | 값 | 넘칠 때 |
 |---|---|
 | `wrap` *(기본)* | 낱말 단위로 줄을 바꾼다(v114) — 구분은 앞 항목에 붙어 줄 끝에 남고, 다음 줄은 항목으로 시작한다. 아이콘은 붙은 낱말과 한 줄에 남는다(앞 아이콘은 첫 낱말, 뒤 아이콘은 마지막 낱말과 줄바꿈 없이 묶는다 — NBSP 만으로는 아이콘 앞뒤가 줄바꿈 자리가 된다) |
-| `truncate` | 한 줄 — 항목 글이 각자 말줄임(…)한다. 줄어드는 차례를 항목마다 정한다(`shrink` — 0 은 줄지 않고, 수가 클수록 먼저 준다) |
+| `truncate` | 한 줄 — 항목 글이 각자 말줄임(…)한다. 줄어드는 정도를 항목마다 정한다(`shrink` — 0 은 줄지 않고, 1 이상은 넘친 폭을 '글 폭 × shrink' 비율로 나눠 함께 준다). 줄어드는 항목도 첫 글자 + "…"(2.1em) 까지만 준다 |
 
 말줄임하면 정보를 읽기 어려워지는 자리(가게 이름 · 주소)는 줄바꿈이 낫다. 목록 줄처럼 높이가 늘면 안 되는 자리만 `truncate` 로 두고, 꼭 보여야 할 항목(금액)은 `shrink={0}` 이다.
 
-[그림: 줄바꿈 · 한 줄 말줄임 · 줄어드는 차례](../../site/components/specs/tag-group.tsx#overflow)
+`shrink` 는 차례가 아니다 — 브라우저 · Flutter 모두 넘친 폭을 줄어드는 항목에 '글 폭 × shrink' 비율로 나눠 한꺼번에 줄인다. 수가 클수록, 글이 길수록 많이 줄 뿐 큰 수의 항목이 다 줄어든 뒤에 다음 항목이 줄지는 않는다. 그래서 줄어드는 항목에는 최소 폭이 있다 — 첫 글자 + "…" 가 남는 2.1em(t3 100% 에서 27.3). 그보다 짧은 항목(두 글자 이하)은 넓히지 않고 글 폭 그대로다. 최소 폭이 없으면 좁은 줄에서 짧은 시각 · 개수까지 함께 줄어 글자 조각("오" 6.7px)만 남았다. 모든 항목이 최소 폭까지 줄어도 넘치면 줄 끝이 말줄임 없이 잘린다(200% · 폭 260 에서 21) — 꼭 보일 항목은 `shrink={0}` 으로 앞에 둔다(2026-10-17 사용자 결정 — 03-E 결정 5 B. 기본을 "줄지 않음" 으로 · SEED 그대로는 고르지 않았다).
+
+[그림: 줄바꿈 · 한 줄 말줄임 · 줄어드는 정도 · 최소 폭](../../site/components/specs/tag-group.tsx#overflow)
 
 [표: 줄바꿈 · 말줄임](tag-group.yaml#overflow)
 
@@ -111,7 +113,7 @@
 
 ## 코드
 
-레시피 `recipes/shadcn/components/ui/tag-group.tsx` 를 쓴다 — `TagGroup` · `TagGroupItem`. `TagGroup` 은 `size`(`"t2"` 기본 · `"t3"` · `"t4"`) · `truncate`(기본 `false` = 줄바꿈)와 항목의 기본 `tone` · `weight` 를 받고, 항목 사이에 " · "(보조 기술에는 ", ")를 스스로 넣는다 — 빈 항목(`null` · `false` · `""`)은 건너뛴다. `TagGroupItem` 은 `tone`(`"neutralSubtle"` · `"neutral"` · `"brand"`) · `weight`(`"regular"` · `"bold"`) · `prefixIcon` 또는 `suffixIcon`(하나만) · `shrink`(`truncate` 일 때 줄어드는 차례, 기본 1) · `srLabel`(보조 기술이 읽을 글 — 주면 보이는 글 · 아이콘은 숨긴다)을 받는다. 아래 미리보기는 스펙 값으로 그린 모습이다.
+레시피 `recipes/shadcn/components/ui/tag-group.tsx` 를 쓴다 — `TagGroup` · `TagGroupItem`. `TagGroup` 은 `size`(`"t2"` 기본 · `"t3"` · `"t4"`) · `truncate`(기본 `false` = 줄바꿈)와 항목의 기본 `tone` · `weight` 를 받고, 항목 사이에 " · "(보조 기술에는 ", ")를 스스로 넣는다 — 빈 항목(`null` · `false` · `""`)은 건너뛴다. `TagGroupItem` 은 `tone`(`"neutralSubtle"` · `"neutral"` · `"brand"`) · `weight`(`"regular"` · `"bold"`) · `prefixIcon` 또는 `suffixIcon`(하나만) · `shrink`(`truncate` 일 때 줄어드는 정도, 기본 1 — 0 은 줄지 않는다) · `srLabel`(보조 기술이 읽을 글 — 주면 보이는 글 · 아이콘은 숨긴다)을 받는다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
 ### 목록 줄의 설명 — 한 줄
 
@@ -147,9 +149,9 @@ import { Eye } from "lucide-react"
 </TagGroup>
 ```
 
-### 줄어드는 차례
+### 줄어드는 정도
 
-[그림: 좁은 폭 — 긴 자산 이름만 먼저 줄어든다](../../site/components/specs/tag-group.tsx#ex-truncate)
+[그림: 좁은 폭 — 긴 자산 이름만 줄어든다](../../site/components/specs/tag-group.tsx#ex-truncate)
 
 ```tsx
 <TagGroup size="t3" truncate>
@@ -165,7 +167,7 @@ import { Eye } from "lucide-react"
 |---|---|
 | 누르기 · 호버 · 키보드 | 없다 — 포커스가 서지 않는다. 줄이 눌리면 그 줄의 동작이다 |
 | 폭이 좁음(`wrap`) | 낱말 단위로 줄을 바꾼다 — 구분은 앞 줄 끝에 남는다 |
-| 폭이 좁음(`truncate`) | 한 줄 그대로, `shrink` 가 큰 항목부터 말줄임 — 구분 · `shrink={0}` 항목은 줄지 않는다 |
+| 폭이 좁음(`truncate`) | 한 줄 그대로, 줄어드는 항목이 '글 폭 × `shrink`' 비율로 함께 말줄임 — 첫 글자 + "…"(2.1em)에서 멈춘다. 구분 · `shrink={0}` 항목은 줄지 않는다. 모두 최소 폭이어도 넘치면 줄 끝이 잘린다 |
 | 글자 크기 설정 | 글이 커진다(`wrap` 이면 줄이 늘고, `truncate` 면 더 일찍 말줄임) |
 
 ## Accessibility
@@ -209,8 +211,13 @@ import { Eye } from "lucide-react"
 - **낱말 단위 줄바꿈 · 구분은 앞 줄 끝에** — SEED 웹은 한국어를 음절에서 끊고("3시 / 간 전") 구분 " · " 가 다음 줄 첫머리에 남는다. porest 는 v114(keep-all + break-word)로 낱말 사이에서만 끊고, 구분 앞 공백을 줄이 안 바뀌는 공백으로 둔다.
 - **끊어 읽는다** — SEED 는 구분을 숨기기만 해 "500m서초4동3분 전" 처럼 붙어 읽히고, 예제의 `aria-label`(span)은 무시된다. porest 는 보이지 않는 ", " 와 항목의 `srLabel` 을 둔다.
 - **구분 기호는 " · " 하나** — SEED 는 `separator` 로 바꿀 수 있다.
+- **줄어드는 항목의 최소 폭** — 한 줄 말줄임에서 항목은 첫 글자 + "…"(2.1em) 까지만 준다. SEED 는 최소 폭이 없어 좁은 줄에서 글자 조각만 남는다(2026-10-17 사용자 결정 — 03-E 결정 5 B).
 
 ## Migration notes
+
+### 2026-10-17 — 줄어드는 항목의 최소 폭 · shrink 문장(03-E 결정 5 B)
+
+구현 조사에서 모든 항목이 기본 `shrink` 1 · 최소 폭 0 이면 폭 200 에서 짧은 시각 · 분할이 18.8 · 16.6px(200% 에서 21 · 19)의 글자 조각이 되는 것을 찾았다. 사용자가 [비교 페이지](https://claude.ai/artifact/FKYaqu7zAR5T2HVwFnx5oD)에서 "줄어드는 항목도 첫 글자 + … 까지만"(B)을 골랐다 — `tag-group.yaml` 의 `label.minWidth` 2.1em. 같은 페이지가 바로잡은 대로 `shrink` 문장 "수가 클수록 먼저" 를 "글 폭 × shrink 비율로 함께" 로 고쳤다(브라우저는 차례대로 줄이지 않는다). 레시피 `TagGroupItem` 은 항목 칸에 최소 폭(2.1em + 아이콘 · 사이, 두 글자 이하면 글 폭)을 준다 — 글 칸(overflow hidden)에 주면 항목의 최소 크기로 올라가지 않아 줄 전체가 줄지 않는다. 웹 ds `TagGroup` 도 같게, 앱은 항목을 `ConstrainedBox(minWidth: 첫 글자 + … 폭 + 아이콘)`(글이 더 짧으면 글 폭)로. 지금 Desk 화면은 Tag Group 을 아직 쓰지 않는다. 옛 스펙은 `tag-group.history/v-pre-03e-03b.*`.
 
 ### 2026-10-03 — 새로 둔다(SEED Tag Group)
 

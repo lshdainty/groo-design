@@ -69,7 +69,7 @@ rules:
         transitionDuration: $motion-duration-color-transition
         transitionEasing: $motion-ease-easing
       label:
-        typography: { value: $text-t5, note: "16 / 22 — 고르든 안 고르든 같다" }
+        typography: { value: $text-t5-static, note: "16 / 22 — 고르든 안 고르든 같다. -static — 글자 크기 설정을 따르지 않는다(웹 text-t5-static, 앱 TextScaler.noScaling). 큰 글자에서 4칸이 \"오 / 늘\" 처럼 한 글자씩 쪼개지지 않게 — WCAG 1.4.4 의 예외(하단 탭 라벨과 같은 대가, 2026-10-17 사용자 결정 — 03-B 결정 4 A. 2 × 2 격자는 고르지 않았다)" }
         fontWeight: { value: 700, note: "고르든 안 고르든 700" }
         foreground: { value: $color-fg-neutral-subtle, dark: $color-fg-neutral-muted, note: "다크는 한 단계 짙게 — 투명 트랙이 다크 표면에 섞여 밝아져 fg-neutral-subtle 이 카드 위 4.09 · 시트 위 3.56 이다. muted 는 카드 5.18 · 시트 4.50 · 바닥 5.93, 라이트는 subtle 그대로 4.59 ~ 4.95(2026-10-17 사용자 결정 — 01-040 B 후속)" }
         textAlign: { value: center, note: "길면 단어 단위로 줄을 바꾼다(v114)" }

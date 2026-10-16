@@ -50,6 +50,8 @@ const CHIP_VARIANTS = {
   variant: {
     solid: [
       "bg-bg-neutral-weak-alpha text-fg-neutral hover:bg-bg-neutral-weak-alpha-pressed active:bg-bg-neutral-weak-alpha-pressed",
+      // 막혀도 안 고른 Solid 는 바탕 그대로 — 글 · 아이콘만 fg-disabled(bg-disabled 는 회색 바닥과 같은 색, 사용자 결정 2026-10-17 — 03-B 결정 1 A)
+      "[&:not([data-state=checked],[data-selected])]:disabled:bg-bg-neutral-weak-alpha",
       "[&:is([data-state=checked],[data-selected])]:bg-bg-neutral-inverted [&:is([data-state=checked],[data-selected])]:text-fg-neutral-inverted [&:is([data-state=checked],[data-selected])]:hover:bg-bg-neutral-inverted-pressed [&:is([data-state=checked],[data-selected])]:active:bg-bg-neutral-inverted-pressed",
     ].join(" "),
     outlineStrong: [
@@ -794,7 +796,7 @@ import { Chip, ChipGroup } from "@/components/ui/chip"
   {
     title: "상태",
     description:
-      "상태는 enabled · hovered · pressed · focused · disabled 다. 호버(웹 — 마우스 있는 기기에서만)는 누름과 같은 바탕이고 축소가 없다. 누르면 누름 바탕(Solid bg-neutral-weak-alpha-pressed · Outline bg-layer-default-pressed · 고른 Outline Weak bg-neutral-weak-pressed · 짙은 채움 bg-neutral-inverted-pressed)에 칩 전체가 2px 거리로 준다 — 배율은 (기준 − 2) ÷ 기준, 기준은 max(높이, 폭 ÷ 4, 24) 이고 모션 줄이기면 줄지 않는다. 포커스는 키보드 포커스에만 바깥 링 2px · 띄움 2px stroke-focus-ring 이다. 비활성은 바탕 bg-disabled · 글자 fg-disabled 이고 흐리게(불투명도) 그리지 않는다 — 고른 채 막히면 안쪽 1px stroke-neutral-solid 를 남겨 무엇을 골랐는지 보인다. 하나 고르기는 ChipRadioGroup 에 disabled 를 주면 모든 칩이 막히고, 여럿 고르기 · 버튼 칩은 칩마다 준다. 입력값 칩은 누르지 않는다 — 호버 바탕이 없고 누름은 지우기만 준다(기준 24), 지우기에 키보드 포커스가 있으면 링은 칩 둘레에 그린다. 정적 미리보기라 hovered · pressed · focused 는 hover: · active: · focus-visible: · has-[…:focus-visible]: 클래스에서 접두어만 뗀 사본을 덧붙여 그렸다 — 축소 기준(--press-basis)은 레시피가 누르는 순간 재고, 여기서는 크기의 기본값(높이 36)이다.",
+      "상태는 enabled · hovered · pressed · focused · disabled 다. 호버(웹 — 마우스 있는 기기에서만)는 누름과 같은 바탕이고 축소가 없다. 누르면 누름 바탕(Solid bg-neutral-weak-alpha-pressed · Outline bg-layer-default-pressed · 고른 Outline Weak bg-neutral-weak-pressed · 짙은 채움 bg-neutral-inverted-pressed)에 칩 전체가 2px 거리로 준다 — 배율은 (기준 − 2) ÷ 기준, 기준은 max(높이, 폭 ÷ 4, 24) 이고 모션 줄이기면 줄지 않는다. 포커스는 키보드 포커스에만 바깥 링 2px · 띄움 2px stroke-focus-ring 이다. 비활성은 바탕 bg-disabled · 글자 fg-disabled 이고 흐리게(불투명도) 그리지 않는다 — 안 고른 Solid 는 바탕 bg-neutral-weak-alpha 를 그대로 두고 글만 fg-disabled(회색 바닥 위에서도 알약이 보인다), 고른 채 막히면 안쪽 1px stroke-neutral-solid 를 남겨 무엇을 골랐는지 보인다. 하나 고르기는 ChipRadioGroup 에 disabled 를 주면 모든 칩이 막히고, 여럿 고르기 · 버튼 칩은 칩마다 준다. 입력값 칩은 누르지 않는다 — 호버 바탕이 없고 누름은 지우기만 준다(기준 24), 지우기에 키보드 포커스가 있으면 링은 칩 둘레에 그린다. 정적 미리보기라 hovered · pressed · focused 는 hover: · active: · focus-visible: · has-[…:focus-visible]: 클래스에서 접두어만 뗀 사본을 덧붙여 그렸다 — 축소 기준(--press-basis)은 레시피가 누르는 순간 재고, 여기서는 크기의 기본값(높이 36)이다.",
     jsx: `// 호버 · 누름 · 포커스는 고르는 prop 이 없다 — 마우스를 올린 동안 · 누르는 동안 · 키보드 포커스에 그렇게 그린다
 <Chip variant="solid">식비</Chip>                     // enabled · hovered · pressed · focused
 <Chip variant="solid" selected>식비</Chip>

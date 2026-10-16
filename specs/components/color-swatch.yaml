@@ -63,17 +63,17 @@ rules:
     enabled:
       group:
         columns: { value: 5, note: "늘 5개씩 두 줄 — 폭과 상관없이(폭을 나눈 네모 · 줄바꿈은 고르지 않았다, 13B). ↑ ↓ 가 늘 같은 칸으로 간다" }
-        gap: { value: $spacing-x3, note: "칸 사이 · 줄 사이 12 — 누르는 영역 44 가 겹치지 않는다" }
+        gap: { value: $spacing-x3, note: "칸 사이 · 줄 사이 12 — 누르는 영역 44 가 겹치지 않는다. 칸과 같이 px 고정(-static) — 글자 크기 설정을 따르지 않는다" }
         width: { value: 248px, note: "40 × 5 + 12 × 4" }
         order: { value: 색상환, note: "빨강 → 주황 → 노랑 → 초록 → 파랑 → 남색 → 보라 → 분홍 → 갈색 → 회색(DESIGN.md 차트 색 표의 차례)" }
-        keyboard: { value: "← → · ↑ ↓ · Home · End", note: "radiogroup — 묶음에 Tab 하나(고른 칸, 없으면 첫 칸), 화살표로 옮기며 고른다. ← → 는 차례대로(줄 끝에서 다음 줄로), ↑ ↓ 는 위아래 줄의 같은 칸. 끝에서 처음으로 돈다(APG radiogroup). 지금 색 칸은 차례의 맨 앞(그 칸에서 ↑ ↓ 는 그대로). Enter 는 고르지 않고 폼을 보낸다(Radio Group 과 같다)" }
+        keyboard: { value: "← → · ↑ ↓", note: "radiogroup — 묶음에 Tab 하나(고른 칸, 없으면 첫 칸), 화살표로 옮기며 고른다. Home · End · PageUp · PageDown 은 받지 않는다 — 초점도 고른 칸도 그대로, 화면도 스크롤되지 않는다(하나 고르기 묶음은 화살표만 — SEED · 진짜 라디오 · APG, 2026-10-17 사용자 결정 03-E 결정 3 후속 · 색 칸 예외는 고르지 않았다). ← → 는 차례대로(줄 끝에서 다음 줄로), ↑ ↓ 는 위아래 줄의 같은 칸. 끝에서 처음으로 돈다(APG radiogroup). 지금 색 칸은 차례의 맨 앞(그 칸에서 ↑ ↓ 는 그대로). Enter 는 고르지 않고 폼을 보낸다(Radio Group 과 같다)" }
       swatch:
-        size: 40px
+        size: { value: 40px, note: "-static — 웹도 px 그대로, 글자 크기 설정을 따르지 않는다(앱과 같다). 색이 곧 값이라 글처럼 읽을 일이 없어 WCAG 1.4.4(글 확대) 대상이 아니다. rem 이면 200% 에서 80 원이 40 열 · 12 간격 격자에서 서로 겹친다. 누르는 44 · 체크 16 · 지금 색 칸 40 도 그대로(2026-10-17 사용자 결정 — 03-B 결정 5 A, 폭 안 5열로 키우는 안(B)은 고르지 않았다)" }
         radius: { value: $radius-full, note: "원 — 색 점(아바타 · 범례)과 같은 모양이라 \"색\" 으로 읽힌다" }
         touchTarget: { value: 44 × 44, note: "보이는 40 둘레로 2 씩 — 칸 사이 12 라 겹치지 않는다. AA ✓ · AAA ✓" }
         cursor: pointer
         name: { value: 색 이름, note: "\"빨강\" — 라디오의 이름. \"색상 N\" · hex 를 이름으로 두지 않는다" }
-        tooltip: { value: 색 이름, note: "마우스를 올리면 porest Tooltip 으로 같은 이름(네이티브 title 은 쓰지 않는다) — 색으로 가리기 어려운 사람도 이름을 본다. Icon Picker 의 칸 툴팁과 같다" }
+        tooltip: { value: 색 이름, note: "마우스를 올리면 porest Tooltip 으로 같은 이름(네이티브 title 은 쓰지 않는다) — 색으로 가리기 어려운 사람도 이름을 본다. Icon Picker 의 칸 툴팁과 같다. 앱은 툴팁을 칸의 의미 노드 안에 두거나 의미에서 뺀다 — 칸 밖이면 첫 칸의 색 이름이 묶음 이름에 붙는다(2026-10-17 사용자 승인 — 03B-004b)" }
       check:
         size: { value: 16px, note: "lucide check" }
         strokeWidth: { value: 2.5px, note: "v106 — 선택은 선 2.5" }

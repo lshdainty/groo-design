@@ -16,7 +16,9 @@ import { cn } from "@/lib/utils";
  *             묶음의 tone · weight 는 항목의 기본값이다
  *   truncate  false(기본) — 넘치면 낱말 단위로 줄을 바꾼다(keep-all + break-word, v114 — 항목 사이 · 항목 안 띄어쓰기에서)
  *             true — 한 줄(inline-flex · 최대 폭 100%). 넘치면 항목 글이 각자 말줄임(…)하고 구분은 줄지 않는다.
- *             줄어드는 차례는 항목의 shrink — 기본 1, 0 은 줄지 않고 수가 클수록 먼저 · 많이 준다(금액처럼 꼭 보일 항목은 0)
+ *             줄어드는 정도는 항목의 shrink — 기본 1, 0 은 줄지 않고 1 이상은 넘친 폭을 '글 폭 × shrink' 비율로 나눠 함께 준다
+ *             (차례대로가 아니다 — 금액처럼 꼭 보일 항목은 0). 줄어드는 항목도 첫 글자 + "…" 까지만 — 글 칸의 최소 폭 2.1em,
+ *             두 글자 이하면 글 폭(max-content — 넓히지 않는다). 모두 최소 폭이어도 넘치면 줄 끝이 잘린다(2026-10-17 사용자 결정 — 03-E 결정 5 B)
  *
  * 구분 " · " 는 줄이 안 바뀌는 공백(U+00A0) · 가운뎃점(U+00B7) · 공백 — 앞 항목에 붙어, 줄이 바뀌면 앞 줄 끝에 남고 다음 줄은
  * 항목으로 시작한다. 아이콘은 그 글과 한 줄에 붙어 있다(아이콘만 줄 끝에 남지 않는다 — 항목 + 구분을 한 칸으로 묶어 칸 안은
@@ -64,7 +66,8 @@ const tagGroupItemVariants = cva("", {
       regular: "font-normal",
       bold: "font-bold",
     },
-    // wrap 은 글 흐름 안(inline — 항목 안 띄어쓰기에서도 줄이 바뀐다), truncate 는 한 줄의 칸(줄어들며 말줄임)
+    // wrap 은 글 흐름 안(inline — 항목 안 띄어쓰기에서도 줄이 바뀐다), truncate 는 한 줄의 칸(줄어들며 말줄임).
+    // truncate 의 최소 폭은 style 이 준다(itemMinWidth — 첫 글자 + "…" + 아이콘)
     truncate: {
       false: "inline",
       true: "inline-flex min-w-0 items-center",
@@ -86,6 +89,21 @@ const LABEL: Record<"wrap" | "truncate", string> = {
   wrap: "whitespace-normal",
   truncate: "min-w-0 truncate",
 };
+
+// 줄어드는 항목의 최소 폭 — 글 칸에 첫 글자 + "…" 가 남는 2.1em(글자 크기를 따른다) + 아이콘(12 · 13 · 14) · 사이 2.
+// 두 글자 이하인 글은 글 폭 그대로(max-content — 넓히지 않는다). 최소 폭은 항목 칸에 준다 — 글 칸(overflow hidden)의 최소 폭은
+// 항목의 최소 크기로 올라가지 않는다. 사용자 결정 2026-10-17 — 03-E 결정 5 B
+const LABEL_MIN = "2.1em";
+const ICON_PX: Record<TagGroupSize, number> = { t2: 12, t3: 13, t4: 14 };
+const graphemes =
+  typeof Intl !== "undefined" && "Segmenter" in Intl ? new Intl.Segmenter(undefined, { granularity: "grapheme" }) : null;
+const graphemeCount = (text: string) => (graphemes ? Array.from(graphemes.segment(text)).length : Array.from(text).length);
+const itemMinWidth = (node: React.ReactNode, size: TagGroupSize, icon: boolean) =>
+  (typeof node === "string" || typeof node === "number") && graphemeCount(String(node).trim()) <= 2
+    ? "max-content"
+    : icon
+      ? `calc(${LABEL_MIN} + ${ICON_PX[size]}px + var(--spacing-x0_5))`
+      : LABEL_MIN;
 
 // 묶음 칸 — 항목 하나 + 뒤 구분. wrap 은 칸을 nowrap 으로 두어 아이콘 ↔ 글 · 글(아이콘) ↔ 구분 사이에서 줄이 바뀌지 않게 한다.
 // 아이콘은 한 덩어리(inline-flex)라 그 앞뒤는 NBSP · 이음 문자가 있어도 줄바꿈 자리가 된다(CSS Text) — 둘의 가장 가까운 공통
@@ -194,7 +212,7 @@ export type TagGroupItemProps = Omit<React.HTMLAttributes<HTMLSpanElement>, "chi
     tone?: TagGroupTone;
     /** 굵기 — 묶음의 weight 를 덮는다 */
     weight?: TagGroupWeight;
-    /** truncate 일 때 줄어드는 차례 — 기본 1, 0 은 줄지 않고 수가 클수록 먼저 · 많이 준다 */
+    /** truncate 일 때 줄어드는 정도 — 기본 1, 0 은 줄지 않고 1 이상은 넘친 폭을 '글 폭 × shrink' 비율로 나눠 함께 준다 */
     shrink?: number;
     /** 보조 기술이 읽을 글 — 주면 보이는 글 · 아이콘을 숨기고 이 글을 읽는다("분할 2건" · "조회 12") */
     srLabel?: string;
@@ -221,7 +239,7 @@ const TagGroupItem = React.forwardRef<HTMLSpanElement, TagGroupItemProps>(
         ref={ref}
         data-slot="tag-group-item"
         className={cn(tagGroupItemVariants({ tone: tone ?? group.tone, weight: weight ?? group.weight, truncate: group.truncate }), className)}
-        style={group.truncate ? { flexShrink: shrink, ...style } : style}
+        style={group.truncate ? { flexShrink: shrink, minWidth: itemMinWidth(children, group.size, prefixIcon != null || suffixIcon != null), ...style } : style}
         {...props}
       >
         {prefixIcon != null && icon(prefixIcon, "prefix")}

@@ -6,7 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { useFieldGroup } from "@/components/ui/field";
 import { Checkmark } from "@/components/ui/checkbox";
-import { Radiomark, submitOnRadioEnter } from "@/components/ui/radio-group";
+import { Radiomark, ignoreRadioJumpKeys, submitOnRadioEnter } from "@/components/ui/radio-group";
 
 /*
  * Porest Select Box — 구조는 SEED Select Box(2026-10-01). 수치 원본은 specs/components/select-box.yaml.
@@ -214,15 +214,16 @@ export interface RadioSelectBoxGroupProps
     VariantProps<typeof selectBoxGroupVariants> {}
 
 // 하나 고르기 묶음 — role=radiogroup, 이름 필수(Field 로 감싸면 라벨이 이름 · 오류가 설명이 된다, 아니면 aria-label · aria-labelledby).
-// 화살표로 옮기며 고른다. Enter 는 폼을 제출한다(Radio 와 같다 — 여럿 고르기는 Checkmark 가 한다)
+// 화살표로 옮기며 고른다(Home · End 는 받지 않는다 — Radio 와 같다). Enter 는 폼을 제출한다(Radio 와 같다 — 여럿 고르기는 Checkmark 가 한다)
 const RadioSelectBoxGroup = React.forwardRef<React.ElementRef<typeof RadioGroupPrimitive.Root>, RadioSelectBoxGroupProps>(
-  ({ className, columns = 1, onKeyDown, ...props }, ref) => (
+  ({ className, columns = 1, onKeyDown, onKeyDownCapture, ...props }, ref) => (
     <SelectBoxGroupContext.Provider value={{ columns: columns ?? 1 }}>
       <RadioGroupPrimitive.Root
         ref={ref}
         className={cn(selectBoxGroupVariants({ columns }), className)}
         {...useFieldGroup(props)}
         onKeyDown={submitOnRadioEnter(onKeyDown)}
+        onKeyDownCapture={ignoreRadioJumpKeys(onKeyDownCapture)}
       />
     </SelectBoxGroupContext.Provider>
   ),

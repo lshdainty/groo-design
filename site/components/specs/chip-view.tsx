@@ -95,6 +95,7 @@ function chipBox(look: ChipLook, size: ChipSize, mode: ViewMode, face: { bg: Chi
     height: sz.h,
     minWidth: o.iconOnly ? undefined : sz.minW,
     width: o.iconOnly ? sz.iconOnlyW : undefined,
+    maxWidth: look.maxWidth,
     margin: 0,
     padding: o.iconOnly ? 0 : `0 ${sz.padX}px`,
     gap: look.gap,
@@ -118,6 +119,9 @@ function chipBox(look: ChipLook, size: ChipSize, mode: ViewMode, face: { bg: Chi
     WebkitTapHighlightColor: 'transparent',
   };
 }
+
+// 글 — 칩이 줄 폭(look.maxWidth)에 닿을 때만 끝을 말줄임한다. 핀은 바깥 칸에 두어 잘리지 않게
+const LABEL_FIT: CSSProperties = { minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' };
 
 // 핀 — 부위 위(칩 위로 PIN_GAP)에 핀 + 세로 선. inset 은 칩 위 끝에서 부위 위 끝까지
 function PinAbove({ pin, inset, line }: { pin?: ReactNode; inset: number; line: string }) {
@@ -258,8 +262,8 @@ export function ChipView({
               <PinAbove pin={pins?.prefix} inset={(sz.h - sz.prefixIcon) / 2} line={pinLine} />
             </span>
           )}
-          <span style={{ position: 'relative', textDecoration: strike ? 'line-through' : undefined, ...zone?.label }}>
-            {label}
+          <span style={{ position: 'relative', display: 'flex', minWidth: 0, ...zone?.label }}>
+            <span style={{ ...LABEL_FIT, textDecoration: strike ? 'line-through' : undefined }}>{label}</span>
             <PinAbove pin={pins?.label} inset={(sz.h - lh) / 2} line={pinLine} />
           </span>
           {suffixIcon && (
@@ -391,8 +395,8 @@ export function InputChipView({ look, mode = 'auto', size = look.defaults.size, 
           <ChipIconView name={prefixIcon} size={sz.prefixIcon} />
         </span>
       )}
-      <span style={{ position: 'relative', ...zone?.label }}>
-        {label}
+      <span style={{ position: 'relative', display: 'flex', minWidth: 0, ...zone?.label }}>
+        <span style={LABEL_FIT}>{label}</span>
         <PinAbove pin={pins?.label} inset={(sz.h - lh) / 2} line={pinLine} />
       </span>
       {live ? (

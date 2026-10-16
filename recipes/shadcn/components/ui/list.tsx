@@ -7,7 +7,7 @@ import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useExpandMotion } from "@/components/ui/accordion";
 import { Checkmark, type CheckmarkProps } from "@/components/ui/checkbox";
-import { Radiomark, submitOnRadioEnter, type RadiomarkProps } from "@/components/ui/radio-group";
+import { Radiomark, ignoreRadioJumpKeys, submitOnRadioEnter, type RadiomarkProps } from "@/components/ui/radio-group";
 import { Switchmark, type SwitchmarkProps } from "@/components/ui/switch";
 
 /*
@@ -532,11 +532,11 @@ const ListCheckItem = React.forwardRef<React.ElementRef<typeof Checkmark>, ListC
 );
 ListCheckItem.displayName = "ListCheckItem";
 
-// 하나 고르기 목록 — 라디오 묶음(role=radiogroup, aria-label · aria-labelledby 필수). Enter 는 폼을 제출한다(Radio 와 같다)
+// 하나 고르기 목록 — 라디오 묶음(role=radiogroup, aria-label · aria-labelledby 필수). Enter 는 폼을 제출하고 Home · End 는 받지 않는다(Radio 와 같다)
 const ListRadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root> & ItemRadius
->(({ className, itemRadius, style, onKeyDown, ...props }, ref) => (
+>(({ className, itemRadius, style, onKeyDown, onKeyDownCapture, ...props }, ref) => (
   <ListRowTag.Provider value="div">
     <RadioGroupPrimitive.Root
       ref={ref}
@@ -544,6 +544,7 @@ const ListRadioGroup = React.forwardRef<
       style={radiusStyle(itemRadius, style)}
       {...props}
       onKeyDown={submitOnRadioEnter(onKeyDown)}
+      onKeyDownCapture={ignoreRadioJumpKeys(onKeyDownCapture)}
     />
   </ListRowTag.Provider>
 ));

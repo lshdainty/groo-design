@@ -210,7 +210,7 @@ const Icon: Fig = ({ caption }) => {
   );
 };
 
-// 줄바꿈 · 말줄임 · 줄어드는 차례 — 같은 좁은 폭(200)
+// 줄바꿈 · 말줄임 · 줄어드는 정도 · 최소 폭 — 같은 좁은 폭(200)
 function Narrow({ children, w = 200 }: { children: ReactNode; w?: number }) {
   return (
     <div className="relative" style={{ width: w, outline: `1px dashed ${MARK_LINE}`, outlineOffset: 3 }}>
@@ -246,7 +246,15 @@ const Overflow: Fig = ({ caption }) => {
               <TagGroupView look={lk} size="t3" truncate items={items({ label: '교통', shrink: 0 }, { label: '신한카드 Deep Dream 체크(1234)', shrink: 2 }, { label: '오후 2:10', shrink: 0 })} />
             </Narrow>
           </Board>
-          <Cap strong="shrink — 줄어드는 차례">0 은 줄지 않고 수가 클수록 먼저 준다 — 긴 자산 이름만 줄었다</Cap>
+          <Cap strong="shrink — 줄어드는 정도">0 은 줄지 않고 1 이상은 글 폭 × shrink 비율로 함께 준다 — 긴 자산 이름만 줄었다</Cap>
+        </div>
+        <div className="flex min-w-0 flex-col gap-2">
+          <Board className="flex min-h-[120px] items-center justify-center">
+            <Narrow>
+              <TagGroupView look={lk} size="t3" truncate items={items('간식 · 디저트 모음 아주 긴 카테고리 이름', '지어낸카드 체크카드 개인(1234)', '오후 2:10', '분할 2건')} />
+            </Narrow>
+          </Board>
+          <Cap strong="최소 폭 — 첫 글자 + …">모두 shrink 1 이어도 항목마다 첫 글자 + "…"(2.1em)는 남는다 — 글자 조각만 남지 않는다</Cap>
         </div>
       </div>
       <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">분홍 점선 — 폭 200. 말줄임해도 글 전체는 보조 기술이 읽는다</p>

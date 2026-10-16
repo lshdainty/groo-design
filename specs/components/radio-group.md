@@ -242,6 +242,7 @@ import { Radiomark, RadioGroup } from "@/components/ui/radio-group"
 | Click / Tap(동그라미 · 라벨) | 그 선택지를 고른다. 앞에 고른 것은 풀린다. 이미 고른 것을 다시 눌러도 풀리지 않는다. `disabled` 면 무시. |
 | Keyboard `Tab` | 묶음에 들어가고 나간다 — 고른 선택지(없으면 첫 선택지)로 들어간다. 묶음 안에서는 화살표로 옮긴다. |
 | Keyboard `↑` `↓` `←` `→` | 이전 · 다음 선택지로 옮기며 고른다. 막힌 선택지는 건너뛴다. |
+| Keyboard `Home` · `End` | 받지 않는다 — 초점도 고른 선택지도 그대로, 화면도 스크롤되지 않는다(`PageUp` · `PageDown` 도). 첫 · 끝 선택지로는 화살표로 간다 — SEED · 진짜 라디오 · WAI-ARIA APG Radio Group 과 같다(2026-10-17 사용자 결정 — 03-E 결정 3 A). 라디오를 담는 묶음(Chip 하나 고르기 · Segmented Control · Select Box 하나 고르기 · List 라디오 줄)이 모두 같다. [Tabs](tabs.md) 는 Home · End 로 옮기며 고른다. |
 | Keyboard `Space` | 포커스된 선택지를 고른다. |
 | Keyboard `Enter` | 폼을 제출한다 — 진짜 `<input type="radio">` 처럼 폼의 기본 버튼(첫 제출 버튼)을 누른다. 고르지 않는다. 기본 버튼이 없거나 막혀 있으면 아무것도 하지 않는다. Radix 의 선택지는 Enter 를 막기만 해서 묶음이 받는다(사용자 결정 2026-10-08 — SEED 와 같다). 동그라미만(`Radiomark`) 쓰는 List 의 라디오 줄 · Select Box 하나 고르기도 같다. |
 | Disabled(묶음) | 모든 선택지가 막힌다 — 묶음 `aria-disabled`. 막힌 Field 로 감싸도 같다. |
@@ -296,6 +297,10 @@ import { Radiomark, RadioGroup } from "@/components/ui/radio-group"
 - 웹의 `hovered` · `focused` 를 더한다(v106). `focused` 는 앱의 키보드 포커스에도 그린다(2026-10-08).
 
 ## Migration notes
+
+### 2026-10-17 — 하나 고르기 묶음은 Home · End 를 받지 않는다(03-E 결정 3 A)
+
+웹 공용 라디오 묶음(Chip 하나 고르기 · Radio Group · Segmented Control · Select Box 하나 고르기 · List 라디오)은 Radix RovingFocusGroup 이 Home · End(· PageUp · PageDown)로 초점만 첫 · 끝으로 옮겨 초점과 고른 것이 갈렸다. 사용자가 [비교 페이지](https://claude.ai/artifact/FKYaqu7zAR5T2HVwFnx5oD)에서 "받지 않는다"(A — 화살표만, SEED · 진짜 라디오 · APG)를 골랐다. 레시피는 묶음이 캡처 단계에서 라디오의 그 키를 막는다(`ignoreRadioJumpKeys` — radio-group.tsx, Radio Group 도 쓴다). 웹 ds 의 같은 묶음도 같게, 앱은 바뀌는 것 없음. 옮기며 고르는 안(B — Tabs 처럼)은 고르지 않았다. 옛 스펙은 `radio-group.history/v-pre-03e-03b.md`.
 
 ### 2026-10-08 — Enter · 묶음 상태 · 오류 예 · 라벨 안 링크
 

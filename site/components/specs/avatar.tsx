@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { axisDesc, loadComponentSpec } from '@/lib/component-spec';
 import { contrast } from '@/lib/design-tokens';
-import { AVATAR_SIZES, avatarHue, avatarHueIndex, avatarInitial, codePointSum, type AvatarSize } from './display-look';
+import { AVATAR_SIZES, avatarHue, avatarHueIndex, avatarInitial, codePointSum, stackFit, stackWidth, type AvatarSize } from './display-look';
 import { AvatarPlayground } from './display-playground';
 import { AvatarStackView, AvatarView, DIcon, Reading } from './display-view';
 import {
@@ -468,6 +468,49 @@ const StackGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
+// 폭에 맞춘 묶음 — 큰 묶음이 놓인 폭보다 넓으면 보이는 사람 수를 줄이고 "+N" 이 커진다(2026-10-17 사용자 결정 — 03-E 결정 4 B).
+// 폰 폭 360 의 안쪽 312. 몇 명이 보이는지는 stackFit(avatar-stack.yaml root.overflow 의 셈)이 정한다
+const FIT_W = 312;
+function FitCase({ size, fit }: { size: AvatarSize; fit: boolean }) {
+  const lk = al();
+  const st = sl();
+  const d = lk.sizes[size].d;
+  const ov = st.sizes[size].overlap;
+  const shown = fit ? stackFit(SIX.length, d, ov, FIT_W, st.max) : Math.min(SIX.length, st.max);
+  const circles = shown + (SIX.length > shown ? 1 : 0);
+  const w = stackWidth(circles, d, ov);
+  return (
+    <div className="flex flex-col gap-1.5">
+      <div className={fit ? '' : 'overflow-hidden'}>
+        <AvatarStackView look={lk} stack={st} size={size} people={SIX} fitWidth={fit ? FIT_W : undefined} />
+      </div>
+      <Muted>
+        {size} · {SIX.length}명 → {shown}명{SIX.length > shown ? ` + "+${SIX.length - shown}"` : ''} · 폭 {w}
+        {w > FIT_W ? ` — ${w - FIT_W} 넘침` : ''}
+      </Muted>
+    </div>
+  );
+}
+const StackFit: Fig = ({ caption }) => (
+  <Panel caption={caption}>
+    <Pair>
+      <Verdict ok note={`놓인 폭(${FIT_W})에 드는 만큼만 보이고 나머지는 "+N" — 크기는 그대로. 24 · 48 처럼 폭 안에 들면 앞 4명 + "+N" 그대로`}>
+        <W w={FIT_W}>
+          <div className="flex flex-col gap-4">
+            <FitCase size="108" fit />
+            <FitCase size="48" fit />
+          </div>
+        </W>
+      </Verdict>
+      <Verdict ok={false} note={`폭을 보지 않고 늘 앞 4명 — 108 묶음이 폰 폭을 넘어 넷째 사람과 "+2" 가 화면 밖으로 나간다`}>
+        <W w={FIT_W}>
+          <FitCase size="108" fit={false} />
+        </W>
+      </Verdict>
+    </Pair>
+  </Panel>
+);
+
 // ── 코드 예시(미리보기) — avatar.md 의 코드 그대로 ─────────
 const ExRow: Fig = ({ caption }) => (
   <Preview caption={caption} w={280}>
@@ -584,6 +627,7 @@ export const avatarFigures: Record<string, Fig> = {
   'name-guide': NameGuide,
   'color-guide': ColorGuide,
   'stack-guide': StackGuide,
+  'stack-fit': StackFit,
   'ex-row': ExRow,
   'ex-alone': ExAlone,
   'ex-stack': ExStack,

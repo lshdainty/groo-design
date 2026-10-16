@@ -697,24 +697,28 @@ const SuggestionGuide: Fig = ({ caption }) => (
 const SurfaceGuide: Fig = ({ caption }) => {
   const m: Mode = 'light';
   const basement = rc('bg-layer-basement', m);
+  // 넷째 "결제 수단" 은 막힌 칩 — 막혀도 바탕은 그대로, 글 · 아이콘만 fg-disabled(2026-10-17 사용자 결정 — 03-B 결정 1 A)
   const row = (v: ChipVariant, brand: Brand = 'desk', look = cl(brand)) => (
     <ChipGroupView look={look} mode={m} layout="wrap">
-      {['기간', '카테고리', '금액'].map((l) => (
-        <ChipView key={l} look={look} variant={v} selected={false} state="enabled" label={l} suffixIcon="chevron-down" mode={m} />
+      {['기간', '카테고리', '금액', '결제 수단'].map((l, i) => (
+        <ChipView key={l} look={look} variant={v} selected={false} state={i === 3 ? 'disabled' : 'enabled'} label={l} suffixIcon="chevron-down" mode={m} />
       ))}
     </ChipGroupView>
   );
   // 하지 않는 것 — Solid 바탕을 불투명 약한 배경(bg-neutral-weak)으로 칠한 칩
   const base = cl('desk');
+  // 막힌 칩은 불투명 bg-disabled — 라이트에서 둘 다 회색 바닥과 같은 gray-200
   const weak = { name: 'bg-neutral-weak', light: rc('bg-neutral-weak', 'light'), dark: rc('bg-neutral-weak', 'dark') };
+  const off = { name: 'bg-disabled', light: rc('bg-disabled', 'light'), dark: rc('bg-disabled', 'dark') };
+  const su = base.faces.solid.unselected;
   const opaque = {
     ...base,
-    faces: { ...base.faces, solid: { ...base.faces.solid, unselected: { ...base.faces.solid.unselected, enabled: { ...base.faces.solid.unselected.enabled, bg: weak } } } },
+    faces: { ...base.faces, solid: { ...base.faces.solid, unselected: { ...su, enabled: { ...su.enabled, bg: weak }, disabled: { ...su.disabled, bg: off } } } },
   };
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok bg={basement} note="Solid 는 투명한 bg-neutral-weak-alpha — 회색 바닥 위에서도, 흰 표면 위에서도 보인다(1.11:1)">
+        <Verdict ok bg={basement} note="Solid 는 투명한 bg-neutral-weak-alpha — 회색 바닥 위에서도, 흰 표면 위에서도 보인다(1.11:1). 막힌 칩(결제 수단)도 바탕은 그대로, 글 · 아이콘만 fg-disabled">
           <div className="flex w-full max-w-[320px] flex-col gap-4">
             <div className="flex flex-col gap-1.5 px-1">
               <Muted mode={m}>회색 바닥(bg-layer-basement) — Solid</Muted>
@@ -728,11 +732,88 @@ const SurfaceGuide: Fig = ({ caption }) => {
             </div>
           </div>
         </Verdict>
-        <Verdict ok={false} bg={basement} note="칩 바탕을 불투명 bg-neutral-weak 로 — 라이트에서 회색 바닥과 같은 색(1.00:1)이라 칩의 자리가 사라진다">
+        <Verdict ok={false} bg={basement} note="칩 바탕을 불투명 bg-neutral-weak(막힘 bg-disabled)로 — 라이트에서 회색 바닥과 같은 색(1.00:1)이라 칩의 자리가 사라진다">
           <div className="flex w-full max-w-[320px] flex-col gap-1.5 px-1">
-            <Muted mode={m}>회색 바닥(bg-layer-basement) — 불투명 bg-neutral-weak</Muted>
+            <Muted mode={m}>회색 바닥(bg-layer-basement) — 불투명 bg-neutral-weak · 막힘 bg-disabled</Muted>
             {row('solid', 'desk', opaque)}
           </div>
+        </Verdict>
+      </Pair>
+    </Panel>
+  );
+};
+
+// 큰 글자(200%) — 웹은 rem 이라 상자도 배율대로, 앱은 높이가 최소 높이라 글을 따라 늘어난다(2026-10-17 사용자 결정 — 03-E 결정 1 C).
+// 값은 chip.yaml 에서 — 웹은 medium 의 높이 · 좌우 · 글 · 지우기를 배율로 곱하고, 앱은 글만 곱한 뒤 위아래를 (높이 − 줄 높이) ÷ 2 로 둔다
+const TEXT_ZOOM = 2;
+function ZoomChips({ platform, mode }: { platform: 'web' | 'app'; mode: Mode }) {
+  const lk = cl();
+  const sz = lk.sizes.medium;
+  const fs = px(lk.text.fontSize) * TEXT_ZOOM;
+  const lh = px(lk.text.lineHeight) * TEXT_ZOOM;
+  const padY = (sz.h - px(lk.text.lineHeight)) / 2;
+  const k = platform === 'web' ? TEXT_ZOOM : 1;
+  const box: CSSProperties =
+    platform === 'web'
+      ? { height: sz.h * k, minWidth: sz.minW * k, padding: `0 ${sz.padX * k}px`, fontSize: fs, lineHeight: `${lh}px` }
+      : { height: 'auto', minHeight: sz.h, padding: `${padY}px ${sz.padX}px`, fontSize: fs, lineHeight: `${lh}px` };
+  const items: [string, boolean][] = [['전체', true], ['지출', false], ['수입', false]];
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-wrap items-start" style={{ gap: lk.group.gap * k }}>
+        {items.map(([l, on]) => (
+          <ChipView key={l} look={lk} mode={mode} variant="outlineWeak" selected={on} state="enabled" label={l} style={box} />
+        ))}
+      </div>
+      <Muted mode={mode}>
+        {platform === 'web' ? `칩 ${sz.h * k} · 좌우 ${sz.padX * k} — 상자도 ${TEXT_ZOOM}배` : `칩 ${lh + padY * 2} = 글 ${lh} + 위아래 ${padY} — 좌우 ${sz.padX} 그대로`}
+      </Muted>
+    </div>
+  );
+}
+const BigText: Fig = ({ caption }) => (
+  <Panel caption={caption}>
+    <div className="flex w-full flex-col gap-4 md:flex-row">
+      {(['web', 'app'] as const).map((p) => (
+        <div key={p} className="flex min-w-0 flex-1 flex-col gap-2">
+          <Board>
+            <W w={312}>
+              <ZoomChips platform={p} mode="auto" />
+            </W>
+          </Board>
+          <Cap strong={p === 'web' ? '웹 — 글자 크기 설정 200%' : '앱 — OS 글자 크기 200%'}>{p === 'web' ? 'rem 이라 높이 · 여백 · 아이콘 · 지우기가 배율대로' : '높이는 최소 높이 — 글을 따라 늘어나고 여백 · 아이콘 · 지우기는 그대로'}</Cap>
+        </div>
+      ))}
+    </div>
+  </Panel>
+);
+
+// 줄보다 긴 칩 — 줄 폭에서 멈추고 글 끝을 말줄임, 지우기 × 는 남는다(2026-10-17 사용자 결정 — 03-E 결정 2 A).
+// 폰 폭 360 의 안쪽 312 — 넣은 값(사용자가 친 글)은 길이를 고를 수 없다
+const LONG_VALUE = '주말 가족 여행 준비물 · 장보기 목록 · 숙소 체크인 시간 확인';
+const LongLabel: Fig = ({ caption }) => {
+  const lk = cl();
+  const people = (cut: boolean) => (
+    <ChipGroupView look={lk} layout="wrap" ariaLabel="메모 태그">
+      <InputChipView look={lk} state="enabled" label="여행" />
+      <InputChipView look={lk} state="enabled" label={LONG_VALUE} zone={cut ? undefined : { root: { maxWidth: 'none' } }} />
+      <InputChipView look={lk} state="enabled" label="외식" />
+    </ChipGroupView>
+  );
+  return (
+    <Panel caption={caption}>
+      <Pair>
+        <Verdict ok note="줄보다 긴 칩만 줄 폭에서 멈추고 글 끝을 … 로 — 지우기 × 는 늘 보이고, 보조 기술은 글 전체를 읽는다">
+          <W w={312}>
+            <F label="메모 태그">{people(true)}</F>
+          </W>
+        </Verdict>
+        <Verdict ok={false} note="칩이 글만큼 넓어져 줄 밖으로 — 웹은 화면이 옆으로 밀리고, 앱은 지우기 × 가 잘린다">
+          <W w={312}>
+            <div className="overflow-hidden">
+              <F label="메모 태그">{people(false)}</F>
+            </div>
+          </W>
         </Verdict>
       </Pair>
     </Panel>
@@ -895,6 +976,8 @@ export const chipFigures: Record<string, Fig> = {
   'suggestion-guide': SuggestionGuide,
   'surface-guide': SurfaceGuide,
   'label-guide': LabelGuide,
+  'big-text': BigText,
+  'long-label': LongLabel,
   'layout-guide': LayoutGuide,
   'ex-single': ExSingle,
   'ex-multiple': ExMultiple,

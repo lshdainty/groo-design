@@ -24,7 +24,10 @@ import { submitImplicitly, useFieldGroup, useFieldGroupState } from "@/component
  * 라벨을 눌러도 동그라미가 반응하도록 Radio 는 group/radio, 동그라미는 그 hover · active 도 받는다.
  * 키 — 화살표는 옮기며 고르고 Space 는 포커스된 선택지를 고른다. Enter 는 폼을 제출한다(진짜 input · SEED 와 같다 — 폼의 기본 버튼을
  * 누른다, 고르지 않는다). Radix 의 항목은 onKeyDown 을 덮어써 Enter 를 막기만 하므로 묶음이 받는다(submitOnRadioEnter — Radiomark 를
- * 담는 List · Select Box 의 묶음도 같이 쓴다, 사용자 결정 2026-10-08). 라벨 안에 링크 · 버튼을 두지 않는다 — 누르는 영역(::before)이
+ * 담는 List · Select Box 의 묶음도 같이 쓴다, 사용자 결정 2026-10-08). Home · End · PageUp · PageDown 은 받지 않는다 — 화살표만(SEED · 진짜
+ * 라디오 · APG, 사용자 결정 2026-10-17 — 03-E 결정 3 A). Radix 는 이 키로 초점만 첫 · 끝으로 옮겨 초점과 고른 것이 갈리므로 묶음이
+ * 캡처 단계에서 막는다(ignoreRadioJumpKeys — 라디오를 담는 Chip · Segmented Control · List · Select Box 의 묶음도 같이 쓴다).
+ * 라벨 안에 링크 · 버튼을 두지 않는다 — 누르는 영역(::before)이
  * 덮는다. 링크는 라벨 옆 · 아래에(radio-group.md Don't).
  * 묶음의 상태 — Field 의 막힘은 묶음 aria-disabled 와 칸마다 disabled(Radix disabled), 오류 · 필수는 radiogroup 의 aria-invalid ·
  * aria-required 다(SEED RadioGroup 과 같다). 묶음에 직접 준 값이 이긴다.
@@ -160,12 +163,26 @@ function submitOnRadioEnter(onKeyDown?: React.KeyboardEventHandler<HTMLDivElemen
   };
 }
 
+// 하나 고르기 묶음이 받지 않는 키 — Home · End · PageUp · PageDown(화살표만 — SEED · 진짜 라디오 · APG, 사용자 결정 2026-10-17 — 03-E 결정 3 A).
+// Radix 의 RovingFocusGroup 은 이 키로 초점만 첫 · 끝으로 옮긴다(고르지 않는다) — 초점과 고른 것이 갈려, Tab 으로 나갔다 오면 고른 것으로 돌아간다.
+// 묶음이 캡처 단계에서 기본 동작을 막는다 — Radix 의 항목 처리는 defaultPrevented 면 건너뛰고, 화면도 스크롤되지 않는다.
+// 라디오가 아닌 곳(Select Box 펼침 안의 입력칸)에서는 그대로 둔다. 라디오를 담는 묶음(RadioGroup · ChipRadioGroup · SegmentedControl ·
+// ListRadioGroup · RadioSelectBoxGroup)이 함께 쓴다
+const RADIO_JUMP_KEYS = new Set(["Home", "End", "PageUp", "PageDown"]);
+function ignoreRadioJumpKeys(onKeyDownCapture?: React.KeyboardEventHandler<HTMLDivElement>) {
+  return (e: React.KeyboardEvent<HTMLDivElement>) => {
+    onKeyDownCapture?.(e);
+    const item = e.target;
+    if (RADIO_JUMP_KEYS.has(e.key) && item instanceof HTMLElement && item.getAttribute("role") === "radio") e.preventDefault();
+  };
+}
+
 // 묶음 — 세로로 쌓고 줄 사이 12. 제목 · 오류 글은 Field 로 감싸면 이어진다(라벨 → aria-labelledby, 설명 · 오류 → aria-describedby).
 // Field 없이 쓰면 aria-label 또는 aria-labelledby 를 준다. Field 의 막힘 · 오류 · 필수도 받는다(머리 주석) — 묶음에 직접 준 값이 이긴다
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
->(({ className, disabled, onKeyDown, ...props }, ref) => {
+>(({ className, disabled, onKeyDown, onKeyDownCapture, ...props }, ref) => {
   const field = useFieldGroupState();
   const off = disabled ?? field.disabled;
   return (
@@ -178,9 +195,10 @@ const RadioGroup = React.forwardRef<
       {...(field.required ? { "aria-required": true } : {})}
       {...useFieldGroup(props)}
       onKeyDown={submitOnRadioEnter(onKeyDown)}
+      onKeyDownCapture={ignoreRadioJumpKeys(onKeyDownCapture)}
     />
   );
 });
 RadioGroup.displayName = "RadioGroup";
 
-export { Radio, RadioGroup, Radiomark, radioVariants, radioLabelVariants, radiomarkVariants, radiomarkDotVariants, submitOnRadioEnter };
+export { Radio, RadioGroup, Radiomark, radioVariants, radioLabelVariants, radiomarkVariants, radiomarkDotVariants, submitOnRadioEnter, ignoreRadioJumpKeys };

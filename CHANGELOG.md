@@ -418,6 +418,21 @@
   - **표 ↔ 넘김 줄 12(03-D 결정 5 B)** — 12 는 Table Pagination 의 위 여백, 표의 `pagination` 자리는 좌우 24 만. table md · table-pagination yaml · md, 레시피 `table.tsx` 자리에서 `pt-x3` 를 걷음(자리에 넣으면 24 였다), 사이트 주석 · DESIGN Table 요약.
   - **본문 최소 폭의 em(03D-005 고침)** — 1em 은 제목 글자(t5) — 레시피 `list.tsx` · 예제 열 곳 `min-w-[calc(var(--text-t5)+var(--spacing-x2_5))]`, 미리보기 · 사이트 그림도(보통 글자에서 24 → 26).
   - 옛 판: `DESIGN.history/v-pre-app-type-03d.*`, 컴포넌트 `.history/v-pre-app-type-03d.*`(list · card · table · table-pagination · input-otp md · yaml, image-frame md, card-art · accordion · collapsible yaml).
+- **03-E 표시 · 03-B 선택 결정 (2026-10-17)**: 구현 조사에서 사용자가 정한 것을 스펙에 넣었다(DESIGN 은 v104 -static 목록 한 줄)(비교 페이지 03-E https://claude.ai/artifact/FKYaqu7zAR5T2HVwFnx5oD · 03-B https://claude.ai/artifact/SZwwW7UK1FxtZynvYBFLLx). 토큰 추가 없음.
+  - **큰 글자에서 상자(03-E 결정 1 C)** — 웹은 rem 그대로(200% 에서 칩 72 · 지우기 28 · 막대 16), 앱 칩은 높이가 최소 높이라 글을 따라 늘어난다(글 + 위아래 (높이 − 19) ÷ 2 — medium 200% 55). chip yaml `label.typography` · 크기마다 `root.height` 비고 · md "큰 글자" · 사이트 그림 `chip.tsx#big-text`, progress yaml `track.height` 비고 · md.
+  - **줄보다 긴 칩은 줄 폭에서 말줄임(03-E 결정 2 A)** — chip yaml `root.maxWidth` 100% · `label.overflow` 말줄임(아이콘 · 지우기 × 는 남는다), md 절 "줄보다 긴 칩", 사이트 칩 그림이 말줄임으로 그린다 · `chip.tsx#long-label`. 레시피는 아직이다.
+  - **하나 고르기 묶음은 Home · End 를 받지 않는다(03-E 결정 3 A)** — chip · radio-group · segmented-control · select-box · list 의 키보드 표(PageUp · PageDown 도), 레시피 `ignoreRadioJumpKeys`(radio-group.tsx)를 다섯 묶음이 캡처 단계에서 쓴다.
+  - **폭에 맞춘 아바타 묶음(03-E 결정 4 B)** — avatar-stack yaml `root.overflow`(원 c 개의 폭 = 지름 + (c − 1) × (지름 − 겹침), 108 · 312 → 2명 + "+4" 폭 270), avatar md · 사이트 `stackFit` · 그림 `avatar.tsx#stack-fit`. 레시피는 아직이다.
+  - **Tag Group 줄어드는 항목의 최소 폭(03-E 결정 5 B)** — tag-group yaml `label.minWidth` 2.1em(첫 글자 + "…", 두 글자 이하는 글 폭), `shrink` 문장을 "글 폭 × shrink 비율로 함께" 로 바로잡음(차례가 아니다). 레시피 · 예제 · 사이트(항목 칸에 최소 폭) · overflow 그림 넷째 칸.
+  - **막힌 Solid 칩은 바탕 그대로(03-B 결정 1 A)** — chip yaml Solid 안 고름 disabled `bg-neutral-weak-alpha`(글 · 아이콘만 `fg-disabled`), md · 레시피 · 예제 · 미리보기 · 사이트 표면 그림.
+  - **앱 Select 선택지 낭독(03-B 결정 2 A)** — select md ARIA 에 앱 줄(하나 고르기 button + selected · 여럿 checked, 테스트로 고정).
+  - **앱 Color Swatch 묶음(03B-004b)** — color-swatch md ARIA · yaml tooltip 비고: 묶음 `SemanticsRole.radioGroup` + 라벨만, 툴팁은 칸 노드 안.
+  - **앱 첨부 상자도 글자 배율을 따른다(03-B 결정 3 A)** — attachment-input yaml 머리 · `trigger.size` · `item.height` · 파일 `item.width` 비고(웹 rem 과 같게 — 200% 사진 160 · 파일 카드 320 × 160, 이름 네 줄 + 크기가 보인다), md 1.4.4 · Migration.
+  - **Segmented 칸 글은 -static 16(03-B 결정 4 A)** — DESIGN v104 의 -static 목록에 "Segmented 칸 글"(1.4.4 예외 — 하단 탭 라벨과 같은 대가, 세 DESIGN), segmented-control yaml label `$text-t5-static`, md 1.4.4 · Migration, 레시피 · 예제 `text-t5-static` · 미리보기 `--text-t5-static`.
+  - **웹 색 칸 · 간격 -static 40 · 12(03-B 결정 5 A)** — color-swatch yaml `swatch.size` · `group.gap` 비고, md, 레시피 · 예제 `size-10` → `size-[40px]`(앱과 같다 — 색이 곧 값).
+  - **Color Swatch 도 화살표만(03-E 결정 3 후속)** — yaml `group.keyboard` · md 에서 Home · End 를 걷고, 레시피 · 사이트 그림의 Home · End 처리를 걷어 `ignoreRadioJumpKeys` 로 막는다.
+  - **칩 말줄임은 가로 스크롤 줄 · Chip Tabs 에도(03-E 후속)** — chip yaml `root.maxWidth` 비고 · md, tabs md Chip Tabs 절 · Migration.
+  - 옛 판: 컴포넌트 `.history/v-pre-03e-03b.*`(chip · progress · avatar · avatar-stack · tag-group · select · color-swatch · radio-group · segmented-control · select-box · list · attachment-input · tabs), `DESIGN.history/v-pre-03e-03b.*`.
 
 ### Fixed
 - **v9**: 매 batch마다 lint 결과를 손계산만 하던 방식 발견 → 16 sparse component를 매핑해 lint contrastCheck 자동 검증 활성. 이후 모든 토큰 추가는 components 매핑 동반.

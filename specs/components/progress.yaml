@@ -47,7 +47,7 @@ rules:
         typography: { value: $text-t3, note: "이름 줄 오른쪽 끝, 글자 바탕선 맞춤 — 숫자 폭을 같게(tabular-nums). 비율은 반올림한 정수(\"88%\")" }
         foreground: $color-fg-neutral-subtle
       track:
-        height: 8px
+        height: { value: 8px, note: "웹은 rem 이라 글자 크기 설정의 배율대로 커진다(200% 에서 16). 앱은 8 그대로 — 글이 없는 상자라 OS 글자 크기를 따르지 않는다. 이름 · 오른쪽 글 · 금액 줄은 두 플랫폼 모두 글자 크기를 따른다(2026-10-17 사용자 결정 — 03-E 결정 1 C)" }
         radius: $radius-full
         background: { value: $color-bg-neutral-weak, note: "흰 면 위 1.08 · 다크 1.30 — 장식(값은 채움이 보인다). 흰 면 위에 둔다" }
       fill:
