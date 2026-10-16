@@ -404,6 +404,20 @@
   - **새 그림자 이름도 다크를 따라간다(01-003 A 를 새 이름에)** — `export:tailwind` 가 `--shadow-s1` ~ `s4` 를 `var(--porest-shadow-s1)` ~ `s4` 로 적고 값은 @theme 밖 `:root` 에, 다크 블록은 `--porest-shadow-sN` 을 바꾼다. `shadow-s3` 클래스 · `shadow-lg` · `var(--shadow-s3)` 가 모두 다크 값(크로미움으로 잼 — `shadow-computed.txt`). `test-tailwind-export` 에 확인을 더했다.
   - **Button 짝 버튼 = SEED ResponsivePair** — 한 버튼의 라벨이 짝 폭의 절반을 넘으면 세로로 쌓고 라벨은 한 줄. 대가 — 글자 200% 에서 가장 긴 라벨이 넘칠 수 있다(약 170). 2026-10-17 사용자 결정 03A-013 A.
   - **Checkbox · Radio 묶음 — 앱은 이름 노드만** — 묶음 제목을 `Semantics(label)` 로 단 노드 하나, 묶음 역할 없음(Flutter 3.44). 2026-10-17 사용자 결정 03A-014 A.
+- **01 기초 앱 · 글자 웹 · 03-D 목록 · 카드 · 표 결정 (2026-10-17)**: 구현 조사에서 사용자가 정한 것을 스펙에 넣었다(비교 페이지 01 https://claude.ai/artifact/Q6SNYeUqDwfCjuVMfLwd2g · 03-D https://claude.ai/artifact/7TVGy8o47HBg4R3SefDmf6). 토큰 추가 없음.
+  - **앱 옛 px 간격 이름(01A-022 B)** — v98 절에 "앱 `PSpace.xN` = N px 와 새 `PSpacing.xN` = N × 4 px 가 같은 이름이라, 화면 파일을 옮길 때 치환 스크립트로 파일 단위 한꺼번에(대응표) + 한 파일에 둘이 섞이면 실패하는 테스트" 를 세 DESIGN 에 적었다.
+  - **`fg-disabled` 의 자리(01T-028 ~ 031 A)** — State v106 에 "막힘 · 위치 단서 · 장식에만" 규칙(휠 이웃 칸 · 앞뒤 달 · 태그 구분 · 가득 찬 첨부 개수는 스펙 그대로), SEED `fg.disabled` gray-500(#d1d3d8 · 다크 #5b606a — rootage 확인)이 porest 보다 옅다는 것.
+  - **여닫는 머리 설명 500(01T-005)** — 글자 역할 R9 에 "여닫는 머리 설명 t3 · 500"(Accordion · Collapsible — SEED accordion-item medium), "500 을 쓰는 줄 제목" 규칙 줄, accordion · collapsible yaml 비고.
+  - **막힌 OTP 칸의 자리 글(01T-013)** — `fg-placeholder` 그대로(Input · SEED 의 `fg-disabled` 와 다른 자리). input-otp yaml disabled › placeholder · md(SEED 와 다른 점 · Migration) · 레시피 `InputOTP` 가 `placeholder:text-fg-placeholder` 로 Input 막힘 색을 덮는다 · 예제 · 미리보기 · 사이트(text-field 의 `placeholderDisabled` 색, OTP 는 yaml 을 읽어 덮는다). 글자 역할 D7 규칙 줄에도.
+  - **일괄 작업 바 동작은 모두 ghost neutral(01T-033 A)** — 빨강은 확인창에서. table yaml `bulkBar.actions` · md(설명 · 코드 · WCAG 줄) · 예제 · 미리보기 · 사이트(BulkAction 의 critical 을 걷고 yaml 을 읽는다) · DESIGN Table 요약(HR 은 그 줄).
+  - **목록 큰 글자(03-D 결정 1 B)** — 줄 안 폭이 제목 글자 16개(16em) 미만이면 값을 본문 아래로 — Q-001 A 의 예외이고 기준(줄 안 폭)이 거절한 Q-001 B · C(값 폭)와 다르다는 것을 적었다. list yaml 축 `width`(regular · narrow) · `content.stackBelow` 16em · narrow 규칙(앞 붙이개 위 맞춤 · 본문 뒤 여백 0 · 값은 설명 아래 4 · 왼쪽 · 금액은 쉼표 뒤), md "큰 글자에서 값을 본문 아래로", 사이트 그림 `list.tsx#narrow`(360 · 100 · 130 · 200% · 라이트 · 다크). 레시피는 아직 그리지 않는다.
+  - **좁은 줄의 조작 요소는 줄 끝 그대로** — 화살표 · 스위치 · 체크 · 작은 버튼은 내리지 않는다(2026-10-17 사용자 결정 — 누르는 자리를 옮기지 않는다).
+  - **금액은 쉼표 뒤에서만 줄을 바꾼다(03-D 결정 2 B)** — Typography v114 의 예외(웹 `<wbr>` · 앱 U+200B, 읽는 이름 · 복사에는 넣지 않는다) · International Design 숫자 · 돈, card yaml `statValue.lineBreak` · `heroAmount.lineBreak` · md · 사이트 그림 `card.tsx#big-text`(360 · 200%) · 지표 · 순자산 그림이 `<wbr>` 을 넣는다.
+  - **좁은 카드 면 큰 글자(03-D 결정 3 A)** — 회사 줄 + 이름 한 줄 + 아래 여백이 면 높이보다 크면 첫 글자 면. card-art yaml `label.fit` · image-frame md · 사이트 그림 `image-frame.tsx#card-face-scale`(96 ~ 150 × 100 · 130 · 200%). 레시피는 아직 폭으로만 가른다.
+  - **앱 목록 줄 낭독(03-D 결정 4 A)** — 줄 하나 = 한 노드(제목 · 설명 · 값 한 이름, 꺾쇠 → 줄 → 하위 줄) — list md ARIA · SEED 와 다른 점.
+  - **표 ↔ 넘김 줄 12(03-D 결정 5 B)** — 12 는 Table Pagination 의 위 여백, 표의 `pagination` 자리는 좌우 24 만. table md · table-pagination yaml · md, 레시피 `table.tsx` 자리에서 `pt-x3` 를 걷음(자리에 넣으면 24 였다), 사이트 주석 · DESIGN Table 요약.
+  - **본문 최소 폭의 em(03D-005 고침)** — 1em 은 제목 글자(t5) — 레시피 `list.tsx` · 예제 열 곳 `min-w-[calc(var(--text-t5)+var(--spacing-x2_5))]`, 미리보기 · 사이트 그림도(보통 글자에서 24 → 26).
+  - 옛 판: `DESIGN.history/v-pre-app-type-03d.*`, 컴포넌트 `.history/v-pre-app-type-03d.*`(list · card · table · table-pagination · input-otp md · yaml, image-frame md, card-art · accordion · collapsible yaml).
 
 ### Fixed
 - **v9**: 매 batch마다 lint 결과를 손계산만 하던 방식 발견 → 16 sparse component를 매핑해 lint contrastCheck 자동 검증 활성. 이후 모든 토큰 추가는 components 매핑 동반.

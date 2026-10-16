@@ -24,7 +24,7 @@ const Shrunk = ({ h, children }: { h: number; children: ReactNode }) => (
   </div>
 );
 const USERS_HEAD = ['이름', '부서', '직책', '상태'];
-// 표 카드 — 머리(표 이름) + 표 + 아래 줄. 줄은 표와 같은 상자 안 표 아래 12(spacing-component-default)
+// 표 카드 — 머리(표 이름) + 표 + 아래 줄. 줄은 표와 같은 상자 안 표 아래 12(spacing-component-default — 넘김 줄의 위 여백, 표의 자리는 좌우 24 만)
 function TableBlock({ mode = 'auto', w = W, rows = 4, head = USERS_HEAD, data = HR_USERS, total = 21, page = 2, pageSize = 10, row, title = '사용자' }: { mode?: Mode; w?: number; rows?: number; head?: string[]; data?: string[][]; total?: number; page?: number; pageSize?: number; row?: ReactNode; title?: string }) {
   return (
     <div style={{ width: w }}>

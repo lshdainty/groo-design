@@ -48,7 +48,7 @@ rules:
         height: { value: 40px, note: "한 줄 — 줄바꿈하지 않는다. 좁으면 표와 같은 가로 스크롤 상자 안에 둔다(SEED)" }
         justifyContent: { value: space-between, note: "왼쪽 줄 수 · 오른쪽 범위와 화살표" }
         gap: { value: $spacing-x4, note: "왼쪽 묶음 ↔ 오른쪽 묶음 · 범위 묶음 ↔ 화살표 16" }
-        marginTop: { value: $spacing-component-default, note: "표 아래 12 — 따로 정한 간격이 없는 컴포넌트 사이(v101 역할 간격)" }
+        marginTop: { value: $spacing-component-default, note: "표 아래 12 — 따로 정한 간격이 없는 컴포넌트 사이(v101 역할 간격). 이 12 는 넘김 줄이 갖는다 — Table 의 pagination 자리는 좌우 24 만 두고 위 여백을 더하지 않는다. 자리에 넣어도, 표 바로 뒤에 두어도 12 다(2026-10-17 사용자 결정 — 03-D 결정 5 B, Pagination root.marginTop 과 같은 방식)" }
       pageSize:
         size: { value: Select medium, note: "높이 40 · 최소 폭 96 · 모서리 8 — 선택지 \"10개\" · \"25개\" · \"50개\"(3 ~ 4개를 넘지 않는다). 화면 폭과 상관없이 medium(Select 1280 규칙의 예외 — 사용자 결정 2026-10-08)" }
         minWidth: 96px

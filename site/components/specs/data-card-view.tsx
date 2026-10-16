@@ -3,7 +3,7 @@
 // state 를 주면 그 상태로 멈춘 그림, live 면 실제로 호버 · 누름 · 키보드 포커스에 반응한다(누르는 카드 · 머리 동작).
 // 색은 사이트 모드를 따르면(auto) --p-<토큰> 변수, 모드를 정하면 그 모드의 값이다. 순자산 카드의 끝 색은 모드마다 다른 토큰이라 .pdat 가 고른다.
 // 인라인 스타일은 단축 속성(padding)과 개별 속성을 섞지 않는다 — 링크로 들어올 때 값이 지워진다(PR #154).
-import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
+import { Fragment, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
 import { pressRatio, splitVars, sv, type CardLook, type CardPress, type CardState, type CardStatSize, type DeltaDir, type ViewMode } from './data-shared';
 import { dcv } from './display-shared';
 
@@ -267,13 +267,30 @@ export function DeltaView({ look, mode = 'auto', delta, onHero = false, marks, s
   );
 }
 
+// 금액 — 쉼표 뒤에서만 줄을 바꾼다(card.yaml statValue · heroAmount lineBreak, 2026-10-17 03-D 결정 2 B). 금액 글을 만드는 쪽이 쉼표 뒤마다
+// <wbr> 을 넣는다 — 글자가 아니라 읽는 이름 · 복사에 남지 않는다. 묶음 하나가 칸보다 길 때만 v114 의 칸 끝 끊기가 남는다
+export function commaBreaks(v: string): ReactNode {
+  const parts = v.split(',');
+  return parts.map((p, i) => (
+    <Fragment key={i}>
+      {p}
+      {i < parts.length - 1 && (
+        <>
+          ,<wbr />
+        </>
+      )}
+    </Fragment>
+  ));
+}
+const AMOUNT_BREAK: CSSProperties = { whiteSpace: 'normal', overflowWrap: 'break-word', wordBreak: 'keep-all', maxWidth: '100%' };
+
 export function StatView({ look, mode = 'auto', label, value, size = 'large', delta, marks }: { look: CardLook; mode?: ViewMode; label: string; value: string; size?: CardStatSize; delta?: DeltaSpec; marks?: { label?: CSSProperties; value?: CSSProperties; delta?: CSSProperties } }) {
   const st = look.stat;
   const v = st.value.sizes[size];
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', minWidth: 0 }}>
       <span style={{ fontFamily: st.label.fontFamily, fontSize: st.label.fontSize, lineHeight: st.label.lineHeight, fontWeight: st.label.fontWeight, color: dcv(st.label.fg, mode), ...marks?.label }}>{label}</span>
-      <span style={{ marginTop: st.value.marginTop, fontFamily: v.fontFamily, fontSize: v.fontSize, lineHeight: v.lineHeight, fontWeight: st.value.weight, color: dcv(st.value.fg, mode), fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', ...marks?.value }}>{value}</span>
+      <span style={{ marginTop: st.value.marginTop, fontFamily: v.fontFamily, fontSize: v.fontSize, lineHeight: v.lineHeight, fontWeight: st.value.weight, color: dcv(st.value.fg, mode), fontVariantNumeric: 'tabular-nums', ...AMOUNT_BREAK, ...marks?.value }}>{commaBreaks(value)}</span>
       {delta && <DeltaView look={look} mode={mode} delta={delta} style={{ marginTop: st.delta.marginTop, ...marks?.delta }} />}
     </div>
   );
@@ -361,9 +378,9 @@ export function HeroCardView({ look, mode = 'auto', label, amount, delta, detail
         <span style={{ minWidth: 0 }}>{label}</span>
         {labelEnd && <span style={{ display: 'flex', alignItems: 'center', flexShrink: 0, height: h.label.lineHeight, marginRight: -look.header.gap }}>{labelEnd}</span>}
       </div>
-      <div style={{ position: 'relative', marginTop: h.amount.marginTop, fontFamily: h.amount.fontFamily, fontSize: h.amount.fontSize, lineHeight: h.amount.lineHeight, fontWeight: h.amount.fontWeight, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', ...marks?.amount }}>
+      <div style={{ position: 'relative', marginTop: h.amount.marginTop, fontFamily: h.amount.fontFamily, fontSize: h.amount.fontSize, lineHeight: h.amount.lineHeight, fontWeight: h.amount.fontWeight, fontVariantNumeric: 'tabular-nums', ...AMOUNT_BREAK, ...marks?.amount }}>
         {pins?.amount}
-        {amount}
+        {commaBreaks(amount)}
       </div>
       {(delta || detail) && (
         <div style={{ position: 'relative', marginTop: h.detail.marginTop, fontFamily: h.detail.fontFamily, fontSize: h.detail.fontSize, lineHeight: h.detail.lineHeight, fontWeight: h.detail.fontWeight, opacity: override?.dimText ? 0.78 : undefined, ...marks?.detail }}>

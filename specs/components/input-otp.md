@@ -29,7 +29,7 @@ SEED 에는 이 컴포넌트가 없다 — Text Input 문서가 "주민등록번
 
 ### 한 칸
 
-코드 칸은 [Input](input.md) 상자형 한 칸이다 — `large` 52(폰 · 앱) · `medium` 40(1280 이상 데스크톱 웹), 웹의 기본은 `responsive`. 상자 · 글자 · 포커스 · 오류 · 막힘은 Input 그대로이고, 숫자는 고정폭 숫자(`tabular-nums`)로 다른 칸처럼 왼쪽에 쓴다 — 고정폭 글꼴 · 글자 사이 띄움 · 가운데 맞춤을 두지 않는다. 자릿수는 placeholder("6자리 숫자")가 알린다.
+코드 칸은 [Input](input.md) 상자형 한 칸이다 — `large` 52(폰 · 앱) · `medium` 40(1280 이상 데스크톱 웹), 웹의 기본은 `responsive`. 상자 · 글자 · 포커스 · 오류 · 막힘은 Input 그대로이고(막힌 칸의 자리 글만 다르다 — 아래 "SEED 와 다른 점"), 숫자는 고정폭 숫자(`tabular-nums`)로 다른 칸처럼 왼쪽에 쓴다 — 고정폭 글꼴 · 글자 사이 띄움 · 가운데 맞춤을 두지 않는다. 자릿수는 placeholder("6자리 숫자")가 알린다.
 
 [그림: 크기 — large 52(폰 · 앱) · medium 40(1280 이상 데스크톱 웹)](../../site/components/specs/input-otp.tsx#size)
 
@@ -187,9 +187,14 @@ const [error, setError] = useState<string | null>(null)
 ## SEED 와 다른 점
 
 - **porest 가 정한 컴포넌트다** — SEED 에는 OTP 부품이 없다(Figma 에 비공개 PIN Field 가 상태만 있다). 칸은 SEED Text Input 그대로이고 "Input을 나누지 말고" 를 따랐다.
+- **막힌 칸의 자리 글은 `fg-placeholder` 그대로** — Input · Textarea · SEED Text Input 은 막히면 자리 글도 `fg-disabled` 지만, 코드 칸은 막혀도 "6자리 숫자" 를 켜진 칸과 같은 색으로 둔다. 막힌 칸은 바탕(`bg-disabled`) · 커서로 갈린다(2026-10-17 사용자 결정 — [01 기초 앱 · 글자 웹 비교 페이지](https://claude.ai/artifact/Q6SNYeUqDwfCjuVMfLwd2g) 01T-013 — Input 그대로 `fg-disabled` 는 고르지 않았다). 다크는 두 색이 같은 값(#838997)이라 차이가 없고, 라이트만 4.18 ↔ 3.16 으로 갈린다.
 - **숫자만 뽑기 · `one-time-code` · 숫자 키보드 · 다시 받기 · 설명 줄** — SEED 에 규칙이 없다(문서 · 예제 · 코드에 `inputMode` · `one-time-code` 0회). SEED 에서 가장 가까운 것은 `maxGraphemeCount` 로 글자 수를 세는 예("6글자까지 입력 가능합니다")다.
 
 ## Migration notes
+
+### 2026-10-17 — 막힌 칸의 자리 글
+
+사용자가 [01 기초 앱 · 글자 웹 비교 페이지](https://claude.ai/artifact/Q6SNYeUqDwfCjuVMfLwd2g) 01T-013 에서 정했다 — 막힌 코드 칸의 자리 글은 `fg-placeholder` 그대로다(`input-otp.yaml` disabled › placeholder). 전에는 스펙이 자리 글 색 하나(`fg-placeholder`)만 적고 막힘 줄은 값만 적어, 웹 ds 견본이 Input 규칙대로 `fg-disabled`(#8A91A0)로 그렸다. 레시피는 `InputOTP` 가 입력에 `placeholder:text-fg-placeholder` 를 덧붙여 Input 의 막힘 색을 덮는다. 웹 · 앱 ds 의 코드 칸도 이렇게 옮긴다.
 
 ### 2026-10-09 — Input 한 칸으로 다시 쓴다
 

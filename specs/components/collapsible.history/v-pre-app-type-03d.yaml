@@ -1,0 +1,228 @@
+# Collapsible 의 수치 원본 — 트리거는 Accordion 항목 하나의 모양(2026-10-10 사용자 결정, 펼치고 접기 · 나누기 비교 페이지 9A · 10A ·
+# 11A · "따라오는 것"). 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 내용 하나를 접고 편다 — 거래 상세의 분할 내역, 분할의 "빠르게 맞추기", HR 업무 보고의 상세 검색 조건. SEED 에는 Collapsible
+# 컴포넌트가 없고 Accordion 가이드의 한 줄("단일 콘텐츠를 접고 펼치는 용도는 해당 아이템에 Collapsible 동작을 활용", Apache-2.0)
+# 뿐이라, 트리거는 Accordion 항목 하나의 모양을 그대로 쓴다 — 줄 전체가 트리거, 머리 글이 곧 이름, 54 · 74, 꺾쇠 20.
+# 이름은 상태마다 바꾸지 않고 펼침은 aria-expanded 가 알린다(APG Disclosure). 펼친 뒤 초점은 트리거에 그대로.
+#
+# 축 — open(접힘 · 펼침) · description(설명 없음 · 있음 — 54 · 74) · layout(펼친 내용 — 글 · 줄 목록) ·
+# surface(놓인 면 — 흰 면 · 카드 · 경고 상자). 값 · 상태 · 모션은 accordion.yaml 과 같다 — 다른 것은 layout · surface 다.
+#
+# SEED 와 다른 자리(collapsible.md 의 "SEED 와 다른 점")
+#   - SEED 에 컴포넌트 · 값이 없다 — Accordion 항목의 값(rootage accordion-item medium)을 porest 로 옮긴 값을 쓴다
+#     (좌우 24 · 불투명한 누름 바탕 — accordion.yaml 과 같다).
+#   - 카드 면 · 경고 상자 안에 둘 때의 여백 · 선 · 누름 색은 porest 가 정했다(surface).
+
+name: Collapsible
+
+slots:
+  root: 접는 자리 하나 — 트리거 + 펼친 내용. surface card 면 Card 면
+  heading: 머리말 — 트리거를 감싼다(heading > button). 모양은 없다
+  trigger: 트리거 — 줄 전체가 누르는 자리(button). Accordion 항목과 같은 모양
+  background: 트리거 바탕 층 — 누름 · 호버 바탕. 줄지 않는다
+  content: 트리거 콘텐츠 층 — 본문 · 꺾쇠. 누르면 이 층만 준다
+  body: 본문 — 이름 + 설명
+  title: 이름 — 무엇을 여닫는지. 상태마다 바꾸지 않는다
+  description: 설명 — 있을 때만(합계 · 적용한 필터 수)
+  chevron: 꺾쇠 — 오른쪽 끝. 펼치면 위를 가리킨다
+  panel: 펼친 내용 — 높이로 펼치고 접는다. 안에서 스크롤하지 않는다
+  divider: 트리거 위 선 — 경고 상자 아래 줄일 때만
+  box: 경고 상자 — surface warning 일 때 Collapsible 을 품는 상자(분할 합계 경고). 위에 경고 글, 아래 줄이 트리거
+  focusRing: 키보드 포커스 링(웹) — 트리거 안쪽
+
+variants:
+  open:
+    collapsed: 접힘 — 처음 상태는 쓰는 쪽이 정한다(기본)
+    expanded: 펼침 — 꺾쇠가 위, 내용이 보인다
+  description:
+    none: 이름만 — 트리거 54(기본)
+    shown: 이름 + 설명 — 트리거 74
+  layout:
+    text: 글 · 카드 · 칸 — 펼친 내용 아래 16(기본)
+    rows: 줄 목록 — 줄이 제 위아래 여백을 가져 펼친 내용 아래 8(거래 상세의 분할 내역)
+  surface:
+    default: 흰 면 · 시트 · 대화상자의 줄 — 줄 폭 전체, 좌우 24(기본)
+    card: 카드 면 — Collapsible 자체가 Card 면이고 트리거가 그 머리다(HR 상세 검색 조건)
+    warning: 경고 상자 안의 아래 줄 — 좌우 16 · 위 선 · 누름은 경고 바탕의 누름 색(분할 "빠르게 맞추기")
+
+defaults:
+  open: collapsed
+  description: none
+  layout: text
+  surface: default
+
+states:
+  enabled: 기본
+  hovered: 웹 — 누름과 같은 바탕(v106), 축소 없음
+  focused: 웹 — 키보드 포커스에만 트리거 안쪽 링
+  pressed: 바탕 + 콘텐츠만 2px 거리 축소(v104)
+  disabled: 전용 색(v106) — 불투명도로 흐리게 하지 않는다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      heading:
+        level: { value: h3, note: "놓인 자리의 머리말 차례에 맞춘다(Accordion 과 같다) — 대화상자 · 시트 · 카드 제목(h2) 아래면 h3" }
+      trigger:
+        minHeight: { value: 54px, note: "위아래 16 + 이름 22 — Accordion 항목과 같다. 이름이 줄을 바꾸면 늘어난다" }
+        paddingY: $spacing-x4
+        paddingX: { value: $spacing-global-gutter, note: "화면 가장자리 규칙 24" }
+        textAlign: left
+        cursor: pointer
+        touchTarget: { value: 트리거 전체, note: "줄 폭 × 54 이상 — 글 단추 · 꺾쇠만 누르게 하지 않는다(사용자 결정 9A). AA ✓ · AAA ✓" }
+      background:
+        background: transparent
+        insetX: 0px
+        radius: 0px
+        transitionProperty: { value: "background-color, inset, border-radius", note: "Accordion 과 같다" }
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      content:
+        gap: { value: $spacing-x3, note: "본문 ↔ 꺾쇠 12" }
+        alignItems: center
+        transitionProperty: scale
+        transitionDuration: $motion-duration-pressed-scale
+        transitionEasing: $motion-ease-pressed-scale
+      body:
+        gap: { value: $spacing-x0_5, note: "이름 ↔ 설명 2" }
+      title:
+        typography: $text-t5
+        fontWeight: 500
+        foreground: $color-fg-neutral
+        lineClamp: { value: none, note: "늘 줄을 바꾼다(10A)" }
+      description:
+        typography: $text-t3
+        fontWeight: 500
+        foreground: $color-fg-neutral-subtle
+        lineClamp: none
+      chevron:
+        size: { value: 20px, note: "lucide chevron-down — 접혀 있으면 아래" }
+        color: $color-fg-neutral-subtle
+        rotate: 0deg
+        transitionProperty: rotate
+        transitionDuration: $motion-duration-d6
+        transitionEasing: $motion-ease-easing
+      panel:
+        display: { value: 숨김, note: "접혀 있으면 내용을 그리지 않는다 — 보조 기술도 읽지 않는다(앱도)" }
+        paddingTop: 0px
+        paddingX: { value: $spacing-global-gutter, note: "트리거와 같은 좌우 — 내용(줄 · 칸 · 글)은 이 안에서 시작한다" }
+        paddingBottom: { value: $spacing-x4, note: "트리거 위아래와 같은 16" }
+        maxHeight: { value: none, note: "패널 안에서 스크롤하지 않는다 — 길면 놓인 화면 · 시트가 스크롤한다" }
+    hovered:
+      background:
+        background: { value: $color-bg-layer-default-pressed, note: "Accordion 과 같다 — 시트 · 대화상자 위에서도 같은 값" }
+        insetX: $spacing-x1_5
+        radius: $radius-r2_5
+    pressed:
+      background:
+        background: $color-bg-layer-default-pressed
+        insetX: $spacing-x1_5
+        radius: $radius-r2_5
+      content:
+        scale: { value: 2px 거리 축소, note: "콘텐츠 층만 — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px(v104)" }
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: -2px, note: "트리거 안쪽 — 카드 · 상자 · 시트가 바깥 링을 자르지 않게" }
+        color: $color-stroke-focus-ring
+        radius: { value: 0px, note: "흰 면의 줄 — 각진 링" }
+    disabled:
+      trigger:
+        cursor: not-allowed
+      title:
+        foreground: $color-fg-disabled
+      description:
+        foreground: $color-fg-disabled
+      chevron:
+        color: $color-fg-disabled
+
+  # ── 펼침 ──────────────────────────────────────────────
+  - when: { open: expanded }
+    enabled:
+      chevron:
+        rotate: { value: 180deg, note: "위로" }
+      panel:
+        display: { value: 보임, note: "초점은 트리거에 그대로 · 저절로 스크롤하지 않는다(따라오는 것)" }
+
+  # ── 설명 ──────────────────────────────────────────────
+  - when: { description: shown }
+    enabled:
+      trigger:
+        minHeight: { value: 74px, note: "위아래 16 + 이름 22 + 2 + 설명 18" }
+
+  # ── 펼친 내용 ─────────────────────────────────────────
+  - when: { layout: rows }
+    enabled:
+      panel:
+        paddingBottom: { value: $spacing-x2, note: "8 — 줄마다 위아래 12 를 가져 마지막 줄의 글 아래로 20(비교 페이지 9A 의 분할 내역). 줄의 좌우는 0 — 패널의 좌우가 들인다" }
+
+  # ── 놓인 면 ───────────────────────────────────────────
+  - when: { surface: card }
+    enabled:
+      root:
+        background: { value: $color-bg-layer-default, note: "Card 면 — 바닥(bg-layer-basement) 위" }
+        borderWidth: 1px
+        borderColor: $color-stroke-neutral-weak
+        radius: { value: $radius-r4, note: "Card 16 — 트리거가 카드 머리다. 안의 누름 바탕은 16 − 6 = 10 으로 동심" }
+        overflow: hidden
+      panel:
+        paddingBottom: { value: $spacing-x6, note: "카드 안 여백 24(Card) — 칸 묶음 아래" }
+    focused:
+      focusRing:
+        radius: { value: $radius-r3_5, note: "카드 모서리 16 − 링 들임 2 = 14 — 트리거가 카드 맨 위라 모서리를 따른다" }
+  - when: { surface: warning }
+    enabled:
+      box:
+        background: { value: $color-bg-warning-weak, note: "놓인 면 — 경고 글(제목 · 설명)과 아래 줄의 트리거를 함께 담는다" }
+        borderWidth: 1px
+        borderColor: $color-stroke-warning-weak
+        radius: { value: $radius-r3, note: "12 — 지금 분할 경고 상자의 모서리" }
+        overflow: { value: hidden, note: "아래 줄의 누름 바탕 · 펼친 내용을 모서리에서 자른다" }
+        paddingTop: { value: $spacing-x3_5, note: "경고 글 위 14" }
+        paddingX: { value: $spacing-x4, note: "경고 글 좌우 16 — 트리거 좌우와 같다" }
+        paddingBottom: { value: $spacing-x3, note: "경고 글 ↔ 아래 줄의 선 12" }
+      trigger:
+        paddingX: { value: $spacing-x4, note: "경고 상자의 안쪽 여백 16 — 상자 글과 같은 자리에 선다" }
+      panel:
+        paddingX: $spacing-x4
+      divider:
+        height: 1px
+        background: { value: $color-stroke-warning-weak, note: "트리거 위 — 상자 안 경고 글과 트리거 줄을 가른다" }
+        display: { value: 트리거 위, note: "상자 폭 끝까지" }
+    hovered:
+      background:
+        background: { value: $color-bg-warning-weak-pressed, note: "놓인 면(bg-warning-weak)의 누름 짝 — 꺾쇠 4.37 · 4.35 · 이름 13.04 · 9.59" }
+    pressed:
+      background:
+        background: $color-bg-warning-weak-pressed
+    focused:
+      focusRing:
+        radius: { value: $radius-r2_5, note: "상자 모서리 12 − 링 들임 2 = 10 — 트리거가 상자 맨 아래라 모서리를 따른다" }
+
+motion:
+  "펼침 · 접힘 — 높이":
+    duration: $motion-duration-d6
+    easing: $motion-ease-easing
+    properties: [height]
+    note: "Accordion 과 같다(사용자 결정 3A) — 펼쳐도 초점 · 스크롤은 그대로"
+  "꺾쇠 — 회전":
+    duration: $motion-duration-d6
+    easing: $motion-ease-easing
+    properties: [rotate]
+    note: "0 → 180° — 모션 줄이기면 바로 뒤집힌다"
+  "모션 줄이기 — 펼침 · 접힘":
+    duration: $motion-duration-d3
+    easing: $motion-ease-easing
+    properties: [opacity]
+    note: "높이를 움직이지 않고 150ms 서서히(v104)"
+  "누름 · 호버 — 바탕":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color, inset, border-radius]
+  "누름 — 콘텐츠":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "모션 줄이기면 하지 않는다"

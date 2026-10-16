@@ -260,6 +260,7 @@ export function otpLook(): OtpLook {
     length: k.numIn(k.str(b['value.filter'], 'value.filter'), /앞 (\d+)자리/, 'value.filter'),
     cooldown: k.numIn(k.str(b['resend.cooldown'], 'resend.cooldown'), /(\d+)초/, 'resend.cooldown'),
     placeholder: k.str(b['placeholder.content'], 'placeholder.content'),
+    placeholderKeep: false,
     description: k.str(b['description.content'], 'description.content'),
     error: k.str(inv['description.content'], 'invalid description.content'),
     labels: { first: label('first'), ready: label('ready'), cooldown: label('cooldown') },
@@ -274,6 +275,10 @@ export function otpLook(): OtpLook {
     if (i.minHeight !== look.sizes[s].height || i.radius !== look.sizes[s].radius || i.padX !== look.sizes[s].padX) throw new Error(`${F} 의 ${s} 칸(${JSON.stringify(look.sizes[s])})이 input.yaml 상자형과 다르다`);
   }
   if (tf.breakpoint !== look.breakpoint) throw new Error(`${F} 의 경계(${look.breakpoint})가 input.yaml(${tf.breakpoint})과 다르다`);
+  // 막힌 칸의 자리 글 — 켜진 칸의 색(fg-placeholder)이면 그대로 두고, Input 의 막힘 색이면 Input 그대로. 그 밖의 색이면 그림을 고친다
+  const phOff = k.str(resolveState(spec, {}, 'disabled')['placeholder.foreground'], 'disabled placeholder.foreground');
+  if (phOff === `$color-${tf.color.placeholder.name}`) look.placeholderKeep = true;
+  else if (phOff !== `$color-${tf.color.placeholderDisabled.name}`) throw new Error(`${F} 의 막힌 칸 자리 글(${phOff})이 input.yaml 의 자리 글 · 막힌 자리 글 어느 쪽도 아니다`);
   const h = buttonLook({ variant: look.resend.variant, size: look.resend.size }).faces.light.enabled.height;
   if (h !== look.resend.height) throw new Error(`${F} 의 다시 받기 높이(${look.resend.height})가 Button ${look.resend.variant} ${look.resend.size}(${h})와 다르다`);
   if (!look.labels.cooldown.includes('{n}')) throw new Error(`${F} 의 cooldown 글(${look.labels.cooldown})에 {n} 이 없다`);

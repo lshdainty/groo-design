@@ -110,7 +110,7 @@ const Anatomy: Fig = ({ caption }) => {
           <div style={{ position: 'relative', width: tableW + bw * 2 + 28, paddingLeft: 12, paddingTop: 4 }}>
             <div style={{ position: 'relative', width: tableW + bw * 2 }}>
               <TableCard title="사용자 12명">
-                <TableView look={t} caption="사용자" columns={cols(w)} rows={userRows(4)} sort={SORT} selectable selected={['u1', 'u3']} bulkActions={[{ label: '내보내기' }, { label: '삭제', tone: 'critical' }]} more fixed marks={{ bulk: box, headerRow: box }} />
+                <TableView look={t} caption="사용자" columns={cols(w)} rows={userRows(4)} sort={SORT} selectable selected={['u1', 'u3']} bulkActions={[{ label: '내보내기' }, { label: '삭제' }]} more fixed marks={{ bulk: box, headerRow: box }} />
               </TableCard>
               <At n="ⓙ" x={-12} y={barTop + 14} />
               <At n="ⓐ" x={-12} y={top + t.head.minH + t.row.minH.text * 4 - 22} />
@@ -352,7 +352,7 @@ const Selection: Fig = ({ caption }) => {
       <div className="flex flex-col items-center gap-3">
         <Col>
           <TableCard title="업무 보고" width={640}>
-            <TableView look={t} caption="업무 보고" columns={reportCols} rows={reportRows()} sort={{ key: 'date', dir: 'descending' }} selectable selected={['r1', 'r3']} bulkActions={[{ label: '내보내기' }, { label: '삭제', tone: 'critical' }]} minWidth={600} />
+            <TableView look={t} caption="업무 보고" columns={reportCols} rows={reportRows()} sort={{ key: 'date', dir: 'descending' }} selectable selected={['r1', 'r3']} bulkActions={[{ label: '내보내기' }, { label: '삭제' }]} minWidth={600} />
           </TableCard>
         </Col>
         <Cap w={560}>

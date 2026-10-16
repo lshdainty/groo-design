@@ -87,6 +87,7 @@ function inputLook(brand: Brand): TfInputLook {
       bgDisabled: tok(disabled['root.background'], brand, 'input disabled root.background'),
       value: tok(base['value.foreground'], brand, 'input value.foreground'),
       placeholder: tok(base['placeholder.foreground'], brand, 'input placeholder.foreground'),
+      placeholderDisabled: tok(disabled['placeholder.foreground'], brand, 'input disabled placeholder.foreground'),
       affix: tok(base['prefixText.foreground'], brand, 'input prefixText.foreground'),
       icon: tok(base['prefixIcon.color'], brand, 'input prefixIcon.color'),
       clear: tok(base['clearButton.color'], brand, 'input clearButton.color'),

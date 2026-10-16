@@ -439,8 +439,12 @@ export function IndicatorView({ look, children, label, zoom = 1, style }: { look
 // ── 카드 그림 ─────────────────────────────────────────────
 // 카드 면 — 기관 색 한 색. 작은 면(폭 < 96)은 회사 첫 글자만 가운데, 그 위는 왼쪽 아래 회사 · 카드 이름
 export type CardFace = { bg: string; fg: SplitColor };
-export function CardFaceView({ ca, face, issuer, name, width, mode = 'auto', zoom = 1 }: { ca: CardArtLook; face: CardFace; issuer: string; name: string; width: number; mode?: ViewMode; zoom?: number }) {
-  const size = cardArtSize(width, ca.bands);
+// textScale — 글자 배율(앱 · 브라우저 글자 크기). 글자만 커지고 여백은 그대로다. 회사 줄 + 이름 한 줄 + 아래 여백이 면 높이보다 크면
+// 첫 글자 면(card-art.yaml label.fit — 2026-10-17 03-D 결정 3 A)
+export function CardFaceView({ ca, face, issuer, name, width, mode = 'auto', zoom = 1, textScale = 1 }: { ca: CardArtLook; face: CardFace; issuer: string; name: string; width: number; mode?: ViewMode; zoom?: number; textScale?: number }) {
+  const band = cardArtSize(width, ca.bands);
+  const fits = band === 'small' || (ca.sizes[band].issuer.lineHeight + ca.sizes[band].name.lineHeight) * textScale + ca.sizes[band].padBottom <= width / ca.ratio;
+  const size = fits ? band : 'small';
   const fg = fgProps(face.fg, mode);
   if (size === 'small')
     return (
@@ -449,15 +453,16 @@ export function CardFaceView({ ca, face, issuer, name, width, mode = 'auto', zoo
       </span>
     );
   const s = ca.sizes[size];
+  const z = zoom * textScale;
   return (
     <span aria-hidden data-pcardface={size} className={fg.className} data-mode={fg['data-mode']} style={{ ...fill, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', boxSizing: 'border-box', paddingLeft: s.padX * zoom, paddingRight: s.padX * zoom, paddingBottom: s.padBottom * zoom, background: face.bg, fontFamily: FONT, textAlign: 'left', ...fg.style }}>
-      <span style={{ display: 'block', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: s.issuer.fontSize * zoom, lineHeight: `${s.issuer.lineHeight * zoom}px`, fontWeight: ca.issuerWeight }}>{issuer}</span>
+      <span style={{ display: 'block', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: s.issuer.fontSize * z, lineHeight: `${s.issuer.lineHeight * z}px`, fontWeight: ca.issuerWeight }}>{issuer}</span>
       {s.nameClamp === 1 ? (
         // 한 줄 — 넘치면 말줄임(medium)
-        <span style={{ display: 'block', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: s.name.fontSize * zoom, lineHeight: `${s.name.lineHeight * zoom}px`, fontWeight: ca.nameWeight }}>{name}</span>
+        <span style={{ display: 'block', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: s.name.fontSize * z, lineHeight: `${s.name.lineHeight * z}px`, fontWeight: ca.nameWeight }}>{name}</span>
       ) : (
         // 여러 줄 — 단어 단위로 바꾸고(v114) 그 줄 수를 넘으면 말줄임(large 두 줄)
-        <span style={{ display: '-webkit-box', WebkitLineClamp: s.nameClamp, WebkitBoxOrient: 'vertical', overflow: 'hidden', fontSize: s.name.fontSize * zoom, lineHeight: `${s.name.lineHeight * zoom}px`, fontWeight: ca.nameWeight, wordBreak: 'keep-all', overflowWrap: 'break-word' }}>{name}</span>
+        <span style={{ display: '-webkit-box', WebkitLineClamp: s.nameClamp, WebkitBoxOrient: 'vertical', overflow: 'hidden', fontSize: s.name.fontSize * z, lineHeight: `${s.name.lineHeight * z}px`, fontWeight: ca.nameWeight, wordBreak: 'keep-all', overflowWrap: 'break-word' }}>{name}</span>
       )}
     </span>
   );
@@ -471,14 +476,16 @@ export type CardArtViewProps = Omit<ImageFrameViewProps, 'ratio' | 'fallback' | 
   // 아는 카드사의 면(서버가 기관 색 표에서 찾아 넘긴다) — 없으면 대체 그림
   face: CardFace | null;
   decorative?: boolean;
+  // 글자 배율 — 카드 면의 글만 키운다(안 들면 첫 글자 면)
+  textScale?: number;
 };
 // 카드 그림 — ratio card 의 Image Frame. 그림이 없거나 실패하면 아는 카드사는 카드 면, 모르면 대체 그림(credit-card).
 // 장식(기본)이면 alt="" — 그림 · 면을 숨기고, 아니면 "카드사 카드 이름" 을 읽는다. 그림 위 배지는 그대로 읽힌다(레시피 CardArt 와 같다)
-export function CardArtView({ ca, width, issuer, name, face, decorative = true, mode = 'auto', zoom = 1, ...rest }: CardArtViewProps) {
+export function CardArtView({ ca, width, issuer, name, face, decorative = true, mode = 'auto', zoom = 1, textScale = 1, ...rest }: CardArtViewProps) {
   const label = [issuer.trim(), name.trim()].filter(Boolean).join(' ');
   return (
     <span data-pcardart="" style={{ display: 'block', flexShrink: 0, width: rest.fill ? '100%' : width * zoom }}>
-      <ImageFrameView {...rest} mode={mode} zoom={zoom} ratio="card" width={width} alt={decorative ? '' : label} fallbackIcon="credit-card" fallback={face ? <CardFaceView ca={ca} face={face} issuer={issuer} name={name} width={width} mode={mode} zoom={zoom} /> : undefined} />
+      <ImageFrameView {...rest} mode={mode} zoom={zoom} ratio="card" width={width} alt={decorative ? '' : label} fallbackIcon="credit-card" fallback={face ? <CardFaceView ca={ca} face={face} issuer={issuer} name={name} width={width} mode={mode} zoom={zoom} textScale={textScale} /> : undefined} />
     </span>
   );
 }

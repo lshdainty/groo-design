@@ -135,7 +135,7 @@ export type TableLook = {
   sort: { gap: number; icon: number; muted: DColor; strong: DColor; bg: DColor; touchH: number };
   check: { look: CheckLook; size: number; touch: number; colW: number };
   more: { look: ButtonLook; size: number; touch: number; colW: number };
-  bulk: { minH: number; padL: number; padR: number; radius: number; bg: DColor; gap: number; marginBottom: number; text: DType; fg: DColor; action: ButtonLook; critical: ButtonLook; clear: ButtonLook };
+  bulk: { minH: number; padL: number; padR: number; radius: number; bg: DColor; gap: number; marginBottom: number; text: DType; fg: DColor; action: ButtonLook; clear: ButtonLook };
   ring: DRing;
   badge: BadgeLook;
   avatar: AvatarLook;

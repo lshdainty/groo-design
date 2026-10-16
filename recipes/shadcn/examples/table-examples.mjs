@@ -133,7 +133,7 @@ const LIST_PREFIX_VARIANTS = {
   },
 };
 const LIST_PREFIX_DEFAULTS = { disabled: false };
-const LIST_BODY_BASE = "flex min-w-[calc(1em+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
+const LIST_BODY_BASE = "flex min-w-[calc(var(--text-t5)+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
 const LIST_TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral [overflow-wrap:anywhere]";
 const LIST_TITLE_VARIANTS = { disabled: { true: "text-fg-disabled", false: "" } };
 const LIST_TITLE_DEFAULTS = { disabled: false };
@@ -646,13 +646,13 @@ import {
   {
     title: "고르기 · 일괄 작업",
     description:
-      "여럿을 골라 한 번에 다루는 표만 첫 열에 Checkbox large(24 · 누르는 44)를 둔다 — 열 폭 24 + 앞 24 · 뒤 16. 머리 칸의 체크는 지금 쪽의 줄 전부를 고르고 풀며, 일부만 골랐으면 일부(mixed)다(이름 \"모두 선택\" · 줄은 \"{줄 이름} 선택\"). 한 줄 이상 고르면 표 위(아래 8)에 일괄 작업 바가 뜬다 — 바탕 bg-brand-weak 한 값 · 높이 48 · 모서리 12 · 왼쪽 16 · 오른쪽 8, 왼쪽에 \"2개 선택됨\"(14 · 500 · role=\"status\" 로 알린다), 오른쪽에 동작(Button ghost small — 삭제는 위험 글자)과 ✕ \"선택 해제\". 고른 줄 자체에는 바탕을 칠하지 않는다 — 체크가 고른 것을 말한다(사용자 결정 21A). 브랜드 옅은 바탕은 일괄 작업 바에만 있다. 제출일은 처음 누르면 내림(defaultSortDirection=\"descending\")이다.",
+      "여럿을 골라 한 번에 다루는 표만 첫 열에 Checkbox large(24 · 누르는 44)를 둔다 — 열 폭 24 + 앞 24 · 뒤 16. 머리 칸의 체크는 지금 쪽의 줄 전부를 고르고 풀며, 일부만 골랐으면 일부(mixed)다(이름 \"모두 선택\" · 줄은 \"{줄 이름} 선택\"). 한 줄 이상 고르면 표 위(아래 8)에 일괄 작업 바가 뜬다 — 바탕 bg-brand-weak 한 값 · 높이 48 · 모서리 12 · 왼쪽 16 · 오른쪽 8, 왼쪽에 \"2개 선택됨\"(14 · 500 · role=\"status\" 로 알린다), 오른쪽에 동작(Button ghost small — 모두 neutral, \"삭제\" 도 회색 글이고 빨강은 누른 뒤의 확인창에서)과 ✕ \"선택 해제\". 고른 줄 자체에는 바탕을 칠하지 않는다 — 체크가 고른 것을 말한다(사용자 결정 21A). 브랜드 옅은 바탕은 일괄 작업 바에만 있다. 제출일은 처음 누르면 내림(defaultSortDirection=\"descending\")이다.",
     jsx: `import { Button } from "@/components/ui/button"
 import { Table, TableBulkBar, TableSelectCell, TableSelectHead } from "@/components/ui/table"
 
 <TableBulkBar count={selected.size} onClear={clearSelection}>
   <Button variant="ghost" size="small" onClick={exportSelected}>내보내기</Button>
-  <Button variant="ghost" ghostColor="critical" size="small" onClick={askDeleteSelected}>삭제</Button>
+  <Button variant="ghost" size="small" onClick={askDeleteSelected}>삭제</Button>
 </TableBulkBar>
 <Table caption="업무 보고">
   <TableHeader>
@@ -676,7 +676,7 @@ import { Table, TableBulkBar, TableSelectCell, TableSelectHead } from "@/compone
           "업무 보고",
           `<div style="padding:0 var(--spacing-x6);">${bulkBar(2, [
             button({ text: "내보내기", variant: "ghost", size: "small" }),
-            button({ text: "삭제", variant: "ghost", size: "small", ghostColor: "critical" }),
+            button({ text: "삭제", variant: "ghost", size: "small" }),
           ])}</div>${table({
             caption: "업무 보고",
             head: [selectHead("indeterminate"), head("제목"), head("작성자"), head("제출일", { sort: "none" }), head("상태")],

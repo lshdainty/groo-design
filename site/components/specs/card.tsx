@@ -345,6 +345,37 @@ const Stat: Fig = ({ caption }) => {
   );
 };
 
+// 큰 글자 — 카드보다 긴 금액은 쉼표 뒤에서만 줄을 바꾼다(card.md 지표 카드 · 순자산 카드, 2026-10-17 03-D 결정 2 B).
+// 폭 360 · 글자 200%(앱처럼 글자만 키웠다 — 여백 · 모서리는 그대로). 숫자는 가장 나쁜 값(18자리)과 보통 값. 증감 줄은 빼고 그렸다
+const BIG_SCALE = 2;
+const BIG_WORST = -123456789012;
+const BigText: Fig = ({ caption }) => {
+  const c = CL();
+  const L = c.stat.value.sizes.large;
+  const h = c.hero;
+  const px = (v: string | undefined) => `${parseFloat(v ?? '0') * BIG_SCALE}px`;
+  const labelM: CSSProperties = { fontSize: px(c.stat.label.fontSize), lineHeight: px(c.stat.label.lineHeight) };
+  const valueM: CSSProperties = { fontSize: px(L.fontSize), lineHeight: px(L.lineHeight) };
+  return (
+    <Panel caption={caption}>
+      <Wrap gap="gap-5">
+        {MODES.map((mode) => (
+          <Col key={mode} strong={`${mode === 'dark' ? '다크' : '라이트'} · 폭 ${SCREEN_W} · 글자 ${BIG_SCALE * 100}%`} cap="세 자리 묶음이 갈라지지 않는다 — 줄이 하나 늘 수 있다" w={320}>
+            <Floor mode={mode} style={{ width: SCREEN_W }}>
+              {[STATS[0].amount, BIG_WORST].map((a) => (
+                <CardSurface key={a} look={c} mode={mode} label={STATS[0].label}>
+                  <StatView look={c} mode={mode} label={STATS[0].label} value={won(a)} marks={{ label: labelM, value: valueM }} />
+                </CardSurface>
+              ))}
+              <HeroCardView look={c} mode={mode} label={NET_WORTH.label} amount={won(BIG_WORST)} marks={{ label: { fontSize: px(h.label.fontSize), lineHeight: px(h.label.lineHeight) }, amount: { fontSize: px(h.amount.fontSize), lineHeight: px(h.amount.lineHeight) } }} />
+            </Floor>
+          </Col>
+        ))}
+      </Wrap>
+    </Panel>
+  );
+};
+
 const Delta: Fig = ({ caption }) => {
   const c = CL();
   const items: [string, number, { direction: 'up' | 'down' | 'flat'; value: string; text: string; srText?: string }][] = [
@@ -641,6 +672,7 @@ export const cardFigures: Record<string, Fig> = {
   'list-card': ListCardFig,
   'accordion-card': AccordionCard,
   stat: Stat,
+  'big-text': BigText,
   delta: Delta,
   'hero-card': HeroCard,
   states: States,

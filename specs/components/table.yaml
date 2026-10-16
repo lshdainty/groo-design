@@ -132,6 +132,7 @@ rules:
       bulkBar:
         display: none
         minHeight: { value: 48px, note: "표 위 — 고른 수 글(t4 14 · 500 \"3개 선택됨\") + 동작 버튼(Button ghost small) + 선택 해제 ✕" }
+        actions: { value: Button ghost small · neutral, note: "바 안 동작은 모두 ghost neutral — \"삭제\" 도 회색 글. 빨강은 누른 뒤의 확인창(Alert Dialog criticalSolid)에서. 옅은 브랜드 바탕 위 빨강 글은 라이트 4.44 : 1(2026-10-17 사용자 결정 01T-033 A — SEED ghost 는 fg.neutral 하나)" }
         paddingX: { value: $spacing-x4, note: "왼쪽 16 · 오른쪽은 끝 버튼이 붙도록 8" }
         radius: $radius-r3
         background: { value: $color-bg-brand-weak, note: "한 값 — 지금 표 10% · DESIGN 8% 두 벌을 걷는다. 고른 줄에는 바탕을 칠하지 않는다(체크로만)" }

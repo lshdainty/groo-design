@@ -1,0 +1,69 @@
+# 카드 그림(CardArt)의 수치 원본 — 카드 한 장을 보이는 Image Frame(ratio card · 1.586)과 그림이 없을 때의 카드 면
+# (2026-10-04 사용자 결정, 이미지 비교 페이지 3A · 4B · "따라오는 것"). 틀 · 윤곽 · 모서리 · 불러오는 동안은 image-frame.yaml 이다.
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 그림이 있으면 그림 — 세로 그림(원래 폭 < 높이)은 시계 방향으로 90° 돌려 가로 틀을 채운다(image-frame.yaml 의 ratio card).
+# 그림이 없거나 못 불러오면 카드사로 가른다(dev 활성 카드 6,790장 중 82% 가 그림이 없다)
+#   아는 카드사(institution-colors.yaml 에 있다) — 카드 면: 기관 색 한 색 + 회사 · 카드 이름(작은 면은 회사 첫 글자). 글자색은 표의 text.
+#   모르는 카드사 — Content Placeholder(credit-card). 브랜드 파랑 · 회색 면으로 회사 색인 척하지 않는다.
+# 광택 띠 · 그라디언트를 두지 않는다 — 글자 아래 대비가 떨어진다(지금 웹 NH농협카드 광택 위 2.73).
+# 상세에서는 그림이 떠도 카드 이름을 화면에 글로 둔다(면의 글 · alt 에만 두지 않는다 — image-frame.md).
+#
+# porest 에만 있는 부품이다 — SEED 는 사진을 늘 cover 로 채우고 "실물 그림"(카드) 규칙이 없다.
+
+name: CardArt
+
+slots:
+  root: 카드 그림 — Image Frame ratio card(1.586). 그림이 있으면 그림, 없으면 카드 면 또는 대체 그림
+  face: 카드 면 — 그림이 없는 아는 카드사의 카드. 기관 색 한 색
+  label: 글 묶음 — 회사 · 카드 이름. 면 왼쪽 아래에 붙는다(레시피 data-slot="card-art-label" — 2026-10-15 구현 세션 질문 Q-013 정리)
+  issuer: 회사 이름 — 카드 이름 위 한 줄
+  name: 카드 이름 — 회사 이름 아래, medium 한 줄 · large 두 줄까지
+  initial: 회사 첫 글자 — 작은 면(폭 96 미만) 가운데. 회사 · 카드 이름 대신
+
+variants:
+  size:
+    small: 폭 96 미만 — 목록 56 · 카드 추가 미리보기 68 · 카탈로그 목록 44. 회사 첫 글자만(이름은 줄의 글이 말한다)
+    medium: 폭 96 ~ 239 — 좁은 화면의 혜택 격자 칸. 회사 · 카드 이름
+    large: 폭 240 이상 — 데스크톱 혜택 격자(282) · 상세 312. 회사 · 카드 이름 한 단계 크게
+
+defaults:
+  size: medium
+
+states:
+  enabled: 하나뿐 — 누르지 않는다(누르는 자리는 감싼 버튼 · 링크)
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        aspectRatio: { value: "1.586 / 1", note: "Image Frame ratio card — 모서리는 폭으로(목록 56 · 격자 · 상세 8 · 카탈로그 44 는 6), 윤곽 stroke-neutral-overlay 는 면 위에도 늘" }
+      face:
+        background: { value: 기관 색, note: "institution-colors.yaml 의 color — 모드를 따르지 않는다(라이트 · 다크 같다). 광택 띠 · 그라디언트 없이 한 색" }
+        foreground: { value: 기관 글자색, note: "표의 text — white 면 static-white, dark 면 라이트 fg-neutral · 다크 fg-neutral-inverted. 78곳 모두 4.52:1 이상" }
+      issuer:
+        fontWeight: 500
+        overflowX: { value: 말줄임, note: "한 줄 — 넘치면 말줄임(…)" }
+      name:
+        fontWeight: 700
+        lineClamp: { value: 1, note: "medium 은 한 줄 — 폭 96 면(높이 60.5)에 회사 16 + 두 줄 38 + 아래 8 = 62 가 넘쳐(글자 125% 면 폭 120 까지) 한 줄로 둔다. 넘치면 말줄임" }
+      initial:
+        fontWeight: 700
+        lineHeight: { value: 1, note: "면 가운데" }
+        textTransform: { value: uppercase, note: "회사 이름의 첫 글자 하나(Avatar 규칙 — 글자 단위, 로마자는 대문자). \"KB국민카드\" → \"K\" · \"신한카드\" → \"신\"" }
+
+  # ── 크기 ──────────────────────────────────────────────
+  - when: { size: small }
+    enabled:
+      initial: { fontSize: { value: 면 높이의 40%, note: "정수로 반올림하고 가장 작아도 10 — 목록 56(높이 35.3) 14 · 미리보기 68(42.9) 17 · 카탈로그 44(27.7) 11. 회사 · 카드 이름은 두지 않는다" } }
+  - when: { size: medium }
+    enabled:
+      label: { paddingX: $spacing-x2_5, paddingBottom: $spacing-x2 }
+      issuer: { typography: $text-t2 }
+      name: { typography: $text-t4 }
+  - when: { size: large }
+    enabled:
+      label: { paddingX: $spacing-x4, paddingBottom: $spacing-x3_5 }
+      issuer: { typography: $text-t3 }
+      name: { typography: $text-t5, lineClamp: { value: 2, note: "두 줄까지 — 단어 단위로 바꾸고(v114) 넘치면 말줄임" } }

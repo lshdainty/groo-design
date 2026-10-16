@@ -21,6 +21,8 @@
 #     (2026-10-15 사용자 결정 — 구현 세션 질문 Q-002, 안 B — Tree View 의 mode · collapsible 과 같은 이름 · 같은 뜻).
 #   - 긴 값 — 본문 최소 1em · 제목 · 글 설명 overflow-wrap anywhere · 글 값은 줄 끝에서 끊는다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-001, 안 A).
 #     SEED 는 뒤 붙이개 flexShrink 0 · 본문 flexGrow 1 만 둔다 — 줄지 않는 값 · 양보하는 본문은 SEED 와 같고, 겹침을 막는 셋만 더했다.
+#   - 줄 안 폭이 제목 글자 16개(16em)보다 좁으면 값을 본문 아래로(축 width — 2026-10-17 사용자 결정, 03-D 결정 1 B). Q-001 A 의 예외다 —
+#     값 폭이 아니라 줄 안 폭(큰 글자 · 좁은 화면)이 기준이다. SEED List 에는 큰 글자 규칙이 없다(iOS 설정 앱의 값 칸이 큰 글자에서 아래로 내려가는 모양).
 
 name: List
 
@@ -57,6 +59,9 @@ variants:
   expanded:
     collapsed: 하위 줄 접힘(기본) — 꺾쇠가 오른쪽
     expanded: 하위 줄 펼침 — 꺾쇠가 아래
+  width:
+    regular: 줄 안 폭이 제목 글자 16개(16em) 이상 — 앞 · 본문 · 뒤가 한 줄(기본, Q-001 A)
+    narrow: 줄 안 폭이 16em 미만 — 값(글 값 · 금액)이 본문 아래로. 화면이 고르지 않는다 — 줄 안 폭으로 저절로 바뀐다(큰 글자 · 좁은 화면)
   mode:
     foldable: 접는 부모 줄(기본 — 레시피 collapsible 기본 true). 하위가 있으면 꺾쇠 단추, 이름(expandLabel)은 필수
     fixed: 늘 펼친 편집 화면 — 레시피 collapsible={false}. 꺾쇠 단추 · 펼침 상태가 없고 하위 줄이 늘 보인다
@@ -67,6 +72,7 @@ defaults:
   nest: none
   expanded: collapsed
   mode: foldable
+  width: regular
 
 states:
   enabled: 기본
@@ -98,6 +104,7 @@ rules:
         transitionProperty: scale
         transitionDuration: $motion-duration-pressed-scale
         transitionEasing: $motion-ease-pressed-scale
+        stackBelow: { value: 16em, note: "줄 안 폭(줄 폭 − 좌우 여백, 앞 붙이개 · 꺾쇠 자리 포함)이 이보다 좁으면 width narrow — em 은 제목 글자(t5) 크기라 글자 배율을 따라 커진다. 보통 글자에서 256 이라 320 폰(줄 안 272)까지 한 줄이고, 360 폰(312)은 글자 약 122% 부터(130% 면 15em) 값이 아래로 간다. 웹은 16rem(t5 = 1rem) 컨테이너 쿼리, 앱은 LayoutBuilder 로 16 × t5 × 글자 배율 — 둘이 같은 값을 잰다(2026-10-17 사용자 결정 03-D 결정 1 B)" }
       prefix:
         paddingRight: $spacing-x3
       icon:
@@ -113,7 +120,7 @@ rules:
         gap: $spacing-x0_5
         paddingRight: { value: $spacing-x2_5, note: "본문과 뒤 붙이개 사이" }
         flexGrow: { value: 1, note: "남는 폭을 본문이 쓰고, 값이 길면 본문이 먼저 양보한다(SEED content flexGrow 1)" }
-        minWidth: { value: 1em, note: "본문은 한 글자(1em)까지 준다 — 뒤 여백 10 은 따로 더한다(레시피 calc(1em + 10px)). 값이 본문 위로 넘쳐 겹치지 않게(2026-10-15 사용자 결정 — 구현 세션 질문 Q-001, 안 A)" }
+        minWidth: { value: 1em, note: "본문은 한 글자(1em)까지 준다 — em 은 제목 글자(t5 16) 크기다. 버튼이 물려받은 글자(14)로 재면 24 가 된다 — 레시피는 calc(var(--text-t5) + 10px), 뒤 여백 10 은 따로 더해 보통 글자에서 26(2026-10-17 고침 03D-005). 값이 본문 위로 넘쳐 겹치지 않게(2026-10-15 사용자 결정 — 구현 세션 질문 Q-001, 안 A)" }
       title:
         typography: $text-t5
         fontWeight: { value: 400, note: "SEED 와 같다 — 굵기는 목록 제목 · 금액 같은 자리에 남긴다(사용자 결정)" }
@@ -188,6 +195,19 @@ rules:
       background: { background: $color-bg-brand-weak-pressed }
       detail: { foreground: $color-fg-neutral-muted }
       suffixText: { foreground: $color-fg-neutral-muted }
+
+  # ── 큰 글자 · 좁은 줄 — 값을 본문 아래로(03-D 결정 1 B) ──
+  - when: { width: narrow }
+    enabled:
+      item:
+        alignItems: { value: flex-start, note: "앞 붙이개 · 꺾쇠 단추는 위에 맞춘다 — 본문이 여러 줄이 된다" }
+      body:
+        paddingRight: { value: 0px, note: "옆에 뒤 붙이개가 없다 — 제목이 줄 안 폭을 다 쓴다" }
+      suffix:
+        placement: { value: 본문 아래, note: "값(글 값 · 금액)을 설명 아래에 둔다 — 본문 칸 안 왼쪽 맞춤, 폭은 본문 폭. 화살표 · 컨트롤 · 작은 버튼은 줄 끝 그대로(regular 와 같다 — 2026-10-17 사용자 결정, 누르는 자리를 옮기지 않는다)" }
+        marginTop: { value: $spacing-x0_5, note: "본문 사이 2 에 더해 설명 ↔ 값 4" }
+        textAlign: start
+        lineBreak: { value: 금액은 쉼표 뒤 · 글 값은 줄 끝, note: "금액은 쉼표 뒤에서만 줄을 바꾼다(Typography v114 의 예외 — 결정 2 B, 웹 <wbr> · 앱 U+200B), 글 값(이메일 · 계좌번호)은 Q-001 A 그대로 줄 끝에서 끊는다" }
 
   # ── 하위 줄 ───────────────────────────────────────────
   - when: { nest: parent }

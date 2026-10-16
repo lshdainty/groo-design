@@ -1,0 +1,285 @@
+# Accordion 의 수치 원본 — 구조는 SEED Accordion(rootage accordion.json · accordion-item.json, @seed-design/react 2.0.0 —
+# 2026-10-10 사용자 결정, 펼치고 접기 · 나누기 비교 페이지 1B · 2A · 3A · 4A · 5A · 6A · "따라오는 것").
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 관련 정보를 묶어 세로로 쌓고, 항목마다 머리(트리거)를 눌러 상세를 펼친다. 변형은 SEED 의 둘이다 — inline(기본 · 연속 목록 +
+# 들인 사이 선)과 separated(항목마다 Card 면). 크기는 SEED medium 하나 — 폰 · 데스크톱이 같다(large 는 고르지 않았다).
+# 여럿을 함께 열고, 목록 머리 오른쪽에 "모두 펼치기" 글 단추를 둔다(porest 확장 — SEED 에 없다).
+# 상세가 없는 항목은 트리거가 아닌 그냥 줄이다(detail none) — 꺾쇠 없이 같은 높이 · 같은 글 시작.
+#
+# 한 항목의 트리거는 두 층이다 — background(바탕 층: 누름 · 호버 바탕, 줄지 않는다)와 content(콘텐츠 층: 앞 아이콘 · 본문 · 꺾쇠,
+# 누르면 이 층만 준다 — 기초 Feedback v104 "목록 줄 · 아코디언은 콘텐츠만"). List 줄과 같은 짜임이다.
+#
+# 축 — variant(inline · separated) · open(접힘 · 펼침) · description(설명 없음 · 있음 — 높이 54 · 74) · detail(상세 있음 · 없음).
+# 펼침은 누름 · 호버 · 포커스와 곱해지므로 상태가 아니라 축이다(specs/CLAUDE.md).
+#
+# SEED 와 다른 자리(accordion.md 의 "SEED 와 다른 점")
+#   - 트리거 좌우 24(spacing-global-gutter — porest 화면 가장자리 규칙, SEED 16).
+#   - inline 사이 선은 List 의 들인 선 — 좌우 24(SEED 12 의 짝), 색은 SEED 와 같은 stroke-neutral-subtle.
+#   - separated 면은 porest Card 면 — 모서리 16 · 사이 8(SEED 12 · 12 는 데이터 표시 라운드에서 카드에 거절됐다).
+#   - 누름 바탕은 불투명한 bg-layer-default-pressed(SEED bg.transparent-pressed 는 투명도가 있어 검사기가 받지 않는다 — v102).
+#     들임 6 · 모서리 10 · 콘텐츠만 축소는 SEED 그대로.
+#   - "모두 펼치기" 글 단추(사용자 결정 4A) · 상세 없는 항목은 그냥 줄(5A) · 포커스 링(웹, 트리거 안쪽 2px) — SEED 에 없다.
+#   - 펼친 내용의 글 모양(text-article-note · fg-neutral-muted · 0 / 24 / 16)을 정한다 — SEED AccordionContent 는 여백 · 글자가 없다.
+#   - 크기는 medium 하나 — SEED large(PC 대응)는 고르지 않았다(2A).
+
+name: Accordion
+
+slots:
+  root: 아코디언 — 항목을 세로로 잇는다. 항목은 2개 이상(하나면 Collapsible)
+  item: 항목 하나 — 트리거 + 펼친 내용. separated 는 Card 면
+  heading: 머리말 — 트리거를 감싼다(heading > button). 모양은 없다
+  trigger: 트리거 — 줄 전체가 누르는 자리(button)
+  background: 트리거 바탕 층 — 누름 · 호버 바탕. 줄지 않는다
+  content: 트리거 콘텐츠 층 — 앞 아이콘 · 본문 · 꺾쇠. 누르면 이 층만 준다
+  prefixIcon: 앞 아이콘 — 있을 때만
+  body: 본문 — 제목 + 설명
+  title: 제목 — 무엇의 상세인지(이름)
+  description: 설명 — 있을 때만, 제목 아래 한 줄 요약
+  chevron: 꺾쇠 — 오른쪽 끝. 펼치면 위를 가리킨다
+  panel: 펼친 내용 — 높이로 펼치고 접는다. 안에서 스크롤하지 않는다
+  panelText: 펼친 내용의 글 — 표 · 목록 · 칸을 넣으면 그쪽 규칙
+  divider: 항목 사이 선 — inline 만
+  header: 목록 머리 — 시트 · 대화상자에서 아코디언 위 한 줄(제목 + 모두 펼치기). 카드 안이면 카드 머리가 이 자리다
+  headerTitle: 목록 머리 제목 — "혜택 상세 · 12건"
+  expandAll: 모두 펼치기 — 목록 머리 오른쪽 글 단추(porest 확장). 펼치면 "모두 접기"
+  focusRing: 키보드 포커스 링(웹) — 트리거 안쪽
+
+variants:
+  variant:
+    inline: 연속 목록 + 들인 사이 선 — 화면 · 카드 안 목록(기본)
+    separated: 항목마다 Card 면 — 항목 하나하나가 따로 읽히는 정보 묶음(카드 혜택 상세 시트 · 대화상자)
+  open:
+    collapsed: 접힘 — 머리만 보인다. 처음에는 모두 접힘(기본)
+    expanded: 펼침 — 꺾쇠가 위, 내용이 보인다
+  description:
+    none: 제목만 — 트리거 54(기본)
+    shown: 제목 + 설명 — 트리거 74
+  detail:
+    expandable: 상세가 있는 항목 — 트리거(기본)
+    none: 상세가 없는 항목 — 그냥 줄. 꺾쇠 없음 · 트리거 아님 · 높이와 글 시작은 같다
+
+defaults:
+  variant: inline
+  open: collapsed
+  description: none
+  detail: expandable
+
+states:
+  enabled: 기본
+  hovered: 웹 — 누름과 같은 바탕(v106), 축소 없음
+  focused: 웹 — 키보드 포커스에만 트리거 안쪽 링
+  pressed: 바탕 + 콘텐츠만 2px 거리 축소(v104)
+  disabled: 전용 색(v106) — 불투명도로 흐리게 하지 않는다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        gap: { value: 0px, note: "inline — 항목 사이는 선이 가른다(separated 는 8)" }
+        items: { value: 2개 이상, note: "항목이 하나면 Collapsible 이다(SEED Don't — 단일 Item)" }
+      item:
+        background: { value: transparent, note: "놓인 면 그대로 — 화면 · 시트 · 대화상자 · 카드" }
+      heading:
+        level: { value: h3, note: "SEED headingLevel 기본 3 — 놓인 자리의 머리말 차례에 맞춘다. 대화상자 · 시트 · 카드 제목(h2) 아래면 h3, 그 위 머리말이 h3 이면 h4" }
+      trigger:
+        minHeight: { value: 54px, note: "위아래 16 + 제목 22. 제목이 줄을 바꾸면 늘어난다" }
+        paddingY: { value: $spacing-x4, note: "SEED medium paddingY x4" }
+        paddingX: { value: $spacing-global-gutter, note: "화면 가장자리 규칙 24(SEED global-gutter 16)" }
+        textAlign: left
+        cursor: pointer
+        touchTarget: { value: 트리거 전체, note: "줄 폭 × 54 이상 — 꺾쇠만이 아니라 줄 전체가 누르는 자리(SEED). AA ✓ · AAA ✓" }
+      background:
+        background: transparent
+        insetX: 0px
+        radius: 0px
+        transitionProperty: { value: "background-color, inset, border-radius", note: "누르면 바탕이 안쪽으로 들어오며 둥글어진다(List 와 같다)" }
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      content:
+        gap: { value: $spacing-x3, note: "앞 아이콘 ↔ 본문 ↔ 꺾쇠 12 — SEED prefix paddingRight · suffixIcon paddingLeft x3" }
+        alignItems: { value: center, note: "제목이 여러 줄이어도 앞 아이콘 · 꺾쇠는 트리거 가운데" }
+        transitionProperty: scale
+        transitionDuration: $motion-duration-pressed-scale
+        transitionEasing: $motion-ease-pressed-scale
+      prefixIcon:
+        size: { value: 22px, note: "있을 때만 — SEED medium prefixIcon 22" }
+        color: $color-fg-neutral
+      body:
+        gap: { value: $spacing-x0_5, note: "제목 ↔ 설명 2" }
+      title:
+        typography: $text-t5
+        fontWeight: { value: 500, note: "SEED medium" }
+        foreground: $color-fg-neutral
+        lineClamp: { value: none, note: "늘 줄을 바꾼다 — 말줄임 · 줄 수 제한 없음(사용자 결정 10A, 단어 단위 v114)" }
+      description:
+        typography: $text-t3
+        fontWeight: 500
+        foreground: $color-fg-neutral-subtle
+        lineClamp: { value: none, note: "늘 줄을 바꾼다" }
+      chevron:
+        size: { value: 20px, note: "lucide chevron-down — 접혀 있으면 아래" }
+        color: { value: $color-fg-neutral-subtle, note: "흰 면 5.50 · 다크 6.09(시트 5.27)" }
+        rotate: 0deg
+        transitionProperty: rotate
+        transitionDuration: $motion-duration-d6
+        transitionEasing: $motion-ease-easing
+      panel:
+        display: { value: 숨김, note: "접혀 있으면 내용을 그리지 않는다 — 보조 기술도 읽지 않는다(앱도)" }
+        paddingTop: 0px
+        paddingX: { value: $spacing-global-gutter, note: "트리거와 같은 24 — 앞 아이콘이 있어도 같다. 펼친 내용은 줄 폭을 쓴다" }
+        paddingBottom: { value: $spacing-x4, note: "트리거 위아래와 같은 16" }
+        maxHeight: { value: none, note: "패널 안에서 스크롤하지 않는다 — 길면 페이지 · 시트 본문이 스크롤한다(SEED Don't)" }
+      panelText:
+        typography: { value: $text-article-note, note: "14 / 22 — 긴 글 보조. 비교 페이지가 그린 14 / 22 가 이 토큰 그대로다" }
+        fontWeight: 400
+        foreground: { value: $color-fg-neutral-muted, note: "흰 면 7.11 · 다크 7.70(시트 6.67)" }
+      header:
+        minHeight: { value: 36px, note: "모두 펼치기의 보이는 상자와 같은 높이 — 제목과 한 줄(2026-10-16 글자 역할 D2 — 글 버튼 36, 전 32)" }
+        alignItems: center
+        justifyContent: space-between
+        gap: $spacing-x2
+        marginBottom: { value: $spacing-x2, note: "머리 ↔ 첫 항목 8 — separated 의 카드 사이와 같다" }
+      headerTitle:
+        typography: { value: $text-t5, note: "Card 머리 제목과 같다 — 건수를 붙인다(\"혜택 상세 · 12건\")" }
+        fontWeight: 700
+        foreground: $color-fg-neutral
+      expandAll:
+        height: { value: 36px, note: "보이는 상자 — SEED Text Button(minHeight x9), Card 머리 동작과 같은 모양(card.yaml headerAction). 2026-10-16 사용자 결정 — 글자 역할 D2" }
+        paddingLeft: $spacing-x3_5
+        paddingRight: { value: $spacing-x3_5, note: "좌우 14 — 줄 끝에서는 오른쪽 14 만큼 바깥으로 내어 글자 끝이 머리 여백에 선다" }
+        radius: $radius-r2
+        typography: $text-t4
+        fontWeight: { value: 700, note: "SEED Text Button t4 · bold — 2026-10-16 사용자 결정 글자 역할 D2(전 500)" }
+        foreground: { value: $color-fg-neutral-muted, note: "SEED Text Button fg.neutral-muted — 2026-10-16 사용자 결정 글자 역할 D2(전 subtle). 아이콘은 두지 않는다(전 chevrons-up-down · chevrons-down-up 16) — 글이 \"모두 펼치기\" · \"모두 접기\" 로 바뀌며 상태를 말한다" }
+        touchTarget: { value: 44 × 44, note: "보이는 36 위아래로 4 씩 · 옆은 글 폭 + 여백. AA ✓ · AAA ✓" }
+        label: { value: 모두 펼치기 · 모두 접기, note: "상세가 있는 항목이 모두 펼쳐져 있으면 \"모두 접기\" — 하나라도 접혀 있으면 \"모두 펼치기\"" }
+        position: { value: 목록 머리 오른쪽, note: "시트 · 대화상자 목록 머리, 카드 머리의 오른쪽 동작 자리" }
+        transitionProperty: background-color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+    hovered:
+      background:
+        background: { value: $color-bg-layer-default-pressed, note: "SEED bg.transparent-pressed 의 불투명 짝 — 시트 · 대화상자 위에서도 같은 값(bg-layer-floating-pressed 와 같다)" }
+        insetX: { value: $spacing-x1_5, note: "바탕이 좌우 6 들어온다(SEED marginX x1_5)" }
+        radius: { value: $radius-r2_5, note: "SEED cornerRadius x2_5 — separated 면(16) 안에서도 16 − 6 = 10 으로 동심" }
+      expandAll:
+        background: $color-bg-layer-default-pressed
+    pressed:
+      background:
+        background: $color-bg-layer-default-pressed
+        insetX: $spacing-x1_5
+        radius: $radius-r2_5
+      content:
+        scale: { value: 2px 거리 축소, note: "콘텐츠 층만(SEED scaleScope content) — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px(v104)" }
+      expandAll:
+        background: $color-bg-layer-default-pressed
+        scale: { value: 2px 거리 축소, note: "글 단추만 — Card 머리 동작과 같다" }
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: -2px, note: "트리거 안쪽 — 카드 · 시트가 바깥 링을 자르지 않게(지금 웹 카드 혜택은 카드 셸에 잘려 안 보인다)" }
+        color: $color-stroke-focus-ring
+        radius: { value: 0px, note: "inline — 줄과 같은 각진 링(List 와 같다)" }
+      expandAll:
+        outlineWidth: { value: 2px, note: "모두 펼치기 단추의 키보드 링 — Card 머리 동작과 같다(card.yaml focused)" }
+        outlineOffset: { value: 2px, note: "단추 바깥" }
+        outlineColor: $color-stroke-focus-ring
+    disabled:
+      trigger:
+        cursor: { value: not-allowed, note: "누르기 · 펼치기 불가 — 상세가 없는 항목은 막힌 트리거가 아니라 그냥 줄(detail none)" }
+      prefixIcon:
+        color: $color-fg-disabled
+      title:
+        foreground: $color-fg-disabled
+      description:
+        foreground: $color-fg-disabled
+      chevron:
+        color: $color-fg-disabled
+
+  # ── 변형 ──────────────────────────────────────────────
+  - when: { variant: inline }
+    enabled:
+      divider:
+        height: 1px
+        background: { value: $color-stroke-neutral-subtle, note: "SEED dividerColor 와 같은 역할" }
+        marginX: { value: $spacing-x6, note: "들인 선 24 — List 의 들인 선과 같다(SEED dividerPaddingX 12 의 porest 짝)" }
+        display: { value: 항목 사이, note: "첫 항목 위 · 마지막 항목 아래에는 긋지 않는다(Divider — 마지막 선 금지)" }
+  - when: { variant: separated }
+    enabled:
+      root:
+        gap: { value: $spacing-x2, note: "Card 사이 8(사용자 결정 1B) — SEED separated medium 12 는 카드에서 거절됐다(데이터 표시 5A)" }
+      item:
+        borderWidth: 1px
+        borderColor: { value: $color-stroke-neutral-weak, note: "Card 테두리 — SEED separated strokeColor 와 같은 역할" }
+        radius: { value: $radius-r4, note: "Card 면 16(SEED r3 12) — 안의 누름 바탕은 16 − 6 = 10 으로 동심" }
+        shadow: { value: none, note: "그림자 없음 — Card 면" }
+        overflow: { value: hidden, note: "누름 바탕 · 펼친 내용을 모서리에서 자른다 — 포커스 링은 안쪽이라 잘리지 않는다" }
+    focused:
+      focusRing:
+        radius: { value: $radius-r3_5, note: "항목 모서리 16 − 링 들임 2 = 14 — 트리거가 항목 맨 위라 모서리를 따른다" }
+
+  # ── 펼침 ──────────────────────────────────────────────
+  - when: { open: expanded }
+    enabled:
+      chevron:
+        rotate: { value: 180deg, note: "위로 — SEED Expanded" }
+      panel:
+        display: { value: 보임, note: "펼쳐도 저절로 스크롤 · 초점 이동하지 않는다 — 초점은 트리거에 그대로(SEED)" }
+
+  # ── 설명 ──────────────────────────────────────────────
+  - when: { description: shown }
+    enabled:
+      trigger:
+        minHeight: { value: 74px, note: "위아래 16 + 제목 22 + 2 + 설명 18" }
+
+  # ── 상세 없는 항목 ────────────────────────────────────
+  - when: { detail: none }
+    enabled:
+      heading:
+        level: { value: 없음, note: "머리말 · 단추로 감싸지 않는다 — 글만 읽힌다(Tab 이 건너뛴다)" }
+      trigger:
+        cursor: { value: default, note: "트리거가 아니다 — 같은 위아래 16 · 좌우 24 로 높이 · 글 시작이 다른 항목과 같다(사용자 결정 5A)" }
+        touchTarget: { value: 없음, note: "누르는 줄이 아니다" }
+      chevron:
+        display: { value: none, note: "꺾쇠를 두지 않는다 — 막힌 트리거 · 꺾쇠만 뒤집히는 줄은 고르지 않았다(5B · 5C)" }
+    hovered:
+      background:
+        background: { value: transparent, note: "바탕이 생기지 않는다 — 누를 것이 아니다" }
+        insetX: 0px
+        radius: 0px
+    pressed:
+      background:
+        background: transparent
+        insetX: 0px
+        radius: 0px
+      content:
+        scale: { value: 없음, note: "줄지 않는다" }
+
+motion:
+  "펼침 · 접힘 — 높이":
+    duration: $motion-duration-d6
+    easing: $motion-ease-easing
+    properties: [height]
+    note: "SEED expandHeight · collapseHeight d6 · easing(사용자 결정 3A). 펼칠 때 저절로 스크롤하지 않는다"
+  "꺾쇠 — 회전":
+    duration: $motion-duration-d6
+    easing: $motion-ease-easing
+    properties: [rotate]
+    note: "0 → 180° — 높이와 같은 시간. 모션 줄이기면 바로 뒤집힌다"
+  "모션 줄이기 — 펼침 · 접힘":
+    duration: $motion-duration-d3
+    easing: $motion-ease-easing
+    properties: [opacity]
+    note: "높이를 움직이지 않고 내용이 150ms 서서히 나타나고 사라진다(v104 — 200ms 넘는 움직임은 150ms 서서히)"
+  "누름 · 호버 — 바탕":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color, inset, border-radius]
+    note: "바탕이 좌우 6 들어오며 모서리 10 으로 둥글어진다 — 모두 펼치기 단추의 바탕도 같은 시간"
+  "누름 — 콘텐츠":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "콘텐츠 층만 2px 거리 축소 — 모션 줄이기면 하지 않는다"

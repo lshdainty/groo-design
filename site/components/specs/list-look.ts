@@ -85,6 +85,21 @@ function headerFace(v: Record<string, unknown>, mode: Mode, brand: Brand): Heade
   };
 }
 
+// 좁은 줄 — content.stackBelow(16em — 제목 글자 수)와 width narrow 규칙(설명 ↔ 값 · 본문 뒤 여백 · 맞춤)
+function narrowOf(spec: ReturnType<typeof loadComponentSpec>): ListLook['narrow'] {
+  const base = resolveState(spec, {}, 'enabled');
+  const raw = String(tokenValue(base['content.stackBelow']) ?? '');
+  const m = /^(\d+(?:\.\d+)?)em$/.exec(raw);
+  if (!m) throw new Error(`list.yaml content.stackBelow(${raw})가 em 값이 아니다 — 제목 글자 수로 잰다`);
+  const v = resolveState(spec, { width: 'narrow' }, 'enabled');
+  return {
+    below: Number(m[1]),
+    marginTop: must(num(tokenValue(v['suffix.marginTop'])), 'narrow suffix.marginTop'),
+    bodyPadRight: must(num(tokenValue(v['body.paddingRight'])), 'narrow body.paddingRight'),
+    alignItems: must(str(tokenValue(v['item.alignItems'])), 'narrow item.alignItems'),
+  };
+}
+
 const cache = new Map<string, ListLook>();
 
 export function listLook(brand: Brand = 'desk'): ListLook {
@@ -134,6 +149,7 @@ export function listLook(brand: Brand = 'desk'): ListLook {
     avatar: avatarLook(brand),
     avatarSize: { one: '36', two: '42' },
     titleGap: must(num(design().front.spacing.x1_5), 'spacing x1_5'),
+    narrow: narrowOf(spec),
   };
   cache.set(brand, look);
   return look;

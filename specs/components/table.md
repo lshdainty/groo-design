@@ -97,7 +97,7 @@ SEED 에는 표 컴포넌트가 없다. SEED 팀이 코드로 그린 표는 문�
 
 ### 선택 · 일괄 작업 바
 
-여럿을 골라 한 번에 다루는 표만 첫 열에 [Checkbox](checkbox.md) large(24)를 둔다. 머리 칸의 체크는 지금 쪽의 줄 전부를 고르고 풀며, 일부만 골랐으면 일부(indeterminate)다. 한 줄 이상 고르면 표 위에 일괄 작업 바가 뜬다 — 바탕 `bg-brand-weak` 한 값, 높이 48 · 모서리 12, 왼쪽에 "3개 선택됨", 오른쪽에 동작([Button](button.md) `ghost` small)과 선택 해제 ✕. 고른 줄 자체에는 바탕을 칠하지 않는다 — 체크가 고른 것을 말한다([List](list.md) 의 여럿 고르기와 같다, 사용자 결정). 브랜드 옅은 바탕은 일괄 작업 바에만 있다.
+여럿을 골라 한 번에 다루는 표만 첫 열에 [Checkbox](checkbox.md) large(24)를 둔다. 머리 칸의 체크는 지금 쪽의 줄 전부를 고르고 풀며, 일부만 골랐으면 일부(indeterminate)다. 한 줄 이상 고르면 표 위에 일괄 작업 바가 뜬다 — 바탕 `bg-brand-weak` 한 값, 높이 48 · 모서리 12, 왼쪽에 "3개 선택됨", 오른쪽에 동작([Button](button.md) `ghost` small)과 선택 해제 ✕. 바 안 동작은 모두 ghost neutral 이다 — "삭제" 도 회색 글(아이콘 · 글이 위험을 말한다)이고, 빨강은 누른 뒤 뜨는 확인창([Alert Dialog](alert-dialog.md) — "3개를 지울까요?" + `criticalSolid`)에서 쓴다. 옅은 브랜드 바탕 위 빨강 글은 라이트 4.44 : 1 로 4.5 에 못 미친다(2026-10-17 사용자 결정 — [01 기초 앱 · 글자 웹 비교 페이지](https://claude.ai/artifact/Q6SNYeUqDwfCjuVMfLwd2g) 01T-033 A, SEED Action Button 의 ghost 도 `fg.neutral` 하나다). 고른 줄 자체에는 바탕을 칠하지 않는다 — 체크가 고른 것을 말한다([List](list.md) 의 여럿 고르기와 같다, 사용자 결정). 브랜드 옅은 바탕은 일괄 작업 바에만 있다.
 
 [그림: 선택 열 · 머리 체크 일부 · 일괄 작업 바 — 고른 줄은 바탕 없이 체크로만](../../site/components/specs/table.tsx#selection)
 
@@ -186,7 +186,7 @@ SEED 에는 표 컴포넌트가 없다. SEED 팀이 코드로 그린 표는 문�
 
 ### 표 아래는 Table Pagination
 
-줄이 한 쪽(10줄)보다 많을 수 있으면 표 아래 12 에 [Table Pagination](table-pagination.md) 을 둔다 — 표와 같은 상자 안이라 열이 넘쳐 가로로 밀 때 함께 밀린다. 넘기면 표 맨 위로 스크롤한다.
+줄이 한 쪽(10줄)보다 많을 수 있으면 표 아래 12 에 [Table Pagination](table-pagination.md) 을 둔다 — 표와 같은 상자 안이라 열이 넘쳐 가로로 밀 때 함께 밀린다. 넘기면 표 맨 위로 스크롤한다. 12 는 넘김 줄의 위 여백(`table-pagination.yaml` root.marginTop)이다 — 표의 `pagination` 자리는 좌우 24 만 두고 위 여백을 더하지 않는다. 그래서 자리에 넣어도, 표 바로 뒤에 두어도 12 다(2026-10-17 사용자 결정 — [03-D 비교 페이지](https://claude.ai/artifact/7TVGy8o47HBg4R3SefDmf6) 결정 5 B. 전에는 두 스펙이 같은 12 를 각자 적어 자리에 넣으면 24 였다).
 
 ### 글
 
@@ -196,7 +196,7 @@ SEED 에는 표 컴포넌트가 없다. SEED 팀이 코드로 그린 표는 문�
 
 레시피 `recipes/shadcn/components/ui/table.tsx` 를 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
-- `Table` — 표 상자(가로 스크롤) + `<table>`. `caption`(필수 — 숨긴 표 이름, 보이는 제목은 카드 머리) · `rowHeight`(`"text"` 기본 45 · `"rich"` 72) · `stickyHeader`(상자가 스스로 스크롤할 때 머리를 붙인다 — 높이는 `className` 의 `max-h-*`) · `pagination`(표 아래 [Table Pagination](table-pagination.md) 자리 — 표와 같은 가로 스크롤 상자 안, 위 12 · 좌우 24) · `tableClassName`(안쪽 `<table>` 에 붙는 클래스).
+- `Table` — 표 상자(가로 스크롤) + `<table>`. `caption`(필수 — 숨긴 표 이름, 보이는 제목은 카드 머리) · `rowHeight`(`"text"` 기본 45 · `"rich"` 72) · `stickyHeader`(상자가 스스로 스크롤할 때 머리를 붙인다 — 높이는 `className` 의 `max-h-*`) · `pagination`(표 아래 [Table Pagination](table-pagination.md) 자리 — 표와 같은 가로 스크롤 상자 안, 좌우 24. 위 12 는 Table Pagination 이 갖는다) · `tableClassName`(안쪽 `<table>` 에 붙는 클래스).
 - `TableHeader` · `TableBody` · `TableRow` — `<thead>` · `<tbody>` · `<tr>`. `TableRow` 에 `onClick` 을 주면 누르는 줄이다(호버 · 누름 바탕) — 키보드로는 첫 열의 이름 링크(`TableRowHeader` 의 `href` 또는 `onClick`)로 같은 곳에 간다.
 - `TableHead` — 머리 칸(`<th scope="col">`). `align`(`"start"` 기본 · `"end"`) · `sort`(`"none"` · `"ascending"` · `"descending"` — 주면 정렬할 수 있는 열, 칸 전체가 버튼이고 ↑↓ 를 늘 그린다 · `aria-sort` 를 단다) · `onSortChange(next)`(누를 때마다 내림 ↔ 오름, 두 단계 — `"none"` 으로 돌아가지 않는다) · `defaultSortDirection`(그 열을 처음 누를 때의 방향 — 기본은 `align="end"`(숫자)면 `"descending"`, 아니면 `"ascending"`. 날짜 열은 `"descending"` 을 준다).
 - `TableRowHeader` — 첫 열(`<th scope="row">`, 그 줄의 이름). `href` · `onClick` 을 주면 이름이 링크 · 버튼이 된다.
@@ -259,7 +259,7 @@ import { Table, TableBulkBar, TableSelectCell, TableSelectHead } from "@/compone
 
 <TableBulkBar count={selected.size} onClear={clearSelection}>
   <Button variant="ghost" size="small" onClick={exportSelected}>내보내기</Button>
-  <Button variant="ghost" ghostColor="critical" size="small" onClick={askDeleteSelected}>삭제</Button>
+  <Button variant="ghost" size="small" onClick={askDeleteSelected}>삭제</Button>
 </TableBulkBar>
 <Table caption="업무 보고">
   <TableHeader>
@@ -351,7 +351,7 @@ import { TableBody, TableSkeletonRows, TableStatusRow } from "@/components/ui/ta
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 머리 · 칸 `fg-neutral` 카드 면 위 16.41 · 다크 13.42, 누름 바탕 위 15.48 · 10.32 ✓. 둘째 줄 `fg-neutral-subtle` 5.50 · 6.09 ✓. 일괄 작업 바 글 `fg-neutral` `bg-brand-weak` 위 Desk 14.42 · 다크 12.07 · HR 14.79 · 다크 11.68 ✓ |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 머리 · 칸 `fg-neutral` 카드 면 위 16.41 · 다크 13.42, 누름 바탕 위 15.48 · 10.32 ✓. 둘째 줄 `fg-neutral-subtle` 5.50 · 6.09 ✓. 일괄 작업 바 글 · 동작 `fg-neutral` `bg-brand-weak` 위 Desk 14.42 · 다크 12.07 · HR 14.79 · 다크 11.68 ✓ — 바 안 동작은 모두 ghost neutral(빨강 글은 라이트 4.44 라 쓰지 않는다) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | ↑↓ 흐린 쪽 `fg-neutral-muted` 7.11 · 다크 7.70, 짙은 쪽 `fg-neutral` ✓. 줄 선은 장식(1.15) — 줄은 글의 자리로 읽힌다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
 | **WCAG 1.4.1** Use of color | 정렬 방향은 짙은 화살표의 모양(↑ · ↓)과 `aria-sort` 로도 알린다. 고른 줄은 체크로 ✓ |
 | **WCAG 1.3.1** Info and relationships | `<table>` · `<caption>` · `<th scope="col">` · 첫 열 `<th scope="row">` — 보조 기술이 칸마다 열 이름과 줄 이름을 읽는다. 표처럼 보이는 `div` 격자를 두지 않는다 |
@@ -400,6 +400,13 @@ import { TableBody, TableSkeletonRows, TableStatusRow } from "@/components/ui/ta
 - **768 미만은 List 줄** — SEED 문서 표 · Table Pagination 예제는 감싸개가 가로로 밀린다(사용자 결정 — 가로 스크롤 · 열 숨김은 고르지 않았다).
 
 ## Migration notes
+
+### 2026-10-17 — 넘김 줄 위 12 · 바 안 동작(03-D 결정 5 · 01T-033)
+
+- **표 ↔ 넘김 줄 12 는 Table Pagination 이 갖는다**(사용자 결정 — [03-D 비교 페이지](https://claude.ai/artifact/7TVGy8o47HBg4R3SefDmf6) 결정 5 B). `table.md` 의 "위 12 · 좌우 24"(10-08 데이터 표시 PR)와 `table-pagination.yaml` root.marginTop 12(10-08 화면 틀 PR)가 같은 12 를 각자 적어, 웹 ds(`table.tsx:164` `px-x6 pt-x3` + `table-pagination-variants.ts:31` `mt-component-default`) · 레시피에서 자리에 넣으면 24 였다. 표의 자리는 좌우 24 만 두고(`pt-x3` 를 뺐다 — 레시피 `table.tsx`), 넘김 줄의 위 12 는 그대로다. 표 자리가 12 를 갖기(A) · 24 를 스펙으로(C)는 고르지 않았다.
+- **일괄 작업 바의 동작은 모두 ghost neutral**(사용자 결정 — [01 기초 앱 · 글자 웹 비교 페이지](https://claude.ai/artifact/Q6SNYeUqDwfCjuVMfLwd2g) 01T-033 A). 웹 ds 견본(`table.demo.tsx:247-258`)의 "삭제" ghost critical 은 `bg-brand-weak` 위 라이트 4.44 : 1 이었다. 빨강은 누른 뒤의 확인창(Alert Dialog `criticalSolid`)에서 쓴다. 4.44 를 받아들이기(B) · `fg-critical-contrast`(C)는 고르지 않았다.
+
+옛 스펙은 `table.history/v-pre-app-type-03d.*` · `table-pagination.history/v-pre-app-type-03d.*`.
 
 ### 2026-10-15 — 구현 세션 질문 정리(Q-011-1 · 2 · 4)
 

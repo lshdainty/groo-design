@@ -242,7 +242,7 @@ const LIST_CONTENT_BASE = [
 ].join(" ");
 const LIST_CONTENT_VARIANTS = { align: { center: "items-center", top: "items-start" }, nest: { none: "px-global-gutter", parent: "pl-x1 pr-global-gutter", child: "pl-[104px] pr-global-gutter" } };
 const LIST_CONTENT_DEFAULTS = { align: "center", nest: "none" };
-const LIST_BODY_BASE = "flex min-w-[calc(1em+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
+const LIST_BODY_BASE = "flex min-w-[calc(var(--text-t5)+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
 const LIST_TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral [overflow-wrap:anywhere]";
 const LIST_TITLE_VARIANTS = { disabled: { true: "text-fg-disabled", false: "" } };
 const LIST_TITLE_DEFAULTS = { disabled: false };

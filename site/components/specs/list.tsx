@@ -1,6 +1,7 @@
 // List 페이지의 그림 — specs/components/list.md 의 `[그림: …](../../site/components/specs/list.tsx#<id>)` 자리.
 // 줄 · 목록 제목은 list.yaml · list-header.yaml 을 푼 값(listLook)으로, 화면 예시는 kit 의 Desk 화면 조각으로 그린다.
-import { Children, isValidElement, type CSSProperties, type ReactNode } from 'react';
+import { Children, Fragment, isValidElement, type CSSProperties, type ReactNode } from 'react';
+import { Coffee, Utensils } from 'lucide-react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { listLook, LIST_STATES, type ListState, type RowSpec } from './list-look';
 import { ListHeaderView, ListView, type ViewMode } from './list-view';
@@ -374,6 +375,94 @@ const LongValues: Fig = ({ caption }) => {
   );
 };
 
+// 큰 글자 — 줄 안 폭이 제목 글자 16개(16em)보다 좁으면 값을 본문 아래로(list.md "큰 글자에서 값을 본문 아래로", 2026-10-17 03-D 결정 1 B).
+// 글자만 배율로 키운다(앱처럼 — 타일 · 여백은 그대로). 금액은 쉼표 뒤에서만 줄을 바꾼다(결정 2 B — <wbr>). 이름 · 가게는 지어낸 것이다
+type NarrowRow = { title: string; detail?: string; icon?: 'utensils' | 'coffee'; hue?: string; text?: string; amount?: string };
+const NARROW_ROWS: NarrowRow[] = [
+  { title: '이메일', text: 'porest.demo.long.address@example-company.co.kr' },
+  { title: '점심 — 아주 긴 가게 이름이 두 줄 이상으로 이어질 때', detail: '식비 · 지어낸카드', icon: 'utensils', hue: 'orange', amount: '−123,456,789,012원' },
+  { title: '숲길커피', detail: '카페 · 간식', icon: 'coffee', hue: 'brown', amount: '−4,500원' },
+];
+const NARROW_W = 360;
+const NARROW_SCALES = [1, 1.3, 2];
+// 금액 — 쉼표 뒤마다 줄바꿈 자리(<wbr>). 읽는 이름 · 복사에는 남지 않는다
+const commaBreaks = (v: string) => v.split(',').map((part, i, all) => (
+  <Fragment key={i}>
+    {part}
+    {i < all.length - 1 && <>,<wbr /></>}
+  </Fragment>
+));
+function NarrowList({ mode, s }: { mode: 'light' | 'dark'; s: number }) {
+  const lk = look();
+  const f = lk.faces.none[mode].enabled;
+  const n = lk.narrow;
+  const t = parseFloat(f.title.fontSize);
+  const inner = NARROW_W - f.pad.x * 2;
+  const stacked = inner < n.below * t * s;
+  const px = (v: string) => `${parseFloat(v) * s}px`;
+  const title: CSSProperties = { fontSize: px(f.title.fontSize), lineHeight: px(f.title.lineHeight ?? f.title.fontSize), fontWeight: f.title.fontWeight, color: f.title.color, overflowWrap: 'anywhere', maxWidth: '100%' };
+  const detail: CSSProperties = { fontSize: px(f.detail.fontSize), lineHeight: px(f.detail.lineHeight ?? f.detail.fontSize), color: f.detail.color, overflowWrap: 'anywhere', maxWidth: '100%' };
+  const valueText: CSSProperties = { fontSize: px(f.suffix.fontSize), lineHeight: px(f.suffix.lineHeight ?? f.suffix.fontSize), color: f.suffix.color, overflowWrap: 'anywhere' };
+  const amount: CSSProperties = { ...title, fontWeight: 700, fontVariantNumeric: 'tabular-nums', overflowWrap: 'normal', wordBreak: 'keep-all' };
+  return (
+    <div style={{ width: NARROW_W, background: lk.surface.default[mode], fontFamily: f.title.fontFamily }} className="flex flex-col py-2">
+      {NARROW_ROWS.map((r) => {
+        const Icon = r.icon === 'coffee' ? Coffee : Utensils;
+        const value = r.amount ? <span style={{ ...amount, whiteSpace: stacked ? 'normal' : 'nowrap' }}>{commaBreaks(r.amount)}</span> : <span style={valueText}>{r.text}</span>;
+        return (
+          <div key={r.title} style={{ display: 'flex', alignItems: stacked ? n.alignItems : 'center', padding: `${f.pad.y}px ${f.pad.x}px` }}>
+            {r.icon && r.hue && (
+              <span style={{ display: 'flex', flexShrink: 0, paddingRight: f.prefix.padRight }}>
+                <span aria-hidden style={{ display: 'inline-grid', placeItems: 'center', width: f.tile.size, height: f.tile.size, borderRadius: f.tile.radius, background: lk.tiles[r.hue].bg[mode], color: lk.tiles[r.hue].fg[mode] }}>
+                  <Icon size={f.tile.iconSize} strokeWidth={2} />
+                </span>
+              </span>
+            )}
+            <span style={{ display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'flex-start', gap: f.body.gap, fontSize: px(f.title.fontSize), minWidth: stacked ? 0 : `calc(${f.body.minWidth} + ${f.body.padRight}px)`, paddingRight: stacked ? n.bodyPadRight : f.body.padRight }}>
+              <span style={title}>{r.title}</span>
+              {r.detail && <span style={detail}>{r.detail}</span>}
+              {stacked && <span style={{ marginTop: n.marginTop, maxWidth: '100%', textAlign: 'left' }}>{value}</span>}
+            </span>
+            {!stacked && (r.amount ? <span style={{ flexShrink: 0 }}>{value}</span> : <span style={{ flexShrink: 1, minWidth: 0, textAlign: 'right' }}>{value}</span>)}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+const Narrow: Fig = ({ caption }) => {
+  const lk = look();
+  const t = parseFloat(lk.faces.none.light.enabled.title.fontSize);
+  const inner = NARROW_W - lk.faces.none.light.enabled.pad.x * 2;
+  return (
+    <Panel caption={caption}>
+      <div className="flex flex-col items-center gap-6">
+        {(['light', 'dark'] as const).map((m) => (
+          <div key={m} className="flex max-w-full flex-wrap items-start justify-center gap-6">
+            {NARROW_SCALES.map((s) => {
+              const em = inner / (t * s);
+              const stacked = em < lk.narrow.below;
+              return (
+                <div key={s} className="flex max-w-full flex-col items-center gap-2">
+                  <div className="max-w-full overflow-x-auto rounded-xl">
+                    <NarrowList mode={m} s={s} />
+                  </div>
+                  <Cap strong={`글자 ${Math.round(s * 100)}% · ${m === 'light' ? '라이트' : '다크'}`}>
+                    줄 안 {inner} = 제목 글자 {Number(em.toFixed(1))}개 — {stacked ? `${lk.narrow.below} 미만이라 값이 본문 아래로` : `${lk.narrow.below} 이상이라 한 줄(Q-001 A)`}
+                  </Cap>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+        <Cap>
+          폭 360(좌우 {lk.faces.none.light.enabled.pad.x}) · 글자만 배율로 키웠다. 기준은 값의 길이가 아니라 줄 안 폭이다 — {lk.narrow.below}em 이상이면 값이 아무리 길어도 한 줄이다. 금액은 쉼표 뒤에서만 줄을 바꾼다
+        </Cap>
+      </div>
+    </Panel>
+  );
+};
+
 const Detail: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="grid gap-4 sm:grid-cols-2">
@@ -723,6 +812,7 @@ export const listFigures: Record<string, Fig> = {
   prefix: Prefix,
   suffix: Suffix,
   'long-values': LongValues,
+  narrow: Narrow,
   detail: Detail,
   header: Header,
   divider: Divider,

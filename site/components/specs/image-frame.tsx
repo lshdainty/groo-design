@@ -10,7 +10,7 @@ import { AvatarView, Reading } from './display-view';
 import { B, PhoneBoard, Screen, dk, tone } from './display-screens';
 import { contrastOf, IF_PLACEMENTS, IF_RATIOS, imageFrameRadius, imageTones, institutions, over, PICS, PLACEMENT_KO, ratioText, RATIO_KO, cardFace, type IfRatio, type PicKind } from './image-look';
 import { ImageFramePlayground } from './image-playground';
-import { AspectRatioView, RawPic, VideoChild } from './image-view';
+import { AspectRatioView, CardArtView, RawPic, VideoChild } from './image-view';
 import { ARL, BenefitGridScreen, BenefitListScreen, CAL, CARDS, Card, CardCell, Cell, Discontinued, Frame, GRID, IFL, Ind, Logo, RULES, RuleCard, RuleScreen, Rows, at, cardRow, type Fig } from './image-screens';
 import { ScrollFogView } from './loading-view';
 import { scrollFogLook } from './loading-look';
@@ -477,6 +477,52 @@ const CardFace: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="mx-auto grid max-w-[700px] gap-4">
+        {board('light')}
+        {board('dark')}
+      </div>
+    </Panel>
+  );
+};
+
+// 큰 글자 × 좁은 면 — 회사 줄 + 이름 한 줄 + 아래 여백이 면 높이보다 크면 첫 글자 면(card-art.yaml label.fit, 2026-10-17 03-D 결정 3 A).
+// 글자만 배율로 키운다(여백 · 면은 그대로). "지어낸카드" · 노란 면은 지어낸 것이다(기관 색 표 밖 — 그림용)
+const FACE_SCALE_W = [96, 110, 124, 150];
+const FACE_SCALES = [1, 1.3, 2];
+const FaceScale: Fig = ({ caption }) => {
+  const ca = CAL();
+  const face = { bg: '#F2B705', fg: ca.text.dark };
+  const need = (w: number, sc: number) => {
+    const s = w >= ca.bands.large ? ca.sizes.large : ca.sizes.medium;
+    return (s.issuer.lineHeight + s.name.lineHeight) * sc + s.padBottom;
+  };
+  const board = (mode: 'light' | 'dark') => (
+    <ModeBoard mode={mode}>
+      <div className="flex flex-col gap-4 overflow-x-auto">
+        {FACE_SCALES.map((sc) => (
+          <div key={sc} className="flex items-end gap-3">
+            <b className="w-14 shrink-0 whitespace-nowrap text-[12px]" style={{ color: tone('fg-neutral-subtle', mode) }}>
+              글자 {Math.round(sc * 100)}%
+            </b>
+            {FACE_SCALE_W.map((w) => {
+              const h = Math.round((w / ca.ratio) * 10) / 10;
+              const n = Math.round(need(w, sc) * 10) / 10;
+              return (
+                <span key={w} className="flex shrink-0 flex-col items-center gap-1.5">
+                  <CardArtView look={IFL()} ca={ca} face={face} issuer="지어낸카드" name="탄탄 올림 체크카드" width={w} pic={null} mode={mode} textScale={sc} />
+                  <Sub mode={mode} strong={`${w} · 면 ${h}`}>
+                    글 {n} — {n > h ? '첫 글자' : '이름'}
+                  </Sub>
+                </span>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </ModeBoard>
+  );
+  return (
+    <Panel caption={caption}>
+      <div className="mx-auto grid max-w-[760px] gap-4">
         {board('light')}
         {board('dark')}
       </div>
@@ -960,6 +1006,7 @@ export const imageFrameFigures: Record<string, Fig> = {
   overlay: Overlay,
   'card-rotate': CardRotate,
   'card-face': CardFace,
+  'card-face-scale': FaceScale,
   'which-guide': WhichGuide,
   'stroke-guide': StrokeGuide,
   'radius-guide': RadiusGuide,

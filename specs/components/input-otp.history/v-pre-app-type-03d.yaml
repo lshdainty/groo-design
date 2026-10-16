@@ -1,0 +1,118 @@
+# Input OTP 의 수치 원본 — 인증 코드 칸(2026-10-09 사용자 결정, 입력 비교 페이지 10A · 11B · "따라오는 것").
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 메일 · 문자로 받은 일회용 코드(지금은 숫자 6자리)를 넣는 Input 한 칸이다 — 칸을 자릿수만큼 나누지 않는다(SEED Text Input
+# "Input을 나누지 말고 … 한 번에 입력"). 상자 · 글자 · 포커스 · 오류 · 막힘의 값은 input.yaml(상자형 large 52 · medium 40 · 반응형)이
+# 원본이고, 라벨 · 설명 · 오류 글은 Field(field.yaml)가 그린다. 여기에는 코드 칸이 더하는 것만 둔다 — 숫자만 받기 · 자동 채우기 ·
+# 설명 줄 · 칸 아래 다시 받기 단추(남은 초 · 그동안 막힘).
+#
+# 축 — size(Input 과 같다) · resend(다시 받기 단추의 때). 상태는 칸의 상태다(Input 과 같다).
+#
+# SEED 와 다른 자리(input-otp.md 의 "SEED 와 다른 점")
+#   - SEED 에는 OTP 부품 · 규칙이 없다 — one-time-code · inputmode · 숫자만 뽑기 · 다시 받기 · 설명 줄은 porest 가 정했다.
+#   - 서버 규칙(10분 · 60초 · 5번 — porest-sso-back ReauthServiceImpl)을 화면에 보인다.
+
+name: Input OTP
+
+slots:
+  field: 코드 칸 — Input 상자형 한 칸. 이름은 Field 라벨("인증 코드")
+  value: 입력 — 숫자만, 최대 6자리
+  placeholder: 빈 칸의 글 — "6자리 숫자"
+  description: 설명 — Field 꼬리, 유효 시간 · 틀릴 수 있는 횟수
+  resend: 다시 받기 — Button neutralWeak medium, 칸 아래. 남은 초를 붙이고 그동안 막힌다
+
+variants:
+  size:
+    large: 52 — 폰 · 앱
+    medium: 40 — 1280 이상 데스크톱 웹(마우스)
+    responsive: 폭에 따라 — 1280 미만 large · 이상 medium. 웹의 기본
+  resend:
+    first: 아직 안 보냄 — "코드 받기"
+    ready: 보낸 지 60초가 지남 — "다시 받기"
+    cooldown: 보낸 지 60초 안 — "다시 받기(52초)", 막힘
+
+defaults:
+  size: responsive
+  resend: ready
+
+states:
+  enabled: 기본
+  focused: 칸에 포커스 — 마우스 · 터치로 눌러도(Input)
+  invalid: 오류 — Field 의 invalid(aria-invalid). 오류 글이 설명 자리를 대신한다
+  disabled: 비활성 — 값을 바꿀 수 없다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      field:
+        variant: { value: outline, note: "Input 상자형(input.yaml) — 크기 · 모서리 · 테두리 · 포커스 · 오류 · 막힘은 Input 그대로. 칸을 자릿수만큼 나누지 않는다(사용자 결정 10A — 6칸 · 6칸 모양은 고르지 않았다)" }
+        width: { value: 놓인 자리 폭, note: "Field 의 입력 자리를 채운다" }
+        background: transparent
+        borderColor: { value: $color-stroke-neutral-weak, note: "안쪽 1px(Input)" }
+      value:
+        foreground: $color-fg-neutral
+        numerals: { value: tabular-nums, note: "숫자 폭을 고르게 — 고정폭 글꼴(mono) · 글자 사이 띄움은 쓰지 않는다" }
+        textAlign: { value: start, note: "다른 입력칸과 같다" }
+        inputMode: { value: numeric, note: "숫자 키보드 — type=\"number\" 는 쓰지 않는다(Input)" }
+        autoComplete: { value: one-time-code, note: "웹 autocomplete — iOS · 안드로이드가 받은 코드를 키보드 위에 제안한다. 앱은 AutofillHints.oneTimeCode" }
+        filter: { value: 숫자만 · 앞 6자리, note: "치기 · 붙여넣기 · 자동 채우기 모두 — 글에서 숫자만 뽑아 앞 6자리를 쓴다(\"123 456\" · \"123-456\" · \"인증 코드: 123456\" → 123456). maxLength 를 걸지 않는다 — 브라우저가 먼저 잘라 숫자를 잃는다" }
+        autoSubmit: { value: 없음, note: "6자리를 채워도 보내지 않는다 — 확인 단추를 누른다(고칠 틈을 둔다)" }
+      placeholder:
+        content: { value: 6자리 숫자, note: "자릿수를 알린다 — 보내는 코드가 바뀌면 같이" }
+        foreground: $color-fg-placeholder
+      description:
+        content: { value: "10분 안에 입력해주세요 · 5번 틀리면 다시 받아요.", note: "늘 보인다(사용자 결정 11B) — 서버 규칙(유효 600초 · 틀림 5번 · 다시 받기 60초 — porest-sso-back ReauthServiceImpl)이 바뀌면 글도 바꾼다. 오류가 나면 Field 규칙대로 오류 글이 이 자리를 대신하고, 칸을 고치면 돌아온다" }
+        typography: { value: $text-t4, note: "Field 설명 그대로" }
+        foreground: $color-fg-neutral-subtle
+      resend:
+        variant: { value: neutralWeak, note: "Button — 옅은 회색 채움" }
+        height: { value: 40px, note: "Button medium — 칸 옆이 아니라 아래에 둬 칸(52 · 40)과 높이를 맞출 일이 없다(지금 웹은 칸 40 옆 36)" }
+        marginTop: { value: $spacing-x3, note: "Field 꼬리(설명 · 오류) ↔ 단추 12. 왼쪽 맞춤" }
+        cooldown: { value: 60초, note: "보낸 뒤 60초 동안 막는다(서버 COOLDOWN 60) — 남은 초를 1초마다 줄여 보인다" }
+        focus: { value: 보내면 칸으로, note: "단추가 막히며 초점이 본문으로 빠지지 않게 — 코드를 보내면 초점을 코드 칸으로 옮긴다" }
+    focused:
+      field:
+        borderColor: { value: $color-stroke-neutral-contrast, note: "안쪽 2px(Input) — 내용이 밀리지 않는다" }
+    invalid:
+      field:
+        borderColor: { value: $color-stroke-critical-solid, note: "안쪽 2px(Input) — 포커스해도 그대로" }
+      description:
+        content: { value: "코드가 맞지 않거나 시간이 지났어요. 확인하거나 다시 받아주세요.", note: "Field 오류(14 · fg-critical + 아이콘 16)가 설명을 대신한다(18A) — 칸을 고치기 시작하면 설명 줄이 돌아온다" }
+        foreground: $color-fg-critical
+    disabled:
+      field:
+        background: { value: $color-bg-disabled, note: "Input 그대로 — 흐리게 하지 않는다(v106)" }
+      value:
+        foreground: $color-fg-disabled
+
+  # ── 크기(Input 그대로) ────────────────────────────────
+  - when: { size: large }
+    enabled:
+      field: { minHeight: 52px, radius: $radius-r3, paddingX: $spacing-x4 }
+      value: { typography: $text-t5 }
+  - when: { size: medium }
+    enabled:
+      field: { minHeight: 40px, radius: $radius-r2, paddingX: $spacing-x3_5 }
+      value: { typography: $text-t4 }
+  - when: { size: responsive }
+    enabled:
+      field:
+        breakpoint: { value: 1280px, note: "미만은 large, 이상은 medium 의 값(Input) — 앱은 늘 large" }
+
+  # ── 다시 받기 ─────────────────────────────────────────
+  - when: { resend: first }
+    enabled:
+      resend:
+        label: { value: 코드 받기, note: "처음 — 보내기 전" }
+  - when: { resend: ready }
+    enabled:
+      resend:
+        label: 다시 받기
+  - when: { resend: cooldown }
+    enabled:
+      resend:
+        label: { value: "다시 받기({n}초)", note: "남은 초를 괄호에 붙인다(앞 글자에 붙여 쓴다 — International Design). 0 이 되면 \"다시 받기\"" }
+        background: { value: $color-bg-disabled, note: "Button 막힘 — 흐리게 하지 않는다(v106)" }
+        foreground: $color-fg-disabled
+        cursor: not-allowed

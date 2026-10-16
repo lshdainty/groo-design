@@ -130,6 +130,8 @@ export type OtpLook = {
   length: number;
   cooldown: number;
   placeholder: string;
+  // 막혀도 자리 글을 켜진 칸의 색(fg-placeholder)으로 두는가 — input-otp.yaml disabled › placeholder(2026-10-17 01T-013)
+  placeholderKeep: boolean;
   description: string;
   error: string;
   // "다시 받기({n}초)" — {n} 자리에 남은 초
