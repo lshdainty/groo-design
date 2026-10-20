@@ -1,4 +1,4 @@
-// 컴포넌트 페이지의 그림이 사이트의 라이트 · 다크 전환을 따르게 — porest 색 토큰을 CSS 변수로 깐다.
+// 컴포넌트 페이지의 그림이 사이트의 라이트 · 다크 전환을 따르게 — groo 색 토큰을 CSS 변수로 깐다.
 // `--p-<토큰>`(Desk 값) · `--p-hr-<토큰>`(HR 에서 값이 다른 브랜드 토큰만). `.dark`(fumadocs 의 다크)면 `-dark` 짝으로 바뀐다.
 // 그림은 색을 hex 대신 이 변수로 쓴다(kit 의 rc — 모드를 정하지 않으면 변수).
 import { design, proseValue } from '@/lib/design-tokens';
@@ -56,7 +56,7 @@ function build() {
 }
 
 let css: string | undefined;
-export function PorestTokenStyle() {
+export function GrooTokenStyle() {
   css ??= build();
-  return <style id="porest-tokens" dangerouslySetInnerHTML={{ __html: css }} />;
+  return <style id="groo-tokens" dangerouslySetInnerHTML={{ __html: css }} />;
 }

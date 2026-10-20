@@ -2,7 +2,7 @@
  * shadcn Tag Group 예제 — docs site components/tag-group.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 셋(목록 줄의 설명 · 앞세울 항목과 아이콘 · 줄어드는 정도)은 차례 · 제목 · 코드가
  * specs/components/tag-group.md 의 "코드" 절과 같고, 뒤의 셋(크기 · 줄바꿈 · 톤과 뒤 아이콘)은 md 의 Properties 를 코드로 더 보인다.
- * porest 에 처음 두는 컴포넌트다 — 웹의 2px 점 · HR 의 "•" 로 가르던 메타 줄을 대신한다.
+ * groo 에 처음 두는 컴포넌트다 — 웹의 2px 점 · HR 의 "•" 로 가르던 메타 줄을 대신한다.
  *
  * TAG_GROUP_BASE · TAG_GROUP_VARIANTS · TAG_GROUP_DEFAULTS · ITEM_BASE · ITEM_VARIANTS · ITEM_DEFAULTS 는 recipes/shadcn/components/ui/tag-group.tsx 의
  * cva(tagGroupVariants · tagGroupItemVariants)와, ICON · ICON_SIZE · LABEL · UNIT · SEPARATOR · SEPARATOR_MODE · SEPARATOR_GLYPH 는 그 파일의 상수와,

@@ -2,7 +2,7 @@
 
 > 화면 아래에서 올라오는 동작 목록. 1280 미만에서 [Menu](menu.md) 대신 뜬다 — 같은 줄 · 같은 순서. 줄 끝 ⋮ · 머리의 더보기 버튼이 열고, 폰의 [스와이프](swipe-actions.md)는 같은 동작의 지름길로 남는다. 입력 폼 · 상세 · 고르기는 [Bottom Sheet](bottom-sheet.md), 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md) 다.
 
-구조는 당근 [SEED Swipeable Menu Sheet](https://seed-design.io/react/components/swipeable-menu-sheet)(Apache-2.0)를 따른다 — 딤 · 시트 · 손잡이 · 머리(제목 · 설명) · 묶음 · 줄. 딤 · 끌어내리기 · 안전 영역 · 모션은 [Bottom Sheet](bottom-sheet.md) 와 같고, 다른 것은 손잡이가 늘 있고 위 닫기 버튼이 없다는 것이다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
+구조는 당근 [SEED Swipeable Menu Sheet](https://seed-design.io/react/components/swipeable-menu-sheet)(Apache-2.0)를 따른다 — 딤 · 시트 · 손잡이 · 머리(제목 · 설명) · 묶음 · 줄. 딤 · 끌어내리기 · 안전 영역 · 모션은 [Bottom Sheet](bottom-sheet.md) 와 같고, 다른 것은 손잡이가 늘 있고 위 닫기 버튼이 없다는 것이다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
 수치 원본은 [`menu-sheet.yaml`](menu-sheet.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -200,9 +200,9 @@ import { MenuSheet, MenuSheetContent, MenuSheetGroup, MenuSheetItem, MenuSheetTr
 ## SEED 와 다른 점
 
 - **좌우 여백은 화면 여백 24** — SEED 16(Bottom Sheet 와 같다).
-- **딤은 porest 0.50 · 다크 0.65**(v102) — SEED 0.455.
+- **딤은 groo 0.50 · 다크 0.65**(v102) — SEED 0.455.
 - **줄 사이 선은 `stroke-neutral-weak`** — SEED `stroke.neutral-muted` 는 투명도가 있고, 그 자리의 불투명한 짝 중 `stroke-neutral-subtle` 은 다크에서 묶음 바탕과 같은 색이라 선이 사라진다.
-- **줄을 누르면 시트가 닫힌다** — SEED 코드는 닫지 않고 쓰는 쪽이 닫는다. porest 는 Menu 와 같게 닫고 실행한다(1280 에서 바뀌어도 같은 동작).
+- **줄을 누르면 시트가 닫힌다** — SEED 코드는 닫지 않고 쓰는 쪽이 닫는다. groo 는 Menu 와 같게 닫고 실행한다(1280 에서 바뀌어도 같은 동작).
 - **막힌 줄을 둔다** — SEED 는 Figma 에만 있고 코드 · 색이 없다. Menu 와 같은 규칙(전용 색 · 누르지 못함)으로 채운다 — 1280 에서 Menu 와 바뀌어도 같은 줄이 막혀 있어야 한다.
 - **보조 기술용 닫기는 키보드 초점이 오면 보인다** — SEED 는 안 보이는 채로 Tab 이 선다(기초의 "초점은 늘 보인다").
 - **트리거에 `aria-haspopup="dialog"` · `aria-expanded`** — SEED 는 문서에 적고 실제로는 붙이지 않는다.

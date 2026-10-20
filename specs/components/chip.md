@@ -2,7 +2,7 @@
 
 > 고르거나 넣은 값을 보이는 작은 알약. 2 ~ 4개 짧은 폼 값 고르기 · 누르면 값을 채워 주는 제안 · 목록 위 필터 바 · 넣은 값(지우기 버튼으로 뺀다)을 맡는다. 5개 이상은 [Select](select.md), 글이 긴 2 ~ 4개는 [Radio](radio-group.md) · [Checkbox](checkbox.md), 다른 구역으로 옮기는 탭 · 같은 내용을 바로 거르는 2 ~ 4개는 Tabs · Segmented Control(그 차례에), 누를 수 없는 표시는 [Badge](badge.md) · [Tag Group](tag-group.md) 이다.
 
-구조는 당근 [SEED Chip](https://seed-design.io/components/chip)(Apache-2.0)을 따른다 — 알약(Container) · 글(Label) · 앞 아이콘 · 뒤 아이콘. 하나 고르기는 라디오(Chip.RadioItem), 여럿 고르기는 체크박스(Chip.Toggle), 제안 · 여는 칩은 버튼(Chip.Button)이다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 · 02 사용자 결정).
+구조는 당근 [SEED Chip](https://seed-design.io/components/chip)(Apache-2.0)을 따른다 — 알약(Container) · 글(Label) · 앞 아이콘 · 뒤 아이콘. 하나 고르기는 라디오(Chip.RadioItem), 여럿 고르기는 체크박스(Chip.Toggle), 제안 · 여는 칩은 버튼(Chip.Button)이다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 · 02 사용자 결정).
 
 수치 원본은 [`chip.yaml`](chip.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -311,7 +311,7 @@ import { Chip, ChipGroup, InputChip } from "@/components/ui/chip"
 - **Outline Strong 을 고르면 테두리를 지운다** — SEED 는 짙은 채움 위에 옅은 테두리가 남는다(SEED Chip Tabs 는 지운다).
 - **비활성은 흐리게 하지 않는다**(v106) — SEED 는 불투명도 0.5. 막힌 Solid(안 고름)는 SEED 처럼 바탕 `bg-neutral-weak-alpha` 를 그대로 두고, 흐림 대신 글 · 아이콘만 `fg-disabled` 다(2026-10-17 사용자 결정 — 03-B 결정 1 A). 고른 채 막힌 칩은 짙은 1px `stroke-neutral-solid` 로 고른 것을 남긴다(사용자 결정 2026-10-02).
 - **줄보다 긴 칩은 줄 폭에서 말줄임**(2026-10-17 사용자 결정 — 03-E 결정 2 A) — SEED 는 `white-space: nowrap` 만 있고 최대 폭 · 말줄임이 없다(글자를 1.5배에서 묶어 넘침이 드물다).
-- **큰 글자** — SEED 는 상자가 px 이고 글자를 1.5배(일부 1.35)에서 묶는다. porest 는 글자 상한을 두지 않고(03-D 결정 1), 웹은 상자도 rem 으로 커지며 앱은 최소 높이가 글을 따라 늘어난다(2026-10-17 사용자 결정 — 03-E 결정 1 C).
+- **큰 글자** — SEED 는 상자가 px 이고 글자를 1.5배(일부 1.35)에서 묶는다. groo 는 글자 상한을 두지 않고(03-D 결정 1), 웹은 상자도 rem 으로 커지며 앱은 최소 높이가 글을 따라 늘어난다(2026-10-17 사용자 결정 — 03-E 결정 1 C).
 - **웹의 호버**는 누름과 같은 바탕(v106 — SEED 도 마우스에서는 같다), **누르는 영역**은 가로 · 세로 44 까지 넓힌다(SEED 에 규정 없음 — Button 과 같다).
 - **입력값 칩 · 지우기 버튼 · 필터 바의 걸린 조건 모습**을 정했다 — SEED 는 "Suffix 에 Remove 버튼", "Filter Bar 템플릿" 이라고만 하고 치수 · 모양이 없다.
 - **아이콘은 lucide 선 아이콘**(v106) — 여는 칩 `chevron-down`, 지우기 `x`, 필터 지우기 `rotate-ccw`.

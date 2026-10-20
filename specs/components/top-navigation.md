@@ -2,7 +2,7 @@
 
 > 화면 맨 위의 바(상단 바) — 지금 화면의 이름과 이동(뒤로 · 닫기 · 주 메뉴), 화면의 동작 두셋을 둔다. 폰(Desk 앱 · Desk 웹 768 미만 · HR 웹 768 미만)의 모든 화면과 데스크톱(768 이상)의 머리가 이것이다. 탭 사이를 오가는 것은 [Bottom Navigation](bottom-navigation.md), 데스크톱의 메뉴는 [Side Navigation](side-navigation.md), 화면 안에서 구역을 나누는 것은 [Tabs](tabs.md) 다.
 
-구조는 당근 [SEED Top Navigation](https://seed-design.io/components/top-navigation)(Apache-2.0)을 따른다 — "화면 상단에 위치하여 탐색 인터페이스를 제공하는 네비게이션 컴포넌트" 로, 앱의 최상위 탭에서 쓰는 **Root** 와 "2-depth 이상의 화면에서" 쓰는 **Standard** 두 타입, 왼쪽(뒤로 · 닫기) · 가운데(제목) · 오른쪽(아이콘 · 글 버튼) 세 자리. 높이 56 · 아이콘 버튼 44 · 아이콘 24 · 화면 끝 6 은 SEED 값 그대로다. 데스크톱 머리(GNB)는 SEED 에 컴포넌트가 없어 porest 가 같은 규칙으로 더했다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). porest 에 처음 두는 컴포넌트다 — 지금 제품마다 다른 머리(56 · 58 · 48, 아이콘 버튼 36 · 40 · 48)를 대신한다.
+구조는 당근 [SEED Top Navigation](https://seed-design.io/components/top-navigation)(Apache-2.0)을 따른다 — "화면 상단에 위치하여 탐색 인터페이스를 제공하는 네비게이션 컴포넌트" 로, 앱의 최상위 탭에서 쓰는 **Root** 와 "2-depth 이상의 화면에서" 쓰는 **Standard** 두 타입, 왼쪽(뒤로 · 닫기) · 가운데(제목) · 오른쪽(아이콘 · 글 버튼) 세 자리. 높이 56 · 아이콘 버튼 44 · 아이콘 24 · 화면 끝 6 은 SEED 값 그대로다. 데스크톱 머리(GNB)는 SEED 에 컴포넌트가 없어 groo 가 같은 규칙으로 더했다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). groo 에 처음 두는 컴포넌트다 — 지금 제품마다 다른 머리(56 · 58 · 48, 아이콘 버튼 36 · 40 · 48)를 대신한다.
 
 수치 원본은 [`top-navigation.yaml`](top-navigation.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -196,7 +196,7 @@ HR 웹 768 미만은 하단 탭 바가 없다 — 모든 화면이 `standard` �
 
 ### 화면을 옮길 때
 
-다른 화면으로 옮기면(링크 · 탭 · 사이드바 항목) 스크롤을 맨 위로 보내고 초점을 그 화면의 제목(`h1`)으로 옮긴다 — 키보드 · 스크린리더가 새 화면의 처음에서 시작한다. 문서 제목(브라우저 탭)은 화면마다 "{화면 제목} - Porest Desk" · "{화면 제목} - Porest HR" 이다. 뒤로 가기로 돌아오면 그 화면의 스크롤 위치를 돌려놓는다. 하단 탭을 오갈 때는 [Bottom Navigation](bottom-navigation.md) 이 정한다(탭마다 마지막 화면 · 스크롤을 기억 — 웹도), 가계부 묶음의 1차 탭을 오갈 때는 [Tabs](tabs.md) 가 정한다(탭마다 기억 — 초점은 고른 탭에 남는다).
+다른 화면으로 옮기면(링크 · 탭 · 사이드바 항목) 스크롤을 맨 위로 보내고 초점을 그 화면의 제목(`h1`)으로 옮긴다 — 키보드 · 스크린리더가 새 화면의 처음에서 시작한다. 문서 제목(브라우저 탭)은 화면마다 "{화면 제목} - 그루 담다" · "{화면 제목} - 그루 이음" 이다. 뒤로 가기로 돌아오면 그 화면의 스크롤 위치를 돌려놓는다. 하단 탭을 오갈 때는 [Bottom Navigation](bottom-navigation.md) 이 정한다(탭마다 마지막 화면 · 스크롤을 기억 — 웹도), 가계부 묶음의 1차 탭을 오갈 때는 [Tabs](tabs.md) 가 정한다(탭마다 기억 — 초점은 고른 탭에 남는다).
 
 [그림: 가계부 900 에서 캘린더로 — 캘린더는 맨 위에서, 초점은 제목](../../site/components/specs/top-navigation.tsx#route-guide)
 
@@ -219,7 +219,7 @@ HR 웹 768 미만은 하단 탭 바가 없다 — 모든 화면이 `standard` �
 - `TopNavigationTextButton` — 글 버튼(`<button type="button">`).
 - `TopNavigationPrimaryButton` — 데스크톱 머리의 주 버튼([Button](button.md) `brandSolid` · `small` 그대로 + 오른쪽 8).
 - `ScreenTitle` — 데스크톱 본문 맨 위 제목(`<h1 tabIndex={-1} data-screen-title>` · `text-screen-title`). `description`(제목 아래 설명 — t3 `fg-neutral-subtle`) · `actions`(그 화면의 동작 버튼 — Button small)를 주면 한 줄 제목 줄(제목 덩어리 왼쪽 · 버튼 오른쪽 아래 끝 맞춤)로 그린다. `ref` 는 늘 `h1` 이다.
-- `TopNavigationProvider` — `product`("Porest Desk" · "Porest HR"). `useScreenTitle(title)` 가 문서 제목을 "{title} - {product}" 로 쓴다.
+- `TopNavigationProvider` — `product`("그루 담다" · "그루 이음"). `useScreenTitle(title)` 가 문서 제목을 "{title} - {product}" 로 쓴다.
 - `focusScreenTitle()` — 셸이 화면을 옮긴 뒤 부른다: 본문 스크롤을 맨 위로, `[data-screen-title]` 에 초점(링은 키보드로 왔을 때만). `{ resetScroll: false }` 면 초점만 옮긴다 — 하단 탭 · 가계부 묶음 탭을 오갈 때 셸이 기억한 스크롤을 돌려놓는다(목록이 그려진 뒤).
 
 앱은 같은 값을 Dart 로 둔다(`PTopNavigation` — `AppBar` 대신, 제목은 `Semantics(header: true, headingLevel: 1)` — iOS 는 `header` 를, 안드로이드는 `headingLevel` 을 읽는다). 앱에는 랜드마크가 없어 이 제목이 화면 읽기의 첫 정거장이다 — DESIGN.md Layout 의 "랜드마크"(2026-10-16 사용자 결정 — 틀 앱 02-004).
@@ -369,7 +369,7 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 · 글 버튼 `fg-neutral` 바(`bg-layer-default`) 위 16.41 · 다크 13.42, 누름 바탕 위 15.48 · 10.32 ✓. 막힌 글은 예외(비활성) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 아이콘 `fg-neutral` 16.41 · 13.42 ✓. 알림 점 `fg-brand` Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓. 키보드 포커스 링 같은 값 ✓ — 누름 바탕(바와 1.06 · 다크 1.30)은 장식 |
 | **WCAG 1.4.1** Use of color | 알림 점은 이름에도 들어간다("알림, 새 알림 있음") ✓ |
-| **WCAG 2.4.2** Page Titled | 문서 제목이 화면마다 "{화면 제목} - Porest Desk" ✓ |
+| **WCAG 2.4.2** Page Titled | 문서 제목이 화면마다 "{화면 제목} - 그루 담다" ✓ |
 | **WCAG 2.4.3** Focus order | 화면을 옮기면 초점이 새 화면의 제목으로 — 앞 화면에서 누른 자리에 남지 않는다 ✓ |
 | **WCAG 2.4.6** Headings and Labels | 제목은 화면의 `h1` ✓(SEED 웹은 제목이 `span` 이다). 검색 화면은 보이지 않는 `h1` "검색" · 데스크톱은 모든 화면에 본문 `h1` 하나(홈 · 캘린더도) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 아이콘 버튼 44 · 글 버튼 높이 44 ✓ |
@@ -407,15 +407,15 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 
 ## SEED 와 다른 점
 
-- **제목은 늘 왼쪽**(사용자 결정 2026-10-04) — SEED 는 iOS(cupertino) 가운데 · Android 왼쪽 두 테마다. porest 는 Android 자리(← 다음 56)만 두고, titleMinGap 8 을 늘 지킨다(SEED 웹은 적용하지 않아 긴 제목이 버튼 상자와 10 겹친다).
+- **제목은 늘 왼쪽**(사용자 결정 2026-10-04) — SEED 는 iOS(cupertino) 가운데 · Android 왼쪽 두 테마다. groo 는 Android 자리(← 다음 56)만 두고, titleMinGap 8 을 늘 지킨다(SEED 웹은 적용하지 않아 긴 제목이 버튼 상자와 10 겹친다).
 - **Root 제목 22 / 30 · 700(`text-t8`)** — SEED 는 Root 를 그림(약 22)과 Figma 에만 두고 코드 · rootage 에 값이 없다.
-- **선 · 그림자 없음** — SEED 안에서 Top Navigation 문서("별도의 시각적인 장치를 표시하지 않습니다" · 코드도 divider 를 2.0 에서 걷었다)와 Elevation 문서("그림자나 라인(스타일)을 추가하여 '구분감'을 줍니다")가 갈린다. porest 는 Top Navigation 쪽이다(결정 3 — DESIGN.md Elevation 문장도 고쳤다).
-- **누름 바탕은 불투명한 `bg-layer-default-pressed` · 2px 거리 축소** — SEED 의 투명도 있는 bg.transparent-pressed 를 검사기가 받지 않는다(v102). SEED 웹 App Bar 는 누름 바탕 · 축소가 없고 모서리가 4 다 — porest 는 rootage(r2 8 · scaleScope self)를 따른다.
+- **선 · 그림자 없음** — SEED 안에서 Top Navigation 문서("별도의 시각적인 장치를 표시하지 않습니다" · 코드도 divider 를 2.0 에서 걷었다)와 Elevation 문서("그림자나 라인(스타일)을 추가하여 '구분감'을 줍니다")가 갈린다. groo 는 Top Navigation 쪽이다(결정 3 — DESIGN.md Elevation 문장도 고쳤다).
+- **누름 바탕은 불투명한 `bg-layer-default-pressed` · 2px 거리 축소** — SEED 의 투명도 있는 bg.transparent-pressed 를 검사기가 받지 않는다(v102). SEED 웹 App Bar 는 누름 바탕 · 축소가 없고 모서리가 4 다 — groo 는 rootage(r2 8 · scaleScope self)를 따른다.
 - **포커스 링은 상자 안쪽** — SEED 웹 App Bar 와 같다(버튼끼리 붙어 바깥 링이 이웃에 걸린다).
 - **투명 톤 · 막 없음** — 쓸 자리가 생기면 정한다.
 - **글 버튼에 iOS 최대 폭 96 이 없다** — 제목이 늘 왼쪽이라 SEED Android 와 같다.
 - **알림은 점만** — SEED 는 Small · Large 둘 다 쓴다. 숫자는 맨 오른쪽 버튼에서 화면 밖으로 나간다.
-- **← 의 동작을 정한다** — SEED 는 History · Hierarchy 를 사용처 정책으로 남기고, 웹 snippet 은 `pop()` 만 한다. porest 는 History 를 기본으로, 앞 화면이 없을 때만 상위 화면(주소를 고쳐 씀)이다.
+- **← 의 동작을 정한다** — SEED 는 History · Hierarchy 를 사용처 정책으로 남기고, 웹 snippet 은 `pop()` 만 한다. groo 는 History 를 기본으로, 앞 화면이 없을 때만 상위 화면(주소를 고쳐 씀)이다.
 - **제목이 `h1` 이고 바가 `header` 다** — SEED 웹 App Bar 는 `div` · 제목 `span` 이라 랜드마크 · 제목이 없다.
 - **데스크톱 머리를 더한다** — SEED 는 GNB 를 Layout 의 영역 이름으로만 둔다(그림 약 56 + 선). 왼쪽 검색칸은 SEED React App Bar 의 `AppBarSlot` 예(머리 안 검색 막대)와 같은 자리다.
 - **검색칸은 상단 바 안에서 늘 `medium` 40** — Text Field 의 "`medium` 은 1280 이상" 의 예외다(바 56 안에 `large` 52 를 두지 않는다).
@@ -442,7 +442,7 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 
 제품이 할 일.
 
-- **Desk 웹** — 거래 검색 화면(`/desk/search` — 지금은 "검색 기능 준비 중")을 앱 `search_screen.dart` 와 같은 화면으로 새로 만든다: 제목 자리 검색칸 · 고급 필터 · 전체 · 지출 · 수입 칩 줄(Scroll Auto Hide) · 결과 목록(서버 `keyword` 인자는 이미 있다 — `expenseApi.ts:26`). 그 뒤 데스크톱 머리 왼쪽 검색칸(360 · `Enter` 로 그 화면)과 폰 탭 첫 화면 돋보기를 단다. 데스크톱 머리에서 눈(`PorestTopBar.tsx:44-52`)을 걷는다. 알림 팝오버(`NotificationsPopover.tsx` — 화면 고정 top 58 · right 20 · 380 × min(640, 화면 − 80))를 1280 이상 Popover 부품(벨 아래 8 · 높이 600 까지)으로, 768 ~ 1279 는 Bottom Sheet 로. 데스크톱 화면 머리 `.page__head`(h1 24) 15자리를 `ScreenTitle`(26 · `description` · `actions`)로, 홈 · 캘린더에 `h1` 을 더한다.
+- **Desk 웹** — 거래 검색 화면(`/desk/search` — 지금은 "검색 기능 준비 중")을 앱 `search_screen.dart` 와 같은 화면으로 새로 만든다: 제목 자리 검색칸 · 고급 필터 · 전체 · 지출 · 수입 칩 줄(Scroll Auto Hide) · 결과 목록(서버 `keyword` 인자는 이미 있다 — `expenseApi.ts:26`). 그 뒤 데스크톱 머리 왼쪽 검색칸(360 · `Enter` 로 그 화면)과 폰 탭 첫 화면 돋보기를 단다. 데스크톱 머리에서 눈(`GrooTopBar.tsx:44-52`)을 걷는다. 알림 팝오버(`NotificationsPopover.tsx` — 화면 고정 top 58 · right 20 · 380 × min(640, 화면 − 80))를 1280 이상 Popover 부품(벨 아래 8 · 높이 600 까지)으로, 768 ~ 1279 는 Bottom Sheet 로. 데스크톱 화면 머리 `.page__head`(h1 24) 15자리를 `ScreenTitle`(26 · `description` · `actions`)로, 홈 · 캘린더에 `h1` 을 더한다.
 - **Desk 앱** — 검색 화면의 검색칸을 `PTopNavigation` 의 제목 자리로(지금 `title` 이 `String` 이라 둘 자리가 없다 — 제목 위젯 슬롯 + 보이지 않는 머리말 "검색"), 칩 줄과 카드 혜택 화면의 거르는 줄 140(`card_screen.dart`)을 AppBar `bottom` 에서 Scroll Auto Hide 로.
 
 ### 2026-10-04 — SEED Top Navigation 으로 새로 둔다
@@ -451,13 +451,13 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-04 조사 — Desk 웹 · HR 은 크로미움에 띄워 쟀고, Desk 앱은 위젯 테스트로 쟀다).
 
-- **머리 높이가 셋** — 셸 56(웹 `widgets/layout/ui/MobileHeader.tsx:36-74` · 앱 `shared/widgets/mobile_header.dart:24-119`) · 웹 하위 화면 58(`shared/ui/porest/mobile-back-header.tsx:12-77`, sticky z 10) · HR 48(`widgets/layout/ui/LayoutHeader.tsx:8-19` · `Layout.tsx:16-31`). 모두 56 으로.
-- **아이콘 버튼이 자리마다 다르다** — 셸 36 원 · 20(`size="iconLg"`), 웹 데스크톱 36 · 16(코드는 18 인데 버튼 규칙이 16 으로 누른다 — `PorestTopBar.tsx:51 · 61` · `button-variants.ts:60`), 앱 동작 40 · 16 · 앱 검색 48 · 20, ← 34 × 34(웹) · 38 × 56(앱 `shared/widgets/p_back_button.dart:17-49`) · HR 접기 28. 모두 상자 44 · 아이콘 24 로.
+- **머리 높이가 셋** — 셸 56(웹 `widgets/layout/ui/MobileHeader.tsx:36-74` · 앱 `shared/widgets/mobile_header.dart:24-119`) · 웹 하위 화면 58(`shared/ui/groo/mobile-back-header.tsx:12-77`, sticky z 10) · HR 48(`widgets/layout/ui/LayoutHeader.tsx:8-19` · `Layout.tsx:16-31`). 모두 56 으로.
+- **아이콘 버튼이 자리마다 다르다** — 셸 36 원 · 20(`size="iconLg"`), 웹 데스크톱 36 · 16(코드는 18 인데 버튼 규칙이 16 으로 누른다 — `GrooTopBar.tsx:51 · 61` · `button-variants.ts:60`), 앱 동작 40 · 16 · 앱 검색 48 · 20, ← 34 × 34(웹) · 38 × 56(앱 `shared/widgets/p_back_button.dart:17-49`) · HR 접기 28. 모두 상자 44 · 아이콘 24 로.
 - **제목** — 루트 24 / 700(웹 · 앱) → 22 / 30, 하위 18 / 600(웹 x 46 · 앱 x 46) → 18 / 24 · 700 · x 56. 앱 머리 주석은 22 인데 실제 24 다(`mobile_header.dart:14-16 · 56`).
 - **← 가 늘 "전체" 로 새로 이동한다** — `MobileBackHeader` 의 `to` 기본값 `/desk/more`(push), 호출 14곳 중 `to` 를 준 곳이 0(`mobile-back-header.tsx:14 · 48`) — 홈 벨 → 알림 → ← 가 전체로 간다(F8). History 로.
 - **설정 하위 화면의 ← 에 이름이 없고 제목이 `h2`**(`pages/settings/ui/SettingsPage.tsx:504-521 · 523`, F7). 설정 하위 · 밤하늘 · 리포트는 기기 · 브라우저 뒤로가 페이지를 떠난다(`SettingsPage.tsx:388-395` · `NightSkyPanel.tsx:70` · `ForestReport.tsx:523`, F9).
-- **데스크톱 머리** — Desk 웹 `header.top` 이 `main` 안에 있고 아래 1px 선이 늘 있다(`widgets/layout/ui/PorestTopBar.tsx:22-89` · `shared/styles/porest.css:214-268`). 접기 버튼은 Side Navigation 머리로, 테마는 설정으로(메뉴 결정 ④), 아이콘은 알림 · 설정 둘 + "내역 추가"(지금 80.7 × 32 · 12 / 500 → Button small) — 금액 가리기 눈은 걷는다(2026-10-16 위). HR 헤더(접기 28 "Toggle Sidebar" · 빵부스러기 · 테마 36 "Toggle theme")는 걷는다.
-- **알림 점** — 데스크톱 7 × 7 에 2px 테두리를 둘러 빨강 3 × 3 이 아이콘 위로 4 튀어나오고(`PorestTopBar.tsx:62-67`, F20), 폰 6 · 앱 7 빨강이다(`mobile_header.dart:82-118`). 브랜드 점 6 · 아이콘 상자 x 17 ~ 23 · y 1 ~ 7 로(Notification Badge).
-- **랜드마크 · 문서 제목** — 웹 머리가 `main` 안이라 `banner` 가 0, 모바일 웹은 `main` 0, 본문 바로가기 0, 문서 제목 고정("POREST Desk" · HR "porest" · `lang="en"` — `index.html:2 · 7`, F16). 앱 셸 제목은 머리말(header)이 아니다(F6).
+- **데스크톱 머리** — Desk 웹 `header.top` 이 `main` 안에 있고 아래 1px 선이 늘 있다(`widgets/layout/ui/GrooTopBar.tsx:22-89` · `shared/styles/groo.css:214-268`). 접기 버튼은 Side Navigation 머리로, 테마는 설정으로(메뉴 결정 ④), 아이콘은 알림 · 설정 둘 + "내역 추가"(지금 80.7 × 32 · 12 / 500 → Button small) — 금액 가리기 눈은 걷는다(2026-10-16 위). HR 헤더(접기 28 "Toggle Sidebar" · 빵부스러기 · 테마 36 "Toggle theme")는 걷는다.
+- **알림 점** — 데스크톱 7 × 7 에 2px 테두리를 둘러 빨강 3 × 3 이 아이콘 위로 4 튀어나오고(`GrooTopBar.tsx:62-67`, F20), 폰 6 · 앱 7 빨강이다(`mobile_header.dart:82-118`). 브랜드 점 6 · 아이콘 상자 x 17 ~ 23 · y 1 ~ 7 로(Notification Badge).
+- **랜드마크 · 문서 제목** — 웹 머리가 `main` 안이라 `banner` 가 0, 모바일 웹은 `main` 0, 본문 바로가기 0, 문서 제목 고정("그루 담다" · HR "groo" · `lang="en"` — `index.html:2 · 7`, F16). 앱 셸 제목은 머리말(header)이 아니다(F6).
 - **화면을 옮겨도 스크롤 위치가 따라온다** — 웹 셸의 스크롤 상자가 하나라 900 내려 둔 가계부에서 캘린더로 가면 캘린더가 900 에서 열린다(`widgets/layout/ui/AppLayout.tsx:93 · 122`, F3). 화면을 옮기면 맨 위 + 제목에 초점으로.
-- **가짜 검색 입구** — 웹 데스크톱 readOnly 검색칸(`PorestTopBar.tsx:27-42`)과 폰 검색 아이콘(`MobileHeader.tsx:63-70`)이 "준비 중" 화면으로 간다(F21). 앱은 진짜 검색이다. → 2026-10-16 정했다(위 — 웹 검색 화면을 만든 뒤 입구를 둔다).
+- **가짜 검색 입구** — 웹 데스크톱 readOnly 검색칸(`GrooTopBar.tsx:27-42`)과 폰 검색 아이콘(`MobileHeader.tsx:63-70`)이 "준비 중" 화면으로 간다(F21). 앱은 진짜 검색이다. → 2026-10-16 정했다(위 — 웹 검색 화면을 만든 뒤 입구를 둔다).

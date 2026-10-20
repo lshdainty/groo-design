@@ -4,7 +4,7 @@
 #
 # 관련 정보를 묶어 세로로 쌓고, 항목마다 머리(트리거)를 눌러 상세를 펼친다. 변형은 SEED 의 둘이다 — inline(기본 · 연속 목록 +
 # 들인 사이 선)과 separated(항목마다 Card 면). 크기는 SEED medium 하나 — 폰 · 데스크톱이 같다(large 는 고르지 않았다).
-# 여럿을 함께 열고, 목록 머리 오른쪽에 "모두 펼치기" 글 단추를 둔다(porest 확장 — SEED 에 없다).
+# 여럿을 함께 열고, 목록 머리 오른쪽에 "모두 펼치기" 글 단추를 둔다(groo 확장 — SEED 에 없다).
 # 상세가 없는 항목은 트리거가 아닌 그냥 줄이다(detail none) — 꺾쇠 없이 같은 높이 · 같은 글 시작.
 #
 # 한 항목의 트리거는 두 층이다 — background(바탕 층: 누름 · 호버 바탕, 줄지 않는다)와 content(콘텐츠 층: 앞 아이콘 · 본문 · 꺾쇠,
@@ -14,9 +14,9 @@
 # 펼침은 누름 · 호버 · 포커스와 곱해지므로 상태가 아니라 축이다(specs/CLAUDE.md).
 #
 # SEED 와 다른 자리(accordion.md 의 "SEED 와 다른 점")
-#   - 트리거 좌우 24(spacing-global-gutter — porest 화면 가장자리 규칙, SEED 16).
+#   - 트리거 좌우 24(spacing-global-gutter — groo 화면 가장자리 규칙, SEED 16).
 #   - inline 사이 선은 List 의 들인 선 — 좌우 24(SEED 12 의 짝), 색은 SEED 와 같은 stroke-neutral-subtle.
-#   - separated 면은 porest Card 면 — 모서리 16 · 사이 8(SEED 12 · 12 는 데이터 표시 라운드에서 카드에 거절됐다).
+#   - separated 면은 groo Card 면 — 모서리 16 · 사이 8(SEED 12 · 12 는 데이터 표시 라운드에서 카드에 거절됐다).
 #   - 누름 바탕은 불투명한 bg-layer-default-pressed(SEED bg.transparent-pressed 는 투명도가 있어 검사기가 받지 않는다 — v102).
 #     들임 6 · 모서리 10 · 콘텐츠만 축소는 SEED 그대로.
 #   - "모두 펼치기" 글 단추(사용자 결정 4A) · 상세 없는 항목은 그냥 줄(5A) · 포커스 링(웹, 트리거 안쪽 2px) — SEED 에 없다.
@@ -42,7 +42,7 @@ slots:
   divider: 항목 사이 선 — inline 만
   header: 목록 머리 — 시트 · 대화상자에서 아코디언 위 한 줄(제목 + 모두 펼치기). 카드 안이면 카드 머리가 이 자리다
   headerTitle: 목록 머리 제목 — "혜택 상세 · 12건"
-  expandAll: 모두 펼치기 — 목록 머리 오른쪽 글 단추(porest 확장). 펼치면 "모두 접기"
+  expandAll: 모두 펼치기 — 목록 머리 오른쪽 글 단추(groo 확장). 펼치면 "모두 접기"
   focusRing: 키보드 포커스 링(웹) — 트리거 안쪽
 
 variants:
@@ -204,7 +204,7 @@ rules:
       divider:
         height: 1px
         background: { value: $color-stroke-neutral-subtle, note: "SEED dividerColor 와 같은 역할" }
-        marginX: { value: $spacing-x6, note: "들인 선 24 — List 의 들인 선과 같다(SEED dividerPaddingX 12 의 porest 짝)" }
+        marginX: { value: $spacing-x6, note: "들인 선 24 — List 의 들인 선과 같다(SEED dividerPaddingX 12 의 groo 짝)" }
         display: { value: 항목 사이, note: "첫 항목 위 · 마지막 항목 아래에는 긋지 않는다(Divider — 마지막 선 금지)" }
   - when: { variant: separated }
     enabled:

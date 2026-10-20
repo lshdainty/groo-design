@@ -2,7 +2,7 @@
 
 > 여러 단계로 된 항목 가운데 하나를 고르는 나무 — HR 관리 > 회사 · 부서 사용자의 부서 나무. 고른 항목의 내용은 옆 패널(조직도 · 사용자)에 보인다. 부모 · 하위 두 단계에서 줄이 편집을 여는 목록은 [List](list.md) 의 하위 줄, 상세를 접어 두는 목록은 [Accordion](accordion.md) 이다.
 
-SEED 에는 나무가 없다 — Accordion 은 중첩 · 고르기를 다루지 않는다. porest 는 [WAI-ARIA APG Treeview](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/) 를 따른다 — 나무 전체가 `Tab` 정지점 하나, `↑` `↓` 로 보이는 항목 사이, `→` `←` 로 펼치고 접으며 하위 · 부모로, `Home` · `End` 로 다닌다(2026-10-10 사용자 결정 8A). 누르는 자리는 줄 전체다 — 잎은 누르면 고르고, 부모 줄은 누르면 고르면서 펴고 접으며(펼친 부모를 고르면 하위가 접힌다), 꺾쇠는 표시만이다(16D — SEED Accordion "터치 영역은 Chevron 아이콘뿐만 아니라 Trigger 전체"). `Enter` · `Space` 는 누르기와 같고, `→` `←` 는 고르지 않고 펴고 접기만 한다. 노드의 동작은 나무 밖 ⋮ 하나가 고른 항목에 건다. 줄의 값은 [Side Navigation](side-navigation.md) 항목(44 · 패널 가장자리 8 · 모서리 10 · 14 / 19 · 지금 항목 바탕)과 [List](list.md) 의 누름이다 — 나무는 250 남짓한 패널(1280 에서 본문 992 의 25% = 248 — Resizable) 안의 탐색 목록이라 같은 자리의 사이드바 줄과 크기가 같다. porest 에 처음 두는 스펙이다 — DESIGN.md 의 옛 Treeview 절(v73)을 대신한다.
+SEED 에는 나무가 없다 — Accordion 은 중첩 · 고르기를 다루지 않는다. groo 는 [WAI-ARIA APG Treeview](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/) 를 따른다 — 나무 전체가 `Tab` 정지점 하나, `↑` `↓` 로 보이는 항목 사이, `→` `←` 로 펼치고 접으며 하위 · 부모로, `Home` · `End` 로 다닌다(2026-10-10 사용자 결정 8A). 누르는 자리는 줄 전체다 — 잎은 누르면 고르고, 부모 줄은 누르면 고르면서 펴고 접으며(펼친 부모를 고르면 하위가 접힌다), 꺾쇠는 표시만이다(16D — SEED Accordion "터치 영역은 Chevron 아이콘뿐만 아니라 Trigger 전체"). `Enter` · `Space` 는 누르기와 같고, `→` `←` 는 고르지 않고 펴고 접기만 한다. 노드의 동작은 나무 밖 ⋮ 하나가 고른 항목에 건다. 줄의 값은 [Side Navigation](side-navigation.md) 항목(44 · 패널 가장자리 8 · 모서리 10 · 14 / 19 · 지금 항목 바탕)과 [List](list.md) 의 누름이다 — 나무는 250 남짓한 패널(1280 에서 본문 992 의 25% = 248 — Resizable) 안의 탐색 목록이라 같은 자리의 사이드바 줄과 크기가 같다. groo 에 처음 두는 스펙이다 — DESIGN.md 의 옛 Treeview 절(v73)을 대신한다.
 
 수치 원본은 [`tree-view.yaml`](tree-view.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -268,8 +268,8 @@ import { TreeView } from "@/components/ui/tree-view"
 
 ## SEED 와 다른 점
 
-- **SEED 에는 나무가 없다** — Accordion 은 중첩 · 고르기를 다루지 않는다. 키보드 · 역할은 WAI-ARIA APG Treeview 이고, 줄의 값은 porest 의 Side Navigation 항목 · List 누름이다.
-- **들임 20 · 꺾쇠 16 · 고른 바탕** — porest 가 정했다(비교 페이지 8A 그림 · Side Navigation 지금 항목).
+- **SEED 에는 나무가 없다** — Accordion 은 중첩 · 고르기를 다루지 않는다. 키보드 · 역할은 WAI-ARIA APG Treeview 이고, 줄의 값은 groo 의 Side Navigation 항목 · List 누름이다.
+- **들임 20 · 꺾쇠 16 · 고른 바탕** — groo 가 정했다(비교 페이지 8A 그림 · Side Navigation 지금 항목).
 - **줄 전체가 누르는 자리** — SEED Accordion 의 "터치 영역은 Chevron 아이콘뿐만 아니라 Trigger 전체" 를 나무 줄에 옮겼다(16D). Accordion 줄은 여닫기만 하지만 나무 줄은 고르기도 한다 — 부모 줄은 고르면서 펴고 접는다.
 
 ## Migration notes

@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Aspect Ratio — 구조는 SEED Aspect Ratio(2026-10-04). 수치 원본은 specs/components/aspect-ratio.yaml.
+ * Groo Aspect Ratio — 구조는 SEED Aspect Ratio(2026-10-04). 수치 원본은 specs/components/aspect-ratio.yaml.
  * 옛 Aspect Ratio(Radix · 권장 16:9 · 4:3 · 1:1 · 3:4 · 21:9 · 2:1 · 자식이 모서리 · 바탕을 맡음)를 대신한다.
  *
  *   AspectRatio   폭이 정해지면 비율로 높이가 정해지는 상자 하나 — 자식 하나가 상자를 채운다. 그 밖은 div 속성

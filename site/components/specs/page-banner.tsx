@@ -48,11 +48,11 @@ function SettingRows({ mode }: { mode: Mode }) {
 // Desk 웹 — 앱 막대 아래 띠(데스크톱도 화면 폭 · 좌우 24)
 function DeskWeb({ mode, banner, w = 580 }: { mode: Mode; banner: ReactNode; w?: number }) {
   return (
-    <WebWindow mode={mode} w={w} h={300} url="desk.porest.app">
+    <WebWindow mode={mode} w={w} h={300} url="desk.groo.app">
       <div className="flex h-full flex-col" style={{ background: rc('bg-layer-default', mode) }}>
         <div className="flex h-12 shrink-0 items-center gap-6 px-6 text-[13px]" style={{ color: rc('fg-neutral-subtle', mode), boxShadow: `inset 0 -1px 0 ${rc('stroke-neutral-weak', mode)}` }}>
           <b className="text-[15px]" style={{ color: rc('fg-neutral', mode) }}>
-            Porest Desk
+            그루 담다
           </b>
           <span style={{ color: rc('fg-neutral', mode) }}>대시보드</span>
           <span>가계부</span>

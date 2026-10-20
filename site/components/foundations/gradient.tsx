@@ -86,7 +86,7 @@ export function FadeMaskFigure() {
 }
 
 export function ShimmerFigure() {
-  const css = sectionCode('CSS keyframes 정의').replace(/@keyframes ([a-z-]+)/g, '@keyframes porest-$1');
+  const css = sectionCode('CSS keyframes 정의').replace(/@keyframes ([a-z-]+)/g, '@keyframes groo-$1');
   // 반짝임의 시간 · 곡선 · 면 · 글 자리는 skeleton.yaml(motion "반짝임" · root) — 토큰 이름도 YAML 에 적힌 그대로
   const sk = loadingKit().skeleton;
   const raw = (loadComponentSpec('skeleton') as unknown as { motion: Record<string, { duration: string; easing: string }> }).motion['반짝임'];

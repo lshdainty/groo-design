@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 /*
- * Porest Side Navigation — 구조는 SEED Side Navigation(2026-10-04). 수치 원본은 specs/components/side-navigation.yaml.
+ * Groo Side Navigation — 구조는 SEED Side Navigation(2026-10-04). 수치 원본은 specs/components/side-navigation.yaml.
  * 옛 Sidebar(shadcn — 256 · 48 · 모바일 Sheet · 항목 32 · ⌘B · 쿠키 · floating · inset)를 대신한다.
  *
  *   SideNavigation           데스크톱(768 이상)의 주 메뉴 — <nav aria-label="주 메뉴">. collapsed · defaultCollapsed · onCollapsedChange
@@ -270,7 +270,7 @@ const TRIGGER = [
 ].join(" ");
 
 export interface SideNavigationHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** 서비스 마크(24) + 이름("Porest Desk" · "Porest HR") — 누르지 않는다(홈은 첫 항목) */
+  /** 서비스 마크(24) + 이름("그루 담다" · "그루 이음") — 누르지 않는다(홈은 첫 항목) */
   logo?: React.ReactNode;
 }
 

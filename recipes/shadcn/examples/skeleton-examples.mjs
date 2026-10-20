@@ -149,19 +149,19 @@ const PC_TONE = {
   neutral: "[--pc-track:var(--color-stroke-neutral-subtle)] [--pc-range:var(--color-stroke-neutral-solid)]",
 };
 const PC_ROOT = "inline-block shrink-0 overflow-visible align-middle";
-const PC_SPIN = "animate-[porest-progress-circle-rotate_1200ms_cubic-bezier(0.35,0.25,0.65,0.75)_infinite] motion-reduce:animate-none";
+const PC_SPIN = "animate-[groo-progress-circle-rotate_1200ms_cubic-bezier(0.35,0.25,0.65,0.75)_infinite] motion-reduce:animate-none";
 const PC_CIRCLE =
   "fill-none [cx:calc(var(--pc-size)/2)] [cy:calc(var(--pc-size)/2)] [r:calc(var(--pc-size)/2_-_var(--pc-thickness)/2)] [stroke-width:var(--pc-thickness)]";
 const PC_TRACK = `${PC_CIRCLE} [stroke:var(--pc-track)]`;
 const PC_RANGE = `${PC_CIRCLE} [stroke:var(--pc-range)] [stroke-linecap:round] [transform-box:fill-box] [transform-origin:center] [transform:rotate(-90deg)]`;
 const PC_RANGE_INDETERMINATE = [
-  "animate-[porest-progress-circle-head_1200ms_cubic-bezier(0.35,0,0.65,1)_infinite,porest-progress-circle-tail_1200ms_cubic-bezier(0.35,0,0.65,0.6)_infinite]",
+  "animate-[groo-progress-circle-head_1200ms_cubic-bezier(0.35,0,0.65,1)_infinite,groo-progress-circle-tail_1200ms_cubic-bezier(0.35,0,0.65,0.6)_infinite]",
   "motion-reduce:animate-none motion-reduce:[stroke-dasharray:75_200]",
 ].join(" ");
 const PC_KEYFRAMES = [
-  "@keyframes porest-progress-circle-rotate { 0% { transform: rotate(0deg) } 100% { transform: rotate(360deg) } }",
-  "@keyframes porest-progress-circle-head { 0% { stroke-dasharray: 0 200 } 75%, 100% { stroke-dasharray: 100 200 } }",
-  "@keyframes porest-progress-circle-tail { 0%, 33.33% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: -100 } }",
+  "@keyframes groo-progress-circle-rotate { 0% { transform: rotate(0deg) } 100% { transform: rotate(360deg) } }",
+  "@keyframes groo-progress-circle-head { 0% { stroke-dasharray: 0 200 } 75%, 100% { stroke-dasharray: 100 200 } }",
+  "@keyframes groo-progress-circle-tail { 0%, 33.33% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: -100 } }",
 ].join("\n");
 
 // ── result-section.tsx 의 cva · 상수와 같은 값 — 10초 실패(failure · medium) ────
@@ -334,7 +334,7 @@ const transactionRowsSkeleton = (rows, reduced = false) =>
   ).join("")}</ul>`;
 
 // <ProgressCircle size="40" /> — 원 모드의 원(값 없는 원)
-const PC_STYLE = `<style data-href="porest-progress-circle" data-precedence="porest">${PC_KEYFRAMES}</style>`;
+const PC_STYLE = `<style data-href="groo-progress-circle" data-precedence="groo">${PC_KEYFRAMES}</style>`;
 const circle40 = () =>
   `<svg ${attrs([
     'role="progressbar"',

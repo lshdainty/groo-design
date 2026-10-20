@@ -1,8 +1,8 @@
 # Z-Index Layers
 
-> Porest 의 floating layer stacking 정책. 시스템 wide 가이드. 각 컴포넌트의 z-index 는 이 표의 층을 따르고, 층마다 값은 DESIGN.md 의 z-index 토큰(v116)이 원본이다.
+> Groo 의 floating layer stacking 정책. 시스템 wide 가이드. 각 컴포넌트의 z-index 는 이 표의 층을 따르고, 층마다 값은 DESIGN.md 의 z-index 토큰(v116)이 원본이다.
 
-Porest 는 Bootstrap 식 **명시적 z-index 계층 분기** 정책을 채택. shadcn 공식은 모든 layer 가 `z-50` + portal order 로 stacking 하지만, 디버깅 / 의도 명시 / 예측 가능성을 위해 layer 별로 z-index 를 분기한다. Portal 순서에 의존하면 깨질 때 추적이 어렵다.
+Groo 는 Bootstrap 식 **명시적 z-index 계층 분기** 정책을 채택. shadcn 공식은 모든 layer 가 `z-50` + portal order 로 stacking 하지만, 디버깅 / 의도 명시 / 예측 가능성을 위해 layer 별로 z-index 를 분기한다. Portal 순서에 의존하면 깨질 때 추적이 어렵다.
 
 ## Layer matrix
 

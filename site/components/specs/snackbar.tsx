@@ -443,7 +443,7 @@ const PlacementGuide: Fig = ({ caption }) => {
           </div>
         </div>
         <div className="flex flex-col items-center gap-2">
-          <WebWindow w={winW} h={340} url="desk.porest.app">
+          <WebWindow w={winW} h={340} url="desk.groo.app">
             <div className="flex h-full flex-col px-8 pt-6" style={{ background: rc('bg-layer-default') }}>
               <span className="pb-3 text-[20px] font-bold" style={{ color: rc('fg-neutral') }}>
                 가계부

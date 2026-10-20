@@ -2,7 +2,7 @@
 
 > 특정 설정이나 상태를 바로 켜고 끄는 컴포넌트. 누르는 순간 적용되는 설정에 쓴다 — 알림 받기, 앱 잠금처럼.
 
-구조는 당근 [SEED Switch](https://seed-design.io/components/switch)(Apache-2.0)를 따른다 — 스위치(Switchmark) · 스위치 + 라벨(Switch). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-09-30 사용자 결정).
+구조는 당근 [SEED Switch](https://seed-design.io/components/switch)(Apache-2.0)를 따른다 — 스위치(Switchmark) · 스위치 + 라벨(Switch). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-09-30 사용자 결정).
 
 수치 원본은 [`switch.yaml`](switch.yaml) 이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 

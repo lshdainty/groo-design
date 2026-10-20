@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Notification Badge — 구조는 SEED Notification Badge(2026-10-03). 수치 원본은 specs/components/notification-badge.yaml.
+ * Groo Notification Badge — 구조는 SEED Notification Badge(2026-10-03). 수치 원본은 specs/components/notification-badge.yaml.
  *
  *   NotificationBadge         붙을 대상(아이콘 · 글)을 감싸고 그 상자 위에 점 · 숫자를 겹쳐 놓는다 — 자리를 차지하지 않아
  *                             아이콘 크기 · 버튼 높이 · 탭 폭 · 줄 높이가 그대로다

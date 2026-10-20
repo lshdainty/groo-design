@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Accordion — 구조는 SEED Accordion(rootage accordion.json · accordion-item.json, 2026-10-10). 수치 원본은 specs/components/accordion.yaml.
+ * Groo Accordion — 구조는 SEED Accordion(rootage accordion.json · accordion-item.json, 2026-10-10). 수치 원본은 specs/components/accordion.yaml.
  * 관련 상세를 세로로 묶고 항목마다 머리(트리거)를 눌러 펼친다 — 카드 혜택 · 유의사항. 하나만 접고 펴는 자리는 Collapsible, 단계가 있는
  * 고르는 나무는 Tree View, 하위 줄을 접는 목록은 List 의 하위 줄이다. 옛 Radix 베이스 · 아래 선만 · 꺾쇠 16 · 하나만 여는 모드는 걷었다.
  *

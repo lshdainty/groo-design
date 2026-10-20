@@ -217,7 +217,7 @@ rules:
       progressCircle: { size: 16px, thickness: 2px }
   - when: { size: large }
     enabled:
-      root: { height: { value: 48px, note: "SEED 52 — porest 는 48(사용자 결정)" }, radius: $radius-r3 }
+      root: { height: { value: 48px, note: "SEED 52 — groo 는 48(사용자 결정)" }, radius: $radius-r3 }
       progressCircle: { size: 18px, thickness: 2px }
 
   # 크기 × 배치 — 여백 · 간격 · 글자 · 아이콘

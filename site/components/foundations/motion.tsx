@@ -120,8 +120,8 @@ function keyframeRows(heading: string): Kf[] {
   });
 }
 export function KeyframeLibrary() {
-  // 사이트의 Tailwind(spin · pulse · ping)와 이름이 겹치지 않게 앞에 porest- 를 붙여 싣는다
-  const css = sectionCode('CSS keyframes 정의').replace(/@keyframes ([a-z-]+)/g, '@keyframes porest-$1');
+  // 사이트의 Tailwind(spin · pulse · ping)와 이름이 겹치지 않게 앞에 groo- 를 붙여 싣는다
+  const css = sectionCode('CSS keyframes 정의').replace(/@keyframes ([a-z-]+)/g, '@keyframes groo-$1');
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: css }} />

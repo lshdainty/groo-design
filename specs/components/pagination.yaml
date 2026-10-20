@@ -7,13 +7,13 @@
 # (화살표 포함). 첫 · 마지막 쪽에서는 화살표 대신 40 빈 칸을 두어 쪽이 바뀌어도 칸 자리가 흔들리지 않는다. 1쪽 이하면 그리지 않는다.
 #
 # 누르는 영역은 위아래만 44 이고 옆은 칸 폭 40 이다 — v106 "누르는 영역 44" 의 예외(사용자 결정 2026-10-04: 칸 40 그대로,
-# porest 폰은 끝없이 불러오기라 넘김은 주로 마우스로 누른다). WCAG 2.5.8(AA) 은 통과, 2.5.5(AAA) 는 미달이다.
+# groo 폰은 끝없이 불러오기라 넘김은 주로 마우스로 누른다). WCAG 2.5.8(AA) 은 통과, 2.5.5(AAA) 는 미달이다.
 #
 # SEED 와 다른 자리(pagination.md 의 "SEED 와 다른 점")
-#   - 지금 쪽 채움: SEED bg.neutral-solid(#2A3038) → porest bg-neutral-inverted(짙은 회색 — 다크는 밝은 반전) + fg-neutral-inverted.
+#   - 지금 쪽 채움: SEED bg.neutral-solid(#2A3038) → groo bg-neutral-inverted(짙은 회색 — 다크는 밝은 반전) + fg-neutral-inverted.
 #     누름은 bg-neutral-inverted-pressed(v112).
 #   - 누름 · 호버 바탕: SEED bg.transparent-pressed → 불투명한 bg-layer-default-pressed(v102 · v104).
-#   - 누름 축소: SEED scale 0.97 → porest 2px 거리(v104 — 40 이면 0.95).
+#   - 누름 축소: SEED scale 0.97 → groo 2px 거리(v104 — 40 이면 0.95).
 #   - 누르는 영역: 세로만 44 로 넓힌다(SEED 는 40 그대로).
 #   - 끝 쪽에 닿아 누르던 화살표가 빈 칸이 되면 초점을 지금 쪽 번호로 옮긴다 — SEED 는 body 로 떨어진다.
 #   - 쪽이 주소에 있으면 칸은 링크(<a>)다 — SEED 는 늘 버튼이다.
@@ -118,7 +118,7 @@ rules:
   - when: { current: current }
     enabled:
       item:
-        background: { value: $color-bg-neutral-inverted, note: "짙은 채움 — SEED bg.neutral-solid 의 porest 짝(다크는 밝은 반전)" }
+        background: { value: $color-bg-neutral-inverted, note: "짙은 채움 — SEED bg.neutral-solid 의 groo 짝(다크는 밝은 반전)" }
       label:
         foreground: $color-fg-neutral-inverted
     hovered:

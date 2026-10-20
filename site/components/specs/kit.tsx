@@ -269,7 +269,7 @@ export function AlertBox({ title, body, cancel = '취소', confirm, tone = 'crit
 }
 
 // 웹 창 — 데스크탑 화면(Desk 웹 · HR 웹)
-export function WebWindow({ children, mode = 'auto', w = 640, h = 380, url = 'desk.porest.app' }: { children: ReactNode; mode?: Mode; w?: number; h?: number; url?: string }) {
+export function WebWindow({ children, mode = 'auto', w = 640, h = 380, url = 'desk.groo.app' }: { children: ReactNode; mode?: Mode; w?: number; h?: number; url?: string }) {
   return (
     <div className="shrink-0 overflow-hidden rounded-xl border border-black/10 shadow-sm" style={{ width: w, height: h, background: rc('bg-layer-basement', mode) }}>
       <div className="flex h-8 items-center gap-1.5 px-3" style={{ background: deco(mode, 'chrome') }}>

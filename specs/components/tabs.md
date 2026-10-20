@@ -2,7 +2,7 @@
 
 > 다른 구역으로 옮기는 탭. 화면 · 구역 맨 위의 1차 탭은 Line(밑줄 막대), 그 안의 2차 탭은 Chip Tabs(칩 모양)다. 같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게 보는 자리는 [Segmented Control](segmented-control.md), 2 ~ 4개 짧은 폼 값은 [Chip](chip.md) · 5개 이상은 [Select](select.md), 목록 조건을 걸고 푸는 자리는 Chip 의 필터 바다.
 
-구조는 당근 [SEED Tabs](https://seed-design.io/components/tabs)(Apache-2.0)를 따른다 — Line 타입(목록 · 탭 · 글 · 막대)과 Chip 타입(칩 모양 탭), 1차 Line · 2차 Chip. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
+구조는 당근 [SEED Tabs](https://seed-design.io/components/tabs)(Apache-2.0)를 따른다 — Line 타입(목록 · 탭 · 글 · 막대)과 Chip 타입(칩 모양 탭), 1차 Line · 2차 Chip. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
 수치 원본은 [`tabs.yaml`](tabs.yaml)(Line)과 [`chip-tabs.yaml`](chip-tabs.yaml)(Chip Tabs — 칩 하나는 [`chip.yaml`](chip.yaml) 그대로)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -98,7 +98,7 @@
 
 ### 탭 바보다 더 나눌 때 — 화면 위 Line
 
-폰의 [Bottom Navigation](bottom-navigation.md) 은 다섯 칸이 어느 화면에서나 같다 — 더 나눌 구분은 탭 바 칸을 바꾸지 않고 그 탭 화면의 맨 위 1차 Line 으로 둔다(SEED Bottom Navigation — "더 많은 구분이 필요하다면 화면 상단에 Tabs 를 사용"). Desk 의 가계부 탭은 화면 위 Line 넷(가계부 · 자산 · 통계 · 예산 — Fill · `medium` 44)이다. 머리 제목은 넷 모두 "가계부" 다(탭 바 칸의 이름 — 고른 탭은 Line 이 말한다. 문서 제목만 "{탭 이름} - Porest Desk"). 화면 맨 위 1차 Line 은 어디서나 [Top Navigation](top-navigation.md) 바로 아래에 붙어 함께 고정된다(SEED Tabs `stickyList` — 가계부 묶음 · 카테고리의 지출 · 수입). 숨는 것은 그 아래 스크롤 상자의 [Scroll Auto Hide](scroll-auto-hide.md) 뿐이다. 데스크톱(768 이상)에서는 넷이 [Side Navigation](side-navigation.md) 의 항목이라 이 탭 줄이 없다.
+폰의 [Bottom Navigation](bottom-navigation.md) 은 다섯 칸이 어느 화면에서나 같다 — 더 나눌 구분은 탭 바 칸을 바꾸지 않고 그 탭 화면의 맨 위 1차 Line 으로 둔다(SEED Bottom Navigation — "더 많은 구분이 필요하다면 화면 상단에 Tabs 를 사용"). Desk 의 가계부 탭은 화면 위 Line 넷(가계부 · 자산 · 통계 · 예산 — Fill · `medium` 44)이다. 머리 제목은 넷 모두 "가계부" 다(탭 바 칸의 이름 — 고른 탭은 Line 이 말한다. 문서 제목만 "{탭 이름} - 그루 담다"). 화면 맨 위 1차 Line 은 어디서나 [Top Navigation](top-navigation.md) 바로 아래에 붙어 함께 고정된다(SEED Tabs `stickyList` — 가계부 묶음 · 카테고리의 지출 · 수입). 숨는 것은 그 아래 스크롤 상자의 [Scroll Auto Hide](scroll-auto-hide.md) 뿐이다. 데스크톱(768 이상)에서는 넷이 [Side Navigation](side-navigation.md) 의 항목이라 이 탭 줄이 없다.
 
 웹과 앱은 짜임이 다르고 겪는 것은 같다(2026-10-16 구현 세션 질문 Q-017-1 정리 — Tabs 7A · 화면 틀 7A).
 
@@ -289,10 +289,10 @@ const tab = params.get("tab") ?? "category"
 ## SEED 와 다른 점
 
 - **목록 바닥 선을 불투명 구획 선으로**(v102) — SEED `stroke.neutral-muted`(반투명) → `stroke-neutral-subtle`.
-- **Line 의 막대 들임 · Hug 목록 좌우는 SEED 처럼 16** — porest 의 화면 여백 24(`spacing-global-gutter`)를 쓰지 않는다. 탭이 제 좌우 10 을 더해 Hug 의 첫 글이 26 에서 시작해 본문 글의 24 와 거의 맞는다.
+- **Line 의 막대 들임 · Hug 목록 좌우는 SEED 처럼 16** — groo 의 화면 여백 24(`spacing-global-gutter`)를 쓰지 않는다. 탭이 제 좌우 10 을 더해 Hug 의 첫 글이 26 에서 시작해 본문 글의 24 와 거의 맞는다.
 - **Chip Tabs 목록 좌우는 화면 여백 24** — SEED 16. Chip 의 가로 스크롤 줄(필터 바 · 제안 줄)과 같게, 칩 줄은 어디서나 첫 칩이 화면 여백에서 시작한다. 위아래 8 은 SEED 에 없는 값이다.
-- **Chip Tabs 의 칩은 porest Chip 그대로** — 비활성은 흐리게 하지 않고(v106), Outline 을 고르면 테두리를 지운다(SEED Chip Tabs 와 같다).
-- **알림 점은 브랜드 글자색**(`fg-brand` — Desk · HR 이 다르다)이고, 보조 기술에 "새 소식" 을 덧붙인다(SEED 는 점만 그린다). SEED 의 `bg.brand-solid` 짝은 porest 다크에서 바탕과 1.73 · 2.86:1 이라 점이 안 보인다. 고른 탭에는 점을 그리지 않는다(내용을 보면 사라진다).
+- **Chip Tabs 의 칩은 groo Chip 그대로** — 비활성은 흐리게 하지 않고(v106), Outline 을 고르면 테두리를 지운다(SEED Chip Tabs 와 같다).
+- **알림 점은 브랜드 글자색**(`fg-brand` — Desk · HR 이 다르다)이고, 보조 기술에 "새 소식" 을 덧붙인다(SEED 는 점만 그린다). SEED 의 `bg.brand-solid` 짝은 groo 다크에서 바탕과 1.73 · 2.86:1 이라 점이 안 보인다. 고른 탭에는 점을 그리지 않는다(내용을 보면 사라진다).
 - **웹은 1차 탭을 주소에 남긴다** — SEED 에 없는 규칙이다(사용자 결정 2026-10-02). 내용은 SEED 기본처럼 바로 바꾸고 상태를 남긴다.
 
 ## Migration notes

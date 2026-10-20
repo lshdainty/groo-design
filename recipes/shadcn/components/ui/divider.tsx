@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Divider — 구조는 SEED Divider(2026-10-03). 수치 원본은 specs/components/divider.yaml. 옛 Separator 를 대신한다.
+ * Groo Divider — 구조는 SEED Divider(2026-10-03). 수치 원본은 specs/components/divider.yaml. 옛 Separator 를 대신한다.
  *
  *   Divider   내용 사이를 나누는 1px 선 — <hr> 이 아니라 <div> 로 그린다
  *

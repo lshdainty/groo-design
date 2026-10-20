@@ -2,7 +2,7 @@
 
 > 위 검색칸에 치는 대로 아래 목록이 걸러지고, 그 목록에서 하나를 고르는 묶음 — 은행 · 증권사 · 카드 상품 · 종목 · 결재자처럼 스크롤만으로 찾기 어려운 긴 목록에 쓴다. 대개 [Input Button](input-button.md) 이 여는 검색 시트 · 팝오버의 내용이고, 고르는 것이 그 단계의 일이면 화면 · 단계 안에 둔다. 짧은 선택지는 [Select](select.md), 줄 몇 개에서 하나는 [List](list.md) 의 라디오 줄이다.
 
-SEED 에는 이 컴포넌트가 없다 — Select 문서가 "옵션이 매우 많아 스크롤만으로 탐색하기 어렵다면 검색형 선택(Combobox) 패턴을 고려합니다. SEED는 아직 Combobox를 제공하지 않습니다." 라고 적었고, Search Bar 는 Figma 에만 있다(코드는 아직 없다). 그래서 부품마다 SEED 를 따른다 — 검색칸은 Text Input 의 밑줄형("화면에 하나의 Input만 있는 경우 Underline 사용을 권장" — 앞 돋보기), 결과는 List Item 줄 + 오른쪽 Radiomark(하나 고르기), 결과 없음은 Result Section("'나루로리롱'에 대한 검색 결과가 없어요" 예), 키보드는 SEED 팀이 만든 유일한 검색 + 결과인 문서 사이트 검색 창이다 — "the arrow keys move a highlight through the results rather than the focus, which is what lets someone keep typing"(당근 SEED, Apache-2.0). 놓이는 자리 · 서버 검색 지연 · 분류 머리 · 실패는 porest 가 정했다(2026-10-08 사용자 결정). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 Searchable List 스펙(상자 안 결과 · 제목 13 · 썸네일 44 × 28 · 고른 줄 브랜드 바탕)을 대신한다.
+SEED 에는 이 컴포넌트가 없다 — Select 문서가 "옵션이 매우 많아 스크롤만으로 탐색하기 어렵다면 검색형 선택(Combobox) 패턴을 고려합니다. SEED는 아직 Combobox를 제공하지 않습니다." 라고 적었고, Search Bar 는 Figma 에만 있다(코드는 아직 없다). 그래서 부품마다 SEED 를 따른다 — 검색칸은 Text Input 의 밑줄형("화면에 하나의 Input만 있는 경우 Underline 사용을 권장" — 앞 돋보기), 결과는 List Item 줄 + 오른쪽 Radiomark(하나 고르기), 결과 없음은 Result Section("'나루로리롱'에 대한 검색 결과가 없어요" 예), 키보드는 SEED 팀이 만든 유일한 검색 + 결과인 문서 사이트 검색 창이다 — "the arrow keys move a highlight through the results rather than the focus, which is what lets someone keep typing"(당근 SEED, Apache-2.0). 놓이는 자리 · 서버 검색 지연 · 분류 머리 · 실패는 groo 가 정했다(2026-10-08 사용자 결정). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 Searchable List 스펙(상자 안 결과 · 제목 13 · 썸네일 44 × 28 · 고른 줄 브랜드 바탕)을 대신한다.
 
 수치 원본은 [`searchable-list.yaml`](searchable-list.yaml)이고, 줄 · 검색칸의 수치는 [`list.yaml`](list.yaml) · [`input.yaml`](input.yaml)이 원본이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -318,10 +318,10 @@ import {
 
 ## SEED 와 다른 점
 
-- **porest 가 둔 컴포넌트다** — SEED 는 Combobox 를 아직 두지 않았고 Search Bar 는 Figma 에만 있다. 검색칸 · 결과 줄 · 라디오 · 결과 없음은 SEED 부품, 키보드는 SEED 문서 사이트의 검색 창을 따랐다.
+- **groo 가 둔 컴포넌트다** — SEED 는 Combobox 를 아직 두지 않았고 Search Bar 는 Figma 에만 있다. 검색칸 · 결과 줄 · 라디오 · 결과 없음은 SEED 부품, 키보드는 SEED 문서 사이트의 검색 창을 따랐다.
 - **강조 바탕은 불투명한 `bg-layer-default-pressed`** — SEED 문서 검색은 `bg.transparent-pressed`(투명도 있음)다(v102). 모양(좌우 6 · 모서리 10)은 List 의 누름 바탕이다.
 - **지우기 버튼** — SEED Text Input 은 문서 · Figma 에만 Clear Button 이 있고 코드에 없다.
-- **목록은 listbox · option** — SEED 문서 검색은 한 줄에 카드 셋이라 grid 다. porest 결과는 한 줄에 하나라 listbox 다.
+- **목록은 listbox · option** — SEED 문서 검색은 한 줄에 카드 셋이라 grid 다. groo 결과는 한 줄에 하나라 listbox 다.
 - **서버 검색 300ms · 분류 머리 · 실패 · 놓이는 자리** — SEED 에 규칙이 없다.
 - **결과 개수를 알리지 않는다** — SEED 문서 검색과 같다(0건만 알린다).
 

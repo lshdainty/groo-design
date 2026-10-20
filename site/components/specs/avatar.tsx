@@ -114,12 +114,12 @@ const Anatomy: Fig = ({ caption }) => {
 };
 
 // ── Size ──────────────────────────────────────────────────
-// avatar.yaml 의 자리 설명 — "36 — 댓글(SEED). porest 한 줄 목록 줄(…)" 에서 SEED 자리와 porest 자리
+// avatar.yaml 의 자리 설명 — "36 — 댓글(SEED). groo 한 줄 목록 줄(…)" 에서 SEED 자리와 groo 자리
 function places(size: AvatarSize) {
   const desc = axisDesc(loadComponentSpec('avatar'), 'size', size) ?? '';
   const seed = /—\s*([^(.]+)\(SEED\)/.exec(desc)?.[1]?.trim();
-  const porest = /porest\s+([^(]+)/.exec(desc)?.[1]?.trim().replace(/\.$/, '');
-  return { seed, porest };
+  const groo = /groo\s+([^(]+)/.exec(desc)?.[1]?.trim().replace(/\.$/, '');
+  return { seed, groo };
 }
 const Size: Fig = ({ caption }) => {
   const lk = al();
@@ -137,7 +137,7 @@ const Size: Fig = ({ caption }) => {
                   {s === lk.defaultSize && <span className="font-normal pk-muted"> (기본)</span>}
                 </b>
                 <span className="text-[11px] leading-4 pk-muted">글자 {lk.sizes[s].font}</span>
-                <span className="text-[11px] leading-4 pk-text">{p.porest}</span>
+                <span className="text-[11px] leading-4 pk-text">{p.groo}</span>
                 {p.seed && <span className="text-[11px] leading-4 pk-muted">SEED {p.seed}</span>}
               </div>
             );

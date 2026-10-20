@@ -1,7 +1,7 @@
 /*
  * shadcn Floating Action Button 예제 — docs site components/floating-action-button.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 하나(할 일 — 추가)는 차례 · 제목 · 코드가 specs/components/floating-action-button.md 의
- * "코드" 절과 같고, 뒤의 하나(바닥 버튼 위 — offsetBottom)는 md 의 Properties(자리)를 코드로 더 보인다. porest 에 처음 두는 컴포넌트다 —
+ * "코드" 절과 같고, 뒤의 하나(바닥 버튼 위 — offsetBottom)는 md 의 Properties(자리)를 코드로 더 보인다. groo 에 처음 두는 컴포넌트다 —
  * 구조는 SEED Floating Action Button 의 아이콘만 모양(extended=false)이다.
  *
  * ROOT 는 recipes/shadcn/components/ui/floating-action-button.tsx 의 상수와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다.

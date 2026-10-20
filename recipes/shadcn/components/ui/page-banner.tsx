@@ -5,7 +5,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Page Banner — 구조는 SEED Page Banner(2026-10-02). 수치 원본은 specs/components/page-banner.yaml.
+ * Groo Page Banner — 구조는 SEED Page Banner(2026-10-02). 수치 원본은 specs/components/page-banner.yaml.
  *
  * 페이지 맨 위(머리 바로 아래, 위에 사진이 있으면 그 아래)에 화면 폭 전체로 놓는 띠 — 그 페이지 전체의 상태를 알린다
  * (증권 연결 끊김 · Pro 만료 예정 · 새 버전). 한 화면에 하나. 그 기능 가까이의 안내는 Callout, 잠깐 알릴 결과는 Snackbar 다.

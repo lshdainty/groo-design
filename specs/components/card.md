@@ -2,7 +2,7 @@
 
 > 회색 바닥 위에 놓는 흰 면 하나 — 한 가지 내용(오늘 쓴 돈 · 예산 · 차트 · 표 · 지표)을 묶어 화면을 나눈다. 폰과 데스크톱, 라이트와 다크가 같은 규칙이다. 줄을 늘어놓는 것은 카드 안의 [List](list.md), 줄과 열을 견주는 것은 카드 안의 [Table](table.md), 고르는 상자는 [Select Box](select-box.md) 다.
 
-SEED 에는 카드 컴포넌트가 없다. 그래도 SEED 가 그린 카드는 모두 같다 — 바닥(`bg.layer-basement`) 위 흰 면(`bg.layer-default`)에 1px `stroke.neutral-weak` 테두리, 그림자는 없다(React List 카드 예제 · 디자인 문서 그림 · 대시보드의 요약 타일과 차트 카드). SEED Elevation 은 카드를 "Level 1 layer-default — Card, List, TextField처럼 페이지를 구성하는 개별 콘텐츠 블록" 에 두고, 그림자는 "화면 전체에서 주목도가 높은 몇 안 되는 요소" 에만 쓴다(당근 SEED, Apache-2.0). 카드 사이 8 은 Divider 문서의 "Basement 레이어 위에 Default 레이어를 올려 8px Gap", 누름은 Feedback 의 규칙이다. 카드 머리 · 여백 · 지표 카드 · 순자산 카드 · 증감 표기는 SEED 에 없어 porest 가 정했다(2026-10-08 사용자 결정). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 Card 스펙(그림자 기본 · 변형 넷 · 모서리 12)을 대신한다.
+SEED 에는 카드 컴포넌트가 없다. 그래도 SEED 가 그린 카드는 모두 같다 — 바닥(`bg.layer-basement`) 위 흰 면(`bg.layer-default`)에 1px `stroke.neutral-weak` 테두리, 그림자는 없다(React List 카드 예제 · 디자인 문서 그림 · 대시보드의 요약 타일과 차트 카드). SEED Elevation 은 카드를 "Level 1 layer-default — Card, List, TextField처럼 페이지를 구성하는 개별 콘텐츠 블록" 에 두고, 그림자는 "화면 전체에서 주목도가 높은 몇 안 되는 요소" 에만 쓴다(당근 SEED, Apache-2.0). 카드 사이 8 은 Divider 문서의 "Basement 레이어 위에 Default 레이어를 올려 8px Gap", 누름은 Feedback 의 규칙이다. 카드 머리 · 여백 · 지표 카드 · 순자산 카드 · 증감 표기는 SEED 에 없어 groo 가 정했다(2026-10-08 사용자 결정). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 Card 스펙(그림자 기본 · 변형 넷 · 모서리 12)을 대신한다.
 
 수치 원본은 [`card.yaml`](card.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -45,7 +45,7 @@ SEED 에는 카드 컴포넌트가 없다. 그래도 SEED 가 그린 카드는 �
 
 ### 여백
 
-카드 안 여백은 폭과 상관없이 24 다 — [List](list.md) 줄의 좌우 24, [Bottom Sheet](bottom-sheet.md) 의 머리 · 본문 24 와 같은 값이라 카드 · 줄 · 시트가 한 자리에 글자를 세운다(카드 24 = List 줄 24 = 시트 24, 사용자 결정 — 시트와 같게). SEED 도 같은 원칙이다 — 카드 · 줄 · 시트가 모두 16 이다. porest 는 화면 가장자리 규칙(2026-09-14 — 24)을 따라 모두 24 다.
+카드 안 여백은 폭과 상관없이 24 다 — [List](list.md) 줄의 좌우 24, [Bottom Sheet](bottom-sheet.md) 의 머리 · 본문 24 와 같은 값이라 카드 · 줄 · 시트가 한 자리에 글자를 세운다(카드 24 = List 줄 24 = 시트 24, 사용자 결정 — 시트와 같게). SEED 도 같은 원칙이다 — 카드 · 줄 · 시트가 모두 16 이다. groo 는 화면 가장자리 규칙(2026-09-14 — 24)을 따라 모두 24 다.
 
 목록을 담은 카드는 좌우 여백을 두지 않는다 — 줄이 제 좌우 24 · 위아래 12 를 가지므로 줄이 카드 가장자리까지 간다(시트 본문에 List 를 둘 때와 같다). 머리는 위 24 · 좌우 24 · 아래 4, 카드 아래 여백은 12 — 마지막 줄의 아래 12 와 합쳐 보이는 24 로 위와 같다. 옛 16 · 24(768 에서 바뀜)는 SEED 이전 card.md v4(2026-05 — 화면 끝이 20 이던 때)의 값이다.
 
@@ -327,13 +327,13 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 
 ## SEED 와 다른 점
 
-- **porest 가 정한 자리가 많다** — SEED 에 카드 컴포넌트가 없어 여백 · 머리 · 지표 카드 · 순자산 카드 · 증감 표기는 porest 규칙이다. 면 · 테두리 · 바닥 · 카드 사이 8 · 누름은 SEED 를 따랐다.
-- **모서리 16 하나** — SEED 는 문서 예 16 · React 예 14(r3_5)로 갈리고 카드 모서리 토큰이 없다. porest 는 List 동심 모서리 · Skeleton 카드 면과 같은 16 이다.
-- **누름 색은 불투명한 `bg-layer-default-pressed`** — SEED 와 같은 자리(Feedback 의 `-pressed` 짝)이고 값은 porest(v102).
+- **groo 가 정한 자리가 많다** — SEED 에 카드 컴포넌트가 없어 여백 · 머리 · 지표 카드 · 순자산 카드 · 증감 표기는 groo 규칙이다. 면 · 테두리 · 바닥 · 카드 사이 8 · 누름은 SEED 를 따랐다.
+- **모서리 16 하나** — SEED 는 문서 예 16 · React 예 14(r3_5)로 갈리고 카드 모서리 토큰이 없다. groo 는 List 동심 모서리 · Skeleton 카드 면과 같은 16 이다.
+- **누름 색은 불투명한 `bg-layer-default-pressed`** — SEED 와 같은 자리(Feedback 의 `-pressed` 짝)이고 값은 groo(v102).
 - **카드 머리는 제목 16 · 700** — SEED 의 카드 머리 예는 React List 카드의 ListHeader(14 · 500 · `fg.neutral-subtle`) 하나다(사용자 결정 — 작은 회색 머리는 고르지 않았다).
-- **카드 안 여백 24** — SEED 는 카드 · 줄 · 시트가 모두 16 으로 같은 원칙이다. porest 는 화면 가장자리 규칙(2026-09-14 — 24)으로 카드 · 줄 · 시트가 모두 24 다. 목록 카드의 줄도 좌우 24(List — 24 보다 좁히지 않는다).
+- **카드 안 여백 24** — SEED 는 카드 · 줄 · 시트가 모두 16 으로 같은 원칙이다. groo 는 화면 가장자리 규칙(2026-09-14 — 24)으로 카드 · 줄 · 시트가 모두 24 다. 목록 카드의 줄도 좌우 24(List — 24 보다 좁히지 않는다).
 - **순자산 카드(브랜드 채움)** — SEED 에는 채운 카드 예가 없다.
-- **증감 색** — SEED 에 증감 규칙이 없다. porest 는 방향 색(▲ 빨강 · ▼ 파랑)이다.
+- **증감 색** — SEED 에 증감 규칙이 없다. groo 는 방향 색(▲ 빨강 · ▼ 파랑)이다.
 
 ## Migration notes
 
@@ -386,10 +386,10 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 제품은 앱 적용 단계에서 옮긴다(2026-10-08 조사 — Desk 웹 · HR 은 크로미움에 띄워 쟀고, Desk 앱은 위젯 테스트로 쟀다).
 
 - **Desk 웹 `Card`(115곳)** — 기본 `shadow`(inline `--shadow-sm`) · `bordered` 7 · `brand` 4 · `muted` 2 · **`raised` 12**(`shared/ui/card.tsx:28-56`). 데스크톱 카드 면 #FFFFFF 가 #F5F6FA 위 1.08(다크 1.13) · 모서리 12 · 테두리 0. 여백 문턱이 `min-[736px]`(`:83 · 126 · 142`)이라 750 폭 폰 틀에서 데스크톱 여백 24 가 나온다(D25). `CardTitle` 이 `text-title-md leading-none`(`:98`)이라 18 / 600 · 줄 높이 18 이다. 여백 24 하나 · `default` 로.
-- **Desk 웹 머리 제목 두 벌 · 머리 동작 18.6** — 홈 18 / 600(`CardTitle`), 통계 · 예산 · 자산 16 / 600(`shared/ui/porest/section.tsx:75` 가 `text-body-lg` 로 덮음), 폰 평면 머리 16 / 700(`.flat-group__head` — `shared/styles/porest.css:490-501`). 머리 동작 "전체 보기 · 자세히 · 예산 관리 · 관리 · 캘린더" 는 13 / 500 글 버튼 높이 18.6 ~ 19.5(`porest.css:513-530`, D21). 16 · 700 + 누르는 영역 44 로.
+- **Desk 웹 머리 제목 두 벌 · 머리 동작 18.6** — 홈 18 / 600(`CardTitle`), 통계 · 예산 · 자산 16 / 600(`shared/ui/groo/section.tsx:75` 가 `text-body-lg` 로 덮음), 폰 평면 머리 16 / 700(`.flat-group__head` — `shared/styles/groo.css:490-501`). 머리 동작 "전체 보기 · 자세히 · 예산 관리 · 관리 · 캘린더" 는 13 / 500 글 버튼 높이 18.6 ~ 19.5(`groo.css:513-530`, D21). 16 · 700 + 누르는 영역 44 로.
 - **Desk 웹 · 앱 폰 '카드 다이어트'** — 폰은 흰 바탕 위 평면 묶음(`Section` 의 모바일 분기 · 앱 `PFlatSection` 15 / 700 — `shared/widgets/p_flat_section.dart`) + 흰 위 흰 `raised` 카드다. 바닥을 회색으로 두고 묶음마다 카드(목록 카드)로 바꾼다 — 줄은 List 그대로.
 - **Desk 앱 `PCard`(50곳)** — `raised` 18 · `bordered` 15 · `brand` 6 · `muted` 5, 기본 여백 16 · 모서리 12(`shared/widgets/p_card.dart`). 주석은 "shadow 패딩 24(spacing-xl)" 인데 코드는 16 이다 — 24 로. 통계 `_Card` 는 면 없는 껍데기다(`features/stats/presentation/stats_screen.dart:649-656`).
-- **순자산 카드 다크 대비** — 웹 `.dark .balance-hero` 가 `--color-primary-light`(#7AA9F6) → `--color-primary`(`shared/styles/porest.css:369-375`)라 흰 글자가 머리 2.58 · 금액 32 / 800 **2.7** · 부제 2.84 · 자산 / 부채 3.09 · 3.17 이다. 앱은 같은 짝(`app/theme/tokens.dart:333-334`)으로 흰 2.38 · 흰 72% 머리 라벨 **1.9** 다. 라이트 끝 #012B68 은 `color-mix(bg-brand 60%, #000)`(`porest.css:353-358` · 앱 `tokens.dart:271-273`) — brand-900 으로. 머리 라벨의 불투명도 0.72(`porest.css:391-394`) · 부제 0.78(`:416-422`)을 걷고, 증감 색(초록 · 빨강 80% 섞기 — `:431-444`, 앱 `heroChgUp` · `heroChgDown` — `app/theme/colors.dart:62-65`)은 흰 글자 + ▲ · ▼ 로.
+- **순자산 카드 다크 대비** — 웹 `.dark .balance-hero` 가 `--color-primary-light`(#7AA9F6) → `--color-primary`(`shared/styles/groo.css:369-375`)라 흰 글자가 머리 2.58 · 금액 32 / 800 **2.7** · 부제 2.84 · 자산 / 부채 3.09 · 3.17 이다. 앱은 같은 짝(`app/theme/tokens.dart:333-334`)으로 흰 2.38 · 흰 72% 머리 라벨 **1.9** 다. 라이트 끝 #012B68 은 `color-mix(bg-brand 60%, #000)`(`groo.css:353-358` · 앱 `tokens.dart:271-273`) — brand-900 으로. 머리 라벨의 불투명도 0.72(`groo.css:391-394`) · 부제 0.78(`:416-422`)을 걷고, 증감 색(초록 · 빨강 80% 섞기 — `:431-444`, 앱 `heroChgUp` · `heroChgDown` — `app/theme/colors.dart:62-65`)은 흰 글자 + ▲ · ▼ 로.
 - **HR 카드** — shadcn `Card` 가 흰 바탕 위 흰 면(1.0)에 테두리 + `shadow-sm` · 모서리 12 · 여백 24(`shared/ui/shadcn/card.tsx:10 · 23 · 68 · 78`), 대시보드 위젯 틀은 모서리 12 · 테두리 · 그림자 · 머리 12 + 아래 선 · 제목 14 / 600(`features/dashboard/ui/WidgetWrapper.tsx:14-41`). 페이지 바닥을 회색으로, 카드는 `default` 로.
 - **HR 통계 카드 "+-12.5%"** — 음수가 "+-12.5%" 로 찍히고 화살표는 늘 오르는 초록(#00A63E 3.22)이다(`features/vacation-history/ui/VacationRequestStatsItem.tsx:72-73`). "지난 달 대비 -1일 감소" #FB2C36(3.81 · 4.28) · "1일 증가" #00C951(**2.22**)(`VacationStatsItem.tsx:33 · 69-71`). 아이콘 타일 파스텔(#DBEAFE …)이 다크에서도 그대로다. `CardStat` + `Delta` 로 — ▲ 빨강 · ▼ 파랑 + 값 + 글, 타일은 List 의 타일 색(`chart-*-weak`).
 - **Desk 웹 통계 비교 카드** — ▲ 빨강(지출 늘었음) · ▼ 파랑(`pages/stats/ui/StatsPage.tsx` 비교 KPI)으로 이미 방향 색이다. 글을 붙이고 `Delta` 로 맞춘다. 쓰는 곳이 없는 `shared/ui/hero-stat-card.tsx`(D29)는 걷는다.

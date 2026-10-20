@@ -595,9 +595,9 @@ const PRICES = [
 
 // 사람 — Avatar 42 + 이름 · 이메일(두 줄 칸이 하나라도 있으면 모든 줄이 72)
 const PEOPLE = [
-  { name: "김하늘", email: "haneul.kim@porest.kr", department: "개발팀", days: "12.5일", active: true },
-  { name: "박서연", email: "seoyeon.park@porest.kr", department: "인사팀", days: "0.5일", active: true },
-  { name: "이도윤", email: "doyun.lee@porest.kr", department: "디자인팀", days: "3일", active: false },
+  { name: "김하늘", email: "haneul.kim@groo.kr", department: "개발팀", days: "12.5일", active: true },
+  { name: "박서연", email: "seoyeon.park@groo.kr", department: "인사팀", days: "0.5일", active: true },
+  { name: "이도윤", email: "doyun.lee@groo.kr", department: "디자인팀", days: "3일", active: false },
 ];
 
 // ── 예제 ──────────────────────────────────────────────────────────────────

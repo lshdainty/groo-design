@@ -3,7 +3,7 @@
  * 각 예제 = { title, description, jsx, render() }. 앞의 셋(수입 · 지출 추이 — 이중 축 · 카테고리 도넛 — 목록 범례 · 표로 보기 · 비었음 · 실패)은
  * 차례 · 제목 · 코드가 specs/components/chart.md 의 "코드" 절과 같고, 뒤의 둘(툴팁 — 오늘을 짚은 순간 · 열지도)은 md 의 툴팁 · 열지도를 코드로 더 보인다.
  * SEED 에는 차트 컴포넌트도 차트 색도 없다 — 이중 축 · 계열 색 눈금 · 가로 격자 · 세로 점선 가리킴 · "■ 라벨 값" 툴팁 · 위 지표 타일은 SEED Layout 의
- * 대시보드 그림을, 색 배정 · 범례 · 열지도 · 빈 · 실패 · 접근성은 porest 가 정했다(2026-10-08). 옛 예제(shadcn ChartContainer · 16:9 · 아래 점 범례 ·
+ * 대시보드 그림을, 색 배정 · 범례 · 열지도 · 빈 · 실패 · 접근성은 groo 가 정했다(2026-10-08). 옛 예제(shadcn ChartContainer · 16:9 · 아래 점 범례 ·
  * 테두리 툴팁)를 대신한다.
  *
  * CHART_ORDER · DOT_BG · SUBTLE_BG · MINUS · chartGridProps · ACTIVE_DOT · DRAW · CHART_ROOT · TOOLTIP_SURFACE · LEGEND_TILE · LEGEND_TILE_HIDDEN · LEGEND_ROW ·

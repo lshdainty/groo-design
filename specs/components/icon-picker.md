@@ -2,7 +2,7 @@
 
 > 카테고리 · 저축 목표에 붙일 아이콘을 고르는 칸 — [Input Button](input-button.md) 이 고른 세트(148개 · 13 묶음)의 격자를 시트(1280 미만) · 팝오버(1280 이상)로 열고, 한국어 이름 · 찾는 말로 찾는다. 고른 아이콘은 [List](list.md) 의 카테고리 타일(40 · 아이콘 20)에 그린다.
 
-SEED 에는 아이콘을 고르는 부품이 없다 — SEED 팀이 만든 아이콘 격자는 문서 사이트의 Icon Library(칸 ≈ 60 · 사이 16 · 아이콘 24, 칸마다 Tab)뿐이고 제품 부품이 아니다. 원칙은 Iconography 의 "당근의 모노크롬, 멀티컬러 아이콘은 총 300여개 … 가능한 현재 제작된 범위 내에서 사용하는 것을 권장" 과 "24px 크기에서는 44px 이상의 여백을 권장" 이다(당근 SEED, Apache-2.0). porest 는 lucide 전체(2,007)를 열지 않고 카테고리용 세트를 묶음으로 두고, 칸 · 고른 표시 · 키보드 · 한국어 찾기를 정했다(2026-10-09 사용자 결정). 옛 Icon Picker 스펙(40 정사각 트리거 · 팝오버 320 · 8열 × 32 · 영어 이름 찾기 · 고른 칸 브랜드 채움)을 대신한다.
+SEED 에는 아이콘을 고르는 부품이 없다 — SEED 팀이 만든 아이콘 격자는 문서 사이트의 Icon Library(칸 ≈ 60 · 사이 16 · 아이콘 24, 칸마다 Tab)뿐이고 제품 부품이 아니다. 원칙은 Iconography 의 "당근의 모노크롬, 멀티컬러 아이콘은 총 300여개 … 가능한 현재 제작된 범위 내에서 사용하는 것을 권장" 과 "24px 크기에서는 44px 이상의 여백을 권장" 이다(당근 SEED, Apache-2.0). groo 는 lucide 전체(2,007)를 열지 않고 카테고리용 세트를 묶음으로 두고, 칸 · 고른 표시 · 키보드 · 한국어 찾기를 정했다(2026-10-09 사용자 결정). 옛 Icon Picker 스펙(40 정사각 트리거 · 팝오버 320 · 8열 × 32 · 영어 이름 찾기 · 고른 칸 브랜드 채움)을 대신한다.
 
 수치 원본은 [`icon-picker.yaml`](icon-picker.yaml)이고, 아이콘 세트는 [`category-icons.yaml`](category-icons.yaml)(148개 · 13 묶음 — 이름 · 찾는 말)이다. 트리거 · 시트 · 팝오버 · 찾기 칸의 나머지 값은 각 스펙이 원본이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -251,10 +251,10 @@ searchCategoryIcons("월세").map((it) => it.name) // ["집"]
 
 ## SEED 와 다른 점
 
-- **porest 가 정한 컴포넌트다** — SEED 에는 아이콘 고르기 부품 · 화면이 없다(카테고리를 고르는 SEED 예는 글자를 치는 시트다). 세트를 두는 것은 SEED Iconography 의 "현재 제작된 범위 내에서" 를 따랐다.
+- **groo 가 정한 컴포넌트다** — SEED 에는 아이콘 고르기 부품 · 화면이 없다(카테고리를 고르는 SEED 예는 글자를 치는 시트다). 세트를 두는 것은 SEED Iconography 의 "현재 제작된 범위 내에서" 를 따랐다.
 - **칸 48 · 고른 칸 안쪽 2px 짙은 테두리** — SEED 문서 사이트의 Icon Library 는 칸 ≈ 60 · 사이 16 · 1px 테두리이고 고른 칸을 `bg.brand-weak` 틴트(흰 바탕과 1.10:1)로만 보인다. 아이콘 24 는 같다.
 - **2차원 화살표 · 격자에 Tab 하나** — SEED 문서 사이트 격자는 칸마다 Tab(652개)이고 화살표가 없다.
-- **한국어 이름 · 찾는 말** — SEED Icon Library 도 이름 · 키워드(한글 포함)로 찾는다. porest 는 칸의 이름까지 한국어다(SEED 는 `icon_a_uppercase_outline_fill` 같은 이름).
+- **한국어 이름 · 찾는 말** — SEED Icon Library 도 이름 · 키워드(한글 포함)로 찾는다. groo 는 칸의 이름까지 한국어다(SEED 는 `icon_a_uppercase_outline_fill` 같은 이름).
 - **결과 수를 알린다** — SEED Icon Library 는 설명 글("`{검색어}`로 검색한 결과입니다.")만 바꾼다.
 
 ## Migration notes
@@ -280,7 +280,7 @@ searchCategoryIcons("월세").map((it) => it.name) // ["집"]
 - **트리거** — 웹은 Field 의 `[&>*]:w-full`(`shared/ui/field.tsx:60`) 때문에 폭 전체 × 40 에 아이콘 18 만 있고 바탕이 `bg-page`(대화상자와 1.08)다. 앱은 40 정사각 · `isButton` 0. Input Button 으로.
 - **격자 · 고른 칸** — 웹 8열 · 칸 32 · 아이콘 16 · 처음 120개, 스크롤마다 +120(2,007) · 고른 칸 회색 + 파란 고리, 바닥 10px "전체 2007개 · 스크롤해서 더 보기". 앱 8열 × 41.3 · 1,977개 · 고른 칸 브랜드 옅은 바탕 + 1.5px 테두리. 빈 결과 "검색 결과가 없습니다"(합니다체 — D26).
 - **웹 · 앱이 다른 아이콘 수** — 웹 lucide-react 1.28.0 은 2,007 · 앱은 1,977 이라 웹에만 있는 13개(circle-euro … user-shield)는 앱에서 태그로 떨어지고, 앱 주석은 "1,100+" 다(`p_icon_picker.dart:14`, S7). 세트는 둘 다에 있는 이름만 쓴다.
-- **아이콘이 없을 때 그리기가 다섯** — 빈 칸(`widgets/category-manage/ui/CategoryManager.tsx:781` → `shared/ui/porest/primitives.tsx:76-82` — `?? "tag"` 가 `""` 를 못 잡는다) · 첫 글자(`shared/ui/category-tile.tsx:78`) · 태그 · "?" · "—", 크기 11 ~ 20(D22). List 의 결정(태그 하나 · 20)대로 — `findCategoryIcon` 이 `null` 이고 저장 값이 비었으면 태그다.
+- **아이콘이 없을 때 그리기가 다섯** — 빈 칸(`widgets/category-manage/ui/CategoryManager.tsx:781` → `shared/ui/groo/primitives.tsx:76-82` — `?? "tag"` 가 `""` 를 못 잡는다) · 첫 글자(`shared/ui/category-tile.tsx:78`) · 태그 · "?" · "—", 크기 11 ~ 20(D22). List 의 결정(태그 하나 · 20)대로 — `findCategoryIcon` 이 `null` 이고 저장 값이 비었으면 태그다.
 
 ### 이전 기록
 

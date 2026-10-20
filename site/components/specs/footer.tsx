@@ -18,7 +18,7 @@ const modeKo = (m: 'light' | 'dark') => (m === 'dark' ? '다크' : '라이트');
 const F = () => ftLook();
 // 그리는 때의 해(빌드 때) — 저작권의 해는 박아 두지 않는다
 const YEAR = new Date().getFullYear();
-const HOME: FtBlocks = { ...FT_HOME, divider: true, copyright: { owner: 'POREST', year: YEAR } };
+const HOME: FtBlocks = { ...FT_HOME, divider: true, copyright: { owner: '그루', year: YEAR } };
 
 // 페이지 바닥 — 본문 끝(회색 글 줄) 아래에 바닥. 바탕은 페이지 바탕(bg-layer-default)
 function PageBottom({ mode = 'auto', width, children, body = true }: { mode?: Mode; width: number; children: ReactNode; body?: boolean }) {
@@ -194,7 +194,7 @@ const Navigation: Fig = ({ caption }) => {
 // ── 안내 영역 ─────────────────────────────────────────────
 const Info: Fig = ({ caption }) => {
   const l = F();
-  const blocks: FtBlocks = { policy: FT_HOME.policy, text: FT_HOME.text, business: FT_PLACEHOLDER.business, contact: FT_PLACEHOLDER.contact, copyright: { owner: 'POREST', year: YEAR }, social: 2 };
+  const blocks: FtBlocks = { policy: FT_HOME.policy, text: FT_HOME.text, business: FT_PLACEHOLDER.business, contact: FT_PLACEHOLDER.contact, copyright: { owner: '그루', year: YEAR }, social: 2 };
   return (
     <Panel caption={caption}>
       <div className="flex flex-col gap-6">
@@ -281,11 +281,11 @@ function LoginStub({ mode = 'auto' }: { mode?: Mode }) {
 }
 const PlacesGuide: Fig = ({ caption }) => {
   const l = F();
-  const small: FtBlocks = { policy: FT_HOME.policy, copyright: { owner: 'POREST', year: YEAR } };
+  const small: FtBlocks = { policy: FT_HOME.policy, copyright: { owner: '그루', year: YEAR } };
   return (
     <Panel caption={caption}>
       <div className="flex flex-col gap-4">
-        <Shot w={1280} strong="porest-home 맨 아래(지금)" cap="7B — 브랜드 · 사이트맵 | 선 | 정책 링크 · 안내 글 · 저작권">
+        <Shot w={1280} strong="groo-home 맨 아래(지금)" cap="7B — 브랜드 · 사이트맵 | 선 | 정책 링크 · 안내 글 · 저작권">
           <PageBottom width={1280}>
             <FooterView look={l} width={1280} blocks={HOME} frozen />
           </PageBottom>
@@ -328,7 +328,7 @@ function FakeSocial({ mode = 'auto' }: { mode?: Mode }) {
 }
 const PlaceholderGuide: Fig = ({ caption }) => {
   const l = F();
-  const base: FtBlocks = { policy: FT_HOME.policy, text: FT_HOME.text, copyright: { owner: 'POREST', year: YEAR } };
+  const base: FtBlocks = { policy: FT_HOME.policy, text: FT_HOME.text, copyright: { owner: '그루', year: YEAR } };
   return (
     <Panel caption={caption}>
       <div className="flex w-full flex-col gap-4 md:flex-row">
@@ -347,10 +347,10 @@ const PlaceholderGuide: Fig = ({ caption }) => {
   );
 };
 const NOW = [
-  ['porest-home', '© POREST'],
-  ['SSO 로그인', 'Copyright © POREST. All Rights Reserved.'],
-  ['HR 문서(VitePress)', '© 2025 POREST. All rights reserved.'],
-  ['Desk 설명서(Docusaurus)', 'POREST Desk 사용자 설명서'],
+  ['groo-home', '© 그루'],
+  ['SSO 로그인', 'Copyright © 그루. All Rights Reserved.'],
+  ['HR 문서(VitePress)', '© 2025 그루. All rights reserved.'],
+  ['Desk 설명서(Docusaurus)', '그루 담다 사용자 설명서'],
 ] as const;
 const CopyrightGuide: Fig = ({ caption }) => {
   const l = F();
@@ -370,7 +370,7 @@ const CopyrightGuide: Fig = ({ caption }) => {
           <div className="w-full max-w-[320px]">{NOW.map(([p, t]) => line(p, t))}</div>
         </Verdict>
         <Verdict ok note={`바꾼 뒤 — "${c.format}" 한 벌. 해는 그리는 때(빌드 · 화면)의 해`}>
-          <div className="w-full max-w-[320px]">{NOW.map(([p]) => line(p, copyrightText(c.format, 'POREST', YEAR)))}</div>
+          <div className="w-full max-w-[320px]">{NOW.map(([p]) => line(p, copyrightText(c.format, '그루', YEAR)))}</div>
         </Verdict>
       </div>
     </Panel>
@@ -409,7 +409,7 @@ const HomeGuide: Fig = ({ caption }) => {
     <Panel caption={caption}>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-6">
-          <Shot w={1280} strong="porest-home · 1280">
+          <Shot w={1280} strong="groo-home · 1280">
             <FooterView look={l} mode="light" width={1280} blocks={HOME} skin={HOME_SKIN} frozen />
           </Shot>
           <Shot w={390} strong="390">

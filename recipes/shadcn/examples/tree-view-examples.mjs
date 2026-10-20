@@ -4,7 +4,7 @@
  * specs/components/tree-view.md 의 "코드" 절과 같고, 마지막(부모 줄을 누르면 — 고르면서 접힌다)은 md 의 "누르기 — 줄 전체" 를 코드로 더 보인다.
  * SEED 에는 나무가 없다 — 키보드 · 역할은 WAI-ARIA APG Treeview(2026-10-10 사용자 결정 8A), 누르는 자리는 줄 전체다(16D — SEED Accordion
  * "터치 영역은 Chevron 아이콘뿐만 아니라 Trigger 전체" 를 나무 줄에 옮겼다, Apache-2.0). 줄의 값은 Side Navigation 항목 · List 누름이다.
- * porest 에 처음 두는 예제다 — DESIGN.md 의 옛 Treeview 절(v73)을 대신한다.
+ * groo 에 처음 두는 예제다 — DESIGN.md 의 옛 Treeview 절(v73)을 대신한다.
  *
  * ROW · ROW_IDLE · ROW_SELECTED · CONTENT · CHEVRON_CELL · CHEVRON · ICON · LABEL 은 recipes/shadcn/components/ui/tree-view.tsx 의 상수와, TREE · ITEM ·
  * ROW_GROUP · GROUP · CHEVRON_OPEN 은 그 파일의 JSX 에 적힌 클래스와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 패널 머리의 ⋮ 는

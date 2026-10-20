@@ -166,7 +166,7 @@ const Ratio: Fig = ({ caption }) => {
               <span className="tabular-nums">
                 {w} × {num1(w / l.ratios[r].value)}
               </span>
-              <span>{r === 'card' ? 'porest — ISO 카드' : RATIO_KO[r]}</span>
+              <span>{r === 'card' ? 'groo — ISO 카드' : RATIO_KO[r]}</span>
             </span>
           </div>
         ))}

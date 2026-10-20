@@ -2,13 +2,13 @@
  * shadcn Resizable 예제 — docs site components/resizable.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 둘(HR 관리 — 부서 나무 | 조직도 · HR 대시보드 — 위젯 ⋮ 의 크기)은 차례 · 제목 · 코드가
  * specs/components/resizable.md 의 "코드" 절과 같고, 뒤의 둘(목록 폭 20 · 40 · 손잡이 상태, 모서리 손잡이 · 자리표시)은 md 의 Properties 를 코드로 더 보인다.
- * SEED 에는 Resizable 이 없다(모바일 앱 중심) — 손잡이 · 범위 · 키보드 · 기억 · 위젯 크기는 porest 가 정했고(2026-10-10 사용자 결정 12B · 13A),
+ * SEED 에는 Resizable 이 없다(모바일 앱 중심) — 손잡이 · 범위 · 키보드 · 기억 · 위젯 크기는 groo 가 정했고(2026-10-10 사용자 결정 12B · 13A),
  * 키보드는 WAI-ARIA APG Window Splitter 다. 옛 예제(가로 · 세로 · 손잡이 상자 12 × 16 · 인라인 style)를 대신한다.
  *
  * LINE · SEPARATOR · GRIP 은 recipes/shadcn/components/ui/resizable.tsx 의 상수와, GROUP · PANEL_LIST · PANEL_FILL · WIDGET_HANDLE · WIDGET_MARK 는
  * 그 파일의 JSX 에 적힌 클래스와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 위젯 ⋮ 와 "크기" 메뉴는 menu.tsx · button.tsx 의 값을
  * 옮겨 썼다 — MENU_* · BUTTON_* 는 menu-examples.mjs 의 것과 같다(이 파일이 쓰는 변형 · 크기만). 끄는 동안의 자리표시 · 따라오는 위젯의 모양은
- * styles/porest-shadcn-bridge.css 가 react-grid-layout 의 클래스(.react-grid-placeholder · .resizing)에 건다 — 사이트는 그 CSS 를 함께 싣는다.
+ * styles/groo-shadcn-bridge.css 가 react-grid-layout 의 클래스(.react-grid-placeholder · .resizing)에 건다 — 사이트는 그 CSS 를 함께 싣는다.
  * 규칙은 specs/components/resizable.md, 수치 원본은 specs/components/resizable.yaml.
  *
  * Preview 는 정적 HTML 이다 — 페이지의 Tailwind v4 browser CDN 이 클래스를 utility 로 만든다.

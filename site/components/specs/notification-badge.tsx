@@ -404,11 +404,11 @@ const ColorGuide: Fig = ({ caption }) => (
       <Verdict ok note="브랜드 색 — Desk 파랑 · HR 초록. 알림은 오류가 아니다">
         <W w={280}>
           <div className="flex flex-col gap-2">
-            <AppBar title="porest desk">
+            <AppBar title="groo desk">
               <Bell />
               <Bell notif="large" count={3} />
             </AppBar>
-            <AppBar title="porest hr" brand="hr">
+            <AppBar title="groo hr" brand="hr">
               <Bell brand="hr" />
               <Bell brand="hr" notif="large" count={3} />
             </AppBar>
@@ -418,7 +418,7 @@ const ColorGuide: Fig = ({ caption }) => (
       <Verdict ok={false} note="빨간 점 · 숫자 — 오류 · 넘침 표시와 같은 색이 된다">
         <W w={280}>
           <div className="flex flex-col gap-2">
-            <AppBar title="porest desk">
+            <AppBar title="groo desk">
               <BarButton>
                 <span className="relative inline-flex">
                   <DIcon name="bell" size={24} color={tone('fg-neutral')} />

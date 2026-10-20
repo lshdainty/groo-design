@@ -67,11 +67,11 @@ const touchTargets = parseTouchTargets(content);
 // 옛 클래스에 닿지 않는다. var 로 적으면 클래스에도 var(--shadow-s3) 가 박혀 다크 블록이 바꾼 s3 를 따라간다
 // (2026-10-16 사용자 결정 — 기초 웹 01-003 A). 별칭의 값이 가리키는 새 이름과 다르면 별칭이 아니므로 멈춘다.
 const SHADOW_ALIAS = { "shadow-sm": "shadow-s1", "shadow-md": "shadow-s2", "shadow-lg": "shadow-s3", "shadow-xl": "shadow-s4" };
-// 새 이름(shadow-s1 ~ s4)도 같은 이유로 값 대신 var(--porest-shadow-sN) 으로 적고, 값은 @theme 밖 :root 의
-// --porest-shadow-sN 에 둔다 — 다크 블록이 그 값을 바꾸면 .shadow-s3 · shadow-lg · var(--shadow-s3) 가 모두 따라간다
+// 새 이름(shadow-s1 ~ s4)도 같은 이유로 값 대신 var(--groo-shadow-sN) 으로 적고, 값은 @theme 밖 :root 의
+// --groo-shadow-sN 에 둔다 — 다크 블록이 그 값을 바꾸면 .shadow-s3 · shadow-lg · var(--shadow-s3) 가 모두 따라간다
 // (2026-10-17 사용자 결정 — 01-003 A 를 새 이름에도). -dark 짝(--shadow-s3-dark)은 값 그대로 둔다.
 const SHADOW_HOLD = /^shadow-s\d+$/;
-const holdOf = (name) => (SHADOW_HOLD.test(name) && `${name}-dark` in shadows ? `porest-${name}` : null);
+const holdOf = (name) => (SHADOW_HOLD.test(name) && `${name}-dark` in shadows ? `groo-${name}` : null);
 const shadowAliasOf = (name) => {
   const dark = name.endsWith("-dark");
   const target = SHADOW_ALIAS[dark ? name.slice(0, -"-dark".length) : name];
@@ -223,7 +223,7 @@ for (const table of [shadows, gradients]) {
     if (name.endsWith("-dark") || !(`${name}-dark` in table)) continue;
     // 옛 그림자 이름은 var(--shadow-sN) 이라 s1 ~ s4 를 바꾸면 따라온다 — 따로 다크 값을 적지 않는다
     if (table === shadows && shadowAliasOf(name)) continue;
-    // 새 그림자 이름은 값을 든 --porest-shadow-sN 을 바꾼다
+    // 새 그림자 이름은 값을 든 --groo-shadow-sN 을 바꾼다
     const target = table === shadows && holdOf(name) ? holdOf(name) : name;
     darkDecls.push(`  --${target}: ${table[`${name}-dark`]};`);
   }

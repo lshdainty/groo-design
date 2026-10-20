@@ -11,7 +11,7 @@
 #
 # SEED 와 다른 자리(color-swatch.md 의 "SEED 와 다른 점")
 #   - SEED 에는 색 고르기 부품이 없다 — "색상 선택" 은 글자 칩 · 색 점 12 + 이름(Wheel Picker 예)뿐이다. 칸 · 고리 · 2차원 화살표 ·
-#     지금 색 칸 · 새 항목의 첫 색은 porest 가 정했다. 색 이름을 칸마다 두는 것은 SEED Wheel Picker 예(항목마다 ariaLabel)와 같다.
+#     지금 색 칸 · 새 항목의 첫 색은 groo 가 정했다. 색 이름을 칸마다 두는 것은 SEED Wheel Picker 예(항목마다 ariaLabel)와 같다.
 
 name: Color Swatch
 
@@ -73,7 +73,7 @@ rules:
         touchTarget: { value: 44 × 44, note: "보이는 40 둘레로 2 씩 — 칸 사이 12 라 겹치지 않는다. AA ✓ · AAA ✓" }
         cursor: pointer
         name: { value: 색 이름, note: "\"빨강\" — 라디오의 이름. \"색상 N\" · hex 를 이름으로 두지 않는다" }
-        tooltip: { value: 색 이름, note: "마우스를 올리면 porest Tooltip 으로 같은 이름(네이티브 title 은 쓰지 않는다) — 색으로 가리기 어려운 사람도 이름을 본다. Icon Picker 의 칸 툴팁과 같다. 앱은 툴팁을 칸의 의미 노드 안에 두거나 의미에서 뺀다 — 칸 밖이면 첫 칸의 색 이름이 묶음 이름에 붙는다(2026-10-17 사용자 승인 — 03B-004b)" }
+        tooltip: { value: 색 이름, note: "마우스를 올리면 groo Tooltip 으로 같은 이름(네이티브 title 은 쓰지 않는다) — 색으로 가리기 어려운 사람도 이름을 본다. Icon Picker 의 칸 툴팁과 같다. 앱은 툴팁을 칸의 의미 노드 안에 두거나 의미에서 뺀다 — 칸 밖이면 첫 칸의 색 이름이 묶음 이름에 붙는다(2026-10-17 사용자 승인 — 03B-004b)" }
       check:
         size: { value: 16px, note: "lucide check" }
         strokeWidth: { value: 2.5px, note: "v106 — 선택은 선 2.5" }

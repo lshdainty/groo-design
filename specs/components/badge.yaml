@@ -9,8 +9,8 @@
 #
 # SEED 와 다른 자리(badge.md 의 "SEED 와 다른 점")
 #   - neutral solid 는 bg-neutral-inverted + fg-neutral-inverted(SEED 는 palette gray-800 + fg.on-neutral-solid) — 역할 색만 부른다.
-#   - warning solid 는 주황(bg-warning-solid) + 흰 글자(SEED 는 노랑 + 검정 81.6%) — porest 의 주의 색은 주황이다(v108). 5.06 · 5.79:1.
-#   - neutral outline 테두리는 stroke-neutral-weak(SEED stroke.neutral-muted 는 투명도가 있는 색 — porest 에 없다).
+#   - warning solid 는 주황(bg-warning-solid) + 흰 글자(SEED 는 노랑 + 검정 81.6%) — groo 의 주의 색은 주황이다(v108). 5.06 · 5.79:1.
+#   - neutral outline 테두리는 stroke-neutral-weak(SEED stroke.neutral-muted 는 투명도가 있는 색 — groo 에 없다).
 #   - 의미 색 outline 테두리 stroke-*-weak 의 다크는 팔레트 400(SEED 300) — v117.
 #   - 기본값은 weak · neutral · medium(SEED React 는 solid · neutral · medium) — 반복 목록 · 분류는 weak 가 기본이라는 SEED 문서를 따른다.
 #   - Action(정보 아이콘 버튼, SEED React 3)은 두지 않는다 — 배지 안에서 따로 눌리는 것이 생기고 누르는 영역이 12 · 14 다. 설명은 옆의 Help Bubble.
@@ -134,7 +134,7 @@ rules:
       root: { background: $color-bg-positive-solid, foreground: { value: $color-static-white, note: "5.07 · 5.79" } }
   - when: { variant: solid, tone: warning }
     enabled:
-      root: { background: { value: $color-bg-warning-solid, note: "주황 — SEED 의 노랑 + 검정 글자가 아니다(porest 주의 색은 주황, Page Banner 와 같다)" }, foreground: { value: $color-static-white, note: "5.06 · 5.79" } }
+      root: { background: { value: $color-bg-warning-solid, note: "주황 — SEED 의 노랑 + 검정 글자가 아니다(groo 주의 색은 주황, Page Banner 와 같다)" }, foreground: { value: $color-static-white, note: "5.06 · 5.79" } }
   - when: { variant: solid, tone: critical }
     enabled:
       root: { background: $color-bg-critical-solid, foreground: { value: $color-static-white, note: "5.06 · 5.77" } }

@@ -77,7 +77,7 @@ const Hero: Fig = ({ caption }) => (
         </div>
       </Phone>
       </div>
-      <WebWindow mode="light" w={600} h={420} url="hr.porest.app">
+      <WebWindow mode="light" w={600} h={420} url="hr.groo.app">
         <WebDialog
           mode="light"
           title="휴가 신청"
@@ -404,7 +404,7 @@ const ExStates: Fig = () => {
       <div className="flex flex-col" style={{ gap: lk.field.form.gapY }}>
         <TfLiveField field={lk.field} input={lk.input} label="이름" invalid errorMessage="이름을 입력해주세요." />
         <TfLiveField field={lk.field} input={lk.input} label="계좌" inputProps={{ disabled: true, defaultValue: '국민 123-45-6789' }} />
-        <TfLiveField field={lk.field} input={lk.input} label="아이디" inputProps={{ readOnly: true, defaultValue: 'porest' }} />
+        <TfLiveField field={lk.field} input={lk.input} label="아이디" inputProps={{ readOnly: true, defaultValue: 'groo' }} />
       </div>
     </Live>
   );

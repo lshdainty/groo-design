@@ -2,7 +2,7 @@
 
 > 화면 안, 그 기능 · 내용 가까이에 늘 보이는 안내 상자 — 팁 · 제약 · 주의, 그리고 그 자리에서 난 오류(저장 실패). 페이지 전체의 상태는 [Page Banner](page-banner.md), 잠깐 알릴 결과는 [Snackbar](snackbar.md), 눌러서 여는 도움말은 [Help Bubble](help-bubble.md) 이다.
 
-구조는 당근 [SEED Callout](https://seed-design.io/react/components/callout)(Apache-2.0)을 따른다 — 옅은 톤 바탕 · 아이콘 · 제목 · 본문 · 링크가 한 문단, 상호작용 셋(보이기 · 전체 누르기 · 닫기). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). 옛 Alert(왼쪽 4px 막대) 스펙을 대신한다 — "Alert" 라는 이름은 모달([Alert Dialog](alert-dialog.md))에만 쓴다.
+구조는 당근 [SEED Callout](https://seed-design.io/react/components/callout)(Apache-2.0)을 따른다 — 옅은 톤 바탕 · 아이콘 · 제목 · 본문 · 링크가 한 문단, 상호작용 셋(보이기 · 전체 누르기 · 닫기). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). 옛 Alert(왼쪽 4px 막대) 스펙을 대신한다 — "Alert" 라는 이름은 모달([Alert Dialog](alert-dialog.md))에만 쓴다.
 
 수치 원본은 [`callout.yaml`](callout.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -181,7 +181,7 @@ import { Callout } from "@/components/ui/callout"
 
 ## SEED 와 다른 점
 
-- **톤은 다섯** — magic(AI)은 porest 에 AI 기능이 없어 두지 않는다.
+- **톤은 다섯** — magic(AI)은 groo 에 AI 기능이 없어 두지 않는다.
 - **아이콘은 lucide 선 아이콘**(v106) — SEED 는 채운 아이콘을 권한다.
 - **나중에 나타나는 경고 · 위험은 `role="alert"`** — SEED 는 역할이 없어 알리지 않는다.
 - **버튼은 모두 `type="button"`** — SEED 링크 · 닫기에는 없어 폼 안에서 제출된다.

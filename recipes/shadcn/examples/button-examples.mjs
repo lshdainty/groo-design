@@ -50,7 +50,7 @@ const SIZE = {
   xsmall: "h-8 rounded-full [--press-basis:32] [--progress-size:14px]",
   small: "h-9 rounded-r2 [--press-basis:36] [--progress-size:14px]",
   medium: "h-10 rounded-r2 [--press-basis:40] [--progress-size:16px]",
-  // SEED large 는 52 — porest 는 48(button.md "SEED 와 다른 점")
+  // SEED large 는 52 — groo 는 48(button.md "SEED 와 다른 점")
   large: "h-12 rounded-r3 [--press-basis:48] [--progress-size:18px]",
 };
 
@@ -90,7 +90,7 @@ const COMPOUND = [
   { variant: "ghost", ghostColor: "neutralSubtle", className: "text-fg-neutral-subtle" },
   { variant: "ghost", ghostColor: "brand", className: "text-fg-brand" },
   { variant: "ghost", ghostColor: "critical", className: "text-fg-critical" },
-  // flush ghost 는 텍스트 버튼 — 배경 없이 글자색으로만 반응한다(button.md "porest 에만 있는 것")
+  // flush ghost 는 텍스트 버튼 — 배경 없이 글자색으로만 반응한다(button.md "groo 에만 있는 것")
   {
     variant: "ghost",
     flush: ["left", "right"],
@@ -202,23 +202,23 @@ const PC_TONE = {
     "[--pc-track:var(--progress-track,color-mix(in_srgb,currentColor_30%,transparent))] [--pc-range:var(--progress-range,currentColor)]",
 };
 const PC_ROOT = "inline-block shrink-0 overflow-visible align-middle";
-const PC_SPIN = "animate-[porest-progress-circle-rotate_1200ms_cubic-bezier(0.35,0.25,0.65,0.75)_infinite] motion-reduce:animate-none";
+const PC_SPIN = "animate-[groo-progress-circle-rotate_1200ms_cubic-bezier(0.35,0.25,0.65,0.75)_infinite] motion-reduce:animate-none";
 const PC_CIRCLE =
   "fill-none [cx:calc(var(--pc-size)/2)] [cy:calc(var(--pc-size)/2)] [r:calc(var(--pc-size)/2_-_var(--pc-thickness)/2)] [stroke-width:var(--pc-thickness)]";
 const PC_TRACK = `${PC_CIRCLE} [stroke:var(--pc-track)]`;
 const PC_RANGE = `${PC_CIRCLE} [stroke:var(--pc-range)] [stroke-linecap:round] [transform-box:fill-box] [transform-origin:center] [transform:rotate(-90deg)]`;
 const PC_RANGE_INDETERMINATE = [
-  "animate-[porest-progress-circle-head_1200ms_cubic-bezier(0.35,0,0.65,1)_infinite,porest-progress-circle-tail_1200ms_cubic-bezier(0.35,0,0.65,0.6)_infinite]",
+  "animate-[groo-progress-circle-head_1200ms_cubic-bezier(0.35,0,0.65,1)_infinite,groo-progress-circle-tail_1200ms_cubic-bezier(0.35,0,0.65,0.6)_infinite]",
   "motion-reduce:animate-none motion-reduce:[stroke-dasharray:75_200]",
 ].join(" ");
 const PC_KEYFRAMES = [
-  "@keyframes porest-progress-circle-rotate { 0% { transform: rotate(0deg) } 100% { transform: rotate(360deg) } }",
-  "@keyframes porest-progress-circle-head { 0% { stroke-dasharray: 0 200 } 75%, 100% { stroke-dasharray: 100 200 } }",
-  "@keyframes porest-progress-circle-tail { 0%, 33.33% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: -100 } }",
+  "@keyframes groo-progress-circle-rotate { 0% { transform: rotate(0deg) } 100% { transform: rotate(360deg) } }",
+  "@keyframes groo-progress-circle-head { 0% { stroke-dasharray: 0 200 } 75%, 100% { stroke-dasharray: 100 200 } }",
+  "@keyframes groo-progress-circle-tail { 0%, 33.33% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: -100 } }",
 ].join("\n");
 
 // 레시피는 키프레임을 <style href precedence>(React 19 — 문서 머리에 한 번)로 싣는다 — 정적 HTML 은 로딩 버튼이 있는 예제마다 한 번 둔다
-const PC_STYLE = `<style data-href="porest-progress-circle" data-precedence="porest">${PC_KEYFRAMES}</style>`;
+const PC_STYLE = `<style data-href="groo-progress-circle" data-precedence="groo">${PC_KEYFRAMES}</style>`;
 
 // button.tsx 의 로딩 원 — <ProgressCircle size="inherit" tone="inherit" aria-hidden className="absolute left-1/2 top-1/2 …" />.
 // 겹치는 클래스가 없어 cn() 은 이어 붙이기와 같다. 상자 크기는 레시피처럼 style 로 — [&_svg]:size-* 가 원을 덮지 않는다

@@ -7,10 +7,10 @@
 # 목록의 모양은 Select 목록(select.yaml 의 medium)과 같은 계열이다.
 #
 # SEED 와 다른 자리(menu.md 의 "SEED 와 다른 점")
-#   - 크기는 small 하나 — SEED medium 240 은 터치용인데, porest 는 1280 미만에서 Menu Sheet 를 쓴다(시트 · 대화상자 결정 1).
+#   - 크기는 small 하나 — SEED medium 240 은 터치용인데, groo 는 1280 미만에서 Menu Sheet 를 쓴다(시트 · 대화상자 결정 1).
 #   - 호버 · 누름 바탕은 불투명한 bg-layer-floating-pressed(SEED bg.transparent-pressed 는 투명도가 있다 — v102).
 #   - 묶음 사이 선은 불투명한 stroke-neutral-subtle(SEED stroke.neutral-muted).
-#   - 그림자는 porest s3(v105), 아이콘은 lucide(v106).
+#   - 그림자는 groo s3(v105), 아이콘은 lucide(v106).
 #   - z-index: specs/z-index.md 의 L3(z-floating 200) — SEED 99999 는 Alert Dialog 위로 뜬다.
 
 name: Menu

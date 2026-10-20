@@ -42,7 +42,7 @@ type Fig = (p: { caption?: string }) => ReactNode;
 const bl = (brand: 'desk' | 'hr' = 'desk') => dk(brand).badge;
 const px = (v: string) => parseFloat(v);
 const TONE_KO: Record<BadgeTone, string> = { neutral: '중립', brand: '브랜드', informative: '안내', positive: '긍정', warning: '주의', critical: '위험' };
-// 톤마다 badge.md 의 porest 예
+// 톤마다 badge.md 의 groo 예
 const TONE_EX: Record<BadgeTone, string> = { neutral: '예정', brand: 'Pro', informative: '읽기 전용', positive: '달성', warning: '만료 임박', critical: '연체' };
 // 같은 톤이면 weak → outline → solid 순으로 강해진다(badge.md)
 const STRENGTH: BadgeVariant[] = ['weak', 'outline', 'solid'];

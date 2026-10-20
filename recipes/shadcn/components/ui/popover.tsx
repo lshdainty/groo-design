@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Porest Popover — 구조는 SEED Popover(2026-10-02). 수치 원본은 specs/components/popover.yaml.
+ * Groo Popover — 구조는 SEED Popover(2026-10-02). 수치 원본은 specs/components/popover.yaml.
  *
  *   Popover           트리거에 붙어 떠 있는 비모달 표면(Radix Popover) — open · defaultOpen · onOpenChange
  *   PopoverTrigger    여는 버튼 — aria-haspopup="dialog" · aria-expanded, 열린 동안 aria-controls

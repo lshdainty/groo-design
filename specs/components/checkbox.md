@@ -2,7 +2,7 @@
 
 > 사용자가 하나 이상의 옵션을 고르게 하는 컴포넌트. 여러 항목 가운데 여러 개를 고르거나, 저장하기 전에 켜고 끌 것을 모아 둘 때 쓴다.
 
-구조는 당근 [SEED Checkbox](https://seed-design.io/components/checkbox)(Apache-2.0)를 따른다 — 칸(Checkmark) · 칸 + 라벨(Checkbox) · 묶음(Checkbox Group). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-09-30 사용자 결정).
+구조는 당근 [SEED Checkbox](https://seed-design.io/components/checkbox)(Apache-2.0)를 따른다 — 칸(Checkmark) · 칸 + 라벨(Checkbox) · 묶음(Checkbox Group). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-09-30 사용자 결정).
 
 수치 원본은 [`checkbox.yaml`](checkbox.yaml) 이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -277,10 +277,10 @@ import { Checkmark } from "@/components/ui/checkbox"
 
 ## SEED 와 다른 점
 
-- **선택 안 된 칸의 테두리는 `stroke-neutral-solid`**(3:1 이상, v109). SEED 는 옅은 선(stroke.neutral-weak)이지만 porest 는 칸을 선으로 알아봐야 한다(1.4.11).
+- **선택 안 된 칸의 테두리는 `stroke-neutral-solid`**(3:1 이상, v109). SEED 는 옅은 선(stroke.neutral-weak)이지만 groo 는 칸을 선으로 알아봐야 한다(1.4.11).
 - 투명한 누름(SEED bg.transparent-pressed) · 비활성 테두리(stroke.neutral-muted)는 불투명한 가장 가까운 역할(`bg-layer-default-pressed` · `stroke-neutral-weak`)로 — 8자리 hex 를 lint 가 거부한다.
 - Ghost 의 누름 바탕(SEED palette.gray-200 · carrot-200)은 역할 색 `bg-neutral-weak` · `bg-brand-weak-pressed` 로.
-- **묶음 줄 사이는 12**(사용자 결정) — SEED 는 4 다. 4 면 이웃 줄의 누르는 영역(44)과 겹쳐 한 줄이 실제로 36 · 40 만 받는다. porest 는 기초에서 44 를 반드시로 정했다(Inclusive Design).
+- **묶음 줄 사이는 12**(사용자 결정) — SEED 는 4 다. 4 면 이웃 줄의 누르는 영역(44)과 겹쳐 한 줄이 실제로 36 · 40 만 받는다. groo 는 기초에서 44 를 반드시로 정했다(Inclusive Design).
 - 웹의 `hovered` · `focused` 를 더한다(v106). `focused` 는 앱의 키보드 포커스에도 그린다(2026-10-08).
 - 아이콘은 lucide(선 3) — SEED 는 채운 체크 아이콘.
 
@@ -296,7 +296,7 @@ import { Checkmark } from "@/components/ui/checkbox"
 
 ### 2026-09-30 — 묶음 줄 사이 12 · 모션 표
 
-Radio 를 옮기다 드러난 것을 Checkbox 에도 맞췄다(porest-design#143 뒤).
+Radio 를 옮기다 드러난 것을 Checkbox 에도 맞췄다(groo-design#143 뒤).
 
 | 옛 | 새 |
 |---|---|

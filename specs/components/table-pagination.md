@@ -2,7 +2,7 @@
 
 > 데이터 표 아래의 쪽 넘김 한 줄 — 한 번에 몇 줄을 볼지("10개 씩 보기")와 지금 범위("11-20 / 총 237개")를 고르고, 이전 · 다음으로 넘긴다. 표가 아닌 목록은 [Pagination](pagination.md), 표는 [Table](table.md) 이다.
 
-구조는 당근 [SEED Table Pagination](https://seed-design.io/components/table-pagination)(Apache-2.0)을 따른다 — "데이터 테이블에서 대량의 데이터를 페이지 단위로 나누고, 페이지 이동과 페이지당 표시 행 수를 제어하는 컴포넌트" 로, 줄 수 고르기(Rows Per Page) · 범위 고르기(Page Range) · 이전 · 다음. 표에서는 번호로 뛰는 일보다 정렬 · 거르기로 찾거나 차례로 훑는 일이 많아 Pagination 과 따로 둔다(SEED). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). porest 에 처음 두는 컴포넌트다 — 옛 Pagination 의 "표 오른쪽 아래" 쓰임을 대신한다.
+구조는 당근 [SEED Table Pagination](https://seed-design.io/components/table-pagination)(Apache-2.0)을 따른다 — "데이터 테이블에서 대량의 데이터를 페이지 단위로 나누고, 페이지 이동과 페이지당 표시 행 수를 제어하는 컴포넌트" 로, 줄 수 고르기(Rows Per Page) · 범위 고르기(Page Range) · 이전 · 다음. 표에서는 번호로 뛰는 일보다 정렬 · 거르기로 찾거나 차례로 훑는 일이 많아 Pagination 과 따로 둔다(SEED). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). groo 에 처음 두는 컴포넌트다 — 옛 Pagination 의 "표 오른쪽 아래" 쓰임을 대신한다.
 
 수치 원본은 [`table-pagination.yaml`](table-pagination.yaml)이다. 고르기 둘은 [Select](select.md) medium, 이전 · 다음은 [Pagination](pagination.md) 의 화살표 칸이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -162,8 +162,8 @@ import { TablePagination } from "@/components/ui/table-pagination"
 
 ## SEED 와 다른 점
 
-- **화살표 칸은 Pagination 과 같은 porest 값** — 불투명 누름 바탕 · 2px 거리 축소 · 세로 44 누르는 영역(v102 · v104 · v106 의 예외).
-- **고르기는 porest Select medium** — 화면 폭과 상관없이 40 이다. Select 의 "1280 미만 large 52" 규칙의 예외다(사용자 결정 2026-10-08 — 줄 한 높이, 52 는 고르지 않았다). 범위 목록의 최대 높이 240 은 SEED 그대로.
+- **화살표 칸은 Pagination 과 같은 groo 값** — 불투명 누름 바탕 · 2px 거리 축소 · 세로 44 누르는 영역(v102 · v104 · v106 의 예외).
+- **고르기는 groo Select medium** — 화면 폭과 상관없이 40 이다. Select 의 "1280 미만 large 52" 규칙의 예외다(사용자 결정 2026-10-08 — 줄 한 높이, 52 는 고르지 않았다). 범위 목록의 최대 높이 240 은 SEED 그대로.
 - **줄이 줄어 범위가 없어지면 마지막 범위로 옮기고, 넘기면 알린다** — SEED 는 `constraint` 로 범위를 맞추고, 결과 안내는 사용처의 몫이다.
 - **막힌 화살표는 `aria-disabled`** — 초점이 그 자리에 남는다. SEED 는 `disabled` 라 끝에 닿으면 초점이 떨어진다.
 - **표 아래 12**(`spacing-component-default`) — SEED 는 간격을 적지 않았다. 12 는 넘김 줄의 위 여백이다 — Table 의 `pagination` 자리는 좌우 24 만 두고 위 여백을 더하지 않아, 자리에 넣어도 표 바로 뒤에 두어도 12 다(2026-10-17 사용자 결정 — [03-D 비교 페이지](https://claude.ai/artifact/7TVGy8o47HBg4R3SefDmf6) 결정 5 B. 두 스펙이 같은 12 를 각자 적어 함께 쓰면 24 였다).
@@ -187,7 +187,7 @@ import { TablePagination } from "@/components/ui/table-pagination"
 
 ### 2026-10-04 — SEED Table Pagination 으로 새로 둔다
 
-사용자가 [화면 틀 · 이동 비교 페이지](https://claude.ai/artifact/B6tsgbw356Kf2Zumvm2v6a)에서 정했다 — 데이터 표는 Table Pagination(10A — 줄 수 10 · 25 · 50 "{n}개 씩 보기" · 범위 고르기 "11-20 / 총 237개" · 목록 최대 높이 240 · 이전 · 다음은 끝에서 막힘 · 표 아래에만 · 한 줄), 칸 40 은 누르는 영역 44 규칙의 예외. 표 아래에 같은 Pagination 을 두던 porest 옛 쓰임(10B)은 고르지 않았다.
+사용자가 [화면 틀 · 이동 비교 페이지](https://claude.ai/artifact/B6tsgbw356Kf2Zumvm2v6a)에서 정했다 — 데이터 표는 Table Pagination(10A — 줄 수 10 · 25 · 50 "{n}개 씩 보기" · 범위 고르기 "11-20 / 총 237개" · 목록 최대 높이 240 · 이전 · 다음은 끝에서 막힘 · 표 아래에만 · 한 줄), 칸 40 은 누르는 영역 44 규칙의 예외. 표 아래에 같은 Pagination 을 두던 groo 옛 쓰임(10B)은 고르지 않았다.
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-04 조사 — HR 은 크로미움에 띄워 쟀다).
 

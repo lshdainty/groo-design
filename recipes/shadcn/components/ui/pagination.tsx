@@ -7,7 +7,7 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
 import { useWaitPhase } from "@/components/ui/skeleton";
 
 /*
- * Porest Pagination — 구조는 SEED Pagination(2026-10-04). 수치 원본은 specs/components/pagination.yaml(넘김 줄) ·
+ * Groo Pagination — 구조는 SEED Pagination(2026-10-04). 수치 원본은 specs/components/pagination.yaml(넘김 줄) ·
  * infinite-list.yaml(폰의 끝없이 불러오기 — 목록 끝 자리). 옛 Pagination(shadcn — 지금 쪽 테두리 · 칸 사이 4 · 이전 · 다음 글자)을 대신한다.
  *
  *   Pagination        데스크톱(768 이상) 목록 아래 가운데의 넘김 줄 — <nav aria-label="페이지 탐색">

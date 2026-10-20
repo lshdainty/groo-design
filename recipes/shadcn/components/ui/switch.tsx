@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Switch — 구조는 SEED Switch(2026-09-30). 수치 원본은 specs/components/switch.yaml.
+ * Groo Switch — 구조는 SEED Switch(2026-09-30). 수치 원본은 specs/components/switch.yaml.
  *
  *   Switchmark  스위치만 — 설정 줄에 끼워 쓴다(누르는 영역은 그 줄 전체가 맡는다, 이름 연결 필수)
  *   Switch      스위치 + 라벨 — 라벨까지 눌리고, 누르는 영역은 44 까지 넓힌다(::before)

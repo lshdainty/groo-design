@@ -10,7 +10,7 @@
 #
 # SEED 와 다른 자리(input-button.md 의 "SEED 와 다른 점")
 #   - 누름 · 호버 바탕은 불투명한 bg-layer-default-pressed(SEED transparent-pressed 는 투명도가 있어 검사기가 받지 않는다 — v102).
-#   - 누르면 콘텐츠를 2px 거리로 준다(SEED rootage 는 scaleScope content 를 적었지만 웹 CSS 에는 없다 — porest 는 rootage 대로, v104).
+#   - 누르면 콘텐츠를 2px 거리로 준다(SEED rootage 는 scaleScope content 를 적었지만 웹 CSS 에는 없다 — groo 는 rootage 대로, v104).
 #   - 아이콘은 lucide 선 아이콘(v106) — 지우기는 circle-x(SEED 는 채운 원).
 
 name: Input Button

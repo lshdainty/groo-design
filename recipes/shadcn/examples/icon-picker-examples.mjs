@@ -1,9 +1,9 @@
 /*
- * Porest Icon Picker 예제 — docs site components/icon-picker.html 에서 Preview + Code 토글로 보인다.
+ * Groo Icon Picker 예제 — docs site components/icon-picker.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 둘(카테고리 — 아이콘 · 이름 찾기 · 세트 밖 아이콘)은 차례 · 제목 · 코드가
  * specs/components/icon-picker.md 의 "코드" 절과 같다. 트리거는 Input Button, 여는 자리는 1280 미만 Bottom Sheet · 이상 Popover 이고, 고를 수 있는 것은
  * 고른 세트(category-icons.yaml — 148개 · 13 묶음)뿐이다(2026-10-09). SEED 에는 아이콘 고르기 부품이 없다 — 세트를 두는 것은 SEED Iconography 의
- * "현재 제작된 범위 내에서" 를 따랐고, 칸 48 · 고른 칸 안쪽 2px · 2차원 화살표 · 한국어 찾기는 porest 가 정했다. 옛 예제(40 정사각 트리거 ·
+ * "현재 제작된 범위 내에서" 를 따랐고, 칸 48 · 고른 칸 안쪽 2px · 2차원 화살표 · 한국어 찾기는 groo 가 정했다. 옛 예제(40 정사각 트리거 ·
  * 팝오버 320 · 8열 × 32 · lucide 전체 · 영어 이름 · "없음")를 대신한다.
  *
  * CELL · GRID · GRID_COLUMNS · GROUP_HEADER · ANNOUNCE_DELAY 는 recipes/shadcn/components/ui/icon-picker.tsx 의 상수와, SEARCH_POPOVER · BODY_POPOVER ·

@@ -34,7 +34,7 @@ export function Pill({ brand = 'desk', tab = 'home', addLabel, items, ...p }: Om
 }
 export function Side({ brand = 'desk', groups, logo, ...p }: Omit<SideNavProps, 'look' | 'bubble' | 'logo' | 'brand' | 'groups'> & { brand?: Brand; groups?: SideGroup[]; logo?: string }) {
   const k = NK(brand);
-  return <SideNav look={k.side} bubble={menuKit(brand).bubble} logo={logo ?? (brand === 'hr' ? 'Porest HR' : 'Porest Desk')} brand={k.tone['bg-brand-solid']} groups={groups ?? (brand === 'hr' ? HR_NAV : DESK_NAV)} {...p} />;
+  return <SideNav look={k.side} bubble={menuKit(brand).bubble} logo={logo ?? (brand === 'hr' ? '그루 이음' : '그루 담다')} brand={k.tone['bg-brand-solid']} groups={groups ?? (brand === 'hr' ? HR_NAV : DESK_NAV)} {...p} />;
 }
 export function SidePanel({ brand = 'desk', ...p }: Omit<SidePanelViewProps, 'look'> & { brand?: Brand }) {
   return <SidePanelView look={NK(brand).panel} {...p} />;
@@ -267,7 +267,7 @@ export function LedgerScreen({ mode = 'auto', h = 600, scale = 0.62, tabSize = '
 // ── 데스크톱 ─────────────────────────────────────────────
 // 브라우저 창 — 실제 px(w × h)로 그린 화면을 s 배로. 창 장식(위 막대)은 줄이지 않는다
 // cw · ch 를 주면 창은 그만큼만 보인다(화면은 w × h 로 짜고 왼쪽 위를 자른다)
-export function Desktop({ mode = 'auto', w, h, s, url = 'desk.porest.app', cw, ch, children }: { mode?: Mode; w: number; h: number; s: number; url?: string; cw?: number; ch?: number; children: ReactNode }) {
+export function Desktop({ mode = 'auto', w, h, s, url = 'desk.groo.app', cw, ch, children }: { mode?: Mode; w: number; h: number; s: number; url?: string; cw?: number; ch?: number; children: ReactNode }) {
   const vw = cw ?? w;
   const vh = ch ?? h;
   return (
@@ -445,7 +445,7 @@ export function DeskDesktop({ mode = 'auto', w = 1280, h = 760, s = 0.45, collap
 // HR 데스크톱 — 머리 없음, 사이드바 지금 항목 + 본문 제목
 export function HrDesktop({ mode = 'auto', w = 1280, h = 640, s = 0.45, collapsed = false, current = 'leave-history', title = '휴가 현황', side, children }: { mode?: Mode; w?: number; h?: number; s?: number; collapsed?: boolean; current?: string; title?: string; side?: ReactNode; children?: ReactNode }) {
   return (
-    <Desktop mode={mode} w={w} h={h} s={s} url="hr.porest.app">
+    <Desktop mode={mode} w={w} h={h} s={s} url="hr.groo.app">
       <Shell mode={mode} brand="hr" side={side ?? <Side brand="hr" mode={mode} current={current} collapsed={collapsed} />}>
         {children ?? <HrLeaveMain mode={mode} title={title} />}
       </Shell>
@@ -483,7 +483,7 @@ export function HrLeavePhone({ mode = 'auto', h = 600, scale = 0.62, overlay, ti
 export function HrDrawer({ mode = 'auto', current = 'leave-history', h = 600, open, groups, fog = true }: { mode?: Mode; current?: string; h?: number; open?: string[]; groups?: SideGroup[]; fog?: boolean }) {
   const k = NK('hr');
   return (
-    <SidePanel brand="hr" mode={mode} side="left" width={PHONE * k.panel.leftRatio} title="Porest HR" fog={fog} safeTop={40}>
+    <SidePanel brand="hr" mode={mode} side="left" width={PHONE * k.panel.leftRatio} title="그루 이음" fog={fog} safeTop={40}>
       <Side brand="hr" mode={mode} drawer current={current} open={open} groups={groups} />
     </SidePanel>
   );

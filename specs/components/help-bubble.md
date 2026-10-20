@@ -2,7 +2,7 @@
 
 > 트리거를 누르면 옆에 뜨는 짙은 도움말 말풍선 — 화면에 늘 두기에는 길고, 몰라도 일은 할 수 있는 설명(규정 · 계산 방법 · 기능 안내). 마우스를 올리면 뜨는 짧은 설명은 같은 모양의 [Tooltip](tooltip.md) 이고, 화면 안에 늘 보여야 하는 안내는 Callout(그 차례에), 버튼 · 입력이 있는 내용은 [Popover](popover.md) 다.
 
-구조는 당근 [SEED Help Bubble](https://seed-design.io/react/components/help-bubble)(Apache-2.0)를 따른다 — 말풍선 · 화살표 · 제목 · 설명 · 닫기 버튼. [Tooltip](tooltip.md) 도 같은 말풍선을 쓴다(SEED 도 두 컴포넌트가 스펙 하나를 쓴다) — 여는 방식만 다르다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
+구조는 당근 [SEED Help Bubble](https://seed-design.io/react/components/help-bubble)(Apache-2.0)를 따른다 — 말풍선 · 화살표 · 제목 · 설명 · 닫기 버튼. [Tooltip](tooltip.md) 도 같은 말풍선을 쓴다(SEED 도 두 컴포넌트가 스펙 하나를 쓴다) — 여는 방식만 다르다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
 수치 원본은 [`help-bubble.yaml`](help-bubble.yaml)이다(Tooltip 과 같은 파일). 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -186,9 +186,9 @@ import { TopNavigationIconButton } from "@/components/ui/top-navigation"
 
 ## SEED 와 다른 점
 
-- **바탕은 porest `bg-neutral-inverted`**(SEED neutral-solid 의 역할 짝) — 다크에서는 밝은 말풍선에 짙은 글자(SEED 와 같은 방향).
+- **바탕은 groo `bg-neutral-inverted`**(SEED neutral-solid 의 역할 짝) — 다크에서는 밝은 말풍선에 짙은 글자(SEED 와 같은 방향).
 - **닫기 버튼의 누르는 영역은 44** — SEED 38(기초의 "누르는 영역 44").
-- **닫기 버튼의 초점 링은 말풍선 글자색** — porest 브랜드 링은 짙은 말풍선 위에서 3:1 에 못 미친다(SEED 링은 파랑이라 닿는다).
+- **닫기 버튼의 초점 링은 말풍선 글자색** — groo 브랜드 링은 짙은 말풍선 위에서 3:1 에 못 미친다(SEED 링은 파랑이라 닿는다).
 - **화면 끝에서 화살표는 트리거 가운데에 남고 말풍선이 16 보다 가장자리에 붙는다**(사용자 결정 2026-10-15) — SEED 는 16 을 지키고 화살표를 옮긴다("조정시 최소 14px").
 - **z-index 는 specs/z-index.md 의 L4**(`z-tooltip` 210) — 팝오버 · 메뉴 안에서 열어도 그 위에 뜬다. SEED 는 포털 없이 99 로 그려 둘레 상자가 자를 수 있다.
 

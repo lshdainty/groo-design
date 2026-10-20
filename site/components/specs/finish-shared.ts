@@ -157,8 +157,8 @@ export type FtLook = {
   breakpoint: number;
   surface: IColor;
 };
-// "© {해} POREST" — 해는 그리는 때의 해
-export const copyrightText = (format: string, owner: string, year: number) => format.replace('{해}', String(year)).replace('POREST', owner);
+// "© {해} 그루" — 해는 그리는 때의 해
+export const copyrightText = (format: string, owner: string, year: number) => format.replace('{해}', String(year)).replace('그루', owner);
 
 // ── Avatar — 사진 바꾸기 자리 ─────────────────────────────
 export type AvEditLook = {
@@ -173,10 +173,10 @@ export type AvEditLook = {
 };
 
 // ── Footer 의 그림 데이터 ──────────────────────────────────
-// porest-home 바닥(7B) — footer.md 코드 절 그대로. 링크 주소는 실제 서비스 주소다(그림 속 링크는 눌러도 떠나지 않는다)
+// groo-home 바닥(7B) — footer.md 코드 절 그대로. 링크 주소는 실제 서비스 주소다(그림 속 링크는 눌러도 떠나지 않는다)
 export type FtLinkData = { label: string; href?: string; external?: boolean; key?: string };
 export const FT_HOME = {
-  brand: { name: 'POREST', description: 'People + Forest. 사람(People)이 모여 숲(Forest)처럼 자라나는 조직 생태계를 설계합니다.' },
+  brand: { name: '그루', description: 'People + Forest. 사람(People)이 모여 숲(Forest)처럼 자라나는 조직 생태계를 설계합니다.' },
   columns: [
     {
       title: '서비스',
@@ -202,8 +202,8 @@ export const FT_PLACEHOLDER = {
   business: [['(상호)', '대표 (이름)', '사업자 등록번호 000-00-00000'], ['(주소)']],
   contact: [['(전화)', '(문의 메일)']],
 };
-// porest-home 의 색 · 글꼴 — 홈은 porest-design 을 따르지 않는다(홈 CLAUDE.md). 짝: fg-neutral → --ink · fg-neutral-muted → --ink2 ·
-// fg-neutral-subtle → --ink3 · stroke-neutral-subtle → --line, 브랜드 글자는 --blue. 값은 porest-home origin/main index.html:10(1f78e02 — #10 에서 브랜드 사이 8 · 사이트맵 링크 올림 --ink3 으로 스펙에 맞췄다) —
+// groo-home 의 색 · 글꼴 — 홈은 groo-design 을 따르지 않는다(홈 CLAUDE.md). 짝: fg-neutral → --ink · fg-neutral-muted → --ink2 ·
+// fg-neutral-subtle → --ink3 · stroke-neutral-subtle → --line, 브랜드 글자는 --blue. 값은 groo-home origin/main index.html:10(1f78e02 — #10 에서 브랜드 사이 8 · 사이트맵 링크 올림 --ink3 으로 스펙에 맞췄다) —
 // --ink3 은 #8B95A1(흰 바탕 3.04)에서 짙게 고친 값이다(사용자 결정 8A — 4.5 이상)
 export const HOME_SKIN = { font: "'Noto Sans KR', -apple-system, 'Apple SD Gothic Neo', sans-serif", ink: '#191F28', ink2: '#4E5968', ink3: '#6B7684', line: '#E5E8EB', brand: '#1B64DA', bg: '#FFFFFF' };
 export const HOME_INK3_BEFORE = '#8B95A1';
@@ -242,7 +242,7 @@ export const AT_REJECT = {
 } as const;
 export type AtRejectCode = keyof typeof AT_REJECT;
 
-// ── HR 역할 — porest-sql hr/data/4. roles.sql 의 넷(설명 원문 그대로) + 관리자가 더한 넷(그림용 — 비교 페이지 10 이 그린 것) ──
+// ── HR 역할 — groo-sql hr/data/4. roles.sql 의 넷(설명 원문 그대로) + 관리자가 더한 넷(그림용 — 비교 페이지 10 이 그린 것) ──
 export const HR_ROLES = [
   { code: 'ADMIN', name: '관리자', description: '관리자 권한으로 시스템 운영에 필요한 전체 권한이 부여되어 있습니다.' },
   { code: 'USER', name: '일반 사용자', description: '일반 사용자 권한으로 시스템 관리에 필요한 권한을 제외한 일반적인 읽기, 쓰기 권한이 부여되어 있습니다.' },

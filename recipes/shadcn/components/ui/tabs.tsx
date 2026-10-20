@@ -7,7 +7,7 @@ import { chipVariants } from "@/components/ui/chip";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Porest Tabs — 구조는 SEED Tabs(2026-10-02). 수치 원본은 specs/components/tabs.yaml(Line) · chip-tabs.yaml(Chip Tabs).
+ * Groo Tabs — 구조는 SEED Tabs(2026-10-02). 수치 원본은 specs/components/tabs.yaml(Line) · chip-tabs.yaml(Chip Tabs).
  *
  *   Tabs                             값을 쥔 묶음(Radix Tabs). ← → 로 옮기면 바로 고르고(자동), 끝에서 처음으로 돈다.
  *                                    막힌 탭은 건너뛴다. Home · End 는 첫 · 마지막 탭(막히지 않은)

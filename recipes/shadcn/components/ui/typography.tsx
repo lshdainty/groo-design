@@ -3,14 +3,14 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Typography (shadcn 베이스 + Porest 디자인 토큰)
+ * Groo Typography (shadcn 베이스 + Groo 디자인 토큰)
  *
  * shadcn/ui의 Typography는 컴포넌트가 아닌 prose 가이드 — 마크다운 렌더링 결과의
- * 표준 클래스 모음. 우리는 Porest typography 토큰을 사용하는 wrapper 컴포넌트를
+ * 표준 클래스 모음. 우리는 Groo typography 토큰을 사용하는 wrapper 컴포넌트를
  * 옵션으로 제공 (선택 사항 — Tailwind utility로 직접 사용해도 됨).
  *
  * - h1/h2/h3/h4/p/blockquote/code/lead/large/small/muted 11종
- * - 모든 요소는 Porest typography 토큰(--text-display-md, --text-body-md 등) 사용
+ * - 모든 요소는 Groo typography 토큰(--text-display-md, --text-body-md 등) 사용
  */
 
 const TypographyH1 = React.forwardRef<

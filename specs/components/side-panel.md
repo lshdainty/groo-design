@@ -2,7 +2,7 @@
 
 > 화면 옆(왼쪽 · 오른쪽)에서 미끄러져 나오는 모달 패널. 지금 쓰는 곳은 HR 폰(768 미만)의 주 메뉴 서랍 하나다 — ☰ 를 누르면 왼쪽에서 나와 [Side Navigation](side-navigation.md) 의 항목을 보인다. 오른쪽 패널(1280 이상의 보조 작업)은 쓰는 곳이 아직 없다. 아래에서 올라오는 모달은 [Bottom Sheet](bottom-sheet.md), 가운데 대화상자는 [Dialog](dialog.md) 다.
 
-구조는 당근 [SEED Side Panel](https://seed-design.io/components/side-panel)(Apache-2.0)을 따른다 — "화면의 측면에서 슬라이드되어 나타나며, 현재 맥락을 유지한 채 상세 정보를 확인하거나 부수적인 작업을 수행하는 레이아웃 컴포넌트" 로, 딤 · 패널 · 머리(제목 · 설명 · 닫기) · 본문 · 바닥, 크기 480 · 720 · 960 · 768 미만 80%, 높이 전체, 모서리 · 그림자 · 선 없음. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). 옛 Sheet 스펙(shadcn — 네 방향 · 75% · 384 · 그림자 · 선)을 대신한다 — 아래는 Bottom Sheet 가 맡고, 위에서 내려오는 패널은 걷었다.
+구조는 당근 [SEED Side Panel](https://seed-design.io/components/side-panel)(Apache-2.0)을 따른다 — "화면의 측면에서 슬라이드되어 나타나며, 현재 맥락을 유지한 채 상세 정보를 확인하거나 부수적인 작업을 수행하는 레이아웃 컴포넌트" 로, 딤 · 패널 · 머리(제목 · 설명 · 닫기) · 본문 · 바닥, 크기 480 · 720 · 960 · 768 미만 80%, 높이 전체, 모서리 · 그림자 · 선 없음. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). 옛 Sheet 스펙(shadcn — 네 방향 · 75% · 384 · 그림자 · 선)을 대신한다 — 아래는 Bottom Sheet 가 맡고, 위에서 내려오는 패널은 걷었다.
 
 수치 원본은 [`side-panel.yaml`](side-panel.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -94,7 +94,7 @@
 
 HR 웹 768 미만의 [Top Navigation](top-navigation.md) ☰ 가 연다.
 
-- 왼쪽 · 화면 폭의 80% · 제목은 서비스 이름("Porest HR").
+- 왼쪽 · 화면 폭의 80% · 제목은 서비스 이름("그루 이음").
 - 본문은 [Side Navigation](side-navigation.md) 의 묶음 · 항목을 펼친 모양 그대로 담는다 — 본문 좌우 16 에 항목(좌우 8)이 들어와 아이콘이 제목과 같은 24 에 선다. 넘칠 수 있어 `scrollFog` 를 건다.
 - 지금 화면의 묶음은 펼쳐진 채 열리고 지금 항목이 보인다.
 - 항목을 누르면 이동하고 서랍이 닫힌다 — 다음 화면의 초점 · 스크롤은 Top Navigation 의 "화면을 옮길 때".
@@ -138,7 +138,7 @@ import { SidePanel, SidePanelBody, SidePanelContent } from "@/components/ui/side
 import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNavigationSubItem } from "@/components/ui/side-navigation"
 
 <SidePanel open={menuOpen} onOpenChange={setMenuOpen}>
-  <SidePanelContent side="left" title="Porest HR" id="main-menu">
+  <SidePanelContent side="left" title="그루 이음" id="main-menu">
     <SidePanelBody scrollFog className="px-x4">
       {/* 사이드바와 같은 항목 — 지금 묶음은 저절로 펼쳐지고, 항목을 누르면 이동하고 닫힌다 */}
       <SideNavigationContent onNavigate={() => setMenuOpen(false)}>
@@ -221,13 +221,13 @@ import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNav
 
 ## SEED 와 다른 점
 
-- **딤은 porest 0.50 · 다크 0.65**(v102) — SEED 0.455.
+- **딤은 groo 0.50 · 다크 0.65**(v102) — SEED 0.455.
 - **본문 끝 흐림은 Scroll Fog**(2026-10-03) — 넘칠 수 있는 본문에 늘 켜진 위 20 · 아래 80. SEED Side Panel 은 본문 아래 48 을 늘 흐린다.
 - **반투명 색을 불투명 짝으로**(v102) — 머리 아래 선 `stroke-neutral-subtle`, 닫기 버튼 누름 `bg-layer-floating-pressed`.
-- **1280 미만의 오른쪽 패널은 Bottom Sheet** — SEED Responsive Side Panel 은 md(768)에서 바꾼다. porest 는 Responsive Dialog · Input Button 과 같은 1280 이다.
+- **1280 미만의 오른쪽 패널은 Bottom Sheet** — SEED Responsive Side Panel 은 md(768)에서 바꾼다. groo 는 Responsive Dialog · Input Button 과 같은 1280 이다.
 - **기본 크기는 medium 720** — SEED React · CSS 와 같다(rootage JSON 기본은 small).
-- **가로 화면의 노치** — SEED 문서는 "패널 너비에 safe-area-inset을 더합니다", 코드는 폭 안에서 뺀다. porest 는 문서를 따른다(내용 폭이 줄지 않게).
-- **입력 폼은 바깥 · 끌기로 닫지 않는다** — Dialog · Bottom Sheet 와 같은 porest 규칙(2026-10-02). SEED 는 모든 패널이 바깥 누르기 · 가로 끌기(25%)로 닫힌다.
+- **가로 화면의 노치** — SEED 문서는 "패널 너비에 safe-area-inset을 더합니다", 코드는 폭 안에서 뺀다. groo 는 문서를 따른다(내용 폭이 줄지 않게).
+- **입력 폼은 바깥 · 끌기로 닫지 않는다** — Dialog · Bottom Sheet 와 같은 groo 규칙(2026-10-02). SEED 는 모든 패널이 바깥 누르기 · 가로 끌기(25%)로 닫힌다.
 - **모션 줄이기면 150ms 서서히 나타남**(v104) — SEED 는 300ms 미끄러짐 그대로.
 - **Persistent(비모달) 패널은 두지 않는다** — 쓸 자리가 없다.
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 패널 `z-modal-content` 101).

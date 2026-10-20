@@ -2,7 +2,7 @@
 
 > 단추 하나가 한 상태를 그 자리에서 켜고 끄는 아이콘 단추 — 관심 등록 · 메모 고정 · 비밀값 보기. 이름은 그대로 두고 켬은 `aria-pressed` 가 알린다. 금액 가리기 눈은 설정으로 가는 버튼이라 Toggle 이 아니다(아래). 여럿 가운데 고르거나 거르는 것은 [Chip](chip.md), 누르는 순간 적용되는 설정 줄은 [Switch](switch.md), 저장해야 적용되는 켜고 끄기는 [Checkbox](checkbox.md) 다.
 
-SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 Toggle Button(32 · 36, `aria-pressed`)이 코드에만 있고, 아이콘 켜고 끄기는 Iconography 의 규칙("OFF, ON 개념이 있는 버튼의 상태 전환을 표현할 때는 Default(Line), On(Fill), Off(Line+Slash)을 사용합니다")과 하트 단추(Reaction Button · Image Frame Reaction Button)뿐이다(당근 SEED, Apache-2.0). porest 는 켜고 끄는 단추를 아이콘 단추 하나로 두고(2026-10-09 사용자 결정) 켬 · 끔을 아이콘의 모양 · 굵기 · 색으로만 가른다 — 바탕은 칠하지 않는다. 글 토글(옛 Toggle 의 `default` · `outline` 28 · 32 · 40)과 Toggle Group 은 걷었다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다.
+SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 Toggle Button(32 · 36, `aria-pressed`)이 코드에만 있고, 아이콘 켜고 끄기는 Iconography 의 규칙("OFF, ON 개념이 있는 버튼의 상태 전환을 표현할 때는 Default(Line), On(Fill), Off(Line+Slash)을 사용합니다")과 하트 단추(Reaction Button · Image Frame Reaction Button)뿐이다(당근 SEED, Apache-2.0). groo 는 켜고 끄는 단추를 아이콘 단추 하나로 두고(2026-10-09 사용자 결정) 켬 · 끔을 아이콘의 모양 · 굵기 · 색으로만 가른다 — 바탕은 칠하지 않는다. 글 토글(옛 Toggle 의 `default` · `outline` 28 · 32 · 40)과 Toggle Group 은 걷었다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다.
 
 수치 원본은 [`toggle.yaml`](toggle.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -105,7 +105,7 @@ SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 To
 
 ### 글 토글은 두지 않는다
 
-글이 있는 켜고 끄기 단추(SEED Toggle Button · 옛 porest Toggle)는 두지 않는다(사용자 결정 8A). 켜고 끄기는 뜻에 따라 셋으로 나뉜다.
+글이 있는 켜고 끄기 단추(SEED Toggle Button · 옛 groo Toggle)는 두지 않는다(사용자 결정 8A). 켜고 끄기는 뜻에 따라 셋으로 나뉜다.
 
 | 이런 자리 | 쓰는 것 |
 |---|---|
@@ -237,10 +237,10 @@ import { toggleVariants } from "@/components/ui/toggle"
 
 ## SEED 와 다른 점
 
-- **아이콘만 있는 단추다** — SEED Toggle Button 은 글이 있는 알약(xsmall 32 · small 36 · 14 / 700)이고 디자인 문서가 없다(코드만). porest 는 글 토글을 두지 않는다 — 거르기는 Chip, 설정은 Switch 다.
+- **아이콘만 있는 단추다** — SEED Toggle Button 은 글이 있는 알약(xsmall 32 · small 36 · 14 / 700)이고 디자인 문서가 없다(코드만). groo 는 글 토글을 두지 않는다 — 거르기는 Chip, 설정은 Switch 다.
 - **켬을 바탕으로 칠하지 않는다** — SEED `brandSolid` 는 끔이 주황 채움 · 켬이 회색 알약이고 `neutralWeak` 는 켬 · 끔 색이 같다(라벨 · 아이콘만 바뀐다). SEED Iconography 의 켬 = 채움(Fill)은 lucide 에 채움 모양이 없어 진한 색 + 선 2.5 로 대신한다(v106).
-- **모으기 단추의 끔은 사선 없이** — SEED Iconography 는 끔을 Line + Slash 로 적었지만 하트 단추(Reaction · Image Frame Reaction Button)는 끔을 사선 없는 선으로 둔다. porest 는 모으기(관심 · 고정)는 사선 없이, 기능(눈 · 종)은 `-off` 로 나눴다.
-- **이름은 고정** — SEED 예제는 켜면 라벨도 바꾼다("미선택" ↔ "선택됨"). porest 는 APG 대로 이름을 두고 `aria-pressed` 만 바꾼다.
+- **모으기 단추의 끔은 사선 없이** — SEED Iconography 는 끔을 Line + Slash 로 적었지만 하트 단추(Reaction · Image Frame Reaction Button)는 끔을 사선 없는 선으로 둔다. groo 는 모으기(관심 · 고정)는 사선 없이, 기능(눈 · 종)은 `-off` 로 나눴다.
+- **이름은 고정** — SEED 예제는 켜면 라벨도 바꾼다("미선택" ↔ "선택됨"). groo 는 APG 대로 이름을 두고 `aria-pressed` 만 바꾼다.
 - **누르는 영역 44** — SEED 32 · 36 · 하트 40.
 - **막힘은 진짜 `disabled`**(Tab 에서 빠진다 — Button 과 같다). SEED 는 `aria-disabled`(포커스가 남는다)다. 불러오는 중(loading)은 두지 않는다 — 누르면 바로 바뀐다.
 
@@ -250,11 +250,11 @@ import { toggleVariants } from "@/components/ui/toggle"
 
 금액 가리기 눈은 2026-08-06 부터 실제 제품에서 켜고 끄지 않고 금액 가리기 설정으로 간다(가리기는 화면 · 카드 단위). 이 스펙은 그 눈을 켜고 끄는 단추로 적어 왔다 — 사용자가 [구현 질문 Q-017 · Q-018 비교 페이지](https://claude.ai/artifact/6R7NBc4ByvxGyLy6E6tvKf)에서 데스크톱 머리의 눈을 빼고(Q-017-3c = Q-018-3 B) 폰은 순자산 카드의 눈 그대로(Q-017-2b A)로 정해, 눈을 Toggle 목록에서 빼고 "금액 가리기 눈은 Toggle 이 아니다" 를 더했다. 모양 결정(7A 지금 상태 · 21A 흰 아이콘만)은 그대로 산다. 19B(상단 바에서는 끔도 진한 색)는 상단 바에 켜고 끄는 단추를 둘 때의 규칙으로 남는다.
 
-- **Desk 웹 · 앱** — 순자산 카드 눈(웹 `DashboardPage.tsx:1185 · 2186` · `AssetPage.tsx:1678 · 1972`, 앱 `dashboard_screen.dart:561` · `asset_screen.dart:648`)의 이름을 "금액 가리기 설정" 으로, `aria-pressed` · 앱 `toggled` 는 달지 않는다. 데스크톱 머리의 눈(`PorestTopBar.tsx:44-52`)은 걷는다.
+- **Desk 웹 · 앱** — 순자산 카드 눈(웹 `DashboardPage.tsx:1185 · 2186` · `AssetPage.tsx:1678 · 1972`, 앱 `dashboard_screen.dart:561` · `asset_screen.dart:648`)의 이름을 "금액 가리기 설정" 으로, `aria-pressed` · 앱 `toggled` 는 달지 않는다. 데스크톱 머리의 눈(`GrooTopBar.tsx:44-52`)은 걷는다.
 
 ### 2026-10-09 — 켜고 끄는 아이콘 단추로 다시 쓴다
 
-사용자가 [입력 비교 페이지](https://claude.ai/artifact/CwVJDATSmLtwQoH67wh1zj)에서 정했다 — 아이콘만 바뀐다(5A — 바탕 그대로, 켬 = 진한 색 + 선 2.5, 보이는 40 · 누르는 44 · 이름 고정 + `aria-pressed`), 모으기 단추(관심 · 고정)의 끔은 사선 없이(6B — 기초 Iconography 에 한 줄을 더했다), 눈은 지금 상태(7A — 가렸으면 `eye-off`, 이름 "금액 가리기" 고정), 글 토글은 두지 않는다(8A — Toggle 스펙은 아이콘 토글 단추가 되고 `default` · `outline` 28 · 32 · 40 은 걷는다). 그리고 "따라오는 것" — 할 일 완료 원은 Checkbox, 앱 `PToggle` 3곳은 칩 · Select 로, HR 테마 단추 이름 한국어, 요청 중에도 막지 않는다. 켜면 옅은 바탕(5B) · 반전(5C) · 모으기 단추도 사선(6A) · 누르면 할 일을 그리는 눈(7B) · SEED Toggle Button(8B) · 지금 porest Toggle(8C)은 고르지 않았다. 스펙을 쓰다 나온 것(같은 비교 페이지 19 ~ 22) — 상단 바에서는 끔도 진한 색(19B — 굵기 · 아이콘으로만 가른다), 실패는 되돌린 뒤 스낵바 + "다시 시도"(20A), 순자산 카드 위는 흰 아이콘만(21A), 일정 알림 다섯은 여럿 고르는 Select(22A). Toggle 규칙 그대로의 흐린 끔(19A) · 카드 안 빨간 줄(20B) · 늘 흰 12% 원(21B) · 칩 다섯(22B)은 고르지 않았다. 옛 스펙은 `toggle.history/v-pre-seed-input.*` 에 남겼다.
+사용자가 [입력 비교 페이지](https://claude.ai/artifact/CwVJDATSmLtwQoH67wh1zj)에서 정했다 — 아이콘만 바뀐다(5A — 바탕 그대로, 켬 = 진한 색 + 선 2.5, 보이는 40 · 누르는 44 · 이름 고정 + `aria-pressed`), 모으기 단추(관심 · 고정)의 끔은 사선 없이(6B — 기초 Iconography 에 한 줄을 더했다), 눈은 지금 상태(7A — 가렸으면 `eye-off`, 이름 "금액 가리기" 고정), 글 토글은 두지 않는다(8A — Toggle 스펙은 아이콘 토글 단추가 되고 `default` · `outline` 28 · 32 · 40 은 걷는다). 그리고 "따라오는 것" — 할 일 완료 원은 Checkbox, 앱 `PToggle` 3곳은 칩 · Select 로, HR 테마 단추 이름 한국어, 요청 중에도 막지 않는다. 켜면 옅은 바탕(5B) · 반전(5C) · 모으기 단추도 사선(6A) · 누르면 할 일을 그리는 눈(7B) · SEED Toggle Button(8B) · 지금 groo Toggle(8C)은 고르지 않았다. 스펙을 쓰다 나온 것(같은 비교 페이지 19 ~ 22) — 상단 바에서는 끔도 진한 색(19B — 굵기 · 아이콘으로만 가른다), 실패는 되돌린 뒤 스낵바 + "다시 시도"(20A), 순자산 카드 위는 흰 아이콘만(21A), 일정 알림 다섯은 여럿 고르는 Select(22A). Toggle 규칙 그대로의 흐린 끔(19A) · 카드 안 빨간 줄(20B) · 늘 흰 12% 원(21B) · 칩 다섯(22B)은 고르지 않았다. 옛 스펙은 `toggle.history/v-pre-seed-input.*` 에 남겼다.
 
 | 옛 Toggle | 새 Toggle |
 |---|---|
@@ -266,7 +266,7 @@ import { toggleVariants } from "@/components/ui/toggle"
 제품은 앱 적용 단계에서 옮긴다(2026-10-09 조사 — Desk 웹은 크로미움에 띄워 쟀고, Desk 앱은 위젯 테스트 · 코드로 봤다). 켜고 끄는 단추가 웹 10여 곳 · 앱 5곳에 저마다 다른 크기 · 이름 규칙으로 있다.
 
 - **관심 별** — 웹 종목 머리 38(`features/stock/ui/stock-row.tsx:307-345`)은 이름이 "관심 등록 ↔ 관심 해제" 로 바뀌면서 `aria-pressed` 도 달아 "관심 해제, 눌림" 으로 겹쳐 읽히고(D12), 켜면 노랑 바탕 + 채운 별이다. 앱(`features/stocks/presentation/toss_stocks_view.dart:1413-1436`)은 `InkWell` 이라 이름 · 상태가 없다(D14). "관심 등록" 고정 + `aria-pressed` · `star` 선 2 · 2.5 로.
-- **금액 가리기 눈** — 웹 상단 바 36(`widgets/layout/ui/PorestTopBar.tsx:44-52` — 동작 이름) · 홈 히어로 28 · 모바일 26(`pages/dashboard/ui/DashboardPage.tsx:1167-1186 · 2168-2187` — `title` 만) · 자산 18(`pages/asset/ui/AssetPage.tsx:1666-1679 · 1971-1974`) · 자산 상세 바닥(`widgets/asset-full/ui/AssetDetailDialog.tsx:2352-2361` — 글 "보기 · 숨기기", 동작 아이콘) · 설정(`pages/settings/ui/SettingsPage.tsx:1007-1016`) — 상태 알림이 0이고 아이콘 뜻이 둘이다(상단 · 홈 · 자산은 상태, 자산 상세 · 비밀값은 동작 — D12). 앱은 홈 26 + 동작 이름 툴팁 · 자산 18 이름 0(`features/dashboard/presentation/dashboard_screen.dart:544-567` · `features/asset/presentation/asset_screen.dart:643-656`, D14). 모두 "금액 가리기" + `aria-pressed` + 지금 상태 아이콘으로, 크기는 40(상단 바 44 · 24, 순자산 카드 `tone="inverted"`).
+- **금액 가리기 눈** — 웹 상단 바 36(`widgets/layout/ui/GrooTopBar.tsx:44-52` — 동작 이름) · 홈 히어로 28 · 모바일 26(`pages/dashboard/ui/DashboardPage.tsx:1167-1186 · 2168-2187` — `title` 만) · 자산 18(`pages/asset/ui/AssetPage.tsx:1666-1679 · 1971-1974`) · 자산 상세 바닥(`widgets/asset-full/ui/AssetDetailDialog.tsx:2352-2361` — 글 "보기 · 숨기기", 동작 아이콘) · 설정(`pages/settings/ui/SettingsPage.tsx:1007-1016`) — 상태 알림이 0이고 아이콘 뜻이 둘이다(상단 · 홈 · 자산은 상태, 자산 상세 · 비밀값은 동작 — D12). 앱은 홈 26 + 동작 이름 툴팁 · 자산 18 이름 0(`features/dashboard/presentation/dashboard_screen.dart:544-567` · `features/asset/presentation/asset_screen.dart:643-656`, D14). 모두 "금액 가리기" + `aria-pressed` + 지금 상태 아이콘으로, 크기는 40(상단 바 44 · 24, 순자산 카드 `tone="inverted"`).
 - **비밀값 보기** — 웹 32 "App Key 보기" 고정 + `aria-pressed` 는 모범이지만 아이콘이 누르면 할 일이다(`features/subscription/ui/SecretField.tsx:47-66`). 앱 32 는 켬 상태가 없다(`features/subscription/presentation/broker_connect_card.dart:341-357`). 40 · 지금 상태 아이콘으로.
 - **메모 고정 해제** — 웹 고정 메모 카드에만 아이콘 13 + 여백 4 ≈ 21(`pages/memo/ui/MemoPage.tsx:473-503`)이고 고정은 편집기 스위치 · 스와이프로만 한다. 카드의 고정 토글 40 으로 — 고정 · 해제를 같은 단추로([Card](card.md) 의 고정 버튼).
 - **할 일 완료 원** — 웹 22 · 이름 "완료 ↔ 완료 취소" + `aria-pressed` · 요청 중 막힘(`pages/todo/ui/TodoPage.tsx:388-397` · `TodoMobileLedger.tsx:558-566`, D12)은 켜고 끄는 단추가 아니라 할 일의 값이다 — [Checkbox](checkbox.md)(이름에 할 일 제목)로.

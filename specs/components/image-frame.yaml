@@ -15,8 +15,8 @@
 #   - 불러오는 동안은 Skeleton, 실패는 Content Placeholder 로 가르고 10초에 실패로 바꾼다 — SEED React 는 받는 중에도 대체 그림을 바로 보인다.
 #   - 실패해도 alt 를 대체 그림의 이름으로 남긴다 — SEED 는 img 를 숨겨 아무것도 읽히지 않는다.
 #   - 그림 위 요소는 배지 · Indicator 둘(Reaction Button · Icon 은 두지 않는다), 네 모서리만(SEED React 는 9자리).
-#   - Indicator 바탕은 overlay-dim-dark(검정 65%) — SEED static-black-alpha-800(63.5%)의 가장 가까운 porest 값(토큰을 더하지 않았다).
-#   - 비율에 카드 1.586 을 더한다(porest — ISO 카드), 세로 카드 그림은 돌린다.
+#   - Indicator 바탕은 overlay-dim-dark(검정 65%) — SEED static-black-alpha-800(63.5%)의 가장 가까운 groo 값(토큰을 더하지 않았다).
+#   - 비율에 카드 1.586 을 더한다(groo — ISO 카드), 세로 카드 그림은 돌린다.
 
 name: ImageFrame
 
@@ -39,7 +39,7 @@ variants:
     "6:7": 조금 세로 — 사람 · 물건 사진
     "4:5": 세로 — 가로 줄로 잇는 사진(여러 장)
     "2:3": 긴 세로 — 포스터 · 표지
-    card: 카드 1.586(ISO 카드 85.6 × 53.98) — porest. 목록 · 격자 · 상세의 카드 그림, 세로 그림은 돌린다
+    card: 카드 1.586(ISO 카드 85.6 × 53.98) — groo. 목록 · 격자 · 상세의 카드 그림, 세로 그림은 돌린다
   radius:
     "4": 폭 24 이하
     "6": 폭 25 ~ 48
@@ -78,7 +78,7 @@ rules:
       floater:
         offset: { value: $spacing-x1_5, note: "틀 가장자리 → 요소 바깥 상자 6(SEED). 네 모서리 — 위 시작 · 위 끝 · 아래 시작 · 아래 끝. 한 자리에 하나 · 틀 하나에 둘까지 · 틀의 짧은 변이 80 이상일 때만" }
       indicator:
-        background: { value: $overlay-dim-dark, note: "검정 65% — 두 모드 같다(그림은 모드를 따르지 않는다). SEED static-black-alpha-800(63.5%)의 가장 가까운 porest 값. overlay-dim-light(50%)면 흰 그림 위 흰 글자가 3.95 로 모자란다" }
+        background: { value: $overlay-dim-dark, note: "검정 65% — 두 모드 같다(그림은 모드를 따르지 않는다). SEED static-black-alpha-800(63.5%)의 가장 가까운 groo 값. overlay-dim-light(50%)면 흰 그림 위 흰 글자가 3.95 로 모자란다" }
         foreground: { value: $color-static-white, note: "흰 그림 위 7.00 · 검은 그림 위 21:1 — 어떤 그림 위에서도 4.5 를 넘는다" }
         typography: { value: $text-t1, note: "11 / 15 — 글자 크기 설정을 따른다(SEED rem)" }
         fontWeight: 500

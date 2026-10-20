@@ -41,7 +41,7 @@ export function TypeScaleTable() {
           <td className="tabular-nums">{t.lineHeight}</td>
           <td className="tabular-nums text-fd-muted-foreground">{info.get(t.name)?.ratio ?? '—'}</td>
           <td className="max-w-[360px] overflow-hidden text-ellipsis whitespace-nowrap" style={{ fontSize: t.fontSize, lineHeight: t.lineHeight }}>
-            가나다 Porest 123
+            가나다 Groo 123
           </td>
           <td className="whitespace-nowrap text-fd-muted-foreground"><Inline text={info.get(t.name)?.use ?? '—'} /></td>
         </tr>
@@ -155,7 +155,7 @@ const BREAK_SAMPLES: { where: string; size: string; weight?: number; width: numb
   { where: 'Select Box 제목 · 3열', size: 't5', weight: 500, width: 64, text: '최근 3개월', mark: '3개월' },
   { where: 'List 설명', size: 't3', width: 250, text: '내보낸 파일에서 계좌번호 · 카드번호의 가운데 자리를 별표로 바꿔요. 받는 사람이 번호 전체를 보지 못해요', mark: '자리를' },
   { where: 'Checkbox 라벨 · 시트', size: 't4', width: 200, text: '알림을 받을 때 결제 예정 금액도 함께 보여 주기', mark: '함께' },
-  { where: '이메일 · 2열', size: 't3', width: 88, text: 'porest.desk@example.com' },
+  { where: '이메일 · 2열', size: 't3', width: 88, text: 'groo.desk@example.com' },
 ];
 
 function BreakSample({ s, rule }: { s: (typeof BREAK_SAMPLES)[number]; rule: CSSProperties }) {

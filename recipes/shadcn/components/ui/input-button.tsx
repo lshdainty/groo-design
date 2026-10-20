@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { useField, useFieldControl } from "@/components/ui/field";
 
 /*
- * Porest Input Button — 구조는 SEED Input Button(React 이름 Field Button, 2026-10-01). 수치 원본은 specs/components/input-button.yaml.
+ * Groo Input Button — 구조는 SEED Input Button(React 이름 Field Button, 2026-10-01). 수치 원본은 specs/components/input-button.yaml.
  *
  *   InputButton             입력칸 모양의 버튼 — 누르면 고르는 자리(달력 · 시각 휠 · 아이콘 격자 · 검색 시트)를 연다
  *   useInputButtonSurface   여는 자리 — 1280 미만 "sheet"(아래 시트) · 이상 "popover"(칸 아래 팝오버). 칸 크기가 바뀌는 폭과 같다

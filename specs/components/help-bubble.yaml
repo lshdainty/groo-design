@@ -8,10 +8,10 @@
 # 쓰는 규칙은 help-bubble.md(눌러서) · tooltip.md(마우스 · 키보드)에 있다.
 #
 # SEED 와 다른 자리(help-bubble.md · tooltip.md 의 "SEED 와 다른 점")
-#   - 바탕은 porest bg-neutral-inverted(SEED neutral-solid 의 역할 짝) — 다크에서는 밝은 말풍선에 짙은 글자.
+#   - 바탕은 groo bg-neutral-inverted(SEED neutral-solid 의 역할 짝) — 다크에서는 밝은 말풍선에 짙은 글자.
 #   - 닫기 버튼의 누르는 영역 44(SEED 38 — 기초의 "누르는 영역 44").
 #   - Tooltip 은 포인터를 말풍선 위로 옮겨도 닫히지 않는다(WCAG 1.4.13 — SEED 기본은 닫힌다).
-#   - 닫기 버튼의 초점 링은 말풍선 글자색(fg-neutral-inverted) — porest 브랜드 링은 짙은 말풍선 위에서 3:1 에 못 미친다.
+#   - 닫기 버튼의 초점 링은 말풍선 글자색(fg-neutral-inverted) — groo 브랜드 링은 짙은 말풍선 위에서 3:1 에 못 미친다.
 #   - 화면 끝의 트리거 — 화살표는 트리거 가운데에 남고 말풍선이 가장자리 16 보다 붙는다(2026-10-15). SEED 는 16 을 지키고 화살표를 옮긴다.
 #   - z-index: specs/z-index.md 의 L4(z-tooltip 210) — 팝오버 · 메뉴(L3) 위. SEED 99 는 포털 없이 그린다.
 

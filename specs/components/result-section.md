@@ -2,7 +2,7 @@
 
 > 화면이나 그 영역 가운데에 놓는 결과 — 비어 있음 · 불러오기 실패 · 완료 · 찾을 수 없는 페이지 · 화면 오류를 한 틀로 그린다. 불러오기에 실패했는데 "내역이 없어요" 처럼 비어 있음으로 보이지 않게, 실패는 아이콘 · 글 · "다시 시도" 로 다르게 보인다.
 
-구조는 당근 [SEED Result Section](https://seed-design.io/react/components/result-section)(Apache-2.0)을 따른다 — 아이콘 · 제목 · 설명 · 버튼 둘, 크기 둘(화면 전체 · 일부). SEED 는 조합 예제 하나뿐이라 porest 는 수치를 스펙으로 둔다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). porest 에 처음 두는 컴포넌트다.
+구조는 당근 [SEED Result Section](https://seed-design.io/react/components/result-section)(Apache-2.0)을 따른다 — 아이콘 · 제목 · 설명 · 버튼 둘, 크기 둘(화면 전체 · 일부). SEED 는 조합 예제 하나뿐이라 groo 는 수치를 스펙으로 둔다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). groo 에 처음 두는 컴포넌트다.
 
 수치 원본은 [`result-section.yaml`](result-section.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 

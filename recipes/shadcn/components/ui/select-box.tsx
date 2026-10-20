@@ -9,7 +9,7 @@ import { Checkmark } from "@/components/ui/checkbox";
 import { Radiomark, ignoreRadioJumpKeys, submitOnRadioEnter } from "@/components/ui/radio-group";
 
 /*
- * Porest Select Box — 구조는 SEED Select Box(2026-10-01). 수치 원본은 specs/components/select-box.yaml.
+ * Groo Select Box — 구조는 SEED Select Box(2026-10-01). 수치 원본은 specs/components/select-box.yaml.
  *
  *   RadioSelectBoxGroup · RadioSelectBox   하나 고르기 — 묶음은 radiogroup, 오른쪽 라디오(Radiomark 20) 또는 없음
  *   CheckSelectBoxGroup · CheckSelectBox   여럿 고르기 — 묶음은 fieldset, 오른쪽 칸 없는 체크(Checkbox Ghost) 또는 없음

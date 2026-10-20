@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { ProgressCircle } from "@/components/ui/progress-circle";
 
 /*
- * Porest Button — 구조는 SEED Action Button(2026-09-30). 수치 원본은 specs/components/button.yaml.
+ * Groo Button — 구조는 SEED Action Button(2026-09-30). 수치 원본은 specs/components/button.yaml.
  *
  * Variants(7) — 한 화면의 강조 버튼(Solid)은 하나
  *   brandSolid     브랜드 색 채움 — 서비스 핵심 액션 하나(Desk 거래 추가 · HR 휴가 신청)
@@ -74,7 +74,7 @@ const buttonVariants = cva(
         xsmall: "h-8 rounded-full [--press-basis:32] [--progress-size:14px]",
         small: "h-9 rounded-r2 [--press-basis:36] [--progress-size:14px]",
         medium: "h-10 rounded-r2 [--press-basis:40] [--progress-size:16px]",
-        // SEED large 는 52 — porest 는 48(button.md "SEED 와 다른 점")
+        // SEED large 는 52 — groo 는 48(button.md "SEED 와 다른 점")
         large: "h-12 rounded-r3 [--press-basis:48] [--progress-size:18px]",
       },
       layout: {
@@ -111,7 +111,7 @@ const buttonVariants = cva(
       { variant: "ghost", ghostColor: "neutralSubtle", className: "text-fg-neutral-subtle" },
       { variant: "ghost", ghostColor: "brand", className: "text-fg-brand" },
       { variant: "ghost", ghostColor: "critical", className: "text-fg-critical" },
-      // flush ghost 는 텍스트 버튼 — 배경 없이 글자색으로만 반응한다(button.md "porest 에만 있는 것")
+      // flush ghost 는 텍스트 버튼 — 배경 없이 글자색으로만 반응한다(button.md "groo 에만 있는 것")
       {
         variant: "ghost",
         flush: ["left", "right"],

@@ -168,7 +168,7 @@ export const dividerExamples = [
   {
     title: "장식 · 의미 있는 구분선",
     description:
-      "선은 눈으로 묶음을 가르는 장식이라 기본은 보조 기술에 숨긴다(<div aria-hidden>) — SEED 는 <hr>(\"구분선\" 으로 읽힌다)이 기본이지만 porest 는 장식이 기본이다. 문서의 장처럼 보조 기술도 \"구분선\" 을 알아야 하는 자리만 decorative={false} 로 role=\"separator\" 를 둔다 — 세로선이면 aria-orientation=\"vertical\" 이다. 두 선은 모습이 같다. <hr> 로 그리지 않는다.",
+      "선은 눈으로 묶음을 가르는 장식이라 기본은 보조 기술에 숨긴다(<div aria-hidden>) — SEED 는 <hr>(\"구분선\" 으로 읽힌다)이 기본이지만 groo 는 장식이 기본이다. 문서의 장처럼 보조 기술도 \"구분선\" 을 알아야 하는 자리만 decorative={false} 로 role=\"separator\" 를 둔다 — 세로선이면 aria-orientation=\"vertical\" 이다. 두 선은 모습이 같다. <hr> 로 그리지 않는다.",
     jsx: `<Divider />                                       {/* 장식 — aria-hidden */}
 <Divider decorative={false} />                    {/* role="separator" */}
 <Divider orientation="vertical" decorative={false} /> {/* aria-orientation="vertical" */}`,

@@ -2,7 +2,7 @@
 
 > 숫자의 흐름 · 비율 · 세기를 그림으로 보이는 차트 — 수입 · 지출 추이(선), 기간별 합(막대), 카테고리 비율(도넛), 요일 × 시간 세기(열지도). 차트는 카드 본문 안에 두고, 같은 숫자를 범례 · 툴팁의 글로도 읽을 수 있게 한다. 숫자 하나는 [Card](card.md) 의 지표 카드, 줄과 열은 [Table](table.md) 이다.
 
-SEED 에는 차트 컴포넌트도 차트 색도 없다 — 팔레트 7가족과 장식용 배너 색뿐이다. SEED 문서가 가진 차트는 Layout 의 High Density 대시보드 그림 한 장이다: 선 그래프 두 계열, 좌우 이중 축의 눈금 글자를 계열 색으로, 가로 격자만, 가리킨 자리의 세로 점선과 "■ 라벨 값" 툴팁, 차트 위의 지표 타일(범례 겸 합계). 그리고 Inclusive Design 의 원칙 — "색상만으로 정보를 전달하지 않고, 텍스트, 아이콘 등 다른 시각적 요소와 함께 제공합니다" · 대체 텍스트 · 애니메이션 줄이기(당근 SEED, Apache-2.0). 색은 porest 가 v110 · v111 에서 정했고, 축 · 툴팁 · 범례 · 빈 · 실패 · 접근성은 이 그림과 원칙 위에서 porest 가 정했다(2026-10-08 사용자 결정). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 Chart 스펙(shadcn ChartContainer · 16:9 · 아래 점 범례 · 테두리 툴팁)을 대신한다.
+SEED 에는 차트 컴포넌트도 차트 색도 없다 — 팔레트 7가족과 장식용 배너 색뿐이다. SEED 문서가 가진 차트는 Layout 의 High Density 대시보드 그림 한 장이다: 선 그래프 두 계열, 좌우 이중 축의 눈금 글자를 계열 색으로, 가로 격자만, 가리킨 자리의 세로 점선과 "■ 라벨 값" 툴팁, 차트 위의 지표 타일(범례 겸 합계). 그리고 Inclusive Design 의 원칙 — "색상만으로 정보를 전달하지 않고, 텍스트, 아이콘 등 다른 시각적 요소와 함께 제공합니다" · 대체 텍스트 · 애니메이션 줄이기(당근 SEED, Apache-2.0). 색은 groo 가 v110 · v111 에서 정했고, 축 · 툴팁 · 범례 · 빈 · 실패 · 접근성은 이 그림과 원칙 위에서 groo 가 정했다(2026-10-08 사용자 결정). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 Chart 스펙(shadcn ChartContainer · 16:9 · 아래 점 범례 · 테두리 툴팁)을 대신한다.
 
 수치 원본은 [`chart.yaml`](chart.yaml)이고, 색 값은 DESIGN.md 의 v110(차트 10색) · v111(옅은 바탕)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -333,9 +333,9 @@ import { ChartDataTable } from "@/components/ui/chart"
 
 ## SEED 와 다른 점
 
-- **porest 가 정한 자리가 대부분이다** — SEED 에는 차트 컴포넌트 · 색 · 규칙이 없다. 이중 축 · 계열 색 눈금 · 가로 격자 · 세로 점선 가리킴 · "■ 라벨 값" 툴팁 · 위 지표 타일은 SEED 대시보드 그림을 따랐다.
-- **계열 색은 porest 차트 10색(700 · 800-dark)** — SEED 그림의 blue-600 · green-500 은 흰 바탕 2.84 · 2.18 로 3:1 에 못 미친다. SEED 팔레트에는 남색 · 분홍 · 갈색 가족이 없다(v110).
-- **이중 축의 눈금 글자는 계열 색 그대로** — SEED 그림은 계열 색을 옅게 썼다. porest 는 글자 기준 4.5 를 넘는 700 · 800-dark 다.
+- **groo 가 정한 자리가 대부분이다** — SEED 에는 차트 컴포넌트 · 색 · 규칙이 없다. 이중 축 · 계열 색 눈금 · 가로 격자 · 세로 점선 가리킴 · "■ 라벨 값" 툴팁 · 위 지표 타일은 SEED 대시보드 그림을 따랐다.
+- **계열 색은 groo 차트 10색(700 · 800-dark)** — SEED 그림의 blue-600 · green-500 은 흰 바탕 2.84 · 2.18 로 3:1 에 못 미친다. SEED 팔레트에는 남색 · 분홍 · 갈색 가족이 없다(v110).
+- **이중 축의 눈금 글자는 계열 색 그대로** — SEED 그림은 계열 색을 옅게 썼다. groo 는 글자 기준 4.5 를 넘는 700 · 800-dark 다.
 - **지표 타일의 바탕은 `chart-{색}-subtle`** — SEED 그림의 팔레트 100 과 같은 자리(v111).
 - **도넛 범례 · 열지도 · 빈 · 실패 · 표로 보기** — SEED 에 없다.
 - **숫자 줄임은 축만, 소수 한 자리("1.2만")** — SEED 는 유효 숫자 셋("1.23만")이다(International Design).
@@ -368,10 +368,10 @@ import { ChartDataTable } from "@/components/ui/chart"
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-08 조사 — Desk 웹 · HR 은 크로미움에 띄워 쟀고, Desk 앱은 위젯 테스트 · 코드로 봤다).
 
-- **차트 색이 세 제품 세 벌** — 웹은 10-06 토큰 가져오기로 v110 이 들어왔다(`shared/styles/porest-tokens.css:263-282 · 1002-1011`). 앱은 옛 v21 상수(`app/theme/colors.dart:69-89` · `core/format/chart_palette.dart` — 빨강 #C73838 · 다크 #ECA0A0)라 "식비" 가 웹 #BE490D / #FF8758 · 앱 #B36418 / #E8B266 이다(D3). HR 은 recharts 데모 색(#0088FE · #00C49F · #FFBB28 · #FF8042 · #8884D8 — `features/vacation-history/ui/VacationTypeStatsContent.tsx:8-23`) 고정이라 흰 바탕 1.69 ~ 3.53, 다크에서도 격자 #CCCCCC · 축 #888888(3.54)이다(`MonthVacationStatsContent.tsx:56-87`, D7). 앱 · HR 을 v110 으로 — HR 휴가 유형은 차트 색 이름에 잇는다.
+- **차트 색이 세 제품 세 벌** — 웹은 10-06 토큰 가져오기로 v110 이 들어왔다(`shared/styles/groo-tokens.css:263-282 · 1002-1011`). 앱은 옛 v21 상수(`app/theme/colors.dart:69-89` · `core/format/chart_palette.dart` — 빨강 #C73838 · 다크 #ECA0A0)라 "식비" 가 웹 #BE490D / #FF8758 · 앱 #B36418 / #E8B266 이다(D3). HR 은 recharts 데모 색(#0088FE · #00C49F · #FFBB28 · #FF8042 · #8884D8 — `features/vacation-history/ui/VacationTypeStatsContent.tsx:8-23`) 고정이라 흰 바탕 1.69 ~ 3.53, 다크에서도 격자 #CCCCCC · 축 #888888(3.54)이다(`MonthVacationStatsContent.tsx:56-87`, D7). 앱 · HR 을 v110 으로 — HR 휴가 유형은 차트 색 이름에 잇는다.
 - **순번 색이 저장된 색과 부딪친다** — 색 없는 카테고리(구독)에 7번째 순번 색(빨강)을 줘 저장된 빨강(경조사)과 겹친다 — 홈 · 통계 도넛에 #D72323 조각이 둘(`pages/dashboard/ui/DashboardPage.tsx:339-346` · `pages/stats/ui/StatsPage.tsx:265-272` · 앱 `features/dashboard/presentation/dashboard_screen.dart:961-971`, D4). 10개를 넘으면 순번이 한 바퀴 돌아 회색이 일반 조각에 간다. `assignChartColors` 로.
 - **이름 없는 차트** — recharts 3.8 기본값으로 모든 차트 SVG 가 `role="application"` · `tabindex=0` 인데 이름 · `<title>` · 대체 글 · 초점 링이 0 이다(웹 · HR). 앱 차트 파일 5개는 `Semantics(` 0(D8). `role="img"` + 요약 이름으로.
-- **모션 줄이기 무시** — 공용 `Donut` 과 예산 막대가 `isAnimationActive` 를 참으로 박았다(`shared/ui/porest/charts.tsx:671` · `pages/budget/ui/BudgetPage.tsx:1191`, D11). 렌더로 확인 — 줄이기 상태에서도 조각이 120ms 사이에 바뀐다. 기본 `"auto"` 로.
+- **모션 줄이기 무시** — 공용 `Donut` 과 예산 막대가 `isAnimationActive` 를 참으로 박았다(`shared/ui/groo/charts.tsx:671` · `pages/budget/ui/BudgetPage.tsx:1191`, D11). 렌더로 확인 — 줄이기 상태에서도 조각이 120ms 사이에 바뀐다. 기본 `"auto"` 로.
 - **오늘 뒤 날짜를 0 으로** — 일별 추이가 10/9 ~ 10/31 을 0 으로 채운다(`StatsPage.tsx:2085-2121`, D12). 오늘까지만.
 - **이중 축** — 수입 0 ~ 400만 · 지출 0 ~ 40만, 눈금 글자가 계열 색이다(웹 `StatsPage.tsx:2268-2295` · 앱 `stats_screen.dart` `useDualAxis`, D13). 그대로 두고, 툴팁 · 지표 타일이 두 값을 숫자로 보이게 한다.
 - **음수 축 글자가 잘린다** — 자산 순자산 차트 세로축 "−3,000만" · "−2,000만" 이 SVG 밖으로 7px(−1,000만 4px) 나가 빼기가 안 보인다(`pages/asset/ui/AssetPage.tsx:151-235` — `YAxis` 폭, D6).
@@ -382,4 +382,4 @@ import { ChartDataTable } from "@/components/ui/chart"
 - **같은 화면의 다른 파랑** — 홈 수입 숫자는 브랜드 #0147AD, 수입 막대는 #1D6EC9 다(`DashboardPage.tsx:237-240 · 1278-1290`, D31). 수입은 chart-blue 하나로.
 - **빈 · 실패** — 홈 막대 차트가 비면 축 0 ~ 1 만 남고, 도넛은 회색 고리 + "카테고리 데이터가 없습니다"(데스크톱) / "…없어요"(폰) 두 문체, 통계 · 예산은 실패도 빈 상태로 보인다(D2 · D28). HR 은 합쇼체 빈 상태. Result Section 으로.
 - **HR 차트 두 개** — 유형 도넛 가운데 두 줄이 붙고(위 글 아래 끝 · 아래 글 위 끝 거의 0), 월 막대 축(시간)과 툴팁(일)의 단위가 다르며 "월" 이 코드에 박혔다(`VacationTypeStatsContent.tsx:150-185` · `MonthVacationStatsContent.tsx:56-87`, D24).
-- **쓰지 않는 것** — 웹 손 SVG `LineChart` · `BarChart`(`shared/ui/porest/charts.tsx:89-569`)는 쓰는 곳이 0 이다(D29). `chart-palette.ts` 머리 주석의 "base hex" 가 옛 값이다(`shared/lib/porest/chart-palette.ts:1-13`, D32).
+- **쓰지 않는 것** — 웹 손 SVG `LineChart` · `BarChart`(`shared/ui/groo/charts.tsx:89-569`)는 쓰는 곳이 0 이다(D29). `chart-palette.ts` 머리 주석의 "base hex" 가 옛 값이다(`shared/lib/groo/chart-palette.ts:1-13`, D32).

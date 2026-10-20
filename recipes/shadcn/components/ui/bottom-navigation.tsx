@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { NotificationBadge } from "@/components/ui/notification-badge";
 
 /*
- * Porest Bottom Navigation — porest 의 떠 있는 알약(2026-10-04 사용자 결정 4B · 5A · 6B · 7A). 규칙은 SEED Bottom Navigation
+ * Groo Bottom Navigation — groo 의 떠 있는 알약(2026-10-04 사용자 결정 4B · 5A · 6B · 7A). 규칙은 SEED Bottom Navigation
  * (5칸 · 라벨 5자 · 최대 480 · 배지 2칸 · 글자 크기 설정을 따르지 않음). 수치 원본은 specs/components/bottom-navigation.yaml.
  *
  *   BottomNavigation           바(<nav aria-label="주 메뉴">) — Desk 앱 · Desk 웹 768 미만의 주 메뉴. 칸 다섯(홈 · 가계부 · + · 캘린더 · 전체)이

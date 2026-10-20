@@ -623,7 +623,7 @@ import { ScrollFog } from "@/components/ui/scroll-fog"
   {
     title: "비율 — 여덟 가지",
     description:
-      "비율은 여덟 가지다 — SEED 의 일곱(1:1 · 2:1 · 16:9 · 4:3 · 6:7 · 4:5 · 2:3)과 카드 1.586(ISO 카드 85.6 × 53.98 — porest). 기본은 4:3 이다. 틀은 그림이 오기 전에 비율로 자리를 잡아(높이 = 폭 ÷ 비율) 그림이 와도 줄이 밀리지 않는다. 비율 클래스는 Aspect Ratio 의 것(aspectRatioVariants)을 그대로 쓴다. 그림은 가운데를 남겨 자른다(cover). 이 밖의 비율(3:4 · 21:9)은 만들지 않는다.",
+      "비율은 여덟 가지다 — SEED 의 일곱(1:1 · 2:1 · 16:9 · 4:3 · 6:7 · 4:5 · 2:3)과 카드 1.586(ISO 카드 85.6 × 53.98 — groo). 기본은 4:3 이다. 틀은 그림이 오기 전에 비율로 자리를 잡아(높이 = 폭 ÷ 비율) 그림이 와도 줄이 밀리지 않는다. 비율 클래스는 Aspect Ratio 의 것(aspectRatioVariants)을 그대로 쓴다. 그림은 가운데를 남겨 자른다(cover). 이 밖의 비율(3:4 · 21:9)은 만들지 않는다.",
     jsx: `<ImageFrame ratio="1:1" width={120} src={photo.url} alt="" />
 <ImageFrame ratio="2:1" width={120} src={photo.url} alt="" />
 <ImageFrame ratio="16:9" width={120} src={photo.url} alt="" />

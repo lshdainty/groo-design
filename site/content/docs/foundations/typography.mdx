@@ -12,14 +12,14 @@ import { LegacyTypeTable, LineBreakFigure, LineBreakTable, RoleRules, RoleTable,
 
 ## 개요
 
-porest 글자 체계는 당근 SEED 와 같은 두 가지 스타일로 이뤄진다.
+groo 글자 체계는 당근 SEED 와 같은 두 가지 스타일로 이뤄진다.
 
 - **스케일 스타일** — `text-t1` ~ `text-t14`. 크기와 줄 높이의 짝이다. 굵기는 400 이고, 강조는 `font-medium`(500) · `font-bold`(700)로 준다 — SEED 의 t5Medium · t5Bold 와 같다.
 - **역할 스타일** — `text-screen-title` · `text-article-body` · `text-article-note`. 화면 제목 · 긴 글처럼 자리가 정해진 글자다.
 
 ## 글꼴
 
-porest 는 Pretendard 를 제품에 함께 실어 어느 플랫폼에서나 같은 글꼴로 그린다. SEED 는 iOS · Android · macOS 에서 시스템 글꼴을, Windows 에서만 Pretendard 를 쓴다 — porest 는 두 서비스의 인상을 플랫폼마다 같게 두려고 전부 Pretendard 다. 영문 대체는 Inter 다.
+groo 는 Pretendard 를 제품에 함께 실어 어느 플랫폼에서나 같은 글꼴로 그린다. SEED 는 iOS · Android · macOS 에서 시스템 글꼴을, Windows 에서만 Pretendard 를 쓴다 — groo 는 두 서비스의 인상을 플랫폼마다 같게 두려고 전부 Pretendard 다. 영문 대체는 Inter 다.
 
 | 자리 | 글꼴 | 비고 |
 |---|---|---|
@@ -33,7 +33,7 @@ porest 는 Pretendard 를 제품에 함께 실어 어느 플랫폼에서나 같�
 
 <TypeScaleTable />
 
-porest 는 크기와 줄 높이를 한 토큰으로 묶는다 — `text-t5` 가 16px 과 22px 을 함께 준다. Tailwind 로 내보내면 `--text-t5` · `--text-t5--line-height` 로 갈린다. SEED 는 둘을 따로 토큰(`$font-size.t5` · `$line-height.t5`)으로 두고 같은 순서끼리 짝지어 쓴다.
+groo 는 크기와 줄 높이를 한 토큰으로 묶는다 — `text-t5` 가 16px 과 22px 을 함께 준다. Tailwind 로 내보내면 `--text-t5` · `--text-t5--line-height` 로 갈린다. SEED 는 둘을 따로 토큰(`$font-size.t5` · `$line-height.t5`)으로 두고 같은 순서끼리 짝지어 쓴다.
 
 - t1 ~ t5 는 본문 · 장식 글자, t6 ~ t10 은 제목 · 주요 글자, t11 ~ t14 는 큰 화면 제목이다(`sm` 중단점 이상).
 
@@ -53,13 +53,13 @@ porest 는 크기와 줄 높이를 한 토큰으로 묶는다 — `text-t5` 가 
 <WeightFigure />
 
 - 600 은 쓰지 않는다. 옛 스타일에서 600 을 쓰던 자리는 옮길 때 500 이나 700 으로 고른다.
-- SEED 는 시스템 글꼴을 써서 medium(500)이 플랫폼마다 조금 달라 보인다. porest 는 Pretendard 를 함께 실어 Desk 앱 · 웹에서 같게 보인다 — 시스템 글꼴을 쓰는 지금의 HR 웹만 다를 수 있다.
+- SEED 는 시스템 글꼴을 써서 medium(500)이 플랫폼마다 조금 달라 보인다. groo 는 Pretendard 를 함께 실어 Desk 앱 · 웹에서 같게 보인다 — 시스템 글꼴을 쓰는 지금의 HR 웹만 다를 수 있다.
 
 ### 스케일 스타일 이름
 
-SEED 는 크기와 굵기를 묶어 `t5Medium` 처럼 부른다. porest 는 크기 토큰에 굵기를 더한다.
+SEED 는 크기와 굵기를 묶어 `t5Medium` 처럼 부른다. groo 는 크기 토큰에 굵기를 더한다.
 
-| SEED | porest |
+| SEED | groo |
 |---|---|
 | `t5Regular` | `text-t5` |
 | `t5Medium` | `text-t5 font-medium` |
@@ -81,7 +81,7 @@ UI 글자는 줄 높이 ×1.35 안팎, 긴 글은 ×1.5 안팎이다 — 한국�
 
 ## 줄바꿈
 
-한국어는 띄어쓰기 단위(어절)로 줄을 바꾼다. 브라우저와 Flutter 의 기본값은 글자 사이 어디서나 끊어서 좁은 칸에서 낱말이 두 줄로 갈린다 — porest 는 웹 · 앱 모두 단어 단위로 끊는다.
+한국어는 띄어쓰기 단위(어절)로 줄을 바꾼다. 브라우저와 Flutter 의 기본값은 글자 사이 어디서나 끊어서 좁은 칸에서 낱말이 두 줄로 갈린다 — groo 는 웹 · 앱 모두 단어 단위로 끊는다.
 
 <LineBreakFigure />
 
@@ -91,7 +91,7 @@ UI 글자는 줄 높이 ×1.35 안팎, 긴 글은 ×1.5 안팎이다 — 한국�
 - 폭이 내용을 따르는 flex 항목은 `min-width: 0` 을 둬야 긴 낱말이 칸 안에서 끊긴다(컴포넌트 레시피는 이미 둔다).
 - 앱의 이음 문자는 보여 주는 글에만 넣는다 — 입력칸 · 복사할 글 · 검색어 · 서버로 보낼 값에는 넣지 않는다.
 - 영문은 원래 단어 단위라 바뀌지 않는다. 한 줄 말줄임 · 줄 수 제한은 그대로 쓴다.
-- SEED 는 읽는 글(게시글 본문 · 시트 · 패널 제목 · 도움말 말풍선)만 단어 단위로 끊고, 컴포넌트 라벨 · 설명은 글자 단위로 둔다. porest 는 라벨 · 설명까지 단어 단위다.
+- SEED 는 읽는 글(게시글 본문 · 시트 · 패널 제목 · 도움말 말풍선)만 단어 단위로 끊고, 컴포넌트 라벨 · 설명은 글자 단위로 둔다. groo 는 라벨 · 설명까지 단어 단위다.
 
 ## 사용 가이드라인
 
@@ -109,4 +109,4 @@ UI 글자는 줄 높이 ×1.35 안팎, 긴 글은 ×1.5 안팎이다 — 한국�
 
 ---
 
-<p className="text-sm text-fd-muted-foreground">구성과 일부 설명은 당근 [SEED Design](https://seed-design.io) 의 Foundations 문서(Apache-2.0)를 바탕으로 했다. 값과 그림은 porest 것이다.</p>
+<p className="text-sm text-fd-muted-foreground">구성과 일부 설명은 당근 [SEED Design](https://seed-design.io) 의 Foundations 문서(Apache-2.0)를 바탕으로 했다. 값과 그림은 groo 것이다.</p>

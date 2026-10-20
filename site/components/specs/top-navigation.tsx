@@ -631,8 +631,8 @@ const RouteGuide: Fig = ({ caption }) => {
           </Verdict>
         </Pair>
         <div className="flex flex-wrap justify-center gap-2">
-          <Reading tone="ok">캘린더 - Porest Desk</Reading>
-          <Reading>문서 제목은 화면마다 &ldquo;{'{'}화면 제목{'}'} - Porest Desk&rdquo;</Reading>
+          <Reading tone="ok">캘린더 - 그루 담다</Reading>
+          <Reading>문서 제목은 화면마다 &ldquo;{'{'}화면 제목{'}'} - 그루 담다&rdquo;</Reading>
         </div>
       </div>
     </Plate>

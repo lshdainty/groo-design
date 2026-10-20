@@ -4,7 +4,7 @@ import { CircleAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Field — 구조는 SEED Field(2026-10-01). 수치 원본은 specs/components/field.yaml.
+ * Groo Field — 구조는 SEED Field(2026-10-01). 수치 원본은 specs/components/field.yaml.
  *
  *   Field            머리(라벨 · 필수 점 또는 "선택" · 보조 액션) · 입력 · 꼬리(설명 또는 오류 · 글자 수). 사이 8
  *   useFieldControl  입력(Input · Textarea)이 Field 의 id · 설명 · 오류 · 필수 · 막힘을 받는다

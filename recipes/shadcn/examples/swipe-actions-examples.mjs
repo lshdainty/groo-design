@@ -1,7 +1,7 @@
 /*
  * shadcn Swipe Actions 예제 — docs site components/swipe-actions.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 하나(가계부 줄)는 차례 · 제목 · 코드가 specs/components/swipe-actions.md 의 "코드" 절과
- * 같고, 뒤의 둘(동작 셋 — 고정 · 수정 · 삭제 · 막힌 동작)은 md 의 동작 · 상태를 코드로 더 보인다. SEED 에는 줄 밀기가 없다 — porest 에만 있는
+ * 같고, 뒤의 둘(동작 셋 — 고정 · 수정 · 삭제 · 막힌 동작)은 md 의 동작 · 상태를 코드로 더 보인다. SEED 에는 줄 밀기가 없다 — groo 에만 있는
  * 지름길이고, SEED Inclusive Design 의 "복잡한 제스처는 단순한 터치 동작으로도" 를 따라 같은 동작을 늘 줄 끝 ⋮ → Menu Sheet 로도 연다.
  * 2026-10-08 — 다크 배지(fg-informative · fg-critical 채움 + fg-neutral-inverted 아이콘) · 중립 배지(bg-neutral-weak + 안쪽 1px) · 라벨 색 ·
  * 줄 높이 1.3 · Esc 뒤 초점을 고쳤다(데이터 표시 결정의 "줄 밀기"). 옛 예제(테두리 상자 · 옛 색 이름)를 대신한다.

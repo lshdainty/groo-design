@@ -2,7 +2,7 @@
 
 > 물건 하나를 보이는 각진 타일 — 은행 · 증권 · 카드 · 코인 · 금 같은 자산과 회사를 기관 색 면 + 이름의 첫 글자로 그리고, 그림(카드 그림 · 로고)이 있으면 그림이 오는 대로 덮는다. 사람은 [Avatar](avatar.md)(원), 카테고리 · 기능은 [List](list.md) 의 타일(옅은 색 + 아이콘), 사진 · 카드 그림 자체는 [Image Frame](image-frame.md) 이다.
 
-SEED 에는 이 부품이 없다 — 가게 · 업체는 원 Avatar(Identity Placeholder `business`)이고 로고 · 브랜드 마크의 규칙은 출처에 없다. porest 는 사람만 Avatar 로 두기로 했고(2026-10-03), 물건은 이 타일이다. 모양 · 크기는 List 의 타일(40 · 모서리 크기 × 0.3), 첫 글자와 이름 색은 Avatar 의 규칙, 윤곽은 Image Frame 의 투명 윤곽이다(2026-10-04 사용자 결정). 지금 제품의 자산 로고(웹 `AssetLogo` · 앱 `AssetLogo`)와 HR 회사 로고를 대신한다.
+SEED 에는 이 부품이 없다 — 가게 · 업체는 원 Avatar(Identity Placeholder `business`)이고 로고 · 브랜드 마크의 규칙은 출처에 없다. groo 는 사람만 Avatar 로 두기로 했고(2026-10-03), 물건은 이 타일이다. 모양 · 크기는 List 의 타일(40 · 모서리 크기 × 0.3), 첫 글자와 이름 색은 Avatar 의 규칙, 윤곽은 Image Frame 의 투명 윤곽이다(2026-10-04 사용자 결정). 지금 제품의 자산 로고(웹 `AssetLogo` · 앱 `AssetLogo`)와 HR 회사 로고를 대신한다.
 
 수치 원본은 [`logo-tile.yaml`](logo-tile.yaml)이고, 기관 색은 [`institution-colors.yaml`](institution-colors.yaml)(78곳 — 그림 없는 카드의 면과 함께 쓴다)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -215,8 +215,8 @@ import { LogoTile } from "@/components/ui/logo-tile"
 
 ## SEED 와 다른 점
 
-- **porest 에만 있는 부품이다** — SEED 는 가게 · 업체를 원 Avatar(Identity Placeholder `business`)로 그리고, 물건은 사진(Image Frame)뿐이며 로고 · 브랜드 마크 · 색 바탕 아이콘 타일의 규칙이 없다. 가장 가까운 SEED 값은 첨부 파일 썸네일(48 · 모서리 8 · 옅은 면 · 아이콘 24)이다.
-- **사람만 원, 물건은 각진 타일** — porest 결정(2026-10-03). 모양 · 크기는 List 타일(porest), 첫 글자 · 이름 색은 Avatar(porest), 윤곽만 SEED(Image Frame 의 stroke.neutral-subtle)다.
+- **groo 에만 있는 부품이다** — SEED 는 가게 · 업체를 원 Avatar(Identity Placeholder `business`)로 그리고, 물건은 사진(Image Frame)뿐이며 로고 · 브랜드 마크 · 색 바탕 아이콘 타일의 규칙이 없다. 가장 가까운 SEED 값은 첨부 파일 썸네일(48 · 모서리 8 · 옅은 면 · 아이콘 24)이다.
+- **사람만 원, 물건은 각진 타일** — groo 결정(2026-10-03). 모양 · 크기는 List 타일(groo), 첫 글자 · 이름 색은 Avatar(groo), 윤곽만 SEED(Image Frame 의 stroke.neutral-subtle)다.
 - **로고 그림은 잘리지 않게 흰 판 위** — SEED 의 그림은 모두 cover 라 로고를 맞추는 규칙이 없다.
 
 ## Migration notes
@@ -243,7 +243,7 @@ import { LogoTile } from "@/components/ui/logo-tile"
 
 - **Desk 웹 `AssetLogo`**(`entities/asset/ui/asset-logo.tsx:23-87`) — 모서리 `var(--radius-tile)` 12 고정(`:44 · 66`), 글자 800, 첫 글자 `charAt(0)`(`:53`), 카드 그림은 정사각 cover 에 불러오는 동안 투명 빈 칸(`:35-50`), 모노그램 글자를 읽고 그림이 뜨면 침묵한다(`:39 · 84`). 해시는 `oklch(.55 .12 h)`(`:5-10 · 56-60`). 색 우선순위가 저장된 `asset.color` → 표 → 해시라 만들 때 저장한 옛 색이 남는다 — 표에서 찾는다(저장된 값은 그대로 두고 읽지 않는다 — 옛 앱은 계속 저장된 값을 그리고, 강제 업데이트는 필요 없다).
 - **Desk 앱 `AssetLogo`**(`features/asset/presentation/widgets/asset_logo.dart:17-72`) — `ClipRRect(12)` 고정(`:28 · 59`) · 700 · 13, 그림은 `loadingBuilder` 없이 빈 칸(`:27-36`), 해시 `HSL(hash & 0xFF, .45, .45)`(`shared/brand/bank_colors.dart:553-560`)는 색상의 절반이 흰 글자 4.5 미만(최저 2.58)이다. 같은 자산이 웹 · 앱에서 다른 색이다("비상금" 웹 #9a6500 · 앱 #423fa6).
-- **흰 글자 미달 열 곳** — 유안타 2.54 · 대신 2.59 · 한화투자 2.63 · 빗썸 2.65 · 제주 2.89 · NH농협 · NH투자 3.19 · 코인원 3.33 · SC제일 3.68 · 키움 3.96(`shared/lib/porest/bank-colors.ts:52-555` — 앱 표도 같다). 표의 글자색으로(SC제일 · 키움 · 코인원 · 기타 금은방 · 롯데카드는 색을 조금 고쳤다 — ΔE 0.9 ~ 3.8).
+- **흰 글자 미달 열 곳** — 유안타 2.54 · 대신 2.59 · 한화투자 2.63 · 빗썸 2.65 · 제주 2.89 · NH농협 · NH투자 3.19 · 코인원 3.33 · SC제일 3.68 · 키움 3.96(`shared/lib/groo/bank-colors.ts:52-555` — 앱 표도 같다). 표의 글자색으로(SC제일 · 키움 · 코인원 · 기타 금은방 · 롯데카드는 색을 조금 고쳤다 — ΔE 0.9 ~ 3.8).
 - **다크에서 묻히는 짙은 남색 15곳**(BoA 1.02 · 현대차증권 1.05 · 케이뱅크 1.12 …)과 흰 바탕의 노랑(카카오뱅크 · 카카오페이증권 1.28) — 투명 윤곽으로.
 - **크기 · 모서리가 자리마다** — 웹 계좌 관리 줄 36 · 11(`widgets/asset-full/ui/AccountManager.tsx:368-375`), 앱 계좌 · 투자 추가 미리보기 52 · 8(`features/asset/presentation/account_add_dialog.dart:633-689` · `investment_add_dialog.dart:1182-1240`), 웹 같은 자리는 52 · 12. 줄은 40, 상세 머리는 48, 미리보기는 48 로.
 - **카드 추가 · 편집의 카탈로그 목록 썸네일** — 44 × 28 의 카드 그림(웹 `AssetEditDialog.tsx:1042-1060` · 앱 `card_add_dialog.dart:1030-1060`)은 Image Frame 카드 그림이다. 표에 없는 회사(BC 등)를 웹은 `--color-chart-brown` 갈색으로, 앱은 `borderDefault` 로 칠한다 — 카드 면 규칙(모르면 대체 그림)으로.

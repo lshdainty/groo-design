@@ -18,7 +18,7 @@ const round1 = (v: number) => Math.round(v * 10) / 10;
 // 기억한 폭 — 없거나 읽지 못하면 null(사생활 창 · 막힌 저장소)
 export function readSaved(key: string): number | null {
   try {
-    const v = Number(window.localStorage.getItem(`porest-split:${key}`));
+    const v = Number(window.localStorage.getItem(`groo-split:${key}`));
     return Number.isFinite(v) && v > 0 ? v : null;
   } catch {
     return null;
@@ -26,7 +26,7 @@ export function readSaved(key: string): number | null {
 }
 function save(key: string, v: number) {
   try {
-    window.localStorage.setItem(`porest-split:${key}`, String(v));
+    window.localStorage.setItem(`groo-split:${key}`, String(v));
   } catch {
     /* 저장하지 못해도 폭은 바뀐다 */
   }

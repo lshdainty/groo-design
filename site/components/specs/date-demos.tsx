@@ -689,7 +689,7 @@ export function DatePickerPlayground({ kits, ovs, sels, field }: { kits: Record<
                 w={stageW}
                 h={stageH}
                 title={brand === 'hr' ? '업무 보고' : '통계'}
-                url={brand === 'hr' ? 'hr.porest.app' : 'desk.porest.app'}
+                url={brand === 'hr' ? 'hr.groo.app' : 'desk.groo.app'}
                 onBackground={(e) => {
                   const t = e.target as HTMLElement;
                   if (open && !t.closest('[data-inline-surface]') && !t.closest('.psel-box')) close();
@@ -825,7 +825,7 @@ export function TimePickerPlayground({ kits, ovs, sels, field }: { kits: Record<
                 w={stageW}
                 h={stageH}
                 title="일정 추가"
-                url={brand === 'hr' ? 'hr.porest.app' : 'desk.porest.app'}
+                url={brand === 'hr' ? 'hr.groo.app' : 'desk.groo.app'}
                 onBackground={(e) => {
                   const t = e.target as HTMLElement;
                   if (open && !t.closest('[data-inline-surface]') && !t.closest('.psel-box')) close();

@@ -2,7 +2,7 @@
 
 > 작업이 진행 중임을 알리는 원 — 값을 모르면 호가 늘었다 줄며 돌고, 값을 알면 12시부터 값만큼 채운다. 섹션 하나를 새로 고칠 때 · 목록 끝을 더 불러올 때 · 구조를 미리 그릴 수 없는 화면을 기다릴 때 · 올리기 · 받기에 쓴다. 목록 · 카드처럼 구조가 보이는 자리를 처음 불러올 때는 [Skeleton](skeleton.md), 저장 버튼은 [Button](button.md) 의 로딩이다. 앱의 당겨서 새로 고침도 이 원이다(아래 "당겨서 새로 고침").
 
-구조는 당근 [SEED Progress Circle](https://seed-design.io/components/progress-circle)(Apache-2.0)을 따른다 — 트랙 · 호, 크기 24 · 40(두께 3 · 5), 값 없는 원 · 값 있는 원, 톤 neutral · brand · staticWhite · inherit. SEED 에는 "Spinner" 라는 컴포넌트가 없다 — 옛 Spinner 스펙(16 · 24 · 32 · 48, 브랜드 색 4분의 1 호 · 1.5초 일정 속도)을 이것이 대신한다. 당겨서 새로 고침은 SEED [Pull To Refresh](https://seed-design.io/react/components/pull-to-refresh)(React 문서뿐)의 수치를 따른다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정).
+구조는 당근 [SEED Progress Circle](https://seed-design.io/components/progress-circle)(Apache-2.0)을 따른다 — 트랙 · 호, 크기 24 · 40(두께 3 · 5), 값 없는 원 · 값 있는 원, 톤 neutral · brand · staticWhite · inherit. SEED 에는 "Spinner" 라는 컴포넌트가 없다 — 옛 Spinner 스펙(16 · 24 · 32 · 48, 브랜드 색 4분의 1 호 · 1.5초 일정 속도)을 이것이 대신한다. 당겨서 새로 고침은 SEED [Pull To Refresh](https://seed-design.io/react/components/pull-to-refresh)(React 문서뿐)의 수치를 따른다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정).
 
 수치 원본은 [`progress-circle.yaml`](progress-circle.yaml)과 [`pull-to-refresh.yaml`](pull-to-refresh.yaml)(당겨서 새로 고침)이다. 언제 보이고 언제 실패로 바꾸는지는 [Skeleton 의 "기다리는 동안"](skeleton.md#기다리는-동안) 한 곳에 있다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -235,12 +235,12 @@ onRefresh: () async { ref.invalidate(dashboardProvider); },
 ## SEED 와 다른 점
 
 - **`neutral` 원은 3:1 이 넘는 색**(`stroke-neutral-solid`, 흰 면 위 4.18 · 다크 4.13) — SEED 의 gray-500 원은 흰 화면 위 1.50:1 로 WCAG 1.4.11 에 못 미친다(사용자 결정 "SEED 모양 + 보이는 색"). 모양 · 크기 · 움직임은 SEED 그대로다.
-- **`brand` 는 porest 역할 짝** — 원 `stroke-brand-solid`(다크는 밝은 짝) · 트랙 `bg-brand-weak-pressed`. SEED 는 #ff6600 을 다크에서도 그대로 쓴다.
+- **`brand` 는 groo 역할 짝** — 원 `stroke-brand-solid`(다크는 밝은 짝) · 트랙 `bg-brand-weak-pressed`. SEED 는 #ff6600 을 다크에서도 그대로 쓴다.
 - **`staticWhite` 트랙은 흰 30%** — Button v112 의 채운 버튼 원과 같다(SEED 18%).
 - **값 있는 원은 `min` · `max` 를 지키고 채움이 300ms 로 따라 찬다** — SEED 웹은 둘 다 고장이다(0 ~ 5 중 3 이 3% 로 그려지고, 채움이 건너뛴다).
 - **모션 줄이기면 돌지 않는다** — 값 없는 원은 고정된 3/4 호(v104). SEED 는 계속 돈다.
 - **이름 · 값 글은 한국어** — "불러오는 중" · "40%". SEED 웹은 이름이 없고 값 글이 영어("loading..." · "40 percent")다.
-- **작은 판 · 화면 전체 딤 위의 원은 두지 않는다** — SEED 그림의 반투명 판(60 · 88)은 스펙에 없고, porest 는 틀을 그리고 콘텐츠 영역에 원을 둔다.
+- **작은 판 · 화면 전체 딤 위의 원은 두지 않는다** — SEED 그림의 반투명 판(60 · 88)은 스펙에 없고, groo 는 틀을 그리고 콘텐츠 영역에 원을 둔다.
 - **당겨서 새로 고침의 지시자는 쉴 때 보조 기술에 숨긴다** — SEED 는 안 보이는 원이 "0 percent" 로 읽힌다. 모션 줄이기면 내용이 바로 제자리로 간다.
 
 ## Migration notes

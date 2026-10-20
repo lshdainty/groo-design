@@ -2,7 +2,7 @@
 
 > 테두리 상자로 선택지를 보여 주고 하나 · 여럿을 고르게 하는 컴포넌트. 설명 · 그림 · 딸린 입력이 붙는 선택지를 비교해 고르고, 저장 · 다음 같은 버튼으로 반영하는 자리에 쓴다.
 
-구조는 당근 [SEED Select Box](https://seed-design.io/components/select-box)(Apache-2.0)를 따른다 — 하나 고르기(Radio Select Box) · 여럿 고르기(Check Select Box) · 묶음(Select Box Group). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정).
+구조는 당근 [SEED Select Box](https://seed-design.io/components/select-box)(Apache-2.0)를 따른다 — 하나 고르기(Radio Select Box) · 여럿 고르기(Check Select Box) · 묶음(Select Box Group). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정).
 
 수치 원본은 [`select-box.yaml`](select-box.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -325,7 +325,7 @@ const toggle = (code: string, on: boolean) =>
 - **누름 · 호버 바탕은 불투명한 `bg-layer-default-pressed`** — SEED 의 transparent-pressed 는 투명도가 있어 검사기가 받지 않는다(v102).
 - **웹의 호버 · 포커스 상태를 둔다**(v106) — 호버는 누름과 같은 바탕.
 - **펼침 안쪽 여백을 컴포넌트가 정한다**(좌우 20 · 아래 16) — SEED 는 쓰는 쪽이 정한다(예제 값이 이것이다).
-- **여럿 고르기의 체크는 Checkbox 의 Ghost 칸**(체크 14) — SEED 는 선택 상자 전용 체크(15)이고 호버에 색이 한 단계 진해진다. porest 는 호버에 색을 바꾸지 않는다 — 정할 때 `fg-placeholder` 와 `fg-neutral-subtle` 이 같은 색이었다. v119(2026-10-16 글자 역할 D7)에서 `fg-placeholder` 가 SEED 처럼 gray-600 으로 옅어져 두 색은 이제 갈리지만, 호버 색은 이 결정 밖이라 그대로 둔다.
+- **여럿 고르기의 체크는 Checkbox 의 Ghost 칸**(체크 14) — SEED 는 선택 상자 전용 체크(15)이고 호버에 색이 한 단계 진해진다. groo 는 호버에 색을 바꾸지 않는다 — 정할 때 `fg-placeholder` 와 `fg-neutral-subtle` 이 같은 색이었다. v119(2026-10-16 글자 역할 D7)에서 `fg-placeholder` 가 SEED 처럼 gray-600 으로 옅어져 두 색은 이제 갈리지만, 호버 색은 이 결정 밖이라 그대로 둔다.
 - **칸이 비지 않게 한다** — 5개를 2열에 두는 것처럼 빈 칸이 생기면 1열로 쌓거나 열 수를 맞춘다(제품 조사에서 더했다).
 - 묶음의 칸 이름 · 설명 · 오류는 묶음이 아니라 [Field](field.md) 가 그린다(2026-10-01 — SEED 의 Select Box Group Field 자리). SEED 의 Fieldset 은 따로 두지 않는다.
 - 고른 테두리 `stroke-neutral-contrast` 는 v113 에 더한 역할이다(SEED 와 같은 gray-1000).
@@ -342,7 +342,7 @@ const toggle = (code: string, on: boolean) =>
 
 - **데스크톱** — 팝오버 250 안 cmdk 검색 + 체크 줄이고, 줄을 누를 때마다 `await` 없이 사용자 전체를 PUT 한다(hr-front `features/admin-authority/ui/UserRoleAssignment.tsx:29-36 · 98-132` · 저장 `UserManagementPanel.tsx:60-87`). 두 번 빨리 누르면 두 번째 요청이 첫 변경을 모르는 목록으로 계산될 수 있다(코드로 읽은 위험). 검색은 역할 이름으로만 된다.
 - **폰** — 시트 85vh + 검색칸(이름 · 코드) + 체크 카드(`div onClick` — 키보드로 못 닿는다) + "완료" 로 한 번 저장(`MobileRoleSelector.tsx:46-64 · 80-140 · 140-145`). 저장 오류를 스스로 삼켜 실패해도 시트가 닫힌다.
-- **역할 수** — 관리자가 "역할" 탭에서 늘리고 지울 수 있고 상한이 없다. 기본은 넷(porest-sql `hr/data/4. roles.sql` — 관리자 · 일반 사용자 · 승인권자 · 업무 코드 관리자). 비교 페이지는 여덟 개로 그렸다 — 가장 긴 "일반 사용자" 설명도 폰 상자에서 두 줄에 든다. 설명은 1000자까지 쓸 수 있어(`Role.java:52`) 더 길면 두 줄을 넘는다.
+- **역할 수** — 관리자가 "역할" 탭에서 늘리고 지울 수 있고 상한이 없다. 기본은 넷(groo-sql `hr/data/4. roles.sql` — 관리자 · 일반 사용자 · 승인권자 · 업무 코드 관리자). 비교 페이지는 여덟 개로 그렸다 — 가장 긴 "일반 사용자" 설명도 폰 상자에서 두 줄에 든다. 설명은 1000자까지 쓸 수 있어(`Role.java:52`) 더 길면 두 줄을 넘는다.
 - **걷는 것** — `shared/ui/shadcn/command.tsx` · 배럴 재수출(`shared/ui/shadcn/index.ts:39-49`) · `cmdk` 의존, 고아가 되는 번역 키 `authority.noRoleFound`. 같은 시트 모양의 "권한 관리"(`MobilePermissionDrawer.tsx` — 역할 탭)는 그 차례에 이 모양으로 맞춘다.
 
 ### 2026-10-08 — Enter 는 폼 제출

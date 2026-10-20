@@ -116,7 +116,7 @@ export function KeyframePlayer({ single, loop, reduced, shimmer, palette: p }: {
 
   const box: CSSProperties = { width: 36, height: 36, borderRadius: 8, background: p.weak, border: `1.5px solid ${p.line}` };
   const loopRunning = loopOn && !isReduced;
-  const loopAnim = (k: Kf) => (loopRunning ? `porest-${k.name} ${k.ms}ms ${k.ease} infinite` : 'none');
+  const loopAnim = (k: Kf) => (loopRunning ? `groo-${k.name} ${k.ms}ms ${k.ease} infinite` : 'none');
 
   return (
     <div className="flex flex-col gap-4">
@@ -143,7 +143,7 @@ export function KeyframePlayer({ single, loop, reduced, shimmer, palette: p }: {
               <div className="flex h-14 items-center justify-center">
                 <span
                   key={n}
-                  style={{ ...box, animation: n && pl ? `porest-${pl.anim} ${pl.ms}ms ${pl.ease} both` : 'none', opacity: pl ? 1 : 0.35 }}
+                  style={{ ...box, animation: n && pl ? `groo-${pl.anim} ${pl.ms}ms ${pl.ease} both` : 'none', opacity: pl ? 1 : 0.35 }}
                   onAnimationEnd={() => stop(k.name)}
                 />
               </div>

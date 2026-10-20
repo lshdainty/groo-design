@@ -2,7 +2,7 @@
 
 > 같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게 보는 컨트롤. 그 내용 바로 위에, 한 화면에 하나 둔다. 다른 구역으로 옮기면 [Tabs](tabs.md), 2 ~ 4개 짧은 폼 값은 [Chip](chip.md), 목록 조건을 여럿 걸고 풀면 Chip 의 필터 바다.
 
-구조는 당근 [SEED Segmented Control](https://seed-design.io/components/segmented-control)(Apache-2.0)을 따른다 — 트랙 · 칸 · 글 · 고른 알약. 칸 폭만 porest 가 다시 정했고(칸이 트랙을 똑같이 나눈다), 나머지 값은 porest 토큰이다. SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
+구조는 당근 [SEED Segmented Control](https://seed-design.io/components/segmented-control)(Apache-2.0)을 따른다 — 트랙 · 칸 · 글 · 고른 알약. 칸 폭만 groo 가 다시 정했고(칸이 트랙을 똑같이 나눈다), 나머지 값은 groo 토큰이다. SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
 수치 원본은 [`segmented-control.yaml`](segmented-control.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -136,13 +136,13 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 
 ## SEED 와 다른 점
 
-- **칸이 트랙 폭을 똑같이 나눈다** — SEED 는 칸 최소 86 · 좌우 24 라 4개(352)가 360 · 375 폰에 들어가지 않는다(SEED 안에서 2 ~ 4개를 허용하는 규칙과 어긋난다). porest 는 최소 폭 없이 칸 수로 나누고 좌우 12 다 — 높이 · 글 · 알약은 SEED 그대로(사용자 결정 2026-10-02).
+- **칸이 트랙 폭을 똑같이 나눈다** — SEED 는 칸 최소 86 · 좌우 24 라 4개(352)가 360 · 375 폰에 들어가지 않는다(SEED 안에서 2 ~ 4개를 허용하는 규칙과 어긋난다). groo 는 최소 폭 없이 칸 수로 나누고 좌우 12 다 — 높이 · 글 · 알약은 SEED 그대로(사용자 결정 2026-10-02).
 - **반투명 색을 불투명 짝으로**(v102) — 안 고른 칸 누름 테두리 `stroke-neutral-weak`. 트랙은 SEED 그대로 투명한 `bg-neutral-weak-alpha` 다 — v102 에는 검사기가 8자리 hex 를 받지 않아 불투명 `bg-neutral-weak` 로 두었는데, 회색 바닥 위에서 트랙이 바닥과 같은 색(1.00:1)이라 흰 알약만 떠 보여 v120 에 되돌렸다(2026-10-16 사용자 결정 — 기초 웹 01-040 B). 고른 알약은 SEED `palette.gray-00`(라이트 흰 · 다크 검정) 대신 `bg-layer-default` — 다크에서도 트랙보다 어둡다. 고른 칸 누름은 `bg-layer-default-pressed`.
 - **고른 알약의 테두리를 짙게** — SEED 의 옅은 1px(`stroke.neutral-muted`)는 트랙과 1.14:1 이라 고른 칸이 WCAG 1.4.11 에 못 미친다. 짙은 1px `stroke-neutral-contrast`(트랙과 라이트 13.71 ~ 14.79 · 다크 7.84 ~ 10.33:1)로 바꿨다 — Chip(Outline Weak 고름) · Select Box 의 고른 표시와 같은 말이다. 고른 채 막히면 `stroke-neutral-solid`(사용자 결정 2026-10-02).
 - **안 고른 칸을 올리거나 누르는 동안 글을 `fg-neutral-muted` 로** — 누름 바탕 위 `fg-neutral-subtle` 이 다크에서 3.91:1 이라서다(List 의 강조 줄과 같은 방법).
 - **다크의 안 고른 글은 늘 `fg-neutral-muted`** — SEED 는 `fg.neutral-subtle` 이다. 투명 트랙(v120)이 다크 표면에 섞여 밝아지면서 subtle 이 카드 위 4.09 · 시트 위 3.56 이 돼, 다크만 한 단계 짙게 둔다(카드 5.18 · 시트 4.50). 라이트는 subtle 그대로(4.59 ~ 4.95)다(2026-10-17 사용자 결정 — 01-040 B 후속).
 - **줄바꿈은 단어 단위**(v114) — SEED 는 글자 단위(`overflow-wrap: break-word`)다.
-- **알림 점은 브랜드 글자색**(`fg-brand`)이고, 보조 기술에 "새 소식" 을 덧붙인다. SEED 의 `bg.brand-solid` 짝은 porest 다크에서 트랙과 1.33 · 2.20:1 이라 쓰지 않는다. 고른 칸에는 점을 그리지 않는다.
+- **알림 점은 브랜드 글자색**(`fg-brand`)이고, 보조 기술에 "새 소식" 을 덧붙인다. SEED 의 `bg.brand-solid` 짝은 groo 다크에서 트랙과 1.33 · 2.20:1 이라 쓰지 않는다. 고른 칸에는 점을 그리지 않는다.
 
 ## Migration notes
 

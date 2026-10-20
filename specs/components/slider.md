@@ -2,7 +2,7 @@
 
 > 정해진 범위에서 값을 끌어 고르는 컨트롤 — 예산 알림 임계값처럼 정확한 숫자보다 범위 안의 자리가 중요한 값, 그리고 별점처럼 2 ~ 5단계 가운데 하나를 고른다. 정확한 숫자 · 금액은 [Input](input.md), 이름이 붙은 2 ~ 4개는 [Chip](chip.md), 5개 이상은 [Select](select.md) 다.
 
-구조는 당근 [SEED Slider](https://seed-design.io/components/slider)(Apache-2.0)를 따른다 — 트랙(Track) · 채움(Active Track) · 손잡이(Handle) · 눈금(Tick Mark) · 표식(Marker) · 말풍선(Value Indicator). 모양은 SEED 의 무채색 그대로이고, 손잡이 줄 높이 · 머리 값 · 저장 시점 · 키보드는 porest 가 정했다(2026-10-09 사용자 결정). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 Slider 스펙(브랜드 채움 · 흰 손잡이 16 + 2px 브랜드 테두리 + 그림자 · 아래 meta 줄)을 대신한다.
+구조는 당근 [SEED Slider](https://seed-design.io/components/slider)(Apache-2.0)를 따른다 — 트랙(Track) · 채움(Active Track) · 손잡이(Handle) · 눈금(Tick Mark) · 표식(Marker) · 말풍선(Value Indicator). 모양은 SEED 의 무채색 그대로이고, 손잡이 줄 높이 · 머리 값 · 저장 시점 · 키보드는 groo 가 정했다(2026-10-09 사용자 결정). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 Slider 스펙(브랜드 채움 · 흰 손잡이 16 + 2px 브랜드 테두리 + 그림자 · 아래 meta 줄)을 대신한다.
 
 수치 원본은 [`slider.yaml`](slider.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -269,7 +269,7 @@ import { RangeSlider, SliderValue } from "@/components/ui/slider"
 - **손잡이 줄 44** — SEED 26(표식이 있으면 46)은 기초 Inclusive Design 의 44 에 못 미친다. 줄 전체가 누르는 자리다.
 - **역할 색 이름** — 트랙은 SEED palette.gray-400 과 같은 단계의 역할 `stroke-neutral-weak`(흰 표면 1.23, SEED 1.35), 손잡이 · 말풍선은 SEED bg.neutral-solid(2026-10-01 전 이름 bg.neutral-inverted)의 짝 `bg-neutral-inverted` 다. 라이트에서 채움과 손잡이가 같은 색이다(SEED 는 #1a1c20 · #2a3038, 1.28:1).
 - **머리 값** — SEED 는 가만히 있을 때 값을 보이지 않는다(말풍선 · 표식은 SEED 그대로).
-- **키보드는 APG** — SEED 는 `Home` 이 첫 손잡이 · `End` 가 끝 손잡이를 움직이고(포커스와 무관 — Radix 원본과 같다), RTL 에서 `↑` 가 줄인다(Radix 와도 다르다). porest 는 포커스한 손잡이를 움직이고 `↑` 는 늘 늘린다.
+- **키보드는 APG** — SEED 는 `Home` 이 첫 손잡이 · `End` 가 끝 손잡이를 움직이고(포커스와 무관 — Radix 원본과 같다), RTL 에서 `↑` 가 줄인다(Radix 와도 다르다). groo 는 포커스한 손잡이를 움직이고 `↑` 는 늘 늘린다.
 - **저장 시점 · 요청 중 막지 않기 · 실패 처리** — SEED 는 `onValuesCommit` 만 두고 규칙은 없다.
 - **눈금은 구간 수로 레시피가 가른다** — SEED 는 쓰는 쪽이 `ticks` 를 넘긴다(문서는 "2~5개의 스텝", 예제는 9개도 있다). 가는 눈금(thin 1)은 두지 않는다 — 구간이 6개 이상이면 눈금 없이 양 끝 표식이다.
 
@@ -277,7 +277,7 @@ import { RangeSlider, SliderValue } from "@/components/ui/slider"
 
 ### 2026-10-09 — SEED Slider 로 다시 쓴다
 
-사용자가 [입력 비교 페이지](https://claude.ai/artifact/CwVJDATSmLtwQoH67wh1zj)에서 정했다 — 모양은 SEED 무채색(1B — 트랙 gray-400 · 채움 `fg-neutral` · 손잡이 20 · 누르면 24 · 테두리 · 그림자 없음 · 다크는 채움 = 손잡이 · 손잡이 줄 44), 값은 머리 값 + 끄는 동안 · 호버 · 키보드 포커스 때 말풍선 + 아래 양 끝 표식(2C), 눈금은 2 ~ 5 구간만 굵은 틈이고 2 ~ 5단계도 Slider(3B), 저장은 손을 뗄 때 한 번 · 요청 중에도 막지 않고 · 실패하면 되돌리고 그 자리에서(4B). 그리고 "따라오는 것" — 이름은 칸 라벨 · `aria-valuetext` 단위 · APG 키보드 · 막힘 전용 색 · 쓰지 않는 앱 `PRangeSlider` 걷음. 지금 porest 모양(1A) · SEED 모양 + 브랜드 채움(1C) · 숫자 여섯(2A) · 가만히 있을 때 값 없음(2B) · 점 눈금 11 + 숫자 6(3A) · 단계마다 저장 + 막힘(4A) · 400ms 지연(4C) · 저장 버튼(4D)은 고르지 않았다. 옛 스펙은 `slider.history/v-pre-seed-input.*` 에 남겼다.
+사용자가 [입력 비교 페이지](https://claude.ai/artifact/CwVJDATSmLtwQoH67wh1zj)에서 정했다 — 모양은 SEED 무채색(1B — 트랙 gray-400 · 채움 `fg-neutral` · 손잡이 20 · 누르면 24 · 테두리 · 그림자 없음 · 다크는 채움 = 손잡이 · 손잡이 줄 44), 값은 머리 값 + 끄는 동안 · 호버 · 키보드 포커스 때 말풍선 + 아래 양 끝 표식(2C), 눈금은 2 ~ 5 구간만 굵은 틈이고 2 ~ 5단계도 Slider(3B), 저장은 손을 뗄 때 한 번 · 요청 중에도 막지 않고 · 실패하면 되돌리고 그 자리에서(4B). 그리고 "따라오는 것" — 이름은 칸 라벨 · `aria-valuetext` 단위 · APG 키보드 · 막힘 전용 색 · 쓰지 않는 앱 `PRangeSlider` 걷음. 지금 groo 모양(1A) · SEED 모양 + 브랜드 채움(1C) · 숫자 여섯(2A) · 가만히 있을 때 값 없음(2B) · 점 눈금 11 + 숫자 6(3A) · 단계마다 저장 + 막힘(4A) · 400ms 지연(4C) · 저장 버튼(4D)은 고르지 않았다. 옛 스펙은 `slider.history/v-pre-seed-input.*` 에 남겼다.
 
 | 옛 Slider | 새 Slider |
 |---|---|

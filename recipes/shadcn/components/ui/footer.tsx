@@ -4,18 +4,18 @@ import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Footer — 짜임은 SEED Footer(2026-10-15, 디자인 문서 "조합 예시" · registry block footer-01 ~ 04 · qvism-preset footer recipe).
+ * Groo Footer — 짜임은 SEED Footer(2026-10-15, 디자인 문서 "조합 예시" · registry block footer-01 ~ 04 · qvism-preset footer recipe).
  * 수치 원본은 specs/components/footer.yaml.
  * 사이트 맨 아래의 바닥 — 정해진 한 덩어리가 아니라 블록을 골라 조립한다. 필수 블록은 없고 위 → 아래 순서만 있다:
  *   탐색 영역(FooterNav — 브랜드 · 사이트맵) · 선(FooterDivider — 두 영역을 함께 쓸 때만) · 안내 영역(FooterInfo — 정책 링크 · 안내 글 ·
  *   사업자 정보 · 연락처 · 저작권 줄). 블록을 빼도 순서는 바꾸지 않는다. Desk · HR 의 제품 화면 · 앱에는 두지 않는다(정책 링크는 설정 목록의 줄).
- *   사업자 정보 · 연락처 · 소셜은 블록만 있다 — 값을 지어내 넣지 않는다(porest 에는 아직 그 값이 어디에도 없다).
+ *   사업자 정보 · 연락처 · 소셜은 블록만 있다 — 값을 지어내 넣지 않는다(groo 에는 아직 그 값이 어디에도 없다).
  *
  *   Footer           <footer>(contentinfo — 한 페이지에 하나, article · section 안에 두지 않는다). 위 선(topLine, 기본 true — 화면 폭 전체
  *                    1px stroke-neutral-subtle)을 긋고, 안에 최대 1040(layout-max-content)의 가운데 틀 — 위아래 40 · 좌우 32(1280 미만 24 —
  *                    spacing-global-gutter) · 영역 사이 40. 바탕은 페이지 바탕 그대로(투명)
  *   FooterNav        탐색 영역 줄 — 브랜드 · 사이트맵을 한 줄에(사이 32), 넘치면 사이트맵이 브랜드 아래로(위아래도 32)
- *   FooterBrand      name(필수 — 글자 로고 "POREST" t7 20 / 27 · 700 · fg-neutral) · description(소개 한 줄 — t3 13 / 18 ·
+ *   FooterBrand      name(필수 — 글자 로고 "그루" t7 20 / 27 · 700 · fg-neutral) · description(소개 한 줄 — t3 13 / 18 ·
  *                    fg-neutral-subtle · 최대 340, 넘치면 줄을 바꾼다). 남은 폭을 차지하고(1 1 240) 최소 120, 이름 ↔ 소개 8
  *   FooterSitemap    <nav aria-label="사이트 지도">(기본 이름 — 머리의 주 메뉴 nav 와 이름으로 갈린다). 열을 가로로(사이 32 · 줄바꿈)
  *   FooterColumn     title(필수 — 열 제목 t3 13 / 18 · 500 · fg-neutral-muted, 머리말이 아니라 링크 목록의 이름 — aria-labelledby).
@@ -26,7 +26,7 @@ import { cn } from "@/lib/utils";
  *   FooterText       안내 글 · 사업자 정보 · 연락처 — t3 13 / 18 · fg-neutral-subtle. 사업자 정보 · 연락처는 항목을 " | " 로 잇고
  *                    묶음이 바뀌면 줄을 바꾼다(<br />)
  *   FooterBottom     저작권 줄 — 저작권(앞) · 소셜(끝)이 1280 이상은 한 줄 양 끝(사이 16 · 넘치면 줄바꿈), 1280 미만은 위아래(왼쪽 정렬)
- *   FooterCopyright  owner(필수) · year(기본 그리는 때의 해) → "© 2026 POREST" — t4 14 / 19 · 500 · fg-neutral-muted. 안내 영역의 마지막
+ *   FooterCopyright  owner(필수) · year(기본 그리는 때의 해) → "© 2026 그루" — t4 14 / 19 · 500 · fg-neutral-muted. 안내 영역의 마지막
  *   FooterSocial     소셜 버튼 묶음(사이 24) — 안에는 Button ghost · large · iconOnly + 이름. 버튼마다 바깥 여백만큼 끝을 맞춘다
  *                    (SEED bleedX asPadding — 좌우 −12)
  *   FooterLink       href(필수) · size(large — 사이트맵 t5 16 / 22 · 500 · fg-neutral, 올리면 · 누르면 fg-neutral-subtle /
@@ -94,7 +94,7 @@ const FooterNav = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivE
 FooterNav.displayName = "FooterNav";
 
 export interface FooterBrandProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
-  /** 글자 로고 — "POREST" */
+  /** 글자 로고 — "그루" */
   name: React.ReactNode;
   /** 소개 한 줄 */
   description?: React.ReactNode;
@@ -174,7 +174,7 @@ const FooterBottom = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLD
 FooterBottom.displayName = "FooterBottom";
 
 export interface FooterCopyrightProps extends Omit<React.HTMLAttributes<HTMLParagraphElement>, "children"> {
-  /** 저작권자 — "POREST" */
+  /** 저작권자 — "그루" */
   owner: string;
   /** 해 — 기본은 그리는 때의 해(박아 두지 않는다) */
   year?: number;

@@ -2,7 +2,7 @@
 
 > 안 읽은 알림 · 확인하지 않은 새 것이 있다는 신호 — 점(있음)과 숫자(몇 개). 아이콘 버튼 · 탭 글에 붙고, 보면 사라진다. 대상의 상태 · 분류를 글로 보이는 것은 [Badge](badge.md) 다.
 
-구조는 당근 [SEED Notification Badge](https://seed-design.io/components/notification-badge)(Apache-2.0)를 따른다 — 점(Small) · 숫자 알약(Large), 아이콘 · 글에 붙는 자리, 크기 · 자리는 고정. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). porest 에 처음 두는 컴포넌트다 — Tabs · Chip Tabs · Segmented Control 의 알림 점도 이 점이다.
+구조는 당근 [SEED Notification Badge](https://seed-design.io/components/notification-badge)(Apache-2.0)를 따른다 — 점(Small) · 숫자 알약(Large), 아이콘 · 글에 붙는 자리, 크기 · 자리는 고정. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). groo 에 처음 두는 컴포넌트다 — Tabs · Chip Tabs · Segmented Control 의 알림 점도 이 점이다.
 
 수치 원본은 [`notification-badge.yaml`](notification-badge.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -202,10 +202,10 @@ import { NotificationBadge } from "@/components/ui/notification-badge"
 
 ## SEED 와 다른 점
 
-- **점은 브랜드 글자색**(`fg-brand` — 다크에서 밝은 짝) — SEED 는 점도 채움 색(bg.brand-solid)이다. porest 다크에서 채움 색 점은 표면과 Desk 1.73 · HR 2.86:1 로 묻힌다. 숫자 알약은 SEED 대로 채움 색 + 흰 숫자다.
+- **점은 브랜드 글자색**(`fg-brand` — 다크에서 밝은 짝) — SEED 는 점도 채움 색(bg.brand-solid)이다. groo 다크에서 채움 색 점은 표면과 Desk 1.73 · HR 2.86:1 로 묻힌다. 숫자 알약은 SEED 대로 채움 색 + 흰 숫자다.
 - **숫자 상한은 "99+"** — SEED Bottom Navigation 문서를 따른다(Notification Badge 문서는 "최대 4자 · 999+" 로 두 문서가 다르다).
-- **이름에 넣는다** — SEED 는 점 · 숫자에 이름이 없고 붙은 탭 · 버튼의 이름도 그대로라 소리로 알 수 없다. porest 는 붙은 버튼 · 탭의 이름에 "새 알림 3개" · "새 소식" 을 넣는다.
-- **점 둘레 링이 없다** — SEED Top Navigation 그림의 바탕색 링(3)은 CSS 에 없다. porest 도 두지 않는다(6 전체가 색).
+- **이름에 넣는다** — SEED 는 점 · 숫자에 이름이 없고 붙은 탭 · 버튼의 이름도 그대로라 소리로 알 수 없다. groo 는 붙은 버튼 · 탭의 이름에 "새 알림 3개" · "새 소식" 을 넣는다.
+- **점 둘레 링이 없다** — SEED Top Navigation 그림의 바탕색 링(3)은 CSS 에 없다. groo 도 두지 않는다(6 전체가 색).
 - 크기 · 자리 · 숫자 글자(글자 크기 설정을 따르지 않음) · 모션 없음은 SEED 와 같다.
 
 ## Migration notes
@@ -224,9 +224,9 @@ YAML 의 숫자(large) 글자가 rem 토큰(`$text-t1`)을 가리키고 "글자 
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-03 조사).
 
-- **Desk 웹 상단 바** — 점 7 × 7 에 2px 표면 테두리를 둘러 빨강이 3 × 3 이다(`widgets/layout/ui/PorestTopBar.tsx:54-68` · `:65`). 모바일 머리는 6 × 6(`MobileHeader.tsx:47-61`). 둘 다 `aria-hidden` 이고 버튼 이름은 "알림" 뿐 — 새 알림이 있는지 소리로 알 수 없다. 빨강(`--fg-expense`)을 브랜드 점 6 으로.
+- **Desk 웹 상단 바** — 점 7 × 7 에 2px 표면 테두리를 둘러 빨강이 3 × 3 이다(`widgets/layout/ui/GrooTopBar.tsx:54-68` · `:65`). 모바일 머리는 6 × 6(`MobileHeader.tsx:47-61`). 둘 다 `aria-hidden` 이고 버튼 이름은 "알림" 뿐 — 새 알림이 있는지 소리로 알 수 없다. 빨강(`--fg-expense`)을 브랜드 점 6 으로.
 - **Desk 앱 상단 바** — 7 × 7 빨강 · 의미 노드 없음(`shared/widgets/mobile_header.dart:82-118`), 버튼은 툴팁 "알림" 뿐.
 - **필터 개수** — 웹 16 알약 · `aria-hidden`(`pages/expense/ui/ExpensePage.tsx:1916-1929`), 앱 `PBadge` 23 × 17 · 버튼 이름 없이 "3" 으로만 읽힘(`features/expense/presentation/expense_screen.dart:874-901 · 929-936`, `features/todo/presentation/todo_screen.dart:699-707`), HR 버튼 안 "필터 3"(`work-report/ui/ReportHeader.tsx:43-58`). 필터 바는 Chip 결정대로 개수를 걷는다.
-- **상세 빠른 동작 위의 말** — 44 원 버튼 위 브랜드 알약에 "2개" · "연결됨" · "1건" 을 얹어 버튼 이름 앞에 붙어 "2개 내역 분할" · "연결됨 반복 설정" 으로 읽힌다(웹 `shared/ui/porest/detail.tsx:211-215` ← `TxDetailDialog.tsx:318-357`, 앱 `shared/widgets/p_detail.dart:292`). 알림이 아니다 — 버튼 글 · 설명으로 옮긴다.
-- **죽은 코드** — 웹 `features/notification/ui/NotificationBell.tsx:78-82`("99+" 10px · 빨강, 쓰는 곳 0) · `shared/ui/sidebar.tsx:628-647` `SidebarMenuBadge` · `porest.css:121 · 190` `.side__item .count`.
+- **상세 빠른 동작 위의 말** — 44 원 버튼 위 브랜드 알약에 "2개" · "연결됨" · "1건" 을 얹어 버튼 이름 앞에 붙어 "2개 내역 분할" · "연결됨 반복 설정" 으로 읽힌다(웹 `shared/ui/groo/detail.tsx:211-215` ← `TxDetailDialog.tsx:318-357`, 앱 `shared/widgets/p_detail.dart:292`). 알림이 아니다 — 버튼 글 · 설명으로 옮긴다.
+- **죽은 코드** — 웹 `features/notification/ui/NotificationBell.tsx:78-82`("99+" 10px · 빨강, 쓰는 곳 0) · `shared/ui/sidebar.tsx:628-647` `SidebarMenuBadge` · `groo.css:121 · 190` `.side__item .count`.
 - **HR** — 알림 기능이 없다. 생기면 같은 규칙(초록 점).

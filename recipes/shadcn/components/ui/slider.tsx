@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useFieldGroup, useFieldGroupState } from "@/components/ui/field";
 
 /*
- * Porest Slider — 구조는 SEED Slider(2026-10-09). 수치 원본은 specs/components/slider.yaml.
+ * Groo Slider — 구조는 SEED Slider(2026-10-09). 수치 원본은 specs/components/slider.yaml.
  *
  *   Slider        값 하나 — min · max · step(기본 1) · value · defaultValue · onValueChange(value — 움직일 때마다, 화면만) ·
  *                 onValueCommit(value — 손을 뗄 때 · 키마다 한 번, 바로 적용하는 저장은 여기서) · formatValue(value — 단위를 붙인 글,

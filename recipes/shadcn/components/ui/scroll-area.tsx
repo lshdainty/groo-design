@@ -3,10 +3,10 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Scroll Area — 기본 스크롤 + 전역 스크롤바 한 벌(2026-10-10). 수치 원본은 specs/components/scroll-area.yaml.
- * SEED 에는 Scroll Area · 스크롤바 규칙이 없다(끝 흐림 Scroll Fog 만) — porest 가 정했다. 내용 위에 겹쳐 뜨는 Radix ScrollArea(올리기 전에는
+ * Groo Scroll Area — 기본 스크롤 + 전역 스크롤바 한 벌(2026-10-10). 수치 원본은 specs/components/scroll-area.yaml.
+ * SEED 에는 Scroll Area · 스크롤바 규칙이 없다(끝 흐림 Scroll Fog 만) — groo 가 정했다. 내용 위에 겹쳐 뜨는 Radix ScrollArea(올리기 전에는
  * 보이지 않는 막대)와 ScrollBar 는 걷었다 — 스크롤은 브라우저 그대로(휠 · 키보드 · 끌기 · 관성)이고, 스크롤바 모양은 컴포넌트가 아니라
- * styles/porest-shadcn-bridge.css 의 전역 한 벌이다(6px 알약 · 막대 stroke-neutral-solid · 바탕 투명, Firefox 두 줄은
+ * styles/groo-shadcn-bridge.css 의 전역 한 벌이다(6px 알약 · 막대 stroke-neutral-solid · 바탕 투명, Firefox 두 줄은
  * @supports not selector(::-webkit-scrollbar) 안 — 크로미움은 scrollbar-width · scrollbar-color 가 걸리면 webkit 6px 을 버린다).
  *
  *   ScrollArea   기본 스크롤 상자(div) — orientation "vertical"(기본) · "horizontal" · "both"(넘치는 방향만 overflow: auto) ·

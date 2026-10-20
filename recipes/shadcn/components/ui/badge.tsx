@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Badge — 구조는 SEED Badge(2026-10-03). 수치 원본은 specs/components/badge.yaml.
+ * Groo Badge — 구조는 SEED Badge(2026-10-03). 수치 원본은 specs/components/badge.yaml.
  *
  *   Badge        대상의 상태 · 분류를 한두 낱말로 보이는 작은 라벨 — <span>. 누르지 않는다(호버 · 누름 · 포커스 · 비활성이 없다)
  *   BadgeGroup   한 대상의 배지 묶음 — 둘까지, 사이 4. 줄을 바꾸지 않는다

@@ -347,7 +347,7 @@ const OpenGuide: Fig = ({ caption }) => {
         </div>
         <div className="flex flex-col items-center gap-2">
           <ScaledBox w={popW + p.edge * 2} h={popWindowH} s={0.8}>
-          <WebWindow mode="light" w={popW + p.edge * 2} h={popWindowH} url="hr.porest.app">
+          <WebWindow mode="light" w={popW + p.edge * 2} h={popWindowH} url="hr.groo.app">
             <div className="h-full pt-6" style={{ background: rc('bg-layer-default', 'light', 'hr'), paddingLeft: p.edge, paddingRight: p.edge }}>
               <div className="relative w-[240px]">
                 <F mode="light" label="날짜">

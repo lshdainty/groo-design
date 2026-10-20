@@ -2,7 +2,7 @@
 
 > 불러오는 동안 곧 나타날 내용의 자리를 미리 그리는 회색 면. 목록 · 카드 · 상세처럼 구조가 정해진 자리에 쓴다 — 화면의 틀(머리 · 탭 · 제목 · 버튼 · 카드 면)은 실제로 그리고, 서버에서 올 데이터 자리만 스켈레톤이다. 저장 · 새로 고침처럼 행동 하나를 기다리는 자리는 [Progress Circle](progress-circle.md), 이미지가 없거나 못 불러온 자리는 [Content Placeholder](content-placeholder.md) 다.
 
-구조는 당근 [SEED Skeleton](https://seed-design.io/components/skeleton)(Apache-2.0)을 따른다 — 면 하나 위로 흰 띠가 자기 폭만큼 지나가는 반짝임, 모서리 넷(0 · 8 · 16 · full), 글자 자리는 글줄 높이. 깜빡임(펄스)은 두지 않는다. 기다리는 동안의 시간표(1초 · 5초 · 10초)도 이 문서의 "기다리는 동안" 에 둔다 — SEED [Loading 패턴](https://seed-design.io/patterns/loading)의 시나리오를 규칙으로 옮겼다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). 옛 Skeleton 스펙(깜빡임 · 모서리 4 · 글줄보다 낮은 막대)을 대신한다.
+구조는 당근 [SEED Skeleton](https://seed-design.io/components/skeleton)(Apache-2.0)을 따른다 — 면 하나 위로 흰 띠가 자기 폭만큼 지나가는 반짝임, 모서리 넷(0 · 8 · 16 · full), 글자 자리는 글줄 높이. 깜빡임(펄스)은 두지 않는다. 기다리는 동안의 시간표(1초 · 5초 · 10초)도 이 문서의 "기다리는 동안" 에 둔다 — SEED [Loading 패턴](https://seed-design.io/patterns/loading)의 시나리오를 규칙으로 옮겼다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). 옛 Skeleton 스펙(깜빡임 · 모서리 4 · 글줄보다 낮은 막대)을 대신한다.
 
 수치 원본은 [`skeleton.yaml`](skeleton.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -331,8 +331,8 @@ new QueryClient({
 
 ## SEED 와 다른 점
 
-- **면은 porest `bg-neutral-weak`**(gray-200 #F5F6FA · 다크 #353B4D) — SEED gray-200(#f3f4f5 · #1d2025)의 역할 짝이다. 흰 면 위 1.08:1 로 SEED(1.10)와 거의 같다.
-- **흰 면 위에만 둔다** — porest gray-200 은 페이지 바탕과 같은 색이라 바탕 위에서는 사라진다(SEED 는 정하지 않았다).
+- **면은 groo `bg-neutral-weak`**(gray-200 #F5F6FA · 다크 #353B4D) — SEED gray-200(#f3f4f5 · #1d2025)의 역할 짝이다. 흰 면 위 1.08:1 로 SEED(1.10)와 거의 같다.
+- **흰 면 위에만 둔다** — groo gray-200 은 페이지 바탕과 같은 색이라 바탕 위에서는 사라진다(SEED 는 정하지 않았다).
 - **모션 줄이기면 띠가 멈춘다**(v104) — SEED 는 계속 돈다.
 - **보조 기술에 알린다** — 영역 `aria-busy` + 화면의 상태 글 하나. SEED 웹은 아무것도 남기지 않는다.
 - **모서리 기본값 8** — SEED 코드와 같다(rootage 는 0 을 기본이라 적었다).

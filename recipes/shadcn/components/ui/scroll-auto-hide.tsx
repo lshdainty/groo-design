@@ -4,10 +4,10 @@ import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Scroll Auto Hide — SEED Breeze ScrollAutoHide · Apache-2.0(2026-10-10). 수치 원본은 specs/components/scroll-auto-hide.yaml.
+ * Groo Scroll Auto Hide — SEED Breeze ScrollAutoHide · Apache-2.0(2026-10-10). 수치 원본은 specs/components/scroll-auto-hide.yaml.
  * 옮긴 곳: github.com/daangn/seed-design docs/registry/react/breeze/scroll-auto-hide/scroll-auto-hide.tsx(dev 045051f87f, 2026-08-13 —
  * "harden scroll auto hide settling" #1997). 동작은 SEED 그대로이고 바뀐 것은 이름뿐이다 — 스냅 200ms · cubic-bezier(0, 0, 0.15, 1) 을
- * porest 토큰 motion-duration-d4 · motion-ease-enter 로(값이 같다, v104), CSS 모듈(position: sticky · top: 0)을 Tailwind 로,
+ * groo 토큰 motion-duration-d4 · motion-ease-enter 로(값이 같다, v104), CSS 모듈(position: sticky · top: 0)을 Tailwind 로,
  * @radix-ui/react-compose-refs 를 이 파일의 mergeRefs 로.
  *
  *   ScrollAutoHide   숨는 영역 — scrollContainerRef(스크롤 상자의 ref — 필수) · asChild(자식 하나를 루트로), 나머지는 div 속성.

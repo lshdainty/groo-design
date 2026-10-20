@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ResponsiveMenu, ResponsiveMenuContent, ResponsiveMenuGroup, ResponsiveMenuItem, ResponsiveMenuTrigger } from "@/components/ui/menu";
 
 /*
- * Porest Swipe Actions — porest 에만 있는 패턴(SEED 에는 줄 밀기가 없다). 수치 원본은 specs/components/swipe-actions.yaml.
+ * Groo Swipe Actions — groo 에만 있는 패턴(SEED 에는 줄 밀기가 없다). 수치 원본은 specs/components/swipe-actions.yaml.
  * 2026-10-02 — 미는 지름길은 남기고 같은 동작을 줄 끝 ⋮ → Menu Sheet 로도 연다. 2026-10-08 — 다크 배지 · 중립 배지 · 라벨 색 ·
  * 줄 높이 1.3 · Esc 뒤 초점을 고쳤다(데이터 표시 결정의 "줄 밀기").
  *

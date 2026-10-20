@@ -14,7 +14,7 @@ const SITE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = join(SITE, '..');
 const DOCS = join(SITE, 'content/docs');
 // GitHub 의 원본 파일 주소 — site/lib/shared.ts 의 gitConfig 와 같은 레포 · 브랜치다
-const REPO_BLOB = 'https://github.com/lshdainty/porest-design/blob/main';
+const REPO_BLOB = 'https://github.com/lshdainty/groo-design/blob/main';
 
 // DESIGN.md 의 `## ` 절 → 기초 페이지. 절 이름이 바뀌면 여기서 멈춘다(조용히 빠지지 않게).
 // Color · Gradient · Typography · Spacing · Radius · Layout · Elevation · Motion · Feedback 은 SEED 문서 모양으로
@@ -28,8 +28,8 @@ const FOUNDATION_SECTIONS = [
   { heading: 'Iconography', slug: 'iconography', title: 'Iconography', description: '아이콘 세트 · 크기 · 굵기 · 아이콘 버튼' },
   { heading: 'Inclusive Design', slug: 'inclusive-design', title: 'Inclusive Design', description: '모든 사용자가 쓸 수 있게' },
   { heading: 'International Design', slug: 'international-design', title: 'International Design', description: '날짜 · 시각 · 숫자 · 기호의 로케일 표기' },
-  { heading: 'Voice and Tone', slug: 'voice-and-tone', title: 'Voice and Tone', description: 'porest 가 말하는 방법' },
-  { heading: 'Writing', slug: 'writing', title: 'Writing', description: 'porest 가 글을 쓰는 방법' },
+  { heading: 'Voice and Tone', slug: 'voice-and-tone', title: 'Voice and Tone', description: 'groo 가 말하는 방법' },
+  { heading: 'Writing', slug: 'writing', title: 'Writing', description: 'groo 가 글을 쓰는 방법' },
 ];
 
 // `##` 절 안의 `###` 하나를 따로 한 페이지로 — Layout 절에 있던 것 가운데 새 Layout 페이지가 다루지 않는 것

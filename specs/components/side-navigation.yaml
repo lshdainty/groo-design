@@ -7,12 +7,12 @@
 # 하위가 있는 항목은 펼치기만 하고(이동 없음), 하위가 지금 화면이면 저절로 펼쳐진다. 접혔을 때 하위는 오른쪽 펼침 메뉴(Menu 모양),
 # 하위가 없는 항목의 이름은 말풍선(Help Bubble 툴팁)이다.
 #
-# 수치의 출처 — SEED Side Navigation 은 rootage 가 없고 레시피(qvism-preset side-navigation)에 px 로 있다. 그 값을 porest 토큰에
+# 수치의 출처 — SEED Side Navigation 은 rootage 가 없고 레시피(qvism-preset side-navigation)에 px 로 있다. 그 값을 groo 토큰에
 # 맞췄다(새 토큰 없음). 폭 240 · 56 은 DESIGN.md v101 의 layout-sidebar · layout-sidebar-collapsed 다.
 #
 # SEED 와 다른 자리(side-navigation.md 의 "SEED 와 다른 점")
 #   - 바탕은 흰 면 bg-layer-default + 오른쪽 안쪽 1px stroke-neutral-subtle — SEED tone=neutral 은 회색(gray-100) 면이다.
-#     porest 본문이 회색(bg-page)이라 사이드바가 흰 면이다(따라오는 것).
+#     groo 본문이 회색(bg-page)이라 사이드바가 흰 면이다(따라오는 것).
 #   - 투명한 상태 색을 불투명 역할로(v102): 호버 · 누름 bg.transparent-pressed → bg-layer-default-pressed,
 #     선 stroke.neutral-muted → stroke-neutral-subtle. 지금 항목(bg.transparent-selected)은 한 단계 짙은 bg-neutral-weak-pressed
 #     (사용자 결정 2026-10-08 — bg-neutral-weak 는 다크에서 호버 바탕과 같은 #353B4D 였다). 지금 항목은 마우스를 올리거나

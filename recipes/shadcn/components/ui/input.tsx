@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { setNativeValue, useFieldControl, useTextControl } from "@/components/ui/field";
 
 /*
- * Porest Input(Text Input) — 구조는 SEED Text Input(2026-10-01). 수치 원본은 specs/components/input.yaml.
+ * Groo Input(Text Input) — 구조는 SEED Text Input(2026-10-01). 수치 원본은 specs/components/input.yaml.
  *
  * 한 줄 입력칸. 라벨 · 설명 · 오류 · 글자 수는 Field 가 둘레에서 그린다 — Field 안에 두면 id · aria 를 받는다.
  * 상자(div)가 테두리 · 바탕 · 모서리와 앞 · 뒤 붙이개 · 지우기 버튼을 담고, 입력(<input>)은 상자 높이를 채운다.

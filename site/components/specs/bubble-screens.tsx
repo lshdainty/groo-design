@@ -71,7 +71,7 @@ export function LeaveSummary({ mode = 'auto', open = true, desc = true, gesture,
 }
 export function LeaveWindow({ mode = 'auto', w = 460, h = 280, overlay, gesture }: { mode?: Mode; w?: number; h?: number; overlay?: ReactNode; gesture?: 'tap' | 'click' }) {
   return (
-    <WebWindow mode={mode} w={w} h={h} url="hr.porest.app">
+    <WebWindow mode={mode} w={w} h={h} url="hr.groo.app">
       <div style={{ height: '100%', boxSizing: 'border-box', padding: '22px 28px', background: rc('bg-layer-basement', mode, 'hr') }}>
         <div style={{ fontSize: 20, lineHeight: '28px', fontWeight: 700, color: rc('fg-neutral', mode, 'hr'), paddingBottom: 14 }}>휴가</div>
         {/* 카드 — card.yaml 의 면(1px 테두리 · 모서리 16 · 여백 24). 위는 말풍선이 열릴 자리만큼 비운다 */}

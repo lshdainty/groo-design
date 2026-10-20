@@ -2,7 +2,7 @@
 
 > 짧은 선택지 5개 이상에서 폼에 넣을 값을 고르는 칸. 결제 수단 · 통화 · 휴가 정책 · 반복 단위처럼 한 줄 글(+ 한 줄 설명)로 충분한 선택지를 칸 아래 목록으로 연다. 달력 · 시각 · 아이콘 격자 · 검색이 필요한 긴 목록은 [Input Button](input-button.md), 설명 · 그림이 붙는 2 ~ 6개는 [Select Box](select-box.md)다.
 
-구조는 당근 [SEED Select](https://seed-design.io/components/select)(Apache-2.0)를 따른다 — 트리거(Trigger) · 목록(Content) · 선택지(Item) · 묶음(Group) · 묶음 사이 선(Divider). 라벨 · 설명 · 오류는 [Field](field.md)가 둘레에서 그린다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정).
+구조는 당근 [SEED Select](https://seed-design.io/components/select)(Apache-2.0)를 따른다 — 트리거(Trigger) · 목록(Content) · 선택지(Item) · 묶음(Group) · 묶음 사이 선(Divider). 라벨 · 설명 · 오류는 [Field](field.md)가 둘레에서 그린다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정).
 
 수치 원본은 [`select.yaml`](select.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -356,10 +356,10 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
 ## SEED 와 다른 점
 
 - **누름 · 호버 · 키보드 위치 바탕은 불투명한 색** — 트리거 `bg-layer-default-pressed`, 목록 안 알약 `bg-layer-floating-pressed`. SEED `bg.transparent-pressed` 는 투명도가 있어 대비 검사기가 받지 않는다(v102). 묶음 사이 선도 불투명한 `stroke-neutral-subtle`(SEED `stroke.neutral-muted` 는 투명도가 있다).
-- **그림자는 porest `shadow-s3`**(v105 — SEED 와 구조는 같고 값은 porest).
+- **그림자는 groo `shadow-s3`**(v105 — SEED 와 구조는 같고 값은 groo).
 - **아이콘은 lucide 선 아이콘**(v106) — 셰브론 `chevron-down`, 고른 표시 `check`(선 2.5). SEED 는 채운 체크다.
-- **선택지 커서는 pointer** — SEED 는 default. porest 의 누르는 줄(List · Select Box)과 맞춘다.
-- **트리거 이름은 라벨 하나** — SEED React 는 트리거에 고른 값을 따로 읽히지 않는다. porest 는 `role="combobox"` 의 값으로 고른 글이 읽힌다(라벨 + 값).
+- **선택지 커서는 pointer** — SEED 는 default. groo 의 누르는 줄(List · Select Box)과 맞춘다.
+- **트리거 이름은 라벨 하나** — SEED React 는 트리거에 고른 값을 따로 읽히지 않는다. groo 는 `role="combobox"` 의 값으로 고른 글이 읽힌다(라벨 + 값).
 
 ## Migration notes
 

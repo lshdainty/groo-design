@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Floating Action Button — 구조는 SEED Floating Action Button(아이콘만 · extended=false, 2026-10-04).
+ * Groo Floating Action Button — 구조는 SEED Floating Action Button(아이콘만 · extended=false, 2026-10-04).
  * 수치 원본은 specs/components/floating-action-button.yaml.
  *
  *   FloatingActionButton   화면 위에 떠 있는 그 화면의 주 동작 하나 — 오른쪽 아래의 브랜드 원 56 + 흰 아이콘 24.

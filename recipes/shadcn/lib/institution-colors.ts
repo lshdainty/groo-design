@@ -1,5 +1,5 @@
 /*
- * Porest 기관 색 — 은행 · 증권 · 카드사 · 코인 · 금 기관마다 색 하나와 그 위 글자색(2026-10-04).
+ * Groo 기관 색 — 은행 · 증권 · 카드사 · 코인 · 금 기관마다 색 하나와 그 위 글자색(2026-10-04).
  * 원본은 specs/components/institution-colors.yaml 이다. 아래 표(INSTITUTION_COLORS)는 scripts/gen-institution-colors.mjs 가
  * 그 YAML 에서 만든다 — 손으로 고치지 않는다. 표를 바꾸려면 YAML 을 고치고 `npm run gen:institution-colors` 로 다시 만든다.
  * `npm run verify`(check:institution-colors)가 표와 YAML 이 어긋나면 멈춘다. 앱도 같은 YAML 에서 만든다.

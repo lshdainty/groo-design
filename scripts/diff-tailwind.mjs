@@ -69,7 +69,7 @@ console.log(`source: ${basename(source)}`);
 console.log(`prev:   ${basename(prev)}`);
 console.log("");
 
-const tmp = mkdtempSync(resolve(tmpdir(), "porest-diff-"));
+const tmp = mkdtempSync(resolve(tmpdir(), "groo-diff-"));
 const prevCssPath = resolve(tmp, "prev.css");
 const currCssPath = resolve(tmp, "curr.css");
 

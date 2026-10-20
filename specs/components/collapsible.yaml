@@ -10,9 +10,9 @@
 # surface(놓인 면 — 흰 면 · 카드 · 경고 상자). 값 · 상태 · 모션은 accordion.yaml 과 같다 — 다른 것은 layout · surface 다.
 #
 # SEED 와 다른 자리(collapsible.md 의 "SEED 와 다른 점")
-#   - SEED 에 컴포넌트 · 값이 없다 — Accordion 항목의 값(rootage accordion-item medium)을 porest 로 옮긴 값을 쓴다
+#   - SEED 에 컴포넌트 · 값이 없다 — Accordion 항목의 값(rootage accordion-item medium)을 groo 로 옮긴 값을 쓴다
 #     (좌우 24 · 불투명한 누름 바탕 — accordion.yaml 과 같다).
-#   - 카드 면 · 경고 상자 안에 둘 때의 여백 · 선 · 누름 색은 porest 가 정했다(surface).
+#   - 카드 면 · 경고 상자 안에 둘 때의 여백 · 선 · 누름 색은 groo 가 정했다(surface).
 
 name: Collapsible
 

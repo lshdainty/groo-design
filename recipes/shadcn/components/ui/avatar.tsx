@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { ProgressCircle } from "@/components/ui/progress-circle";
 
 /*
- * Porest Avatar — 구조는 SEED Avatar · Avatar Stack(2026-10-03). 수치 원본은 specs/components/avatar.yaml · avatar-stack.yaml.
+ * Groo Avatar — 구조는 SEED Avatar · Avatar Stack(2026-10-03). 수치 원본은 specs/components/avatar.yaml · avatar-stack.yaml.
  *
  *   Avatar         사람 한 명을 보이는 원 — 사진(src)이 있으면 사진, 없거나 · 불러오는 동안 · 못 불러오면 이니셜 + 이름 색
  *   AvatarStack    여러 사람 — 겹친 묶음. 앞 max(기본 4)명 + 끝에 "+N" 원

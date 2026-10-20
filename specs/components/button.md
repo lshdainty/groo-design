@@ -2,7 +2,7 @@
 
 > 명확한 액션을 쉽게 실행하게 돕는 기본 인터랙션 컴포넌트. 폼 제출 · 대화상자 닫기 · 다음 단계처럼 사용자가 무엇을 하는지 분명한 동작에 쓴다.
 
-구조는 당근 [SEED Action Button](https://seed-design.io/components/action-button)(Apache-2.0)을 따른다 — 크기 4 · 배치 2 · 변형 7 · 상태 6. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-09-30 사용자 결정).
+구조는 당근 [SEED Action Button](https://seed-design.io/components/action-button)(Apache-2.0)을 따른다 — 크기 4 · 배치 2 · 변형 7 · 상태 6. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-09-30 사용자 결정).
 
 수치 원본은 [`button.yaml`](button.yaml) 이다. 아래 수치 표는 사이트가 그 파일로 그리고, GitHub 에서는 표 자리가 그 파일로 가는 링크로 보인다. 그림 자리(`[그림: …]`)도 같다 — 사이트는 그 자리에 스펙 값으로 그린 버튼과 화면 예시를 둔다.
 
@@ -118,7 +118,7 @@
 **로딩**
 
 - `loading` 이면 로딩 원(크기는 Size 표)을 라벨 자리 가운데 둔다. 라벨은 글자 · 아이콘 색만 투명하게 해서 버튼 폭이 그대로다 — 버튼이 자식을 따로 감싸지 않으므로 부르는 쪽의 `[&>span]` · `[&>svg]` 규칙이 그대로 먹는다.
-- 로딩 중에는 **누르기를 자동으로 막는다**(두 번 제출 방지) — 포인터 · Enter · Space 누르기를 삼키고(`onClick` 을 부르지 않는다), 누름 축소도 없다. 포커스는 그대로 두고 `aria-busy="true"` 를 단다. SEED 는 로딩이 비활성을 포함하지 않지만 porest 는 막는다 — 사용자 결정.
+- 로딩 중에는 **누르기를 자동으로 막는다**(두 번 제출 방지) — 포인터 · Enter · Space 누르기를 삼키고(`onClick` 을 부르지 않는다), 누름 축소도 없다. 포커스는 그대로 두고 `aria-busy="true"` 를 단다. SEED 는 로딩이 비활성을 포함하지 않지만 groo 는 막는다 — 사용자 결정.
 - 로딩 원 색은 변형마다 다르다(Solid 는 흰 원, Brand Outline 은 옅은 브랜드 트랙 위 브랜드 선 색 `stroke-brand-solid` — Progress Circle brand 톤과 같고 다크에서는 밝은 짝, 나머지는 회색 트랙 위 본문색).
 
 [그림: 직접 눌러 보기 — 위는 누름 · 호버 · 키보드 포커스(Tab), 아래는 누르면 잠시 로딩이 된다](../../site/components/specs/button.tsx#live-states)
@@ -185,7 +185,7 @@
 
 [그림: neutralWeak 를 놓는 바탕 — 라이트에서만 생기는 문제라 라이트로 그렸다](../../site/components/specs/button.tsx#surface)
 
-**모달 footer**(porest)
+**모달 footer**(groo)
 
 - 오른쪽에 `[취소 neutralWeak] [저장 neutralSolid]` — 웹은 `small`(36), 모바일 전체 폭은 `large`(48).
 - 확인 창을 여는 **삭제**는 왼쪽에 `ghost` + `critical` 글자. 삭제의 **확정**은 [Alert Dialog](alert-dialog.md) 의 `criticalSolid`.
@@ -224,7 +224,7 @@
 
 ## Button 과 Chip
 
-SEED 는 Button 과 Chip 을 이렇게 가른다. porest 도 같다 — 선택 · 필터는 [Chip](chip.md)(같은 내용을 2 ~ 4가지로 바로 다르게 보면 [Segmented Control](segmented-control.md))이 맡는다. Toggle Group 은 2026-10-09 걷었다.
+SEED 는 Button 과 Chip 을 이렇게 가른다. groo 도 같다 — 선택 · 필터는 [Chip](chip.md)(같은 내용을 2 ~ 4가지로 바로 다르게 보면 [Segmented Control](segmented-control.md))이 맡는다. Toggle Group 은 2026-10-09 걷었다.
 
 | | Button | Chip |
 |---|---|---|
@@ -235,7 +235,7 @@ SEED 는 Button 과 Chip 을 이렇게 가른다. porest 도 같다 — 선택 �
 
 [그림: Button 은 실행, 고르기는 지금 켜진 조건](../../site/components/specs/button.tsx#chip)
 
-## porest 에만 있는 것
+## groo 에만 있는 것
 
 **반반 바(split bar)** — 액션 **둘**이 무게가 같고 한 묶음으로 읽힐 때, 본문 폭을 채운 네모 바를 반으로 갈라 각 칸에 하나씩 둔다(예: 내역 분할의 `항목 추가` · `균등 분할`).
 
@@ -454,7 +454,7 @@ const [saving, setSaving] = useState(false)
 
 그 밖에 바뀐 것 — 누름은 밝기 95% · 0.98 배 → 누름 색 + 2px 거리 축소(v104), 비활성은 50% 불투명 → 전용 색(v106), 글자 굵기 500 → 700, 모서리 4 → 8(`large` 12, `xsmall` 알약), 아이콘–글자 간격 8 고정 → 크기마다(4 · 4 · 6 · 8), 로딩 스피너는 라벨 앞 → 라벨 자리.
 
-**앱에 옮길 때 — `cn` 부터.** 새 cva 는 porest 스케일 이름(`text-t4` · `px-x4` · `rounded-r2`)을 쓴다. 기본 tailwind-merge 는 `text-t4` 를 글자색으로 읽어 앞의 `text-fg-neutral-inverted` 를 지우고(짙은 버튼의 흰 글자가 사라진다), `px-x4` 를 여백으로 못 읽어 `p-0` 덮어쓰기가 먹지 않는다. 레시피 `lib/utils.ts` 처럼 spacing · radius · text 스케일을 `extendTailwindMerge` 에 등록한다 — Desk 웹의 `cn` 은 지금 옛 글자 이름만 안다.
+**앱에 옮길 때 — `cn` 부터.** 새 cva 는 groo 스케일 이름(`text-t4` · `px-x4` · `rounded-r2`)을 쓴다. 기본 tailwind-merge 는 `text-t4` 를 글자색으로 읽어 앞의 `text-fg-neutral-inverted` 를 지우고(짙은 버튼의 흰 글자가 사라진다), `px-x4` 를 여백으로 못 읽어 `p-0` 덮어쓰기가 먹지 않는다. 레시피 `lib/utils.ts` 처럼 spacing · radius · text 스케일을 `extendTailwindMerge` 에 등록한다 — Desk 웹의 `cn` 은 지금 옛 글자 이름만 안다.
 
 **다른 컴포넌트에 남은 옛 이름** — 버튼을 부르는 레시피 코드(alert-dialog · calendar · carousel · pagination · sidebar)와 그 스펙, 모달 footer 규칙(dialog · drawer · alert-dialog)은 이 변경에서 옮겼다. 아래는 옛 이름을 글로만 적고 있어 각 컴포넌트 차례에 옮긴다 — 예제 속 JSX(tooltip · sheet · popover · form · dropdown-menu · drawer · dialog · card · alert-dialog · table · spinner 예제), 스펙 본문(table · popover · spinner · context-menu · dropdown-menu · calendar 의 nav `outline` — toggle-group 은 2026-10-09 걷었고 icon-picker 는 Input Button 으로, collapsible 은 2026-10-10 Accordion 항목 모양의 트리거로 다시 썼다), DESIGN.md 의 다른 컴포넌트 절(Form 의 `button-primary` lg · Pagination 의 페이지 버튼), 미리보기의 빈 화면 · 폼 · 결재 행(Outline 과 Solid 를 한 줄에 둔다 — Outline 조합 규칙과 어긋난다).
 

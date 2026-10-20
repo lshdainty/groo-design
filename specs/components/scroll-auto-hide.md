@@ -2,7 +2,7 @@
 
 > 스크롤 상자 맨 위에 붙은 영역이 아래로 스크롤하면 그 거리만큼 숨고, 위로 스크롤하면 같은 거리만큼 드러난다 — 폰 가계부 · 할 일 원장의 머리(월 · 총액 · 주 달력), 거래 검색 · 카드 혜택 화면의 거르는 줄처럼 목록을 넓게 보고 싶은 자리. 상단 바와 탭은 숨지 않는다.
 
-구조는 당근 [SEED Breeze Scroll Auto Hide](https://seed-design.io/breeze/components/scroll-auto-hide)(Apache-2.0)를 그대로 따른다 — "아래로 스크롤할 때 고정 영역을 숨기고, 위로 스크롤하면 같은 거리만큼 다시 드러난다 … 필터, 탭, 보조 헤더처럼 콘텐츠 공간을 더 넓게 쓰고 싶은 영역". 스크롤하는 동안 거리를 1:1 로 따라가고, 끝나면 50% 를 기준으로 200ms 에 다 숨거나 다 드러나며, 높이를 바꾸지 않고 `translate3d()` 로만 옮긴다. 모션 줄이기면 자동 숨김을 끄고, 숨은 영역 안으로 초점이 오면 드러낸다(2026-10-10 사용자 결정 15A). 사용자가 스크롤바를 묻는 14번에 "당근에 자동으로 접히고 펴지는 컴포넌트 … 그거 사용하면 될 것 같아" 라고 한 컴포넌트다 — 스크롤바가 아니라 이것이어서 따로 물어 정했다. porest 에 처음 두는 스펙이다.
+구조는 당근 [SEED Breeze Scroll Auto Hide](https://seed-design.io/breeze/components/scroll-auto-hide)(Apache-2.0)를 그대로 따른다 — "아래로 스크롤할 때 고정 영역을 숨기고, 위로 스크롤하면 같은 거리만큼 다시 드러난다 … 필터, 탭, 보조 헤더처럼 콘텐츠 공간을 더 넓게 쓰고 싶은 영역". 스크롤하는 동안 거리를 1:1 로 따라가고, 끝나면 50% 를 기준으로 200ms 에 다 숨거나 다 드러나며, 높이를 바꾸지 않고 `translate3d()` 로만 옮긴다. 모션 줄이기면 자동 숨김을 끄고, 숨은 영역 안으로 초점이 오면 드러낸다(2026-10-10 사용자 결정 15A). 사용자가 스크롤바를 묻는 14번에 "당근에 자동으로 접히고 펴지는 컴포넌트 … 그거 사용하면 될 것 같아" 라고 한 컴포넌트다 — 스크롤바가 아니라 이것이어서 따로 물어 정했다. groo 에 처음 두는 스펙이다.
 
 수치 원본은 [`scroll-auto-hide.yaml`](scroll-auto-hide.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -48,7 +48,7 @@
 
 ### 바탕 · 겹침
 
-바탕과 z-index 는 쓰는 쪽이 정한다(SEED) — 바탕이 없으면 숨는 동안 아래 줄이 비친다. 원장 머리는 목록과 같은 흰 면(`bg-layer-default`)이고, z-index 는 스크롤 상자 안의 겹침 값 2 다 — [List](list.md) 줄 뒤 붙이개의 단추 · 링크(z 1) 위에 놓인다(지금 웹 원장 머리는 5 — `shared/ui/porest/ledger.tsx:58`). 층 토큰(`z-sticky`)이 아니다([z-index](../z-index.md) 의 "쓰는 법").
+바탕과 z-index 는 쓰는 쪽이 정한다(SEED) — 바탕이 없으면 숨는 동안 아래 줄이 비친다. 원장 머리는 목록과 같은 흰 면(`bg-layer-default`)이고, z-index 는 스크롤 상자 안의 겹침 값 2 다 — [List](list.md) 줄 뒤 붙이개의 단추 · 링크(z 1) 위에 놓인다(지금 웹 원장 머리는 5 — `shared/ui/groo/ledger.tsx:58`). 층 토큰(`z-sticky`)이 아니다([z-index](../z-index.md) 의 "쓰는 법").
 
 ## Guidelines
 
@@ -74,7 +74,7 @@
 
 ## 코드
 
-레시피 `recipes/shadcn/components/ui/scroll-auto-hide.tsx` 를 쓴다(SEED Breeze 의 `ScrollAutoHide` 를 옮긴 새 부품 — `npx @seed-design/cli add breeze:scroll-auto-hide` 의 코드를 porest 토큰으로). 아래 미리보기는 스펙 값으로 그린 모습이다.
+레시피 `recipes/shadcn/components/ui/scroll-auto-hide.tsx` 를 쓴다(SEED Breeze 의 `ScrollAutoHide` 를 옮긴 새 부품 — `npx @seed-design/cli add breeze:scroll-auto-hide` 의 코드를 groo 토큰으로). 아래 미리보기는 스펙 값으로 그린 모습이다.
 
 - `ScrollAutoHide` — 숨는 영역. `scrollContainerRef`(스크롤 상자의 ref — 필수) · `asChild`(자식 하나를 루트로), 나머지는 `div` 속성. `sticky` · `top: 0` · 1:1 따라가기 · 50% 스냅(200ms `motion-ease-enter`) · 모션 줄이기면 끔 · 초점이 들어오면 드러냄은 부품이 맡는다. 바탕 · z-index 는 `className` 으로 쓰는 쪽이.
 
@@ -144,7 +144,7 @@ const scrollRef = useRef<HTMLDivElement>(null)
 ## SEED 와 다른 점
 
 - **동작 · 값은 SEED 그대로다** — 1:1 · 50% 스냅 · 200ms enter · 모션 줄이기면 끔 · 초점이 오면 드러냄 · `translate3d` · `sticky` · `top: 0`.
-- **이름을 porest 토큰으로** — 200ms 는 `motion-duration-d4`, `cubic-bezier(0, 0, 0.15, 1)` 은 `motion-ease-enter`(값이 같다, v104).
+- **이름을 groo 토큰으로** — 200ms 는 `motion-duration-d4`, `cubic-bezier(0, 0, 0.15, 1)` 은 `motion-ease-enter`(값이 같다, v104).
 - **바탕 · z-index 를 원장 머리 값으로 정해 둔다** — 흰 면 · 2. SEED 는 쓰는 쪽에 맡긴다.
 
 ## Migration notes
@@ -162,5 +162,5 @@ const scrollRef = useRef<HTMLDivElement>(null)
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-09 조사).
 
-- **Desk 웹 원장 머리** — `shared/ui/porest/ledger.tsx:69-82` 의 `LedgerCollapse` 가 72px(`use-ledger-scroll.ts` `COMPACT_ENTER`)를 지나면 총액 · 인사이트 · 소비 요약을 max-height 340 → 0 + 투명도 220ms 로 접고, 24px(`COMPACT_EXIT`) 아래로 와야 다시 편다 — 목록이 그만큼 당겨지고 손가락을 따라가지 않으며, 모션 줄이기에서도 그대로 움직인다(조사 C11 · D9). 접힌 영역은 `pointer-events: none` 뿐이라 `Tab` 으로 보이지 않는 "소비 요약" 에 초점이 간다. 주 달력은 늘 남는다. `ScrollAutoHide` 로 — 월 · 총액 · 주 달력까지 한 덩어리.
+- **Desk 웹 원장 머리** — `shared/ui/groo/ledger.tsx:69-82` 의 `LedgerCollapse` 가 72px(`use-ledger-scroll.ts` `COMPACT_ENTER`)를 지나면 총액 · 인사이트 · 소비 요약을 max-height 340 → 0 + 투명도 220ms 로 접고, 24px(`COMPACT_EXIT`) 아래로 와야 다시 편다 — 목록이 그만큼 당겨지고 손가락을 따라가지 않으며, 모션 줄이기에서도 그대로 움직인다(조사 C11 · D9). 접힌 영역은 `pointer-events: none` 뿐이라 `Tab` 으로 보이지 않는 "소비 요약" 에 초점이 간다. 주 달력은 늘 남는다. `ScrollAutoHide` 로 — 월 · 총액 · 주 달력까지 한 덩어리.
 - **Desk 앱 원장 머리** — 같은 자리를 `AnimatedSize` 220ms easeOut 으로 접는다(`features/expense/presentation/expense_screen.dart:424-432`, C11). 같은 동작(1:1 · 50% 스냅 200ms · 줄이기면 늘 보임 · 초점이 오면 드러냄)으로.

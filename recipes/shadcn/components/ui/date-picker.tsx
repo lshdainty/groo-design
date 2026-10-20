@@ -7,7 +7,7 @@ import { ChipRadio, ChipRadioGroup } from "@/components/ui/chip";
 import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker";
 
 /*
- * Porest Date Picker — 구조는 SEED Date Picker(2026-10-03). 수치 원본은 specs/components/date-picker.yaml. 옛 Calendar(react-day-picker)를 대신한다.
+ * Groo Date Picker — 구조는 SEED Date Picker(2026-10-03). 수치 원본은 specs/components/date-picker.yaml. 옛 Calendar(react-day-picker)를 대신한다.
  *
  *   DatePicker          달력 — selection(single · range · multiple) × visibleRange(month · twoMonths · continuous).
  *                       value · onValueChange 는 쓰는 쪽이 가진다(제어 — 시트 · 팝오버의 draft). min · max · isDateDisabled ·

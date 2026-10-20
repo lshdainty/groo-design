@@ -4,7 +4,7 @@
 # SEED 에는 표 컴포넌트가 없다. SEED 팀이 코드로 그린 표는 문서 사이트의 표(TableRoot — "SEED 테이블 디자인의 단일 소스",
 # 제품 컴포넌트가 아니다) 하나이고, Table Pagination 문서 그림의 데이터 표가 정렬 표시 · 선택 칸 · ⋮ 열 · 72 줄을 보인다.
 # 머리 41 · 줄 45 · 글 14 / 20 은 문서 표, 72 줄 · 늘 보이는 ↑↓ · 숫자 오른쪽 · ⋮ 열은 그림에서 왔다. 정렬 동작 · 선택 ·
-# 일괄 작업 바 · 머리 고정 · 좁은 화면 · 빈 · 실패는 SEED 에 없어 porest 가 정했다.
+# 일괄 작업 바 · 머리 고정 · 좁은 화면 · 빈 · 실패는 SEED 에 없어 groo 가 정했다.
 #
 # 상태는 줄의 상태다 — 줄을 누르면 상세가 열리는 표만 hovered · pressed · focused 가 있다(보기만 하는 줄은 enabled 하나).
 # 정렬 버튼도 같은 상태를 쓴다. 줄 종류(row) · 맞춤(align) · 정렬(sort) · 고르기(selection) · 폭(width)은 상태와 곱해지므로 축이다.
@@ -12,7 +12,7 @@
 #
 # SEED 와 다른 자리(table.md 의 "SEED 와 다른 점")
 #   - 줄 선은 불투명한 stroke-neutral-subtle — SEED 안에서 문서 표(stroke.neutral-muted)와 토큰 설명(stroke.neutral-subtle)이 갈리고
-#     둘 다 투명도가 있는 색이다. porest 의 불투명 짝은 둘 다 stroke-neutral-subtle 이다(v102).
+#     둘 다 투명도가 있는 색이다. groo 의 불투명 짝은 둘 다 stroke-neutral-subtle 이다(v102).
 #   - 머리 굵기는 문서 표의 500 — SEED 그림은 굵게(700 안팎) 보인다.
 #   - 첫 칸 앞 · 끝 칸 뒤 여백은 카드 여백 24 — 표가 카드 안에 가장자리까지 붙는다(SEED 문서 표는 사방 16).
 #   - 상태 배지는 왼쪽(글 열과 같다) — SEED 그림은 가운데.

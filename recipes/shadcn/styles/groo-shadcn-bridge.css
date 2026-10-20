@@ -1,17 +1,17 @@
 /*
- * Porest → shadcn bridge
+ * Groo → shadcn bridge
  *
- * Porest 토큰(`exports/tokens.css` / `.hr.css` / `.desk.css`)을 먼저 로드한 뒤
- * 이 파일을 로드하면, shadcn 컴포넌트가 기대하는 CSS variable이 Porest 토큰과
+ * Groo 토큰(`exports/tokens.css` / `.hr.css` / `.desk.css`)을 먼저 로드한 뒤
+ * 이 파일을 로드하면, shadcn 컴포넌트가 기대하는 CSS variable이 Groo 토큰과
  * 연결됨. shadcn 컴포넌트 코드는 변경 없이 그대로 사용 가능.
  *
  * 사용법:
  *   1. <link href="exports/tokens.css">           (Default 브랜드)
  *      또는 tokens.hr.css / tokens.desk.css 중 하나
- *   2. <link href="recipes/shadcn/styles/porest-shadcn-bridge.css">
- *   3. <html data-theme="dark"> 로 다크모드 토글 (Porest 토큰 자체 지원)
+ *   2. <link href="recipes/shadcn/styles/groo-shadcn-bridge.css">
+ *   3. <html data-theme="dark"> 로 다크모드 토글 (Groo 토큰 자체 지원)
  *
- * 추가 변수(--radius 등)는 shadcn 표준 변수명을 따라 정의 — Porest yaml에는
+ * 추가 변수(--radius 등)는 shadcn 표준 변수명을 따라 정의 — Groo yaml에는
  * 별도 alias 토큰을 두지 않고 이 bridge에서만 매핑.
  */
 
@@ -67,7 +67,7 @@
 }
 
 /*
- * 다크모드는 Porest 토큰이 [data-theme="dark"]에서 자체 처리(text/surface/border
+ * 다크모드는 Groo 토큰이 [data-theme="dark"]에서 자체 처리(text/surface/border
  * 등이 *-dark 변수로 alias). bridge 변수는 var() 참조라 자동 따라감 — 별도
  * dark mode 블록 불필요.
  */

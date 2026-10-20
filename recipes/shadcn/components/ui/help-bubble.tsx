@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Help Bubble — 구조는 SEED Help Bubble(2026-10-02). 수치 원본은 specs/components/help-bubble.yaml(Tooltip 과 한 파일).
+ * Groo Help Bubble — 구조는 SEED Help Bubble(2026-10-02). 수치 원본은 specs/components/help-bubble.yaml(Tooltip 과 한 파일).
  * Radix Popover(비모달) 위에 짰다.
  *
  *   HelpBubble          눌러서 여는 짙은 도움말 말풍선 — open · defaultOpen · onOpenChange

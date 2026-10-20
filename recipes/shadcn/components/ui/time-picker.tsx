@@ -3,7 +3,7 @@ import * as React from "react";
 import { WheelPicker, WheelPickerColumn, type WheelPickerValueChangeDetails } from "@/components/ui/wheel-picker";
 
 /*
- * Porest Time Picker — 구조는 SEED Time Picker(2026-10-03). 수치 원본은 specs/components/time-picker.yaml(휠은 wheel-picker.yaml medium · 5칸).
+ * Groo Time Picker — 구조는 SEED Time Picker(2026-10-03). 수치 원본은 specs/components/time-picker.yaml(휠은 wheel-picker.yaml medium · 5칸).
  *
  *   TimePicker        12시간 휠 — 오전·오후 → 시 → 분. value · onValueChange 는 24시간 { hour 0 ~ 23, minute 0 ~ 59 }.
  *                     minuteStep(1 · 5 · 10 · 15 · 30, 기본 5) · disabled · autoFocus(열 때 시 칼럼에 초점) · aria-label(칸 라벨, 기본 "시간 선택")

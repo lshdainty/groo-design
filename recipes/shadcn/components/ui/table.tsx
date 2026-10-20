@@ -8,7 +8,7 @@ import { ResponsiveMenu, ResponsiveMenuTrigger } from "@/components/ui/menu";
 import { Skeleton } from "@/components/ui/skeleton";
 
 /*
- * Porest Table — 구조는 SEED 문서 사이트의 표(TableRoot)와 디자인 그림의 데이터 표(2026-10-08). 수치 원본은 specs/components/table.yaml.
+ * Groo Table — 구조는 SEED 문서 사이트의 표(TableRoot)와 디자인 그림의 데이터 표(2026-10-08). 수치 원본은 specs/components/table.yaml.
  * 옛 Table(작은 대문자 회색 머리 · 머리 바탕 · 칸 8 · 금액 고정폭 글꼴)과 DESIGN.md 의 Data Table(v71)을 대신한다.
  *
  *   Table               표 상자(가로 스크롤) + <table>. caption 필수(숨긴 표 이름 — 보이는 제목은 카드 머리) · rowHeight "text"(기본 45) ·

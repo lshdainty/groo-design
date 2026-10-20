@@ -2,7 +2,7 @@
 
 > 사진 · 파일을 골라 붙이는 칸 — 거래 영수증 · 메모 첨부처럼 여럿을 붙이는 자리는 첨부 타일 + 항목 줄, CSV · Excel 가져오기처럼 파일 하나를 골라 바로 넘기는 자리는 드롭존이다. 사람의 프로필 사진은 [Avatar](avatar.md) 의 "사진 바꾸기" 이고, 붙은 사진을 보이기만 하는 자리는 [Image Frame](image-frame.md) 이다.
 
-구조는 당근 [SEED Attachment Input](https://seed-design.io/components/attachment-input)(rootage `attachment-input` · `-trigger` · `-item` · `-item-action-button` · `-item-remove-button` · `-dropzone`, qvism-preset recipe, React `AttachmentField` — Apache-2.0)을 따른다 — 첨부 타일(80, "3/10") · 사진 80 썸네일(Media) · 파일 160 × 80 카드(File) · 오른쪽 위 × 20 · 올리는 중 · 실패 · 다시 시도 · 대표 배지 · 순서 바꾸기 · 드롭존. 드롭존의 색 · 파일 이름 줄 · 항목 메뉴(끌지 않고 옮기는 길) · 포커스 링은 porest 가 정했다(2026-10-15 사용자 결정 — 마무리 3A · 4A · 5A, 이어서 11D · 12A · 13B · 14A). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 DESIGN.md 의 File Upload 절(v73 — 2px 점선 · 📁 · 막힘 불투명도 0.5)을 대신한다.
+구조는 당근 [SEED Attachment Input](https://seed-design.io/components/attachment-input)(rootage `attachment-input` · `-trigger` · `-item` · `-item-action-button` · `-item-remove-button` · `-dropzone`, qvism-preset recipe, React `AttachmentField` — Apache-2.0)을 따른다 — 첨부 타일(80, "3/10") · 사진 80 썸네일(Media) · 파일 160 × 80 카드(File) · 오른쪽 위 × 20 · 올리는 중 · 실패 · 다시 시도 · 대표 배지 · 순서 바꾸기 · 드롭존. 드롭존의 색 · 파일 이름 줄 · 항목 메뉴(끌지 않고 옮기는 길) · 포커스 링은 groo 가 정했다(2026-10-15 사용자 결정 — 마무리 3A · 4A · 5A, 이어서 11D · 12A · 13B · 14A). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 DESIGN.md 의 File Upload 절(v73 — 2px 점선 · 📁 · 막힘 불투명도 0.5)을 대신한다.
 
 수치 원본은 [`attachment-input.yaml`](attachment-input.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -444,17 +444,17 @@ const openViewer = (id: string) => window.open(`/files/${id}`, "_blank", "noopen
 
 - **드롭존 색** — 테두리 `stroke-neutral-solid`(SEED palette.gray-500 — 다크 표면 위 2.71), 끌어 들어오면 `stroke-neutral-contrast` + `bg-layer-default-pressed`(SEED 는 테두리만 stroke.neutral-solid — gray-500 과 1.32 · 1.53). 막히면 테두리도 `stroke-neutral-weak`. 대비 표는 위 Dropzone.
 - **드롭존은 늘 실선** — SEED rootage 는 기본이 점선이고 끄는 동안 실선이라고 적었다. 사용자가 1px 실선을 골랐다(5A — 점선은 지금 웹의 모양 5B 로 고르지 않았다). 끌기는 색 · 바탕으로 알린다.
-- **덮개 · 띠** — SEED bg.overlay 대신 porest `overlay-dim` — 올리는 중은 Progress Circle 의 사진 위 딤(라이트 50% · 다크 65%), 글이 얹히는 실패 덮개 · 대표 띠는 두 모드 모두 65%(Image Frame Indicator 와 같은 까닭 — 50% 면 흰 사진 위 흰 글 3.95).
-- **사진 윤곽은 `stroke-neutral-overlay`**(v118) — SEED stroke.neutral-subtle 의 투명한 값과 같다(porest 의 `stroke-neutral-subtle` 은 불투명한 구분선이라 이름을 나눴다).
-- **항목 메뉴** — 항목을 누르면 크게 보기 · 대표로 정하기 · 앞으로 옮기기 · 뒤로 옮기기 \| 지우기(1280 미만 Menu Sheet · 이상 Menu) — SEED 는 끌기만 있다. 끌지 않는 포인터 길(WCAG 2.5.7)이다(사용자 결정 14A). 그래서 누르기와 끌기를 가르는 문턱(마우스 8px · 터치 250ms)을 porest 가 정했다.
-- **파일 이름 네 줄 · 확장자 남김** — SEED 레시피는 줄을 자르지 않는다(`word-break: break-all` · `overflow: hidden`) — 다섯 줄부터 상자를 넘는다. 줄바꿈은 SEED 와 같은 글자 단위다 — porest Typography v114(단어 단위)의 예외로 사용자가 정했다(11D).
-- 사진의 읽기 전용 · 끄는 중 불투명도 0.5 · 파일 카드의 `fg-disabled` 는 **SEED 와 같다** — porest v106(불투명도로 흐리지 않는다)의 예외로 사용자가 정했다(13B — 이 두 상태에만).
+- **덮개 · 띠** — SEED bg.overlay 대신 groo `overlay-dim` — 올리는 중은 Progress Circle 의 사진 위 딤(라이트 50% · 다크 65%), 글이 얹히는 실패 덮개 · 대표 띠는 두 모드 모두 65%(Image Frame Indicator 와 같은 까닭 — 50% 면 흰 사진 위 흰 글 3.95).
+- **사진 윤곽은 `stroke-neutral-overlay`**(v118) — SEED stroke.neutral-subtle 의 투명한 값과 같다(groo 의 `stroke-neutral-subtle` 은 불투명한 구분선이라 이름을 나눴다).
+- **항목 메뉴** — 항목을 누르면 크게 보기 · 대표로 정하기 · 앞으로 옮기기 · 뒤로 옮기기 \| 지우기(1280 미만 Menu Sheet · 이상 Menu) — SEED 는 끌기만 있다. 끌지 않는 포인터 길(WCAG 2.5.7)이다(사용자 결정 14A). 그래서 누르기와 끌기를 가르는 문턱(마우스 8px · 터치 250ms)을 groo 가 정했다.
+- **파일 이름 네 줄 · 확장자 남김** — SEED 레시피는 줄을 자르지 않는다(`word-break: break-all` · `overflow: hidden`) — 다섯 줄부터 상자를 넘는다. 줄바꿈은 SEED 와 같은 글자 단위다 — groo Typography v114(단어 단위)의 예외로 사용자가 정했다(11D).
+- 사진의 읽기 전용 · 끄는 중 불투명도 0.5 · 파일 카드의 `fg-disabled` 는 **SEED 와 같다** — groo v106(불투명도로 흐리지 않는다)의 예외로 사용자가 정했다(13B — 이 두 상태에만).
 - **포커스 링은 모두 안쪽** — SEED 는 항목만 바깥이라 가로 스크롤 줄 아래쪽에서 잘린다.
 - **× 의 누르는 자리 44** · **항목 줄은 화면 여백까지 + 끝 흐림 20**(Scroll Fog `row`) — SEED 는 × 20 그대로 · 넓히는 폭은 쓰는 쪽이 정한다.
 - **누름 바탕은 불투명한 `bg-layer-default-pressed`**(SEED bg.transparent-pressed 의 짝).
-- **거절은 Field 오류 글 · 이유마다 한 문장 · 한 번에 모아** — SEED 는 파일마다 `onFileReject` 를 부르고 글은 쓰는 쪽이 정한다. porest 는 한 번 고른 것의 거절을 모아 넘긴다(`onFilesReject`).
+- **거절은 Field 오류 글 · 이유마다 한 문장 · 한 번에 모아** — SEED 는 파일마다 `onFileReject` 를 부르고 글은 쓰는 쪽이 정한다. groo 는 한 번 고른 것의 거절을 모아 넘긴다(`onFilesReject`).
 - **항목은 쓰는 쪽이 쥔다**(`entries` 제어) — SEED React 는 안에서 쥐고 `onAcceptedFileEntriesChange` 로 알린다.
-- **앱의 고르기 창은 Menu Sheet** — SEED Lynx 는 호스트의 고르기 어댑터(`onSelectFiles`)만 둔다. 메뉴 시트는 porest 다.
+- **앱의 고르기 창은 Menu Sheet** — SEED Lynx 는 호스트의 고르기 어댑터(`onSelectFiles`)만 둔다. 메뉴 시트는 groo 다.
 
 ## Migration notes
 

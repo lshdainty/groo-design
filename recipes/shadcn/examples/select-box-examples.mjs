@@ -590,7 +590,7 @@ const BUTTON_COMPOUND = [{ size: "medium", layout: "withText", className: "px-x4
 const BUTTON_DEFAULTS = { variant: "neutralSolid", size: "medium", layout: "withText", ghostColor: "neutral" };
 const buttonVariants = cvaOf(BUTTON_BASE, { variants: BUTTON_VARIANTS, compoundVariants: BUTTON_COMPOUND, defaultVariants: BUTTON_DEFAULTS });
 
-// HR 역할 — porest-sql 기본 넷(설명 원문 그대로) + 관리자가 더한 넷(그림용 — 비교 페이지 마무리 10 이 그린 것). 저장된 역할은 일반 사용자 · 승인권자
+// HR 역할 — groo-sql 기본 넷(설명 원문 그대로) + 관리자가 더한 넷(그림용 — 비교 페이지 마무리 10 이 그린 것). 저장된 역할은 일반 사용자 · 승인권자
 const ROLES = [
   { code: "ADMIN", name: "관리자", description: "관리자 권한으로 시스템 운영에 필요한 전체 권한이 부여되어 있습니다." },
   { code: "USER", name: "일반 사용자", description: "일반 사용자 권한으로 시스템 관리에 필요한 권한을 제외한 일반적인 읽기, 쓰기 권한이 부여되어 있습니다." },

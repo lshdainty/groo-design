@@ -2,7 +2,7 @@
 
 > 그림 한 장을 보이는 틀 — 비율 상자에 그림을 꽉 채우고, 그림 위에 안쪽 1px 투명 윤곽을 늘 그린다. 불러오는 동안은 같은 모서리의 [Skeleton](skeleton.md), 없거나 못 불러오면 [Content Placeholder](content-placeholder.md) 다. 카드 그림 · 규정 그림 · 앞으로의 사진이 모두 이것이다. 사람은 [Avatar](avatar.md), 은행 · 증권 · 카드 같은 물건의 첫 글자 타일은 [Logo Tile](logo-tile.md), 그림이 아닌 비율 상자(동영상 · 지도)는 [Aspect Ratio](aspect-ratio.md) 다.
 
-구조는 당근 [SEED Image Frame](https://seed-design.io/components/image-frame)(Apache-2.0)을 따른다 — "사용자가 업로드한 이미지를 표시하기 위한 컴포넌트" 로, 비율 상자 · 그림(cover) · 안쪽 1px 윤곽 · 대체 그림 · 네 모서리의 그림 위 요소. 모서리는 SEED 대로 폭으로 고른다("가로 크기 24까지 r1, 48까지 r1.5, 그 이상은 r2 적용"). 카드 그림(ISO 카드 1.586 · 세로 그림 돌리기 · 그림 없는 카드의 면)은 porest 가 더했다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). porest 에 처음 두는 부품이다 — 옛 [Aspect Ratio](aspect-ratio.md) 와 화면마다 손으로 짠 그림 틀을 대신한다.
+구조는 당근 [SEED Image Frame](https://seed-design.io/components/image-frame)(Apache-2.0)을 따른다 — "사용자가 업로드한 이미지를 표시하기 위한 컴포넌트" 로, 비율 상자 · 그림(cover) · 안쪽 1px 윤곽 · 대체 그림 · 네 모서리의 그림 위 요소. 모서리는 SEED 대로 폭으로 고른다("가로 크기 24까지 r1, 48까지 r1.5, 그 이상은 r2 적용"). 카드 그림(ISO 카드 1.586 · 세로 그림 돌리기 · 그림 없는 카드의 면)은 groo 가 더했다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). groo 에 처음 두는 부품이다 — 옛 [Aspect Ratio](aspect-ratio.md) 와 화면마다 손으로 짠 그림 틀을 대신한다.
 
 수치 원본은 [`image-frame.yaml`](image-frame.yaml)(틀)과 [`card-art.yaml`](card-art.yaml)(카드 그림 · 카드 면)이다. 카드 면의 색은 [`institution-colors.yaml`](institution-colors.yaml)(기관 색 표 — [Logo Tile](logo-tile.md) 과 함께 쓴다). 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -30,9 +30,9 @@
 
 ### Ratio
 
-비율은 여덟 가지다 — SEED 의 일곱(1:1 · 2:1 · 16:9 · 4:3 · 6:7 · 4:5 · 2:3)과 카드 1.586(ISO 카드 85.6 × 53.98 — porest). 기본은 4:3 이다. 틀은 그림이 오기 전에 비율로 자리를 잡아, 그림이 와도 줄이 밀리지 않는다. 카드 그림은 목록 · 격자 · 상세 모두 1.586 이다 — 최대 높이를 걸어 비율을 바꾸지 않는다.
+비율은 여덟 가지다 — SEED 의 일곱(1:1 · 2:1 · 16:9 · 4:3 · 6:7 · 4:5 · 2:3)과 카드 1.586(ISO 카드 85.6 × 53.98 — groo). 기본은 4:3 이다. 틀은 그림이 오기 전에 비율로 자리를 잡아, 그림이 와도 줄이 밀리지 않는다. 카드 그림은 목록 · 격자 · 상세 모두 1.586 이다 — 최대 높이를 걸어 비율을 바꾸지 않는다.
 
-[그림: 같은 폭에 여덟 비율 — 카드 1.586 은 porest](../../site/components/specs/image-frame.tsx#ratio)
+[그림: 같은 폭에 여덟 비율 — 카드 1.586 은 groo](../../site/components/specs/image-frame.tsx#ratio)
 
 [표: 비율](image-frame.yaml#ratio)
 
@@ -336,12 +336,12 @@ import { ScrollFog } from "@/components/ui/scroll-fog"
 
 ## SEED 와 다른 점
 
-- **윤곽은 늘 그린다** — SEED 는 CSS · React 의 기본이 꺼짐(rootage JSON 기본 · 디자인 그림은 켬)이고 Figma 코드 생성은 윤곽을 옮기지 않는다. porest 는 끄는 속성을 두지 않는다. 값은 SEED stroke.neutral-subtle 그대로 `stroke-neutral-overlay`(v118)다.
+- **윤곽은 늘 그린다** — SEED 는 CSS · React 의 기본이 꺼짐(rootage JSON 기본 · 디자인 그림은 켬)이고 Figma 코드 생성은 윤곽을 옮기지 않는다. groo 는 끄는 속성을 두지 않는다. 값은 SEED stroke.neutral-subtle 그대로 `stroke-neutral-overlay`(v118)다.
 - **모서리를 폭으로 저절로 고른다** — SEED React 는 기본 r2(8) 하나라 24 · 48 그림은 쓰는 쪽이 손으로 내린다.
 - **불러오는 동안은 스켈레톤, 실패는 대체 그림** — SEED React 는 받는 중에도 대체 그림을 바로 보여 "불러오는 중" 과 "없음" 이 같다(SEED 디자인 문서는 스켈레톤이라 적었다 — 그쪽을 따른다). 10초가 지나면 실패로 바꾼다(Skeleton 시간표).
 - **실패해도 이름이 남는다** — SEED 는 실패하면 `img` 를 숨겨 아무것도 읽히지 않는다.
 - **그림 위는 배지 · Indicator 둘, 네 모서리만** — Reaction Button(하트) · 콘텐츠 종류 아이콘은 쓸 자리가 없어 두지 않는다. SEED React Floater 는 9자리를 받는다.
-- **Indicator 바탕은 `overlay-dim-dark`(검정 65%)** — SEED static-black-alpha-800(63.5%)에 맞는 토큰이 porest 에 없어 가장 가까운 딤을 두 모드에 쓴다(토큰을 더하지 않았다). Indicator 를 읽는 글(`label`)로 무엇의 수인지 알린다 — SEED 는 "+9" 만 읽힌다.
+- **Indicator 바탕은 `overlay-dim-dark`(검정 65%)** — SEED static-black-alpha-800(63.5%)에 맞는 토큰이 groo 에 없어 가장 가까운 딤을 두 모드에 쓴다(토큰을 더하지 않았다). Indicator 를 읽는 글(`label`)로 무엇의 수인지 알린다 — SEED 는 "+9" 만 읽힌다.
 - **카드 그림을 더한다** — 비율 1.586 · 세로 그림 돌리기 · 그림 없는 카드의 기관 색 면. SEED 는 사진을 늘 cover 로 채우고 실물 그림 규칙이 없다.
 
 ## Migration notes
@@ -365,7 +365,7 @@ YAML 이 `1` · `2` · `1.586` 은 숫자로, `16 / 9` · `4 / 3` · `6 / 7` · 
 - **상세에 카드 이름이 없다** — 그림이 뜨면 제목 "카드 상세" 뿐이고 이름은 웹 `alt` 에만(`CardBenefitDetailDialog.tsx:79-130 · 620`), 앱은 이름 없는 그림 노드다(`card_benefit_detail_sheet.dart:33 · 294-344`). 모르는 회사의 앱 대체 아트는 글 · 의미가 0 이다(`:362-380`).
 - **그림 없는 카드(82%)의 글자가 약하다** — 웹 단색 + 흰 18% 광택 + 흰 글자로 NH농협카드 3.39(광택 위 2.73) · 하나 4.20 · 롯데 4.38(`entities/card/lib/cardBrand.ts:27-38` · `CardBenefitPage.tsx:227-300` · `CardBenefitDetailDialog.tsx:132-229`), 앱 그라데이션 3.56 ~ 3.85(`features/card/presentation/widgets/card_brand.dart:57-72`). 기관 색 한 색 + 표의 글자색으로.
 - **모르는 카드사(44곳)** — 웹은 브랜드 파랑(진짜 회사 색처럼 보인다 — `cardBrand.ts` 의 `CARD_FALLBACK_GRADIENT`), 앱은 회색 + 카드 아이콘이고 상세에 이름이 없다. 대체 그림(`credit-card`) + 이름 글로.
-- **카드사 색 표가 둘** — 같은 회사가 다른 색이다(하나 #008485 · #008C74, NH농협 #00A651 · #00A149 — `shared/lib/porest/bank-colors.ts` ↔ `cardBrand.ts`, 앱도 같은 두 벌). `institution-colors.yaml` 하나로.
+- **카드사 색 표가 둘** — 같은 회사가 다른 색이다(하나 #008485 · #008C74, NH농협 #00A651 · #00A149 — `shared/lib/groo/bank-colors.ts` ↔ `cardBrand.ts`, 앱도 같은 두 벌). `institution-colors.yaml` 하나로.
 - **윤곽이 0** — 흰 카드 그림이 흰 바탕에 묻힌다(9월 24일 캡처). 투명 윤곽으로.
 - **모서리가 12 · 6 · 4 · 8 로 갈린다** — 웹 격자 · 상세 12, 웹 폰 목록 6 · 앱 4(`card_benefits_screen.dart:509-597`), 편집 미리보기 8 · 카탈로그 4. 폭으로 고른다(목록 56 · 격자 · 상세 8, 카탈로그 44 는 6).
 - **불러오는 동안 빈 칸** — 앱 그림 7곳 모두 `loadingBuilder` 가 없고, 웹은 카드 혜택만 회색 상자다. 스켈레톤으로.

@@ -1,10 +1,10 @@
 /*
  * shadcn Footer 예제 — docs site components/footer.html 에서 Preview + Code 토글로 보인다.
- * 각 예제 = { title, description, jsx, render() }. 첫째(porest-home — 7B 짜임)는 제목 · 코드가 specs/components/footer.md 의 "코드" 절과 같고,
+ * 각 예제 = { title, description, jsx, render() }. 첫째(groo-home — 7B 짜임)는 제목 · 코드가 specs/components/footer.md 의 "코드" 절과 같고,
  * 둘째(값이 생기면 — 자리표시)는 md 의 "값이 없는 블록은 비워 둔다" 를 코드로 더 보인다 — 값을 지어내지 않고 자리표시 글만 쓴다.
  * 짜임은 당근 SEED Footer(seed-design.io/components/footer — 디자인 문서 "조합 예시" · registry block footer-01 ~ 04, Apache-2.0)를 따른다 — 정해진 한
  * 덩어리가 아니라 블록(브랜드 · 사이트맵 | 선 | 정책 링크 · 안내 글 · 저작권)을 골라 조립한다(2026-10-15 사용자 결정 7B · 8A · 9A). 1280 미만 좌우 24 · 위 선 ·
- * "© 해 POREST" 는 porest 가 정했다. porest 에 처음 두는 예제다.
+ * "© 해 그루" 는 groo 가 정했다. groo 에 처음 두는 예제다.
  *
  * ROOT · ROOT_TOP_LINE · FRAME · NAV · BRAND · BRAND_NAME · BRAND_INTRO · SITEMAP · COLUMN · COLUMN_TITLE · COLUMN_LINKS · DIVIDER · INFO · LINKS · TEXT ·
  * BOTTOM · COPYRIGHT · SOCIAL · LINK · LINK_SIZE 는 recipes/shadcn/components/ui/footer.tsx 의 상수와, COLUMN_ITEM("flex")은 그 파일의 JSX 에 적힌 클래스와
@@ -147,9 +147,9 @@ const column = (id, title, links) =>
   `<div data-slot="footer-column" class="${COLUMN}"><span id="${id}" data-slot="footer-column-title" class="${COLUMN_TITLE}">${esc(title)}</span><ul aria-labelledby="${id}" data-slot="footer-column-links" class="${COLUMN_LINKS}">${links
     .map((l) => `<li class="${COLUMN_ITEM}">${link(l, { size: "large" })}</li>`)
     .join("")}</ul></div>`;
-// porest-home 바닥(7B) — footer.md 코드 절 그대로
+// groo-home 바닥(7B) — footer.md 코드 절 그대로
 function footer({ id = "ft", extra = "", social = "" } = {}) {
-  return `<footer data-slot="footer" class="${ROOT} ${ROOT_TOP_LINE}"><div data-slot="footer-frame" class="${FRAME}"><div data-slot="footer-nav" class="${NAV}"><div data-slot="footer-brand" class="${BRAND}"><p data-slot="footer-brand-name" class="${BRAND_NAME}" style="${P_FIX.brandName}">POREST</p><p data-slot="footer-brand-description" class="${BRAND_INTRO}" style="${P_FIX.subtle}">${esc(
+  return `<footer data-slot="footer" class="${ROOT} ${ROOT_TOP_LINE}"><div data-slot="footer-frame" class="${FRAME}"><div data-slot="footer-nav" class="${NAV}"><div data-slot="footer-brand" class="${BRAND}"><p data-slot="footer-brand-name" class="${BRAND_NAME}" style="${P_FIX.brandName}">그루</p><p data-slot="footer-brand-description" class="${BRAND_INTRO}" style="${P_FIX.subtle}">${esc(
     "People + Forest. 사람(People)이 모여 숲(Forest)처럼 자라나는 조직 생태계를 설계합니다.",
   )}</p></div><nav data-slot="footer-sitemap" aria-label="사이트 지도" class="${SITEMAP}">${column(`${id}-service`, "서비스", [
     ["HR", "https://hr.porest.cloud"],
@@ -160,7 +160,7 @@ function footer({ id = "ft", extra = "", social = "" } = {}) {
     ["회원가입", "https://sso.porest.cloud"],
   ])}</nav></div><div aria-hidden="true" data-slot="footer-divider" class="${DIVIDER}"></div><div data-slot="footer-info" class="${INFO}"><div data-slot="footer-links" class="${LINKS}">${link(["개인정보 처리방침", "https://sso.porest.cloud/privacy"], { external: true })}</div><p data-slot="footer-text" class="${TEXT}" style="${P_FIX.subtle}">${esc(
     "화면의 숫자와 이름은 소개용 예시입니다. 사진: Unsplash.",
-  )}</p>${extra}<div data-slot="footer-bottom" class="${BOTTOM}"><p data-slot="footer-copyright" class="${COPYRIGHT}" style="${P_FIX.muted}">© ${YEAR} POREST</p>${social}</div></div></div></footer>`;
+  )}</p>${extra}<div data-slot="footer-bottom" class="${BOTTOM}"><p data-slot="footer-copyright" class="${COPYRIGHT}" style="${P_FIX.muted}">© ${YEAR} 그루</p>${social}</div></div></div></footer>`;
 }
 const PAGE =
   "overflow:hidden; border-radius:var(--radius-r4); background:var(--color-bg-layer-default); box-shadow:inset 0 0 0 1px var(--color-stroke-neutral-subtle); color:var(--color-fg-neutral);";
@@ -174,9 +174,9 @@ const page = (html) => `<div style="${PAGE}">${PAGE_BODY}${html}</div>`;
 
 export const footerExamples = [
   {
-    title: "porest-home — 7B 짜임",
+    title: "groo-home — 7B 짜임",
     description:
-      "SEED footer-04 를 줄인 porest-home 의 바닥이다(7B) — 탐색 영역(브랜드 \"POREST\" 20 / 27 · 700 + 소개 13 / 18 | 사이트맵 <nav aria-label=\"사이트 지도\"> 의 서비스 · 계정 열 — 제목 13 / 18 · 500 fg-neutral-muted · 링크 large 16 / 22 · 500 fg-neutral, 사이 16) · 선(1px stroke-neutral-subtle) · 안내 영역(개인정보 처리방침 ↗ · 안내 글 · © 해 POREST). 틀은 최대 1040 · 위아래 40 · 좌우 24(1280 이상 32) · 영역 사이 40 이고 바닥 위에 화면 폭 1px 선을 긋는다. 폭이 줄면 사이트맵이 브랜드 아래로, 열이 줄을 바꾼다(열 최소 100). 처리방침만 새 탭(↗ + 보이지 않는 \"(새 탭)\")이고 같은 탭으로 가는 서비스 링크에는 ↗ 가 없다. 링크에는 밑줄이 없다 — 올림 · 누름은 색으로 알린다(사이트맵 링크는 옅게, 정책 링크는 짙게). porest-home 자체는 빌드 없는 정적 페이지라 같은 짜임을 HTML 로 옮기고 색 · 글꼴은 홈 것을 쓴다(8A).",
+      "SEED footer-04 를 줄인 groo-home 의 바닥이다(7B) — 탐색 영역(브랜드 \"그루\" 20 / 27 · 700 + 소개 13 / 18 | 사이트맵 <nav aria-label=\"사이트 지도\"> 의 서비스 · 계정 열 — 제목 13 / 18 · 500 fg-neutral-muted · 링크 large 16 / 22 · 500 fg-neutral, 사이 16) · 선(1px stroke-neutral-subtle) · 안내 영역(개인정보 처리방침 ↗ · 안내 글 · © 해 그루). 틀은 최대 1040 · 위아래 40 · 좌우 24(1280 이상 32) · 영역 사이 40 이고 바닥 위에 화면 폭 1px 선을 긋는다. 폭이 줄면 사이트맵이 브랜드 아래로, 열이 줄을 바꾼다(열 최소 100). 처리방침만 새 탭(↗ + 보이지 않는 \"(새 탭)\")이고 같은 탭으로 가는 서비스 링크에는 ↗ 가 없다. 링크에는 밑줄이 없다 — 올림 · 누름은 색으로 알린다(사이트맵 링크는 옅게, 정책 링크는 짙게). groo-home 자체는 빌드 없는 정적 페이지라 같은 짜임을 HTML 로 옮기고 색 · 글꼴은 홈 것을 쓴다(8A).",
     jsx: `import {
   Footer,
   FooterBottom,
@@ -195,7 +195,7 @@ export const footerExamples = [
 <Footer>
   <FooterNav>
     <FooterBrand
-      name="POREST"
+      name="그루"
       description="People + Forest. 사람(People)이 모여 숲(Forest)처럼 자라나는 조직 생태계를 설계합니다."
     />
     <FooterSitemap>
@@ -221,7 +221,7 @@ export const footerExamples = [
     <FooterText>화면의 숫자와 이름은 소개용 예시입니다. 사진: Unsplash.</FooterText>
     {/* 사업자 정보 · 연락처 · 소셜은 값이 생기면 이 자리에 — 지어내지 않는다 */}
     <FooterBottom>
-      <FooterCopyright owner="POREST" />
+      <FooterCopyright owner="그루" />
     </FooterBottom>
   </FooterInfo>
 </Footer>`,
@@ -231,7 +231,7 @@ export const footerExamples = [
   {
     title: "값이 생기면 — 사업자 정보 · 연락처 · 소셜(자리표시)",
     description:
-      "사업자 정보 · 연락처 · 소셜 링크는 블록만 있다 — porest 의 상호 · 사업자 등록번호 · 주소 · 전화 · 문의 메일 · 공개 소셜 채널은 아직 어느 레포에도 없어 값을 지어내 넣지 않는다. 값이 생기면 안내 글 아래에 사업자 정보 → 연락처를 FooterText 로(항목은 \" | \" 로 잇고 묶음이 바뀌면 <br />), 소셜은 저작권 줄 끝의 FooterSocial 로 둔다 — Button ghost · large · 아이콘만 + 이름(사이 24 · 바깥 여백만큼 끝을 맞춘다), 1280 미만은 저작권 아래. 아래 글은 무엇이 들어갈 자리인지만 쓴 자리표시다.",
+      "사업자 정보 · 연락처 · 소셜 링크는 블록만 있다 — groo 의 상호 · 사업자 등록번호 · 주소 · 전화 · 문의 메일 · 공개 소셜 채널은 아직 어느 레포에도 없어 값을 지어내 넣지 않는다. 값이 생기면 안내 글 아래에 사업자 정보 → 연락처를 FooterText 로(항목은 \" | \" 로 잇고 묶음이 바뀌면 <br />), 소셜은 저작권 줄 끝의 FooterSocial 로 둔다 — Button ghost · large · 아이콘만 + 이름(사이 24 · 바깥 여백만큼 끝을 맞춘다), 1280 미만은 저작권 아래. 아래 글은 무엇이 들어갈 자리인지만 쓴 자리표시다.",
     jsx: `import { Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -243,7 +243,7 @@ import { Button } from "@/components/ui/button"
 </FooterText>
 <FooterText>(전화) | (문의 메일)</FooterText>
 <FooterBottom>
-  <FooterCopyright owner="POREST" />
+  <FooterCopyright owner="그루" />
   <FooterSocial>
     <Button variant="ghost" size="large" layout="iconOnly" aria-label="(소셜 채널 이름)">
       <Globe />

@@ -1,6 +1,6 @@
 # Git Convention
 
-Porest Design System 저장소의 브랜치·커밋 규칙. CLAUDE.md의 토큰 작업 규칙(snapshot, lint, ≤5 토큰/배치)과 함께 적용한다 — 본 문서는 git 레이어만 다룬다.
+Groo Design System 저장소의 브랜치·커밋 규칙. CLAUDE.md의 토큰 작업 규칙(snapshot, lint, ≤5 토큰/배치)과 함께 적용한다 — 본 문서는 git 레이어만 다룬다.
 
 ## 브랜치
 

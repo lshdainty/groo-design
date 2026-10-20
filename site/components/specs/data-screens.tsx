@@ -245,7 +245,7 @@ export function TableCard({ mode = 'auto', title = '사용자', action, children
 // HR 데스크톱 — 사용자 관리(사이드바 · 화면 제목 · 표 카드)
 export function UsersDesktop({ mode = 'auto', s = 0.5, w = 1280, h = 560, children }: { mode?: Mode; s?: number; w?: number; h?: number; children?: ReactNode }) {
   return (
-    <Desktop mode={mode} w={w} h={h} s={s} url="hr.porest.app">
+    <Desktop mode={mode} w={w} h={h} s={s} url="hr.groo.app">
       <Shell mode={mode} brand="hr" side={<Side brand="hr" mode={mode} current="users" />}>
         <ScreenTitle mode={mode} brand="hr" top={32}>
           사용자 관리

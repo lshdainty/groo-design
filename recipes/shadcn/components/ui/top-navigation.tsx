@@ -7,8 +7,8 @@ import { NotificationBadge } from "@/components/ui/notification-badge";
 import { useLeaveConfirm } from "@/components/ui/alert-dialog";
 
 /*
- * Porest Top Navigation — 구조는 SEED Top Navigation(Root · Standard, 2026-10-04). 수치 원본은 specs/components/top-navigation.yaml.
- * 데스크톱 머리(desktop)는 SEED 에 컴포넌트가 없어 porest 가 같은 규칙으로 더했다.
+ * Groo Top Navigation — 구조는 SEED Top Navigation(Root · Standard, 2026-10-04). 수치 원본은 specs/components/top-navigation.yaml.
+ * 데스크톱 머리(desktop)는 SEED 에 컴포넌트가 없어 groo 가 같은 규칙으로 더했다.
  *
  *   TopNavigation               바(<header> — main 밖, banner). type "root"(탭 첫 화면) · "standard"(기본 — 그 아래 화면 · HR 폰) ·
  *                               "desktop"(768 이상 Desk 의 머리 — 제목은 본문 맨 위 ScreenTitle). 자식은 아래 부품을 차례대로
@@ -33,7 +33,7 @@ import { useLeaveConfirm } from "@/components/ui/alert-dialog";
  *                               모든 데스크톱 화면에 하나(홈 · 캘린더도). description(화면 부제 — 제목 아래 t5 · 400 · fg-neutral-muted · 위 2, 2026-10-16 글자 역할 D6) · actions(Button small
  *                               묶음 · 사이 8)를 주면 한 줄 제목 줄 — 제목 덩어리 왼쪽 · 버튼 오른쪽(사이 16), 버튼은 제목 덩어리 아래 끝에 맞춘다.
  *                               글이 길면 설명이 줄을 바꾸고 버튼은 그 자리(2026-10-16 사용자 결정 Q-018-2 A). ref 는 늘 h1
- *   TopNavigationProvider       product("Porest Desk" · "Porest HR") — useScreenTitle(title) 가 문서 제목을 "{title} - {product}" 로 쓴다
+ *   TopNavigationProvider       product("그루 담다" · "그루 이음") — useScreenTitle(title) 가 문서 제목을 "{title} - {product}" 로 쓴다
  *   focusScreenTitle()          셸이 화면을 옮긴 뒤 부른다 — 본문 스크롤을 맨 위로, 보이는 [data-screen-title] 에 초점(링은 키보드로 왔을 때만).
  *                               { resetScroll: false } 면 초점만 — 하단 탭 · 가계부 묶음 탭을 오갈 때 셸이 기억한 스크롤을 돌려놓는다(Q-018-4 A)
  *
@@ -373,7 +373,7 @@ ScreenTitle.displayName = "ScreenTitle";
 // ── 문서 제목 · 화면을 옮길 때 ───────────────────────────────
 const ProductContext = React.createContext<string | null>(null);
 
-/** 서비스 이름 — 문서 제목의 뒤("{화면 제목} - Porest Desk"). 앱 맨 위에 한 번 둔다 */
+/** 서비스 이름 — 문서 제목의 뒤("{화면 제목} - 그루 담다"). 앱 맨 위에 한 번 둔다 */
 function TopNavigationProvider({ product, children }: { product: string; children?: React.ReactNode }) {
   return <ProductContext.Provider value={product}>{children}</ProductContext.Provider>;
 }

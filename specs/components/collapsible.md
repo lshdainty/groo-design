@@ -2,7 +2,7 @@
 
 > 내용 하나를 접고 펴는 자리 — 거래 상세의 분할 내역, 분할 합계가 어긋날 때의 "빠르게 맞추기", HR 업무 보고의 상세 검색 조건. 트리거는 [Accordion](accordion.md) 항목 하나의 모양이다. 같은 모양의 항목이 여럿이면 Accordion 이다.
 
-SEED 에는 Collapsible 컴포넌트가 없다 — [SEED Accordion](https://seed-design.io/components/accordion) 가이드의 한 줄 "단일 콘텐츠를 접고 펼치는 용도는 해당 아이템에 Collapsible 동작을 활용할 수 있어요" 뿐이다(Apache-2.0). porest 는 그 문장대로 트리거를 Accordion 항목 하나의 모양으로 둔다 — 줄 전체가 트리거, 머리 글이 곧 이름, 54 · 74, 꺾쇠 20(2026-10-10 사용자 결정 9A). 이름은 상태마다 바꾸지 않고 펼침은 `aria-expanded` 가 알린다(APG Disclosure), 펼친 뒤 초점은 트리거에 그대로다. 옛 Collapsible 스펙("스타일 0 · 동작만 — 시각은 사용처" · Button 으로 감싼 트리거 · "더 보기" 쓰임)을 대신한다.
+SEED 에는 Collapsible 컴포넌트가 없다 — [SEED Accordion](https://seed-design.io/components/accordion) 가이드의 한 줄 "단일 콘텐츠를 접고 펼치는 용도는 해당 아이템에 Collapsible 동작을 활용할 수 있어요" 뿐이다(Apache-2.0). groo 는 그 문장대로 트리거를 Accordion 항목 하나의 모양으로 둔다 — 줄 전체가 트리거, 머리 글이 곧 이름, 54 · 74, 꺾쇠 20(2026-10-10 사용자 결정 9A). 이름은 상태마다 바꾸지 않고 펼침은 `aria-expanded` 가 알린다(APG Disclosure), 펼친 뒤 초점은 트리거에 그대로다. 옛 Collapsible 스펙("스타일 0 · 동작만 — 시각은 사용처" · Button 으로 감싼 트리거 · "더 보기" 쓰임)을 대신한다.
 
 수치 원본은 [`collapsible.yaml`](collapsible.yaml)이다 — 트리거 · 상태 · 모션 값은 [`accordion.yaml`](accordion.yaml)과 같고, 놓인 면(`surface`)만 더 있다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -227,8 +227,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 
 ## SEED 와 다른 점
 
-- **SEED 에는 Collapsible 이 없다** — Accordion 가이드의 한 줄대로 항목 하나의 모양을 쓴다. 값은 Accordion 의 porest 값(좌우 24 · 불투명한 누름 바탕 · 안쪽 포커스 링)이다.
-- **놓인 면(`surface`)** — 카드 면 · 경고 상자 안에 둘 때의 여백 · 선 · 누름 색은 porest 가 정했다.
+- **SEED 에는 Collapsible 이 없다** — Accordion 가이드의 한 줄대로 항목 하나의 모양을 쓴다. 값은 Accordion 의 groo 값(좌우 24 · 불투명한 누름 바탕 · 안쪽 포커스 링)이다.
+- **놓인 면(`surface`)** — 카드 면 · 경고 상자 안에 둘 때의 여백 · 선 · 누름 색은 groo 가 정했다.
 - **잘린 글을 펼치지 않는다** · **원장 머리는 하나만 펼친다** — SEED 에 규칙이 없다.
 
 ## Migration notes
@@ -250,7 +250,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 - **웹 거래 상세 분할 내역** — 머리 "내역 분할 6개"(h4) 오른쪽 글 단추 "합계 123,456,789원 + 꺾쇠 16" 이 128.9 × 18 이고 이름에 무엇을 여닫는지 · 빼기 부호가 없으며, `aria-expanded` 0 · 움직임 0 이다(`widgets/expense-detail/ui/TxDetailDialog.tsx:646-700` · 상태 `:113`, D4 · D13). 앱은 같은 자리가 높이 18 · 이름 · 상태 0 이다(`features/expense/presentation/tx_detail_dialog.dart:828-880`). `default` 트리거 "내역 분할 6개 · 합계 −123,456,789원" 으로.
 - **웹 분할 빠르게 맞추기** — "✦ 빠르게 맞추기 ⌄" 가 103 × 16.5 · 11 / 700 브랜드 · `aria-controls` 0 · 움직임 0 이다(`features/expense-split/ui/SplitTxDialog.tsx:590-640`, D13). 앱은 높이 22 · 이름 · 상태 0(`features/expense_split/presentation/split_tx_dialog.dart:513-545`). `warning` 트리거로.
 - **HR 업무 보고 필터** — outline 단추 152 × 36 "필터 2" 가 "필터2" 로 붙어 읽히고 `aria-expanded` 0 · 내용 움직임 0 이다(`features/work-report/ui/ReportHeader.tsx:43-63` → `ReportFilter.tsx:58-231`, D19). 조건 카드의 머리 `card` 트리거 "상세 검색 조건 · 2개 필터 적용 중" 으로.
-- **원장 머리** — 웹 가계부는 소비 요약 카드(`txmDrop` 180ms)와 월 달력이 함께 열리고, 앱은 하나를 열면 다른 하나를 닫는다(`pages/expense/ui/ExpensePage.tsx:1972-2020` → `shared/ui/porest/ledger.tsx:202-250` · 앱 `features/expense/presentation/expense_screen.dart:505-507 · 617-619`, D24) — 웹도 하나만. 월 달력 단추의 이름이 가계부는 "목록 / 달력" 으로 잘못 바뀌고 할 일은 "월 전체 보기 / 접기" 이며 `aria-expanded` 0, 앱은 이름 0 이다(`ExpensePage.tsx:2112-2116` · `TodoMobileLedger.tsx:472-476` → `ledger.tsx:394-416` · 앱 `expense_screen.dart:1253-1266`, D10) — "월 달력" + `aria-expanded` 로. 누르는 영역도 소비 요약 39.5 · 월 달력 32 다(D13).
+- **원장 머리** — 웹 가계부는 소비 요약 카드(`txmDrop` 180ms)와 월 달력이 함께 열리고, 앱은 하나를 열면 다른 하나를 닫는다(`pages/expense/ui/ExpensePage.tsx:1972-2020` → `shared/ui/groo/ledger.tsx:202-250` · 앱 `features/expense/presentation/expense_screen.dart:505-507 · 617-619`, D24) — 웹도 하나만. 월 달력 단추의 이름이 가계부는 "목록 / 달력" 으로 잘못 바뀌고 할 일은 "월 전체 보기 / 접기" 이며 `aria-expanded` 0, 앱은 이름 0 이다(`ExpensePage.tsx:2112-2116` · `TodoMobileLedger.tsx:472-476` → `ledger.tsx:394-416` · 앱 `expense_screen.dart:1253-1266`, D10) — "월 달력" + `aria-expanded` 로. 누르는 영역도 소비 요약 39.5 · 월 달력 32 다(D13).
 - **잘린 글** — HR 규정 카드 16곳이 `line-clamp-4` 로 데스크톱 4열에서 한국어 3/16 · 영어 6/16 이 잘리고 펼칠 길이 없으며, "지급 시기" 는 같은 문장이 두 번 찍힌다(`features/culture-regulation/ui/RuleVacation.tsx:17 · 27-37` 외 `Rule*.tsx`, D6). 자르지 않고 줄마다 가장 긴 카드에 높이를 맞춘다. 웹 유의사항 제목의 말줄임(D11)은 Accordion, HR 부서 이름의 말줄임(D12)은 [Tree View](tree-view.md) 에서 걷는다.
 - **쓰지 않는 것** — SSO `collapsible.tsx` 는 쓰는 곳이 0 이다(D21).
 

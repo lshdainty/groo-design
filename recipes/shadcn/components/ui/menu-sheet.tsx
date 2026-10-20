@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { BottomSheet, BottomSheetSurface, BottomSheetTrigger } from "@/components/ui/bottom-sheet";
 
 /*
- * Porest Menu Sheet — 구조는 SEED Swipeable Menu Sheet(2026-10-02). 수치 원본은 specs/components/menu-sheet.yaml.
+ * Groo Menu Sheet — 구조는 SEED Swipeable Menu Sheet(2026-10-02). 수치 원본은 specs/components/menu-sheet.yaml.
  * Bottom Sheet(bottom-sheet.tsx — vaul) 위에 짰다.
  *
  *   MenuSheet          화면 아래에서 올라오는 동작 목록 — open · defaultOpen · onOpenChange

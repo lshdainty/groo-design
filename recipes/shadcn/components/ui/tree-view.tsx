@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { useExpandMotion } from "@/components/ui/accordion";
 
 /*
- * Porest Tree View — WAI-ARIA APG Treeview(2026-10-10). 수치 원본은 specs/components/tree-view.yaml.
+ * Groo Tree View — WAI-ARIA APG Treeview(2026-10-10). 수치 원본은 specs/components/tree-view.yaml.
  * 여러 단계로 된 항목 가운데 하나를 고르는 나무 — HR 관리 > 회사 · 부서 사용자의 부서 나무. 고른 항목의 내용은 옆 패널에 보인다.
  * SEED 에는 나무가 없다 — 키보드 · 역할은 APG Treeview, 줄의 값은 Side Navigation 항목(44 · 모서리 10 · 14 / 19)과 List 의 누름이다.
  * 부모 · 하위 두 단계에서 줄이 편집을 여는 목록은 List 의 하위 줄(ListParentItem), 상세를 접어 두는 목록은 Accordion 이다.

@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Scroll Fog — 구조는 SEED Scroll Fog(2026-10-03). 수치 원본은 specs/components/scroll-fog.yaml.
+ * Groo Scroll Fog — 구조는 SEED Scroll Fog(2026-10-03). 수치 원본은 specs/components/scroll-fog.yaml.
  * 스크롤되는 영역의 끝을 흐려 뒤에 더 있다는 것을 알린다. 색을 덮는 막이 아니라 스크롤 상자에 거는 투명도 마스크라 어느 바탕
  * (흰 면 · 회색 바탕 · 다크)에서도 같고, 흐린 자리의 칩 · 줄도 그대로 눌린다. 스크롤 위치 · 넘침을 재지 않고 늘 켜 둔다.
  *
@@ -30,7 +30,7 @@ import { cn } from "@/lib/utils";
  *   (내용과 함께 스크롤된다 — 흐림 아래에 깔린다). 키보드로 옮긴 요소가 흐림 아래 멈추지 않게 스크롤 여유를 같은 만큼 둔다.
  * 흐림은 장식이다 — 역할 · 이름이 없다. 안에 초점 가는 요소가 없으면 상자에 tabIndex={0} · role="region" 과 이름(aria-label)을 준다
  * (키보드 스크롤 — 역할 없는 div 에는 이름을 달 수 없다, Scroll Area). 시트 · 대화상자 · 팝오버 안의 상자는 className 에 overscroll-contain.
- * 스크롤바는 전역 한 벌(styles/porest-shadcn-bridge.css)이고 숨기는 것은 가로 줄(row)뿐이다.
+ * 스크롤바는 전역 한 벌(styles/groo-shadcn-bridge.css)이고 숨기는 것은 가로 줄(row)뿐이다.
  * 부품이 제 안개를 가진 자리(Wheel Picker · Date Picker 이어지는 달)에는 겹쳐 걸지 않는다.
  */
 

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { ignoreRadioJumpKeys } from "@/components/ui/radio-group";
 
 /*
- * Porest Segmented Control — 구조는 SEED Segmented Control(2026-10-02). 수치 원본은 specs/components/segmented-control.yaml.
+ * Groo Segmented Control — 구조는 SEED Segmented Control(2026-10-02). 수치 원본은 specs/components/segmented-control.yaml.
  *
  *   SegmentedControl       트랙 — 라디오 묶음(role=radiogroup). 같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게
  *                          보는 자리에, 그 내용 바로 위에 하나만 둔다. 이름(aria-label · aria-labelledby)과 value(또는

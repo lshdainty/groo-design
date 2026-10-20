@@ -2,7 +2,7 @@
 
 > 입력 하나를 감싸는 둘레 — 칸 이름(라벨) · 필수 또는 선택 표시 · 설명 · 오류 · 글자 수를 한 모양으로 붙인다. Text Input · Textarea 와 Checkbox · Radio · Select Box 묶음을 감싼다.
 
-구조는 당근 [SEED Field](https://seed-design.io/components/field)(Apache-2.0)를 따른다 — 머리(Header) · 입력(Input) · 꼬리(Footer). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정). 옛 Label · Form 스펙은 Field 로 합쳤다(맨 아래 Migration notes).
+구조는 당근 [SEED Field](https://seed-design.io/components/field)(Apache-2.0)를 따른다 — 머리(Header) · 입력(Input) · 꼬리(Footer). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정). 옛 Label · Form 스펙은 Field 로 합쳤다(맨 아래 Migration notes).
 
 수치 원본은 [`field.yaml`](field.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -173,7 +173,7 @@ import { Input } from "@/components/ui/input"
 
 ```tsx
 <Field label="아이디" description="영문 · 숫자 20자까지" maxGraphemeCount={20} invalid errorMessage="이미 쓰고 있는 아이디예요.">
-  <Input defaultValue="porest" />
+  <Input defaultValue="groo" />
 </Field>
 ```
 
@@ -294,10 +294,10 @@ const form = useForm({ defaultValues: { title: "", reason: "" } })
 
 ## SEED 와 다른 점
 
-- **보조 액션은 porest Button**(ghost · neutralSubtle · xsmall · 오른쪽 flush) — 머리 높이 22 를 바꾸지 않게 위아래로 5 씩 넘친다(SEED 의 bleedY 와 같은 일).
+- **보조 액션은 groo Button**(ghost · neutralSubtle · xsmall · 오른쪽 flush) — 머리 높이 22 를 바꾸지 않게 위아래로 5 씩 넘친다(SEED 의 bleedY 와 같은 일).
 - **폼 간격을 정했다** — Field 사이 24 · 나란히 둔 두 칸 사이 16(SEED 는 2열 사이 16 만 글로 적었다).
 - **오류를 알리는 자리** — Field 가 화면 밖 polite 알림 자리를 둔다(SEED 문서에는 없다).
-- **맞음 · 확인 중은 설명 글로** — porest 옛 스펙(v75)의 초록 테두리 · 돌림 표시는 두지 않는다. SEED 에도 없다.
+- **맞음 · 확인 중은 설명 글로** — groo 옛 스펙(v75)의 초록 테두리 · 돌림 표시는 두지 않는다. SEED 에도 없다.
 - **Fieldset 은 컴포넌트로 두지 않는다** — 구역 제목(List Header)과 Field 로 짠다.
 
 ## Migration notes

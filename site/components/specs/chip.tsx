@@ -182,7 +182,7 @@ function HrNoticeWindow({ mode, w = 560 }: { mode: Mode; w?: number }) {
   const winH = 32 + 24 * 2 + chrome.head + body + chrome.foot;
   const s = o.dialog.footer.button.size;
   return (
-    <WebWindow mode={mode} w={w} h={winH} url="hr.porest.app">
+    <WebWindow mode={mode} w={w} h={winH} url="hr.groo.app">
       <CenterOn mode={mode} dim={o.dialog.dim}>
         <DialogSurface
           look={o.dialog}
@@ -587,7 +587,7 @@ function DeskWebLedger({ mode }: { mode: Mode }) {
   const o = ov();
   const s = lk.sizes.small;
   return (
-    <WebWindow mode={mode} w={520} h={340} url="desk.porest.app">
+    <WebWindow mode={mode} w={520} h={340} url="desk.groo.app">
       <div className="flex h-full flex-col px-8 pt-6" style={{ background: rc('bg-layer-default', mode) }}>
         <span className="pb-4 text-[20px] font-bold" style={{ color: rc('fg-neutral', mode) }}>
           가계부

@@ -1,4 +1,4 @@
-# Porest Design — Component Usage Examples
+# Groo Design — Component Usage Examples
 
 `DESIGN.md` (baseline) / `DESIGN.hr.md` / `DESIGN.desk.md`에 정의된 토큰·컴포넌트 spec을 **실제 코드로 사용하는 예시**. spec 정의는 *what / why*, 본 문서는 *how*.
 
@@ -99,7 +99,7 @@ States — Loading (`aria-busy`), Disabled, With icon. Touch target: `lg` 권장
     aria-required="true"
     aria-describedby="email-helper"
     class="px-3 py-2 rounded-md border border-default bg-surface-input text-text-primary text-body-lg focus:border-focus focus:outline-none focus:ring-2 focus:ring-focus/20 transition-colors"
-    placeholder="hello@porest.app"
+    placeholder="hello@groo.app"
   />
   <span id="email-helper" class="text-caption text-tertiary">로그인 시 사용됩니다</span>
 </div>
@@ -115,7 +115,7 @@ Default — label + required mark + helper text. `inputmode="email"` 모바일 �
     type="email"
     aria-invalid="true"
     aria-describedby="email-bad-error"
-    value="hello@porest"
+    value="hello@groo"
     class="px-3 py-2 rounded-md border border-error bg-surface-input text-text-primary text-body-lg focus:outline-none focus:ring-2 focus:ring-error/20"
   />
   <span id="email-bad-error" role="alert" class="text-caption text-error">올바른 이메일 주소를 입력해주세요</span>
@@ -410,7 +410,7 @@ A11y: focus trap (Tab/Shift+Tab 내부 순환), Escape 닫기, 닫힌 후 trigge
       </div>
       <div class="flex flex-col gap-1">
         <span class="text-label-sm text-tertiary">이메일</span>
-        <span class="text-body-lg">hong@porest.app</span>
+        <span class="text-body-lg">hong@groo.app</span>
       </div>
     </div>
   </aside>
@@ -667,7 +667,7 @@ Hover Card — non-interactive preview. delay 700ms hover, link/avatar에 mentio
 <!-- 흰 면 + 오른쪽 1px 선. 이름 있는 nav, 지금 항목은 옅은 회색 + 짙은 글자 + aria-current -->
 <nav aria-label="주 메뉴" class="w-[240px] h-screen bg-bg-layer-default shadow-[inset_-1px_0_0_var(--color-stroke-neutral-subtle)] flex flex-col">
   <div class="min-h-[64px] p-x2 flex items-center justify-between">
-    <span class="ml-x2 flex items-center gap-x2 text-t5 font-bold">Porest HR</span>
+    <span class="ml-x2 flex items-center gap-x2 text-t5 font-bold">그루 이음</span>
     <button type="button" aria-label="사이드바" aria-expanded="true" aria-controls="main-nav" class="size-[40px] rounded-r2 grid place-items-center text-fg-neutral-subtle">▤</button>
   </div>
   <div id="main-nav" class="flex-1 overflow-y-auto pt-x2 px-x2 pb-[24px] flex flex-col gap-x2">

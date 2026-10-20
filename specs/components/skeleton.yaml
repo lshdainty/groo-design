@@ -9,7 +9,7 @@
 # 요청 제한 · 다시 시도. 시간표는 skeleton.md 의 "기다리는 동안" 한 곳에 적고 progress-circle.md · result-section.md 가 가리킨다.
 #
 # SEED 와 다른 자리(skeleton.md 의 "SEED 와 다른 점")
-#   - 면은 porest bg-neutral-weak(gray-200 #F5F6FA · 다크 gray-300 #353B4D) — SEED palette gray-200(#f3f4f5 · #1d2025)의 역할 짝.
+#   - 면은 groo bg-neutral-weak(gray-200 #F5F6FA · 다크 gray-300 #353B4D) — SEED palette gray-200(#f3f4f5 · #1d2025)의 역할 짝.
 #   - 모션 줄이기면 띠가 멈춘다(v104) — SEED 는 계속 돈다.
 #   - 스켈레톤은 보조 기술에 숨기고, 영역에 aria-busy + 숨은 상태 글을 둔다 — SEED 는 아무것도 알리지 않는다.
 #   - 모서리 기본값은 8(SEED 코드와 같다 — rootage 는 0 을 기본값이라 적었다).

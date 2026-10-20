@@ -2,7 +2,7 @@
 
 > 1280 이상에서 화면 정중앙에 뜨는 대화상자. 입력 폼 · 상세처럼 지금 화면을 떠나지 않고 할 일을 띄운다 — 같은 내용을 1280 미만에서는 [Bottom Sheet](bottom-sheet.md) 로 띄운다(한 부품이 폭으로 바꾼다 — Responsive Dialog). 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md), 트리거에 붙는 짧은 내용은 [Popover](popover.md), 화면 높이를 넘는 긴 내용은 페이지다.
 
-구조는 당근 [SEED Dialog](https://seed-design.io/components/dialog) · Responsive Dialog(Apache-2.0)를 따른다 — 딤 · 대화상자 · 머리(제목 · 설명 · 닫기) · 본문 · 바닥, 본문만 스크롤. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
+구조는 당근 [SEED Dialog](https://seed-design.io/components/dialog) · Responsive Dialog(Apache-2.0)를 따른다 — 딤 · 대화상자 · 머리(제목 · 설명 · 닫기) · 본문 · 바닥, 본문만 스크롤. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
 수치 원본은 [`dialog.yaml`](dialog.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -190,10 +190,10 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 
 ## SEED 와 다른 점
 
-- **바뀌는 폭은 1280**(사용자 결정 2026-10-02) — SEED Responsive Dialog 는 md(768). porest 는 Input Button 의 시트 · 팝오버 경계(1280)와 하나로 맞췄다.
+- **바뀌는 폭은 1280**(사용자 결정 2026-10-02) — SEED Responsive Dialog 는 md(768). groo 는 Input Button 의 시트 · 팝오버 경계(1280)와 하나로 맞췄다.
 - **바닥 버튼은 Button small 36** — SEED 예제는 medium 40. Button 을 정할 때 "40 은 대화상자에 비해 굵다" 로 고른 값을 지켰다(2026-10-02 다시 확인).
-- **딤은 porest 0.50 · 다크 0.65**(v102) — SEED 0.455.
-- **입력 폼은 바깥을 눌러도 닫히지 않고, 머리 닫기 버튼을 두지 않는다** — SEED 도 같은 쪽을 권한다(snippet 의 바깥 닫기 기본값 · "입력 폼에서는 헤더 X 지양"). porest 는 규칙으로 못박았다.
+- **딤은 groo 0.50 · 다크 0.65**(v102) — SEED 0.455.
+- **입력 폼은 바깥을 눌러도 닫히지 않고, 머리 닫기 버튼을 두지 않는다** — SEED 도 같은 쪽을 권한다(snippet 의 바깥 닫기 기본값 · "입력 폼에서는 헤더 X 지양"). groo 는 규칙으로 못박았다.
 - **반투명 색을 불투명 짝으로**(v102) — 머리 아래 선 `stroke-neutral-subtle`, 닫기 버튼 누름 `bg-layer-floating-pressed`.
 - **본문 끝 흐림은 Scroll Fog**(2026-10-03) — 넘칠 수 있는 본문에 늘 켜진 위 20 · 아래 80. SEED Dialog 는 본문이 넘칠 때만 아래 48 을 흐린다.
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 대화상자 `z-modal-content` 101) — 그 안에서 연 Popover(L3) · Alert Dialog(L5)가 위에 뜬다(SEED 는 모두 2 + layerIndex).

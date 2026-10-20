@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 /*
- * Porest Result Section — 구조는 SEED Result Section(2026-10-02). 수치 원본은 specs/components/result-section.yaml.
+ * Groo Result Section — 구조는 SEED Result Section(2026-10-02). 수치 원본은 specs/components/result-section.yaml.
  *
  * 화면이나 그 영역 가운데에 놓는 결과 — 비어 있음 · 불러오기 실패(다시 시도) · 완료 · 찾을 수 없는 페이지(404) · 화면 오류를
  * 한 틀로 그린다. 불러오기 실패를 "내역이 없어요" 처럼 비어 있음으로 보이지 않는다 — failure 로, 무엇을 불러오지 못했는지와

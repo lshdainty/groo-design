@@ -6,7 +6,7 @@ import './global.css';
 
 export const metadata: Metadata = {
   title: { default: appName, template: `%s — ${appName}` },
-  description: 'Porest HR · Porest Desk 가 함께 쓰는 디자인 시스템',
+  description: '그루 이음 · 그루 담다 가 함께 쓰는 디자인 시스템',
 };
 
 export default function Layout({ children }: LayoutProps<'/'>) {

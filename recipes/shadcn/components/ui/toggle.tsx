@@ -4,8 +4,8 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Toggle — 켜고 끄는 아이콘 단추(2026-10-09). 수치 원본은 specs/components/toggle.yaml.
- * SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 Toggle Button 은 코드에만 있고 porest 는 두지 않는다(사용자 결정 8A).
+ * Groo Toggle — 켜고 끄는 아이콘 단추(2026-10-09). 수치 원본은 specs/components/toggle.yaml.
+ * SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 Toggle Button 은 코드에만 있고 groo 는 두지 않는다(사용자 결정 8A).
  * 옛 글 토글(default · outline 28 · 32 · 40)과 Toggle Group 은 걷었다 — 거르기 · 고르기는 Chip · Segmented Control, 설정은 Switch.
  *
  *   Toggle   <button type="button" aria-pressed> 하나 — 관심 등록 · 메모 고정 · App Key 보기(그 자리에서 켜고 끄는 단추)

@@ -3,7 +3,7 @@
 // 차트 10색을 원 40 칸에 진하게 칠해 5 × 2(색상환 차례)로 늘어놓고 하나를 고른다 — radiogroup, 묶음에 Tab 하나 + 2차원 화살표.
 // 고른 칸은 2 띄운 2px 짙은 고리 + 가운데 체크(라이트 흰 · 다크 짙은 글자). 팔레트 밖 색 · 색 없는 항목은 격자 앞 "지금 색" · "자동" 칸 —
 // 놓인 자리가 divider.stackBelow 보다 좁으면 그 칸을 격자 위 줄에 두고 선을 가로로 긋는다(사이는 그대로).
-// states 를 주면 그 칸들을 그 상태로 멈춘 그림, live 면 실제로 누르고 화살표로 옮긴다 — 마우스를 올리면 칸 이름 툴팁(porest Tooltip — menu-view).
+// states 를 주면 그 칸들을 그 상태로 멈춘 그림, live 면 실제로 누르고 화살표로 옮긴다 — 마우스를 올리면 칸 이름 툴팁(groo Tooltip — menu-view).
 import { useEffect, useLayoutEffect, useRef, useState, type ButtonHTMLAttributes, type CSSProperties, type FocusEvent, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react';
 import { Check } from 'lucide-react';
 import { CURRENT, icv, pressRatio, typeStyle, type SwatchCurrent, type SwatchLook, type SwatchState, type ViewMode } from './input-shared';

@@ -1,12 +1,12 @@
 import { createGetUrl } from 'fumadocs-core/source';
 
-export const appName = 'Porest Design';
+export const appName = 'Groo Design';
 export const docsRoute = '/docs';
 export const docsContentRoute = '/llms.mdx/docs';
 
 export const gitConfig = {
   user: 'lshdainty',
-  repo: 'porest-design',
+  repo: 'groo-design',
   branch: 'main',
 };
 

@@ -2,7 +2,7 @@
 
 > 화면 아래에서 올라오는 모달. 1280 미만에서 폼 · 상세 · 고르기를 띄운다 — 같은 내용을 1280 이상에서는 [Dialog](dialog.md) 로 띄운다(한 부품이 폭으로 바꾼다 — Responsive Dialog). 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md), 줄의 동작 목록은 Menu Sheet(그 차례에), 화면 높이의 90% 를 넘는 내용은 페이지다.
 
-구조는 당근 [SEED Bottom Sheet](https://seed-design.io/components/bottom-sheet)(Apache-2.0)를 따른다 — 딤 · 시트 · 머리(제목 · 설명) · 닫기 버튼 · 본문 · 바닥, 손잡이는 고를 때만. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). 옛 Drawer 스펙을 대신한다.
+구조는 당근 [SEED Bottom Sheet](https://seed-design.io/components/bottom-sheet)(Apache-2.0)를 따른다 — 딤 · 시트 · 머리(제목 · 설명) · 닫기 버튼 · 본문 · 바닥, 손잡이는 고를 때만. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). 옛 Drawer 스펙을 대신한다.
 
 수치 원본은 [`bottom-sheet.yaml`](bottom-sheet.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -197,11 +197,11 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 ## SEED 와 다른 점
 
 - **좌우 여백은 화면 여백 24** — SEED 16. 닫기 버튼도 오른쪽 24.
-- **딤은 porest 0.50 · 다크 0.65**(v102) — SEED 0.455.
-- **바닥 버튼은 Button large 48** — SEED 예제는 medium 40. porest 모바일 바닥 CTA 규칙이다.
+- **딤은 groo 0.50 · 다크 0.65**(v102) — SEED 0.455.
+- **바닥 버튼은 Button large 48** — SEED 예제는 medium 40. groo 모바일 바닥 CTA 규칙이다.
 - **입력 폼은 바깥 누르기 · 끌어내리기로 닫지 않는다**(사용자 결정 2026-10-02) — SEED 는 "복잡한 양식 · 결제" 에 닫기 버튼 + 손잡이 제거를 권하고, 끌어 닫기까지 막으려면 따로 끈다.
 - **시트의 입력 폼은 위 닫기 + 바닥 저장** — 닫기 버튼과 바닥 취소를 함께 두지 않는다(SEED Dialog 의 규칙을 시트에도).
-- **손잡이 누름 색은 두지 않는다** — SEED `palette.gray-500` 의 짝이 porest 역할 색에 없다.
+- **손잡이 누름 색은 두지 않는다** — SEED `palette.gray-500` 의 짝이 groo 역할 색에 없다.
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 시트 `z-modal-content` 101) — 그 위에 Popover(L3) · Alert Dialog(L5)가 뜬다.
 
 ## Migration notes

@@ -1,4 +1,4 @@
-# Porest Design System — 컴포넌트 상세 스펙 워크플로
+# Groo Design System — 컴포넌트 상세 스펙 워크플로
 
 ## WHY (왜 이 가이드가 필요한가)
 
