@@ -10,7 +10,7 @@
 # 공통 값만 보인다 — 상태와 상관없는 공통 값은 #base.enabled.
 #
 # SEED 에는 줄 밀기가 없다 — 줄의 동작은 늘 보이는 버튼(List suffix 1 ~ 3개 · 표의 ⋮ 열)이고, 원칙은 "복잡한 제스처는 단순한
-# 터치 동작으로도 수행 가능하도록 대체 방법을 제공"(Inclusive Design) 하나다. 값은 모두 porest 가 정했다.
+# 터치 동작으로도 수행 가능하도록 대체 방법을 제공"(Inclusive Design) 하나다. 값은 모두 groo 가 정했다.
 
 name: Swipe Actions
 

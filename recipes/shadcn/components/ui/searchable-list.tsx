@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { imageFrameRadius } from "@/components/ui/image-frame";
 
 /*
- * Porest Searchable List — 위 검색칸에 치는 대로 아래 목록이 걸러지고 하나를 고르는 묶음(2026-10-08). 수치 원본은
+ * Groo Searchable List — 위 검색칸에 치는 대로 아래 목록이 걸러지고 하나를 고르는 묶음(2026-10-08). 수치 원본은
  * specs/components/searchable-list.yaml(줄 · 검색칸의 나머지 값은 list.yaml · input.yaml).
  * SEED 에는 이 컴포넌트가 없다(Combobox 를 아직 두지 않았다) — 부품마다 SEED 를 따른다: 검색칸은 Text Input 밑줄형, 결과는 List 줄 +
  * 오른쪽 Radiomark, 결과 없음은 Result Section, 키보드는 SEED 문서 사이트 검색 창(초점은 입력칸, 화살표는 강조만 옮긴다).

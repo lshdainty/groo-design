@@ -2,7 +2,7 @@
 
 > 내용 사이를 나누는 1px 선. 같은 묶음 안은 들인 선, 묶음 사이는 끝까지 선이고, 크게 다른 내용 사이는 선이 아니라 8 간격(회색 바탕 위 흰 층 사이)이다. 반복되는 목록 줄 사이는 [List](list.md) 의 줄 사이 선(필요할 때만)이다.
 
-구조는 당근 [SEED Divider](https://seed-design.io/components/divider)(Apache-2.0)를 따른다 — 1px 선 · 가로 · 세로 · 들임(16), 나누는 세기 셋(들인 선 · 끝까지 선 · 8 간격). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). 옛 Separator 를 대신한다 — 이름도 SEED 대로 Divider 다.
+구조는 당근 [SEED Divider](https://seed-design.io/components/divider)(Apache-2.0)를 따른다 — 1px 선 · 가로 · 세로 · 들임(16), 나누는 세기 셋(들인 선 · 끝까지 선 · 8 간격). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). 옛 Separator 를 대신한다 — 이름도 SEED 대로 Divider 다.
 
 수치 원본은 [`divider.yaml`](divider.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -154,9 +154,9 @@ import { Divider } from "@/components/ui/divider"
 
 ## SEED 와 다른 점
 
-- **색은 `stroke-neutral-subtle` 하나** — SEED 는 기본 neutral-muted(투명도 있는 검정 6.3%) · 반복 항목용 neutral-subtle(4.7%) 둘이다. porest 의 `stroke-neutral-subtle`(#EDEFF3)이 SEED 기본과 같은 진하기(흰 바탕 1.15)라 새 토큰 없이 한 색으로 둔다.
-- **기본이 장식** — SEED 는 `<hr>`(보조 기술이 "구분선" 으로 읽는다)가 기본이고 장식은 `as="div"` 로 바꿔야 한다. porest 는 장식이 기본이고 의미 있는 구분선만 `role="separator"` 다(SEED 포용적 디자인의 "장식 요소는 숨긴다" 를 기본으로).
-- **들임(inset)은 코드에 있다** — SEED 디자인 문서는 "Figma 에서만" 이라 쓰지만 React · Lynx 에 있다. porest 도 둔다(16).
+- **색은 `stroke-neutral-subtle` 하나** — SEED 는 기본 neutral-muted(투명도 있는 검정 6.3%) · 반복 항목용 neutral-subtle(4.7%) 둘이다. groo 의 `stroke-neutral-subtle`(#EDEFF3)이 SEED 기본과 같은 진하기(흰 바탕 1.15)라 새 토큰 없이 한 색으로 둔다.
+- **기본이 장식** — SEED 는 `<hr>`(보조 기술이 "구분선" 으로 읽는다)가 기본이고 장식은 `as="div"` 로 바꿔야 한다. groo 는 장식이 기본이고 의미 있는 구분선만 `role="separator"` 다(SEED 포용적 디자인의 "장식 요소는 숨긴다" 를 기본으로).
+- **들임(inset)은 코드에 있다** — SEED 디자인 문서는 "Figma 에서만" 이라 쓰지만 React · Lynx 에 있다. groo 도 둔다(16).
 
 ## Migration notes
 
@@ -166,7 +166,7 @@ import { Divider } from "@/components/ui/divider"
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-03 조사).
 
-- **`subtle` 과 `default` 가 같은 값** — 웹 `index.css:68-69 · 288-289`, 앱 `app/theme/tokens.dart:230-231 · 324-325` 에서 둘 다 `#E5E8EF` · 다크 `#353B4D` 라 `LedgerDivider subtle`(`shared/ui/porest/ledger.tsx:103`)이 아무것도 바꾸지 않는다. 구분선은 `stroke-neutral-subtle` 하나로(라이트 1.23 → 1.15).
-- **나누는 방법이 제각각** — 웹: `Separator` 6 · `LedgerDivider` 5 · 인라인 `borderTop/Bottom` 48 · `border-t/b` 52 · `divide-y` 10 · 1px 높이 div 8 · `porest.css` 6. 앱: `PDivider` 26 · 날 `Divider` 9 · `Border(top/bottom)` 48 · 세로 1px 6. HR: `Separator` 10 · 메뉴 구분선 10(#eeeeee 1.16 · 다크 #353535 1.33). 모두 Divider · List 줄 사이 선으로.
+- **`subtle` 과 `default` 가 같은 값** — 웹 `index.css:68-69 · 288-289`, 앱 `app/theme/tokens.dart:230-231 · 324-325` 에서 둘 다 `#E5E8EF` · 다크 `#353B4D` 라 `LedgerDivider subtle`(`shared/ui/groo/ledger.tsx:103`)이 아무것도 바꾸지 않는다. 구분선은 `stroke-neutral-subtle` 하나로(라이트 1.23 → 1.15).
+- **나누는 방법이 제각각** — 웹: `Separator` 6 · `LedgerDivider` 5 · 인라인 `borderTop/Bottom` 48 · `border-t/b` 52 · `divide-y` 10 · 1px 높이 div 8 · `groo.css` 6. 앱: `PDivider` 26 · 날 `Divider` 9 · `Border(top/bottom)` 48 · 세로 1px 6. HR: `Separator` 10 · 메뉴 구분선 10(#eeeeee 1.16 · 다크 #353535 1.33). 모두 Divider · List 줄 사이 선으로.
 - **같은 줄이 화면마다 다르게 나뉜다** — 웹 `LedgerRow` 가 가계부에서는 선이 없고 할 일 · 메모에서는 들인 선이다(List 규칙으로 맞춘다).
 - **스펙끼리 어긋났다** — 옛 separator.md · DESIGN.md 는 `border-default`(1.23), list.md 의 줄 사이 선은 `stroke-neutral-subtle`(1.15)이었다. 이제 하나다.

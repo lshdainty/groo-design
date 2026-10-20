@@ -90,17 +90,17 @@ function checkShadowAliases(css) {
       else if (m[1].trim() !== `var(--${n})`) { console.error(`  ❌ --${o}: ${m[1].trim()} (expected var(--${n}))`); errors++; }
     }
   }
-  // 새 이름 — @theme 의 --shadow-sN 은 var(--porest-shadow-sN), 값(라이트)은 @theme 밖 :root 에(2026-10-17 — 01-003 A 를 새 이름에도)
+  // 새 이름 — @theme 의 --shadow-sN 은 var(--groo-shadow-sN), 값(라이트)은 @theme 밖 :root 에(2026-10-17 — 01-003 A 를 새 이름에도)
   const md = readFileSync(resolve(ROOT, "DESIGN.md"), "utf8");
   const sh = parseShadows(md);
   const hold = /\n:root \{\n([\s\S]*?)\n\}/.exec(css)?.[1] ?? "";
   for (const n of [1, 2, 3, 4]) {
     const m = new RegExp(`^\\s+--shadow-s${n}:\\s*([^;]+);`, "m").exec(theme);
-    if (!m || m[1].trim() !== `var(--porest-shadow-s${n})`) { console.error(`  ❌ --shadow-s${n}: ${m?.[1]} (expected var(--porest-shadow-s${n}))`); errors++; }
-    const v = new RegExp(`^\\s+--porest-shadow-s${n}:\\s*([^;]+);`, "m").exec(hold);
-    if (!v || v[1].trim() !== sh[`shadow-s${n}`]) { console.error(`  ❌ :root --porest-shadow-s${n}: ${v?.[1]} (expected ${sh[`shadow-s${n}`]})`); errors++; }
+    if (!m || m[1].trim() !== `var(--groo-shadow-s${n})`) { console.error(`  ❌ --shadow-s${n}: ${m?.[1]} (expected var(--groo-shadow-s${n}))`); errors++; }
+    const v = new RegExp(`^\\s+--groo-shadow-s${n}:\\s*([^;]+);`, "m").exec(hold);
+    if (!v || v[1].trim() !== sh[`shadow-s${n}`]) { console.error(`  ❌ :root --groo-shadow-s${n}: ${v?.[1]} (expected ${sh[`shadow-s${n}`]})`); errors++; }
   }
-  if (errors === 0) console.log(`  ✓ 그림자 — 옛 이름 → var(--shadow-s1 ~ s4) → var(--porest-shadow-s1 ~ s4), 다크 블록이 값을 바꾼다`);
+  if (errors === 0) console.log(`  ✓ 그림자 — 옛 이름 → var(--shadow-s1 ~ s4) → var(--groo-shadow-s1 ~ s4), 다크 블록이 값을 바꾼다`);
   return errors;
 }
 
@@ -120,8 +120,8 @@ function checkDarkBlock(css, target) {
   for (const t of [parseShadows(md), parseGradients(md)]) {
     for (const [name, val] of Object.entries(t)) {
       if (name.endsWith("-dark") || !t[`${name}-dark`] || name in SHADOW_ALIAS) continue;
-      // 새 그림자 이름(shadow-s1 ~ s4)은 값을 든 --porest-shadow-sN 을 바꾼다(아래 checkShadowAliases)
-      expected.set(/^shadow-s\d+$/.test(name) ? `porest-${name}` : name, t[`${name}-dark`]);
+      // 새 그림자 이름(shadow-s1 ~ s4)은 값을 든 --groo-shadow-sN 을 바꾼다(아래 checkShadowAliases)
+      expected.set(/^shadow-s\d+$/.test(name) ? `groo-${name}` : name, t[`${name}-dark`]);
     }
   }
   for (const [name, val] of expected) {

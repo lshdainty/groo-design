@@ -2,7 +2,7 @@
  * shadcn Slider 예제 — docs site components/slider.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 셋(설정 — 예산 알림 임계값 · 2 ~ 5단계 — 별점 · 범위)은 차례 · 제목 · 코드가
  * specs/components/slider.md 의 "코드" 절과 같다. 구조는 SEED Slider(트랙 · 채움 · 손잡이 · 눈금 · 표식 · 말풍선) — 모양은 SEED 의 무채색
- * 그대로이고, 손잡이 줄 44 · 머리 값 · 손을 뗄 때 저장 · APG 키보드는 porest 가 정했다(2026-10-09). 옛 예제(브랜드 채움 · 흰 손잡이 16 +
+ * 그대로이고, 손잡이 줄 44 · 머리 값 · 손을 뗄 때 저장 · APG 키보드는 groo 가 정했다(2026-10-09). 옛 예제(브랜드 채움 · 흰 손잡이 16 +
  * 2px 브랜드 테두리 + 그림자 · Label 옆 "68%" 를 손으로 조립)를 대신한다.
  *
  * ROOT · CONTROL · TRACK · FILL · THUMB* · INDICATOR* · MARKER* · SLIDER_VALUE 는 recipes/shadcn/components/ui/slider.tsx 의 JSX 에 적힌

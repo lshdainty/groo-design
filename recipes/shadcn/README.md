@@ -1,22 +1,22 @@
-# Porest × shadcn
+# Groo × shadcn
 
-Porest 디자인 시스템 토큰을 shadcn/ui 컴포넌트에 주입한 recipe.
-shadcn 코드 구조(cva + Slot + forwardRef)는 그대로, 색상·typography만 Porest 토큰으로 교체.
+Groo 디자인 시스템 토큰을 shadcn/ui 컴포넌트에 주입한 recipe.
+shadcn 코드 구조(cva + Slot + forwardRef)는 그대로, 색상·typography만 Groo 토큰으로 교체.
 
 ## 핵심 아이디어
 
 shadcn 컴포넌트는 두 종류의 CSS variable에 의존:
 - `--primary` / `--primary-foreground` / `--background` / `--border` / `--ring` ...
 
-이걸 우리 Porest 토큰(`--color-primary`, `--color-text-on-accent` 등)으로 alias하는
+이걸 우리 Groo 토큰(`--color-primary`, `--color-text-on-accent` 등)으로 alias하는
 **bridge CSS** 한 장으로 해결.
 shadcn 컴포넌트 코드는 한 줄도 손대지 않아도 됨.
 
 ```
-Porest 토큰 (exports/tokens*.css)
+Groo 토큰 (exports/tokens*.css)
         │
         ▼
-porest-shadcn-bridge.css   ← 이 recipe가 제공
+groo-shadcn-bridge.css   ← 이 recipe가 제공
         │
         ▼
 shadcn variables (--primary, --background, ...)
@@ -27,18 +27,18 @@ shadcn 컴포넌트 (.tsx)      ← cva + Tailwind utility
 
 ## 다른 React 프로젝트에 적용하는 법
 
-1. **Porest 토큰 export 복사** — `exports/tokens.css`(또는 `.hr.css` / `.desk.css`)를
+1. **Groo 토큰 export 복사** — `exports/tokens.css`(또는 `.hr.css` / `.desk.css`)를
    프로젝트의 `public/` 또는 `src/styles/`로 복사.
-2. **Bridge 복사** — 이 디렉터리의 `styles/porest-shadcn-bridge.css`를 같이 복사.
+2. **Bridge 복사** — 이 디렉터리의 `styles/groo-shadcn-bridge.css`를 같이 복사.
 3. **글로벌 stylesheet에서 import**:
    ```css
-   @import "./porest-tokens.css";
-   @import "./porest-shadcn-bridge.css";
+   @import "./groo-tokens.css";
+   @import "./groo-shadcn-bridge.css";
    @import "tailwindcss";
    ```
 4. **컴포넌트 복사** — `components/ui/button.tsx`를 프로젝트로 복사. 같은 디렉터리에
    shadcn 표준대로 `lib/utils.ts` (cn helper)도 함께 복사. **`cn` 은 이 레시피 것을 써야 한다** —
-   porest 스케일(`text-t4` · `px-x4` · `rounded-r2`)을 tailwind-merge 에 등록해 둔 것으로, 기본
+   groo 스케일(`text-t4` · `px-x4` · `rounded-r2`)을 tailwind-merge 에 등록해 둔 것으로, 기본
    tailwind-merge 는 `text-t4` 를 글자색으로 읽어 버튼의 글자색 클래스를 지운다.
 5. **의존성 설치**:
    ```bash
@@ -54,8 +54,8 @@ shadcn 컴포넌트 (.tsx)      ← cva + Tailwind utility
 recipes/shadcn/
 ├── README.md                        ← 이 파일
 ├── lib/utils.ts                     ← cn() helper (clsx + tailwind-merge)
-├── styles/porest-shadcn-bridge.css  ← Porest 토큰 → shadcn variables alias
-├── components/ui/button.tsx         ← shadcn Button + Porest 토큰
+├── styles/groo-shadcn-bridge.css  ← Groo 토큰 → shadcn variables alias
+├── components/ui/button.tsx         ← shadcn Button + Groo 토큰
 └── examples/*-examples.mjs          ← 컴포넌트별 예제(정적 HTML) — 옛 문서 사이트가 그린다
 ```
 
@@ -116,7 +116,7 @@ export function AddTransaction() {
 
 ## 다음 단계 후보 컴포넌트
 
-button 다음에 만들 컴포넌트 우선순위 (Porest 사용처 기준):
+button 다음에 만들 컴포넌트 우선순위 (Groo 사용처 기준):
 1. **Input / Textarea** — form 영역 핵심
 2. **Card** — listing detail / 정보 그룹
 3. **Dialog (Modal)** — confirm / form modal
@@ -126,4 +126,4 @@ button 다음에 만들 컴포넌트 우선순위 (Porest 사용처 기준):
 7. **Tabs** — 탭 네비
 8. **Menu** — 줄 · 화면의 동작(1280 미만은 Menu Sheet — `menu.tsx` 의 ResponsiveMenu)
 
-각 컴포넌트도 동일 패턴: shadcn 표준 코드 + Porest 토큰 + 한국어 라벨 데모.
+각 컴포넌트도 동일 패턴: shadcn 표준 코드 + Groo 토큰 + 한국어 라벨 데모.

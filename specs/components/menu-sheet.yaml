@@ -6,14 +6,14 @@
 # Bottom Sheet(bottom-sheet.yaml)와 같다 — 다른 것은 손잡이가 늘 있고 위 닫기 버튼이 없다는 것.
 #
 # SEED 와 다른 자리(menu-sheet.md 의 "SEED 와 다른 점")
-#   - 좌우 여백: SEED 16 → porest 화면 여백 spacing-global-gutter 24(Bottom Sheet 와 같다).
-#   - 딤: porest overlay-dim 0.50 · 다크 0.65(v102 — SEED 0.455).
+#   - 좌우 여백: SEED 16 → groo 화면 여백 spacing-global-gutter 24(Bottom Sheet 와 같다).
+#   - 딤: groo overlay-dim 0.50 · 다크 0.65(v102 — SEED 0.455).
 #   - 줄 사이 선: 묶음 바탕(bg-neutral-weak) 위에서 보이는 불투명한 stroke-neutral-weak(SEED stroke.neutral-muted 는
 #     투명도가 있다 — 다크에서 stroke-neutral-subtle 은 묶음 바탕과 같은 색이라 선이 사라진다).
 #   - 줄 누름 · 호버는 불투명한 bg-neutral-weak-pressed(SEED 와 같은 역할).
 #   - 막힌 줄: SEED 는 Figma 에만 있고 코드에 없다 — Menu 와 같은 규칙(전용 색 · 누르지 못함)으로 채운다.
 #     1280 에서 Menu ↔ Menu Sheet 가 바뀌어도 같은 줄이 막혀 있어야 해서다.
-#   - 보조 기술용 닫기: SEED 는 안 보이는 채로 Tab 이 선다 — porest 는 키보드 초점이 오면 보인다(기초의 "초점은 늘 보인다").
+#   - 보조 기술용 닫기: SEED 는 안 보이는 채로 Tab 이 선다 — groo 는 키보드 초점이 오면 보인다(기초의 "초점은 늘 보인다").
 #   - z-index: specs/z-index.md 의 L2(딤 z-modal 100 · 시트 z-modal-content 101).
 
 name: MenuSheet
@@ -58,7 +58,7 @@ rules:
   - when: {}
     enabled:
       overlay:
-        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "Bottom Sheet 와 같은 porest 딤(v102)" }
+        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "Bottom Sheet 와 같은 groo 딤(v102)" }
         zIndex: { value: 100, note: "z-modal — specs/z-index.md L2. 시트는 z-modal-content 101" }
       root:
         maxWidth: { value: 480px, note: "그보다 좁은 화면은 화면 폭 전체, 넓으면 가운데" }

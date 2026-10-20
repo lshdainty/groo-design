@@ -6,10 +6,10 @@
 # 열고 닫는 동작(입력 폼은 바깥 · 끌기로 닫지 않는다 · 끌어 닫는 기준)은 bottom-sheet.md 의 Behavior 에 있다.
 #
 # SEED 와 다른 자리(bottom-sheet.md 의 "SEED 와 다른 점")
-#   - 좌우 여백: SEED 16(global-gutter) → porest 화면 여백 spacing-global-gutter 24. 닫기 버튼도 오른쪽 24.
-#   - 딤: SEED bg.overlay 0.455 → porest overlay-dim 0.50 · 다크 0.65(v102).
-#   - 바닥 버튼: Button large 48(SEED 예제 medium 40 — porest 모바일 바닥 CTA 규칙).
-#   - 손잡이 누름 색: SEED palette.gray-500 의 짝이 porest 역할 색에 없어(porest gray-500 은 fg-disabled) 두지 않는다.
+#   - 좌우 여백: SEED 16(global-gutter) → groo 화면 여백 spacing-global-gutter 24. 닫기 버튼도 오른쪽 24.
+#   - 딤: SEED bg.overlay 0.455 → groo overlay-dim 0.50 · 다크 0.65(v102).
+#   - 바닥 버튼: Button large 48(SEED 예제 medium 40 — groo 모바일 바닥 CTA 규칙).
+#   - 손잡이 누름 색: SEED palette.gray-500 의 짝이 groo 역할 색에 없어(groo gray-500 은 fg-disabled) 두지 않는다.
 #   - z-index: specs/z-index.md 의 L2(딤 z-modal 100 · 시트 z-modal-content 101).
 #
 # 본문 끝 흐림은 축 scrollFog 다 — 넘칠 수 있는 본문(목록 · 긴 폼)에 걸고, 걸면 늘 켜져 있다(Scroll Fog — scroll-fog.yaml 의
@@ -51,7 +51,7 @@ rules:
   - when: {}
     enabled:
       overlay:
-        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "porest 딤(v102 — SEED 0.455 는 들이지 않았다)" }
+        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "groo 딤(v102 — SEED 0.455 는 들이지 않았다)" }
         zIndex: { value: 100, note: "z-modal — specs/z-index.md L2. 시트는 z-modal-content 101" }
       root:
         maxWidth: { value: 480px, note: "그보다 좁은 화면은 화면 폭 전체, 넓으면 가운데" }
@@ -111,7 +111,7 @@ rules:
         width: 36px
         height: 4px
         radius: $radius-full
-        background: { value: $color-stroke-neutral-weak, note: "SEED palette.gray-400 의 짝(porest gray-400). 누름 색은 두지 않는다" }
+        background: { value: $color-stroke-neutral-weak, note: "SEED palette.gray-400 의 짝(groo gray-400). 누름 색은 두지 않는다" }
         top: { value: $spacing-x1_5, note: "시트 위에서 6, 가로 가운데" }
         touchTarget: { value: 44 × 44, note: "누르면 다음(더 높은) 스냅 높이로 — 가장 높은 높이에서 누르면 닫힌다(SEED). 보조 기술에는 숨긴다" }
 

@@ -9,12 +9,12 @@
 # 본문(목록 · 긴 폼)에 걸고, 걸면 넘쳤는지와 상관없이 늘 켜져 있다(Scroll Fog — scroll-fog.yaml 의 overlayBody, 2026-10-03).
 #
 # SEED 와 다른 자리(dialog.md 의 "SEED 와 다른 점")
-#   - 바뀌는 폭: SEED md(768) → porest 1280(Input Button 과 같은 경계 — 사용자 결정 2026-10-02).
+#   - 바뀌는 폭: SEED md(768) → groo 1280(Input Button 과 같은 경계 — 사용자 결정 2026-10-02).
 #   - 바닥 버튼: SEED 예제 medium 40 → Button small 36(Button 결정 — "40 은 대화상자에 비해 굵다", 2026-10-02 다시 확인).
-#   - 딤: SEED bg.overlay 0.455 → porest overlay-dim 0.50 · 다크 0.65(v102).
+#   - 딤: SEED bg.overlay 0.455 → groo overlay-dim 0.50 · 다크 0.65(v102).
 #   - 반투명 색을 불투명 짝으로(v102): 머리 아래 선 stroke-neutral-subtle, 닫기 버튼 누름 bg-layer-floating-pressed.
 #   - z-index: specs/z-index.md 의 L2(딤 z-modal 100 · 대화상자 z-modal-content 101).
-#   - 본문 끝 흐림: SEED Dialog 의 넘칠 때만 아래 48 → porest Scroll Fog(늘 켜진 위 20 · 아래 80, 넘칠 수 있는 본문에만 — 2026-10-03).
+#   - 본문 끝 흐림: SEED Dialog 의 넘칠 때만 아래 48 → groo Scroll Fog(늘 켜진 위 20 · 아래 80, 넘칠 수 있는 본문에만 — 2026-10-03).
 
 name: Dialog
 
@@ -53,7 +53,7 @@ rules:
   - when: {}
     enabled:
       overlay:
-        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "porest 딤(v102)" }
+        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "groo 딤(v102)" }
         zIndex: { value: 100, note: "z-modal — specs/z-index.md L2" }
       root:
         maxWidth: { value: 화면 폭 − 40, note: "좌우 20 은 남긴다" }

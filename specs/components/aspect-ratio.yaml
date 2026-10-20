@@ -11,7 +11,7 @@
 #
 # SEED 와 다른 자리(aspect-ratio.md 의 "SEED 와 다른 점")
 #   - 비율을 여덟 가지로 묶는다 — SEED React 는 아무 숫자나 받는다.
-#   - 카드 1.586 을 더한다(porest).
+#   - 카드 1.586 을 더한다(groo).
 
 name: AspectRatio
 

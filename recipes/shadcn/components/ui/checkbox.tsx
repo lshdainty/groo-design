@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { submitImplicitly, useFieldGroup, useFieldGroupState } from "@/components/ui/field";
 
 /*
- * Porest Checkbox — 구조는 SEED Checkbox(2026-09-30). 수치 원본은 specs/components/checkbox.yaml.
+ * Groo Checkbox — 구조는 SEED Checkbox(2026-09-30). 수치 원본은 specs/components/checkbox.yaml.
  *
  *   Checkmark      칸만 — 목록 행 · 표 머리에 넣어 쓴다(누르는 영역은 행 전체가 맡는다, aria-label 필수)
  *   Checkbox       칸 + 라벨 — 라벨까지 눌리고, 누르는 영역은 44 까지 넓힌다(::before)

@@ -4,7 +4,7 @@
  * specs/components/quantity-picker.md 의 "코드" 절과 같고, 뒤의 둘(세 크기 · 끝 · 오류 · 막힘)은 md 의 Properties 를 코드로 더 보인다.
  * 구조는 당근 SEED Quantity Picker(seed-design.io/components/quantity-picker — rootage quantity-picker · quantity-picker-button, Apache-2.0)를 따른다 —
  * 테두리 상자 안에 줄이기 · 선 · 값 · 선 · 늘리기, 세 크기 36 · 40 · 52, 값 칸은 보기만, 지우기 · 로딩(2026-10-15 사용자 결정 1A · 2A · 3A).
- * 웹의 기본 크기 responsive · 누르는 자리 44 · 끝의 aria-disabled 는 porest 가 정했다. porest 에 처음 두는 예제다.
+ * 웹의 기본 크기 responsive · 누르는 자리 44 · 끝의 aria-disabled 는 groo 가 정했다. groo 에 처음 두는 예제다.
  *
  * ROOT · ROOT_SIZE · ROOT_LAYOUT · BUTTON · BUTTON_SIZE · DIVIDER · VALUE · VALUE_SIZE · VALUE_PLACEHOLDER · VALUE_TEXT 는
  * recipes/shadcn/components/ui/quantity-picker.tsx 의 상수와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 로딩 원의 PC_* 는 progress-circle.tsx 의
@@ -84,22 +84,22 @@ const PC_TONE = {
     "[--pc-track:var(--progress-track,color-mix(in_srgb,currentColor_30%,transparent))] [--pc-range:var(--progress-range,currentColor)]",
 };
 const PC_ROOT = "inline-block shrink-0 overflow-visible align-middle";
-const PC_SPIN = "animate-[porest-progress-circle-rotate_1200ms_cubic-bezier(0.35,0.25,0.65,0.75)_infinite] motion-reduce:animate-none";
+const PC_SPIN = "animate-[groo-progress-circle-rotate_1200ms_cubic-bezier(0.35,0.25,0.65,0.75)_infinite] motion-reduce:animate-none";
 const PC_CIRCLE =
   "fill-none [cx:calc(var(--pc-size)/2)] [cy:calc(var(--pc-size)/2)] [r:calc(var(--pc-size)/2_-_var(--pc-thickness)/2)] [stroke-width:var(--pc-thickness)]";
 const PC_TRACK = `${PC_CIRCLE} [stroke:var(--pc-track)]`;
 const PC_RANGE = `${PC_CIRCLE} [stroke:var(--pc-range)] [stroke-linecap:round] [transform-box:fill-box] [transform-origin:center] [transform:rotate(-90deg)]`;
 const PC_RANGE_INDETERMINATE = [
-  "animate-[porest-progress-circle-head_1200ms_cubic-bezier(0.35,0,0.65,1)_infinite,porest-progress-circle-tail_1200ms_cubic-bezier(0.35,0,0.65,0.6)_infinite]",
+  "animate-[groo-progress-circle-head_1200ms_cubic-bezier(0.35,0,0.65,1)_infinite,groo-progress-circle-tail_1200ms_cubic-bezier(0.35,0,0.65,0.6)_infinite]",
   "motion-reduce:animate-none motion-reduce:[stroke-dasharray:75_200]",
 ].join(" ");
 const PC_KEYFRAMES = [
-  "@keyframes porest-progress-circle-rotate { 0% { transform: rotate(0deg) } 100% { transform: rotate(360deg) } }",
-  "@keyframes porest-progress-circle-head { 0% { stroke-dasharray: 0 200 } 75%, 100% { stroke-dasharray: 100 200 } }",
-  "@keyframes porest-progress-circle-tail { 0%, 33.33% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: -100 } }",
+  "@keyframes groo-progress-circle-rotate { 0% { transform: rotate(0deg) } 100% { transform: rotate(360deg) } }",
+  "@keyframes groo-progress-circle-head { 0% { stroke-dasharray: 0 200 } 75%, 100% { stroke-dasharray: 100 200 } }",
+  "@keyframes groo-progress-circle-tail { 0%, 33.33% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: -100 } }",
 ].join("\n");
 // 레시피는 키프레임을 <style href precedence>(React 19 — 문서 머리에 한 번)로 싣는다 — 정적 HTML 은 로딩 원이 있는 예제마다 한 번 둔다
-const PC_STYLE = `<style data-href="porest-progress-circle" data-precedence="porest">${PC_KEYFRAMES}</style>`;
+const PC_STYLE = `<style data-href="groo-progress-circle" data-precedence="groo">${PC_KEYFRAMES}</style>`;
 // quantity-picker.tsx 의 로딩 원 — <ProgressCircle size="inherit" tone="inherit" aria-hidden />. 상자 크기는 레시피처럼 style 로
 const PROGRESS_CIRCLE = `<svg role="progressbar" aria-label="불러오는 중" aria-hidden="true" data-slot="progress-circle" data-size="inherit" data-tone="inherit" data-mode="indeterminate" class="${[
   PC_ROOT,

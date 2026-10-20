@@ -2,7 +2,7 @@
 
 > 시각을 고르는 12시간 휠 — 오전·오후 · 시 · 분. 시각 칸([Input Button](input-button.md))을 누르면 1280 미만은 아래 시트 · 이상은 칸 아래 팝오버로 열리고, "완료" 로 넣는다. 날짜와 함께 받으면 [Date Picker](date-picker.md) 의 날짜 칸 옆에 시각 칸을 나란히 둔다. 시각을 치는 칸은 두지 않는다.
 
-구조는 당근 [SEED Time Picker](https://seed-design.io/components/time-picker)(Apache-2.0)를 따른다 — [Wheel Picker](wheel-picker.md) 위의 세 칼럼(오전·오후 → 시 → 분)과 가운데 띠. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). 옛 Time Picker(v72 — 치는 칸 · 24시간)를 대신한다.
+구조는 당근 [SEED Time Picker](https://seed-design.io/components/time-picker)(Apache-2.0)를 따른다 — [Wheel Picker](wheel-picker.md) 위의 세 칼럼(오전·오후 → 시 → 분)과 가운데 띠. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). 옛 Time Picker(v72 — 치는 칸 · 24시간)를 대신한다.
 
 수치 원본은 [`time-picker.yaml`](time-picker.yaml)이다. 휠의 크기 · 색 · 띠 · 안개는 [`wheel-picker.yaml`](wheel-picker.yaml)(medium · 5칸)을 따른다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다.
 
@@ -150,7 +150,7 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 
 - **팝오버도 쓴다** — 1280 이상은 칸 아래 팝오버(Input Button 결정). SEED React 예제는 시트 · 바로 펼침뿐이다(디자인 문서에는 팝오버가 있다).
 - **열 때 초점은 시 칼럼** — SEED 예제는 시트 상자에 둔다.
-- **색은 porest 역할 짝** — 띠 `bg-neutral-weak`, 고른 글자 `fg-neutral`, 둘레 글자 `fg-disabled`(SEED 와 같은 역할).
+- **색은 groo 역할 짝** — 띠 `bg-neutral-weak`, 고른 글자 `fg-neutral`, 둘레 글자 `fg-disabled`(SEED 와 같은 역할).
 
 ## Migration notes
 

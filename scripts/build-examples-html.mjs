@@ -316,11 +316,11 @@ const html = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Porest Design — Component Examples</title>
+  <title>Groo Design — Component Examples</title>
   <script>
     (function() {
       try {
-        var saved = localStorage.getItem("porest-theme");
+        var saved = localStorage.getItem("groo-theme");
         var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
         var theme = saved || (prefersDark ? "dark" : "light");
         document.documentElement.setAttribute("data-theme", theme);
@@ -333,7 +333,7 @@ const html = `<!DOCTYPE html>
   <style>${pageCss}</style>
 </head>
 <body>
-  <button class="theme-toggle" type="button" aria-label="테마 전환" onclick="(function(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('porest-theme',n)}catch(e){}})()">🌓 Theme</button>
+  <button class="theme-toggle" type="button" aria-label="테마 전환" onclick="(function(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('groo-theme',n)}catch(e){}})()">🌓 Theme</button>
   <main>
 ${body}
   </main>

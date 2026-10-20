@@ -2,7 +2,7 @@
 
 > 날짜 · 기간 · 여러 날을 고르는 달력. 날짜 칸([Input Button](input-button.md))을 누르면 1280 미만은 아래 시트 · 이상은 칸 아래 팝오버로 열리고, "완료" 로 넣는다. 날짜를 치는 칸은 두지 않는다. 시각은 [Time Picker](time-picker.md) 를 날짜 칸 옆에 나란히, 달만 고를 때는 [Wheel Picker](wheel-picker.md) 다.
 
-구조는 당근 [SEED Date Picker](https://seed-design.io/components/date-picker)(Apache-2.0)를 따른다 — 머리(연 · 월 제목 · 이전 · 다음) · 요일 줄 · 날짜 칸(원 · 숫자) · 기간 띠, 하루 · 기간 · 여러 날, 한 달 · 두 달 · 이어지는 달. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). 옛 Calendar 스펙을 대신한다.
+구조는 당근 [SEED Date Picker](https://seed-design.io/components/date-picker)(Apache-2.0)를 따른다 — 머리(연 · 월 제목 · 이전 · 다음) · 요일 줄 · 날짜 칸(원 · 숫자) · 기간 띠, 하루 · 기간 · 여러 날, 한 달 · 두 달 · 이어지는 달. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). 옛 Calendar 스펙을 대신한다.
 
 수치 원본은 [`date-picker.yaml`](date-picker.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -259,11 +259,11 @@ WAI-ARIA Grid 다 — 날짜 하나만 `Tab` 순서에 들고 방향키로 옮�
 
 ## SEED 와 다른 점
 
-- **오늘은 옅은 원 + 숫자 700** — porest 옅은 원(`bg-neutral-weak`)은 바탕과 1.08:1 이라 굵기로도 알린다. 기간 안 · 고른 날이어도 굵기는 남는다(SEED 는 옅은 원만, 기간 안에서는 사라진다).
+- **오늘은 옅은 원 + 숫자 700** — groo 옅은 원(`bg-neutral-weak`)은 바탕과 1.08:1 이라 굵기로도 알린다. 기간 안 · 고른 날이어도 굵기는 남는다(SEED 는 옅은 원만, 기간 안에서는 사라진다).
 - **앞뒤 달을 흐리게 채우고 늘 6주** — SEED 는 비우고 4 ~ 6주라 달을 넘길 때 시트 머리 · 바닥이 48 · 96 씩 움직인다. 흐린 날은 누르지 못하고 보조 기술에 숨긴다.
 - **팝오버 달력 336(칸 48 × 7) · 두 달 696** — SEED 는 부모 폭.
 - **좁은 칸에서 원을 줄인다** — 칸이 44 보다 좁으면 원은 칸 폭 − 2(SEED 는 320 화면에서 이웃 원이 겹친다).
-- **색은 porest 역할 짝** — 고른 날 `bg-neutral-inverted`, 호버 · 누름 `bg-layer-floating-pressed`(SEED 투명 색 대신 불투명), 읽기 전용 시작일 `stroke-neutral-solid`(SEED palette gray-600), 기간 사이 숫자 `fg-neutral-muted`(SEED 코드와 같다 — 그림은 fg-neutral).
+- **색은 groo 역할 짝** — 고른 날 `bg-neutral-inverted`, 호버 · 누름 `bg-layer-floating-pressed`(SEED 투명 색 대신 불투명), 읽기 전용 시작일 `stroke-neutral-solid`(SEED palette gray-600), 기간 사이 숫자 `fg-neutral-muted`(SEED 코드와 같다 — 그림은 fg-neutral).
 - **빠른 기간 칩 줄** — SEED 에는 가이드가 없다("오늘로 이동" 예제뿐).
 - **Week 보기는 두지 않는다** — 쓰는 곳이 없다.
 - **열 때 초점은 고른 날(없으면 오늘)** — SEED 는 정하지 않았다(Tab 자리는 고른 날, 없으면 1일).

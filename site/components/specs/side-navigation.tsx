@@ -62,7 +62,7 @@ const Hero: Fig = ({ caption }) => (
               <DeskMain mode={mode} />
             </Shell>
           </Desktop>
-          <Desktop mode={mode} w={1024} h={720} s={0.46} cw={360} ch={600} url="hr.porest.app">
+          <Desktop mode={mode} w={1024} h={720} s={0.46} cw={360} ch={600} url="hr.groo.app">
             <Shell mode={mode} brand="hr" side={<Side brand="hr" mode={mode} current="leave-history" collapsed />}>
               <HrLeaveMain mode={mode} />
             </Shell>
@@ -381,7 +381,7 @@ const MobileGuide: Fig = ({ caption }) => (
   <Plate caption={caption}>
     <Pair>
       <Verdict ok note="HR 1280 — 사이드바(펼침 240)">
-        <Desktop w={1280} h={640} s={0.36} cw={620} ch={560} url="hr.porest.app">
+        <Desktop w={1280} h={640} s={0.36} cw={620} ch={560} url="hr.groo.app">
           <Shell brand="hr" side={<Side brand="hr" current="leave-history" />}>
             <HrLeaveMain />
           </Shell>
@@ -506,14 +506,14 @@ const PositionGuide: Fig = ({ caption }) => (
   <Plate caption={caption}>
     <Pair>
       <Verdict ok note="사이드바의 지금 항목(휴가 › 휴가 현황 — 부모 펼침) + 본문 제목이 위치를 알린다">
-        <Desktop w={1280} h={640} s={0.36} cw={620} ch={560} url="hr.porest.app">
+        <Desktop w={1280} h={640} s={0.36} cw={620} ch={560} url="hr.groo.app">
           <Shell brand="hr" side={<Side brand="hr" current="leave-history" />}>
             <HrLeaveMain />
           </Shell>
         </Desktop>
       </Verdict>
       <Verdict ok={false} note="머리에 빵부스러기로 같은 위치를 한 번 더">
-        <Desktop w={1280} h={640} s={0.36} cw={620} ch={560} url="hr.porest.app">
+        <Desktop w={1280} h={640} s={0.36} cw={620} ch={560} url="hr.groo.app">
           <Shell brand="hr" side={<Side brand="hr" current="leave-history" />} header={<Crumbs />}>
             <HrLeaveMain />
           </Shell>

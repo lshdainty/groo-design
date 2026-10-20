@@ -4,7 +4,7 @@ import { Controller, FormProvider, type ControllerProps, type FieldPath, type Fi
 import { Field, type FieldProps } from "@/components/ui/field";
 
 /*
- * Porest Form — react-hook-form 을 Field 에 잇는다(2026-10-01). 스펙은 specs/components/field.md(Field 가 폼을 맡는다).
+ * Groo Form — react-hook-form 을 Field 에 잇는다(2026-10-01). 스펙은 specs/components/field.md(Field 가 폼을 맡는다).
  *
  *   Form       FormProvider 그대로
  *   FormField  Controller + Field — 칸의 오류(fieldState.error)를 Field 의 invalid · errorMessage 로 넘긴다

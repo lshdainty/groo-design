@@ -2,9 +2,9 @@ import { clsx, type ClassValue } from "clsx";
 import { extendTailwindMerge } from "tailwind-merge";
 
 /*
- * porest 토큰 스케일을 tailwind-merge 에 알린다(tailwind-merge 3 — Tailwind v4).
+ * groo 토큰 스케일을 tailwind-merge 에 알린다(tailwind-merge 3 — Tailwind v4).
  *
- * 기본 설정은 porest 이름을 그 자리의 스케일로 읽지 못한다.
+ * 기본 설정은 groo 이름을 그 자리의 스케일로 읽지 못한다.
  *   - `text-t4` 를 글자 크기가 아니라 글자 색으로 읽어, 앞의 `text-fg-neutral` 을 지운다(버튼 글자색이 사라진다).
  *   - `px-x4` · `rounded-r2` 를 여백 · 모서리로 못 읽어, 뒤에서 덮어 쓴 `p-0` · `rounded-full` 과 둘 다 남긴다 —
  *     그러면 어느 쪽이 이길지 CSS 순서가 정한다.

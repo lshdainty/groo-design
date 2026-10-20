@@ -130,7 +130,7 @@ export function PeopleWindow({ mode = 'auto', w = 460, h = 420, open, states, ha
   const line = `${t.row.lineW}px solid ${dcv(t.row.line, mode)}`;
   const bleed = -(t.more.size - parseFloat(t.cell.type.lineHeight ?? t.cell.type.fontSize)) / 2;
   return (
-    <WebWindow mode={mode} w={w} h={h} url="hr.porest.app">
+    <WebWindow mode={mode} w={w} h={h} url="hr.groo.app">
       <div style={{ height: '100%', boxSizing: 'border-box', padding: '22px 28px', background: rc('bg-layer-basement', mode, 'hr') }}>
         <div style={{ fontSize: 20, lineHeight: '28px', fontWeight: 700, color: rc('fg-neutral', mode, 'hr'), paddingBottom: 14 }}>직원</div>
         <div style={{ boxSizing: 'border-box', borderRadius: cf.radius, borderWidth: cf.borderW, borderStyle: 'solid', borderColor: rc('stroke-neutral-weak', mode, 'hr'), background: rc('bg-layer-default', mode, 'hr') }}>

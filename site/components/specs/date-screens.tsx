@@ -100,7 +100,7 @@ export function DeskPopover({ mode, brand = 'desk', w, title, url, field, fieldW
   return (
     <div className="shrink-0" style={{ width: w * scale, height: h * scale }}>
       <div style={{ width: w, height: h, transform: scale === 1 ? undefined : `scale(${scale})`, transformOrigin: 'top left' }}>
-        <WebWindow mode={mode} w={w} h={h} url={url ?? (brand === 'hr' ? 'hr.porest.app' : 'desk.porest.app')}>
+        <WebWindow mode={mode} w={w} h={h} url={url ?? (brand === 'hr' ? 'hr.groo.app' : 'desk.groo.app')}>
           <div className="relative h-full px-8 pt-6" style={{ background: rc('bg-layer-basement', mode, brand) }}>
             <div className="pb-4 text-[20px] font-bold leading-7" style={{ color: rc('fg-neutral', mode, brand) }}>
               {title}

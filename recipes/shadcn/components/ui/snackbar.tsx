@@ -6,7 +6,7 @@ import { CircleAlert, CircleCheck, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Snackbar — 구조는 SEED Snackbar(2026-10-02). 수치 원본은 specs/components/snackbar.yaml.
+ * Groo Snackbar — 구조는 SEED Snackbar(2026-10-02). 수치 원본은 specs/components/snackbar.yaml.
  * 옛 Sonner(sonner.tsx — 흰 카드 · 위 가운데 · 3장 쌓기)를 대신한다.
  *
  *   SnackbarProvider      앱 맨 위에 한 번 둔다 — 화면 아래 가운데 자리(region)를 body 끝에 그린다

@@ -9,7 +9,7 @@ const rc = (name: string, mode: Mode = 'light', brand: Brand = 'desk') => (name 
 const shadow = (n: 1 | 2 | 3 | 4, mode: Mode = 'light') => proseValue(`shadow-s${n}${mode === 'dark' ? '-dark' : ''}`);
 const dim = (mode: Mode = 'light') => proseValue(mode === 'dark' ? 'overlay-dim-dark' : 'overlay-dim-light');
 
-// "쌓임 맥락 — Global · Local" 의 두 표 — 층 번호 · 무엇 · porest
+// "쌓임 맥락 — Global · Local" 의 두 표 — 층 번호 · 무엇 · groo
 function levels(n: 0 | 1) {
   return sectionTable('쌓임 맥락', n).rows.map((r) => ({ level: r[0], what: r[1], token: r[2].replace(/`/g, '') }));
 }

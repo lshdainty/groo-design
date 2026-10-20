@@ -83,9 +83,9 @@ export function SideNavPlayground({ looks, bubbles, tones }: { looks: Record<Bra
       `  SideNavigation, SideNavigationContent, SideNavigationGroup, SideNavigationHeader, SideNavigationItem${subs === 'on' ? ', SideNavigationSubItem' : ''},`,
       '} from "@/components/ui/side-navigation"',
       '',
-      hand === 'auto' ? `{/* 창 폭 ${width} — ${collapsed ? '768 ~ 1279 는 접힘 56' : '1280 이상은 펼침 240'}. 손으로 접은 상태는 localStorage(porest:side-navigation-collapsed)에 기억 */}` : '{/* 손으로 정했다 — 다음에 열어도 이 상태 */}',
+      hand === 'auto' ? `{/* 창 폭 ${width} — ${collapsed ? '768 ~ 1279 는 접힘 56' : '1280 이상은 펼침 240'}. 손으로 접은 상태는 localStorage(groo:side-navigation-collapsed)에 기억 */}` : '{/* 손으로 정했다 — 다음에 열어도 이 상태 */}',
       `<SideNavigation${ctrl}>`,
-      `  <SideNavigationHeader logo={<ServiceLogo name="${brand === 'hr' ? 'Porest HR' : 'Porest Desk'}" />} />`,
+      `  <SideNavigationHeader logo={<ServiceLogo name="${brand === 'hr' ? '그루 이음' : '그루 담다'}" />} />`,
       '  <SideNavigationContent>',
       ...lines,
       '  </SideNavigationContent>',
@@ -103,7 +103,7 @@ export function SideNavPlayground({ looks, bubbles, tones }: { looks: Record<Bra
             look={look}
             bubble={bubbles[brand]}
             mode={mode}
-            logo={brand === 'hr' ? 'Porest HR' : 'Porest Desk'}
+            logo={brand === 'hr' ? '그루 이음' : '그루 담다'}
             brand={t['bg-brand-solid']}
             groups={groups}
             current={cur}
@@ -241,7 +241,7 @@ export function SidePanelPlayground({ looks, sides, bubbles, tops, tones, cancel
     if (v > look.drag.velocity || dx > width * look.drag.ratio) closePanel(`끌어 닫았다(${Math.round(dx)} · ${v.toFixed(2)}px/ms)`);
     else setDrag(0);
   };
-  const title = side === 'left' ? 'Porest HR' : '알림 설정';
+  const title = side === 'left' ? '그루 이음' : '알림 설정';
   const description = desc === 'on' ? (side === 'left' ? undefined : '알림을 받을 때를 골라요.') : undefined;
   const code =
     side === 'left'
@@ -250,7 +250,7 @@ export function SidePanelPlayground({ looks, sides, bubbles, tops, tones, cancel
           'import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNavigationSubItem } from "@/components/ui/side-navigation"',
           '',
           '<SidePanel open={menuOpen} onOpenChange={setMenuOpen}>',
-          '  <SidePanelContent side="left" title="Porest HR" id="main-menu">',
+          '  <SidePanelContent side="left" title="그루 이음" id="main-menu">',
           `    <SidePanelBody${body === 'long' ? ' scrollFog' : ''} className="px-x4">`,
           '      {/* 사이드바와 같은 항목 — 지금 묶음은 저절로 펼쳐지고, 항목을 누르면 이동하고 닫힌다 */}',
           '      <SideNavigationContent onNavigate={() => setMenuOpen(false)}>…</SideNavigationContent>',
@@ -283,7 +283,7 @@ export function SidePanelPlayground({ looks, sides, bubbles, tops, tones, cancel
     ) : (
       <div style={{ position: 'relative', width: screenW, height: screenH, overflow: 'hidden', background: tc(t, 'bg-layer-basement', mode), fontFamily: FONT }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56, paddingLeft: 32, paddingRight: 24, background: tc(t, 'bg-layer-default', mode) }}>
-          <span style={{ fontSize: 16, fontWeight: 700, color: tc(t, 'fg-neutral', mode) }}>Porest Desk · 1280</span>
+          <span style={{ fontSize: 16, fontWeight: 700, color: tc(t, 'fg-neutral', mode) }}>그루 담다 · 1280</span>
           <button ref={trigger} type="button" onClick={openPanel} style={{ height: 36, paddingLeft: 14, paddingRight: 14, borderRadius: 8, borderWidth: 0, background: tc(t, 'bg-neutral-weak', mode), color: tc(t, 'fg-neutral', mode), fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
             알림 설정
           </button>
@@ -330,7 +330,7 @@ export function SidePanelPlayground({ looks, sides, bubbles, tops, tones, cancel
                   }
                 >
                   {side === 'left' ? (
-                    <SideNav look={sides.hr} bubble={bubbles.hr} mode={mode} logo="Porest HR" brand={t['bg-brand-solid']} groups={body === 'long' ? HR_NAV : HR_NAV_CODE} current="leave-history" drawer live onNavigate={(v) => closePanel(`${v} — 이동하고 닫았다`)} />
+                    <SideNav look={sides.hr} bubble={bubbles.hr} mode={mode} logo="그루 이음" brand={t['bg-brand-solid']} groups={body === 'long' ? HR_NAV : HR_NAV_CODE} current="leave-history" drawer live onNavigate={(v) => closePanel(`${v} — 이동하고 닫았다`)} />
                   ) : (
                     <SettingRows tones={t} mode={mode} n={body === 'long' ? 12 : 3} />
                   )}

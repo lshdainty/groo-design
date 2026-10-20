@@ -5,7 +5,7 @@ import { Button, type ButtonProps } from "@/components/ui/button";
 import { Input, type InputProps } from "@/components/ui/input";
 
 /*
- * Porest Input OTP — 메일 · 문자로 받은 일회용 인증 코드(지금은 숫자 6자리)를 넣는 칸(2026-10-09). 수치 원본은 specs/components/input-otp.yaml,
+ * Groo Input OTP — 메일 · 문자로 받은 일회용 인증 코드(지금은 숫자 6자리)를 넣는 칸(2026-10-09). 수치 원본은 specs/components/input-otp.yaml,
  * 칸의 상자 · 글자 · 상태는 input.yaml(Input), 라벨 · 설명 · 오류는 field.yaml(Field)이 원본이다.
  * SEED 에는 이 컴포넌트가 없다 — Text Input 의 "Input을 나누지 말고 … 한 번에 입력" 을 따라 칸을 자릿수만큼 나누지 않는다(사용자 결정 10A).
  * 옛 Input OTP(칸 6 × 40 · 숨은 입력 하나 — input-otp 라이브러리)를 대신한다.

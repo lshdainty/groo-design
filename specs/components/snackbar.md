@@ -2,7 +2,7 @@
 
 > 화면 아래에 잠깐 떴다 사라지는 띠(토스트) — 방금 한 일의 결과("거래를 저장했어요."), 뒤에서 끝난 일, 다시 하면 되는 가벼운 실패를 알린다. 조치해야 끝나는 오류 · 계속 보여야 할 경고 · 결정은 여기 두지 않는다 — 그 자리의 [Callout](callout.md) · 페이지의 [Page Banner](page-banner.md) · [Result Section](result-section.md) · [Alert Dialog](alert-dialog.md) 다.
 
-구조는 당근 [SEED Snackbar](https://seed-design.io/react/components/snackbar)(Apache-2.0)를 따른다 — 짙은 띠 · 아이콘(성공 · 실패에만) · 글 · 액션 하나, 화면 아래 가운데에 한 번에 하나. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). 옛 Sonner(토스트) 스펙을 대신한다.
+구조는 당근 [SEED Snackbar](https://seed-design.io/react/components/snackbar)(Apache-2.0)를 따른다 — 짙은 띠 · 아이콘(성공 · 실패에만) · 글 · 액션 하나, 화면 아래 가운데에 한 번에 하나. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). 옛 Sonner(토스트) 스펙을 대신한다.
 
 수치 원본은 [`snackbar.yaml`](snackbar.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -202,7 +202,7 @@ import { SnackbarAvoidOverlap, SnackbarProvider } from "@/components/ui/snackbar
 - **글은 문장이면 마침표**(Writing v106) — SEED 는 한 문장이면 뺀다.
 - **모션 줄이기면 투명도만**(v104) — SEED 는 그대로 돈다.
 - **보조 기술용 닫기는 키보드 초점이 오면 보인다** — SEED 는 안 보이는 채로 Tab 이 선다.
-- **포커스 링은 띠 글자색** — porest 브랜드 링은 짙은 띠 위에서 3:1 에 못 미친다.
+- **포커스 링은 띠 글자색** — groo 브랜드 링은 짙은 띠 위에서 3:1 에 못 미친다.
 - **아이콘은 lucide 선 아이콘**(v106).
 - **z-index 는 specs/z-index.md 의 L6**(`z-snackbar` 400).
 - **띠 안에서 닫히면 초점을 돌려준다** — 띠에 들어오기 전 자리로. SEED 는 body 로 떨어뜨려 키보드 사용자가 처음부터 다시 찾아야 한다.

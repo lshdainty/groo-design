@@ -2,7 +2,7 @@
 
 > 이미지가 없거나 불러오지 못했을 때 그 자리를 채우는 대체 그림 — 옅은 면 가운데에 무엇이 없는지 말하는 선 아이콘. 카드 그림 · 혜택 그림 · 첨부 사진처럼 이미지가 들어갈 틀이 비었을 때 쓴다 — 보통은 [Image Frame](image-frame.md) 이 제 대체 그림으로 그린다. 불러오는 동안에는 같은 모서리의 [Skeleton](skeleton.md) 이고, 사람의 사진이 없으면 [Avatar](avatar.md) 의 이니셜, 물건 타일의 그림이 없으면 [Logo Tile](logo-tile.md) 의 첫 글자다.
 
-구조는 당근 [SEED Content Placeholder](https://seed-design.io/components/content-placeholder)(Apache-2.0)를 따른다 — 면 · 그림, 그림은 틀 높이의 50%(16 ~ 160), 제 모서리 없음. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). porest 에 처음 두는 부품이다 — 옛 [Aspect Ratio](aspect-ratio.md) 스펙의 "이미지 로딩 전 placeholder" 한 줄을 대신한다.
+구조는 당근 [SEED Content Placeholder](https://seed-design.io/components/content-placeholder)(Apache-2.0)를 따른다 — 면 · 그림, 그림은 틀 높이의 50%(16 ~ 160), 제 모서리 없음. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). groo 에 처음 두는 부품이다 — 옛 [Aspect Ratio](aspect-ratio.md) 스펙의 "이미지 로딩 전 placeholder" 한 줄을 대신한다.
 
 수치 원본은 [`content-placeholder.yaml`](content-placeholder.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -35,7 +35,7 @@
 
 ### 색
 
-면은 `bg-neutral-weak`(Skeleton 의 면과 같은 색), 그림은 `stroke-neutral-weak` 다 — SEED 의 그림 색(palette gray-400)과 같은 단계인 porest gray-400 이고, Bottom Sheet 손잡이와 같은 역할이다. 면 위 1.14 · 다크 1.20 으로 옅다 — 그림은 "여기에 그림이 있을 자리" 를 알리는 장식이고, 무엇이 없는지는 대체 글이 말한다.
+면은 `bg-neutral-weak`(Skeleton 의 면과 같은 색), 그림은 `stroke-neutral-weak` 다 — SEED 의 그림 색(palette gray-400)과 같은 단계인 groo gray-400 이고, Bottom Sheet 손잡이와 같은 역할이다. 면 위 1.14 · 다크 1.20 으로 옅다 — 그림은 "여기에 그림이 있을 자리" 를 알리는 장식이고, 무엇이 없는지는 대체 글이 말한다.
 
 [그림: 흰 카드 위 · 다크 — 옅은 면과 그림](../../site/components/specs/content-placeholder.tsx#colors)
 
@@ -134,7 +134,7 @@ import { ImageFrame } from "@/components/ui/image-frame"
 ## SEED 와 다른 점
 
 - **그림은 lucide 선 아이콘**(기본 `image`, v106) — SEED 의 12가지 그림(당근 서비스별 — 부동산 · 중고차 · 알바 …)은 브랜드 자산이라 쓰지 않는다.
-- **그림 색은 `stroke-neutral-weak`**(porest gray-400) — SEED palette gray-400 의 짝. porest 면과 그림이 SEED 보다 조금 옅다(1.14 · 1.20 — SEED 1.22 · 1.50).
+- **그림 색은 `stroke-neutral-weak`**(groo gray-400) — SEED palette gray-400 의 짝. groo 면과 그림이 SEED 보다 조금 옅다(1.14 · 1.20 — SEED 1.22 · 1.50).
 - **불러오는 동안에는 보이지 않는다** — SEED React Image Frame 은 불러오는 동안에도 이 그림을 보여 "불러오는 중" 과 "없음" 이 같아진다(SEED 디자인 문서는 로딩을 Skeleton 이라 적었다 — 그쪽을 따른다).
 - **대체 글을 자리 이름으로 남긴다** — SEED 는 그림을 숨기기만 한다.
 

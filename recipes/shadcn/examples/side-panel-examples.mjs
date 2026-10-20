@@ -416,12 +416,12 @@ export const sidePanelExamples = [
   {
     title: "주 메뉴 서랍 — HR 폰",
     description:
-      "HR 웹 768 미만의 주 메뉴다 — 상단 바(Top Navigation)의 ☰ 를 누르면 왼쪽에서 화면 폭의 80% 패널이 미끄러져 나온다(300ms enter-expressive · 딤 overlay-dim 라이트 0.50 · 다크 0.65). 패널은 높이 전체에 붙고 모서리 · 그림자 · 선이 없다 — 딤과 면 색(bg-layer-floating)으로 뜬다. 제목은 서비스 이름(\"Porest HR\" — t8 22/30 · 700, 위 24 · 좌우 24 · 아래 16 · 최소 70)이고 닫기 버튼(52 투명 상자 · 아이콘 22 — 위 28 · 오른쪽 24)이 있다. 본문은 Side Navigation 의 묶음 · 항목을 펼친 모양 그대로 담는다 — 본문 좌우 16 에 항목(좌우 8)이 들어와 아이콘이 제목과 같은 24 에 선다. 지금 화면의 묶음(휴가)은 펼쳐진 채 열리고 지금 항목(휴가 현황)이 bg-neutral-weak-pressed 다. 넘칠 수 있어 scrollFog 를 건다(위 20 · 아래 80 늘 흐림). 항목을 누르면 이동하고 닫힌다(onNavigate). 딤 누르기 · Esc · 왼쪽으로 끌기 · 뒤로 가기로도 닫히고, 창이 768 이상으로 넓어지면 닫힌다 — 사이드바가 그 자리를 맡는다.",
+      "HR 웹 768 미만의 주 메뉴다 — 상단 바(Top Navigation)의 ☰ 를 누르면 왼쪽에서 화면 폭의 80% 패널이 미끄러져 나온다(300ms enter-expressive · 딤 overlay-dim 라이트 0.50 · 다크 0.65). 패널은 높이 전체에 붙고 모서리 · 그림자 · 선이 없다 — 딤과 면 색(bg-layer-floating)으로 뜬다. 제목은 서비스 이름(\"그루 이음\" — t8 22/30 · 700, 위 24 · 좌우 24 · 아래 16 · 최소 70)이고 닫기 버튼(52 투명 상자 · 아이콘 22 — 위 28 · 오른쪽 24)이 있다. 본문은 Side Navigation 의 묶음 · 항목을 펼친 모양 그대로 담는다 — 본문 좌우 16 에 항목(좌우 8)이 들어와 아이콘이 제목과 같은 24 에 선다. 지금 화면의 묶음(휴가)은 펼쳐진 채 열리고 지금 항목(휴가 현황)이 bg-neutral-weak-pressed 다. 넘칠 수 있어 scrollFog 를 건다(위 20 · 아래 80 늘 흐림). 항목을 누르면 이동하고 닫힌다(onNavigate). 딤 누르기 · Esc · 왼쪽으로 끌기 · 뒤로 가기로도 닫히고, 창이 768 이상으로 넓어지면 닫힌다 — 사이드바가 그 자리를 맡는다.",
     jsx: `import { SidePanel, SidePanelBody, SidePanelContent } from "@/components/ui/side-panel"
 import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNavigationSubItem } from "@/components/ui/side-navigation"
 
 <SidePanel open={menuOpen} onOpenChange={setMenuOpen}>
-  <SidePanelContent side="left" title="Porest HR" id="main-menu">
+  <SidePanelContent side="left" title="그루 이음" id="main-menu">
     <SidePanelBody scrollFog className="px-x4">
       {/* 사이드바와 같은 항목 — 지금 묶음은 저절로 펼쳐지고, 항목을 누르면 이동하고 닫힌다 */}
       <SideNavigationContent onNavigate={() => setMenuOpen(false)}>
@@ -440,7 +440,7 @@ import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNav
       `<div style="${STAGE("360px", 640)}">${phoneBehind("휴가 현황", [["연차", "11일 남음"], ["반차", "2회 남음"], ["병가", "3일 사용"], ["경조 휴가", "없음"]])}${sidePanel({
         uid: "side-panel-ex-drawer",
         side: "left",
-        title: "Porest HR",
+        title: "그루 이음",
         children: body({ side: "left", scrollFog: true, className: "px-x4", html: drawerNavigation({ uid: "side-panel-ex-drawer-nav", groups: HR_GROUPS, current: "휴가 현황" }) }),
       })}</div>`,
   },

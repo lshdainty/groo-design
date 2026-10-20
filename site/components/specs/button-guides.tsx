@@ -339,7 +339,7 @@ const SideBySide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// ── 모달 footer(porest) ───────────────────────────────────
+// ── 모달 footer(groo) ───────────────────────────────────
 function DeskWebPage() {
   return (
     <div className="flex h-full">
@@ -557,7 +557,7 @@ const ChipCompare: Fig = ({ caption }) => (
   </Panel>
 );
 
-// ── porest 에만 있는 것 ───────────────────────────────────
+// ── groo 에만 있는 것 ───────────────────────────────────
 const SplitBar: Fig = ({ caption }) => {
   const f = buttonLook({ variant: 'ghost', size: 'xsmall' }).faces.light.enabled;
   return (

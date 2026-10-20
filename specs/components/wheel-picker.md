@@ -2,7 +2,7 @@
 
 > 순서가 있는 값을 세로로 굴려 고르는 휠 — 한 칼럼 이상. [Time Picker](time-picker.md) 의 바탕이고, [Date Picker](date-picker.md) 머리의 연 · 월 휠, 달만 고르는 자리(예산 · 홈 · 카드 실적의 달)에 쓴다. 적은 선택지는 [Radio](radio-group.md) · [Segmented Control](segmented-control.md), 긴 목록은 [Select](select.md), 정해진 목록이 아닌 값은 [Input](input.md) 이다.
 
-구조는 당근 [SEED Wheel Picker](https://seed-design.io/components/wheel-picker)(Apache-2.0)를 따른다 — 칼럼 · 항목 · 가운데 선택 띠 · 위아래 안개, 크기 small 36 · medium 44. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). porest 에 처음 두는 컴포넌트다.
+구조는 당근 [SEED Wheel Picker](https://seed-design.io/components/wheel-picker)(Apache-2.0)를 따른다 — 칼럼 · 항목 · 가운데 선택 띠 · 위아래 안개, 크기 small 36 · medium 44. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). groo 에 처음 두는 컴포넌트다.
 
 수치 원본은 [`wheel-picker.yaml`](wheel-picker.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다.
 
@@ -131,7 +131,7 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker"
 - **안개 높이는 늘 min(40%, 3칸)** — SEED 는 연 · 월 휠에서 코드 상수 102 를 쓴다(식으로는 123).
 - **기본 크기 medium** — SEED rootage 는 small, 코드 · React 는 medium(코드를 따른다).
 - **달만 고르기에 쓴다** — SEED 에는 월만 고르는 피커가 없다(연 · 월 휠은 Date Picker 안뿐).
-- **링 색은 porest `stroke-focus-ring`**.
+- **링 색은 groo `stroke-focus-ring`**.
 
 ## Migration notes
 

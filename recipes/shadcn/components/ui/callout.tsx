@@ -5,7 +5,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Callout — 구조는 SEED Callout(2026-10-02). 수치 원본은 specs/components/callout.yaml.
+ * Groo Callout — 구조는 SEED Callout(2026-10-02). 수치 원본은 specs/components/callout.yaml.
  * 옛 Alert(alert.tsx — 왼쪽 4px 막대)를 대신한다. "Alert" 라는 이름은 모달(Alert Dialog)에만 쓴다.
  *
  * 화면 안, 그 기능 · 내용 가까이에 늘 보이는 안내 상자 — 팁 · 제약 · 주의, 그 자리에서 난 오류(저장 실패는 폼 맨 위

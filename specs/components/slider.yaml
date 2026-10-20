@@ -10,8 +10,8 @@
 #
 # SEED 와 다른 자리(slider.md 의 "SEED 와 다른 점")
 #   - 손잡이 줄(control) 높이 44 — 줄 전체가 누르는 자리다(v106 — 누르는 영역 44). SEED 는 26(표식이 있으면 46).
-#   - 트랙은 SEED palette.gray-400 의 porest 역할 stroke-neutral-weak(같은 gray-400 단계 — 흰 표면 1.23, SEED 1.35).
-#     손잡이 · 말풍선은 SEED bg.neutral-solid(2026-10-01 전 이름 bg.neutral-inverted)의 porest 역할 bg-neutral-inverted —
+#   - 트랙은 SEED palette.gray-400 의 groo 역할 stroke-neutral-weak(같은 gray-400 단계 — 흰 표면 1.23, SEED 1.35).
+#     손잡이 · 말풍선은 SEED bg.neutral-solid(2026-10-01 전 이름 bg.neutral-inverted)의 groo 역할 bg-neutral-inverted —
 #     라이트에서 채움(fg-neutral)과 같은 색이라 손잡이는 크기(20 · 4)로 갈린다(SEED 는 #1a1c20 · #2a3038, 1.28:1).
 #   - 머리 오른쪽에 지금 값을 늘 둔다 — SEED 는 가만히 있을 때 값을 보이지 않는다(말풍선은 SEED 그대로).
 #   - 키보드는 APG — Home · End 는 포커스한 손잡이를 움직이고 RTL 에서도 ↑ 는 늘린다. SEED 는 Home 이 첫 손잡이 · End 가 끝 손잡이,

@@ -8,8 +8,8 @@ import { ignoreRadioJumpKeys } from "@/components/ui/radio-group";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 /*
- * Porest Color Swatch — 카테고리 · 태그 · 라벨 · 저축 목표 · 캘린더에 붙일 색을 고르는 묶음(2026-10-09). 수치 원본은 specs/components/color-swatch.yaml.
- * SEED 에는 색 고르기 부품이 없다 — 칸의 칠 · 크기 · 고른 표시 · 키보드 · 새 항목의 첫 색은 porest 가 정했다(사용자 결정 12C · 13B · 14B).
+ * Groo Color Swatch — 카테고리 · 태그 · 라벨 · 저축 목표 · 캘린더에 붙일 색을 고르는 묶음(2026-10-09). 수치 원본은 specs/components/color-swatch.yaml.
+ * SEED 에는 색 고르기 부품이 없다 — 칸의 칠 · 크기 · 고른 표시 · 키보드 · 새 항목의 첫 색은 groo 가 정했다(사용자 결정 12C · 13B · 14B).
  * 옛 Color Swatch(폭을 나눈 정사각 칸 · currentColor 테두리 · 마우스 1.05배 · options 를 받는 묶음)를 대신한다.
  *
  *   ColorSwatchGroup   묶음(radiogroup · 5 × 2). value · defaultValue(ChartColor 또는 "current" — 지금 색 칸, null 이면 고른 칸 없음) ·
@@ -22,7 +22,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  *
  * 칸: 원 40(누르는 44 — ::before) · 5개씩 두 줄 · 사이 12(폭과 상관없이 248), v110 차트 색(라이트 700 · 다크 800-dark)으로 꽉 채운다 —
  *   옅게 섞은 칸 · v111 옅은 바탕 칸은 쓰지 않는다. 칸의 이름은 색 이름("빨강") — "색상 N" · hex 를 이름으로 두지 않는다. 보조 기술이
- *   읽고, 마우스를 올리거나 키보드 초점이 오면 같은 이름의 툴팁(porest Tooltip — 네이티브 title 은 쓰지 않는다, Icon Picker 칸과 같다)이
+ *   읽고, 마우스를 올리거나 키보드 초점이 오면 같은 이름의 툴팁(groo Tooltip — 네이티브 title 은 쓰지 않는다, Icon Picker 칸과 같다)이
  *   뜬다 — 색으로 가리기 어려운 사람도 이름을 본다. 지금 색 칸은 이름이 아래 글로 보이므로 툴팁을 두지 않는다. 호버는 모양이 바뀌지
  *   않는다(커서만).
  * 고름: 칸 바깥 2 띄운 2px 고리(stroke-neutral-contrast — Select Box 의 고른 테두리와 같은 색, outline) + 가운데 체크 16 · 선 2.5

@@ -7,7 +7,7 @@ import { useField, useFieldControl } from "@/components/ui/field";
 import { inputButtonSurfaceVariants, inputButtonVariants } from "@/components/ui/input-button";
 
 /*
- * Porest Select — 구조는 SEED Select(2026-10-01). 수치 원본은 specs/components/select.yaml.
+ * Groo Select — 구조는 SEED Select(2026-10-01). 수치 원본은 specs/components/select.yaml.
  *
  *   Select        트리거(button role=combobox) + 칸 아래 목록(role=listbox). 하나 고르기(기본) · 여럿 고르기(multiple)
  *   SelectGroup   묶음 — 제목(label)은 없어도 된다. 묶음이 둘 이상이면 사이에 선을 저절로 그린다

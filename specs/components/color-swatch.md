@@ -2,7 +2,7 @@
 
 > 카테고리 · 태그 · 라벨 · 저축 목표 · 캘린더에 붙일 색을 고르는 묶음 — 차트 10색을 원 칸에 진하게 칠해 5 × 2 로 늘어놓고 하나를 고른다. 고른 색은 그 항목의 차트 · 타일 · 점에 그대로 칠해진다. 이름이 붙은 선택지를 고르는 것은 [Chip](chip.md) · [Select](select.md) 다.
 
-SEED 에는 색을 고르는 부품이 없다 — 사용자가 색을 정하는 화면이 SEED 문서에 나오지 않고, "색상 선택" 은 글자 칩(Chip Group "사이즈/색상 선택")과 색 점 12 + 이름(Wheel Picker 예 — 항목마다 `ariaLabel`)뿐이다(당근 SEED, Apache-2.0). 그래서 칸의 칠 · 크기 · 고른 표시 · 키보드 · 새 항목의 첫 색은 porest 가 정했다(2026-10-09 사용자 결정) — 색은 v110 차트 10색, 고른 고리는 [Select Box](select-box.md) 의 짙은 테두리(v113)와 같은 색이다. 옛 Color Swatch 스펙(폭을 나눈 정사각 칸 · `currentColor` 테두리 · 마우스 1.05배)을 대신한다.
+SEED 에는 색을 고르는 부품이 없다 — 사용자가 색을 정하는 화면이 SEED 문서에 나오지 않고, "색상 선택" 은 글자 칩(Chip Group "사이즈/색상 선택")과 색 점 12 + 이름(Wheel Picker 예 — 항목마다 `ariaLabel`)뿐이다(당근 SEED, Apache-2.0). 그래서 칸의 칠 · 크기 · 고른 표시 · 키보드 · 새 항목의 첫 색은 groo 가 정했다(2026-10-09 사용자 결정) — 색은 v110 차트 10색, 고른 고리는 [Select Box](select-box.md) 의 짙은 테두리(v113)와 같은 색이다. 옛 Color Swatch 스펙(폭을 나눈 정사각 칸 · `currentColor` 테두리 · 마우스 1.05배)을 대신한다.
 
 수치 원본은 [`color-swatch.yaml`](color-swatch.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -223,8 +223,8 @@ import { Field } from "@/components/ui/field"
 
 ## SEED 와 다른 점
 
-- **porest 가 정한 컴포넌트다** — SEED 에는 색 고르기 부품 · 화면이 없다. SEED 가 가진 가장 가까운 것은 Wheel Picker 예의 "색 점 12 + 이름" 이고, 칸마다 이름을 다는 것만 같다.
-- **2차원 화살표** — SEED 는 격자 고르기의 키보드 규칙이 없다(SEED 문서 사이트의 팔레트 칸은 칸마다 Tab 이다). porest 는 radiogroup 에 위아래 줄 이동을 더했다.
+- **groo 가 정한 컴포넌트다** — SEED 에는 색 고르기 부품 · 화면이 없다. SEED 가 가진 가장 가까운 것은 Wheel Picker 예의 "색 점 12 + 이름" 이고, 칸마다 이름을 다는 것만 같다.
+- **2차원 화살표** — SEED 는 격자 고르기의 키보드 규칙이 없다(SEED 문서 사이트의 팔레트 칸은 칸마다 Tab 이다). groo 는 radiogroup 에 위아래 줄 이동을 더했다.
 - **색은 v110 차트 10색** — SEED 팔레트는 사용자가 고르는 색 세트를 두지 않는다.
 
 ## Migration notes
@@ -259,7 +259,7 @@ import { Field } from "@/components/ui/field"
 
 - **웹 자리** — 카테고리(`widgets/category-manage/ui/CategoryEditDialog.tsx:305-315`) · 저축 목표(`widgets/asset-full/ui/SavingGoalAddDialog.tsx:432-442`) · 캘린더 라벨(`widgets/calendar-manage/ui/CalendarLabelsSection.tsx:523-532`) · 할 일 태그(`widgets/calendar-manage/ui/TodoTagManager.tsx:523-532`) · 메모 태그(`widgets/memo-manage/ui/MemoTagManager.tsx:529-538`) · 메모 색(`pages/memo/ui/MemoPage.tsx:1178-1188`) · 공유 캘린더 둘(`CalendarShareSection.tsx:680-689 · 955-964`).
 - **앱 자리** — 카테고리(`features/category/presentation/category_edit_dialog.dart:469`) · 저축 목표(`features/saving_goal/presentation/saving_goal_edit_dialog.dart:308`) · 메모(`features/memo/presentation/memo_edit_dialog.dart:256`) · 할 일 태그(`features/todo/presentation/todo_tag_management_screen.dart:585`) · 메모 태그(`memo_tag_management_screen.dart:589`) · 캘린더 라벨 · 공유(`features/calendar/presentation/calendar_labels_screen.dart:536` · `calendar_share_screen.dart:499 · 785`).
-- **옅은 칸** — 웹은 `color-mix(… 18%, transparent)`(`shared/lib/porest/chart-palette.ts:147-151`)라 칸이 대화상자와 1.25 ~ 1.34 이고 칸끼리 OKLab ΔE 가 최소 0.012(남색 · 보라) · 가운데 0.033 이다. 체크 14 는 칸 위 3.63 ~ 4.32. 앱은 13 · 22% 에 옛 상수 색이라 더 옅다(최소 0.006 — `core/format/chart_palette.dart:141-150`, D17). 칸은 데스크톱 88.8 · 폰 62 로 폭을 나눈다.
+- **옅은 칸** — 웹은 `color-mix(… 18%, transparent)`(`shared/lib/groo/chart-palette.ts:147-151`)라 칸이 대화상자와 1.25 ~ 1.34 이고 칸끼리 OKLab ΔE 가 최소 0.012(남색 · 보라) · 가운데 0.033 이다. 체크 14 는 칸 위 3.63 ~ 4.32. 앱은 13 · 22% 에 옛 상수 색이라 더 옅다(최소 0.006 — `core/format/chart_palette.dart:141-150`, D17). 칸은 데스크톱 88.8 · 폰 62 로 폭을 나눈다.
 - **몰래 빨강** — 색이 없거나 팔레트 밖(가져오기의 #9E9E9E — `porest-desk-back` `ImportServiceImpl.java:71`)인 카테고리 · 목표 · 라벨 · 태그를 열면 빨강이 골라져 있고, 이름만 고쳐 저장해도 `#c73838` 이 나간다(웹 `CategoryEditDialog.tsx:74-78 · 114-126` · `CalendarLabelsSection.tsx:404-408` · `TodoTagManager.tsx:405-409` · `MemoTagManager.tsx:411-415`, 앱 `category_edit_dialog.dart:91-96` "첫 색으로 정규화" · `saving_goal_edit_dialog.dart:103-106`, D6). 앱 태그 · 라벨은 팔레트 밖 색을 그대로 두되 어느 칸도 고르지 않아(`todo_tag_management_screen.dart:447-450`) 웹과 다르다. 지금 색 칸으로.
 - **새 항목은 늘 빨강** — 웹 · 앱 카테고리 · 목표 · 라벨 · 태그(`CategoryEditDialog.tsx:75` · `SavingGoalAddDialog.tsx:91-93` · `category_edit_dialog.dart:94-96`, D18), 메모 · 캘린더는 파랑(`MemoPage.tsx:73` · `CalendarShareSection.tsx:897`). 서버가 심는 기본 지출 카테고리 여덟이 이미 여덟 색을 쓰고 식비가 빨강이다(`ExpenseCategoryServiceImpl.java:196-208`) — `firstUnusedColor` 로.
 - **이름 · 키보드** — 웹 칸 이름이 "색상 1 ~ 10"(5곳) · "색상 #c73838"(메모) · "#c73838"(캘린더 둘)이고 묶음 이름 0/8 · 첫 → 는 초점만 옮기고 ↓ 는 다음 칸으로 간다(`color-swatch.tsx:55`, D24). 앱 칸은 `GestureDetector` 라 이름 · 고른 상태 · 키보드 초점이 0 이다(`p_color_picker.dart:47-63`, D7).

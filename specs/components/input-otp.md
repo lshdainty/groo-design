@@ -2,7 +2,7 @@
 
 > 메일 · 문자로 받은 일회용 인증 코드(지금은 숫자 6자리)를 넣는 칸 — [Input](input.md) 한 칸이다. 칸을 자릿수만큼 나누지 않는다. 칸 아래 다시 받기 단추가 남은 초를 보이고, 설명 줄이 유효 시간 · 틀릴 수 있는 횟수를 늘 알린다.
 
-SEED 에는 이 컴포넌트가 없다 — Text Input 문서가 "주민등록번호나 전화번호처럼 입력 형식이 정해진 경우, Input을 나누지 말고 값에 포맷을 자동으로 적용해서 추가 인터랙션 없이 한 번에 입력할 수 있도록 해주세요." 라고 적었고, `one-time-code` · `inputmode` · 붙여넣기 · 다시 받기 규칙은 출처에 없다(당근 SEED, Apache-2.0). porest 는 코드 칸을 Input 한 칸으로 두고(2026-10-09 사용자 결정) 숫자만 뽑기 · 자동 채우기 · 다시 받기 · 설명 줄을 정했다. 파일 이름(`input-otp`)은 그대로 두고, 옛 스펙의 칸 6 × 40(숨은 입력 하나)과 DESIGN.md v69 의 "칸마다 입력" 을 대신한다.
+SEED 에는 이 컴포넌트가 없다 — Text Input 문서가 "주민등록번호나 전화번호처럼 입력 형식이 정해진 경우, Input을 나누지 말고 값에 포맷을 자동으로 적용해서 추가 인터랙션 없이 한 번에 입력할 수 있도록 해주세요." 라고 적었고, `one-time-code` · `inputmode` · 붙여넣기 · 다시 받기 규칙은 출처에 없다(당근 SEED, Apache-2.0). groo 는 코드 칸을 Input 한 칸으로 두고(2026-10-09 사용자 결정) 숫자만 뽑기 · 자동 채우기 · 다시 받기 · 설명 줄을 정했다. 파일 이름(`input-otp`)은 그대로 두고, 옛 스펙의 칸 6 × 40(숨은 입력 하나)과 DESIGN.md v69 의 "칸마다 입력" 을 대신한다.
 
 수치 원본은 [`input-otp.yaml`](input-otp.yaml)이고, 칸의 상자 · 글자 · 상태는 [`input.yaml`](input.yaml), 라벨 · 설명 · 오류는 [`field.yaml`](field.yaml)이 원본이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -186,7 +186,7 @@ const [error, setError] = useState<string | null>(null)
 
 ## SEED 와 다른 점
 
-- **porest 가 정한 컴포넌트다** — SEED 에는 OTP 부품이 없다(Figma 에 비공개 PIN Field 가 상태만 있다). 칸은 SEED Text Input 그대로이고 "Input을 나누지 말고" 를 따랐다.
+- **groo 가 정한 컴포넌트다** — SEED 에는 OTP 부품이 없다(Figma 에 비공개 PIN Field 가 상태만 있다). 칸은 SEED Text Input 그대로이고 "Input을 나누지 말고" 를 따랐다.
 - **막힌 칸의 자리 글은 `fg-placeholder` 그대로** — Input · Textarea · SEED Text Input 은 막히면 자리 글도 `fg-disabled` 지만, 코드 칸은 막혀도 "6자리 숫자" 를 켜진 칸과 같은 색으로 둔다. 막힌 칸은 바탕(`bg-disabled`) · 커서로 갈린다(2026-10-17 사용자 결정 — [01 기초 앱 · 글자 웹 비교 페이지](https://claude.ai/artifact/Q6SNYeUqDwfCjuVMfLwd2g) 01T-013 — Input 그대로 `fg-disabled` 는 고르지 않았다). 다크는 두 색이 같은 값(#838997)이라 차이가 없고, 라이트만 4.18 ↔ 3.16 으로 갈린다.
 - **숫자만 뽑기 · `one-time-code` · 숫자 키보드 · 다시 받기 · 설명 줄** — SEED 에 규칙이 없다(문서 · 예제 · 코드에 `inputMode` · `one-time-code` 0회). SEED 에서 가장 가까운 것은 `maxGraphemeCount` 로 글자 수를 세는 예("6글자까지 입력 가능합니다")다.
 

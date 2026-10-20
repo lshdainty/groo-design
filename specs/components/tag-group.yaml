@@ -8,7 +8,7 @@
 # 구분 " · " 는 앞 공백이 줄이 안 바뀌는 공백(U+00A0)이라 앞 항목에 붙는다 — 줄이 바뀌면 앞 줄 끝에 남고 다음 줄은 항목으로 시작한다.
 #
 # SEED 와 다른 자리(tag-group.md 의 "SEED 와 다른 점")
-#   - 기본 글자 fg-neutral-subtle 은 porest 값(흰 바탕 5.50:1) — SEED fg.neutral-subtle(#868b94)은 3.42:1.
+#   - 기본 글자 fg-neutral-subtle 은 groo 값(흰 바탕 5.50:1) — SEED fg.neutral-subtle(#868b94)은 3.42:1.
 #   - 구분 " · " 의 색은 fg-disabled(SEED palette gray-600 의 역할 짝) — 글보다 한 단계 흐리다.
 #   - 줄바꿈은 낱말 단위(v114 keep-all + break-word) — SEED 웹은 한국어를 음절에서 끊고("3시 / 간 전") 구분이 줄 첫머리에 남는다.
 #   - 보조 기술이 항목을 끊어 읽게 항목 사이에 보이지 않는 ", " 를 둔다 — SEED 는 "500m서초4동3분 전" 처럼 붙어 읽힌다.

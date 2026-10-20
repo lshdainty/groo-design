@@ -894,12 +894,12 @@ import { Input } from "@/components/ui/input"
       "invalid 와 errorMessage 를 주면 오류 글(14 · fg-critical)이 설명 자리를 대신한다 — 둘을 함께 보이지 않는다. 오류 글 앞에는 늘 circle-alert(16)가 붙어 색만으로 알리지 않고, 글자 수도 둘 다 fg-critical 이 된다. 칸의 테두리는 칸이 바꾼다(안쪽 2px stroke-critical-solid — 포커스해도 그대로). 라벨과 입력한 글자는 그대로다. 오류 글은 칸의 aria-describedby 로 이어지고, 바뀔 때 화면 밖 polite 알림 자리가 한 번 읽는다. 글은 무엇을 하면 되는지 짧게 쓴다 — \"잘못된 입력입니다\" 처럼 이유만 말하지 않는다.",
     jsx: `// 오류가 없을 때 — 설명
 <Field label="아이디" description="영문 · 숫자 20자까지" maxGraphemeCount={20}>
-  <Input defaultValue="porest" />
+  <Input defaultValue="groo" />
 </Field>
 
 // 오류 — 오류 글이 설명 자리를 대신한다
 <Field label="아이디" description="영문 · 숫자 20자까지" maxGraphemeCount={20} invalid errorMessage="이미 쓰고 있는 아이디예요.">
-  <Input defaultValue="porest" />
+  <Input defaultValue="groo" />
 </Field>`,
     render: () =>
       surface(
@@ -910,7 +910,7 @@ import { Input } from "@/components/ui/input"
               label: "아이디",
               description: "영문 · 숫자 20자까지",
               maxGraphemeCount: 20,
-              value: "porest",
+              value: "groo",
               control: (f) => textInput({ f }),
             }),
             "오류가 없을 때 — 설명",
@@ -923,7 +923,7 @@ import { Input } from "@/components/ui/input"
               maxGraphemeCount: 20,
               invalid: true,
               errorMessage: "이미 쓰고 있는 아이디예요.",
-              value: "porest",
+              value: "groo",
               control: (f) => textInput({ f }),
             }),
             "오류 — 설명 자리를 대신한다",

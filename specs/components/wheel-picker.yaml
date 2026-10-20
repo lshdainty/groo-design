@@ -1,14 +1,14 @@
 # Wheel Picker 의 수치 원본 — 구조는 SEED Wheel Picker(2026-10-03 사용자 결정, 비교 페이지 4 · 8 · 10).
 # 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
-# 순서가 있는 값을 세로로 굴려 고르는 휠 — 한 칼럼 이상. porest 에서 쓰는 곳은 셋: Time Picker(오전·오후 · 시 · 분),
+# 순서가 있는 값을 세로로 굴려 고르는 휠 — 한 칼럼 이상. groo 에서 쓰는 곳은 셋: Time Picker(오전·오후 · 시 · 분),
 # Date Picker 머리의 연 · 월 휠, 월만 고르기(예산 · 홈 · 카드 실적의 달). 휠은 멈춘 뒤에 값을 정하고, 시트 · 팝오버에서는
 # "완료" 로 넣는다(input-button.md). 적은 독립 선택지는 Radio · Segmented Control, 많은 목록은 Select, 정해진 목록이 아닌 값은 Text Field.
 #
 # SEED 와 다른 자리(wheel-picker.md 의 "SEED 와 다른 점")
 #   - 안개 높이는 늘 min(높이 × 40%, 항목 3칸) — SEED 는 연 · 월 휠에서 코드 상수 102 를 쓴다(식으로는 123).
 #   - 기본 크기는 medium(SEED rootage 는 small, 코드 · React 는 medium — 코드를 따른다).
-#   - 키보드 초점은 가운데(고른) 항목 둘레에 안쪽 링 — 링 색은 porest stroke-focus-ring.
+#   - 키보드 초점은 가운데(고른) 항목 둘레에 안쪽 링 — 링 색은 groo stroke-focus-ring.
 
 name: WheelPicker
 

@@ -16,7 +16,7 @@ import { useInputButtonSurface } from "@/components/ui/input-button";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Porest Dialog — 구조는 SEED Dialog · Responsive Dialog(2026-10-02). 수치 원본은 specs/components/dialog.yaml.
+ * Groo Dialog — 구조는 SEED Dialog · Responsive Dialog(2026-10-02). 수치 원본은 specs/components/dialog.yaml.
  *
  *   Dialog                  1280 이상의 가운데 대화상자(Radix Dialog) — open · defaultOpen · onOpenChange · form · dirty
  *   DialogTrigger           여는 버튼 — 닫으면 초점이 여기로 돌아온다

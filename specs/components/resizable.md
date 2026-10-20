@@ -2,7 +2,7 @@
 
 > 화면 안의 크기를 손으로 바꾸는 손잡이 — HR 관리 화면의 목록 | 상세 나누기(목록 폭)와 HR 대시보드 편집 모드의 위젯 크기. 768 이상의 데스크톱에서만 쓴다. 폰은 나누지 않는다 — 목록 → 상세 · 탭이고, 옆 패널은 [Side Panel](side-panel.md)(1280 미만은 Bottom Sheet)이다.
 
-SEED 에는 Resizable 이 없다 — 모바일 앱 중심이라 끌어서 나누는 패널이 없다. 그래서 값은 모두 porest 가 정했다(2026-10-10 사용자 결정 12B · 13A) — 나누기는 남기고 고친다(보이는 선 1px + 가운데 손잡이 표시 · 누르는 폭 16 · 이름 "목록 너비" · `←` `→` 5% · `Home` · `End` · 목록 20 ~ 40% · 화면마다 폭 기억 · 한 번 누르면 25 ↔ 40), 위젯 크기도 남기고 고친다(모서리 손잡이 대비 3 이상 · 토큰 색 자리표시 · ⋮ "크기"). 키보드는 [WAI-ARIA APG Window Splitter](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/) 다. 옛 Resizable 스펙(가로 · 세로 · 손잡이 상자 12 × 16 · 누르는 폭 4 · hover 변화 없음)과 DESIGN.md v71 의 반대되던 글(손잡이 4 ~ 6px · hover 브랜드 색 · ±1% · "localStorage 권장")을 대신한다.
+SEED 에는 Resizable 이 없다 — 모바일 앱 중심이라 끌어서 나누는 패널이 없다. 그래서 값은 모두 groo 가 정했다(2026-10-10 사용자 결정 12B · 13A) — 나누기는 남기고 고친다(보이는 선 1px + 가운데 손잡이 표시 · 누르는 폭 16 · 이름 "목록 너비" · `←` `→` 5% · `Home` · `End` · 목록 20 ~ 40% · 화면마다 폭 기억 · 한 번 누르면 25 ↔ 40), 위젯 크기도 남기고 고친다(모서리 손잡이 대비 3 이상 · 토큰 색 자리표시 · ⋮ "크기"). 키보드는 [WAI-ARIA APG Window Splitter](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/) 다. 옛 Resizable 스펙(가로 · 세로 · 손잡이 상자 12 × 16 · 누르는 폭 4 · hover 변화 없음)과 DESIGN.md v71 의 반대되던 글(손잡이 4 ~ 6px · hover 브랜드 색 · ±1% · "localStorage 권장")을 대신한다.
 
 수치 원본은 [`resizable.yaml`](resizable.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -212,7 +212,7 @@ import { Menu, MenuContent, MenuGroup, MenuGroupLabel, MenuItem, MenuTrigger } f
 
 ## SEED 와 다른 점
 
-- **SEED 에는 Resizable 이 없다** — 모바일 앱 중심이라 끌어서 나누는 패널이 없다. 손잡이 · 범위 · 키보드 · 기억 · 위젯 크기는 모두 porest 가 정했다(키보드는 APG Window Splitter).
+- **SEED 에는 Resizable 이 없다** — 모바일 앱 중심이라 끌어서 나누는 패널이 없다. 손잡이 · 범위 · 키보드 · 기억 · 위젯 크기는 모두 groo 가 정했다(키보드는 APG Window Splitter).
 
 ## Migration notes
 

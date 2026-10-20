@@ -157,8 +157,8 @@ const NEW_SHADOW = /^shadow-s\d+$/;
 let out = "";
 const w = (s = "") => { out += s + "\n"; };
 
-w(`// GENERATED — porest-design scripts/build-dart-tokens.mjs 가 ${source} 에서 만든다. 손으로 고치지 않는다.`);
-w(`// 바꾸려면 porest-design 의 ${source} 를 고치고 다시 만든다.`);
+w(`// GENERATED — groo-design scripts/build-dart-tokens.mjs 가 ${source} 에서 만든다. 손으로 고치지 않는다.`);
+w(`// 바꾸려면 groo-design 의 ${source} 를 고치고 다시 만든다.`);
 w(`// source: ${source} · sha256 ${sha}`);
 w("//");
 w("// 새 이름(SEED 구조)만 담는다 — 옛 이름(primary · text-secondary · xs ~ 3xl · shadow-sm …)은 새 이름의 별칭이라 뺐다.");

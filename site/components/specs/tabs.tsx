@@ -185,7 +185,7 @@ function HrLeaveWindow({ mode, w = 480, value = 'mine', items = LEAVE_TABS }: { 
   const rows = value === 'mine' ? MINE : APPROVAL;
   const g = tl('hr').gutter;
   return (
-    <WebWindow mode={mode} w={w} h={300} url="hr.porest.app">
+    <WebWindow mode={mode} w={w} h={300} url="hr.groo.app">
       <div className="flex h-full flex-col" style={{ paddingTop: 20, paddingLeft: 20, paddingRight: 20 }}>
         <div className="overflow-hidden rounded-xl" style={{ background: rc('bg-layer-default', mode, 'hr') }}>
           <div className="text-[17px] font-bold" style={{ paddingTop: 18, paddingBottom: 6, paddingLeft: g, paddingRight: g, color: rc('fg-neutral', mode, 'hr') }}>
@@ -351,7 +351,7 @@ function HrAuthorityWindow({ mode = 'auto' }: { mode?: Mode }) {
     ['구성원', '휴가를 신청하고 내역을 봐요.'],
   ];
   return (
-    <WebWindow mode={mode} w={560} h={250} url="hr.porest.app">
+    <WebWindow mode={mode} w={560} h={250} url="hr.groo.app">
       <div className="flex h-full flex-col" style={{ paddingTop: 20, paddingLeft: 20, paddingRight: 20 }}>
         <div className="overflow-hidden rounded-xl" style={{ background: rc('bg-layer-default', mode, 'hr') }}>
           <div className="text-[17px] font-bold" style={{ paddingTop: 18, paddingBottom: 6, paddingLeft: g, paddingRight: g, color: rc('fg-neutral', mode, 'hr') }}>
@@ -809,7 +809,7 @@ function UrlWindow({ mode = 'auto' }: { mode?: Mode }) {
   const g = tl().gutter;
   const max = Math.max(...MONTHS.map(([, v]) => v));
   return (
-    <WebWindow mode={mode} w={520} h={340} url="desk.porest.app/stats?tab=trend">
+    <WebWindow mode={mode} w={520} h={340} url="desk.groo.app/stats?tab=trend">
       <div className="flex h-full flex-col" style={{ background: rc('bg-layer-default', mode) }}>
         <div className="text-[20px] font-bold" style={{ paddingTop: 20, paddingBottom: 8, paddingLeft: g, paddingRight: g, color: rc('fg-neutral', mode) }}>
           통계
@@ -842,7 +842,7 @@ const ContentGuide: Fig = ({ caption }) => (
       <div className="flex flex-col items-center gap-2">
         {/* 주소 막대를 크게 — 1차 탭이 주소에 남는다 */}
         <span className="rounded-lg px-3 py-1.5 text-[13px] leading-5 pk-surface" style={{ boxShadow: `inset 0 0 0 1px ${rc('stroke-neutral-weak')}` }}>
-          <span className="pk-muted">desk.porest.app/stats</span>
+          <span className="pk-muted">desk.groo.app/stats</span>
           <b className="rounded px-0.5 pk-text" style={{ background: MARK }}>
             ?tab=trend
           </b>

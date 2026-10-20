@@ -472,7 +472,7 @@ export function FooterPlayground({ look, year }: { look: FtLook; year: number })
     text: on.text ? FT_HOME.text : undefined,
     business: on.business ? FT_PLACEHOLDER.business : undefined,
     contact: on.contact ? FT_PLACEHOLDER.contact : undefined,
-    copyright: on.copyright ? { owner: 'POREST', year } : undefined,
+    copyright: on.copyright ? { owner: '그루', year } : undefined,
     social: on.social ? 2 : undefined,
   };
   const code = useMemo(() => {
@@ -484,7 +484,7 @@ export function FooterPlayground({ look, year }: { look: FtLook; year: number })
       L.push('  <FooterNav>');
       if (on.brand) {
         used.add('FooterBrand');
-        L.push(`    <FooterBrand name="POREST" description="${FT_HOME.brand.description}" />`);
+        L.push(`    <FooterBrand name="그루" description="${FT_HOME.brand.description}" />`);
       }
       if (on.sitemap) {
         used.add('FooterSitemap').add('FooterColumn').add('FooterLink');
@@ -520,7 +520,7 @@ export function FooterPlayground({ look, year }: { look: FtLook; year: number })
         L.push('    <FooterBottom>');
         if (on.copyright) {
           used.add('FooterCopyright');
-          L.push('      <FooterCopyright owner="POREST" />');
+          L.push('      <FooterCopyright owner="그루" />');
         }
         if (on.social) L.push('      {/* 소셜 — 값이 생기면 FooterSocial(Button ghost · large · iconOnly + 이름) */}');
         L.push('    </FooterBottom>');

@@ -2,7 +2,7 @@
 
 > 스크롤되는 자리의 규칙 — 스크롤은 브라우저 기본이고 스크롤바 모양은 전역 한 벌(6px 알약)이다. 안에 초점 가는 것이 없는 스크롤 상자는 상자 자신이 초점과 이름을 받고, 시트 · 대화상자 · 팝오버 안의 상자는 끝에서 뒤 화면을 끌고 가지 않는다. 끝을 흐려 더 있다는 것을 알리는 일은 [Scroll Fog](scroll-fog.md) 다.
 
-SEED 에는 Scroll Area · 스크롤바 규칙이 없다 — 스크롤 끝 흐림(Scroll Fog)만 있다. 그래서 모양은 porest 가 정했다(2026-10-10 사용자 결정 14A — "당근 스크롤에 모양 자체는 없는 거라면 모양은 A") — 기본 스크롤 + 전역 한 벌(6px 알약 · thumb `stroke-neutral-solid` · track 투명), Firefox 는 `thin` + `scrollbar-color` 를 `@supports not selector(::-webkit-scrollbar)` 안에. 내용 위에 겹쳐 뜨는 Radix ScrollArea 는 걷는다. 옛 Scroll Area 스펙(Radix 베이스 · `border-strong` thumb · 전역 webkit + Firefox 를 한 곳에)과 DESIGN.md v71 의 다른 글(hover 때만 · 6 ~ 8px · 불투명도 0.4 ~ 1)을 대신한다. 스크롤하면 숨는 머리는 [Scroll Auto Hide](scroll-auto-hide.md) 다(사용자가 14번 답에서 말한 "자동으로 접히고 펴지는" SEED 컴포넌트 — 스크롤바가 아니다).
+SEED 에는 Scroll Area · 스크롤바 규칙이 없다 — 스크롤 끝 흐림(Scroll Fog)만 있다. 그래서 모양은 groo 가 정했다(2026-10-10 사용자 결정 14A — "당근 스크롤에 모양 자체는 없는 거라면 모양은 A") — 기본 스크롤 + 전역 한 벌(6px 알약 · thumb `stroke-neutral-solid` · track 투명), Firefox 는 `thin` + `scrollbar-color` 를 `@supports not selector(::-webkit-scrollbar)` 안에. 내용 위에 겹쳐 뜨는 Radix ScrollArea 는 걷는다. 옛 Scroll Area 스펙(Radix 베이스 · `border-strong` thumb · 전역 webkit + Firefox 를 한 곳에)과 DESIGN.md v71 의 다른 글(hover 때만 · 6 ~ 8px · 불투명도 0.4 ~ 1)을 대신한다. 스크롤하면 숨는 머리는 [Scroll Auto Hide](scroll-auto-hide.md) 다(사용자가 14번 답에서 말한 "자동으로 접히고 펴지는" SEED 컴포넌트 — 스크롤바가 아니다).
 
 수치 원본은 [`scroll-area.yaml`](scroll-area.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -75,7 +75,7 @@ Radix ScrollArea 처럼 마우스를 올리기 전에는 보이지 않는 막대
 
 ## 코드
 
-전역 스크롤바는 컴포넌트가 아니라 CSS 한 벌이다 — `recipes/shadcn/styles/porest-shadcn-bridge.css` 에 둔다(줄바꿈 v114 의 `html` 규칙과 같은 자리 — 이 bridge 를 부르는 화면이 함께 받는다). 사이트 · 미리보기의 전역 규칙도 이 계약을 따른다. 레시피 `recipes/shadcn/components/ui/scroll-area.tsx` 는 Radix 를 걷고 기본 스크롤 상자로 바꾼다.
+전역 스크롤바는 컴포넌트가 아니라 CSS 한 벌이다 — `recipes/shadcn/styles/groo-shadcn-bridge.css` 에 둔다(줄바꿈 v114 의 `html` 규칙과 같은 자리 — 이 bridge 를 부르는 화면이 함께 받는다). 사이트 · 미리보기의 전역 규칙도 이 계약을 따른다. 레시피 `recipes/shadcn/components/ui/scroll-area.tsx` 는 Radix 를 걷고 기본 스크롤 상자로 바꾼다.
 
 - `ScrollArea` — 기본 스크롤 상자(`div`). `orientation`(`"vertical"` 기본 · `"horizontal"` · `"both"` — 넘치는 방향만 `overflow: auto`) · `label`(주면 `role="region"` · `tabIndex={0}` · `aria-label` — 안에 초점 가는 것이 없으면 필수) · `contain`(`overscroll-behavior: contain` — 시트 · 대화상자 · 팝오버 안), 나머지는 `div` 속성. 스크롤바는 그리지 않는다(전역 CSS). `ScrollBar` 는 걷는다.
 - 끝을 흐리는 상자는 [Scroll Fog](scroll-fog.md) 의 `ScrollFog` 가 곧 스크롤 상자다 — 같은 규칙을 `div` 속성(`role="region"` · `tabIndex={0}` · `aria-label`)과 `className`(`overscroll-contain` — 시트 · 대화상자 · 팝오버 안)으로 받는다. 시트 · 대화상자 · 팝오버의 본문(`DialogBody` · `BottomSheetBody` · `ResponsiveDialogBody` · `PopoverBody`)은 스스로 `contain` 이다 — 레시피가 본문에 건다(지금은 없다).
@@ -173,7 +173,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 ## SEED 와 다른 점
 
-- **SEED 에는 Scroll Area · 스크롤바 규칙이 없다** — 끝 흐림(Scroll Fog)만 있다. 모양 · Firefox 처리 · 초점 · 이름 · contain 은 모두 porest 가 정했다.
+- **SEED 에는 Scroll Area · 스크롤바 규칙이 없다** — 끝 흐림(Scroll Fog)만 있다. 모양 · Firefox 처리 · 초점 · 이름 · contain 은 모두 groo 가 정했다.
 
 ## Migration notes
 
@@ -192,7 +192,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-09 조사 — 웹 · HR 은 스크롤바 숨김을 끄고 크로미움 140 에 띄워 쟀다).
 
-- **Desk 웹** — 전역 webkit 6 · `--border-strong` #767C8B 는 그대로 맞고 Firefox 규칙이 0 이다(`index.css:470-498`, D20) — `@supports` 안에 두 줄을 더한다. 폰 본문 `.m-scroll` 은 스크롤바 0, 서랍 본문은 `scrollbar-hide`(`shared/ui/drawer.tsx:163`) — 세로는 숨기지 않는다. Radix `scroll-area.tsx` 는 실사용 0(유일한 `NotificationBell.tsx:103` 을 아무도 안 쓴다) · `.scroll` CSS 도 쓰는 곳 0 이다(`porest.css:270-288`, D21) — 걷는다. 가로 줄 11곳은 숨김이 맞고 끝 흐림(Scroll Fog `row`)이 아직 없다.
+- **Desk 웹** — 전역 webkit 6 · `--border-strong` #767C8B 는 그대로 맞고 Firefox 규칙이 0 이다(`index.css:470-498`, D20) — `@supports` 안에 두 줄을 더한다. 폰 본문 `.m-scroll` 은 스크롤바 0, 서랍 본문은 `scrollbar-hide`(`shared/ui/drawer.tsx:163`) — 세로는 숨기지 않는다. Radix `scroll-area.tsx` 는 실사용 0(유일한 `NotificationBell.tsx:103` 을 아무도 안 쓴다) · `.scroll` CSS 도 쓰는 곳 0 이다(`groo.css:270-288`, D21) — 걷는다. 가로 줄 11곳은 숨김이 맞고 끝 흐림(Scroll Fog `row`)이 아직 없다.
 - **HR** — 전역 4px + 보이는 회색 track(#787878 ↔ #F8F8F8 4.16 · 다크 3.63, `index.css:132-160`). Radix ScrollArea 8곳은 막대 10 · thumb 7 `bg-border` #EEEEEE 가 바탕 1.11(다크 1.34)이라 `type="always"` 4곳도 사실상 보이지 않는다(`shared/ui/shadcn/scrollArea.tsx:33-43` · 달력 일정 · 일 · 주 `calendar-agenda-view.tsx:64` · `calendar-day-view.tsx:98 · 206` · `calendar-week-view.tsx:94`, D8). 기본 overflow + 전역 한 벌로 — 일정 상자는 초점 가는 것이 없어 이름("{날짜} 일정")을 단다. `overscroll-behavior` 는 0 이다.
 - **Desk 앱** — 전역 스크롤바 테마가 없고 Material `Scrollbar` 3곳만 4dp 네모 #BCBCBC(흰 면 1.9 — `account_add_dialog.dart:732` · `card_add_dialog.dart:979` · `investment_add_dialog.dart:1300`, D18)이다. 앱은 스크롤할 때만 보이는 플랫폼 스크롤바를 두되 막대 색을 `stroke-neutral-solid` · 6 · 알약으로 맞춘다(전역 `ScrollbarTheme` 하나).
 - **넘침 막기** — `overscroll-behavior` 는 웹 1곳(`icon-picker.tsx:163` contain)뿐이고 HR · SSO 는 0 이다. 대화상자 안 상자(아이콘 240 · 시간 208 · 자산 기관 260 · 주식 56vh · HR 휴가 신청 · 승인 · 정책 300 · SSO 역할 권한 200)에 `contain` 을.

@@ -7,7 +7,7 @@ import { avatarHue, avatarInitial, type AvatarHue } from "@/components/ui/avatar
 import { imageFrameImageVariants, imageFrameRadius, imageFrameVariants } from "@/components/ui/image-frame";
 
 /*
- * Porest Logo Tile — porest 에만 있는 부품(2026-10-04 — SEED 는 가게 · 업체를 원 Avatar 로 그리고 로고 타일 규칙이 없다).
+ * Groo Logo Tile — groo 에만 있는 부품(2026-10-04 — SEED 는 가게 · 업체를 원 Avatar 로 그리고 로고 타일 규칙이 없다).
  * 수치 원본은 specs/components/logo-tile.yaml, 기관 색은 institution-colors.yaml(lib/institution-colors.ts).
  * 지금 제품의 자산 로고(웹 · 앱 AssetLogo)와 HR 회사 로고를 대신한다.
  *

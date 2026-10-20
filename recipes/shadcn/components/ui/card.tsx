@@ -3,8 +3,8 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Card — 면은 SEED Elevation · stroke.neutral-weak · Feedback(2026-10-08). 수치 원본은 specs/components/card.yaml.
- * SEED 에는 카드 컴포넌트가 없다 — 바닥 위 흰 면 + 1px 테두리 · 그림자 없음 · 누름은 SEED 를, 머리 · 여백 · 지표 · 순자산 · 증감은 porest 가 정했다.
+ * Groo Card — 면은 SEED Elevation · stroke.neutral-weak · Feedback(2026-10-08). 수치 원본은 specs/components/card.yaml.
+ * SEED 에는 카드 컴포넌트가 없다 — 바닥 위 흰 면 + 1px 테두리 · 그림자 없음 · 누름은 SEED 를, 머리 · 여백 · 지표 · 순자산 · 증감은 groo 가 정했다.
  * 옛 변형 넷(shadow · bordered · muted · brand) · 모서리 12 · 여백 16 / 24 · 그림자 상승은 걷었다.
  *
  *   Card            카드 면. variant "default"(바닥 위 흰 면 + 1px 테두리) · "hero"(순자산 — 브랜드 채움 · 흰 글자, 한 화면에 하나).

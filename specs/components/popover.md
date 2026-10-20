@@ -2,7 +2,7 @@
 
 > 트리거에 붙어 떠 있는 표면. 1280 이상에서 부가 정보 · 짧은 동작 · 고르는 패널(Input Button 의 달력 · 시각 · 목록)을 띄운다 — 같은 내용을 1280 미만에서는 [Bottom Sheet](bottom-sheet.md) 로 띄운다. 비모달이라 뒤 화면을 막지 않는다. 폼 · 상세는 [Dialog](dialog.md), 줄의 동작 목록은 Menu(그 차례에), 짧은 도움말 말풍선은 Help Bubble(그 차례에)이다.
 
-구조는 당근 [SEED Popover](https://seed-design.io/react/components/popover)(Apache-2.0 — 디자인 문서는 없고 React 문서 · rootage 만 있다)를 따른다 — 표면 · 머리(제목 · 설명 · 닫기) · 본문 · 바닥, 머리 · 본문 · 바닥 여백은 Dialog 와 같다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
+구조는 당근 [SEED Popover](https://seed-design.io/react/components/popover)(Apache-2.0 — 디자인 문서는 없고 React 문서 · rootage 만 있다)를 따른다 — 표면 · 머리(제목 · 설명 · 닫기) · 본문 · 바닥, 머리 · 본문 · 바닥 여백은 Dialog 와 같다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
 수치 원본은 [`popover.yaml`](popover.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 

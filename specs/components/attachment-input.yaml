@@ -141,7 +141,7 @@ rules:
         gap: { value: $spacing-x2_5, note: "파일 카드의 썸네일 ↔ 이름 10 — SEED x2_5" }
         name: { value: "파일 이름 · 크기 · 상태", note: "보조 기술에는 늘 전체 이름 — 줄인 이름이 아니다(\"2026-10-15_카드영수증_….pdf, 9.8MB, 올리는 중 40%\")" }
         press: { value: 메뉴를 연다, note: "순서 바꾸기(onReorder) · 크게 보기(onPreview)를 줄 때만 — 누르는 자리는 항목 전체(× 는 따로). 사진을 누르면 바로 크게 보던 자리는 메뉴 첫 줄 \"크게 보기\" 로 옮긴다(사용자 결정 14A)" }
-        dragStart: { value: "마우스 8px · 터치 250ms", note: "누르기(메뉴)와 끌기를 가른다 — 마우스는 누른 채 8px 넘게 움직이면, 터치는 250ms 누른 채 움직이면 끌기. 그 전에 움직이면 줄이 가로로 스크롤한다(porest — SEED 는 끌기만 있다). 앱도 터치 250ms 길게 누름(SEED Lynx long-press — Q-016-1)" }
+        dragStart: { value: "마우스 8px · 터치 250ms", note: "누르기(메뉴)와 끌기를 가른다 — 마우스는 누른 채 8px 넘게 움직이면, 터치는 250ms 누른 채 움직이면 끌기. 그 전에 움직이면 줄이 가로로 스크롤한다(groo — SEED 는 끌기만 있다). 앱도 터치 250ms 길게 누름(SEED Lynx long-press — Q-016-1)" }
         dragDelayApp: { value: 250ms, note: "앱의 길게 눌러 끌기 문턱 — 웹 터치와 같다(Flutter 기본 길게 누름 500ms 가 아니다)" }
         keys: { value: "Enter 메뉴 · Space 들기", note: "웹 — 초점이 온 항목에서 Enter 는 메뉴, Space 는 들기 → ← → 로 옮기고 Space · Enter 로 놓기 · Esc 그만두기(dnd-kit 키보드 — 순서 바꾸기를 줄 때만). 앱은 들기 대신 customSemanticsActions(앞으로 옮기기 · 뒤로 옮기기)와 메뉴" }
       thumbnail:
@@ -417,7 +417,7 @@ rules:
         label: 파일 선택
     disabled:
       dropzone:
-        borderColor: { value: $color-stroke-neutral-weak, note: "막히면 테두리도 옅게 — 짙은 테두리는 받을 수 있는 자리로 읽힌다(porest — SEED 는 테두리를 바꾸지 않는다)" }
+        borderColor: { value: $color-stroke-neutral-weak, note: "막히면 테두리도 옅게 — 짙은 테두리는 받을 수 있는 자리로 읽힌다(groo — SEED 는 테두리를 바꾸지 않는다)" }
         dropTarget: { value: 받지 않음, note: "끌어 와도 모습이 바뀌지 않고 놓아도 붙지 않는다" }
       dropzoneLabel:
         foreground: { value: $color-fg-disabled, note: "SEED dropzone disabled" }

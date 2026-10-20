@@ -86,7 +86,7 @@ function RuleWindow({ mode, w = 540, s = 1, marks, decor, short = false }: { mod
   const h = 32 + top + ruleH(short ? 1 : 2) + 40;
   return (
     <Scaled w={w} h={h} s={s}>
-      <WebWindow mode={mode} w={w} h={h} url="hr.porest.app">
+      <WebWindow mode={mode} w={w} h={h} url="hr.groo.app">
         <Page mode={mode} title="휴가">
           <RuleTrigger mode={mode} style={{ left: 32, top: TRIG_TOP }} />
           <Summary mode={mode} top={TRIG_TOP + TRIG_H + 16} />
@@ -111,7 +111,7 @@ function DateWindow({ mode, w = 448, s = 1, marks, decor }: { mode: Mode; w?: nu
   const h = 32 + top + dateH() + 24;
   return (
     <Scaled w={w} h={h} s={s}>
-      <WebWindow mode={mode} w={w} h={h} url="hr.porest.app">
+      <WebWindow mode={mode} w={w} h={h} url="hr.groo.app">
         <Page mode={mode} title="휴가 신청">
           <div className="absolute left-8" style={{ top: fieldsTop, width: 320 }}>
             <Form>
@@ -205,7 +205,7 @@ function PlaceWindow({ kind }: { kind: 'below' | 'above' | 'edge' }) {
   const left = Math.max(p.edge, Math.min(center - popW / 2, w - p.edge - popW));
   const top = kind === 'above' ? trig.y - p.offset - pop : trig.y + TRIG_H + p.offset;
   return (
-    <WebWindow mode="auto" w={w} h={h} url="hr.porest.app">
+    <WebWindow mode="auto" w={w} h={h} url="hr.groo.app">
       <Page mode="auto" title="">
         <RuleTrigger mode="auto" style={{ left: trig.x, top: trig.y }} />
       </Page>
@@ -250,7 +250,7 @@ function FormPopoverWindow() {
   const top = TRIG_TOP + TRIG_H + p.offset;
   const h = 360;
   return (
-    <WebWindow mode="auto" w={w} h={h} url="hr.porest.app">
+    <WebWindow mode="auto" w={w} h={h} url="hr.groo.app">
       <Page mode="auto" title="휴가">
         <span className="absolute left-8 flex h-8 items-center rounded-lg px-3 text-[14px] font-bold text-white" style={{ top: TRIG_TOP, background: rc('bg-brand-solid', 'auto', 'hr') }}>
           휴가 신청
@@ -302,7 +302,7 @@ function FocusWindow({ step }: { step: 'open' | 'back' | 'tab' }) {
   const h = 32 + top + ruleH(1) + 56;
   return (
     <Scaled w={w} h={h} s={0.62}>
-      <WebWindow mode="auto" w={w} h={h} url="hr.porest.app">
+      <WebWindow mode="auto" w={w} h={h} url="hr.groo.app">
         <Page mode="auto" title="휴가">
           <RuleTrigger mode="auto" style={{ left: 32, top: TRIG_TOP }} focus={step === 'back'} />
           <Summary mode="auto" top={TRIG_TOP + TRIG_H + 16} focus={step === 'tab'} />

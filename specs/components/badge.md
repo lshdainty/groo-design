@@ -2,7 +2,7 @@
 
 > 대상의 상태 · 분류를 한두 낱말로 보이는 작은 라벨("예정" · "연체" · "승인"). 누르지 않는다 — 고르고 거르는 것은 [Chip](chip.md), 실행은 [Button](button.md), 시간 · 개수 · 길이 같은 메타 정보는 [Tag Group](tag-group.md), 안 읽은 알림은 [Notification Badge](notification-badge.md) 다.
 
-구조는 당근 [SEED Badge](https://seed-design.io/components/badge)(Apache-2.0)를 따른다 — 둥근 사각 상자 · 앞 아이콘 · 글, 변형 셋(weak · solid · outline) × 톤 여섯, 크기 둘. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). 옛 Badge(알약 · 11 / 600 · solid · soft · outline 12변형 · 누르는 배지)를 대신한다.
+구조는 당근 [SEED Badge](https://seed-design.io/components/badge)(Apache-2.0)를 따른다 — 둥근 사각 상자 · 앞 아이콘 · 글, 변형 셋(weak · solid · outline) × 톤 여섯, 크기 둘. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). 옛 Badge(알약 · 11 / 600 · solid · soft · outline 12변형 · 누르는 배지)를 대신한다.
 
 수치 원본은 [`badge.yaml`](badge.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -44,7 +44,7 @@
 
 ### Tone
 
-| 톤 | 쓰는 자리 | porest 예 |
+| 톤 | 쓰는 자리 | groo 예 |
 |---|---|---|
 | `neutral` *(기본)* | 상태가 따로 없거나 분명하지 않은 것 · 분류 | 예정 · 환불됨 · 기록만 · 일시정지 · 단종 · 기본 · 신용 · 체크 |
 | `informative` | 안내 · 권한 제한 · 베타 | 읽기 전용 · 새로 |
@@ -228,9 +228,9 @@ import { Badge } from "@/components/ui/badge"
 
 - **기본은 weak · neutral · medium** — SEED React 기본은 solid · neutral · medium 이다. SEED 디자인 문서가 반복 목록 · 분류 · 부가 정보에 weak 를 권하므로 그쪽을 기본으로 둔다.
 - **중립 solid 는 역할 색** — `bg-neutral-inverted` + `fg-neutral-inverted`(SEED 는 palette gray-800 + fg.on-neutral-solid).
-- **warning solid 는 주황 + 흰 글자** — SEED 는 노랑 + 검정 81.6% 글자. porest 의 주의 색은 주황(v108)이고, 흰 글자가 5.06 · 5.79:1 이다(Page Banner 와 같다).
-- **의미 색 옅은 선의 다크는 팔레트 400** — SEED 는 300. porest 다크 표면은 SEED 보다 밝아 300 이 1.38 ~ 1.40:1(시트 위 1.19 ~ 1.21)로 묻힌다. 400 은 1.71 ~ 1.73:1 — SEED 다크(1.77)와 같은 관계다(v117).
-- **중립 outline 테두리는 `stroke-neutral-weak`** — SEED stroke.neutral-muted 는 투명도가 있는 색이라 porest 에 없다.
+- **warning solid 는 주황 + 흰 글자** — SEED 는 노랑 + 검정 81.6% 글자. groo 의 주의 색은 주황(v108)이고, 흰 글자가 5.06 · 5.79:1 이다(Page Banner 와 같다).
+- **의미 색 옅은 선의 다크는 팔레트 400** — SEED 는 300. groo 다크 표면은 SEED 보다 밝아 300 이 1.38 ~ 1.40:1(시트 위 1.19 ~ 1.21)로 묻힌다. 400 은 1.71 ~ 1.73:1 — SEED 다크(1.77)와 같은 관계다(v117).
+- **중립 outline 테두리는 `stroke-neutral-weak`** — SEED stroke.neutral-muted 는 투명도가 있는 색이라 groo 에 없다.
 - **대비는 WCAG AA** — SEED 의 흰 글자 on 주황(2.94) · 의미 색 solid(3.8 ~ 4.0) · 라이트 outline(3.8 ~ 4.1)처럼 4.5:1 에 못 미치는 짝이 없다.
 - **Action(정보 아이콘 버튼)은 두지 않는다** — SEED React 3(2026-10-01)의 배지 안 정보 버튼은 누르는 영역이 12 · 14 이고, 누르지 않는 배지 안에 따로 눌리는 것이 생긴다. 설명은 배지 옆 ⓘ Help Bubble 이다.
 
@@ -252,8 +252,8 @@ import { Badge } from "@/components/ui/badge"
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-03 조사 — Desk 웹 · HR 은 크로미움에 띄워 쟀고, Desk 앱은 위젯 테스트로 쟀다).
 
-- **세 벌** — 웹 `Badge` 19.2 · 알약 · 11/600(`shared/ui/badge.tsx:17-71`, 호출 23), 앱 `PBadge` 17(테두리 있으면 19) · 알약 · 11/700(`shared/widgets/p_badge.dart:14-163`, 호출 31), HR shadcn 22 · 모서리 6 · 12/500(`shared/ui/shadcn/badge.tsx:7-46`, 호출 49). 손으로 만든 배지가 웹 약 40 · 앱 약 15곳이다(모서리 2 · 4 · 알약, 글자 9.5 ~ 12, 굵기 600 ~ 800) — 모두 이 Badge 로. 9.5 · 10 · 10.5 · 11.5px 글자(웹 `CardBenefitPage.tsx:214 · 274 · 495` "단종" · `porest.css:1454-1462` "NEW" · `DutchPayPage.tsx:1860-1910` "결제자")는 medium 11 로 올린다.
-- **흐린 줄 안의 배지** — 예정 · 환불 거래의 "예정" · "환불됨" 이 줄 전체 불투명도 0.6 에 함께 흐려져 웹 2.30 · 다크 2.77, 앱 2.39 · 2.87:1 이다(웹 `shared/ui/porest/ledger.tsx:555 · 692-708`, 앱 `features/expense/presentation/widgets/expense_row.dart:84-86 · 124-164`). List 의 "합계에 안 드는 줄" 규칙으로 바꾼다.
+- **세 벌** — 웹 `Badge` 19.2 · 알약 · 11/600(`shared/ui/badge.tsx:17-71`, 호출 23), 앱 `PBadge` 17(테두리 있으면 19) · 알약 · 11/700(`shared/widgets/p_badge.dart:14-163`, 호출 31), HR shadcn 22 · 모서리 6 · 12/500(`shared/ui/shadcn/badge.tsx:7-46`, 호출 49). 손으로 만든 배지가 웹 약 40 · 앱 약 15곳이다(모서리 2 · 4 · 알약, 글자 9.5 ~ 12, 굵기 600 ~ 800) — 모두 이 Badge 로. 9.5 · 10 · 10.5 · 11.5px 글자(웹 `CardBenefitPage.tsx:214 · 274 · 495` "단종" · `groo.css:1454-1462` "NEW" · `DutchPayPage.tsx:1860-1910` "결제자")는 medium 11 로 올린다.
+- **흐린 줄 안의 배지** — 예정 · 환불 거래의 "예정" · "환불됨" 이 줄 전체 불투명도 0.6 에 함께 흐려져 웹 2.30 · 다크 2.77, 앱 2.39 · 2.87:1 이다(웹 `shared/ui/groo/ledger.tsx:555 · 692-708`, 앱 `features/expense/presentation/widgets/expense_row.dart:84-86 · 124-164`). List 의 "합계에 안 드는 줄" 규칙으로 바꾼다.
 - **옅은 배지가 4.5:1 아래** — 웹 info · success · warning · error 4.03 · 4.04 · 3.71 · 3.75(`badge.tsx:36-42`), 앱 soft 3.93 ~ 4.25(`p_badge.dart:141-150`), 할 일 우선순위 3.83 ~ 4.16(웹 `TodoPage.tsx:93-117` · 앱 `todo_meta.dart:49-64`). weak(`fg-*-contrast`)는 5.65 이상이다.
 - **다크 outline 테두리가 라이트 색 그대로** — 2.89 ~ 3.12:1(웹 `badge.tsx:46-53` · 앱 `p_badge.dart:153-160`). 브랜드 채움 배지는 다크 표면과 1.73:1.
 - **정의 없는 색** — 웹 "현재 기기"(`widgets/account-settings/ui/DevicesSection.tsx:244-258`) · "남은 원금 정리됨"(`AssetDetailDialog.tsx:984-990`)이 없는 토큰(`--border-success` · `--fg-success`)을 불러 테두리 · 색 없는 보통 글자로 보인다. 앱은 outlineSuccess 다.
@@ -261,4 +261,4 @@ import { Badge } from "@/components/ui/badge"
 - **HR 결재 상태에 다크 짝이 없다** — `shared/lib/vacationStatus.tsx:18-43`(`dark:` 0개)이라 다크 화면에 밝은 알약이 뜬다(바탕 : 표면 13 ~ 15:1). 입금 · 출금 · 통계 "대기" · 현재 결재자도 같다(`culture-dues/ui/DuesTableContent.tsx:181-186` · `VacationRequestStatsItem.tsx:85-138`). 톤으로 옮기면 다크 짝이 생긴다 — 대기 `neutral` · 진행 `informative` · 승인 `positive` · 반려 `critical` · 취소 `neutral`(SEED 톤 표대로 — 앱 적용 때 확인).
 - **HR 흰 글자 미달** — 가입 상태 노랑 1.91 · 초록 2.22 · 빨강 3.81, 근무 시간 2.13 ~ 3.75(`admin-users-management/ui/UserTable.tsx:137-170`), destructive 3.76(`badge.tsx:17`), 증감 초록 글자 2.22(`vacation-history/ui/VacationStatsItem.tsx:21`). 근무 시간처럼 뜻 없는 분류 색은 톤이 아니라 글(또는 Tag Group)로 가른다.
 - **영어 · 코드값** — HR 역할 코드 `ROLE_ADMIN` 배지(`admin-authority/ui/MobileRoleSelector.tsx:124` · `UserRoleAssignment.tsx:74`) → "관리자", 휴가 정책 코드값 배지(`admin-vacation-plan/ui/VacationPlanPolicyDialog.tsx:122-125`) → 정책 이름, "3 포함된 정책"(`:85-87`) → "정책 3개", 웹 "NEW"(`widgets/constellation/ui/CollectionCard.tsx:132-148`) → "새로", 매수 유의 코드값 폴백(`TossStocksPage.tsx:1157`) → 이름을 못 찾으면 배지를 빼고 기록. 요금제 이름 Pro · Free 는 그대로.
-- **누르는 것처럼 보이는 배지** — 웹 `Badge` 의 호버 색(누르지 않는데), 웹 `AssetFilterBadge`(글 + ×, `ExpensePage.tsx:1365-1407`)는 Chip(입력값)으로, 상세 빠른 동작 위의 "연결됨" · "2개"(`shared/ui/porest/detail.tsx:211-215`)는 버튼 이름에 붙어 "연결됨 반복 설정" 으로 읽힌다 — 개수는 Notification Badge 규칙, 말은 버튼 글로.
+- **누르는 것처럼 보이는 배지** — 웹 `Badge` 의 호버 색(누르지 않는데), 웹 `AssetFilterBadge`(글 + ×, `ExpensePage.tsx:1365-1407`)는 Chip(입력값)으로, 상세 빠른 동작 위의 "연결됨" · "2개"(`shared/ui/groo/detail.tsx:211-215`)는 버튼 이름에 붙어 "연결됨 반복 설정" 으로 읽힌다 — 개수는 Notification Badge 규칙, 말은 버튼 글로.

@@ -1,4 +1,4 @@
-# Bottom Navigation 의 수치 원본 — porest 의 떠 있는 알약(2026-10-04 사용자 결정, 화면 틀 · 이동 비교 페이지 4B · 5A · 6B · 7A ·
+# Bottom Navigation 의 수치 원본 — groo 의 떠 있는 알약(2026-10-04 사용자 결정, 화면 틀 · 이동 비교 페이지 4B · 5A · 6B · 7A ·
 # "따라오는 것"). 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
 # 폰 화면 아래에 떠 있는 탭 바(하단 탭 바) — Desk 앱 · Desk 웹 768 미만의 주 메뉴. 칸은 다섯이다 —
@@ -7,12 +7,12 @@
 # 아래로 스크롤하면 줄어들고(48, 라벨은 숨기되 이름은 남긴다) 위로 · 맨 위로 오면 펴진다. 줄어든 바를 누르면 펴진다.
 #
 # 수치의 출처 — SEED Bottom Navigation 은 디자인 문서 · 그림뿐이다(rootage · 코드 없음). 바의 모양(알약 · 66 · 48 · 좌우 14 · 36 ·
-# 아래 자리 · 줄어드는 기준)은 지금 Desk 웹 · 앱 값(shared/ui/porest/tabbar.tsx · shared/widgets/p_tab_bar.dart)이고,
+# 아래 자리 · 줄어드는 기준)은 지금 Desk 웹 · 앱 값(shared/ui/groo/tabbar.tsx · shared/widgets/p_tab_bar.dart)이고,
 # 칸 · 라벨 · 아이콘 · 5칸 · 라벨 5자 · 최대 480 · 배지 2칸 · 글자 크기 설정을 따르지 않음은 SEED 다.
 #
 # SEED 와 다른 자리(bottom-navigation.md 의 "SEED 와 다른 점")
 #   - 화면 아래에 붙은 바(48 + 안전 영역 · 위 1px 선) 대신 떠 있는 알약 — 사용자 결정(4B). 붙은 바(4A)는 고르지 않았다.
-#   - 바탕은 불투명한 bg-layer-floating(흐림 걷음), 그림자는 porest shadow-s3, 안쪽 테두리는 stroke-neutral-subtle —
+#   - 바탕은 불투명한 bg-layer-floating(흐림 걷음), 그림자는 groo shadow-s3, 안쪽 테두리는 stroke-neutral-subtle —
 #     지금 제품의 손으로 쓴 그림자(0 10 30 18% + 0 2 8 8%)와 border-subtle 70% 를 가장 가까운 토큰으로 옮겼다(새 토큰 없음).
 #   - 아이콘은 채움(Fill) 대신 lucide 선 아이콘 — 고름은 짙은 색 + 선 2.5, 안 고름은 fg-neutral-subtle + 선 2(v106 · 5A).
 #     SEED 그림의 안 고른 색(#B0B3BA 2.10:1 · #868B94 3.42:1)은 대비가 모자라 쓰지 않는다.

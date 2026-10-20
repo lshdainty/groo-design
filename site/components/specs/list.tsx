@@ -343,7 +343,7 @@ const LONG_TX: RowSpec[] = [
   { kind: 'button', prefix: { tile: 'orange', icon: 'utensils' }, title: '점심', detail: '식비 · 현금', suffix: { amount: '−12,000원' } },
 ];
 const LONG_KV: RowSpec[] = [
-  { kind: 'view', title: '이메일', suffix: { text: 'porest.desk.design.system@example-company-domain.com' } },
+  { kind: 'view', title: '이메일', suffix: { text: 'groo.desk.design.system@example-company-domain.com' } },
   { kind: 'view', title: '가입일', suffix: { text: '2026년 3월 2일' } },
 ];
 const LongValues: Fig = ({ caption }) => {
@@ -379,7 +379,7 @@ const LongValues: Fig = ({ caption }) => {
 // 글자만 배율로 키운다(앱처럼 — 타일 · 여백은 그대로). 금액은 쉼표 뒤에서만 줄을 바꾼다(결정 2 B — <wbr>). 이름 · 가게는 지어낸 것이다
 type NarrowRow = { title: string; detail?: string; icon?: 'utensils' | 'coffee'; hue?: string; text?: string; amount?: string };
 const NARROW_ROWS: NarrowRow[] = [
-  { title: '이메일', text: 'porest.demo.long.address@example-company.co.kr' },
+  { title: '이메일', text: 'groo.demo.long.address@example-company.co.kr' },
   { title: '점심 — 아주 긴 가게 이름이 두 줄 이상으로 이어질 때', detail: '식비 · 지어낸카드', icon: 'utensils', hue: 'orange', amount: '−123,456,789,012원' },
   { title: '숲길커피', detail: '카페 · 간식', icon: 'coffee', hue: 'brown', amount: '−4,500원' },
 ];
@@ -767,7 +767,7 @@ function Preview({ children, caption }: { children: ReactNode; caption?: string 
 }
 const ExBasic: Fig = ({ caption }) => (
   <Preview caption={caption}>
-    <L rows={[{ kind: 'view', title: '가입일', suffix: { text: '2026년 3월 2일' } }, { kind: 'view', title: '이메일', suffix: { text: 'porest@example.com' } }]} />
+    <L rows={[{ kind: 'view', title: '가입일', suffix: { text: '2026년 3월 2일' } }, { kind: 'view', title: '이메일', suffix: { text: 'groo@example.com' } }]} />
   </Preview>
 );
 const ExButton: Fig = ({ caption }) => (

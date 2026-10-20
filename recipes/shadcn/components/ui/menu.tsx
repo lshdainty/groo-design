@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/menu-sheet";
 
 /*
- * Porest Menu — 구조는 SEED Menu(small, 2026-10-02). 수치 원본은 specs/components/menu.yaml. Radix DropdownMenu 위(비모달)에 짰다.
+ * Groo Menu — 구조는 SEED Menu(small, 2026-10-02). 수치 원본은 specs/components/menu.yaml. Radix DropdownMenu 위(비모달)에 짰다.
  *
  *   Menu              트리거에 붙어 여는 동작 목록 — open · defaultOpen · onOpenChange
  *   MenuTrigger       여는 버튼(⋮ — Button ghost · iconOnly, 이름 "{줄 이름} 더보기") — aria-haspopup="menu" · aria-expanded,

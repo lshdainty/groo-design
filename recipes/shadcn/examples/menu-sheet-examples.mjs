@@ -385,7 +385,7 @@ export const menuSheetExamples = [
         height: 520,
         pageHtml: page("프로필", [
           ["이름", "김지원"],
-          ["이메일", "porest@example.com"],
+          ["이메일", "groo@example.com"],
           ["가입일", "2026년 3월 2일"],
         ]),
         groups: [[{ label: "앨범에서 고르기" }, { label: "사진 찍기" }], [{ label: "사진 지우기", tone: "critical" }]],

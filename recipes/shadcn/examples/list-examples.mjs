@@ -886,13 +886,13 @@ export const listExamples = [
 
 <List>
   <ListItem title="가입일" suffix="2026년 3월 2일" />
-  <ListItem title="이메일" suffix="porest@example.com" />
+  <ListItem title="이메일" suffix="groo@example.com" />
 </List>`,
     render: () =>
       screen(
         list([
           listItem({ title: "가입일", suffix: "2026년 3월 2일" }),
-          listItem({ title: "이메일", suffix: "porest@example.com" }),
+          listItem({ title: "이메일", suffix: "groo@example.com" }),
         ]),
       ),
   },

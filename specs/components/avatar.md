@@ -277,9 +277,9 @@ const pick = (file: File | undefined) => {
 
 - **사진이 없으면 이니셜 + 이름 색** — SEED 는 사람 그림(Identity Placeholder)이고 이니셜이 없다. Desk 는 사진이 없어 사람이 모두 같은 회색 그림이 되고, 묶음에서 누가 누구인지 갈리지 않는다(사용자 결정 5C). 이름 색은 차트 10색(v110)에서 이름 해시로 하나, 글자는 `fg-neutral-inverted`.
 - **넘친 사람은 "+N" 원** — SEED 는 "앞에서부터 숨긴다" 뿐이다(사용자 결정 6B).
-- **링은 놓인 바탕색** — SEED 는 `bg.layer-default` 하나. porest 다크에서 시트(`bg-layer-floating`)는 기본 표면과 달라 그 바탕색을 쓴다.
-- **오른쪽 아래 배지(원 · 방패 · 꽃 마스크)는 두지 않는다** — porest 에 쓰는 자리가 없다.
-- **80 · 96 의 자리는 porest 화면에서** — SEED 는 설명이 없다(Desk 계정 머리 · HR 큰 프로필 사진).
+- **링은 놓인 바탕색** — SEED 는 `bg.layer-default` 하나. groo 다크에서 시트(`bg-layer-floating`)는 기본 표면과 달라 그 바탕색을 쓴다.
+- **오른쪽 아래 배지(원 · 방패 · 꽃 마스크)는 두지 않는다** — groo 에 쓰는 자리가 없다.
+- **80 · 96 의 자리는 groo 화면에서** — SEED 는 설명이 없다(Desk 계정 머리 · HR 큰 프로필 사진).
 - **이름 옆 아바타는 장식, 혼자면 이름** — SEED 는 `alt` 가 선택이고 예제에 없어 이름 없는 그림으로 읽힌다.
 
 ## Migration notes
@@ -312,7 +312,7 @@ const pick = (file: File | undefined) => {
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-03 조사).
 
-- **Desk 웹에 공용 아바타가 없다** — 사람이 네 갈래로 그려진다: 사이드바 32 브랜드 옅은 이니셜(`widgets/layout/ui/PorestSidebar.tsx:228-237` — 이름이 비면 "·"), 설정 46 · 72 브랜드 채움(`pages/settings/ui/SettingsPage.tsx:695-710 · 924-938` — 다크 채움 : 표면 1.73, 이름이 비면 "?"), 더치페이 28 ~ 40 차트 해시(`pages/dutch-pay/ui/DutchPayPage.tsx:57-77 · 631-663`), 캘린더 공유 멤버는 권한 아이콘 원(`widgets/calendar-manage/ui/CalendarShareSection.tsx:74-85 · 772-788` — 아이콘 이름 없음, 다크 2.54 · 2.57). 사람은 모두 Avatar 로, 권한은 [Badge](badge.md) 로.
+- **Desk 웹에 공용 아바타가 없다** — 사람이 네 갈래로 그려진다: 사이드바 32 브랜드 옅은 이니셜(`widgets/layout/ui/GrooSidebar.tsx:228-237` — 이름이 비면 "·"), 설정 46 · 72 브랜드 채움(`pages/settings/ui/SettingsPage.tsx:695-710 · 924-938` — 다크 채움 : 표면 1.73, 이름이 비면 "?"), 더치페이 28 ~ 40 차트 해시(`pages/dutch-pay/ui/DutchPayPage.tsx:57-77 · 631-663`), 캘린더 공유 멤버는 권한 아이콘 원(`widgets/calendar-manage/ui/CalendarShareSection.tsx:74-85 · 772-788` — 아이콘 이름 없음, 다크 2.54 · 2.57). 사람은 모두 Avatar 로, 권한은 [Badge](badge.md) 로.
 - **더치페이 다크 흰 이니셜 1.91 ~ 2.08:1** — 웹 · 앱 모두 밝은 다크 차트 색 위 흰 글자다. `fg-neutral-inverted` 로.
 - **같은 사람이 웹 · 앱에서 다른 색** — 웹은 UTF-16 글자 코드 합 % 10(파랑부터, 7 갈색 · 8 노랑), 앱은 `h·31 + c`(빨강부터 — `features/dutch_pay/presentation/dutch_pay_screen.dart:358-366`)라 무작위 이름 2,000개 중 84.5% 가 다른 색이다. 웹 주석 "앱 정합" 은 사실이 아니다. 새 규칙(코드 포인트 합 % 10 · v110 순서)으로 웹은 나머지 7 · 8 인 이름만 노랑 ↔ 갈색이 바뀌고, 앱은 대부분 바뀐다.
 - **안 낸 사람 흐림** — 더치페이 아바타를 불투명도 0.5 로 흐려 앱 라이트 1.43:1 이다. 흐리지 않고 배지 · 글로 알린다.

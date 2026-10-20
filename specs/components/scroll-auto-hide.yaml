@@ -4,7 +4,7 @@
 # 스크롤 상자 맨 위에 붙은 영역이 아래로 스크롤하면 그 거리만큼 위로 숨고, 위로 스크롤하면 같은 거리만큼 드러난다.
 # 스크롤이 끝나면 영역 높이의 50% 를 기준으로 다 숨거나 다 드러나며(200ms · SEED enter 곡선), 높이를 바꾸지 않고 translate3d 로만
 # 옮긴다. 모션 줄이기면 자동 숨김을 끄고(늘 보임), 숨은 영역 안으로 키보드 초점이 오면 바로 드러낸다. 바탕 · z-index 는 쓰는 쪽이 정한다.
-# porest 의 자리는 폰 가계부 · 할 일 원장 머리(월 · 총액 · 주 달력 — 필터를 걸면 그 자리의 필터 칩 줄)와 거래 검색 · 카드 혜택 화면의
+# groo 의 자리는 폰 가계부 · 할 일 원장 머리(월 · 총액 · 주 달력 — 필터를 걸면 그 자리의 필터 칩 줄)와 거래 검색 · 카드 혜택 화면의
 # 거르는 줄(40 · 140 — 2026-10-16 사용자 결정 Q-017-5 C)이다 — Desk 웹 · 앱.
 # 상단 바 · Line Tabs 는 숨지 않고(top-navigation.yaml), 하단 탭 바는 제 규칙으로 줄어든다(bottom-navigation.yaml).
 #
@@ -12,7 +12,7 @@
 # 축 — motionSetting(보통 · 모션 줄이기).
 #
 # SEED 와 다른 자리(scroll-auto-hide.md 의 "SEED 와 다른 점")
-#   - 스냅 200ms · cubic-bezier(0, 0, 0.15, 1) 을 porest 이름으로 — motion-duration-d4 · motion-ease-enter(값이 같다, v104).
+#   - 스냅 200ms · cubic-bezier(0, 0, 0.15, 1) 을 groo 이름으로 — motion-duration-d4 · motion-ease-enter(값이 같다, v104).
 #   - 바탕 · z-index 를 원장 머리 값으로 정해 둔다(SEED 는 쓰는 쪽에 맡긴다).
 
 name: ScrollAutoHide

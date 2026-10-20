@@ -487,7 +487,7 @@ import { Input } from "@/components/ui/input"
   <Input defaultValue="국민 123-45-6789" />
 </Field>
 <Field label="아이디" readOnly>
-  <Input defaultValue="porest" />
+  <Input defaultValue="groo" />
 </Field>`,
     render: () =>
       surface(
@@ -511,7 +511,7 @@ import { Input } from "@/components/ui/input"
               id: "input-ex-state-readonly",
               label: "아이디",
               readOnly: true,
-              value: "porest",
+              value: "groo",
               control: (f) => textInput({ f }),
             }),
           ]),
@@ -561,7 +561,7 @@ import { Input } from "@/components/ui/input"
     jsx: `import { Search } from "lucide-react"
 
 <Field label="홈페이지">
-  <Input prefix="https://" placeholder="예: porest.app" />
+  <Input prefix="https://" placeholder="예: groo.app" />
 </Field>
 
 <Field label="금액">
@@ -580,7 +580,7 @@ import { Input } from "@/components/ui/input"
             field({
               id: "input-ex-affix-url",
               label: "홈페이지",
-              control: (f) => textInput({ f, prefix: "https://", placeholder: "예: porest.app" }),
+              control: (f) => textInput({ f, prefix: "https://", placeholder: "예: groo.app" }),
             }),
             "prefix",
           ),

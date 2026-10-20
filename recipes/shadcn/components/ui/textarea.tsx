@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { useFieldControl, useTextControl } from "@/components/ui/field";
 
 /*
- * Porest Textarea — 구조는 SEED Textarea(Text Input 의 여러 줄, 2026-10-01). 수치 원본은 specs/components/textarea.yaml.
+ * Groo Textarea — 구조는 SEED Textarea(Text Input 의 여러 줄, 2026-10-01). 수치 원본은 specs/components/textarea.yaml.
  *
  * 여러 줄 입력칸. 상자 · 테두리 · 상태는 Input 의 outline 과 같다 — 안쪽 1px, 포커스 · 오류 2px 는 ::after 로 덧그린다.
  * 라벨 · 설명 · 오류 · 글자 수는 Field 가 둘레에서 그린다.

@@ -285,7 +285,7 @@ const ExDrawer: Fig = ({ caption }) => (
   <CodePreview caption={caption} pad={16} padX={0} w={PHONE} brand="hr" bg="bg-layer-basement">
     <div className="relative mx-auto overflow-hidden rounded-2xl" style={{ width: PHONE, height: 520, background: rc('bg-layer-default', 'auto', 'hr') }}>
       <Bar brand="hr" leading="menu" title="휴가 현황" leadingExpanded />
-      <SidePanel brand="hr" side="left" width={PHONE * P('hr').leftRatio} title="Porest HR" fog>
+      <SidePanel brand="hr" side="left" width={PHONE * P('hr').leftRatio} title="그루 이음" fog>
         <Side brand="hr" drawer groups={HR_NAV_CODE} current="leave-history" />
       </SidePanel>
     </div>

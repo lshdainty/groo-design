@@ -13,7 +13,7 @@
 # SEED 와 다른 자리(select.md 의 "SEED 와 다른 점")
 #   - 누름 · 호버 · 키보드 위치 바탕은 불투명한 bg-layer-default-pressed(트리거) · bg-layer-floating-pressed(목록 안) —
 #     SEED transparent-pressed 는 투명도가 있어 검사기가 받지 않는다(v102).
-#   - 그림자는 porest s3(v105 — SEED 와 구조는 같고 값은 porest).
+#   - 그림자는 groo s3(v105 — SEED 와 구조는 같고 값은 groo).
 #   - 묶음 사이 선은 불투명한 stroke-neutral-subtle(SEED stroke.neutral-muted 는 투명도가 있다).
 #   - 아이콘은 lucide(v106) — 셰브론 chevron-down, 고른 표시 check(선 2.5 — SEED 는 채운 체크).
 

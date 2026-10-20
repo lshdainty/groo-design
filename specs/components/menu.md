@@ -2,7 +2,7 @@
 
 > 트리거에 붙어 열리는 동작 목록 — 줄을 누르면 바로 실행하고 닫힌다. 1280 이상에서 쓰고, 같은 목록을 1280 미만에서는 [Menu Sheet](menu-sheet.md) 로 띄운다. 값을 고르는 일(테마 · 정렬 · 보기)은 Menu 가 아니라 [Select](select.md) · [Segmented Control](segmented-control.md) · [Radio](radio-group.md) 다.
 
-구조는 당근 [SEED Menu](https://seed-design.io/react/components/menu)(Apache-2.0)를 따른다 — 메뉴 · 묶음 · 묶음 이름 · 줄(앞 아이콘 · 이름 · 설명 · 뒤 아이콘), 묶음 사이에만 선. 크기는 SEED small 하나다(1280 미만은 Menu Sheet 가 맡는다). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). 옛 Dropdown Menu 를 대신하고, Context Menu · Menubar 는 걷었다.
+구조는 당근 [SEED Menu](https://seed-design.io/react/components/menu)(Apache-2.0)를 따른다 — 메뉴 · 묶음 · 묶음 이름 · 줄(앞 아이콘 · 이름 · 설명 · 뒤 아이콘), 묶음 사이에만 선. 크기는 SEED small 하나다(1280 미만은 Menu Sheet 가 맡는다). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). 옛 Dropdown Menu 를 대신하고, Context Menu · Menubar 는 걷었다.
 
 수치 원본은 [`menu.yaml`](menu.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -227,14 +227,14 @@ import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/component
 
 ## SEED 와 다른 점
 
-- **크기는 small 하나** — SEED medium(240 · 줄 46)은 터치 화면용인데, porest 는 1280 미만에서 Menu Sheet 를 쓴다(시트 · 대화상자 결정 1).
+- **크기는 small 하나** — SEED medium(240 · 줄 46)은 터치 화면용인데, groo 는 1280 미만에서 Menu Sheet 를 쓴다(시트 · 대화상자 결정 1).
 - **호버 · 누름 바탕은 불투명한 `bg-layer-floating-pressed`** · **선은 `stroke-neutral-subtle`** — SEED 의 투명도 있는 색(`bg.transparent-pressed` · `stroke.neutral-muted`)을 검사기가 받지 않는다(v102). Select 목록과 같다.
-- **위험 색은 porest `fg-critical`** — 떠 있는 표면 위 5.06 · 5.27 이라 SEED critical(라이트 3.76)의 대비 문제가 없다.
-- **설명 · 묶음 이름은 porest `fg-neutral-subtle`** — 5.50 · 5.27(SEED 3.42).
+- **위험 색은 groo `fg-critical`** — 떠 있는 표면 위 5.06 · 5.27 이라 SEED critical(라이트 3.76)의 대비 문제가 없다.
+- **설명 · 묶음 이름은 groo `fg-neutral-subtle`** — 5.50 · 5.27(SEED 3.42).
 - **줄은 단어 단위로 줄을 바꾼다**(v114) — SEED 는 음절에서도 바꾼다.
 - **z-index 는 specs/z-index.md 의 L3**(`z-floating` 200) — SEED 99999 는 Alert Dialog 위로 뜬다.
 - **1280 에서 Menu Sheet 와 바뀌는 `ResponsiveMenu`** — SEED 는 둘을 따로 쓴다.
-- **트리거 끝에 맞춘다** — SEED 기본은 가운데(`bottom`)라 줄 끝 ⋮ 의 메뉴가 표 밖으로 100 넘게 나간다. porest 는 오른쪽 끝(`end`)이 기본이다.
+- **트리거 끝에 맞춘다** — SEED 기본은 가운데(`bottom`)라 줄 끝 ⋮ 의 메뉴가 표 밖으로 100 넘게 나간다. groo 는 오른쪽 끝(`end`)이 기본이다.
 
 ## Migration notes
 

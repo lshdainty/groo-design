@@ -12,7 +12,7 @@ export function ShimmerDemo({ scenes, loop, bone }: { scenes: Scene[]; loop: { m
   const run = on && !reduced;
   const bar = (w: number | string, s: Scene) => (
     <span className="relative block overflow-hidden" style={{ width: w, height: bone.text, borderRadius: bone.radius, background: s.bone }}>
-      <span className="absolute inset-0" style={{ background: s.shimmer, transform: 'translateX(-100%)', animation: run ? `porest-shimmer ${loop.ms}ms ${loop.ease} infinite` : 'none' }} />
+      <span className="absolute inset-0" style={{ background: s.shimmer, transform: 'translateX(-100%)', animation: run ? `groo-shimmer ${loop.ms}ms ${loop.ease} infinite` : 'none' }} />
     </span>
   );
   return (
@@ -34,7 +34,7 @@ export function ShimmerDemo({ scenes, loop, bone }: { scenes: Scene[]; loop: { m
             <span className="text-[12px] font-bold" style={{ color: s.fg }}>{s.label}</span>
             <div className="flex items-center gap-3 rounded-xl p-3" style={{ background: s.card }}>
               <span className="relative block h-10 w-10 shrink-0 overflow-hidden" style={{ borderRadius: bone.avatar, background: s.bone }}>
-                <span className="absolute inset-0" style={{ background: s.shimmer, transform: 'translateX(-100%)', animation: run ? `porest-shimmer ${loop.ms}ms ${loop.ease} infinite` : 'none' }} />
+                <span className="absolute inset-0" style={{ background: s.shimmer, transform: 'translateX(-100%)', animation: run ? `groo-shimmer ${loop.ms}ms ${loop.ease} infinite` : 'none' }} />
               </span>
               <div className="flex flex-1 flex-col gap-2">
                 {bar('70%', s)}

@@ -11,7 +11,7 @@ import { ignoreRadioJumpKeys } from "@/components/ui/radio-group";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Porest Chip — 구조는 SEED Chip(2026-10-02). 수치 원본은 specs/components/chip.yaml.
+ * Groo Chip — 구조는 SEED Chip(2026-10-02). 수치 원본은 specs/components/chip.yaml.
  *
  *   Chip                         버튼 — 제안(누르면 칸에 값을 넣는다, 고른 모습 없음) · 필터 바의 여는 칩(뒤 아래 화살표 +
  *                                aria-haspopup="dialog", 걸린 조건이면 selected) · 아이콘만 있는 필터 지우기(↺, aria-label 필수)

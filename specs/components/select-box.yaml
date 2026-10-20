@@ -158,7 +158,7 @@ motion:
     duration: $motion-duration-d2
     easing: $motion-ease-easing
     properties: [border-color]
-    note: "SEED 는 0.1s 를 바로 적었다 — porest d2 = 100ms"
+    note: "SEED 는 0.1s 를 바로 적었다 — groo d2 = 100ms"
   "누름 — 누르는 자리":
     duration: $motion-duration-pressed-scale
     easing: $motion-ease-pressed-scale

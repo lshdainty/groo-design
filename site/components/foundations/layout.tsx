@@ -102,7 +102,7 @@ export function LayoutTypesFigure() {
   const rail = color('bg-neutral-weak'), line = color('stroke-neutral-weak'), fill = color('bg-brand-weak');
   const box = 'absolute rounded-[3px]';
   return (
-    <Figure caption="Dashboard Layout 은 두 웹(Desk · HR), Contents Layout 은 porest-home 같은 소개 페이지">
+    <Figure caption="Dashboard Layout 은 두 웹(Desk · HR), Contents Layout 은 groo-home 같은 소개 페이지">
       <div className="flex flex-wrap justify-center gap-8">
         <div className="flex flex-col items-center gap-2">
           <div className="relative h-[160px] w-[240px] overflow-hidden rounded-lg border border-black/10 bg-white">

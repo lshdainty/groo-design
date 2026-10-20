@@ -2,7 +2,7 @@
 
 > 가로 줄로 된 내용을 세로로 잇는 컴포넌트. 설정 · 메뉴 · 선택 · 키-값 줄과 거래 · 할 일 · 알림 같은 내용 줄을 모두 이것으로 그린다.
 
-구조는 당근 [SEED List](https://seed-design.io/components/list)(Apache-2.0)를 따른다 — 목록(List) · 한 줄(List Item) · 목록 제목(List Header) · 줄 사이 선(ListDivider). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정).
+구조는 당근 [SEED List](https://seed-design.io/components/list)(Apache-2.0)를 따른다 — 목록(List) · 한 줄(List Item) · 목록 제목(List Header) · 줄 사이 선(ListDivider). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정).
 
 수치 원본은 [`list.yaml`](list.yaml)(목록 · 한 줄)과 [`list-header.yaml`](list-header.yaml)(목록 제목)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -278,7 +278,7 @@ import { List, ListItem } from "@/components/ui/list"
 
 <List>
   <ListItem title="가입일" suffix="2026년 3월 2일" />
-  <ListItem title="이메일" suffix="porest@example.com" />
+  <ListItem title="이메일" suffix="groo@example.com" />
 </List>
 ```
 
@@ -468,13 +468,13 @@ import { List, ListButtonItem, ListParentItem } from "@/components/ui/list"
 
 ## SEED 와 다른 점
 
-- **좌우 여백은 24**(`spacing-global-gutter` — porest 2026-09-14 결정). SEED 는 16.
+- **좌우 여백은 24**(`spacing-global-gutter` — groo 2026-09-14 결정). SEED 는 16.
 - **앞 타일(40, 모서리 12)을 둔다**(사용자 결정) — 색이 뜻을 가진 내용 줄(거래 · 카테고리 · 알림 종류)에. SEED 의 앞 자리는 아이콘 · 아바타 · 컨트롤뿐이다.
 - **누름 · 호버 바탕은 불투명한 `bg-layer-default-pressed`** — SEED 의 transparent-pressed 는 투명도가 있어 검사기가 받지 않는다(v102).
-- **막힌 줄은 값 글자 · 타일도 비활성 색** — SEED 는 제목 · 설명 · 아이콘만 바꾼다(porest 비활성은 전용 색, v106).
+- **막힌 줄은 값 글자 · 타일도 비활성 색** — SEED 는 제목 · 설명 · 아이콘만 바꾼다(groo 비활성은 전용 색, v106).
 - 누르면 콘텐츠 층만 주는 건 SEED 와 같다(SEED `scaleScope: content`) — 배율은 기초 Feedback v104 의 2px 거리다.
 - 목록 제목의 좌우도 24 다.
-- **포커스 링(웹)은 porest 가 정했다** — 줄 안쪽 2px. SEED 는 목록 줄의 포커스 링을 적지 않았다.
+- **포커스 링(웹)은 groo 가 정했다** — 줄 안쪽 2px. SEED 는 목록 줄의 포커스 링을 적지 않았다.
 - **하위 줄 · 줄 앞 꺾쇠 단추** — SEED List 에 없다(2026-10-10 사용자 결정 7C). 늘 펼친 편집 화면은 `collapsible={false}` — Tree View 와 같은 이름이다(2026-10-15 Q-002).
 - **좁은 줄은 값을 본문 아래로** — 줄 안 폭이 16em(제목 글자) 미만일 때만(2026-10-17 03-D 결정 1 B). SEED List 에는 큰 글자 규칙이 없다 — iOS 설정 앱(값 셀)이 큰 글자에서 값을 아래 줄로 내리는 모양이다.
 - **앱 줄은 한 노드**(제목 · 설명 · 값을 한 이름) — SEED · 웹은 값이 버튼 밖이라 두 번 멈춘다(2026-10-17 03-D 결정 4 A).
@@ -545,7 +545,7 @@ Checkbox · Radio 의 Enter 가 폼을 제출하게 됐다(사용자 결정 — 
 
 ### 2026-10-03 — 합계에 안 드는 줄
 
-사용자가 [표시 비교 페이지](https://claude.ai/artifact/4ySVacsdnG4fgraR1HRK3G) 3A 로 정했다 — 불투명도를 걷고 제목 · 금액만 `fg-neutral-subtle`, 환불 금액은 취소선, 배지는 보통 대비. 지금 웹 · 앱은 예정 · 환불 줄 전체를 불투명도 0.6 으로 흐려 "예정" · "환불됨" 배지가 웹 2.30 · 다크 2.77, 앱 2.39 · 2.87:1 이다(웹 `shared/ui/porest/ledger.tsx:555` · `entities/expense/ui/expense-row.tsx:58 · 81-84` · `entities/asset/ui/transfer-row.tsx:75`, 앱 `features/expense/presentation/widgets/expense_row.dart:84-86` · `transfer_row.dart:130`). 코드 주석은 "흐림만으로는 아직 안 온 것과 구별이 안 돼 배지로 가른다" 고 적었는데 그 배지가 흐려진다. 메타 줄은 2.47 · 3.02 였다. 줄의 설명 줄은 [Tag Group](tag-group.md) 으로 그린다.
+사용자가 [표시 비교 페이지](https://claude.ai/artifact/4ySVacsdnG4fgraR1HRK3G) 3A 로 정했다 — 불투명도를 걷고 제목 · 금액만 `fg-neutral-subtle`, 환불 금액은 취소선, 배지는 보통 대비. 지금 웹 · 앱은 예정 · 환불 줄 전체를 불투명도 0.6 으로 흐려 "예정" · "환불됨" 배지가 웹 2.30 · 다크 2.77, 앱 2.39 · 2.87:1 이다(웹 `shared/ui/groo/ledger.tsx:555` · `entities/expense/ui/expense-row.tsx:58 · 81-84` · `entities/asset/ui/transfer-row.tsx:75`, 앱 `features/expense/presentation/widgets/expense_row.dart:84-86` · `transfer_row.dart:130`). 코드 주석은 "흐림만으로는 아직 안 온 것과 구별이 안 돼 배지로 가른다" 고 적었는데 그 배지가 흐려진다. 메타 줄은 2.47 · 3.02 였다. 줄의 설명 줄은 [Tag Group](tag-group.md) 으로 그린다.
 
 ### 2026-10-04 — 카테고리 타일 세부 · 물건 줄
 
@@ -553,8 +553,8 @@ Checkbox · Radio 의 Enter 가 폼을 제출하게 됐다(사용자 결정 — 
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-03 조사).
 
-- **아이콘 18** — 웹 `CategoryChip` md(`shared/ui/porest/category-chip.tsx:9-40` — 32 / 40 / 48 에 16 / 18 / 22)와 앱 줄 타일이 18 이다. 40 타일은 20 으로.
-- **없는 아이콘의 대체가 셋** — 웹 줄 타일은 빈 칸(`shared/ui/porest/primitives.tsx:76-82`), 웹 고르는 칸 · 손 타일은 첫 글자(`shared/lib/icon-map.tsx:31` — `CategoryTile` 이 "구 구독" 으로 읽힌다), 앱은 태그 아이콘(`shared/icons/lucide_icon_map.dart:11-14`). 태그 아이콘 하나로.
-- **이체 줄 타일이 브랜드 파랑** — 웹 `entities/asset/ui/transfer-row.tsx:60` 이 `color="var(--fg-tertiary)"` 로 회색을 뜻했는데, 색 이름이 아니라 `var(...)` 라 표에서 못 찾고 색 없음 분기(브랜드 18% + #0147ad · 다크 #5fa0e5 — `shared/lib/porest/chart-palette.ts:103-140`)로 간다. 앱은 회색이다(`features/expense/presentation/widgets/transfer_row.dart:82`). `chart-gray-weak` + `chart-gray` 로.
+- **아이콘 18** — 웹 `CategoryChip` md(`shared/ui/groo/category-chip.tsx:9-40` — 32 / 40 / 48 에 16 / 18 / 22)와 앱 줄 타일이 18 이다. 40 타일은 20 으로.
+- **없는 아이콘의 대체가 셋** — 웹 줄 타일은 빈 칸(`shared/ui/groo/primitives.tsx:76-82`), 웹 고르는 칸 · 손 타일은 첫 글자(`shared/lib/icon-map.tsx:31` — `CategoryTile` 이 "구 구독" 으로 읽힌다), 앱은 태그 아이콘(`shared/icons/lucide_icon_map.dart:11-14`). 태그 아이콘 하나로.
+- **이체 줄 타일이 브랜드 파랑** — 웹 `entities/asset/ui/transfer-row.tsx:60` 이 `color="var(--fg-tertiary)"` 로 회색을 뜻했는데, 색 이름이 아니라 `var(...)` 라 표에서 못 찾고 색 없음 분기(브랜드 18% + #0147ad · 다크 #5fa0e5 — `shared/lib/groo/chart-palette.ts:103-140`)로 간다. 앱은 회색이다(`features/expense/presentation/widgets/transfer_row.dart:82`). `chart-gray-weak` + `chart-gray` 로.
 - **손으로 짠 타일** — 웹 약 20곳(18 ~ 48, 예산 36 · 12 처럼 × 0.3 이 아닌 모서리 — `pages/budget/ui/BudgetPage.tsx:1314`), 앱 `PRadius.tile(` 39곳 · 24파일. 앱 `PCategoryTile` 은 버튼으로 읽히지 않는다(`shared/widgets/p_category_tile.dart:37` — 라벨 + 누르기뿐). List 의 타일로 옮긴다.
 - **자산 줄 · 계좌 관리 줄의 로고 타일**은 [Logo Tile](logo-tile.md) 의 Migration notes 에 있다. 대시보드 결제 예정(반복 = 구독) 줄의 "D-3" 글 타일(`pages/dashboard/ui/DashboardPage.tsx:1790-1812`)은 가맹점 · 구독 로고와 함께 다음 차례에 정한다.

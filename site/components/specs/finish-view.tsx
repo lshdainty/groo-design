@@ -701,7 +701,7 @@ export type FtBlocks = {
   // 소셜 — 자리표시 버튼 수
   social?: number;
 };
-// porest-home 처럼 색 · 글꼴을 바꿔 그릴 때(짜임 · 간격 · 글 크기는 그대로)
+// groo-home 처럼 색 · 글꼴을 바꿔 그릴 때(짜임 · 간격 · 글 크기는 그대로)
 export type FtSkin = { font: string; ink: string; ink2: string; ink3: string; line: string; brand: string; bg: string };
 
 export function FtLinkView({ look, mode = 'auto', link, size, state, skin, frozen = false, underline = false }: { look: FtLook; mode?: ViewMode; link: FtLink; size: FtLinkSize; state?: 'hovered' | 'pressed' | 'focused'; skin?: FtSkin; frozen?: boolean; underline?: boolean }) {

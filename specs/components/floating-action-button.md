@@ -2,7 +2,7 @@
 
 > 화면 위에 떠 있는 그 화면의 주 동작 하나 — 오른쪽 아래의 브랜드 원 56 에 흰 아이콘 24. 폰(768 미만)의 탭 바가 없는 화면(할 일 · 더치페이)에 둔다. 탭 바가 있는 화면의 추가는 [Bottom Navigation](bottom-navigation.md) 가운데 + 가, 데스크톱의 주 동작은 화면 머리의 [Button](button.md) 이 맡는다.
 
-구조는 당근 [SEED Floating Action Button](https://seed-design.io/components/floating-action-button)(Apache-2.0)을 따른다 — "화면 상에 떠 있으며 주요 액션을 실행하는 버튼" 이고 "화면 내 주요 액션으로 하나만 존재할 수 있습니다". 오른쪽 아래 · 화면 끝과 아래 고정 요소에서 20 · 원 56 · 아이콘 24(SEED 의 아이콘만 모양 — `extended=false`). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). porest 에 처음 두는 스펙이다 — 지금 Desk 웹 · 앱의 52 원(`Fab` · `PFloatingActionButton`)을 정리한다.
+구조는 당근 [SEED Floating Action Button](https://seed-design.io/components/floating-action-button)(Apache-2.0)을 따른다 — "화면 상에 떠 있으며 주요 액션을 실행하는 버튼" 이고 "화면 내 주요 액션으로 하나만 존재할 수 있습니다". 오른쪽 아래 · 화면 끝과 아래 고정 요소에서 20 · 원 56 · 아이콘 24(SEED 의 아이콘만 모양 — `extended=false`). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). groo 에 처음 두는 스펙이다 — 지금 Desk 웹 · 앱의 52 원(`Fab` · `PFloatingActionButton`)을 정리한다.
 
 수치 원본은 [`floating-action-button.yaml`](floating-action-button.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -155,9 +155,9 @@ import { SnackbarAvoidOverlap } from "@/components/ui/snackbar"
 
 ## SEED 와 다른 점
 
-- **아이콘만 56 하나** — SEED 코드 기본은 글이 붙은 48(`extended`)이고 스크롤하면 라벨을 숨길 수 있다. porest 는 늘 아이콘만이다(사용자 결정 11B).
-- **porest 브랜드 채움** — SEED 는 당근 주황 하나다. Desk 파랑 · HR 초록, 흰 아이콘(대비 8.38 · 5.06 — SEED 주황 위 흰색은 2.94).
-- **그림자는 porest `shadow-s3`** — SEED shadow.s3 와 같은 자리(v105).
+- **아이콘만 56 하나** — SEED 코드 기본은 글이 붙은 48(`extended`)이고 스크롤하면 라벨을 숨길 수 있다. groo 는 늘 아이콘만이다(사용자 결정 11B).
+- **groo 브랜드 채움** — SEED 는 당근 주황 하나다. Desk 파랑 · HR 초록, 흰 아이콘(대비 8.38 · 5.06 — SEED 주황 위 흰색은 2.94).
+- **그림자는 groo `shadow-s3`** — SEED shadow.s3 와 같은 자리(v105).
 - **누름 · 호버는 `bg-brand-solid-pressed` + 2px 거리 축소**(v104 · v106).
 - **`type="button"`** — SEED 는 `type` 이 없어 폼 안에서 제출된다.
 - **여백 20 은 안전 영역 경계부터** — SEED 문서의 20(예제는 16)을 따르고, 안전 영역을 더한다(SEED Safe Area 그림).
@@ -172,7 +172,7 @@ import { SnackbarAvoidOverlap } from "@/components/ui/snackbar"
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-04 조사).
 
-- **Desk 웹** — `shared/ui/porest/fab.tsx:12-33`(할 일 `TodoPage.tsx:734` · 더치페이 `DutchPayPage.tsx:576`, 폰 전체 화면). 52 원 · + 22 · `shadow-lg` · 아래 24 · 오른쪽 18 고정 · z 20 이라 홈 표시줄(34)과 10 겹친다(`fab.tsx:22`, F23). 56 · 24 · 20 + 안전 영역 · z-sticky 로.
+- **Desk 웹** — `shared/ui/groo/fab.tsx:12-33`(할 일 `TodoPage.tsx:734` · 더치페이 `DutchPayPage.tsx:576`, 폰 전체 화면). 52 원 · + 22 · `shadow-lg` · 아래 24 · 오른쪽 18 고정 · z 20 이라 홈 표시줄(34)과 10 겹친다(`fab.tsx:22`, F23). 56 · 24 · 20 + 안전 영역 · z-sticky 로.
 - **Desk 앱** — `shared/widgets/p_floating_action_button.dart:10-47`(할 일 `todo_screen.dart:272` · 더치페이 `dutch_pay_screen.dart:60`). 52 · elevation 6 · 아이콘 22 · 오른쪽 16 · 아래 16 + 안전 영역, 이름은 tooltip 뿐이고 버튼 표시가 없다(`PButton` 처럼 Semantics 가 없다).
 - **HR 대시보드 SpeedDial** — `shared/ui/speed-dial/SpeedDial.tsx:45` · `DashboardContent.tsx:244`(아래 32 · 오른쪽 32 · z 50, 메뉴 조사 M7). 메뉴를 여는 떠 있는 버튼이라 이 스펙 밖이다 — 앱 적용 때 정한다.
 - **쓰지 않는 것** — 앱 `PSpeedDial`(호출 0, F27).

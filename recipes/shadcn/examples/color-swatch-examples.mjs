@@ -1,8 +1,8 @@
 /*
- * Porest Color Swatch 예제 — docs site components/color-swatch.html 에서 Preview + Code 토글로 보인다.
+ * Groo Color Swatch 예제 — docs site components/color-swatch.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 셋(새 카테고리 · 고치기 · 자동)은 차례 · 제목 · 코드가 specs/components/color-swatch.md 의
  * "코드" 절과 같고, 뒤의 하나(막힘)는 md 의 State 를 코드로 더 보인다. 색 고르기는 차트 10색을 원 40 칸에 진하게 칠해 5 × 2 로 늘어놓는
- * radiogroup 이다(2026-10-09). SEED 에는 색 고르기 부품이 없어 칸 · 고른 표시 · 키보드 · 새 항목의 첫 색은 porest 가 정했다 — 칸마다 색 이름을
+ * radiogroup 이다(2026-10-09). SEED 에는 색 고르기 부품이 없어 칸 · 고른 표시 · 키보드 · 새 항목의 첫 색은 groo 가 정했다 — 칸마다 색 이름을
  * 다는 것만 SEED Wheel Picker 예(항목마다 ariaLabel)와 같다. 옛 예제(폭을 나눈 정사각 칸 · 18% 섞은 옅은 칸 · currentColor 테두리 · 마우스 1.05배)를 대신한다.
  *
  * SWATCH · CHECK · SWATCH_BG · CHECK_COLOR · COLOR_SWATCH_ORDER · COLOR_NAMES · ASSIGN_ORDER · COLUMNS · firstUnusedColor 는
@@ -139,7 +139,7 @@ function colorSwatchGroup({ labelId, value = null, currentColor, autoColor, disa
       `data-color="${isCurrent ? (current === "custom" ? currentColor : autoColor) : v}"`,
       `class="${cls(SWATCH, look)}"`,
       isCurrent && current === "custom" && `style="background: ${currentColor}"`,
-      // 격자 칸은 Tooltip 의 트리거(asChild) — 이름 툴팁(porest Tooltip · 네이티브 title 없음). 지금 색 칸은 이름이 아래 글이라 툴팁이 없다
+      // 격자 칸은 Tooltip 의 트리거(asChild) — 이름 툴팁(groo Tooltip · 네이티브 title 없음). 지금 색 칸은 이름이 아래 글이라 툴팁이 없다
       !isCurrent && 'data-state="closed"',
     ])}>${checked ? `<span aria-hidden="true" data-slot="color-swatch-check" class="${cls(CHECK, checkColor)}">${CHECK_SVG}</span>` : ""}</button>`;
   };

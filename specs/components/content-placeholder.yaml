@@ -8,7 +8,7 @@
 #
 # SEED 와 다른 자리(content-placeholder.md 의 "SEED 와 다른 점")
 #   - 그림은 lucide 선 아이콘(기본 image, v106) — SEED 의 12가지 그림(당근 서비스별)은 브랜드 자산이라 쓰지 않는다.
-#   - 그림 색은 stroke-neutral-weak — porest gray-400(SEED palette gray-400 #dcdee3 의 짝, Bottom Sheet 손잡이와 같은 역할).
+#   - 그림 색은 stroke-neutral-weak — groo gray-400(SEED palette gray-400 #dcdee3 의 짝, Bottom Sheet 손잡이와 같은 역할).
 #     면 위 1.14 · 다크 1.20(SEED 1.22 · 1.50) — 장식이다.
 #   - 불러오는 동안에는 보이지 않는다 — SEED React Image Frame 은 불러오는 동안에도 이 그림을 보인다(디자인 문서와 어긋난다).
 

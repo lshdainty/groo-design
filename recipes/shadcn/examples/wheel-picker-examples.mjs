@@ -1,7 +1,7 @@
 /*
  * shadcn Wheel Picker 예제 — docs site components/wheel-picker.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 하나(달만 고르기)는 차례 · 제목 · 코드가 specs/components/wheel-picker.md 의 "코드" 절과 같다.
- * porest 에 처음 두는 컴포넌트다(Time Picker 의 바탕 · Date Picker 머리의 연 · 월 휠 · 달만 고르는 자리).
+ * groo 에 처음 두는 컴포넌트다(Time Picker 의 바탕 · Date Picker 머리의 연 · 월 휠 · 달만 고르는 자리).
  *
  * ROOT · ROOT_SIZE · ROOT_COUNT · INDICATOR · COLUMNS · FOG · FOG_TOP · FOG_BOTTOM · COLUMN · ITEM · ITEM_ALIGN · ITEM_LABEL · ITEM_LABEL_SIZE 는
  * recipes/shadcn/components/ui/wheel-picker.tsx 의 상수와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다(time-picker-examples.mjs 의 것과도 같다).

@@ -2,7 +2,7 @@
  * shadcn Notification Badge 예제 — docs site components/notification-badge.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 둘(상단 바 알림 — 점 · 숫자 — 몇 개인지 보여야 할 때)은 차례 · 제목 · 코드가
  * specs/components/notification-badge.md 의 "코드" 절과 같고, 뒤의 둘(크기와 자리 · 글에 붙을 때)은 md 의 Properties 를 코드로 더 보인다.
- * porest 에 처음 두는 컴포넌트다. 상단 바는 Top Navigation 의 아이콘 버튼(44 · 아이콘 24)이고 점만 둔다(2026-10-04) — 숫자는 본문의 아이콘 버튼에서 보인다.
+ * groo 에 처음 두는 컴포넌트다. 상단 바는 Top Navigation 의 아이콘 버튼(44 · 아이콘 24)이고 점만 둔다(2026-10-04) — 숫자는 본문의 아이콘 버튼에서 보인다.
  *
  * TARGET · NB_BASE · NB_VARIANTS · NB_COMPOUND · NB_DEFAULTS 는 recipes/shadcn/components/ui/notification-badge.tsx 의 상수 · cva(notificationBadgeVariants)와,
  * formatNotificationCount 는 그 파일의 함수와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 버튼 BUTTON_* 는 button.tsx 의 cva 와 같다

@@ -69,7 +69,7 @@ const Hero: Fig = ({ caption }) => {
           </div>
         </Phone>
       </div>
-        <WebWindow mode="light" w={600} h={420} url="hr.porest.app">
+        <WebWindow mode="light" w={600} h={420} url="hr.groo.app">
           <WebDialog
             mode="light"
             title="휴가 신청"

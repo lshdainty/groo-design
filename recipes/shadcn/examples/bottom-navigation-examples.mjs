@@ -2,7 +2,7 @@
  * shadcn Bottom Navigation 예제 — docs site components/bottom-navigation.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 둘(Desk 셸 — 다섯 칸 · 본문 아래 여백)은 차례 · 제목 · 코드가
  * specs/components/bottom-navigation.md 의 "코드" 절과 같고, 뒤의 둘(줄어든 바 · 캘린더의 +)은 md 의 Properties · Guidelines 를 코드로 더 보인다.
- * porest 에 처음 두는 스펙이다 — 떠 있는 알약(2026-10-04 사용자 결정 4B).
+ * groo 에 처음 두는 스펙이다 — 떠 있는 알약(2026-10-04 사용자 결정 4B).
  *
  * ROOT · ROOT_REGULAR · ROOT_COMPACT · ITEM · ITEM_CURRENT · ITEM_OTHER · LABEL · ADD · ADD_CIRCLE · BOTTOM_NAVIGATION_INSET 은
  * recipes/shadcn/components/ui/bottom-navigation.tsx 의 상수와, ADD_CIRCLE_SIZE · LABEL_HIDDEN 은 그 파일의 JSX 에 적힌 클래스와 글자 하나까지

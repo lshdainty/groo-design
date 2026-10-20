@@ -7,7 +7,7 @@
 # SEED 와 다른 자리(page-banner.md 의 "SEED 와 다른 점")
 #   - 좌우 여백은 화면 여백 24(SEED 16) — 띠 안 글이 페이지 글과 같은 선에서 시작한다.
 #   - 톤은 다섯 — magic(AI)은 두지 않는다.
-#   - 짙은(solid) 띠의 글은 흰색(static-white) — porest bg-*-solid 위 5.06 이상(SEED warning 은 노랑 위 검정).
+#   - 짙은(solid) 띠의 글은 흰색(static-white) — groo bg-*-solid 위 5.06 이상(SEED warning 은 노랑 위 검정).
 #   - 아이콘은 lucide 선 아이콘(v106).
 
 name: PageBanner

@@ -10,7 +10,7 @@ import { ContentPlaceholder } from "@/components/ui/content-placeholder";
 import { LOADING_TIMING, Skeleton } from "@/components/ui/skeleton";
 
 /*
- * Porest Image Frame — 구조는 SEED Image Frame(2026-10-04). 수치 원본은 specs/components/image-frame.yaml(틀) · card-art.yaml(카드 그림 ·
+ * Groo Image Frame — 구조는 SEED Image Frame(2026-10-04). 수치 원본은 specs/components/image-frame.yaml(틀) · card-art.yaml(카드 그림 ·
  * 카드 면), 카드 면의 색은 institution-colors.yaml(lib/institution-colors.ts). 옛 Aspect Ratio + 손으로 짠 그림 틀을 대신한다.
  *
  *   ImageFrame           그림 한 장을 보이는 틀 — 비율 상자에 그림을 꽉 채우고(cover) 그림 위에 안쪽 1px 투명 윤곽을 늘 그린다.

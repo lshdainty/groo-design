@@ -10,10 +10,10 @@
 #
 # SEED 와 다른 자리(tabs.md 의 "SEED 와 다른 점")
 #   - 목록 바닥 선: SEED stroke.neutral-muted(반투명) → 불투명 구획 선 stroke-neutral-subtle(v102).
-#   - 막대 들임 · Hug 목록 좌우는 SEED 처럼 16 이다 — porest 의 화면 여백 24(spacing-global-gutter)를 쓰지 않는다.
+#   - 막대 들임 · Hug 목록 좌우는 SEED 처럼 16 이다 — groo 의 화면 여백 24(spacing-global-gutter)를 쓰지 않는다.
 #     탭이 제 좌우 10 을 더해 Hug 의 첫 글이 26 에서 시작한다(목록 · 본문 글의 24 와 거의 맞는다).
 #   - 알림 점은 브랜드 글자색(fg-brand — 다크에서 밝은 짝, Desk · HR 이 다르다) — Notification Badge small 과 같다(notification-badge.yaml).
-#     SEED 는 bg.brand-solid 이고, porest 다크에서는 그 색이 바탕에 묻힌다.
+#     SEED 는 bg.brand-solid 이고, groo 다크에서는 그 색이 바탕에 묻힌다.
 
 name: Tabs
 

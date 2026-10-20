@@ -1,9 +1,9 @@
 ---
 version: alpha
-name: Porest
+name: Groo
 description: |
-  People + Forest. Dual-brand design system for Porest HR (B2B) 
-  and Porest Desk (B2C). Optimized for Korean-first audiences,
+  People + Forest. Dual-brand design system for 그루 이음 (B2B) 
+  and 그루 담다 (B2C). Optimized for Korean-first audiences,
   all-ages accessibility.
 
 colors:
@@ -416,7 +416,7 @@ colors:
   # @sync:brand-end (colors-3)
   
   # @sync:shared-start (colors-3)
-  # === v102 — SEED 역할 색 (fg · bg · stroke). 값은 porest 색이고, 옛 이름(text-* · surface-* · border-* · success …)은 같은 값의 별칭이다 ===
+  # === v102 — SEED 역할 색 (fg · bg · stroke). 값은 groo 색이고, 옛 이름(text-* · surface-* · border-* · success …)은 같은 값의 별칭이다 ===
   # 글자 (fg)
   fg-neutral: "{colors.gray-1000}"
   fg-neutral-dark: "{colors.gray-1000-dark}"
@@ -773,7 +773,7 @@ spacing:
   2xl: "32px"
   3xl: "48px"
   # v101 — SEED 역할 간격(SEED spacing-x · spacing-y). 값은 위 스케일을 가리킨다.
-  global-gutter: "24px"  # x6 — SEED 는 x4(16px). porest 는 앱 규칙(2026-09-14, 본문 24)을 둔다
+  global-gutter: "24px"  # x6 — SEED 는 x4(16px). groo 는 앱 규칙(2026-09-14, 본문 24)을 둔다
   between-chips: "8px"  # x2
   component-default: "12px"  # x3
   between-text: "6px"  # x1_5
@@ -1837,9 +1837,9 @@ components:
     backgroundColor: "{colors.brand-1000-dark}"
 ---
 
-## Overview — Porest Desk (B2C)
+## Overview — 그루 담다 (B2C)
 
-본 파일은 **Porest Desk(B2C 개인 메모/할일/가계부)** 단독 self-contained 디자인 시스템(v17~). 공유 baseline은 `DESIGN.md` 참조. 본 파일에서 토큰명의 `-desk` 접미사는 컨텍스트가 Desk로 암묵적이라 생략 — `primary` = `#0147AD` (deep navy), `button-primary` 등.
+본 파일은 **그루 담다(B2C 개인 메모/할일/가계부)** 단독 self-contained 디자인 시스템(v17~). 공유 baseline은 `DESIGN.md` 참조. 본 파일에서 토큰명의 `-desk` 접미사는 컨텍스트가 Desk로 암묵적이라 생략 — `primary` = `#0147AD` (deep navy), `button-primary` 등.
 
 HR(B2B 조직 관리)은 별도 `DESIGN.hr.md` 파일 — `primary` = `#357B5F` (forest green).
 
@@ -1864,11 +1864,11 @@ HR(B2B 조직 관리)은 별도 `DESIGN.hr.md` 파일 — `primary` = `#357B5F` 
 
 ### v111 — 카테고리 옅은 바탕 (2026-09-30)
 
-SEED 의 배너 색(`$color.banner.*` 10색)을 porest 에 둘지 보고, 같은 자리에서 쓰는 porest 의 옅은 바탕을 팔레트 단계로 정했다. 사용자가 비교 페이지(https://claude.ai/artifact/Re8MSU1eb6VKwg3wfySbHS)에서 넷을 정했다 — 배너 10색은 두지 않음 · 작은 면 200 · 다크 300 · 넓은 면은 한 단계 옅게 따로 · 글자 · 아이콘은 v109 규칙.
+SEED 의 배너 색(`$color.banner.*` 10색)을 groo 에 둘지 보고, 같은 자리에서 쓰는 groo 의 옅은 바탕을 팔레트 단계로 정했다. 사용자가 비교 페이지(https://claude.ai/artifact/Re8MSU1eb6VKwg3wfySbHS)에서 넷을 정했다 — 배너 10색은 두지 않음 · 작은 면 200 · 다크 300 · 넓은 면은 한 단계 옅게 따로 · 글자 · 아이콘은 v109 규칙.
 
 **Desk 웹에는 2026-10-06 토큰 가져오기로 값이 들어갔다** — 카테고리 타일은 아직 화면에서 18% 를 섞는다. Desk 앱 · HR 은 아직이다(앱 적용 단계).
 
-- SEED 의 안내 메시지(Callout · Page Banner)는 배너 색이 아니라 역할 색(약한 배경 + 대비 글자)을 쓴다 — porest 에는 v102 · v109 로 있다. `$color.banner.*` 는 SEED 컴포넌트 104개 가운데 쓰는 것이 없는 장식 색이고, porest 에는 홍보 배너 자리가 없어 두지 않는다.
+- SEED 의 안내 메시지(Callout · Page Banner)는 배너 색이 아니라 역할 색(약한 배경 + 대비 글자)을 쓴다 — groo 에는 v102 · v109 로 있다. `$color.banner.*` 는 SEED 컴포넌트 104개 가운데 쓰는 것이 없는 장식 색이고, groo 에는 홍보 배너 자리가 없어 두지 않는다.
 - 대신 차트 10색을 화면마다 따로 섞던 옅은 바탕(웹 타일 18% · 캘린더 칩 17% · 메모 카드 12 ~ 16% · 앱 13 · 22%)을 토큰으로 둔다.
 
 | 토큰 | 라이트 | 다크 | 쓰는 곳 |
@@ -1900,13 +1900,13 @@ v108 에서 미뤄 둔 차트 10색을 팔레트 단계로 옮긴다. 사용자�
 - 노랑 800-dark 는 v109 규칙대로 채도를 지금 제품(#D4B83A)만큼 올렸다(#C5A721).
 - **저장된 색은 옮기지 않는다.** Desk 는 카테고리 · 태그 · 캘린더 · 라벨 · 저축 목표 · 메모의 색을 라이트 hex 로 저장하고, 웹 · 앱이 그 값으로 다크 짝을 찾는다. 앱 적용 때 저장 값은 이름표로 두고 짝 표만 "옛 hex → 새 토큰" 으로 바꾼다 — 옛 앱은 옛 색을 그대로 그려 강제 업데이트가 필요 없다. DB 값을 새 hex 로 옮기면 옛 앱이 새 값을 몰라 편집할 때 빨강으로 되돌린다.
 - 아바타 이니셜은 fg-neutral-inverted 다 — 라이트는 흰색(700 위 4.55:1 이상), 다크는 어두운 글자(800-dark 위 6.07:1 이상). 다크에서 흰 글자는 2.4:1 이다.
-- HR 은 porest 차트 색을 쓰지 않는다(부서 색은 shadcn chart-1 ~ 5 이름을 저장한다). HR 앱 적용 때 그 다섯 이름을 porest 차트 색에 잇는다.
+- HR 은 groo 차트 색을 쓰지 않는다(부서 색은 shadcn chart-1 ~ 5 이름을 저장한다). HR 앱 적용 때 그 다섯 이름을 groo 차트 색에 잇는다.
 
 ### v109 — v108 색 점검 반영 (2026-09-30)
 
-v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `porest-tokens.css` · 앱 `colors.dart` 가 복사해 쓰는 v108 직전 값) · v108 · 대안으로 나란히 그린 점검 페이지(https://claude.ai/artifact/RsFYD1ZoqgnBzDJ2irHm6r)에서 사용자가 정했다. 역할 → 단계와 SEED 에서 옮긴 이유는 아래 v108 절에 반영했다(`(v109)` 표시).
+v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `groo-tokens.css` · 앱 `colors.dart` 가 복사해 쓰는 v108 직전 값) · v108 · 대안으로 나란히 그린 점검 페이지(https://claude.ai/artifact/RsFYD1ZoqgnBzDJ2irHm6r)에서 사용자가 정했다. 역할 → 단계와 SEED 에서 옮긴 이유는 아래 v108 절에 반영했다(`(v109)` 표시).
 
-**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `porest-tokens.css` · 앱 `porest_tokens.g.dart` — 2026-10-06 가져오기, 옛 색 이름은 역할 색에 이어 두었다). 화면은 아직 옛 이름을 쓰고 화면 이관 때 옮긴다. HR 은 아직이다(앱 적용 단계).
+**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `groo-tokens.css` · 앱 `groo_tokens.g.dart` — 2026-10-06 가져오기, 옛 색 이름은 역할 색에 이어 두었다). 화면은 아직 옛 이름을 쓰고 화면 이관 때 옮긴다. HR 은 아직이다(앱 적용 단계).
 
 | 무엇 | 바꾼 것 | 왜 |
 |---|---|---|
@@ -1926,7 +1926,7 @@ v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `porest-tokens.css` · 
 
 당근 SEED 처럼 색에 팔레트 층을 둔다. 팔레트는 가족마다 차례 번호를 붙인 색이고, 역할 색(v102)은 hex 대신 그 단계를 가리킨다. 사용자가 2026-09-30 SEED 와 나란히 놓은 비교 페이지에서 구조(SEED 식 모드별) · 채우기(가족마다 차례로) · 값(SEED 규칙대로 새로 뽑음)을 정하고, 값 제안표를 보고 그대로 넣기로 했다. 출처: seed-design.io Foundations › Color › Palette(Apache-2.0).
 
-**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `porest-tokens.css` · 앱 `porest_tokens.g.dart` — 2026-10-06 가져오기, 옛 색 이름은 역할 색에 이어 두었다). 화면은 역할 색 이름으로 이관할 때 이 단계를 따른다. HR 은 아직이다(앱 적용 단계).
+**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `groo-tokens.css` · 앱 `groo_tokens.g.dart` — 2026-10-06 가져오기, 옛 색 이름은 역할 색에 이어 두었다). 화면은 역할 색 이름으로 이관할 때 이 단계를 따른다. HR 은 아직이다(앱 적용 단계).
 
 | 자리 | 값 |
 |---|---|
@@ -1954,7 +1954,7 @@ v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `porest-tokens.css` · 
 
 #### 역할 → 단계
 
-기본은 SEED 가 그 역할에 쓰는 단계다. porest 규칙 1번(WCAG AA)이 막거나 porest 에 없는 자리만 옮겼다(아래 "SEED 에서 옮긴 자리").
+기본은 SEED 가 그 역할에 쓰는 단계다. groo 규칙 1번(WCAG AA)이 막거나 groo 에 없는 자리만 옮겼다(아래 "SEED 에서 옮긴 자리").
 
 | 역할 | 라이트 | 다크 | SEED 와 다르면 (라이트 / 다크) |
 |---|---|---|---|
@@ -2016,28 +2016,28 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 - (v119) fg-placeholder — v102 에서 SEED 600 → 700 으로 옮겼다가(600 은 입력칸 bg-neutral-weak 위 3.87:1 · 다크 3.18:1), 2026-10-16 사용자 결정(글자 역할 D7 B)으로 SEED 처럼 gray-600 에 되돌렸다. 자리 글이 앞뒤 글자 · 칸 아래 설명(gray-700)보다 한 단계 옅어 "아직 비었다" 가 색으로도 보인다. **대가** — 흰 면 4.18:1 · 다크 시트(bg-layer-floating) 3.58:1 로 4.5:1 밑이고(입력칸 위 3.87 · 다크 3.18), 다크 값 `#838997` 이 `fg-disabled` 다크와 같은 값이다 — 빈 칸과 막힌 칸은 글자색이 아니라 칸 바탕(`bg-disabled`) · 커서로 갈린다. 대비 짝은 막힘 글자처럼 textColor 만 둔다(`role-placeholder-*`). SEED 는 APCA 로 재고 자리 글을 AA 대상으로 보지 않는다.
 - 의미 색 글자 · 선(fg-* · stroke-*-solid)의 다크 — SEED 700 → 800. 다크 700 은 어두운 표면 위 2.9:1 안팎이다 — 흰 글자를 얹는 채움 눌림 자리라 어두워야 한다.
 - stroke-neutral-subtle — SEED 는 투명도 있는 검정 · 흰색이다. 검사기가 8자리 hex 를 받지 않아 gray-300 에 둔다.
-- (v118) stroke-neutral-overlay — SEED stroke.neutral-subtle 의 투명한 값(검정 4.7% · 흰 5%)을 이미지 · 아바타 · 로고 타일 위 1px 윤곽에만 쓰는 역할로 따로 둔다. porest 의 stroke-neutral-subtle 은 구분선 · 목록 선이라 불투명 그대로다 — 같은 이름에 두 값을 둘 수 없어 이름을 나눴다. 이름의 overlay 는 "내용 위에 얹는"(SEED bg.overlay 와 같은 뜻)이다 — 굵기 단계(subtle · weak · solid · contrast)가 아니라 자리를 말한다. 불투명한 선을 그림 둘레에 그리면 어두운 사진 · 카드 둘레에 옅은 테가 생긴다(사용자 결정 2026-10-04 이미지 비교 1A). 검사기(`@google/design.md`)를 0.4 로 올려 8자리 hex 를 받는다 — 위 줄의 "받지 않아" 는 0.1 때 이유다.
+- (v118) stroke-neutral-overlay — SEED stroke.neutral-subtle 의 투명한 값(검정 4.7% · 흰 5%)을 이미지 · 아바타 · 로고 타일 위 1px 윤곽에만 쓰는 역할로 따로 둔다. groo 의 stroke-neutral-subtle 은 구분선 · 목록 선이라 불투명 그대로다 — 같은 이름에 두 값을 둘 수 없어 이름을 나눴다. 이름의 overlay 는 "내용 위에 얹는"(SEED bg.overlay 와 같은 뜻)이다 — 굵기 단계(subtle · weak · solid · contrast)가 아니라 자리를 말한다. 불투명한 선을 그림 둘레에 그리면 어두운 사진 · 카드 둘레에 옅은 테가 생긴다(사용자 결정 2026-10-04 이미지 비교 1A). 검사기(`@google/design.md`)를 0.4 로 올려 8자리 hex 를 받는다 — 위 줄의 "받지 않아" 는 0.1 때 이유다.
 - (v120) bg-neutral-weak-alpha · -pressed — SEED 의 투명한 약한 배경(검정 4.7% · 6.3% / 다크 흰 12.5% · 18%)을 그대로 들인다. 라이트에서 바닥 `bg-layer-basement` · 약한 배경 `bg-neutral-weak` · 비활성 `bg-disabled` 가 모두 gray-200 이라(SEED 도 같다) 회색 바닥 위에 놓인 채움이 바닥과 1.00:1 로 사라진다. SEED 처럼 바닥 위에 자주 놓이는 두 부품 — Chip `solid` 바탕 · Segmented Control 트랙 — 만 투명 짝을 쓰고(어느 바탕에서나 보인다 — 회색 위 1.11 · 흰 위 1.11 · 다크 1.47), 나머지 약한 배경 · 비활성 채움은 흰 표면 위에만 둔다(Elevation 의 "바닥 위의 채움"). 불투명 `bg-neutral-weak` 는 그대로다(사용자 결정 2026-10-16 기초 웹 01-040 B — 비교 페이지 https://claude.ai/artifact/U33bUxZkgQoHfAgdp2DEVK).
-- warning — SEED 의 주의 색은 노랑이고 채움 위 글자가 검정이다. porest 는 주황 + 흰 글자를 그대로 두고, 단계는 다른 의미 색과 같은 규칙으로 앉혔다.
+- warning — SEED 의 주의 색은 노랑이고 채움 위 글자가 검정이다. groo 는 주황 + 흰 글자를 그대로 두고, 단계는 다른 의미 색과 같은 규칙으로 앉혔다.
 - bg-positive-solid 의 다크 — SEED 는 500(눌림 600)이다. 다른 의미 색과 맞춰 600(눌림 700)에 둔다.
 - 브랜드 채움의 다크 — Desk 는 브랜드 색이 어두워(L* 33) 채움을 지금 값(#0147AD)과 같은 무게인 500 에 둔다(ΔE 1.4). 눌림은 SEED 의 800 이 흰 글자 3.76:1 이라 700 이다. HR 은 채움이 SEED 대로 700 이고, 눌림은 800 이 흰 글자 3.61:1 이라 600(더 어둡게)이다.
 - 브랜드 글자 · 선 · 포커스 링의 다크 — SEED 700 → 900. 다크 700 은 어두운 표면 위 Desk 2.27:1 · HR 2.86:1 이다.
 - stroke-brand-solid 의 라이트 — SEED 700 → 600. 브랜드 색 그대로다.
 - stroke-brand-weak 의 다크 — SEED 300 → 800. 다크 300 은 표면과 1.3:1 안팎(Desk 1.29 · HR 1.36)이라 선이 보이지 않는다.
 - (v117) 의미 색 stroke-*-weak 의 다크 — SEED 300 → 400. 다크 300 은 표면과 1.38 ~ 1.40:1(시트 위 1.19 ~ 1.21)로 선이 묻히고, 브랜드처럼 800 으로 올리면 글자(fg-*) · stroke-*-solid 와 같은 색이 되어 옅은 선이 아니다. 400 은 1.71 ~ 1.73:1 — SEED 다크(1.77)와 같은 관계이고 라이트 300(1.51 ~ 1.53)과 무게가 맞는다.
-- stroke-focus-ring — SEED 는 파랑(blue-600)이다. porest 는 옛 border-focus 대로 브랜드 색이다.
-- (v109) 다크 약한 배경 · 눌림(의미 색 · 브랜드) — SEED 100 · 200 → 200 · 300. porest 는 다크 카드 표면(#242938, L* 16.7)이 SEED(#16171B, L* 8)보다 밝아서, 100 단계가 표면과 1.00 ~ 1.02:1 로 묻혔다. 200 · 300 이 SEED 의 표면 대비 관계(약한 배경 1.2:1 · 눌림 1.4:1)와 같다 — 지금 1.15 · 1.4:1.
+- stroke-focus-ring — SEED 는 파랑(blue-600)이다. groo 는 옛 border-focus 대로 브랜드 색이다.
+- (v109) 다크 약한 배경 · 눌림(의미 색 · 브랜드) — SEED 100 · 200 → 200 · 300. groo 는 다크 카드 표면(#242938, L* 16.7)이 SEED(#16171B, L* 8)보다 밝아서, 100 단계가 표면과 1.00 ~ 1.02:1 로 묻혔다. 200 · 300 이 SEED 의 표면 대비 관계(약한 배경 1.2:1 · 눌림 1.4:1)와 같다 — 지금 1.15 · 1.4:1.
 - (v109) 대비 글자의 라이트 — SEED 900 → 800. 900 은 거의 검정에 가까운 짙은 색(8:1)이었다. 800 은 약한 배경 · 눌림 위 5.0 ~ 5.7:1 이다. 규칙은 "대비 글자는 일반 글자보다 한 단계 바깥" — 라이트 700 → 800, 다크 800 → 900.
-- (v109) stroke-neutral-solid — SEED 800 → 600. porest 는 이 선을 체크박스 · 라디오 테두리와 꺼진 스위치 트랙에 쓴다(SEED 는 그 자리에 옅은 선을 쓴다). UI 3:1 을 넘는 가장 옅은 단계이고, 지금 제품 값과 ΔE 3.5 다.
+- (v109) stroke-neutral-solid — SEED 800 → 600. groo 는 이 선을 체크박스 · 라디오 테두리와 꺼진 스위치 트랙에 쓴다(SEED 는 그 자리에 옅은 선을 쓴다). UI 3:1 을 넘는 가장 옅은 단계이고, 지금 제품 값과 ΔE 3.5 다.
 - (v109) fg-disabled 의 다크 — SEED 500 → 600. 다크 500 은 비활성 버튼 위 2.08:1 로 라이트(2.93:1)보다 흐렸다. 600 은 3.18:1 이다.
 - (v109) bg-neutral-inverted 의 라이트 — SEED 900 → 1000. 지금 제품의 토스트 · 툴팁 배경(#1A1F2E)이다 — 사용자 결정.
 - (v109) HR 의 stroke-brand-weak 라이트 — 300 → 400(채도 올림). 300 은 옅은 회녹이라 지금 제품 값과 ΔE 15.5 였다. 지금은 ΔE 1.5 다.
 
 ### v102 — SEED 역할 색 (2026-09-29)
 
-당근 SEED 의 역할 기반 색 체계를 들인다. 사용자가 2026-09-29 porest 와 SEED 를 나란히 놓은 비교 페이지에서 네 가지(구조 · 값 · AA 미달 · HR 웹)를 정하고, 역할 색 제안표를 보고 그대로 넣기로 했다.
+당근 SEED 의 역할 기반 색 체계를 들인다. 사용자가 2026-09-29 groo 와 SEED 를 나란히 놓은 비교 페이지에서 네 가지(구조 · 값 · AA 미달 · HR 웹)를 정하고, 역할 색 제안표를 보고 그대로 넣기로 했다.
 
-**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `porest-tokens.css` · 앱 `porest_tokens.g.dart` — 2026-10-06 가져오기, 옛 색 이름은 역할 색에 이어 두었다). 화면은 아직 옛 이름(웹 · 앱 합쳐 4,700여 곳)을 쓰고 화면 이관 때 새 이름으로 옮긴다. HR 은 아직이다(앱 적용 단계).
+**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `groo-tokens.css` · 앱 `groo_tokens.g.dart` — 2026-10-06 가져오기, 옛 색 이름은 역할 색에 이어 두었다). 화면은 아직 옛 이름(웹 · 앱 합쳐 4,700여 곳)을 쓰고 화면 이관 때 새 이름으로 옮긴다. HR 은 아직이다(앱 적용 단계).
 
 이름은 SEED 처럼 속성 · 역할 · 변형 · 상태 순이다 — 예: fg-critical-contrast, bg-brand-solid-pressed.
 
@@ -2048,7 +2048,7 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 | 변형 | solid(채움) · weak(약한 배경) · contrast(약한 배경 위 글자) · muted · subtle · inverted |
 | 상태 | pressed(눌림) |
 
-- 값은 porest 색이다. SEED 는 대비를 APCA 로 재고 porest 는 WCAG AA 라 SEED 값은 가져오지 않았다 — SEED 의 흐린 글자는 흰 바탕에서 WCAG 3.42:1 이다. 당근 주황(carrot)은 쓰지 않는다.
+- 값은 groo 색이다. SEED 는 대비를 APCA 로 재고 groo 는 WCAG AA 라 SEED 값은 가져오지 않았다 — SEED 의 흐린 글자는 흰 바탕에서 WCAG 3.42:1 이다. 당근 주황(carrot)은 쓰지 않는다.
 - 옛 이름(text-primary · surface-default · border-default · success …)은 같은 값의 별칭으로 남긴다. 컴포넌트 스펙과 제품은 컴포넌트를 옮길 때 새 이름으로 바꾼다.
 - 글자와 그 글자가 놓이는 배경의 짝은 머리말 `components` 의 `role-*` 로 적어 두어 `npm run lint` 가 라이트 · 다크 대비를 잰다(4.5:1 밑이면 경고).
 - 흰 글자는 `static-white` 다(SEED palette.static-white). 채움(solid) 위 글자에 쓴다.
@@ -2155,7 +2155,7 @@ v102 때의 규칙이다. v108 부터 값은 팔레트 단계에서 온다 — �
 
 #### 들이지 않은 SEED 역할
 
-porest 화면에 아직 쓰는 자리가 없다. 자리가 생기면 위 규칙으로 더한다.
+groo 화면에 아직 쓰는 자리가 없다. 자리가 생기면 위 규칙으로 더한다.
 
 - bg.neutral-solid — 짙은 회색 채움(bg.neutral-inverted-pressed 는 v112 에 Button 의 누름으로 들였다)
 - bg.transparent-*(4) — 투명도 있는 배경. 필요하면 v118 의 stroke-neutral-overlay 처럼 역할 색으로 둔다(검사기 0.4 부터 8자리 hex 를 받는다). bg.neutral-weak-alpha(-pressed)는 v120 에 회색 바닥 위 칩 · 세그먼트 트랙의 바탕으로 들였다
@@ -2488,7 +2488,7 @@ design.md `contrastCheck` 룰은 incidental 인지 없이 모든 `backgroundColo
 | 유지 | `bg-page-dark` `#1A1F2E` | (변경 없음) | 다크 페어 미언급 → 공유 |
 
 #### 변경 이유
-1. **브랜드 톤 갱신**: 새 primary 색이 Porest = People + Forest 감각에 더 가깝게 정착(HR forest green, Desk deep navy).
+1. **브랜드 톤 갱신**: 새 primary 색이 Groo = People + Forest 감각에 더 가깝게 정착(HR forest green, Desk deep navy).
 2. **Desk neutral 분리**: B2B(HR)와 B2C(Desk)는 동일 페이지 베이스를 공유할 필요가 없음 — HR은 따뜻한 베이지, Desk는 차분한 light gray로 첫인상 차별화.
 3. **명명 정합**: design.md spec은 `primary` 명명을 권장 — 기존 `accent-*` 명칭에서 `primary-*`로 정렬, 추후 spec 도구 호환성 확보.
 
@@ -2660,12 +2660,12 @@ html {
 
 - `keep-all` 만 쓰면 띄어쓰기 없는 긴 낱말(긴 이름 · 이메일 · 주소)이 칸 밖으로 넘친다 — `overflow-wrap: break-word` 가 그런 낱말만 칸 끝에서 끊는다. 지금 칸 밖으로 넘치던 긴 영문도 칸 안에 들어온다. `anywhere` 도 같은 결과지만 표 칸 폭까지 좁혀 코드 이름이 글자 단위로 쪼개진다 — SEED 와 같은 `break-word` 를 쓴다.
 - 폭이 내용을 따르는 flex 항목은 `min-width: 0` 을 둬야 긴 낱말이 칸 안에서 끊긴다(컴포넌트 레시피는 이미 둔다).
-- 영문은 원래 단어 단위라 바뀌지 않는다. 일본어는 `keep-all` 이 잘못 끊는다(SEED 레시피 주석) — porest 는 한국어 · 영문만 쓴다.
+- 영문은 원래 단어 단위라 바뀌지 않는다. 일본어는 `keep-all` 이 잘못 끊는다(SEED 레시피 주석) — groo 는 한국어 · 영문만 쓴다.
 - 앱의 이음 문자는 보여 주는 글에만 넣는다 — 입력칸 · 복사할 글 · 검색어 · 서버로 보낼 값에는 넣지 않는다. Flutter 3.41 에서 시험했다: 기본값은 "휴 / 가를" · "권 / 한입니다" 처럼 끊고, 이음 문자를 넣으면 낱말 사이에서만 끊으며 한 줄보다 긴 낱말은 그래도 끊는다.
 - 한 줄 말줄임 · 줄 수 제한은 그대로 쓴다 — 줄을 바꾸는 자리만 바뀐다.
 - 예외 — **금액은 쉼표 뒤에서만 줄을 바꾼다**(2026-10-17 사용자 결정 — 03-D 목록 · 카드 · 표 비교 페이지 https://claude.ai/artifact/7TVGy8o47HBg4R3SefDmf6 결정 2 B). 칸보다 긴 금액(큰 글자 · 큰 수)을 아무 글자에서 끊으면 세 자리 묶음이 갈라져("−123,456,7 / 89,012원") 금액을 한 번에 읽기 어렵다. 금액 글을 만드는 함수가 보이는 글의 쉼표 뒤마다 줄바꿈 자리를 넣는다 — 웹 `<wbr>` · 앱 U+200B(ZERO WIDTH SPACE). 읽는 이름(보조 기술) · 복사할 글 · 서버로 보낼 값에는 넣지 않는다 — 웹 `<wbr>` 은 글자가 아니라 이름 · 복사에 남지 않고, 앱은 `semanticsLabel` 에 원래 글을 주고 고르기 · 복사에서 뺀다. 쉼표 사이 묶음 하나가 칸보다 길 때만 위의 칸 끝 끊기가 남는다. 줄이 하나 늘 수 있다(글자 200% 순자산 3 → 4줄). 쓰는 자리 — 지표 카드 · 순자산 금액(`specs/components/card.md`), 목록 금액(`specs/components/list.md` 의 "큰 글자에서 값을 본문 아래로"), 상세 합계 — 모두 같은 함수다.
 - 읽어야 하는 글은 자르지 않는다 — 규정 카드의 본문 · 유의사항(아코디언) 제목 · 나무의 부서 이름은 말줄임 · 줄 수 제한 없이 줄을 바꿔 다 보이고, "더 보기" · 눌러서 상세로 펼치게 하지 않는다(사용자 결정 2026-10-10 — 펼치고 접기 10A).
-- 당근(SEED)은 전역 규칙 없이 읽는 글(게시글 본문 · 시트 · 패널 제목 · 도움말 말풍선)만 단어 단위이고, 컴포넌트 라벨 · 설명은 글자 단위다(daangn.com CSS · SEED 레시피, 2026-10-01). porest 는 컴포넌트 라벨 · 설명까지 단어 단위로 한다 — 사용자 결정(2026-10-01).
+- 당근(SEED)은 전역 규칙 없이 읽는 글(게시글 본문 · 시트 · 패널 제목 · 도움말 말풍선)만 단어 단위이고, 컴포넌트 라벨 · 설명은 글자 단위다(daangn.com CSS · SEED 레시피, 2026-10-01). groo 는 컴포넌트 라벨 · 설명까지 단어 단위로 한다 — 사용자 결정(2026-10-01).
 - 제품은 앱 적용 단계에서 옮긴다 — Desk 웹은 4곳(카드 혜택 2 · 일정 상세 2)에만 손으로 `keep-all` 을 걸었고 HR 웹 · Desk 앱은 없다. 전역 규칙을 걸고 그 4곳은 걷는다.
 
 ### 글자 역할 (2026-10-16)
@@ -2740,9 +2740,9 @@ v100 은 크기 · 줄 높이 · 굵기의 토큰을 정했고, v102 는 글자�
 
 ### v101 — SEED 레이아웃 (2026-09-29)
 
-당근 SEED 의 Layout 문서를 기준으로 중단점 · 콘텐츠 폭 · 여백 · 사이드바를 정한다. 사용자가 2026-09-29 porest 와 SEED 를 나란히 놓은 비교 페이지를 보고 네 가지 모두 SEED 쪽을 골랐다. 앱 화면 가장자리만 porest 값(24px)을 둔다 — 2026-09-14 에 정한 앱 규칙이다.
+당근 SEED 의 Layout 문서를 기준으로 중단점 · 콘텐츠 폭 · 여백 · 사이드바를 정한다. 사용자가 2026-09-29 groo 와 SEED 를 나란히 놓은 비교 페이지를 보고 네 가지 모두 SEED 쪽을 골랐다. 앱 화면 가장자리만 groo 값(24px)을 둔다 — 2026-09-14 에 정한 앱 규칙이다.
 
-**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `porest-tokens.css` · 앱 `porest_tokens.g.dart` — 2026-10-06 가져오기). 화면은 아직 옛 값을 쓰고 화면 이관 때 이 이름으로 옮긴다 — 그 전까지는 화면 코드의 값(Desk 웹 좌우 여백 28 · 사이드바 256 등)이 이 표와 다른 게 정상이다. 중단점만은 화면 이관을 기다리지 않는다(아래 "중단점"). HR 은 아직이다(HR 웹 Tailwind 기본 중단점 · 사이드바 288 — 앱 적용 단계).
+**Desk 웹 · 앱의 디자인 시스템 토큰에는 값이 들어갔다**(웹 `groo-tokens.css` · 앱 `groo_tokens.g.dart` — 2026-10-06 가져오기). 화면은 아직 옛 값을 쓰고 화면 이관 때 이 이름으로 옮긴다 — 그 전까지는 화면 코드의 값(Desk 웹 좌우 여백 28 · 사이드바 256 등)이 이 표와 다른 게 정상이다. 중단점만은 화면 이관을 기다리지 않는다(아래 "중단점"). HR 은 아직이다(HR 웹 Tailwind 기본 중단점 · 사이드바 288 — 앱 적용 단계).
 
 출처: seed-design.io Foundations › Layout, `@seed-design/qvism-preset` 의 layout · side-navigation 레시피, rootage `dimension`(역할 간격). SEED 는 Apache-2.0 이다.
 
@@ -2790,7 +2790,7 @@ v100 은 크기 · 줄 높이 · 굵기의 토큰을 정했고, v102 는 글자�
 
 #### 콘텐츠 레이아웃
 
-서비스 소개처럼 정보를 전하는 페이지(porest-home 등)에 쓴다 — 두 웹의 관리 화면은 위 밀도를 쓴다. 12칸이고 `breakpoint-lg`(1280) 이상에서 가운데 정렬한다(v103, 2026-09-29).
+서비스 소개처럼 정보를 전하는 페이지(groo-home 등)에 쓴다 — 두 웹의 관리 화면은 위 밀도를 쓴다. 12칸이고 `breakpoint-lg`(1280) 이상에서 가운데 정렬한다(v103, 2026-09-29).
 
 | 토큰 | 값 | 뜻 |
 |---|---|---|
@@ -2798,7 +2798,7 @@ v100 은 크기 · 줄 높이 · 굵기의 토큰을 정했고, v102 는 글자�
 | `layout-max-content-wide` | `1280px` | 넓게 훑어보는 페이지(검색 결과 · 목록)의 최대 폭 |
 
 - `layout-max-medium` 과 값(1040)이 같지만 뜻이 달라 따로 둔다 — 한쪽만 바꿀 수 있게.
-- 아직 porest-home 에 들어가지 않았다. 그 레포를 고칠 때 맞춘다.
+- 아직 groo-home 에 들어가지 않았다. 그 레포를 고칠 때 맞춘다.
 
 #### 여백 · 칸 사이
 
@@ -2813,11 +2813,11 @@ v100 은 크기 · 줄 높이 · 굵기의 토큰을 정했고, v102 는 글자�
 
 #### 역할 간격
 
-SEED 가 자리에 이름을 붙인 간격이다(SEED 이름은 `spacing-x.*` 수평 · `spacing-y.*` 수직). porest 는 머리말의 spacing 블록에 이름만 두고, 값은 v98 스케일 위에 있다.
+SEED 가 자리에 이름을 붙인 간격이다(SEED 이름은 `spacing-x.*` 수평 · `spacing-y.*` 수직). groo 는 머리말의 spacing 블록에 이름만 두고, 값은 v98 스케일 위에 있다.
 
 | 토큰 | 값 | 쓰는 곳 |
 |---|---|---|
-| `spacing-global-gutter` | 24px · `spacing-x6` | 수평 — 화면 전체의 기본 좌우 여백. SEED 는 16px — porest 는 앱 규칙(2026-09-14, 본문 24)을 둔다 |
+| `spacing-global-gutter` | 24px · `spacing-x6` | 수평 — 화면 전체의 기본 좌우 여백. SEED 는 16px — groo 는 앱 규칙(2026-09-14, 본문 24)을 둔다 |
 | `spacing-between-chips` | 8px · `spacing-x2` | 수평 — 칩 사이 |
 | `spacing-component-default` | 12px · `spacing-x3` | 수직 — 따로 정한 간격이 없는 컴포넌트 사이 |
 | `spacing-between-text` | 6px · `spacing-x1_5` | 수직 — 글 요소 사이 |
@@ -2882,7 +2882,7 @@ SEED 가 자리에 이름을 붙인 간격이다(SEED 이름은 `spacing-x.*` �
 | 지금 탭을 다시 누름 | 맨 위 · 그 탭의 첫 화면 | 그대로 |
 | 쪽 넘기기(Pagination) | 목록 맨 위 | 누른 칸 — "N페이지" 를 알린다 |
 
-- 문서 제목은 화면마다 "{화면 제목} - Porest Desk" · "{화면 제목} - Porest HR" 이다.
+- 문서 제목은 화면마다 "{화면 제목} - 그루 담다" · "{화면 제목} - 그루 이음" 이다.
 - ← 는 들어온 화면으로(History), 앞 화면이 없으면 상위 화면으로 — 주소를 고쳐 쓴다. ✕ 는 모달 · 독립 흐름을 닫을 때만.
 
 #### 화면 바탕 — 회색 바닥 위 흰 층
@@ -3078,7 +3078,7 @@ Desk는 모든 viewport에서 `touch-min` 44 / `touch-circular` 44 strict 적용
 DESIGN.md baseline 정의 참고 — CSS logical property 기반 LTR ↔ RTL 자동 분기. 모바일 우선 컴포넌트에 RTL 적용 가이드.
 
 #### Desk 적용 컨텍스트
-- **현 시점 active 사용 0** — Porest Desk 1차 시장 한국어(LTR). RTL은 향후 글로벌 시점.
+- **현 시점 active 사용 0** — 그루 담다 1차 시장 한국어(LTR). RTL은 향후 글로벌 시점.
 - **신규 컴포넌트 spec 작성 시 logical 우선** — physical property 회피, `inline-start/end`/`block-start/end` 사용.
 - **bottom sheet swipe direction**: RTL 시에도 위·아래 그대로 (block 축은 RTL 무관).
 - **bottom nav 좌→우 순서** (홈/메모/할일/가계부/설정) → RTL 시 우→좌 자동 배치 (flex-direction 자체는 그대로, logical property 동작).
@@ -3091,7 +3091,7 @@ DESIGN.md baseline 정의 참고 — CSS logical property 기반 LTR ↔ RTL 자
 
 ### v104 — SEED 고도 (2026-09-29)
 
-당근 SEED 의 Elevation 을 들인다. 사용자가 2026-09-29 "구조는 SEED, 값은 porest" 를 골랐다 — 고도 모델과 규칙은 SEED, 그림자 값은 porest 의 청회색 4단계(v12 · v25) 그대로 s1 ~ s4 로 부른다. 출처: seed-design.io Foundations › Elevation(Apache-2.0).
+당근 SEED 의 Elevation 을 들인다. 사용자가 2026-09-29 "구조는 SEED, 값은 groo" 를 골랐다 — 고도 모델과 규칙은 SEED, 그림자 값은 groo 의 청회색 4단계(v12 · v25) 그대로 s1 ~ s4 로 부른다. 출처: seed-design.io Foundations › Elevation(Apache-2.0).
 
 #### 쌓임 맥락 — Global · Local
 
@@ -3099,14 +3099,14 @@ DESIGN.md baseline 정의 참고 — CSS logical property 기반 LTR ↔ RTL 자
 - **Local** — 한 층 안에서 콘텐츠끼리의 깊이. 항상 자기가 속한 Global 층 위에 놓인다.
 - 새로 덮인 층(시트)은 곧 새 기준이 된다 — 그 안의 툴팁 · 메뉴는 그 층을 바닥으로 쌓인다(페이지 위 페이지). 메뉴 · 팝오버 · Select 목록은 `z-floating`, 툴팁 · 말풍선은 `z-tooltip` 하나씩이라 어느 층에서 열어도 그 층 위에 뜬다.
 
-| Global 층 | 무엇 | porest |
+| Global 층 | 무엇 | groo |
 |---|---|---|
 | 0 | 바닥 — 스크롤되는 모든 콘텐츠 뒤 | `bg-layer-basement` |
 | 1 | 기본 — 카드 · 목록 · 입력칸 · 상단 내비게이션 | `bg-layer-default` |
 | 2 | 시트 · 메뉴 시트 · 서랍 — 화면을 덮는 새 쌓임 맥락 | `z-modal` |
 | 3 | 경고창 — 가장 급한 정보, 다른 모달보다도 위 | `z-alert` |
 
-| Local 층 | 무엇 | porest |
+| Local 층 | 무엇 | groo |
 |---|---|---|
 | 1 | 기본 콘텐츠 — 목록 · 탭 · 알림 띠 · 상단 내비게이션 | 층의 표면 |
 | 2 | 떠 있는 동작 — 플로팅 버튼 | `z-sticky` |
@@ -3143,11 +3143,11 @@ DESIGN.md baseline 정의 참고 — CSS logical property 기반 LTR ↔ RTL 자
 | `shadow-s3-dark` | `0 8px 24px -4px rgba(0, 0, 0, 0.50), 0 2px 6px -2px rgba(0, 0, 0, 0.25), inset 0 1px 0 0 rgba(255, 255, 255, 0.08)` | 다크 — s3 |
 | `shadow-s4-dark` | `0 24px 48px -8px rgba(0, 0, 0, 0.60), 0 8px 16px -4px rgba(0, 0, 0, 0.30), inset 0 1px 0 0 rgba(255, 255, 255, 0.10)` | 다크 — s4 |
 
-- SEED 는 3단계(s1 ~ s3, 검정 한 겹)다. porest 는 큰 모달 · 서랍용 한 단계를 더 둔다.
-- 옛 이름(`shadow-sm` · `md` · `lg` · `xl` 과 `-dark`)은 같은 값의 별칭이다 — 아래 v12 · v25 표(기록). 웹 내보내기(`export:tailwind`)는 옛 이름을 값 대신 `var(--shadow-s1)` ~ `var(--shadow-s4)` 로 적는다 — Tailwind 가 그림자 값을 클래스 안에 박아 넣어 다크 블록이 옛 클래스(`shadow-lg` …)에 닿지 않던 것을, 옛 클래스도 s1 ~ s4 의 다크 값을 따라가게 한다(2026-10-16 사용자 결정 — 기초 웹 01-003 A). 새 이름도 같다 — `--shadow-s1` ~ `s4` 는 `var(--porest-shadow-s1)` ~ `s4` 를 가리키고 값은 @theme 밖 `:root` 에 두며, 다크 블록이 그 값을 바꾼다 — `shadow-s3` 클래스도 다크 값이 된다(2026-10-17 사용자 결정 — 01-003 A 를 새 이름에도). xs 단계 그림자는 두지 않는다(01-006 A — 웹의 shadow-xs 는 Tailwind 기본값이라 내보내기에 없다, 쓰는 곳을 걷는다).
+- SEED 는 3단계(s1 ~ s3, 검정 한 겹)다. groo 는 큰 모달 · 서랍용 한 단계를 더 둔다.
+- 옛 이름(`shadow-sm` · `md` · `lg` · `xl` 과 `-dark`)은 같은 값의 별칭이다 — 아래 v12 · v25 표(기록). 웹 내보내기(`export:tailwind`)는 옛 이름을 값 대신 `var(--shadow-s1)` ~ `var(--shadow-s4)` 로 적는다 — Tailwind 가 그림자 값을 클래스 안에 박아 넣어 다크 블록이 옛 클래스(`shadow-lg` …)에 닿지 않던 것을, 옛 클래스도 s1 ~ s4 의 다크 값을 따라가게 한다(2026-10-16 사용자 결정 — 기초 웹 01-003 A). 새 이름도 같다 — `--shadow-s1` ~ `s4` 는 `var(--groo-shadow-s1)` ~ `s4` 를 가리키고 값은 @theme 밖 `:root` 에 두며, 다크 블록이 그 값을 바꾼다 — `shadow-s3` 클래스도 다크 값이 된다(2026-10-17 사용자 결정 — 01-003 A 를 새 이름에도). xs 단계 그림자는 두지 않는다(01-006 A — 웹의 shadow-xs 는 Tailwind 기본값이라 내보내기에 없다, 쓰는 곳을 걷는다).
 - 모달 · 시트 뒤를 덮는 딤은 v43 의 `overlay-dim-light` · `overlay-dim-dark` 를 그대로 쓴다(SEED 의 overlay 0.45 · overlay-muted 0.17 은 들이지 않았다).
 
-Porest는 **Tonal Layers**(표면 휘도 차)를 1차 elevation 수단으로, **Layered Shadow**를 2차 보조 수단으로 사용합니다 — Toss 톤의 절제된 깊이감.
+Groo는 **Tonal Layers**(표면 휘도 차)를 1차 elevation 수단으로, **Layered Shadow**를 2차 보조 수단으로 사용합니다 — Toss 톤의 절제된 깊이감.
 
 ### v12 추가 — 4단계 shadow 레시피 (prose-token · 기록 — 기준은 v104 그림자 표 — 옛 이름은 별칭)
 
@@ -3250,7 +3250,7 @@ modal/sheet/drawer dim overlay (alpha 채널 prose-token).
 | `motion-duration-pressed-scale` | `150ms` | 역할 — 눌림 축소(= d3) |
 
 - 색 전환과 눌림 축소는 같은 150ms 다 — 시작과 속도가 같아야 하나의 반응으로 읽힌다.
-- 반복은 v63 의 `motion-duration-loop`(1500ms)를 그대로 쓴다(porest 역할) — 스켈레톤 반짝임. Progress Circle(옛 스피너)은 SEED 의 1.2초다(`specs/components/progress-circle.yaml`, 2026-10-03).
+- 반복은 v63 의 `motion-duration-loop`(1500ms)를 그대로 쓴다(groo 역할) — 스켈레톤 반짝임. Progress Circle(옛 스피너)은 SEED 의 1.2초다(`specs/components/progress-circle.yaml`, 2026-10-03).
 - 옛 이름은 같은 값의 별칭이다 — `motion-duration-fast` → d3, `motion-duration-base` → d4, `motion-duration-slow` → d6. `motion-duration-slower`(500ms)는 걷는 중이다 — 큰 전환도 d6(300) 안에서 끝낸다.
 
 #### 이징
@@ -3420,7 +3420,7 @@ DESIGN.md baseline 정의 참고 — 14 keyframes (단발 10 + loop 4). 모바�
 - 켜고 끄는 아이콘 단추(Toggle)는 켬에 바탕을 칠하지 않는다 — 위 표의 `selected` 바탕(반전)은 칩 · 세그먼트 · 날짜처럼 여럿 가운데 고르는 요소의 것이다. 켬은 아이콘이 진한 색 + 선 2.5 로 말한다(Iconography, 2026-10-09).
 - 누르는 순간 저장되는 컨트롤(Switch · Toggle · 할 일 완료 체크, 손을 뗄 때 저장되는 Slider)은 요청 중에도 `loading` · `disabled` 로 바꾸지 않는다 — 화면은 바로 바뀌고, 실패하면 되돌리고 그 자리에서 알린다. 한 요청이 화면의 다른 컨트롤을 막지도 않는다 — 막으면 키보드 초점이 본문으로 빠진다(2026-10-09).
 - 스위치처럼 색으로 켜짐을 뜻하는 요소의 비활성도 컴포넌트 단계에서 정한다(SEED 스위치는 불투명도 0.58).
-- **`fg-disabled` 는 막힘 · 위치 단서 · 장식에만 쓴다**(2026-10-17 사용자 결정 — 01 기초 앱 · 글자 웹 비교 페이지 https://claude.ai/artifact/Q6SNYeUqDwfCjuVMfLwd2g 01T-028 ~ 031 A). 막힌 요소의 글자 · 아이콘(위 표) 말고는 이 셋이다 — 위치 단서(Wheel Picker 의 가운데가 아닌 칸 — 고른 값은 가운데 `fg-neutral` 이고 이웃 칸은 굴리는 동안 자리를 알린다, Date Picker 의 앞뒤 달 날짜 — 누르지 못하고 보조 기술에 숨긴다), 장식(Tag Group 의 구분 " · " — 보조 기술에 숨긴다), 막힌 칸의 글(Attachment Input 이 가득 찼을 때의 개수 — 트리거가 막혀 "10/10, 사용할 수 없음" 으로 읽힌다). 네 자리 모두 스펙 값 그대로 둔다. 읽어야 하는 글(값 · 설명 · 안내)에는 쓰지 않는다 — 흰 면 3.16 : 1 이라 보통 글 4.5 : 1 에 못 미친다(WCAG 1.4.3 은 막힌 · 쓰지 않는 요소를 기준에서 뺀다). 기본 휠(26px)은 큰 글이라 3 : 1 을 넘고, 좁은 팝오버의 작은 휠(20px)만 이웃 칸이 3.16 : 1 로 남는다. SEED 는 같은 자리를 더 옅게 그린다 — `fg.disabled` = gray-500, 라이트 #d1d3d8(흰 면 1.50) · 다크 #5b606a(rootage `color.json` · wheel-picker · date-picker, Apache-2.0). porest `fg-disabled`(#8A91A0)가 SEED 보다 진하다.
+- **`fg-disabled` 는 막힘 · 위치 단서 · 장식에만 쓴다**(2026-10-17 사용자 결정 — 01 기초 앱 · 글자 웹 비교 페이지 https://claude.ai/artifact/Q6SNYeUqDwfCjuVMfLwd2g 01T-028 ~ 031 A). 막힌 요소의 글자 · 아이콘(위 표) 말고는 이 셋이다 — 위치 단서(Wheel Picker 의 가운데가 아닌 칸 — 고른 값은 가운데 `fg-neutral` 이고 이웃 칸은 굴리는 동안 자리를 알린다, Date Picker 의 앞뒤 달 날짜 — 누르지 못하고 보조 기술에 숨긴다), 장식(Tag Group 의 구분 " · " — 보조 기술에 숨긴다), 막힌 칸의 글(Attachment Input 이 가득 찼을 때의 개수 — 트리거가 막혀 "10/10, 사용할 수 없음" 으로 읽힌다). 네 자리 모두 스펙 값 그대로 둔다. 읽어야 하는 글(값 · 설명 · 안내)에는 쓰지 않는다 — 흰 면 3.16 : 1 이라 보통 글 4.5 : 1 에 못 미친다(WCAG 1.4.3 은 막힌 · 쓰지 않는 요소를 기준에서 뺀다). 기본 휠(26px)은 큰 글이라 3 : 1 을 넘고, 좁은 팝오버의 작은 휠(20px)만 이웃 칸이 3.16 : 1 로 남는다. SEED 는 같은 자리를 더 옅게 그린다 — `fg.disabled` = gray-500, 라이트 #d1d3d8(흰 면 1.50) · 다크 #5b606a(rootage `color.json` · wheel-picker · date-picker, Apache-2.0). groo `fg-disabled`(#8A91A0)가 SEED 보다 진하다.
 - **앱의 키보드 포커스** — 앱도 하드웨어 키보드로 옮길 때만 웹과 같은 링(2px · 띄움 2px · `stroke-focus-ring`)을 그린다 — Flutter 의 `FocusHighlightMode.traditional` 일 때만이고, 손가락으로 누를 때는 그리지 않는다. 누를 수 있는 것은 모두 포커스를 받아 Tab 순서에 든다 — 버튼(`PButton`)도(사용자 결정 2026-10-08).
 
 #### 겹칠 때
@@ -3480,7 +3480,7 @@ DESIGN.md baseline 정의 참고 — 14 keyframes (단발 10 + loop 4). 모바�
 
 ### v106 — SEED 포용적 디자인 (2026-09-30)
 
-당근 SEED 의 Inclusive Design 을 들인다 — 시각 · 청각 · 운동 · 인지 능력과 상황이 다른 모든 사용자가 쓸 수 있게. 규칙은 SEED 그대로이고, 대비는 porest 가 정한 WCAG 2 로 잰다(v102). 사용자가 2026-09-30 터치 영역은 "44 를 반드시"(Touch targets 의 지금 문구)로 골랐다. 출처: seed-design.io Foundations › Inclusive Design(Apache-2.0).
+당근 SEED 의 Inclusive Design 을 들인다 — 시각 · 청각 · 운동 · 인지 능력과 상황이 다른 모든 사용자가 쓸 수 있게. 규칙은 SEED 그대로이고, 대비는 groo 가 정한 WCAG 2 로 잰다(v102). 사용자가 2026-09-30 터치 영역은 "44 를 반드시"(Touch targets 의 지금 문구)로 골랐다. 출처: seed-design.io Foundations › Inclusive Design(Apache-2.0).
 
 **아직 제품에는 들어가지 않았다.** 2026-09-30 조사에서 어긋난 자리 — Desk 웹이 화면 확대를 막음(`user-scalable=no`), Desk 웹 입력칸 오류를 보조 기술에 알리지 않음, 이름 없는 아이콘 버튼 90여 곳, HR 웹 `<html lang="en">`, 모션 줄이기를 따르지 않는 반복 모션 — 은 앱 적용 단계에서 고친다.
 
@@ -3515,7 +3515,7 @@ DESIGN.md baseline 정의 참고 — 14 keyframes (단발 10 + loop 4). 모바�
 
 ### v106 — SEED 국제화 디자인 (2026-09-30)
 
-당근 SEED 의 International Design 을 들인다 — 언어 · 지역마다 날짜 · 시각 · 숫자 · 기호를 그 관습대로 쓴다. 사용자가 2026-09-30 날짜는 SEED 셋, 시각은 오전 · 오후 12시간, 지난 시간은 지금 porest 방식, 구간은 한국어 물결표 · 영어 en dash 로 골랐다. 출처: seed-design.io Foundations › International Design(Apache-2.0).
+당근 SEED 의 International Design 을 들인다 — 언어 · 지역마다 날짜 · 시각 · 숫자 · 기호를 그 관습대로 쓴다. 사용자가 2026-09-30 날짜는 SEED 셋, 시각은 오전 · 오후 12시간, 지난 시간은 지금 groo 방식, 구간은 한국어 물결표 · 영어 en dash 로 골랐다. 출처: seed-design.io Foundations › International Design(Apache-2.0).
 
 - 언어: 한국어(기본) · 영어 — Desk 웹 · Desk 앱 · HR 웹. SSO 는 한국어만.
 - 표기는 코드에 직접 적지 않고 로케일 문구 · 로케일 포맷터로 낸다. 날짜 · 시각은 한국어 로케일을 넘겨야 "오후" 가 나온다.
@@ -3584,15 +3584,15 @@ DESIGN.md baseline 정의 참고 — 14 keyframes (단발 10 + loop 4). 모바�
 #### 번역 여유
 
 - 버튼 · 라벨처럼 폭이 정해진 자리는 번역하면 길어질 자리를 둔다 — 줄바꿈하거나 늘어나게.
-- porest 실측(2026-09-30, 한국어 · 영어 문구 6,100여 쌍): 영어가 한국어의 2배(가운데값), 6자 이하 짧은 말은 2.5배, 58 ~ 60% 가 2배 이상.
+- groo 실측(2026-09-30, 한국어 · 영어 문구 6,100여 쌍): 영어가 한국어의 2배(가운데값), 6자 이하 짧은 말은 2.5배, 58 ~ 60% 가 2배 이상.
 - SEED 의 확장 비율(한국어 글자 수 기준): 10자 이하 150 ~ 250% · 11 ~ 20자 130 ~ 150% · 21 ~ 30자 110 ~ 130% · 31 ~ 50자 90 ~ 110% · 51 ~ 70자 80 ~ 90% · 71자 이상 80%.
 - 화면은 영어로도 한 번씩 확인한다.
 
 ## Voice and Tone
 
-### v106 — porest 목소리 (2026-09-30)
+### v106 — groo 목소리 (2026-09-30)
 
-당근 SEED 의 Voice and Tone 을 바탕으로 porest 의 목소리를 정한다. 사용자가 2026-09-30 원칙은 SEED, 톤은 "차분하고 친절한" 으로 골랐다 — porest 의 기준 톤은 토스(심플, 신뢰감, 전 연령 범용)이고, 돈과 회사 일을 다룬다. 출처: seed-design.io Foundations › Voice and Tone(Apache-2.0).
+당근 SEED 의 Voice and Tone 을 바탕으로 groo 의 목소리를 정한다. 사용자가 2026-09-30 원칙은 SEED, 톤은 "차분하고 친절한" 으로 골랐다 — groo 의 기준 톤은 토스(심플, 신뢰감, 전 연령 범용)이고, 돈과 회사 일을 다룬다. 출처: seed-design.io Foundations › Voice and Tone(Apache-2.0).
 
 #### 원칙 — 명확한 · 이해하기 쉬운 · 사려깊은
 
@@ -3614,7 +3614,7 @@ DESIGN.md baseline 정의 참고 — 14 keyframes (단발 10 + loop 4). 모바�
 
 ## Writing
 
-### v106 — porest 글쓰기 (2026-09-30)
+### v106 — groo 글쓰기 (2026-09-30)
 
 당근 SEED 의 Writing 을 들인다. 사용자가 2026-09-30 골랐다 — 말투는 모두 해요체, 존칭은 줄임, 마침표는 SEED(문장이면 늘), 띄어쓰기는 SEED(이름은 붙이고 문장은 띄움) + 보조 용언은 붙임, 줄임표는 `…`, 오류는 무엇이 · 왜 · 어떻게. 출처: seed-design.io Foundations › Writing(Apache-2.0).
 
@@ -3683,7 +3683,7 @@ DESIGN.md baseline 정의 참고 — 14 keyframes (단발 10 + loop 4). 모바�
 | `radius-r6` | 24px | — |
 | `radius-full` | 9999px | `radius-full`(같은 이름) |
 
-- 이번에는 **토큰만** 넓힌다. 컴포넌트마다 어느 모서리를 쓸지는 2단계에서 SEED 의 해당 컴포넌트와 하나씩 비교해 정한다 — SEED 는 porest 보다 둥글다(버튼 · 입력칸 8 ↔ porest 4, 대화상자 20 ↔ 12, 말풍선 12 ↔ 2). 그때까지 아래 v83 매핑(토스 톤)이 지금 값이다.
+- 이번에는 **토큰만** 넓힌다. 컴포넌트마다 어느 모서리를 쓸지는 2단계에서 SEED 의 해당 컴포넌트와 하나씩 비교해 정한다 — SEED 는 groo 보다 둥글다(버튼 · 입력칸 8 ↔ groo 4, 대화상자 20 ↔ 12, 말풍선 12 ↔ 2). 그때까지 아래 v83 매핑(토스 톤)이 지금 값이다.
 - 새로 쓰는 모서리는 SEED 이름으로 적는다. 옛 이름은 컴포넌트 스펙 · 제품이 다 옮기면 걷는다.
 - 사용자 결정(2026-09-29 — 모서리 A: 토큰만 넓히고 컴포넌트는 하나씩). 이름 방식은 v98 간격과 같은 원칙이다 — 6 · 10 · 14 · 24 를 크기 이름(xs · sm …) 사이에 끼울 이름이 없다.
 
@@ -4075,7 +4075,7 @@ Desk — 가계부 카테고리 · 수입 · 지출 추이 · 예산 이행 · �
 - **더치페이 비율** — 칸 뒤 글은 "%" 인데 계산은 가중치다(1 · 1 · 2 → 25 · 25 · 50%). 먼저 정할 일이다 — 정수 몫으로 바꾸면 Quantity Picker("2인분"), 아니면 글을 계산에 맞게 고친다.
 - **거래 영수증 · 메모 첨부** — 서버(`EXPENSE_RECEIPT` · `MEMO_ATTACHMENT`, 한 파일 10MB)는 있는데 화면이 없다. 거래 상세 · 메모 편집에 Attachment Input 타일로 새로 연다(웹 · 앱). 앱의 `FileAttachmentSection`(붙은 곳 0 · 서버 enum 과 어긋난 referenceType)은 걷는다. "n/최대" 는 서버의 개수 한도를 정한 뒤에 그린다.
 - **데이터 가져오기** — 웹 1280 이상은 드롭존(1px 실선 · "파일을 여기로 끌어다 놓으세요" + "파일 선택"), 1280 미만 · 앱은 "파일 선택" 버튼 + 파일 카드다. 지금 웹의 점선 상자(`div onClick` — 키보드로 못 닿는다)와 앱의 실선 상자를 걷고, 거절은 전역 토스트가 아니라 칸 아래 오류 글로 알린다.
-- **바닥 · 저작권** — Desk 화면 · 앱에는 바닥을 두지 않는다(처리방침 · 설명서는 설정의 줄). Desk 설명서(Docusaurus) 바닥의 "POREST Desk 사용자 설명서" 는 저작권 "© {해} POREST" 로 바꾼다.
+- **바닥 · 저작권** — Desk 화면 · 앱에는 바닥을 두지 않는다(처리방침 · 설명서는 설정의 줄). Desk 설명서(Docusaurus) 바닥의 "그루 담다 사용자 설명서" 는 저작권 "© {해} 그루" 로 바꾼다.
 - **cmdk** — 쓰는 곳이 없는 카드 상품 콤보박스 · `command.tsx` · 의존을 지운다(DESIGN.md "Command" 절).
 
 ### Pagination / Drawer / Spinner / Stepper (v67 추가 batch · 기록 — 기준은 각 컴포넌트 스펙과 위 절)

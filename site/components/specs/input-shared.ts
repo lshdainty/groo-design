@@ -176,7 +176,7 @@ export type SwatchLook = {
   press: IPress;
   labelDisabled: IColor;
   names: { current: string; auto: string };
-  // 칸 툴팁 — 마우스를 올리면(키보드 초점에도 — porest Tooltip) 칸 이름(색 이름)
+  // 칸 툴팁 — 마우스를 올리면(키보드 초점에도 — groo Tooltip) 칸 이름(색 이름)
   tooltip: boolean;
 };
 export const firstUnused = (look: SwatchLook, used: string[]) => look.assign.find((c) => !used.includes(c)) ?? look.assign[0];

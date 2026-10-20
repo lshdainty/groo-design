@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Porest Design — multi-page static documentation site
+// Groo Design — multi-page static documentation site
 //
 // 출력: exports/site/
 //   index.html                      Landing (브랜드 정체성 + 핵심 가치)
@@ -85,7 +85,7 @@ import { wheelPickerExamples } from "../recipes/shadcn/examples/wheel-picker-exa
 // Phase 6 Data
 import { tableExamples } from "../recipes/shadcn/examples/table-examples.mjs";
 import { chartExamples } from "../recipes/shadcn/examples/chart-examples.mjs";
-// Porest 도메인 spec (shadcn 외) — 2026-05-15 추가
+// Groo 도메인 spec (shadcn 외) — 2026-05-15 추가
 import { colorSwatchExamples } from "../recipes/shadcn/examples/color-swatch-examples.mjs";
 import { iconPickerExamples } from "../recipes/shadcn/examples/icon-picker-examples.mjs";
 import { searchableListExamples } from "../recipes/shadcn/examples/searchable-list-examples.mjs";
@@ -187,7 +187,7 @@ const SHADCN_EXAMPLES = {
   // Phase 6 Data
   table: tableExamples,
   chart: chartExamples,
-  // Porest 도메인 spec (shadcn 카탈로그 외) — 2026-05-15
+  // Groo 도메인 spec (shadcn 카탈로그 외) — 2026-05-15
   "color-swatch": colorSwatchExamples,
   "icon-picker": iconPickerExamples,
   "searchable-list": searchableListExamples,
@@ -417,10 +417,10 @@ function buildTokens() {
     "}",
   ].join("\n");
 
-  // shadcn alias bridge — recipes/shadcn/styles/porest-shadcn-bridge.css 그대로 합침
+  // shadcn alias bridge — recipes/shadcn/styles/groo-shadcn-bridge.css 그대로 합침
   // (`--ring`, `--color-ring`, `--color-primary-foreground` 등 — shadcn 컴포넌트가
-  // 기대하는 변수명을 Porest 토큰으로 alias)
-  const bridgePath = resolve(ROOT, "recipes/shadcn/styles/porest-shadcn-bridge.css");
+  // 기대하는 변수명을 Groo 토큰으로 alias)
+  const bridgePath = resolve(ROOT, "recipes/shadcn/styles/groo-shadcn-bridge.css");
   const bridgeCss = existsSync(bridgePath) ? readFileSync(bridgePath, "utf8") : "";
 
   // === rootCss: 외부 stylesheet ===
@@ -487,7 +487,7 @@ body {
 }
 
 /* === 전역 스크롤바 — Scroll Area(2026-10-10, specs/components/scroll-area.yaml) ===
-   recipes/shadcn/styles/porest-shadcn-bridge.css 와 같은 계약이다 — 세로 · 가로 6px 알약 · 막대 stroke-neutral-solid · 바탕 · 모서리 투명.
+   recipes/shadcn/styles/groo-shadcn-bridge.css 와 같은 계약이다 — 세로 · 가로 6px 알약 · 막대 stroke-neutral-solid · 바탕 · 모서리 투명.
    크로미움 · 사파리는 webkit 규칙, Firefox 만 표준 두 줄(scrollbar-width thin · scrollbar-color)을 @supports not selector(::-webkit-scrollbar) 안에 둔다 —
    크로미움은 scrollbar-width · scrollbar-color 가 걸린 요소에서 ::-webkit-scrollbar 를 버려 6px 이 10px(thin) · 15px(color 만)로 바뀐다.
    .scrollbar-hide 는 가로 줄(칩 · 탭 · 가로 카드)에만 — 세로 스크롤바는 숨기지 않는다 */
@@ -1075,7 +1075,7 @@ function siteJs() {
   // Theme toggle
   function applyTheme(t) { document.documentElement.setAttribute("data-theme", t); }
   function getTheme() {
-    try { return localStorage.getItem("porest-theme") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); }
+    try { return localStorage.getItem("groo-theme") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); }
     catch(e) { return "light"; }
   }
   applyTheme(getTheme());
@@ -1085,7 +1085,7 @@ function siteJs() {
     var c = document.documentElement.getAttribute("data-theme");
     var n = c === "dark" ? "light" : "dark";
     applyTheme(n);
-    try { localStorage.setItem("porest-theme", n); } catch(e) {}
+    try { localStorage.setItem("groo-theme", n); } catch(e) {}
   });
 
   // Brand toggle
@@ -1099,7 +1099,7 @@ function siteJs() {
     });
   }
   function getBrand() {
-    try { return localStorage.getItem("porest-brand") || "default"; }
+    try { return localStorage.getItem("groo-brand") || "default"; }
     catch(e) { return "default"; }
   }
   applyBrand(getBrand());
@@ -1109,7 +1109,7 @@ function siteJs() {
     var b = btn.dataset.brand;
     if (!b) return;
     applyBrand(b);
-    try { localStorage.setItem("porest-brand", b); } catch(e) {}
+    try { localStorage.setItem("groo-brand", b); } catch(e) {}
   });
 
   // Mobile sidebar
@@ -1232,7 +1232,7 @@ function renderSidebar(currentPath) {
   }
 
   let out = '<aside class="sidebar" aria-label="문서 네비게이션">';
-  out += `<div class="brand-row"><strong>Porest</strong><span class="brand-tag">Default</span></div>`;
+  out += `<div class="brand-row"><strong>Groo</strong><span class="brand-tag">Default</span></div>`;
   // 좁은 viewport에서 topbar의 brand-switch가 숨겨졌을 때 sidebar 안에서 사용 가능
   out += `<div class="brand-switch" role="group" aria-label="브랜드 전환 (사이드바)">
     <button data-brand="default" aria-pressed="true" type="button">Default</button>
@@ -1259,7 +1259,7 @@ function renderTopbar(currentPath, breadcrumb) {
   const prefix = segments === 0 ? "." : "..".repeat(segments - 1) + "..";
   const home = prefix + "/index.html";
 
-  let crumbs = `<a href="${escape(home)}">Porest</a>`;
+  let crumbs = `<a href="${escape(home)}">Groo</a>`;
   for (const c of breadcrumb) {
     crumbs += `<span>/</span>`;
     if (c.href) crumbs += `<a href="${escape(prefix + c.href)}">${escape(c.label)}</a>`;
@@ -1294,7 +1294,7 @@ function page({ title, currentPath, breadcrumb, body }) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${escape(title)} — Porest Design</title>
+  <title>${escape(title)} — Groo Design</title>
   <link rel="stylesheet" href="${prefix}/assets/tokens.css">
   <link rel="stylesheet" href="${prefix}/assets/site.css">
   <!-- Tailwind v4 browser CDN — @theme 토큰 읽어 utility class 런타임 컴파일 -->
@@ -1328,12 +1328,12 @@ ${body}
 function pageLanding() {
   const body = `
 <section class="hero" id="hero">
-  <span class="hero-eyebrow">Porest Design System</span>
+  <span class="hero-eyebrow">Groo Design System</span>
   <h1>사람과 일상이<br>숲처럼 자라나는 시스템</h1>
   <p>HR과 Desk, 두 서비스를 위한 단일 디자인 시스템. 한국어 우선, 전 연령 접근성, Toss 톤의 절제와 신뢰감을 레퍼런스로 삼아 토큰부터 컴포넌트까지 일관된 톤을 정의합니다.</p>
   <div class="hero-actions">
     <a class="btn btn--primary" href="./tokens/colors.html">토큰 둘러보기</a>
-    <a class="btn btn--outline" href="https://github.com/lshdainty/porest-design">GitHub</a>
+    <a class="btn btn--outline" href="https://github.com/lshdainty/groo-design">GitHub</a>
   </div>
 </section>
 
@@ -1345,21 +1345,21 @@ function pageLanding() {
     <div class="identity-card">
       <span class="identity-swatch" style="background: #357B5F;">HR</span>
       <span class="identity-tag">B2B · 조직 HR</span>
-      <h3>Porest HR</h3>
+      <h3>그루 이음</h3>
       <p>인사·결재·평가의 절제된 데이터 밀도. 격식체 톤, 데스크탑 중심, forest green primary. 결재 큐의 명확한 위계와 직원 detail의 깊이.</p>
       <code>--color-primary: #357B5F</code>
     </div>
     <div class="identity-card">
       <span class="identity-swatch" style="background: #0147AD;">D</span>
       <span class="identity-tag">B2C · 메모/할일/가계부</span>
-      <h3>Porest Desk</h3>
+      <h3>그루 담다</h3>
       <p>일상 메모와 할일의 친근한 모바일 톤. 친근체 부분 적용, bottom sheet · pull-to-refresh, cobalt blue primary. 매일의 기록을 단정하게.</p>
       <code>--color-primary: #0147AD</code>
     </div>
     <div class="identity-card">
       <span class="identity-swatch" style="background: #1A1F2E;">P</span>
       <span class="identity-tag">Baseline · 공유</span>
-      <h3>Porest Default</h3>
+      <h3>Groo Default</h3>
       <p>두 브랜드 공통 토대. neutral 색상·타이포그래피·spacing·radius. brand-agnostic 컴포넌트의 reference. 새로운 brand 추가 시 진입점.</p>
       <code>baseline · 47 colors</code>
     </div>
@@ -1406,7 +1406,7 @@ npm run build:site</code></pre>
 </section>
 `;
   return page({
-    title: "Porest Design",
+    title: "Groo Design",
     currentPath: "/index.html",
     breadcrumb: [],
     body,
@@ -1486,7 +1486,7 @@ function pageColors() {
 
   const body = `
 <h1>Colors</h1>
-<p class="lede">Porest는 neutral baseline 47색 + brand 4색(primary / primary-light / border-focus / border-focus-light)으로 구성됩니다. 한국어 본문 4.5:1 대비비, UI 3:1을 모든 색 페어에 자동 검증합니다.</p>
+<p class="lede">Groo는 neutral baseline 47색 + brand 4색(primary / primary-light / border-focus / border-focus-light)으로 구성됩니다. 한국어 본문 4.5:1 대비비, UI 3:1을 모든 색 페어에 자동 검증합니다.</p>
 
 <h2>브랜드 primary</h2>
 <p>상단 토글로 Default / HR / Desk 전환하면 primary 색이 바뀌는 걸 확인할 수 있습니다. 4 토큰만 분기, 나머지는 모두 baseline 공유.</p>
@@ -1981,14 +1981,14 @@ const SHADCN_CATALOG = [
   { slug: "button", name: "Button", category: "Form", description: "액션을 실행하는 버튼. 변형 7 × 크기 4 × 배치 2(SEED Action Button 구조)." },
   { slug: "checkbox", name: "Checkbox", category: "Form", description: "여러 선택 가능한 박스." },
   { slug: "chip", name: "Chip", category: "Form", description: "2 ~ 4개 짧은 폼 값 고르기 · 누르면 값을 채우는 제안 · 목록 위 필터 바 · 지우기로 빼는 넣은 값을 맡는 작은 알약 (SEED Chip 구조)." },
-  { slug: "color-swatch", name: "Color Swatch", category: "Form", description: "카테고리 · 태그 · 저축 목표 · 캘린더에 붙일 색을 차트 10색으로 칠한 원 칸 40 을 5 × 2 로 늘어놓고 하나 고르는 묶음 — 고른 칸은 2 띄운 2px 짙은 고리 + 체크이고, 고칠 때는 격자 앞에 지금 색 칸을 둔다 (SEED 에 색 고르기 부품이 없어 porest 가 정했다 — 고른 고리는 Select Box 의 짙은 테두리)." },
+  { slug: "color-swatch", name: "Color Swatch", category: "Form", description: "카테고리 · 태그 · 저축 목표 · 캘린더에 붙일 색을 차트 10색으로 칠한 원 칸 40 을 5 × 2 로 늘어놓고 하나 고르는 묶음 — 고른 칸은 2 띄운 2px 짙은 고리 + 체크이고, 고칠 때는 격자 앞에 지금 색 칸을 둔다 (SEED 에 색 고르기 부품이 없어 groo 가 정했다 — 고른 고리는 Select Box 의 짙은 테두리)." },
   { slug: "date-picker", name: "Date Picker", category: "Form", description: "날짜 · 기간 · 여러 날을 고르는 달력 — 날짜 칸(Input Button)을 누르면 1280 미만 시트 · 이상 팝오버로 열리고 \"완료\" 로 넣는다. 머리 · 요일 줄 · 날짜 칸 48 · 기간 띠, 한 달 · 두 달 · 이어지는 달 (SEED Date Picker 구조)." },
   { slug: "floating-action-button", name: "Floating Action Button", category: "Form", description: "화면 위에 떠 있는 그 화면의 주 동작 하나 — 오른쪽 아래(화면 끝 · 아래 끝에서 20)의 브랜드 원 56 에 흰 아이콘 24 이고, 폰의 탭 바가 없는 화면(할 일 · 더치페이)에만 둔다 (SEED Floating Action Button 구조)." },
   { slug: "field", name: "Field", category: "Form", description: "칸 이름 · 필수 표시 · 설명 · 오류 · 글자 수를 입력 하나에 붙이는 둘레 (SEED Field 구조)." },
-  { slug: "icon-picker", name: "Icon Picker", category: "Form", description: "카테고리 · 저축 목표에 붙일 아이콘을 고르는 칸 — Input Button 이 고른 세트(148개 · 13 묶음)의 칸 48 격자를 1280 미만 시트 · 이상 팝오버로 열고 한국어 이름 · 찾는 말로 찾는다 (SEED 에 아이콘 고르기 부품이 없어 porest 가 정했다 — 트리거는 SEED Input Button, 칸은 SEED Iconography 의 아이콘 24 · 누르는 자리 44 이상 권장)." },
+  { slug: "icon-picker", name: "Icon Picker", category: "Form", description: "카테고리 · 저축 목표에 붙일 아이콘을 고르는 칸 — Input Button 이 고른 세트(148개 · 13 묶음)의 칸 48 격자를 1280 미만 시트 · 이상 팝오버로 열고 한국어 이름 · 찾는 말로 찾는다 (SEED 에 아이콘 고르기 부품이 없어 groo 가 정했다 — 트리거는 SEED Input Button, 칸은 SEED Iconography 의 아이콘 24 · 누르는 자리 44 이상 권장)." },
   { slug: "input", name: "Input", category: "Form", description: "한 줄 글 · 숫자를 직접 치는 입력칸. 상자 · 밑줄 × large · medium · 반응형, 앞 · 뒤 붙이개 · 지우기 (SEED Text Input 구조)." },
   { slug: "input-button", name: "Input Button", category: "Form", description: "입력칸 모양의 버튼. 누르면 달력 · 시각 · 아이콘 격자 · 긴 목록을 1280 미만 시트 · 이상 팝오버로 열고 고른 값이 칸에 들어간다 (SEED Input Button 구조)." },
-  { slug: "input-otp", name: "Input OTP", category: "Form", description: "메일 · 문자로 받은 일회용 인증 코드(숫자 6자리)를 넣는 Input 한 칸 — 칸을 자릿수만큼 나누지 않고 붙여 넣으면 숫자만 남기며, 칸 아래 다시 받기 단추가 남은 초를 보이고 설명 줄이 유효 시간 · 틀릴 수 있는 횟수를 늘 알린다 (SEED 에 없는 부품 — 형식이 정해진 값은 칸을 나누지 말라는 SEED Text Input 규칙을 따라 porest 가 정했다)." },
+  { slug: "input-otp", name: "Input OTP", category: "Form", description: "메일 · 문자로 받은 일회용 인증 코드(숫자 6자리)를 넣는 Input 한 칸 — 칸을 자릿수만큼 나누지 않고 붙여 넣으면 숫자만 남기며, 칸 아래 다시 받기 단추가 남은 초를 보이고 설명 줄이 유효 시간 · 틀릴 수 있는 횟수를 늘 알린다 (SEED 에 없는 부품 — 형식이 정해진 값은 칸을 나누지 말라는 SEED Text Input 규칙을 따라 groo 가 정했다)." },
   { slug: "quantity-picker", name: "Quantity Picker", category: "Form", description: "작은 정수를 한 단계씩 늘리고 줄이는 컨트롤 — 테두리 상자 안 줄이기 · 값 · 늘리기, 세 크기 36 · 40 · 52(웹 기본 1280 미만 52 · 이상 40 — 옆 칸과 같은 높이 · 누르는 자리 44), 값 칸은 보기만, 끝의 버튼은 초점이 남는 막힘, 최소에서 지우기 · 서버를 기다리는 로딩 (SEED Quantity Picker 구조)." },
   { slug: "radio-group", name: "Radio Group", category: "Form", description: "여러 옵션 중 하나만 선택." },
   { slug: "select-box", name: "Select Box", category: "Form", description: "제목 · 설명이 붙은 선택지를 상자로 비교해 하나 · 여럿을 고른다 (SEED Select Box 구조)." },
@@ -1997,7 +1997,7 @@ const SHADCN_CATALOG = [
   { slug: "switch", name: "Switch", category: "Form", description: "on/off 토글." },
   { slug: "textarea", name: "Textarea", category: "Form", description: "여러 줄 글을 받는 입력칸. 3줄에서 쓴 만큼 자라고 최대 · 고정 높이를 정할 수 있다 (SEED Textarea 구조)." },
   { slug: "time-picker", name: "Time Picker", category: "Form", description: "시각을 고르는 12시간 휠 — 오전·오후 · 시 · 분. 시각 칸을 누르면 1280 미만 시트 · 이상 팝오버로 열리고 \"완료\" 로 넣는다 (SEED Time Picker 구조)." },
-  { slug: "toggle", name: "Toggle", category: "Form", description: "단추 하나가 한 상태를 켜고 끄는 아이콘 단추(보이는 40 · 누르는 44) — 관심 등록 · 메모 고정 · 금액 가리기 · 비밀값 보기에 쓰고, 이름은 그대로 둔 채 켬은 aria-pressed 와 아이콘의 모양 · 굵기 · 색으로만 가른다 (SEED 에 디자인 문서가 없어 SEED Iconography 의 켜고 끄기 규칙 · 하트 단추를 바탕으로 porest 가 정했다)." },
+  { slug: "toggle", name: "Toggle", category: "Form", description: "단추 하나가 한 상태를 켜고 끄는 아이콘 단추(보이는 40 · 누르는 44) — 관심 등록 · 메모 고정 · 금액 가리기 · 비밀값 보기에 쓰고, 이름은 그대로 둔 채 켬은 aria-pressed 와 아이콘의 모양 · 굵기 · 색으로만 가른다 (SEED 에 디자인 문서가 없어 SEED Iconography 의 켜고 끄기 규칙 · 하트 단추를 바탕으로 groo 가 정했다)." },
   { slug: "wheel-picker", name: "Wheel Picker", category: "Form", description: "순서가 있는 값을 세로로 굴려 고르는 휠 — 칼럼 · 항목 · 가운데 선택 띠 · 위아래 안개. Time Picker 의 바탕이고, 달력의 연 · 월 휠 · 달만 고르는 자리에 쓴다 (SEED Wheel Picker 구조)." },
 
   // Display (22) — Scroll Auto Hide 는 2026-10-10 더했다(SEED Breeze — 스크롤하면 숨는 원장 머리)
@@ -2010,14 +2010,14 @@ const SHADCN_CATALOG = [
   { slug: "divider", name: "Divider", category: "Display", description: "내용 사이를 나누는 1px 선 — 같은 묶음 안은 들인 선, 묶음 사이는 끝까지 선이고, 크게 다른 내용 사이는 선이 아니라 8 간격이다 (SEED Divider 구조)." },
   { slug: "image-frame", name: "Image Frame", category: "Display", description: "그림 한 장을 보이는 틀 — 비율 상자에 그림을 꽉 채우고 안쪽 1px 투명 윤곽을 늘 그리며, 모서리는 폭으로(4 · 6 · 8) 고르고, 불러오는 동안은 Skeleton · 없거나 실패하면 Content Placeholder, 그림 위에는 배지 · 장수 글을 둘까지 얹는다 — 카드 그림은 세로 그림을 돌리고 그림이 없으면 카드사 색 면이다 (SEED Image Frame 구조)." },
   { slug: "list", name: "List", category: "Display", description: "설정 · 메뉴 · 선택 · 내용 줄을 세로로 잇는 목록 (SEED List 구조)." },
-  { slug: "logo-tile", name: "Logo Tile", category: "Display", description: "은행 · 증권 · 카드 · 코인 · 금 같은 물건과 회사를 보이는 각진 타일 — 기관 색(표에 없으면 이름 색) 면에 이름의 첫 글자를 먼저 그리고 그림이 오면 덮는다, 32 · 40 · 48 · 모서리 크기 × 0.3 (SEED 에 물건 타일이 없어 porest 가 정한 부품 — 윤곽은 SEED Image Frame)." },
+  { slug: "logo-tile", name: "Logo Tile", category: "Display", description: "은행 · 증권 · 카드 · 코인 · 금 같은 물건과 회사를 보이는 각진 타일 — 기관 색(표에 없으면 이름 색) 면에 이름의 첫 글자를 먼저 그리고 그림이 오면 덮는다, 32 · 40 · 48 · 모서리 크기 × 0.3 (SEED 에 물건 타일이 없어 groo 가 정한 부품 — 윤곽은 SEED Image Frame)." },
   { slug: "notification-badge", name: "Notification Badge", category: "Display", description: "안 읽은 알림 · 확인하지 않은 새 것이 있다는 신호 — 점(있음)과 숫자(몇 개 · 99+)를 아이콘 버튼 · 탭 글에 붙이고, 보면 사라진다 (SEED Notification Badge 구조)." },
   { slug: "page-banner", name: "Page Banner", category: "Display", description: "페이지 머리 바로 아래 화면 폭 전체로 놓여 그 페이지 전체의 상태(연결 끊김 · 만료 예정 · 새 버전)를 알리는 띠 — 한 화면에 하나 (SEED Page Banner 구조)." },
-  { slug: "progress", name: "Progress", category: "Display", description: "\"얼마나 찼나\" 를 보이는 높이 8 미터 막대 — 예산 · 카드 한도처럼 쓸수록 차는 것과 저축 목표 · 카드 실적처럼 모을수록 차는 것, 넘친 한도만 위험 색 (SEED 에 선형 막대가 없어 porest 가 정한 부품 — 진행은 Progress Circle)." },
+  { slug: "progress", name: "Progress", category: "Display", description: "\"얼마나 찼나\" 를 보이는 높이 8 미터 막대 — 예산 · 카드 한도처럼 쓸수록 차는 것과 저축 목표 · 카드 실적처럼 모을수록 차는 것, 넘친 한도만 위험 색 (SEED 에 선형 막대가 없어 groo 가 정한 부품 — 진행은 Progress Circle)." },
   { slug: "progress-circle", name: "Progress Circle", category: "Display", description: "작업이 진행 중임을 알리는 원 — 값을 모르면 호가 늘었다 줄며 돌고 값을 알면 12시부터 채운다, 크기 24 · 40 · 버튼 안, 톤 neutral · brand · staticWhite · inherit (SEED Progress Circle 구조)." },
-  { slug: "resizable", name: "Resizable", category: "Display", description: "화면 안의 크기를 손으로 바꾸는 손잡이 — 768 이상 HR 관리 화면의 목록 | 상세(선 1px + 손잡이 표시 · 누르는 폭 16 · 목록 20 ~ 40% · ← → 5% · 한 번 누르면 25 ↔ 40 · 화면마다 폭 기억)와 대시보드 위젯 크기(모서리 손잡이 · ⋮ \"크기\") (SEED 에 Resizable 이 없어 porest 가 정했다 — 키보드는 APG Window Splitter)." },
+  { slug: "resizable", name: "Resizable", category: "Display", description: "화면 안의 크기를 손으로 바꾸는 손잡이 — 768 이상 HR 관리 화면의 목록 | 상세(선 1px + 손잡이 표시 · 누르는 폭 16 · 목록 20 ~ 40% · ← → 5% · 한 번 누르면 25 ↔ 40 · 화면마다 폭 기억)와 대시보드 위젯 크기(모서리 손잡이 · ⋮ \"크기\") (SEED 에 Resizable 이 없어 groo 가 정했다 — 키보드는 APG Window Splitter)." },
   { slug: "result-section", name: "Result Section", category: "Display", description: "화면이나 그 영역 가운데에 놓는 결과 — 비어 있음 · 불러오기 실패 · 완료 · 찾을 수 없는 페이지 · 화면 오류를 한 틀로 그린다 (SEED Result Section 구조)." },
-  { slug: "scroll-area", name: "Scroll Area", category: "Display", description: "스크롤되는 자리의 규칙 — 스크롤은 브라우저 기본이고 스크롤바는 전역 한 벌(6px 알약 · 막대 stroke-neutral-solid · Firefox 두 줄은 @supports 안)이며, 초점 가는 것이 없는 상자는 region · 이름 · tabindex 0, 시트 · 대화상자 안 상자는 contain 이다 (SEED 에 스크롤바 규칙이 없어 porest 가 정했다 — 끝 흐림은 SEED Scroll Fog)." },
+  { slug: "scroll-area", name: "Scroll Area", category: "Display", description: "스크롤되는 자리의 규칙 — 스크롤은 브라우저 기본이고 스크롤바는 전역 한 벌(6px 알약 · 막대 stroke-neutral-solid · Firefox 두 줄은 @supports 안)이며, 초점 가는 것이 없는 상자는 region · 이름 · tabindex 0, 시트 · 대화상자 안 상자는 contain 이다 (SEED 에 스크롤바 규칙이 없어 groo 가 정했다 — 끝 흐림은 SEED Scroll Fog)." },
   { slug: "scroll-auto-hide", name: "Scroll Auto Hide", category: "Display", description: "스크롤 상자 맨 위의 영역이 아래로 스크롤하면 그 거리만큼 숨고 위로 스크롤하면 같은 거리만큼 드러난다 — 폰 가계부 · 할 일 원장 머리, 멈추면 50% 를 기준으로 200ms 스냅 · translate3d 로만 옮김 · 모션 줄이기면 끔 · 숨은 머리에 초점이 오면 드러냄 (SEED Breeze Scroll Auto Hide 구조)." },
   { slug: "scroll-fog", name: "Scroll Fog", category: "Display", description: "스크롤되는 영역의 끝을 투명도 마스크로 늘 흐려 뒤에 더 있다는 것을 알린다 — 칩 줄 좌우 20 · 시트 · 대화상자 본문 위 20 · 아래 80 · 바닥 고정 버튼이 있는 화면 (SEED Scroll Fog 구조)." },
   { slug: "skeleton", name: "Skeleton", category: "Display", description: "불러오는 동안 데이터 자리만 미리 그리는 회색 면과 1.5초 띠 — 모서리 넷 · 글줄 높이, 1초 뒤에 보이고 5초 · 10초에 바뀌는 시간표(LoadingRegion) (SEED Skeleton 구조)." },
@@ -2036,8 +2036,8 @@ const SHADCN_CATALOG = [
   { slug: "tooltip", name: "Tooltip", category: "Overlay", description: "마우스를 올리거나 키보드 초점이 오면 트리거 옆에 뜨는 짧은 설명 — 아이콘 버튼 · 줄인 글이 무엇인지 보여 주는 Help Bubble 모양의 보조 (SEED Help Bubble Tooltip 구조)." },
 
   // Navigation (9) — Footer 는 2026-10-15 더했다(마무리 — SEED 조합 예시). Command(⌘K 팔레트 · cmdk)는 2026-10-15 걷었다(세 제품 모두 쓰는 곳이 없다)
-  { slug: "bottom-navigation", name: "Bottom Navigation", category: "Navigation", description: "폰 화면 아래에 떠 있는 탭 바 — 홈 · 가계부 · + · 캘린더 · 전체 다섯 칸이 어느 화면에서나 같은 알약(펼침 66 · 줄어듦 48)이고, 가운데 + 는 탭이 아니라 그 화면의 추가다 (SEED Bottom Navigation 구조 — 떠 있는 알약은 porest)." },
-  { slug: "footer", name: "Footer", category: "Navigation", description: "사이트 맨 아래의 바닥 — 브랜드 · 사이트맵(서비스 · 계정) | 선 | 개인정보 처리방침 ↗ · 안내 글 · © 해 POREST 를 블록으로 골라 조립하고(porest-home), 틀 1040 · 위아래 40 · 좌우 32(1280 미만 24) · 링크는 밑줄 없이 색으로 · 새 탭만 ↗ · 값이 없는 사업자 정보 · 연락처 · 소셜은 비워 둔다 (SEED Footer 조합 예시 구조)." },
+  { slug: "bottom-navigation", name: "Bottom Navigation", category: "Navigation", description: "폰 화면 아래에 떠 있는 탭 바 — 홈 · 가계부 · + · 캘린더 · 전체 다섯 칸이 어느 화면에서나 같은 알약(펼침 66 · 줄어듦 48)이고, 가운데 + 는 탭이 아니라 그 화면의 추가다 (SEED Bottom Navigation 구조 — 떠 있는 알약은 groo)." },
+  { slug: "footer", name: "Footer", category: "Navigation", description: "사이트 맨 아래의 바닥 — 브랜드 · 사이트맵(서비스 · 계정) | 선 | 개인정보 처리방침 ↗ · 안내 글 · © 해 그루 를 블록으로 골라 조립하고(groo-home), 틀 1040 · 위아래 40 · 좌우 32(1280 미만 24) · 링크는 밑줄 없이 색으로 · 새 탭만 ↗ · 값이 없는 사업자 정보 · 연락처 · 소셜은 비워 둔다 (SEED Footer 조합 예시 구조)." },
   { slug: "menu", name: "Menu", category: "Navigation", description: "트리거에 붙어 열리는 동작 목록 — 줄을 누르면 바로 실행하고 닫히며, 1280 미만에서는 같은 목록이 Menu Sheet 로 뜬다 (SEED Menu 구조)." },
   { slug: "pagination", name: "Pagination", category: "Navigation", description: "데스크톱 긴 목록 아래 가운데의 쪽 넘김 줄 — 칸 40 을 사이 없이 잇고(480 이상 9칸 · 미만 7칸) 지금 쪽은 짙게 채우며, 폰의 긴 목록은 쪽을 나누지 않고 끝없이 불러온다 (SEED Pagination 구조)." },
   { slug: "segmented-control", name: "Segmented Control", category: "Navigation", description: "같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게 보는 컨트롤 — 그 내용 바로 위에 하나 두고, 칸이 트랙 폭을 똑같이 나눈다 (SEED Segmented Control 구조)." },
@@ -2108,8 +2108,8 @@ ${component.description ? `<p class="lede">${escape(component.description)}</p>`
   <a class="tag">${escape(cat.category)}</a>
   ${hasSpec ? `<a class="tag tag-spec">M3 톤 detailed spec</a>` : ""}
   <a href="https://ui.shadcn.com/docs/components/${escape(component.slug)}" target="_blank" rel="noopener">shadcn/ui ↗</a>
-  <a href="https://github.com/lshdainty/porest-design/blob/main/recipes/shadcn/components/ui/${escape(component.slug)}.tsx" target="_blank" rel="noopener">소스 ↗</a>
-  ${hasSpec ? `<a href="https://github.com/lshdainty/porest-design/blob/main/specs/components/${escape(component.slug)}.md" target="_blank" rel="noopener">spec ↗</a>` : ""}
+  <a href="https://github.com/lshdainty/groo-design/blob/main/recipes/shadcn/components/ui/${escape(component.slug)}.tsx" target="_blank" rel="noopener">소스 ↗</a>
+  ${hasSpec ? `<a href="https://github.com/lshdainty/groo-design/blob/main/specs/components/${escape(component.slug)}.md" target="_blank" rel="noopener">spec ↗</a>` : ""}
 </div>
 `;
 
@@ -2125,7 +2125,7 @@ ${component.description ? `<p class="lede">${escape(component.description)}</p>`
     body += `
 <div class="callout">
   <div>
-    <strong>곧 작성 예정</strong> · 이 컴포넌트는 Phase 진행 중. shadcn 표준 구조(cva + Radix primitives) + Porest 토큰으로 작성됩니다.
+    <strong>곧 작성 예정</strong> · 이 컴포넌트는 Phase 진행 중. shadcn 표준 구조(cva + Radix primitives) + Groo 토큰으로 작성됩니다.
   </div>
 </div>
 `;
@@ -2187,11 +2187,11 @@ ${component.description ? `<p class="lede">${escape(component.description)}</p>`
   // === bridge & utils (모든 shadcn 페이지 공통 — 한 번만 보여주는 details) ===
   body += `<h2>bridge & utils</h2>\n`;
   body += `<p style="font-size: var(--text-label-md); color: var(--color-text-secondary);">아래 두 파일은 프로젝트당 한 번만 추가 — 모든 shadcn 컴포넌트가 공유.</p>\n`;
-  const bridgePath = resolve(ROOT, "recipes/shadcn/styles/porest-shadcn-bridge.css");
+  const bridgePath = resolve(ROOT, "recipes/shadcn/styles/groo-shadcn-bridge.css");
   const utilsPath = resolve(ROOT, "recipes/shadcn/lib/utils.ts");
   if (existsSync(bridgePath)) {
     const bridgeCode = readFileSync(bridgePath, "utf8");
-    body += `<details><summary><code>styles/porest-shadcn-bridge.css</code> — Porest 토큰 → shadcn variables alias</summary><pre><code class="lang-css">${escape(bridgeCode)}</code></pre></details>\n`;
+    body += `<details><summary><code>styles/groo-shadcn-bridge.css</code> — Groo 토큰 → shadcn variables alias</summary><pre><code class="lang-css">${escape(bridgeCode)}</code></pre></details>\n`;
   }
   if (existsSync(utilsPath)) {
     const utilsCode = readFileSync(utilsPath, "utf8");
@@ -2201,7 +2201,7 @@ ${component.description ? `<p class="lede">${escape(component.description)}</p>`
   body += `
 <div class="callout">
   <div>
-    <strong>참고</strong> · shadcn 공식 문서 <a href="https://ui.shadcn.com/docs/components/${escape(component.slug)}" target="_blank" rel="noopener">ui.shadcn.com/docs/components/${escape(component.slug)}</a> · 디자인 토큰 사양 <a href="https://github.com/lshdainty/porest-design/blob/main/DESIGN.md" target="_blank" rel="noopener">DESIGN.md</a>.
+    <strong>참고</strong> · shadcn 공식 문서 <a href="https://ui.shadcn.com/docs/components/${escape(component.slug)}" target="_blank" rel="noopener">ui.shadcn.com/docs/components/${escape(component.slug)}</a> · 디자인 토큰 사양 <a href="https://github.com/lshdainty/groo-design/blob/main/DESIGN.md" target="_blank" rel="noopener">DESIGN.md</a>.
   </div>
 </div>
 `;

@@ -4,7 +4,7 @@
  * 차례 · 제목 · 코드가 specs/components/card.md 의 "코드" 절과 같고, 뒤의 셋(증감 셋 · 데스크톱 격자 — 넷씩 · 아코디언 카드 — 유의사항)은 md 의 증감 표기 ·
  * 지표 · 카드 안 아코디언(body="accordion", 2026-10-10)을 코드로 더 보인다.
  * 면은 SEED Elevation · stroke.neutral-weak · Feedback 이다 — SEED 에는 카드 컴포넌트가 없어 바닥 위 흰 면 + 1px 테두리 · 그림자 없음 ·
- * 누름은 SEED 를, 머리 · 여백 · 지표 · 순자산 · 증감은 porest 가 정했다(2026-10-08). 옛 예제(그림자 · bordered · muted · brand 넷 · 모서리 12 ·
+ * 누름은 SEED 를, 머리 · 여백 · 지표 · 순자산 · 증감은 groo 가 정했다(2026-10-08). 옛 예제(그림자 · bordered · muted · brand 넷 · 모서리 12 ·
  * 여백 16 / 24 · 머리 설명 · 아래 버튼 줄)를 대신한다.
  *
  * ROOT · VARIANT · BODY · PRESS_WHOLE · PRESS_WHOLE_SURFACE · PRESS_PEERS · HERO_GLOW · CARD_ACTION · CARD_LINK · DELTA_TONE · ARROW 는

@@ -119,7 +119,7 @@ const Hero: Fig = ({ caption }) => (
         </Form>
       </Screen>
       </div>
-      <WebWindow mode="light" w={600} h={480} url="hr.porest.app">
+      <WebWindow mode="light" w={600} h={480} url="hr.groo.app">
         <WebDialog
           mode="light"
           brand="hr"
@@ -270,13 +270,13 @@ const Footer: Fig = ({ caption }) => (
     <div className="grid gap-4 md:grid-cols-3">
       <div className="flex flex-col gap-2">
         <Surface>
-          <F label="아이디" value="porest" description="영문 · 숫자 20자까지" max={20} count={6} />
+          <F label="아이디" value="groo" description="영문 · 숫자 20자까지" max={20} count={6} />
         </Surface>
         <Cap strong="설명">14 · 옅은 회색</Cap>
       </div>
       <div className="flex flex-col gap-2">
         <Surface>
-          <F label="아이디" value="porest" error="이미 쓰고 있는 아이디예요." max={20} count={6} />
+          <F label="아이디" value="groo" error="이미 쓰고 있는 아이디예요." max={20} count={6} />
         </Surface>
         <Cap strong="오류">설명 자리를 대신한다 · 글자 수도 빨갛다</Cap>
       </div>
@@ -409,7 +409,7 @@ const IndicatorGuide: Fig = ({ caption }) => (
           <Form gap={16}>
             <F label="이름" value="김포레" />
             <F label="휴대폰 번호" indicator="optional" placeholder="010-0000-0000" />
-            <F label="이메일" value="porest@porest.app" />
+            <F label="이메일" value="groo@groo.app" />
           </Form>
         </div>
       </Verdict>
@@ -427,7 +427,7 @@ const IndicatorGuide: Fig = ({ caption }) => (
           <Form gap={16}>
             <F label="이름" indicator="required" value="김포레" />
             <F label="휴대폰 번호" indicator="optional" placeholder="010-0000-0000" />
-            <F label="이메일" indicator="required" value="porest@porest.app" />
+            <F label="이메일" indicator="required" value="groo@groo.app" />
           </Form>
         </div>
       </Verdict>
@@ -513,7 +513,7 @@ const ExError: Fig = () => {
   const lk = look();
   return (
     <Live>
-      <TfLiveField field={lk.field} input={lk.input} label="아이디" description="영문 · 숫자 20자까지" max={20} invalid errorMessage="이미 쓰고 있는 아이디예요." inputProps={{ defaultValue: 'porest' }} />
+      <TfLiveField field={lk.field} input={lk.input} label="아이디" description="영문 · 숫자 20자까지" max={20} invalid errorMessage="이미 쓰고 있는 아이디예요." inputProps={{ defaultValue: 'groo' }} />
     </Live>
   );
 };

@@ -2,7 +2,7 @@
 
 > 한 줄 글 · 숫자를 직접 치는 입력칸(Text Input). 이름 · 금액 · 제목 · 아이디 · 검색어처럼 짧은 값을 받는다. 여러 줄은 [Textarea](textarea.md), 짧은 목록에서 고르는 값은 [Select](select.md), 달력 · 시트 · 긴 목록에서 고르는 값은 [Input Button](input-button.md)이다.
 
-구조는 당근 [SEED Text Input](https://seed-design.io/components/text-input)(Apache-2.0)을 따른다 — 상자(Container) · 입력 · 앞 · 뒤 붙이개 · 지우기 버튼. 라벨 · 설명 · 오류 · 글자 수는 [Field](field.md)가 둘레에서 그린다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정).
+구조는 당근 [SEED Text Input](https://seed-design.io/components/text-input)(Apache-2.0)을 따른다 — 상자(Container) · 입력 · 앞 · 뒤 붙이개 · 지우기 버튼. 라벨 · 설명 · 오류 · 글자 수는 [Field](field.md)가 둘레에서 그린다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정).
 
 수치 원본은 [`input.yaml`](input.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -173,7 +173,7 @@ import { Search } from "lucide-react"
   <Input defaultValue="국민 123-45-6789" />
 </Field>
 <Field label="아이디" readOnly>
-  <Input defaultValue="porest" />
+  <Input defaultValue="groo" />
 </Field>
 ```
 

@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Wheel Picker — 구조는 SEED Wheel Picker(2026-10-03). 수치 원본은 specs/components/wheel-picker.yaml.
+ * Groo Wheel Picker — 구조는 SEED Wheel Picker(2026-10-03). 수치 원본은 specs/components/wheel-picker.yaml.
  *
  *   WheelPicker         휠 — role="group" + 이름(aria-label · aria-labelledby 중 하나는 꼭). size(small 36 · medium 44, 기본 medium) ·
  *                       visibleItems(5 · 7, 기본 5) · disabled. 칼럼 묶음을 가운데에 모으고 가운데 띠 · 위아래 안개를 그린다

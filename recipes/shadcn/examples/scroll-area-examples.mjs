@@ -3,10 +3,10 @@
  * 각 예제 = { title, description, jsx, render() }. 앞의 셋(전역 스크롤바 · 초점 가는 것이 없는 상자 — HR 달력 일 보기 · 대화상자 안 상자 — 휴가 정책)은
  * 차례 · 제목 · 코드가 specs/components/scroll-area.md 의 "코드" 절과 같고(전역 스크롤바는 CSS), 마지막(가로 상자 · 가로 줄)은 md 의 놓인 자리를 코드로 더 보인다.
  * SEED 에는 Scroll Area · 스크롤바 규칙이 없다(끝 흐림 Scroll Fog 만) — 기본 스크롤 + 전역 한 벌(6px 알약 · thumb stroke-neutral-solid · track 투명)은
- * porest 가 정했다(2026-10-10 사용자 결정 14A). 옛 예제(Radix ScrollArea · 겹쳐 뜨는 막대 · 인라인 style)를 대신한다.
+ * groo 가 정했다(2026-10-10 사용자 결정 14A). 옛 예제(Radix ScrollArea · 겹쳐 뜨는 막대 · 인라인 style)를 대신한다.
  *
  * ROOT · ORIENTATION · CONTAIN · FOCUS 는 recipes/shadcn/components/ui/scroll-area.tsx 의 cn() 이 잇는 글 · 상수와 글자 하나까지 같아야 한다 —
- * 두 파일을 함께 고친다. 스크롤바 모양은 컴포넌트가 아니라 recipes/shadcn/styles/porest-shadcn-bridge.css 의 전역 한 벌이다 — 사이트는 그 CSS 를
+ * 두 파일을 함께 고친다. 스크롤바 모양은 컴포넌트가 아니라 recipes/shadcn/styles/groo-shadcn-bridge.css 의 전역 한 벌이다 — 사이트는 그 CSS 를
  * 함께 싣으므로 아래 상자들의 막대가 곧 그 모양이다(맥 · 폰의 겹침 스크롤바는 OS 설정대로 넘칠 때만 보인다).
  * 규칙은 specs/components/scroll-area.md, 수치 원본은 specs/components/scroll-area.yaml.
  *

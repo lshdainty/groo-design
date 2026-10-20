@@ -1,6 +1,6 @@
-# Porest Design System
+# Groo Design System
 
-People + Forest. **Porest HR**(B2B 조직 관리)·**Porest Desk**(B2C 개인 메모/할일/가계부) 듀얼 브랜드 단일 디자인 시스템. 한국어 우선·전 연령 접근성·Toss 톤(절제·신뢰감) 레퍼런스.
+People + Forest. **그루 이음**(B2B 조직 관리)·**그루 담다**(B2C 개인 메모/할일/가계부) 듀얼 브랜드 단일 디자인 시스템. 한국어 우선·전 연령 접근성·Toss 톤(절제·신뢰감) 레퍼런스.
 
 [Google design.md](https://github.com/google-labs-code/design.md) spec 기반, **Tailwind v4 `@theme` CSS** 산출물.
 
@@ -61,7 +61,7 @@ npm run build    # site/out — 정적 사이트 + 검색 색인 + llms.txt
 │   └── shadcn/
 │       ├── components/ui/   # 60개 .tsx 컴포넌트 (cva + Slot + forwardRef + Radix 표준)
 │       ├── examples/        # 50개 *-examples.mjs (Preview HTML + JSX 코드 토글 데이터)
-│       ├── styles/porest-shadcn-bridge.css  # Porest 토큰 → shadcn variables alias
+│       ├── styles/groo-shadcn-bridge.css  # Groo 토큰 → shadcn variables alias
 │       └── lib/utils.ts     # cn() helper
 ├── scripts/              # native Node 도구 (외부 의존성 없음)
 │   ├── sync-shared-tokens.mjs   # 공유 토큰 자동 동기 (typography/rounded/spacing + colors 마커 영역)
@@ -188,11 +188,11 @@ Coverage:
 ```css
 /* app.css */
 @import "tailwindcss";
-@import "./node_modules/@porest/design/exports/tokens.hr.css";  /* HR 브랜드 */
-@import "./node_modules/@porest/design/recipes/shadcn/styles/porest-shadcn-bridge.css";  /* shadcn variables alias */
+@import "./node_modules/@groo/design/exports/tokens.hr.css";  /* HR 브랜드 */
+@import "./node_modules/@groo/design/recipes/shadcn/styles/groo-shadcn-bridge.css";  /* shadcn variables alias */
 ```
 
-shadcn/ui 컴포넌트 사용 시 — `recipes/shadcn/components/ui/`의 `.tsx` 파일을 프로젝트로 복사 + 위 bridge.css import. Porest 토큰이 자동으로 shadcn 변수(`--color-primary`, `--color-ring` 등)에 매핑되어 그대로 동작.
+shadcn/ui 컴포넌트 사용 시 — `recipes/shadcn/components/ui/`의 `.tsx` 파일을 프로젝트로 복사 + 위 bridge.css import. Groo 토큰이 자동으로 shadcn 변수(`--color-primary`, `--color-ring` 등)에 매핑되어 그대로 동작.
 
 또는 직접 CSS variable 사용:
 

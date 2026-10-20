@@ -2,7 +2,7 @@
 
 > "얼마나 찼나" 를 보이는 막대 — 예산 · 카드 한도처럼 쓸수록 차는 것, 저축 목표 · 카드 실적처럼 모을수록 차는 것. 이름 · 오른쪽 글 · 막대 · 금액 줄이 한 묶음이다. 불러오기나 올리기 · 받기의 진행에는 쓰지 않는다 — 그건 [Progress Circle](progress-circle.md) 이다.
 
-SEED 에는 선형 막대 컴포넌트가 없다 — [Loading 패턴](https://seed-design.io/patterns/loading)에 "Progress Bar" 라는 말만 있고 rootage · React · Figma 어디에도 없다(SEED 는 진행을 값 있는 Progress Circle 로 그린다). 그래서 porest 만의 부품이다 — 높이 하나(8) · 모서리 full · 색 하나(브랜드), 넘친 한도만 위험 색. 값은 porest 토큰이다(2026-10-03 사용자 결정). 옛 Progress 스펙(높이 2 · 4 · 8 · 진행 · 흐르는 막대 · 100% 에서 성공 색)을 대신한다.
+SEED 에는 선형 막대 컴포넌트가 없다 — [Loading 패턴](https://seed-design.io/patterns/loading)에 "Progress Bar" 라는 말만 있고 rootage · React · Figma 어디에도 없다(SEED 는 진행을 값 있는 Progress Circle 로 그린다). 그래서 groo 만의 부품이다 — 높이 하나(8) · 모서리 full · 색 하나(브랜드), 넘친 한도만 위험 색. 값은 groo 토큰이다(2026-10-03 사용자 결정). 옛 Progress 스펙(높이 2 · 4 · 8 · 진행 · 흐르는 막대 · 100% 에서 성공 색)을 대신한다.
 
 수치 원본은 [`progress.yaml`](progress.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -173,7 +173,7 @@ import { Progress } from "@/components/ui/progress"
 
 ## SEED 와 다른 점
 
-- **SEED 에는 선형 막대가 없다** — porest 만의 부품이다. SEED 가 진행에 쓰는 값 있는 Progress Circle(올리기 · 당겨서 새로 고침)은 porest 도 그대로 쓰고, 막대는 "얼마나 찼나" 를 보이는 미터로만 둔다.
+- **SEED 에는 선형 막대가 없다** — groo 만의 부품이다. SEED 가 진행에 쓰는 값 있는 Progress Circle(올리기 · 당겨서 새로 고침)은 groo 도 그대로 쓰고, 막대는 "얼마나 찼나" 를 보이는 미터로만 둔다.
 - 미터는 `role="meter"` 로 읽힌다 — 진행(`progressbar`)과 나눈다.
 
 ## Migration notes
@@ -192,7 +192,7 @@ import { Progress } from "@/components/ui/progress"
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-03 조사 — Desk 웹 · HR 은 크로미움에 띄워 쟀고, Desk 앱은 위젯 테스트로 쟀다).
 
-- **Desk 웹** — 손 막대 20여 곳의 높이가 6 · 7 · 8 · 10 · 12 이고 역할이 하나도 없다(낭독기에 값이 가지 않는다). 예산 막대(`shared/styles/porest.css:562-582` — 안내 · 주의 · 위험 세 색, 채움 전환이 꺼져 있다 `porest.css:575`), 예산 페이스(`pages/budget/ui/BudgetPage.tsx:881` — 다크에서 채움 색 그대로 1.5:1), 카드 사용(`AssetPage.tsx:1176-1181` — 다크에서 라이트 경고 · 위험 색 2.7 · 2.6), 저축(`AssetPage.tsx:827-845` · `SavingGoalManager.tsx:267` · `SavingGoalAddDialog.tsx:311`), 신용 한도(`AssetDetailDialog.tsx:1336`). 카드 실적은 Tailwind 원색 장미 · 호박 · 초록(70% 에서 바뀜)으로 트랙과 1.91 ~ 3.35:1, "130% 달성" 글 3.22:1(`features/card-performance/ui/CardPerformanceBar.tsx:21-53`).
+- **Desk 웹** — 손 막대 20여 곳의 높이가 6 · 7 · 8 · 10 · 12 이고 역할이 하나도 없다(낭독기에 값이 가지 않는다). 예산 막대(`shared/styles/groo.css:562-582` — 안내 · 주의 · 위험 세 색, 채움 전환이 꺼져 있다 `groo.css:575`), 예산 페이스(`pages/budget/ui/BudgetPage.tsx:881` — 다크에서 채움 색 그대로 1.5:1), 카드 사용(`AssetPage.tsx:1176-1181` — 다크에서 라이트 경고 · 위험 색 2.7 · 2.6), 저축(`AssetPage.tsx:827-845` · `SavingGoalManager.tsx:267` · `SavingGoalAddDialog.tsx:311`), 신용 한도(`AssetDetailDialog.tsx:1336`). 카드 실적은 Tailwind 원색 장미 · 호박 · 초록(70% 에서 바뀜)으로 트랙과 1.91 ~ 3.35:1, "130% 달성" 글 3.22:1(`features/card-performance/ui/CardPerformanceBar.tsx:21-53`).
 - **Desk 앱** — `LinearProgressIndicator` 13곳 + 홈 손 막대 1(`dashboard/dashboard_screen.dart:1404-1430` — 의미 없음), 높이 6 · 8 · 10 · 12. 이름 없이 값 "50" 만 읽힌다. 카드 실적은 브랜드 → 성공 색(`card/card_performance_bar.dart:79-81 · 115-120`, 다크 2.51:1)으로 웹과 색 · 문턱이 다르다. 앱 업데이트 받기 막대(`update/update_gate_screen.dart:304-309` · `settings/update_screen.dart:262`)는 값 있는 원으로.
 - **HR 웹** — `Progress` 래퍼가 값을 Radix 에 넘기지 않아 모든 막대가 '값 모름'으로 읽힌다(`shared/ui/shadcn/progress.tsx:10-24`). 승인률 · 오늘 근무 시간 2곳(`vacation-application/ui/VacationRequestStatsItem.tsx:131` · `dashboard/ui/widgets/TodayWorkStatus/TodayWorkStatusContent.tsx:54-60` — 초록 2.09 · 주황 2.72:1).
 - 앱 적용 때 화면마다 정할 자리 — 예산 페이스(오늘 표시 2 × 18 을 얹은 막대), 할 일 완료 · 더치페이 정산 · 분할 비율 막대(`TodoPage.tsx:600` · `DutchPayPage.tsx:937` · `TxDetailDialog.tsx:720`)가 미터인지, 통계의 막대(차트라 이 막대가 아니다).

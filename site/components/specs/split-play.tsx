@@ -75,7 +75,7 @@ export function SplitPlayground({ look, wlook, tones, kit, kebab, left, right }:
             type="button"
             onClick={() => {
               try {
-                window.localStorage.removeItem(`porest-split:${STORE}`);
+                window.localStorage.removeItem(`groo-split:${STORE}`);
               } catch {
                 /* 저장소가 막혀 있어도 된다 */
               }

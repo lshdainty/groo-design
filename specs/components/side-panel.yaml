@@ -9,8 +9,8 @@
 # 열고 닫는 동작(입력 폼은 바깥 누르기 · 끌기로 닫지 않는다 · 닫기와 취소는 하나만)은 Dialog · Bottom Sheet 와 같다 — side-panel.md 의 Behavior.
 #
 # SEED 와 다른 자리(side-panel.md 의 "SEED 와 다른 점")
-#   - 딤: SEED bg.overlay 0.455 → porest overlay-dim 0.50 · 다크 0.65(v102).
-#   - 본문 끝 흐림: SEED 의 늘 켜진 아래 48 → porest Scroll Fog overlayBody(위 20 · 아래 80, 넘칠 수 있는 본문에만 — 2026-10-03).
+#   - 딤: SEED bg.overlay 0.455 → groo overlay-dim 0.50 · 다크 0.65(v102).
+#   - 본문 끝 흐림: SEED 의 늘 켜진 아래 48 → groo Scroll Fog overlayBody(위 20 · 아래 80, 넘칠 수 있는 본문에만 — 2026-10-03).
 #   - 반투명 색을 불투명 짝으로(v102): 머리 아래 선 stroke-neutral-subtle, 닫기 버튼 누름 bg-layer-floating-pressed.
 #   - 모션 줄이기면 150ms 서서히 나타남(v104) — SEED 는 300ms 미끄러짐 그대로.
 #   - 1280 미만의 오른쪽 패널은 Bottom Sheet — SEED Responsive Side Panel 의 경계는 md(768).
@@ -59,7 +59,7 @@ rules:
   - when: {}
     enabled:
       overlay:
-        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "porest 딤(v102) — SEED 0.455 는 들이지 않았다" }
+        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "groo 딤(v102) — SEED 0.455 는 들이지 않았다" }
         zIndex: { value: 100, note: "z-modal — specs/z-index.md L2" }
       root:
         height: { value: 화면 높이 전체, note: "dvh — 방향과 상관없이(SEED)" }
@@ -147,7 +147,7 @@ rules:
         width: { value: 화면 폭의 80%, note: "768 미만에서만 쓴다 — 딤이 오른쪽 20% 에 남는다. 크기(480 · 720 · 960)는 오른쪽 패널만 쓴다" }
         position: { value: 왼쪽 끝, note: "왼쪽으로 끌면 닫힌다" }
       title:
-        typography: { value: $text-t8, note: "서비스 이름(\"Porest HR\") — 주 메뉴 서랍의 제목" }
+        typography: { value: $text-t8, note: "서비스 이름(\"그루 이음\") — 주 메뉴 서랍의 제목" }
       body:
         paddingX: { value: $spacing-x4, note: "주 메뉴 — Side Navigation 의 항목(좌우 8)이 들어와 아이콘이 제목과 같은 24 에서 선다" }
 

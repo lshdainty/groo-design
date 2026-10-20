@@ -90,7 +90,7 @@ export function brandProfile(brandName, tokens) {
   if (isHR) {
     return {
       key: "hr",
-      title: "Porest HR",
+      title: "그루 이음",
       kicker: "B2B · 조직 HR 관리",
       tagline: "사람과 일상이 숲처럼 자라나는 조직",
       heroFacts: [
@@ -257,7 +257,7 @@ export function brandProfile(brandName, tokens) {
   if (isDesk) {
     return {
       key: "desk",
-      title: "Porest Desk",
+      title: "그루 담다",
       kicker: "B2C · 메모, 할일, 가계부",
       tagline: "메모, 할일, 가계부의 단정한 일상",
       heroFacts: [
@@ -283,7 +283,7 @@ export function brandProfile(brandName, tokens) {
           { label: "보관함", value: "archive" },
         ],
         memos: [
-          { title: "Porest 브랜드 톤", excerpt: "절제 · 신뢰감 — 토스 레퍼런스. 두 브랜드 듀얼 톤…", tags: "all fav" },
+          { title: "Groo 브랜드 톤", excerpt: "절제 · 신뢰감 — 토스 레퍼런스. 두 브랜드 듀얼 톤…", tags: "all fav" },
           { title: "이번 주 회고", excerpt: "월요일 스프린트 시작 정리. 핵심 액션 3가지…", tags: "all today" },
           { title: "10월 고정비 정리", excerpt: "통신 · 구독 해지할 것 — 가계부에 옮기기", tags: "all fav today" },
           { title: "지난 프로젝트 정리", excerpt: "9월 회고 자료 — 보관함으로 옮긴 메모", tags: "archive" },
@@ -303,13 +303,13 @@ export function brandProfile(brandName, tokens) {
           kind: "memo-card",
           title: "최근 메모",
           items: [
-            { title: "Porest 브랜드 톤", excerpt: "절제·신뢰감 — 토스 레퍼런스. 두 브랜드 듀얼 톤…", tags: ["brand", "design"] },
+            { title: "Groo 브랜드 톤", excerpt: "절제·신뢰감 — 토스 레퍼런스. 두 브랜드 듀얼 톤…", tags: ["brand", "design"] },
             { title: "이번 주 회고", excerpt: "월요일 sprint 시작 정리. 핵심 액션 3가지…", tags: ["weekly", "회고"] },
           ],
         },
       ],
       listingDetail: {
-        title: "Porest 브랜드 톤",
+        title: "Groo 브랜드 톤",
         meta: "메모 · 2026-05-08 작성 · 마지막 수정 2026-05-09",
         ratingScore: null,
         ratingCount: "342 단어 · 5분 읽기",
@@ -373,7 +373,7 @@ export function brandProfile(brandName, tokens) {
         average: "4.6",
         averageNote: "주간 회고 평균",
         items: [
-          { author: "5월 1주차", role: "주간 회고", date: "2026-05-05", rating: 5, text: "Porest 브랜드 톤 정의. semantic refresh 시작 — base 4개 emerald/red/orange/sky." },
+          { author: "5월 1주차", role: "주간 회고", date: "2026-05-05", rating: 5, text: "Groo 브랜드 톤 정의. semantic refresh 시작 — base 4개 emerald/red/orange/sky." },
           { author: "5월 2주차", role: "주간 회고", date: "2026-05-08", rating: 4, text: "v51-v53 마무리. preview Phase 1 완료. Phase 2 시작 (listing/calendar/reviews)." },
           { author: "4월 회고", role: "월간", date: "2026-04-30", rating: 5, text: "design.md 도구 도입 + Tailwind v4 export pipeline 안정화. 50 milestone 누적." },
         ],
@@ -430,7 +430,7 @@ export function brandProfile(brandName, tokens) {
   // shared baseline (DESIGN.md, brand-agnostic)
   return {
     key: "shared",
-    title: "Porest baseline",
+    title: "Groo baseline",
     kicker: "Shared · 두 브랜드의 공통 토대",
     tagline: "사람과 일상이 숲처럼 자라나는 디자인 시스템",
     heroFacts: [
@@ -485,7 +485,7 @@ export function brandProfile(brandName, tokens) {
         { icon: "✓", label: "0 errors", note: "lint:all 통과" },
       ],
       host: {
-        name: "Porest Design",
+        name: "Groo Design",
         role: "Source of Truth · DESIGN.md",
         bio: "HR/Desk 두 브랜드의 공유 baseline. typography·spacing·rounded·neutral colors·neutral components 정의.",
         since: "v1 시작 2024 — 현재 v62",
@@ -640,7 +640,7 @@ function renderHero(brand) {
   <section class="hero">
     <div class="hero-card hero-card--primary">
       <div class="hero-card-content">
-        <div class="hero-eyebrow">Design System Inspiration of Porest</div>
+        <div class="hero-eyebrow">Design System Inspiration of Groo</div>
         <h1 class="hero-title">${escape(brand.title)}</h1>
         <div class="hero-kicker">${escape(brand.kicker)}</div>
         <p class="hero-tagline">${escape(brand.tagline)}</p>
@@ -763,7 +763,7 @@ function renderTypographyMoment(brand, tokens) {
         <span>${escape(t.fontSize)} / ${escape(t.lineHeight)} · ${escape(t.fontWeight)}</span>
       </div>
       <div class="typo-scale-sample" style="font-size:${escape(t.fontSize)};line-height:${escape(t.lineHeight)};font-weight:${escape(t.fontWeight)};">
-        Porest
+        Groo
       </div>
     </div>`).join("");
 
@@ -1489,7 +1489,7 @@ export function renderListGallery(brand) {
     frames([
       listFrame("보기만 하는 줄", "ListItem", listOf([
         listRow({ title: "가입일", suffix: escape("2026년 3월 2일") }),
-        listRow({ title: "이메일", suffix: escape("porest@example.com") }),
+        listRow({ title: "이메일", suffix: escape("groo@example.com") }),
       ])),
       listFrame("누르는 줄", "ListButtonItem", listOf([
         listRow({ kind: "button", prefix: icon("user"), title: "계정", suffix: listChevron() }),
@@ -1742,7 +1742,7 @@ export function renderListGallery(brand) {
         listRow({ kind: "button", prefix: listTile("orange", "utensils"), title: "점심", detail: "식비 · 현금", suffix: amount("−12,000원") }),
       ]), 320),
       listFrame("360 · 키-값 줄 — 52자 이메일", "ListItem suffix=\"…\"(글 그대로 — 줄 끝에서 끊는다)", listOf([
-        listRow({ title: "이메일", suffix: escape("porest.desk.design.system@example-company-domain.com") }),
+        listRow({ title: "이메일", suffix: escape("groo.desk.design.system@example-company-domain.com") }),
         listRow({ title: "가입일", suffix: escape("2026년 3월 2일") }),
       ]), 360),
     ].join("")}
@@ -2004,7 +2004,7 @@ export function renderSelectBoxGallery(brand) {
     ]),
   );
 
-  // 5. 여럿 고르고 저장 — HR 역할(2026-10-15 마무리 10A). porest-sql 기본 넷(설명 원문) + 관리자가 더한 넷(그림용 — 비교 페이지 10 이 그린 것).
+  // 5. 여럿 고르고 저장 — HR 역할(2026-10-15 마무리 10A). groo-sql 기본 넷(설명 원문) + 관리자가 더한 넷(그림용 — 비교 페이지 10 이 그린 것).
   // 칸 없는 체크 상자 여럿 + 아래 "저장" 한 번(바뀐 것이 없으면 막힘) — 데스크톱 사용자 상세 칸 · 폰 사용자 상세 화면이 같은 모양이다
   const ROLES = [
     { code: "ADMIN", title: "관리자", description: "관리자 권한으로 시스템 운영에 필요한 전체 권한이 부여되어 있습니다." },
@@ -2463,7 +2463,7 @@ export function renderTextFieldGallery(brand) {
     samples([
       sample("라벨 · 보조 액션 · 설명 · 글자 수", "Field label · headerAction · description · maxGraphemeCount", textField({ ...category, control: { kind: "input", size: "large", value: "반려동물", placeholder: "예: 반려동물, 부수입" } })),
       sample("부위 — 머리 22 · 입력 52 · 꼬리 19, 사이 8", "점선은 머리 · 꼬리 — 좌우 2 들어온다. 빈 칸은 글자 수도 옅다", textField({ ...category, className: "ptf-anatomy", control: { kind: "input", size: "large", placeholder: "예: 반려동물, 부수입" } })),
-      sample("오류 — 설명 자리를 대신한다", "invalid · errorMessage — 라벨은 그대로", textField({ label: "아이디", description: "영문 · 숫자 20자까지", max: 20, invalid: true, error: "이미 쓰고 있는 아이디예요.", control: { kind: "input", size: "large", value: "porest" } })),
+      sample("오류 — 설명 자리를 대신한다", "invalid · errorMessage — 라벨은 그대로", textField({ label: "아이디", description: "영문 · 숫자 20자까지", max: 20, invalid: true, error: "이미 쓰고 있는 아이디예요.", control: { kind: "input", size: "large", value: "groo" } })),
     ]),
   );
 
@@ -2540,7 +2540,7 @@ export function renderTextFieldGallery(brand) {
     "붙이개 · 지우기",
     "칸 안 앞 · 뒤에 글자나 아이콘을 둔다 — 글자는 칸 글자와 같은 크기의 fg-neutral-subtle, 아이콘은 large 20 · medium 16 의 fg-neutral-muted 이고 칸과 사이 10 · 8 이다. 단위는 라벨에 \"(원)\" 으로 붙이지 않고 뒤 글자로 둔다 — 단위 글자는 칸의 설명으로도 읽힌다. 금액은 쓰는 동안 천 단위 쉼표를 넣는다(숫자 키보드 inputmode=\"numeric\"). 지우기는 lucide circle-x(large 22 · medium 18 · fg-neutral-subtle)이고 값이 있고 막히지 않았을 때만 있다 — 누르면 값을 비우고 입력에 포커스를 둔다. Tab 순서에는 없다. 붙이개 · 여백을 눌러도 입력으로 포커스가 간다. 써 보고 지워 볼 수 있다.",
     samples([
-      sample("앞 글자 — https://", "prefix=\"https://\"", textField({ label: "웹사이트", control: { kind: "input", size: "large", prefix: "https://", value: "porest.app", inputmode: "url" } })),
+      sample("앞 글자 — https://", "prefix=\"https://\"", textField({ label: "웹사이트", control: { kind: "input", size: "large", prefix: "https://", value: "groo.app", inputmode: "url" } })),
       sample("뒤 글자 — 원 · 쉼표", "suffix=\"원\" · inputMode=\"numeric\"", textField({ label: "금액", control: { kind: "input", size: "large", suffix: "원", value: "12,000", inputmode: "numeric", format: "amount" } })),
       sample("앞 · 뒤 글자 — 만 ~ 세", "prefix=\"만\" · suffix=\"세\"", textField({ label: "나이", control: { kind: "input", size: "large", prefix: "만", suffix: "세", value: "32", inputmode: "numeric" } })),
       sample("앞 아이콘 · 지우기 — 값이 있을 때", "prefixIcon={<Search />} · clearable", search("large", "회의")),
@@ -4518,7 +4518,7 @@ export function renderMenuGallery(brand) {
   // 2. Menu Sheet — 폰. 같은 메모 줄 동작(아이콘 + 글) · 글만(가운데) · 머리 더보기(설명 · 보조 기술용 닫기)
   const sheetFrame = (page, sheet, height = 600) => overlayFrame({ device: "phone", height, page, layers: [overlayScrim(), overlayLayer("sheet", sheet)] });
   const memoPhone = menuPage({ title: "메모", body: moreRows(MENU_MEMOS) });
-  const profilePhone = menuPage({ title: "프로필", body: listOf([["이름", "김지원"], ["이메일", "porest@example.com"], ["가입일", "2026년 3월 2일"]].map(([title, value]) => listRow({ title, suffix: escape(value) }))) });
+  const profilePhone = menuPage({ title: "프로필", body: listOf([["이름", "김지원"], ["이메일", "groo@example.com"], ["가입일", "2026년 3월 2일"]].map(([title, value]) => listRow({ title, suffix: escape(value) }))) });
   const sheetPanel = panel(
     "Menu Sheet — 손잡이 · 가운데 제목 · 묶음 · 글만",
     "1280 미만에서는 같은 목록이 화면 아래에서 올라오는 메뉴 시트로 뜬다 — 같은 줄 · 같은 순서 · 같은 막힘이고, 코드는 폭을 보고 둘 중 하나를 그리는 ResponsiveMenu 하나다. 시트는 최대 480 · 위 두 모서리 20 · 위 24(손잡이 자리) · 좌우 화면 여백 24 · 아래 16 + 안전 영역이고, 그림자 없이 딤(0.50 · 다크 0.65) 위의 떠 있는 표면이다(L2 딤 100 · 시트 101). 손잡이(36 × 4 · stroke-neutral-weak · 위 6)는 늘 있고 위 닫기 버튼 · 바닥 취소는 없다 — 딤 · 끌어내리기 · Esc · 뒤로 가기로 닫는다. 머리는 가운데 정렬이다 — 제목 18/24 · 700(무엇의 동작인지), 설명 14/19 · fg-neutral-muted(사이 4), 그 아래 16. 묶음은 옅은 회색 상자(bg-neutral-weak · 모서리 16)이고 묶음 사이는 선 없이 10 이다. 줄은 최소 52 · 위아래 14 · 좌우 16 · 이름 16/22 · 아이콘 22(사이 14)이고, 줄 사이에 1px stroke-neutral-weak 선을 긋는다(묶음의 마지막 줄 아래는 없다). 아이콘 없이 글만 쓰면 가운데 정렬이고 줄 설명을 두지 않는다 — 한 시트에서 섞지 않는다. 위험한 동작은 맨 아래 묶음에 둔다. 줄을 누르면 시트를 닫고 실행한다. 보조 기술용 닫기는 목록 뒤에 있고 평소에는 보이지 않다가 키보드 초점이 오면 52 높이 · bg-neutral-weak · 모서리 12 버튼으로 보인다.",
@@ -5238,7 +5238,7 @@ const AVATAR = avatarLib();
 const AVATAR_SIZES = [20, 24, 36, 42, 48, 56, 64, 80, 96, 108];
 const AVATAR_FONT = { 20: 10, 24: 10, 36: 14, 42: 17, 48: 19, 56: 22, 64: 26, 80: 32, 96: 38, 108: 43 };
 const AVATAR_STACK = { 20: [5, 1, 10], 24: [6, 1, 10], 36: [8, 2, 13], 42: [10, 2, 15], 48: [12, 2, 17], 56: [13, 3, 20], 64: [16, 3, 23], 80: [20, 4, 29], 96: [24, 5, 35], 108: [27, 5, 39] };
-// 아바타 크기마다 SEED 와 porest 의 자리(avatar.yaml variants.size)
+// 아바타 크기마다 SEED 와 groo 의 자리(avatar.yaml variants.size)
 const AVATAR_PLACE = { 20: "글 한 줄 안", 24: "줄 안 묶음", 36: "한 줄 목록", 42: "두 줄 목록", 48: "작은 목록", 56: "큰 목록", 64: "프로필 상세", 80: "계정 머리", 96: "HR 큰 사진", 108: "사진 수정" };
 
 // 아이콘 — lucide 그림(선 2). 크기는 놓인 자리가 정한다(배지 12 · 14 · 태그 12 · 13 · 14 · 알림 아이콘 18 · 24)
@@ -5481,7 +5481,7 @@ export function renderDisplayGallery(brand) {
     listRow({ prefix: tile("orange", "coffee"), title: "스타벅스 강남역점", detail: "카페 · 신한카드", suffix: '<span class="plst-amount">5,600원</span>' }),
     listRow({ prefix: tile("gray", "bus"), title: "버스", detail: "교통 · 체크카드", suffix: '<span class="plst-amount">1,500원</span>' }),
   ]), { bar: topBar("가계부", [bellButton({ size: "small" })]) });
-  const nbDesk = `<div class="pdsp-desk">${topBar("porest", [`<button class="btn btn-ghost btn-icon-only btn-size-medium" type="button" aria-label="검색">${DISPLAY_ICON.search}</button>`, bellButton({ size: "large", count: 3 })])}<div class="pdsp-desk-body">${note("한 자리 숫자는 아이콘 버튼(40) 안에 들고, 두 자리 · \"99+\" 는 버튼 오른쪽 밖으로 나간다.")}</div></div>`;
+  const nbDesk = `<div class="pdsp-desk">${topBar("groo", [`<button class="btn btn-ghost btn-icon-only btn-size-medium" type="button" aria-label="검색">${DISPLAY_ICON.search}</button>`, bellButton({ size: "large", count: 3 })])}<div class="pdsp-desk-body">${note("한 자리 숫자는 아이콘 버튼(40) 안에 들고, 두 자리 · \"99+\" 는 버튼 오른쪽 밖으로 나간다.")}</div></div>`;
   const textAttach = surface(row([
     `<span class="pdsp-text-target">${notificationBadge({ target: "공지", attach: "text" })}</span>`,
     `<span class="pdsp-text-target">${notificationBadge({ target: "받은 결재", attach: "text", size: "large", count: 2 })}</span>`,
@@ -5662,7 +5662,7 @@ export function renderDisplayGallery(brand) {
 
 // 기다림 — spec: specs/components/skeleton.md · progress-circle.md · progress.md · scroll-fog.md · content-placeholder.md ·
 // 수치 skeleton.yaml · progress-circle.yaml · pull-to-refresh.yaml · progress.yaml · scroll-fog.yaml · content-placeholder.yaml. 구조는 SEED Skeleton ·
-// Progress Circle · Pull To Refresh · Scroll Fog · Content Placeholder 와 Loading 패턴(2026-10-03). Progress(막대)는 porest 만의 미터다.
+// Progress Circle · Pull To Refresh · Scroll Fog · Content Placeholder 와 Loading 패턴(2026-10-03). Progress(막대)는 groo 만의 미터다.
 // 스켈레톤 .psk(면 + ::after 반짝임 띠) · 기다리는 영역 .pld-region(data-phase — quiet 0 ~ 1초 · waiting 1초 ~ · slow 5초 ~ · failed 10초) > 오래 걸림 글 .pld-slow ·
 // 화면의 상태 글 .pld-status(role=status, 보이지 않게) · 원 .ppc(svg role=progressbar > 트랙 .ppc-track · 호 .ppc-range) ·
 // 당겨서 새로 고침 .pptr(지시자 칸 .pptr-indicator · 내용 .pptr-content) · 막대 .pmeter(이름 줄 .pmeter-head · 트랙 .pmeter-track(role=meter) > 채움 .pmeter-fill ·
@@ -6048,7 +6048,7 @@ export function renderLoadingGallery(brand) {
   const fogDialog = desktop(520, overlayPage({ desktop: true }), [overlayScrim(), overlayLayer("dialog", overlayDialog({ title: "거래 상세", close: true, body: overlayValueList(longDetail), scrollFog: true }))]);
   const IMPORTED = ["김밥천국", "버스", "다이소", "스타벅스", "GS25", "교보문고", "올리브영", "택시", "넷플릭스", "쿠팡"].map((t, i) => ({ title: t, detail: `10월 ${i + 1}일 · 현대카드 M`, value: "가져옴" }));
   const fogPage = phone(560, `${title("가져오기 결과")}<div class="pld-page-fog"><div class="pfog pfog--page" tabindex="0" role="region" aria-label="가져온 거래">${listOf(IMPORTED.map((r) => listRow({ title: r.title, detail: r.detail, suffix: escape(r.value) })))}</div><div class="pld-page-cta">${overlayButton("가계부에 넣기", { size: "large" })}</div></div>`);
-  const TERMS = "제1조(목적) 이 약관은 Porest Desk 가 제공하는 가계부 · 메모 · 할 일 서비스의 이용 조건과 절차를 정한다. 제2조(계정) 이용자는 하나의 계정만 만들 수 있고, 계정 정보는 본인만 쓴다. 제3조(데이터) 이용자가 넣은 거래 · 메모는 이용자의 것이며, 서비스는 보관과 백업에만 쓴다. 제4조(해지) 이용자는 언제든 설정에서 이용을 해지할 수 있고, 해지하면 아이디와 이메일은 다시 쓸 수 없다. 제5조(변경) 약관이 바뀌면 시행 7일 전에 앱 안에서 알린다.";
+  const TERMS = "제1조(목적) 이 약관은 그루 담다 가 제공하는 가계부 · 메모 · 할 일 서비스의 이용 조건과 절차를 정한다. 제2조(계정) 이용자는 하나의 계정만 만들 수 있고, 계정 정보는 본인만 쓴다. 제3조(데이터) 이용자가 넣은 거래 · 메모는 이용자의 것이며, 서비스는 보관과 백업에만 쓴다. 제4조(해지) 이용자는 언제든 설정에서 이용을 해지할 수 있고, 해지하면 아이디와 이메일은 다시 쓸 수 없다. 제5조(변경) 약관이 바뀌면 시행 7일 전에 앱 안에서 알린다.";
   const box = (scroll) => `<div class="pld-box"${scroll ? ` data-pfog-scroll="${scroll}"` : ""}><div class="pfog pfog--box" tabindex="0" role="region" aria-label="이용 약관"><p class="pld-terms">${escape(TERMS)}</p></div></div>`;
   const fogPanel = panel(
     "Scroll Fog — 칩 줄 · 시트 · 대화상자 본문 · 바닥 버튼 화면 · 상자, 늘 켜짐 · 깊이만큼 여백",
@@ -6126,7 +6126,7 @@ export function renderLoadingGallery(brand) {
 
 
 // 이미지 — spec: specs/components/image-frame.md · logo-tile.md · aspect-ratio.md · 수치 image-frame.yaml · card-art.yaml · logo-tile.yaml · aspect-ratio.yaml ·
-// 기관 색 institution-colors.yaml. 구조는 SEED Image Frame · Aspect Ratio(2026-10-04) — Logo Tile · 카드 그림은 porest 만의 부품이다.
+// 기관 색 institution-colors.yaml. 구조는 SEED Image Frame · Aspect Ratio(2026-10-04) — Logo Tile · 카드 그림은 groo 만의 부품이다.
 // 그림 틀 .pif(비율 .pif--{1x1 · 2x1 · 16x9 · 4x3 · 6x7 · 4x5 · 2x3 · card} · 모서리 .pif--r{4 · 6 · 8 · 0} — 폭으로 고른다, 상태 data-state loaded · loading · fallback) >
 //   그림 .pif-img(cover — fit contain 이면 .pif--contain 의 흰 판 위) · 불러오는 동안 03p 의 .psk · 없음 · 실패면 03p 의 .pcph(또는 카드 면 .pcart-face) ·
 //   그림 위 자리 .pif-floater(--top-start · --top-end · --bottom-start · --bottom-end — 모서리에서 6) > 배지(03o 의 .pbadge solid) · 장수 글 .pif-ind.
@@ -6350,7 +6350,7 @@ export function renderImageGallery(brand, tokens) {
   const inst = (name) => INSTITUTION.find(name);
 
   // 1. 비율 여덟 — 같은 폭 120. 그림은 cover(가운데를 남겨 자른다), 로고 · 글이 든 그림은 contain + 흰 판
-  const RATIOS = [["1:1", "정사각"], ["2:1", "넓은 띠"], ["16:9", "동영상"], ["4:3", "사진 — 기본"], ["6:7", "조금 세로"], ["4:5", "세로 · 여러 장"], ["2:3", "긴 세로"], ["card", "카드 1.586 — porest"]];
+  const RATIOS = [["1:1", "정사각"], ["2:1", "넓은 띠"], ["16:9", "동영상"], ["4:3", "사진 — 기본"], ["6:7", "조금 세로"], ["4:5", "세로 · 여러 장"], ["2:3", "긴 세로"], ["card", "카드 1.586 — groo"]];
   const ratioRow = row(RATIOS.map(([r, ko]) => item(imageFrame({ ratio: r, width: 120, src: r === "card" ? PIMG.cardH : PIMG.forest }), `${r === "card" ? "card" : r} — ${ko}`, `120 × ${num(120 / PIMG_RATIO[r][1])}`)), "pimg-row--ratios");
   const fitRow = row([
     item(imageFrame({ ratio: "4:3", width: 160, src: PIMG.dawn }), "cover — 사진", "가운데를 남겨 자른다(기본)"),
@@ -6358,7 +6358,7 @@ export function renderImageGallery(brand, tokens) {
   ]);
   const ratioPanel = panel(
     "Image Frame — 비율 여덟 · 같은 폭 120 · cover · contain",
-    "비율은 여덟 가지다 — SEED 의 일곱(1:1 · 2:1 · 16:9 · 4:3 · 6:7 · 4:5 · 2:3)과 카드 1.586(ISO 카드 85.6 × 53.98 — porest). 기본은 4:3 이다. 틀은 그림이 오기 전에 비율로 자리를 잡아(높이 = 폭 ÷ 비율) 그림이 와도 줄이 밀리지 않고, 모서리로 그림을 자른다(overflow hidden · isolation). 사진 · 카드 그림은 꽉 채우고 가운데를 남겨 자른다(cover). 로고처럼 잘리면 안 되는 그림은 잘리지 않게 넣고(contain) 둘레를 흰 판으로 채운다 — 판은 두 모드 모두 흰색이라 다크에서도 그림의 검은 부분이 사라지지 않는다. 카드 그림은 목록 · 격자 · 상세 모두 1.586 이다 — 최대 높이를 걸어 비율을 바꾸지 않는다. 이 밖의 비율(3:4 · 21:9)은 만들지 않는다.",
+    "비율은 여덟 가지다 — SEED 의 일곱(1:1 · 2:1 · 16:9 · 4:3 · 6:7 · 4:5 · 2:3)과 카드 1.586(ISO 카드 85.6 × 53.98 — groo). 기본은 4:3 이다. 틀은 그림이 오기 전에 비율로 자리를 잡아(높이 = 폭 ÷ 비율) 그림이 와도 줄이 밀리지 않고, 모서리로 그림을 자른다(overflow hidden · isolation). 사진 · 카드 그림은 꽉 채우고 가운데를 남겨 자른다(cover). 로고처럼 잘리면 안 되는 그림은 잘리지 않게 넣고(contain) 둘레를 흰 판으로 채운다 — 판은 두 모드 모두 흰색이라 다크에서도 그림의 검은 부분이 사라지지 않는다. 카드 그림은 목록 · 격자 · 상세 모두 1.586 이다 — 최대 높이를 걸어 비율을 바꾸지 않는다. 이 밖의 비율(3:4 · 21:9)은 만들지 않는다.",
     `${samples([sample("비율 — 폭 120 에서 높이", "ratio=\"1:1\" · \"2:1\" · \"16:9\" · \"4:3\"(기본) · \"6:7\" · \"4:5\" · \"2:3\" · \"card\"", surface(ratioRow))], "ptf-samples pimg-samples--wide")}${samples([
       sample("Fit — 라이트 · 다크", "fit=\"cover\"(기본) · fit=\"contain\" — 흰 판은 두 모드 같다", pair(fitRow)),
     ], "ptf-samples pov-samples--next pimg-samples--wide")}`,
@@ -6581,7 +6581,7 @@ export function renderImageGallery(brand, tokens) {
 
   // 13. Aspect Ratio — 그림이 아닌 비율 상자(동영상 · 지도 · 바깥 페이지). 모서리 · 바탕 · 윤곽이 없다
   const video = (label) => `<video class="par-child" poster="${PIMG.video}" preload="none" aria-label="${escape(label)}"></video>`;
-  const arRow = row(RATIOS.map(([r, ko]) => item(`<span class="pimg-ar-guide">${aspectRatioBox({ ratio: r, child: `<span class="par-child pimg-ar-fill" aria-hidden="true"></span>` })}</span>`, `${r === "card" ? "card" : r} — ${r === "4:3" ? "기본" : ko.replace(" — porest", "")}`, `120 × ${num(120 / PIMG_RATIO[r][1])}`)), "pimg-row--ratios");
+  const arRow = row(RATIOS.map(([r, ko]) => item(`<span class="pimg-ar-guide">${aspectRatioBox({ ratio: r, child: `<span class="par-child pimg-ar-fill" aria-hidden="true"></span>` })}</span>`, `${r === "card" ? "card" : r} — ${r === "4:3" ? "기본" : ko.replace(" — groo", "")}`, `120 × ${num(120 / PIMG_RATIO[r][1])}`)), "pimg-row--ratios");
   const videoPhone = phone(360, `${title("자산 연결 안내")}${aspectRatioBox({ ratio: "16:9", child: video("자산 연결 안내 동영상") })}<div class="pimg-page-text">16:9 동영상 — 모서리 · 바탕 · 윤곽 없이 상자를 채운다(cover)</div>`);
   const whichGuide = surface(row([
     item(cardArt({ issuer: "현대카드", name: "SELECT", src: PIMG.cardWhite, width: 150 }), "카드 그림 — Image Frame", "모서리 8 · 윤곽 · 스켈레톤 · 대체 그림"),
@@ -6597,7 +6597,7 @@ export function renderImageGallery(brand, tokens) {
     ], "ptf-samples pov-samples--next")}`,
   );
 
-  const lede = "SEED Image Frame · Aspect Ratio 구조와 porest 의 카드 그림 · Logo Tile — 그림과 물건을 보이는 부품이다. 그림은 Image Frame 하나로 그린다 — 비율 상자(여덟 비율 · 기본 4:3 · 카드 1.586)에 그림을 꽉 채우고(cover), 그림 위에 안쪽 1px 투명 윤곽(stroke-neutral-overlay · v118 — 검정 4.7% · 다크 흰 5%)을 늘 그리며, 모서리는 폭으로(24 이하 4 · 48 이하 6 · 그 위 8 · 화면 폭 0) 고른다. 불러오는 동안은 같은 모서리의 Skeleton, 없거나 · 못 불러오거나 · 10초가 지나면 Content Placeholder 이고 이름(alt)이 남는다. 그림 위에는 배지(solid) · 장수 글(Indicator — 검정 65%)을 네 모서리에 둘까지 얹는다. 카드 그림은 세로 그림을 시계 방향 90° 돌려 채우고, 그림이 없으면 아는 카드사는 기관 색 면(표의 글자색 — 78곳 모두 4.52:1 이상), 모르면 대체 그림이다. 은행 · 증권 · 카드 · 코인 · 금 · 회사는 Logo Tile(32 · 40 · 48 · 모서리 × 0.3) — 기관 색 또는 이름 색 면 + 첫 글자를 먼저 그리고 그림이 오면 덮는다. 그림이 아닌 비율 상자(동영상 · 지도)는 Aspect Ratio(모서리 · 바탕 없음)다. 여러 장은 끝이 보이는 가로 줄 + \"1 / 12\" 이고, Carousel(화살표 · 점 · 자동 넘김)은 걷었다. 기관 색은 institution-colors.yaml 에서 읽어 그렸다.";
+  const lede = "SEED Image Frame · Aspect Ratio 구조와 groo 의 카드 그림 · Logo Tile — 그림과 물건을 보이는 부품이다. 그림은 Image Frame 하나로 그린다 — 비율 상자(여덟 비율 · 기본 4:3 · 카드 1.586)에 그림을 꽉 채우고(cover), 그림 위에 안쪽 1px 투명 윤곽(stroke-neutral-overlay · v118 — 검정 4.7% · 다크 흰 5%)을 늘 그리며, 모서리는 폭으로(24 이하 4 · 48 이하 6 · 그 위 8 · 화면 폭 0) 고른다. 불러오는 동안은 같은 모서리의 Skeleton, 없거나 · 못 불러오거나 · 10초가 지나면 Content Placeholder 이고 이름(alt)이 남는다. 그림 위에는 배지(solid) · 장수 글(Indicator — 검정 65%)을 네 모서리에 둘까지 얹는다. 카드 그림은 세로 그림을 시계 방향 90° 돌려 채우고, 그림이 없으면 아는 카드사는 기관 색 면(표의 글자색 — 78곳 모두 4.52:1 이상), 모르면 대체 그림이다. 은행 · 증권 · 카드 · 코인 · 금 · 회사는 Logo Tile(32 · 40 · 48 · 모서리 × 0.3) — 기관 색 또는 이름 색 면 + 첫 글자를 먼저 그리고 그림이 오면 덮는다. 그림이 아닌 비율 상자(동영상 · 지도)는 Aspect Ratio(모서리 · 바탕 없음)다. 여러 장은 끝이 보이는 가로 줄 + \"1 / 12\" 이고, Carousel(화살표 · 점 · 자동 넘김)은 걷었다. 기관 색은 institution-colors.yaml 에서 읽어 그렸다.";
 
   return `
   <section class="section">
@@ -6625,7 +6625,7 @@ export function renderImageGallery(brand, tokens) {
 // 화면 틀 · 이동 — spec: specs/components/top-navigation.md · bottom-navigation.md · side-navigation.md · side-panel.md · pagination.md · table-pagination.md ·
 // floating-action-button.md · 수치 top-navigation.yaml · bottom-navigation.yaml · side-navigation.yaml · side-panel.yaml · pagination.yaml · infinite-list.yaml ·
 // table-pagination.yaml · floating-action-button.yaml · 화면 틀은 DESIGN.md Layout 의 "화면 틀" · "Safe Area". 구조는 SEED Top Navigation · Side Navigation ·
-// Side Panel · Pagination · Table Pagination · Floating Action Button 이고, 하단 탭 바는 porest 의 떠 있는 알약을 고쳐 쓴다(2026-10-04 · 10-08 사용자 결정).
+// Side Panel · Pagination · Table Pagination · Floating Action Button 이고, 하단 탭 바는 groo 의 떠 있는 알약을 고쳐 쓴다(2026-10-04 · 10-08 사용자 결정).
 // 상단 바 .ptnav(--root · --standard · --desktop) > 왼쪽 버튼 · 제목 .ptnav-title · 오른쪽 자리 .ptnav-actions > 아이콘 버튼 .ptnav-icon(상자 44 · 아이콘 24) · 글 버튼 .ptnav-text ·
 //   데스크톱 주 버튼 .ptnav-primary(Button brandSolid small). 알림 점은 03o 의 .pnb(small — 24 아이콘의 x 17 ~ 23 · y 1 ~ 7)다.
 // 하단 탭 바 .ptbar(--compact) > 칸 .ptbar-item(아이콘 24 · 라벨 .ptbar-label) · 가운데 + .ptbar-add > 원 .ptbar-add-circle.
@@ -6783,7 +6783,7 @@ function sideNavItem({ label, icon = "", sub = false, open = false, current = fa
 // 사이드바 — groups 묶음 · current 지금 화면(하위면 부모가 저절로 펼쳐진다 — 접혔을 때는 부모가 지금 항목) · open 손으로 펼친 부모 ·
 // collapsed 접힘 56 · hover 마우스를 올린 항목(그 순간을 멈춤) · logo 서비스 이름 · scrolled 내용이 스크롤된 모습(머리 아래 선) · live 직접 접고 펼치는 사이드바 ·
 // drawer 768 미만의 주 메뉴 서랍에 넣는 내용만(SideNavigationContent — 펼친 모양, 머리 · 바닥 없음)
-function sideNav({ groups, current = "", open = [], collapsed = false, hover = "", logo = "Porest Desk", scrolled = false, live = false, drawer = false, height = 0 } = {}) {
+function sideNav({ groups, current = "", open = [], collapsed = false, hover = "", logo = "그루 담다", scrolled = false, live = false, drawer = false, height = 0 } = {}) {
   const uid = nextPnavId("psnav");
   const parentOf = (name) => groups.flatMap((g) => g.items).find((it) => it.sub && it.sub.includes(name));
   const curParent = parentOf(current);
@@ -7049,7 +7049,7 @@ export function renderNavGallery(brand) {
   const deskMain = `${pnavTitleRow("가계부", "모든 거래 내역", [["filter", "필터 · 3"], ["download", "내보내기"]])}<div class="pnav-desk-cards">${pnavCard(`<div class="pnav-card-cap">이번 달 지출</div><div class="pnav-card-num">1,240,000원</div>`)}${pnavCard(`<div class="pnav-card-cap">수입</div><div class="pnav-card-num">3,200,000원</div>`)}${pnavCard(`<div class="pnav-card-cap">남은 예산</div><div class="pnav-card-num">360,000원</div>`)}</div>${pnavCard(pnavRows(PNAV_LEDGER, 6), "pnav-card--list")}`;
   const deskFrame = pnavDesk({ height: 480, side: sideNav({ groups: PNAV_DESK_NAV, current: "가계부", collapsed: true }), header: deskHeader, main: deskMain });
   const hrMain = `<div class="pnav-desk-top">${pnavScreenTitle("휴가 현황")}</div>${pnavCard(pnavRows(PNAV_LEAVE), "pnav-card--list")}`;
-  const hrFrame = pnavDesk({ height: 420, side: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", collapsed: true, logo: "Porest HR" }), main: hrMain });
+  const hrFrame = pnavDesk({ height: 420, side: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", collapsed: true, logo: "그루 이음" }), main: hrMain });
   // 거래 검색 화면(폰) — ← · 제목 자리 검색칸 · 고급 필터, 거르는 줄(전체 · 지출 · 수입 칩 40)은 스크롤 상자 맨 위의 숨는 머리(.psah — 03p 의 Scroll Auto Hide 스크립트)
   const searchRows = [["지어낸마트 장보기", "식비 · 10월 3일", "−42,300원"], ["지어낸마트 환불", "식비 · 10월 5일", "+12,000원"], ["지어낸마트 정기 배송", "생활 · 10월 9일", "−18,900원"], ["지어낸마트 월간 정기 결제 환불 확인", "식비 · 10월 12일", "+8,800원"]];
   const searchPhone = pnavPhone({ height: 420, inner: `${topNav({ search: { value: "지어낸마트" }, actions: [{ icon: "slidersHorizontal", name: "고급 필터", attrs: 'aria-haspopup="dialog"' }] })}<div class="pnav-body psah-scroll" data-pnav-scroll data-psah-live="nav-search" tabindex="0" role="region" aria-label="검색 결과"><div class="psah pnav-filter-row">${chipGroup({ role: "radiogroup", label: "거래 종류", items: chipRadios(["전체", "지출", "수입"], "전체", { variant: "solid", size: "small" }) })}</div>${pnavRows(searchRows, 16)}</div>` });
@@ -7131,7 +7131,7 @@ export function renderNavGallery(brand) {
 
   // 8. Side Navigation — 펼침 240(1280 이상) · 접힘 56(768 ~ 1279). 창 1280 · 1024
   const deskWide = pnavDesk({ minWidth: 900, height: 520, side: sideNav({ groups: PNAV_DESK_NAV, current: "가계부", hover: "자산" }), header: deskHeader, main: deskMain });
-  const hrWide = pnavDesk({ minWidth: 900, height: 520, side: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", logo: "Porest HR" }), main: hrMain });
+  const hrWide = pnavDesk({ minWidth: 900, height: 520, side: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", logo: "그루 이음" }), main: hrMain });
   const widthPanel = panel(
     "Side Navigation — 1280 이상 펼침 240 · 768 ~ 1279 접힘 56",
     "데스크톱(768 이상)의 주 메뉴다 — 화면 왼쪽 높이 전체의 흰 면(bg-layer-default — 회색 본문 bg-layer-basement 와 면으로 갈린다) + 오른쪽 안쪽 1px stroke-neutral-subtle 이고, 본문과 따로 스크롤된다. 1280 이상은 펼침 240(layout-sidebar), 768 ~ 1279 는 아이콘만 56(layout-sidebar-collapsed)으로 저절로 접혀 본문을 넓게 둔다 — 처음 열 때도 창 폭을 본다. 머리의 접기 버튼으로 어느 폭에서나 손으로 접고 펼 수 있고 손으로 접은 상태는 브라우저에 기억한다(localStorage). 768 미만에서는 없다 — Desk 는 하단 탭 바, HR 은 ☰ 로 여는 왼쪽 옆 패널이다. 위 Desk 창(1280 이상)은 가계부가 지금 항목, 자산에 마우스를 올린 순간이다. 아래 HR 창은 하위 휴가 현황이 지금 화면이라 부모 휴가가 저절로 펼쳐져 있다 — 빵부스러기 없이 사이드바의 지금 항목과 본문 제목이 위치를 알린다. 위 판의 768 ~ 1279 창이 접힌 모습이다. 좁은 화면에서는 창이 가로로 밀린다.",
@@ -7141,10 +7141,10 @@ export function renderNavGallery(brand) {
   );
 
   // 9. Side Navigation — 머리 · 묶음 · 항목 · 지금 항목 · 하위 · 스크롤(머리 아래 선 · 끝 흐림) — 사이드바만, 라이트 · 다크
-  const navAlone = (t) => `<div class="pnav-navs">${sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", hover: "캘린더", logo: "Porest HR", height: 620 })}${sideNav({ groups: PNAV_DESK_NAV, current: "나무증권", collapsed: true, height: 620 })}</div>`;
+  const navAlone = (t) => `<div class="pnav-navs">${sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", hover: "캘린더", logo: "그루 이음", height: 620 })}${sideNav({ groups: PNAV_DESK_NAV, current: "나무증권", collapsed: true, height: 620 })}</div>`;
   const scrolledNav = `<div class="pnav-navs">${sideNav({ groups: PNAV_DESK_NAV, current: "가계부", height: 340, scrolled: true })}</div>`;
   const LONG_NAV = [{ label: "근무", items: [{ label: "홈", icon: "layoutGrid" }, { label: "연말정산 · 의료비 서류 제출 확인", icon: "briefcase" }, { label: "캘린더", icon: "calendarDays" }] }];
-  const longNav = `<div class="pnav-navs">${sideNav({ groups: LONG_NAV, current: "홈", logo: "Porest HR", height: 300 })}</div>`;
+  const longNav = `<div class="pnav-navs">${sideNav({ groups: LONG_NAV, current: "홈", logo: "그루 이음", height: 300 })}</div>`;
   const itemStates = [
     { ko: "기본", en: "enabled", i: "" },
     { ko: "호버", en: "hovered — 웹", i: "hover" },
@@ -7174,7 +7174,7 @@ export function renderNavGallery(brand) {
   const itemTop = (index) => 64 + 8 + 44 * index;
   const tipCrop = pnavDesk({ width: 420, height: 330, side: sideNav({ groups: PNAV_DESK_NAV, current: "가계부", collapsed: true, hover: "자산" }), main: `${pnavScreenTitle("가계부")}${pnavCard(pnavRows(PNAV_LEDGER, 3), "pnav-card--list")}`, overlay: sideNavTip({ text: "자산", top: itemTop(1) + 22 }) });
   const flyCrop = pnavDesk({ width: 420, height: 330, side: sideNav({ groups: PNAV_DESK_NAV, current: "나무증권", collapsed: true }), main: `${pnavScreenTitle("나무증권")}${pnavCard(pnavRows([["삼성전자", "보통주 · 12주", "852,000원"], ["카카오", "보통주 · 30주", "1,236,000원"], ["KODEX 200", "ETF · 8주", "296,400원"]]), "pnav-card--list")}`, overlay: sideNavFlyout({ parent: "증권", items: ["나무증권", "토스증권"], current: "나무증권", hover: "토스증권", top: itemTop(2) }) });
-  const liveDesk = pnavDesk({ height: 520, side: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", collapsed: true, logo: "Porest HR", live: true }), main: hrMain, attrs: "data-psnav-frame" });
+  const liveDesk = pnavDesk({ height: 520, side: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", collapsed: true, logo: "그루 이음", live: true }), main: hrMain, attrs: "data-psnav-frame" });
   const flyPanel = panel(
     "Side Navigation — 접혔을 때: 이름 말풍선 · 옆 펼침 메뉴 · 직접",
     "접힌 사이드바(56)에서 하위가 없는 항목에 마우스를 올리면 200ms 뒤 · 키보드 초점이면 바로 오른쪽에 이름 말풍선(Help Bubble 툴팁 — 짙은 바탕 · 모서리 12 · 13/18 · 700, 항목 오른쪽 12)이 뜨고 떠나면 100ms 뒤 닫힌다. 하위가 있는 항목은 누른 아이콘 옆 8(위 끝 맞춤)에 펼침 메뉴가 열린다 — Menu 와 같은 표면(bg-layer-floating · 모서리 20 · shadow-s3 · 위아래 8 · 폭 200 · L3 z-floating 200), 맨 위에 부모 이름(13/18 · fg-neutral-subtle · 위아래 8 · 좌우 16), 줄은 높이 44 · 좌우 16 · 14/19 · fg-neutral 이고 바탕은 좌우 8 들인 알약(모서리 12 — 호버 bg-layer-floating-pressed)이다. 지금 화면의 줄은 지금 항목과 같은 bg-neutral-weak-pressed 다. 이 폭(768 ~ 1279)은 Menu 가 Menu Sheet 로 바뀌는 1280 미만이지만 사이드바의 하위 목록은 시트로 바꾸지 않는다 — Menu 경계의 예외다(줄 44 — 이 폭에 터치 태블릿이 섞인다). 마우스는 200ms 뒤 열고 메뉴로 옮겨 가는 동안 닫히지 않으며 떠나면 100ms 뒤 닫는다 · 다른 펼침 메뉴가 열려 있으면 바로 연다. 누르거나 Enter · Space 로도 열고(키보드로 열면 첫 줄로 초점), Esc · 바깥 누르기 · Tab 으로 나가면 닫는다(Esc 면 초점은 부모로). 아래 창(768 ~ 1279 · HR)은 직접 해 볼 수 있다 — 접기 버튼으로 펼침 240 ↔ 접힘 56(200ms), 펼친 사이드바의 휴가는 눌러 펼치고 접는다.",
@@ -7189,19 +7189,19 @@ export function renderNavGallery(brand) {
   // 11. Side Panel — HR 폰 주 메뉴 서랍(왼쪽 80%). 왼쪽은 열린 순간을 멈춘 그림, 오른쪽은 ☰ 로 직접 연다
   const drawerNav = sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", drawer: true });
   const drawerBack = `${topNav({ title: "휴가 현황", leading: "menu", menu: { open: true } })}${phoneBody(pnavRows(PNAV_LEAVE))}`;
-  const drawerOpen = pnavPhone({ height: 560, cls: "pnav-phone--modal", inner: `<div class="pnav-back" inert>${drawerBack}</div><div class="pov-scrim" aria-hidden="true"></div>${sidePanel({ side: "left", title: "Porest HR", body: drawerNav, scrollFog: true })}` });
+  const drawerOpen = pnavPhone({ height: 560, cls: "pnav-phone--modal", inner: `<div class="pnav-back" inert>${drawerBack}</div><div class="pov-scrim" aria-hidden="true"></div>${sidePanel({ side: "left", title: "그루 이음", body: drawerNav, scrollFog: true })}` });
   const drawerLiveId = nextPnavId("pspanel-live");
   const drawerLive = pnavPhone({
     height: 560,
     cls: "pnav-phone--modal",
     attrs: "data-pspanel-phone",
-    inner: `<div class="pnav-back" data-pspanel-back>${topNav({ title: "휴가 현황", leading: "menu", menu: { open: false, controls: drawerLiveId, live: true } })}${phoneBody(pnavRows(PNAV_LEAVE))}</div><div class="pov-scrim" aria-hidden="true" data-pspanel-scrim hidden></div>${sidePanel({ side: "left", title: "Porest HR", body: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", drawer: true }), scrollFog: true, id: drawerLiveId, hidden: true, live: true })}`,
+    inner: `<div class="pnav-back" data-pspanel-back>${topNav({ title: "휴가 현황", leading: "menu", menu: { open: false, controls: drawerLiveId, live: true } })}${phoneBody(pnavRows(PNAV_LEAVE))}</div><div class="pov-scrim" aria-hidden="true" data-pspanel-scrim hidden></div>${sidePanel({ side: "left", title: "그루 이음", body: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", drawer: true }), scrollFog: true, id: drawerLiveId, hidden: true, live: true })}`,
   });
   const drawerPanel = panel(
     "Side Panel — HR 폰 주 메뉴 서랍(왼쪽 · 화면 폭의 80%)",
-    "화면 옆에서 미끄러져 나오는 모달 패널이다 — 지금 쓰는 곳은 HR 웹 768 미만의 주 메뉴 서랍 하나다. 상단 바의 ☰(이름 \"주 메뉴\" · aria-haspopup=\"dialog\" · aria-expanded)를 누르면 왼쪽에서 300ms(d6 · enter-expressive)로 들어온다. 폭은 화면의 80% 라 딤(overlay-dim 0.50 · 다크 0.65 · L2 z-modal 100)이 오른쪽 20% 에 남는다. 패널은 높이 전체에 붙고 모서리 · 그림자 · 선 없이 딤과 떠 있는 표면 bg-layer-floating 으로 뜬다(L2 z-modal-content 101). 머리는 위 24 · 좌우 24 · 아래 16 · 최소 70, 제목은 서비스 이름(\"Porest HR\" — text-t8 22/30 · 700), 닫기는 투명 상자 52 · 아이콘 22(fg-neutral-subtle — 위 28 · 오른쪽 24)다. 본문은 사이드바의 묶음 · 항목을 펼친 모양 그대로 담는다 — 본문 좌우 16 에 항목(좌우 8)이 들어와 아이콘이 제목과 같은 24 에 선다. 넘칠 수 있어 끝을 늘 흐린다(Scroll Fog overlayBody — 위 20 · 아래 80 + 본문 안 여백). 지금 화면의 묶음(휴가)은 펼쳐진 채 열리고, 항목을 누르면 이동하고 닫힌다. 딤 누르기 · 닫기 · Esc · 왼쪽으로 끌기로 닫히고, 닫히면 초점이 ☰ 로 돌아온다. 오른쪽 폰은 직접 열고 닫을 수 있다(모션 줄이기면 150ms 서서히).",
+    "화면 옆에서 미끄러져 나오는 모달 패널이다 — 지금 쓰는 곳은 HR 웹 768 미만의 주 메뉴 서랍 하나다. 상단 바의 ☰(이름 \"주 메뉴\" · aria-haspopup=\"dialog\" · aria-expanded)를 누르면 왼쪽에서 300ms(d6 · enter-expressive)로 들어온다. 폭은 화면의 80% 라 딤(overlay-dim 0.50 · 다크 0.65 · L2 z-modal 100)이 오른쪽 20% 에 남는다. 패널은 높이 전체에 붙고 모서리 · 그림자 · 선 없이 딤과 떠 있는 표면 bg-layer-floating 으로 뜬다(L2 z-modal-content 101). 머리는 위 24 · 좌우 24 · 아래 16 · 최소 70, 제목은 서비스 이름(\"그루 이음\" — text-t8 22/30 · 700), 닫기는 투명 상자 52 · 아이콘 22(fg-neutral-subtle — 위 28 · 오른쪽 24)다. 본문은 사이드바의 묶음 · 항목을 펼친 모양 그대로 담는다 — 본문 좌우 16 에 항목(좌우 8)이 들어와 아이콘이 제목과 같은 24 에 선다. 넘칠 수 있어 끝을 늘 흐린다(Scroll Fog overlayBody — 위 20 · 아래 80 + 본문 안 여백). 지금 화면의 묶음(휴가)은 펼쳐진 채 열리고, 항목을 누르면 이동하고 닫힌다. 딤 누르기 · 닫기 · Esc · 왼쪽으로 끌기로 닫히고, 닫히면 초점이 ☰ 로 돌아온다. 오른쪽 폰은 직접 열고 닫을 수 있다(모션 줄이기면 150ms 서서히).",
     samples([
-      sample("열린 순간 — 휴가 묶음이 펼쳐진 채", "<SidePanelContent side=\"left\" title=\"Porest HR\"> · <SideNavigationContent>", drawerOpen),
+      sample("열린 순간 — 휴가 묶음이 펼쳐진 채", "<SidePanelContent side=\"left\" title=\"그루 이음\"> · <SideNavigationContent>", drawerOpen),
       sample("직접 — ☰ 로 열기", "딤 · 닫기 · Esc · 항목을 누르면 닫힌다 — 초점은 ☰ 로", `${drawerLive}<p class="pnav-live-status" aria-hidden="true" data-pspanel-status="">☰ 를 눌러 보세요.</p>`),
     ]),
   );
@@ -7322,7 +7322,7 @@ export function renderNavGallery(brand) {
     ])}${fabStates}`,
   );
 
-  const lede = "SEED Top Navigation · Side Navigation · Side Panel · Pagination · Table Pagination · Floating Action Button 구조와 porest 의 떠 있는 하단 탭 바 — 화면을 감싸는 틀과 이동이다. 문턱은 둘이다 — 768(모바일 틀 ↔ 사이드바 틀)과 1280(사이드바 접힘 ↔ 펼침). 화면 맨 위의 바(Top Navigation)는 폰 · 데스크톱 모두 56 · 선 · 그림자 없음 · 아이콘 버튼 상자 44(아이콘 24 · 화면 끝 6 · 버튼끼리 붙음)이고, 탭 첫 화면은 왼쪽 큰 제목 22, 그 아래 화면은 ← + 18 이다. 폰의 주 메뉴는 Desk 는 떠 있는 알약(66 · 줄면 48 · 불투명 bg-layer-floating · 다섯 칸 · 지금 탭은 짙은 색 + 선 2.5 · 가운데 + 는 브랜드 원 44), HR 은 ☰ 로 여는 왼쪽 옆 패널(화면 폭의 80%)이다. 데스크톱은 사이드바(Side Navigation — 240 · 768 ~ 1279 는 아이콘만 56 · 항목 44 · 지금 항목은 bg-neutral-weak-pressed · 접혔을 때 하위는 옆 펼침 메뉴)이고 Desk 만 머리(주 버튼 + 아이콘 셋)를 둔다. 긴 목록은 데스크톱 Pagination(칸 40 · 사이 0 · 지금 쪽 짙은 채움 · 9칸 / 7칸 · 끝은 빈 칸), 폰은 끝없이 불러오기(받는 중 · 다시 시도 · 끝 글), 데이터 표는 Table Pagination(한 줄 40)이다. 탭 바 없는 폰 화면의 주 동작은 떠 있는 버튼(원 56)이다. 옛 Sidebar · Sheet(옆 패널) · Pagination 은 다시 그렸고, Breadcrumb · Navigation Menu 는 걷었다 — 데스크톱의 위치는 사이드바의 지금 항목이 알린다."
+  const lede = "SEED Top Navigation · Side Navigation · Side Panel · Pagination · Table Pagination · Floating Action Button 구조와 groo 의 떠 있는 하단 탭 바 — 화면을 감싸는 틀과 이동이다. 문턱은 둘이다 — 768(모바일 틀 ↔ 사이드바 틀)과 1280(사이드바 접힘 ↔ 펼침). 화면 맨 위의 바(Top Navigation)는 폰 · 데스크톱 모두 56 · 선 · 그림자 없음 · 아이콘 버튼 상자 44(아이콘 24 · 화면 끝 6 · 버튼끼리 붙음)이고, 탭 첫 화면은 왼쪽 큰 제목 22, 그 아래 화면은 ← + 18 이다. 폰의 주 메뉴는 Desk 는 떠 있는 알약(66 · 줄면 48 · 불투명 bg-layer-floating · 다섯 칸 · 지금 탭은 짙은 색 + 선 2.5 · 가운데 + 는 브랜드 원 44), HR 은 ☰ 로 여는 왼쪽 옆 패널(화면 폭의 80%)이다. 데스크톱은 사이드바(Side Navigation — 240 · 768 ~ 1279 는 아이콘만 56 · 항목 44 · 지금 항목은 bg-neutral-weak-pressed · 접혔을 때 하위는 옆 펼침 메뉴)이고 Desk 만 머리(주 버튼 + 아이콘 셋)를 둔다. 긴 목록은 데스크톱 Pagination(칸 40 · 사이 0 · 지금 쪽 짙은 채움 · 9칸 / 7칸 · 끝은 빈 칸), 폰은 끝없이 불러오기(받는 중 · 다시 시도 · 끝 글), 데이터 표는 Table Pagination(한 줄 40)이다. 탭 바 없는 폰 화면의 주 동작은 떠 있는 버튼(원 56)이다. 옛 Sidebar · Sheet(옆 패널) · Pagination 은 다시 그렸고, Breadcrumb · Navigation Menu 는 걷었다 — 데스크톱의 위치는 사이드바의 지금 항목이 알린다."
     + (brand.key === "shared" ? " 공유 토큰에는 브랜드 역할 색이 없어 + · 떠 있는 버튼 · 알림 점 · 주 버튼 · 포커스 링이 여기서는 중립으로 보인다 — HR · Desk 미리보기에서 브랜드 색이다." : "");
 
   return `
@@ -7462,11 +7462,11 @@ const ptblSkeletonRows = (n, columns) => Array.from({ length: n }, (_, r) => `<t
 
 // HR 사용자 — table.md 의 "HR 사용자 표" 와 같은 열(이름 · 부서 · 남은 휴가 · 상태 · ⋮). 입사일은 날짜 열(처음 누르면 최근 것 먼저)
 const PTBL_USERS = [
-  { id: "u1", name: "김하늘", email: "haneul.kim@porest.kr", dept: "개발팀", days: 12.5, status: "재직", tone: "positive", joined: "2021-03-02" },
-  { id: "u2", name: "이도윤", email: "doyun.lee@porest.kr", dept: "디자인팀", days: 3, status: "휴직", tone: "warning", joined: "2022-07-11" },
-  { id: "u3", name: "박서연", email: "seoyeon.park@porest.kr", dept: "인사팀", days: 0.5, status: "재직", tone: "positive", joined: "2019-11-18" },
-  { id: "u4", name: "최민준", email: "minjun.choi@porest.kr", dept: "영업팀", days: 15, status: "재직", tone: "positive", joined: "2018-01-08" },
-  { id: "u5", name: "정다은", email: "daeun.jung@porest.kr", dept: "재무팀", days: 8, status: "초대 대기", tone: "neutral", joined: "2026-10-06" },
+  { id: "u1", name: "김하늘", email: "haneul.kim@groo.kr", dept: "개발팀", days: 12.5, status: "재직", tone: "positive", joined: "2021-03-02" },
+  { id: "u2", name: "이도윤", email: "doyun.lee@groo.kr", dept: "디자인팀", days: 3, status: "휴직", tone: "warning", joined: "2022-07-11" },
+  { id: "u3", name: "박서연", email: "seoyeon.park@groo.kr", dept: "인사팀", days: 0.5, status: "재직", tone: "positive", joined: "2019-11-18" },
+  { id: "u4", name: "최민준", email: "minjun.choi@groo.kr", dept: "영업팀", days: 15, status: "재직", tone: "positive", joined: "2018-01-08" },
+  { id: "u5", name: "정다은", email: "daeun.jung@groo.kr", dept: "재무팀", days: 8, status: "초대 대기", tone: "neutral", joined: "2026-10-06" },
 ];
 const ptblDays = (n) => `${n.toLocaleString("ko-KR")}일`;
 // 업무 보고 — 고르기 · 일괄 작업(table.md 의 "고르기 · 일괄 작업"). 2026년 10월 1일은 목요일이다
@@ -7938,7 +7938,7 @@ export function renderDataGallery(brand) {
   // 6. 768 미만은 List 줄 — 같은 줄을 폰에서는 List 의 누르는 줄로(제목 · 설명 · 오른쪽 값, 누르면 상세)
   const userList = listOf(sortUsers().map((u) => listRow({ kind: "button", title: u.name, detail: `${u.dept} · ${u.status}`, suffix: `<span class="pdata-list-value">${escape(ptblDays(u.days))}</span>` })), ' aria-label="사용자"');
   const phoneList = pnavPhone({ height: 564, bg: "basement", inner: `${topNav({ title: "사용자", leading: "menu" })}<div class="pnav-body pdata-phone-body" data-pnav-scroll>${`<div class="pdata-sort-line">${selectTrigger({ size: "large", value: "남은 휴가 많은 순", label: "정렬" })}</div>`}<div class="pdata-stack pdata-stack--top0">${pcard({ body: "list", list: userList })}</div></div>` });
-  const deskTable = pnavDesk({ width: 0, minWidth: 820, height: 470, side: sideNav({ groups: PNAV_HR_NAV, current: "사용자", collapsed: true, logo: "Porest HR" }), main: `${pnavScreenTitle("사용자")}${tableCard("사용자", userTable())}` });
+  const deskTable = pnavDesk({ width: 0, minWidth: 820, height: 470, side: sideNav({ groups: PNAV_HR_NAV, current: "사용자", collapsed: true, logo: "그루 이음" }), main: `${pnavScreenTitle("사용자")}${tableCard("사용자", userTable())}` });
   const narrowPanel = panel(
     "Table — 768 미만은 List 줄로",
     "768 미만에서는 표를 그리지 않고 줄마다 List 의 누르는 줄로 바꾼다 — 폰에서 옆으로 밀거나 열을 숨겨 보지 않는다. 첫 열(그 줄의 이름) → 제목(16 / 22), 다음으로 중요한 열 1 ~ 2개 → 설명(13 · fg-neutral-subtle · \" · \" 로 잇는다), 핵심 숫자 하나 또는 상태 → 오른쪽 값(숫자는 16 · 고정폭 숫자, 상태는 Badge), 나머지 열은 줄을 눌러 여는 상세다. 썸네일 · 사람 · 기관은 앞 붙이개(Image Frame · Avatar · Logo Tile), 선택 칸은 앞 체크 24(List 의 여럿 고르기), 줄 끝 ⋮ 는 Menu Sheet(폰 스와이프는 지름길), 정렬은 목록 위 Select 하나(\"남은 휴가 많은 순\"), 넘김 줄은 끝없이 불러오기다. 폰 화면은 바닥이 회색이고 목록은 카드에 담는다(Card 의 목록 카드). 위 데스크톱 창(768 ~ 1279)은 같은 데이터의 표다 — 좁은 화면에서는 창이 가로로 밀린다.",
@@ -8157,7 +8157,7 @@ export function renderDataGallery(brand) {
     `${pair(swipeFloor)}${samples([sample("⋮ → Menu Sheet — 같은 동작 · 같은 차례", "SwipeActionsMenu — 삭제는 tone=\"critical\"", swipeSheet)], NEXT)}${swipeStates}`,
   );
 
-  const lede = "SEED 문서 사이트 표 · 디자인 그림 · 면 · Feedback · 대시보드 그림 · 밑줄 칸 · List 줄 + Radiomark · Result Section 과 porest 의 지표 · 순자산 카드 · 증감 · 줄 밀기 — 데이터를 보이는 자리다. SEED 에는 다섯 모두 컴포넌트가 없어 부품마다 SEED 를 따랐다(2026-10-08 사용자 결정). 표는 머리 41 · 14 / 20 · 500 · 짙은 글자(머리 바탕 · 작은 대문자 없음) · 줄 45(썸네일 · 두 줄이면 72) · 줄 선 stroke-neutral-subtle 마지막 줄까지 · 첫 칸 앞 · 끝 칸 뒤 24 · 숫자 오른쪽 · 정렬할 수 있는 열에 ↑↓ 늘(두 단계) · 줄 끝 ⋮ 하나 · 고른 줄은 체크로만(일괄 작업 바만 bg-brand-weak) · 768 미만은 List 줄이다. 카드는 회색 바닥 위 흰 면 + 1px stroke-neutral-weak · 모서리 16 · 그림자 없음 · 여백 24(목록 카드 24 / 4 / 12) · 쌓은 사이 8 · 머리 16 · 700 + \"전체 보기\"(누르는 44) · 누름은 색 + 2px(대등한 동작이 있으면 색만)이고, 지표 카드는 폰에서 한 줄에 하나다. 증감은 어디서나 ▲ 빨강 · ▼ 파랑 + 값 + 글(순자산 채움 위만 흰 글자). 차트는 차트 10색 · 눈금 11 · 가로 점선 격자 · 이중 축이면 눈금 글자가 계열 색 · 위 지표 타일 · 떠 있는 툴팁 \"■ 라벨 값\" · 도넛은 목록 범례 · 열지도 칸은 112 이상만 원까지이고, 검색해서 고르기는 밑줄 검색칸 + List 줄 + 오른쪽 라디오 + 콤보박스 키보드, 줄 밀기의 같은 동작은 줄 끝 ⋮ 로도 연다. 옛 Data Table · Chart mini · 카드 카탈로그 목록 · 옛 줄 밀기 CSS 는 걷었고, 04 의 지표 위젯(회색 채운 칸) · 05 ~ 08 의 그림자 카드 · 13 의 스켈레톤 카드는 이 카드 면으로 다시 그렸다."
+  const lede = "SEED 문서 사이트 표 · 디자인 그림 · 면 · Feedback · 대시보드 그림 · 밑줄 칸 · List 줄 + Radiomark · Result Section 과 groo 의 지표 · 순자산 카드 · 증감 · 줄 밀기 — 데이터를 보이는 자리다. SEED 에는 다섯 모두 컴포넌트가 없어 부품마다 SEED 를 따랐다(2026-10-08 사용자 결정). 표는 머리 41 · 14 / 20 · 500 · 짙은 글자(머리 바탕 · 작은 대문자 없음) · 줄 45(썸네일 · 두 줄이면 72) · 줄 선 stroke-neutral-subtle 마지막 줄까지 · 첫 칸 앞 · 끝 칸 뒤 24 · 숫자 오른쪽 · 정렬할 수 있는 열에 ↑↓ 늘(두 단계) · 줄 끝 ⋮ 하나 · 고른 줄은 체크로만(일괄 작업 바만 bg-brand-weak) · 768 미만은 List 줄이다. 카드는 회색 바닥 위 흰 면 + 1px stroke-neutral-weak · 모서리 16 · 그림자 없음 · 여백 24(목록 카드 24 / 4 / 12) · 쌓은 사이 8 · 머리 16 · 700 + \"전체 보기\"(누르는 44) · 누름은 색 + 2px(대등한 동작이 있으면 색만)이고, 지표 카드는 폰에서 한 줄에 하나다. 증감은 어디서나 ▲ 빨강 · ▼ 파랑 + 값 + 글(순자산 채움 위만 흰 글자). 차트는 차트 10색 · 눈금 11 · 가로 점선 격자 · 이중 축이면 눈금 글자가 계열 색 · 위 지표 타일 · 떠 있는 툴팁 \"■ 라벨 값\" · 도넛은 목록 범례 · 열지도 칸은 112 이상만 원까지이고, 검색해서 고르기는 밑줄 검색칸 + List 줄 + 오른쪽 라디오 + 콤보박스 키보드, 줄 밀기의 같은 동작은 줄 끝 ⋮ 로도 연다. 옛 Data Table · Chart mini · 카드 카탈로그 목록 · 옛 줄 밀기 CSS 는 걷었고, 04 의 지표 위젯(회색 채운 칸) · 05 ~ 08 의 그림자 카드 · 13 의 스켈레톤 카드는 이 카드 면으로 다시 그렸다."
     + (desk ? "" : brand.key === "hr" ? " 순자산 카드는 Desk 에만 있어 Desk 미리보기에 그렸다." : " 공유 토큰에는 브랜드 역할 색이 없어 일괄 작업 바 · 포커스 링이 여기서는 중립으로 보이고, 브랜드 채움을 쓰는 순자산 카드 · 열지도는 HR · Desk 미리보기에 그렸다.");
 
   return `
@@ -8190,7 +8190,7 @@ export function renderDataGallery(brand) {
 
 // 입력 — spec: specs/components/slider.md · toggle.md · input-otp.md · color-swatch.md · icon-picker.md · 수치 slider.yaml · toggle.yaml · input-otp.yaml ·
 // color-swatch.yaml · icon-picker.yaml · 아이콘 세트 category-icons.yaml. SEED 가 컴포넌트로 가진 것은 Slider 와 Toggle Button(코드만)뿐이라, 인증 코드 칸 ·
-// 색 고르기 · 아이콘 고르기는 SEED 의 원칙(Text Input 의 "Input을 나누지 말고" · Iconography)에서 porest 가 정했다(2026-10-09 사용자 결정 1 ~ 22 · 따라오는 것).
+// 색 고르기 · 아이콘 고르기는 SEED 의 원칙(Text Input 의 "Input을 나누지 말고" · Iconography)에서 groo 가 정했다(2026-10-09 사용자 결정 1 ~ 22 · 따라오는 것).
 // 슬라이더 .psld(--none · --discrete) > 손잡이 줄 .psld-control(44 — 줄 전체가 누르는 자리) > 트랙 .psld-track(채움 .psld-fill · 눈금 틈 .psld-tick) ·
 //   손잡이 .psld-thumb(role=slider) + 말풍선 .psld-bubble · 아래 표식 .psld-markers. 머리 값 .psld-value 는 Field 머리(03g 의 .ptf-field-header) 오른쪽이다.
 // 켜고 끄는 아이콘 단추 .ptgl(<button aria-pressed> — 보이는 40 · 누르는 44 · 아이콘 20). 끔 · 켬 아이콘을 둘 다 담고 aria-pressed 로 하나를 보인다.
@@ -8894,7 +8894,7 @@ export function renderInputGallery(brand) {
   // 1. 원 40 · 5 × 2 · 차트 10색
   const swatchLook = panel(
     "Color Swatch — 차트 10색 · 원 40 · 5 × 2 · 사이 12",
-    "카테고리 · 태그 · 라벨 · 저축 목표 · 캘린더에 붙일 색을 고르는 묶음이다. 칸은 v110 차트 10색(라이트 700 · 다크 800-dark)으로 꽉 채운다 — 칸이 곧 그 항목의 차트 · 아이콘 · 점에 칠해질 색이다. 옅게 섞은 칸 · v111 옅은 바탕 칸은 쓰지 않는다(옅은 칸끼리는 남색 · 보라 · 분홍이 헷갈린다). 칸은 원 40(누르는 44)이고 폭과 상관없이 5개씩 두 줄 · 사이 12(묶음 248) — 데스크톱 대화상자에서도 폰 시트에서도 같은 크기 · 같은 줄이다. 차례는 색상환(빨강 → 주황 → 노랑 → 초록 → 파랑 → 남색 → 보라 → 분홍 → 갈색 → 회색)이라 ↑ ↓ 가 늘 같은 칸으로 간다. 칸의 이름은 색 이름(\"빨강\")이고 묶음의 이름은 Field 라벨(\"색상\")이다 — 칸 아래에 이름 글을 늘어놓지 않는다 — 보조 기술이 읽고, 마우스를 올리면 porest Tooltip 이 같은 이름을 보인다(200ms 뒤 · 키보드 초점이면 바로 — 네이티브 title 은 쓰지 않는다. \"직접\" 견본에서 올려 볼 수 있다). SEED 에는 색 고르기 부품이 없어 porest 가 정했다. 옛 폭을 나눈 정사각 칸 · currentColor 테두리 · 마우스 1.05배는 걷었다.",
+    "카테고리 · 태그 · 라벨 · 저축 목표 · 캘린더에 붙일 색을 고르는 묶음이다. 칸은 v110 차트 10색(라이트 700 · 다크 800-dark)으로 꽉 채운다 — 칸이 곧 그 항목의 차트 · 아이콘 · 점에 칠해질 색이다. 옅게 섞은 칸 · v111 옅은 바탕 칸은 쓰지 않는다(옅은 칸끼리는 남색 · 보라 · 분홍이 헷갈린다). 칸은 원 40(누르는 44)이고 폭과 상관없이 5개씩 두 줄 · 사이 12(묶음 248) — 데스크톱 대화상자에서도 폰 시트에서도 같은 크기 · 같은 줄이다. 차례는 색상환(빨강 → 주황 → 노랑 → 초록 → 파랑 → 남색 → 보라 → 분홍 → 갈색 → 회색)이라 ↑ ↓ 가 늘 같은 칸으로 간다. 칸의 이름은 색 이름(\"빨강\")이고 묶음의 이름은 Field 라벨(\"색상\")이다 — 칸 아래에 이름 글을 늘어놓지 않는다 — 보조 기술이 읽고, 마우스를 올리면 groo Tooltip 이 같은 이름을 보인다(200ms 뒤 · 키보드 초점이면 바로 — 네이티브 title 은 쓰지 않는다. \"직접\" 견본에서 올려 볼 수 있다). SEED 에는 색 고르기 부품이 없어 groo 가 정했다. 옛 폭을 나눈 정사각 칸 · currentColor 테두리 · 마우스 1.05배는 걷었다.",
     `${pair(() => phone(pcswField({ group: { value: "blue" } })))}${samples([
       sample("10색 — 이름 · 차례", "칸의 이름 = 색 이름, 색 = chart-{색}(라이트 700 · 다크 800-dark)", legend),
       sample("폰 시트 — 칸 342 안의 248", "large — 같은 크기 · 같은 줄", phone(catForm("large", { value: "brown" }))),
@@ -8962,7 +8962,7 @@ export function renderInputGallery(brand) {
   // 1. 트리거
   const ipkTriggerPanel = panel(
     "Icon Picker — 트리거는 Input Button: 라벨 · 지금 아이콘 · 그 이름",
-    "카테고리 · 저축 목표에 붙일 아이콘을 고르는 칸이다. 트리거는 Input Button 이다 — 라벨 \"아이콘\"(Field), 앞 붙이개에 지금 아이콘(large 20 · medium 16 · fg-neutral-muted), 값에 그 아이콘의 한국어 이름(\"커피\"), 뒤에 아래 화살표. 이름은 \"아이콘, 커피\" 로 읽힌다. 아이콘이 없는 항목은 태그 + \"태그\"(\"없음\" 을 고르는 칸은 두지 않는다 — 어차피 태그로 그린다), 세트 밖 아이콘이 저장된 항목은 그 아이콘 + \"지금 아이콘\" 이다. 크기는 반응형(1280 미만 large 52 · 이상 medium 40)이고 앱은 large 다. 누름 · 오류 · 막힘 · 읽기 전용은 Input Button 그대로다(03h). SEED 에는 아이콘 고르기 부품이 없어 porest 가 정했다. 옛 40 정사각 트리거 · 아이콘만 · 없으면 \"—\" 는 걷었다.",
+    "카테고리 · 저축 목표에 붙일 아이콘을 고르는 칸이다. 트리거는 Input Button 이다 — 라벨 \"아이콘\"(Field), 앞 붙이개에 지금 아이콘(large 20 · medium 16 · fg-neutral-muted), 값에 그 아이콘의 한국어 이름(\"커피\"), 뒤에 아래 화살표. 이름은 \"아이콘, 커피\" 로 읽힌다. 아이콘이 없는 항목은 태그 + \"태그\"(\"없음\" 을 고르는 칸은 두지 않는다 — 어차피 태그로 그린다), 세트 밖 아이콘이 저장된 항목은 그 아이콘 + \"지금 아이콘\" 이다. 크기는 반응형(1280 미만 large 52 · 이상 medium 40)이고 앱은 large 다. 누름 · 오류 · 막힘 · 읽기 전용은 Input Button 그대로다(03h). SEED 에는 아이콘 고르기 부품이 없어 groo 가 정했다. 옛 40 정사각 트리거 · 아이콘만 · 없으면 \"—\" 는 걷었다.",
     `${pair(() => phone(pipkTrigger({ size: "large", value: "coffee" })))}${samples([
       sample("아이콘이 없는 항목 — 태그", "\"\" · null 은 태그로 그린다 — \"없음\" 칸은 없다", phone(pipkTrigger({ size: "large", value: "" }))),
       sample("세트 밖 아이콘 — 지금 아이콘", "a-arrow-down — 지우지도 바꾸지도 않는다 · 격자에는 고른 칸이 없다", phone(pipkTrigger({ size: "large", value: "a-arrow-down" }))),
@@ -9029,11 +9029,11 @@ export function renderInputGallery(brand) {
   const ipkLiveId = nextPinpId("pipk-live");
   const ipkLive = panel(
     "직접 — 찾기 · 2차원 화살표 · 고르면 닫힌다",
-    "격자는 칸마다 Tab 이 서지 않는다 — 격자에 Tab 하나(고른 칸, 없으면 첫 칸)로 들어와 화살표로 옮긴다. ← → 는 차례대로(줄 끝에서 다음 줄 · 다음 묶음으로), ↑ ↓ 는 보이는 위아래 줄의 가장 가까운 칸(묶음 머리를 넘는다), Home · End 는 그 줄의 처음 · 끝, Enter · Space 로 고른다 — 고르면 닫히고 초점은 트리거로 간다. 찾기 칸에서 ↓ 는 격자의 첫 칸으로. Esc 는 찾는 말이 있으면 지우고, 비었으면 닫는다(값은 그대로). 칸의 한국어 이름은 porest Tooltip 으로도 보인다(마우스 200ms 뒤 · 키보드로 옮기면 바로). 열면 초점은 고른 칸이다 — 폰에서 키보드가 올라와 격자를 가리지 않게, 찾기 칸은 눌러야 친다. 아래는 트리거 아래에 여는 팝오버(1280 이상)로 그렸다 — 세트 148개를 모두 담았다.",
+    "격자는 칸마다 Tab 이 서지 않는다 — 격자에 Tab 하나(고른 칸, 없으면 첫 칸)로 들어와 화살표로 옮긴다. ← → 는 차례대로(줄 끝에서 다음 줄 · 다음 묶음으로), ↑ ↓ 는 보이는 위아래 줄의 가장 가까운 칸(묶음 머리를 넘는다), Home · End 는 그 줄의 처음 · 끝, Enter · Space 로 고른다 — 고르면 닫히고 초점은 트리거로 간다. 찾기 칸에서 ↓ 는 격자의 첫 칸으로. Esc 는 찾는 말이 있으면 지우고, 비었으면 닫는다(값은 그대로). 칸의 한국어 이름은 groo Tooltip 으로도 보인다(마우스 200ms 뒤 · 키보드로 옮기면 바로). 열면 초점은 고른 칸이다 — 폰에서 키보드가 올라와 격자를 가리지 않게, 찾기 칸은 눌러야 친다. 아래는 트리거 아래에 여는 팝오버(1280 이상)로 그렸다 — 세트 148개를 모두 담았다.",
     samples([sample("카테고리 — 아이콘", "IconPicker — value · onValueChange", `<div class="pinp-live pinp-live--ipk" data-pipk-host="${ipkLiveId}">${pipkTrigger({ size: "medium", value: "coffee", live: ipkLiveId })}<div class="pinp-float pinp-float--live" id="${ipkLiveId}" role="dialog" aria-label="아이콘" hidden>${pipkPanel({ surface: "popover", value: "coffee", live: true })}</div>${status("data-pipk-status", "트리거를 눌러 열어 보세요.")}</div>`)], "ptf-samples pinp-samples--wide"),
   );
 
-  const lede = "SEED Slider 와 SEED 의 원칙(Text Input 의 \"Input을 나누지 말고\" · Iconography)에서 정한 입력 다섯이다(2026-10-09 사용자 결정 — 비교 페이지 1 ~ 22 · 따라오는 것). SEED 가 컴포넌트로 가진 것은 Slider 와 Toggle Button(코드만)뿐이라, 켜고 끄는 아이콘 단추 · 인증 코드 칸 · 색 고르기 · 아이콘 고르기는 porest 가 정했다. 슬라이더는 SEED 무채색(트랙 4 · 채움 · 손잡이 20 · 누르면 24) · 손잡이 줄 44 · 머리 값 + 끄는 동안 말풍선 + 양 끝 표식 · 2 ~ 5 구간만 굵은 틈 · 손을 뗄 때 한 번 저장(요청 중에도 막지 않는다)이다. 켜고 끄는 단추는 아이콘만 바뀐다(켬 = 진한 색 + 선 2.5, 바탕 없음) · 이름 고정 + aria-pressed · 눈은 지금 상태 · 관심 · 고정의 끔은 사선 없이 · 보이는 40 · 누르는 44 이고, 상단 바에서는 끔도 이웃과 같은 진한 색이다. 인증 코드는 Input 한 칸 · 숫자만 뽑기 · 설명 줄 · 칸 아래 다시 받기(남은 초)다. 색은 차트 10색 원 40 · 5 × 2 · 고리 + 체크 · 지금 색 칸이고, 아이콘은 Input Button 트리거 · 고른 세트 148 · 한국어 찾기 · 칸 48 · 안쪽 2px 테두리다. 옛 Slider(브랜드 채움 · 흰 손잡이) · 글 Toggle · Toggle Group · 6칸 OTP · 정사각 색 칸 · 8열 아이콘 팝오버는 걷었다 — 16 Input · 21 Domain selectors 의 옛 칸과 CSS 도 걷었다."
+  const lede = "SEED Slider 와 SEED 의 원칙(Text Input 의 \"Input을 나누지 말고\" · Iconography)에서 정한 입력 다섯이다(2026-10-09 사용자 결정 — 비교 페이지 1 ~ 22 · 따라오는 것). SEED 가 컴포넌트로 가진 것은 Slider 와 Toggle Button(코드만)뿐이라, 켜고 끄는 아이콘 단추 · 인증 코드 칸 · 색 고르기 · 아이콘 고르기는 groo 가 정했다. 슬라이더는 SEED 무채색(트랙 4 · 채움 · 손잡이 20 · 누르면 24) · 손잡이 줄 44 · 머리 값 + 끄는 동안 말풍선 + 양 끝 표식 · 2 ~ 5 구간만 굵은 틈 · 손을 뗄 때 한 번 저장(요청 중에도 막지 않는다)이다. 켜고 끄는 단추는 아이콘만 바뀐다(켬 = 진한 색 + 선 2.5, 바탕 없음) · 이름 고정 + aria-pressed · 눈은 지금 상태 · 관심 · 고정의 끔은 사선 없이 · 보이는 40 · 누르는 44 이고, 상단 바에서는 끔도 이웃과 같은 진한 색이다. 인증 코드는 Input 한 칸 · 숫자만 뽑기 · 설명 줄 · 칸 아래 다시 받기(남은 초)다. 색은 차트 10색 원 40 · 5 × 2 · 고리 + 체크 · 지금 색 칸이고, 아이콘은 Input Button 트리거 · 고른 세트 148 · 한국어 찾기 · 칸 48 · 안쪽 2px 테두리다. 옛 Slider(브랜드 채움 · 흰 손잡이) · 글 Toggle · Toggle Group · 6칸 OTP · 정사각 색 칸 · 8열 아이콘 팝오버는 걷었다 — 16 Input · 21 Domain selectors 의 옛 칸과 CSS 도 걷었다."
     + (desk ? "" : brand.key === "hr" ? " 순자산 카드 위 단추(tone inverted)는 Desk 에만 있어 Desk 미리보기에 그렸다." : " 공유 토큰에는 브랜드 역할 색이 없어 포커스 링이 여기서는 중립으로 보이고, 순자산 카드 위 단추는 Desk 미리보기에 그렸다.");
 
   return `
@@ -9072,7 +9072,7 @@ export function renderInputGallery(brand) {
 // 펼치고 접기 · 나누기 — spec: specs/components/accordion.md · collapsible.md · tree-view.md · resizable.md · scroll-area.md · scroll-auto-hide.md ·
 // list.md(하위 줄) · card.md(body accordion) · 수치 accordion.yaml · collapsible.yaml · tree-view.yaml · resizable.yaml · scroll-area.yaml · scroll-auto-hide.yaml · list.yaml.
 // SEED 가 컴포넌트로 가진 것은 Accordion(rootage accordion.json · @seed-design/react 2.0.0)과 Breeze Scroll Auto Hide 뿐이라, Collapsible(Accordion 가이드의
-// 한 줄) · Tree View(APG Treeview) · Resizable(APG Window Splitter) · Scroll Area(전역 스크롤바)는 porest 가 정했다(2026-10-10 사용자 결정 1 ~ 17).
+// 한 줄) · Tree View(APG Treeview) · Resizable(APG Window Splitter) · Scroll Area(전역 스크롤바)는 groo 가 정했다(2026-10-10 사용자 결정 1 ~ 17).
 // 아코디언 .pacc(data-variant inline · separated) > 줄 .pacc-row(항목 .pacc-item · 상세가 없는 줄 .pacc-plain — inline 은 둘째 줄부터 ::before 들인 선) >
 //   머리말 .pacc-heading > 트리거 .pacc-trigger(바탕 층 ::before · 줄 전체) > 콘텐츠 층 .pacc-content(앞 아이콘 .pacc-prefix · 본문 .pacc-body(.pacc-title · .pacc-desc) ·
 //   꺾쇠 .pacc-chevron) + 펼친 내용 .pacc-panel > .pacc-panel-text. 목록 머리 .pacc-header(.pacc-header-title · 모두 펼치기 .pacc-all).
@@ -9647,7 +9647,7 @@ export function renderCollapseGallery(brand) {
     `${pair(() => psahPhone({ live: "pair" }))}${samples([sample("직접 — 내렸다 조금 올리기 · 모션 줄이기 · 숨은 머리로 초점", "ScrollAutoHide scrollContainerRef", `<div class="pcol-live" id="${sahLiveId}">${psahPhone({ live: "main" })}${controls([["900 내리기", "data-psah-run=\"down\""], ["160 올리기", "data-psah-run=\"up\""], ["숨은 머리로 초점(Tab)", "data-psah-run=\"focus\""], ["맨 위로", "data-psah-run=\"top\""]])}${reduceSwitch(sahLiveId)}${status("data-psah-status", "폰 안을 스크롤하거나 단추를 눌러 보세요.")}</div>`)], "ptf-samples pcol-samples--sheet")}`,
   );
 
-  const lede = "SEED Accordion 과 SEED Breeze Scroll Auto Hide 위에 둔 펼치고 접기 · 나누기 여섯이다(2026-10-10 사용자 결정 1 ~ 17). SEED 가 컴포넌트로 가진 것은 이 둘뿐이라 Collapsible(Accordion 가이드의 한 줄 — 항목 하나의 모양) · Tree View(APG Treeview) · Resizable(APG Window Splitter) · Scroll Area(전역 스크롤바)는 porest 가 정했다. 아코디언은 inline · separated 두 변형 · 크기 medium 하나(제목 16 · 설명 13 · 54 · 74) · 꺾쇠 · 높이 300ms · 여럿 열기 + 모두 펼치기 · 상세가 없는 항목은 그냥 줄이고, 접기는 그 항목 하나의 트리거를 흰 면 · 경고 상자 · 카드에 놓는다. 카테고리는 List 의 하위 줄(줄 앞 꺾쇠 단추 44 · 하위 104 · 두 세로줄), 부서 나무는 줄 전체가 누르는 자리(부모는 고르면서 펴고 접는다) · Tab 하나 + 화살표 · ⋮ 하나다. 나누기는 선 1px + 손잡이 표시 · 누르는 폭 16 · 20 ~ 40% · ← → 5% · 한 번 누르면 25 ↔ 40 · 화면마다 기억, 위젯은 모서리 손잡이 · 토큰 색 자리표시 · ⋮ 크기다. 스크롤은 브라우저 기본 + 전역 6px 알약(Firefox 두 줄은 @supports 안), 원장 머리는 스크롤 거리를 따라 숨는다. 옛 Accordion · Collapsible · Scroll Area · Resizable · Treeview 칸(17 · 18 · 20)과 그 CSS 는 걷었다 — 18 Data 는 통째로 걷었다."
+  const lede = "SEED Accordion 과 SEED Breeze Scroll Auto Hide 위에 둔 펼치고 접기 · 나누기 여섯이다(2026-10-10 사용자 결정 1 ~ 17). SEED 가 컴포넌트로 가진 것은 이 둘뿐이라 Collapsible(Accordion 가이드의 한 줄 — 항목 하나의 모양) · Tree View(APG Treeview) · Resizable(APG Window Splitter) · Scroll Area(전역 스크롤바)는 groo 가 정했다. 아코디언은 inline · separated 두 변형 · 크기 medium 하나(제목 16 · 설명 13 · 54 · 74) · 꺾쇠 · 높이 300ms · 여럿 열기 + 모두 펼치기 · 상세가 없는 항목은 그냥 줄이고, 접기는 그 항목 하나의 트리거를 흰 면 · 경고 상자 · 카드에 놓는다. 카테고리는 List 의 하위 줄(줄 앞 꺾쇠 단추 44 · 하위 104 · 두 세로줄), 부서 나무는 줄 전체가 누르는 자리(부모는 고르면서 펴고 접는다) · Tab 하나 + 화살표 · ⋮ 하나다. 나누기는 선 1px + 손잡이 표시 · 누르는 폭 16 · 20 ~ 40% · ← → 5% · 한 번 누르면 25 ↔ 40 · 화면마다 기억, 위젯은 모서리 손잡이 · 토큰 색 자리표시 · ⋮ 크기다. 스크롤은 브라우저 기본 + 전역 6px 알약(Firefox 두 줄은 @supports 안), 원장 머리는 스크롤 거리를 따라 숨는다. 옛 Accordion · Collapsible · Scroll Area · Resizable · Treeview 칸(17 · 18 · 20)과 그 CSS 는 걷었다 — 18 Data 는 통째로 걷었다."
     + (desk ? "" : brand.key === "hr" ? "" : " 공유 토큰에는 브랜드 역할 색이 없어 포커스 링 · 자리표시가 여기서는 중립으로 보인다.");
 
   return `
@@ -9954,9 +9954,9 @@ function pattMenuGroups({ kind = "image", position = "middle", badge = true } = 
 }
 
 // ── Footer ───────────────────────────────────────────────────────────────
-// porest-home 바닥(7B) — footer.md 코드 절 그대로. 링크는 실제 서비스 주소다(미리보기 안에서는 페이지 끝 스크립트가 떠나지 않게 막는다)
+// groo-home 바닥(7B) — footer.md 코드 절 그대로. 링크는 실제 서비스 주소다(미리보기 안에서는 페이지 끝 스크립트가 떠나지 않게 막는다)
 const PFOOT_HOME = {
-  brand: { name: "POREST", description: "People + Forest. 사람(People)이 모여 숲(Forest)처럼 자라나는 조직 생태계를 설계합니다." },
+  brand: { name: "그루", description: "People + Forest. 사람(People)이 모여 숲(Forest)처럼 자라나는 조직 생태계를 설계합니다." },
   columns: [
     { title: "서비스", links: [["HR", "https://hr.porest.cloud"], ["Desk", "https://desk.porest.cloud"], ["Desk 설명서", "https://desk.porest.cloud/guide/"]] },
     { title: "계정", links: [["로그인", "https://sso.porest.cloud"], ["회원가입", "https://sso.porest.cloud"]] },
@@ -9984,7 +9984,7 @@ function pfoot({ width = "", topLine = true, placeholder = false, states = {}, n
   const join = (groups) => groups.map((g) => g.map(escape).join(" | ")).join("<br>");
   const extra = placeholder ? `<p class="pfoot-text pfoot-text--placeholder">${join(PFOOT_PLACEHOLDER.business)}</p><p class="pfoot-text pfoot-text--placeholder">${join(PFOOT_PLACEHOLDER.contact)}</p>` : "";
   const social = placeholder ? `<div class="pfoot-social" data-slot="footer-social">${["(소셜 채널 1)", "(소셜 채널 2)"].map((n, i) => `<button class="btn btn-ghost btn-icon-only btn-size-large" type="button" aria-label="${escape(n)}">${finSvg(i ? "at-sign" : "globe")}</button>`).join("")}</div>` : "";
-  return `<footer ${attrsOf([`class="pfoot${topLine ? " pfoot--top-line" : ""}"`, 'data-slot="footer"', width && `data-width="${width}"`])}><div class="pfoot-frame">${navArea}<div class="pfoot-info" data-slot="footer-info"><div class="pfoot-links" data-slot="footer-links">${h.policy.map((l) => pfootLink(l, { external: true, state: states[`정책:${l[0]}`] })).join("")}</div><p class="pfoot-text">${escape(h.text)}</p>${extra}<div class="pfoot-bottom" data-slot="footer-bottom"><p class="pfoot-copyright">© ${PFOOT_YEAR} POREST</p>${social}</div></div></div></footer>`;
+  return `<footer ${attrsOf([`class="pfoot${topLine ? " pfoot--top-line" : ""}"`, 'data-slot="footer"', width && `data-width="${width}"`])}><div class="pfoot-frame">${navArea}<div class="pfoot-info" data-slot="footer-info"><div class="pfoot-links" data-slot="footer-links">${h.policy.map((l) => pfootLink(l, { external: true, state: states[`정책:${l[0]}`] })).join("")}</div><p class="pfoot-text">${escape(h.text)}</p>${extra}<div class="pfoot-bottom" data-slot="footer-bottom"><p class="pfoot-copyright">© ${PFOOT_YEAR} 그루</p>${social}</div></div></div></footer>`;
 }
 
 // 직접 견본의 항목 메뉴 — 1280 이상 Menu(머리 없이 aria-label = 파일 이름) · 미만 Menu Sheet(머리 = 파일 이름, 아이콘 없이 글만 — 가운데). 줄을 모두 그려 두고
@@ -10002,7 +10002,7 @@ const pattLiveSheet = (id) => {
 // 마무리 갤러리 — Quantity Picker 여덟 · Attachment Input 열하나 · Footer 셋, 판을 흰 표면(.vignette-card) 위에 그린다. 견본 틀(.ptf-samples · .ptf-cap) ·
 // 상태 표(.cb-matrix)는 Text Field 갤러리 것, 라이트 · 다크 나란히 틀(.pdsp-pair · .pdsp-theme)은 03o 것, 입력칸 · 고르는 칸 · Field 는 03g · 03h 것,
 // 원은 03p 것, 메뉴 · 메뉴 시트는 03m 것이다. 화면 틀(.pfin-phone · .pfin-sheet · .pfin-dialog · .pfin-desk)은 이 블록 것이다.
-// 글은 각 스펙 md 의 코드 예 · 그림과 같은 자리다 — HR(휴가 정책 · 업무 보고)과 Desk(거래 영수증 · 데이터 가져오기 · 장보기 수량), 바닥은 porest-home(7B).
+// 글은 각 스펙 md 의 코드 예 · 그림과 같은 자리다 — HR(휴가 정책 · 업무 보고)과 Desk(거래 영수증 · 데이터 가져오기 · 장보기 수량), 바닥은 groo-home(7B).
 // 사진 · 이름은 지어낸 것이다. "직접" 이 붙은 견본은 실제로 누르고 · 고르고 · 끌어 놓을 수 있다(페이지 끝 스크립트).
 export function renderFinishGallery(brand) {
   const shared = brand.key === "shared";
@@ -10326,8 +10326,8 @@ export function renderFinishGallery(brand) {
   // ── Footer ─────────────────────────────────────────────────────────────
   const page = (width, body, cls = "") => `<div class="pfin-wide"><div class="pfin-page${cls ? ` ${cls}` : ""}" style="--pfin-w: ${width}px;"><div class="pfin-page-body" aria-hidden="true"><span></span><span></span><span></span></div>${body}</div></div>`;
   const footLook = panel(
-    "Footer — porest-home 짜임(7B): 1280 · 768 · 390",
-    "사이트 맨 아래의 바닥이다 — 정해진 한 덩어리가 아니라 블록을 골라 조립한다(SEED Footer 의 \"조합 예시\" — 필수 블록 없이 위 → 아래 순서만). porest-home 짜임은 SEED footer-04 를 줄인 것이다 — 탐색 영역(브랜드 \"POREST\" 20 / 27 · 700 + 소개 13 / 18 · fg-neutral-subtle · 최대 340 | 사이트맵 열 서비스 · 계정 — 열 제목 13 / 18 · 500 · fg-neutral-muted · 링크 16 / 22 · 500 · fg-neutral, 사이 16) · 선(1px stroke-neutral-subtle) · 안내 영역(개인정보 처리방침 ↗ — 14 / 19 · 500 · fg-neutral-muted · 안내 글 · \"© 해 POREST\" 14 / 19 · 500). 틀은 최대 1040(layout-max-content) · 위아래 40 · 좌우 32(1280 미만 24) · 영역 사이 40, 위에는 화면 폭 1px 선. 폭이 줄면 브랜드(1 1 240 · 최소 120)와 사이트맵(사이 32)이 줄을 바꾸고 열은 최소 100 이다. 새 탭으로 여는 처리방침에만 ↗ 와 보이지 않는 \"(새 탭)\" 을 둔다. 링크 없는 \"HR 기능\" 열 · 도메인 줄은 걷었다. 그림은 레시피(porest 토큰)로 그린 바닥이다 — 홈에 넣을 때는 아래 \"홈에 넣은 모습\" 처럼 색 · 글꼴만 홈 것이다(8A). 링크는 눌러도 미리보기를 떠나지 않는다.",
+    "Footer — groo-home 짜임(7B): 1280 · 768 · 390",
+    "사이트 맨 아래의 바닥이다 — 정해진 한 덩어리가 아니라 블록을 골라 조립한다(SEED Footer 의 \"조합 예시\" — 필수 블록 없이 위 → 아래 순서만). groo-home 짜임은 SEED footer-04 를 줄인 것이다 — 탐색 영역(브랜드 \"그루\" 20 / 27 · 700 + 소개 13 / 18 · fg-neutral-subtle · 최대 340 | 사이트맵 열 서비스 · 계정 — 열 제목 13 / 18 · 500 · fg-neutral-muted · 링크 16 / 22 · 500 · fg-neutral, 사이 16) · 선(1px stroke-neutral-subtle) · 안내 영역(개인정보 처리방침 ↗ — 14 / 19 · 500 · fg-neutral-muted · 안내 글 · \"© 해 그루\" 14 / 19 · 500). 틀은 최대 1040(layout-max-content) · 위아래 40 · 좌우 32(1280 미만 24) · 영역 사이 40, 위에는 화면 폭 1px 선. 폭이 줄면 브랜드(1 1 240 · 최소 120)와 사이트맵(사이 32)이 줄을 바꾸고 열은 최소 100 이다. 새 탭으로 여는 처리방침에만 ↗ 와 보이지 않는 \"(새 탭)\" 을 둔다. 링크 없는 \"HR 기능\" 열 · 도메인 줄은 걷었다. 그림은 레시피(groo 토큰)로 그린 바닥이다 — 홈에 넣을 때는 아래 \"홈에 넣은 모습\" 처럼 색 · 글꼴만 홈 것이다(8A). 링크는 눌러도 미리보기를 떠나지 않는다.",
     `${samples([
       sample("1280 — 한 줄 · 좌우 32", "Footer width wide — 틀 1040 가운데", page(1280, pfoot({ width: "wide" }))),
       sample("768 — 좌우 24 · 사이트맵이 브랜드 옆에 남는다", "1280 미만", page(768, pfoot({ width: "narrow" }))),
@@ -10350,7 +10350,7 @@ export function renderFinishGallery(brand) {
   const homeSkin = `<div class="pfin-home">${pfoot({ width: "narrow" })}</div>`;
   const footPlaceholder = panel(
     "값이 없는 블록 — 자리표시로만 · 홈에 넣은 모습",
-    "사업자 정보 · 연락처 · 소셜 링크는 블록만 있다 — porest 의 상호 · 사업자 등록번호 · 주소 · 전화 · 문의 메일 · 공개 소셜 채널은 아직 어느 레포에도 없다. 값을 지어내 넣지 않는다 — 그림도 \"(상호) | 사업자 등록번호 000-00-00000\" 처럼 자리표시임이 드러나게만 쓴다. 값이 생기면 안내 글 아래(사업자 정보 → 연락처 — 13 / 18 · \" | \" 로 잇고 묶음이 바뀌면 줄을 바꾼다), 소셜(Button ghost · large · 아이콘만 + 이름, 사이 24)은 저작권 줄 끝(1280 미만은 저작권 아래)이다. porest-home 은 짜임 · 간격 · 글 크기만 스펙이고 색 · 글꼴은 홈 것이다(8A — Noto Sans KR · --ink · --ink2 · --ink3 · --line, 브랜드 글자는 --blue) — 안내 글 --ink3 은 흰 바탕 4.5 이상으로 짙게 했다(#6B7684).",
+    "사업자 정보 · 연락처 · 소셜 링크는 블록만 있다 — groo 의 상호 · 사업자 등록번호 · 주소 · 전화 · 문의 메일 · 공개 소셜 채널은 아직 어느 레포에도 없다. 값을 지어내 넣지 않는다 — 그림도 \"(상호) | 사업자 등록번호 000-00-00000\" 처럼 자리표시임이 드러나게만 쓴다. 값이 생기면 안내 글 아래(사업자 정보 → 연락처 — 13 / 18 · \" | \" 로 잇고 묶음이 바뀌면 줄을 바꾼다), 소셜(Button ghost · large · 아이콘만 + 이름, 사이 24)은 저작권 줄 끝(1280 미만은 저작권 아래)이다. groo-home 은 짜임 · 간격 · 글 크기만 스펙이고 색 · 글꼴은 홈 것이다(8A — Noto Sans KR · --ink · --ink2 · --ink3 · --line, 브랜드 글자는 --blue) — 안내 글 --ink3 은 흰 바탕 4.5 이상으로 짙게 했다(#6B7684).",
     `${samples([
       sample("자리표시 — 사업자 정보 · 연락처 · 소셜", "1280 — 값이 생기면 들어갈 자리", page(1280, pfoot({ width: "wide", placeholder: true }))),
     ], WIDE)}${samples([
@@ -10359,7 +10359,7 @@ export function renderFinishGallery(brand) {
     ], SHEET)}`,
   );
 
-  const lede = "SEED Quantity Picker · Attachment Input · Footer 를 따른 마무리 셋이다(2026-10-15 사용자 결정 1A ~ 14A). Quantity Picker 는 테두리 상자 안 − · 선 · 값 · 선 · + — 세 크기 36 · 40 · 52(웹 기본 responsive), 값 칸은 보기만, 끝의 버튼은 aria-disabled(초점이 남는다), 지우기 · 로딩. Attachment Input 은 첨부 타일 80 + 한 줄(사진 80 · 파일 카드 160 × 80 · × 20 누르는 44 · 올리는 중 원 24 · 실패 다시 시도 · 대표 띠 · 순서 바꾸기 · 항목 메뉴)과 1280 이상 드롭존(120 · 1px 실선 · 파일 선택)이다 — 파일 이름은 글자 단위 네 줄, 끄는 · 읽기 전용 사진만 0.5 다. Footer 는 블록을 골라 조립하는 바닥 — porest-home 짜임(브랜드 · 서비스 · 계정 | 선 | 처리방침 ↗ · 안내 글 · © 해 POREST)이다. 옛 File Upload(v73 — 2px 점선 · 📁 · 막힘 0.5)는 걷었다."
+  const lede = "SEED Quantity Picker · Attachment Input · Footer 를 따른 마무리 셋이다(2026-10-15 사용자 결정 1A ~ 14A). Quantity Picker 는 테두리 상자 안 − · 선 · 값 · 선 · + — 세 크기 36 · 40 · 52(웹 기본 responsive), 값 칸은 보기만, 끝의 버튼은 aria-disabled(초점이 남는다), 지우기 · 로딩. Attachment Input 은 첨부 타일 80 + 한 줄(사진 80 · 파일 카드 160 × 80 · × 20 누르는 44 · 올리는 중 원 24 · 실패 다시 시도 · 대표 띠 · 순서 바꾸기 · 항목 메뉴)과 1280 이상 드롭존(120 · 1px 실선 · 파일 선택)이다 — 파일 이름은 글자 단위 네 줄, 끄는 · 읽기 전용 사진만 0.5 다. Footer 는 블록을 골라 조립하는 바닥 — groo-home 짜임(브랜드 · 서비스 · 계정 | 선 | 처리방침 ↗ · 안내 글 · © 해 그루)이다. 옛 File Upload(v73 — 2px 점선 · 📁 · 막힘 0.5)는 걷었다."
     + (shared ? " 공유 토큰에는 브랜드 역할 색이 없어 포커스 링이 여기서는 중립으로 보인다." : "");
 
   return `
@@ -10867,7 +10867,7 @@ export function renderBatchV67(brand) {
     : pnavPhone({
         height: 460,
         cls: "pnav-phone--modal",
-        inner: `<div class="pnav-back" inert>${topNav({ title: "휴가 현황", leading: "menu", menu: { open: true } })}${pnavRows(PNAV_LEAVE)}</div><div class="pov-scrim" aria-hidden="true"></div>${sidePanel({ side: "left", title: "Porest HR", body: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", drawer: true }), scrollFog: true })}`,
+        inner: `<div class="pnav-back" inert>${topNav({ title: "휴가 현황", leading: "menu", menu: { open: true } })}${pnavRows(PNAV_LEAVE)}</div><div class="pov-scrim" aria-hidden="true"></div>${sidePanel({ side: "left", title: "그루 이음", body: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", drawer: true }), scrollFog: true })}`,
       });
 
   // Progress Circle · Progress — 옛 Spinner(16 · 24 · 32 · 브랜드 4분의 1 호 · 라벨 앞 원) · 진행 막대(4 · 흐르는 막대)는 걷었다(2026-10-03 — 03p).
@@ -10971,7 +10971,7 @@ export function renderShadcnNav(brand) {
     <div class="sc-grid">
       <div class="sc-card">
         <div class="sc-head">Side Navigation — 모양은 03r</div>
-        <div class="pnav-navs">${sideNav({ groups: isHr ? PNAV_HR_NAV : PNAV_DESK_NAV, current: isHr ? "휴가 현황" : "가계부", logo: isHr ? "Porest HR" : "Porest Desk", height: 420 })}</div>
+        <div class="pnav-navs">${sideNav({ groups: isHr ? PNAV_HR_NAV : PNAV_DESK_NAV, current: isHr ? "휴가 현황" : "가계부", logo: isHr ? "그루 이음" : "그루 담다", height: 420 })}</div>
       </div>
     </div>
   </section>`;
@@ -11002,7 +11002,7 @@ export function renderShadcnDisclose(brand) {
               ] })
             : brand.key === "desk"
               ? overlayPage({ desktop: true, title: "메모", rows: [
-                  { color: "orange", icon: "book", title: "Porest 브랜드 톤", detail: "10월 1일 (목)", value: "342자" },
+                  { color: "orange", icon: "book", title: "Groo 브랜드 톤", detail: "10월 1일 (목)", value: "342자" },
                   { color: "blue", icon: "book", title: "5월 회고", detail: "9월 30일 (수)", value: "1,204자" },
                   { color: "violet", icon: "book", title: "참고 자료", detail: "9월 28일 (월)", value: "86자" },
                 ] })
@@ -11147,11 +11147,11 @@ export function renderBatchV73V78(brand) {
       <div class="sc-card sc-card--full">
         <div class="sc-head">Field 검증 — 기본 · 포커스 · 오류 · 맞음 · 확인 중</div>
         <div class="fv-grid">${[
-          { ko: "기본", en: "enabled", field: { description: "영문 · 숫자 20자까지", control: { placeholder: "예: porest" } } },
-          { ko: "포커스", en: "focused — 안쪽 2px 짙은 테두리", field: { description: "영문 · 숫자 20자까지", control: { value: "porest", focus: true } } },
-          { ko: "오류", en: "invalid — 오류가 설명을 대신한다", field: { invalid: true, error: "이미 쓰고 있는 아이디예요.", description: "영문 · 숫자 20자까지", control: { value: "porest" } } },
-          { ko: "맞음 — 설명 글로", en: "테두리는 그대로 · 아이콘 16", field: { description: "쓸 수 있는 아이디예요.", descriptionIcon: "circleCheck", control: { value: "porest2026" } } },
-          { ko: "확인 중 — 설명 글로", en: "테두리는 그대로", field: { description: "확인하는 중", control: { value: "porest2026" } } },
+          { ko: "기본", en: "enabled", field: { description: "영문 · 숫자 20자까지", control: { placeholder: "예: groo" } } },
+          { ko: "포커스", en: "focused — 안쪽 2px 짙은 테두리", field: { description: "영문 · 숫자 20자까지", control: { value: "groo", focus: true } } },
+          { ko: "오류", en: "invalid — 오류가 설명을 대신한다", field: { invalid: true, error: "이미 쓰고 있는 아이디예요.", description: "영문 · 숫자 20자까지", control: { value: "groo" } } },
+          { ko: "맞음 — 설명 글로", en: "테두리는 그대로 · 아이콘 16", field: { description: "쓸 수 있는 아이디예요.", descriptionIcon: "circleCheck", control: { value: "groo2026" } } },
+          { ko: "확인 중 — 설명 글로", en: "테두리는 그대로", field: { description: "확인하는 중", control: { value: "groo2026" } } },
         ].map(c => `
           <div class="fv-cell">
             <div class="ptf-cap">${escape(c.ko)}<span>${escape(c.en)}</span></div>
@@ -11199,7 +11199,7 @@ function renderTokenCatalog(tokens) {
         <span>${escape(t.fontSize)} / ${escape(t.lineHeight)} / ${escape(t.fontWeight)}</span>
       </div>
       <div class="text-sample" style="font-size:${escape(t.fontSize)};line-height:${escape(t.lineHeight)};font-weight:${escape(t.fontWeight)};">
-        Porest Design — 사람과 일상이 숲처럼 자라나는 디자인 시스템
+        Groo Design — 사람과 일상이 숲처럼 자라나는 디자인 시스템
       </div>
     </div>`).join("");
 
@@ -11283,7 +11283,7 @@ export function pageCss() {
     }
 
     /* === 전역 스크롤바 — Scroll Area(2026-10-10, specs/components/scroll-area.yaml) ===
-       recipes/shadcn/styles/porest-shadcn-bridge.css 와 같은 계약이다 — 세로 · 가로 6px 알약 · 막대 stroke-neutral-solid · 바탕 · 모서리 투명.
+       recipes/shadcn/styles/groo-shadcn-bridge.css 와 같은 계약이다 — 세로 · 가로 6px 알약 · 막대 stroke-neutral-solid · 바탕 · 모서리 투명.
        크로미움 · 사파리는 webkit 규칙, Firefox 만 표준 두 줄(scrollbar-width thin · scrollbar-color)을 @supports not selector(::-webkit-scrollbar) 안에 둔다 —
        크로미움은 scrollbar-width · scrollbar-color 가 걸린 요소에서 ::-webkit-scrollbar 를 버려 6px 이 10px(thin) · 15px(color 만)로 바뀐다.
        블록마다 두던 scrollbar-width: thin 도 그 블록의 @supports 안으로 옮겼다(03r · 03s · 03t).
@@ -15776,7 +15776,7 @@ export function pageCss() {
 
     /* === 기다림 — Skeleton · Progress Circle · Pull To Refresh · Progress · Scroll Fog · Content Placeholder ===
        specs/components/skeleton.md · progress-circle.md · progress.md · scroll-fog.md · content-placeholder.md(수치는 같은 이름의 .yaml · pull-to-refresh.yaml).
-       구조는 SEED(2026-10-03) — Progress(막대)는 porest 만의 미터다. 토큰은 역할 색과 v104 의 gradient-shimmer-neutral(-dark) · gradient-fade-mask ·
+       구조는 SEED(2026-10-03) — Progress(막대)는 groo 만의 미터다. 토큰은 역할 색과 v104 의 gradient-shimmer-neutral(-dark) · gradient-fade-mask ·
        motion-duration-loop · motion-ease-easing 이고, 반짝임 · 회전 · 나타남은 토큰의 shimmer · spin · fade-in 키프레임이다.
        끝 흐림의 마스크는 gradient-fade-mask 의 16단계에 방향을 붙여 깐다 — 그 단계(--pfog-stops · 깊이에 맞춘 --pfog-head · --pfog-tail)는 페이지가 토큰 값에서 읽어 둔다
        (DESIGN.md "마스크는 방향 없이 적었다 — 쓰는 자리에서 방향을 붙인다"). 모션 줄이기면 띠 · 회전 · 채움 · 당기기 전환이 멈춘다.
@@ -16088,7 +16088,7 @@ export function pageCss() {
     /* === 이미지 — Image Frame · 카드 그림 · Logo Tile · Aspect Ratio ===
        specs/components/image-frame.md · logo-tile.md · aspect-ratio.md(수치 원본은 image-frame.yaml · card-art.yaml · logo-tile.yaml · aspect-ratio.yaml,
        기관 색은 institution-colors.yaml — 빌드가 읽어 인라인 --pcart-bg · --plt-bg 로 넘긴다). 구조는 SEED Image Frame · Aspect Ratio(2026-10-04) —
-       카드 그림 · Logo Tile 은 porest 만의 부품이다. 모두 누르지 않는다(누르는 자리는 감싼 줄 · 칸). 윤곽은 stroke-neutral-overlay(v118 — 검정 4.7% · 다크 흰 5%)이고
+       카드 그림 · Logo Tile 은 groo 만의 부품이다. 모두 누르지 않는다(누르는 자리는 감싼 줄 · 칸). 윤곽은 stroke-neutral-overlay(v118 — 검정 4.7% · 다크 흰 5%)이고
        안쪽 1px(inset box-shadow)라 크기가 변하지 않는다. 기관 색 · 그림은 모드를 따르지 않는다. 다크 짝은 이 블록 끝의 [data-theme="dark"] 에서 바꾼다 —
        03o 의 라이트 · 다크 나란히 틀(.pdsp-theme--light · --dark)은 페이지 테마와 관계없이 그 테마로 그린다. */
 
@@ -16339,7 +16339,7 @@ export function pageCss() {
     /* === 화면 틀 · 이동 — Top Navigation · Bottom Navigation · Side Navigation · Side Panel · Pagination · Table Pagination · Floating Action Button ===
        specs/components/top-navigation.md · bottom-navigation.md · side-navigation.md · side-panel.md · pagination.md · table-pagination.md · floating-action-button.md
        (수치 원본은 같은 이름의 .yaml 과 infinite-list.yaml) · 화면 틀은 DESIGN.md Layout 의 "화면 틀" · "Safe Area" · 쌓임은 specs/z-index.md.
-       구조는 SEED Top Navigation · Side Navigation · Side Panel · Pagination · Table Pagination · Floating Action Button 이고 하단 탭 바는 porest 의 떠 있는 알약이다(2026-10-04 · 10-08).
+       구조는 SEED Top Navigation · Side Navigation · Side Panel · Pagination · Table Pagination · Floating Action Button 이고 하단 탭 바는 groo 의 떠 있는 알약이다(2026-10-04 · 10-08).
        누름은 바탕 + 2px 거리 축소(배율 (기준 − 2) ÷ 기준 — 기준은 상자 크기, 상단 바 44 · 사이드바 항목 56(폭 224 ÷ 4) · 쪽 칸 40 · + 44 · 떠 있는 버튼 56),
        호버는 같은 바탕이고 축소가 없다(마우스 있는 기기에서만). 포커스는 키보드에만 링 2px stroke-focus-ring — 붙은 칸(상단 바 버튼 · 탭 칸 · 사이드바 항목)은 안쪽,
        떨어진 칸(쪽 칸 · + · 떠 있는 버튼)은 바깥 2. 모션 줄이기면 축소 · 미끄러짐을 뺀다. 화면 틀(.pnav-phone · .pnav-desk)은 갤러리 것이고 틀의 --pnav-safe-top ·
@@ -17720,7 +17720,7 @@ export function pageCss() {
 
     /* === 입력 — Slider · Toggle · Input OTP · Color Swatch · Icon Picker ===
        specs/components/slider.md · toggle.md · input-otp.md · color-swatch.md · icon-picker.md(수치 원본은 같은 이름의 .yaml) · 아이콘 세트 category-icons.yaml.
-       SEED 가 컴포넌트로 가진 것은 Slider 와 Toggle Button(코드만)뿐이라 나머지는 SEED 의 원칙에서 porest 가 정했다(2026-10-09 사용자 결정).
+       SEED 가 컴포넌트로 가진 것은 Slider 와 Toggle Button(코드만)뿐이라 나머지는 SEED 의 원칙에서 groo 가 정했다(2026-10-09 사용자 결정).
        슬라이더는 손잡이 줄 44 안에 트랙 4 · 채움 · 손잡이 20 — 손잡이 가운데는 트랙 양 끝에서 반지름(--psld-r 10)만큼 들어온 범위를 값으로 나눈 자리다(calc).
        채움 · 손잡이는 트랙을 누르거나 키보드로 옮길 때 150ms 로 건너뛰고, 끄는 동안(data-dragging)은 1:1 로 따라간다. 말풍선은 누름 · 호버 · 키보드 포커스에만 뜨고
        트랙 끝에서는 상자만 안으로 민다(--psld-shift — 페이지 끝 스크립트가 잰다). 켜고 끄는 단추는 바탕을 칠하지 않고 아이콘의 모양 · 굵기 · 색만 바꾼다.
@@ -18188,7 +18188,7 @@ export function pageCss() {
 
     /* === 펼치고 접기 · 나누기 — Accordion · Collapsible · Tree View · Resizable · Scroll Area · Scroll Auto Hide ===
        specs/components/accordion.md · collapsible.md · tree-view.md · resizable.md · scroll-area.md · scroll-auto-hide.md · list.md(하위 줄) · card.md(body accordion)
-       (수치 원본은 같은 이름의 .yaml). SEED Accordion · Breeze Scroll Auto Hide 를 따르고, 나머지는 porest 가 정했다(2026-10-10 사용자 결정 1 ~ 17).
+       (수치 원본은 같은 이름의 .yaml). SEED Accordion · Breeze Scroll Auto Hide 를 따르고, 나머지는 groo 가 정했다(2026-10-10 사용자 결정 1 ~ 17).
        아코디언 트리거는 두 층이다 — 바탕 층(::before: 누름 · 호버 바탕, 줄지 않는다 — 좌우 6 들어와 모서리 10)과 콘텐츠 층(.pacc-content — 누르는 동안만
        2px 거리 축소, 기준 --press-basis 는 페이지 끝 스크립트가 누르는 순간 잰다). 접기 · 나무 줄 · 하위 줄의 꺾쇠 단추도 같은 셈이다.
        펼침 · 접힘(높이 300ms d6 · 모션 줄이기면 투명도 150ms d3)은 페이지 끝 스크립트가 맡고, 꺾쇠의 회전만 CSS 다. 모션 줄이기는 기기 설정이거나
@@ -18577,7 +18577,7 @@ export function pageCss() {
 
     /* === 마무리(03v) — Quantity Picker · Attachment Input · Footer ===
        specs/components/quantity-picker.md · attachment-input.md · footer.md(수치 원본은 같은 이름의 .yaml). SEED 를 따르고 크기 기본 · 누르는 자리 · 드롭존 색 ·
-       파일 이름 네 줄 · 항목 메뉴 · 위 선은 porest 가 정했다(2026-10-15 사용자 결정 1A ~ 14A). 짜임 · 값은 quantity-picker.tsx · attachment-input.tsx · footer.tsx 와 같다.
+       파일 이름 네 줄 · 항목 메뉴 · 위 선은 groo 가 정했다(2026-10-15 사용자 결정 1A ~ 14A). 짜임 · 값은 quantity-picker.tsx · attachment-input.tsx · footer.tsx 와 같다.
        반응형(responsive · 드롭존 · 바닥 여백)은 1280(--breakpoint-lg — 미디어 쿼리는 변수를 못 써 수를 적었다) 경계이고, 갤러리 그림은 data-screen · data-width 로
        그 폭의 모습을 고정한다. --hover · --pressed · --focus 는 갤러리에서 그 순간을 멈춘 클래스다. 다크 짝은 이 블록 끝에서 바꾼다 — 03o 의 라이트 · 다크
        나란히 틀(.pdsp-theme--dark)은 페이지가 라이트여도 바꾼다. */
@@ -18890,7 +18890,7 @@ export function pageCss() {
       .pfoot-link--large:hover { color: var(--color-fg-neutral-subtle); }
       .pfoot-link--medium:hover { color: var(--color-fg-neutral); }
     }
-    /* 홈에 넣은 모습(8A) — 짜임은 스펙, 색 · 글꼴은 porest-home index.html 의 값(--ink · --ink2 · --ink3 은 4.5 이상으로 짙게 고친 값 · --line · --blue). 그림 전용 */
+    /* 홈에 넣은 모습(8A) — 짜임은 스펙, 색 · 글꼴은 groo-home index.html 의 값(--ink · --ink2 · --ink3 은 4.5 이상으로 짙게 고친 값 · --line · --blue). 그림 전용 */
     .pfin-page--home { background: #ffffff; }
     .pfin-page--home .pfin-page-body > span { background: #f2f4f6; }
     .pfin-section .pfin-home .pfoot.pfoot { --color-fg-neutral: #191f28; --color-fg-neutral-muted: #4e5968; --color-fg-neutral-subtle: #6b7684; --color-stroke-neutral-subtle: #e5e8eb; font-family: "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", sans-serif; }
@@ -19662,11 +19662,11 @@ function renderHtml(brandName, css, tokens, sourceFile) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Porest Design — ${escape(brandName)}</title>
+  <title>Groo Design — ${escape(brandName)}</title>
   <script>
     (function() {
       try {
-        var saved = localStorage.getItem("porest-theme");
+        var saved = localStorage.getItem("groo-theme");
         var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
         var theme = saved || (prefersDark ? "dark" : "light");
         document.documentElement.setAttribute("data-theme", theme);
@@ -19679,7 +19679,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
   <style>${pageCss()}${fadeMaskStopsCss(css)}</style>
 </head>
 <body>
-  <button class="theme-toggle" type="button" aria-label="테마 전환" onclick="(function(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('porest-theme',n)}catch(e){}})()">
+  <button class="theme-toggle" type="button" aria-label="테마 전환" onclick="(function(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('groo-theme',n)}catch(e){}})()">
     <span class="theme-toggle-icon theme-toggle-dark-icon">🌙</span>
     <span class="theme-toggle-icon theme-toggle-light-icon">☀️</span>
     <span class="theme-toggle-dark-text">Dark</span>
@@ -19727,7 +19727,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
     ${renderBatchV73V78(brand)}
     ${renderTokenCatalog(tokens)}
     <p style="text-align:center;color:var(--color-text-tertiary);font-size:var(--text-caption);margin-top:var(--spacing-3xl);">
-      source <code>${escape(sourceFile)}</code> · Porest Design System
+      source <code>${escape(sourceFile)}</code> · Groo Design System
     </p>
   </main>
   <script>
@@ -22893,7 +22893,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
           if (next) rove(next, true);
         });
       });
-      // ── 칸 툴팁 — 색 칸 · 아이콘 칸의 이름을 porest Tooltip(03m 의 말풍선 .pbub--tooltip)으로 보인다(네이티브 title 은 쓰지 않는다 — color-swatch.yaml
+      // ── 칸 툴팁 — 색 칸 · 아이콘 칸의 이름을 groo Tooltip(03m 의 말풍선 .pbub--tooltip)으로 보인다(네이티브 title 은 쓰지 않는다 — color-swatch.yaml
       //    swatch.tooltip · icon-picker 칸). 마우스는 200ms 뒤 · 키보드 초점은 바로 열고, 칸 · 말풍선을 모두 벗어나면 100ms 뒤 닫는다. 하나가 열려 있거나
       //    닫힌 지 300ms 안에 옆 칸으로 옮기면 기다리지 않는다(TooltipProvider). 누르기 · Esc · 스크롤에 닫는다. 자리는 칸 위 12(위가 모자라면 아래)
       var tipEl = null, tipFor = null, tipOpenT = 0, tipCloseT = 0, tipClosedAt = 0;
@@ -24170,8 +24170,8 @@ const targets = args.source ? [
   { source: args.source, output: args.output || resolve(ROOT, "exports/preview.html"), brand: args.brand || basename(args.source, ".md") }
 ] : [
   { source: resolve(ROOT, "DESIGN.md"), output: resolve(ROOT, "exports/preview.html"), brand: "shared (DESIGN.md)" },
-  { source: resolve(ROOT, "DESIGN.hr.md"), output: resolve(ROOT, "exports/preview.hr.html"), brand: "Porest HR" },
-  { source: resolve(ROOT, "DESIGN.desk.md"), output: resolve(ROOT, "exports/preview.desk.html"), brand: "Porest Desk" },
+  { source: resolve(ROOT, "DESIGN.hr.md"), output: resolve(ROOT, "exports/preview.hr.html"), brand: "그루 이음" },
+  { source: resolve(ROOT, "DESIGN.desk.md"), output: resolve(ROOT, "exports/preview.desk.html"), brand: "그루 담다" },
 ];
 
 if (!existsSync(resolve(ROOT, "exports"))) mkdirSync(resolve(ROOT, "exports"));

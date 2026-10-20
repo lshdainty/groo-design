@@ -1,5 +1,5 @@
 /*
- * Porest 카테고리 아이콘 세트 — 카테고리 · 저축 목표에 붙이는 아이콘을 고르는 Icon Picker 의 범위(2026-10-09).
+ * Groo 카테고리 아이콘 세트 — 카테고리 · 저축 목표에 붙이는 아이콘을 고르는 Icon Picker 의 범위(2026-10-09).
  * 원본은 specs/components/category-icons.yaml 이다. 아래 @generated 구역(아이콘 import · DEFAULT_CATEGORY_ICON · CATEGORY_ICON_GROUPS ·
  * CATEGORY_ICONS · CATEGORY_ICON_COMPONENTS)은 scripts/gen-category-icons.mjs 가 그 YAML 에서 만든다 — 손으로 고치지 않는다.
  * 세트를 바꾸려면 YAML 을 고치고 `npm run gen:category-icons` 로 다시 만든다. `npm run verify`(check:category-icons)가 표와 YAML 이

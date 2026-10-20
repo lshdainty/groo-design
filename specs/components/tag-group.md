@@ -2,7 +2,7 @@
 
 > 여러 메타 정보(카테고리 이름 · 자산 · 시각 · 거리 · 개수 · 금액)를 " · " 로 이어 한 줄로 보이는 글줄 — "식비 · 신한카드 · 오후 2:10". 읽기만 한다. 대상의 상태 · 분류 라벨은 [Badge](badge.md), 고르는 값은 [Chip](chip.md) 이다.
 
-구조는 당근 [SEED Tag Group](https://seed-design.io/components/tag-group)(Apache-2.0)를 따른다 — 항목(글 + 아이콘 하나) · 구분 " · ", 크기 셋(t2 · t3 · t4), 항목마다 톤 · 굵기, 줄바꿈 또는 한 줄 말줄임. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). porest 에 처음 두는 컴포넌트다 — DESIGN.md Caption 절의 "닉네임 · 시간" 메타 줄과 [List](list.md) 줄의 설명 줄이 이것이다.
+구조는 당근 [SEED Tag Group](https://seed-design.io/components/tag-group)(Apache-2.0)를 따른다 — 항목(글 + 아이콘 하나) · 구분 " · ", 크기 셋(t2 · t3 · t4), 항목마다 톤 · 굵기, 줄바꿈 또는 한 줄 말줄임. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-03 사용자 결정). groo 에 처음 두는 컴포넌트다 — DESIGN.md Caption 절의 "닉네임 · 시간" 메타 줄과 [List](list.md) 줄의 설명 줄이 이것이다.
 
 수치 원본은 [`tag-group.yaml`](tag-group.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -206,10 +206,10 @@ import { Eye } from "lucide-react"
 
 ## SEED 와 다른 점
 
-- **기본 글자가 4.5:1 을 넘는다** — 기본 톤은 porest `fg-neutral-subtle`(흰 바탕 5.50:1)이다. SEED fg.neutral-subtle(#868b94)은 3.42:1 이다.
+- **기본 글자가 4.5:1 을 넘는다** — 기본 톤은 groo `fg-neutral-subtle`(흰 바탕 5.50:1)이다. SEED fg.neutral-subtle(#868b94)은 3.42:1 이다.
 - **구분 색은 `fg-disabled`** — SEED palette gray-600 의 역할 짝(글보다 한 단계 흐리다).
-- **낱말 단위 줄바꿈 · 구분은 앞 줄 끝에** — SEED 웹은 한국어를 음절에서 끊고("3시 / 간 전") 구분 " · " 가 다음 줄 첫머리에 남는다. porest 는 v114(keep-all + break-word)로 낱말 사이에서만 끊고, 구분 앞 공백을 줄이 안 바뀌는 공백으로 둔다.
-- **끊어 읽는다** — SEED 는 구분을 숨기기만 해 "500m서초4동3분 전" 처럼 붙어 읽히고, 예제의 `aria-label`(span)은 무시된다. porest 는 보이지 않는 ", " 와 항목의 `srLabel` 을 둔다.
+- **낱말 단위 줄바꿈 · 구분은 앞 줄 끝에** — SEED 웹은 한국어를 음절에서 끊고("3시 / 간 전") 구분 " · " 가 다음 줄 첫머리에 남는다. groo 는 v114(keep-all + break-word)로 낱말 사이에서만 끊고, 구분 앞 공백을 줄이 안 바뀌는 공백으로 둔다.
+- **끊어 읽는다** — SEED 는 구분을 숨기기만 해 "500m서초4동3분 전" 처럼 붙어 읽히고, 예제의 `aria-label`(span)은 무시된다. groo 는 보이지 않는 ", " 와 항목의 `srLabel` 을 둔다.
 - **구분 기호는 " · " 하나** — SEED 는 `separator` 로 바꿀 수 있다.
 - **줄어드는 항목의 최소 폭** — 한 줄 말줄임에서 항목은 첫 글자 + "…"(2.1em) 까지만 준다. SEED 는 최소 폭이 없어 좁은 줄에서 글자 조각만 남는다(2026-10-17 사용자 결정 — 03-E 결정 5 B).
 
@@ -225,7 +225,7 @@ import { Eye } from "lucide-react"
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-03 조사).
 
-- **메타 줄 구분이 세 가지** — Desk 웹은 2 × 2 점 그림(`shared/ui/porest/ledger.tsx:639-652` `LedgerRowSep` · 할 일 `TodoPage.tsx:789-795`, `--border-strong` 3.72 · 4.80), Desk 앱은 " · " 글자 합치기(`features/expense/presentation/widgets/expense_row.dart:199-209` — 할 일만 2px 점 `todo_screen.dart:1266-1282`), HR 은 "•"(`admin-notice/ui/NoticeList.tsx:61 · 63` · `admin-holiday/ui/HolidayList.tsx:69`, 3.07 · 3.96).
+- **메타 줄 구분이 세 가지** — Desk 웹은 2 × 2 점 그림(`shared/ui/groo/ledger.tsx:639-652` `LedgerRowSep` · 할 일 `TodoPage.tsx:789-795`, `--border-strong` 3.72 · 4.80), Desk 앱은 " · " 글자 합치기(`features/expense/presentation/widgets/expense_row.dart:199-209` — 할 일만 2px 점 `todo_screen.dart:1266-1282`), HR 은 "•"(`admin-notice/ui/NoticeList.tsx:61 · 63` · `admin-holiday/ui/HolidayList.tsx:69`, 3.07 · 3.96).
 - **웹의 글자 "·" 세 벌** — 코드 86줄 · 39파일과 번역 177행에 " · " · "·"(`StatsPage.tsx:1786`) · `&nbsp;·`(`ExpensePage.tsx:2196`)가 섞였다.
 - **웹 · 앱 항목이 다르다** — 가계부 줄이 웹은 분류 · 자산 · 시각, 앱은 분류 · 자산 · 할부 N개월이다. 앱 적용 때 한 순서로 맞춘다.
 - **아이콘 + 숫자가 숫자만 읽힘** — 분할 개수(웹 `entities/expense/ui/expense-row.tsx:86-103`)는 "2" 로만, HR 공지 조회수(눈 아이콘 + 숫자)는 아이콘 이름이 없다 → `srLabel`("분할 2건" · "조회 12").

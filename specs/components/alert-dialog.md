@@ -2,7 +2,7 @@
 
 > 되돌릴 수 없는 일을 하기 전에 묻는 확인창 — 지우기 · 나가기처럼 둘 중 하나를 골라야 할 때(액션 둘 이하), 또는 꼭 알아야 할 일을 알릴 때(버튼 하나). 폰 · 데스크톱 모두 화면 정중앙에 같은 모양으로 뜬다. 입력 · 조회는 [Dialog](dialog.md) · [Bottom Sheet](bottom-sheet.md), 여러 동작 목록은 Menu Sheet(그 차례에), 지나가는 알림은 Snackbar(그 차례에)다.
 
-구조는 당근 [SEED Alert Dialog](https://seed-design.io/components/alert-dialog)(Apache-2.0)를 따른다 — 딤 · 확인창 · 제목 · 설명 · 버튼, 닫기 버튼 없음. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
+구조는 당근 [SEED Alert Dialog](https://seed-design.io/components/alert-dialog)(Apache-2.0)를 따른다 — 딤 · 확인창 · 제목 · 설명 · 버튼, 닫기 버튼 없음. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
 수치 원본은 [`alert-dialog.yaml`](alert-dialog.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -169,9 +169,9 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 ## SEED 와 다른 점
 
 - **1280 이상은 버튼 small 36** — Button 결정(대화상자 바닥 36)을 따랐다. 1280 미만은 SEED 와 같은 medium 40.
-- **딤은 porest 0.50 · 다크 0.65**(v102) — SEED 0.455.
+- **딤은 groo 0.50 · 다크 0.65**(v102) — SEED 0.455.
 - **z-index 는 specs/z-index.md 의 L5**(딤 `z-alert` 300 · 확인창 `z-alert-content` 301) — 열린 대화상자 · 시트 위에 뜬다. SEED 는 모든 모달이 2 + layerIndex 라 DOM 순서에 기댄다.
-- **`Esc` 는 취소** — SEED 와 같다. 옛 porest 스펙은 `Esc` 도 막았다.
+- **`Esc` 는 취소** — SEED 와 같다. 옛 groo 스펙은 `Esc` 도 막았다.
 
 ## Migration notes
 

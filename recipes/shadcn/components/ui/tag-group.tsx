@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Porest Tag Group — 구조는 SEED Tag Group(2026-10-03). 수치 원본은 specs/components/tag-group.yaml.
+ * Groo Tag Group — 구조는 SEED Tag Group(2026-10-03). 수치 원본은 specs/components/tag-group.yaml.
  *
  *   TagGroup       여러 메타 정보(카테고리 이름 · 자산 · 시각 · 거리 · 개수 · 금액)를 " · " 로 이은 글줄 — 묶음 <span>, 역할 없음
  *                  (목록 역할을 주지 않는다 — "목록, 항목 3개" 를 줄마다 읽지 않게). 항목 사이 구분은 묶음이 스스로 넣는다

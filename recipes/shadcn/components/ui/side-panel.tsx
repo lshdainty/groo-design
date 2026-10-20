@@ -8,7 +8,7 @@ import { useInputButtonSurface } from "@/components/ui/input-button";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Porest Side Panel — 구조는 SEED Side Panel(2026-10-04). 수치 원본은 specs/components/side-panel.yaml. Radix Dialog 위에 짰다.
+ * Groo Side Panel — 구조는 SEED Side Panel(2026-10-04). 수치 원본은 specs/components/side-panel.yaml. Radix Dialog 위에 짰다.
  * 옛 Sheet(shadcn — 네 방향 · 75% · 384 · 그림자 · 선)를 대신한다 — 아래에서 올라오는 것은 Bottom Sheet, 위에서 내려오는 패널은 없다.
  *
  *   SidePanel          화면 옆에서 미끄러져 나오는 모달 — open · defaultOpen · onOpenChange · form · dirty
@@ -266,7 +266,7 @@ const CLOSE_SIDE: Record<Side, string> = {
 };
 
 export interface SidePanelContentProps extends Omit<React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>, "title"> {
-  /** 제목 — 무엇을 하는 패널인지. 주 메뉴 서랍은 서비스 이름("Porest HR") */
+  /** 제목 — 무엇을 하는 패널인지. 주 메뉴 서랍은 서비스 이름("그루 이음") */
   title: React.ReactNode;
   /** 설명 — 덧붙일 말이 있을 때만 한 문장 */
   description?: React.ReactNode;

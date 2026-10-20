@@ -5,7 +5,7 @@
 # 페이지 전체의 상태는 Page Banner(page-banner.yaml), 잠깐 알릴 결과는 Snackbar(snackbar.yaml)다.
 #
 # SEED 와 다른 자리(callout.md 의 "SEED 와 다른 점")
-#   - 톤은 다섯 — magic(AI)은 porest 에 AI 기능이 없어 두지 않는다.
+#   - 톤은 다섯 — magic(AI)은 groo 에 AI 기능이 없어 두지 않는다.
 #   - 아이콘은 lucide 선 아이콘(v106 — SEED 는 채운 아이콘을 권한다).
 #   - 나중에 나타나는 경고 · 위험(저장 실패)은 role="alert"(SEED 는 역할이 없다).
 #   - 버튼에 type="button"(SEED 링크 · 닫기에는 없어 폼 안에서 제출된다).

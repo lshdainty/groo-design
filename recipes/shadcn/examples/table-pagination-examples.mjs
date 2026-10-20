@@ -2,7 +2,7 @@
  * shadcn Table Pagination 예제 — docs site components/table-pagination.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 하나(HR 사용자 표)는 차례 · 제목 · 코드가 specs/components/table-pagination.md 의
  * "코드" 절과 같고, 뒤의 셋(전체 수를 모를 때 · 끝과 한 범위 · 좁은 화면)은 md 의 Properties · Guidelines 를 코드로 더 보인다.
- * porest 에 처음 두는 컴포넌트다 — 구조는 SEED Table Pagination 이다.
+ * groo 에 처음 두는 컴포넌트다 — 구조는 SEED Table Pagination 이다.
  *
  * ARROW · ARROW_ENABLED · ARROW_DISABLED · TEXT · SELECT_BOX · MAX_RANGE_OPTIONS 는 recipes/shadcn/components/ui/table-pagination.tsx 의 상수와,
  * ROOT · PAGE_SIZE · RIGHT · RANGE · ARROWS · STATUS 는 그 파일의 JSX 에 적힌 클래스와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다.

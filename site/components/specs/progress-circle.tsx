@@ -229,7 +229,7 @@ const Tones: Fig = ({ caption }) => {
       return (
         <div className="flex h-[132px] flex-col items-center justify-center gap-3 rounded-xl" style={{ background: rc('bg-layer-default', mode) }}>
           <span className="text-[16px] font-bold" style={{ color: rc('fg-brand', mode) }}>
-            Porest Desk
+            그루 담다
           </span>
           <Circle mode={mode} size="40" tone="brand" label="시작하는 중" />
           <span className="text-[11px] tabular-nums" style={{ color: rc('fg-neutral-subtle', mode) }}>

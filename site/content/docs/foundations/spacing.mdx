@@ -6,7 +6,7 @@ source: DESIGN.md
 
 import { SpacingRolesFigure, SpacingRoleTable, SpacingScaleFigure, SpacingTokenTable } from '@/components/foundations/spacing';
 
-간격은 요소 사이의 공간으로 묶음과 흐름을 만든다. porest 는 당근 SEED 의 dimension 스케일(2px 단위 19단계)과, 자리마다 이름을 붙인 역할 간격을 쓴다.
+간격은 요소 사이의 공간으로 묶음과 흐름을 만든다. groo 는 당근 SEED 의 dimension 스케일(2px 단위 19단계)과, 자리마다 이름을 붙인 역할 간격을 쓴다.
 
 ## 목적
 
@@ -22,7 +22,7 @@ import { SpacingRolesFigure, SpacingRoleTable, SpacingScaleFigure, SpacingTokenT
 
 <SpacingRoleTable />
 
-- `spacing-global-gutter` 는 SEED(16px)와 달리 24px 이다. porest 앱의 화면 좌우 여백 규칙(2026-09-14, 본문 24)을 따른다 — 주간 띠 · 캘린더 격자 안 칸의 인셋 · 카테고리 탭 바의 전폭은 의도한 예외다.
+- `spacing-global-gutter` 는 SEED(16px)와 달리 24px 이다. groo 앱의 화면 좌우 여백 규칙(2026-09-14, 본문 24)을 따른다 — 주간 띠 · 캘린더 격자 안 칸의 인셋 · 카테고리 탭 바의 전폭은 의도한 예외다.
 - 웹에서 768px 이상의 페이지 좌우 여백은 [Layout](/docs/foundations/layout) 의 `layout-margin`(32px)이다. 768 미만은 `spacing-global-gutter` 를 쓴다.
 - 노치 · 홈 표시줄처럼 안전 영역이 있는 화면에서는 화면 끝이 아니라 **안전 영역 경계부터** 잰다. Desk 앱은 SafeArea, 웹은 `env(safe-area-inset-*)` 로 이미 그렇게 한다.
 
@@ -36,4 +36,4 @@ import { SpacingRolesFigure, SpacingRoleTable, SpacingScaleFigure, SpacingTokenT
 
 ---
 
-<p className="text-sm text-fd-muted-foreground">구성과 일부 설명은 당근 [SEED Design](https://seed-design.io) 의 Foundations 문서(Apache-2.0)를 바탕으로 했다. 값과 그림은 porest 것이다.</p>
+<p className="text-sm text-fd-muted-foreground">구성과 일부 설명은 당근 [SEED Design](https://seed-design.io) 의 Foundations 문서(Apache-2.0)를 바탕으로 했다. 값과 그림은 groo 것이다.</p>

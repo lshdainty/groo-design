@@ -6,7 +6,7 @@ import { Button, type ButtonProps } from "@/components/ui/button";
 import { useInputButtonSurface } from "@/components/ui/input-button";
 
 /*
- * Porest Alert Dialog — 구조는 SEED Alert Dialog(2026-10-02). 수치 원본은 specs/components/alert-dialog.yaml.
+ * Groo Alert Dialog — 구조는 SEED Alert Dialog(2026-10-02). 수치 원본은 specs/components/alert-dialog.yaml.
  *
  *   AlertDialog              되돌릴 수 없는 일 앞에서 묻는 확인창(Radix AlertDialog) — open · defaultOpen · onOpenChange
  *   AlertDialogTrigger       여는 버튼 — 닫으면 초점이 여기로 돌아온다
@@ -85,7 +85,7 @@ function focusOpener(trigger: HTMLElement | null, opener: Element | null) {
 // ── 뒤로 가기(1280 미만) ───────────────────────────────────────
 // 열린 표면마다 히스토리에 같은 주소로 한 칸을 쌓는다. 칸은 서로 구별하지 않고 개수로 센다 — popstate 하나가 칸 하나를 쓴다.
 // history.state 는 물려준다(react-router 가 위치를 세는 idx 가 사라지지 않게).
-const BACK_FLAG = "porestOverlayBack";
+const BACK_FLAG = "grooOverlayBack";
 
 type BackSlot = { onBack: () => void; inHistory: boolean };
 

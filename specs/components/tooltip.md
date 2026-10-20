@@ -2,7 +2,7 @@
 
 > 마우스를 올리거나 키보드 초점이 오면 트리거 옆에 뜨는 짧은 설명 — 아이콘 버튼 · 줄인 글이 무엇인지 보여 주는 **보조**다. 손가락으로 누르면 열리지 않으므로 이름 · 막힌 이유처럼 꼭 알아야 하는 것은 툴팁에만 두지 않는다. 폰에서도 읽어야 하는 설명은 같은 모양의 [Help Bubble](help-bubble.md)(눌러서)이다. 앱에도 둔다 — 하드웨어 키보드 초점 · 마우스에서만 열린다. 손가락 누름 · 길게 누르기로는 열지 않는다(2026-10-02 사용자 결정 8A — 길게 누르기 안은 고르지 않았다 · 2026-10-08 "앱도 하드웨어 키보드").
 
-구조는 당근 [SEED Help Bubble Tooltip](https://seed-design.io/react/components/help-bubble-tooltip)(Apache-2.0)을 따른다 — [Help Bubble](help-bubble.md) 과 같은 말풍선(짙은 바탕 · 13 · 모서리 12 · 화살표 · 최대 280)을 마우스 · 키보드로 여는 것이다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
+구조는 당근 [SEED Help Bubble Tooltip](https://seed-design.io/react/components/help-bubble-tooltip)(Apache-2.0)을 따른다 — [Help Bubble](help-bubble.md) 과 같은 말풍선(짙은 바탕 · 13 · 모서리 12 · 화살표 · 최대 280)을 마우스 · 키보드로 여는 것이다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
 수치 원본은 [`help-bubble.yaml`](help-bubble.yaml)의 `opens: hover` 다 — 모양은 Help Bubble 과 한 벌이다. 툴팁만의 수치 파일(`tooltip.yaml` · 내보낸 `tooltip.json`)은 두지 않는다 — SEED 도 rootage 에 `help-bubble` 하나다. 웹 · 앱의 검사는 툴팁을 `help-bubble` 의 `opens: hover` 로 잰다(구현 세션 질문 Q-009-1). 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -155,7 +155,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 ## SEED 와 다른 점
 
 - **말풍선 위로 포인터를 옮겨도 닫히지 않는다**(WCAG 1.4.13) — SEED 는 기본으로 닫히고 `keepOpenOnContentHover` 를 켜야 남는다.
-- **바탕은 porest `bg-neutral-inverted`** — Help Bubble 과 같다.
+- **바탕은 groo `bg-neutral-inverted`** — Help Bubble 과 같다.
 - **z-index 는 specs/z-index.md 의 L4**(`z-tooltip` 210) — SEED 는 포털 없이 99.
 
 ## Migration notes
@@ -180,4 +180,4 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 - **Desk 웹** — 툴팁은 접힌 사이드바 하나(지연 0ms, 태블릿 터치로 탭하면 안 뜬다). 네이티브 `title` 29곳 — 아이콘 버튼의 유일한 이름 7곳, 막힌 버튼의 이유 2곳(예산 "복사할 지난달 예산이 없어요"), 키보드로 못 닿는 설명 4곳. 데스크톱 줄의 아이콘 6개는 이름도 툴팁도 없다.
 - **Desk 앱** — PTooltip 17(반전 13 · 모서리 2) · Material 기본 툴팁 9(회색 14 · 모서리 4), 길게 누르면 뜬다. 아이콘 버튼 37 중 20 이 이름이 없다.
 - **HR 웹** — 툴팁은 브랜드 파랑 12 · 모서리 6 · 화살표(바탕 대비 4.95 · 4.73), 지연 늘 0(Provider 가 겹친다). 네이티브 `title` 11곳.
-- 차트 · 데이터 툴팁(웹 7 · 앱 8 · HR 2)은 이 스펙이 아니다 — porest 차트 부품으로 따로 정하고 말풍선 모양만 맞춘다.
+- 차트 · 데이터 툴팁(웹 7 · 앱 8 · HR 2)은 이 스펙이 아니다 — groo 차트 부품으로 따로 정하고 말풍선 모양만 맞춘다.

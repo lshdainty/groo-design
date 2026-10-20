@@ -192,7 +192,7 @@ export function NotificationPlayground({ kits, buttons }: { kits: Kits; buttons:
   const stage =
     attach === 'icon' ? (
       <div className="flex items-center justify-between rounded-2xl pl-6 pr-2" style={{ height: 56, background: dcv(k.tone['bg-layer-default'], mode), fontFamily: FONT }}>
-        <span style={{ fontSize: 17, lineHeight: '24px', fontWeight: 700, color: dcv(k.tone['fg-brand'], mode) }}>porest {brand}</span>
+        <span style={{ fontSize: 17, lineHeight: '24px', fontWeight: 700, color: dcv(k.tone['fg-brand'], mode) }}>groo {brand}</span>
         <ButtonView look={btn} mode={mode} iconNode={badged(<DIcon name="bell" size={iconSize} strokeWidth={2.2} />)} ariaLabel={name} />
       </div>
     ) : (

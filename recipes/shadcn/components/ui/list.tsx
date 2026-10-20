@@ -11,7 +11,7 @@ import { Radiomark, ignoreRadioJumpKeys, submitOnRadioEnter, type RadiomarkProps
 import { Switchmark, type SwitchmarkProps } from "@/components/ui/switch";
 
 /*
- * Porest List — 구조는 SEED List(2026-10-01). 수치 원본은 specs/components/list.yaml · list-header.yaml.
+ * Groo List — 구조는 SEED List(2026-10-01). 수치 원본은 specs/components/list.yaml · list-header.yaml.
  *
  *   List · ListItem          목록(ul) · 보기만 하는 줄
  *   ListButtonItem · ListLinkItem   줄 전체가 버튼 · 링크(뒤 붙이개의 작은 버튼은 따로 눌린다)

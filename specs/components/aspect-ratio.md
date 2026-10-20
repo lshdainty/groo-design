@@ -111,8 +111,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio"
 
 ## SEED 와 다른 점
 
-- **비율을 여덟 가지로 묶는다** — SEED React 는 아무 숫자나 받는다(Figma 의 Image Frame 은 일곱 가지다). porest 는 그 일곱에 카드 1.586 을 더해 Image Frame 과 같은 여덟 가지만 쓴다.
-- **그림에는 쓰지 않는다** — SEED 도 그림은 Image Frame 이지만 Aspect Ratio 예제에 `<img>` 를 넣는다. porest 는 그림을 모두 Image Frame 으로 그린다.
+- **비율을 여덟 가지로 묶는다** — SEED React 는 아무 숫자나 받는다(Figma 의 Image Frame 은 일곱 가지다). groo 는 그 일곱에 카드 1.586 을 더해 Image Frame 과 같은 여덟 가지만 쓴다.
+- **그림에는 쓰지 않는다** — SEED 도 그림은 Image Frame 이지만 Aspect Ratio 예제에 `<img>` 를 넣는다. groo 는 그림을 모두 Image Frame 으로 그린다.
 
 ## Migration notes
 
@@ -132,5 +132,5 @@ YAML 이 `1` · `2` · `1.586` 은 숫자로, `16 / 9` · `4 / 3` · `6 / 7` · 
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-03 조사).
 
-- **porest 의 이 부품을 쓰는 곳이 없다** — Desk 웹은 CSS `aspect-ratio` 를 손으로 쓴다(카드 그림 틀 `pages/card-benefit/ui/CardBenefitPage.tsx:191-226` · `CardBenefitDetailDialog.tsx:92-101`, 스켈레톤 셋, 통계의 정사각 `pages/stats/ui/StatsPage.tsx:1790`). 앱은 Flutter `AspectRatio` 를 여덟 곳에 쓴다 — 카드 그림(`features/card/presentation/card_benefit_detail_sheet.dart:308 · 625` · 진입 없는 `card_detail_screen.dart:64 · 261`), 별숲 그림(`features/constellation/presentation/my_sky_card.dart:145` · `night_sky_hero.dart:119`), 통계(`features/stats/presentation/stats_screen.dart:926 · 1709`). 카드 그림은 Image Frame 으로, 그림이 아닌 별숲 · 통계 자리는 이 부품의 여덟 비율로 옮긴다.
+- **groo 의 이 부품을 쓰는 곳이 없다** — Desk 웹은 CSS `aspect-ratio` 를 손으로 쓴다(카드 그림 틀 `pages/card-benefit/ui/CardBenefitPage.tsx:191-226` · `CardBenefitDetailDialog.tsx:92-101`, 스켈레톤 셋, 통계의 정사각 `pages/stats/ui/StatsPage.tsx:1790`). 앱은 Flutter `AspectRatio` 를 여덟 곳에 쓴다 — 카드 그림(`features/card/presentation/card_benefit_detail_sheet.dart:308 · 625` · 진입 없는 `card_detail_screen.dart:64 · 261`), 별숲 그림(`features/constellation/presentation/my_sky_card.dart:145` · `night_sky_hero.dart:119`), 통계(`features/stats/presentation/stats_screen.dart:926 · 1709`). 카드 그림은 Image Frame 으로, 그림이 아닌 별숲 · 통계 자리는 이 부품의 여덟 비율로 옮긴다.
 - 옛 스펙의 "기존 `aspect-ratio.tsx` 는 Radix 그대로" 는 레시피 이야기였다 — 제품에는 그 부품이 없었다.

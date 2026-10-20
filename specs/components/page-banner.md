@@ -2,7 +2,7 @@
 
 > 페이지 맨 위(머리 바로 아래)에 화면 폭 전체로 놓이는 띠 — 그 페이지 전체의 상태를 알린다(증권 연결 끊김 · Pro 만료 예정 · 새 버전). 한 화면에 하나. 그 기능 가까이의 안내는 [Callout](callout.md), 잠깐 알릴 결과는 [Snackbar](snackbar.md) 다.
 
-구조는 당근 [SEED Page Banner](https://seed-design.io/react/components/page-banner)(Apache-2.0)를 따른다 — 화면 폭 띠 · 아이콘 · 제목 · 본문 · 버튼, 옅은(weak) · 짙은(solid) 바탕, 상호작용 셋. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). porest 에 처음 두는 컴포넌트다.
+구조는 당근 [SEED Page Banner](https://seed-design.io/react/components/page-banner)(Apache-2.0)를 따른다 — 화면 폭 띠 · 아이콘 · 제목 · 본문 · 버튼, 옅은(weak) · 짙은(solid) 바탕, 상호작용 셋. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). groo 에 처음 두는 컴포넌트다.
 
 수치 원본은 [`page-banner.yaml`](page-banner.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -164,7 +164,7 @@ import { PageBanner } from "@/components/ui/page-banner"
 
 - **좌우 여백은 화면 여백 24** — SEED 16. 띠 안 글이 페이지 글과 같은 선에서 시작한다.
 - **톤은 다섯** — magic(AI)은 두지 않는다.
-- **짙은 바탕의 글은 흰색** — porest `bg-*-solid` 위 5.06 이상(SEED warning 은 노랑 위 검정 글).
+- **짙은 바탕의 글은 흰색** — groo `bg-*-solid` 위 5.06 이상(SEED warning 은 노랑 위 검정 글).
 - **아이콘은 lucide 선 아이콘**(v106).
 - **나중에 나타나는 경고 · 위험은 `role="alert"`**, 버튼은 모두 `type="button"`.
 

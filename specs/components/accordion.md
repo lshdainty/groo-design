@@ -2,7 +2,7 @@
 
 > 관련 정보를 세로로 묶어 두고 항목마다 머리를 눌러 상세를 펼치는 목록 — 카드 혜택 · 유의사항처럼 상세가 길어 다 펼쳐 두면 화면이 몇 배로 길어지는 자리에 쓴다. 하나만 접고 펴는 자리는 [Collapsible](collapsible.md), 단계가 있는 고르는 나무는 [Tree View](tree-view.md), 하위 줄을 접는 목록은 [List](list.md) 의 하위 줄이다.
 
-구조는 당근 [SEED Accordion](https://seed-design.io/components/accordion)(rootage `accordion.json` · `accordion-item.json`, @seed-design/react 2.0.0 — Apache-2.0)을 따른다 — 트리거(앞 아이콘 · 제목 · 설명 · 꺾쇠)와 펼친 내용, 변형 둘(`inline` · `separated`), 회전 · 펼침 300ms, 누르면 좌우 6 들어온 바탕 + 콘텐츠만 축소. 크기는 SEED medium 하나이고, 여럿 열기 · "모두 펼치기" · 상세 없는 항목 · 카드 상세의 쓰임은 porest 가 정했다(2026-10-10 사용자 결정). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 Accordion 스펙(Radix 베이스 · 아래 선만 · 꺾쇠 16 · 하나만 여는 모드 · 불투명도 막힘)을 대신한다.
+구조는 당근 [SEED Accordion](https://seed-design.io/components/accordion)(rootage `accordion.json` · `accordion-item.json`, @seed-design/react 2.0.0 — Apache-2.0)을 따른다 — 트리거(앞 아이콘 · 제목 · 설명 · 꺾쇠)와 펼친 내용, 변형 둘(`inline` · `separated`), 회전 · 펼침 300ms, 누르면 좌우 6 들어온 바탕 + 콘텐츠만 축소. 크기는 SEED medium 하나이고, 여럿 열기 · "모두 펼치기" · 상세 없는 항목 · 카드 상세의 쓰임은 groo 가 정했다(2026-10-10 사용자 결정). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 Accordion 스펙(Radix 베이스 · 아래 선만 · 꺾쇠 16 · 하나만 여는 모드 · 불투명도 막힘)을 대신한다.
 
 수치 원본은 [`accordion.yaml`](accordion.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -70,7 +70,7 @@ SEED 의 두 변형을 그대로 둔다(사용자 결정 1B).
 
 ### 펼친 내용
 
-펼친 내용은 트리거와 같은 좌우 24, 아래 16 안에 둔다 — 위 여백은 0 이라 트리거 아래 16 에 바로 이어진다. 글은 `text-article-note`(14 / 22 — 긴 글 보조) · `fg-neutral-muted` 다. SEED 의 AccordionContent 는 여백 · 글자가 없어 쓰는 쪽이 정하는데, porest 는 혜택 상세처럼 긴 설명이 대부분이라 이 글 모양을 기본으로 둔다. 앞 아이콘이 있어도 펼친 내용은 24 에서 시작한다 — 줄 폭을 쓴다. 내용이 길어도 패널 안에서 스크롤하지 않는다 — 페이지 · 시트 본문이 스크롤한다(SEED "Content Panel 내 스크롤 지양").
+펼친 내용은 트리거와 같은 좌우 24, 아래 16 안에 둔다 — 위 여백은 0 이라 트리거 아래 16 에 바로 이어진다. 글은 `text-article-note`(14 / 22 — 긴 글 보조) · `fg-neutral-muted` 다. SEED 의 AccordionContent 는 여백 · 글자가 없어 쓰는 쪽이 정하는데, groo 는 혜택 상세처럼 긴 설명이 대부분이라 이 글 모양을 기본으로 둔다. 앞 아이콘이 있어도 펼친 내용은 24 에서 시작한다 — 줄 폭을 쓴다. 내용이 길어도 패널 안에서 스크롤하지 않는다 — 페이지 · 시트 본문이 스크롤한다(SEED "Content Panel 내 스크롤 지양").
 
 [그림: 펼친 내용 — 0 / 24 / 16 · 14 / 22 · 7줄 상세가 그대로 펼쳐진다](../../site/components/specs/accordion.tsx#panel)
 
@@ -88,7 +88,7 @@ SEED 의 두 변형을 그대로 둔다(사용자 결정 1B).
 
 ### 모두 펼치기
 
-여럿을 함께 열고(사용자 결정 4A), 목록 머리 오른쪽에 "모두 펼치기" 글 단추를 둔다 — porest 확장이다(SEED 에 없다). 상세가 있는 항목을 모두 펼치고, 모두 펼쳐져 있으면 글이 "모두 접기" 로 바뀐다. 모양은 [Card](card.md) 머리 동작과 같은 글 버튼(SEED Text Button)이다 — 14 · 700 · `fg-neutral-muted`, 아이콘 없이 보이는 36(좌우 14) · 누르는 44(2026-10-16 사용자 결정 — 글자 역할 D2, DESIGN.md Typography 의 "글자 역할" R16). 머리가 카드 머리면 그 오른쪽 동작 자리에, 시트 · 대화상자면 목록 머리 줄(제목 16 / 22 · 700 + 건수 — 카드 머리와 같은 글, 높이 36 · 아래 8)의 오른쪽에 둔다. 하나만 여는 모드(4C — 다른 항목을 열면 앞 항목이 닫힌다)와 단추 없이 하나씩 여는 안(4B)은 고르지 않았다.
+여럿을 함께 열고(사용자 결정 4A), 목록 머리 오른쪽에 "모두 펼치기" 글 단추를 둔다 — groo 확장이다(SEED 에 없다). 상세가 있는 항목을 모두 펼치고, 모두 펼쳐져 있으면 글이 "모두 접기" 로 바뀐다. 모양은 [Card](card.md) 머리 동작과 같은 글 버튼(SEED Text Button)이다 — 14 · 700 · `fg-neutral-muted`, 아이콘 없이 보이는 36(좌우 14) · 누르는 44(2026-10-16 사용자 결정 — 글자 역할 D2, DESIGN.md Typography 의 "글자 역할" R16). 머리가 카드 머리면 그 오른쪽 동작 자리에, 시트 · 대화상자면 목록 머리 줄(제목 16 / 22 · 700 + 건수 — 카드 머리와 같은 글, 높이 36 · 아래 8)의 오른쪽에 둔다. 하나만 여는 모드(4C — 다른 항목을 열면 앞 항목이 닫힌다)와 단추 없이 하나씩 여는 안(4B)은 고르지 않았다.
 
 [그림: 혜택 상세 · 12건 — 모두 펼치기 · 모두 접기, 보이는 36 · 누르는 44](../../site/components/specs/accordion.tsx#expand-all)
 
@@ -314,15 +314,15 @@ const expandable = benefits.filter((b) => b.detail).map((b) => b.id)
 
 ## SEED 와 다른 점
 
-- **트리거 좌우 24**(`spacing-global-gutter` — porest 화면 가장자리 규칙). SEED 는 16.
+- **트리거 좌우 24**(`spacing-global-gutter` — groo 화면 가장자리 규칙). SEED 는 16.
 - **`inline` 사이 선은 List 의 들인 선 — 좌우 24**. SEED 는 12(색은 같은 `stroke-neutral-subtle`).
-- **`separated` 면은 porest Card 면 — 모서리 16 · 사이 8**. SEED 는 12 · 12(medium) — 데이터 표시 라운드에서 카드에 거절된 값이다.
+- **`separated` 면은 groo Card 면 — 모서리 16 · 사이 8**. SEED 는 12 · 12(medium) — 데이터 표시 라운드에서 카드에 거절된 값이다.
 - **누름 바탕은 불투명한 `bg-layer-default-pressed`** — SEED bg.transparent-pressed 는 투명도가 있어 검사기가 받지 않는다(v102). 들임 6 · 모서리 10 · 콘텐츠만 축소는 SEED 그대로다.
 - **크기는 medium 하나** — SEED large(PC 대응 — 제목 20 · 설명 16 · 꺾쇠 24 · 위아래 20)는 두지 않는다. SEED react 의 `responsive` 도 없다.
 - **늘 여럿을 함께 열고 "모두 펼치기" 를 둔다** — SEED react 의 기본은 하나만이고 모두 펼치기가 없다.
 - **상세가 없는 항목은 그냥 줄** — SEED 에 규칙이 없다.
 - **펼친 내용의 글 모양을 정한다**(`text-article-note` · `fg-neutral-muted` · 0 / 24 / 16) — SEED AccordionContent 는 여백 · 글자가 없다.
-- **포커스 링(웹)은 porest 가 정했다** — 트리거 안쪽 2px(`separated` 는 모서리 14). SEED 는 아코디언의 포커스 링을 적지 않았다.
+- **포커스 링(웹)은 groo 가 정했다** — 트리거 안쪽 2px(`separated` 는 모서리 14). SEED 는 아코디언의 포커스 링을 적지 않았다.
 
 ## Migration notes
 

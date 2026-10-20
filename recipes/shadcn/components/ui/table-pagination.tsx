@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Select, SelectItem } from "@/components/ui/select";
 
 /*
- * Porest Table Pagination — 구조는 SEED Table Pagination(2026-10-04). 수치 원본은 specs/components/table-pagination.yaml.
+ * Groo Table Pagination — 구조는 SEED Table Pagination(2026-10-04). 수치 원본은 specs/components/table-pagination.yaml.
  * 고르기 둘은 Select medium(select.tsx), 이전 · 다음은 Pagination 의 화살표 칸이다. 줄 · 범위 계산은 SEED useTablePagination 과 같다.
  *
  *   TablePagination   데이터 표 아래의 쪽 넘김 한 줄 — role="group" · aria-label="표 페이지 탐색"

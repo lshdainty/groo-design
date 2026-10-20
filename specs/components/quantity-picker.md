@@ -2,7 +2,7 @@
 
 > 작은 정수를 한 단계씩 늘리고 줄이는 컨트롤 — 승인 필요 횟수(0 ~ 3) · 반복 간격 · 부여 시간(0 ~ 7시간)처럼 흔한 값이 열 단계 안쪽인 수를 받는다. 흔한 값이 더 멀거나 돈 · 소수면 [Input](input.md) 의 숫자 칸, 날짜 부분(1 ~ 31일)이나 띄엄띄엄 이름 붙은 값(할부)은 [Select](select.md), 범위 안의 자리(임계값)는 [Slider](slider.md) 다.
 
-구조는 당근 [SEED Quantity Picker](https://seed-design.io/components/quantity-picker)(rootage `quantity-picker.json` · `quantity-picker-button.json`, @seed-design/react 2.1.0 · react-headless `useQuantityPicker` — Apache-2.0)를 따른다 — 테두리 상자 안에 줄이기(−) · 선 · 값 · 선 · 늘리기(+), 세 크기(36 · 40 · 52), 값 칸은 보기만, 끝에 닿은 버튼은 막힘, 지우기(Removable) · 로딩. 웹의 기본 크기(responsive) · 누르는 자리 44 · 끝의 `aria-disabled` 는 porest 가 정했다(2026-10-15 사용자 결정 — 마무리 1A · 2A · 3A). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. porest 에 처음 두는 부품이다 — 지금 세 제품에는 `[−] 값 [+]` 컨트롤이 없고 작은 정수도 모두 숫자 칸이다.
+구조는 당근 [SEED Quantity Picker](https://seed-design.io/components/quantity-picker)(rootage `quantity-picker.json` · `quantity-picker-button.json`, @seed-design/react 2.1.0 · react-headless `useQuantityPicker` — Apache-2.0)를 따른다 — 테두리 상자 안에 줄이기(−) · 선 · 값 · 선 · 늘리기(+), 세 크기(36 · 40 · 52), 값 칸은 보기만, 끝에 닿은 버튼은 막힘, 지우기(Removable) · 로딩. 웹의 기본 크기(responsive) · 누르는 자리 44 · 끝의 `aria-disabled` 는 groo 가 정했다(2026-10-15 사용자 결정 — 마무리 1A · 2A · 3A). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. groo 에 처음 두는 부품이다 — 지금 세 제품에는 `[−] 값 [+]` 컨트롤이 없고 작은 정수도 모두 숫자 칸이다.
 
 수치 원본은 [`quantity-picker.yaml`](quantity-picker.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -78,7 +78,7 @@ SEED 의 세 크기를 그대로 둔다(사용자 결정 1A) — `small` 36 · `
 | `invalid` | 상자 테두리 안쪽 2px `stroke-critical-solid` — 값이 허용 범위를 벗어났다(범위가 데이터로 바뀌어 지금 값이 밖일 때). 오류 글은 Field 가 칸 아래에 |
 | `disabled` | 아이콘 · 값 `fg-disabled`, 두 버튼 모두 `disabled` — 초점을 받지 않는다. 흐리게 하지 않는다(v106) |
 
-로딩 원은 SEED 값 그대로 트랙 `gray-500` · 호 `fg-neutral` 이다 — porest Button 의 `ghost` 로딩 원과 같은 값이다(누름 바탕 위 투명 버튼이라 같은 자리). Progress Circle 의 `neutral` 톤(트랙 `stroke-neutral-subtle` · 호 `stroke-neutral-solid`)이 아니라 `inherit` 로 이 값을 넘긴다.
+로딩 원은 SEED 값 그대로 트랙 `gray-500` · 호 `fg-neutral` 이다 — groo Button 의 `ghost` 로딩 원과 같은 값이다(누름 바탕 위 투명 버튼이라 같은 자리). Progress Circle 의 `neutral` 톤(트랙 `stroke-neutral-subtle` · 호 `stroke-neutral-solid`)이 아니라 `inherit` 로 이 값을 넘긴다.
 
 [그림: 상태 — 기본 · 호버 · 포커스 · 누름 · 로딩 · 오류 · 막힘(세 크기)](../../site/components/specs/quantity-picker.tsx#states)
 
@@ -273,7 +273,7 @@ const change = (next: number) => {
 - **웹 폼의 기본 크기는 `responsive`**(1280 미만 large 52 · 이상 medium 40) — SEED react 의 기본은 small 36 이다. 옆 Input 과 같은 규칙이다(사용자 결정 1A). 표 칸 · 줄 안은 small.
 - **36 · 40 버튼의 누르는 자리 44** — 보이지 않는 여백을 4 · 2 씩 더한다(기초 Iconography). SEED 는 버튼 크기 그대로다.
 - **누름 · 호버 바탕은 불투명한 `bg-layer-default-pressed`** — SEED bg.transparent-pressed 는 투명도가 있어 검사기가 받지 않는다(v102 · button.yaml).
-- **끝에 닿은 버튼은 `aria-disabled` 만** — SEED headless 는 `disabled` 속성도 건다(`useQuantityPicker.ts` 235 · 250) — 키보드로 끝까지 누르면 초점이 빠질 수 있다. porest 는 초점을 남긴다(따라오는 것).
+- **끝에 닿은 버튼은 `aria-disabled` 만** — SEED headless 는 `disabled` 속성도 건다(`useQuantityPicker.ts` 235 · 250) — 키보드로 끝까지 누르면 초점이 빠질 수 있다. groo 는 초점을 남긴다(따라오는 것).
 - **웹 호버 · 키보드 포커스 링을 적는다**(v106) — SEED rootage 에는 없다(SEED react 는 공용 포커스 링).
 - **`getValueText(value)` 는 수 하나를 받는다** — SEED 는 (글, 수) 둘이다. 쓰는 쪽에서는 같다.
 - 로딩 원 · 지우기 · fill 은 SEED 그대로다(사용자 결정 3A).

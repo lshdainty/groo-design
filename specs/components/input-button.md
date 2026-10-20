@@ -2,7 +2,7 @@
 
 > 입력칸 모양의 버튼. 누르면 달력 · 시각 · 아이콘 격자 · 긴 목록을 시트(1280 미만) · 팝오버(1280 이상)로 열고, 고른 값이 칸에 글로 들어간다 — 직접 치지 않는다. 짧은 선택지 5개 이상은 [Select](select.md), 직접 치는 값은 [Input](input.md)이다.
 
-구조는 당근 [SEED Input Button](https://seed-design.io/components/input-button)(React 이름 Field Button, Apache-2.0)을 따른다 — 상자(Container) · 값 · 앞 · 뒤 붙이개 · 지우기 버튼. 라벨 · 설명 · 오류는 [Field](field.md)가 둘레에서 그린다. 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정).
+구조는 당근 [SEED Input Button](https://seed-design.io/components/input-button)(React 이름 Field Button, Apache-2.0)을 따른다 — 상자(Container) · 값 · 앞 · 뒤 붙이개 · 지우기 버튼. 라벨 · 설명 · 오류는 [Field](field.md)가 둘레에서 그린다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-01 사용자 결정).
 
 수치 원본은 [`input-button.yaml`](input-button.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -289,10 +289,10 @@ const done = <Button disabled={!draft} onClick={() => { setDate(draft); setOpen(
 ## SEED 와 다른 점
 
 - **누름 · 호버 바탕은 불투명한 `bg-layer-default-pressed`** — SEED `bg.transparent-pressed` 는 투명도가 있어 대비 검사기가 받지 않는다(v102).
-- **누르면 값 · 붙이개를 2px 거리로 준다** — SEED rootage 는 `scaleScope: content` 를 적었지만 웹 CSS 에는 없다. porest 는 rootage 대로(기초 Feedback v104).
-- **이름에 고른 값을 잇는다** — SEED 는 값 · placeholder 를 읽히지 않고 쓰는 쪽이 `aria-label` 에 "할 일 + 지금 값" 을 적게 한다. porest 는 Field 의 라벨과 값을 `aria-labelledby` 로 이어 저절로 읽힌다.
+- **누르면 값 · 붙이개를 2px 거리로 준다** — SEED rootage 는 `scaleScope: content` 를 적었지만 웹 CSS 에는 없다. groo 는 rootage 대로(기초 Feedback v104).
+- **이름에 고른 값을 잇는다** — SEED 는 값 · placeholder 를 읽히지 않고 쓰는 쪽이 `aria-label` 에 "할 일 + 지금 값" 을 적게 한다. groo 는 Field 의 라벨과 값을 `aria-labelledby` 로 이어 저절로 읽힌다.
 - **아이콘은 lucide 선 아이콘**(v106) — 지우기는 `circle-x`(SEED 는 채운 원).
-- **읽기 전용도 포커스가 간다** — SEED 는 읽기 전용 칸의 버튼을 막는다(`disabled`). porest 는 Text Input · Select 의 읽기 전용처럼 포커스로 값에 닿게 두고 열지 않는다(`aria-disabled`).
+- **읽기 전용도 포커스가 간다** — SEED 는 읽기 전용 칸의 버튼을 막는다(`disabled`). groo 는 Text Input · Select 의 읽기 전용처럼 포커스로 값에 닿게 두고 열지 않는다(`aria-disabled`).
 - **여는 자리를 고르는 도움(`useInputButtonSurface`)을 둔다** — SEED 는 Date Picker · Time Picker 문서에 규칙만 적었다.
 
 ## Migration notes

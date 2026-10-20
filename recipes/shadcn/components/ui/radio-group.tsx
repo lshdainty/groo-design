@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { submitImplicitly, useFieldGroup, useFieldGroupState } from "@/components/ui/field";
 
 /*
- * Porest Radio — 구조는 SEED Radio(2026-09-30). 수치 원본은 specs/components/radio-group.yaml.
+ * Groo Radio — 구조는 SEED Radio(2026-09-30). 수치 원본은 specs/components/radio-group.yaml.
  *
  *   Radiomark   동그라미만 — 라벨이 따로 서는 자리에 넣어 쓴다(누르는 영역은 그 줄 전체가 맡는다, 라벨 연결 필수)
  *   Radio       동그라미 + 라벨 — 라벨까지 눌리고, 누르는 영역은 44 까지 넓힌다(::before)

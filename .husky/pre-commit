@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# Porest Design System pre-commit gate
+# Groo Design System pre-commit gate
 # Runs sync:check + lint:all (npm run verify). Bypass: git commit --no-verify (지양).
 
 exec npm run verify

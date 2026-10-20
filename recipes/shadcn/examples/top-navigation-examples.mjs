@@ -2,7 +2,7 @@
  * shadcn Top Navigation 예제 — docs site components/top-navigation.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 넷(탭 첫 화면 · 그 아래 화면 · 데스크톱 머리 · HR 폰)은 차례 · 제목 · 코드가
  * specs/components/top-navigation.md 의 "코드" 절과 같고, 뒤의 둘(✕ 독립 흐름 · 오른쪽 셋까지와 긴 제목)은 md 의 Properties · Guidelines 를
- * 코드로 더 보인다. porest 에 처음 두는 컴포넌트다.
+ * 코드로 더 보인다. groo 에 처음 두는 컴포넌트다.
  *
  * ROOT · ROOT_LEFT · TEXT_T8 · TEXT_T6 · TEXT_T5 · TITLE · TITLE_TYPE · PRESS_TRANSITION · FOCUS_INSIDE · ICON_BUTTON · TEXT_BUTTON · SEARCH ·
  * SCREEN_TITLE · SCREEN_TITLE_ROW · SCREEN_DESCRIPTION · SCREEN_ACTIONS 는 recipes/shadcn/components/ui/top-navigation.tsx 의 상수와, ROW · ACTIONS · PRIMARY 는

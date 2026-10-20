@@ -3,7 +3,7 @@
  * 각 예제 = { title, description, jsx, render() }. 앞의 둘(혜택 상세 — 시트 · 대화상자(separated) · 카드 상세 — 혜택(inline))은 차례 · 제목 · 코드가
  * specs/components/accordion.md 의 "코드" 절과 같고, 뒤의 둘(모두 접기 — 유의사항 · 앞 아이콘 · 막힌 항목)은 md 의 모두 펼치기 · State 를 코드로 더 보인다.
  * 구조는 SEED Accordion(rootage accordion.json · accordion-item.json, @seed-design/react 2.0.0 — Apache-2.0)이다 — 변형 inline · separated, 크기 medium 하나,
- * 꺾쇠 · 펼침 300ms. 여럿 열기 · "모두 펼치기" · 상세 없는 항목 · 카드 상세의 쓰임은 porest 가 정했다(2026-10-10). 옛 예제(Radix 베이스 · 아래 선만 ·
+ * 꺾쇠 · 펼침 300ms. 여럿 열기 · "모두 펼치기" · 상세 없는 항목 · 카드 상세의 쓰임은 groo 가 정했다(2026-10-10). 옛 예제(Radix 베이스 · 아래 선만 ·
  * 꺾쇠 16 · 하나만 여는 Single · 인라인 style)를 대신한다.
  *
  * ROOT · ITEM · ACCORDION_BODY · ACCORDION_PANEL_TEXT · EXPAND_ALL 은 recipes/shadcn/components/ui/accordion.tsx 의 상수와, TRIGGER_* · CONTENT_* · PREFIX_* ·

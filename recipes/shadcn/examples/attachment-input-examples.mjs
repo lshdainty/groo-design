@@ -4,8 +4,8 @@
  * specs/components/attachment-input.md 의 "코드" 절과 같고, 마지막(읽기 전용 · 막힘)은 md 의 State 를 코드로 더 보인다.
  * 구조는 당근 SEED Attachment Input(seed-design.io/components/attachment-input — rootage attachment-input · -trigger · -item · -item-action-button ·
  * -item-remove-button · -dropzone, Apache-2.0)을 따른다 — 첨부 타일 80 · 사진 80 · 파일 카드 160 × 80 · × 20 · 올리는 중 원 24 · 실패 다시 시도 · 대표 띠 ·
- * 순서 바꾸기 · 드롭존(2026-10-15 사용자 결정 3A · 4A · 5A). 드롭존 색 · 파일 이름 네 줄 · 항목 메뉴 · 포커스 링은 porest 가 정했다(11D · 12A · 13B · 14A).
- * porest 에 처음 두는 예제다 — DESIGN.md 의 옛 File Upload 절(v73)을 대신한다.
+ * 순서 바꾸기 · 드롭존(2026-10-15 사용자 결정 3A · 4A · 5A). 드롭존 색 · 파일 이름 네 줄 · 항목 메뉴 · 포커스 링은 groo 가 정했다(11D · 12A · 13B · 14A).
+ * groo 에 처음 두는 예제다 — DESIGN.md 의 옛 File Upload 절(v73)을 대신한다.
  *
  * ROOT · ROW_TILE · ROW_DROPZONE · ROW_CONTENT · LIST · TRIGGER · TRIGGER_ICON · COUNT · COUNT_NOW · COUNT_MAX · MASK · ITEM · ITEM_KIND · IMAGE · IMAGE_FALLBACK ·
  * THUMBNAIL · META · NAME · NAME_CLEAR · NAME_MEASURE · NAME_EXT · SIZE · BACKDROP · BACKDROP_UPLOADING · BACKDROP_ERROR · BADGE · BADGE_LABEL · ACTION · ACTION_KIND ·

@@ -415,19 +415,19 @@ export function loadingCss() {
   const m = pc.motion;
   const s = sk.motion.shimmer;
   return [
-    `@keyframes porest-pc-rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}`,
-    `@keyframes porest-pc-head{0%{stroke-dasharray:0 100}${m.head.until}%,100%{stroke-dasharray:100 100}}`,
-    `@keyframes porest-pc-tail{0%,${m.tail.from}%{stroke-dashoffset:0}100%{stroke-dashoffset:-100}}`,
-    `@keyframes porest-sk-shimmer{from{transform:translateX(${s.from}%)}to{transform:translateX(${s.to}%)}}`,
+    `@keyframes groo-pc-rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}`,
+    `@keyframes groo-pc-head{0%{stroke-dasharray:0 100}${m.head.until}%,100%{stroke-dasharray:100 100}}`,
+    `@keyframes groo-pc-tail{0%,${m.tail.from}%{stroke-dashoffset:0}100%{stroke-dashoffset:-100}}`,
+    `@keyframes groo-sk-shimmer{from{transform:translateX(${s.from}%)}to{transform:translateX(${s.to}%)}}`,
     `.ppc-start{transform:rotate(${pc.start}deg);transform-box:view-box;transform-origin:50% 50%}`,
-    `.ppc-spin{transform-origin:50% 50%;animation:porest-pc-rotate ${m.rotate.duration} ${m.rotate.easing} infinite}`,
-    `.ppc-arc{stroke-dasharray:0 100;animation:porest-pc-head ${m.head.duration} ${m.head.easing} infinite,porest-pc-tail ${m.tail.duration} ${m.tail.easing} infinite}`,
+    `.ppc-spin{transform-origin:50% 50%;animation:groo-pc-rotate ${m.rotate.duration} ${m.rotate.easing} infinite}`,
+    `.ppc-arc{stroke-dasharray:0 100;animation:groo-pc-head ${m.head.duration} ${m.head.easing} infinite,groo-pc-tail ${m.tail.duration} ${m.tail.easing} infinite}`,
     `.ppc-fill{transition:stroke-dashoffset ${m.fill.duration} ${m.fill.easing}}`,
     `.ppc-spin[data-still]{animation:none}`,
     `.ppc-arc[data-still]{animation:none;stroke-dasharray:${pc.reducedArc} 100;stroke-dashoffset:0}`,
     `.ppc-fill[data-still]{transition:none}`,
     `.ppg-fill{transition:width ${pg.fill.motion.duration} ${pg.fill.motion.easing}}`,
-    `.psk-band{transform:translateX(${s.from}%);animation:porest-sk-shimmer ${s.duration} ${s.easing} infinite}`,
+    `.psk-band{transform:translateX(${s.from}%);animation:groo-sk-shimmer ${s.duration} ${s.easing} infinite}`,
     `.psk-band[data-still]{animation:none;opacity:0}`,
     `@media (prefers-reduced-motion:reduce){.ppc-spin{animation:none}.ppc-arc{animation:none;stroke-dasharray:${pc.reducedArc} 100;stroke-dashoffset:0}.ppc-fill{transition:none}.ppg-fill{transition:none}.psk-band{animation:none;opacity:0}}`,
   ].join('');

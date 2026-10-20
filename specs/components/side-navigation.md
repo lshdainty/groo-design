@@ -2,7 +2,7 @@
 
 > 데스크톱(768 이상)의 주 메뉴 — 화면 왼쪽의 세로 띠(사이드바)에 서비스의 최상위 화면들을 묶어 둔다. 1280 이상은 펼침 240, 768 ~ 1279 는 아이콘만 56 으로 저절로 접히고, 손으로 접고 펼 수 있다. 768 미만에서는 없다 — Desk 웹은 [Bottom Navigation](bottom-navigation.md), HR 은 ☰ 로 여는 왼쪽 [Side Panel](side-panel.md) 에 같은 항목을 담는다. 화면 맨 위의 바는 [Top Navigation](top-navigation.md) 이다.
 
-구조는 당근 [SEED Side Navigation](https://seed-design.io/components/side-navigation)(Apache-2.0)을 따른다 — "서비스의 최상위 메뉴 간 이동을 돕고 앱의 전체 구조를 탐색할 수 있게 하는 컴포넌트" 로, 머리(Header) · 접기 버튼(Trigger) · 내용(Content) · 묶음(Group) · 항목(Menu Item) · 하위 항목(Menu Sub Item) · 바닥(Footer). 폭 240 · 56 · 머리 64 · 항목 44 · 아이콘 20 · 이름 14 / 19 · 500 · 모서리 10 은 SEED 값 그대로다(SEED 는 rootage 없이 레시피에 px 로 둔다). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). 옛 Sidebar 스펙(shadcn — 256 · 48 · 항목 32)을 대신한다.
+구조는 당근 [SEED Side Navigation](https://seed-design.io/components/side-navigation)(Apache-2.0)을 따른다 — "서비스의 최상위 메뉴 간 이동을 돕고 앱의 전체 구조를 탐색할 수 있게 하는 컴포넌트" 로, 머리(Header) · 접기 버튼(Trigger) · 내용(Content) · 묶음(Group) · 항목(Menu Item) · 하위 항목(Menu Sub Item) · 바닥(Footer). 폭 240 · 56 · 머리 64 · 항목 44 · 아이콘 20 · 이름 14 / 19 · 500 · 모서리 10 은 SEED 값 그대로다(SEED 는 rootage 없이 레시피에 px 로 둔다). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). 옛 Sidebar 스펙(shadcn — 256 · 48 · 항목 32)을 대신한다.
 
 수치 원본은 [`side-navigation.yaml`](side-navigation.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -43,7 +43,7 @@
 
 ### 머리 · 접기 버튼
 
-머리는 높이 64 · 안쪽 8 이고, 왼쪽에 서비스 마크 24 + 이름(16 / 22 · 700 — "Porest Desk" · "Porest HR"), 오른쪽에 접기 버튼이다. 접기 버튼은 상자 40 · 아이콘 18(`fg-neutral-subtle`) · 모서리 8 이고 누르는 영역은 44 다. 접히면 로고는 숨고 접기 버튼이 56 의 가운데에 선다. 로고는 누르지 않는다 — 홈은 첫 항목이다.
+머리는 높이 64 · 안쪽 8 이고, 왼쪽에 서비스 마크 24 + 이름(16 / 22 · 700 — "그루 담다" · "그루 이음"), 오른쪽에 접기 버튼이다. 접기 버튼은 상자 40 · 아이콘 18(`fg-neutral-subtle`) · 모서리 8 이고 누르는 영역은 44 다. 접히면 로고는 숨고 접기 버튼이 56 의 가운데에 선다. 로고는 누르지 않는다 — 홈은 첫 항목이다.
 
 [그림: 머리 — 마크 · 이름 · 접기 버튼 40, 접히면 버튼만 가운데](../../site/components/specs/side-navigation.tsx#header)
 
@@ -187,7 +187,7 @@
 
 ### 두지 않는 것
 
-shadcn Sidebar 에 있던 것 가운데 다음은 두지 않는다 — SEED 에 없고 porest 화면에 쓸 자리가 없다.
+shadcn Sidebar 에 있던 것 가운데 다음은 두지 않는다 — SEED 에 없고 groo 화면에 쓸 자리가 없다.
 
 | shadcn | 두지 않는 까닭 |
 |---|---|
@@ -201,7 +201,7 @@ shadcn Sidebar 에 있던 것 가운데 다음은 두지 않는다 — SEED 에 
 
 레시피 `recipes/shadcn/components/ui/side-navigation.tsx` 를 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
-- `SideNavigation` — 사이드바(`<nav aria-label="주 메뉴">`). `collapsed` · `defaultCollapsed` · `onCollapsedChange`(손으로 다룰 때). 주지 않으면 창 폭(768 ~ 1279 접힘 · 1280 이상 펼침) + 손으로 접은 기억(`localStorage` 의 `porest:side-navigation-collapsed`)으로 정한다.
+- `SideNavigation` — 사이드바(`<nav aria-label="주 메뉴">`). `collapsed` · `defaultCollapsed` · `onCollapsedChange`(손으로 다룰 때). 주지 않으면 창 폭(768 ~ 1279 접힘 · 1280 이상 펼침) + 손으로 접은 기억(`localStorage` 의 `groo:side-navigation-collapsed`)으로 정한다.
 - `SideNavigationHeader` — 머리. `logo`(마크 + 서비스 이름). 접기 버튼(이름 "사이드바" · `aria-expanded` · `aria-controls`)을 스스로 그린다.
 - `SideNavigationContent` — 내용(스크롤 · 머리 아래 선 · 끝 흐림). 768 미만의 주 메뉴 서랍(Side Panel)에는 이것만 넣는다 — `SideNavigation` 밖에서 쓰면 스스로 `<nav aria-label="주 메뉴">` 가 되고, 펼친 모양으로 그린다(서랍의 스크롤 · 흐림은 Side Panel 본문이 맡는다). `onNavigate`(항목을 눌러 이동할 때 — 서랍을 닫는다).
 - `SideNavigationGroup` — 묶음. `label`(있을 때만).
@@ -223,7 +223,7 @@ import {
 } from "@/components/ui/side-navigation"
 
 <SideNavigation>
-  <SideNavigationHeader logo={<ServiceLogo name="Porest Desk" />} />
+  <SideNavigationHeader logo={<ServiceLogo name="그루 담다" />} />
   <SideNavigationContent>
     <SideNavigationGroup label="워크스페이스">
       <SideNavigationItem href="/desk" icon={<LayoutGrid />} label="홈" current={path === "/desk"} />
@@ -313,14 +313,14 @@ import {
 
 ## SEED 와 다른 점
 
-- **흰 면 + 오른쪽 선** — SEED 기본 `tone=neutral` 은 회색 면(gray-100)이다. porest 본문이 회색(`bg-page`)이라 사이드바를 흰 면(`bg-layer-default`)으로 둔다(따라오는 것). `transparent` 톤은 두지 않는다.
-- **투명한 상태 색을 불투명 역할로**(v102) — 호버 · 누름 `bg-layer-default-pressed`, 선 `stroke-neutral-subtle`. 지금 항목은 SEED 의 옅은 선택 바탕보다 한 단계 짙은 `bg-neutral-weak-pressed` 다(사용자 결정 2026-10-08 — `bg-neutral-weak` 는 다크에서 호버 바탕과 같은 색 #353B4D 였다). 지금 항목은 마우스를 올리거나 눌러도 바탕이 그대로다 — SEED 는 선택 · 누름 바탕(selected-pressed)이 따로 있지만 porest 에는 그보다 짙은 불투명 역할이 없다.
+- **흰 면 + 오른쪽 선** — SEED 기본 `tone=neutral` 은 회색 면(gray-100)이다. groo 본문이 회색(`bg-page`)이라 사이드바를 흰 면(`bg-layer-default`)으로 둔다(따라오는 것). `transparent` 톤은 두지 않는다.
+- **투명한 상태 색을 불투명 역할로**(v102) — 호버 · 누름 `bg-layer-default-pressed`, 선 `stroke-neutral-subtle`. 지금 항목은 SEED 의 옅은 선택 바탕보다 한 단계 짙은 `bg-neutral-weak-pressed` 다(사용자 결정 2026-10-08 — `bg-neutral-weak` 는 다크에서 호버 바탕과 같은 색 #353B4D 였다). 지금 항목은 마우스를 올리거나 눌러도 바탕이 그대로다 — SEED 는 선택 · 누름 바탕(selected-pressed)이 따로 있지만 groo 에는 그보다 짙은 불투명 역할이 없다.
 - **아이콘은 `fg-neutral-subtle`** — SEED palette.gray-600 은 면 위 1.97:1 이다.
 - **긴 이름은 줄을 바꾼다** — SEED 문서대로다(SEED 레시피는 한 줄 말줄임).
 - **처음 열 때도 폭을 본다** — SEED 코드는 창 폭이 1280 을 넘나들 때만 접고 펴서, 1000 으로 열면 펼친 채다. 768 미만의 서랍도 SEED 코드에는 없다.
 - **접기 버튼은 누르는 영역 44 · 이름 "사이드바" + `aria-expanded`** — SEED 는 40 이고 이름만 "사이드바 열기" · "사이드바 닫기" 로 바꾼다. `nav` 에 이름("주 메뉴")을 단다 — SEED 는 이름이 없다.
 - **접혔을 때 묶음 사이 1px 선** — SEED 는 묶음 이름 자리를 접어 간격만 남긴다(비교 페이지 8A 그림을 따랐다).
-- **펼침 메뉴의 줄은 44 하나** — SEED 는 Menu `size="responsive"`(1280 미만 medium 46 · 이상 small 39)다. porest Menu 는 small 하나뿐이고 1280 미만은 Menu Sheet 라, 사이드바의 펼침 메뉴만 Menu 표면 + 줄 44 로 두고 1280 미만에서도 시트로 바꾸지 않는다 — Menu 경계의 예외(사용자 결정 2026-10-08).
+- **펼침 메뉴의 줄은 44 하나** — SEED 는 Menu `size="responsive"`(1280 미만 medium 46 · 이상 small 39)다. groo Menu 는 small 하나뿐이고 1280 미만은 Menu Sheet 라, 사이드바의 펼침 메뉴만 Menu 표면 + 줄 44 로 두고 1280 미만에서도 시트로 바꾸지 않는다 — Menu 경계의 예외(사용자 결정 2026-10-08).
 - **아래 끝 흐림은 `gradient-fade-mask` 24** — 깊이는 SEED 레시피와 같다.
 
 ## Migration notes
@@ -333,7 +333,7 @@ import {
 - **증권 부모**(Q-017-4 정리) — 연결한 증권사가 둘 이상일 때만 부모(펼치기만), 하나 · 없으면 `/desk/stocks` 단독 링크(꺾쇠 없음), 구독이 없으면 숨김.
 - **홈 두 칸 경계**(Q-017-6 A) — Desk 데스크톱 홈의 두 칸도 1280 부터다(사이드바가 펼쳐지는 폭 — DESIGN.md "문턱 — 768 · 1280"). 768 ~ 1279 는 한 칸.
 
-- **Desk 웹** — 바닥 사용자 버튼(⇕ · 임시 브랜치의 설정으로 가는 이름 줄)을 걷는다. 증권은 부모가 이동 + 펼침(`PorestSidebar.tsx:96-101`)이다 — 둘 이상이면 펼치기만 · 하위 링크로. `porest.css` 의 `@media (max-width: 1100px) { .dash-grid … }` 를 1279 로(1280 부터 두 칸), `useDeviceSize` 는 mobile · desktop 둘로(`"tablet"` 을 읽는 코드는 0).
+- **Desk 웹** — 바닥 사용자 버튼(⇕ · 임시 브랜치의 설정으로 가는 이름 줄)을 걷는다. 증권은 부모가 이동 + 펼침(`GrooSidebar.tsx:96-101`)이다 — 둘 이상이면 펼치기만 · 하위 링크로. `groo.css` 의 `@media (max-width: 1100px) { .dash-grid … }` 를 1279 로(1280 부터 두 칸), `useDeviceSize` 는 mobile · desktop 둘로(`"tablet"` 을 읽는 코드는 0).
 
 ### 2026-10-10 — 하위 펼침 300ms
 
@@ -349,7 +349,7 @@ import {
 
 제품은 앱 적용 단계에서 옮긴다(2026-10-04 조사 — Desk 웹 · HR 은 크로미움에 띄워 쟀다).
 
-- **Desk 웹** — `widgets/layout/ui/PorestSidebar.tsx:186-263` · `widgets/layout/model/nav.ts:34-61` 위 shadcn `shared/ui/sidebar.tsx`. 256 · 접힘 48 · 항목 32 · 14 / 400 · 아이콘 16 · 지금 항목 #F0F2F7 + 500. 768 · 1024 · 1100 에서도 256 으로 펼쳐져 본문이 512 까지 좁아진다(F24). 주 메뉴가 `nav` 가 아니라 `div` + 목록이다(`sidebar.tsx:216-251`, F16). "증권" 은 누르면 이동 + 펼침이다(`PorestSidebar.tsx:108-112`) — 펼치기만으로. 접힌 로고 버튼 이름이 "" 이고 눌러도 아무 일이 없으며, 사용자 버튼(⇕)도 동작이 없다(`:193-213 · 226-256`, F15).
+- **Desk 웹** — `widgets/layout/ui/GrooSidebar.tsx:186-263` · `widgets/layout/model/nav.ts:34-61` 위 shadcn `shared/ui/sidebar.tsx`. 256 · 접힘 48 · 항목 32 · 14 / 400 · 아이콘 16 · 지금 항목 #F0F2F7 + 500. 768 · 1024 · 1100 에서도 256 으로 펼쳐져 본문이 512 까지 좁아진다(F24). 주 메뉴가 `nav` 가 아니라 `div` + 목록이다(`sidebar.tsx:216-251`, F16). "증권" 은 누르면 이동 + 펼침이다(`GrooSidebar.tsx:108-112`) — 펼치기만으로. 접힌 로고 버튼 이름이 "" 이고 눌러도 아무 일이 없으며, 사용자 버튼(⇕)도 동작이 없다(`:193-213 · 226-256`, F15).
 - **HR 웹** — `widgets/sidebar/ui/AppSidebar.tsx:66-82` · `SidebarContent.tsx:81-190` · `SidebarFooter.tsx:72-134` · `shared/ui/shadcn/treeView.tsx`. 288 inset(본문 상자 모서리 12 · 그림자 — `widgets/layout/ui/Layout.tsx:16-31`) · 접힘 66. 실제 화면인 잎 항목이 `div` + onClick 이라 키보드로 닿지 않고 누르면 초점이 body 로 간다(`treeView.tsx:416-447`, 부모는 Accordion `h3` — `:299-355 · 457`, F1). 묶음 이름 2.54 · 메뉴 글 4.23(F18), 묶음 이름이 회사 이름("SKC")이고 묶음 "관리자" 안에 항목 "관리자" 가 있다(F28).
 - **접힘 기억** — 두 웹 모두 쿠키 `sidebar_state` 를 쓰기만 하고 읽지 않아 새로 고치면 펼쳐진다(웹 `sidebar.tsx:60-77` · HR `shadcn/sidebar.tsx:69-86`, F14). localStorage 로.
 - **접힌 사이드바** — Desk 는 말풍선만(하위는 숨김), HR 은 말풍선 + 눌러 여는 하위 메뉴(`SidebarContent.tsx:134-172`)다. 말풍선 · 펼침 메뉴로.

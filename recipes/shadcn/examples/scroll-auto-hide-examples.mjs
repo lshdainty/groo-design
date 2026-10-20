@@ -4,7 +4,7 @@
  * 둘째(필터를 건 원장 — 칩 줄도 같은 머리)는 md 의 Guidelines(어디에 쓰나)를 코드로 더 보인다.
  * 구조는 당근 SEED Breeze Scroll Auto Hide(seed-design.io/breeze/components/scroll-auto-hide — Apache-2.0)를 그대로 따른다 — 스크롤 거리를 1:1 로
  * 따라 숨고 드러나며, 멈추면 50% 를 기준으로 200ms(motion-duration-d4 · motion-ease-enter)에 스냅하고, 높이를 바꾸지 않고 translate3d 로만 옮긴다
- * (2026-10-10 사용자 결정 15A). porest 에 처음 두는 예제다.
+ * (2026-10-10 사용자 결정 15A). groo 에 처음 두는 예제다.
  *
  * ROOT 는 recipes/shadcn/components/ui/scroll-auto-hide.tsx 의 cn() 이 잇는 글과, SNAP_TRANSITION · SNAP_THRESHOLD_RATIO · SCROLL_SETTLE_DELAY_MS 는
  * 그 파일의 상수와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 바탕 · z-index(HOST — bg-bg-layer-default · z-[2])는 쓰는 쪽의 className 이다

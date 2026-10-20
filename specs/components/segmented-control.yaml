@@ -21,7 +21,7 @@
 #   - 다크의 안 고른 글은 늘 fg-neutral-muted — 투명 트랙(v120) 위 subtle 이 다크 카드 4.09 · 시트 3.56 이다(2026-10-17 사용자 결정 — 01-040 B 후속).
 #   - 줄바꿈은 단어 단위(v114) — 긴 글은 여러 줄이 되고 모든 칸이 가장 높은 칸에 맞춘다(SEED).
 #   - 알림 점은 브랜드 글자색(fg-brand — 다크에서 밝은 짝, Desk · HR 이 다르다) — Notification Badge small 과 같다(notification-badge.yaml).
-#     SEED 는 bg.brand-solid 이고, porest 다크에서는 그 색이 바탕에 묻힌다.
+#     SEED 는 bg.brand-solid 이고, groo 다크에서는 그 색이 바탕에 묻힌다.
 
 name: SegmentedControl
 

@@ -4,7 +4,7 @@
 // ← → 차례 · ↑ ↓ 보이는 위아래 줄의 가까운 칸(묶음을 넘는다) · Home · End 그 줄 · Enter · Space 고르기.
 // 찾기 칸(Input 밑줄형)은 치는 대로 거르고 치기를 멈추면 결과 수를 화면 밖으로 알린다 — 0건이면 Result Section.
 // 찾기 칸은 스크롤 상자 밖(여는 자리 본문 위에 붙는다 — IpSearchView), 묶음 머리 · 격자는 끝 흐림 상자 안(본문 — IpListView)이다.
-// 실제 격자의 칸은 마우스를 올리면(지연 뒤) · 키보드 초점이 오면(바로) 칸 이름 툴팁(porest Tooltip — menu-view)을 띄운다. 네이티브 title 은 쓰지 않는다.
+// 실제 격자의 칸은 마우스를 올리면(지연 뒤) · 키보드 초점이 오면(바로) 칸 이름 툴팁(groo Tooltip — menu-view)을 띄운다. 네이티브 title 은 쓰지 않는다.
 // 트리거(Input Button)와 여는 자리(1280 미만 Bottom Sheet · 이상 Popover)는 select-view · overlay-view 의 그림을 쓴다.
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ButtonHTMLAttributes, type CSSProperties, type FocusEvent, type KeyboardEvent, type PointerEvent, type ReactNode, type Ref } from 'react';
 import { Tag, type LucideIcon } from 'lucide-react';

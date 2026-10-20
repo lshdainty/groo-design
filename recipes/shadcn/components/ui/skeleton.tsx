@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { ProgressCircle } from "@/components/ui/progress-circle";
 
 /*
- * Porest Skeleton — 구조는 SEED Skeleton(2026-10-03). 수치 원본은 specs/components/skeleton.yaml.
+ * Groo Skeleton — 구조는 SEED Skeleton(2026-10-03). 수치 원본은 specs/components/skeleton.yaml.
  * 기다리는 동안의 시간표(1초 · 5초 · 10초)는 SEED Loading 패턴을 규칙으로 옮긴 것이다 — skeleton.md 의 "기다리는 동안".
  * 옛 Skeleton(깜빡임 · surface-input · 모서리 4 · 브랜드 25% 띠의 SkeletonShimmer)을 대신한다.
  *

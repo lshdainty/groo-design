@@ -2,7 +2,7 @@
 
 > 여러 옵션 가운데 하나만 고르게 하는 컴포넌트. 선택지를 모두 펼쳐 두고 저장하기 전에 하나를 고를 때 쓴다.
 
-구조는 당근 [SEED Radio](https://seed-design.io/components/radio)(Apache-2.0)를 따른다 — 동그라미(Radiomark) · 동그라미 + 라벨(Radio) · 묶음(Radio Group). 값은 porest 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-09-30 사용자 결정).
+구조는 당근 [SEED Radio](https://seed-design.io/components/radio)(Apache-2.0)를 따른다 — 동그라미(Radiomark) · 동그라미 + 라벨(Radio) · 묶음(Radio Group). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-09-30 사용자 결정).
 
 수치 원본은 [`radio-group.yaml`](radio-group.yaml) 이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
@@ -289,11 +289,11 @@ import { Radiomark, RadioGroup } from "@/components/ui/radio-group"
 
 ## SEED 와 다른 점
 
-- **선택 안 된 동그라미의 테두리는 `stroke-neutral-solid`**(3:1 이상, v109). SEED 는 옅은 선(stroke.neutral-weak)이지만 porest 는 동그라미를 선으로 알아봐야 한다(1.4.11).
+- **선택 안 된 동그라미의 테두리는 `stroke-neutral-solid`**(3:1 이상, v109). SEED 는 옅은 선(stroke.neutral-weak)이지만 groo 는 동그라미를 선으로 알아봐야 한다(1.4.11).
 - **비활성은 Checkbox 와 같게**(사용자 결정) — 선택 안 됨은 `bg-disabled` + `stroke-neutral-weak`, 선택은 채운 원 그대로 `bg-disabled` + `fg-disabled` 점. SEED 는 팔레트 gray-300 을 쓰고, 선택이면 채움을 빼고 테두리 + 커진 점(8 → 10)으로 그린다.
 - 투명한 누름(SEED bg.transparent-pressed)은 불투명한 가장 가까운 역할(`bg-layer-default-pressed`)로 — 8자리 hex 를 lint 가 거부한다.
-- **묶음은 세로만**(사용자 결정) — SEED 는 가로를 피하라고 하되, 꼭 가로로 놓아야 하면 간격을 넉넉히 두라고 한다. porest 는 가로 자리에 Segmented · Chip 을 쓴다.
-- **묶음 줄 사이는 12**(사용자 결정) — SEED 는 4 다. 4 면 이웃 줄의 누르는 영역(44)과 겹쳐 한 줄이 실제로 36 · 40 만 받는다. porest 는 기초에서 44 를 반드시로 정했다(Inclusive Design).
+- **묶음은 세로만**(사용자 결정) — SEED 는 가로를 피하라고 하되, 꼭 가로로 놓아야 하면 간격을 넉넉히 두라고 한다. groo 는 가로 자리에 Segmented · Chip 을 쓴다.
+- **묶음 줄 사이는 12**(사용자 결정) — SEED 는 4 다. 4 면 이웃 줄의 누르는 영역(44)과 겹쳐 한 줄이 실제로 36 · 40 만 받는다. groo 는 기초에서 44 를 반드시로 정했다(Inclusive Design).
 - 웹의 `hovered` · `focused` 를 더한다(v106). `focused` 는 앱의 키보드 포커스에도 그린다(2026-10-08).
 
 ## Migration notes

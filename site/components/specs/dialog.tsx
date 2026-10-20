@@ -45,7 +45,7 @@ const line = { outline: `1px dashed ${MARK_LINE}`, outlineOffset: -1 };
 function Win({ mode = 'auto', w = 600, h, brand = 'desk', title, children, s = 1, url }: { mode?: Mode; w?: number; h: number; brand?: 'desk' | 'hr'; title: string; children: ReactNode; s?: number; url?: string }) {
   return (
     <Scaled w={w} h={h} s={s}>
-      <WebWindow mode={mode} w={w} h={h} url={url ?? (brand === 'hr' ? 'hr.porest.app' : 'desk.porest.app')}>
+      <WebWindow mode={mode} w={w} h={h} url={url ?? (brand === 'hr' ? 'hr.groo.app' : 'desk.groo.app')}>
         <WebPage mode={mode} title={title} brand={brand} />
         {children}
       </WebWindow>

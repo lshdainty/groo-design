@@ -7,7 +7,7 @@
 #
 # SEED 와 다른 자리(alert-dialog.md 의 "SEED 와 다른 점")
 #   - 버튼: 1280 미만 medium 40(SEED 와 같다), 1280 이상 small 36(Button 결정 — 대화상자 바닥 36).
-#   - 딤: SEED bg.overlay 0.455 → porest overlay-dim 0.50 · 다크 0.65(v102).
+#   - 딤: SEED bg.overlay 0.455 → groo overlay-dim 0.50 · 다크 0.65(v102).
 #   - z-index: specs/z-index.md 의 L5(딤 z-alert 300 · 확인창 z-alert-content 301) — 열린 Dialog · Bottom Sheet 위에 뜬다(SEED 는 모두 2 + layerIndex).
 
 name: AlertDialog
@@ -37,7 +37,7 @@ rules:
   - when: {}
     enabled:
       overlay:
-        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "porest 딤(v102)" }
+        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "groo 딤(v102)" }
         zIndex: { value: 300, note: "z-alert — specs/z-index.md L5. 열린 대화상자 · 시트 위" }
       root:
         maxWidth: { value: 272px, note: "좌우 32 는 남긴다 — 화면이 336 보다 좁으면 화면 폭 − 64" }
