@@ -433,6 +433,12 @@
   - **Color Swatch 도 화살표만(03-E 결정 3 후속)** — yaml `group.keyboard` · md 에서 Home · End 를 걷고, 레시피 · 사이트 그림의 Home · End 처리를 걷어 `ignoreRadioJumpKeys` 로 막는다.
   - **칩 말줄임은 가로 스크롤 줄 · Chip Tabs 에도(03-E 후속)** — chip yaml `root.maxWidth` 비고 · md, tabs md Chip Tabs 절 · Migration.
   - 옛 판: 컴포넌트 `.history/v-pre-03e-03b.*`(chip · progress · avatar · avatar-stack · tag-group · select · color-swatch · radio-group · segmented-control · select-box · list · attachment-input · tabs), `DESIGN.history/v-pre-03e-03b.*`.
+- **I-01 결과 확인 결정 (2026-10-21)**: 기초 · 틀 구현(I-01) 결과를 보고 사용자가 정한 것 중 스펙에 닿는 넷을 넣었다(결과 확인 페이지 https://claude.ai/artifact/HPSYwAj7X3fWzqbF7nMsyq · 카드 · 띠 비교 페이지 https://claude.ai/artifact/Gk7fNsZy2CJh8HC6syA4dq). 토큰 추가 없음. 옛 판은 DESIGN.history/v-pre-i01-result.* · 각 컴포넌트 .history/v-pre-i01-result.md.
+  - **Desk 폰은 띠 화면(결정 3)** — 화면 바탕 표의 "카드 화면" 줄을 걷었다. 홈 · 자산 · 통계 · 예산 · 카드 상세도 구역(머리 + 내용)마다 화면 폭 흰 띠이고, 띠 안은 카드 안과 같은 값(머리 글 위 24 · 좌우 24 · 아래 4, 글 · 숫자 내용 아래 24 — 띠 안 위 4 · 아래 8 은 그 안에 든다)이다. 순자산(`hero`)은 화면 폭 · 모서리 0 띠(비교 페이지 그림 그대로). 데스크톱(768 이상)은 같은 구역을 카드로 쌓는다 — 10-16 02-005 C 를 폰에서 바꾼 것. 대가(구역이 머리 글로만 갈린다 · 줄 안 폭이 48 넓다)를 적었다. DESIGN 세 파일 Layout "화면 바탕" · 바닥 위 채움 줄, card md(면 · 순자산), list md(목록을 두는 바탕), divider md(강함), 사이트 Elevation "화면 바탕" 글 · 그림(띠 — 구역 · 묶음 · 흰 화면), 내비게이션 그림의 폰 홈 · 자산(`HomeScreen` · `LedgerScreen` · Bottom Navigation 가계부 안내)을 띠로.
+  - **표에 없던 화면은 띠(결정 1B)** — 띠 화면 예에 밤하늘 · 숲 리포트 · 증권 · 거래 검색(날짜 묶음마다 띠)을 적었다.
+  - **짝 버튼 부품(결정 6A)** — Button "긴 라벨" 판정을 웹 `ResponsivePair` · 앱 `PResponsivePair` 부품 하나가 맡고, 시트 · 확인창 바닥도 그 부품을 쓴다. button md · alert-dialog md(vertical 줄).
+  - **거래 검색 조건은 넷(결정 5A · 고치기 W2)** — 키워드 · 유형 · 금액 범위 · 기간(Input Button 으로 여는 Date Picker 기간 — 브라우저 날짜 칸 금지), 카테고리 · 자산 조건은 두지 않는다. top-navigation md.
+  - 남은 것 — 폰 카드 묶음(`cardStack`)을 쓰는 다른 Desk 그림(button-guides 고정 지출 · 지출 카드, checkbox 알림 스위치, content-placeholder 카드 · 혜택, feedback-demos 홈, loading 화면들, attachment-input 가계부)은 아직 카드다 — 다음 묶음에서 띠로 다시 그린다.
 
 ### Fixed
 - **v9**: 매 batch마다 lint 결과를 손계산만 하던 방식 발견 → 16 sparse component를 매핑해 lint contrastCheck 자동 검증 활성. 이후 모든 토큰 추가는 components 매핑 동반.

@@ -6,12 +6,12 @@ import { Figure, Panel as Plate } from '../foundations/ui';
 import { snackbarLook } from './feedback-look';
 import { SnackDock } from './feedback-screens';
 import { SnackbarView } from './feedback-view';
-import { Sheet, Verdict, cardStack, rc, type Mode } from './kit';
+import { Sheet, Verdict, rc, type Mode } from './kit';
 import { ASSET_ROWS, DESK_TABS } from './nav-data';
 import { BottomNavPlayground } from './nav-playground';
 import {
+  BandHead,
   FloorBands,
-  TxCard,
   Arrow,
   Band,
   Bar,
@@ -289,11 +289,12 @@ const MoneyGuide: Fig = ({ caption }) => (
       </Verdict>
       <Verdict ok={false} note="가계부에 들어가면 탭 바 칸을 ← · 넷으로 바꾼다 — 캘린더 · 전체로 바로 못 간다">
         <NPhone scale={0.46} h={600} bg="bg-layer-basement" bar={<Bar type="root" title="자산" actions={[{ icon: 'search', label: '검색' }]} />} overlay={<Pill items={MONEY_BAD} tab="assets" noAdd />}>
-          <div style={cardStack()}>
-            <TxCard title="계좌" action="관리">
+          <FloorBands>
+            <>
+              <BandHead title="계좌" action="관리" />
               <TxRows n={4} rows={ASSET_ROWS} />
-            </TxCard>
-          </div>
+            </>
+          </FloorBands>
         </NPhone>
       </Verdict>
     </Pair>
