@@ -47,6 +47,8 @@ rules:
         background: $color-bg-layer-floating
         shadow: { value: none, note: "그림자 없이 딤과 표면 색으로 뜬다(SEED)" }
         zIndex: { value: 301, note: "z-alert-content — specs/z-index.md L5" }
+        maxHeight: { value: 화면 높이(안전 영역 안), note: "dvh 우선 — 넘치면 확인창 전체(제목 · 설명 · 버튼)가 스크롤된다. 끝 흐림 없음(SEED alert-dialog.css content max-height 100%). 2026-10-17 사용자 결정 03-F 1A" }
+        overflowY: auto
       title:
         typography: $text-t7
         fontWeight: 700

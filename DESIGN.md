@@ -3099,6 +3099,7 @@ Tailwind v4는 `me-*`/`ms-*` (margin-end/start), `pe-*`/`ps-*`, `text-start`/`te
 라이트에서 바닥 `bg-layer-basement` · 약한 배경 `bg-neutral-weak` · 비활성 `bg-disabled` 는 모두 gray-200 이다(SEED 도 같다 — "layer-basement 와 neutral-weak 는 라이트에서 비슷하게 보일 수 있다"). 그래서 회색 바닥 위에 바로 놓인 채움은 바닥과 1.00:1 로 사라진다(다크는 1.47:1 로 갈린다). 사용자 결정 2026-10-16(기초 웹 비교 페이지 https://claude.ai/artifact/U33bUxZkgQoHfAgdp2DEVK 01-040 B):
 
 - **`bg-neutral-weak` · `bg-disabled` 로 칠하는 것은 흰 표면(`bg-layer-default` · `bg-layer-floating`) 위에만 둔다** — neutralWeak 버튼 · 안내 상자(Callout) · 스켈레톤 · 막힌 칸의 바탕. 화면 바탕은 Layout 의 "화면 바탕" 이 정한다(폰은 띠 · 흰 화면, 데스크톱은 카드).
+- 예외 — Page Banner 옅은 neutral 은 자리가 바닥 위(머리 바로 아래 화면 폭)인데도 `bg-neutral-weak` 그대로다. 라이트에서 띠 모양이 사라지는 것을 받아들였다(2026-10-17 사용자 결정 — 03-F 결정 3).
 - 회색 바닥 위에 바로 놓이는 버튼은 neutralOutline 이다 — 데스크톱 화면 제목 줄의 버튼처럼. 입력칸은 테두리가 모양을 맡아 바닥 위에서도 보인다(막혀 바탕이 바닥과 같아도).
 - 바닥 위에 자주 놓이는 두 부품 — Chip `solid` 바탕 · Segmented Control 트랙 — 은 투명 짝 `bg-neutral-weak-alpha`(누름 `bg-neutral-weak-alpha-pressed`)로 칠한다. 놓인 바탕에 섞여 어느 바탕에서나 보인다 — 회색 위 1.11:1 · 흰 위 1.11:1 · 다크 1.47:1(SEED 도 이 두 부품만 투명 짝을 쓴다). 흰 면 위에서는 불투명 `bg-neutral-weak`(1.08:1)보다 조금 짙다.
 

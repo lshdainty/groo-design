@@ -44,6 +44,8 @@
 
 최대 272 에 좌우 32 를 남긴다(화면이 336 보다 좁으면 화면 폭 − 64). 안쪽 20 · 모서리 20, 제목 20 / 27 · 700, 설명 16 / 22 — 설명은 다른 떠 있는 표면과 달리 짙은 `fg-neutral` 이다(꼭 읽어야 할 말이다). 버튼은 1280 미만 Button medium 40, 1280 이상 small 36 이다.
 
+높이는 안전 영역 안 화면 높이까지다. 글자를 크게 쓰거나 글이 길어 넘치면 확인창 전체 — 제목 · 설명 · 버튼 — 가 한 덩어리로 스크롤된다(SEED 그대로, 끝 흐림 없음). 그래서 큰 글자에서는 버튼이 처음에 아래에 숨을 수 있다 — 확인창을 끝까지 내려야 "취소 · 확정" 이 나온다. Dialog · Bottom Sheet(머리 · 바닥 고정, 본문만 스크롤)와 다른 틀이다(2026-10-17 사용자 결정 — 03-F 1A, 비교 페이지 https://claude.ai/artifact/F5SKUbGEWDG82F7B5RRjQB — 추천 1B "80% + 본문만 스크롤" 이 아니다). 넘치지 않게 글을 짧게 쓰는 것이 먼저다(아래 "글").
+
 [표: 공통](alert-dialog.yaml#base.enabled)
 
 [표: 모션](alert-dialog.yaml#motion)
@@ -172,8 +174,13 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 - **딤은 groo 0.50 · 다크 0.65**(v102) — SEED 0.455.
 - **z-index 는 specs/z-index.md 의 L5**(딤 `z-alert` 300 · 확인창 `z-alert-content` 301) — 열린 대화상자 · 시트 위에 뜬다. SEED 는 모든 모달이 2 + layerIndex 라 DOM 순서에 기댄다.
 - **`Esc` 는 취소** — SEED 와 같다. 옛 groo 스펙은 `Esc` 도 막았다.
+- **높이 · 스크롤은 SEED 와 같다** — 화면 높이까지, 넘치면 확인창 전체가 스크롤(groo Dialog 의 80% · 본문만 스크롤과 다르다).
 
 ## Migration notes
+
+### 2026-10-17 — 화면보다 커질 때(03-F 1A)
+
+구현 조사(03F-014 · 017)에서 글자 200% 의 긴 확인창이 화면 위아래로 나가고 스크롤도 안 됐다(웹 높이 1,538 · 앱 Column 아래 464 넘침). 사용자가 SEED 그대로 — 화면 높이까지 · 넘치면 확인창 전체 스크롤 — 를 골랐다(https://claude.ai/artifact/F5SKUbGEWDG82F7B5RRjQB). 웹 레시피 `AlertDialogContent` 에 높이 상한 · `overflow-y: auto` 를 더했다. 앱 `PAlertDialog` 는 Column 을 스크롤 상자로 감싼다.
 
 ### 2026-10-02 — SEED Alert Dialog 로 다시 정한다
 
