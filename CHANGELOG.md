@@ -439,6 +439,11 @@
   - **짝 버튼 부품(결정 6A)** — Button "긴 라벨" 판정을 웹 `ResponsivePair` · 앱 `PResponsivePair` 부품 하나가 맡고, 시트 · 확인창 바닥도 그 부품을 쓴다. button md · alert-dialog md(vertical 줄).
   - **거래 검색 조건은 넷(결정 5A · 고치기 W2)** — 키워드 · 유형 · 금액 범위 · 기간(Input Button 으로 여는 Date Picker 기간 — 브라우저 날짜 칸 금지), 카테고리 · 자산 조건은 두지 않는다. top-navigation md.
   - 남은 것 — 폰 카드 묶음(`cardStack`)을 쓰는 다른 Desk 그림(button-guides 고정 지출 · 지출 카드, checkbox 알림 스위치, content-placeholder 카드 · 혜택, feedback-demos 홈, loading 화면들, attachment-input 가계부)은 아직 카드다 — 다음 묶음에서 띠로 다시 그린다.
+- **03-F 알림 · 시트 · 메뉴 결정 (2026-10-17 결정, 2026-10-21 반영)**: 구현 조사에서 사용자가 정한 것을 스펙에 넣었다(비교 페이지 https://claude.ai/artifact/F5SKUbGEWDG82F7B5RRjQB). 토큰 추가 없음. 옛 판은 DESIGN.history/v-pre-03f-overlay.* · 각 컴포넌트 .history/v-pre-03f-overlay.*.
+  - **확인창이 화면보다 커질 때(결정 1A)** — SEED 그대로: 높이는 안전 영역 안 화면까지, 넘치면 확인창 전체(제목 · 설명 · 버튼)가 스크롤, 끝 흐림 없음. alert-dialog yaml `root.maxHeight` · `overflowY` · md(크기 · SEED 와 다른 점 · Migration) · 레시피 `AlertDialogContent` · 미리보기 `.pov-alert`. 추천 1B(80% + 본문만 스크롤)가 아니다 — 대가(큰 글자에서 버튼이 아래에 숨는다)를 적었다.
+  - **스낵바 큰 글자 · 긴 액션(결정 2B)** — 코드는 SEED 그대로, 쓰기 규칙(글 두 줄 · 액션 한두 마디 · 번역 문구도)으로 막는다. snackbar md "글".
+  - **회색 바닥 위 Page Banner 옅은 neutral(결정 3)** — `bg-neutral-weak` 그대로, 라이트에서 띠 모양이 사라지는 것을 받아들인다. page-banner md · DESIGN 세 파일 "바닥 위의 채움" 예외 줄.
+  - **앱 메뉴 · 스피드 다이얼(결정 4A · 5A)** — 앱 캘린더 공유 멤버 ⋮ 는 기초 PR 에서 Menu Sheet 로("{이름} 더보기"), `PDropdownMenu` · `PSpeedDial` 지움. menu md · floating-action-button md Migration.
 
 ### Fixed
 - **v9**: 매 batch마다 lint 결과를 손계산만 하던 방식 발견 → 16 sparse component를 매핑해 lint contrastCheck 자동 검증 활성. 이후 모든 토큰 추가는 components 매핑 동반.

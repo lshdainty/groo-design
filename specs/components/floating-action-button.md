@@ -175,4 +175,4 @@ import { SnackbarAvoidOverlap } from "@/components/ui/snackbar"
 - **Desk 웹** — `shared/ui/groo/fab.tsx:12-33`(할 일 `TodoPage.tsx:734` · 더치페이 `DutchPayPage.tsx:576`, 폰 전체 화면). 52 원 · + 22 · `shadow-lg` · 아래 24 · 오른쪽 18 고정 · z 20 이라 홈 표시줄(34)과 10 겹친다(`fab.tsx:22`, F23). 56 · 24 · 20 + 안전 영역 · z-sticky 로.
 - **Desk 앱** — `shared/widgets/p_floating_action_button.dart:10-47`(할 일 `todo_screen.dart:272` · 더치페이 `dutch_pay_screen.dart:60`). 52 · elevation 6 · 아이콘 22 · 오른쪽 16 · 아래 16 + 안전 영역, 이름은 tooltip 뿐이고 버튼 표시가 없다(`PButton` 처럼 Semantics 가 없다).
 - **HR 대시보드 SpeedDial** — `shared/ui/speed-dial/SpeedDial.tsx:45` · `DashboardContent.tsx:244`(아래 32 · 오른쪽 32 · z 50, 메뉴 조사 M7). 메뉴를 여는 떠 있는 버튼이라 이 스펙 밖이다 — 앱 적용 때 정한다.
-- **쓰지 않는 것** — 앱 `PSpeedDial`(호출 0, F27).
+- **쓰지 않는 것** — 앱 `PSpeedDial`(호출 0, F27). 지운다(2026-10-17 사용자 결정 — 03-F 결정 5A).

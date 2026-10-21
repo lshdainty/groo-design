@@ -14107,7 +14107,8 @@ export function pageCss() {
     .pov-pop-footer { display: flex; flex-shrink: 0; justify-content: flex-end; gap: var(--spacing-x2); padding: var(--spacing-x4) var(--spacing-x6) var(--spacing-x6); }
 
     /* Alert Dialog — 최대 272(좌우 32 남김 — 표면 자리) · 안쪽 20 · 모서리 20 · 그림자 없음. L5 확인창 z-alert-content(301) */
-    .pov-alert { z-index: var(--z-alert-content); width: 272px; max-width: 100%; padding: var(--spacing-x5); border-radius: var(--radius-r5); }
+    /* 높이는 틀(안전 영역 안 화면)까지 — 넘치면 확인창 전체가 스크롤된다(SEED, 2026-10-17 03-F 1A) */
+    .pov-alert { z-index: var(--z-alert-content); width: 272px; max-width: 100%; max-height: 100%; overflow-y: auto; padding: var(--spacing-x5); border-radius: var(--radius-r5); }
     .pov-alert-title { font-size: var(--text-t7); line-height: var(--text-t7--line-height); font-weight: 700; color: var(--color-fg-neutral); }
     /* 설명 — 다른 떠 있는 표면과 달리 짙은 fg-neutral(꼭 읽어야 할 말). 제목 ↔ 설명 6, 제목이 없으면 0 */
     .pov-alert-desc { margin: 0; font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 400; color: var(--color-fg-neutral); }
