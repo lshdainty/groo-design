@@ -214,7 +214,8 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
       ref={ref}
       data-slot="card-header"
       className={cn(
-        "flex items-center justify-between gap-x2",
+        // 큰 글자 — 오른쪽 동작이 머리 폭의 절반을 넘으면 제목 아래 줄 오른쪽 끝으로(제목 최소 50% · 줄바꿈, 2026-10-21 03-G 4A — Button 짝과 같은 반 폭 판정)
+        "flex items-center justify-between gap-x2 flex-wrap [&>:first-child:not(:last-child)]:min-w-[50%] [&>:first-child:not(:last-child)]:flex-1 [&>:last-child:not(:first-child)]:ml-auto",
         // 목록 · 아코디언 카드 — 위 24 · 좌우 24 · 아래 4(줄 · 트리거가 제 위 여백 12 · 16 을 가진다). 글 카드는 카드 여백 안 · 아래 8
         ctx?.body === "list" || ctx?.body === "accordion" ? "px-x6 pb-x1 pt-x6" : "pb-x2",
         className,

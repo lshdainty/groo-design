@@ -15257,15 +15257,15 @@ export function pageCss() {
     .pdp-day[data-outside] > .pdp-day-visual { color: var(--color-fg-disabled); }
     .pdp-day[data-disabled] > .pdp-day-visual { text-decoration: line-through; }
     .pdp-day[data-disabled]:not([data-selected]) > .pdp-day-visual { background: transparent; color: var(--color-fg-disabled); }
-    /* 호버(고운 포인터만) · 누름 — 옅은 원 bg-layer-floating-pressed. 오늘(옅은 원) · 기간 사이 날(띠) 위에서는 한 단계 짙은 bg-neutral-weak-pressed —
+    /* 호버(고운 포인터만) · 누름 — 옅은 원 bg-neutral-weak-alpha-pressed(SEED 투명 색, 03-C 2B). 오늘(옅은 원) · 기간 사이 날(띠) 위에서는 불투명 bg-neutral-weak-pressed —
        옅은 원 · 띠와 같은 색이 되어 안 보이지 않게. 날짜는 줄지 않는다. 고른 날 · 읽기 전용 · 막힌 날 · 앞뒤 달에는 없다 */
     @media (hover: hover) {
-      .pdp-day:not([data-selected], [data-readonly], [aria-disabled="true"], [data-outside]):hover > .pdp-day-visual { background: var(--color-bg-layer-floating-pressed); }
+      .pdp-day:not([data-selected], [data-readonly], [aria-disabled="true"], [data-outside]):hover > .pdp-day-visual { background: var(--color-bg-neutral-weak-alpha-pressed); }
       .pdp-day:is([data-today], [data-in-range]):not([data-selected], [data-readonly], [aria-disabled="true"]):hover > .pdp-day-visual { background: var(--color-bg-neutral-weak-pressed); }
     }
     .pdp-day:not([data-selected], [data-readonly], [aria-disabled="true"], [data-outside]):active > .pdp-day-visual,
     .pdp-day.pdp-day--hover > .pdp-day-visual,
-    .pdp-day.pdp-day--pressed > .pdp-day-visual { background: var(--color-bg-layer-floating-pressed); }
+    .pdp-day.pdp-day--pressed > .pdp-day-visual { background: var(--color-bg-neutral-weak-alpha-pressed); }
     .pdp-day:is([data-today], [data-in-range]):not([data-selected], [data-readonly], [aria-disabled="true"]):active > .pdp-day-visual,
     .pdp-day:is([data-today], [data-in-range]):is(.pdp-day--hover, .pdp-day--pressed) > .pdp-day-visual { background: var(--color-bg-neutral-weak-pressed); }
     .pdp-day[data-outside],

@@ -13,7 +13,7 @@
 #   - 앞뒤 달 날짜를 흐리게(fg-disabled) 채우고 늘 6주(SEED 는 비우고 4 ~ 6주) — 누르지 못하고 보조 기술에 숨긴다.
 #   - 칸이 44 보다 좁으면(320 화면) 원을 칸 폭 − 2 로 줄인다(SEED 는 이웃 원이 겹친다).
 #   - 팝오버의 달력 폭은 336(칸 48 × 7), 두 달 보기는 336 + 24 + 336(SEED 는 부모 폭).
-#   - 고른 날 bg-neutral-inverted(SEED neutral-solid 의 짝) · 호버 · 누름 bg-layer-floating-pressed(SEED 투명 색의 불투명 짝, v102) ·
+#   - 고른 날 bg-neutral-inverted(SEED neutral-solid 의 짝) · 호버 · 누름은 SEED 와 같은 투명 bg-neutral-weak-alpha-pressed(03-C 2B — 오늘 · 기간 위만 불투명 bg-neutral-weak-pressed) ·
 #     읽기 전용 시작일 stroke-neutral-solid(SEED palette gray-600 의 역할 짝).
 #   - 빠른 기간 칩 줄을 둔다(SEED 에 없다). Week 보기는 두지 않는다(쓰는 곳이 없다).
 
@@ -55,7 +55,7 @@ states:
   enabled: 이번 달 날짜
   hovered: 웹 — 마우스를 올린 날짜의 원(고운 포인터만)
   pressed: 누르는 동안 원(터치) — 날짜는 줄지 않는다
-  focused: 웹 — 키보드 초점이 온 날짜에 링
+  focused: 키보드 초점이 온 날짜에 링(웹 · 앱 — 앱은 하드웨어 키보드 · 스위치 접근, 03-C 4A)
   today: 오늘 — 옅은 원 + 숫자 굵게
   selected: 고른 날 · 기간의 시작 · 끝 — 짙은 원
   inRange: 기간의 사이 날 — 띠
@@ -75,7 +75,7 @@ rules:
         gap: { value: $spacing-between-chips, note: "칩 사이 8 — 시트는 한 줄 가로 스크롤(화면 끝까지), 팝오버는 줄바꿈" }
         paddingBottom: { value: $spacing-x3, note: "칩 줄 ↔ 머리 12" }
       header:
-        height: 48px
+        height: { value: 48px, note: "최소 — 글자가 크면 그만큼만 늘어난다. 칸 · 머리 · 요일 줄 · 원 · 이전 · 다음은 px, 글자만 배율(SEED, 03-C 1B)" }
       title:
         typography: $text-t5
         fontWeight: 700
@@ -87,20 +87,20 @@ rules:
         size: { value: 20px, note: "lucide chevron-down" }
         color: $color-fg-neutral
       navButton:
-        size: { value: 40px, note: "Button ghost iconOnly medium — 둘 사이 0, 머리 오른쪽 끝, 누르는 영역 44" }
+        size: { value: 40px, note: "Button ghost iconOnly medium 을 px 로 — 글자 크기를 따르지 않는다(03-C 1B). 둘 사이 0, 머리 오른쪽 끝, 누르는 영역 44" }
         iconSize: { value: 18px, note: "lucide chevron-left · chevron-right" }
         color: $color-fg-neutral
       weekday:
-        height: 48px
+        height: { value: 48px, note: "최소 — 글자가 크면 그만큼만 늘어난다(03-C 1B)" }
         typography: $text-t4
         fontWeight: 500
         foreground: $color-fg-neutral-subtle
       cell:
-        height: { value: 48px, note: "폭은 달력 폭 ÷ 7 — 칸 전체가 누르는 자리, 칸 사이 0" }
+        height: { value: 48px, note: "최소(SEED dateCell minHeight) — 글자가 크면 그만큼만 늘어난다(03-C 1B). 폭은 달력 폭 ÷ 7 — 칸 전체가 누르는 자리, 칸 사이 0" }
         weeks: { value: 6, note: "늘 6주 — 달을 넘겨도 머리 · 바닥이 움직이지 않는다(이어지는 달만 그 달의 주 수)" }
         cursor: pointer
       dayVisual:
-        size: { value: 42px, note: "칸 위 3 · 가로 가운데 — 원 · 띠끼리 6 떨어진다. 칸이 44 보다 좁으면(320 화면) 칸 폭 − 2" }
+        size: { value: 42px, note: "px — 글자 크기를 따르지 않는다(03-C 1B, SEED). 칸 위 3 · 가로 가운데 — 원 · 띠끼리 6 떨어진다. 칸이 44 보다 좁으면(320 화면) 칸 폭 − 2" }
         radius: $radius-full
         background: transparent
         transitionProperty: background-color
@@ -114,7 +114,7 @@ rules:
         height: { value: 42px, note: "칸 위 3 — 원과 같은 높이(칸이 좁아 원이 줄면 띠도 같이). 시작 칸은 원 가운데부터 오른쪽, 끝 칸은 왼쪽부터 원 가운데까지, 사이 칸은 칸 폭 전체 — 줄 끝에서 둥글리지 않고 칸 끝에서 끊는다" }
         background: $color-bg-neutral-weak
       monthLabel:
-        height: 48px
+        height: { value: 48px, note: "최소 — 글자가 크면 그만큼만 늘어난다(03-C 1B)" }
         typography: $text-t5
         fontWeight: 700
         foreground: $color-fg-neutral
@@ -126,10 +126,10 @@ rules:
         paddingTop: { value: $spacing-x4, note: "팝오버 — 달력 아래 16, 버튼 small 36 오른쪽 맞춤. 시트는 Bottom Sheet 바닥(위 12 · 아래 16, large 48 — 하나면 폭 전체, 둘이면 반씩)" }
     hovered:
       dayVisual:
-        background: { value: $color-bg-layer-floating-pressed, note: "마우스(고운 포인터)만 — 축소 없음. 오늘(옅은 원) · 기간 사이 날(띠) 위에서는 한 단계 짙은 bg-neutral-weak-pressed(옅은 원 · 띠와 같은 색이 되어 안 보이지 않게). 막힌 날 · 읽기 전용 · 앞뒤 달에는 없다" }
+        background: { value: $color-bg-neutral-weak-alpha-pressed, note: "SEED 투명 색 — 바탕 1.15 · 다크 1.77(2026-10-21 03-C 2B). 마우스(고운 포인터)만 — 축소 없음. 오늘(옅은 원) · 기간 사이 날(띠) 위에서는 불투명 bg-neutral-weak-pressed(투명 색을 띠에 얹으면 또 다른 색이 된다). 막힌 날 · 읽기 전용 · 앞뒤 달에는 없다" }
     pressed:
       dayVisual:
-        background: { value: $color-bg-layer-floating-pressed, note: "터치는 누르는 동안 — 오늘 · 기간 사이 날 위에서는 bg-neutral-weak-pressed. 날짜는 줄지 않는다(이전 · 다음은 Button 처럼 2px 축소)" }
+        background: { value: $color-bg-neutral-weak-alpha-pressed, note: "터치는 누르는 동안 — 오늘 · 기간 사이 날 위에서는 불투명 bg-neutral-weak-pressed. 날짜는 줄지 않는다(이전 · 다음은 Button 처럼 2px 축소)" }
     focused:
       focusRing:
         width: 2px

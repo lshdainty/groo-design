@@ -42,15 +42,15 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker";
  *              시트는 BottomSheetContent 에 h-[90dvh] 를 준다. 달 높이가 정해져 있어(48 + 48 × 주 + 16) 보이는 달 ± 2달만 그린다.
  *              손으로 스크롤해 맨 위 달이 바뀌면 그 달 1일이 Tab 자리가 된다. 키로 달을 넘으면 그 날이 보이게 가장 적게 스크롤한다
  *
- * 날짜 칸 — 높이 48 · 폭 = 달력 폭 ÷ 7, 칸 전체가 누르는 자리. 원은 칸 가운데 42(위 3 — 원 · 띠끼리 6 떨어진다), 칸이 44 보다
+ * 날짜 칸 — 높이 최소 48(글자가 크면 그만큼만 늘어난다 — 칸 · 머리 · 요일 줄 · 원 · 이전 · 다음은 px, 글자만 배율 — 03-C 1B · SEED) · 폭 = 달력 폭 ÷ 7, 칸 전체가 누르는 자리. 원은 칸 가운데 42(위 3 — 원 · 띠끼리 6 떨어진다), 칸이 44 보다
  * 좁으면(320 화면) 칸 폭 − 2. 기간 띠도 원과 같은 높이다. 숫자 t5 16 / 22 · 500 · tabular-nums. 달 그리드가 크기 컨테이너라
  * --day = min(42px, 칸 폭 − 2px) 를 한 번 셈해 원 · 띠 · 링이 같이 쓴다.
  *
  * 상태(date-picker.yaml · "상태가 겹칠 때")
  *   보통       숫자 fg-neutral-muted · 원 없음
- *   호버 · 누름 원 bg-layer-floating-pressed — 호버는 고운 포인터(마우스)만, 터치는 누르는 동안. 날짜는 줄지 않는다. 오늘(옅은 원) ·
+ *   호버 · 누름 원 bg-neutral-weak-alpha-pressed(SEED 투명 색 — 03-C 2B) — 호버는 고운 포인터(마우스)만, 터치는 누르는 동안. 날짜는 줄지 않는다. 오늘(옅은 원) ·
  *              기간 사이 날(띠) 위에서는 한 단계 짙은 bg-neutral-weak-pressed — 옅은 원 · 띠와 같은 색이 되어 안 보이지 않게
- *              (다크에서는 bg-layer-floating-pressed 와 bg-neutral-weak 가 같은 색이다). 고른 날 · 막힌 날 · 읽기 전용 · 앞뒤 달에는 없다
+ *              (투명 색을 띠 위에 얹으면 띠와 겹쳐 또 다른 색이 된다). 고른 날 · 막힌 날 · 읽기 전용 · 앞뒤 달에는 없다
  *   오늘       원 bg-neutral-weak + 숫자 700 · fg-neutral. 고른 날 · 기간 안에서도 700 은 남는다. aria-current="date"
  *   고름       원 bg-neutral-inverted + 숫자 fg-neutral-inverted — 하루 · 여러 날의 고른 날, 기간의 시작 · 끝. 오늘이어도 이 모양
  *   기간 사이   원 없이 띠(bg-neutral-weak, 원 높이) — 시작 칸은 원 가운데부터 오른쪽, 끝 칸은 왼쪽부터 원 가운데까지, 사이 칸은 칸 폭
@@ -256,28 +256,30 @@ const ROOT_SIZE = {
 const PRESETS = "shrink-0 pb-x3";
 
 // 머리 48 — 왼쪽 제목, 오른쪽 이전 · 다음(사이 0)
-const HEADER = "flex h-12 shrink-0 items-center justify-between";
+// 이전 · 다음 — Button ghost iconOnly medium 을 px 40 으로 고정한다(글자 크기를 따르지 않는다 — 03-C 1B, SEED)
+const NAV_PX = "h-[40px] w-[40px]";
+const HEADER = "flex min-h-[48px] shrink-0 items-center justify-between";
 // 제목 — 누르는 자리는 머리 높이 48 전체, 글자는 왼쪽에서 4 · 셰브론과 4. 바탕이 없어 모서리 8 은 초점 링에만 보인다
 const TITLE = [
-  "inline-flex h-12 min-w-0 cursor-pointer items-center gap-x1 rounded-r2 border-0 bg-transparent px-x1 font-sans text-t5 font-bold text-fg-neutral outline-none",
+  "inline-flex min-h-[48px] min-w-0 cursor-pointer items-center gap-x1 rounded-r2 border-0 bg-transparent px-x1 font-sans text-t5 font-bold text-fg-neutral outline-none",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 // 셰브론 20 — 휠이 열리면 위로(150ms easing). 모션 줄이기면 바로
-const TITLE_ICON = "size-5 shrink-0 text-fg-neutral [transition:rotate_var(--motion-duration-d3)_var(--motion-ease-easing)] motion-reduce:[transition:none]";
+const TITLE_ICON = "size-[20px] shrink-0 text-fg-neutral [transition:rotate_var(--motion-duration-d3)_var(--motion-ease-easing)] motion-reduce:[transition:none]";
 const NAV = "flex shrink-0 items-center";
 
 // 두 달 — 사이 24, 달마다 가운데 이름 48 · 이전은 첫 달 왼쪽 끝 · 다음은 둘째 달 오른쪽 끝(위 4)
 const TWO_MONTHS = "grid grid-cols-2 gap-x-x6";
-const TWO_MONTHS_HEADER = "relative flex h-12 items-center justify-center";
+const TWO_MONTHS_HEADER = "relative flex min-h-[48px] items-center justify-center";
 const MONTH_NAME = "text-t5 font-bold text-fg-neutral whitespace-nowrap";
 const NAV_START = "absolute left-0 top-x1";
 const NAV_END = "absolute right-0 top-x1";
 
 // 이어지는 달 — 스크롤 칸(스크롤바 숨김) · 위에 붙는 요일 줄 · 달마다 왼쪽 이름 48 + 아래 16 · 아래 안개 96
 const CONTINUOUS_SCROLL = "relative min-h-0 flex-1 overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden";
-const CONTINUOUS_WEEKDAYS = "sticky top-0 z-[2] grid h-12 grid-cols-7 bg-bg-layer-floating";
+const CONTINUOUS_WEEKDAYS = "sticky top-0 z-[2] grid min-h-[48px] grid-cols-7 bg-bg-layer-floating";
 const CONTINUOUS_MONTH = "pb-x4";
-const CONTINUOUS_MONTH_NAME = "flex h-12 items-center px-x1 text-t5 font-bold text-fg-neutral";
+const CONTINUOUS_MONTH_NAME = "flex min-h-[48px] items-center px-x1 text-t5 font-bold text-fg-neutral";
 const FOG = "pointer-events-none sticky bottom-0 z-[3] -mt-24 h-24 [background:linear-gradient(to_bottom,transparent,var(--color-bg-layer-floating))]";
 
 // 연 · 월 휠 자리 — 요일 줄 + 6주(336)를 덮는다. 휠 308 은 가운데(위아래 14)
@@ -288,11 +290,11 @@ const WHEEL_MONTH = "w-[96px]";
 // 달 그리드 — 크기 컨테이너. --day = min(42, 칸 폭 − 2) 를 원 · 띠 · 링이 같이 쓴다
 const GRID = "@container [--day:min(42px,calc(100cqw_/_7_-_2px))]";
 const WEEK = "grid grid-cols-7";
-const WEEKDAY_ROW = "grid h-12 grid-cols-7";
+const WEEKDAY_ROW = "grid min-h-[48px] grid-cols-7";
 const WEEKDAY = "flex items-center justify-center text-t4 font-medium text-fg-neutral-subtle";
 
 // 칸 — 높이 48 · 폭 = 달력 폭 ÷ 7. 기간 띠는 칸의 ::before(원 높이, 칸 세로 가운데)
-const CELL = "relative isolate h-12 min-w-0";
+const CELL = "relative isolate min-h-[48px] min-w-0";
 const BAND = "before:pointer-events-none before:absolute before:top-1/2 before:h-[var(--day)] before:-translate-y-1/2 before:bg-bg-neutral-weak before:content-['']";
 const BAND_SIDE = {
   start: "before:left-1/2 before:right-0",
@@ -307,8 +309,8 @@ const DAY = [
   "after:pointer-events-none after:absolute after:left-1/2 after:top-1/2 after:size-[var(--day)] after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:content-['']",
   "focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-stroke-focus-ring",
 ].join(" ");
-// 호버(마우스 — 고운 포인터만) · 누름(터치) — 원 bg-layer-floating-pressed, 축소 없음
-const DAY_PRESS = "[@media(hover:hover)_and_(pointer:fine)]:hover:before:bg-bg-layer-floating-pressed active:before:bg-bg-layer-floating-pressed";
+// 호버(마우스 — 고운 포인터만) · 누름(터치) — 원 bg-neutral-weak-alpha-pressed(SEED 투명 색 — 2026-10-21 03-C 2B), 축소 없음
+const DAY_PRESS = "[@media(hover:hover)_and_(pointer:fine)]:hover:before:bg-bg-neutral-weak-alpha-pressed active:before:bg-bg-neutral-weak-alpha-pressed";
 // 오늘(옅은 원) · 기간 사이 날(띠) 위의 호버 · 누름 — 한 단계 짙은 bg-neutral-weak-pressed(옅은 원 · 띠와 같은 색이면 안 보인다)
 const DAY_PRESS_ON_WEAK = "[@media(hover:hover)_and_(pointer:fine)]:hover:before:bg-bg-neutral-weak-pressed active:before:bg-bg-neutral-weak-pressed";
 const DAY_STATE = {
@@ -834,7 +836,7 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>((props, ref
     const s = cellState(d);
     const band = s.complete && !sameDay(rangeStart, rangeEnd) ? (s.rangeStart ? "start" : s.rangeEnd ? "end" : s.inRange ? "middle" : null) : null;
     const tone = s.readOnly ? "readOnly" : s.selected ? "selected" : s.disabled ? "disabled" : s.inRange ? "inRange" : s.today ? "today" : "enabled";
-    // 호버 · 누름 — 보통 날은 bg-layer-floating-pressed, 오늘 · 기간 사이 날은 한 단계 짙게. 고른 날 · 막힌 날 · 읽기 전용에는 없다
+    // 호버 · 누름 — 보통 날은 bg-neutral-weak-alpha-pressed, 오늘 · 기간 사이 날은 한 단계 짙게. 고른 날 · 막힌 날 · 읽기 전용에는 없다
     const press = tone === "enabled" ? DAY_PRESS : tone === "today" || tone === "inRange" ? DAY_PRESS_ON_WEAK : null;
     // 미완성 기간의 시작은 막힌 날이어도 취소선을 긋지 않는다
     const strike = s.disabled && !s.readOnly && !(s.rangeStart && !s.complete);
@@ -912,7 +914,7 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>((props, ref
       aria-label={labels.previousMonth}
       data-slot="date-picker-previous"
       disabled={!canPrev}
-      className={extra}
+      className={cn(NAV_PX, extra)}
       onClick={() => step(-1)}
     >
       <ChevronLeft aria-hidden />
@@ -926,7 +928,7 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>((props, ref
       aria-label={labels.nextMonth}
       data-slot="date-picker-next"
       disabled={!canNext}
-      className={extra}
+      className={cn(NAV_PX, extra)}
       onClick={() => step(1)}
     >
       <ChevronRight aria-hidden />

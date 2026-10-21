@@ -165,6 +165,8 @@
 - `mediumWeak`(기본) — 14 · 500 · `fg-neutral-subtle`. 줄보다 앞서지 않는다.
 - `boldSolid` — 14 · 700 · `fg-neutral`. 화면을 크게 나누는 묶음에만.
 
+오른쪽 작은 버튼은 큰 글자에서 오른쪽 동작이 머리 폭의 절반을 넘으면 제목 아래 줄 오른쪽 끝으로 내린다 — 제목은 한 줄 전체 폭으로 읽히고 머리가 버튼 한 줄(36)만큼 높아진다. 평소(100% · 130%)는 한 줄 그대로다. [Button](button.md) 짝의 반 폭 판정과 같고, 카드 머리 · 아코디언 목록 머리 · List Header 가 같은 규칙이다(2026-10-21 사용자 결정 — 03-G 결정 4 A, https://claude.ai/artifact/A3oCdxNvDwkNBPFPE36bmF).
+
 오른쪽에 작은 버튼(도움말 · 전체 보기)을 둘 수 있다 — 글이면 글 버튼(SEED Text Button 14 · 700 · `fg-neutral-muted` · 보이는 36 · 위아래로 블리드해 줄 높이를 바꾸지 않는다, 2026-10-16 사용자 결정 — 글자 역할 D2). Card 머리 동작과 같은 값이다. 화면 맨 위 제목 · 카드 제목은 목록 제목이 아니다 — 카드 제목은 [Card](card.md) 의 머리(16 / 22 · 700, 2026-10-08)다.
 
 [그림: 목록 제목 두 가지](../../site/components/specs/list.tsx#header)
@@ -481,6 +483,10 @@ import { List, ListButtonItem, ListParentItem } from "@/components/ui/list"
 - **긴 값의 겹침만 막는다** — 본문 최소 1em · 제목 · 글 설명 `overflow-wrap: anywhere` · 글 값은 줄 끝에서 끊는다(2026-10-15 Q-001). SEED 는 뒤 붙이개 `flexShrink 0` · 본문 `flexGrow 1` 만 두고 최소 폭 · 줄바꿈 규칙을 두지 않는다 — 줄지 않는 값 · 양보하는 본문은 SEED 와 같다.
 
 ## Migration notes
+
+### 2026-10-21 — List Header 큰 글자(03-G 4A)
+
+목록 제목의 오른쪽 버튼이 반 폭을 넘으면 제목 아래 줄 오른쪽 끝으로 — 레시피 `listHeaderVariants` 에 flex-wrap · 제목 최소 50%(제목을 요소로 감쌀 때). 비교 페이지 https://claude.ai/artifact/A3oCdxNvDwkNBPFPE36bmF.
 
 ### 2026-10-17 — 하나 고르기 묶음은 Home · End 를 받지 않는다(03-E 결정 3 A)
 

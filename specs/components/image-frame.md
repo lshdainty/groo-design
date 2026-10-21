@@ -361,7 +361,7 @@ YAML 이 `1` · `2` · `1.586` 은 숫자로, `16 / 9` · `4 / 3` · `6 / 7` · 
 제품은 앱 적용 단계에서 옮긴다(2026-10-03 조사 — Desk 웹 · HR 은 크로미움에 띄워 쟀고, Desk 앱은 위젯 테스트로 쟀다. dev 실데이터는 카드 9,503장 · 그림 표본 150장).
 
 - **세로 카드 그림이 가운데만 보인다** — 표본 150장 중 80장이 세로(0.62 ~ 0.64)인데 모든 틀이 가로 cover 라 높이의 29 ~ 41% 만 보인다(웹 `pages/card-benefit/ui/CardBenefitPage.tsx:191-226 · 416-445` · `CardBenefitDetailDialog.tsx:92-121` · `widgets/asset-full/ui/AssetEditDialog.tsx:934-939 · 1042-1047`, 앱 `features/card/presentation/card_benefits_screen.dart:578-590` · `card_benefit_detail_sheet.dart:307-318` · `features/asset/presentation/card_add_dialog.dart:866-878 · 1043-1052`). `CardArt` 로 돌린다.
-- **상세 그림 틀이 2.16:1** — 웹 상세 대화상자가 최대 높이 220 을 걸어 1280 에서 476 × 220 이다(`CardBenefitDetailDialog.tsx:92-101`). 1.586 그대로 두고 폭을 줄인다(폰 상세와 같은 312, 가운데).
+- **상세 그림 틀이 2.16:1** — 웹 상세 대화상자가 최대 높이 220 을 걸어 1280 에서 476 × 220 이다(`CardBenefitDetailDialog.tsx:92-101`). 1.586 그대로 두고 폭을 줄인다(폰 상세와 같은 312, 가운데). 312 는 처음 에이전트가 적은 값이었고 2026-10-21 사용자 결정 — 03-G 결정 5 A 로 확인했다(본문 폭을 채우는 안은 고르지 않았다).
 - **상세에 카드 이름이 없다** — 그림이 뜨면 제목 "카드 상세" 뿐이고 이름은 웹 `alt` 에만(`CardBenefitDetailDialog.tsx:79-130 · 620`), 앱은 이름 없는 그림 노드다(`card_benefit_detail_sheet.dart:33 · 294-344`). 모르는 회사의 앱 대체 아트는 글 · 의미가 0 이다(`:362-380`).
 - **그림 없는 카드(82%)의 글자가 약하다** — 웹 단색 + 흰 18% 광택 + 흰 글자로 NH농협카드 3.39(광택 위 2.73) · 하나 4.20 · 롯데 4.38(`entities/card/lib/cardBrand.ts:27-38` · `CardBenefitPage.tsx:227-300` · `CardBenefitDetailDialog.tsx:132-229`), 앱 그라데이션 3.56 ~ 3.85(`features/card/presentation/widgets/card_brand.dart:57-72`). 기관 색 한 색 + 표의 글자색으로.
 - **모르는 카드사(44곳)** — 웹은 브랜드 파랑(진짜 회사 색처럼 보인다 — `cardBrand.ts` 의 `CARD_FALLBACK_GRADIENT`), 앱은 회색 + 카드 아이콘이고 상세에 이름이 없다. 대체 그림(`credit-card`) + 이름 글로.

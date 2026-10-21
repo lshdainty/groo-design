@@ -44,6 +44,8 @@
 
 팝오버의 달력은 336(칸 48 × 7), 시트는 시트 폭에서 좌우 24 를 뺀 폭이다(360 화면 312). 칸이 44 보다 좁으면(320 화면) 원을 칸 폭 − 2 로 줄인다.
 
+글자 크기 설정은 글자(숫자 · 요일 · 제목)만 따른다. 칸 · 머리 · 요일 줄은 최소 48 이고 글이 더 크면 그만큼만 늘어나며, 원 42 · 이전 · 다음 40 은 px 그대로다(SEED — dateCell minHeight). 웹 · 앱이 같은 모양이다. 글자 200% 에서 달력은 396(머리 48 · 요일 48 · 칸 50 × 6) — 시트 안에 6주가 다 들고 제목이 한 줄로 보인다. 대가 — 두 자리 숫자(32px)가 원 42 를 채워 이웃 숫자와 약 6 떨어진다(SEED 와 같은 값)(2026-10-21 사용자 결정 — 03-C 1B, 비교 페이지 https://claude.ai/artifact/3nWUZCYpPh2Cg3uXc3DKtp).
+
 ### Selection
 
 | 값 | 쓰는 곳 |
@@ -67,9 +69,9 @@
 | 상태 | 모습 |
 |---|---|
 | `enabled` | 숫자 `fg-neutral-muted` · 원 없음 |
-| `hovered` | 웹 — 마우스를 올린 날짜에 옅은 원(`bg-layer-floating-pressed`). 오늘 · 기간 사이 날 위에서는 한 단계 짙은 `bg-neutral-weak-pressed` |
+| `hovered` | 웹 — 마우스를 올린 날짜에 옅은 원(`bg-neutral-weak-alpha-pressed` — SEED 투명 색, 바탕 1.15 · 다크 1.77). 오늘 · 기간 사이 날 위에서는 불투명 `bg-neutral-weak-pressed` |
 | `pressed` | 터치 — 누르는 동안 같은 원. 날짜는 줄지 않는다 |
-| `focused` | 웹 — 키보드 초점이 온 날짜의 원 둘레 안쪽 2px 링 |
+| `focused` | 키보드 초점이 온 날짜의 원 둘레 안쪽 2px 링 — 웹 · 앱(앱은 하드웨어 키보드 · 스위치 접근일 때만) |
 | `today` | 옅은 원(`bg-neutral-weak`) + 숫자 700 · `fg-neutral` |
 | `selected` | 짙은 원(`bg-neutral-inverted`) + 숫자 `fg-neutral-inverted` — 하루 · 여러 날의 고른 날, 기간의 시작 · 끝 |
 | `inRange` | 기간의 사이 날 — 원 없이 띠(`bg-neutral-weak`) |
@@ -209,7 +211,7 @@ const [draft, setDraft] = React.useState(date)
 
 ### 키보드
 
-WAI-ARIA Grid 다 — 날짜 하나만 `Tab` 순서에 들고 방향키로 옮긴다.
+WAI-ARIA Grid 다 — 날짜 하나만 `Tab` 순서에 들고 방향키로 옮긴다. 웹 · 앱이 같다 — 앱도 하드웨어 키보드 · 스위치 접근에서 아래 키를 받고, 열 때 초점은 고른 날(없으면 오늘)로 간다. 링은 키보드일 때만 그린다(2026-10-21 사용자 결정 — 03-C 4A).
 
 | 키 | 동작 |
 |---|---|
@@ -228,7 +230,7 @@ WAI-ARIA Grid 다 — 날짜 하나만 `Tab` 순서에 들고 방향키로 옮�
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 숫자 `fg-neutral-muted` 바탕 위 7.11 · 다크 6.67 · 기간 띠 위 6.58 · 5.93, 고른 날 16.41 · 13.42 ✓. 막힌 날 · 앞뒤 달은 누를 수 없는 표시라 기준 밖(막힌 날은 취소선이 함께 알린다) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 고른 날 짙은 원 ✓. 오늘의 옅은 원은 바탕과 1.08 · 1.13 — 그래서 숫자 굵기로도 알린다. 초점 링 `stroke-focus-ring` ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 고른 날 짙은 원 ✓. 오늘의 옅은 원은 바탕과 1.08 · 1.13 — 그래서 숫자 굵기로도 알린다. 호버 원(투명)은 바탕과 1.15 · 1.77, 오늘 원과 1.06 · 1.57 로 갈린다. 초점 링 `stroke-focus-ring` ✓ |
 | **WCAG 1.4.1** Use of color | 오늘은 굵기, 막힌 날은 취소선 — 색만으로 알리지 않는다 ✓ |
 | **WCAG 2.1.1** Keyboard | 위 키보드 표 — 모든 날을 키로 고른다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 날짜 칸 44.6 × 48(360 화면) · 48 × 48(팝오버) ✓ · 이전 · 다음 40(누르는 영역 44) ✓ |
@@ -263,12 +265,22 @@ WAI-ARIA Grid 다 — 날짜 하나만 `Tab` 순서에 들고 방향키로 옮�
 - **앞뒤 달을 흐리게 채우고 늘 6주** — SEED 는 비우고 4 ~ 6주라 달을 넘길 때 시트 머리 · 바닥이 48 · 96 씩 움직인다. 흐린 날은 누르지 못하고 보조 기술에 숨긴다.
 - **팝오버 달력 336(칸 48 × 7) · 두 달 696** — SEED 는 부모 폭.
 - **좁은 칸에서 원을 줄인다** — 칸이 44 보다 좁으면 원은 칸 폭 − 2(SEED 는 320 화면에서 이웃 원이 겹친다).
-- **색은 groo 역할 짝** — 고른 날 `bg-neutral-inverted`, 호버 · 누름 `bg-layer-floating-pressed`(SEED 투명 색 대신 불투명), 읽기 전용 시작일 `stroke-neutral-solid`(SEED palette gray-600), 기간 사이 숫자 `fg-neutral-muted`(SEED 코드와 같다 — 그림은 fg-neutral).
+- **색은 groo 역할 짝** — 고른 날 `bg-neutral-inverted`, 읽기 전용 시작일 `stroke-neutral-solid`(SEED palette gray-600), 기간 사이 숫자 `fg-neutral-muted`(SEED 코드와 같다 — 그림은 fg-neutral).
+- **호버 · 누름은 SEED 와 같은 투명 색**(`bg-neutral-weak-alpha-pressed`) — 오늘 · 기간 사이 날 위만 불투명 `bg-neutral-weak-pressed` 다(투명 색을 띠에 얹으면 또 다른 색이 된다).
 - **빠른 기간 칩 줄** — SEED 에는 가이드가 없다("오늘로 이동" 예제뿐).
 - **Week 보기는 두지 않는다** — 쓰는 곳이 없다.
 - **열 때 초점은 고른 날(없으면 오늘)** — SEED 는 정하지 않았다(Tab 자리는 고른 날, 없으면 1일).
 
 ## Migration notes
+
+### 2026-10-21 — 큰 글자 · 호버 · 앱 키 · 캘린더 화면(03-C)
+
+구현 조사 03-C(2026-10-16 ~ 17)를 보고 사용자가 정했다(비교 페이지 https://claude.ai/artifact/3nWUZCYpPh2Cg3uXc3DKtp).
+
+- **큰 글자(1B)** — 글자만 배율, 칸 · 머리 · 요일 줄은 최소 48 · 원 42 · 이전 · 다음 40 은 px(SEED). 웹은 rem 이던 칸이 200% 에서 96 으로 커져 시트를 넘고 제목이 "202…" 로 잘렸다 — 레시피 `min-h-[48px]` · 이전 · 다음 `h-[40px] w-[40px]`. 앱은 칸 48 고정을 최소 48 로. 거절: 웹 rem 그대로 · 달력 글자 모두 -static.
+- **호버 · 누름 원(2B)** — 불투명 `bg-layer-floating-pressed` 가 다크에서 오늘 원(`bg-neutral-weak`)과 같은 색이었다. SEED 투명 색 `bg-neutral-weak-alpha-pressed` 로(추천 A "늘 bg-neutral-weak-pressed" 가 아니다). 오늘 · 기간 위는 그대로 불투명 `bg-neutral-weak-pressed`.
+- **앱 방향키(4A)** — 앱도 웹과 같은 키 · 열 때 초점 · 키보드일 때만 링. 앱 `PDatePicker` 에 Focus · 키 처리와 테스트를 더한다(이어지는 달은 스크롤 위치를 따라간다).
+- **캘린더 화면 격자(5A)** — 피커가 아니지만 같은 규칙을 쓴다: 이웃 달 날짜는 숫자만 `fg-disabled`(일정 · 금액은 이번 달과 같게 읽힌다), 꺼진 캘린더 줄은 체크로만 알리고 흐리게 하지 않는다(불투명도 금지 — DESIGN State). 웹 `calendar-month-view.tsx:206 · 233 · 252` · `calendar-source-toggle.tsx:138 · 169` 의 불투명도를 걷는다.
 
 ### 2026-10-03 — SEED Date Picker 로 새로 둔다(옛 Calendar 를 대신)
 

@@ -439,9 +439,10 @@ export interface AccordionHeaderProps extends Omit<React.HTMLAttributes<HTMLDivE
   title: React.ReactNode;
 }
 
-// 목록 머리 — 시트 · 대화상자에서 아코디언 위 한 줄. 높이 36 · 아래 8 · 제목 t5 · 700(카드 머리와 같은 글) + 오른쪽 모두 펼치기
+// 목록 머리 — 시트 · 대화상자에서 아코디언 위 한 줄. 높이 36 · 아래 8 · 제목 t5 · 700(카드 머리와 같은 글) + 오른쪽 모두 펼치기.
+// 큰 글자 — 오른쪽 동작이 머리 폭의 절반을 넘으면 제목 아래 줄 오른쪽 끝으로(제목 최소 50% · 줄바꿈, 2026-10-21 03-G 4A — Button 짝과 같은 반 폭 판정)
 const AccordionHeader = React.forwardRef<HTMLDivElement, AccordionHeaderProps>(({ title, className, children, ...props }, ref) => (
-  <div ref={ref} data-slot="accordion-header" className={cn("mb-x2 flex min-h-9 items-center justify-between gap-x2", className)} {...props}>
+  <div ref={ref} data-slot="accordion-header" className={cn("mb-x2 flex min-h-9 items-center justify-between gap-x2 flex-wrap [&>:first-child:not(:last-child)]:min-w-[50%] [&>:first-child:not(:last-child)]:flex-1 [&>:last-child:not(:first-child)]:ml-auto", className)} {...props}>
     <div data-slot="accordion-header-title" className="min-w-0 font-sans text-t5 font-bold text-fg-neutral break-keep [overflow-wrap:break-word]">
       {title}
     </div>

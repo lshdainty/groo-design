@@ -1,0 +1,214 @@
+# Date Picker 의 수치 원본 — 구조는 SEED Date Picker(2026-10-03 사용자 결정, 비교 페이지 1 ~ 12 · 앞뒤 달 추가 결정).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 날짜 · 기간 · 여러 날을 고르는 달력. Input Button 이 1280 미만은 아래 시트 · 이상은 칸 아래 팝오버로 열고 "완료" 로 넣는다
+# (input-button.md — 고르는 동안 칸 값은 그대로, 닫으면 버림). 날짜를 치는 칸은 두지 않는다. 시각은 Time Picker(time-picker.md)를
+# 날짜 칸 옆에 나란히 둔다. 연 · 월 휠과 월만 고르기는 Wheel Picker(wheel-picker.yaml).
+#
+# 오늘 · 고름 · 기간 · 막힘 · 읽기 전용은 한 날짜에 함께 걸린다 — 그래서 축이 아니라 상태로 두고, 겹칠 때 무엇이 이기는지는
+# date-picker.md 의 "상태가 겹칠 때" 에 적는다(고름 > 기간 안 > 오늘, 오늘의 굵기는 늘 남는다).
+#
+# SEED 와 다른 자리(date-picker.md 의 "SEED 와 다른 점")
+#   - 오늘은 옅은 원 + 숫자 700 · fg-neutral(SEED 는 옅은 원만 — groo 옅은 원은 바탕과 1.08:1). 기간 안 · 고른 날이어도 굵기는 남는다.
+#   - 앞뒤 달 날짜를 흐리게(fg-disabled) 채우고 늘 6주(SEED 는 비우고 4 ~ 6주) — 누르지 못하고 보조 기술에 숨긴다.
+#   - 칸이 44 보다 좁으면(320 화면) 원을 칸 폭 − 2 로 줄인다(SEED 는 이웃 원이 겹친다).
+#   - 팝오버의 달력 폭은 336(칸 48 × 7), 두 달 보기는 336 + 24 + 336(SEED 는 부모 폭).
+#   - 고른 날 bg-neutral-inverted(SEED neutral-solid 의 짝) · 호버 · 누름 bg-layer-floating-pressed(SEED 투명 색의 불투명 짝, v102) ·
+#     읽기 전용 시작일 stroke-neutral-solid(SEED palette gray-600 의 역할 짝).
+#   - 빠른 기간 칩 줄을 둔다(SEED 에 없다). Week 보기는 두지 않는다(쓰는 곳이 없다).
+
+name: DatePicker
+
+slots:
+  root: 달력 — 시트 · 팝오버의 본문
+  presets: 빠른 기간 — 기간 달력 위 칩 한 줄(하나 고르기)
+  header: 머리 — 왼쪽 연 · 월 제목, 오른쪽 이전 · 다음
+  title: 연 · 월 제목 — 누르면 날짜 자리에 연 · 월 휠
+  titleIcon: 제목 셰브론 — 휠이 열리면 위로
+  navButton: 이전 · 다음 — 한 달씩(두 달 보기는 한 달씩, PageUp · PageDown 은 두 달)
+  weekday: 요일 줄 — "일" … "토", 읽는 이름은 "일요일" …
+  cell: 날짜 칸 — 칸 전체가 누르는 자리
+  dayVisual: 날짜 원 — 오늘 · 고름 · 호버
+  dayLabel: 날짜 숫자
+  rangeBand: 기간 띠 — 시작 · 끝 원 사이를 잇는다
+  monthLabel: 달 이름 — 이어지는 달 · 두 달 보기에서 달마다
+  wheel: 연 · 월 휠 — 요일 줄과 날짜 자리를 덮는다(Wheel Picker)
+  fog: 아래 안개 — 이어지는 달의 아래 끝
+  footer: 바닥 — "완료"(기간은 "초기화" + "완료")
+  focusRing: 키보드 포커스 링(웹)
+
+variants:
+  selection:
+    single: 하루 — 날짜 · 기한 · 약속일
+    range: 기간 — 시작 · 끝, 같은 날을 두 번 누르면 하루짜리 기간
+    multiple: 여러 날 — 따로 고른 날들, 띠로 잇지 않는다. 다시 누르면 풀린다
+  visibleRange:
+    month: 한 달 — 하루 · 여러 날, 그리고 시트 · 팝오버가 아닌 자리
+    twoMonths: 두 달 나란히 — 1280 이상 팝오버의 기간
+    continuous: 달이 위아래로 이어진다 — 1280 미만 시트의 기간
+
+defaults:
+  selection: single
+  visibleRange: month
+
+states:
+  enabled: 이번 달 날짜
+  hovered: 웹 — 마우스를 올린 날짜의 원(고운 포인터만)
+  pressed: 누르는 동안 원(터치) — 날짜는 줄지 않는다
+  focused: 웹 — 키보드 초점이 온 날짜에 링
+  today: 오늘 — 옅은 원 + 숫자 굵게
+  selected: 고른 날 · 기간의 시작 · 끝 — 짙은 원
+  inRange: 기간의 사이 날 — 띠
+  outside: 앞뒤 달 날짜 — 흐리게 보이기만, 누르지 못한다
+  disabled: 고를 수 없는 날 — 흐린 글자 + 취소선, 초점은 간다
+  readOnly: 확정된 시작일(기간 늘리기) — 흐린 채움, 누르지 못한다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        width: { value: 336px, note: "팝오버 — 칸 48 × 7. 시트는 시트 폭 − 좌우 24 · 24(360 화면 312 · 칸 44.6)" }
+        background: $color-bg-layer-floating
+      presets:
+        chip: { value: Chip outlineStrong medium 36, note: "하나 고르기(라디오) — 고른 칩은 짙은 채움, 달력에서 다른 날을 누르면 풀린다. 이름 · 범위는 date-picker.md 의 '빠른 기간'" }
+        gap: { value: $spacing-between-chips, note: "칩 사이 8 — 시트는 한 줄 가로 스크롤(화면 끝까지), 팝오버는 줄바꿈" }
+        paddingBottom: { value: $spacing-x3, note: "칩 줄 ↔ 머리 12" }
+      header:
+        height: 48px
+      title:
+        typography: $text-t5
+        fontWeight: 700
+        foreground: $color-fg-neutral
+        paddingX: { value: $spacing-x1, note: "제목 글자는 머리 왼쪽에서 4 — 누르는 자리는 머리 높이 48 전체" }
+        gap: { value: $spacing-x1, note: "글자 ↔ 셰브론" }
+        radius: { value: $radius-r2, note: "바탕이 없어 초점 링에만 보인다" }
+      titleIcon:
+        size: { value: 20px, note: "lucide chevron-down" }
+        color: $color-fg-neutral
+      navButton:
+        size: { value: 40px, note: "Button ghost iconOnly medium — 둘 사이 0, 머리 오른쪽 끝, 누르는 영역 44" }
+        iconSize: { value: 18px, note: "lucide chevron-left · chevron-right" }
+        color: $color-fg-neutral
+      weekday:
+        height: 48px
+        typography: $text-t4
+        fontWeight: 500
+        foreground: $color-fg-neutral-subtle
+      cell:
+        height: { value: 48px, note: "폭은 달력 폭 ÷ 7 — 칸 전체가 누르는 자리, 칸 사이 0" }
+        weeks: { value: 6, note: "늘 6주 — 달을 넘겨도 머리 · 바닥이 움직이지 않는다(이어지는 달만 그 달의 주 수)" }
+        cursor: pointer
+      dayVisual:
+        size: { value: 42px, note: "칸 위 3 · 가로 가운데 — 원 · 띠끼리 6 떨어진다. 칸이 44 보다 좁으면(320 화면) 칸 폭 − 2" }
+        radius: $radius-full
+        background: transparent
+        transitionProperty: background-color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      dayLabel:
+        typography: { value: $text-t5, note: "숫자 폭을 같게(tabular-nums)" }
+        fontWeight: 500
+        foreground: $color-fg-neutral-muted
+      rangeBand:
+        height: { value: 42px, note: "칸 위 3 — 원과 같은 높이(칸이 좁아 원이 줄면 띠도 같이). 시작 칸은 원 가운데부터 오른쪽, 끝 칸은 왼쪽부터 원 가운데까지, 사이 칸은 칸 폭 전체 — 줄 끝에서 둥글리지 않고 칸 끝에서 끊는다" }
+        background: $color-bg-neutral-weak
+      monthLabel:
+        height: 48px
+        typography: $text-t5
+        fontWeight: 700
+        foreground: $color-fg-neutral
+      wheel:
+        height: { value: 336px, note: "요일 줄 48 + 6주 288 자리를 덮는다 — Wheel Picker medium 44 × 7 = 308 을 가운데에(위아래 14). 열린 동안 이전 · 다음은 막힌다" }
+        columns: { value: 연 120 · 월 96, note: "연은 오른쪽 · 월은 왼쪽 정렬로 가운데에 모은다(SEED 와 같다) — 항목은 \"2026년\" · \"10월\"" }
+        background: $color-bg-layer-floating
+      footer:
+        paddingTop: { value: $spacing-x4, note: "팝오버 — 달력 아래 16, 버튼 small 36 오른쪽 맞춤. 시트는 Bottom Sheet 바닥(위 12 · 아래 16, large 48 — 하나면 폭 전체, 둘이면 반씩)" }
+    hovered:
+      dayVisual:
+        background: { value: $color-bg-layer-floating-pressed, note: "마우스(고운 포인터)만 — 축소 없음. 오늘(옅은 원) · 기간 사이 날(띠) 위에서는 한 단계 짙은 bg-neutral-weak-pressed(옅은 원 · 띠와 같은 색이 되어 안 보이지 않게). 막힌 날 · 읽기 전용 · 앞뒤 달에는 없다" }
+    pressed:
+      dayVisual:
+        background: { value: $color-bg-layer-floating-pressed, note: "터치는 누르는 동안 — 오늘 · 기간 사이 날 위에서는 bg-neutral-weak-pressed. 날짜는 줄지 않는다(이전 · 다음은 Button 처럼 2px 축소)" }
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: -2px, note: "원 자리(42) 안쪽 — 칸이 아니라 원 둘레" }
+        color: $color-stroke-focus-ring
+    today:
+      dayVisual:
+        background: $color-bg-neutral-weak
+      dayLabel:
+        fontWeight: { value: 700, note: "색이 아니라 굵기로도 알린다 — 고른 날 · 기간 안에서도 굵기는 남는다" }
+        foreground: $color-fg-neutral
+    selected:
+      dayVisual:
+        background: { value: $color-bg-neutral-inverted, note: "하루 · 여러 날의 고른 날, 기간의 시작 · 끝 — 오늘이어도 이 모양이 이긴다(굵기는 남는다)" }
+      dayLabel:
+        foreground: $color-fg-neutral-inverted
+    inRange:
+      dayVisual:
+        background: { value: transparent, note: "띠가 바탕 — 오늘이어도 원은 그리지 않는다(굵기만 남는다)" }
+      dayLabel:
+        foreground: $color-fg-neutral-muted
+    outside:
+      cell:
+        cursor: default
+      dayLabel:
+        foreground: { value: $color-fg-disabled, note: "앞뒤 달 날짜 — 보이기만 하고 누르지 못한다(숫자만 보조 기술에 숨기고 칸은 남겨 요일 짝을 지킨다). 기간 띠도 그리지 않는다. 다른 달은 이전 · 다음 · 화살표 키로" }
+    disabled:
+      cell:
+        cursor: not-allowed
+      dayLabel:
+        foreground: $color-fg-disabled
+        textDecoration: { value: line-through, note: "고를 수 없는 날 — 흐린 색과 함께 취소선. aria-disabled 라 키보드 초점은 간다" }
+    readOnly:
+      cell:
+        cursor: default
+      dayVisual:
+        background: { value: $color-stroke-neutral-solid, note: "확정된 시작일 — 채움은 남기고 톤을 낮춘다(SEED palette gray-600 의 역할 짝). 누르지 못하지만 초점은 간다" }
+      dayLabel:
+        foreground: $color-fg-neutral-inverted
+
+  # ── 두 달 나란히 ─────────────────────────────────────────
+  - when: { visibleRange: twoMonths }
+    enabled:
+      root:
+        width: { value: 696px, note: "336 + 24 + 336 — 팝오버 폭 744(Popover 최대 480 의 예외)" }
+        columnGap: { value: $spacing-x6, note: "두 달 사이 24" }
+      header:
+        height: { value: 48px, note: "머리를 나누지 않는다 — 달 이름은 달마다 가운데, 이전 버튼은 첫 달 왼쪽 끝 · 다음 버튼은 둘째 달 오른쪽 끝(위 4)" }
+      title:
+        typography: { value: $text-t5, note: "달 이름은 누르지 않는다 — 연 · 월 휠이 없다" }
+
+  # ── 이어지는 달 ─────────────────────────────────────────
+  - when: { visibleRange: continuous }
+    enabled:
+      root:
+        height: { value: 시트에 맞춘다, note: "시트를 화면 높이의 90% 로 열고 머리 · 칩 줄 · 바닥을 뺀 높이 — 그 안에서 달이 위아래로 이어진다(스크롤바 숨김)" }
+      header:
+        height: { value: 0px, note: "머리 없음 — 스크롤이 달을 넘긴다. 연 · 월 휠도 없다" }
+      weekday:
+        position: { value: sticky, note: "맨 위에 붙는다 — 달마다의 요일 줄은 없다" }
+      monthLabel:
+        paddingX: { value: $spacing-x1, note: "왼쪽 정렬, 달 아래 16" }
+      cell:
+        weeks: { value: 그 달의 주 수, note: "4 ~ 6 — 앞뒤 달 날짜는 비운다(달이 이어져 다음 달이 바로 아래에 있다)" }
+      fog:
+        height: { value: 96px, note: "아래 끝 — 투명에서 바탕색으로" }
+
+motion:
+  "날짜 바탕":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color]
+  "제목 셰브론":
+    duration: $motion-duration-d3
+    easing: $motion-ease-easing
+    properties: [rotate 0 → 180°]
+    note: "연 · 월 휠이 열리면 — 휠과 날짜는 모션 없이 바뀐다"
+  "누름 — 이전 · 다음":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "Button 과 같은 2px 거리 축소 — 날짜 칸은 줄지 않는다"

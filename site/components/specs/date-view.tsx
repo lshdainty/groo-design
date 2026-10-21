@@ -95,7 +95,7 @@ export function dayInfo(day: Day, outside: boolean, c: Ctx): DayInfo {
 
 // 상태가 겹칠 때(date-picker.md) — 칸의 바탕 모양은 하나: 읽기 전용 > 고름 > 막힘 > 기간 사이 > 오늘 > 보통(그 상태가 YAML 에 적은 속성으로).
 // 오늘의 굵기는 늘 남는다(고른 날 · 기간 안 · 막힌 날에서도). 취소선은 막힌 날이면 고른 날에도 긋고, 시작만 고른 기간의 시작 · 읽기 전용에는 긋지 않는다.
-// 호버 · 누름 원은 보통 날 bg-layer-floating-pressed, 오늘 · 기간 사이 날은 한 단계 짙은 색 — 고른 날 · 막힌 날 · 읽기 전용 · 앞뒤 달에는 없다
+// 호버 · 누름 원은 보통 날 bg-neutral-weak-alpha-pressed(YAML — SEED 투명 색), 오늘 · 기간 사이 날은 한 단계 짙은 색 — 고른 날 · 막힌 날 · 읽기 전용 · 앞뒤 달에는 없다
 type Face = { bg: DColor | null; fg: DColor; weight: number | string; strike: boolean; cursor: string };
 export function faceFor(look: DateLook, info: DayInfo, hovered = false, pressed = false): Face {
   const F = look.faces;

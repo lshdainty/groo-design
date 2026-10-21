@@ -27,7 +27,7 @@
 
 ### 모양
 
-원 56 · 브랜드 채움(`bg-brand-solid` — Desk 파랑 · HR 초록) · 흰 아이콘 24(`static-white`, 선 2.5) · 그림자 `shadow-s3`. 글을 붙이지 않는다 — 무엇을 하는 버튼인지는 아이콘과 이름(`aria-label`)이 말한다. 색을 바꾸지 않는다(SEED — "색상 변경이 불가능합니다").
+원 56 · 브랜드 채움(`bg-brand-solid` — Desk 파랑 · HR 초록) · 흰 아이콘 24(`static-white`, 선 2.5) · 그림자 `shadow-s3`. 원 · 아이콘은 px 다 — 글자 크기를 따르지 않는다(SEED, 03-G 1A). 글을 붙이지 않는다 — 무엇을 하는 버튼인지는 아이콘과 이름(`aria-label`)이 말한다. 색을 바꾸지 않는다(SEED — "색상 변경이 불가능합니다").
 
 [그림: 모양 — 56 원 · 아이콘 24, Desk · HR · 다크](../../site/components/specs/floating-action-button.tsx#shape)
 
@@ -165,6 +165,10 @@ import { SnackbarAvoidOverlap } from "@/components/ui/snackbar"
 - **z-index 는 specs/z-index.md 의 L1**(`z-sticky` 50).
 
 ## Migration notes
+
+### 2026-10-21 — 단위(03-G 1A)
+
+웹 `size-14`(rem)가 글자 200% 에서 112 가 됐다 — 레시피 `size-[56px]` · 아이콘 `size-[24px]`. 비교 페이지 https://claude.ai/artifact/A3oCdxNvDwkNBPFPE36bmF.
 
 ### 2026-10-04 — SEED Floating Action Button(아이콘만)으로 새로 둔다
 

@@ -159,7 +159,8 @@ const listDividerVariants = cva("h-px shrink-0 bg-stroke-neutral-subtle", {
   defaultVariants: { inset: false },
 });
 
-const listHeaderVariants = cva("flex w-full items-center justify-between gap-x2_5 px-global-gutter py-x2 font-sans text-t4", {
+// 큰 글자 — 오른쪽 동작이 머리 폭의 절반을 넘으면 제목 아래 줄 오른쪽 끝으로(제목 최소 50% · 줄바꿈, 2026-10-21 03-G 4A — Button 짝과 같은 반 폭 판정)
+const listHeaderVariants = cva("flex w-full items-center justify-between gap-x2_5 px-global-gutter py-x2 font-sans text-t4 flex-wrap [&>:first-child:not(:last-child)]:min-w-[50%] [&>:first-child:not(:last-child)]:flex-1 [&>:last-child:not(:first-child)]:ml-auto", {
   variants: {
     variant: {
       mediumWeak: "font-medium text-fg-neutral-subtle",

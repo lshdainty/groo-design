@@ -444,6 +444,16 @@
   - **스낵바 큰 글자 · 긴 액션(결정 2B)** — 코드는 SEED 그대로, 쓰기 규칙(글 두 줄 · 액션 한두 마디 · 번역 문구도)으로 막는다. snackbar md "글".
   - **회색 바닥 위 Page Banner 옅은 neutral(결정 3)** — `bg-neutral-weak` 그대로, 라이트에서 띠 모양이 사라지는 것을 받아들인다. page-banner md · DESIGN 세 파일 "바닥 위의 채움" 예외 줄.
   - **앱 메뉴 · 스피드 다이얼(결정 4A · 5A)** — 앱 캘린더 공유 멤버 ⋮ 는 기초 PR 에서 Menu Sheet 로("{이름} 더보기"), `PDropdownMenu` · `PSpeedDial` 지움. menu md · floating-action-button md Migration.
+- **03-C 날짜 · 시각 · 03-G 이동 · 접기 결정 (2026-10-21)**: 구현 조사(10-16 ~ 17)를 보고 사용자가 정한 것을 스펙에 넣었다(비교 페이지 03-C https://claude.ai/artifact/3nWUZCYpPh2Cg3uXc3DKtp · 03-G https://claude.ai/artifact/A3oCdxNvDwkNBPFPE36bmF). 토큰 추가 없음. 옛 판은 DESIGN.history/v-pre-03c-03g.* · 각 컴포넌트 .history/v-pre-03c-03g.*.
+  - **상자 · 아이콘 · 원은 px(03-G 1A · 03-C 1B)** — DESIGN 세 파일 단위(v104) 아래 한 줄: 글자만 배율, 틀 부품(상단 바 · 하단 바 · FAB · 탭 줄 · 사이드바)과 Date Picker 의 칸 · 머리 · 요일 줄(최소 48) · 원 42 · 이전 · 다음 40 은 px(SEED). 레시피 top-navigation · bottom-navigation · floating-action-button · tabs · side-navigation · date-picker 의 rem 크기(`size-6` · `size-11` · `size-14` · `min-h-10` · `h-12` …)를 px 로. 각 md 에 한 줄 · Migration.
+  - **날짜 호버 원(03-C 2B)** — SEED 투명 색 `bg-neutral-weak-alpha-pressed`(다크에서 오늘 원과 같던 불투명 색을 걷음, 추천 A 가 아니다). 오늘 · 기간 위만 불투명. date-picker yaml · md · 레시피 · 미리보기.
+  - **시 칼럼 Home · End(03-C 3A)** — 오전 · 오후를 그대로 두고 1 · 12 로. time-picker md 키 표 · 레시피 Wheel Picker `jump` · Time Picker.
+  - **앱 달력 방향키(03-C 4A)** — 웹 · 앱 같은 키 · 열 때 초점, 링은 키보드일 때만. date-picker yaml `focused` · md 키보드.
+  - **캘린더 화면 이웃 달 · 꺼진 캘린더(03-C 5A)** — 이웃 달 숫자만 `fg-disabled`, 꺼진 캘린더는 체크로만(흐리게 하지 않음). DESIGN State 한 줄 · date-picker Migration.
+  - **상단 바 제목(03-G 2A)** — 쓰기 규칙(아이콘 둘 · 셋까지 · 글 버튼 한두 마디, 영어도 짧게)으로 막는다 — 코드 그대로. top-navigation md.
+  - **넘치는 Fill 탭(03-G 3B)** — Hug 로 바꾸지 않고 Fill 모양 그대로 목록만 가로 스크롤(SEED, 추천 A 가 아니다). tabs md · yaml · 레시피(overflow-x-auto · 고른 탭 드러내기 · 개발 경고 걷음).
+  - **머리 반 폭 판정(03-G 4A)** — 오른쪽 동작이 머리 폭의 절반을 넘으면 제목 아래 줄 오른쪽 끝으로. card · accordion · list(List Header) md · 레시피 `CardHeader` · `AccordionHeader` · `listHeaderVariants`.
+  - **카드 상세 그림 312(03-G 5A)** · **별자리 상자 1.45 는 Aspect Ratio 대상 아님(6A)** · **separated 아코디언은 흰 표면 위에만(7A)** — image-frame · aspect-ratio · accordion md.
 
 ### Fixed
 - **v9**: 매 batch마다 lint 결과를 손계산만 하던 방식 발견 → 16 sparse component를 매핑해 lint contrastCheck 자동 검증 활성. 이후 모든 토큰 추가는 components 매핑 동반.
