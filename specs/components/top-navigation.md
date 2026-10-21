@@ -61,7 +61,7 @@
 
 ### 글 버튼
 
-오른쪽 자리에 하나만 둔다("완료" · "모두 읽음") — 높이 44 · 좌우 10 · 16 / 22 · 500. 글 버튼과 아이콘 버튼을 함께 두지 않는다.
+오른쪽 자리에 하나만 둔다("완료" · "모두 읽음") — 높이 44 · 좌우 10 · 16 / 22 · 500. 글 버튼과 아이콘 버튼을 함께 두지 않는다. 글 버튼 글은 한두 마디로 쓴다 — 큰 글자 · 긴 글 버튼에서 제목이 밀리는 것은 이 쓰기 규칙(아이콘 둘 · 셋까지 · 글 버튼 한두 마디)으로 막고, 코드는 SEED 그대로 둔다(제목 최소 폭을 두지 않는다). 영어 문구도 짧게 — "Mark all as read" 가 아니라 "Read all"(2026-10-21 사용자 결정 — 03-G 결정 2 A).
 
 [표: 글 버튼](top-navigation.yaml#base.enabled@textButton)
 
@@ -360,7 +360,7 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 | 마우스 호버(웹) | 버튼에 누름과 같은 바탕 — 축소 없음 |
 | `Tab` | 왼쪽 버튼 → 오른쪽 버튼 순서. 제목은 `Tab` 으로 서지 않는다(`tabindex="-1"` — 화면을 옮길 때 초점만 받는다) |
 | 화면을 옮김 | 스크롤 맨 위 + 초점을 새 화면의 제목으로 · 문서 제목을 바꾼다 |
-| 글자 크기 설정 | 제목 · 글 버튼은 1.2배까지 커진다 — 바 높이는 56 그대로 |
+| 글자 크기 설정 | 제목 · 글 버튼은 1.2배까지 커진다 — 바 56 · 아이콘 버튼 44 · 아이콘 24 는 px 그대로(03-G 1A) |
 
 ## Accessibility
 
@@ -422,6 +422,10 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 - **z-index 는 specs/z-index.md 의 L1**(`z-sticky` 50).
 
 ## Migration notes
+
+### 2026-10-21 — 틀 부품 단위 · 제목이 밀릴 때(03-G)
+
+구현 조사 03-G 를 보고 사용자가 정했다(https://claude.ai/artifact/A3oCdxNvDwkNBPFPE36bmF). **결정 1 A** — 바 · 아이콘 버튼 · 아이콘은 px(SEED 치수 토큰), 글자만 정해진 배율. 웹 Tailwind 기본 간격(`h-14` · `size-11` · `size-6` — rem)이 글자 200% 에서 바를 112 로 키웠다. 레시피는 `[&_svg]:size-[24px]` 로(바 · 버튼은 이미 px). 앱은 할 일 없음. 거절: 모두 rem · 상자도 1.2배까지. **결정 2 A** — 제목이 밀리는 것은 쓰기 규칙으로(코드 그대로). 거절: 제목 최소 4em + 글 버튼 말줄임.
 
 ### 2026-10-16 — 화면 부제(글자 역할 D6)
 

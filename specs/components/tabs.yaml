@@ -109,7 +109,7 @@ rules:
       list:
         paddingX: 0px
       trigger:
-        grow: { value: 1, note: "칸을 똑같이 나눈다 — 글이 칸보다 길면 그 탭만 넓어진다(그러면 Hug 로)" }
+        grow: { value: 1, note: "칸을 똑같이 나눈다 — 글이 칸보다 길면 그 탭만 넓어지고, 넘치면 Fill 모양 그대로 목록만 가로 스크롤(SEED, 2026-10-21 03-G 3B)" }
       indicator:
         insetX: { value: $spacing-x4, note: "탭 폭에서 좌우 16 씩 들인다 — 막대 = 탭 폭 − 32. 360 폰 2 · 3 · 4 · 5개면 148 · 88 · 58 · 40" }
   - when: { layout: hug }

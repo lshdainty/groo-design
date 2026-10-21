@@ -27,7 +27,7 @@ import { WheelPicker, WheelPickerColumn, type WheelPickerValueChangeDetails } fr
  *     "완료" 는 draft ?? roundToStep(new Date(), step) 을 넣는다.
  *
  * 휠을 굴리는 동안 칸 값은 그대로다 — 휠이 멈춘 뒤 onValueChange 가 불리고(draft), "완료" 가 칸에 넣는다(input-button.md).
- * 키보드: 칼럼마다 Tab 자리 하나(오전·오후 → 시 → 분 → "완료"), ↑ ↓ 이전 · 다음, Home · End 처음 · 끝(시는 1 · 12).
+ * 키보드: 칼럼마다 Tab 자리 하나(오전·오후 → 시 → 분 → "완료"), ↑ ↓ 이전 · 다음, Home · End 처음 · 끝(시는 1 · 12 — 오전 · 오후는 그대로, 03-C 3A).
  * 이름: 휠 role="group"(칸 라벨), 칼럼 spinbutton "오전/오후" · "시" · "분", 읽는 값 "오후" · "3" · "00". 글은 labels 한 벌로 바꾼다.
  */
 
@@ -189,8 +189,13 @@ const TimePicker = React.forwardRef<HTMLDivElement, TimePickerProps>(
           value={String(displayHour)}
           loop
           align="right"
-          onValueChange={(_next, details: WheelPickerValueChangeDetails) => {
+          onValueChange={(next, details: WheelPickerValueChangeDetails) => {
             const cur = valueRef.current;
+            // Home · End(처음 · 끝 = 1 · 12)는 오전 · 오후를 그대로 두고 그 시로 간다 — 지나간 칸을 세지 않는다(03-C 3A)
+            if (details.jump) {
+              commit({ hour: (Number(next) % 12) + (cur.hour >= 12 ? 12 : 0), minute: cur.minute });
+              return;
+            }
             commit({ hour: (((cur.hour + details.stepDelta) % 24) + 24) % 24, minute: cur.minute });
           }}
         />

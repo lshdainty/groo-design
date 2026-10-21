@@ -40,7 +40,7 @@
 
 ### 칸 · 아이콘 · 라벨
 
-칸은 바 폭을 똑같이 나눈다. 아이콘은 lucide 선 아이콘 24, 라벨은 11 / 15 · 500 이고 글자 크기 설정을 따르지 않는다(SEED — 커지면 칸 밖으로 넘친다). 라벨은 한 줄, 한글 5자 이내로 쓴다.
+칸은 바 폭을 똑같이 나눈다. 바 66 · + 원 44(줄어든 바 36) · 아이콘 24 는 px 다 — 글자 크기와 상관없이 같다(03-G 1A). 아이콘은 lucide 선 아이콘 24, 라벨은 11 / 15 · 500 이고 글자 크기 설정을 따르지 않는다(SEED — 커지면 칸 밖으로 넘친다). 라벨은 한 줄, 한글 5자 이내로 쓴다.
 
 [표: 칸](bottom-navigation.yaml#base.enabled@item)
 
@@ -235,6 +235,10 @@ import { BOTTOM_NAVIGATION_INSET } from "@/components/ui/bottom-navigation"
 - **z-index 는 specs/z-index.md 의 L1**(`z-sticky` 50).
 
 ## Migration notes
+
+### 2026-10-21 — 단위(03-G 1A)
+
+웹 + 원 `size-11` · 아이콘 `size-6`(rem)이 글자 200% 에서 88 로 커져 바(66) 밖으로 넘쳤다. 레시피를 `size-[44px]` · `[36px]` · `[24px]` · `[20px]` 로. 비교 페이지 https://claude.ai/artifact/A3oCdxNvDwkNBPFPE36bmF.
 
 ### 2026-10-16 — 웹도 탭마다 기억
 

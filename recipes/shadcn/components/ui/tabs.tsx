@@ -17,7 +17,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *   TabsSwipeArea                    폰 1차 탭의 내용 칸 묶음 — 내용을 옆으로 밀어 이웃 탭으로 넘긴다
  *
  * Line
- *   layout   fill(기본 — 칸을 똑같이 나눈다, 막대는 탭에서 좌우 16 들인다) ·
+ *   layout   fill(기본 — 칸을 똑같이 나눈다, 막대는 탭에서 좌우 16 들인다. 글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤 — SEED) ·
  *            hug(탭이 글 + 좌우 10 · 목록 좌우 16, 넘치면 가로 스크롤 — 스크롤바는 숨긴다. 막대는 탭 폭 그대로)
  *   size     small 40 · 글 t4 14(기본) · medium 44 · 글 t5 16
  * 목록은 놓인 폭을 채우고 바탕이 불투명하다(bg-layer-default). 바닥 구획 선은 안쪽 1px(inset shadow)이라 높이를 밀지 않는다.
@@ -35,8 +35,8 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  * 막힌 탭은 fg-disabled · not-allowed · 축소 없음. 고른 탭이 막히면(목록 전체를 막을 때) 막대도 fg-disabled 다.
  * 알림 점(notification)은 6px fg-brand(브랜드 글자색 — bg-brand-solid 는 다크 바탕에서 안 보인다) — 글 끝에서 2 · 글 위쪽에
  * 띄워 탭 폭을 넓히지 않는다. 보조 기술에는 "새 소식" 을 덧붙인다(점만으로 알리지 않는다). 고른 탭에는 점도 "새 소식" 도 없다
- * (내용을 보면 사라진다). 한 목록에 하나만 단다(둘 이상이면 개발 중에 경고). Fill 목록이 넘치면(글이 칸을 넘으면) 개발 중에
- * 경고한다 — Hug 로 바꾼다.
+ * (내용을 보면 사라진다). 한 목록에 하나만 단다(둘 이상이면 개발 중에 경고). Fill 목록이 넘치면(글이 칸을 넘으면) Hug 로 바꾸지
+ * 않고 Fill 모양 그대로 목록만 가로 스크롤한다(SEED tabs.css — 2026-10-21 사용자 결정 03-G 3B).
  *
  * Chip Tabs
  *   variant  solid(기본 — 화면 전체를 바꾸는 2차 탭, Chip Solid) · outline(일부를 바꾸는 2차 탭, Chip Outline Strong)
@@ -199,7 +199,7 @@ function useRevealSelected(listRef: React.RefObject<HTMLElement | null>, value: 
   }, [listRef, value, enabled]);
 }
 
-// 개발 중에만 — 이름 없는 목록 · 알림 점 둘 이상 · 넘치는 Fill 목록 · 빈칸 있는 value 를 알린다(같은 경고는 한 번만)
+// 개발 중에만 — 이름 없는 목록 · 알림 점 둘 이상 · 빈칸 있는 value 를 알린다(같은 경고는 한 번만)
 function useListChecks(
   listRef: React.RefObject<HTMLElement | null>,
   component: string,
@@ -223,9 +223,6 @@ function useListChecks(
     if (list.querySelectorAll(":scope > [data-notification]").length > 1) {
       warn("notification", "알림 점이 둘 이상이다 — 새 소식은 한 탭에만 단다.");
     }
-    if (fill && list.scrollWidth > list.clientWidth + 1) {
-      warn("overflow", 'Fill 목록이 넘친다 — 탭이 6개 이상이거나 글이 칸을 넘으면 layout="hug" 로 둔다.');
-    }
     const spaced = Array.from(list.querySelectorAll<HTMLElement>(":scope > [role=tab]")).find((t) => /\s/.test(t.dataset.value ?? ""));
     if (spaced) {
       warn("value", `value "${spaced.dataset.value}" 에 빈칸이 있다 — 탭 · 내용 칸의 id 연결(aria-controls · aria-labelledby)이 깨진다. 바뀌지 않는 id 를 쓴다.`);
@@ -245,14 +242,14 @@ const tabsListVariants = cva(
   {
     variants: {
       layout: {
-        // 칸을 똑같이 나눈다 — 막대는 탭에서 좌우 16 들인다
-        fill: "px-0 [--tabs-indicator-inset:var(--spacing-x4)]",
+        // 칸을 똑같이 나눈다 — 막대는 탭에서 좌우 16 들인다. 글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤(SEED, 03-G 3B)
+        fill: "overflow-x-auto px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [--tabs-indicator-inset:var(--spacing-x4)]",
         // 글만큼 — 목록 좌우 16, 넘치면 가로 스크롤(스크롤바는 숨긴다). 고른 탭은 가장자리와 16 을 두고 드러낸다. 막대는 탭 폭 그대로
         hug: "overflow-x-auto px-x4 scroll-px-x4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [--tabs-indicator-inset:0px]",
       },
       size: {
-        small: "min-h-10",
-        medium: "min-h-11",
+        small: "min-h-[40px]",
+        medium: "min-h-[44px]",
       },
     },
     defaultVariants: { layout: "fill", size: "small" },
@@ -277,8 +274,8 @@ const tabsTriggerVariants = cva(
         hug: "flex-none",
       },
       size: {
-        small: "min-h-10 text-t4 [--press-basis:40]",
-        medium: "min-h-11 text-t5 [--press-basis:44]",
+        small: "min-h-[40px] text-t4 [--press-basis:40]",
+        medium: "min-h-[44px] text-t5 [--press-basis:44]",
       },
     },
     defaultVariants: { layout: "fill", size: "small" },
@@ -295,7 +292,7 @@ const TABS_INDICATOR = [
 ].join(" ");
 
 // 알림 점 — 브랜드 글자색, 글 끝에서 2 · 글 위쪽. 띄워 두므로 탭 폭이 넓어지지 않는다. 고른 탭에는 그리지 않는다
-const TABS_NOTIFICATION = "pointer-events-none absolute left-[calc(100%_+_2px)] top-0 size-1.5 rounded-full bg-fg-brand";
+const TABS_NOTIFICATION = "pointer-events-none absolute left-[calc(100%_+_2px)] top-0 size-[6px] rounded-full bg-fg-brand";
 
 // 막대를 고른 탭 아래에 놓는다 — 값이 바뀌면 미끄러지고, 목록 · 탭 크기가 바뀌거나 글꼴을 다 불러오면 바로 놓는다
 function useIndicator(listRef: React.RefObject<HTMLElement | null>, barRef: React.RefObject<HTMLElement | null>, value: string) {
@@ -371,7 +368,7 @@ const TabsList = React.forwardRef<React.ElementRef<typeof TabsPrimitive.List>, T
     const l = layout ?? "fill";
     const s = size ?? "small";
     useIndicator(own, bar, value);
-    useRevealSelected(own, value, l === "hug");
+    useRevealSelected(own, value, true);
     useListChecks(own, "TabsList", l === "fill", props["aria-label"], props["aria-labelledby"]);
     const ctx = React.useMemo(() => ({ layout: l, size: s }), [l, s]);
     return (
@@ -464,7 +461,7 @@ const chipTabsListVariants = cva(
 );
 
 // 알림 점 — 브랜드 글자색, 글 뒤 6(칩의 사이)에 세로 가운데. 칩 폭이 그만큼 넓어진다. 고른 칩(짙은 채움)에는 그리지 않는다
-const CHIP_TABS_NOTIFICATION = "pointer-events-none size-1.5 shrink-0 rounded-full bg-fg-brand";
+const CHIP_TABS_NOTIFICATION = "pointer-events-none size-[6px] shrink-0 rounded-full bg-fg-brand";
 
 export interface ChipTabsListProps extends Omit<React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>, "loop"> {
   /** solid(기본 — 화면 전체를 바꾸는 2차 탭) · outline(일부 내용을 바꾸는 2차 탭) */

@@ -1,0 +1,49 @@
+# Time Picker 의 수치 원본 — 구조는 SEED Time Picker(2026-10-03 사용자 결정, 비교 페이지 8 · 9).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md. 휠의 크기 · 색 · 띠 · 안개는 wheel-picker.yaml(medium · 5개)이다.
+#
+# 시각을 고르는 12시간 휠 — 오전·오후 → 시 → 분. 칸 표기("오후 3:00", International Design v106)와 같은 말이다.
+# Input Button 이 1280 미만 아래 시트 · 이상 팝오버로 열고 "완료" 로 넣는다. 날짜와 함께 받으면 날짜 칸 옆에 시각 칸을 나란히 둔다.
+#
+# SEED 와 다른 자리(time-picker.md 의 "SEED 와 다른 점")
+#   - 팝오버도 쓴다(SEED React 예제는 시트 · 바로 펼침뿐 — 디자인 문서에는 팝오버가 있다).
+
+name: TimePicker
+
+slots:
+  root: 휠 — Wheel Picker medium, 칼럼 셋
+  periodColumn: 오전 · 오후 — 반복하지 않는다
+  hourColumn: 시 — 1 · 2 … 12(0 을 채우지 않는다), 오른쪽 정렬, 반복
+  minuteColumn: 분 — 2자리(00 · 05 …), 분 간격을 따른다, 반복
+  indicator: 선택 띠 — 세 칼럼을 가로지르는 한 줄
+
+variants:
+  minuteStep:
+    "1": 정확한 분 — 알람 · 방해 금지처럼 분이 중요한 자리(60칸)
+    "5": 기본 — 일정 · 거래 · 대부분(12칸)
+    "10": 느슨한 시간대(6칸)
+    "15": 15분 단위 예약(4칸)
+    "30": 30분 단위 — 근무 · 일정 시간표(2칸)
+
+defaults:
+  minuteStep: "5"
+
+states:
+  enabled: 기본
+  disabled: 막힌 휠 — 값은 그대로, 고른 항목도 흐리게(wheel-picker.yaml)
+
+rules:
+  - when: {}
+    enabled:
+      root:
+        height: { value: 220px, note: "44 × 5 — Wheel Picker medium" }
+        columnOrder: { value: 오전·오후 → 시 → 분, note: "locale 순서(ko) — 단위 글자(시 · 분)는 쓰지 않는다. 단위는 칼럼 이름과 자리가 알린다" }
+        valueFormat: { value: "24시간 {hour, minute}", note: "화면은 12시간, 값은 24시간. 비었으면 지금 시각을 분 간격에 맞춰 반올림한 자리를 짚기만 한다(고른 것처럼 넣지 않는다)" }
+      periodColumn:
+        align: center
+        items: { value: 오전 · 오후, note: "반복하지 않는다 — 두 칸에서 멈춘다" }
+      hourColumn:
+        align: { value: right, note: "한 자리 · 두 자리 수의 끝을 맞춘다" }
+        items: { value: 1 ~ 12, note: "반복 — 11 ↔ 12 를 넘으면 오전 · 오후가 따라 바뀐다" }
+      minuteColumn:
+        align: center
+        items: { value: 분 간격대로 00 ~ 59, note: "반복 — 55 → 00 을 넘어도 시는 그대로다" }

@@ -114,7 +114,7 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 | 키 | 동작 |
 |---|---|
 | `↑` `↓` | 그 칼럼의 이전 · 다음 항목 |
-| `Home` `End` | 처음 · 끝 항목(시는 1 · 12) |
+| `Home` `End` | 처음 · 끝 항목(시는 1 · 12) — 시 칼럼은 오전 · 오후를 바꾸지 않는다(지나간 칸을 세지 않고 그 시로 간다. 화살표로 11 ↔ 12 를 넘을 때만 따라 바뀐다) |
 | `Tab` | 다음 칼럼(오전·오후 → 시 → 분 → "완료") |
 
 ## Accessibility
@@ -153,6 +153,10 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 - **색은 groo 역할 짝** — 띠 `bg-neutral-weak`, 고른 글자 `fg-neutral`, 둘레 글자 `fg-disabled`(SEED 와 같은 역할).
 
 ## Migration notes
+
+### 2026-10-21 — 시 칼럼의 Home · End(03-C 3A)
+
+오후 3 에서 `End` 가 "오전 12" 로 뒤집혔다 — 끝 항목 12 까지 휠이 지나간 칸 수(stepDelta)만큼 시를 더해서다. 사용자가 "오전 · 오후는 그대로, 1 · 12 로" 를 골랐다(2026-10-21 사용자 결정 — 03-C 3A, https://claude.ai/artifact/3nWUZCYpPh2Cg3uXc3DKtp). 레시피 Wheel Picker 가 `onValueChange` 에 `jump`(Home · End)를 싣고, Time Picker 는 jump 면 고른 값으로 시를 정한다. 앱 `p_wheel_picker.dart` · `p_time_picker.dart` 도 같다. 거절: 지금 그대로 · Home · End 받지 않음 · Home = 12 · End = 11.
 
 ### 2026-10-03 — SEED Time Picker 로 새로 둔다(옛 v72 Time Picker 를 대신)
 

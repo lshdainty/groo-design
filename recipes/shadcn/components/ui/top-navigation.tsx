@@ -162,7 +162,7 @@ const FOCUS_INSIDE = "focus-visible:outline-2 focus-visible:-outline-offset-2 fo
 // 아이콘 버튼 — 상자 44 = 누르는 영역 · 아이콘 24. 누르면 바탕 + 2px 거리 축소(44 → 0.955), 막히면 fg-disabled(바탕 · 축소 없음)
 const ICON_BUTTON = [
   "relative flex size-[44px] shrink-0 cursor-pointer items-center justify-center rounded-r2 border-0 bg-transparent p-0 text-fg-neutral",
-  "[&_svg]:size-6 [&_svg]:shrink-0",
+  "[&_svg]:size-[24px] [&_svg]:shrink-0",
   // 켜고 끄는 단추(aria-pressed) — 끔 선 2 · 켬 선 2.5, 색은 그대로 fg-neutral(19B). aria-pressed 가 없는 버튼의 선은 건드리지 않는다
   "aria-[pressed=false]:[&_svg]:[stroke-width:2] aria-pressed:[&_svg]:[stroke-width:2.5]",
   PRESS_TRANSITION,

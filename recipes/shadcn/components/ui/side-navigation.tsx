@@ -259,11 +259,11 @@ const HEADER = [
   "[&:has(~[data-slot=side-navigation-content][data-scrolled])]:shadow-[inset_0_-1px_0_0_var(--color-stroke-neutral-subtle)]",
 ].join(" ");
 // 로고 — 마크 24 + 이름 t5 · 700, 화면 끝에서 16. 접기 버튼 자리(40 + 12)를 비운다
-const LOGO = "ml-x2 mr-[52px] flex min-w-0 items-center gap-x2 overflow-hidden whitespace-nowrap text-t5 font-bold text-fg-neutral [&>img]:size-6 [&>img]:shrink-0 [&>svg]:size-6 [&>svg]:shrink-0";
+const LOGO = "ml-x2 mr-[52px] flex min-w-0 items-center gap-x2 overflow-hidden whitespace-nowrap text-t5 font-bold text-fg-neutral [&>img]:size-[24px] [&>img]:shrink-0 [&>svg]:size-[24px] [&>svg]:shrink-0";
 // 접기 버튼 — 40 · 아이콘 18 · 모서리 8 · 누르는 영역 44, 위 12 · 오른쪽 12(접히면 8)
 const TRIGGER = [
-  "absolute top-x3 flex size-10 cursor-pointer items-center justify-center rounded-r2 border-0 bg-transparent p-0 text-fg-neutral-subtle [&>svg]:size-[18px]",
-  "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "absolute top-x3 flex size-[40px] cursor-pointer items-center justify-center rounded-r2 border-0 bg-transparent p-0 text-fg-neutral-subtle [&>svg]:size-[18px]",
+  "before:absolute before:left-1/2 before:top-1/2 before:size-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/40)] motion-reduce:active:[scale:1]",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
@@ -411,13 +411,13 @@ SideNavigationGroup.displayName = "SideNavigationGroup";
 // 항목 — 최소 44 · 좌우 8 · 모서리 10, 키보드 포커스에 안쪽 2px 링. 바탕은 지금 항목 · 호버 · 누름에만
 // 펼침 ↔ 접힘에 좌우 여백(8 ↔ 10)도 사이드바 폭과 같이 200ms 로 바뀐다(모션 줄이기면 바로)
 const ITEM = [
-  "group/side-navigation-item relative flex min-h-11 w-full items-center rounded-r2_5 border-0 bg-transparent px-x2 text-left font-sans no-underline",
+  "group/side-navigation-item relative flex min-h-[44px] w-full items-center rounded-r2_5 border-0 bg-transparent px-x2 text-left font-sans no-underline",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),padding_var(--motion-duration-d4)_var(--motion-ease-easing)]",
   "motion-reduce:[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 // 접힘 — 40(56 − 좌우 8) · 좌우 10, 아이콘이 화면 끝에서 18
-const ITEM_COLLAPSED = "w-10 px-x2_5";
+const ITEM_COLLAPSED = "w-[40px] px-x2_5";
 const ITEM_HOVER = "cursor-pointer hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed";
 // 지금 항목 — 한 단계 짙은 옅은 회색, 마우스를 올리거나 눌러도 그대로
 const ITEM_CURRENT = "cursor-pointer bg-bg-neutral-weak-pressed";
@@ -425,7 +425,7 @@ const ITEM_DISABLED = "cursor-not-allowed";
 // 콘텐츠 층 — 아이콘 ↔ 이름 12. 누르는 동안만 2px 거리 축소(바탕은 그대로)
 const ITEM_CONTENT = "relative flex min-w-0 flex-1 items-center gap-x3 [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]";
 const ITEM_CONTENT_PRESS = "group-active/side-navigation-item:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-active/side-navigation-item:[scale:1]";
-const ITEM_ICON = "flex shrink-0 [&>svg]:size-5";
+const ITEM_ICON = "flex shrink-0 [&>svg]:size-[20px]";
 // 이름 — t4 · 500 · 위아래 6, 단어 단위로 줄을 바꾼다(말줄임 없음)
 const ITEM_LABEL = "min-w-0 flex-1 py-x1_5 text-t4 font-medium break-keep [overflow-wrap:break-word]";
 const tone = (current: boolean, disabled: boolean) =>
@@ -436,7 +436,7 @@ const tone = (current: boolean, disabled: boolean) =>
       : { icon: "text-fg-neutral-subtle", label: "text-fg-neutral-muted" };
 
 // 꺾쇠 — 16 · fg-neutral-subtle, 펼치면 위로(300ms — 하위 펼침과 같은 시간, 모션 줄이기면 바로)
-const CHEVRON = "size-4 shrink-0 text-fg-neutral-subtle [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none";
+const CHEVRON = "size-[16px] shrink-0 text-fg-neutral-subtle [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none";
 
 // 하위 목록 — 높이 · 투명도로 펼친다(300ms — Accordion 과 같다). 접히면 다 접힌 뒤 보이지 않게(보조 기술 · Tab 에서 빠진다).
 // 모션 줄이기면 높이는 바로 바꾸고 투명도만 150ms — 접을 때는 다 흐려진 뒤 높이를 접는다
@@ -846,7 +846,7 @@ FlyoutParent.displayName = "SideNavigationFlyoutParent";
 const SUB_ITEM = "pl-[40px] pr-x2";
 // 펼침 메뉴의 줄 — 최소 44 · 좌우 16 · t4 · 400 · fg-neutral. 키보드 포커스는 알약 자리(좌우 8 · 모서리 12)의 안쪽 링
 const FLYOUT_ITEM = [
-  "group/side-navigation-flyout-item relative flex min-h-11 items-center px-x4 font-sans text-t4 font-normal no-underline outline-none scroll-my-x2",
+  "group/side-navigation-flyout-item relative flex min-h-[44px] items-center px-x4 font-sans text-t4 font-normal no-underline outline-none scroll-my-x2",
   "after:pointer-events-none after:absolute after:inset-y-0 after:inset-x-x2 after:rounded-r3 after:content-['']",
   "focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-stroke-focus-ring",
 ].join(" ");

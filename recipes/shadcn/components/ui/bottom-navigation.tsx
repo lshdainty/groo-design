@@ -242,7 +242,7 @@ function measurePress(el: HTMLElement) {
 // 칸 — 아이콘 위 · 라벨 아래(사이 2), 칸 전체가 누르는 자리. 누르면 칸만 2px 거리 축소(색은 그대로), 키보드 포커스에 안쪽 2px 링
 const ITEM = [
   "relative flex h-full min-w-0 cursor-pointer flex-col items-center justify-center gap-[2px] rounded-r3 no-underline",
-  "[&_svg]:size-6 [&_svg]:shrink-0",
+  "[&_svg]:size-[24px] [&_svg]:shrink-0",
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "active:[scale:calc(1-2/var(--press-basis,54))] motion-reduce:active:[scale:1]",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
@@ -350,7 +350,7 @@ const BottomNavigationAddButton = React.forwardRef<HTMLButtonElement, BottomNavi
       <span
         aria-hidden
         data-slot="bottom-navigation-add-circle"
-        className={cn(ADD_CIRCLE, compact ? "size-9 [--add-basis:36] [&_svg]:size-5" : "size-11 [--add-basis:44] [&_svg]:size-6")}
+        className={cn(ADD_CIRCLE, compact ? "size-[36px] [--add-basis:36] [&_svg]:size-[20px]" : "size-[44px] [--add-basis:44] [&_svg]:size-[24px]")}
       >
         <Plus />
       </span>
