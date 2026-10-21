@@ -198,6 +198,24 @@ export function FloorBands({ mode = 'auto', children }: { mode?: Mode; children:
     </div>
   );
 }
+// 구역 띠 — 띠 안은 카드 안과 같은 값이다(머리 글 위 24 · 좌우 24 · 아래 4, 글 · 숫자 내용은 좌우 24 · 아래 24).
+// 띠 안 위 4 · 아래 8 은 그 24 안에 든다(DESIGN.md Layout "화면 바탕" — Desk 폰 구역 화면은 띠, 2026-10-21 I-01 결정 3)
+export function BandHead({ mode = 'auto', title, action = '' }: { mode?: Mode; title: string; action?: string }) {
+  const c = cardLook();
+  return (
+    <div style={{ marginTop: -4 }}>
+      <CardHeaderView look={c} mode={mode} title={title} action={action || undefined} body="list" heading="span" />
+    </div>
+  );
+}
+export function SpendBand({ mode = 'auto' }: { mode?: Mode }) {
+  const c = cardLook();
+  return (
+    <div style={{ padding: '20px 24px 16px' }}>
+      <StatView look={c} mode={mode} label="10월 지출" value="1,240,000원" delta={{ direction: 'down', value: '82,000원', text: '지난달보다' }} />
+    </div>
+  );
+}
 // 알림 줄 — 둥근 사각 아이콘 타일 + 제목 · 설명
 export function NoticeRows({ mode = 'auto', n = 5, pad = 24 }: { mode?: Mode; n?: number; pad?: number }) {
   const hues = ['blue', 'orange', 'green', 'violet', 'red'];
@@ -223,11 +241,14 @@ export const HOME_ACTIONS: TopAction[] = [
 export function HomeScreen({ mode = 'auto', h = 600, scale = 0.62, tabSize = 'regular', bar, scrolled = false }: { mode?: Mode; h?: number; scale?: number; tabSize?: TabSize; bar?: ReactNode; scrolled?: boolean }) {
   return (
     <NPhone mode={mode} h={h} scale={scale} tabs tab="home" tabSize={tabSize} bg="bg-layer-basement" bar={bar ?? <Bar mode={mode} type="root" title="홈" actions={HOME_ACTIONS} />}>
-      <div style={{ ...cardStack(), transform: scrolled ? 'translateY(-210px)' : undefined }}>
-        <SpendCard mode={mode} />
-        <TxCard mode={mode}>
-          <TxRows mode={mode} n={7} />
-        </TxCard>
+      <div style={{ transform: scrolled ? 'translateY(-210px)' : undefined }}>
+        <FloorBands mode={mode}>
+          <SpendBand mode={mode} />
+          <>
+            <BandHead mode={mode} title="최근 거래" action="전체 보기" />
+            <TxRows mode={mode} n={7} />
+          </>
+        </FloorBands>
       </div>
     </NPhone>
   );
@@ -248,12 +269,13 @@ export function LedgerScreen({ mode = 'auto', h = 600, scale = 0.62, tabSize = '
     <NPhone mode={mode} h={h} scale={scale} tabs tab="ledger" tabSize={tabSize} bg={value === 'assets' ? 'bg-layer-basement' : 'bg-layer-default'} bar={<Bar mode={mode} type="root" title="가계부" actions={[{ icon: 'search', label: '검색' }]} />}>
       <MoneyTabs mode={mode} value={value} />
       {value === 'assets' ? (
-        // 자산은 카드 화면 — 회색 바닥 위 카드(화면 바탕 2026-10-16). 거래는 흰 화면이라 둘을 밀면 바탕이 바뀐다
-        <div style={cardStack()}>
-          <TxCard mode={mode} title="계좌" action="관리">
+        // 자산은 띠 화면 — 회색 바닥 위 구역 띠(화면 바탕 2026-10-16 · 폰 구역 화면은 2026-10-21 I-01 결정 3). 거래는 흰 화면이라 둘을 밀면 바탕이 바뀐다
+        <FloorBands mode={mode}>
+          <>
+            <BandHead mode={mode} title="계좌" action="관리" />
             <TxRows mode={mode} n={4} rows={ASSET_ROWS} />
-          </TxCard>
-        </div>
+          </>
+        </FloorBands>
       ) : (
         <>
           <DayHead mode={mode} />

@@ -33,7 +33,7 @@
 | 배치 | 언제 |
 |---|---|
 | `horizontal` *(기본)* | 버튼 둘을 나란히 반씩 — 취소 왼쪽 · 확정 오른쪽 |
-| `vertical` | 한쪽 글이 반 폭을 넘을 때 — 세로로 쌓고 **확정이 위**. 레시피가 저절로 바꾼다 |
+| `vertical` | 한쪽 글이 반 폭을 넘을 때 — 세로로 쌓고 **확정이 위**. 레시피가 저절로 바꾼다 — 제품은 짝 버튼 부품(웹 `ResponsivePair` · 앱 `PResponsivePair`, [Button](button.md) "긴 라벨")이 가른다 |
 | `single` | 알리기만 할 때 — 버튼 하나, 폭 전체 |
 
 [그림: 배치 — 나란히 · 세로 · 하나](../../site/components/specs/alert-dialog.tsx#layout)

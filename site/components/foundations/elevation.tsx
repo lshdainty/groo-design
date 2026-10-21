@@ -346,7 +346,7 @@ export function BasementVsWeakFigure() {
   );
 }
 
-// ── 화면 바탕 — 카드 화면 · 띠 화면 · 흰 화면(DESIGN.md Layout "화면 바탕", 2026-10-16 Q-019-3 C) ─────
+// ── 화면 바탕 — 띠 화면(구역 · 묶음) · 흰 화면(DESIGN.md Layout "화면 바탕", 2026-10-16 Q-019-3 C · 폰 구역 화면은 2026-10-21 I-01 결정 3) ─────
 // 투명한 색(#RRGGBBAA)을 바탕에 섞은 불투명 hex — 대비를 잴 때
 function over(fg: string, bg: string) {
   const h = fg.replace('#', '');
@@ -375,19 +375,34 @@ export function ScreenFloorFigure() {
   const gapD = contrast(rc('bg-layer-default', 'dark'), rc('bg-layer-basement', 'dark'));
   const kinds: { key: string; name: string; what: string; draw: (m: Mode) => ReactNode }[] = [
     {
-      key: 'card',
-      name: '카드 화면',
-      what: '홈 · 자산 · 통계 · 예산 · 상세',
+      key: 'section',
+      name: '띠 화면 — 구역',
+      what: '홈 · 자산 · 통계 · 예산 · 카드 상세',
       draw: (m) => (
         <Phone mode={m}>
           <Nav mode={m} />
-          <Cards mode={m} />
+          <div className="absolute inset-x-0 flex flex-col gap-2" style={{ top: 36 }}>
+            <div className="flex flex-col gap-1.5 px-2.5 py-2.5" style={{ background: rc('bg-brand-solid', m) }}>
+              <span className="block h-1 w-8 rounded" style={{ background: rc('static-white', m), opacity: 0.8 }} />
+              <span className="block h-2 w-16 rounded" style={{ background: rc('static-white', m) }} />
+            </div>
+            {[0, 1].map((i) => (
+              <div key={i} className="flex flex-col gap-1.5 pb-2.5 pt-2.5" style={{ background: rc('bg-layer-default', m) }}>
+                <span className="mx-2.5 block h-1.5 w-10 rounded" style={{ background: rc('fg-neutral', m) }} />
+                {i === 0 ? (
+                  <span className="mx-2.5 block h-5 rounded" style={{ background: rc('bg-neutral-weak', m) }} />
+                ) : (
+                  <Rows mode={m} n={2} />
+                )}
+              </div>
+            ))}
+          </div>
         </Phone>
       ),
     },
     {
       key: 'band',
-      name: '띠 화면',
+      name: '띠 화면 — 묶음',
       what: '설정 · 전체 · 캘린더 · 알림',
       draw: (m) => (
         <Phone mode={m}>
@@ -422,7 +437,7 @@ export function ScreenFloorFigure() {
     },
   ];
   return (
-    <Figure caption={`폰 화면의 바닥은 늘 회색이고, 그 위에 흰 층을 화면 종류대로 놓는다. 띠 사이 틈은 라이트 ${gapL.toFixed(2)}:1 · 다크 ${gapD.toFixed(2)}:1 로 옅다 — 묶음은 목록 제목이 가른다`}>
+    <Figure caption={`폰 화면의 바닥은 늘 회색이고, 그 위에 흰 띠를 구역 · 묶음마다 놓는다(거래 목록만 흰 화면). 띠 사이 틈은 라이트 ${gapL.toFixed(2)}:1 · 다크 ${gapD.toFixed(2)}:1 로 옅다 — 구역은 머리 글이, 묶음은 목록 제목이 가른다. 데스크톱은 같은 구역을 카드로 쌓는다`}>
       <div className="flex flex-col gap-4">
         {(['light', 'dark'] as Mode[]).map((m) => (
           <div key={m} className="flex gap-4">
