@@ -13735,8 +13735,10 @@ export function pageCss() {
       box-shadow: inset 0 -1px 0 var(--color-stroke-neutral-subtle);
     }
     .ptab-list--medium { min-height: 44px; }
-    /* Fill — 칸을 똑같이 나눈다(글이 칸보다 길면 그 탭만 넓어진다 — 그러면 Hug 로). 막대는 탭에서 좌우 16 들인다 */
-    .ptab-list--fill { --ptab-inset: var(--spacing-x4); }
+    /* Fill — 칸을 똑같이 나눈다(글이 칸보다 길면 그 탭만 넓어지고, 넘치면 Fill 모양 그대로 목록만 가로 스크롤 — 03-G 3B). 막대는 탭에서 좌우 16 들인다.
+       넘쳐 스크롤할 때도 고른 탭은 가장자리와 16 을 두고 드러낸다(scroll-padding — Hug 와 같다) */
+    .ptab-list--fill { --ptab-inset: var(--spacing-x4); overflow-x: auto; scroll-padding-inline: var(--spacing-x4); scrollbar-width: none; }
+    .ptab-list--fill::-webkit-scrollbar { display: none; }
     /* Hug — 목록 좌우 16, 넘치면 가로 스크롤(스크롤바 숨김). 고른 탭이 화면 밖이면 16 여유를 두고 스크롤한다(scroll-padding) */
     .ptab-list--hug { padding-inline: var(--spacing-x4); overflow-x: auto; scroll-padding-inline: var(--spacing-x4); scrollbar-width: none; }
     .ptab-list--hug::-webkit-scrollbar { display: none; }
@@ -15149,7 +15151,8 @@ export function pageCss() {
     /* === Date Picker · Time Picker · Wheel Picker — specs/components/date-picker.md · time-picker.md · wheel-picker.md(수치는 *.yaml) ===
        구조는 SEED Date Picker · Time Picker · Wheel Picker(2026-10-03). 옛 Calendar(.cal-* 의 피커 쓰임 · 원 40 · 브랜드 채움 · 오늘 테두리) · Date Range Picker(.drp) ·
        Time Picker v72(.tp — 치는 칸 · 24시간)를 대신한다. 03h · 03k 의 여는 자리 그림도 이 달력이다. 06 의 일정 · 가계부 달(.cal-*)은 화면 격자라 그대로다.
-       달력 .pdp — 팝오버 336(칸 48 × 7) · 두 달 696, 시트는 본문 폭(시트 폭 − 좌우 24). 머리 · 요일 줄 · 날짜 줄은 모두 48 이다.
+       달력 .pdp — 팝오버 336(칸 48 × 7) · 두 달 696, 시트는 본문 폭(시트 폭 − 좌우 24). 머리 · 요일 줄 · 날짜 줄은 모두 48 이다 — 최소 48 이고
+       글자가 크면 그만큼만 늘어난다(날짜 줄은 max(48, 숫자 줄 높이 + 위아래 3 · 3) — 200% 50 · 달력 396, 03-C 1B).
        날짜 칸 .pdp-cell 은 달력 폭 ÷ 7 × 48 이고 칸 전체가 누르는 버튼(.pdp-day)이다. 원 .pdp-day-visual 42 는 칸 위 3 · 가로 가운데 — 원 · 띠끼리 6 떨어진다.
        칸이 44 보다 좁으면 원을 칸 폭 − 2 로 줄인다(--pdp-circle — 격자 .pdp-grid 를 크기 담는 그릇으로 두고 100cqw ÷ 칸 수로 잰다).
        기간 띠는 칸의 ::before(원과 같은 높이 · 칸 위 3) — 시작 칸은 원 가운데부터 오른쪽, 끝 칸은 왼쪽부터 원 가운데까지, 사이 칸은 칸 폭 전체다(칸 끝에서 끊는다).
@@ -15176,12 +15179,12 @@ export function pageCss() {
     /* 빠른 기간 — 칩 줄 아래 12(칩 사이 8 은 Chip 묶음이 둔다) */
     .pdp-presets { flex-shrink: 0; padding-bottom: var(--spacing-x3); }
     /* 머리 — 48. 왼쪽 연 · 월 제목(16 / 22 · 700 + 셰브론 20 · 사이 4, 글자는 머리 왼쪽에서 4 — 누르는 자리는 머리 높이 전체), 오른쪽 이전 · 다음(Button ghost 40 · 둘 사이 0) */
-    .pdp-header { display: flex; flex-shrink: 0; align-items: center; justify-content: space-between; height: 48px; }
+    .pdp-header { display: flex; flex-shrink: 0; align-items: center; justify-content: space-between; min-height: 48px; }
     .pdp-title {
       display: inline-flex;
       align-items: center;
       gap: var(--spacing-x1);
-      height: 48px;
+      min-height: 48px;
       margin: 0;
       padding: 0 var(--spacing-x1);
       border: 0;
@@ -15205,8 +15208,8 @@ export function pageCss() {
     .pdp-grid { container-type: inline-size; }
     .pdp-week { display: grid; grid-template-columns: repeat(var(--pdp-cols, 7), minmax(0, 1fr)); }
     /* 요일 — 48 · 14 / 19 · 500 · fg-neutral-subtle */
-    .pdp-weekday { display: grid; place-items: center; height: 48px; font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 500; color: var(--color-fg-neutral-subtle); }
-    .pdp-cell { --pdp-circle: min(42px, calc(100cqw / var(--pdp-cols, 7) - 2px)); position: relative; height: 48px; }
+    .pdp-weekday { display: grid; place-items: center; min-height: 48px; font-size: var(--text-t4); line-height: var(--text-t4--line-height); font-weight: 500; color: var(--color-fg-neutral-subtle); }
+    .pdp-cell { --pdp-circle: min(42px, calc(100cqw / var(--pdp-cols, 7) - 2px)); position: relative; min-height: max(48px, calc(var(--text-t5--line-height) + 6px)); }
     .pdp-cell[data-band]::before { content: ""; position: absolute; top: 3px; left: 0; right: 0; height: var(--pdp-circle); background: var(--color-bg-neutral-weak); }
     .pdp-cell[data-band="start"]::before { left: 50%; }
     .pdp-cell[data-band="end"]::before { right: 50%; }
@@ -15271,8 +15274,8 @@ export function pageCss() {
     .pdp-day[data-outside],
     .pdp-day[data-readonly] { cursor: default; }
     .pdp-day[data-disabled] { cursor: not-allowed; }
-    /* 연 · 월 휠 — 요일 줄 + 6주 자리(336)를 덮는다. Wheel Picker medium 7칸(308)이 가운데라 위아래 14 가 남는다 */
-    .pdp-wheel { position: absolute; inset: 0 0 auto; z-index: 2; display: flex; align-items: center; height: 336px; background: var(--color-bg-layer-floating); }
+    /* 연 · 월 휠 — 요일 줄 + 6주 자리(100% 336 · 200% 348 — 글이 크면 달력을 따라 늘어난다)를 덮는다. Wheel Picker medium 7칸(308)이 가운데라 100% 에서 위아래 14 가 남는다 */
+    .pdp-wheel { position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; background: var(--color-bg-layer-floating); }
     .pdp-wheel[hidden] { display: none; }
     .pdp-wheel > .pwheel { flex: 1 1 auto; }
     .pdp[data-pdp-wheel-open] .pdp-body > .pdp-grid { visibility: hidden; }
@@ -15281,7 +15284,7 @@ export function pageCss() {
     .pdp-header--two > .pdp-nav { position: absolute; top: var(--spacing-x1); }
     .pdp-header--two > .pdp-nav:first-child { left: 0; }
     .pdp-header--two > .pdp-nav:last-child { right: 0; }
-    .pdp-month-name { display: grid; place-items: center; height: 48px; font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; color: var(--color-fg-neutral); }
+    .pdp-month-name { display: grid; place-items: center; min-height: 48px; font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; color: var(--color-fg-neutral); }
     .pdp-months { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--spacing-x6); }
     /* 이어지는 달 — 머리 없이 스크롤이 달을 넘긴다(스크롤바 숨김). 요일 줄은 맨 위에 붙고, 달마다 이름(48 · 16 · 700 · 왼쪽 4) · 달 아래 16, 아래 끝 안개 96 */
     .pdp--continuous { flex: 1 1 auto; min-height: 0; }
@@ -15289,7 +15292,7 @@ export function pageCss() {
     .pdp-scroll::-webkit-scrollbar { display: none; }
     .pdp-weekdays--sticky { position: sticky; top: 0; z-index: 2; background: var(--color-bg-layer-floating); }
     .pdp-month { padding-bottom: var(--spacing-x4); }
-    .pdp-month-label { display: flex; align-items: center; height: 48px; padding: 0 var(--spacing-x1); font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; color: var(--color-fg-neutral); }
+    .pdp-month-label { display: flex; align-items: center; min-height: 48px; padding: 0 var(--spacing-x1); font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; color: var(--color-fg-neutral); }
     .pdp-fog { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 96px; background: linear-gradient(to bottom, transparent, var(--color-bg-layer-floating)); pointer-events: none; }
     /* 보이는 달이 바뀌면 읽는 자리(aria-live) — 보이지 않는다 */
     .pdp-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -20047,7 +20050,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
     // 처음 자리를 잡은 뒤에 [data-ptab-ready] 를 달아 그때부터 미끄러진다. 목록 폭이 바뀌거나(화면 폭 · 숨었던 내용 칸이 열림) 글꼴이 들어오면 다시 잰다.
     // 누름 배율의 기준 = max(높이, 폭 ÷ 4, 24) — 탭 · 칸 폭이 놓인 자리마다 달라 누르는 순간(포인터 · 키) 재서 --press-basis 로 넘긴다. 그 순간을 멈춘 누름 탭 · 칸은 그릴 때 잰다.
     // data-ptab-live 목록 — 누르면 그 탭을 고르고 이어진 내용 칸(aria-controls)을 바로 바꾼다(다른 칸은 hidden 으로 남아 상태를 지킨다). ← → 로 옮기며 바로 고르고
-    // (끝에서 처음으로 돈다) Home · End 는 첫 · 마지막 탭이다. 막힌 탭은 건너뛴다. 고른 탭이 목록 밖이면(Hug · Chip Tabs) scroll-padding(16)만큼 여유를 두고 스크롤한다.
+    // (끝에서 처음으로 돈다) Home · End 는 첫 · 마지막 탭이다. 막힌 탭은 건너뛴다. 고른 탭이 목록 밖이면(Hug · 넘친 Fill · Chip Tabs) scroll-padding(16)만큼 여유를 두고 스크롤한다.
     // 고른 탭 · 칩의 알림 점은 지운다 — 고른 것에는 점이 없고, 열어 내용을 봤으니 사라진다. Chip Tabs 의 칩은 data-selected 로 고른 모습을 칠한다.
     // data-pseg-live 트랙 — 누르면 그 칸을 고르고(다시 눌러도 그대로) 고른 알약을 옮긴다(--pseg-i). ← → ↑ ↓ 로 옮기며 바로 고르고(끝에서 처음으로 돈다) 막힌 칸은 건너뛴다.
     // Enter 로는 고르지 않는다(Radix 라디오와 같다). 고른 칸의 알림 점은 지운다. data-pseg-filter 가 가리키는 목록은 고른 칸의 값(data-pseg-value)이 없는 줄([data-pseg-tags])을 숨긴다.

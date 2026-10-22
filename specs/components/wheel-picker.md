@@ -106,6 +106,7 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker"
 | **WCAG 2.1.1** Keyboard | 칼럼마다 `Tab` 자리, `↑` `↓` `Home` `End` ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | medium 44 · small 36 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | medium 44 ✓ · small 36 ⚠ |
+| **앱(Flutter 3.44.9)** | Flutter 는 spinButton 역할을 구현하지 않았다(넣으면 디버그에서 오류가 난다 — 3.47 도 같다). 칼럼은 역할 없이 이름(칼럼 이름) + 값(항목 글) + 올리기 · 내리기 동작으로 둔다 — Android 는 이것을 조절 막대(SeekBar)로, iOS 는 조절 가능(adjustable)으로 읽어 위아래로 쓸어 값을 바꾼다. 모바일에서 spinbutton 에 해당하는 실제 표현이다. Flutter 가 spinButton 을 구현하면 역할 한 줄을 더한다 |
 | **ARIA** | 휠 `role="group"` + 이름(필수), 칼럼 `role="spinbutton"` + 이름 · `aria-valuetext`(항목 글) · `aria-valuemin` 0 · `aria-valuemax` · `aria-valuenow`(번호). 항목은 보조 기술에 숨긴다 |
 
 ## Do / Don't
@@ -134,6 +135,10 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker"
 - **링 색은 groo `stroke-focus-ring`**.
 
 ## Migration notes
+
+### 2026-10-22 — 앱 칼럼은 조절 가능으로(I-04 검수)
+
+Flutter 3.44.9 는 spinButton 역할이 없다(넣으면 디버그에서 오류). 앱 칼럼은 이름 + 값 + 올리기 · 내리기로 두고(Android 조절 막대 · iOS 조절 가능), Flutter 가 역할을 구현하면 한 줄 더한다 — Accessibility 의 앱 줄.
 
 ### 2026-10-22 — "5개 이하" 를 판단 순서 링크로
 

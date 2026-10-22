@@ -6,6 +6,8 @@ import { loadComponentSpec, resolveState } from '@/lib/component-spec';
 import { DimView, EndButtons, PopoverSurface, SheetButtons, SheetSurface } from './overlay-view';
 import { btn, ov } from './overlay-screens';
 import { DeskHeader, DeskMain, Desktop, NK, Shell, Side } from './nav-screens';
+import { buttonLook } from './button-look';
+import { ButtonView } from './button-view';
 import { rc, type Mode } from './kit';
 
 const UNREAD = 12;
@@ -28,11 +30,18 @@ export function notifyLook() {
   const width = n('width');
   const maxHeight = n('maxHeight');
   if (!width || !maxHeight) throw new Error('popover.yaml notificationList 의 width · maxHeight 를 읽지 못했다');
-  return { width, maxHeight };
+  // 줄 끝 ⋮ — "Button ghost neutralSubtle iconOnly xsmall 32"(2026-10-22 알림 지우기 B)
+  const moreRaw = String(unbox(v['notificationList.rowMore']));
+  const mm = /^Button\s+(ghost)\s+(\w+)\s+(iconOnly)\s+(\w+)\s+(\d+)$/.exec(moreRaw);
+  if (!mm) throw new Error(`popover.yaml notificationList.rowMore(${moreRaw})가 "Button ghost <색> iconOnly <크기> <높이>" 꼴이 아니다`);
+  const more = buttonLook({ variant: mm[1], ghostColor: mm[2], layout: 'iconOnly', size: mm[4] });
+  if (more.faces.light.enabled.height !== Number(mm[5])) throw new Error(`popover.yaml notificationList.rowMore 의 높이 ${mm[5]} 가 Button ${mm[4]} 높이(${more.faces.light.enabled.height})와 다르다`);
+  return { width, maxHeight, more };
 }
 
-// 알림 줄 — 안 읽은 줄은 앞에 점(fg-brand) · 제목 굵게. 설명은 두 줄까지
+// 알림 줄 — 안 읽은 줄은 앞에 점(fg-brand) · 제목 굵게. 설명은 두 줄까지. 줄 끝 ⋮(이름 "{알림 제목} 더보기")는 줄과 형제다
 export function NoticeList({ mode = 'auto', n = NOTICES.length, pad = 24 }: { mode?: Mode; n?: number; pad?: number }) {
+  const { more } = notifyLook();
   return (
     <div className="flex flex-col">
       {Array.from({ length: n }, (_, i) => {
@@ -53,6 +62,9 @@ export function NoticeList({ mode = 'auto', n = NOTICES.length, pad = 24 }: { mo
               <span className="text-[13px] leading-[18px]" style={{ color: rc('fg-neutral-muted', mode), display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', wordBreak: 'keep-all', overflowWrap: 'break-word' }}>
                 {d}
               </span>
+            </span>
+            <span className="shrink-0 self-start">
+              <ButtonView look={more} mode={mode} icon="more-vertical" ariaLabel={`${t} 더보기`} />
             </span>
           </div>
         );

@@ -61,7 +61,7 @@ rules:
         buttonSize: { value: medium 40, note: "Button neutralWeak" }
       secondaryButton:
         buttonSize: { value: small 36, note: "글 버튼(SEED Text Button) — Button ghost small 의 상자(36 · 좌우 14 · 모서리 8 · 누름 bg-layer-default-pressed)가 SEED Text Button 과 같다. 위아래로 블리드해 글 자리만 차지" }
-        foreground: { value: $color-fg-neutral-muted, note: "SEED Text Button 글자 t4 · 700 · fg.neutral-muted — 2026-10-16 사용자 결정 글자 역할 D2(전 ghost 의 fg-neutral)" }
+        foreground: { value: $color-fg-neutral-muted, note: "지금 값은 fg-neutral-muted — SEED Text Button 글자 t4 · 700 · fg.neutral-muted(2026-10-16 사용자 결정 글자 역할 D2). D2 이전에는 Button ghost 의 fg-neutral 이었고 D2 가 바꿨다 — 둘째 버튼을 ghost 그대로 두면 틀린다" }
 
   # ── 크기 ──────────────────────────────────────────────
   - when: { size: large }

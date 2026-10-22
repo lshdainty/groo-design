@@ -32,17 +32,20 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker";
  * 보이는 범위
  *   month      머리 48(연 · 월 제목 + 셰브론 20 · 이전 · 다음 Button ghost iconOnly medium 40, 아이콘 18, 둘 사이 0 · 오른쪽 끝) ·
  *              요일 줄 48 · 늘 6주(앞뒤 달 날짜를 흐리게 채운다 — 달을 넘겨도 높이가 그대로다). 폭은 부모(시트 — 시트 폭 − 48),
- *              팝오버 안이면 336(칸 48 × 7, data-slot=popover-content 를 보고 정한다). 제목을 누르면 요일 줄 · 날짜 자리(336)에
+ *              팝오버 안이면 336(칸 48 × 7, data-slot=popover-content 를 보고 정한다). 제목을 누르면 요일 줄 · 날짜 자리(요일 줄 + 6 × 칸 —
+ *              100% 336 · 200% 348, 글이 크면 달력을 따라 늘어나 열고 닫을 때 높이가 그대로다)에
  *              연 | 월 휠(Wheel Picker medium × 7 — 연 120 오른쪽 정렬 · 월 96 왼쪽 정렬, 월은 돈다)이 뜨고 셰브론이 위로 돈다(150ms).
  *              휠이 열린 동안 이전 · 다음은 막힌다. 제목을 다시 누르면 고른 달로 옮기고 그 달 1일이 Tab 자리가 된다
  *   twoMonths  696(336 + 24 + 336) — 1280 이상 팝오버의 기간. 머리를 나누지 않는다 — 달 이름은 달마다 가운데(48), 이전은 첫 달
  *              왼쪽 끝 · 다음은 둘째 달 오른쪽 끝(위 4). 이전 · 다음은 한 달씩, PageUp · PageDown 은 두 달씩. 연 · 월 휠은 없다
  *   continuous 1280 미만 시트의 기간 — 머리 · 휠이 없고 달이 위아래로 이어진다. 요일 줄이 위에 붙고, 달마다 왼쪽 달 이름(48) ·
  *              그 달의 주 수(4 ~ 6, 앞뒤 달 날짜는 비운다) · 아래 16. 아래 끝 안개 96(투명 → 바탕색). 부모가 준 높이를 채운다 —
- *              시트는 BottomSheetContent 에 h-[90dvh] 를 준다. 달 높이가 정해져 있어(48 + 48 × 주 + 16) 보이는 달 ± 2달만 그린다.
+ *              시트는 BottomSheetContent 에 h-[90dvh] 를 준다. 달 높이를 셈해(이름 줄 + 칸 × 주 + 16 — 100% 48 + 48 × 주 + 16) 보이는
+ *              달 ± 2달만 그린다. 이름 줄 · 칸 · 요일 줄은 글자 크기를 따라 늘 수 있어 숨은 견본으로 재고, 배율이 바뀌면 다시 재서 보던 달로 맞춘다.
  *              손으로 스크롤해 맨 위 달이 바뀌면 그 달 1일이 Tab 자리가 된다. 키로 달을 넘으면 그 날이 보이게 가장 적게 스크롤한다
  *
- * 날짜 칸 — 높이 최소 48(글자가 크면 그만큼만 늘어난다 — 칸 · 머리 · 요일 줄 · 원 · 이전 · 다음은 px, 글자만 배율 — 03-C 1B · SEED) · 폭 = 달력 폭 ÷ 7, 칸 전체가 누르는 자리. 원은 칸 가운데 42(위 3 — 원 · 띠끼리 6 떨어진다), 칸이 44 보다
+ * 날짜 칸 — 높이 max(48, 숫자 줄 높이 + 위아래 3 · 3)(글자가 크면 그만큼만 늘어난다 — 200% 에서 44 + 6 = 50 · 달력 396. 칸 · 머리 · 요일 줄 · 원 · 이전 · 다음은 px,
+ * 글자만 배율 — 03-C 1B · SEED) · 폭 = 달력 폭 ÷ 7, 칸 전체가 누르는 자리. 원은 칸 가운데 42(100% 에서 위 3 — 원 · 띠끼리 6 떨어진다), 칸이 44 보다
  * 좁으면(320 화면) 칸 폭 − 2. 기간 띠도 원과 같은 높이다. 숫자 t5 16 / 22 · 500 · tabular-nums. 달 그리드가 크기 컨테이너라
  * --day = min(42px, 칸 폭 − 2px) 를 한 번 셈해 원 · 띠 · 링이 같이 쓴다.
  *
@@ -282,8 +285,10 @@ const CONTINUOUS_MONTH = "pb-x4";
 const CONTINUOUS_MONTH_NAME = "flex min-h-[48px] items-center px-x1 text-t5 font-bold text-fg-neutral";
 const FOG = "pointer-events-none sticky bottom-0 z-[3] -mt-24 h-24 [background:linear-gradient(to_bottom,transparent,var(--color-bg-layer-floating))]";
 
-// 연 · 월 휠 자리 — 요일 줄 + 6주(336)를 덮는다. 휠 308 은 가운데(위아래 14)
-const WHEEL = "flex h-[336px] items-center bg-bg-layer-floating";
+// 연 · 월 휠 자리 — 요일 줄 + 6주를 덮는다: max(48, 요일 줄 높이) + 6 × max(48, 숫자 줄 높이 + 6) — 100% 336 · 200% 348.
+// 글이 크면 달력을 따라 늘어나 열고 닫을 때 높이가 그대로다(WEEKDAY_ROW · CELL · DAY 와 같은 셈). 휠 308 은 가운데(100% 위아래 14)
+const WHEEL =
+  "flex h-[calc(max(48px,var(--text-t4--line-height))_+_6_*_max(48px,calc(var(--text-t5--line-height)_+_6px)))] items-center bg-bg-layer-floating";
 const WHEEL_YEAR = "w-[120px]";
 const WHEEL_MONTH = "w-[96px]";
 
@@ -293,7 +298,8 @@ const WEEK = "grid grid-cols-7";
 const WEEKDAY_ROW = "grid min-h-[48px] grid-cols-7";
 const WEEKDAY = "flex items-center justify-center text-t4 font-medium text-fg-neutral-subtle";
 
-// 칸 — 높이 48 · 폭 = 달력 폭 ÷ 7. 기간 띠는 칸의 ::before(원 높이, 칸 세로 가운데)
+// 칸 — 높이 max(48, 숫자 줄 높이 + 6)(날짜 버튼 · 앞뒤 달 숫자의 위아래 3 이 키운다 — 100% 48 · 200% 50) · 폭 = 달력 폭 ÷ 7.
+// 기간 띠는 칸의 ::before(원 높이, 칸 세로 가운데)
 const CELL = "relative isolate min-h-[48px] min-w-0";
 const BAND = "before:pointer-events-none before:absolute before:top-1/2 before:h-[var(--day)] before:-translate-y-1/2 before:bg-bg-neutral-weak before:content-['']";
 const BAND_SIDE = {
@@ -302,9 +308,10 @@ const BAND_SIDE = {
   end: "before:left-0 before:right-1/2",
 } as const;
 
-// 날짜 버튼 — 칸 전체. 원은 ::before(칸 가운데 --day · 바탕만 color-transition), 키보드 초점 링은 ::after(원 둘레 안쪽 2px)
+// 날짜 버튼 — 칸 전체 · 위아래 3(숫자 줄이 원 42 를 넘는 큰 글자에서 칸이 줄 높이 + 6 이 된다 — 03-C 1B).
+// 원은 ::before(칸 가운데 --day · 바탕만 color-transition), 키보드 초점 링은 ::after(원 둘레 안쪽 2px)
 const DAY = [
-  "relative isolate flex h-full w-full items-center justify-center border-0 bg-transparent p-0 font-sans text-t5 font-medium tabular-nums outline-none select-none [-webkit-tap-highlight-color:transparent]",
+  "relative isolate flex h-full w-full items-center justify-center border-0 bg-transparent px-0 py-[3px] font-sans text-t5 font-medium tabular-nums outline-none select-none [-webkit-tap-highlight-color:transparent]",
   "before:absolute before:left-1/2 before:top-1/2 before:-z-10 before:size-[var(--day)] before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-transparent before:content-[''] before:[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
   "after:pointer-events-none after:absolute after:left-1/2 after:top-1/2 after:size-[var(--day)] after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:content-['']",
   "focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-stroke-focus-ring",
@@ -323,8 +330,8 @@ const DAY_STATE = {
 } as const;
 const DAY_TODAY_WEIGHT = "font-bold";
 const DAY_STRIKE = "line-through";
-// 앞뒤 달 — 숫자만(버튼 아님), 흐리게 · 누르지 못한다
-const OUTSIDE = "flex h-full w-full cursor-default select-none items-center justify-center text-t5 font-medium tabular-nums text-fg-disabled";
+// 앞뒤 달 — 숫자만(버튼 아님), 흐리게 · 누르지 못한다. 위아래 3 은 날짜 버튼과 같다(칸 높이가 같게)
+const OUTSIDE = "flex h-full w-full cursor-default select-none items-center justify-center py-[3px] text-t5 font-medium tabular-nums text-fg-disabled";
 
 const LIVE = "sr-only";
 
@@ -338,12 +345,14 @@ function mergeRefs<T>(...refs: (React.Ref<T> | undefined)[]) {
   };
 }
 
-// 이어지는 달의 높이 — 달 이름 48 + 48 × 주 + 아래 16
-const MONTH_LABEL_HEIGHT = 48;
-const ROW_HEIGHT = 48;
+// 이어지는 달의 높이 — 달 이름 줄 + 칸 × 주 + 아래 16. 이름 줄 · 칸 · 요일 줄은 글자가 크면 늘어나(03-C 1B — 200% 에서 칸 50)
+// 숨은 견본(PROBE)으로 잰다. 처음 값은 100% 의 48 · 48 · 48
 const MONTH_GAP = 16;
-const WEEKDAY_HEIGHT = 48;
 const CONTINUOUS_FOG = 96;
+type ContinuousMetrics = { label: number; row: number; weekday: number };
+const METRICS_100: ContinuousMetrics = { label: 48, row: 48, weekday: 48 };
+// 견본 — 보이지 않고 보조 기술에도 숨긴다. 달 이름 줄 · 칸 한 줄(앞뒤 달 숫자 — 날짜 버튼과 같은 높이) · 요일 줄 차례
+const PROBE = "pointer-events-none invisible absolute inset-x-0 top-0 -z-10";
 const CONTINUOUS_OVERSCAN = 2;
 
 // 정렬된 위치 목록에서 그 위치를 가진 달 — 이진 탐색
@@ -571,6 +580,9 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>((props, ref
   const monthLabelId = (d: Date) => `${id}m${monthNumber(d)}`;
 
   // ── 이어지는 달: 달 위치 ──
+  // 이름 줄 · 칸 · 요일 줄 높이 — 견본을 재서 쓴다(글자 크기를 따라 바뀐다)
+  const probeRef = React.useRef<HTMLDivElement>(null);
+  const [metrics, setMetrics] = React.useState<ContinuousMetrics>(METRICS_100);
   const monthCount = continuous ? (yearEnd - yearStart + 1) * 12 : 0;
   const layout = React.useMemo(() => {
     const heights: number[] = [];
@@ -578,24 +590,25 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>((props, ref
     let offset = 0;
     for (let i = 0; i < monthCount; i++) {
       const d = fromMonthNumber(firstMonth + i);
-      const h = MONTH_LABEL_HEIGHT + weeksInMonth(d.getFullYear(), d.getMonth()) * ROW_HEIGHT + MONTH_GAP;
+      const h = metrics.label + weeksInMonth(d.getFullYear(), d.getMonth()) * metrics.row + MONTH_GAP;
       offsets.push(offset);
       heights.push(h);
       offset += h;
     }
     return { offsets, heights, total: offset };
-  }, [firstMonth, monthCount]);
+  }, [firstMonth, monthCount, metrics]);
   const offsetOf = (d: Date) => layout.offsets[monthNumber(d) - firstMonth] ?? 0;
   const [scrollTop, setScrollTop] = React.useState(() => (continuous ? offsetOf(view) : 0));
   const [viewport, setViewport] = React.useState(0);
   const scrollTopRef = React.useRef(scrollTop);
 
-  // 그 날이 보이게 가장 적게 스크롤할 자리 — 위에 붙은 요일 줄 48 · 아래 안개 96 을 피한다
+  // 그 날이 보이게 가장 적게 스크롤할 자리 — 위에 붙은 요일 줄(100% 48) · 아래 안개 96 을 피한다
   const revealTop = (d: Date, current: number, height: number) => {
+    const { label, row: rowH, weekday } = metrics;
     const row = Math.floor((new Date(d.getFullYear(), d.getMonth(), 1).getDay() + d.getDate() - 1) / 7);
-    const rowTop = WEEKDAY_HEIGHT + offsetOf(d) + MONTH_LABEL_HEIGHT + row * ROW_HEIGHT;
-    if (rowTop < current + WEEKDAY_HEIGHT) return rowTop - WEEKDAY_HEIGHT;
-    if (height > 0 && rowTop + ROW_HEIGHT > current + height - CONTINUOUS_FOG) return Math.min(rowTop + ROW_HEIGHT - height + CONTINUOUS_FOG, rowTop - WEEKDAY_HEIGHT);
+    const rowTop = weekday + offsetOf(d) + label + row * rowH;
+    if (rowTop < current + weekday) return rowTop - weekday;
+    if (height > 0 && rowTop + rowH > current + height - CONTINUOUS_FOG) return Math.min(rowTop + rowH - height + CONTINUOUS_FOG, rowTop - weekday);
     return current;
   };
   const requestScroll = (top: number) => {
@@ -753,6 +766,29 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>((props, ref
     observer.observe(el);
     return () => observer.disconnect();
   }, [continuous]);
+
+  // 이어지는 달 — 견본(이름 줄 · 칸 · 요일 줄)을 재고, 글자 크기가 바뀌면 다시 잰다
+  React.useLayoutEffect(() => {
+    const el = probeRef.current;
+    if (!continuous || !el) return;
+    const parts = Array.from(el.children);
+    const measure = () => {
+      const [label, row, weekday] = parts.map((c) => c.getBoundingClientRect().height);
+      if (!label || !row || !weekday) return;
+      setMetrics((m) => (m.label === label && m.row === row && m.weekday === weekday ? m : { label, row, weekday }));
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    for (const c of parts) observer.observe(c);
+    return () => observer.disconnect();
+  }, [continuous]);
+  // 높이가 바뀌면(처음 잰 값 · 배율 바뀜) 달 위치가 모두 움직인다 — 보던 달을 다시 맨 위로
+  const measuredRef = React.useRef(metrics);
+  React.useLayoutEffect(() => {
+    if (measuredRef.current === metrics) return;
+    measuredRef.current = metrics;
+    if (continuous) requestScroll(offsetOf(view));
+  });
 
   // autoFocus — 처음 그릴 때만. 시트 · 팝오버가 처음 초점을 둔 뒤 그리기 전에(바깥 표면의 effect 가 나중에 돈다 — 그다음 차례).
   // 지금 값은 ref 로 읽는다
@@ -957,7 +993,7 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>((props, ref
   // 이어지는 달 — 보이는 달 ± 2달(Tab 자리의 달은 늘)
   let body: React.ReactNode;
   if (continuous) {
-    const height = Math.max(viewport, ROW_HEIGHT * 8);
+    const height = Math.max(viewport, metrics.row * 8);
     const topIndex = monthAt(layout.offsets, layout.heights, scrollTop);
     const bottomIndex = monthAt(layout.offsets, layout.heights, scrollTop + height);
     const focusIndex = monthNumber(focused) - firstMonth;
@@ -1082,6 +1118,19 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>((props, ref
     >
       {presetRow}
       {body}
+      {continuous && (
+        <div ref={probeRef} aria-hidden data-slot="date-picker-probe" className={PROBE}>
+          <div className={CONTINUOUS_MONTH_NAME}>{labels.month(view.getFullYear(), view.getMonth() + 1)}</div>
+          <div className={WEEK}>
+            <div className={CELL}>
+              <span className={OUTSIDE}>30</span>
+            </div>
+          </div>
+          <div className={WEEKDAY_ROW}>
+            <div className={WEEKDAY}>{labels.weekdays[0]}</div>
+          </div>
+        </div>
+      )}
       <span aria-live="polite" aria-atomic="true" data-slot="date-picker-live" className={LIVE}>
         {liveText}
       </span>
