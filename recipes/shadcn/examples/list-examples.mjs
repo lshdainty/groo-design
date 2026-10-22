@@ -789,9 +789,9 @@ const listRadioGroup = (items, { ariaLabel, itemRadius } = {}) =>
 const listCheckGroup = (items, { ariaLabel, itemRadius } = {}) =>
   `<fieldset ${attrs([`class="${merge(`${listVariants()} ${CHECK_GROUP}`)}"`, radius(itemRadius), ariaLabel && `aria-label="${ariaLabel}"`])}>${inGroup(items, listCheckItem)}</fieldset>`;
 
-// <ListHeader> — 목록 밖, 바로 위. id 를 목록의 aria-labelledby 로 잇는다
-const listHeader = (text, { variant, id } = {}) =>
-  `<div ${attrs([`class="${merge(listHeaderVariants({ variant }))}"`, id && `id="${id}"`])}>${text}</div>`;
+// <ListHeader> — 목록 밖, 바로 위. 머리말(기본 h2). id 를 목록의 aria-labelledby 로 잇는다
+const listHeader = (text, { variant, id, as = "h2" } = {}) =>
+  `<${as} ${attrs([`class="${merge(`m-0 ${listHeaderVariants({ variant })}`)}"`, id && `id="${id}"`])}>${text}</${as}>`;
 
 // <ListDivider> · <ListTile> — 코드 절에는 아직 없지만 레시피의 부품이라 같은 클래스로 그려 둔다. 구분선은 묶음 안에서 <div>
 const listDivider = (inset, as = "li") =>
