@@ -1,6 +1,6 @@
 # Bottom Navigation
 
-> 폰 화면 아래에 떠 있는 탭 바(하단 탭 바) — Desk 앱 · Desk 웹 768 미만의 주 메뉴다. 칸은 다섯이고 어느 화면에서나 같다 — 홈 · 가계부 · + · 캘린더 · 전체. 가운데 + 는 탭이 아니라 그 화면의 추가 동작이다. 화면 맨 위의 바는 [Top Navigation](top-navigation.md), 데스크톱(768 이상)의 메뉴는 [Side Navigation](side-navigation.md), HR 폰의 메뉴는 ☰ 로 여는 왼쪽 [Side Panel](side-panel.md), 한 탭 안에서 구역을 나누는 것은 [Tabs](tabs.md) 다.
+> 폰 화면 아래에 떠 있는 탭 바(하단 탭 바) — Desk 앱 · Desk 웹 768 미만의 주 메뉴다. 칸은 다섯을 넘지 않고 어느 화면에서나 같다(Desk 는 홈 · 가계부 · + · 캘린더 · 전체 — 아래 "Desk 에서는"). 가운데 + 는 탭이 아니라 그 화면의 추가 동작이다. 다른 이동 부품([Top Navigation](top-navigation.md) · [Side Navigation](side-navigation.md) · [Side Panel](side-panel.md) · [Tabs](tabs.md))과 고르는 표는 DESIGN.md Layout 의 "이동 부품 고르기" 한 곳이다.
 
 규칙은 당근 [SEED Bottom Navigation](https://seed-design.io/components/bottom-navigation)(Apache-2.0)을 따른다 — "앱의 루트 페이지 하단에 고정되어 있는 네비게이션 바로, 다섯 개의 상위 탭 간 이동을 제공합니다." 5칸을 넘지 않고, 라벨은 한글 5자 이내 · 글자 크기 설정을 따르지 않으며, 칸은 최대 480 안에 모으고, 알림 배지는 2칸까지 · "99+", 더 나눌 구분은 화면 위 Tabs 로 둔다. SEED 는 디자인 문서 · 그림뿐이라(rootage · 코드 없음) 바의 모양은 groo 가 지켜 온 **떠 있는 알약**을 고쳐 쓴다 — 바탕을 불투명하게 · 줄어들 때도 칸마다 이름 · 줄어든 바를 누르면 펴짐(2026-10-04 사용자 결정 4B). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. groo 에 처음 두는 스펙이다 — 지금 Desk 웹 · 앱의 탭 바(`tabbar.tsx` · `p_tab_bar.dart`)를 정리한다.
 
@@ -90,7 +90,11 @@
 
 ### 다섯 칸 — 어느 화면에서나 같다
 
-탭 바는 홈 · 가계부 · + · 캘린더 · 전체 다섯이고, 어느 화면에서도 칸이 바뀌지 않는다 — 다른 탭으로 늘 한 번에 간다. 가계부 · 자산 · 통계 · 예산은 탭 바 칸이 아니라 가계부 화면 위의 [Tabs](tabs.md)(Line)다 — 웹은 고른 탭을 주소에 둔다(SEED — "더 많은 구분이 필요하다면 화면 상단에 Tabs 를 사용"). 탭 바 칸을 화면마다 바꾸거나(← · 4칸) 6칸 이상으로 늘리지 않는다.
+칸은 다섯을 넘지 않고, 어느 화면에서도 칸이 바뀌지 않는다 — 다른 탭으로 늘 한 번에 간다. 더 나눌 구분은 탭 바 칸을 늘리지 않고 그 탭 화면 위의 [Tabs](tabs.md)(Line)로 둔다(SEED — "더 많은 구분이 필요하다면 화면 상단에 Tabs 를 사용"). 탭 바 칸을 화면마다 바꾸거나(← · 4칸) 6칸 이상으로 늘리지 않는다.
+
+### Desk 에서는
+
+아래는 부품 규칙이 아니라 Desk 의 화면 배치다(2026-10-22 사용자 결정 9B — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L). 탭 바는 홈 · 가계부 · + · 캘린더 · 전체 다섯이다. 가계부 · 자산 · 통계 · 예산은 탭 바 칸이 아니라 가계부 화면 위의 [Tabs](tabs.md)(Line)다 — 웹은 고른 탭을 주소에 둔다.
 
 [그림: 가계부 — 탭 바는 그대로 · 위 Line Tabs(가계부 · 자산 · 통계 · 예산)](../../site/components/specs/bottom-navigation.tsx#money-guide)
 
@@ -110,6 +114,8 @@
 | 지금 탭(첫 화면) | 맨 위로 |
 | 지금 탭(그 아래 화면) | 그 탭의 첫 화면으로 · 맨 위 — 주소를 고쳐 쓴다 |
 
+앱 기기 뒤로 — 홈이 아닌 탭 첫 화면(가계부 묶음 포함)에서는 홈으로, 홈에서는 앱을 닫는다. 탭을 지나온 순서는 쌓지 않는다(2026-09-12 사용자 결정 — 2026-10-22 결정 7B 로 스펙에 적었다, https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L). 그 아래 화면에서는 [Top Navigation](top-navigation.md) 의 ← 와 같은 곳이다. 웹은 브라우저 기록대로다(정하지 않았다).
+
 [그림: 탭마다 스크롤 기억 · 지금 탭을 다시 누르면 맨 위](../../site/components/specs/bottom-navigation.tsx#retap-guide)
 
 ### 가운데 + 는 화면의 추가
@@ -125,7 +131,7 @@
 ### 다른 것과 함께
 
 - **스낵바** — 탭 바 위 8 에 뜬다([Snackbar](snackbar.md) — 탭 바를 `SnackbarAvoidOverlap` 으로 감싼다).
-- **바닥 고정 버튼 · 입력 화면** — 탭 바가 있는 화면에 바닥 고정 버튼을 두지 않는다. 입력은 시트로 띄우고(시트 · 딤이 탭 바를 덮는다), 화면 키보드가 열리면 탭 바를 가린다.
+- **바닥 고정 버튼 · 입력 화면** — 탭 바가 있는 화면에 바닥 고정 버튼을 두지 않는다 — 탭 바가 바닥을 덮는다. 탭 바가 없는 화면(할 일 · 더치페이)은 바닥 버튼 · [Floating Action Button](floating-action-button.md) 을 둘 수 있다. 입력은 시트로 띄우고(시트 · 딤이 탭 바를 덮는다), 화면 키보드가 열리면 탭 바를 가린다.
 - **안전 영역** — 바의 아래 여백 6 만 홈 표시줄 영역에 걸치고 누르는 칸은 그 위에서 끝난다(Layout 의 Safe Area).
 
 [그림: 스낵바는 탭 바 위 8 · 시트가 탭 바를 덮음](../../site/components/specs/bottom-navigation.tsx#stack-guide)
@@ -235,6 +241,10 @@ import { BOTTOM_NAVIGATION_INSET } from "@/components/ui/bottom-navigation"
 - **z-index 는 specs/z-index.md 의 L1**(`z-sticky` 50).
 
 ## Migration notes
+
+### 2026-10-22 — 기기 뒤로 · Desk 배치 소제목 · 이동 부품 표 링크
+
+앱 기기 뒤로(탭 첫 화면 → 홈, 홈 → 닫기, 탭 이력 없음 — 2026-09-12 사용자 결정, 앱 `branch_back_to_home.dart` 에 이미 구현)를 "탭을 옮길 때" 에 적었다(7B). 다섯 칸의 이름 · 가계부 묶음은 "Desk 에서는" 소제목 아래로 — 부품 규칙(다섯 칸 이하 · 늘 같은 칸)은 위에 남는다(9B). 머리말의 다른 이동 부품 안내는 DESIGN.md Layout 의 "이동 부품 고르기" 링크로(6B). "탭 바가 있는 화면에 바닥 고정 버튼을 두지 않는다" 는 그대로 두고 까닭 · 범위(탭 바가 없는 화면은 둘 수 있다)를 밝혔다(남은 규칙 R20 — 그대로). 사용자 결정 — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L. 문장 이동 · 덧붙임만, 값 변경 없음.
 
 ### 2026-10-21 — 단위(03-G 1A)
 

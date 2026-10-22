@@ -726,6 +726,32 @@ const PrefixGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
+// 섞이는 결과 — 다른 물건이 한 결과에 나오면(거래와 자산을 함께 찾는 검색) 목록 제목으로 묶음을 나눈다(2026-10-22 사용자 결정 6B). 이름은 지어냈다
+const MIX_TX: RowSpec[] = [
+  { kind: 'button', prefix: { tile: 'orange', icon: 'utensils' }, title: '하늘 식당', detailNode: meta('auto', '10월 19일', '식비'), suffix: { amount: '−23,000원' } },
+  { kind: 'button', prefix: { tile: 'violet', icon: 'receipt' }, title: '하늘 정기 결제', detailNode: meta('auto', '10월 14일', '구독'), suffix: { amount: '−9,900원' } },
+];
+const MIX_ASSET: RowSpec = { kind: 'button', prefix: { node: <Logo name="하늘은행" /> }, title: '하늘은행 파킹통장', detailNode: meta('auto', '자산', '입출금'), suffix: { amount: '1,250,000원' } };
+const MixGuide: Fig = ({ caption }) => (
+  <Panel caption={caption}>
+    <Pair>
+      <Verdict ok note="거래 · 자산을 목록 제목으로 나눈다 — 묶음마다 앞 붙이개가 하나(타일 · 로고 타일)">
+        <Surface className="w-full">
+          <H title="거래" />
+          <L rows={MIX_TX} />
+          <H title="자산" />
+          <L rows={[MIX_ASSET]} />
+        </Surface>
+      </Verdict>
+      <Verdict ok={false} note="한 목록에 거래 타일과 자산 로고 타일이 섞였다 — 무엇이 거래이고 무엇이 계좌인지 줄마다 읽어야 한다">
+        <Surface className="w-full">
+          <L rows={[MIX_TX[0], MIX_ASSET, MIX_TX[1]]} />
+        </Surface>
+      </Verdict>
+    </Pair>
+  </Panel>
+);
+
 // 합계에 안 드는 줄 — 예정 · 환불(제목 · 금액만 옅게, 환불 금액 취소선, 배지는 보통 대비) · 줄 전체를 불투명도로 흐린 옛 모습
 function ExcludedList({ dim = false }: { dim?: boolean }) {
   const ex = (tx: Tx) => (dim ? txRow({ ...tx, excluded: undefined }) : txRow(tx));
@@ -835,6 +861,7 @@ export const listFigures: Record<string, Fig> = {
   'surface-guide': SurfaceGuide,
   'concentric-guide': ConcentricGuide,
   'prefix-guide': PrefixGuide,
+  'mix-guide': MixGuide,
   'excluded-rows': ExcludedRows,
   'ex-basic': ExBasic,
   'ex-button': ExButton,

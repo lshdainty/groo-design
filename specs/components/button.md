@@ -174,7 +174,7 @@
 
 - 닫기 · 초기화처럼 Dismiss 뜻의 `neutralWeak` 와 CTA 를 나란히 채울 때는 **3:7** 로 나눈다 — 위계가 분명해진다. 모달 footer 는 [Dialog](dialog.md) · [Bottom Sheet](bottom-sheet.md) 의 폭 나누기(지금은 균등)를 따른다.
 - 비슷한 위계의 `neutralWeak` 둘은 나란히 둘 수 있다.
-- **셋 이상 나란히 두지 않는다** — 중요도가 비슷해 보여 고르기 어렵고, 큰 글자에서 라벨이 잘린다. 더 있으면 아이콘만 버튼(더보기)으로 넘긴다.
+- **셋 이상 나란히 두는 것은 피한다**(SEED "세 개 이상 나란히 사용하는 것은 권장하지 않습니다") — 중요도가 비슷해 보여 고르기 어렵고, 큰 글자에서 라벨이 잘린다. 더 있으면 아이콘만 버튼(더보기)으로 넘긴다.
 - 인접한 버튼 사이는 8(`spacing-x2`).
 
 [그림: 3:7 — Dismiss 와 CTA 를 화면 하단에 채울 때](../../site/components/specs/button.tsx#placement)
@@ -400,7 +400,7 @@ const [saving, setSaving] = useState(false)
 ### ❌ Don't
 
 - 강조 버튼을 한 화면에 여럿.
-- 셋 이상을 한 줄에.
+- 셋 이상을 한 줄에 — 피한다, 더 있으면 더보기.
 - `brandSolid` 를 일반 저장 · 확인에 — 브랜드 색이 흩어진다.
 - Outline 을 Solid 와 섞기.
 - 앞 · 뒤 아이콘을 함께.
@@ -422,6 +422,10 @@ const [saving, setSaving] = useState(false)
 - `neutralSolid` 의 누름은 새 역할 `bg-neutral-inverted-pressed`(gray-800, v112)다.
 
 ## Migration notes
+
+### 2026-10-22 — 셋 이상 나란히는 "피한다"
+
+"셋 이상 나란히 두지 않는다" 를 SEED 말 그대로 "피한다" 로 낮췄다(남은 규칙 R7 — 화면은 같다). "강조 버튼은 한 화면에 하나"(SEED Hierarchy 표 "화면 내 개수 1개") · "모달 footer 를 neutralOutline 둘로 두지 않는다"(SEED 조합 규칙과 같은 쪽)는 그대로다(R8 · R9). 사용자 결정 — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L. 값 변경 없음.
 
 ### 2026-10-08 — 앱 적용이 남긴 것
 

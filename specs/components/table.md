@@ -168,7 +168,7 @@ SEED 에는 표 컴포넌트가 없다. SEED 팀이 코드로 그린 표는 문�
 
 ### 줄의 동작은 ⋮ 하나
 
-수정 · 삭제 아이콘을 줄마다 늘어놓지 않는다 — 줄 끝 ⋮ 하나에 모으고, 줄 자체를 누르면 상세가 열린다([Menu](menu.md) 의 "줄의 동작"). 줄 안의 누르는 것(체크 · 줄 · ⋮)은 셋을 넘지 않는다.
+수정 · 삭제 아이콘을 줄마다 늘어놓지 않는다 — 줄 끝 ⋮ 하나에 모으고, 줄 자체를 누르면 상세가 열린다([Menu](menu.md) 의 "줄의 동작"). 줄 안의 누르는 것(체크 · 줄 · ⋮)은 셋까지 — 넷 이상은 피한다([List](list.md) 의 누르는 자리와 같은 세기).
 
 [그림: ⋮ 하나 · 늘 보이는 아이콘 묶음](../../site/components/specs/table.tsx#actions-guide)
 
@@ -400,6 +400,10 @@ import { TableBody, TableSkeletonRows, TableStatusRow } from "@/components/ui/ta
 - **768 미만은 List 줄** — SEED 문서 표 · Table Pagination 예제는 감싸개가 가로로 밀린다(사용자 결정 — 가로 스크롤 · 열 숨김은 고르지 않았다).
 
 ## Migration notes
+
+### 2026-10-22 — 줄 안의 누르는 것은 셋까지
+
+"셋을 넘지 않는다"(6ca9937 — 10-08 데이터 비교 페이지에 없다)를 List 와 같은 세기 "셋까지 — 넷 이상은 피한다" 로 맞췄다(남은 규칙 R15 — 고르는 법 5B 가 List 의 같은 숫자를 "지양" 으로 맞췄다). 사용자 결정 — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L. 값 변경 없음.
 
 ### 2026-10-17 — 넘김 줄 위 12 · 바 안 동작(03-D 결정 5 · 01T-033)
 

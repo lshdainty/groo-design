@@ -50,7 +50,7 @@ import {
 } from 'lucide-react';
 import { ButtonView } from './button-view';
 import { useReducedMotion } from './overlay-view';
-import { FONT, ncv, nsv, pressRatio, srOnly, tabBottom, textOf, type FabLook, type FabState, type NavIcon, type TabBarLook, type TabItem, type TabSize, type TopAction, type TopLeading, type TopNavLook, type TopState, type TopType, type ViewMode } from './nav-shared';
+import { FONT, ncv, nsv, pressRatio, srOnly, tabBottom, textOf, type FabLook, type FabState, type NavIcon, type TabBarLook, type TabItem, type TabSize, type TopAction, type TopLeading, type TopNavLook, type TopState, type TopTone, type TopType, type ViewMode } from './nav-shared';
 
 const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
@@ -328,8 +328,23 @@ export function TopTextButton({ look, mode = 'auto', label, disabled = false, st
 }
 
 // ── 상단 바 ──────────────────────────────────────────────
+// 사진 위 투명 바(tone transparent) — 바탕 없음 · 제목 · 아이콘 · 글 버튼 흰 글자. 누름 · 호버 바탕은 열린 일이라 칠하지 않는다(축소만)
+const CLEAR = { name: undefined, light: 'transparent', dark: 'transparent' };
+export function toneLook(look: TopNavLook, tone: TopTone = 'layer'): TopNavLook {
+  if (tone === 'layer') return look;
+  const { fg, disabledFg } = look.transparent;
+  return {
+    ...look,
+    bg: CLEAR,
+    title: { ...look.title, fg },
+    icon: { ...look.icon, fg, hoverBg: CLEAR, pressBg: CLEAR, disabledFg },
+    text: { ...look.text, fg, hoverBg: CLEAR, pressBg: CLEAR, disabledFg },
+  };
+}
 export type TopNavBarProps = {
   look: TopNavLook;
+  // layer(기본) · transparent — 사진 위 투명 바
+  tone?: TopTone;
   mode?: ViewMode;
   type?: TopType;
   leading?: TopLeading | null;
@@ -360,7 +375,8 @@ export type TopNavBarProps = {
   style?: CSSProperties;
 };
 export function TopNavBar({
-  look,
+  look: baseLook,
+  tone = 'layer',
   mode = 'auto',
   type = 'standard',
   leading = type === 'standard' ? 'back' : null,
@@ -385,6 +401,7 @@ export function TopNavBar({
   ariaLabel,
   style,
 }: TopNavBarProps) {
+  const look = toneLook(baseLook, tone);
   const desktop = type === 'desktop';
   const tt = type === 'root' ? look.types.root : look.types.standard;
   const padL = desktop ? look.desktop.padLeft : look.padX;

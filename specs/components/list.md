@@ -266,6 +266,8 @@
 
 [그림: 설정은 아이콘, 가계부는 타일](../../site/components/specs/list.tsx#prefix-guide)
 
+[그림: 섞이는 결과 — 목록 제목(거래 · 자산)으로 묶음을 나눈다 · 한 목록에 섞음](../../site/components/specs/list.tsx#mix-guide)
+
 ## 코드
 
 레시피 `recipes/shadcn/components/ui/list.tsx` 를 쓴다 — `List` · `ListItem` · `ListButtonItem` · `ListLinkItem` · `ListSwitchItem` · `ListCheckItem` · `ListCheckGroup` · `ListRadioGroup` · `ListRadioItem` · `ListDivider` · `ListHeader` · `ListTile` · `ListParentItem`. 아래 미리보기는 스펙 값으로 그린 모습이다.
@@ -486,6 +488,10 @@ import { List, ListButtonItem, ListParentItem } from "@/components/ui/list"
 - **긴 값의 겹침만 막는다** — 본문 최소 1em · 제목 · 글 설명 `overflow-wrap: anywhere` · 글 값은 줄 끝에서 끊는다(2026-10-15 Q-001). SEED 는 뒤 붙이개 `flexShrink 0` · 본문 `flexGrow 1` 만 두고 최소 폭 · 줄바꿈 규칙을 두지 않는다 — 줄지 않는 값 · 양보하는 본문은 SEED 와 같다.
 
 ## Migration notes
+
+### 2026-10-22 — 섞이는 결과 그림
+
+"다른 물건이 한 결과에 나오면 목록 제목으로 묶음을 나눈다"(6B)에 그림 mix-guide 를 더했다 — 스펙 PR1 에서 남은 것. 값 변경 없음.
 
 ### 2026-10-22 — 누르는 자리는 셋 이하 · 섞이는 결과는 묶음을 나눈다
 

@@ -7,10 +7,12 @@ import { buttonLook } from './button-look';
 import { resultSectionLook, snackbarLook, type ResultKind, type ResultSectionLook } from './feedback-look';
 import { ResultDoneDemo, ResultEmptyDemo, ResultFailureDemo } from './feedback-demos';
 import { ResultSectionPlayground } from './feedback-playground';
-import { Band, Legend, Muted, Pair, Pin, markBox, type Fig } from './feedback-screens';
+import { Band, FilterStrip, Legend, Muted, Pair, Pin, markBox, type Fig } from './feedback-screens';
 import { ResultSectionView, type ResultSectionViewProps } from './feedback-view';
 import { Card, Phone, Stat, Verdict, cardStack, rc, type Mode } from './kit';
 import { Cap, cta, tf } from './select-screens';
+import { SheetOverlay, SheetPanel } from './input-button-pickers';
+import { PHONE_SAFE, ov } from './overlay-screens';
 import { cardFace } from './card-face';
 
 const rl = (brand: 'desk' | 'hr' = 'desk') => resultSectionLook(brand);
@@ -29,9 +31,9 @@ const DONE = { kind: 'done' as const, title: '1,204건을 가져왔어요', desc
 const NOT_FOUND = { kind: 'empty' as const, icon: 'search-x' as const, title: '페이지를 찾을 수 없어요', primary: { label: '홈으로' } };
 
 // 화면 전체(large) — 폰 본문을 채운다
-function ResultPhone({ mode, title, scale = 0.65, h = 620, tabs = true, bottom, children }: { mode: Mode; title?: string; scale?: number; h?: number; tabs?: boolean; bottom?: ReactNode; children: ReactNode }) {
+function ResultPhone({ mode, title, scale = 0.65, h = 620, tabs = true, bottom, overlay, children }: { mode: Mode; title?: string; scale?: number; h?: number; tabs?: boolean; bottom?: ReactNode; overlay?: ReactNode; children: ReactNode }) {
   return (
-    <Phone title={title} back={!tabs} mode={mode} scale={scale} h={h} bg="bg-layer-default" tabs={tabs} bottom={bottom}>
+    <Phone title={title} back={!tabs} mode={mode} scale={scale} h={h} bg="bg-layer-default" tabs={tabs} bottom={bottom} overlay={overlay}>
       <div className="flex min-h-0 flex-1 flex-col">{children}</div>
     </Phone>
   );
@@ -224,7 +226,9 @@ const FailureGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 버튼 — 같은 일을 다시(다시 시도) · 돌아갈 곳이 없으면 홈으로 · 화면의 핵심 동작은 바닥 버튼
+// 버튼 — SEED 의 두 표(버튼의 위계 · 실패에서 나가는 길, 2026-10-22 사용자 결정 3B):
+// 화면 전체의 핵심 행동은 바닥 버튼(Bottom CTA) · 그 상태를 푸는 동작은 안 버튼(Contained) · 잠깐 연 시트는 머리 ✕ · 돌아갈 곳이 없으면 홈으로
+const SHEET_FAILURE = { kind: 'failure' as const, title: '혜택을 불러오지 못했어요', description: '잠시 뒤 다시 시도해 주세요.', primary: { label: '다시 시도' } };
 const ButtonsGuide: Fig = ({ caption }) => {
   const cell = (strong: string, note: string, node: ReactNode) => (
     <div className="flex w-[198px] flex-col items-center gap-2">
@@ -234,28 +238,104 @@ const ButtonsGuide: Fig = ({ caption }) => {
   );
   return (
     <Panel caption={caption}>
-      <div className="flex flex-wrap items-start justify-center gap-2">
+      <div className="mx-auto flex max-w-[420px] flex-wrap items-start justify-center gap-2">
         {cell(
-          '다시 시도',
-          '같은 일을 다시 하면 되는 실패',
-          <ResultPhone mode="auto" title="가계부" scale={0.55}>
-            <R size="medium" {...FAILURE} />
-          </ResultPhone>,
-        )}
-        {cell(
-          '홈으로',
-          '없는 주소 — 돌아갈 곳이 없으면',
-          <ResultPhone mode="auto" scale={0.55} tabs={false}>
-            <R size="large" {...NOT_FOUND} />
-          </ResultPhone>,
-        )}
-        {cell(
-          '바닥 버튼',
-          '화면의 핵심 동작은 바닥 버튼(Button large)',
+          'Bottom CTA — 바닥 버튼',
+          '화면 전체 결과 — 다음 여정의 핵심 행동은 바닥 버튼(Button large), 보조는 안 글 버튼',
           <ResultPhone mode="auto" title="가져오기" scale={0.55} tabs={false} bottom={cta('가계부로 가기', 'auto')}>
             <R size="large" {...DONE} primary={undefined} secondary={{ label: '다른 파일 가져오기' }} />
           </ResultPhone>,
         )}
+        {cell(
+          'Contained — 안 버튼',
+          '화면 일부(카드 · 띠 안) — 그 상태를 푸는 동작은 결과 안 버튼',
+          <HomePhone mode="auto" scale={0.55}>
+            <R size="medium" inCard {...EMPTY} title="이번 달 거래가 없어요" />
+          </HomePhone>,
+        )}
+        {cell(
+          '✕ 닫기 — 잠깐 연 시트',
+          '나가는 길은 시트 머리 ✕, 같은 일을 다시는 안 버튼 "다시 시도"',
+          <ResultPhone
+            mode="auto"
+            title="지어낸카드 플러스"
+            scale={0.55}
+            tabs={false}
+            overlay={
+              <SheetOverlay ov={ov()} mode="auto">
+                <SheetPanel ov={ov()} mode="auto" title="카드 혜택 불러오기" safe={PHONE_SAFE}>
+                  <R size="medium" {...SHEET_FAILURE} grow={false} />
+                </SheetPanel>
+              </SheetOverlay>
+            }
+          >
+            <span />
+          </ResultPhone>,
+        )}
+        {cell(
+          '홈으로',
+          '없는 주소 · 바로 들어온 링크 — 돌아갈 곳이 없으면',
+          <ResultPhone mode="auto" scale={0.55} tabs={false}>
+            <R size="large" {...NOT_FOUND} />
+          </ResultPhone>,
+        )}
+      </div>
+    </Panel>
+  );
+};
+
+// 비어 있는 까닭마다(2026-10-22 사용자 결정 2B) — 처음은 할 일 + 첫 버튼, 걸러서 0건은 조건 탓을 말하고 버튼 없이(지우기는 필터 바 맨 앞), 검색 0건은 검색어로
+const FIRST = { kind: 'empty' as const, icon: 'receipt-text' as const, title: '아직 기록한 거래가 없어요', description: '거래를 기록하면 날짜별로 여기에 모여요.', primary: { label: '거래 추가' } };
+const FILTERED = { kind: 'empty' as const, icon: 'funnel-x' as const, title: '조건에 맞는 거래가 없어요', description: '조건을 바꾸거나 지워 보세요.' };
+const SEARCHED = { kind: 'empty' as const, icon: 'search-x' as const, title: "'지어낸마트'에 대한 검색 결과가 없어요", description: '가맹점 이름으로도 찾아보세요.' };
+const EmptyGuide: Fig = ({ caption }) => {
+  const cell = (strong: string, note: string, node: ReactNode) => (
+    <div className="flex w-[198px] flex-col items-center gap-2">
+      {node}
+      <Cap strong={strong}>{note}</Cap>
+    </div>
+  );
+  return (
+    <Panel caption={caption}>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-wrap items-start justify-center gap-2">
+          {cell(
+            '처음 — 하나도 없음',
+            '할 일 + 첫 버튼',
+            <ResultPhone mode="auto" title="가계부" scale={0.55}>
+              <R size="large" {...FIRST} />
+            </ResultPhone>,
+          )}
+          {cell(
+            '걸러서 0건',
+            '조건 탓을 제목이 말한다 · 버튼 없음 — 지우기는 필터 바 맨 앞',
+            <ResultPhone mode="auto" title="가계부" scale={0.55}>
+              <FilterStrip on />
+              <R size="large" {...FILTERED} />
+            </ResultPhone>,
+          )}
+          {cell(
+            '검색 0건',
+            '검색어로 — 할 수 있는 일 한 줄 · 버튼 없음',
+            <ResultPhone mode="auto" title="거래 검색" scale={0.55} tabs={false}>
+              <R size="medium" {...SEARCHED} />
+            </ResultPhone>,
+          )}
+        </div>
+        <Pair>
+          <Verdict ok note="걸러서 0건 — 조건 탓이라고 말한다 · 지우기는 필터 바 맨 앞">
+            <ResultPhone mode="auto" title="가계부" scale={0.5}>
+              <FilterStrip on />
+              <R size="large" {...FILTERED} />
+            </ResultPhone>
+          </Verdict>
+          <Verdict ok={false} note='걸러서 0건에 "거래를 기록하면 여기에 모여요" + "거래 추가" — 할 일이 틀린다'>
+            <ResultPhone mode="auto" title="가계부" scale={0.5}>
+              <FilterStrip on />
+              <R size="large" {...EMPTY} />
+            </ResultPhone>
+          </Verdict>
+        </Pair>
       </div>
     </Panel>
   );
@@ -274,6 +354,7 @@ export const resultSectionFigures: Record<string, Fig> = {
   kinds: Kinds,
   'failure-guide': FailureGuide,
   'buttons-guide': ButtonsGuide,
+  'empty-guide': EmptyGuide,
   'ex-empty': ExEmpty,
   'ex-failure': ExFailure,
   'ex-done': ExDone,

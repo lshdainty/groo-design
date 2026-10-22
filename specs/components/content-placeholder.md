@@ -49,7 +49,7 @@
 
 ### 불러오는 동안은 Skeleton
 
-이미지를 불러오는 동안은 같은 모서리 · 같은 크기의 [Skeleton](skeleton.md) 이다 — 이 그림은 다 불러왔는데 없거나 실패했을 때만 보인다. 불러오는 중과 없음이 같은 그림이면 기다려야 하는지 알 수 없다. 이미지 틀도 기다리는 영역의 시간표를 따른다([Skeleton 의 "기다리는 동안"](skeleton.md#기다리는-동안)).
+이미지를 불러오는 동안은 같은 모서리 · 같은 크기의 [Skeleton](skeleton.md) 이다 — 이 그림은 다 불러왔는데 없거나 실패했을 때만 보인다. 불러오는 중과 없음이 같은 그림이면 기다려야 하는지 알 수 없다. 그림 자리의 스켈레톤 면은 **처음부터** 깐다 — 영역의 시간표(0 ~ 1초는 틀만)를 기다리지 않고, 빈 칸을 두지 않는다. 받아 둔 그림(붙는 순간 이미 받은 그림)은 스켈레톤 없이 바로 보인다. 그림 자리가 시간표에서 따르는 것은 10초 실패다 — 10초가 지나도 안 오면 이 그림이다([Skeleton 의 "기다리는 동안"](skeleton.md#기다리는-동안) · [Image Frame](image-frame.md) 의 State — 웹 · 앱 레시피가 이미 이렇다, 2026-10-22 사용자 결정 4B — https://claude.ai/artifact/KPp9Lpd3v5KMgNrDn7pZmt).
 
 [그림: 불러오는 중은 스켈레톤 · 실패는 대체 그림 — 둘을 같은 그림으로 보인 화면](../../site/components/specs/content-placeholder.tsx#loading-guide)
 
@@ -63,12 +63,57 @@
 
 제 모서리 · 테두리 · 그림자가 없다 — 담는 틀(카드 · 썸네일)이 자르고 두른다. 그래서 같은 대체 그림이 둥근 썸네일에도 화면 폭 사진에도 맞는다.
 
-### 이 부품이 아닌 것
+### 대신 보이는 것 고르기
 
-- 사람의 사진이 없으면 [Avatar](avatar.md) 의 이니셜이다.
-- 자산 · 카드 로고의 글자 모노그램(로고를 못 불러오면 이름 첫 글자)은 이것이 아니다 — [Logo Tile](logo-tile.md) 의 첫 글자다.
-- 그림이 없는 카드 가운데 아는 카드사의 카드는 이것이 아니다 — 기관 색 면에 회사 · 카드 이름을 쓴 카드 면이다([Image Frame](image-frame.md) 의 카드 그림). 모르는 카드사만 이 그림(`credit-card`)이다.
-- 비어 있는 목록 · 화면은 [Result Section](result-section.md) `empty` 다.
+내용이 아직 없거나 · 없거나 · 못 받았을 때 그 자리에 무엇을 보일지는 이 절 한 곳에서 고른다 — [Skeleton](skeleton.md) · [Result Section](result-section.md) · [Image Frame](image-frame.md) · [Avatar](avatar.md) · [Logo Tile](logo-tile.md) · [Chart](chart.md) 는 이 절을 가리키고 제 값 · 모양만 둔다(2026-10-22 사용자 결정 1B — https://claude.ai/artifact/KPp9Lpd3v5KMgNrDn7pZmt). 기다리는 시간 · 덮개(무엇으로 기다리나)는 [Skeleton 의 "무엇으로 기다리나"](skeleton.md#무엇으로-기다리나) 한 표이고 여기서 다시 적지 않는다. 비어 있음의 글 · 버튼은 [Result Section 의 "비어 있는 까닭마다"](result-section.md#비어-있는-까닭마다) 다.
+
+**① 영역(목록 · 카드 · 차트) — 상황 → 보이는 것**
+
+| 상황 | 보이는 것 | 글 · 버튼 | 어디서 |
+|---|---|---|---|
+| 0 ~ 1초 | 틀만 — 머리 · 필터 · 탭은 그리고 데이터 자리는 비운 채 높이만 지킨다 | — | Skeleton 시간표 |
+| 1초 ~ (구조를 안다) | **Skeleton** — 곧 올 줄 · 숫자 · 차트 자리 모양대로 | 5초에 "평소보다 오래 걸리고 있어요." | Skeleton "무엇으로 기다리나" |
+| 다 옴 · 하나도 없음(처음) | **Result Section `empty`** — 아이콘이 그 내용을 말한다 | 제목 "아직 기록한 거래가 없어요" · 설명은 할 일 · 첫 버튼 "거래 추가" | Result Section |
+| 다 옴 · 이 기간에 없음 | Result Section `empty` | 제목 "10월 거래가 없어요" · 그 화면에서 만들 수 있으면 첫 버튼 | Result Section |
+| 다 옴 · 걸러서 0건 | Result Section `empty` — 걸러진 아이콘 | 제목 "조건에 맞는 거래가 없어요" · 설명 "조건을 바꾸거나 지워 보세요." · 버튼 없음(필터 바 맨 앞 지우기가 맡는다) | Result Section |
+| 검색 0건 | Result Section `empty` `medium` | "'{검색어}'에 대한 … 없어요" | [Icon Picker](icon-picker.md) · [Searchable List](searchable-list.md)(결정) |
+| 못 받음 · 10초 | **Result Section `failure`** | "…를 불러오지 못했어요" + "다시 시도" — 이미 보인 내용은 지우지 않는다 | Result Section(결정) |
+| 보던 내용이 있는데 다시 받기 실패 | 내용 그대로 + [Snackbar](snackbar.md) | "새로 고치지 못했어요." — 스켈레톤으로 돌아가지 않는다 | Skeleton "같은 내용을 다시 받을 때"(결정) |
+
+**② 그림 자리 — 무엇이 · 언제 무엇으로**
+
+| 무엇 | 부품 | 받는 중 | 없음 | 실패 |
+|---|---|---|---|---|
+| 사진 · 카드 그림 · 규정 그림 | [Image Frame](image-frame.md) | 같은 모서리의 스켈레톤 면 — 처음부터(받아 둔 그림은 바로) | **이 그림(Content Placeholder)** — 옅은 면 + 자리를 말하는 그림(카드 · 영수증 · 문서). 아는 카드사의 그림 없는 카드는 카드 면 | 이 그림 |
+| 사람 | [Avatar](avatar.md) | 이니셜이 먼저 · 사진이 오면 덮는다 | 이니셜 + 이름 색 | 이니셜 |
+| 은행 · 증권 · 카드 · 회사(물건) | [Logo Tile](logo-tile.md) | 첫 글자가 먼저 · 그림이 오면 덮는다 | 첫 글자 + 기관 색(표에 없으면 이름 색) | 첫 글자 |
+| 카테고리 · 기능(분류) | [List](list.md) 타일 | — 그림을 받지 않는다(아이콘) | — | — |
+| 차트 자리 | [Chart](chart.md) | 차트 자리만 스켈레톤(모서리 16), 머리 · 타일 이름은 그린다 | Result Section `medium` `empty` | Result Section `medium` `failure` |
+
+무엇을 Image Frame 으로 담는지(사람 · 물건 · 그림 · 분류 · 비율 상자)는 [Image Frame 의 "무엇을 Image Frame 으로"](image-frame.md#무엇을-image-frame-으로) 다.
+
+**③ 비슷한 것끼리**
+
+| | Skeleton | Content Placeholder | Result Section `empty` | Result Section `failure` | 이니셜 · 첫 글자 |
+|---|---|---|---|---|---|
+| 뜻 | 곧 온다 | 그림이 없다 · 못 받았다 | 내용이 없다 | 못 받았다 | 이름은 안다 |
+| 모양 | 자리 모양의 회색 면(반짝임) | 옅은 면 + 가운데 선 그림(틀 높이 50%, 16 ~ 160) | 아이콘 40 · 제목 · 설명 · 버튼 | 위험 색 느낌표 · "다시 시도" | 이름 색 원 · 타일 + 첫 글자 |
+| 크기 · 자리 | 올 내용과 같은 크기 | 담는 틀 그대로 | 영역 가운데 | 영역 가운데 | 자리 크기 그대로 |
+| 누를 것 | 없음 | 없음(틀이 받는다) | 첫 버튼 · 없을 수도 | 다시 시도 | 없음 |
+| 끝나는 때 | 내용 · 결과가 오면 | 바뀌지 않는다 | 내용이 생기면 | 다시 받으면 | 그림이 오면 덮인다 |
+| 보조 기술 | 숨김 · 영역 `aria-busy` | 대체 글을 자리 이름으로 | `role="status"` | `role="status"` — 무엇이 안 됐는지 | 혼자면 이름, 이름 옆이면 장식 |
+
+**예외 · 주의**
+
+- **받아 둔 그림은 스켈레톤 없이 바로** — 붙는 순간 이미 받은 그림은 그대로 보인다(웹 · 앱 레시피가 이미 이렇다).
+- **이니셜 · 첫 글자는 스켈레톤이 아니다** — 이름은 이미 와 있다. 그림이 오면 덮는다(Avatar · Logo Tile 의 결정).
+- **있고 없고가 갈리는 섹션은 스켈레톤에 넣지 않는다** — 뜰지 알 수 없다([Skeleton](skeleton.md) 의 "틀은 먼저").
+- **버튼은 그 화면이 할 수 있을 때만** — 보기만 하는 화면 · 걸러서 0건은 버튼 없이 둘 수 있다(SEED Result Section "버튼을 모두 사용하지 않을 수도 있습니다").
+- **카드 · 띠 안의 결과는 `medium` · 좌우 0** — 카드 여백 24 가 맡는다. 화면 전체는 `large`.
+- **숫자 자리를 "—" · "0원" 으로 채우지 않는다** — 기다리는 중이면 스켈레톤, 정말 0 이면 "0원".
+- **자산 · 카드 로고의 글자 모노그램 · 아는 카드사의 그림 없는 카드는 이 그림이 아니다** — 앞은 [Logo Tile](logo-tile.md) 의 첫 글자, 뒤는 기관 색 면에 회사 · 카드 이름을 쓴 카드 면([Image Frame](image-frame.md) 의 카드 그림)이다. 모르는 카드사만 이 그림(`credit-card`)이다.
+
+[그림: 같은 띠의 네 상태 — 불러오는 중 · 처음 · 걸러서 0건 · 불러오지 못함](../../site/components/specs/content-placeholder.tsx#standin-guide)
 
 ## 코드
 
@@ -139,6 +184,10 @@ import { ImageFrame } from "@/components/ui/image-frame"
 - **대체 글을 자리 이름으로 남긴다** — SEED 는 그림을 숨기기만 한다.
 
 ## Migration notes
+
+### 2026-10-22 — 대신 보이는 것 고르기 · 그림 자리는 처음부터 스켈레톤
+
+"이 부품이 아닌 것" 목록을 "대신 보이는 것 고르기" 절로 넓혔다 — 영역 표(시간표 · 처음 · 이 기간 · 걸러서 0건 · 검색 0건 · 실패 · 다시 받기 실패) · 그림 자리 표(Image Frame · Avatar · Logo Tile · List 타일 · Chart) · 비교 표 · 예외 · 주의. Skeleton · Result Section · Image Frame · Avatar · Logo Tile · Chart 는 이 절을 가리킨다(1B). 그림 자리의 처음 1초는 코드대로 글을 맞췄다 — "이미지 틀도 시간표를 따른다"(이 문서) ↔ "처음부터 깐다 — 빈 칸이 없다"(image-frame.yaml)가 어긋나 있었다. 처음부터 스켈레톤, 받아 둔 그림은 바로, 시간표에서 따르는 것은 10초 실패다(4B — 웹 `image-frame.tsx` · 앱 `p_image_frame.dart` 가 이미 이렇다). 사용자 결정 — https://claude.ai/artifact/KPp9Lpd3v5KMgNrDn7pZmt. 고르지 않은 안: 흩어진 그대로(1A) · DESIGN.md 새 절(1C) · 두 문장 그대로(4A) · 1초부터 스켈레톤(4C). 값 변경 없음.
 
 ### 2026-10-03 — 새로 둔다(SEED Content Placeholder)
 

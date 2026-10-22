@@ -169,6 +169,15 @@ function topLook(brand: Brand): TopNavLook {
     leading[li] = { icon: icon as NavIcon, label };
   }
   const p = pressOf(pr['iconButton.scale'], `${F} pressed iconButton.scale`, size);
+  // 사진 위 투명 바 — 바탕 없음 · 제목 · 아이콘 · 글 버튼은 한 색(static-white). 막힘은 layer 와 같다
+  sameSet(axisValues(spec, 'tone'), ['layer', 'transparent'], `${F} tone`);
+  const tr = resolveState(spec, { tone: 'transparent' }, 'enabled');
+  const trDi = resolveState(spec, { tone: 'transparent' }, 'disabled');
+  if (String(unbox(tr['root.background'])) !== 'transparent') throw new Error(`${F} tone transparent 의 root.background 가 transparent 가 아니다`);
+  const trFg = tok(tr['title.foreground'], brand, `${F} transparent title.foreground`);
+  for (const k of ['iconButton.color', 'textButton.foreground'] as const) {
+    if (tok(tr[k], brand, `${F} transparent ${k}`).light !== trFg.light) throw new Error(`${F} tone transparent 의 ${k} 가 제목 색과 다르다 — 그림은 한 색으로 그린다`);
+  }
   return {
     height: len(b['root.height'], `${F} root.height`),
     padX: len(b['root.paddingX'], `${F} root.paddingX`),
@@ -220,6 +229,7 @@ function topLook(brand: Brand): TopNavLook {
     color: motionPair(b['iconButton.transitionDuration'], b['iconButton.transitionEasing'], `${F} 바탕 색`),
     leading,
     primary,
+    transparent: { fg: trFg, disabledFg: tok(trDi['iconButton.color'], brand, `${F} transparent disabled iconButton.color`) },
   };
 }
 

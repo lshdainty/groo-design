@@ -206,6 +206,8 @@ Select 는 늘 [Field](field.md) 의 라벨과 함께 쓴다. 라벨이 없으�
 | 화면 폭 목록에서 하나를 고르고 바로 바뀐다 | **[List](list.md) 라디오 줄** | 기본 통화 · 테마 |
 | 누르면 동작을 실행한다 | **[Menu](menu.md)**(1280 이상) · [Menu Sheet](menu-sheet.md)(1280 미만) — 값을 고르는 데 쓰지 않는다 | 거래 줄 ⋮ → 수정 · 복사 · 삭제 |
 
+[그림: 첫 갈래 — 폼 값 · 보기 거르기 · 구역 옮기기 · 켜고 끄기 · 화면 폭 목록 하나 · 실행](../../site/components/specs/select.tsx#first-guide)
+
 **폼 값 — 위에서부터 판단한다**
 
 선택지마다 필요한 정보의 양, 선택지 개수, 글 길이로 고른다. 위에서부터 판단한다(SEED — 2026-10-01 사용자 결정). "이럴 때 더 맞다" 열은 SEED Radio 문서의 판단 기준이다.
@@ -387,6 +389,10 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
 - **트리거 이름은 라벨 하나** — SEED React 는 트리거에 고른 값을 따로 읽히지 않는다. groo 는 `role="combobox"` 의 값으로 고른 글이 읽힌다(라벨 + 값).
 
 ## Migration notes
+
+### 2026-10-22 — 첫 갈래 그림
+
+"먼저 — 이 자리는 무슨 일을 하나" 표에 그림 first-guide 를 더했다(고르는 법 1B 의 비용 줄 "사이트 그림 pick-guide 에 첫 갈래 그림 하나" — 스펙 PR1 에서 남은 것). 판단 순서 그림 pick-guide 는 그대로다. 값 변경 없음.
 
 ### 2026-10-22 — 고르는 컴포넌트 고르기를 한 곳에
 

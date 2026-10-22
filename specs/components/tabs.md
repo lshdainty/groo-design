@@ -1,6 +1,6 @@
 # Tabs
 
-> 다른 구역으로 옮기는 탭. 화면 · 구역 맨 위의 1차 탭은 Line(밑줄 막대), 그 안의 2차 탭은 Chip Tabs(칩 모양)다. 같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게 보는 자리는 [Segmented Control](segmented-control.md), 폼 값은 [Select](select.md) 의 "고르는 컴포넌트 고르기"(판단 순서), 목록 조건을 걸고 푸는 자리는 [Chip](chip.md) 의 필터 바다.
+> 다른 구역으로 옮기는 탭. 화면 · 구역 맨 위의 1차 탭은 Line(밑줄 막대), 그 안의 2차 탭은 Chip Tabs(칩 모양)다. 같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게 보는 자리는 [Segmented Control](segmented-control.md), 폼 값은 [Select](select.md) 의 "고르는 컴포넌트 고르기"(판단 순서), 목록 조건을 걸고 푸는 자리는 [Chip](chip.md) 의 필터 바다. 화면 사이를 오가는 부품(하단 탭 바 · 사이드바 · 상단 바)과 고르는 표는 DESIGN.md Layout 의 "이동 부품 고르기" 한 곳이다.
 
 구조는 당근 [SEED Tabs](https://seed-design.io/components/tabs)(Apache-2.0)를 따른다 — Line 타입(목록 · 탭 · 글 · 막대)과 Chip 타입(칩 모양 탭), 1차 Line · 2차 Chip. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
@@ -98,7 +98,11 @@
 
 ### 탭 바보다 더 나눌 때 — 화면 위 Line
 
-폰의 [Bottom Navigation](bottom-navigation.md) 은 다섯 칸이 어느 화면에서나 같다 — 더 나눌 구분은 탭 바 칸을 바꾸지 않고 그 탭 화면의 맨 위 1차 Line 으로 둔다(SEED Bottom Navigation — "더 많은 구분이 필요하다면 화면 상단에 Tabs 를 사용"). Desk 의 가계부 탭은 화면 위 Line 넷(가계부 · 자산 · 통계 · 예산 — Fill · `medium` 44)이다. 머리 제목은 넷 모두 "가계부" 다(탭 바 칸의 이름 — 고른 탭은 Line 이 말한다. 문서 제목만 "{탭 이름} - 그루 담다"). 화면 맨 위 1차 Line 은 어디서나 [Top Navigation](top-navigation.md) 바로 아래에 붙어 함께 고정된다(SEED Tabs `stickyList` — 가계부 묶음 · 카테고리의 지출 · 수입). 숨는 것은 그 아래 스크롤 상자의 [Scroll Auto Hide](scroll-auto-hide.md) 뿐이다. 데스크톱(768 이상)에서는 넷이 [Side Navigation](side-navigation.md) 의 항목이라 이 탭 줄이 없다.
+폰의 [Bottom Navigation](bottom-navigation.md) 은 다섯 칸이 어느 화면에서나 같다 — 더 나눌 구분은 탭 바 칸을 바꾸지 않고 그 탭 화면의 맨 위 1차 Line 으로 둔다(SEED Bottom Navigation — "더 많은 구분이 필요하다면 화면 상단에 Tabs 를 사용"). 화면 맨 위 1차 Line 은 어디서나 [Top Navigation](top-navigation.md) 바로 아래에 붙어 함께 고정된다(SEED Tabs `stickyList`). 숨는 것은 그 아래 스크롤 상자의 [Scroll Auto Hide](scroll-auto-hide.md) 뿐이다 — 화면을 오가는 1차 탭은 상단 바와 함께 남는다([Scroll Auto Hide](scroll-auto-hide.md) 의 "숨지 않는 것").
+
+#### Desk 에서는
+
+아래는 부품 규칙이 아니라 Desk 의 화면 배치다(2026-10-22 사용자 결정 9B — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L). Desk 의 가계부 탭은 화면 위 Line 넷(가계부 · 자산 · 통계 · 예산 — Fill · `medium` 44)이다. 머리 제목은 넷 모두 "가계부" 다(탭 바 칸의 이름 — 고른 탭은 Line 이 말한다. 문서 제목만 "{탭 이름} - 그루 담다"). 화면 위 Line 은 가계부 묶음 · 카테고리의 지출 · 수입에 둔다. 데스크톱(768 이상)에서는 넷이 [Side Navigation](side-navigation.md) 의 항목이라 이 탭 줄이 없다.
 
 웹과 앱은 짜임이 다르고 겪는 것은 같다(2026-10-16 구현 세션 질문 Q-017-1 정리 — Tabs 7A · 화면 틀 7A).
 
@@ -297,6 +301,10 @@ const tab = params.get("tab") ?? "category"
 - **웹은 1차 탭을 주소에 남긴다** — SEED 에 없는 규칙이다(사용자 결정 2026-10-02). 내용은 SEED 기본처럼 바로 바꾸고 상태를 남긴다.
 
 ## Migration notes
+
+### 2026-10-22 — Desk 배치 소제목 · 이동 부품 표 링크
+
+"탭 바보다 더 나눌 때" 에서 Desk 의 가계부 넷 · 머리 제목 · 데스크톱 사이드바 문단을 "Desk 에서는" 소제목 아래로 옮겼다 — 부품 규칙(화면 위 1차 Line · 상단 바 아래 고정)은 위에 남는다(9B). 머리말에 DESIGN.md Layout 의 "이동 부품 고르기" 링크(6B). 사용자 결정 — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L. 문장 이동만, 값 변경 없음.
 
 ### 2026-10-22 — 넘친 Fill 의 가장자리 16 · 앱 탭 이름(I-04 검수)
 

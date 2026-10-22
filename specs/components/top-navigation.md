@@ -1,6 +1,6 @@
 # Top Navigation
 
-> 화면 맨 위의 바(상단 바) — 지금 화면의 이름과 이동(뒤로 · 닫기 · 주 메뉴), 화면의 동작 두셋을 둔다. 폰(Desk 앱 · Desk 웹 768 미만 · HR 웹 768 미만)의 모든 화면과 데스크톱(768 이상)의 머리가 이것이다. 탭 사이를 오가는 것은 [Bottom Navigation](bottom-navigation.md), 데스크톱의 메뉴는 [Side Navigation](side-navigation.md), 화면 안에서 구역을 나누는 것은 [Tabs](tabs.md) 다.
+> 화면 맨 위의 바(상단 바) — 지금 화면의 이름과 이동(뒤로 · 닫기 · 주 메뉴), 화면의 동작 두셋을 둔다. 폰(Desk 앱 · Desk 웹 768 미만 · HR 웹 768 미만)의 모든 화면과 데스크톱(768 이상)의 머리가 이것이다. 다른 이동 부품([Bottom Navigation](bottom-navigation.md) · [Side Navigation](side-navigation.md) · [Side Panel](side-panel.md) · [Tabs](tabs.md))과 고르는 표는 DESIGN.md Layout 의 "이동 부품 고르기" 한 곳이다.
 
 구조는 당근 [SEED Top Navigation](https://seed-design.io/components/top-navigation)(Apache-2.0)을 따른다 — "화면 상단에 위치하여 탐색 인터페이스를 제공하는 네비게이션 컴포넌트" 로, 앱의 최상위 탭에서 쓰는 **Root** 와 "2-depth 이상의 화면에서" 쓰는 **Standard** 두 타입, 왼쪽(뒤로 · 닫기) · 가운데(제목) · 오른쪽(아이콘 · 글 버튼) 세 자리. 높이 56 · 아이콘 버튼 44 · 아이콘 24 · 화면 끝 6 은 SEED 값 그대로다. 데스크톱 머리(GNB)는 SEED 에 컴포넌트가 없어 groo 가 같은 규칙으로 더했다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). groo 에 처음 두는 컴포넌트다 — 지금 제품마다 다른 머리(56 · 58 · 48, 아이콘 버튼 36 · 40 · 48)를 대신한다.
 
@@ -91,6 +91,19 @@
 
 [표: 바](top-navigation.yaml#base.enabled@root)
 
+### Tone — 사진 위 투명 바
+
+`layer`(기본)는 불투명 `bg-layer-default` 바다 — 모든 화면. `transparent` 는 사진이 화면 위를 채우는 상세(맨 위에 꽉 찬 카드 그림 · 사진)에서 사진 위에 겹쳐 두는 투명 바다 — 제목 · 아이콘 · 글 버튼이 흰 글자(`static-white`)이고, 막힌 버튼은 `fg-disabled` 그대로다(SEED tone transparent). 본문(사진)은 바 아래가 아니라 화면 맨 위(위 안전 영역 포함)에서 시작한다. 스크롤해 사진이 바 밑으로 지나가면 바탕이 채워진다 — `layer` 로 바뀌고(바탕 · 글 · 아이콘 색이 150ms 로) 선은 긋지 않는다(SEED — "배경이 투명한 Top Navigation 을 사용하는 경우 스크롤할 때 배경색이 채워지는 동작을 가집니다"). 지금 이 톤을 쓰는 화면은 없다(2026-10-22 사용자 결정 5C — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L).
+
+두 값은 **열린 일**이다 — groo 에 토큰이 없어 이 톤을 쓰는 화면을 이관할 때 함께 정한다(값은 SEED 그대로 둘 자리다).
+
+- **바 위 막** — SEED 는 막(gradient — 바 위 검정 35% `#00000059` → 아래 투명, 바 아래로 20 더)을 권한다 — 막 없이 쓰면 "콘텐츠 가독성을 직접 확보해야" 한다. 막 없이 흰 글자 · 아이콘을 밝은 사진 위에 두면 대비가 모자란다.
+- **누름 · 호버 바탕** — SEED 는 투명도 있는 `bg.transparent-pressed` 다. groo 의 누름 바탕(`bg-layer-default-pressed`)은 불투명이라 사진 위에 회색 상자가 된다 — 정할 때까지 바탕 없이 2px 거리 축소만 한다.
+
+[표: 톤](top-navigation.yaml#tone)
+
+[그림: 투명 바 — 맨 위 사진 위 · 스크롤하면 바탕이 채워진다](../../site/components/specs/top-navigation.tsx#transparent)
+
 ### State
 
 | 상태 | 모습 |
@@ -123,7 +136,11 @@
 
 [그림: 오른쪽 — 아이콘 둘 · 넷을 늘어놓은 바 · ⋯ 에 모은 바](../../site/components/specs/top-navigation.tsx#trailing-guide)
 
-### 탭 첫 화면의 오른쪽 — 홈은 검색 · 알림, 나머지는 검색
+### Desk 에서는
+
+아래는 부품 규칙이 아니라 Desk 의 화면 배치다 — 다른 서비스는 위 규칙(오른쪽은 둘까지 · 넘치면 ⋯)만 따른다(2026-10-22 사용자 결정 9B — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L).
+
+#### 탭 첫 화면의 오른쪽 — 홈은 검색 · 알림, 나머지는 검색
 
 Desk 폰(앱 · 웹 768 미만)의 탭 첫 화면은 오른쪽에 홈 = 검색 · 알림, 가계부 · 캘린더 · 전체 = 검색을 둔다 — 어느 탭에서나 머리에 검색이 있어 탭을 옮기지 않고 검색으로 간다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-017-2a A). 검색은 어느 탭에서 누르든 같은 거래 검색 화면으로 가고, 벨은 알림 화면(`standard` — ← · "알림" · "모두 읽음")으로 간다. 웹도 같은 자리다 — 웹은 거래 검색 화면을 먼저 만들고 입구를 단다. "준비 중" 으로 가는 입구는 두지 않는다(Q-017-3a C).
 
@@ -153,20 +170,34 @@ Desk 폰(앱 · 웹 768 미만)의 탭 첫 화면은 오른쪽에 홈 = 검색 �
 
 [그림: ← 는 들어온 화면으로 · ✕ 는 흐름을 닫고 처음 자리로](../../site/components/specs/top-navigation.tsx#back-close-guide)
 
-### ← 는 들어온 화면으로(History)
+### ← 는 어디로 — History 기본 · 화면마다 Hierarchy
 
-← 는 사용자가 실제로 지나온 화면으로 돌아간다(SEED 의 History Back — 웹 `history.back()` · 앱 `pop`). 주소로 바로 들어왔거나(알림 · 북마크 · 새 탭) 앱 안에 앞 화면이 없으면 그 화면의 상위 화면으로 간다(Hierarchy) — 이때는 지금 주소를 고쳐 쓴다(뒤로 가기를 눌러 다시 이 화면으로 오지 않게). 상위 화면은 화면마다 정해 둔다(경로 설정). 기기 · 브라우저의 뒤로 가기와 ← 는 같은 곳으로 간다.
+← 는 기본으로 사용자가 실제로 지나온 화면으로 돌아간다(SEED 의 History Back — 웹 `history.back()` · 앱 `pop`). 주소로 바로 들어왔거나(알림 · 북마크 · 새 탭) 앱 안에 앞 화면이 없으면 그 화면의 상위 화면으로 간다 — 이때는 지금 주소를 고쳐 쓴다(뒤로 가기를 눌러 다시 이 화면으로 오지 않게). 상위 화면은 화면마다 정해 둔다(경로 설정). 기기 · 브라우저의 뒤로 가기와 ← 는 같은 곳으로 간다.
 
 | 들어온 길 | ← 를 누르면 |
 |---|---|
 | 앱 안에서 눌러 들어옴(홈 벨 → 알림) | 들어온 화면(홈) |
 | 주소로 바로 · 알림을 눌러 · 새 탭 | 상위 화면 — 주소를 고쳐 쓴다 |
 
+SEED 는 두 방식을 "화면의 목적과 진입 경로에 따라 선택" 하게 한다 — 설정처럼 "어디서 왔든 같은 곳" 이 나은 화면은 화면마다 상위 화면(Hierarchy Back)을 고를 수 있다. 두 방식이 갈리는 것은 지름길로 들어왔을 때뿐이다 — 들어온 길이 구조와 같으면 같은 곳으로 간다. 어느 화면이 Hierarchy 인지는 화면 이관 때 화면마다 비교 페이지로 고르고, 정하지 않은 화면은 History 다(2026-10-22 사용자 결정 4B — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L).
+
+| | History(기본) | Hierarchy |
+|---|---|---|
+| ← 를 누르면 | 사용자가 지나온 바로 앞 화면 | 정보 구조의 상위 화면 |
+| 들어온 길이 구조와 같을 때 | 같은 곳 | 같은 곳 |
+| 지름길로 들어왔을 때(홈 순자산 카드의 눈 → 금액 가리기) | 들어온 화면(홈) | 상위 화면(설정) |
+| 주소 · 알림으로 바로 들어왔을 때 | 상위 화면(주소를 고쳐 쓴다 — 위 규칙) | 상위 화면 |
+| 어울리는 자리(SEED) | 검색 · 추천 · 피드처럼 이어 보는 흐름, 상세에서 상세로 | 설정 · 프로필처럼 고정 구조를 단계로 내려가는 화면 |
+| 고르는 때 | 화면 이관 때 화면마다 — 정하지 않으면 History | 설정 묶음처럼 "어디서 왔든 같은 곳" 이 나은 화면 |
+
+- **대가** — Hierarchy 를 고른 화면은 ← 가 다른 탭의 화면으로 갈 수 있다 — 하단 탭 바의 지금 칸이 홈에서 전체로 뛴다(홈의 눈 → 금액 가리기 → ← → 설정). 고를 때 이것을 함께 본다.
+- **열린 일** — Hierarchy 화면에서 기기 · 브라우저의 뒤로 가기도 ← 와 같은 곳으로 가는지(웹 브라우저의 뒤로는 방문 기록대로다), 레시피 `TopNavigationBackButton` · 앱 `PTopNavigation` 의 ← 에 "상위로" 를 고르는 값은 Hierarchy 를 고르는 화면이 생길 때(이관 때) 정해 더한다. 그 전까지 ← 는 지금 동작(History) 그대로다.
+
 [그림: ← — 들어온 화면으로 · 앞 화면이 없으면 상위 화면](../../site/components/specs/top-navigation.tsx#history-guide)
 
 ### 스크롤해도 선을 긋지 않는다
 
-바는 스크롤해도 맨 위에 그대로 있고, 목록이 그 밑으로 지나가도 선 · 그림자를 긋지 않는다(SEED Top Navigation — "고정된 영역과 스크롤되는 영역을 구분하기 위해 별도의 시각적인 장치를 표시하지 않습니다"). 데스크톱 머리 아래 늘 있던 1px 선도 걷는다. 바는 스크롤 방향에 따라 숨지 않는다 — 원장 머리처럼 스크롤하면 숨는 보조 머리는 바 아래 스크롤 상자 안의 [Scroll Auto Hide](scroll-auto-hide.md) 다(2026-10-10). 한 표면 안에서 머리와 본문이 따로 스크롤되는 [Dialog](dialog.md) · [Side Panel](side-panel.md) · [Side Navigation](side-navigation.md) 은 그 부품의 규칙대로 본문이 스크롤되면 머리 아래 1px 선을 긋는다.
+바는 스크롤해도 맨 위에 그대로 있고, 목록이 그 밑으로 지나가도 선 · 그림자를 긋지 않는다(SEED Top Navigation — "고정된 영역과 스크롤되는 영역을 구분하기 위해 별도의 시각적인 장치를 표시하지 않습니다"). 데스크톱 머리 아래 늘 있던 1px 선도 걷는다. 바는 스크롤 방향에 따라 숨지 않는다 — 원장 머리처럼 스크롤하면 숨는 보조 머리는 바 아래 스크롤 상자 안의 [Scroll Auto Hide](scroll-auto-hide.md) 다(2026-10-10). 사진 위 투명 바(`transparent`)는 사진이 바 밑으로 지나가면 바탕이 채워지고, 그때도 선을 긋지 않는다(위 "Tone"). 한 표면 안에서 머리와 본문이 따로 스크롤되는 [Dialog](dialog.md) · [Side Panel](side-panel.md) · [Side Navigation](side-navigation.md) 은 그 부품의 규칙대로 본문이 스크롤되면 머리 아래 1px 선을 긋는다.
 
 [그림: 스크롤한 목록 — 바 아래 선 · 그림자 없음 · 늘 있던 선](../../site/components/specs/top-navigation.tsx#scroll-guide)
 
@@ -208,7 +239,7 @@ HR 웹 768 미만은 하단 탭 바가 없다 — 모든 화면이 `standard` �
 
 레시피 `recipes/shadcn/components/ui/top-navigation.tsx` 를 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
-- `TopNavigation` — 바(`<header>`, `main` 밖). `type`(`"root"` · `"standard"` 기본 · `"desktop"`). 자식은 아래 부품.
+- `TopNavigation` — 바(`<header>`, `main` 밖). `type`(`"root"` · `"standard"` 기본 · `"desktop"`) · `tone`(`"layer"` 기본 · `"transparent"` — 사진 위 흰 글자 · 아이콘, 바탕 없음). 투명 바는 쓰는 쪽이 사진이 바 밑으로 지나갔는지 보고 `tone` 을 `"layer"` 로 바꾼다(바탕 · 색은 150ms). 막 · 투명 누름 바탕은 열린 일이라 아직 그리지 않는다 — 누르면 축소만. 자식은 아래 부품.
 - `TopNavigationBackButton` — ← (이름 "뒤로"). 누르면 앱 안에 앞 화면이 있으면 `navigate(-1)`, 없으면 `fallbackHref`(그 화면의 상위 화면 주소, 필수)로 지금 주소를 고쳐 간다(`replace`). `onClick` 을 주면 그것을 부른다(앱은 `pop`).
 - `TopNavigationCloseButton` — ✕ (이름 "닫기"). `onClick` 필수 — 흐름의 처음 자리로. `dirty` 면 닫기 전에 "작성한 내용이 사라져요" 를 묻는다.
 - `TopNavigationMenuButton` — ☰ (이름 "주 메뉴", `aria-haspopup="dialog"` · `aria-expanded` · `aria-controls`). HR 폰의 주 메뉴 Side Panel 을 연다.
@@ -346,12 +377,49 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 {/* 주 메뉴 — Side Panel(왼쪽)에 Side Navigation 의 항목. side-panel.md 의 코드 */}
 ```
 
+### 사진 위 — 투명 바
+
+[그림: 카드 상세 — 사진 위 투명 바 · 사진이 지나가면 채워진 바](../../site/components/specs/top-navigation.tsx#ex-transparent)
+
+```tsx
+import { useEffect, useRef, useState } from "react"
+import { Share2 } from "lucide-react"
+import { TopNavigation, TopNavigationActions, TopNavigationBackButton, TopNavigationIconButton, TopNavigationTitle } from "@/components/ui/top-navigation"
+
+const scrollRef = useRef<HTMLDivElement>(null)
+const photoRef = useRef<HTMLDivElement>(null)
+const [overPhoto, setOverPhoto] = useState(true)
+
+{/* 사진 아래 끝이 바(56 + 위 안전 영역) 밑으로 지나가면 layer 로 — 바탕이 채워진다 */}
+useEffect(() => {
+  const box = scrollRef.current
+  const photo = photoRef.current
+  if (!box || !photo) return
+  const update = () => setOverPhoto(photo.getBoundingClientRect().bottom > box.getBoundingClientRect().top + 56)
+  update()
+  box.addEventListener("scroll", update, { passive: true })
+  return () => box.removeEventListener("scroll", update)
+}, [])
+
+<div ref={scrollRef} className="relative h-full overflow-y-auto">
+  <TopNavigation tone={overPhoto ? "transparent" : "layer"} className="fixed inset-x-0 top-0">
+    <TopNavigationBackButton fallbackHref="/desk/cards" />
+    <TopNavigationTitle>{card.name}</TopNavigationTitle>
+    <TopNavigationActions>
+      <TopNavigationIconButton aria-label="공유" onClick={share}><Share2 /></TopNavigationIconButton>
+    </TopNavigationActions>
+  </TopNavigation>
+  <div ref={photoRef}>{cardPhoto}</div>
+  {details}
+</div>
+```
+
 ## Behavior
 
 | 인터랙션 | 동작 |
 |---|---|
-| 스크롤 | 바는 맨 위에 그대로 — 선 · 그림자 · 숨김 없음 |
-| ← 누르기 · 기기 뒤로 | 들어온 화면으로. 앱 안에 앞 화면이 없으면 상위 화면으로(주소를 고쳐 쓴다) |
+| 스크롤 | 바는 맨 위에 그대로 — 선 · 그림자 · 숨김 없음. 투명 바는 사진이 바 밑으로 지나가면 바탕이 채워진다(`layer` 로) |
+| ← 누르기 · 기기 뒤로 | 들어온 화면으로(기본 — History). 앱 안에 앞 화면이 없으면 상위 화면으로(주소를 고쳐 쓴다). Hierarchy 를 고른 화면은 상위 화면으로 |
 | ✕ 누르기 | 흐름을 닫고 처음 자리로 — 입력한 값이 있으면 먼저 묻는다 |
 | ☰ 누르기 | 왼쪽 Side Panel(주 메뉴)을 연다 — 지금 묶음이 펼쳐진 채 |
 | 아이콘 · 글 버튼 누르기 | 그 동작. 누르는 동안 바탕 + 2px 축소 |
@@ -366,7 +434,7 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 · 글 버튼 `fg-neutral` 바(`bg-layer-default`) 위 16.41 · 다크 13.42, 누름 바탕 위 15.48 · 10.32 ✓. 막힌 글은 예외(비활성) |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 · 글 버튼 `fg-neutral` 바(`bg-layer-default`) 위 16.41 · 다크 13.42, 누름 바탕 위 15.48 · 10.32 ✓. 막힌 글은 예외(비활성). 투명 바의 흰 글자는 사진과 막이 정한다 — 막(열린 일)을 정하고 그 화면의 사진 위에서 잰다 |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 아이콘 `fg-neutral` 16.41 · 13.42 ✓. 알림 점 `fg-brand` Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓. 키보드 포커스 링 같은 값 ✓ — 누름 바탕(바와 1.06 · 다크 1.30)은 장식 |
 | **WCAG 1.4.1** Use of color | 알림 점은 이름에도 들어간다("알림, 새 알림 있음") ✓ |
 | **WCAG 2.4.2** Page Titled | 문서 제목이 화면마다 "{화면 제목} - 그루 담다" ✓ |
@@ -382,7 +450,8 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 
 - 높이 56 · 아이콘 버튼 44 · 아이콘 24 · 화면 끝 6 — 폰 · 데스크톱이 같다.
 - 탭 첫 화면은 왼쪽 큰 제목, 그 아래 화면은 ← + 제목.
-- ← 는 들어온 화면으로, 앞 화면이 없을 때만 상위 화면으로.
+- ← 는 들어온 화면으로(기본), 앞 화면이 없을 때만 상위 화면으로 — 설정처럼 "어디서 왔든 같은 곳" 이 나은 화면은 Hierarchy 를 고른다.
+- 투명 바는 사진이 화면 위를 채우는 상세에서만 — 스크롤하면 바탕을 채운다.
 - 오른쪽은 아이콘 둘(셋까지) 또는 글 버튼 하나 — 넘치면 ⋯.
 - 화면을 옮기면 맨 위 + 초점을 제목으로, 문서 제목도 바꾼다.
 - 탭 첫 화면 오른쪽은 홈 = 검색 · 알림, 나머지 = 검색. 데스크톱 머리는 검색칸 · 주 버튼 · 알림 · 설정.
@@ -391,7 +460,8 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 ### ❌ Don't
 
 - 스크롤하면 선 · 그림자 긋기, 데스크톱 머리 아래 늘 있는 선.
-- 가운데 제목 · 투명 바 · 스크롤에 숨는 바.
+- 가운데 제목 · 스크롤에 숨는 바.
+- 사진이 없는 화면에 투명 바 · 사진이 지나가도 투명한 채로 두기.
 - 본문용 아이콘 버튼(40 · 18)을 바에 쓰기.
 - ← 가 늘 같은 화면(예: "전체")으로 새로 이동하기.
 - 일반 화면에 ✕, 아이콘 버튼과 글 버튼을 함께.
@@ -412,16 +482,27 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 - **선 · 그림자 없음** — SEED 안에서 Top Navigation 문서("별도의 시각적인 장치를 표시하지 않습니다" · 코드도 divider 를 2.0 에서 걷었다)와 Elevation 문서("그림자나 라인(스타일)을 추가하여 '구분감'을 줍니다")가 갈린다. groo 는 Top Navigation 쪽이다(결정 3 — DESIGN.md Elevation 문장도 고쳤다).
 - **누름 바탕은 불투명한 `bg-layer-default-pressed` · 2px 거리 축소** — SEED 의 투명도 있는 bg.transparent-pressed 를 검사기가 받지 않는다(v102). SEED 웹 App Bar 는 누름 바탕 · 축소가 없고 모서리가 4 다 — groo 는 rootage(r2 8 · scaleScope self)를 따른다.
 - **포커스 링은 상자 안쪽** — SEED 웹 App Bar 와 같다(버튼끼리 붙어 바깥 링이 이웃에 걸린다).
-- **투명 톤 · 막 없음** — 쓸 자리가 생기면 정한다.
+- **투명 톤의 막 · 누름 바탕은 열린 일** — 톤(`transparent` — 흰 글자 · 아이콘, 바탕 없음, 스크롤하면 채움)은 SEED 그대로 두었다. SEED 의 막(gradient — 검정 35% → 투명 · 아래로 20)과 투명도 있는 누름 바탕(`bg.transparent-pressed`)은 groo 토큰이 없어 이 톤을 쓰는 화면을 이관할 때 정한다(2026-10-22 사용자 결정 5C).
 - **글 버튼에 iOS 최대 폭 96 이 없다** — 제목이 늘 왼쪽이라 SEED Android 와 같다.
 - **알림은 점만** — SEED 는 Small · Large 둘 다 쓴다. 숫자는 맨 오른쪽 버튼에서 화면 밖으로 나간다.
-- **← 의 동작을 정한다** — SEED 는 History · Hierarchy 를 사용처 정책으로 남기고, 웹 snippet 은 `pop()` 만 한다. groo 는 History 를 기본으로, 앞 화면이 없을 때만 상위 화면(주소를 고쳐 씀)이다.
+- **← 의 기본을 정한다** — SEED 는 History · Hierarchy 를 사용처 정책으로 남기고, 웹 snippet 은 `pop()` 만 한다. groo 는 History 를 기본으로, 앞 화면이 없을 때만 상위 화면(주소를 고쳐 씀)이고, 화면마다 Hierarchy 를 고를 수 있다(SEED 와 같은 선택 — 2026-10-22 4B).
 - **제목이 `h1` 이고 바가 `header` 다** — SEED 웹 App Bar 는 `div` · 제목 `span` 이라 랜드마크 · 제목이 없다.
 - **데스크톱 머리를 더한다** — SEED 는 GNB 를 Layout 의 영역 이름으로만 둔다(그림 약 56 + 선). 왼쪽 검색칸은 SEED React App Bar 의 `AppBarSlot` 예(머리 안 검색 막대)와 같은 자리다.
 - **검색칸은 상단 바 안에서 늘 `medium` 40** — Text Field 의 "`medium` 은 1280 이상" 의 예외다(바 56 안에 `large` 52 를 두지 않는다).
 - **z-index 는 specs/z-index.md 의 L1**(`z-sticky` 50).
 
 ## Migration notes
+
+### 2026-10-22 — 투명 바 · ← 의 두 방식 · 이동 부품 표 · Desk 배치 소제목
+
+사용자가 [날짜 · 이동 · 남은 규칙 비교 페이지](https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L)에서 정했다.
+
+- **투명 바(5C)** — 10-04 의 "투명 상단 바(사진 위) — 두지 않는다. 사진 상세처럼 쓸 자리가 생길 때 정한다." 가 Don't(금지)와 "SEED 와 다른 점"(보류)으로 나뉘어 있었다. 사용자는 보류 한 줄(5B · 추천)이 아니라 SEED 투명 바를 지금 스펙에 두는 안을 골랐다 — YAML 에 `tone`(`layer` 기본 · `transparent`) 축과 규칙, 레시피 `TopNavigation` 의 `tone`, Don't 의 "투명 바" 를 걷었다. 바 위 막(SEED gradient)과 투명 누름 바탕(SEED bg.transparent-pressed)은 groo 토큰이 없어 열린 일이다 — 토큰을 새로 만들지 않았다. 고르지 않은 안: 그대로(5A) · 보류 한 줄(5B).
+- **← 의 두 방식(4B)** — 10-04 "따라오는 것" 의 "← 는 History" 를 기본으로 두고, 화면마다 Hierarchy 를 고르는 표를 더했다. 어느 화면이 Hierarchy 인지는 이관 때 화면마다. 대가 — 탭 바의 지금 칸이 바뀔 수 있다. 고르지 않은 안: 늘 History(4A) · 설정 묶음은 늘 Hierarchy(4C).
+- **이동 부품 고르는 표(6B)** — 머리말의 "탭 사이는 … · 데스크톱은 …" 을 DESIGN.md Layout 의 "이동 부품 고르기" 한 벌로 모으고 링크로 바꿨다. 고르지 않은 안: 머리말 그대로(6A) · 다섯 문서에 복사(6C).
+- **Desk 배치(9B)** — 탭 첫 화면의 오른쪽(홈 = 검색 · 알림 …)을 "Desk 에서는" 소제목 아래로 옮겼다. 문장은 그대로. 고르지 않은 안: 그대로(9A).
+
+제품이 할 일 — 지금 화면은 바뀌지 않는다. 투명 바를 쓰는 화면(사진 상세)이 생기면 그 화면 이관 때 막 · 누름 바탕 토큰을 정하고, 웹 · 앱(`PTopNavigation`)에 `tone` 을 더한다. Hierarchy 를 고른 화면이 생기면 레시피 · 앱의 ← 에 "상위로" 를 고르는 값을 더한다.
 
 ### 2026-10-21 — 틀 부품 단위 · 제목이 밀릴 때(03-G)
 

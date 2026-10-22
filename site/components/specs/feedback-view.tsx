@@ -4,7 +4,7 @@
 // 색은 사이트 모드를 따르면(auto) --p-<토큰> 변수, 모드를 정하면 그 모드의 값이다.
 // 인라인 스타일은 한 속성을 한 이름으로만 적는다 — padding 뒤에 paddingLeft 를 두면(undefined 여도) 링크로 들어올 때 값이 지워진다(PR #154).
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type Ref } from 'react';
-import { Bell, ChevronRight, CircleAlert, CircleCheck, FileUp, Info, Landmark, ReceiptText, Search, SearchX, Sparkles, Star, Trash2, TriangleAlert, X, type LucideIcon } from 'lucide-react';
+import { Bell, ChevronRight, CircleAlert, CircleCheck, FileUp, FunnelX, Info, Landmark, ReceiptText, Search, SearchX, Sparkles, Star, Trash2, TriangleAlert, X, type LucideIcon } from 'lucide-react';
 import { ButtonView } from './button-view';
 import {
   FONT,
@@ -44,6 +44,7 @@ const ICONS: Record<FbIcon, LucideIcon> = {
   trash: Trash2,
   landmark: Landmark,
   sparkles: Sparkles,
+  'funnel-x': FunnelX,
 };
 
 export function FbIconView({ name, size, strokeWidth = 2, color, style }: { name: FbIcon; size: number; strokeWidth?: number; color?: string; style?: CSSProperties }) {

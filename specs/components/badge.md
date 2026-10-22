@@ -34,7 +34,7 @@
 |---|---|---|
 | `weak` *(기본)* | 옅은 바탕(`bg-{톤}-weak`) + 진한 글자(`fg-{톤}-contrast`) · 500 | 반복되는 목록 · 분류 · 부가 정보 — 줄마다 있어도 무겁지 않다 |
 | `outline` | 투명 + 안쪽 1px 옅은 선(`stroke-{톤}-weak`) + 의미 색 글자(`fg-{톤}`) · 700 | 상세 · 본문의 중간 강조 — 권한 · 카드 종류처럼 한 화면에 몇 개 |
-| `solid` | 채움(`bg-{톤}-solid`) + 흰 글자 · 700 | 눈에 띄어야 할 상태 하나, 사진 위 |
+| `solid` | 채움(`bg-{톤}-solid`) + 흰 글자 · 700 | 드물게 — 사진 위, 강하게 알려야 할 상태 |
 
 중립(`neutral`)만 짝이 다르다 — weak 는 `bg-neutral-weak` + `fg-neutral-muted`, solid 는 `bg-neutral-inverted` + `fg-neutral-inverted`(다크에서 밝은 면 + 짙은 글자), outline 은 `stroke-neutral-weak` + `fg-neutral-muted`.
 
@@ -101,7 +101,7 @@ outline 의 의미 색 테두리 넷(`stroke-informative-weak` · `-positive-wea
 
 ### 반복되는 줄은 weak
 
-목록처럼 같은 모양이 되풀이되는 자리는 `weak` 다 — 줄마다 채운 배지가 있으면 화면이 무거워지고 정작 눈에 띄어야 할 것이 묻힌다. `solid` 는 한 화면에서 꼭 눈에 띄어야 할 상태 하나 · 사진 위에만, `outline` 은 상세 · 본문의 중간 강조에 쓴다. 한 목록 안에서는 한 변형으로 맞추고 뜻은 톤으로 가른다.
+목록처럼 같은 모양이 되풀이되는 자리는 `weak` 다 — 줄마다 채운 배지가 있으면 화면이 무거워지고 정작 눈에 띄어야 할 것이 묻힌다. `solid` 는 드물게 쓴다 — 사진 위, 그리고 강하게 알려야 할 상태(연체 · 해지됨)(SEED Solid — "이미지 위 … 또한 강한 주목도가 필요한 경우 사용할 수 있습니다"). `outline` 은 상세 · 본문의 중간 강조에 쓴다. 한 목록 안에서는 한 변형으로 맞추고 뜻은 톤으로 가른다.
 
 [그림: 목록은 weak — 줄마다 solid 인 목록](../../site/components/specs/badge.tsx#weak-guide)
 
@@ -235,6 +235,10 @@ import { Badge } from "@/components/ui/badge"
 - **Action(정보 아이콘 버튼)은 두지 않는다** — SEED React 3(2026-10-01)의 배지 안 정보 버튼은 누르는 영역이 12 · 14 이고, 누르지 않는 배지 안에 따로 눌리는 것이 생긴다. 설명은 배지 옆 ⓘ Help Bubble 이다.
 
 ## Migration notes
+
+### 2026-10-22 — solid 는 드물게
+
+"`solid` 는 한 화면에서 꼭 눈에 띄어야 할 상태 하나 · 사진 위에만"(b1dfc58 — 10-03 비교 페이지에 "하나" 가 없다)을 SEED 말투의 권장 "드물게 — 사진 위, 그리고 강하게 알려야 할 상태(연체 · 해지됨)" 로 낮췄다(남은 규칙 R1). "한 대상에 둘까지"(SEED 와 같은 숫자 · 셋 이상의 대안이 붙어 있다)는 그대로다(R2). 사용자 결정 — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L. 값 변경 없음.
 
 ### 2026-10-03 — SEED Badge 로 새로 둔다
 

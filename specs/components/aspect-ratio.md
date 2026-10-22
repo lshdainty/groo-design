@@ -49,9 +49,9 @@ YAML 의 비율 값은 모두 `"W / H"` 글이다(`"1 / 1"` · `"16 / 9"` · `"1
 
 [그림: 카드 그림은 Image Frame · 동영상은 Aspect Ratio — Aspect Ratio 에 그림을 넣고 모서리를 손으로 두른 화면](../../site/components/specs/aspect-ratio.tsx#which-guide)
 
-### 한 화면은 한두 비율
+### 한 목록 · 격자는 한 비율
 
-같은 목록 · 격자 안에서는 비율을 하나로 맞춘다. 한 화면에 쓰는 비율은 한두 가지다 — 칸마다 비율이 다르면 줄 높이가 들쭉날쭉해진다.
+같은 목록 · 격자 안에서는 비율을 하나로 맞춘다 — 칸마다 비율이 다르면 줄 높이가 들쭉날쭉해진다. 한 화면 전체에 쓰는 비율의 수는 정하지 않는다 — 상세 위 16:9 · 아래 1:1 격자 · 카드 1.586 이 한 화면에 함께 날 수 있다.
 
 [그림: 한 격자는 한 비율 · 칸마다 다른 비율](../../site/components/specs/aspect-ratio.tsx#ratio-guide)
 
@@ -94,7 +94,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio"
 ### ✅ Do
 
 - 동영상 · 지도 · 바깥 페이지처럼 그림이 아닌 자리의 비율.
-- 여덟 비율 안에서 — 한 화면은 한두 가지.
+- 여덟 비율 안에서 — 같은 목록 · 격자는 하나로.
 - 부모가 폭을 정한다.
 
 ### ❌ Don't
@@ -115,6 +115,10 @@ import { AspectRatio } from "@/components/ui/aspect-ratio"
 - **그림에는 쓰지 않는다** — SEED 도 그림은 Image Frame 이지만 Aspect Ratio 예제에 `<img>` 를 넣는다. groo 는 그림을 모두 Image Frame 으로 그린다.
 
 ## Migration notes
+
+### 2026-10-22 — 한 목록 · 격자는 한 비율
+
+"한 화면에 쓰는 비율은 한두 가지다"(31dbaa9 — 10-04 이미지 비교 페이지에 없다)를 걷고, 까닭(줄 높이가 들쭉날쭉)이 닿는 "같은 목록 · 격자 안에서는 하나로" 만 남겼다 — 한 화면 전체의 비율 수는 정하지 않는다(남은 규칙 R6). 사용자 결정 — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L. 값 변경 없음.
 
 ### 2026-10-08 — 비율 값을 "W / H" 글 하나로
 

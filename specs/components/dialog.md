@@ -194,7 +194,7 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 - 머리 닫기 버튼과 바닥 취소를 함께.
 - 되돌릴 수 없는 확인을 Dialog 로(Alert Dialog).
 - 높이 상한 없이 내용을 늘려 제목 · 버튼이 화면 밖으로.
-- 대화상자 위에 대화상자.
+- 대화상자 위에 대화상자 — 단계가 많으면 페이지 · 단계로.
 
 ## Specification
 
@@ -213,6 +213,10 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 대화상자 `z-modal-content` 101) — 그 안에서 연 Popover(L3) · Alert Dialog(L5)가 위에 뜬다(SEED 는 모두 2 + layerIndex).
 
 ## Migration notes
+
+### 2026-10-22 — 대화상자 위 대화상자의 갈 곳
+
+Don't "대화상자 위에 대화상자" 는 그대로 두고 옛 문장의 대안 "단계가 많으면 페이지 · 단계로" 를 함께 적었다(남은 규칙 R18 — 그대로, https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L). 값 변경 없음.
 
 ### 2026-10-22 — Alert Dialog 와 견주는 표
 

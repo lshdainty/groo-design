@@ -54,6 +54,23 @@ export function Band({ style, label, vertical = false, below = false }: { style:
 
 // ── 칸 · 쌍 ─────────────────────────────────────────────
 // 이렇게 · 이렇게 하지 않는다 — 좁은 화면에서는 위아래로
+// 필터 바 대역 — 모양만 줄였다(Chip 은 chip.md). on 이면 걸린 조건 둘 + 맨 앞 지우기(✕), 아니면 조건 없는 칩 셋
+export function FilterStrip({ mode = 'auto', on }: { mode?: Mode; on: boolean }) {
+  const chip = (label: string, active: boolean) => (
+    <span
+      key={label}
+      className="inline-flex h-8 shrink-0 items-center rounded-full px-3 text-[13px] font-medium"
+      style={active ? { background: rc('bg-neutral-inverted', mode), color: rc('fg-neutral-inverted', mode) } : { boxShadow: `inset 0 0 0 1px ${rc('stroke-neutral-weak', mode)}`, color: rc('fg-neutral', mode) }}
+    >
+      {label}
+    </span>
+  );
+  return (
+    <div className="flex shrink-0 gap-2 overflow-hidden" style={{ padding: '12px 24px 8px' }}>
+      {on ? [chip('✕', false), chip('식비 외 2개', true), chip('지난 3개월', true)] : [chip('카테고리', false), chip('기간', false), chip('금액', false)]}
+    </div>
+  );
+}
 export const Pair = ({ children, wide = false }: { children: ReactNode; wide?: boolean }) => <div className={`flex w-full flex-col gap-4 ${wide ? 'max-w-[900px] lg:flex-row' : 'max-w-[760px] md:flex-row'}`}>{children}</div>;
 export const W = ({ children, w = 320 }: { children: ReactNode; w?: number }) => (
   <div className="max-w-full" style={{ width: w }}>

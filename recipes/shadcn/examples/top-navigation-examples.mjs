@@ -1,10 +1,10 @@
 /*
  * shadcn Top Navigation 예제 — docs site components/top-navigation.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 넷(탭 첫 화면 · 그 아래 화면 · 데스크톱 머리 · HR 폰)은 차례 · 제목 · 코드가
- * specs/components/top-navigation.md 의 "코드" 절과 같고, 뒤의 둘(✕ 독립 흐름 · 오른쪽 셋까지와 긴 제목)은 md 의 Properties · Guidelines 를
+ * specs/components/top-navigation.md 의 "코드" 절과 같고, 뒤의 셋(✕ 독립 흐름 · 오른쪽 셋까지와 긴 제목 · 사진 위 투명 바)은 md 의 Properties · Guidelines 를
  * 코드로 더 보인다. groo 에 처음 두는 컴포넌트다.
  *
- * ROOT · ROOT_LEFT · TEXT_T8 · TEXT_T6 · TEXT_T5 · TITLE · TITLE_TYPE · PRESS_TRANSITION · FOCUS_INSIDE · ICON_BUTTON · TEXT_BUTTON · SEARCH ·
+ * ROOT · ROOT_LEFT · ROOT_TONE · TONE_FOREGROUND · TONE_BUTTON · TEXT_T8 · TEXT_T6 · TEXT_T5 · TITLE · TITLE_TYPE · PRESS_TRANSITION · FOCUS_INSIDE · ICON_BUTTON · TEXT_BUTTON · SEARCH ·
  * SCREEN_TITLE · SCREEN_TITLE_ROW · SCREEN_DESCRIPTION · SCREEN_ACTIONS 는 recipes/shadcn/components/ui/top-navigation.tsx 의 상수와, ROW · ACTIONS · PRIMARY 는
  * 그 파일의 JSX 에 적힌 클래스와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 검색칸 INPUT_* 는 input.tsx 의 cva(outline · medium 만)와
  * 같다 — input-examples.mjs 의 ROOT_* · AFFIX_* · VALUE_* · CLEAR 와 같은 글이다. 알림 점 NB_* 는 notification-badge.tsx(notification-badge-examples.mjs)의 것, 주 버튼
@@ -35,6 +35,15 @@ const ROOT_LEFT = {
   standard: "pl-[calc(var(--spacing-x1_5)+env(safe-area-inset-left))]",
   desktop: "pl-[calc(var(--layout-margin)+env(safe-area-inset-left))]",
 };
+// 톤 — transparent 는 사진 위 투명 바(흰 글자 · 아이콘). layer ↔ transparent 를 바꾸면 바탕 · 글자색이 150ms 로 바뀐다
+const ROOT_TONE = {
+  layer: "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
+  transparent:
+    "bg-transparent text-static-white [transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
+};
+// 톤에 따른 글자색 — 제목(TONE_FOREGROUND) · 버튼(TONE_BUTTON — 누름 · 호버 바탕은 열린 일이라 칠하지 않고 축소만)
+const TONE_FOREGROUND = { layer: "", transparent: "text-static-white" };
+const TONE_BUTTON = { layer: "", transparent: "text-static-white hover:bg-transparent active:bg-transparent" };
 
 // 글자 크기 설정은 1.2배까지 — clamp(고정 값, 설정을 따르는 값, 고정 값 × 1.2)
 const TEXT_T8 =
@@ -215,9 +224,11 @@ const ICONS = {
   circleX: svg('<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>'),
 };
 
-// <TopNavigation type> — 바 + 줄
-const topNavigation = (type, inner) =>
-  `<header data-slot="top-navigation" data-type="${type}" class="${ROOT} ${ROOT_LEFT[type]}"><div data-slot="top-navigation-row" class="${ROW}">${inner}</div></header>`;
+// <TopNavigation type tone> — 바 + 줄. 레시피는 cn 으로 합치므로 transparent 의 bg-transparent · text-static-white 가 ROOT 의 bg · text 를 누른다 —
+// 정적 HTML 은 같은 결과가 되게 ROOT 에서 그 둘을 빼고 붙인다
+const rootOf = (tone) => (tone === "transparent" ? ROOT.replace(" bg-bg-layer-default", "").replace(" text-fg-neutral", "") : ROOT);
+const topNavigation = (type, inner, tone = "layer") =>
+  `<header data-slot="top-navigation" data-type="${type}" data-tone="${tone}" class="${rootOf(tone)} ${ROOT_LEFT[type]} ${ROOT_TONE[tone]}"><div data-slot="top-navigation-row" class="${ROW}">${inner}</div></header>`;
 // 사이트의 `.content h1`(크기 · 줄 높이 · 자간 · 바깥 여백)은 층(@layer) 밖 규칙이라 Tailwind utility(@layer utilities)를 늘 이긴다 —
 // 제목 <h1> 에는 클래스가 정한 값을 style 로 한 번 더 적는다(레시피에는 없는 미리보기용 덧칠). standard 는 ← 다음 제목의 자리(6)다
 const clampText = (t) =>
@@ -229,16 +240,21 @@ const H1_FIX = {
   row: "margin:0; letter-spacing:normal; font-size:var(--text-screen-title); line-height:var(--text-screen-title--line-height);",
 };
 // <TopNavigationTitle> — root · standard
-const title = (type, text) =>
-  `<h1 tabindex="-1" data-screen-title="" data-slot="top-navigation-title" class="${TITLE} ${TITLE_TYPE[type]}" style="${H1_FIX[type]}">${esc(text)}</h1>`;
+const title = (type, text, tone = "layer") =>
+  `<h1 tabindex="-1" data-screen-title="" data-slot="top-navigation-title" class="${tone === "transparent" ? TITLE.replace(" text-fg-neutral", "") : TITLE} ${TITLE_TYPE[type]} ${TONE_FOREGROUND[tone]}" style="${H1_FIX[type]}">${esc(text)}</h1>`;
 const actions = (inner) => `<div data-slot="top-navigation-actions" class="${ACTIONS}">${inner}</div>`;
 // <TopNavigationIconButton> — 아이콘은 NotificationBadge(aria-hidden)로 감싸고 notification 이면 점을 붙인다. extra 는 왼쪽 버튼의 이름 · 속성
-function iconButton({ icon, name, notification = false, extra = [], slot = "top-navigation-icon-button", disabled = false }) {
+// transparent 는 cn 이 ICON_BUTTON 의 text-fg-neutral · hover/active 바탕을 TONE_BUTTON 으로 누른 결과다
+const toneButton = (base, tone) =>
+  tone === "transparent"
+    ? `${base.replace(" text-fg-neutral", "").replace("hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed ", "")} ${TONE_BUTTON.transparent}`
+    : base;
+function iconButton({ icon, name, notification = false, extra = [], slot = "top-navigation-icon-button", disabled = false, tone = "layer" }) {
   const dot = notification ? `<span aria-hidden="true" data-slot="notification-badge" data-size="small" class="${notificationBadgeVariants()}"></span>` : "";
   return `<button ${attrs([
     'type="button"',
     `data-slot="${slot}"`,
-    `class="${ICON_BUTTON}"`,
+    `class="${toneButton(ICON_BUTTON, tone)}"`,
     `aria-label="${esc(name)}"`,
     ...extra,
     disabled && "disabled",
@@ -499,5 +515,53 @@ import { ScreenTitle, TopNavigation, TopNavigationActions, TopNavigationIconButt
           "긴 제목 — 말줄임 · 오른쪽 자리 앞 8",
         ),
       ]),
+  },
+
+  {
+    title: "사진 위 — 투명 바(tone)",
+    description:
+      "tone=\"transparent\" 는 사진이 화면 위를 채우는 상세(맨 위에 꽉 찬 카드 그림 · 사진)에서 사진 위에 겹쳐 두는 투명 바다 — 제목 · 아이콘 · 글 버튼이 static-white 이고 막힌 버튼은 fg-disabled 그대로다(SEED tone transparent, 2026-10-22 사용자 결정 5C). 본문(사진)은 화면 맨 위에서 시작한다. 사진이 바 밑으로 지나가면 부르는 쪽이 tone 을 \"layer\" 로 바꿔 바탕을 채운다(바탕 · 글자색 150ms, 선은 긋지 않는다). 바 위 막(SEED gradient — 검정 35% → 투명)과 투명 누름 바탕(SEED bg.transparent-pressed)은 groo 토큰이 없어 열린 일이다 — 레시피는 막을 그리지 않고, 누르면 바탕 없이 축소만 한다. 지금 이 톤을 쓰는 화면은 없다. 미리보기의 사진 자리는 어두운 면으로 대신했다(그림이 아니다).",
+    jsx: `import { useEffect, useRef, useState } from "react"
+import { Share2 } from "lucide-react"
+import { TopNavigation, TopNavigationActions, TopNavigationBackButton, TopNavigationIconButton, TopNavigationTitle } from "@/components/ui/top-navigation"
+
+const scrollRef = useRef<HTMLDivElement>(null)
+const photoRef = useRef<HTMLDivElement>(null)
+const [overPhoto, setOverPhoto] = useState(true)
+
+{/* 사진 아래 끝이 바(56 + 위 안전 영역) 밑으로 지나가면 layer 로 — 바탕이 채워진다 */}
+useEffect(() => {
+  const box = scrollRef.current
+  const photo = photoRef.current
+  if (!box || !photo) return
+  const update = () => setOverPhoto(photo.getBoundingClientRect().bottom > box.getBoundingClientRect().top + 56)
+  update()
+  box.addEventListener("scroll", update, { passive: true })
+  return () => box.removeEventListener("scroll", update)
+}, [])
+
+<div ref={scrollRef} className="relative h-full overflow-y-auto">
+  <TopNavigation tone={overPhoto ? "transparent" : "layer"} className="fixed inset-x-0 top-0">
+    <TopNavigationBackButton fallbackHref="/desk/cards" />
+    <TopNavigationTitle>{card.name}</TopNavigationTitle>
+    <TopNavigationActions>
+      <TopNavigationIconButton aria-label="공유" onClick={share}><Share2 /></TopNavigationIconButton>
+    </TopNavigationActions>
+  </TopNavigation>
+  <div ref={photoRef}>{cardPhoto}</div>
+  {details}
+</div>`,
+    render: () => {
+      const bar = (tone, text) =>
+        topNavigation(
+          "standard",
+          `${iconButton({ icon: "chevronLeft", name: "뒤로", slot: "top-navigation-back-button", tone })}${title("standard", text, tone)}${actions(iconButton({ icon: "share", name: "공유", tone }))}`,
+          tone,
+        );
+      const PHOTO = "height:200px; background:linear-gradient(160deg, #1f2a44 0%, #3a4a6b 100%);";
+      const over = `<div style="${PHONE} height:300px;"><div style="position:absolute; inset:0 0 auto 0; z-index:1;">${bar("transparent", "지어낸카드 플러스")}</div><div style="${BODY}"><div style="${PHOTO}"></div>${rows(LEDGER.slice(0, 2))}</div></div>`;
+      const filled = `<div style="${PHONE} height:300px;">${bar("layer", "지어낸카드 플러스")}<div style="${BODY}">${rows(LEDGER)}</div></div>`;
+      return grid([labeled(over, "맨 위 — 사진 위 투명 바(막은 열린 일)"), labeled(filled, "사진이 지나간 뒤 — layer 로 채워진다")]);
+    },
   },
 ];

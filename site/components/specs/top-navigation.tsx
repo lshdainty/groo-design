@@ -639,6 +639,71 @@ const RouteGuide: Fig = ({ caption }) => {
   );
 };
 
+// ── 사진 위 투명 바(tone transparent — SEED, 2026-10-22 사용자 결정 5C) ──────
+// 사진 자리는 어두운 면으로 대신한다(그림이 아니다 — 두 모드 같다). 막(SEED gradient)과 투명 누름 바탕은 열린 일이라 그리지 않는다.
+// 그림 틀의 상태 표시줄(흰 면)은 kit 의 것 — 사진은 그 아래에서 시작한다
+const PHOTO_H = 220;
+function PhotoStandIn() {
+  return (
+    <div aria-hidden className="relative shrink-0" style={{ height: PHOTO_H, background: 'linear-gradient(160deg, #1f2a44 0%, #3a4a6b 100%)' }}>
+      <span className="absolute left-1/2 top-[70px] block -translate-x-1/2 rounded-[10px]" style={{ width: 200, height: 126, background: 'linear-gradient(135deg, #5b6f95 0%, #2b3550 100%)', boxShadow: '0 0 0 1px rgba(255,255,255,0.12)' }} />
+    </div>
+  );
+}
+const PHOTO_ACTIONS: TopAction[] = [{ icon: 'share', label: '공유' }];
+// 카드 상세의 혜택 줄 — 지어낸 이름
+const BENEFIT_ROWS: [string, string, string, string][] = [
+  ['카페 10% 적립', '모퉁이 커피 · 별빛다방 외 4곳', '3,200원', 'orange'],
+  ['대중교통 5% 할인', '버스 · 지하철', '1,750원', 'blue'],
+  ['편의점 3% 적립', '골목마트 · 하늘편의점', '960원', 'green'],
+  ['해외 결제 1.5% 캐시백', '해외 가맹점 전체', '12,300원', 'violet'],
+  ['영화 4,000원 할인', '구름시네마 · 월 1회', '4,000원', 'pink'],
+  ['통신비 2,000원 할인', '자동이체 등록 시', '2,000원', 'indigo'],
+  ['주유 리터당 60원', '바다주유소', '1,800원', 'red'],
+  ['연회비', '국내 전용', '15,000원', 'gray'],
+];
+function PhotoPhone({ mode = 'auto', filled = false, scale = 0.6 }: { mode?: Mode; filled?: boolean; scale?: number }) {
+  const bar = <Bar mode={mode} title="지어낸카드 플러스" actions={PHOTO_ACTIONS} tone={filled ? 'layer' : 'transparent'} />;
+  return (
+    <NPhone
+      mode={mode}
+      scale={scale}
+      h={560}
+      bar={filled ? bar : <span />}
+      overlay={filled ? undefined : <div className="absolute inset-x-0" style={{ top: 40, zIndex: 3 }}>{bar}</div>}
+    >
+      {filled ? (
+        <div style={{ marginTop: -8 }}>
+          <TxRows mode={mode} n={8} rows={BENEFIT_ROWS} />
+        </div>
+      ) : (
+        <>
+          <PhotoStandIn />
+          <TxRows mode={mode} n={4} rows={BENEFIT_ROWS} />
+        </>
+      )}
+    </NPhone>
+  );
+}
+const TransparentGuide: Fig = ({ caption }) => (
+  <Figure caption={caption}>
+    <div className="flex flex-col gap-5">
+      {MODES.map((mode) => (
+        <div key={mode} className="flex flex-wrap items-start justify-center gap-4">
+          <div className="flex flex-col items-center gap-2">
+            <PhotoPhone mode={mode} />
+            <Cap mode={mode}>맨 위 — 사진 위 투명 바(흰 글자 · 아이콘, {modeKo(mode)})</Cap>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <PhotoPhone mode={mode} filled />
+            <Cap mode={mode}>사진이 지나간 뒤 — layer 로 채워진다 · 선 없음</Cap>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Figure>
+);
+
 // ── 코드 예시(미리보기) — top-navigation.md 의 코드 그대로 ──────
 const ExRoot: Fig = ({ caption }) => (
   <CodePreview caption={caption} pad={16}>
@@ -656,6 +721,14 @@ const ExDesktop: Fig = ({ caption }) => (
       {/* 머리 — 왼쪽 검색칸 · 주 버튼 + 알림 · 설정(금액 가리기 눈은 두지 않는다 — top-navigation.md 코드). 본문 제목 줄 */}
       <DeskHeaderLive look={NK('desk').top} search={<SearchBox />} />
       <ScreenTitle {...LEDGER_TITLE}>가계부</ScreenTitle>
+    </div>
+  </CodePreview>
+);
+const ExTransparent: Fig = ({ caption }) => (
+  <CodePreview caption={caption} pad={16} w={460}>
+    <div className="flex flex-wrap justify-center gap-4">
+      <PhotoPhone scale={0.55} />
+      <PhotoPhone scale={0.55} filled />
     </div>
   </CodePreview>
 );
@@ -791,6 +864,8 @@ const ExSearch: Fig = ({ caption }) => (
 );
 
 export const topNavigationFigures: Record<string, Fig> = {
+  transparent: TransparentGuide,
+  'ex-transparent': ExTransparent,
   'search-field': SearchField,
   'root-guide': RootGuide,
   'search-guide': SearchGuide,
