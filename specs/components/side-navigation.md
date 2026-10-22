@@ -1,6 +1,6 @@
 # Side Navigation
 
-> 데스크톱(768 이상)의 주 메뉴 — 화면 왼쪽의 세로 띠(사이드바)에 서비스의 최상위 화면들을 묶어 둔다. 1280 이상은 펼침 240, 768 ~ 1279 는 아이콘만 56 으로 저절로 접히고, 손으로 접고 펼 수 있다. 768 미만에서는 없다 — Desk 웹은 [Bottom Navigation](bottom-navigation.md), HR 은 ☰ 로 여는 왼쪽 [Side Panel](side-panel.md) 에 같은 항목을 담는다. 화면 맨 위의 바는 [Top Navigation](top-navigation.md) 이다.
+> 데스크톱(768 이상)의 주 메뉴 — 화면 왼쪽의 세로 띠(사이드바)에 서비스의 최상위 화면들을 묶어 둔다. 1280 이상은 펼침 240, 768 ~ 1279 는 아이콘만 56 으로 저절로 접히고, 손으로 접고 펼 수 있다. 768 미만에서는 없다 — Desk 웹은 [Bottom Navigation](bottom-navigation.md), HR 은 ☰ 로 여는 왼쪽 [Side Panel](side-panel.md) 에 같은 항목을 담는다. 다른 이동 부품([Top Navigation](top-navigation.md) · [Tabs](tabs.md))과 고르는 표는 DESIGN.md Layout 의 "이동 부품 고르기" 한 곳이다.
 
 구조는 당근 [SEED Side Navigation](https://seed-design.io/components/side-navigation)(Apache-2.0)을 따른다 — "서비스의 최상위 메뉴 간 이동을 돕고 앱의 전체 구조를 탐색할 수 있게 하는 컴포넌트" 로, 머리(Header) · 접기 버튼(Trigger) · 내용(Content) · 묶음(Group) · 항목(Menu Item) · 하위 항목(Menu Sub Item) · 바닥(Footer). 폭 240 · 56 · 머리 64 · 항목 44 · 아이콘 20 · 이름 14 / 19 · 500 · 모서리 10 은 SEED 값 그대로다(SEED 는 rootage 없이 레시피에 px 로 둔다). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). 옛 Sidebar 스펙(shadcn — 256 · 48 · 항목 32)을 대신한다.
 
@@ -313,7 +313,7 @@ import {
 
 ## SEED 와 다른 점
 
-- **흰 면 + 오른쪽 선** — SEED 기본 `tone=neutral` 은 회색 면(gray-100)이다. groo 본문이 회색(`bg-page`)이라 사이드바를 흰 면(`bg-layer-default`)으로 둔다(따라오는 것). `transparent` 톤은 두지 않는다.
+- **흰 면 + 오른쪽 선** — SEED 기본 `tone=neutral` 은 회색 면(gray-100)이다. groo 본문이 회색(`bg-page`)이라 사이드바를 흰 면(`bg-layer-default`)으로 둔다(따라오는 것). `transparent` 톤은 두지 않는다 — SEED 의 고르는 기준은 "Neutral — 정보가 많거나 위계가 높을 때 권장 / Transparent — 미니멀한 레이아웃" 이고, groo 는 본문이 회색이라 흰 면이 맞다. 본문이 흰 서비스가 생기면 그때 다시 본다(남은 규칙 R21 — 그대로, 2026-10-22 https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L).
 - **투명한 상태 색을 불투명 역할로**(v102) — 호버 · 누름 `bg-layer-default-pressed`, 선 `stroke-neutral-subtle`. 지금 항목은 SEED 의 옅은 선택 바탕보다 한 단계 짙은 `bg-neutral-weak-pressed` 다(사용자 결정 2026-10-08 — `bg-neutral-weak` 는 다크에서 호버 바탕과 같은 색 #353B4D 였다). 지금 항목은 마우스를 올리거나 눌러도 바탕이 그대로다 — SEED 는 선택 · 누름 바탕(selected-pressed)이 따로 있지만 groo 에는 그보다 짙은 불투명 역할이 없다.
 - **아이콘은 `fg-neutral-subtle`** — SEED palette.gray-600 은 면 위 1.97:1 이다.
 - **긴 이름은 줄을 바꾼다** — SEED 문서대로다(SEED 레시피는 한 줄 말줄임).
@@ -324,6 +324,10 @@ import {
 - **아래 끝 흐림은 `gradient-fade-mask` 24** — 깊이는 SEED 레시피와 같다.
 
 ## Migration notes
+
+### 2026-10-22 — 이동 부품 표 링크 · transparent 톤의 까닭
+
+머리말의 다른 이동 부품 안내를 DESIGN.md Layout 의 "이동 부품 고르기" 링크로 바꿨다(6B). "`transparent` 톤은 두지 않는다" 는 그대로 두고 SEED 의 고르는 기준 한 줄을 함께 적었다(남은 규칙 R21). 사용자 결정 — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L. 값 변경 없음.
 
 ### 2026-10-21 — 단위(03-G 1A)
 

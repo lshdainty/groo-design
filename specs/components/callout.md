@@ -170,7 +170,7 @@ import { Callout } from "@/components/ui/callout"
 - 경고 · 오류를 닫을 수 있게.
 - 링크로 행동을 이끌기.
 - 페이지 전체의 상태를 Callout 으로 — Page Banner.
-- 한 화면에 Callout 여럿을 쌓기.
+- 한 화면에 Callout 여럿을 쌓기 — 되도록 가장 중요한 하나를 두고, 나머지는 그 내용 옆(칸 설명 · 줄 설명)으로.
 
 ## Specification
 
@@ -187,6 +187,10 @@ import { Callout } from "@/components/ui/callout"
 - **닫기 버튼의 누름 바탕은 톤의 누름 색**(`bg-*-weak-pressed`) — SEED 투명 누름 색의 불투명 짝.
 
 ## Migration notes
+
+### 2026-10-22 — 여럿을 쌓지 않도록 — 갈 곳을 붙였다
+
+Don't "한 화면에 Callout 여럿을 쌓기"(420ae4e — 10-02 알림 비교 페이지에 없다)에 대안을 붙여 권장으로 낮췄다 — 가장 중요한 하나를 두고 나머지는 칸 설명 · 줄 설명으로(남은 규칙 R10). 사용자 결정 — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L. 값 변경 없음.
 
 ### 2026-10-22 — 알림 고르는 표는 한 벌
 

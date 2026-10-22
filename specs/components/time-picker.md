@@ -58,6 +58,10 @@
 
 휠을 굴리는 동안 칸 값은 그대로다 — "완료" 를 누를 때 들어간다. 바깥 · 끌어내리기 · `Esc` 로 닫으면 버린다. 칸이 비었으면 지금 시각을 분 간격에 맞춰 반올림한 자리(9시 13분 → 9시 15분)를 짚어 열기만 한다.
 
+### 어디에 놓나
+
+시각 칸은 [Input Button](input-button.md) 이 연 시트(1280 미만) · 팝오버(이상) 안이다. 시각 고르기가 그 화면의 주된 일이면 화면에 바로 펼친 휠(Inline — 확정은 화면의 "다음" · "완료")을 둘 수 있다 — SEED 와 같게 두되 지금 쓰는 곳은 없다. 고르는 표는 [Date Picker](date-picker.md) 의 "어디에 놓나" 한 곳이다(2026-10-22 사용자 결정 1C).
+
 ### 시 · 분이 넘어갈 때
 
 시 휠이 11 ↔ 12 를 넘으면 오전 · 오후가 따라 바뀐다(오전 11 → 오후 12). 분 휠은 55 → 00 을 넘어도 시는 그대로다(10시 55분 → 10시 00분).
@@ -66,11 +70,13 @@
 
 날짜와 시각을 함께 받으면 날짜 칸 옆에 시각 칸을 나란히 둔다 — 하나만 바꾸기 쉽고, 종일이면 시각 칸만 걷는다. 시각 칸은 144(large 에서 "오후 12:30" 이 잘리지 않는 폭), 날짜 칸은 글이 다 들어가는 폭 이상이다 — 한 줄에 둘이 들어가지 않으면 시각 칸이 다음 줄로 내려간다 — 다른 해 날짜("2027년 1월 3일 (일)") · 큰 글자 설정 · 좁은 폰에서. 올해 날짜는 360 폭 폰에서 거의 꽉 차므로(가장 긴 "12월 28일 (월)" 이 1px 남는다) 글꼴에 따라 내려갈 수 있다 — 어느 쪽이든 칸 글은 자르지 않는다. 칸마다 Field 로 감싸면 폭 클래스는 Field 에 준다. 칸 글을 말줄임으로 자르지 않는다. 한 칸에 날짜 · 시각을 같이 넣지 않는다.
 
+폼에서는 이 두 칸 나란히다(사용자 결정). 날짜 고르기가 그 화면의 주된 단계라 달력을 화면에 펼쳤다면(Inline — [Date Picker](date-picker.md) 의 "어디에 놓나"), 시각은 그 아래 칸 → 시트로 둔다(SEED — "날짜가 핵심 단계면 Date Picker 를 Inline 으로 펼치고, 시간은 보조 필드로 두어 Time Picker 를 Sheet 로"). 지금 그런 화면은 없다(2026-10-22 사용자 결정 2B — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L).
+
 [그림: 일정 시작 · 종료 — 날짜 칸 + 시각 칸](../../site/components/specs/time-picker.tsx#datetime-guide)
 
 ## 코드
 
-레시피 `recipes/shadcn/components/ui/time-picker.tsx` 를 [Input Button](input-button.md) 이 연 시트 · 팝오버 안에 둔다. 아래 미리보기는 스펙 값으로 그린 모습이다.
+레시피 `recipes/shadcn/components/ui/time-picker.tsx` 를 [Input Button](input-button.md) 이 연 시트 · 팝오버 안에 둔다(펼친 휠은 화면에 바로 둔다 — 지금 쓰는 곳은 없다). 아래 미리보기는 스펙 값으로 그린 모습이다.
 
 ### 시각 — "완료" 로 넣는다
 
@@ -154,6 +160,10 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 - **색은 groo 역할 짝** — 띠 `bg-neutral-weak`, 고른 글자 `fg-neutral`, 둘레 글자 `fg-disabled`(SEED 와 같은 역할).
 
 ## Migration notes
+
+### 2026-10-22 — 어디에 놓나 · 날짜가 주된 단계일 때
+
+"어디에 놓나" 에 펼친 휠(Inline — 지금 쓰는 곳 없음, SEED 와 같게)을 적고 고르는 표는 [Date Picker](date-picker.md) 한 곳을 가리킨다(1C). "날짜와 함께" 는 결정(폼은 두 칸 나란히) 그대로 + "날짜가 주된 단계면 달력은 펼치고 시각은 칸 → 시트"(2B). 사용자 결정 — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L. 값 변경 없음.
 
 ### 2026-10-21 — 시 칼럼의 Home · End(03-C 3A)
 

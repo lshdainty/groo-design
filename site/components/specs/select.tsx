@@ -17,6 +17,12 @@ import { CATS, Cap, Cell, DateTimeFields, F, Form, HeroScreens, Live, PAY_FLAT, 
 import { InputButtonView, SelectFieldList, SelectField, SelectListView, SelectOpenView, SelectTriggerView } from './select-view';
 import { TfInputView } from './text-field-view';
 import { Phone, Verdict, rc } from './kit';
+import { segmentedLook } from './segmented-control-look';
+import { SegmentedView } from './segmented-control-view';
+import { tabsLook } from './tabs-look';
+import { LineTabsView } from './tabs-view';
+import { listLook } from './list-look';
+import { ListView } from './list-view';
 
 type Fig = (p: { caption?: string }) => ReactNode;
 const px = (v: string) => parseFloat(v);
@@ -690,6 +696,49 @@ const PickGuide: Fig = ({ caption }) => {
   );
 };
 
+// 첫 갈래 — 이 자리는 무슨 일을 하나(2026-10-22 고르는 법 1B). 폼 값만 아래 판단 순서(pick-guide)로 간다
+const FirstGuide: Fig = ({ caption }) => {
+  const lk = desk();
+  const menu: SelGroup[] = [{ items: [{ value: 'edit', label: '수정' }, { value: 'copy', label: '복사' }, { value: 'delete', label: '삭제' }] }];
+  const ll = listLook('desk');
+  return (
+    <Panel caption={caption}>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Cell label={<><b className="pk-text">폼에 넣을 값</b> 저장 · 다음을 눌러야 반영 → 아래 판단 순서(Select Box · Select · Chip · Radio · Checkbox)</>}>
+          <F label="결제 수단">
+            <SelectTriggerView look={lk} size="large" state="enabled" labels={['생활비 카드']} />
+          </F>
+        </Cell>
+        <Cell label={<><b className="pk-text">보이는 내용을 거르거나 다르게 본다</b> 2 ~ 4가지 고정 보기 → Segmented Control(조건을 여럿 걸면 Chip 필터 바)</>}>
+          <SegmentedView look={segmentedLook('desk')} live={false} value="week" ariaLabel="기간" items={[{ value: 'today', label: '오늘' }, { value: 'week', label: '이번 주' }, { value: 'all', label: '전체' }, { value: 'done', label: '완료' }]} />
+        </Cell>
+        <Cell label={<><b className="pk-text">다른 구역으로 옮긴다</b> Tabs — 1차 Line · 2차 Chip Tabs</>}>
+          <LineTabsView look={tabsLook('desk')} live={false} value="asset" ariaLabel="가계부" items={[{ value: 'ledger', label: '가계부' }, { value: 'asset', label: '자산' }, { value: 'stats', label: '통계' }, { value: 'budget', label: '예산' }]} />
+        </Cell>
+        <Cell label={<><b className="pk-text">기능 하나를 켜고 끈다</b> 누르는 순간 바뀐다 → Switch(설정 줄은 List 스위치 줄) · 저장해야 반영 → Checkbox</>}>
+          <ListView look={ll} live={false} rows={[{ kind: 'switch', title: '결제 알림', detail: '결제 예정일 하루 전 · 당일', checked: true }]} />
+        </Cell>
+        <Cell label={<><b className="pk-text">화면 폭 목록에서 하나를 고르고 바로 바뀐다</b> List 라디오 줄</>}>
+          <ListView
+            look={ll}
+            live={false}
+            ariaLabel="기본 통화"
+            rows={[
+              { kind: 'radio', title: '대한민국 원', detail: 'KRW', value: 'KRW', checked: true },
+              { kind: 'radio', title: '미국 달러', detail: 'USD', value: 'USD' },
+            ]}
+          />
+        </Cell>
+        <Cell label={<><b className="pk-text">누르면 동작을 실행한다</b> Menu(1280 이상) · Menu Sheet(1280 미만) — 값을 고르는 데 쓰지 않는다</>}>
+          <div className="w-[200px]">
+            <SelectListView look={lk} size="large" groups={menu} />
+          </div>
+        </Cell>
+      </div>
+    </Panel>
+  );
+};
+
 const MenuGuide: Fig = ({ caption }) => {
   const lk = desk();
   const currency: SelGroup[] = [{ items: CURRENCY.items.slice(0, 5).map(({ description, ...i }) => (void description, i)) }];
@@ -778,6 +827,7 @@ export const selectFigures: Record<string, Fig> = {
   'placeholder-guide': PlaceholderGuide,
   'mobile-guide': MobileGuide,
   'pick-guide': PickGuide,
+  'first-guide': FirstGuide,
   'menu-guide': MenuGuide,
   'ex-basic': ExBasic,
   'ex-group': ExGroup,

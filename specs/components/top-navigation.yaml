@@ -17,7 +17,8 @@
 #   - Root 제목은 t8 22/30 700 — SEED 는 그림에만 있다(약 22, rootage 없음).
 #   - 누름 바탕은 불투명한 bg-layer-default-pressed — SEED bg.transparent-pressed 는 투명도가 있다(v102 · v104).
 #   - 버튼 모서리는 rootage r2 8(SEED 웹 레시피는 4), 누름 축소는 v104 의 2px 거리(SEED 웹은 축소 없음).
-#   - 투명 톤(사진 위 흰 글자 + 막)은 두지 않는다 — 쓸 자리가 생기면 정한다.
+#   - 투명 톤(tone transparent — 사진 위 흰 글자, 스크롤하면 채움)은 SEED 값 그대로다(2026-10-22 사용자 결정 5C). 바 위 막(SEED gradient —
+#     검정 35% → 투명, 바 아래로 20)과 투명 누름 바탕(SEED bg.transparent-pressed)은 groo 토큰이 없어 열린 일이다 — 이 톤을 쓰는 화면을 이관할 때 정한다.
 #   - 글 버튼의 iOS 최대 폭 96 은 두지 않는다 — 제목이 늘 왼쪽이라 SEED android 와 같다.
 #   - 알림은 점(Notification Badge small)만 — 숫자는 맨 오른쪽 버튼에서 화면 밖으로 나간다.
 
@@ -44,13 +45,17 @@ variants:
     standard: 그 아래 화면 · HR 폰 — 왼쪽 버튼 + 제목(18)
     desktop: 데스크톱 머리(768 이상, Desk) — 제목 없음(본문 h1), 주 버튼 + 아이콘 버튼
   leadingIcon:
-    back: ← 들어온 화면으로(History) — 앞 화면이 없으면 상위 화면으로
+    back: ← 들어온 화면으로(History, 기본) — 앞 화면이 없으면 상위 화면으로. 화면마다 상위 화면(Hierarchy)을 고를 수 있다
     close: ✕ 모달 · 독립 흐름을 닫는다 — 입력한 값이 사라질 수 있다
     menu: ☰ 주 메뉴(왼쪽 Side Panel)를 연다 — HR 폰
+  tone:
+    layer: 불투명 바(기본) — 모든 화면
+    transparent: 사진 위 투명 바 — 사진이 화면 위를 채우는 상세만. 스크롤해 사진이 바 밑으로 지나가면 layer 로 바뀐다(SEED)
 
 defaults:
   type: standard
   leadingIcon: back
+  tone: layer
 
 states:
   enabled: 기본
@@ -66,7 +71,7 @@ rules:
       root:
         height: { value: 56px, note: "폰 · 데스크톱 모든 화면(SEED — 2026-10-01 iOS · Android 56 으로 통일). 위 안전 영역(safe-area-inset-top)만큼 더 높아지고 내용은 그 아래 56 에 놓인다" }
         paddingX: { value: $spacing-x1_5, note: "화면 끝 → 버튼 상자 6(아이콘은 16, SEED rootage paddingX). 좌우 안전 영역을 더한다 — 바탕은 화면 끝까지" }
-        background: { value: $color-bg-layer-default, note: "불투명 — 투명 바(사진 위 흰 글자 + 막)는 두지 않는다" }
+        background: { value: $color-bg-layer-default, note: "불투명(tone layer) — 사진 위 투명 바는 아래 tone 규칙" }
         borderBottomWidth: { value: 0px, note: "스크롤해도 선을 긋지 않는다(SEED Top Navigation — 2026-10-04 결정 3). 데스크톱 머리도 늘 있던 선을 걷는다" }
         shadow: { value: none, note: "스크롤해도 그림자 없음 — 바와 목록이 한 면으로 보인다" }
         position: { value: 맨 위에 붙음(sticky), note: "스크롤해도 그 자리 — 숨지 않는다. 바 아래로 목록이 지나간다" }
@@ -186,11 +191,36 @@ rules:
         buttonSize: { value: small 36, note: "Button brandSolid small — 화면의 핵심 동작 하나. 아이콘 버튼 왼쪽에 둔다" }
         marginRight: { value: $spacing-x2, note: "주 버튼 ↔ 첫 아이콘 버튼 상자 8" }
 
+  # ── 톤 — 사진 위 투명 바(SEED tone transparent, 2026-10-22 사용자 결정 5C) ──
+  - when: { tone: transparent }
+    enabled:
+      root:
+        background: { value: transparent, note: "SEED tone transparent(gradient=false 의 바탕 #00000000) — 사진 위에 겹친다. 스크롤해 사진이 바 밑으로 지나가면 tone layer 로 바뀌어 바탕이 채워진다(SEED \"배경이 투명한 Top Navigation 을 사용하는 경우 스크롤할 때 배경색이 채워지는 동작\") — 선은 긋지 않는다" }
+        position: { value: 사진 위에 겹침(sticky 그대로), note: "본문(사진)이 바 아래가 아니라 화면 맨 위(위 안전 영역 포함)에서 시작한다 — 바는 그 위에 얹힌다" }
+        scrim: { value: 열린 일, note: "SEED gradient=true(권장 — gradient=false 는 '권장하지 않습니다 … 가독성을 직접 확보해야') — 바 위 검정 35%(#00000059) → 아래 투명. groo 토큰이 없다 — 이 톤을 쓰는 화면을 이관할 때 정한다" }
+        scrimBleedBottom: { value: $spacing-x5, note: "SEED bleedBottom x5 — 막이 바 아래로 20 더 내려온다(막과 함께 쓴다)" }
+      title:
+        foreground: { value: $color-static-white, note: "SEED palette.static-white — 두 모드 같다. 대비는 사진과 막이 정한다(막은 열린 일)" }
+      iconButton:
+        color: { value: $color-static-white, note: "SEED top-navigation-icon-button tone transparent" }
+      textButton:
+        foreground: { value: $color-static-white, note: "SEED top-navigation-text-button tone transparent" }
+    hovered:
+      iconButton:
+        background: { value: 열린 일, note: "SEED bg.transparent-pressed(투명도 있는 누름 바탕) — groo 토큰이 없다. 불투명한 bg-layer-default-pressed 는 사진 위에 회색 상자가 되어 쓰지 않는다 — 정할 때까지 바탕 없이 축소만" }
+      textButton:
+        background: { value: 열린 일, note: "아이콘 버튼과 같다" }
+    pressed:
+      iconButton:
+        background: { value: 열린 일, note: "SEED bg.transparent-pressed — groo 토큰 없음. 정할 때까지 바탕 없이 2px 거리 축소만" }
+      textButton:
+        background: { value: 열린 일, note: "아이콘 버튼과 같다" }
+
   # ── 왼쪽 버튼 ─────────────────────────────────────────
   - when: { leadingIcon: back }
     enabled:
       leading:
-        glyph: { value: lucide chevron-left, note: "이름 \"뒤로\"" }
+        glyph: { value: lucide chevron-left, note: "이름 \"뒤로\" — 기본은 들어온 화면(History), 화면마다 상위 화면(Hierarchy)을 고를 수 있다(top-navigation.md 의 \"← 는 어디로\")" }
   - when: { leadingIcon: close }
     enabled:
       leading:

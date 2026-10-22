@@ -140,7 +140,7 @@
 
 ### 무엇으로 기다리나
 
-기다리는 동안의 틀 규칙은 이 표 한 곳이다 — [Progress Circle](progress-circle.md) 은 이 표를 가리킨다(2026-10-22 사용자 결정 5B — https://claude.ai/artifact/NuEPiLRH2fJidXdKzcDsCX). 덮개 칸은 뒤 화면을 덮는지다.
+기다리는 동안의 틀 규칙은 이 표 한 곳이다 — [Progress Circle](progress-circle.md) 은 이 표를 가리킨다(2026-10-22 사용자 결정 5B — https://claude.ai/artifact/NuEPiLRH2fJidXdKzcDsCX). 덮개 칸은 뒤 화면을 덮는지다. 다 온 뒤 · 그림 자리에 무엇을 보일지(비어 있음 · 실패 · 대체 그림 · 이니셜)는 [Content Placeholder 의 "대신 보이는 것 고르기"](content-placeholder.md#대신-보이는-것-고르기) 다.
 
 | 이런 때 | 보이는 것 | 덮개 |
 |---|---|---|
@@ -154,7 +154,7 @@
 | 저장 · 제출 | 누른 버튼의 로딩([Button](button.md)) | 없음 |
 | 올리기 · 받기(진행을 안다) | 값 있는 Progress Circle 24 — 사진이면 딤 위 흰 원 | 그 사진 위 딤만 |
 | 뒤를 만지면 안 되는 처리(가져오기 확정 · 이용 해지 처리) | 화면 가운데 흰 원 40 — 안내 글 없음([Progress Circle](progress-circle.md) 의 "뒤를 만지면 안 되는 처리") | 화면 전체 딤 |
-| 이미지 | [Image Frame](image-frame.md) 이 그린다 — 같은 모서리의 스켈레톤, 없거나 실패하면 [Content Placeholder](content-placeholder.md). 물건 타일([Logo Tile](logo-tile.md))은 이름을 아니까 첫 글자부터 | 없음 |
+| 이미지 | [Image Frame](image-frame.md) 이 그린다 — 같은 모서리의 스켈레톤을 **처음부터**(위 시간표의 0 ~ 1초 틀만을 기다리지 않는다 — 빈 칸이 없다), 받아 둔 그림은 스켈레톤 없이 바로. 시간표에서 따르는 것은 10초 실패다 — 없거나 실패하면 [Content Placeholder](content-placeholder.md)(2026-10-22 사용자 결정 4B). 물건 타일([Logo Tile](logo-tile.md))은 이름을 아니까 첫 글자부터 | 없음 |
 
 [그림: 자리마다 — 첫 진입 스켈레톤 · 섹션 새로 고침 원 24 · 목록 끝 원 · 저장 버튼 로딩](../../site/components/specs/skeleton.tsx#which-guide)
 
@@ -353,6 +353,10 @@ new QueryClient({
 - **기다리는 동안의 시간표 · 요청 제한 · 다시 시도를 수치로 둔다** — SEED 는 Loading 패턴의 시나리오(5초 안내 · 10초 실패)로만 적었고 구현에는 장치가 없다.
 
 ## Migration notes
+
+### 2026-10-22 — 그림 자리는 처음부터 · 대신 보이는 것은 한 곳
+
+"무엇으로 기다리나" 의 이미지 줄을 코드대로 맞췄다 — 그림 자리의 스켈레톤은 처음부터(시간표의 0 ~ 1초 틀만을 기다리지 않는다), 받아 둔 그림은 바로, 시간표에서 따르는 것은 10초 실패다(content-placeholder.md 의 "시간표를 따른다" 와 image-frame.yaml 의 "처음부터 깐다" 가 어긋나 있었다). 다 온 뒤 무엇을 보일지는 [Content Placeholder 의 "대신 보이는 것 고르기"](content-placeholder.md#대신-보이는-것-고르기) 한 곳을 가리킨다. 사용자 결정 4B · 1B — https://claude.ai/artifact/KPp9Lpd3v5KMgNrDn7pZmt. 값 변경 없음.
 
 ### 2026-10-22 — 기다림 틀 규칙은 이 표 한 곳
 

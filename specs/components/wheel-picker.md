@@ -47,7 +47,7 @@
 
 ### 휠을 쓰는 자리
 
-순서가 있고 앞뒤 값을 보며 고르는 값 — 시각 · 연 · 월. 날짜 하나는 달력(Date Picker)으로 고르고, 연 · 월 · 일 세 휠로 받지 않는다. 순서가 없거나 고를 것이 적으면 다른 컴포넌트다 — Select 의 ["고르는 컴포넌트 고르기"](select.md#고르는-컴포넌트-고르기) 판단 순서로 고른다(2026-10-22 사용자 결정 2B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym).
+순서가 있고 앞뒤 값을 보며 고르는 값 — 시각 · 연 · 월. 하루를 고르면 달력([Date Picker](date-picker.md))이 기본이다 — 요일 · 오늘과의 거리가 보인다. 몇 해 앞뒤의 먼 날도 달력 제목을 눌러 연 · 월 휠로 옮긴 뒤 날을 누른다. 연 · 월 · 일 세 휠은 피한다 — 31일이 없는 달을 따로 막아야 하고, 요일 · 오늘과의 거리가 보이지 않는다(2026-10-22 사용자 결정 3B — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L). 순서가 없거나 고를 것이 적으면 다른 컴포넌트다 — Select 의 ["고르는 컴포넌트 고르기"](select.md#고르는-컴포넌트-고르기) 판단 순서로 고른다(2026-10-22 사용자 결정 2B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym).
 
 ### 달만 고르기
 
@@ -119,7 +119,7 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker"
 
 ### ❌ Don't
 
-- 날짜를 연 · 월 · 일 세 휠로 받기 — 달력.
+- 날짜를 연 · 월 · 일 세 휠로 받기 — 피한다. 먼 날도 달력 제목의 연 · 월 휠로.
 - 순서 없는 긴 목록 — Select.
 - 항목에 버튼 · 여러 줄 글.
 
@@ -135,6 +135,10 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker"
 - **링 색은 groo `stroke-focus-ring`**.
 
 ## Migration notes
+
+### 2026-10-22 — 세 휠은 "피한다"
+
+"연 · 월 · 일 세 휠로 받지 않는다"(c64ff4e 세션 문장 — 10-03 비교 페이지에 "세 휠" 이 없다)를 "하루는 달력이 기본 · 먼 날은 달력 제목의 연 · 월 휠 · 세 휠은 피한다" 로 낮췄다(3B). 사용자 결정 — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L. 고르지 않은 안: Don't 그대로(3A) · 먼 날 칸은 세 휠 허용(3C). 지금 세 휠을 쓰는 곳은 없다 — 화면은 같다.
 
 ### 2026-10-22 — 앱 칼럼은 조절 가능으로(I-04 검수)
 

@@ -61,6 +61,7 @@ export const FB_ICONS = [
   'trash',
   'landmark',
   'sparkles',
+  'funnel-x',
 ] as const;
 export type FbIcon = (typeof FB_ICONS)[number];
 

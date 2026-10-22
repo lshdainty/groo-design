@@ -13,6 +13,9 @@ import { CP_GLYPHS, glyphSize, type CpGlyph } from './loading-look';
 import { PlaceholderPlayground } from './loading-playground';
 import { Bone, CardBox, L, LdPhone, Placeholder, SCREEN, cardStack, type Fig } from './loading-screens';
 import { Legend, Note, Pin } from './overlay-screens';
+import { resultSectionLook } from './feedback-look';
+import { ResultSectionView, type ResultSectionViewProps } from './feedback-view';
+import { FilterStrip } from './feedback-screens';
 
 const cp = () => L().placeholder;
 const Pair = ({ children, wide = false }: { children: ReactNode; wide?: boolean }) => <div className={`flex w-full flex-col gap-4 ${wide ? 'max-w-[900px] lg:flex-row' : 'max-w-[760px] md:flex-row'}`}>{children}</div>;
@@ -367,7 +370,69 @@ const ExBasic: Fig = () => {
   );
 };
 
+// ── 대신 보이는 것 고르기 — 같은 띠의 네 상태(2026-10-22 사용자 결정 1B · 2B) ──────
+// 가계부 흰 화면의 "10월 거래" — 불러오는 중(줄 자리만 스켈레톤) · 처음(할 일 + 첫 버튼) · 걸러서 0건(조건 탓 · 버튼 없음) · 불러오지 못함(다시 시도).
+// 결과는 result-section.yaml(resultSectionLook), 스켈레톤은 skeleton.yaml. 필터 바는 모양만 줄인 대역이다(Chip 은 chip.md)
+function SkRow({ mode }: { mode: Mode }) {
+  return (
+    <div className="flex items-center gap-3" style={{ padding: '12px 24px' }}>
+      <Bone mode={mode} radius="12" width={40} height={40} />
+      <span className="flex min-w-0 flex-1 flex-col gap-1">
+        <Bone mode={mode} text="t5" width="62%" />
+        <Bone mode={mode} text="t3" width="42%" />
+      </span>
+      <Bone mode={mode} text="t5" width={72} />
+    </div>
+  );
+}
+type StandinState = 'loading' | 'first' | 'filtered' | 'failed';
+const STANDIN_RESULT: Record<Exclude<StandinState, 'loading'>, Omit<ResultSectionViewProps, 'look'>> = {
+  first: { kind: 'empty', icon: 'receipt-text', title: '아직 기록한 거래가 없어요', description: '거래를 기록하면 날짜별로 여기에 모여요.', primary: { label: '거래 추가' } },
+  filtered: { kind: 'empty', icon: 'funnel-x', title: '조건에 맞는 거래가 없어요', description: '조건을 바꾸거나 지워 보세요.' },
+  failed: { kind: 'failure', title: '거래를 불러오지 못했어요', description: '잠시 뒤 다시 시도해 주세요.', primary: { label: '다시 시도' } },
+};
+function StandinPhone({ mode, state }: { mode: Mode; state: StandinState }) {
+  return (
+    <LdPhone mode={mode} title="가계부" scale={0.5} h={600} bg="bg-layer-default">
+      <FilterStrip mode={mode} on={state === 'filtered'} />
+      <div className="text-[14px] font-bold" style={{ padding: '16px 24px 4px', color: rc('fg-neutral-subtle', mode) }}>
+        10월 거래
+      </div>
+      {state === 'loading' ? (
+        <div aria-busy>
+          {[0, 1, 2, 3].map((i) => (
+            <SkRow key={i} mode={mode} />
+          ))}
+        </div>
+      ) : (
+        <ResultSectionView look={resultSectionLook('desk')} mode={mode} size="large" grow {...STANDIN_RESULT[state]} />
+      )}
+    </LdPhone>
+  );
+}
+const STANDIN_CAP: Record<StandinState, [string, string]> = {
+  loading: ['불러오는 중', '1초부터 — 필터 · 목록 제목은 그리고 줄 자리만 스켈레톤'],
+  first: ['처음 — 하나도 없음', 'Result Section empty — 할 일 + 첫 버튼'],
+  filtered: ['걸러서 0건', '조건 탓을 제목이 말한다 · 버튼 없음(지우기는 필터 바 맨 앞)'],
+  failed: ['불러오지 못함', 'failure + 다시 시도 — 비어 있음으로 보이지 않는다'],
+};
+const StandinGuide: Fig = ({ caption }) => (
+  <Panel caption={caption}>
+    <div className="mx-auto flex max-w-[420px] flex-wrap items-start justify-center gap-3">
+      {(Object.keys(STANDIN_CAP) as StandinState[]).map((st) => (
+        <div key={st} className="flex w-[196px] flex-col items-center gap-2">
+          <StandinPhone mode="auto" state={st} />
+          <span className="text-center text-[12px] leading-4 pk-muted">
+            <b className="pk-text">{STANDIN_CAP[st][0]}</b> — {STANDIN_CAP[st][1]}
+          </span>
+        </div>
+      ))}
+    </div>
+  </Panel>
+);
+
 export const contentPlaceholderFigures: Record<string, Fig> = {
+  'standin-guide': StandinGuide,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

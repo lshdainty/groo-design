@@ -68,7 +68,10 @@ export type TopNavLook = {
   leading: Record<TopLeading, { icon: NavIcon; label: string }>;
   // 데스크톱 머리의 주 버튼(Button brandSolid small)
   primary: ButtonLook;
+  // 사진 위 투명 바(tone transparent — SEED, 2026-10-22 5C) — 제목 · 아이콘 · 글 버튼 색, 막힘 색. 막 · 누름 바탕은 열린 일이라 그리지 않는다
+  transparent: { fg: NColor; disabledFg: NColor };
 };
+export type TopTone = 'layer' | 'transparent';
 // 오른쪽 자리 하나 — 아이콘 버튼 · 글 버튼
 // pressed 를 주면 켜고 끄는 단추(aria-pressed) — 이름은 고정, 아이콘은 지금 상태를 넘긴다(금액 가리기: 보임 eye · 가림 eye-off)
 export type TopAction = { kind?: 'icon'; icon: NavIcon; label: string; notification?: boolean; pressed?: boolean; disabled?: boolean; state?: TopState } | { kind: 'text'; label: string; disabled?: boolean; state?: TopState };

@@ -6697,7 +6697,8 @@ const TOP_NAV_LEADING = { back: ["chevronLeft", "뒤로"], close: ["x", "닫기"
 //   safeTop  위 안전 영역(상태 표시줄) — 바가 그만큼 높아지고 내용은 그 아래 56 에 놓인다
 //   search   검색칸(Text Field 상자형 medium 40 · 앞 돋보기 · 지우기 — { value, placeholder }). standard 는 제목 자리(← 다음 6 · 보이지 않는 h1 "검색"),
 //            desktop 은 머리 왼쪽 폭 360 — 거래 검색 화면의 입구(2026-10-16 Q-017-3a C)
-function topNav({ type = "standard", leading = "back", title = "", actions = [], text = null, primary = "", menu = null, safeTop = 0, search = null, attrs = "" } = {}) {
+//   tone     "layer"(기본) · "transparent" — 사진 위 투명 바(흰 글자 · 아이콘, 누름 바탕 없이 축소만 — 막 · 누름 바탕은 열린 일, 2026-10-22 5C)
+function topNav({ type = "standard", leading = "back", title = "", actions = [], text = null, primary = "", menu = null, safeTop = 0, search = null, tone = "layer", attrs = "" } = {}) {
   const lead = type === "standard" ? (() => {
     const [icon, name] = TOP_NAV_LEADING[leading];
     const extra = leading === "menu" ? attrsOf(['aria-haspopup="dialog"', `aria-expanded="${menu && menu.open ? "true" : "false"}"`, menu && menu.controls && `aria-controls="${menu.controls}"`, menu && menu.live && "data-pspanel-open"]) : "";
@@ -6710,7 +6711,7 @@ function topNav({ type = "standard", leading = "back", title = "", actions = [],
   const prim = primary ? `<span class="ptnav-primary"><button class="btn btn-brand-solid btn-size-small" type="button">${NAV_ICON.plus}<span>${escape(primary)}</span></button></span>` : "";
   const right = text ? topNavText(text) : actions.map(topNavIcon).join("");
   const tail = prim || right ? `<div class="ptnav-actions">${prim}${right}</div>` : "";
-  return `<header ${attrsOf([`class="ptnav ptnav--${type}"`, safeTop && `style="--pnav-safe-top: ${safeTop}px;"`, attrs])}>${lead}${head}${tail}</header>`;
+  return `<header ${attrsOf([`class="ptnav ptnav--${type}${tone === "transparent" ? " ptnav--transparent" : ""}"`, safeTop && `style="--pnav-safe-top: ${safeTop}px;"`, attrs])}>${lead}${head}${tail}</header>`;
 }
 
 // ── Bottom Navigation ─────────────────────────────────────────────────────
@@ -7035,12 +7036,17 @@ export function renderNavGallery(brand) {
   // 3. Top Navigation — 위 안전 영역 · 스크롤해도 선 없음. 오른쪽 폰은 실제로 스크롤된다
   const notch = pnavPhone({ height: 420, status: 47, inner: `${topNav({ type: "root", title: "홈", safeTop: 47, actions: [{ icon: "search", name: "검색" }, { icon: "bell", name: "알림, 새 알림 있음", dot: true }] })}${phoneBody(`${ledgerTitle("이번 달 거래")}${pnavRows(PNAV_LEDGER, 8)}`)}` });
   const scrolled = pnavPhone({ height: 420, inner: `${topNav({ title: "알림", text: { label: "모두 읽음" } })}${phoneBody(pnavRows([["카드 결제 예정", "현대카드 M · 10월 15일", "184,000원"], ["예산 80% 사용", "식비 · 10월", ""], ["자동 이체 완료", "관리비 · 국민 주계좌", "184,000원"], ["카드 실적 달성", "현대카드 M · 30만원", ""], ["더치페이 요청", "김민수 · 저녁", "21,000원"]], 12), { attrs: 'data-pnav-scrolltop="180" tabindex="0" role="region" aria-label="알림 목록"' })}` });
+  const photoBar = (tone) => topNav({ title: "지어낸카드 플러스", tone, actions: [{ icon: "share", name: "공유" }] });
+  const photoTop = pnavPhone({ height: 420, inner: `<div class="pnav-over">${photoBar("transparent")}</div>${phoneBody(`<div class="pnav-photo" aria-hidden="true"></div>${pnavRows(PNAV_LEDGER, 4)}`)}` });
+  const photoFilled = pnavPhone({ height: 420, inner: `${photoBar("layer")}${phoneBody(pnavRows(PNAV_LEDGER, 8))}` });
   const barPanel = panel(
     "Top Navigation — 바: 위 안전 영역 · 스크롤해도 선 · 그림자 없음",
-    "위 안전 영역(상태 표시줄 · 노치)만큼 바가 높아지고 버튼 · 제목은 그 아래 56 에 놓인다 — 바탕은 화면 끝까지, 누르고 읽는 것은 안전 영역 안이다(Layout 의 Safe Area — 왼쪽 폰은 위 47). 좌우 안전 영역도 바의 여백 6 에 더한다. 바는 맨 위에 붙어(sticky · z-sticky 50) 스크롤해도 그 자리에 있고, 목록이 그 밑으로 지나가도 선 · 그림자를 긋지 않는다(SEED Top Navigation — \"고정된 영역과 스크롤되는 영역을 구분하기 위해 별도의 시각적인 장치를 표시하지 않습니다\"). 스크롤 방향에 따라 숨지도 않고, 투명 바는 두지 않는다. 한 표면 안에서 머리와 본문이 따로 스크롤되는 대화상자 · 옆 패널 · 사이드바만 그 부품의 규칙대로 머리 아래 1px 선을 긋는다. 오른쪽 폰은 이미 조금 내려 둔 목록이고 실제로 스크롤된다.",
+    "위 안전 영역(상태 표시줄 · 노치)만큼 바가 높아지고 버튼 · 제목은 그 아래 56 에 놓인다 — 바탕은 화면 끝까지, 누르고 읽는 것은 안전 영역 안이다(Layout 의 Safe Area — 왼쪽 폰은 위 47). 좌우 안전 영역도 바의 여백 6 에 더한다. 바는 맨 위에 붙어(sticky · z-sticky 50) 스크롤해도 그 자리에 있고, 목록이 그 밑으로 지나가도 선 · 그림자를 긋지 않는다(SEED Top Navigation — \"고정된 영역과 스크롤되는 영역을 구분하기 위해 별도의 시각적인 장치를 표시하지 않습니다\"). 스크롤 방향에 따라 숨지도 않는다. 사진이 화면 위를 채우는 상세만 사진 위 투명 바(tone transparent — 흰 글자 · 아이콘)를 두고, 사진이 바 밑으로 지나가면 바탕이 채워진다(SEED — 막 · 누름 바탕은 열린 일, 2026-10-22 사용자 결정 5C). 지금 이 톤을 쓰는 화면은 없다 — 사진 자리는 어두운 면으로 대신했다. 한 표면 안에서 머리와 본문이 따로 스크롤되는 대화상자 · 옆 패널 · 사이드바만 그 부품의 규칙대로 머리 아래 1px 선을 긋는다. 오른쪽 폰은 이미 조금 내려 둔 목록이고 실제로 스크롤된다.",
     samples([
       sample("위 안전 영역 47 — 바가 그만큼 높아진다", "safe-area-inset-top · 내용은 그 아래 56", notch),
       sample("스크롤한 목록 — 선 · 그림자 없음", "직접 스크롤 — 바는 그 자리 · 숨지 않는다", scrolled),
+      sample("사진 위 투명 바 — 맨 위", "tone transparent · 흰 글자 · 아이콘 · 막은 열린 일", photoTop),
+      sample("사진이 지나간 뒤 — 채워진 바", "tone layer 로 · 선 없음", photoFilled),
     ]),
   );
 
@@ -16524,6 +16530,15 @@ export function pageCss() {
     .ptnav-icon--focus,
     .ptnav-text--focus { outline: 2px solid var(--pnav-ring); outline-offset: -2px; }
     :is(.ptnav-icon, .ptnav-text):disabled { color: var(--color-fg-disabled); cursor: not-allowed; }
+    /* 투명 바(tone transparent — 사진이 화면 위를 채우는 상세) — 바탕 없음 · 제목 · 아이콘 · 글 static-white(두 모드 같다), 막힘은 fg-disabled 그대로.
+       누름 · 호버 바탕(SEED bg.transparent-pressed)과 바 위 막(SEED gradient)은 groo 토큰이 없어 열린 일 — 바탕 없이 축소만. 사진이 지나가면 layer 로 바뀐다 */
+    .ptnav { transition: background-color var(--motion-duration-color-transition) var(--motion-ease-easing), color var(--motion-duration-color-transition) var(--motion-ease-easing); }
+    .ptnav--transparent { background: transparent; color: var(--color-static-white); }
+    .ptnav--transparent :is(.ptnav-title, .ptnav-icon, .ptnav-text) { color: var(--color-static-white); }
+    .ptnav--transparent :is(.ptnav-icon, .ptnav-text):disabled { color: var(--color-fg-disabled); }
+    .ptnav--transparent :is(.ptnav-icon, .ptnav-text):is(:hover, :active, .ptnav-icon--hover, .ptnav-icon--pressed, .ptnav-text--hover, .ptnav-text--pressed) { background: transparent; }
+    .pnav-photo { position: relative; height: 200px; background: linear-gradient(160deg, #1f2a44 0%, #3a4a6b 100%); }
+    .pnav-over { position: absolute; inset: 0 0 auto 0; z-index: 1; }
     @media (prefers-reduced-motion: reduce) {
       :is(.ptnav-icon, .ptnav-text):active:not(:disabled),
       .ptnav-icon--pressed,

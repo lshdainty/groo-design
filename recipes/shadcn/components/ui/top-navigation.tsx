@@ -11,7 +11,11 @@ import { useLeaveConfirm } from "@/components/ui/alert-dialog";
  * 데스크톱 머리(desktop)는 SEED 에 컴포넌트가 없어 groo 가 같은 규칙으로 더했다.
  *
  *   TopNavigation               바(<header> — main 밖, banner). type "root"(탭 첫 화면) · "standard"(기본 — 그 아래 화면 · HR 폰) ·
- *                               "desktop"(768 이상 Desk 의 머리 — 제목은 본문 맨 위 ScreenTitle). 자식은 아래 부품을 차례대로
+ *                               "desktop"(768 이상 Desk 의 머리 — 제목은 본문 맨 위 ScreenTitle). 자식은 아래 부품을 차례대로.
+ *                               tone "layer"(기본 — 불투명 바) · "transparent"(사진이 화면 위를 채우는 상세 — 사진 위 투명 바, 제목 · 아이콘 · 글 버튼
+ *                               static-white, SEED tone transparent, 2026-10-22 사용자 결정 5C). 사진이 바 밑으로 지나가면 부르는 쪽이 tone 을 "layer"
+ *                               로 바꾼다(바탕이 채워진다 — 바탕 · 글자색 150ms). 막(SEED gradient)과 투명 누름 바탕(SEED bg.transparent-pressed)은
+ *                               groo 토큰이 없어 열린 일이다 — 투명 바는 막을 그리지 않고, 누르면 바탕 없이 축소만 한다
  *   TopNavigationBackButton     ← "뒤로" — 앱 안에 앞 화면이 있으면 history.back()(react-router 의 navigate(-1) 와 같다), 없으면
  *                               fallbackHref(그 화면의 상위 화면 주소, 필수)로 지금 주소를 고쳐 간다(location.replace). onClick 을 주면
  *                               그것만 부른다(앱은 pop · 라우터로 옮기는 셸)
@@ -54,7 +58,10 @@ import { useLeaveConfirm } from "@/components/ui/alert-dialog";
 
 type TopNavigationType = "root" | "standard" | "desktop";
 
+type TopNavigationTone = "layer" | "transparent";
+
 const TypeContext = React.createContext<TopNavigationType>("standard");
+const ToneContext = React.createContext<TopNavigationTone>("layer");
 
 // ── 바 ───────────────────────────────────────────────────────
 // 위 안전 영역은 바탕만 채우고 내용은 그 아래 56 에. 좌우는 6(desktop 왼쪽은 32) + 그쪽 안전 영역
@@ -67,19 +74,29 @@ const ROOT_LEFT: Record<TopNavigationType, string> = {
   standard: "pl-[calc(var(--spacing-x1_5)+env(safe-area-inset-left))]",
   desktop: "pl-[calc(var(--layout-margin)+env(safe-area-inset-left))]",
 };
+// 톤 — transparent 는 사진 위 투명 바(흰 글자 · 아이콘). layer ↔ transparent 를 바꾸면 바탕 · 글자색이 150ms 로 바뀐다
+const ROOT_TONE: Record<TopNavigationTone, string> = {
+  layer: "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
+  transparent:
+    "bg-transparent text-static-white [transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
+};
 
 export interface TopNavigationProps extends React.HTMLAttributes<HTMLElement> {
   /** root — 탭 첫 화면(큰 제목) · standard — 그 아래 화면(← + 제목, 기본) · desktop — 768 이상 Desk 의 머리(제목은 본문) */
   type?: TopNavigationType;
+  /** layer — 불투명 바(기본) · transparent — 사진 위 투명 바(사진이 바 밑으로 지나가면 layer 로 바꾼다) */
+  tone?: TopNavigationTone;
 }
 
-const TopNavigation = React.forwardRef<HTMLElement, TopNavigationProps>(({ type = "standard", className, children, ...props }, ref) => (
+const TopNavigation = React.forwardRef<HTMLElement, TopNavigationProps>(({ type = "standard", tone = "layer", className, children, ...props }, ref) => (
   <TypeContext.Provider value={type}>
-    <header ref={ref} data-slot="top-navigation" data-type={type} className={cn(ROOT, ROOT_LEFT[type], className)} {...props}>
-      <div data-slot="top-navigation-row" className="flex h-[56px] items-center">
-        {children}
-      </div>
-    </header>
+    <ToneContext.Provider value={tone}>
+      <header ref={ref} data-slot="top-navigation" data-type={type} data-tone={tone} className={cn(ROOT, ROOT_LEFT[type], ROOT_TONE[tone], className)} {...props}>
+        <div data-slot="top-navigation-row" className="flex h-[56px] items-center">
+          {children}
+        </div>
+      </header>
+    </ToneContext.Provider>
   </TypeContext.Provider>
 ));
 TopNavigation.displayName = "TopNavigation";
@@ -105,13 +122,17 @@ const TITLE_TYPE: Record<Exclude<TopNavigationType, "desktop">, string> = {
   standard: cn("ml-x1_5 first:ml-[50px]", TEXT_T6),
 };
 
+// 톤에 따른 글자색 — transparent 는 static-white(두 모드 같다). layer 는 각 부품의 fg-neutral 그대로
+const TONE_FOREGROUND: Record<TopNavigationTone, string> = { layer: "", transparent: "text-static-white" };
+
 const TopNavigationTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(({ className, ...props }, ref) => {
   const type = React.useContext(TypeContext);
+  const tone = React.useContext(ToneContext);
   if (type === "desktop") {
     if (import.meta.env.DEV) console.warn("[TopNavigation] 데스크톱 머리에는 제목을 두지 않는다 — 본문 맨 위 ScreenTitle 을 쓴다.");
     return null;
   }
-  return <h1 ref={ref} tabIndex={-1} data-screen-title="" data-slot="top-navigation-title" className={cn(TITLE, TITLE_TYPE[type], className)} {...props} />;
+  return <h1 ref={ref} tabIndex={-1} data-screen-title="" data-slot="top-navigation-title" className={cn(TITLE, TITLE_TYPE[type], TONE_FOREGROUND[tone], className)} {...props} />;
 });
 TopNavigationTitle.displayName = "TopNavigationTitle";
 
@@ -181,6 +202,13 @@ const TEXT_BUTTON = [
   "disabled:cursor-not-allowed disabled:bg-transparent disabled:text-fg-disabled disabled:[scale:1]",
 ].join(" ");
 
+// 투명 바의 버튼 — 흰 아이콘 · 글. 누름 · 호버 바탕은 열린 일(SEED bg.transparent-pressed — groo 토큰 없음)이라 칠하지 않고 축소만 한다.
+// 막힘은 fg-disabled 그대로(SEED)
+const TONE_BUTTON: Record<TopNavigationTone, string> = {
+  layer: "",
+  transparent: "text-static-white hover:bg-transparent active:bg-transparent",
+};
+
 function measurePress(el: HTMLElement) {
   el.style.setProperty("--press-basis", String(Math.max(el.offsetHeight, el.offsetWidth / 4, 24)));
 }
@@ -193,35 +221,41 @@ export interface TopNavigationIconButtonProps extends Omit<React.ButtonHTMLAttri
 }
 
 const TopNavigationIconButton = React.forwardRef<HTMLButtonElement, TopNavigationIconButtonProps>(
-  ({ notification = false, className, children, ...props }, ref) => (
-    <button ref={ref} type="button" data-slot="top-navigation-icon-button" className={cn(ICON_BUTTON, className)} {...props}>
-      {/* 아이콘 · 점은 장식 — 이름은 aria-label */}
-      <NotificationBadge aria-hidden visible={notification}>
-        {children}
-      </NotificationBadge>
-    </button>
-  ),
+  ({ notification = false, className, children, ...props }, ref) => {
+    const tone = React.useContext(ToneContext);
+    return (
+      <button ref={ref} type="button" data-slot="top-navigation-icon-button" className={cn(ICON_BUTTON, TONE_BUTTON[tone], className)} {...props}>
+        {/* 아이콘 · 점은 장식 — 이름은 aria-label */}
+        <NotificationBadge aria-hidden visible={notification}>
+          {children}
+        </NotificationBadge>
+      </button>
+    );
+  },
 );
 TopNavigationIconButton.displayName = "TopNavigationIconButton";
 
 const TopNavigationTextButton = React.forwardRef<HTMLButtonElement, Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">>(
-  ({ className, onPointerDown, onKeyDown, ...props }, ref) => (
-    <button
-      ref={ref}
-      type="button"
-      data-slot="top-navigation-text-button"
-      className={cn(TEXT_BUTTON, className)}
-      onPointerDown={(e) => {
-        measurePress(e.currentTarget);
-        onPointerDown?.(e);
-      }}
-      onKeyDown={(e) => {
-        if (e.key === " " || e.key === "Enter") measurePress(e.currentTarget);
-        onKeyDown?.(e);
-      }}
-      {...props}
-    />
-  ),
+  ({ className, onPointerDown, onKeyDown, ...props }, ref) => {
+    const tone = React.useContext(ToneContext);
+    return (
+      <button
+        ref={ref}
+        type="button"
+        data-slot="top-navigation-text-button"
+        className={cn(TEXT_BUTTON, TONE_BUTTON[tone], className)}
+        onPointerDown={(e) => {
+          measurePress(e.currentTarget);
+          onPointerDown?.(e);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === " " || e.key === "Enter") measurePress(e.currentTarget);
+          onKeyDown?.(e);
+        }}
+        {...props}
+      />
+    );
+  },
 );
 TopNavigationTextButton.displayName = "TopNavigationTextButton";
 

@@ -1,6 +1,6 @@
 # Side Panel
 
-> 화면 옆(왼쪽 · 오른쪽)에서 미끄러져 나오는 모달 패널. 지금 쓰는 곳은 HR 폰(768 미만)의 주 메뉴 서랍 하나다 — ☰ 를 누르면 왼쪽에서 나와 [Side Navigation](side-navigation.md) 의 항목을 보인다. 오른쪽 패널(1280 이상의 보조 작업)은 쓰는 곳이 아직 없다. 아래에서 올라오는 모달은 [Bottom Sheet](bottom-sheet.md), 가운데 대화상자는 [Dialog](dialog.md) 다.
+> 화면 옆(왼쪽 · 오른쪽)에서 미끄러져 나오는 모달 패널. 지금 쓰는 곳은 HR 폰(768 미만)의 주 메뉴 서랍 하나다 — ☰ 를 누르면 왼쪽에서 나와 [Side Navigation](side-navigation.md) 의 항목을 보인다. 오른쪽 패널(1280 이상의 보조 작업)은 쓰는 곳이 아직 없다. 아래에서 올라오는 모달은 [Bottom Sheet](bottom-sheet.md), 가운데 대화상자는 [Dialog](dialog.md) 다. 이동 부품(하단 탭 바 · 사이드바 · 상단 바 · Tabs)과 고르는 표는 DESIGN.md Layout 의 "이동 부품 고르기" 한 곳이다.
 
 구조는 당근 [SEED Side Panel](https://seed-design.io/components/side-panel)(Apache-2.0)을 따른다 — "화면의 측면에서 슬라이드되어 나타나며, 현재 맥락을 유지한 채 상세 정보를 확인하거나 부수적인 작업을 수행하는 레이아웃 컴포넌트" 로, 딤 · 패널 · 머리(제목 · 설명 · 닫기) · 본문 · 바닥, 크기 480 · 720 · 960 · 768 미만 80%, 높이 전체, 모서리 · 그림자 · 선 없음. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-04 사용자 결정). 옛 Sheet 스펙(shadcn — 네 방향 · 75% · 384 · 그림자 · 선)을 대신한다 — 아래는 Bottom Sheet 가 맡고, 위에서 내려오는 패널은 걷었다.
 
@@ -233,6 +233,10 @@ import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNav
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 패널 `z-modal-content` 101).
 
 ## Migration notes
+
+### 2026-10-22 — 이동 부품 표 링크
+
+머리말에 DESIGN.md Layout 의 "이동 부품 고르기" 링크를 더했다(6B — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L). 값 변경 없음.
 
 ### 2026-10-22 — 1280 의 까닭 · Persistent 는 보류
 

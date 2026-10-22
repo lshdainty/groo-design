@@ -39,7 +39,7 @@
 
 ### Tone · Variant
 
-톤 다섯(`neutral` · `informative` · `positive` · `warning` · `critical`) × 바탕 둘. 옅은 바탕(`weak`, 기본)은 Callout 과 같은 짝(`bg-*-weak` + `fg-*-contrast`)이고, 짙은 바탕(`solid`)은 `bg-*-solid` + 흰 글이다 — 연결 끊김 · 거절 · 편집 불가처럼 무거운 상태에만.
+톤 다섯(`neutral` · `informative` · `positive` · `warning` · `critical`) × 바탕 둘. 옅은 바탕(`weak`, 기본)은 Callout 과 같은 짝(`bg-*-weak` + `fg-*-contrast`)이고, 짙은 바탕(`solid`)은 `bg-*-solid` + 흰 글이다 — 더 강하게 알려야 할 때(연결 끊김 · 거절 · 편집 불가).
 
 [그림: 톤 다섯 × 옅음 · 짙음 — 라이트 · 다크](../../site/components/specs/page-banner.tsx#tones)
 
@@ -85,9 +85,9 @@
 
 [그림: 자리 — 머리 바로 아래 · 한 화면 하나](../../site/components/specs/page-banner.tsx#placement-guide)
 
-### 짙은 바탕은 무거운 상태에만
+### 짙은 바탕은 더 강하게 알릴 때
 
-기본은 옅은 바탕이다. 짙은 바탕은 연결 끊김 · 거절 · 편집 불가처럼 지금 그 페이지를 제대로 쓸 수 없는 상태에만 쓴다.
+기본은 옅은 바탕이다. 짙은 바탕은 더 강하게 알려야 할 때 쓴다 — 예: 연결 끊김 · 거절 · 편집 불가처럼 지금 그 페이지를 제대로 쓸 수 없는 상태(SEED 는 Tone 마다 Weak · Solid 를 두고 쓰임을 제한하지 않는다).
 
 ### 닫기는 한 번 보면 되는 안내에만
 
@@ -151,7 +151,7 @@ import { PageBanner } from "@/components/ui/page-banner"
 ### ✅ Do
 
 - 페이지 맨 위에 하나, 그 페이지 전체의 상태만.
-- 무거운 상태에만 짙은 바탕.
+- 기본은 옅은 바탕, 짙은 바탕은 더 강하게 알릴 때.
 - 버튼은 동작 이름 하나.
 
 ### ❌ Don't
@@ -175,6 +175,10 @@ import { PageBanner } from "@/components/ui/page-banner"
 - **나중에 나타나는 경고 · 위험은 `role="alert"`**, 버튼은 모두 `type="button"`.
 
 ## Migration notes
+
+### 2026-10-22 — 짙은 바탕은 더 강하게 알릴 때
+
+"짙은 바탕은 무거운 상태에만" 은 10-02 알림 비교 페이지의 그림 꼬리표("짙음(solid) — 무거운 상태에만")가 규칙이 된 것이다 — 같은 페이지 글은 "짙은 바탕을 고르는 기준 문장은 없다" 였다. 예시(연결 끊김 · 거절 · 편집 불가)는 그대로 두고 금지를 권장으로 낮췄다(남은 규칙 R14). 사용자 결정 — https://claude.ai/artifact/Mag1tEv51MdQHdy1o8hY3L. 값 변경 없음.
 
 ### 2026-10-22 — Callout 견주기에 용도 · Sticky
 

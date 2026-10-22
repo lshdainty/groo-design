@@ -278,7 +278,7 @@ const GroupGuide: Fig = ({ caption }) => {
             <Sheet title="주간 회의 메모" groups={mixed} />
           </SheetCrop>
         </Verdict>
-        <Verdict ok={false} note="묶음이 넷 — 최대 3묶음, 한 묶음에는 2개 이상(위험한 동작 묶음만 하나여도 된다)" bg={BASEMENT}>
+        <Verdict ok={false} note="묶음이 넷 — 최대 3묶음" bg={BASEMENT}>
           <SheetCrop w={280}>
             <Sheet title="주간 회의 메모" groups={[{ items: [PIN, EDIT] }, { items: [DUPLICATE] }, { items: [HEADER_MENU[0].items[1]] }, { items: [DELETE] }]} />
           </SheetCrop>

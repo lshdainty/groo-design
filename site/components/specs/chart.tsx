@@ -4,12 +4,12 @@
 // 열지도의 가장 큰 칸에는 고리를 두르지 않는다(사용자 결정 2026-10-08 — 키보드 포커스 링과 헷갈린다).
 import type { ReactNode } from 'react';
 import { Panel } from '../foundations/ui';
-import { CardHeaderView, CardSurface } from './data-card-view';
-import { DAY_HEADS, DAY_LABELS, categoryRows, trendSeries } from './data-chart-data';
+import { CardHeaderView, CardSurface, StatView } from './data-card-view';
+import { DAY_HEADS, DAY_LABELS, categoryRows, monthlySeries, total, trendSeries } from './data-chart-data';
 import { ChartPlayground, ExChartStatusDemo, ExDonutDemo, ExTrendDemo } from './data-chart-play';
 import { DonutLegendView, DonutView, HeatmapView, LegendTilesView, TrendChartView, type TrendSeries } from './data-chart-view';
 import { contrastPair } from './data-contrast';
-import { HEAT_DAYS, HEAT_DAYS_FULL, HEAT_ROWS, HUE_KO, MONTH_DAYS, PALETTE_DEMO, TODAY_DAY, TREND, TREND_MONTH, TREND_TOTAL, TREND_YEAR } from './data-data';
+import { HEAT_DAYS, HEAT_DAYS_FULL, HEAT_ROWS, HUE_KO, MONTH_DAYS, MONTHLY, PALETTE_DEMO, STATS, TODAY_DAY, TREND, TREND_MONTH, TREND_TOTAL, TREND_YEAR } from './data-data';
 import { CHL, CL, DimH, DimV, MODES, ModeLabel, PINK, TL, TREND_TILES, Tip, dayHead, dayLabel, pinkFill, won, type Fig } from './data-screens';
 import { assignChartColors, donutFits, donutThickness, formatDay, type ChartHue } from './data-shared';
 import { TableView, type TCol, type TRow } from './data-table-view';
@@ -607,7 +607,155 @@ const ExStatus: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// ── 어느 차트를 쓰나 · 계열 셋까지 · 도넛은 한 전체의 몫 · 두 계열의 색(2026-10-22 사용자 결정 5B · 6B · 8B · 7B) ──────
+const W5 = 300;
+const BASE = 'var(--p-bg-layer-basement)';
+// 선 · 막대 — 지표 타일 + 차트(값은 chart.yaml · 지어낸 통계)
+function SeriesChart({ series, kind = 'line', mode = 'auto', w = W5, dual = false, title }: { series: TrendSeries[]; kind?: 'line' | 'bar'; mode?: 'light' | 'dark' | 'auto'; w?: number; dual?: boolean; title: string }) {
+  const tiles = series.map((x) => ({ key: x.key, label: x.label, hue: x.hue, total: total(x) }));
+  const bar = kind === 'bar';
+  return (
+    <ChartBox title={title} mode={mode} width={w}>
+      <LegendTilesView look={CHL()} mode={mode} items={tiles} />
+      <TrendChartView
+        look={CHL()}
+        mode={mode}
+        kind={kind}
+        series={series}
+        count={bar ? MONTHLY.length : TODAY_DAY}
+        xLabels={bar ? MONTHLY.map((m) => m.label) : DAY_LABELS}
+        xTicks={bar ? undefined : [0, Math.floor((TODAY_DAY - 1) / 2), TODAY_DAY - 1]}
+        heads={bar ? MONTHLY.map((m) => m.label) : DAY_HEADS}
+        dual={dual}
+        width={inner(w)}
+        height={160}
+        label={`${title}, ${tiles.map((t) => `${t.label} ${t.total}`).join(' · ')}`}
+        noTip
+      />
+    </ChartBox>
+  );
+}
+function SmallDonut({ slices, centerLabel, centerAmount, title, mode = 'auto', w = W5 }: { slices: { key: string; label: string; hue: ChartHue; amount: number }[]; centerLabel: string; centerAmount: string; title: string; mode?: 'light' | 'dark' | 'auto'; w?: number }) {
+  const sum = slices.reduce((a, x) => a + x.amount, 0);
+  const rows = slices.map((x) => ({ key: x.key, label: x.label, hue: x.hue, percent: `${Math.round((x.amount / sum) * 1000) / 10}%`, amount: won(x.amount) }));
+  return (
+    <ChartBox title={title} mode={mode} width={w}>
+      <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 8 }}>
+        <DonutView look={CHL()} mode={mode} slices={slices} centerLabel={centerLabel} centerAmount={centerAmount} label={`${title}, ${centerLabel} ${centerAmount}`} />
+      </div>
+      <DonutLegendView look={CHL()} mode={mode} rows={rows} />
+    </ChartBox>
+  );
+}
+const WhichGuide: Fig = ({ caption }) => {
+  const h = CHL().heat;
+  const cell = Math.floor((inner(W5) - h.labelCol) / 7 - h.gap);
+  const spend = STATS[0];
+  return (
+    <Panel caption={caption}>
+      <Wrap gap="gap-4">
+        <Col strong="선 — 흐름" cap="날짜를 따라 오르내리는 흐름 · 가로축은 오늘에서 끝난다" w={W5}>
+          <SeriesChart series={trendSeries(2, true)} dual title={`${TREND_MONTH}월 수입 · 지출`} />
+        </Col>
+        <Col strong="막대 — 기간마다의 합" cap="기간끼리 견준다 · 음수가 섞여도 된다" w={W5}>
+          <SeriesChart series={monthlySeries(2, true)} kind="bar" dual title="월별 수입 · 지출" />
+        </Col>
+        <Col strong="도넛 — 한 전체의 몫" cap="2 ~ 10 + 기타 · 목록 범례 · 가운데는 조각의 합" w={W5}>
+          <ChartBox title={`${TREND_MONTH}월 카테고리별 지출`} width={W5}>
+            <Donut n={5} />
+          </ChartBox>
+        </Col>
+        <Col strong="열지도 — 두 축의 세기" cap={`요일 × 시간대 · 칸 ${cell} 은 ${h.threshold} 보다 좁아 세기 색만`} w={W5}>
+          <ChartBox title="요일 · 시간대별 지출" width={W5}>
+            <HeatmapView look={CHL()} rows={HEAT_ROWS} columns={HEAT_DAYS} columnsFull={HEAT_DAYS_FULL} cell={cell} label="요일 · 시간대별 지출" />
+          </ChartBox>
+        </Col>
+        <Col strong="지표 카드 — 숫자 하나" cap="숫자 하나 · 둘과 그 변화 — 차트가 아니라 Card 의 지표 카드" w={W5}>
+          <CardSurface look={CL()} width={W5}>
+            <StatView look={CL()} label={spend.label} value={won(spend.amount)} delta={spend.delta} />
+          </CardSurface>
+        </Col>
+      </Wrap>
+    </Panel>
+  );
+};
+
+// 계열 셋 · 다섯 — 다섯은 선이 엉켜 범례를 오간다(지어낸 카테고리 지출, 축 하나)
+const FIVE: TrendSeries[] = [
+  { key: 'food', label: '식비', hue: 'blue', values: TREND.slice(0, TODAY_DAY).map((d) => Math.round(d.expense * 0.42)) },
+  { key: 'transport', label: '교통', hue: 'green', values: TREND.slice(0, TODAY_DAY).map((d, i) => Math.round(d.expense * (0.12 + (i % 3) * 0.05))) },
+  { key: 'shopping', label: '쇼핑', hue: 'orange', values: TREND.slice(0, TODAY_DAY).map((d, i) => Math.round(d.expense * (0.3 - (i % 4) * 0.05))) },
+  { key: 'cafe', label: '카페', hue: 'violet', values: TREND.slice(0, TODAY_DAY).map((d, i) => Math.round(d.expense * (0.1 + (i % 2) * 0.12))) },
+  { key: 'life', label: '생활', hue: 'pink', values: TREND.slice(0, TODAY_DAY).map((d, i) => Math.round(d.expense * (0.25 - (i % 3) * 0.06))) },
+];
+const SeriesGuide: Fig = ({ caption }) => (
+  <Panel caption={caption}>
+    <Pair>
+      <Verdict ok bg={BASE} note="셋까지 — 선마다 따라 읽힌다">
+        <SeriesChart series={FIVE.slice(0, 3)} title={`${TREND_MONTH}월 카테고리 지출`} w={280} />
+      </Verdict>
+      <Verdict ok={false} bg={BASE} note="다섯 — 선이 엉켜 어느 선이 무엇인지 범례를 오간다. 넷 이상이면 도넛 · 표를 먼저 본다">
+        <SeriesChart series={FIVE} title={`${TREND_MONTH}월 카테고리 지출`} w={280} />
+      </Verdict>
+    </Pair>
+  </Panel>
+);
+
+// 도넛에 넣는 것 — 한 전체(자산)의 몫 · 자산 + 빚을 한 고리에 넣고 가운데에 순자산(지금 웹 자산 화면의 짜임 — 숫자는 지어냄)
+const ASSETS = [
+  { key: 'deposit', label: '예금', hue: 'blue' as ChartHue, amount: 4800000 },
+  { key: 'invest', label: '투자', hue: 'green' as ChartHue, amount: 3200000 },
+  { key: 'cash', label: '현금', hue: 'orange' as ChartHue, amount: 450000 },
+];
+const MIXED = [
+  { key: 'deposit', label: '예금', hue: 'blue' as ChartHue, amount: 4800000 },
+  { key: 'invest', label: '투자', hue: 'green' as ChartHue, amount: 3200000 },
+  { key: 'card', label: '카드값', hue: 'orange' as ChartHue, amount: 640000 },
+  { key: 'loan', label: '대출', hue: 'violet' as ChartHue, amount: 9600000 },
+];
+const DonutGuide: Fig = ({ caption }) => (
+  <Panel caption={caption}>
+    <Pair>
+      <Verdict ok bg={BASE} note="한 전체(자산)의 몫 — 가운데는 조각의 합, 빚은 따로(순자산 카드 · 막대)">
+        <SmallDonut slices={ASSETS} centerLabel="자산" centerAmount={won(ASSETS.reduce((a, x) => a + x.amount, 0))} title="자산 구성" w={280} />
+      </Verdict>
+      <Verdict ok={false} bg={BASE} note="자산 + 빚 조각 · 가운데 순자산 — 가장 큰 조각(대출)과 가운데 숫자가 맞지 않는다">
+        <SmallDonut slices={MIXED} centerLabel="순자산" centerAmount={won(4800000 + 3200000 - 640000 - 9600000)} title="자산 구성" w={280} />
+      </Verdict>
+    </Pair>
+  </Panel>
+);
+
+// 두 계열의 색 — 수입 파랑 · 지출 빨강(먼 짝) · 주황 · 빨강(가까운 짝 — 다크 ΔE00 9.7)
+const PairGuide: Fig = ({ caption }) => {
+  const far = trendSeries(2, true);
+  const near = far.map((x) => (x.key === 'income' ? { ...x, hue: 'orange' as ChartHue } : x));
+  return (
+    <Panel caption={caption}>
+      <div className="flex w-full flex-col gap-5">
+        {MODES.map((mode) => (
+          <div key={mode} className="flex flex-col gap-2">
+            <ModeLabel mode={mode} />
+            <Pair>
+              <Verdict ok bg={rc('bg-layer-basement', mode)} note="수입 파랑 · 지출 빨강 — 먼 짝">
+                <SeriesChart series={far} dual mode={mode} title={`${TREND_MONTH}월 수입 · 지출`} w={280} />
+              </Verdict>
+              <Verdict ok={false} bg={rc('bg-layer-basement', mode)} note={`주황 · 빨강 — 가까운 짝(라이트 11.3 · 다크 9.7), 다크에서는 이름 없이 못 가른다`}>
+                <SeriesChart series={near} dual mode={mode} title={`${TREND_MONTH}월 수입 · 지출`} w={280} />
+              </Verdict>
+            </Pair>
+          </div>
+        ))}
+      </div>
+    </Panel>
+  );
+};
+
 export const chartFigures: Record<string, Fig> = {
+  'which-guide': WhichGuide,
+  'series-guide': SeriesGuide,
+  'donut-guide': DonutGuide,
+  'pair-guide': PairGuide,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,
