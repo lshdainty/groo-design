@@ -878,7 +878,7 @@ Hover Card — non-interactive preview. delay 700ms hover, link/avatar에 mentio
 
 | alias 예시 | DESIGN.md / brand 파일 정의 |
 |---|---|
-| `bg-primary` | HR `#357B5F` / Desk `#0147AD` (brand 파일) |
+| `bg-primary` | HR `#075B3C` / Desk `#0147AD` (brand 파일) |
 | `text-on-accent` | `#FFFFFF` (DESIGN.md, brand-neutral) |
 | `bg-surface-default` | `#FFFFFF` (light) / `#1A1F2E` (dark) — `[data-theme="dark"]` token alias |
 | `border-default` | `#E1E5EB` (light) / `#3D4555` (dark) |
@@ -892,7 +892,7 @@ prose-token (shadow / motion / overlay / breakpoint / touch-target / z-index)은
 ## 다음 참조
 
 - `DESIGN.md` — baseline (typography / spacing / rounded / neutral colors / 51 컴포넌트 spec)
-- `DESIGN.hr.md` — HR 브랜드 (B2B, primary `#357B5F`, 격식 톤)
+- `DESIGN.hr.md` — HR 브랜드 (B2B, primary `#075B3C`, 격식 톤)
 - `DESIGN.desk.md` — Desk 브랜드 (B2C, primary `#0147AD`, 친근 톤, 모바일 우선)
 - `CHANGELOG.md` — milestone 기록 (v1 ~ v76)
 - `exports/preview.html` / `preview.hr.html` / `preview.desk.html` — 시각 토큰 카탈로그 + 컴포넌트 vignette

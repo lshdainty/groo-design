@@ -253,7 +253,7 @@ const tab = params.get("tab") ?? "category"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 안 고른 글 `fg-neutral-subtle` 목록 위 5.50 · 6.09, 고른 글 `fg-neutral` 16.41 · 13.42 ✓. 비활성 `fg-disabled` 는 기준 밖(비활성 UI). Chip Tabs 는 [Chip](chip.md) 의 검증 그대로 |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 고름은 막대 2px `fg-neutral`(목록 바탕과 16.41 · 13.42)로 알린다 ✓. 바닥 구획 선(1.15 · 1.30)은 목록을 알리는 유일한 표시가 아니다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓. 알림 점 `fg-brand` 목록 바탕과 Desk 8.38 · 6.10 · HR 5.06 · 6.23, 칩 바탕(`bg-neutral-weak`)과 7.76 · 4.69 · 4.69 · 4.79 ✓ — 고른 탭에는 그리지 않는다 |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 고름은 막대 2px `fg-neutral`(목록 바탕과 16.41 · 13.42)로 알린다 ✓. 바닥 구획 선(1.15 · 1.30)은 목록을 알리는 유일한 표시가 아니다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓. 알림 점 `fg-brand` 목록 바탕과 Desk 8.38 · 6.10 · HR 8.17 · 6.07, 칩 바탕(`bg-neutral-weak`)과 7.76 · 4.69 · 7.56 · 4.67 ✓ — 고른 탭에는 그리지 않는다 |
 | **WCAG 1.4.1** Use of color | 고름은 글자색만이 아니라 막대로도 알린다 ✓ |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 링 2px — 탭 안쪽 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | small 40 · medium 44 ✓(가로는 탭 폭 — Hug 도 글 + 20) |
@@ -292,7 +292,7 @@ const tab = params.get("tab") ?? "category"
 - **Line 의 막대 들임 · Hug 목록 좌우는 SEED 처럼 16** — groo 의 화면 여백 24(`spacing-global-gutter`)를 쓰지 않는다. 탭이 제 좌우 10 을 더해 Hug 의 첫 글이 26 에서 시작해 본문 글의 24 와 거의 맞는다.
 - **Chip Tabs 목록 좌우는 화면 여백 24** — SEED 16. Chip 의 가로 스크롤 줄(필터 바 · 제안 줄)과 같게, 칩 줄은 어디서나 첫 칩이 화면 여백에서 시작한다. 위아래 8 은 SEED 에 없는 값이다.
 - **Chip Tabs 의 칩은 groo Chip 그대로** — 비활성은 흐리게 하지 않고(v106), Outline 을 고르면 테두리를 지운다(SEED Chip Tabs 와 같다).
-- **알림 점은 브랜드 글자색**(`fg-brand` — Desk · HR 이 다르다)이고, 보조 기술에 "새 소식" 을 덧붙인다(SEED 는 점만 그린다). SEED 의 `bg.brand-solid` 짝은 groo 다크에서 바탕과 1.73 · 2.86:1 이라 점이 안 보인다. 고른 탭에는 점을 그리지 않는다(내용을 보면 사라진다).
+- **알림 점은 브랜드 글자색**(`fg-brand` — Desk · HR 이 다르다)이고, 보조 기술에 "새 소식" 을 덧붙인다(SEED 는 점만 그린다). SEED 의 `bg.brand-solid` 짝은 groo 다크에서 바탕과 Desk · HR 1.73:1 이라 점이 안 보인다. 고른 탭에는 점을 그리지 않는다(내용을 보면 사라진다).
 - **웹은 1차 탭을 주소에 남긴다** — SEED 에 없는 규칙이다(사용자 결정 2026-10-02). 내용은 SEED 기본처럼 바로 바꾸고 상태를 남긴다.
 
 ## Migration notes

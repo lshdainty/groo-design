@@ -159,7 +159,7 @@ rules:
   - when: { variant: brandOutline }
     enabled:
       root: { background: transparent, foreground: $color-fg-brand, borderColor: { value: $color-stroke-neutral-weak, note: "SEED stroke.neutral-muted(투명도 있는 검정)의 불투명 짝" }, borderWidth: 1px }
-      progressCircle: { track: $color-bg-brand-weak-pressed, range: { value: $color-stroke-brand-solid, note: "Progress Circle brand 톤과 같다 — 다크는 밝은 짝(바탕 위 라이트 Desk 8.38 · HR 5.06, 다크 Desk 6.10 · HR 6.23 — 트랙과 Desk 6.59 · 4.73). 2026-10-08 까지 bg-brand-solid 라 다크 바탕 위 1.73 이었다(채움 색은 다크에서도 짙다)" } }
+      progressCircle: { track: $color-bg-brand-weak-pressed, range: { value: $color-stroke-brand-solid, note: "Progress Circle brand 톤과 같다 — 다크는 밝은 짝(바탕 위 라이트 Desk 8.38 · HR 8.17, 다크 Desk 6.10 · HR 6.07 — 트랙과 Desk 6.59 · 4.73). 2026-10-08 까지 bg-brand-solid 라 다크 바탕 위 1.73 이었다(채움 색은 다크에서도 짙다)" } }
     hovered:
       root: { background: $color-bg-layer-default-pressed }
     pressed:

@@ -105,7 +105,7 @@ rules:
         transitionEasing: $motion-ease-easing
       notification:
         size: { value: 6px, note: "Notification Badge small — 상단 바는 점만 둔다(숫자 '99+' 는 맨 오른쪽 버튼에서 화면 밖으로 8.5 나간다)" }
-        background: { value: $color-fg-brand, note: "브랜드 글자색 — 바 위 Desk 8.38 · 다크 6.10 · HR 5.06 · 6.23" }
+        background: { value: $color-fg-brand, note: "브랜드 글자색 — 바 위 Desk 8.38 · 다크 6.10 · HR 8.17 · 6.07" }
         top: { value: 1px, note: "아이콘(24) 상자 위에서 1 — y 1 ~ 7" }
         right: { value: 1px, note: "아이콘 상자 오른쪽에서 1 — x 17 ~ 23(notification-badge.yaml 의 icon · small)" }
       searchField:

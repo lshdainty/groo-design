@@ -167,7 +167,7 @@ import { MenuSheet, MenuSheetContent, MenuSheetGroup, MenuSheetItem, MenuSheetTr
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 이름 `fg-neutral` 묶음 바탕(`bg-neutral-weak`) 위 15.20 · 다크 10.32, 설명 `fg-neutral-subtle` 5.09 · 4.68, 위험 `fg-critical` 4.68 · 4.68 ✓. 누름 · 호버 바탕(`bg-neutral-weak-pressed`) 위에서는 위험 4.39 · 3.91, 설명 4.77 · 3.91 ⚠ — 누르는 동안(터치) · 마우스를 올린 동안만이고 SEED 도 같은 자리다(SEED 는 쉴 때도 위험 3.41). 막힌 줄은 예외(비활성) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 키보드 포커스 링 묶음 바탕 위 Desk 7.76 · 4.69 · HR 4.69 · 4.79 ✓. 줄 사이 선(1.14 · 1.20) · 묶음 바탕은 장식 — 줄은 이름이 알린다 |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 키보드 포커스 링 묶음 바탕 위 Desk 7.76 · 4.69 · HR 7.56 · 4.67 ✓. 줄 사이 선(1.14 · 1.20) · 묶음 바탕은 장식 — 줄은 이름이 알린다 |
 | **WCAG 2.1.1** Keyboard | 줄은 버튼 — `Tab` 으로 닿고 `Enter` · `Space` 로 실행한다. `Esc` 로 닫는다 |
 | **WCAG 2.4.7** Focus visible | 줄 안쪽 링 · 보조 기술용 닫기도 초점이 오면 보인다 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 줄 52 ✓ |

@@ -199,7 +199,7 @@ import { toggleVariants } from "@/components/ui/toggle"
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 끔 아이콘 `fg-neutral-muted` 흰 표면 7.11 · 다크 7.70(시트 6.67), 켬 `fg-neutral` 16.41 · 13.42, 누름 바탕 위 끔 6.70 · 5.93 · 켬 15.48 · 10.32 ✓. 순자산 카드 위 흰 아이콘 Desk 8.38 ~ 14.78 · 다크 8.36 ~ 11.25(장식 빛 위 4.88) ✓. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 끔 아이콘 `fg-neutral-muted` 흰 표면 7.11 · 다크 7.70(시트 6.67), 켬 `fg-neutral` 16.41 · 13.42, 누름 바탕 위 끔 6.70 · 5.93 · 켬 15.48 · 10.32 ✓. 순자산 카드 위 흰 아이콘 Desk 8.38 ~ 14.78 · 다크 8.36 ~ 11.25(장식 빛 위 4.88) ✓. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓ |
 | **WCAG 1.4.1** Use of color | 켬 · 끔은 색과 함께 선 굵기(2 · 2.5)와 — 기능 단추는 — 아이콘 모양(사선)으로 갈린다. 보조 기술에는 `aria-pressed` 가 알린다 ✓ |
 | **WCAG 4.1.2** Name, Role, Value | `<button>` + 고정 이름 + `aria-pressed` ✓ — 이름을 상태마다 바꾸지 않는다 |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 링 2px · 띄움 2px |

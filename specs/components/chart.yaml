@@ -141,13 +141,13 @@ rules:
       heatmapCell:
         aspectRatio: { value: "1 / 1", note: "정사각형 — 폭은 격자가 정한다(시간대 라벨 열 56 + 요일 일곱 칸, 사이 6). 2026-10-08 칸 폭은 1440 → 140 · 1280 → 117 · 1024 → 81 · 768 → 44 · 폰 390 → 35" }
         radius: $radius-r1
-        background: { value: "bg-brand-solid 18 · 35 · 55 · 75 · 100%", note: "세기 다섯 — 브랜드 채움을 카드 면에 섞은 지금 제품 단계(가장 큰 칸 값의 8 · 22 · 45 · 75% 에서 끊는다). 값이 없는 칸은 bg-neutral-weak" }
+        background: { value: "bg-brand-solid 18 · 35 · 55 · 76 · 100%", note: "세기 다섯 — 브랜드 채움을 카드 면에 섞은 지금 제품 단계(가장 큰 칸 값의 8 · 22 · 45 · 75% 에서 끊는다). 값이 없는 칸은 bg-neutral-weak" }
       heatmapValue:
         threshold: { value: 112px, note: "칸 폭 — 이보다 좁으면 칸에 글을 두지 않고 세기 색만 칠한다. 값은 툴팁 · 표로 보기에서 읽는다. 글자를 줄여 맞추지 않는다(지금은 1280 이상만 글이 보인다)" }
         typography: { value: $text-t1, note: "11 / 15 — 금액은 원까지(\"123,456,789원\" 84 · \"99,999,999,999원\" 107 — 999억까지 칸 112 에 들어간다). 값이 없는 칸은 \"—\"(fg-neutral-subtle — 5.09 · 다크 4.68)" }
         fontWeight: 700
         numerals: tabular-nums
-        foreground: { value: 단계마다, note: "칸 바탕 위 4.5 를 넘는 쪽 — Desk 라이트 18 · 35 · 55% 는 fg-neutral(5.69 이상) · 75 · 100% 는 static-white(4.62 · 8.38), 다크는 모두 fg-neutral(7.74 이상). HR 은 라이트 18 ~ 75% 가 fg-neutral(5.23 이상) · 100% 만 static-white(5.06), 다크는 모두 fg-neutral(4.69 이상 — HR 100% 단계). 칸마다 재지 않고 단계마다 정해 둔다" }
+        foreground: { value: 단계마다, note: "칸 바탕 위 4.5 를 넘는 쪽 — Desk 라이트 18 · 35 · 55% 는 fg-neutral(5.69 이상) · 76 · 100% 는 static-white(4.74 · 8.38), HR(v121 그루 초록) 라이트는 18 · 35 · 55% 가 fg-neutral(5.94 이상) · 76 · 100% 가 static-white(4.52 · 8.17), 다크는 둘 다 모두 fg-neutral(7.74 이상). 넷째 단계는 75% 였다 — 그루 초록에서 어느 글자도 4.5 에 못 미쳐(흰 4.40) 두 브랜드 함께 76% 로 올렸다(2026-10-22 사용자 결정 B, https://claude.ai/artifact/JftMz8DQo6yKaGJ5kS9N53). 칸마다 재지 않고 단계마다 정해 둔다" }
     hovered:
       legendList:
         background: $color-bg-layer-default-pressed

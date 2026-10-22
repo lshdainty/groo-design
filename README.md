@@ -43,7 +43,7 @@ npm run build    # site/out — 정적 사이트 + 검색 색인 + llms.txt
 ```
 .
 ├── DESIGN.md             # shared baseline (typography/spacing/rounded/neutral colors/neutral components)
-├── DESIGN.hr.md          # HR 브랜드 self-contained (primary #357B5F + brand 컴포넌트 + 공유 복제)
+├── DESIGN.hr.md          # HR 브랜드 self-contained (primary #075B3C + brand 컴포넌트 + 공유 복제)
 ├── DESIGN.desk.md        # Desk 브랜드 self-contained (primary #0147AD + brand 컴포넌트 + 공유 복제)
 ├── DESIGN.history/       # 변경 백업 (v{N}-{이유}.md milestone + v{YYYYMMDD-HHMMSS}.md 자동 스냅샷)
 ├── EXAMPLES.md           # 컴포넌트 사용 예제 (24+ 카테고리, copy-paste HTML + Tailwind v4 utility)

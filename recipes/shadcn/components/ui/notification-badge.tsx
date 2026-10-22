@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
  *                             아이콘 크기 · 버튼 높이 · 탭 폭 · 줄 높이가 그대로다
  *   formatNotificationCount   숫자 표기 — 0 이하 null(배지 없음) · 1 ~ 99 그대로 · 100 이상 "99+". 앱과 같은 규칙
  *
- *   size    small(기본) — 점 6, 브랜드 글자색 fg-brand(다크에서 밝은 짝 — bg-brand-solid 는 다크 표면과 1.73 · 2.86 이라
+ *   size    small(기본) — 점 6, 브랜드 글자색 fg-brand(다크에서 밝은 짝 — bg-brand-solid 는 다크 표면과 Desk · HR 1.73 이라
  *           쓰지 않는다). 새 것이 있는지만. visible 로 보일지 고른다(기본 true)
  *           large — 숫자 알약: 높이 18 · 최소 폭 18 · 좌우 4, bg-brand-solid + 흰 숫자 11/15 · 700 · 숫자 폭 고정. 몇 개인지가
  *           판단에 필요할 때만. count 로 수를 준다 — 0 이하면 숨기고 100 이상이면 "99+"

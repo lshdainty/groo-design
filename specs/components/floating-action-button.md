@@ -124,7 +124,7 @@ import { SnackbarAvoidOverlap } from "@/components/ui/snackbar"
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 흰 아이콘 `bg-brand-solid` 위 Desk 8.38 · 다크 8.36 · HR 5.06 · 5.06 ✓. 원 면은 화면과 Desk 7.76 · 다크 1.96 · HR 4.69 · 3.24 — 다크에서는 흰 아이콘이 버튼을 알린다. 키보드 포커스 링 Desk 7.76 · 6.90 · HR 4.69 · 7.05 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 흰 아이콘 `bg-brand-solid` 위 Desk 8.38 · 다크 8.36 · HR 8.17 · 8.36 ✓. 원 면은 화면과 Desk 7.76 · 다크 1.96 · HR 7.56 · 1.96 — 다크에서는 흰 아이콘이 버튼을 알린다. 키보드 포커스 링 Desk 7.76 · 6.90 · HR 7.56 · 6.88 ✓ |
 | **WCAG 2.4.11** Focus Not Obscured — Minimum(AA) | 목록 아래에 버튼 높이만큼 여백을 둬 마지막 줄이 버튼 밑에 남지 않는다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 56 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 56 ✓ |
@@ -156,7 +156,7 @@ import { SnackbarAvoidOverlap } from "@/components/ui/snackbar"
 ## SEED 와 다른 점
 
 - **아이콘만 56 하나** — SEED 코드 기본은 글이 붙은 48(`extended`)이고 스크롤하면 라벨을 숨길 수 있다. groo 는 늘 아이콘만이다(사용자 결정 11B).
-- **groo 브랜드 채움** — SEED 는 당근 주황 하나다. Desk 파랑 · HR 초록, 흰 아이콘(대비 8.38 · 5.06 — SEED 주황 위 흰색은 2.94).
+- **groo 브랜드 채움** — SEED 는 당근 주황 하나다. Desk 파랑 · HR 초록, 흰 아이콘(대비 8.38 · 8.17 — SEED 주황 위 흰색은 2.94).
 - **그림자는 groo `shadow-s3`** — SEED shadow.s3 와 같은 자리(v105).
 - **누름 · 호버는 `bg-brand-solid-pressed` + 2px 거리 축소**(v104 · v106).
 - **`type="button"`** — SEED 는 `type` 이 없어 폼 안에서 제출된다.

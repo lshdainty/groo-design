@@ -31,7 +31,7 @@ import { cn } from "@/lib/utils";
  * 닫기 — 바로 걷고(모션 없음) 초점은 다음 요소로 간다(뒤에 없으면 앞 요소). open · onDismiss 로 닫음을 기억한다.
  * 포커스 링은 키보드 포커스에만 2px, 안쪽 −2 — 화면 끝까지 차는 띠라 바깥 링이 잘린다(버튼 · 닫기도 같다). 링은 띠 위에
  *   그려지므로 옅은 바탕은 stroke-focus-ring, 짙은 바탕은 띠 글자색(흰 글 · neutral 은 반전 짝)이다 — 브랜드 링은 짙은 바탕
- *   위에서 1.0 ~ 3.2:1 이라 보이지 않는다(HR 라이트는 1.0). 스낵바가 띠 글자색 링을 쓰는 것과 같은 까닭.
+ *   위에서 1.6 ~ 2.4:1 이라 보이지 않는다. 스낵바가 띠 글자색 링을 쓰는 것과 같은 까닭.
  */
 
 export type PageBannerTone = "neutral" | "informative" | "positive" | "warning" | "critical";

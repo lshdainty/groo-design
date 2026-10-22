@@ -189,7 +189,7 @@ import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNav
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 떠 있는 표면(`bg-layer-floating`) 위 16.41 · 다크 11.62, 설명 `fg-neutral-muted` 7.11 · 6.67, 주 메뉴 항목 이름 7.11 · 6.67 · 지금 항목 15.20 · 10.32 ✓ |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 닫기 아이콘 `fg-neutral-subtle` 5.50 · 5.27 ✓, 주 메뉴 아이콘 같은 값 ✓. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 5.06 · 5.39 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 닫기 아이콘 `fg-neutral-subtle` 5.50 · 5.27 ✓, 주 메뉴 아이콘 같은 값 ✓. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ |
 | **WCAG 2.4.3** Focus order | 열면 패널로, 닫으면 연 자리로 초점이 간다. 열린 동안 초점이 뒤 화면으로 나가지 않는다 ✓ |
 | **WCAG 2.5.1** Pointer Gestures | 끌기 말고도 딤 누르기 · 닫기 · `Esc` · 뒤로 가기로 닫힌다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 52 · 주 메뉴 항목 44 · 바닥 버튼 36 ✓ |

@@ -19,7 +19,7 @@
  * 차트 상자 <div data-slot="chart" role="img" aria-label aria-describedby> · 지표 타일(<div role="group" data-slot="chart-legend-tiles"> > <button aria-pressed>) ·
  * 툴팁(<div data-slot="chart-tooltip">) · 도넛 범례(<ul data-slot="chart-donut-legend">) · 가운데 합계 · 열지도(<div data-slot="chart-heatmap" role="img">) ·
  * 표로 보기는 레시피가 그리는 DOM 그대로다. 레시피의 스크립트(가리키기 · ← → · 타일 켜고 끄기 · 칸 폭 재기 · 단계마다 글자색 재기)는 정적 HTML 에 없다 —
- * 그림은 그 순간을 멈춘 것이고, 열지도 칸 글자색은 Desk 라이트의 답(75 · 100% 흰 글자)을 적었다. 아이콘은 lucide-react 와 같은 모양의 inline SVG 다.
+ * 그림은 그 순간을 멈춘 것이고, 열지도 칸 글자색은 Desk 라이트의 답(76 · 100% 흰 글자)을 적었다. 아이콘은 lucide-react 와 같은 모양의 inline SVG 다.
  */
 
 // ── chart.tsx 의 상수와 같은 값 ─────────────────────────────────────
@@ -82,19 +82,19 @@ const LEGEND_ROW_PRESSABLE = [
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 const HOLE_INSET = 4;
-const HEAT_MIX = [0.18, 0.35, 0.55, 0.75, 1];
+const HEAT_MIX = [0.18, 0.35, 0.55, 0.76, 1];
 const HEAT_STEP_BG = [
   "bg-[color-mix(in_srgb,var(--color-bg-brand-solid)_18%,var(--color-bg-layer-default))]",
   "bg-[color-mix(in_srgb,var(--color-bg-brand-solid)_35%,var(--color-bg-layer-default))]",
   "bg-[color-mix(in_srgb,var(--color-bg-brand-solid)_55%,var(--color-bg-layer-default))]",
-  "bg-[color-mix(in_srgb,var(--color-bg-brand-solid)_75%,var(--color-bg-layer-default))]",
+  "bg-[color-mix(in_srgb,var(--color-bg-brand-solid)_76%,var(--color-bg-layer-default))]",
   "bg-bg-brand-solid",
 ];
 const HEAT_STEP_SWATCH = [
   "color-mix(in srgb, var(--color-bg-brand-solid) 18%, var(--color-bg-layer-default))",
   "color-mix(in srgb, var(--color-bg-brand-solid) 35%, var(--color-bg-layer-default))",
   "color-mix(in srgb, var(--color-bg-brand-solid) 55%, var(--color-bg-layer-default))",
-  "color-mix(in srgb, var(--color-bg-brand-solid) 75%, var(--color-bg-layer-default))",
+  "color-mix(in srgb, var(--color-bg-brand-solid) 76%, var(--color-bg-layer-default))",
   "var(--color-bg-brand-solid)",
 ];
 
@@ -526,7 +526,7 @@ const donutLegend = (id) =>
     .join("")}</ul>`;
 
 // <ChartHeatmap> — 왼쪽 시간대 라벨 열 56 + 요일 일곱 칸(정사각형 · 모서리 4 · 사이 6). cell 은 칸 폭(그 화면에서 잰 값) — 112 이상만 원까지.
-// 칸 글자색은 Desk 라이트의 답(75 · 100% 흰 글자 — 레시피는 단계마다 대비를 재서 정한다). keyboard 는 키보드로 옮겨 온 칸(바깥 2px 링)
+// 칸 글자색은 Desk 라이트의 답(76 · 100% 흰 글자 — 레시피는 단계마다 대비를 재서 정한다). keyboard 는 키보드로 옮겨 온 칸(바깥 2px 링)
 function heatmap({ cell, label, keyboard = null }) {
   const max = Math.max(...HEAT_ROWS.flatMap((r) => r.values));
   const text = ["neutral", "neutral", "neutral", "white", "white"];
@@ -721,7 +721,7 @@ import { ChartDataTable } from "@/components/ui/chart"
   {
     title: "열지도 — 칸 112 이상만 원까지",
     description:
-      "요일 × 시간처럼 두 축의 세기는 열지도다 — 왼쪽 시간대 라벨 열 56(이름 13 · 700 + 시간 11 · fg-neutral-subtle) + 요일 일곱 칸(머리 12 · fg-neutral-subtle), 칸은 정사각형 · 모서리 4 · 사이 6. 세기는 다섯 단계 — bg-brand-solid 를 카드 면에 18 · 35 · 55 · 75 · 100% 섞는다(가장 큰 값의 8 · 22 · 45 · 75% 에서 끊는다), 값이 없으면 bg-neutral-weak. 가장 큰 칸에 고리를 두르지 않는다(사용자 결정 22A — 포커스 링과 헷갈린다). 칸 폭이 112 이상일 때만 칸에 원까지(11 / 15 · 700 · 고정폭 숫자, 빈 칸 \"—\") — 좁으면 글 없이 세기 색만이고 돈을 줄여 쓰거나 글자를 줄이지 않는다. 칸 글자색은 단계마다 한 번 정한다(그 바탕 위 fg-neutral 이 4.5 를 넘으면 fg-neutral, 아니면 static-white). 칸을 가리키거나(마우스) 누르면(터치) · 상자에 초점을 두고 ← → ↑ ↓ 로 옮기면 툴팁이 뜬다 — 글이 보이는 넓은 칸에서도. 키보드로 온 칸에는 바깥 2px 링(띄움 2)이다. 위는 1280 의 칸 117(미리보기 칸보다 넓어 옆으로 민다), 아래는 칸 56(112 미만 — 색만) + 키보드로 수요일 저녁을 짚은 순간이다.",
+      "요일 × 시간처럼 두 축의 세기는 열지도다 — 왼쪽 시간대 라벨 열 56(이름 13 · 700 + 시간 11 · fg-neutral-subtle) + 요일 일곱 칸(머리 12 · fg-neutral-subtle), 칸은 정사각형 · 모서리 4 · 사이 6. 세기는 다섯 단계 — bg-brand-solid 를 카드 면에 18 · 35 · 55 · 76 · 100% 섞는다(가장 큰 값의 8 · 22 · 45 · 75% 에서 끊는다), 값이 없으면 bg-neutral-weak. 가장 큰 칸에 고리를 두르지 않는다(사용자 결정 22A — 포커스 링과 헷갈린다). 칸 폭이 112 이상일 때만 칸에 원까지(11 / 15 · 700 · 고정폭 숫자, 빈 칸 \"—\") — 좁으면 글 없이 세기 색만이고 돈을 줄여 쓰거나 글자를 줄이지 않는다. 칸 글자색은 단계마다 한 번 정한다(그 바탕 위 fg-neutral 이 4.5 를 넘으면 fg-neutral, 아니면 static-white). 칸을 가리키거나(마우스) 누르면(터치) · 상자에 초점을 두고 ← → ↑ ↓ 로 옮기면 툴팁이 뜬다 — 글이 보이는 넓은 칸에서도. 키보드로 온 칸에는 바깥 2px 링(띄움 2)이다. 위는 1280 의 칸 117(미리보기 칸보다 넓어 옆으로 민다), 아래는 칸 56(112 미만 — 색만) + 키보드로 수요일 저녁을 짚은 순간이다.",
     jsx: `<ChartHeatmap
   label="10월 요일 · 시간대별 지출, 가장 많은 때 토요일 저녁 240,000원"
   rows={timeSlots}   // { key, label: "저녁", sub: "18~22시" }

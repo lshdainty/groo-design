@@ -198,7 +198,7 @@ import { InfiniteListEnd } from "@/components/ui/pagination"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 번호 `fg-neutral` 흰 면 위 16.41 · 다크 13.42 · 회색 페이지 위 15.20 · 15.20, 지금 쪽 `fg-neutral-inverted` on `bg-neutral-inverted` 16.41 · 13.42(누름 7.11 · 7.70) ✓. 끝 글 `fg-neutral-subtle` 5.50 · 6.09 ✓ |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 화살표 `fg-neutral` 16.41 · 13.42 ✓, 지금 쪽 칸 면 16.41 · 13.42 ✓. 키보드 포커스 링 흰 면 위 Desk 8.38 · 6.10 · HR 5.06 · 6.23 · 회색 페이지 위 7.76 · 6.90 · 4.69 · 7.05 ✓. 호버 바탕은 장식(회색 페이지 위에서는 거의 안 보인다 — 축소가 함께 알린다) |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 화살표 `fg-neutral` 16.41 · 13.42 ✓, 지금 쪽 칸 면 16.41 · 13.42 ✓. 키보드 포커스 링 흰 면 위 Desk 8.38 · 6.10 · HR 8.17 · 6.07 · 회색 페이지 위 7.76 · 6.90 · 7.56 · 6.88 ✓. 호버 바탕은 장식(회색 페이지 위에서는 거의 안 보인다 — 축소가 함께 알린다) |
 | **WCAG 1.4.1** Use of color | 지금 쪽은 채움 면(16.41)으로 알리고 `aria-current="page"` ✓ |
 | **WCAG 2.4.3** Focus order | 끝 쪽에서 누르던 화살표가 빈 칸이 되면 초점을 지금 쪽 번호로 — body 로 떨어지지 않는다 ✓ |
 | **WCAG 4.1.3** Status messages | 쪽이 바뀌면 "N페이지, 전체 M페이지" 를 `role="status"` 로 ✓ |

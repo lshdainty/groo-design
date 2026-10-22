@@ -162,7 +162,7 @@ const description = unread > 0 ? `읽지 않은 알림 ${unread}개` : "새 알�
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 16.41 · 다크 11.62, 설명 `fg-neutral-muted` 7.11 · 6.67 ✓ |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 표면 경계는 그림자 s3(딤 없음) — 표면을 알리는 유일한 표시가 아니다(머리 · 내용이 알린다). 키보드 포커스 링 Desk 8.38 · 5.28 · HR 5.06 · 5.39 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 표면 경계는 그림자 s3(딤 없음) — 표면을 알리는 유일한 표시가 아니다(머리 · 내용이 알린다). 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ |
 | **WCAG 1.4.13** Content on Hover or Focus | 누를 때 열리고(호버로 열지 않는다) 바깥 · `Esc` 로 닫힌다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 52 ✓ |
 | **ARIA** | `role="dialog"`(`aria-modal` 없음), 제목 `aria-labelledby`(있을 때), 트리거 `aria-haspopup="dialog"` · `aria-expanded` · `aria-controls`. 머리 없는 고르는 패널은 `aria-label` 로 이름을 단다 |

@@ -367,7 +367,7 @@ import { TopNavigation, TopNavigationMenuButton, TopNavigationTitle } from "@/co
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 · 글 버튼 `fg-neutral` 바(`bg-layer-default`) 위 16.41 · 다크 13.42, 누름 바탕 위 15.48 · 10.32 ✓. 막힌 글은 예외(비활성) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 아이콘 `fg-neutral` 16.41 · 13.42 ✓. 알림 점 `fg-brand` Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓. 키보드 포커스 링 같은 값 ✓ — 누름 바탕(바와 1.06 · 다크 1.30)은 장식 |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 아이콘 `fg-neutral` 16.41 · 13.42 ✓. 알림 점 `fg-brand` Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓. 키보드 포커스 링 같은 값 ✓ — 누름 바탕(바와 1.06 · 다크 1.30)은 장식 |
 | **WCAG 1.4.1** Use of color | 알림 점은 이름에도 들어간다("알림, 새 알림 있음") ✓ |
 | **WCAG 2.4.2** Page Titled | 문서 제목이 화면마다 "{화면 제목} - 그루 담다" ✓ |
 | **WCAG 2.4.3** Focus order | 화면을 옮기면 초점이 새 화면의 제목으로 — 앞 화면에서 누른 자리에 남지 않는다 ✓ |

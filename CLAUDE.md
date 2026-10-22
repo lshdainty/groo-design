@@ -6,14 +6,14 @@
 
 ## WHY (목적)
 사람과 일상이 숲처럼 자라나는 두 서비스의 단일 디자인 시스템:
-- **그루 이음** (B2B, 조직 HR 관리, accent: `#1E7D4C`)
-- **그루 담다** (B2C, 개인 메모/할일/가계부, accent: `#1B6ADB`)
+- **그루 이음** (B2B, 조직 HR 관리, accent: `#075B3C` — 그루 초록, v121)
+- **그루 담다** (B2C, 개인 메모/할일/가계부, accent: `#0147AD`)
 
 레퍼런스 톤: 토스 — 심플, 신뢰감, 전 연령 범용.
 
 ## WHAT (산출물)
 - `DESIGN.md` — 공유 baseline (typography, spacing, rounded, neutral colors, neutral components)
-- `DESIGN.hr.md` — HR 브랜드 단독 self-contained 시스템 (primary `#357B5F`, primary-light, border-focus, brand 컴포넌트)
+- `DESIGN.hr.md` — HR 브랜드 단독 self-contained 시스템 (primary `#075B3C`, primary-light, border-focus, brand 컴포넌트)
 - `DESIGN.desk.md` — Desk 브랜드 단독 self-contained 시스템 (primary `#0147AD`, primary-light, border-focus, brand 컴포넌트)
 - 토큰: color, typography, spacing, radius, shadow, motion
 - 컴포넌트 스펙: variant, state, accessibility 규칙

@@ -519,7 +519,7 @@ export function chartLook(brand: Brand = 'desk'): ChartLook {
   const hr = stepFg('hr');
   const claim = (br: 'Desk' | 'HR', fg: HeatFg[]) => {
     const whiteAt = fg.map((f, i) => (f.light === 'static-white' ? steps[i] : null)).filter((x): x is number => x !== null);
-    const said = br === 'Desk' ? /Desk 라이트.*?·\s*([\d ·]+)%\s*는\s*static-white/.exec(fgNote)?.[1] : /HR .*?·\s*([\d ·]+)%\s*만\s*static-white/.exec(fgNote)?.[1];
+    const said = br === 'Desk' ? /Desk 라이트.*?·\s*([\d ·]+)%\s*는\s*static-white/.exec(fgNote)?.[1] : /HR\b.*?·\s*([\d ·]+)%\s*가\s*static-white/.exec(fgNote)?.[1];
     const saidSteps = [...must(said, `${F} heatmapValue.foreground 비고 — ${br} 흰 글자 단계`).matchAll(/(\d+)/g)].map((m) => Number(m[1]));
     if (saidSteps.join(',') !== whiteAt.join(',')) throw new Error(`${F} 열지도 ${br} 라이트 흰 글자 단계 — 비고 ${saidSteps.join(',')} · 잰 값 ${whiteAt.join(',')}`);
     if (fg.some((f) => f.dark !== 'fg-neutral')) throw new Error(`${F} 열지도 ${br} 다크에 fg-neutral 이 아닌 단계가 있다 — 비고는 "다크는 모두 fg-neutral"`);

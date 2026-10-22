@@ -90,7 +90,7 @@ rules:
       item: { foreground: { value: $color-fg-neutral, note: "16.41 · 13.42" } }
   - when: { tone: brand }
     enabled:
-      item: { foreground: { value: $color-fg-brand, note: "Desk 8.38 · 6.10 · HR 5.06 · 6.23" } }
+      item: { foreground: { value: $color-fg-brand, note: "Desk 8.38 · 6.10 · HR 8.17 · 6.07" } }
   - when: { weight: regular }
     enabled:
       item: { fontWeight: 400 }

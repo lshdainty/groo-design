@@ -131,7 +131,7 @@ import { TablePagination } from "@/components/ui/table-pagination"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | "씩 보기" · "/ 총 N개" `fg-neutral` 흰 면 위 16.41 · 다크 13.42 ✓. 고르기는 [Select](select.md) 의 검증. 막힌 범위 "0-0" 은 예외(비활성) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 화살표 `fg-neutral` 16.41 · 13.42 ✓. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 화살표 `fg-neutral` 16.41 · 13.42 ✓. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓ |
 | **WCAG 4.1.3** Status messages | 넘기면 "11-20, 총 237개" 를 `role="status"` 로 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 고르기 40 · 화살표 40 × 44 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | ⚠ 화살표는 위아래만 44(Pagination 과 같은 예외), 고르기 높이 40(Select medium — 폭과 상관없이, 사용자 결정 2026-10-08) — 표는 데스크톱 마우스로 다룬다 |

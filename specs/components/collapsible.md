@@ -191,7 +191,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 이름 `fg-neutral` 16.41 · 다크 13.42(경고 상자 누름 바탕 위 13.04 · 9.59), 설명 `fg-neutral-subtle` 5.50 · 6.09(경고 상자 4.91 · 5.30) ✓ |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 꺾쇠 `fg-neutral-subtle` 5.50 · 6.09 · 경고 상자 누름 바탕 위 4.37 · 4.35 ✓. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 꺾쇠 `fg-neutral-subtle` 5.50 · 6.09 · 경고 상자 누름 바탕 위 4.37 · 4.35 ✓. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓ |
 | **WCAG 1.4.1** Use of color | 펼침은 꺾쇠 방향과 보이는 내용으로 알린다 ✓ |
 | **WCAG 2.1.1** Keyboard | `Tab` · `Enter` · `Space` ✓ |
 | **WCAG 2.4.3** Focus order | 펼쳐도 초점은 트리거에 — 펼친 내용은 트리거 바로 뒤 차례 ✓ |

@@ -116,7 +116,7 @@ rules:
         background: { value: $color-bg-brand-weak, note: "놓일 칸 — 브랜드 옅은 바탕. 지금은 라이브러리 기본 빨강 20%" }
         borderWidth: { value: 1px, note: "비교 페이지 13A 그림은 1.5 였지만 크로미움은 1.5px 테두리를 1px 로 그린다(1 · 2배 화면 모두 — 레시피 하네스 실측) — 사용자가 본 모습 그대로 1" }
         borderStyle: dashed
-        borderColor: { value: $color-stroke-brand-solid, note: "바닥 위 HR 4.69 · 다크 7.05 · 옅은 바탕 위 4.56 · 5.42(≥ 3) — 자리표시의 경계" }
+        borderColor: { value: $color-stroke-brand-solid, note: "바닥 위 HR 7.56 · 다크 6.88 · 옅은 바탕 위 7.18 · 5.47(≥ 3) — 자리표시의 경계" }
         radius: { value: $radius-r4, note: "위젯(Card 면)과 같은 16" }
       ghost:
         display: { value: 숨김, note: "끄는 동안 포인터를 따라오는 위젯 — 위젯 모양 그대로" }

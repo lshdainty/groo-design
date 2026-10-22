@@ -233,7 +233,7 @@ const change = (next: number) => {
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 값 `fg-neutral` 흰 면 16.41 · 다크 13.42(시트 11.62) ✓. 막힘 `fg-disabled` 는 기준 밖(비활성 UI) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 아이콘 `fg-neutral` 16.41 · 13.42, 누름 바탕 위 15.48 · 10.32 ✓. 로딩 원 호 `fg-neutral` 누름 바탕 위 15.48 · 10.32 ✓(트랙 `gray-500` 2.98 · 2.08 은 장식). 오류 테두리 `stroke-critical-solid` 5.06 · 6.08 ✓. 기본 1px 테두리 `stroke-neutral-weak`(1.23 · 1.56) · 선(1.15 · 1.30)은 칸을 알리는 유일한 표시가 아니다 — 두 버튼 아이콘과 라벨이 알린다(Input 과 같다). 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 아이콘 `fg-neutral` 16.41 · 13.42, 누름 바탕 위 15.48 · 10.32 ✓. 로딩 원 호 `fg-neutral` 누름 바탕 위 15.48 · 10.32 ✓(트랙 `gray-500` 2.98 · 2.08 은 장식). 오류 테두리 `stroke-critical-solid` 5.06 · 6.08 ✓. 기본 1px 테두리 `stroke-neutral-weak`(1.23 · 1.56) · 선(1.15 · 1.30)은 칸을 알리는 유일한 표시가 아니다 — 두 버튼 아이콘과 라벨이 알린다(Input 과 같다). 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓ |
 | **WCAG 1.4.1** Use of color | 끝의 막힘은 색과 함께 `aria-disabled` 로, 오류는 테두리 두께(1 → 2px)와 Field 오류 글로도 알린다 ✓ |
 | **WCAG 2.1.1** Keyboard | `Tab` 으로 두 버튼, `Enter` · `Space` 로 한 단계 ✓ — 화살표 키는 없다(값을 바꾸는 길은 두 버튼 하나뿐이라 키 하나만 익히면 된다) |
 | **WCAG 2.4.3** Focus order | 끝에 닿아도 초점이 그 버튼에 남는다(`aria-disabled`) — 본문으로 떨어지지 않는다 ✓ |

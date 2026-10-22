@@ -91,7 +91,7 @@ const CLOSE = [
   "[--press-basis:40] [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
   "focus-visible:outline-2 focus-visible:-outline-offset-2",
 ].join(" ");
-// 버튼 · 닫기의 링 색 — 링은 띠 위에 그려진다: 옅은 바탕은 브랜드 링, 짙은 바탕은 띠 글자색(브랜드 링은 짙은 바탕 위 1.0 ~ 3.2:1)
+// 버튼 · 닫기의 링 색 — 링은 띠 위에 그려진다: 옅은 바탕은 브랜드 링, 짙은 바탕은 띠 글자색(브랜드 링은 짙은 바탕 위 1.6 ~ 2.4:1)
 const RING = {
   weak: "focus-visible:outline-stroke-focus-ring",
   solid: "focus-visible:outline-current",

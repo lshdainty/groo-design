@@ -76,7 +76,7 @@ rules:
       focusRing:
         width: 2px
         offset: { value: -2px, note: "닫기 버튼 안쪽" }
-        color: { value: $color-fg-neutral-inverted, note: "말풍선 글자색 — 브랜드 링(stroke-focus-ring)은 짙은 말풍선 위에서 Desk 1.96 · HR 3.24 로 3:1 에 못 미친다" }
+        color: { value: $color-fg-neutral-inverted, note: "말풍선 글자색 — 브랜드 링(stroke-focus-ring)은 짙은 말풍선 위에서 Desk 1.96 · HR 2.01 로 3:1 에 못 미친다" }
         rootOffset: { value: 2px, note: "닫기 버튼이 없는 말풍선에 Tab 으로 들어오면 말풍선 둘레 바깥 2(모서리를 따라)" }
         rootColor: { value: $color-stroke-focus-ring, note: "페이지 위에 그려지므로 브랜드 링" }
 

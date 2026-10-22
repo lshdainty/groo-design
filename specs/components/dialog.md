@@ -159,7 +159,7 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 떠 있는 표면 위 16.41 · 다크 11.62, 설명 `fg-neutral-muted` 7.11 · 6.67 ✓ |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 닫기 아이콘 `fg-neutral-subtle` 5.50 · 5.27 ✓. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 5.06 · 5.39 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 닫기 아이콘 `fg-neutral-subtle` 5.50 · 5.27 ✓. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ |
 | **WCAG 2.4.3** Focus order | 열면 대화상자로, 닫으면 연 자리로 초점이 간다. 열린 동안 초점이 뒤 화면으로 나가지 않는다 |
 | **WCAG 1.4.10** Reflow | 1280 미만은 시트로 바뀌고, 대화상자 높이는 화면의 80% 까지 — 넘치면 본문이 스크롤된다(머리 · 바닥이 화면 밖으로 나가지 않는다) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 52 · 바닥 버튼 36 ✓ |

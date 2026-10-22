@@ -94,7 +94,7 @@ export function brandProfile(brandName, tokens) {
       kicker: "B2B · 조직 HR 관리",
       tagline: "사람과 일상이 숲처럼 자라나는 조직",
       heroFacts: [
-        { label: "primary", value: colorByName["primary"] || "#357B5F" },
+        { label: "primary", value: colorByName["primary"] || "#075B3C" },
         { label: "components", value: "15" },
         { label: "milestone", value: "v57" },
       ],
@@ -5466,7 +5466,7 @@ export function renderDisplayGallery(brand) {
   ], "pdsp-row--nb");
   const nbSizePanel = panel(
     "Notification Badge — 점 6 · 숫자 18 · 99+",
-    "안 읽은 알림이 있다는 신호다. small(기본)은 점 6 — 새 것이 있는지만, large 는 숫자 알약 18 — 몇 개인지가 판단에 필요할 때만 쓴다. 점은 브랜드 글자색 fg-brand(다크는 밝은 짝 — 표면 위 Desk 8.38 · 6.10 · HR 5.06 · 6.23:1)이고, 숫자 알약은 브랜드 채움 bg-brand-solid + 흰 숫자 11 / 15 · 700(숫자 폭을 같게)이다 — 알림은 오류가 아니라 빨강을 쓰지 않는다. 숫자는 글자 크기 설정을 따르지 않는 px 라(t1-static) 커져도 아이콘을 덮지 않는다. 알약은 최소 폭 18 · 좌우 4 — 한 자리 18 × 18, 두 자리 약 22, \"99+\" 약 32 다. 0 이면 없고 100 이상은 \"99+\" 다. 자리는 아이콘 상자(점선 — 24)에서 잰다 — 점은 위 1 · 오른쪽 1(x 17 ~ 23 · y 1 ~ 7), 숫자는 알약의 왼쪽 아래 꼭짓점이 (아이콘 폭 − 8, 14) = (16, 14)라 위로 4, 오른쪽으로 튀어나오고 숫자가 길수록 오른쪽으로 자란다. 점 · 숫자는 자리를 차지하지 않고(아이콘 크기가 그대로다) 나타나고 사라질 때 모션이 없다. 두 틀은 페이지 테마와 관계없이 라이트 · 다크로 그렸다."
+    "안 읽은 알림이 있다는 신호다. small(기본)은 점 6 — 새 것이 있는지만, large 는 숫자 알약 18 — 몇 개인지가 판단에 필요할 때만 쓴다. 점은 브랜드 글자색 fg-brand(다크는 밝은 짝 — 표면 위 Desk 8.38 · 6.10 · HR 8.17 · 6.07:1)이고, 숫자 알약은 브랜드 채움 bg-brand-solid + 흰 숫자 11 / 15 · 700(숫자 폭을 같게)이다 — 알림은 오류가 아니라 빨강을 쓰지 않는다. 숫자는 글자 크기 설정을 따르지 않는 px 라(t1-static) 커져도 아이콘을 덮지 않는다. 알약은 최소 폭 18 · 좌우 4 — 한 자리 18 × 18, 두 자리 약 22, \"99+\" 약 32 다. 0 이면 없고 100 이상은 \"99+\" 다. 자리는 아이콘 상자(점선 — 24)에서 잰다 — 점은 위 1 · 오른쪽 1(x 17 ~ 23 · y 1 ~ 7), 숫자는 알약의 왼쪽 아래 꼭짓점이 (아이콘 폭 − 8, 14) = (16, 14)라 위로 4, 오른쪽으로 튀어나오고 숫자가 길수록 오른쪽으로 자란다. 점 · 숫자는 자리를 차지하지 않고(아이콘 크기가 그대로다) 나타나고 사라질 때 모션이 없다. 두 틀은 페이지 테마와 관계없이 라이트 · 다크로 그렸다."
       + (shared ? " 공유 토큰에는 브랜드 역할 색이 없어 점 · 알약이 여기서는 중립으로 보인다 — HR · Desk 미리보기에서 브랜드 색이다." : ""),
     pair(nbSizes),
   );
@@ -7645,7 +7645,7 @@ const PCHART_CATS = [
   { name: "선물", amount: 24800 },
   { name: "기부", amount: 12400 },
 ];
-// 열지도 — 시간대 × 요일. 세기 다섯(브랜드 채움을 카드 면에 18 · 35 · 55 · 75 · 100% 섞음 — 가장 큰 칸 값의 8 · 22 · 45 · 75% 에서 끊는다), 값이 없는 칸 bg-neutral-weak.
+// 열지도 — 시간대 × 요일. 세기 다섯(브랜드 채움을 카드 면에 18 · 35 · 55 · 76 · 100% 섞음 — 가장 큰 칸 값의 8 · 22 · 45 · 75% 에서 끊는다), 값이 없는 칸 bg-neutral-weak.
 // 칸에 금액(11 / 15 · 700 · 원까지)을 적는 것은 칸 폭 112 이상일 때뿐 — 페이지 끝 스크립트가 ResizeObserver 로 칸 폭을 재서 글을 보이고 감춘다.
 // 가장 큰 칸에 고리를 두르지 않는다(2026-10-08 사용자 결정)
 const PHEAT_DAYS = ["월", "화", "수", "목", "금", "토", "일"];
@@ -8066,7 +8066,7 @@ export function renderDataGallery(brand) {
   const heatCard = (cell, width, live = true, tip = null) => pcard({ head: pcardHead({ title: "요일 · 시간대별 지출" }), content: wide(pheat({ cell, width, live, tip }).replace('class="pheat', `class="pheat ${inkCls}`)) });
   const heatPanel = hasBrand ? panel(
     "Chart — 열지도: 칸 112 이상만 원까지 · 좁으면 세기 색만",
-    "요일 × 시간처럼 두 축의 세기는 열지도다 — 왼쪽 시간대 라벨 열 56(이름 13 · 700 + 시간 11 · fg-neutral-subtle) + 요일 일곱 칸(머리 12 · fg-neutral-subtle), 칸은 정사각형 · 모서리 4 · 사이 6 이다. 세기는 다섯 단계 — 브랜드 채움을 카드 면에 18 · 35 · 55 · 75 · 100% 섞는다(가장 큰 칸 값의 8 · 22 · 45 · 75% 에서 끊는다), 값이 없는 칸은 bg-neutral-weak. 칸에 금액을 적는 것은 칸 폭이 112 이상일 때뿐이다 — 원까지 11 / 15 · 700 · 고정폭 숫자(\"123,456,789원\" 84 · 999억까지 들어간다). 1280 의 칸 117 은 글이 보이고, 1024 의 칸 81 · 폰의 칸 35 는 글 없이 세기 색만이다 — 좁다고 돈을 줄이거나(\"3.5만\") 글자를 줄여 맞추지 않는다. 칸 폭은 ResizeObserver 로 재서 112 를 넘나들면 글을 보이고 감춘다(글자 크기는 그대로). 값은 칸을 가리키거나(웹) 누르면(터치) 뜨는 툴팁(머리 \"수요일 저녁 18~22시\" · 줄 \"■ 지출 35,000원\" — 네모는 그 칸의 세기 색)과 표로 보기에서 읽는다 — 툴팁은 글이 보이는 넓은 칸에서도 뜬다(칸 이름을 알린다). 칸 글자색은 단계마다 칸 바탕 위 4.5 를 넘는 쪽으로 정해 둔다(" + (brand.key === "hr" ? "HR 라이트 18 ~ 75% fg-neutral · 100% 흰 글자, 다크는 모두 fg-neutral" : "Desk 라이트 18 ~ 55% fg-neutral · 75 · 100% 흰 글자, 다크는 모두 fg-neutral") + ", 값이 없는 칸의 \"—\" 는 fg-neutral-subtle). 차트 상자에 초점이 오면 ← → 로 요일 · ↑ ↓ 로 시간대를 옮기며 툴팁을 띄우고 Esc 로 닫는다 — 포커스 링은 상자 바깥에 보인다. 가장 큰 칸에 고리를 두르지 않는다(2026-10-08). 아래 셋은 직접 가리키고 누르고 화살표로 옮길 수 있다.",
+    "요일 × 시간처럼 두 축의 세기는 열지도다 — 왼쪽 시간대 라벨 열 56(이름 13 · 700 + 시간 11 · fg-neutral-subtle) + 요일 일곱 칸(머리 12 · fg-neutral-subtle), 칸은 정사각형 · 모서리 4 · 사이 6 이다. 세기는 다섯 단계 — 브랜드 채움을 카드 면에 18 · 35 · 55 · 76 · 100% 섞는다(가장 큰 칸 값의 8 · 22 · 45 · 75% 에서 끊는다), 값이 없는 칸은 bg-neutral-weak. 칸에 금액을 적는 것은 칸 폭이 112 이상일 때뿐이다 — 원까지 11 / 15 · 700 · 고정폭 숫자(\"123,456,789원\" 84 · 999억까지 들어간다). 1280 의 칸 117 은 글이 보이고, 1024 의 칸 81 · 폰의 칸 35 는 글 없이 세기 색만이다 — 좁다고 돈을 줄이거나(\"3.5만\") 글자를 줄여 맞추지 않는다. 칸 폭은 ResizeObserver 로 재서 112 를 넘나들면 글을 보이고 감춘다(글자 크기는 그대로). 값은 칸을 가리키거나(웹) 누르면(터치) 뜨는 툴팁(머리 \"수요일 저녁 18~22시\" · 줄 \"■ 지출 35,000원\" — 네모는 그 칸의 세기 색)과 표로 보기에서 읽는다 — 툴팁은 글이 보이는 넓은 칸에서도 뜬다(칸 이름을 알린다). 칸 글자색은 단계마다 칸 바탕 위 4.5 를 넘는 쪽으로 정해 둔다(" + (brand.key === "hr" ? "HR 라이트 18 ~ 55% fg-neutral · 76 · 100% 흰 글자, 다크는 모두 fg-neutral" : "Desk 라이트 18 ~ 55% fg-neutral · 76 · 100% 흰 글자, 다크는 모두 fg-neutral") + ", 값이 없는 칸의 \"—\" 는 fg-neutral-subtle). 차트 상자에 초점이 오면 ← → 로 요일 · ↑ ↓ 로 시간대를 옮기며 툴팁을 띄우고 Esc 로 닫는다 — 포커스 링은 상자 바깥에 보인다. 가장 큰 칸에 고리를 두르지 않는다(2026-10-08). 아래 셋은 직접 가리키고 누르고 화살표로 옮길 수 있다.",
     `${samples([sample("1280 — 칸 117 · 원까지", "textMinCellWidth 112 · 11 / 15 · 700 · 단계마다 글자색", wide(floor(heatCard(117, 1280))))], WIDE)}${samples([
       sample("1024 — 칸 81 · 색만", "값은 툴팁 · 표로 보기", wide(floor(heatCard(81, 1024)))),
       sample("폰 — 칸 35 · 색만 · 누른 칸 툴팁", "터치 — 누르면 툴팁(수요일 저녁 35,000원)", wide(floor(heatCard(35, 390, false, { row: 3, col: 2 })))),
@@ -17526,9 +17526,9 @@ export function pageCss() {
     .pchart-legend-name { flex: 1 1 auto; min-width: 0; }
     .pchart-legend-pct { color: var(--color-fg-neutral-subtle); font-variant-numeric: tabular-nums; }
     .pchart-legend-amount { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
-    /* 열지도 — 왼쪽 라벨 열 56 + 요일 일곱 칸(정사각형 · 모서리 4 · 사이 6). 세기 다섯 = 브랜드 채움을 카드 면에 18 · 35 · 55 · 75 · 100% 섞음, 값이 없는 칸 bg-neutral-weak.
+    /* 열지도 — 왼쪽 라벨 열 56 + 요일 일곱 칸(정사각형 · 모서리 4 · 사이 6). 세기 다섯 = 브랜드 채움을 카드 면에 18 · 35 · 55 · 76 · 100% 섞음, 값이 없는 칸 bg-neutral-weak.
        칸 글(11 / 15 · 700 · 고정폭 숫자 · 원까지)은 칸 폭 112 이상에서만 — 페이지 끝 스크립트가 칸 폭을 재서 .pheat-cell--text 를 넣고 뺀다(글자 크기는 그대로).
-       글자색은 단계마다 정해 둔다 — Desk 라이트 75 · 100% 흰 글자, HR 라이트 100% 만 흰 글자, 다크는 모두 fg-neutral, 빈 칸 "—" 는 fg-neutral-subtle. 가장 큰 칸에 고리를 두르지 않는다 */
+       글자색은 단계마다 정해 둔다 — Desk · HR 라이트 76 · 100% 흰 글자, 다크는 모두 fg-neutral, 빈 칸 "—" 는 fg-neutral-subtle. 가장 큰 칸에 고리를 두르지 않는다 */
     .pheat {
       --pheat-brand: var(--color-bg-brand-solid, var(--color-bg-neutral-inverted));
       --pheat-surface: var(--color-bg-layer-default);
@@ -17543,7 +17543,7 @@ export function pageCss() {
       font-family: var(--font-sans);
     }
     .pheat--desk { --pheat-ink-4: var(--color-static-white); --pheat-ink-5: var(--color-static-white); }
-    .pheat--hr { --pheat-ink-5: var(--color-static-white); }
+    .pheat--hr { --pheat-ink-4: var(--color-static-white); --pheat-ink-5: var(--color-static-white); }
     .pheat:focus-visible { outline: 2px solid var(--pdata-ring); outline-offset: 2px; border-radius: var(--radius-r1); }
     .pheat-grid { display: grid; grid-template-columns: 56px repeat(7, var(--pheat-cell)); gap: var(--spacing-x1_5); align-items: center; }
     .pheat-day { text-align: center; font-size: var(--text-t2); line-height: var(--text-t2--line-height); color: var(--color-fg-neutral-subtle); }
@@ -17555,7 +17555,7 @@ export function pageCss() {
     .pheat-cell--1 { background: color-mix(in srgb, var(--pheat-brand) 18%, var(--pheat-surface)); color: var(--pheat-ink-1); }
     .pheat-cell--2 { background: color-mix(in srgb, var(--pheat-brand) 35%, var(--pheat-surface)); color: var(--pheat-ink-2); }
     .pheat-cell--3 { background: color-mix(in srgb, var(--pheat-brand) 55%, var(--pheat-surface)); color: var(--pheat-ink-3); }
-    .pheat-cell--4 { background: color-mix(in srgb, var(--pheat-brand) 75%, var(--pheat-surface)); color: var(--pheat-ink-4); }
+    .pheat-cell--4 { background: color-mix(in srgb, var(--pheat-brand) 76%, var(--pheat-surface)); color: var(--pheat-ink-4); }
     .pheat-cell--5 { background: var(--pheat-brand); color: var(--pheat-ink-5); }
     .pheat-value { display: none; font-size: var(--text-t1); line-height: var(--text-t1--line-height); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .pheat-cell--text > .pheat-value { display: block; }
@@ -17565,7 +17565,7 @@ export function pageCss() {
     .pchart-swatch--heat-1 { background: color-mix(in srgb, var(--pheat-brand) 18%, var(--pheat-surface)); }
     .pchart-swatch--heat-2 { background: color-mix(in srgb, var(--pheat-brand) 35%, var(--pheat-surface)); }
     .pchart-swatch--heat-3 { background: color-mix(in srgb, var(--pheat-brand) 55%, var(--pheat-surface)); }
-    .pchart-swatch--heat-4 { background: color-mix(in srgb, var(--pheat-brand) 75%, var(--pheat-surface)); }
+    .pchart-swatch--heat-4 { background: color-mix(in srgb, var(--pheat-brand) 76%, var(--pheat-surface)); }
     .pchart-swatch--heat-5 { background: var(--pheat-brand); }
 
     /* 검색해서 고르기(Searchable List) — 위 검색칸 + 아래 8 에 결과. 검색칸은 03g 의 밑줄형(large 40 · medium 34) — 좌우 24 안이라 돋보기와 줄의 앞 붙이개가 한 줄에 선다,

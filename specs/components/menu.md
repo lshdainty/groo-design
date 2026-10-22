@@ -195,7 +195,7 @@ import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/component
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 이름 `fg-neutral` 떠 있는 표면(`bg-layer-floating`) 위 16.41 · 다크 11.62, 설명 · 묶음 이름 `fg-neutral-subtle` 5.50 · 5.27, 위험 `fg-critical` 5.06 · 5.27 ✓. 막힌 줄은 예외(비활성) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 키보드 포커스 링 Desk 8.38 · 5.28 · HR 5.06 · 5.39 ✓ — 호버 알약(1.06)은 장식, 위치는 링이 알린다 |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ — 호버 알약(1.06)은 장식, 위치는 링이 알린다 |
 | **WCAG 2.1.1** Keyboard | 열기 · 옮기기 · 실행 · 닫기 모두 키보드로 된다 |
 | **WCAG 2.4.7** Focus visible | 키보드로 옮긴 줄에 늘 링 — 바탕색만으로 알리지 않는다 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 줄 39 × 184 ✓ |

@@ -1343,11 +1343,11 @@ function pageLanding() {
 
   <div class="identity-grid">
     <div class="identity-card">
-      <span class="identity-swatch" style="background: #357B5F;">HR</span>
+      <span class="identity-swatch" style="background: #075B3C;">HR</span>
       <span class="identity-tag">B2B · 조직 HR</span>
       <h3>그루 이음</h3>
-      <p>인사·결재·평가의 절제된 데이터 밀도. 격식체 톤, 데스크탑 중심, forest green primary. 결재 큐의 명확한 위계와 직원 detail의 깊이.</p>
-      <code>--color-primary: #357B5F</code>
+      <p>인사·결재·평가의 절제된 데이터 밀도. 격식체 톤, 데스크탑 중심, 그루 초록 primary. 결재 큐의 명확한 위계와 직원 detail의 깊이.</p>
+      <code>--color-primary: #075B3C</code>
     </div>
     <div class="identity-card">
       <span class="identity-swatch" style="background: #0147AD;">D</span>

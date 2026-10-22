@@ -88,7 +88,7 @@ rules:
       focusRing:
         width: 2px
         offset: { value: -2px, note: "화면 끝까지 차는 띠라 안쪽에 — 버튼 · 닫기도 같다" }
-        color: { value: $color-stroke-focus-ring, note: "옅은 바탕 위 3.91 이상. 짙은 바탕은 띠 글자색(아래 solid 규칙) — 브랜드 링은 짙은 띠 위 1.00 ~ 3.24 다" }
+        color: { value: $color-stroke-focus-ring, note: "옅은 바탕 위 3.90 이상. 짙은 바탕은 띠 글자색(아래 solid 규칙) — 브랜드 링은 짙은 띠 위 1.61 ~ 2.44 다" }
 
   # ── 옅은 바탕(weak) — Callout 과 같은 짝 ─────────────────
   - when: { variant: weak, tone: neutral }

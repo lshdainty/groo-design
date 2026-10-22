@@ -179,7 +179,7 @@ import { Menu, MenuContent, MenuGroup, MenuGroupLabel, MenuItem, MenuTrigger } f
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 손잡이 표시 · 위젯 표식 `stroke-neutral-solid` 흰 면 위 4.18 · 다크 4.13 ✓ · 자리표시 점선 `stroke-brand-solid` 바닥 위 HR 4.69 · 다크 7.05 ✓. 선 `stroke-neutral-weak`(1.23 · 1.56)는 경계일 뿐 — 손잡이는 표시가 알린다. 키보드 포커스 링 HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 손잡이 표시 · 위젯 표식 `stroke-neutral-solid` 흰 면 위 4.18 · 다크 4.13 ✓ · 자리표시 점선 `stroke-brand-solid` 바닥 위 HR 7.56 · 다크 6.88 ✓. 선 `stroke-neutral-weak`(1.23 · 1.56)는 경계일 뿐 — 손잡이는 표시가 알린다. 키보드 포커스 링 HR 8.17 · 6.07 ✓ |
 | **WCAG 2.1.1** Keyboard | 손잡이 `←` `→` `Home` `End` `Enter` ✓ · 위젯 크기는 ⋮ 메뉴 ✓ |
 | **WCAG 2.5.7** Dragging Movements | 끌지 않고 손잡이를 한 번 눌러 25 ↔ 40 · 위젯은 ⋮ "크기" ✓ |
 | **WCAG 2.4.7** Focus visible | 누르는 폭 16 둘레 링 2px ✓ |

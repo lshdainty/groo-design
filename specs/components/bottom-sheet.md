@@ -166,7 +166,7 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 떠 있는 표면(`bg-layer-floating`) 위 16.41 · 다크 11.62, 설명 `fg-neutral-muted` 7.11 · 다크 6.67 ✓ |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 닫기 버튼은 아이콘 `fg-neutral`(16.41 · 11.62)이 버튼을 알린다 — 원 바탕(1.08 · 1.13)은 장식. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 5.06 · 5.39 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 닫기 버튼은 아이콘 `fg-neutral`(16.41 · 11.62)이 버튼을 알린다 — 원 바탕(1.08 · 1.13)은 장식. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ |
 | **WCAG 2.4.3** Focus order | 열면 시트로, 닫으면 연 자리로 초점이 간다. 열린 동안 초점이 뒤 화면으로 나가지 않는다 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 44 · 손잡이 44 · 바닥 버튼 48 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 닫기 버튼(보이는 원 28)은 누르는 영역 44 ✓ · 바닥 버튼 48 ✓ |
