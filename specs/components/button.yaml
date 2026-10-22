@@ -205,19 +205,19 @@ rules:
   # ── 크기 ──────────────────────────────────────────────
   - when: { size: xsmall }
     enabled:
-      root: { height: 32px, radius: $radius-full }
+      root: { height: { value: 32px, note: "최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다(2026-10-22 사용자 결정 — 버튼 큰 글자 A, SEED action-button root.minHeight)" }, radius: $radius-full }
       progressCircle: { size: 14px, thickness: 2px }
   - when: { size: small }
     enabled:
-      root: { height: 36px, radius: $radius-r2 }
+      root: { height: { value: 36px, note: "최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다(2026-10-22 사용자 결정 — 버튼 큰 글자 A, SEED action-button root.minHeight)" }, radius: $radius-r2 }
       progressCircle: { size: 14px, thickness: 2px }
   - when: { size: medium }
     enabled:
-      root: { height: 40px, radius: $radius-r2 }
+      root: { height: { value: 40px, note: "최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다(2026-10-22 사용자 결정 — 버튼 큰 글자 A, SEED action-button root.minHeight)" }, radius: $radius-r2 }
       progressCircle: { size: 16px, thickness: 2px }
   - when: { size: large }
     enabled:
-      root: { height: { value: 48px, note: "SEED 52 — groo 는 48(사용자 결정)" }, radius: $radius-r3 }
+      root: { height: { value: 48px, note: "SEED 52 — groo 는 48(사용자 결정). 최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다(2026-10-22 사용자 결정 — 버튼 큰 글자 A, SEED action-button root.minHeight)" }, radius: $radius-r3 }
       progressCircle: { size: 18px, thickness: 2px }
 
   # 크기 × 배치 — 여백 · 간격 · 글자 · 아이콘
