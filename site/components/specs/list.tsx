@@ -585,12 +585,19 @@ const ChevronGuide: Fig = ({ caption }) => (
 const TargetsGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="줄 자체 + 작은 버튼 하나 — 나머지는 상세 화면에서">
+      {/* 누르는 자리 하나 · 둘 · 셋(SEED List 그림처럼) — 넷 이상은 피한다(2026-10-22 5B) */}
+      <Verdict ok note="하나(줄) · 둘(줄 + ⋮) · 셋(줄 + 즐겨찾기 + ⋮) — 셋 이하로 둔다">
         <Surface className="w-full">
-          <L rows={[{ kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '동네 카페', detail: '즐겨찾는 가맹점', suffix: { buttons: ['more'] } }]} />
+          <L
+            rows={[
+              { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '동네 카페', detail: '하나 — 줄' },
+              { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '동네 카페', detail: '둘 — 줄 · 더보기', suffix: { buttons: ['more'] } },
+              { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '동네 카페', detail: '셋 — 줄 · 즐겨찾기 · 더보기', suffix: { buttons: ['star', 'more'] } },
+            ]}
+          />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="줄 · 즐겨찾기 · 고치기 · 지우기 — 누르는 것이 넷이라 잘못 누른다">
+      <Verdict ok={false} note="넷 — 줄 · 즐겨찾기 · 고치기 · 지우기. 피한다 — 줄을 나누거나 상세 화면으로">
         <Surface className="w-full">
           <L rows={[{ kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '동네 카페', detail: '즐겨찾는 가맹점', suffix: { buttons: ['star', 'pencil', 'trash'] } }]} />
         </Surface>

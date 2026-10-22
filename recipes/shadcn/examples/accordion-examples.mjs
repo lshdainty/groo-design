@@ -151,7 +151,7 @@ const LONG_DETAIL = [
 ].join("\n");
 const BENEFITS = [
   { id: "pay", category: "온라인 간편결제 · 배달앱 · 해외 직구 통합 할인", summary: "네이버페이 · 카카오페이 · 토스페이 결제 시 이용금액의 10% 결제일 할인(월 최대 2만 원)", detail: LONG_DETAIL },
-  { id: "coffee", category: "커피", summary: "스타벅스 · 투썸플레이스 · 이디야 50% 할인", detail: "■ 할인 대상: 스타벅스 · 투썸플레이스 · 이디야 커피 매장 이용금액\n■ 월 2회 · 회당 최대 5천 원" },
+  { id: "coffee", category: "커피", summary: "골목커피 · 숲속다방 · 달빛로스터리 50% 할인", detail: "■ 할인 대상: 골목커피 · 숲속다방 · 달빛로스터리 커피 매장 이용금액\n■ 월 2회 · 회당 최대 5천 원" },
   { id: "transit", category: "대중교통", summary: "버스 · 지하철 10% 청구할인", detail: null },
   { id: "telecom", category: "통신", summary: "SKT · KT · LG U+ 자동이체 5천 원 할인", detail: "■ 통신요금을 이 카드로 자동이체할 때\n■ 전월 실적 30만 원 이상" },
   { id: "store", category: "편의점", summary: "GS25 · CU · 세븐일레븐 5% 할인", detail: null },
@@ -377,7 +377,7 @@ const expandable = benefits.filter((b) => b.detail).map((b) => b.id)
 
 <Accordion variant="separated">
   <AccordionItem value="coffee">
-    <AccordionTrigger prefixIcon={<Coffee />} title="커피" description="스타벅스 · 투썸플레이스 · 이디야 50% 할인" />
+    <AccordionTrigger prefixIcon={<Coffee />} title="커피" description="골목커피 · 숲속다방 · 달빛로스터리 50% 할인" />
     <AccordionContent>{coffeeDetail}</AccordionContent>
   </AccordionItem>
   <AccordionItem value="movie">
@@ -396,7 +396,7 @@ const expandable = benefits.filter((b) => b.detail).map((b) => b.id)
           id: "acc-ex-icons",
           variant: "separated",
           rows: [
-            item({ uid: "acc-ex-icons-coffee", variant: "separated", icon: "coffee", title: "커피", description: "스타벅스 · 투썸플레이스 · 이디야 50% 할인", detail: BENEFITS[1].detail, open: true }),
+            item({ uid: "acc-ex-icons-coffee", variant: "separated", icon: "coffee", title: "커피", description: "골목커피 · 숲속다방 · 달빛로스터리 50% 할인", detail: BENEFITS[1].detail, open: true }),
             item({ uid: "acc-ex-icons-movie", variant: "separated", icon: "ticket", title: "영화", description: "CGV · 롯데시네마 · 메가박스 4천 원 할인", detail: BENEFITS[5].detail }),
             item({ uid: "acc-ex-icons-annual", variant: "separated", icon: "creditCard", title: "연회비 캐시백", description: "전월 실적 50만 원 이상부터", detail: "■ 연회비의 100% 캐시백", disabled: true }),
           ],

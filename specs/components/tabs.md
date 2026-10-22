@@ -1,6 +1,6 @@
 # Tabs
 
-> 다른 구역으로 옮기는 탭. 화면 · 구역 맨 위의 1차 탭은 Line(밑줄 막대), 그 안의 2차 탭은 Chip Tabs(칩 모양)다. 같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게 보는 자리는 [Segmented Control](segmented-control.md), 2 ~ 4개 짧은 폼 값은 [Chip](chip.md) · 5개 이상은 [Select](select.md), 목록 조건을 걸고 푸는 자리는 Chip 의 필터 바다.
+> 다른 구역으로 옮기는 탭. 화면 · 구역 맨 위의 1차 탭은 Line(밑줄 막대), 그 안의 2차 탭은 Chip Tabs(칩 모양)다. 같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게 보는 자리는 [Segmented Control](segmented-control.md), 폼 값은 [Select](select.md) 의 "고르는 컴포넌트 고르기"(판단 순서), 목록 조건을 걸고 푸는 자리는 [Chip](chip.md) 의 필터 바다.
 
 구조는 당근 [SEED Tabs](https://seed-design.io/components/tabs)(Apache-2.0)를 따른다 — Line 타입(목록 · 탭 · 글 · 막대)과 Chip 타입(칩 모양 탭), 1차 Line · 2차 Chip. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
@@ -296,6 +296,10 @@ const tab = params.get("tab") ?? "category"
 - **웹은 1차 탭을 주소에 남긴다** — SEED 에 없는 규칙이다(사용자 결정 2026-10-02). 내용은 SEED 기본처럼 바로 바꾸고 상태를 남긴다.
 
 ## Migration notes
+
+### 2026-10-22 — 폼 값 고르기는 Select 의 판단 순서로
+
+머리글의 "2 ~ 4개 짧은 폼 값은 Chip · 5개 이상은 Select" 사본을 Select 의 "고르는 컴포넌트 고르기" 링크로 바꿨다(사용자 결정 1B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym).
 
 ### 2026-10-21 — 넘치는 Fill · 단위(03-G)
 

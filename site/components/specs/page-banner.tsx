@@ -21,7 +21,7 @@ function B(p: Omit<PageBannerViewProps, 'look' | 'state'> & { state?: PageBanner
 }
 
 // 비교 페이지에서 고른 그대로의 글(2026-10-02)
-const DISCONNECTED = { tone: 'critical' as const, title: '연결 끊김', description: '토스증권 키가 만료돼 시세를 받지 못해요.', button: { label: '다시 연결' } };
+const DISCONNECTED = { tone: 'critical' as const, title: '연결 끊김', description: '증권 연결 키가 만료돼 시세를 받지 못해요.', button: { label: '다시 연결' } };
 const EXPIRING = { tone: 'warning' as const, variant: 'solid' as const, title: '곧 만료', description: 'Pro 이용이 10월 31일에 끝나요.', button: { label: '구독 보기' } };
 const NEW_VERSION = { tone: 'informative' as const, description: '새 버전 1.24.0을 받을 수 있어요.', button: { label: '업데이트' } };
 
@@ -129,7 +129,7 @@ const Anatomy: Fig = ({ caption }) => {
           />
         </div>
         <div className="flex w-[500px] flex-col gap-10 pt-8">
-          <B tone="neutral" interaction="actionable" description="토스증권을 연결하면 보유 주식이 자산에 더해져요." zone={{ suffix: markBox }} pins={{ suffix: <Pin n="ⓕ" /> }} pinLine={MARK_LINE} />
+          <B tone="neutral" interaction="actionable" description="증권 계좌를 연결하면 보유 주식이 자산에 더해져요." zone={{ suffix: markBox }} pins={{ suffix: <Pin n="ⓕ" /> }} pinLine={MARK_LINE} />
           <B tone="informative" interaction="dismissible" title="새 기능" description="반복 거래를 자동으로 기록할 수 있어요." zone={{ close: markBox }} pins={{ close: <Pin n="ⓕ" /> }} pinLine={MARK_LINE} />
         </div>
         <Legend
@@ -198,7 +198,7 @@ const Layout: Fig = ({ caption }) => {
           <div className="flex flex-col gap-3" style={{ width: 344 }}>
             <B {...DISCONNECTED} state="focused" part="button" />
             <B {...DISCONNECTED} variant="solid" state="focused" part="button" />
-            <B tone="neutral" interaction="actionable" description="토스증권을 연결하면 보유 주식이 자산에 더해져요." state="focused" part="root" />
+            <B tone="neutral" interaction="actionable" description="증권 계좌를 연결하면 보유 주식이 자산에 더해져요." state="focused" part="root" />
           </div>
           <Muted>
             링 {l.ring.width} · 안쪽 {-l.ring.offset}(화면 끝까지 차는 띠라 바깥 링은 잘린다) — 옅은 바탕은 {l.faces.weak.critical.ring.name}, 짙은 바탕은 띠 글자색({l.faces.solid.critical.ring.name}). 버튼 링의 모서리 {l.button.radius}
@@ -221,9 +221,9 @@ const Layout: Fig = ({ caption }) => {
 const TONE_TEXT: Record<FbTone, { title: string; description: string }> = {
   neutral: { title: '점검 예정', description: '10월 5일 새벽 2시부터 30분 동안 점검해요.' },
   informative: { title: '새 버전', description: '1.24.0을 받을 수 있어요.' },
-  positive: { title: '연결됨', description: '토스증권 시세를 다시 받아요.' },
+  positive: { title: '연결됨', description: '증권 시세를 다시 받아요.' },
   warning: { title: '곧 만료', description: 'Pro 이용이 10월 31일에 끝나요.' },
-  critical: { title: '연결 끊김', description: '토스증권 키가 만료돼 시세를 받지 못해요.' },
+  critical: { title: '연결 끊김', description: '증권 연결 키가 만료돼 시세를 받지 못해요.' },
 };
 const Tones: Fig = ({ caption }) => {
   const l = bl();

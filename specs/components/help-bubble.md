@@ -76,11 +76,13 @@
 |---|---|
 | 아이콘 버튼 · 줄인 글의 짧은 설명(마우스 · 키보드) | [Tooltip](tooltip.md) |
 | 몰라도 일은 할 수 있는 설명 — 규정 · 계산 방법 · 기능 안내 | **Help Bubble**(ⓘ 를 눌러서) |
-| 일을 하려면 꼭 읽어야 하는 안내 | 화면 안 글 · Callout(그 차례에) |
+| 일을 하려면 꼭 읽어야 하는 안내 | 화면 안 글 · [Callout](callout.md) |
 | 버튼 · 입력이 있는 내용 | [Popover](popover.md) |
 | 길거나 확인을 받아야 하는 설명 | [Bottom Sheet](bottom-sheet.md) · [Dialog](dialog.md) |
 
 [그림: 도움말의 자리 — 툴팁 · 말풍선 · 화면 안 글 · 팝오버](../../site/components/specs/help-bubble.tsx#role-guide)
+
+결과 · 상태 · 오류처럼 알리는 일(Snackbar · Callout · Page Banner · Result Section · Alert Dialog)을 고르는 표는 [Snackbar 의 "무엇으로 알리나"](snackbar.md) 한 벌이다(2026-10-22 사용자 결정 3B — https://claude.ai/artifact/NuEPiLRH2fJidXdKzcDsCX). 이 표는 도움말의 자리만 맡는다.
 
 ### 터치에서도 닿는 도움말
 
@@ -193,6 +195,10 @@ import { TopNavigationIconButton } from "@/components/ui/top-navigation"
 - **z-index 는 specs/z-index.md 의 L4**(`z-tooltip` 210) — 팝오버 · 메뉴 안에서 열어도 그 위에 뜬다. SEED 는 포털 없이 99 로 그려 둘레 상자가 자를 수 있다.
 
 ## Migration notes
+
+### 2026-10-22 — 알림 고르는 표는 한 벌
+
+알리는 일을 고르는 표는 Snackbar 문서 한 벌로 링크하고, 이 문서의 표는 도움말의 자리만 맡는다(사용자 결정 3B — https://claude.ai/artifact/NuEPiLRH2fJidXdKzcDsCX). 값 변경 없음.
 
 ### 2026-10-16 — 예시의 트리거를 검색 · 알림으로
 

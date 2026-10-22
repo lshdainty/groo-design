@@ -380,8 +380,10 @@ export function useSnackbarHost(look: SnackbarLook): SnackbarHost {
         setCur(item);
         return;
       }
-      // 한 번에 하나 — 지금 것을 바로 내보내고 새 것을 띄운다(내보내는 동안 또 오면 마지막 것만)
+      // 한 번에 하나 — 지금 것을 바로 내보내고 새 것을 띄운다(내보내는 동안 또 오면 마지막 것만).
+      // 지금 것에 액션이 있으면 끝날 때까지 지키고 새 것은 그 뒤에(2026-10-22 1B — 기다리는 것은 하나)
       next.current = item;
+      if (curRef.current.action && !exitingRef.current) return;
       if (!exitingRef.current) beginExit();
     },
     [beginExit],

@@ -30,7 +30,7 @@ function TxDetail({ mode = 'auto', marks = false }: { mode?: Mode; marks?: boole
     <div className="flex flex-col" style={{ background: tone('bg-layer-default', mode) }}>
       <div className="flex flex-col gap-1 px-6 pb-4 pt-2">
         <span className="text-[13px] leading-[18px]" style={{ color: tone('fg-neutral-subtle', mode) }}>
-          스타벅스 강남역점
+          골목커피 강남역점
         </span>
         <span className="text-[24px] font-bold leading-8 tabular-nums" style={{ color: tone('fg-neutral', mode) }}>
           −5,600원
@@ -40,7 +40,7 @@ function TxDetail({ mode = 'auto', marks = false }: { mode?: Mode; marks?: boole
         <D mode={mode} />
         {pin('ⓑ', { right: 8, top: -10 })}
       </span>
-      <KV k="결제 수단" v="현대카드 M" mode={mode} />
+      <KV k="결제 수단" v="생활비 카드" mode={mode} />
       <span className="relative flex flex-col" style={{ marginLeft: 8, marginRight: 8 }}>
         <D mode={mode} inset />
         {pin('ⓐ', { right: -4, top: -10 })}
@@ -219,7 +219,7 @@ const Orientation: Fig = ({ caption }) => (
           <Board pad={0} className="overflow-hidden" style={{ paddingTop: 4, paddingBottom: 4 }}>
             {o === 'horizontal' ? (
               <>
-                <KV k="결제 수단" v="현대카드 M" />
+                <KV k="결제 수단" v="생활비 카드" />
                 <D />
                 <KV k="할부" v="일시불" />
               </>
@@ -242,7 +242,7 @@ const InsetFig: Fig = ({ caption }) => {
         {[false, true].map((inset) => (
           <div key={String(inset)} className="flex min-w-0 flex-col gap-2">
             <Board pad={0} className="overflow-hidden" style={{ paddingTop: 4, paddingBottom: 4 }}>
-              <KV k="결제 수단" v="현대카드 M" pad={16} />
+              <KV k="결제 수단" v="생활비 카드" pad={16} />
               <span className="relative flex flex-col">
                 <D inset={inset} />
                 {inset && (
@@ -319,7 +319,7 @@ const NeededGuide: Fig = ({ caption }) => (
 function DetailCard({ last }: { last: boolean }) {
   return (
     <Board pad={0} className="w-full max-w-[320px] overflow-hidden" style={{ paddingTop: 4 }}>
-      <KV k="결제 수단" v="현대카드 M" />
+      <KV k="결제 수단" v="생활비 카드" />
       <span className="flex flex-col" style={{ marginLeft: 8, marginRight: 8 }}>
         <D inset />
       </span>
@@ -353,7 +353,7 @@ const ExBasic: Fig = ({ caption }) => (
     <div className="flex flex-col text-[15px] leading-5 pk-text">
       <div className="flex flex-col">
         <p className="flex justify-between py-3" style={{ margin: 0 }}>
-          결제 수단<span>신한카드</span>
+          결제 수단<span>생활비 카드</span>
         </p>
         <D inset />
         <p className="flex justify-between py-3" style={{ margin: 0 }}>

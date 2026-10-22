@@ -179,13 +179,14 @@ export const alertDialogExamples = [
   {
     title: "지우기",
     description:
-      "되돌릴 수 없는 일 앞에서 묻는다 — 둘 중 하나를 고르는 자리다. 지우는 확정은 variant=\"criticalSolid\", 취소는 neutralWeak(Critical 은 확정에만). 버튼 글은 동작 이름이다(\"삭제\" — \"확인\" · \"예\" 로 뭉뚱그리지 않는다). 닫기 버튼이 없고 바깥(딤)을 눌러도 닫히지 않는다 — Esc · 뒤로 가기는 취소와 같다. 열면 초점은 확인창으로 가고, 닫으면 연 자리로 돌아간다. 확인창은 최대 272 · 안쪽 20 · 모서리 20 이고 그림자 없이 딤(0.50 · 다크 0.65) 위에 뜬다(z-index L5 — 딤 z-alert 300 · 확인창 z-alert-content 301).",
+      "되돌릴 수 없는 일 앞에서 묻는다 — 둘 중 하나를 고르는 자리다. 지우는 확정은 variant=\"criticalSolid\", 취소는 neutralWeak(Critical 은 확정에만). 버튼 글은 동작 이름이다(\"삭제\" — \"확인\" · \"예\" 로 뭉뚱그리지 않는다 — 고를 것이 없는 결과 알림만 \"확인\" 하나). 대상은 무엇인지 알 만큼 짚는다 — 이름 있는 대상은 이름, 거래 한 건은 날짜 · 금액. 닫기 버튼이 없고 바깥(딤)을 눌러도 닫히지 않는다 — Esc · 뒤로 가기는 취소와 같다. 열면 초점은 확인창으로 가고, 닫으면 연 자리로 돌아간다. 확인창은 최대 272 · 안쪽 20 · 모서리 20 이고 그림자 없이 딤(0.50 · 다크 0.65) 위에 뜬다(z-index L5 — 딤 z-alert 300 · 확인창 z-alert-content 301).",
     jsx: `import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogTitle } from "@/components/ui/alert-dialog"
 
 <AlertDialog open={open} onOpenChange={setOpen}>
   <AlertDialogContent>
     <AlertDialogTitle>거래를 삭제할까요?</AlertDialogTitle>
-    <AlertDialogDescription>삭제한 거래는 되돌릴 수 없어요.</AlertDialogDescription>
+    {/* 이름 없는 대상은 무엇인지 알 만큼 — 날짜 · 금액 */}
+    <AlertDialogDescription>{tx.dateLabel} {tx.title} {formatWon(tx.amount)} 거래를 지워요. 삭제한 거래는 되돌릴 수 없어요.</AlertDialogDescription>
     <AlertDialogFooter>
       <AlertDialogCancel>취소</AlertDialogCancel>
       <AlertDialogAction variant="criticalSolid" onClick={remove}>삭제</AlertDialogAction>
@@ -196,7 +197,7 @@ export const alertDialogExamples = [
       alertDialog({
         uid: "alert-dialog-ex-delete",
         title: "거래를 삭제할까요?",
-        description: "삭제한 거래는 되돌릴 수 없어요.",
+        description: "10월 22일 점심 식사 12,000원 거래를 지워요. 삭제한 거래는 되돌릴 수 없어요.",
         action: "삭제",
         variant: "criticalSolid",
       }),
@@ -250,7 +251,7 @@ export const alertDialogExamples = [
   {
     title: "하나 — 알리기",
     description:
-      "꼭 알아야 할 일을 알리기만 할 때는 확정 버튼 하나를 둔다 — 폭 전체다. 지우거나 잃는 일이 아니라 variant 는 기본 neutralSolid 이고, 글은 \"확인\" 대신 결과에 맞는 동작 이름이다(\"다시 로그인\"). Esc · 뒤로 가기는 그대로 닫는다.",
+      "꼭 알아야 할 일을 알리기만 할 때는 확정 버튼 하나를 둔다 — 폭 전체다. 지우거나 잃는 일이 아니라 variant 는 기본 neutralSolid 이고, 글은 버튼이 일을 하면 그 동작 이름(\"다시 로그인\"), 닫기만 하면 \"확인\" 이다(고를 것이 없는 결과 알림). Esc · 뒤로 가기는 그대로 닫는다.",
     jsx: `<AlertDialogContent>
   <AlertDialogTitle>로그인이 만료됐어요</AlertDialogTitle>
   <AlertDialogDescription>30분 동안 쓰지 않아 로그아웃했어요. 다시 로그인해 주세요.</AlertDialogDescription>

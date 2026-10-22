@@ -9,8 +9,8 @@ import { DELETE, DUPLICATE, EDIT, GUIDE_ITEM, MEMO_MENU, PERSON_MENU, PIN, SHARE
 import type { MenuGroup } from './menu-look';
 import { Anchored, Board, DesktopMemoMenu, IconButton, Menu, MemoWindow, PeopleWindow, PhoneMemoSheet, Scaled, iconBtn, mk, modeName } from './menu-screens';
 import { Legend, Note, Shot, overlayKit, pinStyle } from './overlay-screens';
-import { segmentedLook } from './segmented-control-look';
-import { SegmentedView } from './segmented-control-view';
+import { listLook } from './list-look';
+import { ListHeaderView, ListView } from './list-view';
 import { Cap } from './select-screens';
 import { Verdict, WebWindow, rc, type Mode } from './kit';
 import { cardFace } from './card-face';
@@ -266,16 +266,17 @@ const States: Fig = ({ caption }) => (
 );
 
 // ── Guidelines ────────────────────────────────────────────
-// 메뉴는 실행만 — 테마는 설정의 Segmented Control
+// 메뉴는 실행만 — 테마는 설정의 List 라디오 줄
+// 테마는 누르는 순간 바뀌는 고르기 — 설정 화면의 List 라디오 줄(select.md "고르는 컴포넌트 고르기" · 2026-10-22 1B)
 function ThemeSettings({ mode = 'auto' }: { mode?: Mode }) {
-  const seg = segmentedLook('desk');
+  const look = listLook('desk');
   return (
-    <WebWindow mode={mode} w={400} h={250}>
+    <WebWindow mode={mode} w={400} h={290}>
       <div style={{ height: '100%', boxSizing: 'border-box', padding: '22px 28px', background: rc('bg-layer-basement', mode) }}>
         <div style={{ fontSize: 20, lineHeight: '28px', fontWeight: 700, color: rc('fg-neutral', mode), paddingBottom: 14 }}>설정</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, boxSizing: 'border-box', borderRadius: cardFace().radius, borderWidth: cardFace().borderW, borderStyle: 'solid', borderColor: rc('stroke-neutral-weak', mode), paddingTop: cardFace().pad, paddingRight: cardFace().pad, paddingBottom: cardFace().pad, paddingLeft: cardFace().pad, background: rc('bg-layer-default', mode) }}>
-          <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 500, color: rc('fg-neutral', mode) }}>화면 모드</span>
-          <SegmentedView look={seg} mode={mode} items={THEMES} value="dark" live={false} ariaLabel="화면 모드" />
+        <div style={{ boxSizing: 'border-box', overflow: 'hidden', borderRadius: cardFace().radius, borderWidth: cardFace().borderW, borderStyle: 'solid', borderColor: rc('stroke-neutral-weak', mode), background: rc('bg-layer-default', mode) }}>
+          <ListHeaderView look={look} title="화면 모드" mode={mode} />
+          <ListView look={look} mode={mode} live={false} ariaLabel="화면 모드" rows={THEMES.map((th) => ({ kind: 'radio' as const, title: th.label, value: th.value, checked: th.value === 'dark' }))} />
         </div>
       </div>
     </WebWindow>
@@ -285,7 +286,7 @@ function ThemeMenuWindow({ mode = 'auto' }: { mode?: Mode }) {
   const m = mk().menu;
   const groups: MenuGroup[] = [{ items: THEME_MENU[0].items.map((i) => (i.value === 'dark' ? { ...i, suffixIcon: 'check' } : i)) }];
   return (
-    <WebWindow mode={mode} w={400} h={250}>
+    <WebWindow mode={mode} w={400} h={290}>
       <div style={{ height: '100%', boxSizing: 'border-box', padding: '16px 20px', background: rc('bg-layer-basement', mode) }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <span style={{ fontSize: 20, lineHeight: '28px', fontWeight: 700, color: rc('fg-neutral', mode) }}>홈</span>
@@ -298,13 +299,13 @@ function ThemeMenuWindow({ mode = 'auto' }: { mode?: Mode }) {
 const RoleGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="테마처럼 값을 고르는 일은 설정 화면의 Segmented Control — 지금 값이 늘 보이고, 고르면 바로 반영된다" bg={BASEMENT}>
-        <Scaled w={400} h={250} s={0.64}>
+      <Verdict ok note="테마처럼 값을 고르는 일은 설정 화면의 List 라디오 줄 — 지금 값이 늘 보이고, 고르면 바로 반영된다" bg={BASEMENT}>
+        <Scaled w={400} h={290} s={0.64}>
           <ThemeSettings />
         </Scaled>
       </Verdict>
       <Verdict ok={false} note="메뉴에 체크를 달아 값을 고르게 한다 — 메뉴는 누르면 실행하고 닫히는 동작 목록이다(고른 표시가 없다)" bg={BASEMENT}>
-        <Scaled w={400} h={250} s={0.64}>
+        <Scaled w={400} h={290} s={0.64}>
           <ThemeMenuWindow />
         </Scaled>
       </Verdict>

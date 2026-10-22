@@ -76,10 +76,10 @@ Menu 는 누르면 바로 실행되는 명령 목록이다. 값을 고르는 일
 | 줄 · 화면의 동작(수정 · 복사 · 삭제 · 내보내기) | **Menu**(1280 미만 [Menu Sheet](menu-sheet.md)) |
 | 폼에 넣을 값 고르기(결제 수단 · 카테고리) | [Select](select.md) · [Input Button](input-button.md) |
 | 같은 내용의 보기 바꾸기 2 ~ 4개(목록 · 달력) | [Segmented Control](segmented-control.md) |
-| 설정 값 고르기(테마 · 정렬) | [Segmented Control](segmented-control.md) · [Select](select.md) · [List](list.md) 의 라디오 줄 |
+| 값 고르기 — 테마처럼 누르는 순간 바뀌는 설정 · 정렬 · 보기 | 테마는 [List](list.md) 의 라디오 줄, 정렬 · 보기는 [Segmented Control](segmented-control.md) · [Select](select.md) — 고르는 표는 Select 의 "고르는 컴포넌트 고르기" |
 | 되돌릴 수 없는 확인 | 메뉴를 닫은 뒤 [Alert Dialog](alert-dialog.md) |
 
-[그림: 메뉴는 실행만 — 테마 같은 값은 설정의 Segmented Control](../../site/components/specs/menu.tsx#role-guide)
+[그림: 메뉴는 실행만 — 테마 같은 값은 설정의 List 라디오 줄](../../site/components/specs/menu.tsx#role-guide)
 
 ### 줄의 동작 — ⋮ 하나와 메뉴
 
@@ -213,7 +213,7 @@ import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/component
 
 ### ❌ Don't
 
-- 값을 고르는 데 메뉴를 쓰기 — 테마 · 정렬은 Segmented Control · Select.
+- 값을 고르는 데 메뉴를 쓰기 — 테마는 List 라디오 줄, 정렬 · 보기는 Segmented Control · Select.
 - 수정 · 삭제 아이콘을 줄마다 늘 늘어놓기.
 - 일부 줄에만 아이콘.
 - 메뉴 안에 메뉴(하위 메뉴) · 단축키 표기 · 체크 줄.
@@ -237,6 +237,10 @@ import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/component
 - **트리거 끝에 맞춘다** — SEED 기본은 가운데(`bottom`)라 줄 끝 ⋮ 의 메뉴가 표 밖으로 100 넘게 나간다. groo 는 오른쪽 끝(`end`)이 기본이다.
 
 ## Migration notes
+
+### 2026-10-22 — 테마는 List 라디오 줄
+
+"설정 값 고르기(테마 · 정렬) → Segmented Control" 이 Segmented Control 문서("폼 · 설정 값이 아니다")와 Select Box 이관 글(테마 = List 라디오 줄)과 어긋났다. 테마는 List 라디오 줄, 정렬 · 보기는 Segmented Control · Select 로 고치고 고르는 표는 Select 의 "고르는 컴포넌트 고르기" 로 링크한다(사용자 결정 1B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym). 사이트 그림 role-guide 의 왼쪽(설정 화면)을 List 라디오 줄로 다시 그렸다.
 
 ### 2026-10-15 — 알약이 들어오며 둥글어진다
 

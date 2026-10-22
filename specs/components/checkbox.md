@@ -145,7 +145,10 @@ Desk 할 일 완료의 동그라미 체크는 Checkbox 의 모양이 아니다 �
 |---|---|---|
 | 값이 적용될 때 | 저장 같은 액션을 해야 적용(권장) | 누르는 순간 적용 — 저장해야 적용되는 값에는 쓰지 않는다 |
 | 항목 구성 | 한 묶음에 여러 항목 | 항목마다 따로 |
-| 하위 항목 | 부모가 모두를 고르고 풀 수 있다 | 부모와 하위 사이 관계 없음 |
+| 하위 항목 | 부모가 모두를 고르고 풀 수 있다 | 부모와 하위 사이 관계 없음 — 위가 꺼지면 아래를 막는다(값은 그대로) |
+| 경계 사례 | 고정 금액으로 기록(켜면 금액 칸이 나와도 저장 때 반영) · 자동 기록 · 상단에 고정 | 결제 알림 · 단종 카드 포함(누르면 목록이 바로 바뀐다) · 일정의 종일(저장 폼 안이어도 날짜 칸이 바로 바뀐다) |
+
+이 표는 Checkbox 와 Switch 의 한 벌이다 — Switch 문서는 이 표를 가리킨다. 결정(누르는 순간 바뀌는 것만 Switch — SEED 와 같은 강도)은 그대로이고, 이관 때 고를 경계 사례 한 줄을 더했다(2026-10-22 사용자 결정 7B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym). 다른 고르는 컴포넌트와의 표는 Select 의 ["고르는 컴포넌트 고르기"](select.md#고르는-컴포넌트-고르기).
 
 [그림: 저장해야 적용되는 폼은 Checkbox, 바로 적용되는 설정은 Switch](../../site/components/specs/checkbox.tsx#vs-switch)
 
@@ -285,6 +288,10 @@ import { Checkmark } from "@/components/ui/checkbox"
 - 아이콘은 lucide(선 3) — SEED 는 채운 체크 아이콘.
 
 ## Migration notes
+
+### 2026-10-22 — Switch 와 견주는 표에 경계 사례
+
+"Checkbox 와 Switch" 표에 경계 사례 한 줄(고정 금액 · 자동 기록 · 상단 고정은 Checkbox, 결제 알림 · 단종 카드 포함 · 일정 종일은 Switch)을 더하고 이 표를 한 벌로 — Switch 문서는 가리킨다(사용자 결정 7B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym). 결정 그대로, 값 변경 없음.
 
 ### 2026-10-08 — Enter · 묶음 상태 · 라벨 안 링크
 

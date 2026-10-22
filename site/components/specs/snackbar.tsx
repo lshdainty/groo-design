@@ -346,7 +346,7 @@ const RoleGuide: Fig = ({ caption }) => {
           <CalloutView look={calloutLook()} tone="warning" description="총액이 바뀌어 분할 합계와 1,200원 달라요." state="enabled" />
         </RoleRow>
         <RoleRow what="페이지 전체의 상태" name="Page Banner" bleed>
-          <PageBannerView look={pageBannerLook()} tone="critical" title="연결 끊김" description="토스증권 키가 만료돼 시세를 받지 못해요." button={{ label: '다시 연결' }} state="enabled" />
+          <PageBannerView look={pageBannerLook()} tone="critical" title="연결 끊김" description="증권 연결 키가 만료돼 시세를 받지 못해요." button={{ label: '다시 연결' }} state="enabled" />
         </RoleRow>
         <RoleRow what="비어 있음 · 불러오기 실패 · 완료" name="Result Section">
           <ResultSectionView look={resultSectionLook()} kind="failure" size="medium" title="거래를 불러오지 못했어요" description="잠시 뒤 다시 시도해 주세요." primary={{ label: '다시 시도' }} />
@@ -482,7 +482,8 @@ const TimingGuide: Fig = ({ caption }) => {
   const exitS = s(px(l.motion.exit.duration));
   const hold = 3;
   const before = 2;
-  const max = Math.ceil(before + hold + plain + 1);
+  // 눈금은 2초마다 — 가장 긴 줄(멈춤 · 액션 띠 뒤 새 띠)이 들어가는 짝수 초
+  const max = Math.ceil(Math.max(before + hold + plain, withAction + exitS + plain) / 2 + 0.5) * 2;
   const pct = (v: number) => `${(v / max) * 100}%`;
   const bar = (from: number, to: number, label: string, tone: 'show' | 'hold' | 'next' = 'show'): CSSProperties & { label: string } => ({
     left: pct(from),
@@ -495,6 +496,7 @@ const TimingGuide: Fig = ({ caption }) => {
     { title: '액션 있음("되돌리기")', bars: [bar(0, withAction, `보임 ${withAction}초`)] },
     { title: '마우스 · 손가락 · 키보드 초점이 머무르면 — 멈췄다가, 떠나면 처음부터', bars: [bar(0, before, `${before}초`), bar(before, before + hold, '멈춤', 'hold'), bar(before + hold, before + hold + plain, `다시 ${plain}초`)] },
     { title: '새 띠가 오면 — 지금 띠를 바로 바꾼다', bars: [bar(0, 1.5, '지금 띠'), bar(1.5 + exitS, 1.5 + exitS + plain, `새 띠 ${plain}초`, 'next')] },
+    { title: '지금 띠에 액션이 있으면 — 끝날 때까지 지키고 새 띠는 그 뒤에', bars: [bar(0, withAction, `되돌리기 ${withAction}초`), bar(withAction + exitS, withAction + exitS + plain, `새 띠 ${plain}초`, 'next')] },
   ];
   return (
     <Panel caption={caption}>
@@ -519,7 +521,7 @@ const TimingGuide: Fig = ({ caption }) => {
           </div>
         ))}
         <span className="text-[12px] leading-5 pk-muted">
-          머무름이 끝나면 남은 시간이 아니라 처음부터 다시 센다. 한 번에 하나 — 새 띠가 오면 지금 띠가 {px(l.motion.exit.duration)}ms 로 사라지고 새 띠가 {px(l.motion.enter.duration)}ms 로 나타난다. 되돌리기 같은 액션은 같은 일을 할 다른 길(목록 · 상세)도 둔다.
+          머무름이 끝나면 남은 시간이 아니라 처음부터 다시 센다. 한 번에 하나 — 새 띠가 오면 지금 띠가 {px(l.motion.exit.duration)}ms 로 사라지고 새 띠가 {px(l.motion.enter.duration)}ms 로 나타난다. 지금 띠에 액션(되돌리기 · 다시 시도)이 있으면 그 띠가 끝난 뒤에 새 띠가 뜬다. 되돌리기 같은 액션은 같은 일을 할 다른 길(목록 · 상세)도 둔다.
         </span>
       </Surface>
     </Panel>

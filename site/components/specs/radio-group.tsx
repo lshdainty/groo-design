@@ -21,7 +21,8 @@ type Fig = (p: { caption?: string }) => ReactNode;
 const spec = () => loadComponentSpec('radio-group');
 const SIZES = () => axisValues(spec(), 'size');
 const GAP = radioGroupGap;
-const REPEAT = ['반복 없음', '매일', '매주', '매월', '매년'];
+// 넷 — 선택지 5개 이상은 Select(select.md 판단 순서, 2026-10-22 2B)
+const REPEAT = ['반복 없음', '매일', '매주', '매월'];
 
 // 한 Radio — 조합 · 선택 여부 · 상태 · 모드(고정 그림)
 function R(p: RadioCombo & { checked?: RadioChecked; state?: RadioState | 'live'; label?: ReactNode; mode?: Mode; brand?: 'desk' | 'hr'; ariaLabel?: string; style?: CSSProperties }) {
@@ -268,7 +269,7 @@ const Live: Fig = ({ caption }) => (
       </div>
       <div className="flex flex-col">
         <Title id="live-b">반복 — brand · 막힌 선택지</Title>
-        <G ariaLabelledby="live-b" tone="brand" initial={0} disabled={[4]} />
+        <G ariaLabelledby="live-b" tone="brand" initial={0} disabled={[3]} />
       </div>
     </div>
   </Figure>

@@ -75,15 +75,25 @@
 
 [Menu](menu.md) 와 같은 목록을 1280 미만에서 시트로 띄운다 — 손가락으로 누르기 좋은 줄 52 에, 화면 아래라 엄지가 닿는다. 코드는 `ResponsiveMenu` 하나로 짜면 폭을 보고 둘 중 하나를 그린다. 입력 · 고르기 · 상세처럼 실행이 아닌 일은 [Bottom Sheet](bottom-sheet.md) 다.
 
-| 이런 일 | 1280 미만 | 1280 이상 |
-|---|---|---|
-| 줄 · 화면의 동작 | **Menu Sheet** | [Menu](menu.md) |
-| 입력 폼 · 상세 · 고르기 | [Bottom Sheet](bottom-sheet.md) | [Dialog](dialog.md) · [Popover](popover.md) |
-| 되돌릴 수 없는 확인 | [Alert Dialog](alert-dialog.md) | [Alert Dialog](alert-dialog.md) |
+줄 · 화면의 동작은 1280 미만 Menu Sheet · 이상 [Menu](menu.md) 다. 다른 일(입력 폼 · 상세 · 고르기 · 되돌릴 수 없는 확인)에 어느 떠 있는 표면을 쓸지는 DESIGN.md Components 의 "시트 · 대화상자 · 확인창 · 팝오버" 표 한 벌이 정한다(2026-10-22 사용자 결정 3C — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj).
 
 예외 — 접힌 사이드바(768 ~ 1279)의 하위 목록은 이 시트가 아니라 누른 아이콘 옆 펼침 메뉴다([Side Navigation](side-navigation.md) — 사용자 결정 2026-10-08).
 
 [그림: 1280 에서 — 메뉴 시트 ↔ 메뉴](../../site/components/specs/menu-sheet.tsx#responsive-guide)
+
+### Alert Dialog 와 견주기
+
+SEED Alert Dialog 문서의 "Alert Dialog vs. Menu Sheet" 여섯 줄에 groo 의 "함께 쓰기" 한 줄을 더했다(2026-10-22 사용자 결정 2B — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj).
+
+| | [Alert Dialog](alert-dialog.md) | Menu Sheet |
+|---|---|---|
+| 목적 | 반드시 골라야 하는 일 — 되돌릴 수 없는 동작의 확인 | 그 줄 · 화면에서 할 수 있는 동작 여럿 |
+| 동작 수 | 둘 이하(취소 포함) — 알림은 하나 | 둘 이상 |
+| 동작 짜임 | 둘 중 하나(삭제할까 · 나갈까) | 여럿 중 하나 |
+| 설명 | 무엇이 어떻게 되는지 늘 쓴다 | 없어도 된다 — 줄 이름이 말한다 |
+| 자리 | 화면 정중앙 | 화면 아래(1280 이상은 트리거 옆 [Menu](menu.md)) |
+| 닫는 길 | 버튼을 눌러야 닫힌다 — 바깥은 무시 | 줄 · 바깥 · 끌기 · 뒤로 가기로 닫힌다 |
+| 함께 쓰기 *(groo)* | Menu Sheet 의 "삭제" 를 누르면 시트가 닫힌 뒤 이 확인창이 뜬다 | 위험한 줄은 맨 아래 묶음 · critical |
 
 ### 스와이프의 대신 길
 
@@ -205,10 +215,15 @@ import { MenuSheet, MenuSheetContent, MenuSheetGroup, MenuSheetItem, MenuSheetTr
 - **줄을 누르면 시트가 닫힌다** — SEED 코드는 닫지 않고 쓰는 쪽이 닫는다. groo 는 Menu 와 같게 닫고 실행한다(1280 에서 바뀌어도 같은 동작).
 - **막힌 줄을 둔다** — SEED 는 Figma 에만 있고 코드 · 색이 없다. Menu 와 같은 규칙(전용 색 · 누르지 못함)으로 채운다 — 1280 에서 Menu 와 바뀌어도 같은 줄이 막혀 있어야 한다.
 - **보조 기술용 닫기는 키보드 초점이 오면 보인다** — SEED 는 안 보이는 채로 Tab 이 선다(기초의 "초점은 늘 보인다").
+- **보이는 닫기 버튼은 두지 않는다 — SEED React 기본과 같다** — SEED Swipeable Menu Sheet 의 `showCloseButton` 기본값(false)은 "스크린 리더 사용자를 위한 시각적으로 숨겨진 닫기 버튼" 이다. 디자인 문서 Anatomy 의 Close Button 은 이렇게 숨긴 채 보조 기술 · 키보드에만 둔다 — 끌기 · 딤 · 뒤로 가기로 닫히는 시트라 보이는 버튼을 더할 까닭이 없다(2026-10-22 사용자 결정 12B — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj).
 - **트리거에 `aria-haspopup="dialog"` · `aria-expanded`** — SEED 는 문서에 적고 실제로는 붙이지 않는다.
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 시트 `z-modal-content` 101).
 
 ## Migration notes
+
+### 2026-10-22 — Alert Dialog 와 견주는 표 · 닫기 버튼
+
+SEED 의 "Alert Dialog vs. Menu Sheet" 표를 groo 값으로 두고 "함께 쓰기"(삭제는 시트가 닫힌 뒤 확인창)를 더했다(2B). "이런 일 → 1280 미만 · 이상" 표는 DESIGN.md 의 큰 표 한 벌로 보냈다(3C). 보이는 닫기 버튼을 두지 않는 것이 SEED React 기본과 같다는 줄을 "SEED 와 다른 점" 에 적었다(12B) — 사용자 결정 https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj. 값 변경 없음.
 
 ### 2026-10-02 — SEED Menu Sheet 로 새로 둔다
 

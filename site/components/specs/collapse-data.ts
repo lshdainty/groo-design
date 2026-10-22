@@ -17,7 +17,7 @@ export type Benefit = { id: string; title: string; summary: string; detail: stri
 // 열둘 — 첫 제목이 28자(줄을 바꾼다), 대중교통 · 편의점은 상세가 없다(그냥 줄)
 export const BENEFITS: Benefit[] = [
   { id: 'pay', title: '온라인 간편결제 · 배달앱 · 해외 직구 통합 할인', summary: '네이버페이 · 카카오페이 · 토스페이 결제 시 이용금액의 10% 결제일 할인(월 최대 2만 원)', detail: LONG_DETAIL },
-  { id: 'coffee', title: '커피', summary: '스타벅스 · 투썸플레이스 · 이디야 50% 할인', detail: '■ 할인 대상: 스타벅스 · 투썸플레이스 · 이디야 커피 매장 이용금액\n■ 월 2회 · 회당 최대 5천 원' },
+  { id: 'coffee', title: '커피', summary: '골목커피 · 숲속다방 · 달빛로스터리 50% 할인', detail: '■ 할인 대상: 골목커피 · 숲속다방 · 달빛로스터리 커피 매장 이용금액\n■ 월 2회 · 회당 최대 5천 원' },
   { id: 'transit', title: '대중교통', summary: '버스 · 지하철 10% 청구할인', detail: null },
   { id: 'telecom', title: '통신', summary: 'SKT · KT · LG U+ 자동이체 5천 원 할인', detail: '■ 통신요금을 이 카드로 자동이체할 때\n■ 전월 실적 30만 원 이상' },
   { id: 'store', title: '편의점', summary: 'GS25 · CU · 세븐일레븐 5% 할인', detail: null },
@@ -51,7 +51,7 @@ export const CARD = { issuer: '신한카드', name: '데일리 플러스 Platinu
 // ── HR 부서 나무(HR 관리 > 회사) — 20개(부모 3 · 잎 17) ─────────
 export type DeptNode = { id: string; label: string; children?: DeptNode[] };
 // 가장 긴 뿌리 이름 — 부서 패널(본문 × 목록 폭 25%, collapse-look deptPanelW)에서 줄을 바꾼다. 한글이라 영문 섞인 이름보다 넓다
-export const DEPT_ROOT = '포레스트 디지털혁신본부 클라우드 플랫폼 운영 그룹';
+export const DEPT_ROOT = '가람누리 디지털혁신본부 클라우드 플랫폼 운영 그룹';
 export const DEPTS: DeptNode[] = [
   {
     id: 'root',
@@ -121,7 +121,7 @@ const POOL: [string, string, number, string][] = [
   ['파리바게뜨', '카페 · 간식 · 토스 체크카드', 4800, 'brown'],
   ['티머니', '교통 · 토스 체크카드', 1450, 'blue'],
   ['무신사', '쇼핑 · 삼성카드 taptap O', 58900, 'pink'],
-  ['스타벅스 역삼점', '카페 · 간식 · 현대카드 M', 6300, 'brown'],
+  ['골목커피 역삼점', '카페 · 간식 · 현대카드 M', 6300, 'brown'],
   ['GS25 역삼점', '식비 · 토스 체크카드', 3200, 'orange'],
   ['쿠팡', '쇼핑 · 현대카드 M', 27400, 'pink'],
   ['배달의민족', '식비 · 삼성카드 taptap O', 23900, 'orange'],

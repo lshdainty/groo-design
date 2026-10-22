@@ -106,7 +106,7 @@ export const dividerExamples = [
     jsx: `import { Divider } from "@/components/ui/divider"
 
 <div>
-  <p className="flex justify-between py-x3">결제 수단<span>신한카드</span></p>
+  <p className="flex justify-between py-x3">결제 수단<span>생활비 카드</span></p>
   <Divider inset />
   <p className="flex justify-between py-x3">할부<span>3개월</span></p>
 </div>
@@ -114,7 +114,7 @@ export const dividerExamples = [
 <section aria-labelledby="memo-title">…</section>`,
     render: () =>
       screen(
-        `<div><p class="flex justify-between py-x3" style="${P_FIX}">결제 수단<span>신한카드</span></p>${divider({ inset: true })}<p class="flex justify-between py-x3" style="${P_FIX}">할부<span>3개월</span></p></div>${divider()}<section aria-labelledby="divider-ex-memo-title" style="padding:var(--spacing-x3) 0;"><div id="divider-ex-memo-title" style="${SECTION_TITLE}">메모</div><div style="${MUTED}">회의 전 커피 — 팀 4명</div></section>`,
+        `<div><p class="flex justify-between py-x3" style="${P_FIX}">결제 수단<span>생활비 카드</span></p>${divider({ inset: true })}<p class="flex justify-between py-x3" style="${P_FIX}">할부<span>3개월</span></p></div>${divider()}<section aria-labelledby="divider-ex-memo-title" style="padding:var(--spacing-x3) 0;"><div id="divider-ex-memo-title" style="${SECTION_TITLE}">메모</div><div style="${MUTED}">회의 전 커피 — 팀 4명</div></section>`,
       ),
   },
 
@@ -148,7 +148,7 @@ export const dividerExamples = [
       "나누는 세기는 셋이다. 약함 — 같은 묶음 안은 들인 선(inset). 중간 — 묶음 사이 · 액션 영역(바닥 버튼) 위 · 스크롤되는 본문 위 머리는 끝까지 선. 강함 — 크게 다른 내용 사이는 선이 아니라 8 간격이다: 회색 바탕(bg-layer-basement) 위에 흰 층(bg-layer-default) 묶음을 8 띄워 놓는다(\"8px 구분선\" 은 없다 — 두꺼운 회색 막대를 그리지 않는다). 선을 두기 전에 여백 · 제목 · 바탕 층으로 갈리는지 먼저 본다 — 반복되는 목록 줄 사이는 Divider 가 아니라 List 의 줄 사이 선(필요할 때만)이다.",
     jsx: `<div className="flex flex-col gap-x2 bg-bg-layer-basement">
   <section className="bg-bg-layer-default">
-    <p className="py-x3">결제 수단 · 신한카드</p>
+    <p className="py-x3">결제 수단 · 생활비 카드</p>
     <Divider inset />
     <p className="py-x3">할부 · 일시불</p>
     <Divider />
@@ -160,7 +160,7 @@ export const dividerExamples = [
 </div>`,
     render: () =>
       `<div class="flex flex-col gap-x2 bg-bg-layer-basement" style="max-width:360px; border:1px solid var(--color-stroke-neutral-subtle); border-radius:var(--radius-r4); overflow:hidden; color:var(--color-fg-neutral); font-family:var(--font-sans); font-size:var(--text-t5); line-height:var(--text-t5--line-height);">${[
-        `<section class="bg-bg-layer-default" style="padding:0 var(--spacing-global-gutter);"><p class="py-x3" style="${P_FIX}">결제 수단 · 신한카드</p>${divider({ inset: true })}<p class="py-x3" style="${P_FIX}">할부 · 일시불</p>${divider()}<p class="py-x3" style="${P_FIX}">메모</p></section>`,
+        `<section class="bg-bg-layer-default" style="padding:0 var(--spacing-global-gutter);"><p class="py-x3" style="${P_FIX}">결제 수단 · 생활비 카드</p>${divider({ inset: true })}<p class="py-x3" style="${P_FIX}">할부 · 일시불</p>${divider()}<p class="py-x3" style="${P_FIX}">메모</p></section>`,
         `<section class="bg-bg-layer-default" style="padding:0 var(--spacing-global-gutter);"><p class="py-x3" style="${P_FIX}">이번 달 통계</p></section>`,
       ].join("")}</div>`,
   },
