@@ -599,16 +599,18 @@ const ListDivider = React.forwardRef<HTMLElement, ListDividerProps>(({ className
 });
 ListDivider.displayName = "ListDivider";
 
-export interface ListHeaderProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof listHeaderVariants> {
+export interface ListHeaderProps extends React.HTMLAttributes<HTMLElement>, VariantProps<typeof listHeaderVariants> {
   asChild?: boolean;
+  /** 제목 태그 — 기본 h2(화면 제목 아래 단계), 카드 · 대화상자 · 시트 안이면 h3. 오른쪽 버튼이 있으면 "div" 로 두고 제목 글만 h2 · h3 로 감싼다 */
+  as?: "h2" | "h3" | "h4" | "div";
 }
 
 // 목록 제목 — 목록 밖, 바로 위. 오른쪽에 작은 버튼을 둘 수 있다. 글이면 글 버튼(SEED Text Button, 2026-10-16 글자 역할 D2 —
 // list-header.yaml action): <Button variant="ghost" size="small" className="-my-x2 -mr-x3_5 text-fg-neutral-muted"> — 14 · 700 · 보이는 36,
 // 위아래로 블리드해 줄 높이를 바꾸지 않고 글자 끝이 줄 여백에 선다
-const ListHeader = React.forwardRef<HTMLDivElement, ListHeaderProps>(({ className, variant, asChild = false, ...props }, ref) => {
-  const Comp = asChild ? Slot : "div";
-  return <Comp ref={ref} className={cn(listHeaderVariants({ variant }), className)} {...props} />;
+const ListHeader = React.forwardRef<HTMLElement, ListHeaderProps>(({ className, variant, asChild = false, as: Tag = "h2", ...props }, ref) => {
+  const Comp = (asChild ? Slot : Tag) as React.ElementType;
+  return <Comp ref={ref} className={cn("m-0", listHeaderVariants({ variant }), className)} {...props} />;
 });
 ListHeader.displayName = "ListHeader";
 
