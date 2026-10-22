@@ -174,7 +174,7 @@ import { Eye } from "lucide-react"
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 기본 `fg-neutral-subtle` 흰 바탕 5.50 · 다크 6.09, 회색 바탕 5.09 · 6.89 ✓(SEED 의 3.42 가 아니다). `neutral` 16.41 · 13.42, `brand` Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓. 구분 " · " `fg-disabled` 3.16 · 4.13 은 장식이다(보조 기술에 숨김) |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 기본 `fg-neutral-subtle` 흰 바탕 5.50 · 다크 6.09, 회색 바탕 5.09 · 6.89 ✓(SEED 의 3.42 가 아니다). `neutral` 16.41 · 13.42, `brand` Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓. 구분 " · " `fg-disabled` 3.16 · 4.13 은 장식이다(보조 기술에 숨김) |
 | **WCAG 1.3.1** Info and Relationships | 항목 사이에 보이지 않는 ", " — 항목이 붙어 읽히지 않는다 ✓ |
 | **WCAG 1.4.1** Use of color | 앞세운 항목은 색과 함께 굵기로도 다르다 |
 | **WCAG 1.4.4** Resize text | 글이 커지고 줄바꿈 · 말줄임으로 넘치지 않는다 ✓ |

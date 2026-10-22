@@ -228,7 +228,7 @@ import { RangeSlider, SliderValue } from "@/components/ui/slider"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 머리 값 `fg-neutral` 흰 표면 16.41 · 다크 13.42, 표식 `fg-neutral-muted` 7.11 · 7.70(시트 6.67), 말풍선 글 `fg-neutral-inverted` 16.41 · 13.42 ✓. 막힘 `fg-disabled` 는 기준 밖(비활성 UI) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 손잡이 `bg-neutral-inverted` 표면 위 16.41 · 다크 13.42(시트 11.62), 채움 `fg-neutral` 트랙 위 13.38 · 다크 8.62 ✓. 트랙 `stroke-neutral-weak`(표면 위 1.23 · 다크 1.56)는 범위의 바탕이다 — 값은 채움 · 손잡이 · 머리 값이 알린다(SEED 트랙도 1.35). 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 손잡이 `bg-neutral-inverted` 표면 위 16.41 · 다크 13.42(시트 11.62), 채움 `fg-neutral` 트랙 위 13.38 · 다크 8.62 ✓. 트랙 `stroke-neutral-weak`(표면 위 1.23 · 다크 1.56)는 범위의 바탕이다 — 값은 채움 · 손잡이 · 머리 값이 알린다(SEED 트랙도 1.35). 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓ |
 | **WCAG 1.4.1** Use of color | 값은 손잡이의 자리와 머리 값 글로도 보인다 ✓ |
 | **WCAG 2.1.1** Keyboard | 화살표 · `Shift` + 화살표 · `PageUp` · `PageDown` · `Home` · `End` ✓ |
 | **WCAG 2.5.7** Dragging movements | 끌지 않고 트랙을 한 번 눌러 고를 수 있다 · 키보드로도 ✓ |

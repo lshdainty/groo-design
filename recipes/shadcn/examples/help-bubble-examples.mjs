@@ -374,7 +374,7 @@ import { TopNavigationIconButton } from "@/components/ui/top-navigation"
   {
     title: "닫기 버튼 · 말풍선 — 누름 · 포커스",
     description:
-      "닫기는 이름이 \"닫기\" 인 투명 38 상자(아이콘 lucide x 14 · fg-neutral-inverted)다 — 누르는 영역은 사방 3 넓혀 44 × 44 다. 누르면 바탕 없이 2px 거리로 준다(기준 38 — 모션 줄이기면 줄지 않는다). 포커스는 키보드로 왔을 때만 상자 안쪽 2px 링이고 색은 말풍선 글자색이다 — 브랜드 링(stroke-focus-ring)은 짙은 말풍선 위에서 Desk 1.96 · HR 3.24 로 3:1 에 못 미친다. 닫기 버튼이 없는 말풍선은 열린 동안 트리거에서 Tab 을 누르면 말풍선 자체로 들어간다 — 그때는 말풍선 둘레 바깥 2 에 2px stroke-focus-ring 이 모서리를 따라 선다(페이지 위에 그려져 브랜드 링이다). 정적 미리보기라 누름 · 포커스는 active: · focus-visible: 클래스에서 접두어만 뗀 사본을 덧붙여 그렸다.",
+      "닫기는 이름이 \"닫기\" 인 투명 38 상자(아이콘 lucide x 14 · fg-neutral-inverted)다 — 누르는 영역은 사방 3 넓혀 44 × 44 다. 누르면 바탕 없이 2px 거리로 준다(기준 38 — 모션 줄이기면 줄지 않는다). 포커스는 키보드로 왔을 때만 상자 안쪽 2px 링이고 색은 말풍선 글자색이다 — 브랜드 링(stroke-focus-ring)은 짙은 말풍선 위에서 Desk 1.96 · HR 2.01 로 3:1 에 못 미친다. 닫기 버튼이 없는 말풍선은 열린 동안 트리거에서 Tab 을 누르면 말풍선 자체로 들어간다 — 그때는 말풍선 둘레 바깥 2 에 2px stroke-focus-ring 이 모서리를 따라 선다(페이지 위에 그려져 브랜드 링이다). 정적 미리보기라 누름 · 포커스는 active: · focus-visible: 클래스에서 접두어만 뗀 사본을 덧붙여 그렸다.",
     jsx: `// 닫기 버튼은 HelpBubbleContent 가 그린다(showCloseButton) — 누름 · 포커스는 고르는 prop 이 없다
 <HelpBubbleContent title="거래를 찾아보세요" description="가맹점 이름 · 메모 · 금액으로 찾을 수 있어요." showCloseButton />
 

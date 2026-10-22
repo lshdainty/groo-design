@@ -190,7 +190,7 @@ import { BOTTOM_NAVIGATION_INSET } from "@/components/ui/bottom-navigation"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 지금 탭 라벨 `fg-neutral` 바(`bg-layer-floating`) 위 16.41 · 다크 11.62, 다른 탭 `fg-neutral-subtle` 5.50 · 5.27 ✓ — 바탕이 불투명해 뒤로 지나가는 내용과 상관없다(지금은 82% 바탕이라 짙은 카드 위에서 3.82 · 줄면 2.74) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 아이콘 16.41 · 11.62 / 5.50 · 5.27 ✓. + 의 흰 아이콘 `bg-brand-solid` 위 Desk 8.38 · 8.36 · HR 5.06 · 5.06 ✓ — 원과 바(다크 Desk 1.50 · HR 2.48)는 흰 + 가 알린다. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 5.06 · 5.39 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 아이콘 16.41 · 11.62 / 5.50 · 5.27 ✓. + 의 흰 아이콘 `bg-brand-solid` 위 Desk 8.38 · 8.36 · HR 8.17 · 8.36 ✓ — 원과 바(다크 Desk · HR 1.50)는 흰 + 가 알린다. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ |
 | **WCAG 1.4.1** Use of color | 지금 탭은 색(2.99 · 2.20)만이 아니라 선 굵기(2.5 · 2)로도 다르다. 보조 기술에는 `aria-current="page"` |
 | **WCAG 1.4.4** Resize text | 라벨은 글자 크기 설정을 따르지 않는다(SEED) — 칸 밖으로 넘치지 않게. 탭 이름은 화면의 다른 자리(Top Navigation 제목)에서 커진다 ⚠ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 칸 약 61 × 54 · 줄어듦 약 53 × 48 · + 44 ✓ |

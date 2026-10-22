@@ -1684,9 +1684,16 @@ HR(조직 관리, B2B)과 Desk(개인 생산성, B2C)는 동일한 골격을 공
 
 레퍼런스 — 토스의 신뢰감 있는 미니멀리즘, 전 연령 가독성.
 
+### 그룹 색 · 로고 칠 (v121 — 2026-10-22)
+
+- **그룹(그루)에는 브랜드 색이 없다.** 그룹 화면 — 홈의 그룹 쪽 · 그루 계정 로그인 · 그룹 문서 — 의 채움 · 링크는 짙은 회색 `bg-neutral-inverted`(라이트 `#1A1F2E` 위 흰 글자 · 다크 `#F5F6FA` 위 `#242938` 글자, 글자는 `fg-neutral-inverted`)다. 그룹용 primary 토큰은 두지 않는다.
+- **색은 로고에만 있다.** 로고 칠은 고정값이고 라이트 · 다크가 같다 — 진한 잎 `#075B3C` · 겹침 `#218D49` · 밝은 잎 `#43BF5E` · 기둥 `#A96D57`. 로고를 그릴 때만 쓰는 값이라 UI 토큰이 아니다 — 화면의 채움 · 글자 · 선에 쓰지 않는다. 다크 바탕(`#1A1F2E`)에서 진한 잎이 2.01:1 로 어두운 것은 받아들였다(다크에서 잎을 밝히거나 타일 · 테두리를 두르지 않는다).
+- **서비스 색** — 담다는 파랑(`DESIGN.desk.md` 브랜드 램프 그대로), 이음은 그룹 초록이다 — 이음 브랜드 램프의 600 이 로고 진한 잎 `#075B3C` 다(`DESIGN.hr.md` v121).
+- 사용자 결정(2026-10-22) — 색 고르기 https://claude.ai/artifact/G4ygEuztK398wjqhEVsdUa · 로고 칠 비교 https://claude.ai/artifact/JH9rn2VGaQjKpfis7m7hWA · 로고 다크 보정 https://claude.ai/artifact/1CV3wbUT88J2RWghmeeLkX.
+
 ### 파일 분리 (v17부터)
 - **`DESIGN.md`** (이 파일): 공유 baseline — typography, spacing, rounded, neutral colors, neutral components. brand-agnostic이므로 `primary` literal 미정의 → lint missingPrimary warning 1건 영구 수용(공유 라이브러리 진실 신호).
-- **`DESIGN.hr.md`**: HR 브랜드 self-contained 시스템 — 공유 토큰 복제 + HR primary `#357B5F` + HR brand 컴포넌트. brand 컨텍스트가 암묵적이라 토큰명에 `-hr` 접미사 없음(`primary`, `border-focus`, `button-primary` 등).
+- **`DESIGN.hr.md`**: HR 브랜드 self-contained 시스템 — 공유 토큰 복제 + HR primary `#075B3C`(v121 그루 초록) + HR brand 컴포넌트. brand 컨텍스트가 암묵적이라 토큰명에 `-hr` 접미사 없음(`primary`, `border-focus`, `button-primary` 등).
 - **`DESIGN.desk.md`**: Desk 브랜드 self-contained 시스템 — 공유 토큰 복제 + Desk primary `#0147AD`.
 - **lint**: `npm run lint:all`로 3파일 검증. HR/Desk 파일은 0 warnings, DESIGN.md만 missingPrimary 1건.
 - **공유 토큰 변경 시**: 3파일 모두 수동 동기 — design.md spec이 cross-file token reference 미지원이라 자동화 불가.
@@ -1765,7 +1772,7 @@ v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `groo-tokens.css` · �
 | 브랜드 옅은 선 | Desk brand-300 채도 올림, HR 은 brand-400(채도 올림)으로 | 옅은 회청 · 회녹으로 바뀌었다 |
 | 토스트 · 툴팁 배경 | gray-900 → gray-1000(#1A1F2E) | 지금 제품 값으로 — 사용자 결정 |
 
-- 대비는 모두 다시 잰다 — `npm run lint:all` · `lint:dark` 가 통과한다. 다크 의미 색 글자는 다크 입력칸 위 4.67 ~ 4.71:1, 브랜드 글자는 4.69 · 4.79:1 이다.
+- 대비는 모두 다시 잰다 — `npm run lint:all` · `lint:dark` 가 통과한다. 다크 의미 색 글자는 다크 입력칸 위 4.67 ~ 4.71:1, 브랜드 글자는 4.69 · 4.79:1 이다(v121 HR 그루 초록은 4.67:1).
 - 이번에 hex 를 고친 본문 인용 줄의 대비 수치도 다시 쟀다.
 
 ### v108 — SEED 팔레트 층 (2026-09-30)
@@ -1792,7 +1799,7 @@ v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `groo-tokens.css` · �
 
 - OKLCH 에서 가족마다 색상각 하나로 뽑았다. 색상각은 지금 채움색에서 온다 — 의미 색은 라이트 700 이 그 색 그대로다(red #D72323 · green #167F3F · orange #BE490D · blue #1D6EC9, 흰 글자 4.5:1 이상).
 - 단계마다 목표 밝기(CIELAB L*)를 두고, 채도는 SEED 램프 모양의 비율로 준다.
-- 브랜드는 라이트 600 이 브랜드 색이다(Desk #0147AD · HR #357B5F). HR 은 다크 700 도 같은 색이다.
+- 브랜드는 라이트 600 이 브랜드 색이다(Desk #0147AD · HR #075B3C). (v121) HR 은 그루 초록으로 바뀌며 Desk 처럼 어두운 브랜드(L* 34)가 되어, 단계 목표 밝기를 Desk 램프에서 가져왔다 — "HR 은 다크 700 도 브랜드 색과 같다" 던 v108 규칙은 걷었다.
 - 회색의 양 끝은 지금 값이다 — 라이트 00 #FFFFFF · 1000 #1A1F2E, 다크 00 #1A1F2E · 1000 #F5F6FA.
 - 고정한 값 다섯 — 지금 화면의 바닥 · 뜬 표면 · 입력칸 · 흐린 글자가 그대로이게 계산값 대신 지금 hex 를 넣었다(계산값과 색차 ΔE 1.4 이하): gray-200 #F5F6FA · gray-700 #62697A · gray-100-dark #242938 · gray-200-dark #2D3346 · gray-300-dark #353B4D.
 - 다크의 글자 단계(의미 색 800 · 브랜드 900)는 L* 69 다. 제안표 값이 다크 입력칸(bg-neutral-weak-dark #353B4D) 위에서 4.00 ~ 4.28:1 로 `npm run lint:dark` 에 걸려, 4.5:1 을 넘게 밝혔다. 의미 색 900 도 조금 밝아졌다(ΔE 1.7 이하).
@@ -1846,15 +1853,15 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 
 | 역할 | Desk (라이트 / 다크) | HR (라이트 / 다크) | SEED (라이트 / 다크) |
 |---|---|---|---|
-| bg-brand-solid | 600 / 500 | 600 / 700 | 600 / 700 |
-| bg-brand-solid-pressed | 700 / 700 | 700 / 600 | 700 / 800 |
+| bg-brand-solid | 600 / 500 | 600 / 500 (v121) | 600 / 700 |
+| bg-brand-solid-pressed | 700 / 700 | 700 / 700 (v121) | 700 / 800 |
 | bg-brand-weak | 100 / 200 | 100 / 200 | 100 / 100 |
 | bg-brand-weak-pressed | 200 / 300 | 200 / 300 | 200 / 200 |
 | fg-brand | 600 / 900 | 600 / 900 | 600 / 700 |
 | fg-brand-contrast | 700 / 900 | 700 / 900 | 700 / 700 |
 | fg-brand-inverted | 900(다크 팔레트) / 600 | 900(다크 팔레트) / 600 | — (v115) |
 | stroke-brand-solid | 600 / 900 | 600 / 900 | 700 / 700 |
-| stroke-brand-weak | 300 / 800 | 400 / 800 | 300 / 300 |
+| stroke-brand-weak | 300 / 800 | 300 / 800 (v121) | 300 / 300 |
 | stroke-focus-ring | 600 / 900 | 600 / 900 | blue-600 / blue-600 |
 
 #### SEED 에서 옮긴 자리
@@ -1866,10 +1873,10 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 - (v120) bg-neutral-weak-alpha · -pressed — SEED 의 투명한 약한 배경(검정 4.7% · 6.3% / 다크 흰 12.5% · 18%)을 그대로 들인다. 라이트에서 바닥 `bg-layer-basement` · 약한 배경 `bg-neutral-weak` · 비활성 `bg-disabled` 가 모두 gray-200 이라(SEED 도 같다) 회색 바닥 위에 놓인 채움이 바닥과 1.00:1 로 사라진다. SEED 처럼 바닥 위에 자주 놓이는 두 부품 — Chip `solid` 바탕 · Segmented Control 트랙 — 만 투명 짝을 쓰고(어느 바탕에서나 보인다 — 회색 위 1.11 · 흰 위 1.11 · 다크 1.47), 나머지 약한 배경 · 비활성 채움은 흰 표면 위에만 둔다(Elevation 의 "바닥 위의 채움"). 불투명 `bg-neutral-weak` 는 그대로다(사용자 결정 2026-10-16 기초 웹 01-040 B — 비교 페이지 https://claude.ai/artifact/U33bUxZkgQoHfAgdp2DEVK).
 - warning — SEED 의 주의 색은 노랑이고 채움 위 글자가 검정이다. groo 는 주황 + 흰 글자를 그대로 두고, 단계는 다른 의미 색과 같은 규칙으로 앉혔다.
 - bg-positive-solid 의 다크 — SEED 는 500(눌림 600)이다. 다른 의미 색과 맞춰 600(눌림 700)에 둔다.
-- 브랜드 채움의 다크 — Desk 는 브랜드 색이 어두워(L* 33) 채움을 지금 값(#0147AD)과 같은 무게인 500 에 둔다(ΔE 1.4). 눌림은 SEED 의 800 이 흰 글자 3.76:1 이라 700 이다. HR 은 채움이 SEED 대로 700 이고, 눌림은 800 이 흰 글자 3.61:1 이라 600(더 어둡게)이다.
-- 브랜드 글자 · 선 · 포커스 링의 다크 — SEED 700 → 900. 다크 700 은 어두운 표면 위 Desk 2.27:1 · HR 2.86:1 이다.
+- 브랜드 채움의 다크 — Desk 는 브랜드 색이 어두워(L* 33) 채움을 지금 값(#0147AD)과 같은 무게인 500 에 둔다(ΔE 1.4). 눌림은 SEED 의 800 이 흰 글자 3.76:1 이라 700 이다. (v121) HR 도 브랜드 색이 어두워(L* 34 — 그루 초록 #075B3C) Desk 와 같은 자리다 — 채움 500(브랜드 색과 ΔE 2.3) · 눌림 700(SEED 의 800 은 흰 글자 3.79:1). v108 ~ v120 의 HR 은 채움 700 · 눌림 600 이었다.
+- 브랜드 글자 · 선 · 포커스 링의 다크 — SEED 700 → 900. 다크 700 은 어두운 표면 위 Desk 2.27:1 · HR 2.25:1 이다(v121 — 그 전 HR 2.86:1).
 - stroke-brand-solid 의 라이트 — SEED 700 → 600. 브랜드 색 그대로다.
-- stroke-brand-weak 의 다크 — SEED 300 → 800. 다크 300 은 표면과 1.3:1 안팎(Desk 1.29 · HR 1.36)이라 선이 보이지 않는다.
+- stroke-brand-weak 의 다크 — SEED 300 → 800. 다크 300 은 표면과 1.3:1 안팎(Desk 1.29 · HR 1.29 — v121, 그 전 HR 1.36)이라 선이 보이지 않는다.
 - (v117) 의미 색 stroke-*-weak 의 다크 — SEED 300 → 400. 다크 300 은 표면과 1.38 ~ 1.40:1(시트 위 1.19 ~ 1.21)로 선이 묻히고, 브랜드처럼 800 으로 올리면 글자(fg-*) · stroke-*-solid 와 같은 색이 되어 옅은 선이 아니다. 400 은 1.71 ~ 1.73:1 — SEED 다크(1.77)와 같은 관계이고 라이트 300(1.51 ~ 1.53)과 무게가 맞는다.
 - stroke-focus-ring — SEED 는 파랑(blue-600)이다. groo 는 옛 border-focus 대로 브랜드 색이다.
 - (v109) 다크 약한 배경 · 눌림(의미 색 · 브랜드) — SEED 100 · 200 → 200 · 300. groo 는 다크 카드 표면(#242938, L* 16.7)이 SEED(#16171B, L* 8)보다 밝아서, 100 단계가 표면과 1.00 ~ 1.02:1 로 묻혔다. 200 · 300 이 SEED 의 표면 대비 관계(약한 배경 1.2:1 · 눌림 1.4:1)와 같다 — 지금 1.15 · 1.4:1.
@@ -1877,7 +1884,7 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 - (v109) stroke-neutral-solid — SEED 800 → 600. groo 는 이 선을 체크박스 · 라디오 테두리와 꺼진 스위치 트랙에 쓴다(SEED 는 그 자리에 옅은 선을 쓴다). UI 3:1 을 넘는 가장 옅은 단계이고, 지금 제품 값과 ΔE 3.5 다.
 - (v109) fg-disabled 의 다크 — SEED 500 → 600. 다크 500 은 비활성 버튼 위 2.08:1 로 라이트(2.93:1)보다 흐렸다. 600 은 3.18:1 이다.
 - (v109) bg-neutral-inverted 의 라이트 — SEED 900 → 1000. 지금 제품의 토스트 · 툴팁 배경(#1A1F2E)이다 — 사용자 결정.
-- (v109) HR 의 stroke-brand-weak 라이트 — 300 → 400(채도 올림). 300 은 옅은 회녹이라 지금 제품 값과 ΔE 15.5 였다. 지금은 ΔE 1.5 다.
+- (v109) HR 의 stroke-brand-weak 라이트 — 300 → 400(채도 올림). 300 은 옅은 회녹이라 지금 제품 값과 ΔE 15.5 였다. 지금은 ΔE 1.5 다. (v121) 그루 초록 램프에서는 걷었다 — HR 도 Desk 처럼 300(`#77B193`, 흰 면 위 2.47:1 · Desk 2.45:1)이다.
 
 ### v102 — SEED 역할 색 (2026-09-29)
 

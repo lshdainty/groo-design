@@ -167,7 +167,7 @@ import { SnackbarAvoidOverlap, SnackbarProvider } from "@/components/ui/snackbar
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 글 `fg-neutral-inverted` 띠(`bg-neutral-inverted`) 위 16.41 · 다크 13.42, 액션 `fg-brand-inverted` Desk 6.90 · 7.76 · HR 7.05 · 4.69 ✓ |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 글 `fg-neutral-inverted` 띠(`bg-neutral-inverted`) 위 16.41 · 다크 13.42, 액션 `fg-brand-inverted` Desk 6.90 · 7.76 · HR 6.88 · 7.56 ✓ |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 아이콘 `fg-positive-inverted` 6.87 · 4.70, `fg-critical-inverted` 6.89 · 4.68, 띠 면 페이지 위 16.41 · 13.42 ✓. 포커스 링은 띠 글자색으로 띠 위에 그린다 ✓ |
 | **WCAG 2.2.1** Timing adjustable | 머무는 동안 멈추고 떠나면 처음부터. 액션은 6초 — 같은 일을 할 다른 길을 둔다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 액션 글 + 좌우 8 × 44 ✓ |

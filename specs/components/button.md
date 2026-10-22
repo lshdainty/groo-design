@@ -380,7 +380,7 @@ const [saving, setSaving] = useState(false)
 |---|---|
 | **WCAG 1.4.3** 글자 대비(4.5:1) | 흰 글자 × `bg-brand-solid` · `bg-critical-solid`, `fg-neutral-inverted` × `bg-neutral-inverted`(누름 포함), `fg-neutral` × `bg-neutral-weak` — `npm run lint:all` 의 role 짝이 잰다 |
 | **WCAG 1.4.3** 비활성 | `fg-disabled` — 비활성 컴포넌트 글자는 대비 예외(1.4.3 incidental) |
-| **WCAG 1.4.11** UI 대비(3:1) | 포커스 링 `stroke-focus-ring` × 표면. Brand Outline 의 로딩 원 `stroke-brand-solid` × 표면 — 라이트 Desk 8.38 · HR 5.06, 다크 Desk 6.10 · HR 6.23 |
+| **WCAG 1.4.11** UI 대비(3:1) | 포커스 링 `stroke-focus-ring` × 표면. Brand Outline 의 로딩 원 `stroke-brand-solid` × 표면 — 라이트 Desk 8.38 · HR 8.17, 다크 Desk 6.10 · HR 6.07 |
 | **WCAG 2.5.8** Target Size — Minimum(AA, 24×24) | 네 크기 모두 통과 |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA, 44×44) | 보이는 크기는 `large` 48 만 넘지만, 누르는 영역을 44 까지 넓혀 모두 통과(v106) |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에만 링(`focus-visible`) — 앱도 키보드로 옮길 때만 같은 링(2026-10-08) |

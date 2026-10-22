@@ -8,27 +8,27 @@ description: |
 
 colors:
   # @sync:brand-start (colors-0)
-  # === v108 — 브랜드 팔레트(HR 초록). 파일 안에서는 접미사 없이 brand-100 ~ 1000, 단계마다 라이트 · 다크(-dark) ===
-  brand-100: "#EDF5F0"
-  brand-100-dark: "#222D28"
-  brand-200: "#E0EDE7"
-  brand-200-dark: "#25372E"
-  brand-300: "#B4CCC0"
-  brand-300-dark: "#264437"
-  brand-400: "#6AB192"
-  brand-400-dark: "#25523F"
-  brand-500: "#60927B"
-  brand-500-dark: "#216048"
-  brand-600: "#357B5F"
-  brand-600-dark: "#256D51"
-  brand-700: "#256D52"
-  brand-700-dark: "#357B5F"
-  brand-800: "#145A42"
-  brand-800-dark: "#599279"
-  brand-900: "#03452F"
-  brand-900-dark: "#72B898"
-  brand-1000: "#052B1E"
-  brand-1000-dark: "#CED6D2"
+  # === v108 — 브랜드 팔레트(이음 초록 — v121 그루 초록, 600 = #075B3C). 파일 안에서는 접미사 없이 brand-100 ~ 1000, 단계마다 라이트 · 다크(-dark) ===
+  brand-100: "#E8F3EC"
+  brand-100-dark: "#202D26"
+  brand-200: "#D6E8DE"
+  brand-200-dark: "#21352B"
+  brand-300: "#77B193"
+  brand-300-dark: "#214132"
+  brand-400: "#469570"
+  brand-400-dark: "#1F4E38"
+  brand-500: "#0D754E"
+  brand-500-dark: "#1B583E"
+  brand-600: "#075B3C"
+  brand-600-dark: "#0E6443"
+  brand-700: "#064F33"
+  brand-700-dark: "#0C6C49"
+  brand-800: "#033F28"
+  brand-800-dark: "#1D9567"
+  brand-900: "#01301E"
+  brand-900-dark: "#2ABE84"
+  brand-1000: "#012214"
+  brand-1000-dark: "#BBDCCA"
   # @sync:brand-end (colors-0)
   
   # @sync:shared-start (colors-0)
@@ -399,9 +399,9 @@ colors:
   fg-brand-inverted-dark: "{colors.brand-600}"
   # 배경 (bg)
   bg-brand-solid: "{colors.brand-600}"
-  bg-brand-solid-dark: "{colors.brand-700-dark}"
+  bg-brand-solid-dark: "{colors.brand-500-dark}"
   bg-brand-solid-pressed: "{colors.brand-700}"
-  bg-brand-solid-pressed-dark: "{colors.brand-600-dark}"
+  bg-brand-solid-pressed-dark: "{colors.brand-700-dark}"
   bg-brand-weak: "{colors.brand-100}"
   bg-brand-weak-dark: "{colors.brand-200-dark}"
   bg-brand-weak-pressed: "{colors.brand-200}"
@@ -411,7 +411,7 @@ colors:
   stroke-focus-ring-dark: "{colors.brand-900-dark}"
   stroke-brand-solid: "{colors.brand-600}"
   stroke-brand-solid-dark: "{colors.brand-900-dark}"
-  stroke-brand-weak: "{colors.brand-400}"
+  stroke-brand-weak: "{colors.brand-300}"
   stroke-brand-weak-dark: "{colors.brand-800-dark}"
   # @sync:brand-end (colors-3)
   
@@ -1839,7 +1839,7 @@ components:
 
 ## Overview — 그루 이음 (B2B)
 
-본 파일은 **그루 이음(B2B 조직 관리)** 단독 self-contained 디자인 시스템(v17~). 공유 baseline은 `DESIGN.md` 참조. 본 파일에서 토큰명의 `-hr` 접미사는 컨텍스트가 HR로 암묵적이라 생략 — `primary` = `#357B5F` (forest green), `button-primary` 등.
+본 파일은 **그루 이음(B2B 조직 관리)** 단독 self-contained 디자인 시스템(v17~). 공유 baseline은 `DESIGN.md` 참조. 본 파일에서 토큰명의 `-hr` 접미사는 컨텍스트가 HR로 암묵적이라 생략 — `primary` = `#075B3C` (그루 초록 — v121, 로고의 진한 잎과 같은 색), `button-primary` 등. 그룹 화면 · 로고 칠의 색 규칙은 `DESIGN.md` Overview 의 "그룹 색 · 로고 칠".
 
 Desk(B2C 개인 생산성)는 별도 `DESIGN.desk.md` 파일 — `primary` = `#0147AD` (deep navy).
 
@@ -1919,7 +1919,7 @@ v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `groo-tokens.css` · �
 | 브랜드 옅은 선 | Desk brand-300 채도 올림, HR 은 brand-400(채도 올림)으로 | 옅은 회청 · 회녹으로 바뀌었다 |
 | 토스트 · 툴팁 배경 | gray-900 → gray-1000(#1A1F2E) | 지금 제품 값으로 — 사용자 결정 |
 
-- 대비는 모두 다시 잰다 — `npm run lint:all` · `lint:dark` 가 통과한다. 다크 의미 색 글자는 다크 입력칸 위 4.67 ~ 4.71:1, 브랜드 글자는 4.69 · 4.79:1 이다.
+- 대비는 모두 다시 잰다 — `npm run lint:all` · `lint:dark` 가 통과한다. 다크 의미 색 글자는 다크 입력칸 위 4.67 ~ 4.71:1, 브랜드 글자는 4.69 · 4.79:1 이다(v121 HR 그루 초록은 4.67:1).
 - 이번에 hex 를 고친 본문 인용 줄의 대비 수치도 다시 쟀다.
 
 ### v108 — SEED 팔레트 층 (2026-09-30)
@@ -1946,7 +1946,7 @@ v108 로 크게 바뀐 색을 지금 제품 값(Desk 웹 `groo-tokens.css` · �
 
 - OKLCH 에서 가족마다 색상각 하나로 뽑았다. 색상각은 지금 채움색에서 온다 — 의미 색은 라이트 700 이 그 색 그대로다(red #D72323 · green #167F3F · orange #BE490D · blue #1D6EC9, 흰 글자 4.5:1 이상).
 - 단계마다 목표 밝기(CIELAB L*)를 두고, 채도는 SEED 램프 모양의 비율로 준다.
-- 브랜드는 라이트 600 이 브랜드 색이다(Desk #0147AD · HR #357B5F). HR 은 다크 700 도 같은 색이다.
+- 브랜드는 라이트 600 이 브랜드 색이다(Desk #0147AD · HR #075B3C). (v121) HR 은 그루 초록으로 바뀌며 Desk 처럼 어두운 브랜드(L* 34)가 되어, 단계 목표 밝기를 Desk 램프에서 가져왔다 — "HR 은 다크 700 도 브랜드 색과 같다" 던 v108 규칙은 걷었다.
 - 회색의 양 끝은 지금 값이다 — 라이트 00 #FFFFFF · 1000 #1A1F2E, 다크 00 #1A1F2E · 1000 #F5F6FA.
 - 고정한 값 다섯 — 지금 화면의 바닥 · 뜬 표면 · 입력칸 · 흐린 글자가 그대로이게 계산값 대신 지금 hex 를 넣었다(계산값과 색차 ΔE 1.4 이하): gray-200 #F5F6FA · gray-700 #62697A · gray-100-dark #242938 · gray-200-dark #2D3346 · gray-300-dark #353B4D.
 - 다크의 글자 단계(의미 색 800 · 브랜드 900)는 L* 69 다. 제안표 값이 다크 입력칸(bg-neutral-weak-dark #353B4D) 위에서 4.00 ~ 4.28:1 로 `npm run lint:dark` 에 걸려, 4.5:1 을 넘게 밝혔다. 의미 색 900 도 조금 밝아졌다(ΔE 1.7 이하).
@@ -2000,15 +2000,15 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 
 | 역할 | Desk (라이트 / 다크) | HR (라이트 / 다크) | SEED (라이트 / 다크) |
 |---|---|---|---|
-| bg-brand-solid | 600 / 500 | 600 / 700 | 600 / 700 |
-| bg-brand-solid-pressed | 700 / 700 | 700 / 600 | 700 / 800 |
+| bg-brand-solid | 600 / 500 | 600 / 500 (v121) | 600 / 700 |
+| bg-brand-solid-pressed | 700 / 700 | 700 / 700 (v121) | 700 / 800 |
 | bg-brand-weak | 100 / 200 | 100 / 200 | 100 / 100 |
 | bg-brand-weak-pressed | 200 / 300 | 200 / 300 | 200 / 200 |
 | fg-brand | 600 / 900 | 600 / 900 | 600 / 700 |
 | fg-brand-contrast | 700 / 900 | 700 / 900 | 700 / 700 |
 | fg-brand-inverted | 900(다크 팔레트) / 600 | 900(다크 팔레트) / 600 | — (v115) |
 | stroke-brand-solid | 600 / 900 | 600 / 900 | 700 / 700 |
-| stroke-brand-weak | 300 / 800 | 400 / 800 | 300 / 300 |
+| stroke-brand-weak | 300 / 800 | 300 / 800 (v121) | 300 / 300 |
 | stroke-focus-ring | 600 / 900 | 600 / 900 | blue-600 / blue-600 |
 
 #### SEED 에서 옮긴 자리
@@ -2020,10 +2020,10 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 - (v120) bg-neutral-weak-alpha · -pressed — SEED 의 투명한 약한 배경(검정 4.7% · 6.3% / 다크 흰 12.5% · 18%)을 그대로 들인다. 라이트에서 바닥 `bg-layer-basement` · 약한 배경 `bg-neutral-weak` · 비활성 `bg-disabled` 가 모두 gray-200 이라(SEED 도 같다) 회색 바닥 위에 놓인 채움이 바닥과 1.00:1 로 사라진다. SEED 처럼 바닥 위에 자주 놓이는 두 부품 — Chip `solid` 바탕 · Segmented Control 트랙 — 만 투명 짝을 쓰고(어느 바탕에서나 보인다 — 회색 위 1.11 · 흰 위 1.11 · 다크 1.47), 나머지 약한 배경 · 비활성 채움은 흰 표면 위에만 둔다(Elevation 의 "바닥 위의 채움"). 불투명 `bg-neutral-weak` 는 그대로다(사용자 결정 2026-10-16 기초 웹 01-040 B — 비교 페이지 https://claude.ai/artifact/U33bUxZkgQoHfAgdp2DEVK).
 - warning — SEED 의 주의 색은 노랑이고 채움 위 글자가 검정이다. groo 는 주황 + 흰 글자를 그대로 두고, 단계는 다른 의미 색과 같은 규칙으로 앉혔다.
 - bg-positive-solid 의 다크 — SEED 는 500(눌림 600)이다. 다른 의미 색과 맞춰 600(눌림 700)에 둔다.
-- 브랜드 채움의 다크 — Desk 는 브랜드 색이 어두워(L* 33) 채움을 지금 값(#0147AD)과 같은 무게인 500 에 둔다(ΔE 1.4). 눌림은 SEED 의 800 이 흰 글자 3.76:1 이라 700 이다. HR 은 채움이 SEED 대로 700 이고, 눌림은 800 이 흰 글자 3.61:1 이라 600(더 어둡게)이다.
-- 브랜드 글자 · 선 · 포커스 링의 다크 — SEED 700 → 900. 다크 700 은 어두운 표면 위 Desk 2.27:1 · HR 2.86:1 이다.
+- 브랜드 채움의 다크 — Desk 는 브랜드 색이 어두워(L* 33) 채움을 지금 값(#0147AD)과 같은 무게인 500 에 둔다(ΔE 1.4). 눌림은 SEED 의 800 이 흰 글자 3.76:1 이라 700 이다. (v121) HR 도 브랜드 색이 어두워(L* 34 — 그루 초록 #075B3C) Desk 와 같은 자리다 — 채움 500(브랜드 색과 ΔE 2.3) · 눌림 700(SEED 의 800 은 흰 글자 3.79:1). v108 ~ v120 의 HR 은 채움 700 · 눌림 600 이었다.
+- 브랜드 글자 · 선 · 포커스 링의 다크 — SEED 700 → 900. 다크 700 은 어두운 표면 위 Desk 2.27:1 · HR 2.25:1 이다(v121 — 그 전 HR 2.86:1).
 - stroke-brand-solid 의 라이트 — SEED 700 → 600. 브랜드 색 그대로다.
-- stroke-brand-weak 의 다크 — SEED 300 → 800. 다크 300 은 표면과 1.3:1 안팎(Desk 1.29 · HR 1.36)이라 선이 보이지 않는다.
+- stroke-brand-weak 의 다크 — SEED 300 → 800. 다크 300 은 표면과 1.3:1 안팎(Desk 1.29 · HR 1.29 — v121, 그 전 HR 1.36)이라 선이 보이지 않는다.
 - (v117) 의미 색 stroke-*-weak 의 다크 — SEED 300 → 400. 다크 300 은 표면과 1.38 ~ 1.40:1(시트 위 1.19 ~ 1.21)로 선이 묻히고, 브랜드처럼 800 으로 올리면 글자(fg-*) · stroke-*-solid 와 같은 색이 되어 옅은 선이 아니다. 400 은 1.71 ~ 1.73:1 — SEED 다크(1.77)와 같은 관계이고 라이트 300(1.51 ~ 1.53)과 무게가 맞는다.
 - stroke-focus-ring — SEED 는 파랑(blue-600)이다. groo 는 옛 border-focus 대로 브랜드 색이다.
 - (v109) 다크 약한 배경 · 눌림(의미 색 · 브랜드) — SEED 100 · 200 → 200 · 300. groo 는 다크 카드 표면(#242938, L* 16.7)이 SEED(#16171B, L* 8)보다 밝아서, 100 단계가 표면과 1.00 ~ 1.02:1 로 묻혔다. 200 · 300 이 SEED 의 표면 대비 관계(약한 배경 1.2:1 · 눌림 1.4:1)와 같다 — 지금 1.15 · 1.4:1.
@@ -2031,7 +2031,7 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 - (v109) stroke-neutral-solid — SEED 800 → 600. groo 는 이 선을 체크박스 · 라디오 테두리와 꺼진 스위치 트랙에 쓴다(SEED 는 그 자리에 옅은 선을 쓴다). UI 3:1 을 넘는 가장 옅은 단계이고, 지금 제품 값과 ΔE 3.5 다.
 - (v109) fg-disabled 의 다크 — SEED 500 → 600. 다크 500 은 비활성 버튼 위 2.08:1 로 라이트(2.93:1)보다 흐렸다. 600 은 3.18:1 이다.
 - (v109) bg-neutral-inverted 의 라이트 — SEED 900 → 1000. 지금 제품의 토스트 · 툴팁 배경(#1A1F2E)이다 — 사용자 결정.
-- (v109) HR 의 stroke-brand-weak 라이트 — 300 → 400(채도 올림). 300 은 옅은 회녹이라 지금 제품 값과 ΔE 15.5 였다. 지금은 ΔE 1.5 다.
+- (v109) HR 의 stroke-brand-weak 라이트 — 300 → 400(채도 올림). 300 은 옅은 회녹이라 지금 제품 값과 ΔE 15.5 였다. 지금은 ΔE 1.5 다. (v121) 그루 초록 램프에서는 걷었다 — HR 도 Desk 처럼 300(`#77B193`, 흰 면 위 2.47:1 · Desk 2.45:1)이다.
 
 ### v102 — SEED 역할 색 (2026-09-29)
 
@@ -2131,16 +2131,18 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 
 | 역할 | 라이트 | 다크 | 옛 이름 | Desk 웹 이름 |
 |---|---|---|---|---|
-| `fg-brand` | `#357B5F` | `#72B898` | primary · primary-light | fg-brand · fg-link |
-| `fg-brand-contrast` | `#256D52` | `#72B898` | — | fg-brand-strong |
-| `fg-brand-inverted` | `#72B898` | `#357B5F` | — | — |
-| `bg-brand-solid` | `#357B5F` | `#357B5F` | primary | bg-brand |
-| `bg-brand-solid-pressed` | `#256D52` | `#256D51` | — | bg-brand-press · bg-brand-hover |
-| `bg-brand-weak` | `#EDF5F0` | `#25372E` | — | bg-brand-subtle |
-| `bg-brand-weak-pressed` | `#E0EDE7` | `#264437` | — | bg-brand-muted |
-| `stroke-focus-ring` | `#357B5F` | `#72B898` | border-focus · border-focus-light | border-focus |
-| `stroke-brand-solid` | `#357B5F` | `#72B898` | — | border-brand |
-| `stroke-brand-weak` | `#6AB192` | `#599279` | — | border-brand-soft |
+| `fg-brand` | `#075B3C` | `#2ABE84` | primary · primary-light | fg-brand · fg-link |
+| `fg-brand-contrast` | `#064F33` | `#2ABE84` | — | fg-brand-strong |
+| `fg-brand-inverted` | `#2ABE84` | `#075B3C` | — | — |
+| `bg-brand-solid` | `#075B3C` | `#1B583E` | primary | bg-brand |
+| `bg-brand-solid-pressed` | `#064F33` | `#0C6C49` | — | bg-brand-press · bg-brand-hover |
+| `bg-brand-weak` | `#E8F3EC` | `#21352B` | — | bg-brand-subtle |
+| `bg-brand-weak-pressed` | `#D6E8DE` | `#214132` | — | bg-brand-muted |
+| `stroke-focus-ring` | `#075B3C` | `#2ABE84` | border-focus · border-focus-light | border-focus |
+| `stroke-brand-solid` | `#075B3C` | `#2ABE84` | — | border-brand |
+| `stroke-brand-weak` | `#77B193` | `#1D9567` | — | border-brand-soft |
+
+(v121 — 2026-10-22) 이음 브랜드를 그루 초록으로 바꿨다 — 램프의 600 이 로고 진한 잎 `#075B3C` 다(그 전 `#357B5F`). 새 초록은 Desk 파랑처럼 어두운 브랜드(L* 34)라 역할도 Desk 와 같은 단계에 앉혔다 — 다크 채움 700 → 500 · 다크 눌림 600 → 700 · 옅은 선 라이트 400 → 300. 나머지 역할의 단계는 그대로다. 대비는 흰 글자 · 흰 면 위 5.06 → 8.17:1, 다크 채움 위 흰 글자 5.06 → 8.36:1, 다크 브랜드 글자 · 링 6.23 → 6.07:1(다크 카드 위)이다 — `npm run lint:all` · `lint:dark` 통과. 다크 채움은 표면과 1.73:1 로(그 전 2.86) Desk 와 같다 — 다크에서 채움만으로 모양을 알리는 자리는 없다(흰 글자 · 아이콘이 알린다). 사용자 결정 2026-10-22(색 고르기 https://claude.ai/artifact/G4ygEuztK398wjqhEVsdUa 3 — 2C). 옛 값은 `DESIGN.history/v121-ieum-groo-green.hr.md`.
 
 #### 값을 만든 규칙
 
@@ -2165,7 +2167,7 @@ groo 화면에 아직 쓰는 자리가 없다. 자리가 생기면 위 규칙으
 
 #### HR 웹
 
-HR 웹은 아직 groo 색에 이어지지 않았다 — shadcn 기본 테마 그대로라 주 색이 파랑(#2563EB)이다. 2026-09-29 사용자가 앱 적용 단계에서 이 파일의 HR 색(초록 #357B5F)으로 옮기기로 정했다.
+HR 웹은 아직 groo 색에 이어지지 않았다 — shadcn 기본 테마 그대로라 주 색이 파랑(#2563EB)이다. 2026-09-29 사용자가 앱 적용 단계에서 이 파일의 HR 색(초록 — v121 부터 그루 초록 #075B3C)으로 옮기기로 정했다.
 
 ### v104 — 그라디언트 (2026-09-29)
 
@@ -3701,9 +3703,9 @@ DESIGN.md baseline 정의 참고 — 14 keyframes (단발 10 + loop 4): fade-in/
 
 | 자리 | 토큰 | 라이트 | 다크 | 대비 |
 |---|---|---|---|---|
-| brandSolid 채움 | `bg-brand-solid` | `#357B5F` | `#357B5F` | 흰 글자 5.06:1 · 다크 5.06:1 |
-| brandSolid 누름 · 호버 · 로딩 | `bg-brand-solid-pressed` | `#256D52` | `#256D51` | 흰 글자 6.20:1 · 다크 6.20:1 |
-| 브랜드 글자(brandOutline · ghost brand) | `fg-brand` | `#357B5F` | `#72B898` | `bg-layer-default` 위 5.06:1 · 다크 6.23:1 |
+| brandSolid 채움 | `bg-brand-solid` | `#075B3C` | `#1B583E` | 흰 글자 8.17:1 · 다크 8.36:1 |
+| brandSolid 누름 · 호버 · 로딩 | `bg-brand-solid-pressed` | `#064F33` | `#0C6C49` | 흰 글자 9.66:1 · 다크 6.45:1 |
+| 브랜드 글자(brandOutline · ghost brand) | `fg-brand` | `#075B3C` | `#2ABE84` | `bg-layer-default` 위 8.17:1 · 다크 6.07:1 |
 | 포커스 링 | `stroke-focus-ring` | 브랜드 역할 | 브랜드 역할 | 2px · 띄움 2px |
 
 HR 은 데이터 밀도가 높은 화면이 많다 — 표 · 툴바의 인라인 액션(승인 · 반려)은 `small` · `xsmall`, 모바일 결재 화면의 하단 CTA 는 `large` 를 쓴다. brandSolid 는 휴가 신청처럼 서비스의 핵심 액션 하나에만 쓰고, 저장 · 확인 같은 일반 CTA 는 neutralSolid 다.
@@ -3764,22 +3766,22 @@ HR 은 데이터 밀도가 높은 화면이 많다 — 표 · 툴바의 인라�
 
 ### Focus ring
 
-HR 브랜드 — 역할 색 `stroke-focus-ring`(라이트 `#357B5F` · 다크 `#72B898`, v102)을 쓴다. 옛 `border-focus` · `border-focus-light` 는 같은 값의 별칭이다. 모든 인터랙티브 컴포넌트의 focus 표현을 통일한다.
+HR 브랜드 — 역할 색 `stroke-focus-ring`(라이트 `#075B3C` · 다크 `#2ABE84`, v102 · v121 그루 초록)을 쓴다. 옛 `border-focus` · `border-focus-light` 는 같은 값의 별칭이다. 모든 인터랙티브 컴포넌트의 focus 표현을 통일한다.
 
 #### Mode pair (sparse — 색은 역할 색이 정한다)
 | Token | 색상 | 사용 |
 |---|---|---|
-| `focus-ring-on-light` | `stroke-focus-ring` (`#357B5F`) | 라이트 표면 위 모든 컴포넌트 |
-| `focus-ring-on-dark` | `stroke-focus-ring` 다크 (`#72B898`) | 다크 표면 위 모든 컴포넌트 |
+| `focus-ring-on-light` | `stroke-focus-ring` (`#075B3C`) | 라이트 표면 위 모든 컴포넌트 |
+| `focus-ring-on-dark` | `stroke-focus-ring` 다크 (`#2ABE84`) | 다크 표면 위 모든 컴포넌트 |
 
-#### Contrast (토큰 값으로 계산, 2026-10-16)
+#### Contrast (토큰 값으로 계산, 2026-10-22 v121)
 | 페어 | 대비 |
 |---|---|
-| `#357B5F` vs `bg-layer-basement` (`#F5F6FA`) | **4.69:1** ✅ |
-| `#357B5F` vs `bg-layer-default` (`#FFFFFF`) | **5.06:1** ✅ |
-| `#72B898` vs `bg-layer-basement` 다크 (`#1A1F2E`) | **7.05:1** ✅ |
-| `#72B898` vs `bg-layer-default` 다크 (`#242938`) | **6.23:1** ✅ |
-| `#72B898` vs `bg-layer-floating` 다크 (`#2D3346`) | **5.39:1** ✅ |
+| `#075B3C` vs `bg-layer-basement` (`#F5F6FA`) | **7.56:1** ✅ |
+| `#075B3C` vs `bg-layer-default` (`#FFFFFF`) | **8.17:1** ✅ |
+| `#2ABE84` vs `bg-layer-basement` 다크 (`#1A1F2E`) | **6.88:1** ✅ |
+| `#2ABE84` vs `bg-layer-default` 다크 (`#242938`) | **6.07:1** ✅ |
+| `#2ABE84` vs `bg-layer-floating` 다크 (`#2D3346`) | **5.26:1** ✅ |
 
 모든 라이트 · 다크 표면에서 2.4.11(UI 3:1)을 넘는다.
 
@@ -3856,7 +3858,7 @@ HR — 직원 정보 form(필수/선택 옵션), 권한 토글 switch, 평가 �
 
 #### A11y
 - HTML native `<input>` + `<label for>` 우선
-- focus ring `stroke-focus-ring` (`#357B5F` · 다크 `#72B898`) 2px, 키보드 Space (toggle/check), Radio arrow keys
+- focus ring `stroke-focus-ring` (`#075B3C` · 다크 `#2ABE84`) 2px, 키보드 Space (toggle/check), Radio arrow keys
 - error 상태: Checkbox · Radio 는 칸 · 동그라미를 바꾸지 않고 묶음 아래 글로 알린다(2026-09-30). Switch 에는 오류 상태가 없다 — 저장에 실패하면 스위치를 되돌리고 무엇이 안 됐는지 알린다
 - Switch 만 쓰는 설정 줄은 줄 전체가 누르는 영역이고, 줄의 제목이 스위치의 이름이 된다(`<label>` 또는 `aria-labelledby`) — 줄의 모양은 List 의 스위치 줄(`ListSwitchItem`)
 

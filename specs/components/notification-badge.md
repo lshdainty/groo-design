@@ -169,8 +169,8 @@ import { NotificationBadge } from "@/components/ui/notification-badge"
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 숫자 흰 글자 on `bg-brand-solid` — Desk 8.38 · 다크 8.36 · HR 5.06 · 5.06 ✓ |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 점 `fg-brand` 흰 표면 위 Desk 8.38 · 다크 6.10 · HR 5.06 · 6.23 ✓(SEED 의 채움 색이면 다크 1.73 · 2.86 으로 묻힌다). 숫자 알약 면은 다크 표면과 Desk 1.73 · HR 2.86 — 흰 숫자가 알린다 |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 숫자 흰 글자 on `bg-brand-solid` — Desk 8.38 · 다크 8.36 · HR 8.17 · 8.36 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 점 `fg-brand` 흰 표면 위 Desk 8.38 · 다크 6.10 · HR 8.17 · 6.07 ✓(SEED 의 채움 색이면 다크 Desk · HR 1.73 으로 묻힌다). 숫자 알약 면은 다크 표면과 Desk · HR 1.73 — 흰 숫자가 알린다 |
 | **WCAG 1.4.1** Use of color | 점 · 숫자는 소리로는 이름에 들어간다("새 알림 있음") — 색만으로 알리지 않는다 |
 | **WCAG 4.1.2** Name, Role, Value | 붙은 버튼 · 탭의 이름에 알림이 있다 ✓ — 점 · 숫자 자신은 `aria-hidden` |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 해당 없음 — 배지는 누르지 않는다. 붙은 아이콘 버튼은 40(누르는 영역 44) ✓ |
@@ -202,7 +202,7 @@ import { NotificationBadge } from "@/components/ui/notification-badge"
 
 ## SEED 와 다른 점
 
-- **점은 브랜드 글자색**(`fg-brand` — 다크에서 밝은 짝) — SEED 는 점도 채움 색(bg.brand-solid)이다. groo 다크에서 채움 색 점은 표면과 Desk 1.73 · HR 2.86:1 로 묻힌다. 숫자 알약은 SEED 대로 채움 색 + 흰 숫자다.
+- **점은 브랜드 글자색**(`fg-brand` — 다크에서 밝은 짝) — SEED 는 점도 채움 색(bg.brand-solid)이다. groo 다크에서 채움 색 점은 표면과 Desk · HR 1.73:1 로 묻힌다. 숫자 알약은 SEED 대로 채움 색 + 흰 숫자다.
 - **숫자 상한은 "99+"** — SEED Bottom Navigation 문서를 따른다(Notification Badge 문서는 "최대 4자 · 999+" 로 두 문서가 다르다).
 - **이름에 넣는다** — SEED 는 점 · 숫자에 이름이 없고 붙은 탭 · 버튼의 이름도 그대로라 소리로 알 수 없다. groo 는 붙은 버튼 · 탭의 이름에 "새 알림 3개" · "새 소식" 을 넣는다.
 - **점 둘레 링이 없다** — SEED Top Navigation 그림의 바탕색 링(3)은 CSS 에 없다. groo 도 두지 않는다(6 전체가 색).

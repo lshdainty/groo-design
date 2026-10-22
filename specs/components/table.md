@@ -351,8 +351,8 @@ import { TableBody, TableSkeletonRows, TableStatusRow } from "@/components/ui/ta
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 머리 · 칸 `fg-neutral` 카드 면 위 16.41 · 다크 13.42, 누름 바탕 위 15.48 · 10.32 ✓. 둘째 줄 `fg-neutral-subtle` 5.50 · 6.09 ✓. 일괄 작업 바 글 · 동작 `fg-neutral` `bg-brand-weak` 위 Desk 14.42 · 다크 12.07 · HR 14.79 · 다크 11.68 ✓ — 바 안 동작은 모두 ghost neutral(빨강 글은 라이트 4.44 라 쓰지 않는다) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | ↑↓ 흐린 쪽 `fg-neutral-muted` 7.11 · 다크 7.70, 짙은 쪽 `fg-neutral` ✓. 줄 선은 장식(1.15) — 줄은 글의 자리로 읽힌다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 머리 · 칸 `fg-neutral` 카드 면 위 16.41 · 다크 13.42, 누름 바탕 위 15.48 · 10.32 ✓. 둘째 줄 `fg-neutral-subtle` 5.50 · 6.09 ✓. 일괄 작업 바 글 · 동작 `fg-neutral` `bg-brand-weak` 위 Desk 14.42 · 다크 12.07 · HR 14.43 · 다크 12.09 ✓ — 바 안 동작은 모두 ghost neutral(빨강 글은 라이트 4.44 라 쓰지 않는다) |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | ↑↓ 흐린 쪽 `fg-neutral-muted` 7.11 · 다크 7.70, 짙은 쪽 `fg-neutral` ✓. 줄 선은 장식(1.15) — 줄은 글의 자리로 읽힌다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓ |
 | **WCAG 1.4.1** Use of color | 정렬 방향은 짙은 화살표의 모양(↑ · ↓)과 `aria-sort` 로도 알린다. 고른 줄은 체크로 ✓ |
 | **WCAG 1.3.1** Info and relationships | `<table>` · `<caption>` · `<th scope="col">` · 첫 열 `<th scope="row">` — 보조 기술이 칸마다 열 이름과 줄 이름을 읽는다. 표처럼 보이는 `div` 격자를 두지 않는다 |
 | **WCAG 4.1.3** Status messages | 고른 수("3개 선택됨") · 정렬 결과("남은 휴가 내림차순으로 정렬했어요.")를 `role="status"` 로 ✓ — 고른 수의 status 는 바가 없을 때도 두어 처음 고를 때 읽힌다 |

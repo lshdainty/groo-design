@@ -76,7 +76,7 @@ rules:
       notification:
         size: 6px
         radius: $radius-full
-        background: { value: $color-fg-brand, note: "브랜드 글자색 — 목록 바탕과 Desk 8.38 · 6.10 · HR 5.06 · 6.23(bg-brand-solid 는 다크에서 1.73 · 2.86 이라 안 보인다). 고른 탭에는 없다 — 내용을 보면 사라진다" }
+        background: { value: $color-fg-brand, note: "브랜드 글자색 — 목록 바탕과 Desk 8.38 · 6.10 · HR 8.17 · 6.07(bg-brand-solid 는 다크에서 Desk · HR 1.73 이라 안 보인다). 고른 탭에는 없다 — 내용을 보면 사라진다" }
         gap: { value: 2px, note: "글 끝에서 2, 글 위쪽에 맞춘다 — 탭 폭을 넓히지 않는다" }
     pressed:
       trigger:

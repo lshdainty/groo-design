@@ -255,7 +255,7 @@ import { Radiomark, RadioGroup } from "@/components/ui/radio-group"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(라벨 ≥ 4.5:1) | 라벨 `fg-neutral` × 흰 표면 16:1+ ✓ |
-| **WCAG 1.4.11** Non-text contrast(UI ≥ 3:1) | 선택 안 된 동그라미 테두리 `stroke-neutral-solid` × 표면 4.2:1(다크 4.1:1) ✓ · 선택 채움 `bg-neutral-inverted` × 표면 16.4:1(다크 13.4:1) ✓ · 가운데 점 × 채움 — neutral 16.4:1(다크 13.4:1), brand Desk 8.4:1 · HR 5.1:1 ✓. 다크의 brand 채움은 표면과 1.7:1(Desk) · 2.9:1(HR)이라 채움만으로는 3:1 이 안 된다 — 선택은 가운데 흰 점(표면과 14.5:1)과 테두리가 사라지는 모양이 알린다 |
+| **WCAG 1.4.11** Non-text contrast(UI ≥ 3:1) | 선택 안 된 동그라미 테두리 `stroke-neutral-solid` × 표면 4.2:1(다크 4.1:1) ✓ · 선택 채움 `bg-neutral-inverted` × 표면 16.4:1(다크 13.4:1) ✓ · 가운데 점 × 채움 — neutral 16.4:1(다크 13.4:1), brand Desk 8.4:1 · HR 8.2:1 ✓. 다크의 brand 채움은 표면과 1.7:1(Desk · HR)이라 채움만으로는 3:1 이 안 된다 — 선택은 가운데 흰 점(표면과 14.5:1)과 테두리가 사라지는 모양이 알린다 |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에만 링 2px · 띄움 2px(`stroke-focus-ring`) — 앱도 키보드로 옮길 때만 같은 링(2026-10-08) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 동그라미 20 · 24 + 라벨까지 묶은 줄 32 · 36 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 라벨까지 묶어 위아래 44 로 넓힌다 ✓. 묶음 안에서도 줄 사이 12 라 줄마다 44 · 48 을 받는다(줄 사이가 4 면 이웃과 겹쳐 36 · 40 이 된다) — 동그라미만 쓰면 그 줄 전체 |

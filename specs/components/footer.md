@@ -239,7 +239,7 @@ import {
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 사이트맵 링크 · 브랜드 이름 `fg-neutral` 흰 면 16.41 · 다크 13.42, 열 제목 · 정책 링크 · 저작권 `fg-neutral-muted` 7.11 · 7.70, 소개 · 안내 글 · 사이트맵 링크 올림 `fg-neutral-subtle` 5.50 · 6.09 ✓. groo-home 의 `--ink3`(3.04)은 4.5 이상으로 짙게 한다(Migration notes) |
 | **WCAG 1.4.1** Use of color | 링크는 밑줄 없이 색으로 — 바닥의 링크는 문장 속이 아니라 따로 놓인 목록 · 줄이라 위치로 링크임을 안다(SEED). 키보드 포커스는 링으로 ✓ |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 선 · 위 선(1.15 · 1.30)은 장식 — 영역은 간격 · 글이 가른다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 선 · 위 선(1.15 · 1.30)은 장식 — 영역은 간격 · 글이 가른다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓ |
 | **WCAG 1.3.1** Info and Relationships | `<footer>`(contentinfo — 한 페이지에 하나, article · section 안에 두지 않는다) · 사이트맵 `<nav aria-label="사이트 지도">` · 열의 링크 목록은 열 제목을 이름으로(`aria-labelledby`) ✓ |
 | **WCAG 2.4.4** Link purpose | 링크 글이 가는 곳 그대로 — 새 탭 링크는 "(새 탭)" 을 함께 읽는다(↗ 는 `aria-hidden`) ✓ |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 링크 둘레 링 2px · 띄움 2px ✓ |

@@ -52,11 +52,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRow
  *   카드 본문(여백 24) 안에서 줄을 카드 끝까지 내고(글자는 그대로 24 에 선다), 호버 · 누름 바탕 bg-layer-default-pressed 는 좌우 6 들어온
  *   모서리 10(카드 16 − 6 — List 의 동심 모서리). 키보드 포커스에만 안쪽 2px 링. 가운데 합계 16 / 22 · 700 + 위 라벨 12.
  * 열지도: 왼쪽 시간대 라벨 열 56(이름 13 · 700 + 시간 11 · fg-neutral-subtle) + 칸, 위 요일 머리 12 · fg-neutral-subtle. 칸은 정사각형 ·
- *   모서리 4 · 사이 6. 세기 다섯 — bg-brand-solid 를 카드 면에 18 · 35 · 55 · 75 · 100% 섞는다(가장 큰 값의 8 · 22 · 45 · 75% 에서 끊는다),
+ *   모서리 4 · 사이 6. 세기 다섯 — bg-brand-solid 를 카드 면에 18 · 35 · 55 · 76 · 100% 섞는다(가장 큰 값의 8 · 22 · 45 · 75% 에서 끊는다),
  *   값이 없으면 bg-neutral-weak. 가장 큰 칸에 고리를 두르지 않는다(사용자 결정 22A — 포커스 링과 헷갈린다).
  *   칸 폭(ResizeObserver 로 잰다)이 textMinCellWidth(112) 이상일 때만 칸에 원까지(11 / 15 · 700 · 고정폭 숫자, 빈 칸은 "—" fg-neutral-subtle),
  *   좁으면 글 없이 세기 색만 — 글자를 줄이거나 돈을 줄여 쓰지 않는다. 칸 글자색은 단계마다 한 번 정한다 — 그 단계 바탕 위 fg-neutral 이
- *   4.5 를 넘으면 fg-neutral, 아니면 static-white(Desk 라이트 75 · 100% · HR 라이트 100% 가 흰 글자, 다크는 모두 fg-neutral).
+ *   4.5 를 넘으면 fg-neutral, 아니면 static-white(Desk · HR 라이트 76 · 100% 가 흰 글자, 다크는 모두 fg-neutral).
  *   툴팁(머리 tooltipLabel · 줄 "■ {valueLabel} 값", 네모는 그 칸의 세기 색)은 가리키면(마우스) · 누르면(터치 — 다른 곳을 누를 때까지) ·
  *   키보드로 옮기면 뜬다 — 글이 보이는 넓은 칸에서도. 키보드: 상자(Tab 한 칸)에서 ← → 요일 · ↑ ↓ 시간대(처음 누르면 첫 칸), 지금 칸에
  *   바깥 2px 링(띄움 2), Esc · 떠나면 닫는다. 툴팁은 화면 위 떠 있는 층(z-floating 200, 포털)이라 카드 모서리에 잘리지 않는다.
@@ -716,19 +716,19 @@ export interface ChartHeatmapProps extends Omit<React.HTMLAttributes<HTMLDivElem
 }
 
 // 세기 다섯 — bg-brand-solid 를 카드 면에 섞은 비율과 끊는 자리(가장 큰 값에 대한 비율)
-const HEAT_MIX = [0.18, 0.35, 0.55, 0.75, 1] as const;
+const HEAT_MIX = [0.18, 0.35, 0.55, 0.76, 1] as const;
 const HEAT_STEP_BG = [
   "bg-[color-mix(in_srgb,var(--color-bg-brand-solid)_18%,var(--color-bg-layer-default))]",
   "bg-[color-mix(in_srgb,var(--color-bg-brand-solid)_35%,var(--color-bg-layer-default))]",
   "bg-[color-mix(in_srgb,var(--color-bg-brand-solid)_55%,var(--color-bg-layer-default))]",
-  "bg-[color-mix(in_srgb,var(--color-bg-brand-solid)_75%,var(--color-bg-layer-default))]",
+  "bg-[color-mix(in_srgb,var(--color-bg-brand-solid)_76%,var(--color-bg-layer-default))]",
   "bg-bg-brand-solid",
 ] as const;
 const HEAT_STEP_SWATCH = [
   "color-mix(in srgb, var(--color-bg-brand-solid) 18%, var(--color-bg-layer-default))",
   "color-mix(in srgb, var(--color-bg-brand-solid) 35%, var(--color-bg-layer-default))",
   "color-mix(in srgb, var(--color-bg-brand-solid) 55%, var(--color-bg-layer-default))",
-  "color-mix(in srgb, var(--color-bg-brand-solid) 75%, var(--color-bg-layer-default))",
+  "color-mix(in srgb, var(--color-bg-brand-solid) 76%, var(--color-bg-layer-default))",
   "var(--color-bg-brand-solid)",
 ] as const;
 

@@ -105,7 +105,7 @@ rules:
       root: { background: { value: $color-bg-neutral-weak, note: "회색 바탕(bg-layer-basement)과 같은 색 — 흰 표면 위에서만 쓴다" }, foreground: { value: $color-fg-neutral-muted, note: "6.58 · 다크 5.93" } }
   - when: { variant: weak, tone: brand }
     enabled:
-      root: { background: $color-bg-brand-weak, foreground: { value: $color-fg-brand-contrast, note: "Desk 8.74 · 다크 5.48 · HR 5.58 · 5.42" } }
+      root: { background: $color-bg-brand-weak, foreground: { value: $color-fg-brand-contrast, note: "Desk 8.74 · 다크 5.48 · HR 8.49 · 5.47" } }
   - when: { variant: weak, tone: informative }
     enabled:
       root: { background: $color-bg-informative-weak, foreground: { value: $color-fg-informative-contrast, note: "5.67 · 7.80" } }
@@ -125,7 +125,7 @@ rules:
       root: { background: { value: $color-bg-neutral-inverted, note: "다크는 밝은 면 + 짙은 글자로 뒤집힌다(SEED 와 같은 방식)" }, foreground: { value: $color-fg-neutral-inverted, note: "16.41 · 13.42" } }
   - when: { variant: solid, tone: brand }
     enabled:
-      root: { background: $color-bg-brand-solid, foreground: { value: $color-static-white, note: "Desk 8.38 · 8.36 · HR 5.06 · 5.06" } }
+      root: { background: $color-bg-brand-solid, foreground: { value: $color-static-white, note: "Desk 8.38 · 8.36 · HR 8.17 · 8.36" } }
   - when: { variant: solid, tone: informative }
     enabled:
       root: { background: $color-bg-informative-solid, foreground: { value: $color-static-white, note: "5.09 · 5.78" } }
@@ -145,7 +145,7 @@ rules:
       root: { borderColor: { value: $color-stroke-neutral-weak, note: "1.23 · 1.56 — 글이 배지를 알린다(선은 장식)" }, foreground: { value: $color-fg-neutral-muted, note: "7.11 · 7.70" } }
   - when: { variant: outline, tone: brand }
     enabled:
-      root: { borderColor: { value: $color-stroke-brand-weak, note: "Desk 2.45 · 3.86 · HR 2.53 · 4.01 — 의미 색 넷보다 짙다(v109 값 그대로)" }, foreground: { value: $color-fg-brand, note: "Desk 8.38 · 6.10 · HR 5.06 · 6.23" } }
+      root: { borderColor: { value: $color-stroke-brand-weak, note: "Desk 2.45 · 3.86 · HR 2.47 · 3.83 — 의미 색 넷보다 짙다(v109 값 그대로 · HR 은 v121 그루 초록)" }, foreground: { value: $color-fg-brand, note: "Desk 8.38 · 6.10 · HR 8.17 · 6.07" } }
   - when: { variant: outline, tone: informative }
     enabled:
       root: { borderColor: { value: $color-stroke-informative-weak, note: "v117 — 1.52 · 1.73(시트 위 1.50)" }, foreground: { value: $color-fg-informative, note: "5.09 · 6.12" } }

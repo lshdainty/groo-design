@@ -156,7 +156,7 @@ import { TopNavigationIconButton } from "@/components/ui/top-navigation"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 · 설명 `fg-neutral-inverted` 말풍선(`bg-neutral-inverted`) 위 16.41 · 다크 13.42 ✓ |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 말풍선 면 페이지 위 16.41 · 다크 13.42 ✓. 닫기 버튼 초점 링은 말풍선 글자색이라 16.41 · 13.42 ✓ — 브랜드 링은 이 위에서 Desk 1.96 · HR 3.24 라 쓰지 않는다 |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 말풍선 면 페이지 위 16.41 · 다크 13.42 ✓. 닫기 버튼 초점 링은 말풍선 글자색이라 16.41 · 13.42 ✓ — 브랜드 링은 이 위에서 Desk 1.96 · HR 2.01 라 쓰지 않는다 |
 | **WCAG 2.1.1** Keyboard | 트리거 · 닫기 버튼 모두 키보드로 닿는다 |
 | **WCAG 2.4.7** Focus Visible | 닫기 버튼은 안쪽 링(말풍선 글자색), 닫기 버튼이 없는 말풍선은 둘레 바깥 링(`stroke-focus-ring`) ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 44 ✓ · ⓘ 트리거는 Button 규칙(보이는 40 · 누르는 영역 44) ✓ |

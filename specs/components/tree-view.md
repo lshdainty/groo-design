@@ -232,7 +232,7 @@ import { TreeView } from "@/components/ui/tree-view"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 이름 `fg-neutral` 면 위 16.41 · 다크 13.42 · 고른 바탕 위 14.26 · 8.62 ✓ |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 꺾쇠 · 아이콘 `fg-neutral-subtle` 5.50 · 6.09(누름 바탕 5.18 · 4.68 · 고른 바탕 4.77 · 3.91) ✓. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 꺾쇠 · 아이콘 `fg-neutral-subtle` 5.50 · 6.09(누름 바탕 5.18 · 4.68 · 고른 바탕 4.77 · 3.91) ✓. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓ |
 | **WCAG 1.4.1** Use of color | 고른 항목은 바탕(1.15 · 다크 1.56)으로만 보인다 — Side Navigation 지금 항목과 같은 결정(2026-10-08) ⚠. 보조 기술에는 `aria-selected` |
 | **WCAG 2.1.1** Keyboard | 나무에 `Tab` 하나 + 화살표 · `Home` · `End` · `Enter` · `Space` 로 모든 항목을 고르고 펼친다 ✓ — 지금 HR 의 잎 17개는 키보드로 닿지 않는다 |
 | **WCAG 2.4.3** Focus order | 나무는 정지점 하나 — 들어오면 고른 항목 ✓ |

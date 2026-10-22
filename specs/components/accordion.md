@@ -275,7 +275,7 @@ const expandable = benefits.filter((b) => b.detail).map((b) => b.id)
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 흰 면 16.41 · 다크 13.42(시트 11.62), 설명 `fg-neutral-subtle` 5.50 · 6.09(시트 5.27, 누름 바탕 5.18 · 4.68), 모두 펼치기 `fg-neutral-muted` 7.11 · 7.70(시트 6.67, 누름 바탕 6.70 · 5.93), 펼친 내용 `fg-neutral-muted` 7.11 · 7.70(시트 6.67) ✓. 막힘 `fg-disabled` 는 기준 밖(비활성 UI) |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 꺾쇠 `fg-neutral-subtle` 5.50 · 6.09 ✓. 사이 선(1.15 · 1.30) · `separated` 테두리(1.23 · 1.56)는 묶음을 나눌 뿐이다 — 펼침은 꺾쇠 · 내용이 알린다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 꺾쇠 `fg-neutral-subtle` 5.50 · 6.09 ✓. 사이 선(1.15 · 1.30) · `separated` 테두리(1.23 · 1.56)는 묶음을 나눌 뿐이다 — 펼침은 꺾쇠 · 내용이 알린다. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓ |
 | **WCAG 1.4.1** Use of color | 펼침은 꺾쇠 방향과 보이는 내용으로 알린다 ✓ |
 | **WCAG 2.1.1** Keyboard | `Tab` · `Enter` · `Space` · `↓` `↑` · `Home` · `End` ✓ |
 | **WCAG 2.4.3** Focus order | 펼쳐도 초점은 트리거에 — 펼친 내용은 트리거 바로 뒤 차례 ✓ |

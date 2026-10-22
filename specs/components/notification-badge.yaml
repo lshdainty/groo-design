@@ -13,7 +13,7 @@
 #
 # SEED 와 다른 자리(notification-badge.md 의 "SEED 와 다른 점")
 #   - 점은 브랜드 글자색 fg-brand(다크에서 밝은 짝) — SEED 는 점 · 숫자 모두 bg.brand-solid. groo 다크에서 bg-brand-solid 점은
-#     표면과 Desk 1.73 · HR 2.86:1 로 묻힌다. 숫자 알약은 SEED 대로 bg-brand-solid + 흰 글자(숫자가 정보를 들고 있다).
+#     표면과 Desk · HR 1.73:1 로 묻힌다. 숫자 알약은 SEED 대로 bg-brand-solid + 흰 글자(숫자가 정보를 들고 있다).
 #   - 숫자 상한은 "99+"(SEED 두 문서 중 Bottom Navigation 쪽 — Notification Badge 문서의 "최대 4자 · 999+" 가 아니다).
 #   - 붙은 버튼 · 탭의 이름에 "새 알림 3개" 를 넣는다 — SEED 는 이름이 없어 소리로 알 수 없다.
 
@@ -52,17 +52,17 @@ rules:
     enabled:
       root:
         size: 6px
-        background: { value: $color-fg-brand, note: "브랜드 글자색 — 다크에서 밝은 짝(표면 위 Desk 8.38 · 6.10 · HR 5.06 · 6.23). bg-brand-solid 는 다크 표면과 1.73 · 2.86 이라 쓰지 않는다" }
+        background: { value: $color-fg-brand, note: "브랜드 글자색 — 다크에서 밝은 짝(표면 위 Desk 8.38 · 6.10 · HR 8.17 · 6.07). bg-brand-solid 는 다크 표면과 Desk · HR 1.73 이라 쓰지 않는다" }
   - when: { size: large }
     enabled:
       root:
         minWidth: 18px
         minHeight: { value: 18px, note: "글자가 커지지 않아 늘 18 — 폭만 숫자를 따른다(1 · 8 은 18 × 18, 12 는 약 22, 99+ 는 약 32)" }
         paddingX: $spacing-x1
-        background: { value: $color-bg-brand-solid, note: "알약 면은 다크 표면과 Desk 1.73 · HR 2.86 — 흰 숫자가 정보를 들고 있다(8.36 · 5.06)" }
+        background: { value: $color-bg-brand-solid, note: "알약 면은 다크 표면과 Desk · HR 1.73 — 흰 숫자가 정보를 들고 있다(다크 Desk · HR 8.36)" }
       label:
         typography: { value: $text-t1-static, note: "11 / 15 — 글자 크기 설정을 따르지 않는 px(웹 text-t1-static, 앱 TextScaler.noScaling — SEED t1-static). 커지면 아이콘을 덮는다" }
-        foreground: { value: $color-static-white, note: "Desk 8.38 · 다크 8.36 · HR 5.06 · 5.06" }
+        foreground: { value: $color-static-white, note: "Desk 8.38 · 다크 8.36 · HR 8.17 · 8.36" }
         numerals: { value: tabular-nums, note: "숫자 폭을 같게 — 수가 바뀌어도 흔들리지 않는다" }
 
   # ── 붙는 자리 ─────────────────────────────────────────

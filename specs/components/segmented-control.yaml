@@ -85,7 +85,7 @@ rules:
       notification:
         size: 6px
         radius: $radius-full
-        background: { value: $color-fg-brand, note: "브랜드 글자색 — 트랙 위 Desk 라이트 7.00 ~ 7.55 · 다크 3.56 ~ 4.69 · HR 4.23 ~ 4.56 · 3.64 ~ 4.79(v120 투명 트랙 — 놓인 바탕에 따라, bg-brand-solid 는 다크에서 1.33 · 2.20 이라 안 보인다). 고른 칸에는 없다 — 고르면 사라진다" }
+        background: { value: $color-fg-brand, note: "브랜드 글자색 — 트랙 위 Desk 라이트 7.00 ~ 7.55 · 다크 3.56 ~ 4.69 · HR 6.82 ~ 7.36 · 3.55 ~ 4.67(v120 투명 트랙 — 놓인 바탕에 따라, bg-brand-solid 는 다크에서 Desk · HR 1.33 이라 안 보인다). 고른 칸에는 없다 — 고르면 사라진다" }
         gap: { value: 2px, note: "글 끝에서 2, 글 위쪽에 맞춘다" }
     pressed:
       label:

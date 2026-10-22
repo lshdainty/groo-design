@@ -71,7 +71,7 @@ rules:
       action:
         typography: $text-t4
         fontWeight: 700
-        foreground: { value: $color-fg-brand-inverted, note: "반전 짝(v115) — 짙은 띠 위 Desk 6.90 · HR 7.05, 다크의 밝은 띠 위 7.76 · 4.69" }
+        foreground: { value: $color-fg-brand-inverted, note: "반전 짝(v115) — 짙은 띠 위 Desk 6.90 · HR 6.88, 다크의 밝은 띠 위 7.76 · 7.56" }
         touchTarget: { value: 글 + 좌우 8 × 44, note: "띠 높이 안에서 위아래로 넓힌다" }
         radius: { value: $radius-r1, note: "바탕이 없어 초점 링에만 보인다" }
       closeButton:

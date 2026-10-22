@@ -195,7 +195,7 @@ onRefresh: () async { ref.invalidate(dashboardProvider); },
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | `neutral` 원 흰 면 위 4.18 · 다크 4.13(떠 있는 면 3.58) · 트랙과 3.63 · 3.18 ✓. `brand` Desk 8.38 · 6.10 · HR 5.06 · 6.23 ✓. `staticWhite` 딤 위 3.95 · 다크 19.27 ✓. 트랙은 장식 |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | `neutral` 원 흰 면 위 4.18 · 다크 4.13(떠 있는 면 3.58) · 트랙과 3.63 · 3.18 ✓. `brand` Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓. `staticWhite` 딤 위 3.95 · 다크 19.27 ✓. 트랙은 장식 |
 | **WCAG 2.2.2** Pause, Stop, Hide | 진행을 알리는 반복이라 기준의 예외지만, 10초면 실패로 바뀌어 멈추고 모션 줄이기면 돌지 않는다 ✓ |
 | **WCAG 2.3.3** Animation from Interactions | 모션 줄이기면 회전 · 호 · 채움 전환이 멈춘다(v104) ✓ |
 | **WCAG 4.1.2** Name, Role, Value | `role="progressbar"` + 이름(`aria-label` — 기본 "불러오는 중"). 값 있는 원은 `aria-valuenow` · `aria-valuemin` · `aria-valuemax` + `aria-valuetext`("40%"), 값 없는 원은 값 속성을 두지 않는다 ✓ |

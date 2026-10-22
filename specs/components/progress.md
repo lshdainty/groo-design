@@ -140,7 +140,7 @@ import { Progress } from "@/components/ui/progress"
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 이름 `fg-neutral` 흰 면 위 16.41 · 다크 13.42, 비율 · 금액 `fg-neutral-subtle` 5.50 · 6.09(떠 있는 면 5.27), "N원 초과" `fg-critical` 5.06 · 6.08 ✓ |
 | **WCAG 1.4.4** Resize text | 이름 · 오른쪽 글 · 금액 줄이 글자 크기 설정을 따른다 ✓ — 막대는 웹 rem(배율대로) · 앱 8 그대로 |
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 채움 : 트랙 Desk 7.76 · 다크 4.69, HR 4.69 · 4.79, 넘침 4.68 · 4.68 ✓. 트랙 : 바탕 1.08 · 1.30 — 장식(막대의 끝은 금액 줄이 말한다) |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 채움 : 트랙 Desk 7.76 · 다크 4.69, HR 7.56 · 4.67, 넘침 4.68 · 4.68 ✓. 트랙 : 바탕 1.08 · 1.30 — 장식(막대의 끝은 금액 줄이 말한다) |
 | **WCAG 1.4.1** Use of color | 넘침은 색과 함께 "N원 초과" 글, 달성은 글로만 ✓ |
 | **WCAG 4.1.2** Name, Role, Value | `role="meter"` + 이름 "식비 예산 400,000원 중 350,000원" + `aria-valuemin` 0 · `aria-valuemax` 목표 · `aria-valuenow`(목표를 넘으면 목표) + `aria-valuetext`("88%" · "20,000원 초과" · "달성") ✓ |
 | **WCAG 2.3.3** Animation from Interactions | 모션 줄이기면 채움이 바로 바뀐다 ✓ |
