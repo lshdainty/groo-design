@@ -28,11 +28,11 @@ const comma = (v: number) => v.toLocaleString('ko-KR');
 // ── 미리보기 판의 뒤 화면 ──────────────────────────────────
 type Tx = { title: string; sub: string; amount: number; hue: 'orange' | 'blue' | 'green' | 'violet'; month: number };
 const TXS: Tx[] = [
-  { title: '점심 식사', sub: '식비 · 현대카드 M', amount: -12000, hue: 'orange', month: 10 },
-  { title: '지하철', sub: '교통 · 국민 체크카드', amount: -1450, hue: 'blue', month: 10 },
-  { title: '영화', sub: '문화 · 국민 체크카드', amount: -15000, hue: 'violet', month: 9 },
+  { title: '점심 식사', sub: '식비 · 생활비 카드', amount: -12000, hue: 'orange', month: 10 },
+  { title: '지하철', sub: '교통 · 교통 체크카드', amount: -1450, hue: 'blue', month: 10 },
+  { title: '영화', sub: '문화 · 교통 체크카드', amount: -15000, hue: 'violet', month: 9 },
   { title: '약국', sub: '의료 · 현금', amount: -8200, hue: 'green', month: 9 },
-  { title: '운동화', sub: '쇼핑 · 현대카드 M', amount: -89000, hue: 'violet', month: 8 },
+  { title: '운동화', sub: '쇼핑 · 생활비 카드', amount: -89000, hue: 'violet', month: 8 },
 ];
 function TxRow({ kit, mode, tx }: { kit: OvKit; mode: ViewMode; tx: Pick<Tx, 'title' | 'sub' | 'amount' | 'hue'> }) {
   return (
@@ -665,7 +665,7 @@ export function AlertDemo({ kit, mode = 'auto', kind }: { kit: OvKit; mode?: Vie
             titleId={`${id}t`}
             descId={`${id}d`}
             title={del ? '거래를 삭제할까요?' : '작성한 내용이 사라져요'}
-            description={del ? '삭제한 거래는 되돌릴 수 없어요.' : '나가면 쓴 메모가 저장되지 않아요.'}
+            description={del ? `${rows[0]?.month ?? 10}월 ${rows[0]?.title ?? ''} ${comma(Math.abs(rows[0]?.amount ?? 0))}원 거래를 지워요. 삭제한 거래는 되돌릴 수 없어요.` : '나가면 쓴 메모가 저장되지 않아요.'}
             cancel={{ label: del ? '취소' : '계속 작성', look: b.weak, onClick: () => setOpen(false) }}
             confirm={{
               label: del ? '삭제' : '나가기',

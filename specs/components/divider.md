@@ -58,21 +58,23 @@
 |---|---|---|
 | 약함 | 들인 선(`inset`) | 같은 묶음 안 — 상세의 키-값 줄 묶음 · 카드 안 위아래 |
 | 중간 | 끝까지 선(`full`) | 묶음 사이 · 액션 영역(바닥 버튼) 위 · 스크롤되는 본문 위 머리 |
-| 강함 | 8 간격 — 선이 아니다 | 크게 다른 내용 사이 — 회색 바탕(`bg-layer-basement`) 위에 흰 층(`bg-layer-default`) 묶음을 8 띄워 놓는다. Desk 폰 화면(가계부 거래를 뺀 모든 화면 — 설정 · 전체 · 캘린더 · 홈 · 자산 …)은 묶음 · 구역마다 화면 폭 흰 띠를 이렇게 쌓는다(DESIGN.md Layout 의 "화면 바탕" — 2026-10-16, 구역 화면은 2026-10-21 사용자 결정 — I-01 결과 확인 결정 3) |
+| 강함 | 8 간격 — 선이 아니다 | 크게 다른 내용 사이 — 회색 바탕(`bg-layer-basement`) 위에 흰 층(`bg-layer-default`) 묶음을 8 띄워 놓는다 |
 
 "8px 구분선" 은 없다 — 두꺼운 회색 막대를 그리지 않고 바탕 층 사이 간격으로 만든다(SEED).
+
+세기는 상황에 맞게 고른다(SEED "각 방식은 사용 목적과 맥락이 다르므로, 상황에 맞게 적절한 방식을 선택") — 이 표는 고르는 참고이고 화면 규칙이 아니다. 어느 화면이 띠(8 간격)로 나뉘는지는 화면 이관 때 화면마다 고르고, 화면 이름은 DESIGN.md Layout 의 "화면 바탕" 한 곳에 적는다. 상황 → 고를 것 · 띠 · 카드 · 흰 화면까지 견준 표는 DESIGN.md Layout 의 "화면을 나누는 법"(2026-10-22 사용자 결정 — https://claude.ai/artifact/KrXqAymDPz1JKL5AWqdwKS).
 
 [그림: 들인 선 · 끝까지 선 · 8 간격 — 한 화면](../../site/components/specs/divider.tsx#strength-guide)
 
 ### 꼭 필요할 때만
 
-선을 두기 전에 여백 · 제목 · 바탕 층으로 갈리는지 먼저 본다. 반복되는 목록 줄은 줄의 위아래 여백이 줄을 가르므로 선이 없는 것이 기본이다 — 촘촘한 목록에만 [List](list.md) 의 줄 사이 선(같은 1px `stroke-neutral-subtle`). 메뉴 묶음 사이 · 대화상자 머리 아래(스크롤될 때)의 선도 같은 값이다.
+선을 두기 전에 여백 · 제목 · 바탕 층으로 갈리는지 먼저 본다(SEED "Divider를 사용하기 전에 반드시 필요한지 검토해주세요"). 반복되는 목록 줄은 줄의 위아래 여백이 줄을 가르므로 선이 없는 것이 기본이다 — 촘촘한 목록에만 [List](list.md) 의 줄 사이 선(같은 1px `stroke-neutral-subtle`). 메뉴 묶음 사이 · 대화상자 머리 아래(스크롤될 때)의 선도 같은 값이다. 8 간격도 같다 — 같은 성격의 묶음이 이어지면 띠를 끊지 않고 목록 제목으로 가른다.
 
 [그림: 여백으로 갈리는 목록 · 줄마다 선](../../site/components/specs/divider.tsx#needed-guide)
 
 ### 마지막에는 두지 않는다
 
-선은 내용 사이에만 둔다 — 화면 · 묶음의 마지막 요소 아래, 카드 맨 위 · 맨 아래에는 두지 않는다.
+선은 내용 사이에만 둔다 — 화면 · 묶음의 마지막 요소 아래, 카드 맨 위 · 맨 아래에는 두지 않는다. 8 간격도 같다 — 마지막 띠 아래에는 틈 · 선 · 빈 띠를 두지 않는다. 띠가 끝난 아래 회색은 바닥이지 구분선이 아니다(SEED "화면의 마지막 섹션이나 요소 하단에는 Divider를 표시하지 않습니다" — 2026-10-22 사용자 결정 4B).
 
 [그림: 마지막 묶음 아래 선이 없는 화면 · 있는 화면](../../site/components/specs/divider.tsx#last-guide)
 
@@ -92,7 +94,7 @@
 import { Divider } from "@/components/ui/divider"
 
 <div>
-  <p className="flex justify-between py-x3">결제 수단<span>신한카드</span></p>
+  <p className="flex justify-between py-x3">결제 수단<span>생활비 카드</span></p>
   <Divider inset />
   <p className="flex justify-between py-x3">할부<span>3개월</span></p>
 </div>
@@ -159,6 +161,10 @@ import { Divider } from "@/components/ui/divider"
 - **들임(inset)은 코드에 있다** — SEED 디자인 문서는 "Figma 에서만" 이라 쓰지만 React · Lynx 에 있다. groo 도 둔다(16).
 
 ## Migration notes
+
+### 2026-10-22 — 세기 표는 고르는 참고, 화면 이름은 한 곳에
+
+"강함" 줄에 붙어 있던 화면 규칙("Desk 폰 화면은 묶음 · 구역마다 화면 폭 흰 띠")을 걷고 b1dfc58(10-03) 판의 "크게 다른 내용 사이" 로 되돌렸다 — SEED 의 세기 셋 가운데 강함 하나가 화면 규칙으로 번져 폰이 띠로 도배됐다. 폰 화면을 어떻게 나눌지는 화면 이관 때 화면마다 비교 페이지로 고른다(사용자 결정 — https://claude.ai/artifact/KrXqAymDPz1JKL5AWqdwKS 결정 1 · 3B). "꼭 필요할 때만" · "마지막에는 두지 않는다" 를 8 간격(띠)에도 건다(결정 4B). 코드 예시의 실제 카드사 이름을 지어낸 이름("생활비 카드")으로 바꿨다.
 
 ### 2026-10-03 — SEED Divider 로(옛 Separator 를 대신)
 

@@ -187,13 +187,13 @@ export const pageBannerExamples = [
     jsx: `import { PageBanner } from "@/components/ui/page-banner"
 
 <PageBanner tone="critical" title="연결 끊김" button={{ label: "다시 연결", onClick: reconnect }}>
-  토스증권 키가 만료돼 시세를 받지 못해요.
+  증권 연결 키가 만료돼 시세를 받지 못해요.
 </PageBanner>`,
     render: () =>
       screen(
         "증권",
-        pageBanner({ tone: "critical", title: "연결 끊김", button: "다시 연결", children: "토스증권 키가 만료돼 시세를 받지 못해요." }),
-        [["삼성전자 · 12주", "75,400원"], ["카카오 · 5주", "47,100원"]],
+        pageBanner({ tone: "critical", title: "연결 끊김", button: "다시 연결", children: "증권 연결 키가 만료돼 시세를 받지 못해요." }),
+        [["가람전자 · 12주", "75,400원"], ["누리소프트 · 5주", "47,100원"]],
       ),
   },
 
@@ -223,7 +223,7 @@ export const pageBannerExamples = [
           screen(
             "설정",
             pageBanner({ tone: "warning", variant: "solid", title: "곧 만료", button: "구독 보기", children: "Pro 이용이 10월 31일에 끝나요." }),
-            [["구독", "Pro"], ["결제 수단", "현대카드 M"]],
+            [["구독", "Pro"], ["결제 수단", "생활비 카드"]],
           ),
           "solid — 무거운 상태에만 · 흰 글",
         ),

@@ -79,7 +79,7 @@ rules:
   - when: { layout: single }
     enabled:
       footer:
-        direction: { value: row, note: "버튼 하나 폭 전체 — 알리기(\"확인\" 대신 결과에 맞는 동작 이름)" }
+        direction: { value: row, note: "버튼 하나 폭 전체 — 알리기. 고를 것이 없는 결과 알림은 \"확인\", 버튼이 일을 하면(다시 저장) 그 동작 이름(2026-10-22 5B)" }
 
 motion:
   "열림 — 확인창":

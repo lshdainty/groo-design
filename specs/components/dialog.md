@@ -88,6 +88,20 @@
 
 [그림: 닫는 자리 — 폼은 바닥 취소 · 조회는 머리 닫기 · 둘을 함께](../../site/components/specs/dialog.tsx#close-guide)
 
+### Alert Dialog 와 견주기
+
+SEED Dialog 문서의 비교 표 네 줄(쓰는 일 · 사용자 응답 · 닫기 버튼 · 크기)에 groo 에서 갈리는 세 줄을 더했다(2026-10-22 사용자 결정 1C — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj). 어느 떠 있는 표면을 쓸지 일곱을 한눈에 견준 표는 DESIGN.md Components 의 "시트 · 대화상자 · 확인창 · 팝오버" 한 벌이다(3C).
+
+| | Dialog | [Alert Dialog](alert-dialog.md) |
+|---|---|---|
+| 쓰는 일 | 작업 · 조회 · 입력 폼 — 사용자가 내용과 오가며 일한다 | 되돌릴 수 없는 일의 확인 · 꼭 알아야 할 알림 |
+| 사용자 응답 | 고르지 않고 닫고 돌아가도 된다 | 고르기 전에는 못 지나간다 |
+| 닫기 버튼 | 조회는 머리 닫기 · 입력 폼은 바닥 [취소](둘을 함께 두지 않는다) | 없다 — [취소] 가 닫는다 |
+| 크기 | medium · large, 높이는 화면의 80% 까지(본문만 스크롤) | 하나(최대 272), 넘치면 확인창 전체가 스크롤 |
+| 바깥(딤) · `Esc` *(groo)* | 조회는 둘 다 닫힘 · 입력 폼은 바깥 무시, `Esc` 는 취소 | 바깥 무시 · `Esc` 와 뒤로 가기는 취소 |
+| 1280 미만 *(groo)* | 같은 내용이 Bottom Sheet 로 바뀐다(Responsive Dialog) | 폰에서도 가운데 그대로 |
+| 버튼 *(groo)* | 바닥 오른쪽 small — 시트에서는 large | 반씩 나란히(길면 세로 · 확정 위), 1280 미만 medium · 이상 small |
+
 ### 대화상자에 두지 않는 것
 
 - 되돌릴 수 없는 확인 → [Alert Dialog](alert-dialog.md).
@@ -199,6 +213,10 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 대화상자 `z-modal-content` 101) — 그 안에서 연 Popover(L3) · Alert Dialog(L5)가 위에 뜬다(SEED 는 모두 2 + layerIndex).
 
 ## Migration notes
+
+### 2026-10-22 — Alert Dialog 와 견주는 표
+
+SEED Dialog 문서의 "Dialog vs Alert Dialog" 네 줄에 groo 의 세 줄(바깥 · `Esc` · 1280 미만 모양 · 버튼)을 더한 표를 두었다 — 폰에서 Dialog 는 시트가 되고 확인창만 가운데에 남는 것이 SEED 에 없는 차이다(사용자 결정 1C — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj). 떠 있는 표면 일곱을 고르는 큰 표는 DESIGN.md 한 벌로(3C). 값 변경 없음.
 
 ### 2026-10-03 — 본문 끝 흐림을 Scroll Fog 로
 

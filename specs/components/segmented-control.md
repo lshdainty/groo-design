@@ -60,6 +60,16 @@ Segmented Control 은 **조작**이다 — 고르면 화면의 그 내용만 바
 
 [그림: 쓰임 — 같은 내용을 다르게 보기 · 다른 구역으로 옮기기](../../site/components/specs/segmented-control.tsx#role-guide)
 
+비슷한 셋은 이렇게 견준다. 폼 값 · 설정 값을 고르는 표는 Select 의 ["고르는 컴포넌트 고르기"](select.md#고르는-컴포넌트-고르기) 한 곳이다(2026-10-22 사용자 결정 1B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym).
+
+| | Segmented Control | [Chip](chip.md) 필터 바 | [Tabs](tabs.md) |
+|---|---|---|---|
+| 핵심 용도 | 같은 내용을 거르기 · 정렬 · 다르게 보기 | 조건을 여럿 걸고 푼다 | 다른 구역 · 화면으로 옮긴다 |
+| 위치 | 바꾸는 내용 바로 위 | 목록 위 한 줄(가로 스크롤 · 끝 흐림) | 화면 · 구역 맨 위 |
+| 영향 범위 | 그 내용만 | 그 목록만 | 아래 전체를 바꾼다 |
+| 개수 | 2 ~ 4(사용자 결정) | 정해지지 않음 · 개수가 바뀐다 | 1차 Fill 5개까지 |
+| 한 화면에 | 하나(사용자 결정) — 둘째 축은 Chip 하나 고르기 · Select | 하나 | 1차 하나 + 2차 Chip Tabs |
+
 ### 내용 바로 위에, 한 화면에 하나
 
 자기가 바꾸는 내용 바로 위에 둔다 — 떨어져 있으면 무엇을 바꾸는지 알 수 없다. 한 화면에 하나만 둔다. 같은 모양이 둘이면 어느 것이 어느 내용을 바꾸는지 헷갈린다 — 둘째 축은 Chip(하나 고르기) · Select 로 둔다.
@@ -145,6 +155,10 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 - **알림 점은 브랜드 글자색**(`fg-brand`)이고, 보조 기술에 "새 소식" 을 덧붙인다. SEED 의 `bg.brand-solid` 짝은 groo 다크에서 트랙과 Desk · HR 1.33:1 이라 쓰지 않는다. 고른 칸에는 점을 그리지 않는다.
 
 ## Migration notes
+
+### 2026-10-22 — Chip 필터 바 · Tabs 와 견주는 표
+
+Segmented Control · Chip 필터 바 · Tabs 를 견주는 표를 두고, 폼 · 설정 값 고르기는 Select 의 "고르는 컴포넌트 고르기" 로 링크한다(사용자 결정 1B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym). 2 ~ 4 · 한 화면 하나는 10-02 결정 그대로다. 값 변경 없음.
 
 ### 2026-10-17 — 칸 글은 -static(03-B 결정 4 A)
 

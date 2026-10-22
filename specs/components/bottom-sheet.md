@@ -72,20 +72,19 @@
 
 1280 미만에서 지금 화면을 떠나지 않고 할 일 — 입력 폼(거래 추가 · 수정), 고르기(기간 · 정렬 · 날짜 — Input Button 의 시트), 조회(거래 상세). 같은 내용은 1280 이상에서 [Dialog](dialog.md) 로 뜬다 — 머리 · 본문 · 바닥은 같고 표면만 바뀐다. 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md), 줄의 동작 목록(수정 · 복사 · 삭제)은 Menu Sheet(그 차례에)다.
 
-| 이런 일 | 1280 미만 | 1280 이상 |
-|---|---|---|
-| 입력 폼 · 상세 | **Bottom Sheet** | [Dialog](dialog.md) |
-| 날짜 · 시각 · 아이콘 격자 · 긴 목록 고르기 | **Bottom Sheet**(Input Button) | [Popover](popover.md) |
-| Desk 데스크톱 벨의 알림 목록(768 이상) | **Bottom Sheet**(768 ~ 1279) | [Popover](popover.md) — 벨 아래 380(2026-10-16 사용자 결정 Q-017-3b B) |
-| 되돌릴 수 없는 확인 | [Alert Dialog](alert-dialog.md) | [Alert Dialog](alert-dialog.md) |
-| 줄의 동작 목록 | Menu Sheet(그 차례에) | Menu(그 차례에) |
-| 화면 높이의 90% 를 넘는 내용 | 페이지 | 페이지 |
+어느 떠 있는 표면을 쓸지 — 시트 · 대화상자 · 확인창 · 팝오버 · 메뉴 · 메뉴 시트 · 옆 패널을 한눈에 견준 "상황 → 고를 것" 표는 DESIGN.md Components 의 "시트 · 대화상자 · 확인창 · 팝오버" 한 벌이다(2026-10-22 사용자 결정 3C — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj). Desk 데스크톱 벨의 알림 목록도 그 표에 있다(768 ~ 1279 시트 · 1280 이상 [Popover](popover.md) — 2026-10-16 사용자 결정 Q-017-3b B).
 
 [그림: 쓰임 — 폼 · 고르기 · 조회는 시트 · 확인은 Alert Dialog](../../site/components/specs/bottom-sheet.tsx#role-guide)
 
 ### 90% 를 넘으면 페이지
 
-시트는 내용만큼 높고 화면 높이의 90% 를 넘지 않는다. 그보다 긴 내용은 시트 안 스크롤로 버티지 않고 페이지로 옮긴다 — 뒤로 가기 · 주소가 자연스럽게 따라온다.
+시트는 내용만큼 높고 화면 높이의 90% 를 넘지 않는다. 처음부터 길게 짠 내용은 시트를 90% 로 늘려 버티지 않고 페이지로 옮긴다 — 뒤로 가기 · 주소가 자연스럽게 따라온다(2026-10-02 사용자 결정). 다만 보통은 들어맞는 시트가 작은 화면 · 큰 글자 · 키보드로 넘치는 것은 페이지로 옮길 일이 아니다 — 본문만 스크롤하고 끝을 흐린다. SEED 도 같은 문서에서 두 상황을 나눈다("스크롤보다는 페이지로 표현하는 것을 권장" / "해상도 등으로 인해 … 90%를 넘는 경우 스크롤이 발생 · Scroll Fog")(2026-10-22 사용자 결정 9B — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj).
+
+| 상황 | 쓰는 것 | 주의 |
+|---|---|---|
+| 처음부터 길게 짠 내용 — 카테고리 전체 관리 · 단계가 셋 넘는 흐름 · 끝없는 목록 | 페이지 | 주소 · 뒤로 가기가 따라온다. 시트를 90% 로 늘려 버티지 않는다 |
+| 보통은 들어맞는데 작은 화면(360 × 568) · 큰 글자 · 키보드로 넘친 것 | Bottom Sheet 그대로 — 본문만 스크롤 + 끝 흐림 | 머리 · 바닥은 그대로 보인다. 넘칠 수 있는 본문(목록 · 긴 폼)에 [Scroll Fog](scroll-fog.md) |
+| 개수가 데이터에 따라 느는 목록(알림 · 검색 결과) | 시트 + 끝 흐림 — 길어질 수 있으면 페이지를 먼저 생각 | 시트에 둔다면 Scroll Fog 는 넘쳤는지 재지 않고 늘 건다 |
 
 [그림: 높이 — 내용만큼 · 90% 를 넘는 시트](../../site/components/specs/bottom-sheet.tsx#height-guide)
 
@@ -179,13 +178,14 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 - 1280 미만의 폼 · 상세 · 고르기를 시트로 — 1280 이상은 같은 내용을 Dialog 로.
 - 입력 폼은 바깥 · 끌기로 닫지 않고, 바뀐 값이 있으면 닫기 전에 묻는다.
 - 시트의 입력 폼은 위 닫기 + 바닥 저장 하나.
-- 화면 높이의 90% 를 넘는 내용은 페이지로.
+- 처음부터 화면 높이의 90% 를 넘게 짠 내용은 페이지로 — 작은 화면 · 큰 글자로 넘친 것은 본문만 스크롤 + 끝 흐림.
 
 ### ❌ Don't
 
 - 닫기 버튼과 바닥 취소를 함께.
 - 스냅 높이가 없는데 손잡이를 장식으로.
 - 되돌릴 수 없는 확인을 시트로(Alert Dialog).
+- 처음부터 화면을 넘게 짠 내용을 시트에 — 시트를 90% 로 늘려 버티기(페이지).
 - 입력 폼 시트 위에 또 입력 폼 시트를 겹치기 — 그 위에는 고르기 시트(Input Button)와 확인창만 뜬다.
 
 ## Specification
@@ -205,6 +205,10 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 시트 `z-modal-content` 101) — 그 위에 Popover(L3) · Alert Dialog(L5)가 뜬다.
 
 ## Migration notes
+
+### 2026-10-22 — 90% 와 본문 스크롤 · 표면 고르기 표는 한 벌
+
+"그보다 긴 내용은 시트 안 스크롤로 버티지 않는다" 와 "넘칠 수 있는 본문은 Scroll Fog" 가 한 문서에서 부딪쳤다. 결정(90% 를 넘는 내용은 페이지)은 그대로 두고 상황을 둘로 나눴다 — 처음부터 긴 내용은 페이지, 작은 화면 · 큰 글자 · 키보드로 넘친 것은 본문만 스크롤 + 끝 흐림(9B). yaml `maxHeight` 비고도 같은 말로. "이런 일 → 1280 미만 · 이상" 표는 DESIGN.md 의 큰 표 한 벌로 보냈다(3C) — 사용자 결정 https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj. 값 변경 없음. 앱의 85 ~ 92% 고정 시트 5곳(10-02 조사)은 "처음부터 긴 내용" 쪽이라 이관 때 페이지 · 내용 높이로 고른다.
 
 ### 2026-10-16 — 알림 목록
 

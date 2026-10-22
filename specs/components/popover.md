@@ -51,7 +51,9 @@
 
 ### 트리거에 붙는 짧은 것
 
-팝오버는 그 트리거에 대한 것만 담는다 — 칸 옆 안내 · 그 칸에 넣을 값 고르기(달력 · 시각 · 아이콘 격자 · 목록) · 짧은 동작, 그리고 그 버튼이 여는 목록 하나(Desk 데스크톱 머리 벨의 알림 목록 — 아래). 같은 내용이 1280 미만에서는 [Bottom Sheet](bottom-sheet.md) 로 뜬다(Input Button 이 폭으로 고른다). 폼 · 상세는 [Dialog](dialog.md), 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md), 줄의 동작 목록은 Menu(그 차례에)다.
+팝오버는 그 트리거에 대한 것만 담는다 — 칸 옆 안내 · 그 칸에 넣을 값 고르기(달력 · 시각 · 아이콘 격자 · 목록) · 짧은 동작, 그리고 그 버튼이 여는 목록 하나(Desk 데스크톱 머리 벨의 알림 목록 — 아래). 같은 내용이 1280 미만에서는 [Bottom Sheet](bottom-sheet.md) 로 뜬다(Input Button 이 폭으로 고른다). 폼 · 상세는 [Dialog](dialog.md), 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md), 줄의 동작 목록은 [Menu](menu.md) 다. 어느 떠 있는 표면을 쓸지 일곱을 견준 표는 DESIGN.md Components 의 "시트 · 대화상자 · 확인창 · 팝오버" 한 벌이다(2026-10-22 사용자 결정 3C — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj).
+
+**폼을 두지 않는 까닭** — 팝오버는 비모달이라 바깥 누르기 · `Tab` 으로 닫히고, 닫히면 입력이 사라진다. "바뀐 값이 있으면 닫기 전에 묻는다"([Field](field.md))와 함께 서지 못한다. 그래서 저장해야 남는 입력은 칸 하나라도 Dialog 다(1280 미만은 같은 폼이 시트로). 고르면 바로 들어가는 것(달력 · 시각 · 목록 · 아이콘)만 팝오버에 둔다 — 고르는 순간 값이 칸에 들어가 잃을 것이 없다(2026-10-22 사용자 결정 10C — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj). 옛 스펙(d593204^)은 "짧은 form(2–3 fields) 전용 — 4+ fields 는 dialog" 로 칸 수로 갈랐다 — 칸 수가 아니라 닫히면 잃는지가 경계라 이 경계는 기록으로만 남긴다.
 
 [그림: 쓰임 — 칸 옆 안내 · 고르는 패널 · 팝오버에 폼](../../site/components/specs/popover.tsx#role-guide)
 
@@ -177,7 +179,7 @@ const description = unread > 0 ? `읽지 않은 알림 ${unread}개` : "새 알�
 
 ### ❌ Don't
 
-- 팝오버에 폼 · 상세(Dialog).
+- 팝오버에 폼 · 상세(Dialog) — 저장해야 남는 입력은 칸 하나라도. 바깥 누르기 · `Tab` 으로 닫혀 입력이 사라진다.
 - 호버로 열기(도움말 말풍선은 Help Bubble — 그 차례에).
 - 팝오버 위에 팝오버(고르는 패널 안의 작은 패널은 예외 — 달력의 월 · 연도).
 - 1280 미만에서 팝오버(시트).
@@ -196,6 +198,10 @@ const description = unread > 0 ? `읽지 않은 알림 ${unread}개` : "새 알�
 - **z-index 는 specs/z-index.md 의 L3(`z-floating` 200)** — SEED 99999. 대화상자 · 시트(L2) 위, 확인창(L5) 아래.
 
 ## Migration notes
+
+### 2026-10-22 — 폼을 두지 않는 까닭과 경계
+
+"폼 · 상세는 Dialog" 금지는 그대로 두고 까닭(비모달 — 닫히면 입력이 사라진다)과 경계(저장해야 남는 입력은 칸 하나라도 Dialog, 고르면 바로 들어가는 것만 팝오버)를 적었다. 옛 경계(d593204^ — "2–3 fields 까지 · 4+ fields 는 Dialog")는 기록으로만 남긴다(사용자 결정 10C — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj). 값 변경 없음.
 
 ### 2026-10-16 — 알림 목록(Q-017-3b B)
 

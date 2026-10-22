@@ -74,10 +74,9 @@
 |---|---|
 | 그 기능 · 내용 가까이의 팁 · 제약 · 주의 | **Callout** — 본문 안, 그 내용 바로 위 |
 | 그 자리에서 난 오류(저장 · 제출 실패) | **Callout** `critical` — 폼 맨 위, 폼은 연 채로 |
-| 페이지 전체의 상태(연결 끊김 · 만료 예정) | [Page Banner](page-banner.md) — 페이지 맨 위 |
-| 방금 한 일의 결과 | [Snackbar](snackbar.md) |
-| 몰라도 일은 할 수 있는 긴 설명 | [Help Bubble](help-bubble.md)(ⓘ) |
-| 입력값 하나가 틀림 | [Field](field.md) 의 오류 문구(칸 아래) |
+| 시트 · 대화상자가 열린 채 봐야 할 결과(저장 실패 · 계산 결과) | **Callout** — 그 안 폼 맨 위. 창을 닫으며 끝나는 일은 닫힌 뒤 [Snackbar](snackbar.md) |
+
+다른 알림(Snackbar · Page Banner · Result Section · Alert Dialog)과 고르는 표 · 다섯 부품 견주기는 [Snackbar 의 "무엇으로 알리나"](snackbar.md) 한 벌이다(2026-10-22 사용자 결정 3B · 2B — https://claude.ai/artifact/NuEPiLRH2fJidXdKzcDsCX). 몰라도 일은 할 수 있는 긴 설명은 [Help Bubble](help-bubble.md)(ⓘ), 입력값 하나가 틀리면 [Field](field.md) 의 오류 문구(칸 아래)다.
 
 [그림: Callout 은 그 자리 · Page Banner 는 페이지 맨 위 · Snackbar 는 잠깐](../../site/components/specs/callout.tsx#role-guide)
 
@@ -188,6 +187,10 @@ import { Callout } from "@/components/ui/callout"
 - **닫기 버튼의 누름 바탕은 톤의 누름 색**(`bg-*-weak-pressed`) — SEED 투명 누름 색의 불투명 짝.
 
 ## Migration notes
+
+### 2026-10-22 — 알림 고르는 표는 한 벌
+
+"어디에 두나" 표의 다른 부품 줄(Page Banner · Snackbar · Help Bubble · Field)을 걷고 Callout 줄만 남겨, 고르는 표 · 다섯 부품 견주기는 Snackbar 문서 한 벌로 링크한다(3B). 시트 · 대화상자가 열린 채 봐야 할 결과는 그 안 Callout 이라는 줄을 더했다(2B) — 사용자 결정 https://claude.ai/artifact/NuEPiLRH2fJidXdKzcDsCX. 값 변경 없음.
 
 ### 2026-10-02 — SEED Callout 으로 새로 둔다(옛 Alert 를 대신)
 

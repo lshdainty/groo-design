@@ -144,7 +144,7 @@ const Layout: Fig = ({ caption }) => {
             <GroupAlert mode="auto" />
           </Stage>
         </Shot>
-        <Shot strong="single — 하나" cap="알리기만 할 때 — 폭 전체, 결과에 맞는 동작 이름">
+        <Shot strong="single — 하나" cap="알리기만 할 때 — 폭 전체. 버튼이 일을 하면 동작 이름, 닫기만 하면 &quot;확인&quot;">
           <Stage s={0.75}>
             <AlertSurface look={al()} title="저장하지 못했어요" description="연결을 확인하고 다시 저장해 주세요." confirm={{ label: '다시 저장', look: b('neutralSolid') }} />
           </Stage>

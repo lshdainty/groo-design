@@ -12,9 +12,9 @@ const attr = (cond: boolean, s: string) => (cond ? [s] : []);
 const q = (s: string) => JSON.stringify(s);
 
 const ROWS: DemoRow[] = [
-  { id: 'lunch', title: '점심 식사', sub: '식비 · 현대카드 M', amount: '−12,000원', hue: 'orange' },
-  { id: 'cafe', title: '스타벅스', sub: '카페 · 현대카드 M', amount: '−5,600원', hue: 'orange' },
-  { id: 'subway', title: '지하철', sub: '교통 · 국민 체크카드', amount: '−1,450원', hue: 'blue' },
+  { id: 'lunch', title: '점심 식사', sub: '식비 · 생활비 카드', amount: '−12,000원', hue: 'orange' },
+  { id: 'cafe', title: '골목커피', sub: '카페 · 생활비 카드', amount: '−5,600원', hue: 'orange' },
+  { id: 'subway', title: '지하철', sub: '교통 · 교통 체크카드', amount: '−1,450원', hue: 'blue' },
 ];
 
 // ══ Snackbar ═════════════════════════════════════════════
@@ -104,7 +104,7 @@ export function SnackbarPlayground({ looks }: { looks: Record<Brand, SnackbarLoo
           <div className="flex flex-col gap-1.5 text-[12px] text-fd-muted-foreground">
             <span className="font-medium">시간</span>
             <span>
-              액션이 없으면 {look.duration.plain / 1000}초, 있으면 {look.duration.withAction / 1000}초. 띄우기를 다시 누르면 지금 띠를 바로 바꾼다.
+              액션이 없으면 {look.duration.plain / 1000}초, 있으면 {look.duration.withAction / 1000}초. 띄우기를 다시 누르면 지금 띠를 바로 바꾼다 — 액션이 달린 띠는 끝날 때까지 지키고 새 띠는 그 뒤에 뜬다.
             </span>
           </div>
           <div className="flex flex-wrap gap-5">
@@ -216,9 +216,9 @@ export function CalloutPlayground({ looks }: { looks: Record<Brand, CalloutLook>
 const BANNER_TEXT: Record<FbTone, { title: string; text: string; button: string }> = {
   neutral: { title: '점검 예정', text: '10월 5일 새벽 2시부터 30분 동안 점검해요.', button: '자세히' },
   informative: { title: '새 버전', text: '새 버전 1.24.0을 받을 수 있어요.', button: '업데이트' },
-  positive: { title: '연결됨', text: '토스증권 시세를 다시 받아요.', button: '자세히' },
+  positive: { title: '연결됨', text: '증권 시세를 다시 받아요.', button: '자세히' },
   warning: { title: '곧 만료', text: 'Pro 이용이 10월 31일에 끝나요.', button: '구독 보기' },
-  critical: { title: '연결 끊김', text: '토스증권 키가 만료돼 시세를 받지 못해요.', button: '다시 연결' },
+  critical: { title: '연결 끊김', text: '증권 연결 키가 만료돼 시세를 받지 못해요.', button: '다시 연결' },
 };
 
 export function PageBannerPlayground({ looks }: { looks: Record<Brand, PageBannerLook> }) {

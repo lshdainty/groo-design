@@ -1200,7 +1200,7 @@ export function renderRadioGallery(brand) {
   );
 
   // 4. 묶음 — 제목 아래 세로로 쌓고 처음 값(반복 없음)을 골라 둔다
-  const repeats = ["반복 없음", "매일", "매주", "매월", "매년"];
+  const repeats = ["반복 없음", "매일", "매주", "매월"]; // 넷 — 5개 이상은 Select(2026-10-22 2B)
   const groupPanel = `
     <div class="vignette-card cb-panel">
       <div class="vignette-head">
@@ -3800,7 +3800,7 @@ export function renderOverlayGallery(brand) {
     `${samples([
       sample("나란히 — 폰 · medium 40", "horizontal — [취소] [삭제] 반씩 · criticalSolid", alertPhone(alertDialog({ title: "거래를 삭제할까요?", description: "삭제한 거래는 되돌릴 수 없어요.", action: "삭제" }))),
       sample("세로 — 확정 글이 반 폭을 넘을 때", "vertical — 확정이 위 · 둘 다 폭 전체", alertPhone(alertDialog({ title: "관심 그룹을 삭제할까요?", description: "그룹에 담은 종목 12개도 함께 빠져요.", action: "그룹과 종목 함께 삭제" }))),
-      sample("하나 — 알리기", "single — 결과에 맞는 동작 이름 · neutralSolid", alertPhone(alertDialog({ title: "로그인이 만료됐어요", description: "30분 동안 쓰지 않아 로그아웃했어요. 다시 로그인해 주세요.", action: "다시 로그인", tone: "neutral", single: true }))),
+      sample("하나 — 알리기", "single — 일을 하면 동작 이름 · 닫기만 하면 \"확인\" · neutralSolid", alertPhone(alertDialog({ title: "로그인이 만료됐어요", description: "30분 동안 쓰지 않아 로그아웃했어요. 다시 로그인해 주세요.", action: "다시 로그인", tone: "neutral", single: true }))),
     ])}${samples([
       sample("데스크톱 웹 · 대화상자 위 — small 36", "작성 중 나가기 — 확인창 L5(300 · 301)가 대화상자 L2(100 · 101) 위", alertOverDialog),
     ], `${DESKTOP} pov-samples--next`)}`,
@@ -4052,7 +4052,7 @@ export function renderFeedbackGallery(brand) {
     s.tone ? ` data-psnack-tone="${s.tone}"` : ""}${s.action ? ` data-psnack-action="${escape(s.action)}"` : ""}><span>${escape(s.label)}</span></button>`).join("");
   const livePanel = panel(
     "Snackbar — 직접 띄워 보기: 4초 · 액션 6초 · 머무는 동안 멈춤 · 한 번에 하나",
-    "버튼을 누르면 폰 아래(탭 바 위 8)에 띠가 150ms 로 가운데에서 커지며 나타난다(scale 0.8 → 1 · 투명도, ease-enter — 모션 줄이기면 투명도만). 액션이 없으면 4초, 있으면 6초 뒤 100ms 로 사라진다. 마우스를 올리거나 · 손가락으로 누르고 있거나 · 키보드 초점이 띠 안에 있으면 멈추고, 모두 떠나면 처음부터 다시 센다. 다른 버튼을 누르면 지금 띠를 바로 걷고(100ms) 새 띠를 띄운다 — 쌓지 않는다. 액션을 누르면 닫히고, Esc · 띠 누르기로는 닫히지 않는다. 초점은 옮기지 않는다 — 자리(aria-live=\"polite\")가 글을 읽힌다. 남은 시간은 옆 글이 보인다.",
+    "버튼을 누르면 폰 아래(탭 바 위 8)에 띠가 150ms 로 가운데에서 커지며 나타난다(scale 0.8 → 1 · 투명도, ease-enter — 모션 줄이기면 투명도만). 액션이 없으면 4초, 있으면 6초 뒤 100ms 로 사라진다. 마우스를 올리거나 · 손가락으로 누르고 있거나 · 키보드 초점이 띠 안에 있으면 멈추고, 모두 떠나면 처음부터 다시 센다. 다른 버튼을 누르면 지금 띠를 바로 걷고(100ms) 새 띠를 띄운다 — 쌓지 않는다. 지금 띠에 액션(되돌리기)이 있으면 그 띠가 끝난 뒤에 새 띠가 뜬다(기다리는 띠는 하나). 액션을 누르면 닫히고, Esc · 띠 누르기로는 닫히지 않는다. 초점은 옮기지 않는다 — 자리(aria-live=\"polite\")가 글을 읽힌다. 남은 시간은 옆 글이 보인다.",
     `
       <div class="pfb-live">
         <div class="pfb-phone pfb-phone--screen pfb-phone--tabbar">${head("가계부")}<div class="pfb-phone-body">${ledgerRows()}</div><div class="psnack-region" id="${regionId}" role="region" aria-label="알림" aria-live="polite"></div>${tabbar}</div>
@@ -4067,7 +4067,7 @@ export function renderFeedbackGallery(brand) {
   const calloutText = {
     neutral: {
       display: { title: "안내", description: "지난달 거래는 이번 달 예산에 들지 않아요.", link: "자세히" },
-      actionable: { description: "토스증권을 연결하면 보유 주식이 자산에 더해져요." },
+      actionable: { description: "증권 계좌를 연결하면 보유 주식이 자산에 더해져요." },
       dismissible: { title: "새 기능", description: "자산마다 금액을 가릴 수 있어요." },
     },
     informative: {
@@ -4153,9 +4153,9 @@ export function renderFeedbackGallery(brand) {
   const bannerText = {
     neutral: { title: "지난 기록", description: "2025년 가계부를 보고 있어요.", button: "올해로 가기" },
     informative: { title: "새 버전", description: "새 버전이 나왔어요. 새로 고치면 바로 쓸 수 있어요.", button: "새로 고침" },
-    positive: { title: "연결됨", description: "토스증권을 연결했어요. 보유 주식이 자산에 더해져요.", button: "자산 보기" },
+    positive: { title: "연결됨", description: "증권 계좌를 연결했어요. 보유 주식이 자산에 더해져요.", button: "자산 보기" },
     warning: { title: "곧 만료", description: "Pro 이용이 10월 31일에 끝나요.", button: "구독 보기" },
-    critical: { title: "연결 끊김", description: "토스증권 키가 만료돼 시세를 받지 못해요.", button: "다시 연결" },
+    critical: { title: "연결 끊김", description: "증권 연결 키가 만료돼 시세를 받지 못해요.", button: "다시 연결" },
   };
   const bannerHead = { neutral: "가계부", informative: "홈", positive: "증권", warning: "설정", critical: "증권" };
   const screenTop = (title, banner) => `<div class="pfb-top">${head(title, "pfb-top-head")}${banner}<div class="pfb-top-body" aria-hidden="true"><span></span><span></span></div></div>`;
@@ -4192,7 +4192,7 @@ export function renderFeedbackGallery(brand) {
     { ko: "닫기", en: "닫기 40 — 바탕 없음 · 닫기만 축소", args: { tone: "informative", interaction: "dismissible", title: "새 기능", description: "반복 거래를 자동으로 기록할 수 있어요." }, map: { pressed: "closePressed", focus: "closeFocus" } },
     // 짙은 바탕 — 링은 띠 글자색(neutral 은 fg-neutral-inverted, 나머지는 흰 글)
     { ko: "짙은 · 전체 누르기", en: "solid neutral — bg-neutral-inverted-pressed · 링 fg-neutral-inverted", args: { tone: "neutral", variant: "solid", interaction: "actionable", title: "공지", description: "새 공지 2개가 있어요." }, map: { hover: "hover", pressed: "pressed", focus: "focus" } },
-    { ko: "짙은 · 버튼", en: "solid critical — 링 static-white", args: { tone: "critical", variant: "solid", title: "연결 끊김", description: "토스증권 키가 만료돼 시세를 받지 못해요.", button: "다시 연결" }, map: { pressed: "buttonPressed", focus: "buttonFocus" } },
+    { ko: "짙은 · 버튼", en: "solid critical — 링 static-white", args: { tone: "critical", variant: "solid", title: "연결 끊김", description: "증권 연결 키가 만료돼 시세를 받지 못해요.", button: "다시 연결" }, map: { pressed: "buttonPressed", focus: "buttonFocus" } },
     { ko: "짙은 · 닫기", en: "solid informative — 링 static-white", args: { tone: "informative", variant: "solid", interaction: "dismissible", title: "새 버전", description: "새로 고치면 바로 쓸 수 있어요." }, map: { pressed: "closePressed", focus: "closeFocus" } },
   ];
   const bannerStates = matrix("pbanner-matrix pbanner-matrix--states", "부위", bannerStateCols, bannerStateRows, (r, c) => {
@@ -5620,7 +5620,7 @@ export function renderDisplayGallery(brand) {
 
   // 12. Divider — 들인 선 · 끝까지 선 · 세로 · 8 간격(선이 아니다)
   const kv = (k, v) => `<div class="pdsp-kv"><span>${escape(k)}</span><span>${escape(v)}</span></div>`;
-  const detailPhone = `<div class="pdsp-phone pdsp-phone--basement"><div class="pdsp-layer"><div class="pdsp-screen-head"><div class="ptf-screen-title">스타벅스 강남역점</div></div><div class="pdsp-amount-big">5,600원</div><div class="pdsp-pad-x">${tagGroup({ items: [{ text: "카페" }, { text: "10월 3일 (토) 오후 2:10" }] })}</div><div class="pdsp-gap"></div><div class="pdsp-kv-group">${kv("결제 수단", "신한카드")}${divider({ inset: true })}${kv("할부", "일시불")}${divider({ inset: true })}${kv("카테고리", "카페")}</div>${divider()}<div class="pdsp-memo"><div class="pdsp-memo-title">메모</div><div class="pdsp-memo-body">회의 전 커피 — 팀 4명</div></div></div><div class="pdsp-layer"><div class="pdsp-stats">${[["수입", "3,200,000원"], ["지출", "1,284,500원"], ["남은 돈", "1,915,500원"]].map(([k, v], i) => `${i ? divider({ orientation: "vertical", inset: true }) : ""}<div class="pdsp-stat"><span>${escape(k)}</span><strong>${escape(v)}</strong></div>`).join("")}</div></div></div>`;
+  const detailPhone = `<div class="pdsp-phone pdsp-phone--basement"><div class="pdsp-layer"><div class="pdsp-screen-head"><div class="ptf-screen-title">골목커피 강남역점</div></div><div class="pdsp-amount-big">5,600원</div><div class="pdsp-pad-x">${tagGroup({ items: [{ text: "카페" }, { text: "10월 3일 (토) 오후 2:10" }] })}</div><div class="pdsp-gap"></div><div class="pdsp-kv-group">${kv("결제 수단", "생활비 카드")}${divider({ inset: true })}${kv("할부", "일시불")}${divider({ inset: true })}${kv("카테고리", "카페")}</div>${divider()}<div class="pdsp-memo"><div class="pdsp-memo-title">메모</div><div class="pdsp-memo-body">회의 전 커피 — 팀 4명</div></div></div><div class="pdsp-layer"><div class="pdsp-stats">${[["수입", "3,200,000원"], ["지출", "1,284,500원"], ["남은 돈", "1,915,500원"]].map(([k, v], i) => `${i ? divider({ orientation: "vertical", inset: true }) : ""}<div class="pdsp-stat"><span>${escape(k)}</span><strong>${escape(v)}</strong></div>`).join("")}</div></div></div>`;
   const dividerSpecs = (cls) => samples([
     sample("가로 · 끝까지 — 묶음 사이", "<Divider /> — 부모 폭 · 1px stroke-neutral-subtle", surface(`<div class="pdsp-divider-demo">${divider()}</div>`, "pdsp-surface--flush")),
     sample("가로 · 들임 — 같은 묶음 안", "<Divider inset /> — 양끝 16", surface(`<div class="pdsp-divider-demo">${divider({ inset: true })}</div>`, "pdsp-surface--flush")),
@@ -9126,7 +9126,7 @@ const PCOL_LONG_DETAIL = [
 ].join("\n");
 const PCOL_BENEFITS = [
   { id: "pay", title: "온라인 간편결제 · 배달앱 · 해외 직구 통합 할인", summary: "네이버페이 · 카카오페이 · 토스페이 결제 시 이용금액의 10% 결제일 할인(월 최대 2만 원)", detail: PCOL_LONG_DETAIL },
-  { id: "coffee", title: "커피", summary: "스타벅스 · 투썸플레이스 · 이디야 50% 할인", detail: "■ 할인 대상: 스타벅스 · 투썸플레이스 · 이디야 커피 매장 이용금액\n■ 월 2회 · 회당 최대 5천 원" },
+  { id: "coffee", title: "커피", summary: "골목커피 · 숲속다방 · 달빛로스터리 50% 할인", detail: "■ 할인 대상: 골목커피 · 숲속다방 · 달빛로스터리 커피 매장 이용금액\n■ 월 2회 · 회당 최대 5천 원" },
   { id: "transit", title: "대중교통", summary: "버스 · 지하철 10% 청구할인", detail: null },
   { id: "telecom", title: "통신", summary: "SKT · KT · LG U+ 자동이체 5천 원 할인", detail: "■ 통신요금을 이 카드로 자동이체할 때\n■ 전월 실적 30만 원 이상" },
   { id: "store", title: "편의점", summary: "GS25 · CU · 세븐일레븐 5% 할인", detail: null },
@@ -9161,7 +9161,7 @@ const PCOL_FILTERS = [["기간", "2026. 10. 1. ~ 2026. 10. 31."], ["작성자", 
 const PCOL_DEPTS = [
   {
     id: "root",
-    label: "포레스트 디지털혁신본부 클라우드 플랫폼 운영 그룹",
+    label: "가람누리 디지털혁신본부 클라우드 플랫폼 운영 그룹",
     children: [
       { id: "infra", label: "클라우드 인프라팀", children: [{ id: "k8s", label: "쿠버네티스 운영 파트" }, { id: "net", label: "네트워크 · 보안 파트(야간 당직 포함)" }] },
       { id: "data", label: "데이터 플랫폼팀", children: [{ id: "eng", label: "데이터 엔지니어링 파트" }, { id: "ana", label: "분석 파트" }] },
@@ -9352,7 +9352,7 @@ function prsz({ listId = nextPcolId("prsz-list"), size = 25, min = 20, max = 40,
   return `<div ${attrsOf(['class="prsz"', live && `data-prsz-live="${live}"`, 'data-prsz-default="25"', 'data-prsz-toggle="40"'])}><div class="prsz-panel prsz-panel--list" id="${listId}" style="flex-basis: ${size}%;">${left}</div>${handle}<div class="prsz-panel prsz-panel--fill">${right}</div></div>`;
 }
 // 화면의 내용 — 부서 나무(이름만) · 조직도
-const prszTreePane = () => `<div class="prsz-pane"><div class="prsz-pane-title">부서</div>${["포레스트 디지털혁신본부 클라우드 플랫폼 운영 그룹", "클라우드 인프라팀", "데이터 플랫폼팀", "경영지원팀", "프로젝트 1팀", "프로젝트 2팀"].map((d, i) => `<div class="prsz-pane-row${d === "경영지원팀" ? " prsz-pane-row--on" : ""}" style="--ptree-level: ${i === 0 ? 0 : 1};">${escape(d)}</div>`).join("")}</div>`;
+const prszTreePane = () => `<div class="prsz-pane"><div class="prsz-pane-title">부서</div>${["가람누리 디지털혁신본부 클라우드 플랫폼 운영 그룹", "클라우드 인프라팀", "데이터 플랫폼팀", "경영지원팀", "프로젝트 1팀", "프로젝트 2팀"].map((d, i) => `<div class="prsz-pane-row${d === "경영지원팀" ? " prsz-pane-row--on" : ""}" style="--ptree-level: ${i === 0 ? 0 : 1};">${escape(d)}</div>`).join("")}</div>`;
 const prszChartPane = () => `<div class="prsz-pane prsz-pane--chart"><div class="prsz-pane-title">경영지원팀 · 조직도</div><div class="prsz-people">${["팀장 김하늘", "이도윤", "박서연", "최민준", "정우진"].map((p) => `<span class="prsz-person">${escape(p)}</span>`).join("")}</div></div>`;
 // 위젯 — 대시보드 편집 모드의 위젯 하나(Card 면 · 머리 ⋮ · 오른쪽 아래 모서리 손잡이 24 · 표식 9). cols 는 12칸 가운데 몇 칸
 const PRSZ_SIZES = [
@@ -9504,7 +9504,7 @@ export function renderCollapseGallery(brand) {
     matrix("pcol-matrix", "상태", [
       { ko: "inline", en: "연속 목록", v: "inline" },
       { ko: "separated", en: "항목마다 Card 면", v: "separated" },
-    ], ACC_STATES, (r, c) => `<div class="pcol-surface pcol-surface--cell">${pacc({ variant: c.v, rows: [paccItem({ variant: c.v, icon: "coffee", title: "커피", description: "스타벅스 · 투썸플레이스 · 이디야 50% 할인", detail: "", state: r.i === "disabled" ? "" : r.i, disabled: r.i === "disabled" })] })}</div>`),
+    ], ACC_STATES, (r, c) => `<div class="pcol-surface pcol-surface--cell">${pacc({ variant: c.v, rows: [paccItem({ variant: c.v, icon: "coffee", title: "커피", description: "골목커피 · 숲속다방 · 달빛로스터리 50% 할인", detail: "", state: r.i === "disabled" ? "" : r.i, disabled: r.i === "disabled" })] })}</div>`),
   );
 
   // 직접
@@ -20200,6 +20200,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
     // 알림 메시지 (2026-10-02) — snackbar.tsx · callout.tsx · page-banner.tsx · result-section.tsx 가 하는 일 가운데 그림에 필요한 것을 흉내 낸다(03l · 09 · 11 · 19 · 20).
     // 누름 배율의 기준 = max(높이, 폭 ÷ 4, 24) — 액션 · 콜아웃 · 배너 · 버튼 · 닫기는 누르는 순간(포인터 · 키) 재서 --press-basis 로 넘긴다. 그 순간을 멈춘 누름은 그릴 때 잰다.
     // 스낵바 — [data-psnack-show] 버튼이 이어진 자리(data-psnack-target)에 띠를 띄운다. 한 번에 하나 — 띠가 있으면 100ms 로 걷고 새 띠를 150ms 로 띄운다.
+    // 지금 띠에 액션이 있으면 끝날 때까지 지키고 새 띠는 그 뒤에 띄운다(2026-10-22 1B — 기다리는 띠는 하나, 마지막 것만).
     // 액션이 없으면 4초, 있으면 6초 뒤 걷는다. 마우스를 올리거나 · 누르고 있거나 · 키보드 초점이 띠 안에 있으면 멈추고, 모두 떠나면 처음부터 다시 센다.
     // 액션 · 닫기를 누르면 걷는다 — Esc · 띠 누르기로는 닫히지 않는다. 걷는 동안은 aria-hidden 이고, 초점은 옮기지 않는다. 남은 시간은 곁의 글(data-psnack-status)이 보인다.
     // data-pfb-live 콜아웃 · 배너의 닫기는 바로 걷고 초점을 다음 요소로 옮긴다. 결과의 다시 시도(data-presult-retry)는 버튼에 로딩을 걸고 1.2초 뒤 곁의 <template> 내용으로 바꾼다.
@@ -20262,6 +20263,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
         region._next = null;
         var el = build(o);
         el._total = o.action ? 6000 : 4000;
+        el._action = !!o.action;
         el._holds = {};
         el._release = function () { if (el._holds.press) hold(region, el, "press", false); };
         region._cur = el;
@@ -20301,8 +20303,10 @@ function renderHtml(brandName, css, tokens, sourceFile) {
         var region = document.getElementById(btn.getAttribute("data-psnack-target"));
         if (!region) return;
         region._next = { tone: btn.getAttribute("data-psnack-tone") || "neutral", message: btn.getAttribute("data-psnack-message"), action: btn.getAttribute("data-psnack-action") || "" };
-        if (region._cur) leave(region, region._cur);
-        else enter(region);
+        if (region._cur) {
+          if (region._cur._action && !region._cur._leaving) return status(region, "액션 띠가 끝나면 새 띠가 뜬다.");
+          leave(region, region._cur);
+        } else enter(region);
       });
 
       // 콜아웃 · 배너 닫기 — 초점은 상자 다음의 초점 받을 요소로(body 로 떨어지지 않게)

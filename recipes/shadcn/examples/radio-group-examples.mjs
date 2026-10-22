@@ -358,7 +358,7 @@ export const radioGroupExamples = [
         `<label class="group/radio" style="display:flex; cursor:pointer; align-items:center; gap:var(--spacing-x3); padding:var(--spacing-x3) var(--spacing-x6);"><span style="${text}">${label}</span>${radiomark({ checked, disabled })}</label>`;
       return `<div style="display:flex; flex-direction:column; gap:var(--spacing-x2);">
   <span style="${CAPTION}">줄 전체가 누르는 영역</span>
-  <div style="${list}">${radioGroup(repeat(["none", "daily", "weekly", "monthly", "yearly"]), { value: "none", ariaLabel: "반복", row })}</div>
+  <div style="${list}">${radioGroup(repeat(["none", "daily", "weekly", "monthly"]), { value: "none", ariaLabel: "반복", row })}</div>
 </div>`;
     },
   },

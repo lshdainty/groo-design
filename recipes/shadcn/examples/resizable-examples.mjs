@@ -247,7 +247,7 @@ const SIZES = [
 
 // 화면의 내용(미리보기 그림) — 부서 나무(이름만) · 조직도 자리
 const TEXT = "font-family:var(--font-sans); color:var(--color-fg-neutral);";
-const DEPTS = ["포레스트 디지털혁신본부 클라우드 플랫폼 운영 그룹", "클라우드 인프라팀", "데이터 플랫폼팀", "경영지원팀", "프로젝트 1팀", "프로젝트 2팀"];
+const DEPTS = ["가람누리 디지털혁신본부 클라우드 플랫폼 운영 그룹", "클라우드 인프라팀", "데이터 플랫폼팀", "경영지원팀", "프로젝트 1팀", "프로젝트 2팀"];
 const treePane = () =>
   `<div style="${TEXT} padding:var(--spacing-x3) var(--spacing-x2);"><div style="padding:0 var(--spacing-x2) var(--spacing-x2); font-size:var(--text-t6); line-height:var(--text-t6--line-height); font-weight:700;">부서</div>${DEPTS.map(
     (d, i) =>

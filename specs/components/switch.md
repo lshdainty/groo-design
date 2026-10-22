@@ -117,20 +117,14 @@ Switch 는 누르는 순간 결과가 나타나는 설정에만 쓴다. 저장 �
 
 ### 설정 줄
 
-"라벨 왼쪽 · 스위치 오른쪽" 줄(제목 · 설명 · 아이콘이 붙는다)은 Switch 가 아니라 **List** 의 스위치 줄(`ListSwitchItem`)이다(사용자 결정 — SEED 와 같다). 줄의 여백 · 글자 · 누름은 [List](list.md) 가 정하고, Switch 는 그 줄에 스위치만(Switchmark 32) 끼운다.
+"라벨 왼쪽 · 스위치 오른쪽" 줄(제목 · 설명 · 아이콘이 붙는다)은 Switch 가 아니라 **List** 의 스위치 줄(`ListSwitchItem`)이다(사용자 결정 — SEED 와 같다). 줄의 여백 · 글자 · 누름은 [List](list.md) 가 정하고, Switch 는 그 줄에 스위치만(Switchmark 32) 끼운다. 줄 모양의 규칙이다 — 화면 전체를 List 로 그리라는 말이 아니다(2026-10-22 7B).
 
 - 줄 전체가 누르는 영역이다 — 줄이 `<label>` 이라 줄의 제목이 스위치의 이름이 된다.
 - 줄을 누르면 줄의 콘텐츠가 함께 줄고, 스위치는 따로 줄지 않는다(기초 Feedback v104 — SEED 도 List 안의 스위치 축소를 끈다).
 
 ### Switch 와 Checkbox
 
-둘 다 켜고 끄는 선택을 보인다.
-
-| | Checkbox | Switch |
-|---|---|---|
-| 값이 적용될 때 | 저장 같은 액션을 해야 적용(권장) | 누르는 순간 적용 — 저장해야 적용되는 값에는 쓰지 않는다 |
-| 항목 구성 | 한 묶음에 여러 항목 | 항목마다 따로 |
-| 하위 항목 | 부모가 모두를 고르고 풀 수 있다 | 부모와 하위 사이 관계 없음 |
+둘 다 켜고 끄는 선택을 보인다. 값이 적용될 때 · 항목 구성 · 하위 항목 · 경계 사례(결제 알림 · 단종 카드 포함 · 일정 종일은 Switch, 고정 금액으로 기록은 Checkbox)를 견준 표는 [Checkbox 의 "Checkbox 와 Switch"](checkbox.md#checkbox-와-switch) 한 벌이다(2026-10-22 사용자 결정 7B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym).
 
 ## 코드
 
@@ -251,6 +245,10 @@ import { Switchmark } from "@/components/ui/switch"
 - 줄 안의 맞춤은 가운데다 — SEED 는 긴 라벨의 첫 줄에 스위치를 맞춘다.
 
 ## Migration notes
+
+### 2026-10-22 — 견주는 표는 Checkbox 한 벌
+
+"Switch 와 Checkbox" 표를 Checkbox 문서의 표 한 벌(경계 사례 줄 포함)로 링크하고, 설정 줄 문장에 "줄 모양의 규칙 — 화면 전체를 List 로 그리라는 말이 아니다" 를 더했다(사용자 결정 7B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym). 결정 그대로, 값 변경 없음.
 
 ### 2026-10-08 — 라벨 안 링크는 Don't
 

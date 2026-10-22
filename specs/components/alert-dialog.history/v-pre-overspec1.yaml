@@ -1,0 +1,101 @@
+# Alert Dialog 의 수치 원본 — 구조는 SEED Alert Dialog(2026-10-02 사용자 결정, 비교 페이지 1 · 6).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 되돌릴 수 없는 일을 하기 전에 묻는 확인창 — 액션 둘 이하(취소 · 확정)의 양자택일, 또는 알리기만 하는 한 버튼.
+# 폰 · 데스크톱 모두 화면 정중앙에 같은 모양으로 뜬다. 닫기 버튼이 없고, 바깥을 눌러도 닫히지 않으며, Esc 는 취소다.
+# 입력칸을 넣지 않는다 — 입력이 필요하면 Dialog · Bottom Sheet.
+#
+# SEED 와 다른 자리(alert-dialog.md 의 "SEED 와 다른 점")
+#   - 버튼: 1280 미만 medium 40(SEED 와 같다), 1280 이상 small 36(Button 결정 — 대화상자 바닥 36).
+#   - 딤: SEED bg.overlay 0.455 → groo overlay-dim 0.50 · 다크 0.65(v102).
+#   - z-index: specs/z-index.md 의 L5(딤 z-alert 300 · 확인창 z-alert-content 301) — 열린 Dialog · Bottom Sheet 위에 뜬다(SEED 는 모두 2 + layerIndex).
+
+name: AlertDialog
+
+slots:
+  overlay: 딤 — 확인창 뒤 화면 전체
+  root: 확인창 — 화면 정중앙
+  title: 제목 — 묻는 말(되돌릴 수 없는 일이면 그 일)
+  description: 설명 — 결과 · 되돌릴 수 없다는 사실. 늘 있다
+  footer: 바닥 — 버튼 둘(취소 · 확정) 또는 하나(알리기)
+  focusRing: 키보드 포커스 링(웹)
+
+variants:
+  layout:
+    horizontal: 기본 — 버튼 둘을 나란히(취소 왼쪽 · 확정 오른쪽, 반씩)
+    vertical: 버튼 글이 길어 반 폭을 넘을 때 — 세로로 쌓고 확정이 위
+    single: 알리기만 할 때 — 버튼 하나, 폭 전체
+
+defaults:
+  layout: horizontal
+
+states:
+  enabled: 열림
+  focused: 웹 — 키보드 포커스에만 링
+
+rules:
+  - when: {}
+    enabled:
+      overlay:
+        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "groo 딤(v102)" }
+        zIndex: { value: 300, note: "z-alert — specs/z-index.md L5. 열린 대화상자 · 시트 위" }
+      root:
+        maxWidth: { value: 272px, note: "좌우 32 는 남긴다 — 화면이 336 보다 좁으면 화면 폭 − 64" }
+        marginX: $spacing-x8
+        padding: $spacing-x5
+        radius: $radius-r5
+        background: $color-bg-layer-floating
+        shadow: { value: none, note: "그림자 없이 딤과 표면 색으로 뜬다(SEED)" }
+        zIndex: { value: 301, note: "z-alert-content — specs/z-index.md L5" }
+        maxHeight: { value: 화면 높이(안전 영역 안), note: "dvh 우선 — 넘치면 확인창 전체(제목 · 설명 · 버튼)가 스크롤된다. 끝 흐림 없음(SEED alert-dialog.css content max-height 100%). 2026-10-17 사용자 결정 03-F 1A" }
+        overflowY: auto
+      title:
+        typography: $text-t7
+        fontWeight: 700
+        foreground: $color-fg-neutral
+      description:
+        typography: $text-t5
+        fontWeight: 400
+        foreground: { value: $color-fg-neutral, note: "다른 떠 있는 표면과 달리 짙은 글자 — 꼭 읽어야 할 말이다(SEED)" }
+        marginTop: { value: $spacing-x1_5, note: "제목 ↔ 설명. 제목이 없으면 0" }
+      footer:
+        paddingTop: $spacing-x4
+        gap: $spacing-x2
+        buttonSize: { value: medium 40 · 1280 이상 small 36, note: "Button — 확정은 되돌릴 수 없으면 criticalSolid, 아니면 neutralSolid · 취소는 neutralWeak" }
+    focused:
+      focusRing:
+        width: 2px
+        offset: 2px
+        color: $color-stroke-focus-ring
+
+  - when: { layout: horizontal }
+    enabled:
+      footer:
+        direction: { value: row, note: "[취소] [확정] — 두 버튼이 반씩(사이 8)" }
+  - when: { layout: vertical }
+    enabled:
+      footer:
+        direction: { value: column, note: "확정이 위 · 취소가 아래, 둘 다 폭 전체 — 한쪽 글이 반 폭을 넘으면 저절로 바뀐다" }
+  - when: { layout: single }
+    enabled:
+      footer:
+        direction: { value: row, note: "버튼 하나 폭 전체 — 알리기(\"확인\" 대신 결과에 맞는 동작 이름)" }
+
+motion:
+  "열림 — 확인창":
+    duration: $motion-duration-d4
+    easing: $motion-ease-enter-expressive
+    properties: [scale 1.3 → 1, opacity 0 → 1]
+    note: "크게 나타나며 줄어든다(SEED) — 모션 줄이기면 150ms 서서히 나타남"
+  "열림 — 딤":
+    duration: $motion-duration-d2
+    easing: $motion-ease-enter
+    properties: [opacity 0 → 1]
+  "닫힘 — 확인창":
+    duration: $motion-duration-d2
+    easing: $motion-ease-exit
+    properties: [opacity → 0]
+  "닫힘 — 딤":
+    duration: $motion-duration-d2
+    easing: $motion-ease-exit
+    properties: [opacity → 0]

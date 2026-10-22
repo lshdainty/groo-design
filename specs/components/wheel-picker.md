@@ -47,7 +47,7 @@
 
 ### 휠을 쓰는 자리
 
-순서가 있고 앞뒤 값을 보며 고르는 값 — 시각 · 연 · 월. 날짜 하나는 달력(Date Picker)으로 고르고, 연 · 월 · 일 세 휠로 받지 않는다. 고를 것이 5개 이하면 Radio · Segmented Control, 순서 없는 긴 목록은 Select 다.
+순서가 있고 앞뒤 값을 보며 고르는 값 — 시각 · 연 · 월. 날짜 하나는 달력(Date Picker)으로 고르고, 연 · 월 · 일 세 휠로 받지 않는다. 순서가 없거나 고를 것이 적으면 다른 컴포넌트다 — Select 의 ["고르는 컴포넌트 고르기"](select.md#고르는-컴포넌트-고르기) 판단 순서로 고른다(2026-10-22 사용자 결정 2B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym).
 
 ### 달만 고르기
 
@@ -134,6 +134,10 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker"
 - **링 색은 groo `stroke-focus-ring`**.
 
 ## Migration notes
+
+### 2026-10-22 — "5개 이하" 를 판단 순서 링크로
+
+"고를 것이 5개 이하면 Radio · Segmented Control" 은 결정 기록 없이 들어간 숫자라 Select 의 판단 순서(2 ~ 4 · 5 이상)와 어긋났다 — 그 절 링크로 바꿨다(사용자 결정 2B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym).
 
 ### 2026-10-15 — 누르기 · 키 이동은 200ms
 

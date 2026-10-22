@@ -116,4 +116,4 @@ motion:
     duration: $motion-duration-d2
     easing: $motion-ease-exit
     properties: [지금 것 사라짐 → 새 것 나타남]
-    note: "한 번에 하나 — 새 것이 오면 지금 것을 바로 바꾼다"
+    note: "한 번에 하나 — 새 것이 오면 지금 것을 바로 바꾼다. 지금 것에 액션이 있으면 끝날 때까지 지키고 새 것은 그 뒤에(기다리는 것은 하나 — 2026-10-22 1B)"

@@ -86,7 +86,7 @@
 | 지금 화면을 떠나지 않는 보조 작업(상세 · 설정) | [Bottom Sheet](bottom-sheet.md) | Bottom Sheet | [Dialog](dialog.md) — 옆에 둘 까닭이 있으면 **Side Panel**(오른쪽) |
 | 아래에서 올라오는 모달 | Bottom Sheet | Bottom Sheet | — |
 
-오른쪽 패널은 1280 이상에서만이다 — 1280 미만에서는 같은 내용을 Bottom Sheet 로 띄운다(폼 · 상세의 Responsive Dialog 와 같은 경계 — 새 경계를 두지 않는다). 옆에 둘 까닭은 본문을 보면서 함께 다룰 때(목록을 보며 한 줄의 상세)다 — 그렇지 않으면 Dialog 다. 지금은 오른쪽 패널을 쓰는 곳이 없다.
+오른쪽 패널은 1280 이상에서만이다 — 1280 미만에서는 같은 내용을 Bottom Sheet 로 띄운다. 1280 은 [Dialog](dialog.md) 의 Responsive Dialog · [Input Button](input-button.md) 과 같은 경계다 — 768 ~ 1279 에서 오른쪽 패널을 두면 그 안의 고르기 칸은 시트로, 같은 내용의 폼은 시트로 열려 표면이 엇갈려 겹친다. 새 경계를 두지 않는다(2026-10-02 사용자 결정 1280 을 옮겼다 — 2026-10-22 사용자 결정 11B, https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj). 옆에 둘 까닭은 본문을 보면서 함께 다룰 때(목록을 보며 한 줄의 상세)다 — 그렇지 않으면 Dialog 다. 지금은 오른쪽 패널을 쓰는 곳이 없다. 다른 표면과 견준 "상황 → 고를 것" 표는 DESIGN.md Components 의 "시트 · 대화상자 · 확인창 · 팝오버" 한 벌이다(3C).
 
 [그림: 쓰는 자리 — 폰 주 메뉴 · 1280 이상 오른쪽 패널 · 1280 미만은 시트](../../site/components/specs/side-panel.tsx#role-guide)
 
@@ -229,10 +229,14 @@ import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNav
 - **가로 화면의 노치** — SEED 문서는 "패널 너비에 safe-area-inset을 더합니다", 코드는 폭 안에서 뺀다. groo 는 문서를 따른다(내용 폭이 줄지 않게).
 - **입력 폼은 바깥 · 끌기로 닫지 않는다** — Dialog · Bottom Sheet 와 같은 groo 규칙(2026-10-02). SEED 는 모든 패널이 바깥 누르기 · 가로 끌기(25%)로 닫힌다.
 - **모션 줄이기면 150ms 서서히 나타남**(v104) — SEED 는 300ms 미끄러짐 그대로.
-- **Persistent(비모달) 패널은 두지 않는다** — 쓸 자리가 없다.
+- **Persistent(비모달) 패널은 보류** — SEED 는 Backdrop 없이 배경과 함께 다루는 Persistent Type 을 둔다(md 미만은 Modal). groo 는 지금 쓸 자리가 없어 두지 않았고, 생기면 그때 정한다 — 데스크톱 필터 · 목록 옆 상세(dialog.md "앱 적용 때 정할 자리")가 후보다(2026-10-22 사용자 결정 11B — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj).
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 패널 `z-modal-content` 101).
 
 ## Migration notes
+
+### 2026-10-22 — 1280 의 까닭 · Persistent 는 보류
+
+"쓰는 자리" 표 아래에 1280 의 까닭(Responsive Dialog · Input Button 과 같은 경계 — 768 ~ 1279 에서 표면이 엇갈리지 않게)을 적었다. "Persistent 는 두지 않는다" 는 묻지 않고 들어간 문장이라 "지금은 쓸 자리가 없다 — 생기면 그때 정한다" 로 바꿨다(사용자 결정 11B — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj). 값 변경 없음.
 
 ### 2026-10-04 — SEED Side Panel 로 새로 둔다(옛 Sheet 를 대신)
 

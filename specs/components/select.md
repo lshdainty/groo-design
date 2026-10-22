@@ -193,18 +193,43 @@ Select 는 늘 [Field](field.md) 의 라벨과 함께 쓴다. 라벨이 없으�
 
 ### 고르는 컴포넌트 고르기
 
-선택지마다 필요한 정보의 양, 선택지 개수, 글 길이로 고른다. 위에서부터 판단한다(SEED).
+고르는 컴포넌트를 고르는 표는 여기 한 곳이다 — Radio · Checkbox · Switch · Chip · Select Box · Segmented Control · Tabs · List · Searchable List · Wheel Picker · Menu 문서는 선택지 개수를 다시 적지 않고 이 절을 가리키며, 자기 짝 비교 표만 둔다. 선택지 개수의 숫자(2 ~ 4 · 5 이상)도 아래 판단 순서 하나다(2026-10-22 사용자 결정 1B · 2B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym).
 
-| 순서 | 이런 선택지 | 컴포넌트 | 제품의 자리 |
-|---|---|---|---|
-| 1 | 그림 · 여러 줄 설명 · 딸린 입력이 필요하다 | [Select Box](select-box.md) | 반복 거래 종료 · 분배 방식 · 내보내기 형식 · 휴가 부여 방법 |
-| 2 | 5개 이상이거나, 한 줄 설명이면 충분하다 | **Select** | 결제 수단 · 통화 · 휴가 정책 · 계좌 종류 · 반복 단위 · 반복 요일 |
-| 3 | 2 ~ 4개, 설명 없이 글이 짧다 | [Chip](chip.md) | 거래 종류 · 우선순위 · 알림 소리 |
-| 3 | 2 ~ 4개, 설명 없이 글이 길다 | [Radio](radio-group.md) · [Checkbox](checkbox.md) | 공개 범위 · 동의. 예 / 아니오 하나는 Checkbox |
-| 4 | 너무 많아 스크롤로 찾기 어렵다 | [Input Button](input-button.md) + 검색 시트 | 결재자 · 사람 · 종목 · 카드사 |
+**먼저 — 이 자리는 무슨 일을 하나**
+
+| 하는 일 | 고를 것 | Desk 예 |
+|---|---|---|
+| 폼에 넣을 값을 고른다 — 저장 · 다음을 눌러야 반영 | 아래 판단 순서로 — Select Box · Select · Chip · Radio · Checkbox · Input Button | 거래 추가의 결제 수단 · 반복 종료 · 공개 범위 |
+| 보이는 내용을 바로 거르거나 정렬하거나 다르게 본다 | 2 ~ 4가지 고정 보기 → **[Segmented Control](segmented-control.md)**(내용 바로 위, 한 화면 하나) · 조건을 여럿 걸고 푼다 · 개수가 바뀐다 → **[Chip](chip.md) 필터 바** | 할 일 오늘 · 이번 주 · 전체 · 완료 / 거래 검색의 카테고리 · 기간 · 금액 |
+| 다른 구역 · 화면으로 옮긴다 | **[Tabs](tabs.md)** — 1차 Line · 2차 Chip Tabs | 가계부 · 자산 · 통계 · 예산 |
+| 기능 하나를 켜고 끈다 | 누르는 순간 바뀐다 → **[Switch](switch.md)**(설정 줄이면 List 스위치 줄) · 저장해야 반영 → **[Checkbox](checkbox.md)** | 결제 알림 · 고정 금액으로 기록 |
+| 화면 폭 목록에서 하나를 고르고 바로 바뀐다 | **[List](list.md) 라디오 줄** | 기본 통화 · 테마 |
+| 누르면 동작을 실행한다 | **[Menu](menu.md)**(1280 이상) · [Menu Sheet](menu-sheet.md)(1280 미만) — 값을 고르는 데 쓰지 않는다 | 거래 줄 ⋮ → 수정 · 복사 · 삭제 |
+
+**폼 값 — 위에서부터 판단한다**
+
+선택지마다 필요한 정보의 양, 선택지 개수, 글 길이로 고른다. 위에서부터 판단한다(SEED — 2026-10-01 사용자 결정). "이럴 때 더 맞다" 열은 SEED Radio 문서의 판단 기준이다.
+
+| 순서 | 이런 선택지 | 컴포넌트 | 이럴 때 더 맞다 | 제품의 자리 |
+|---|---|---|---|---|
+| 1 | 그림 · 여러 줄 설명 · 딸린 입력이 필요하다 | [Select Box](select-box.md) | 나란히 견주고 버튼으로 확정한다 | 반복 거래 종료 · 분배 방식 · 내보내기 형식 · 휴가 부여 방법 |
+| 2 | 5개 이상이거나, 한 줄 설명이면 충분하다 | **Select** | 사용자가 답을 이미 안다 · 선택지가 늘어날 수 있다 · 자리가 좁다 | 결제 수단 · 통화 · 휴가 정책 · 계좌 종류 · 반복 단위 · 반복 요일 |
+| 3 | 2 ~ 4개, 설명 없이 글이 짧다 | [Chip](chip.md) | 한 줄에서 가볍게 — 고른 값이 곧 화면의 갈래일 때 | 거래 종류 · 우선순위 · 알림 소리 |
+| 3 | 2 ~ 4개, 설명 없이 글이 길다 | [Radio](radio-group.md) · [Checkbox](checkbox.md) | "하나의 정답을 고른다" · "해당되는 것에 모두 체크한다" — 서류처럼 차분히 견줄 때 | 공개 범위 · 동의. 예 / 아니오 하나는 Checkbox |
+| 4 | 너무 많아 스크롤로 찾기 어렵다 | [Input Button](input-button.md) + 검색 시트([Searchable List](searchable-list.md)) | 이름을 알고 친다 | 결재자 · 사람 · 종목 · 카드사 |
 
 - 요일 7개도 2 — 여럿 고르는 Select 다("월, 수, 금").
 - 폼 값을 탭(Segmented Control · Tabs)으로 고르지 않는다 — 탭은 보이는 내용을 바로 거르거나 바꾸는 자리다. 폼 값의 탭은 Chip · Select 로 옮긴다.
+
+**예외 · 주의**
+
+- **저장 폼 안의 Switch** — 값이 저장 때 들어가도 누르면 화면이 바로 바뀌면 Switch 다(일정 "종일" — 날짜 칸이 바뀐다). Switch 결정(누르는 순간만) 안의 경계다 — 경계 사례는 [Checkbox](checkbox.md) 의 "Checkbox 와 Switch" 표.
+- **거르기 칩은 개수 규칙이 다르다** — 폼 값 칩은 2 ~ 4(판단 순서 3), 거르기 칩은 개수가 바뀌거나 5개 이상인 축(카테고리 · 태그)에 쓴다(Chip 필터 바). 2 ~ 4가지로 고정된 보기는 Segmented Control.
+- **늘어날 수 있는 목록** — 지금 셋이어도 사용자가 더할 수 있는 목록(카테고리 · 결제 수단)은 Select 다(SEED Radio "앞으로 더 늘어날 가능성").
+- **선택지가 하나**면 Checkbox — 설명 · 딸린 입력이 붙어도("고정 금액 사용").
+- **글이 칸보다 길면** 다른 컴포넌트 — Segmented Control 칸 글이 줄을 바꾸면 Chip · Select 로.
+- **컨트롤을 끼운 줄**(스위치 · 체크 · 라디오)에는 다른 버튼을 두지 않는다 — 줄 전체가 라벨이다([List](list.md)).
+- **Menu 로 값을 고르지 않는다** — 테마는 List 라디오 줄, 정렬 · 보기는 Segmented Control · Select. 고른 표시가 없는 목록으로 값을 고르면 지금 값이 안 보인다.
 
 [그림: 고르는 컴포넌트 — Select Box · Select · Chip · Radio](../../site/components/specs/select.tsx#pick-guide)
 
@@ -362,6 +387,10 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
 - **트리거 이름은 라벨 하나** — SEED React 는 트리거에 고른 값을 따로 읽히지 않는다. groo 는 `role="combobox"` 의 값으로 고른 글이 읽힌다(라벨 + 값).
 
 ## Migration notes
+
+### 2026-10-22 — 고르는 컴포넌트 고르기를 한 곳에
+
+"고르는 컴포넌트 고르기" 를 넓혀 고르는 표를 이 절 한 곳에 모았다 — 첫 갈래(이 자리는 무슨 일을 하나) 표, 판단 순서(10-01 결정 표에 SEED Radio 의 "이럴 때 더 맞다" 열), 예외 · 주의. 다른 문서(Radio · Select Box · Segmented Control · Tabs · Searchable List · Wheel Picker · Menu · Checkbox · Switch)는 선택지 개수를 지우고 이 절을 가리키며 자기 짝 비교 표만 둔다. 선택지 개수는 이 표의 2 ~ 4 · 5 이상 하나다 — Radio "2 ~ 5 · 6 이상" · Select Box "2 ~ 6 · 7 이상" · Wheel Picker "5개 이하" 를 걷었다(사용자 결정 1B · 2B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym). 값 변경 없음.
 
 ### 2026-10-17 — 앱 선택지 낭독(03-B 결정 2 A)
 

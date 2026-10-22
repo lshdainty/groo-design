@@ -76,8 +76,12 @@
 |---|---|---|
 | 자리 | 페이지 맨 위 | 본문 안, 그 내용 바로 위 |
 | 폭 | 화면 폭 전체 | 콘텐츠 폭 |
+| 용도 | 페이지 상태 · 제재 · 기능 켜짐 안내(연결 끊김 · 만료 예정 · 새 버전) | 팁 · 기능 설명 · 위험 주의 |
 | 범위 | 페이지 전체 | 그 기능 · 내용 |
 | 수 | 한 화면에 하나 | 필요한 만큼(쌓지 않는다) |
+| 스크롤(Sticky) | 맨 위에 붙일 수 있다(화면마다 정한다) | 없다 — 내용과 함께 움직인다 |
+
+"용도" · "Sticky" 두 줄은 SEED Page Banner 문서의 "Page Banner, Callout 비교" 에서 옮겼다(2026-10-22 사용자 결정 3B — https://claude.ai/artifact/NuEPiLRH2fJidXdKzcDsCX). 다른 알림과 고르는 표는 [Snackbar 의 "무엇으로 알리나"](snackbar.md) 한 벌이다.
 
 [그림: 자리 — 머리 바로 아래 · 한 화면 하나](../../site/components/specs/page-banner.tsx#placement-guide)
 
@@ -105,7 +109,7 @@
 import { PageBanner } from "@/components/ui/page-banner"
 
 <PageBanner tone="critical" title="연결 끊김" button={{ label: "다시 연결", onClick: reconnect }}>
-  토스증권 키가 만료돼 시세를 받지 못해요.
+  증권 연결 키가 만료돼 시세를 받지 못해요.
 </PageBanner>
 ```
 
@@ -171,6 +175,10 @@ import { PageBanner } from "@/components/ui/page-banner"
 - **나중에 나타나는 경고 · 위험은 `role="alert"`**, 버튼은 모두 `type="button"`.
 
 ## Migration notes
+
+### 2026-10-22 — Callout 견주기에 용도 · Sticky
+
+Page Banner ↔ Callout 표에 SEED 의 "용도" · "Sticky" 두 줄을 더하고, 다른 알림과 고르는 표는 Snackbar 문서 한 벌로 링크한다(사용자 결정 3B — https://claude.ai/artifact/NuEPiLRH2fJidXdKzcDsCX). 코드 예시 · 사이트 그림 · 레시피 예제 · 미리보기의 실제 증권사 이름을 걷었다("증권 연결 키가 만료돼 …"). 값 변경 없음.
 
 ### 2026-10-02 — 새로 둔다(SEED Page Banner)
 

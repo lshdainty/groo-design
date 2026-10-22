@@ -145,7 +145,7 @@ const PATHS = {
 const DEPARTMENTS = [
   {
     id: "root",
-    label: "포레스트 디지털혁신본부 클라우드 플랫폼 운영 그룹",
+    label: "가람누리 디지털혁신본부 클라우드 플랫폼 운영 그룹",
     children: [
       { id: "infra", label: "클라우드 인프라팀", children: [{ id: "k8s", label: "쿠버네티스 운영 파트" }, { id: "net", label: "네트워크 · 보안 파트(야간 당직 포함)" }] },
       { id: "data", label: "데이터 플랫폼팀", children: [{ id: "eng", label: "데이터 엔지니어링 파트" }, { id: "ana", label: "분석 파트" }] },
