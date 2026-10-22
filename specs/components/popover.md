@@ -67,6 +67,8 @@
 
 Desk 데스크톱 머리의 벨을 누르면 1280 이상에서는 벨 아래 팝오버로, 768 ~ 1279 에서는 [Bottom Sheet](bottom-sheet.md) 로 알림 목록을 연다 — 이 스펙의 1280 경계 그대로다(2026-10-16 사용자 결정 — 구현 세션 질문 Q-017-3b B). 목록이 길고 개수가 정해지지 않았어도 트리거(벨) 하나가 여는 목록이라 팝오버에 둔다 — 폼 · 상세를 담지 않는다. 폭은 380, 높이는 이 스펙대로 600 과 남은 공간 중 작은 쪽까지이고 넘치면 본문(목록)만 스크롤하며 끝을 흐린다. 머리는 제목 "알림" · 설명 "읽지 않은 알림 N개" · 닫기, 바닥은 "알림 설정" · "모두 읽음"(Button small) — 시트도 같은 내용이다(시트의 바닥 버튼은 large 반씩). 줄을 누르면 읽음으로 표시한다(지금 그대로 — 이동하지 않는다). 폰(768 미만)의 벨은 알림 화면으로 간다.
 
+줄 끝에는 ⋮ 하나를 둔다 — Button `ghost` · `ghostColor="neutralSubtle"` · `iconOnly` · `xsmall`(보이는 32 · 누르는 44), 이름 "{알림 제목} 더보기". 시각 옆에 놓고 줄의 읽음 버튼과 형제다 — 줄 버튼 안에 넣지 않아 따로 눌리고 따로 읽힌다. 누르면 1280 미만은 [Menu Sheet](menu-sheet.md)(제목 = 알림 제목), 이상은 [Menu](menu.md) 로 위험 줄 "삭제" 하나를 연다. 메뉴가 다 닫힌 뒤 [Alert Dialog](alert-dialog.md) "알림 삭제" · "삭제한 알림은 되돌릴 수 없어요." [취소][삭제] 를 열고, 지우기는 확인에서만 나간다. 지우다 실패하면 확인창을 열어 둔 채 웹 · 앱의 오류 알림을 띄운다 — 다시 누르거나 취소할 수 있다. 줄 밀기로 지우지 않는다. 폰의 알림 화면 · 벨 시트 · 벨 팝오버가 모두 같다(2026-10-22 사용자 결정 — 알림 지우기 B, https://claude.ai/artifact/RXwXuA8Xm5oYXqjGafNvjU).
+
 [그림: 알림 목록 — 1280 벨 아래 팝오버 · 1024 Bottom Sheet · 알림 0개](../../site/components/specs/popover.tsx#notification-guide)
 
 [표: 알림 목록](popover.yaml#base.enabled@notificationList)
@@ -166,7 +168,7 @@ const description = unread > 0 ? `읽지 않은 알림 ${unread}개` : "새 알�
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 16.41 · 다크 11.62, 설명 `fg-neutral-muted` 7.11 · 6.67 ✓ |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 표면 경계는 그림자 s3(딤 없음) — 표면을 알리는 유일한 표시가 아니다(머리 · 내용이 알린다). 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ |
 | **WCAG 1.4.13** Content on Hover or Focus | 누를 때 열리고(호버로 열지 않는다) 바깥 · `Esc` 로 닫힌다 ✓ |
-| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 52 ✓ |
+| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 52 ✓ · 알림 줄 ⋮ 보이는 32(누르는 44) ✓ |
 | **ARIA** | `role="dialog"`(`aria-modal` 없음), 제목 `aria-labelledby`(있을 때), 트리거 `aria-haspopup="dialog"` · `aria-expanded` · `aria-controls`. 머리 없는 고르는 패널은 `aria-label` 로 이름을 단다 |
 
 ## Do / Don't
@@ -198,6 +200,10 @@ const description = unread > 0 ? `읽지 않은 알림 ${unread}개` : "새 알�
 - **z-index 는 specs/z-index.md 의 L3(`z-floating` 200)** — SEED 99999. 대화상자 · 시트(L2) 위, 확인창(L5) 아래.
 
 ## Migration notes
+
+### 2026-10-22 — 알림 줄 ⋮ 와 지우기(알림 지우기 B)
+
+사용자가 [알림 지우기 비교 페이지](https://claude.ai/artifact/RXwXuA8Xm5oYXqjGafNvjU)에서 정했다 — 줄 끝 ⋮ → "삭제" → 확인창, 웹 · 앱 같게(B). 웹 폰 알림 줄의 × 를 걷자 웹에서 알림을 지울 길이 없었고(데스크톱 벨에는 원래 없었다), 앱은 줄마다 × 로 확인 없이 바로 지웠다. 앱의 × 는 걷는다. 거절: 지우기 없음(A) · 폰은 밀기 + ⋮(C) · 편집 → 골라 삭제 · 모두 삭제(D). I-04 검수 뒤 디자인 세션이 맞춘 것 — ⋮ 는 Button xsmall(32) `neutralSubtle`(앱은 small 이었다), 지우기 실패는 확인창을 남기고 오류 알림(앱은 조용히 닫혔다).
 
 ### 2026-10-22 — 폼을 두지 않는 까닭과 경계
 

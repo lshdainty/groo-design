@@ -17,7 +17,8 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *   TabsSwipeArea                    폰 1차 탭의 내용 칸 묶음 — 내용을 옆으로 밀어 이웃 탭으로 넘긴다
  *
  * Line
- *   layout   fill(기본 — 칸을 똑같이 나눈다, 막대는 탭에서 좌우 16 들인다. 글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤 — SEED) ·
+ *   layout   fill(기본 — 칸을 똑같이 나눈다, 막대는 탭에서 좌우 16 들인다. 글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤 — SEED,
+ *            고른 탭은 가장자리와 16 을 두고 드러낸다) ·
  *            hug(탭이 글 + 좌우 10 · 목록 좌우 16, 넘치면 가로 스크롤 — 스크롤바는 숨긴다. 막대는 탭 폭 그대로)
  *   size     small 40 · 글 t4 14(기본) · medium 44 · 글 t5 16
  * 목록은 놓인 폭을 채우고 바탕이 불투명하다(bg-layer-default). 바닥 구획 선은 안쪽 1px(inset shadow)이라 높이를 밀지 않는다.
@@ -242,8 +243,9 @@ const tabsListVariants = cva(
   {
     variants: {
       layout: {
-        // 칸을 똑같이 나눈다 — 막대는 탭에서 좌우 16 들인다. 글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤(SEED, 03-G 3B)
-        fill: "overflow-x-auto px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [--tabs-indicator-inset:var(--spacing-x4)]",
+        // 칸을 똑같이 나눈다 — 막대는 탭에서 좌우 16 들인다. 글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤(SEED, 03-G 3B) —
+        // 그때도 고른 탭은 가장자리와 16 을 두고 드러낸다(Hug 와 같다)
+        fill: "overflow-x-auto px-0 scroll-px-x4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [--tabs-indicator-inset:var(--spacing-x4)]",
         // 글만큼 — 목록 좌우 16, 넘치면 가로 스크롤(스크롤바는 숨긴다). 고른 탭은 가장자리와 16 을 두고 드러낸다. 막대는 탭 폭 그대로
         hug: "overflow-x-auto px-x4 scroll-px-x4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [--tabs-indicator-inset:0px]",
       },

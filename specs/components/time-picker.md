@@ -125,6 +125,7 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 | **WCAG 2.1.1** Keyboard | 칼럼마다 `Tab` 자리 하나, `↑` `↓` 로 고른다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 항목 44 높이 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 항목 44 높이 ✓ · 폭은 칼럼 글자 폭 + 32(64 이상) ✓ |
+| **앱(Flutter 3.44.9)** | 칼럼은 [Wheel Picker](wheel-picker.md) 의 앱 줄대로 spinbutton 역할 대신 이름("오전/오후" · "시" · "분") + 값 + 올리기 · 내리기(Android 조절 막대 · iOS 조절 가능)다 |
 | **ARIA** | 휠 `role="group"`(이름 = 칸 라벨, 예: "시작 시각"), 칼럼 `role="spinbutton"` + 이름 "오전/오후" · "시" · "분", `aria-valuetext` "오후" · "3" · "00", `aria-valuemin` · `aria-valuemax` · `aria-valuenow`(번호). 항목은 보조 기술에 숨긴다 |
 
 ## Do / Don't

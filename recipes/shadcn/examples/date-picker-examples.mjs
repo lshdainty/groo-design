@@ -3,7 +3,7 @@
  * 각 예제 = { title, description, jsx, render() }. 셋(날짜 하나 · 기간 · 고를 수 있는 범위)은 차례 · 제목 · 코드가 specs/components/date-picker.md 의
  * "코드" 절과 같다. 옛 Calendar 예제(calendar-examples.mjs — react-day-picker · 원 40 · 고른 날 브랜드 채움 · 오늘 테두리)를 대신한다.
  *
- * ROOT · ROOT_SIZE · PRESETS · HEADER · TITLE · TITLE_ICON · NAV · TWO_MONTHS · TWO_MONTHS_HEADER · MONTH_NAME · NAV_START · NAV_END · CONTINUOUS_* · FOG ·
+ * ROOT · ROOT_SIZE · PRESETS · NAV_PX · HEADER · TITLE · TITLE_ICON · NAV · TWO_MONTHS · TWO_MONTHS_HEADER · MONTH_NAME · NAV_START · NAV_END · CONTINUOUS_* · FOG ·
  * GRID · WEEK · WEEKDAY_ROW · WEEKDAY · CELL · BAND · BAND_SIDE · DAY · DAY_PRESS · DAY_PRESS_ON_WEAK · DAY_STATE · DAY_TODAY_WEIGHT · DAY_STRIKE · OUTSIDE · LIVE ·
  * DATE_PICKER_TWO_MONTHS_POPOVER 는 recipes/shadcn/components/ui/date-picker.tsx 의 상수와, TITLE_TEXT · MONTH_COLUMN · HIDDEN_WEEKDAYS 는 그 파일의
  * JSX 에 적힌 클래스와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다(연 · 월 휠 WHEEL · WHEEL_YEAR · WHEEL_MONTH 는 이 파일의 그림이 휠을 열지 않아 옮기지 않았다).
@@ -48,23 +48,25 @@ const ROOT_SIZE = {
 const PRESETS = "shrink-0 pb-x3";
 
 // 머리 48 — 왼쪽 제목, 오른쪽 이전 · 다음(사이 0)
-const HEADER = "flex h-12 shrink-0 items-center justify-between";
+// 이전 · 다음 — Button ghost iconOnly medium 을 px 40 으로 고정한다(글자 크기를 따르지 않는다 — 03-C 1B, SEED)
+const NAV_PX = "h-[40px] w-[40px]";
+const HEADER = "flex min-h-[48px] shrink-0 items-center justify-between";
 
 // 제목 — 누르는 자리는 머리 높이 48 전체, 글자는 왼쪽에서 4 · 셰브론과 4. 바탕이 없어 모서리 8 은 초점 링에만 보인다
 const TITLE = [
-  "inline-flex h-12 min-w-0 cursor-pointer items-center gap-x1 rounded-r2 border-0 bg-transparent px-x1 font-sans text-t5 font-bold text-fg-neutral outline-none",
+  "inline-flex min-h-[48px] min-w-0 cursor-pointer items-center gap-x1 rounded-r2 border-0 bg-transparent px-x1 font-sans text-t5 font-bold text-fg-neutral outline-none",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 
 // 셰브론 20 — 휠이 열리면 위로(150ms easing). 모션 줄이기면 바로
-const TITLE_ICON = "size-5 shrink-0 text-fg-neutral [transition:rotate_var(--motion-duration-d3)_var(--motion-ease-easing)] motion-reduce:[transition:none]";
+const TITLE_ICON = "size-[20px] shrink-0 text-fg-neutral [transition:rotate_var(--motion-duration-d3)_var(--motion-ease-easing)] motion-reduce:[transition:none]";
 
 const NAV = "flex shrink-0 items-center";
 
 // 두 달 — 사이 24, 달마다 가운데 이름 48 · 이전은 첫 달 왼쪽 끝 · 다음은 둘째 달 오른쪽 끝(위 4)
 const TWO_MONTHS = "grid grid-cols-2 gap-x-x6";
 
-const TWO_MONTHS_HEADER = "relative flex h-12 items-center justify-center";
+const TWO_MONTHS_HEADER = "relative flex min-h-[48px] items-center justify-center";
 
 const MONTH_NAME = "text-t5 font-bold text-fg-neutral whitespace-nowrap";
 
@@ -75,11 +77,11 @@ const NAV_END = "absolute right-0 top-x1";
 // 이어지는 달 — 스크롤 칸(스크롤바 숨김) · 위에 붙는 요일 줄 · 달마다 왼쪽 이름 48 + 아래 16 · 아래 안개 96
 const CONTINUOUS_SCROLL = "relative min-h-0 flex-1 overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden";
 
-const CONTINUOUS_WEEKDAYS = "sticky top-0 z-[2] grid h-12 grid-cols-7 bg-bg-layer-floating";
+const CONTINUOUS_WEEKDAYS = "sticky top-0 z-[2] grid min-h-[48px] grid-cols-7 bg-bg-layer-floating";
 
 const CONTINUOUS_MONTH = "pb-x4";
 
-const CONTINUOUS_MONTH_NAME = "flex h-12 items-center px-x1 text-t5 font-bold text-fg-neutral";
+const CONTINUOUS_MONTH_NAME = "flex min-h-[48px] items-center px-x1 text-t5 font-bold text-fg-neutral";
 
 const FOG = "pointer-events-none sticky bottom-0 z-[3] -mt-24 h-24 [background:linear-gradient(to_bottom,transparent,var(--color-bg-layer-floating))]";
 
@@ -88,12 +90,13 @@ const GRID = "@container [--day:min(42px,calc(100cqw_/_7_-_2px))]";
 
 const WEEK = "grid grid-cols-7";
 
-const WEEKDAY_ROW = "grid h-12 grid-cols-7";
+const WEEKDAY_ROW = "grid min-h-[48px] grid-cols-7";
 
 const WEEKDAY = "flex items-center justify-center text-t4 font-medium text-fg-neutral-subtle";
 
-// 칸 — 높이 48 · 폭 = 달력 폭 ÷ 7. 기간 띠는 칸의 ::before(원 높이, 칸 세로 가운데)
-const CELL = "relative isolate h-12 min-w-0";
+// 칸 — 높이 max(48, 숫자 줄 높이 + 6)(날짜 버튼 · 앞뒤 달 숫자의 위아래 3 이 키운다 — 100% 48 · 200% 50) · 폭 = 달력 폭 ÷ 7.
+// 기간 띠는 칸의 ::before(원 높이, 칸 세로 가운데)
+const CELL = "relative isolate min-h-[48px] min-w-0";
 
 const BAND = "before:pointer-events-none before:absolute before:top-1/2 before:h-[var(--day)] before:-translate-y-1/2 before:bg-bg-neutral-weak before:content-['']";
 
@@ -103,16 +106,17 @@ const BAND_SIDE = {
   end: "before:left-0 before:right-1/2",
 };
 
-// 날짜 버튼 — 칸 전체. 원은 ::before(칸 가운데 --day · 바탕만 color-transition), 키보드 초점 링은 ::after(원 둘레 안쪽 2px)
+// 날짜 버튼 — 칸 전체 · 위아래 3(숫자 줄이 원 42 를 넘는 큰 글자에서 칸이 줄 높이 + 6 이 된다 — 03-C 1B).
+// 원은 ::before(칸 가운데 --day · 바탕만 color-transition), 키보드 초점 링은 ::after(원 둘레 안쪽 2px)
 const DAY = [
-  "relative isolate flex h-full w-full items-center justify-center border-0 bg-transparent p-0 font-sans text-t5 font-medium tabular-nums outline-none select-none [-webkit-tap-highlight-color:transparent]",
+  "relative isolate flex h-full w-full items-center justify-center border-0 bg-transparent px-0 py-[3px] font-sans text-t5 font-medium tabular-nums outline-none select-none [-webkit-tap-highlight-color:transparent]",
   "before:absolute before:left-1/2 before:top-1/2 before:-z-10 before:size-[var(--day)] before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-transparent before:content-[''] before:[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
   "after:pointer-events-none after:absolute after:left-1/2 after:top-1/2 after:size-[var(--day)] after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:content-['']",
   "focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-stroke-focus-ring",
 ].join(" ");
 
-// 호버(마우스 — 고운 포인터만) · 누름(터치) — 원 bg-layer-floating-pressed, 축소 없음
-const DAY_PRESS = "[@media(hover:hover)_and_(pointer:fine)]:hover:before:bg-bg-layer-floating-pressed active:before:bg-bg-layer-floating-pressed";
+// 호버(마우스 — 고운 포인터만) · 누름(터치) — 원 bg-neutral-weak-alpha-pressed(SEED 투명 색 — 2026-10-21 03-C 2B), 축소 없음
+const DAY_PRESS = "[@media(hover:hover)_and_(pointer:fine)]:hover:before:bg-bg-neutral-weak-alpha-pressed active:before:bg-bg-neutral-weak-alpha-pressed";
 
 // 오늘(옅은 원) · 기간 사이 날(띠) 위의 호버 · 누름 — 한 단계 짙은 bg-neutral-weak-pressed(옅은 원 · 띠와 같은 색이면 안 보인다)
 const DAY_PRESS_ON_WEAK = "[@media(hover:hover)_and_(pointer:fine)]:hover:before:bg-bg-neutral-weak-pressed active:before:bg-bg-neutral-weak-pressed";
@@ -130,8 +134,8 @@ const DAY_TODAY_WEIGHT = "font-bold";
 
 const DAY_STRIKE = "line-through";
 
-// 앞뒤 달 — 숫자만(버튼 아님), 흐리게 · 누르지 못한다
-const OUTSIDE = "flex h-full w-full cursor-default select-none items-center justify-center text-t5 font-medium tabular-nums text-fg-disabled";
+// 앞뒤 달 — 숫자만(버튼 아님), 흐리게 · 누르지 못한다. 위아래 3 은 날짜 버튼과 같다(칸 높이가 같게)
+const OUTSIDE = "flex h-full w-full cursor-default select-none items-center justify-center py-[3px] text-t5 font-medium tabular-nums text-fg-disabled";
 
 const LIVE = "sr-only";
 
@@ -570,7 +574,7 @@ function datePicker({ uid, selection = "single", visibleRange = "month", value, 
 
   // 이전 · 다음 — Button ghost · medium · 아이콘만(cn(buttonVariants(…), className))
   const navButton = (label, slot, icon, extra) =>
-    `<button class="${cn(buttonVariants({ variant: "ghost", size: "medium", layout: "iconOnly", className: extra }))}" aria-label="${label}" data-slot="${slot}">${svg(PATHS[icon])}</button>`;
+    `<button class="${cn(buttonVariants({ variant: "ghost", size: "medium", layout: "iconOnly", className: cn(NAV_PX, extra) }))}" aria-label="${label}" data-slot="${slot}">${svg(PATHS[icon])}</button>`;
   const prev = (extra) => navButton("이전 달", "date-picker-previous", "chevronLeft", extra);
   const next = (extra) => navButton("다음 달", "date-picker-next", "chevronRight", extra);
 

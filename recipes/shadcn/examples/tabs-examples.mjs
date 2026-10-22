@@ -39,12 +39,12 @@ const LIST_BASE = "relative flex w-full bg-bg-layer-default font-sans shadow-[in
 
 const LIST_VARIANTS = {
   layout: {
-    fill: "px-0 [--tabs-indicator-inset:var(--spacing-x4)]",
+    fill: "overflow-x-auto px-0 scroll-px-x4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [--tabs-indicator-inset:var(--spacing-x4)]",
     hug: "overflow-x-auto px-x4 scroll-px-x4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [--tabs-indicator-inset:0px]",
   },
   size: {
-    small: "min-h-10",
-    medium: "min-h-11",
+    small: "min-h-[40px]",
+    medium: "min-h-[44px]",
   },
 };
 
@@ -67,8 +67,8 @@ const TRIGGER_VARIANTS = {
     hug: "flex-none",
   },
   size: {
-    small: "min-h-10 text-t4 [--press-basis:40]",
-    medium: "min-h-11 text-t5 [--press-basis:44]",
+    small: "min-h-[40px] text-t4 [--press-basis:40]",
+    medium: "min-h-[44px] text-t5 [--press-basis:44]",
   },
 };
 
@@ -84,14 +84,14 @@ const INDICATOR = [
 ].join(" ");
 
 // 알림 점(TABS_NOTIFICATION) — 브랜드 글자색, 글 끝에서 2 · 글 위쪽. 띄워 두므로 탭 폭이 넓어지지 않는다. 고른 탭에는 그리지 않는다
-const NOTIFICATION = "pointer-events-none absolute left-[calc(100%_+_2px)] top-0 size-1.5 rounded-full bg-fg-brand";
+const NOTIFICATION = "pointer-events-none absolute left-[calc(100%_+_2px)] top-0 size-[6px] rounded-full bg-fg-brand";
 
 // Chip Tabs 목록(chipTabsListVariants) — 바탕 · 바닥 선 없이 한 줄 가로 스크롤. 좌우 화면 여백 24 · 위아래 8 · 칩 사이 8
 const CHIP_TABS_LIST =
   "relative flex w-full flex-nowrap gap-between-chips overflow-x-auto px-global-gutter py-x2 scroll-px-global-gutter font-sans [scrollbar-width:none] [&::-webkit-scrollbar]:hidden";
 
 // Chip Tabs 의 알림 점(CHIP_TABS_NOTIFICATION) — 브랜드 글자색, 글 뒤 6(칩의 사이)에 세로 가운데. 칩 폭이 그만큼 넓어진다. 고른 칩에는 그리지 않는다
-const CHIP_TABS_NOTIFICATION = "pointer-events-none size-1.5 shrink-0 rounded-full bg-fg-brand";
+const CHIP_TABS_NOTIFICATION = "pointer-events-none size-[6px] shrink-0 rounded-full bg-fg-brand";
 
 // 내용 칸(TABS_CONTENT) — 키보드 포커스 링은 안쪽 2px, 고르지 않은 칸은 숨긴다. 밀어 넘기는 동안의 엿보기 칸은 띄운다
 const CONTENT = [
