@@ -74,7 +74,7 @@
 
 ### 마지막에는 두지 않는다
 
-선은 내용 사이에만 둔다 — 화면 · 묶음의 마지막 요소 아래, 카드 맨 위 · 맨 아래에는 두지 않는다. 8 간격도 같다 — 마지막 띠 아래에는 틈 · 선 · 빈 띠를 두지 않는다. 띠가 끝난 아래 회색은 바닥이지 구분선이 아니다(SEED "화면의 마지막 섹션이나 요소 하단에는 Divider를 표시하지 않습니다" — 2026-10-22 사용자 결정 4B).
+선은 내용 사이에만 둔다 — 화면 · 묶음의 마지막 요소 아래, 카드 맨 위 · 맨 아래에는 두지 않는다. 8 간격도 같다 — 첫 띠 위 · 마지막 띠 아래에는 틈 · 선 · 빈 띠를 두지 않는다. 첫 띠는 머리(상단 바 · 가계부 묶음 탭) 바로 아래에 붙고, 띠가 끝난 아래 회색은 바닥이지 구분선이 아니다(SEED "화면의 마지막 섹션이나 요소 하단에는 Divider를 표시하지 않습니다" — 2026-10-22 사용자 결정 4B · 시작 쪽도 같은 까닭으로 2026-10-23 사용자 결정 — https://claude.ai/artifact/W8PJv3at8BMv1ypCQd7vGB 결정 1 · https://claude.ai/artifact/WRqqZhbQYdBCcnyEKhzeVW Q2). 8 간격은 띠와 띠 사이에만 있다.
 
 [그림: 마지막 묶음 아래 선이 없는 화면 · 있는 화면](../../site/components/specs/divider.tsx#last-guide)
 
@@ -161,6 +161,10 @@ import { Divider } from "@/components/ui/divider"
 - **들임(inset)은 코드에 있다** — SEED 디자인 문서는 "Figma 에서만" 이라 쓰지만 React · Lynx 에 있다. groo 도 둔다(16).
 
 ## Migration notes
+
+### 2026-10-23 — 첫 띠 위에도 틈을 두지 않는다
+
+"마지막 띠 아래 틈 없음" 에 시작 쪽을 더했다 — 머리(상단 바 · 가계부 묶음 탭) 바로 아래 첫 띠 위 8 을 두지 않는다. 사용자: "SEED 가 마지막 gap 은 빼라고 하듯 머리와 시작 사이 gap 도 빼는 게 맞다, 저것 때문에 다 이상해 보인다"(홈 https://claude.ai/artifact/W8PJv3at8BMv1ypCQd7vGB 결정 1) · "시작과 끝에 gap 이 들어가면 이상해 보인다"(I-05 https://claude.ai/artifact/WRqqZhbQYdBCcnyEKhzeVW Q2). DESIGN 세 파일 Layout "화면 바탕" 의 옛 "맨 위 8" 을 걷었다. 값 변경 없음.
 
 ### 2026-10-22 — 세기 표는 고르는 참고, 화면 이름은 한 곳에
 
