@@ -22,6 +22,9 @@
 //     "14 / 20 · 500" 같은 한 덩어리로 싣는다 — 따로 적은 lineHeight · fontWeight 도 그대로 둔다(그것만 읽는 쪽이 있다).
 //     배수 줄 높이(1.3 — 단위 없는 수)는 글자 크기를 곱한 px 로 접는다(12 × 1.3 = 15.6).
 //   - 없는 토큰을 가리키면 파일 · 위치와 함께 멈춘다.
+//     예외 하나 — 브랜드 색이 없는 그룹 파일(DESIGN.md — "그룹 색 · 로고 칠")에서 brand 역할 · 팔레트(fg-brand* · bg-brand* ·
+//     stroke-brand* · brand-N)를 가리키는 칸은 값을 싣지 않고 skipped 에 모은다. 그룹 화면은 brand 변형을 쓰지 않는다
+//     (2026-10-23 그루 계정 지시서 I-18 Q1-A). 브랜드 파일에서 brand 역할이 없으면 그대로 멈춘다.
 
 import { readFileSync, readdirSync, mkdirSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
@@ -68,8 +71,19 @@ const overlays = parseOverlay(content);
 const gradients = parseGradients(content);
 const layouts = parseLayout(content);
 
+// 그룹 파일 — brand 칸은 건너뛴다(머리 주석)
+const groupSource = !colorTable.has("bg-brand-solid");
+const BRAND_COLOR = /^(fg-brand|bg-brand|stroke-brand|brand-\d)/;
+class BrandSkip extends Error {
+  constructor(name) {
+    super(`brand ${name}`);
+    this.token = name;
+  }
+}
+
 // 다크 값 — 짝(-dark)이 있으면 그 값, 짝이 없는 옛 이름은 가리키는 이름의 다크 값(CSS 다크 블록과 같은 규칙).
 function colorFor(name, mode, where) {
+  if (!colorTable.has(name) && groupSource && BRAND_COLOR.test(name)) throw new BrandSkip(name);
   if (!colorTable.has(name)) throw new Error(`${where}: 색 토큰 ${name} 이 없다`);
   if (mode === "light") return resolveColorHex(colorTable, name);
   if (colorTable.has(`${name}-dark`)) return resolveColorHex(colorTable, `${name}-dark`);
@@ -180,25 +194,39 @@ function convert(file) {
   const states = names(spec.states);
   const axes = Object.fromEntries(Object.entries(spec.variants ?? {}).map(([axis, def]) => [axis, names(def)]));
   const notes = [];
+  const skipped = [];
   const rules = spec.rules.map((rule, ri) => {
     const out = { when: rule.when ?? {} };
     for (const [state, block] of Object.entries(rule)) {
       if (state === "when" || !block) continue;
       if (!states.includes(state)) throw new Error(`${rel} rules[${ri}]: 없는 상태 ${state}`);
       out[state] = {};
+      let stateSkipped = false;
       for (const [slot, props] of Object.entries(block)) {
         if (!props) continue;
         out[state][slot] = {};
+        let slotSkipped = false;
         for (const [prop, raw] of Object.entries(props)) {
           const where = `${rel} rules[${ri}].${state}.${slot}.${prop}`;
-          out[state][slot][prop] = value(raw, where);
+          try {
+            out[state][slot][prop] = value(raw, where);
+          } catch (e) {
+            if (!(e instanceof BrandSkip)) throw e;
+            skipped.push({ rule: ri, state, slot, prop, token: e.token });
+            slotSkipped = stateSkipped = true;
+            continue;
+          }
           if (isBox(raw) && raw.note) notes.push({ rule: ri, state, slot, prop, note: raw.note });
         }
         foldType(out[state][slot], props);
+        // brand 칸만 있던 부위 · 상태는 통째로 뺀다(빈 부위가 "값 없음" 으로 읽히지 않게)
+        if (slotSkipped && Object.keys(out[state][slot]).length === 0) delete out[state][slot];
       }
+      if (stateSkipped && Object.keys(out[state]).length === 0) delete out[state];
     }
     return out;
   });
+  if (skipped.length) skippedTotal += skipped.length;
   const motionOut = spec.motion
     ? Object.fromEntries(
         Object.entries(spec.motion).map(([label, m]) => [
@@ -218,8 +246,10 @@ function convert(file) {
     rules,
     ...(motionOut ? { motion: motionOut } : {}),
     notes,
+    ...(skipped.length ? { skipped } : {}),
   };
 }
+let skippedTotal = 0;
 
 const outDir = resolve(ROOT, args.out);
 mkdirSync(outDir, { recursive: true });
@@ -233,3 +263,4 @@ for (const f of files) {
 }
 writeFileSync(join(outDir, "index.json"), JSON.stringify({ design, components: index }, null, 2) + "\n");
 console.error(`spec json: ${files.length} 개 → ${relative(ROOT, outDir)} (${design.file} · ${design.sha256})`);
+if (skippedTotal) console.error(`  그룹 파일 — brand 칸 ${skippedTotal} 개를 건너뛰었다(각 JSON 의 skipped)`);

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 앱 · 테스트용 내보내기 검증 — Dart 토큰(exports/tokens.<브랜드>.dart) · 스펙 값 JSON(exports/spec/<브랜드>/).
+// 앱 · 테스트용 내보내기 검증 — Dart 토큰(exports/tokens.<브랜드>.dart) · 스펙 값 JSON(exports/spec/<브랜드>/ · 그룹은 exports/spec/group/).
 // Flutter 없이 돌린다(CI 에 Flutter 가 없다). 컴파일은 앱 레포의 flutter analyze 가 본다 — 여기서는
 // 무엇이 빠지거나 옛 이름이 섞이거나 값이 덜 풀린 채 나가는지만 막는다.
 //
@@ -126,6 +126,27 @@ function checkSpec({ brand }) {
 for (const b of BRANDS) {
   checkDart(b);
   checkSpec(b);
+}
+
+// 그룹 파일(DESIGN.md) — 그루 계정 · 홈 · 그룹 문서가 받는다. Dart 는 없다(앱 짝 없음).
+// 포커스 링은 짙은 회색, brand 칸은 싣지 않고 skipped 에만 있다(2026-10-23 I-18 Q1-A)
+checkSpec({ brand: "group" });
+{
+  const abs = resolve(ROOT, "exports/spec/group");
+  if (existsSync(abs)) {
+    const accordion = JSON.parse(readFileSync(join(abs, "accordion.json"), "utf8"));
+    const ring = JSON.stringify(accordion.rules[0]?.focused?.focusRing?.color);
+    if (ring === JSON.stringify({ light: "#1A1F2E", dark: "#F5F6FA" })) ok("포커스 링 — 짙은 회색 #1A1F2E / #F5F6FA");
+    else fail(`그룹 포커스 링 값이 다르다: ${ring}`);
+    let skipped = 0;
+    for (const f of readdirSync(abs).filter((x) => x.endsWith(".json") && x !== "index.json")) {
+      for (const s of JSON.parse(readFileSync(join(abs, f), "utf8")).skipped ?? []) {
+        skipped++;
+        if (!/^(fg-brand|bg-brand|stroke-brand|brand-\d)/.test(s.token)) fail(`${f} — brand 아닌 칸을 건너뛰었다: ${s.token}`);
+      }
+    }
+    ok(`건너뛴 칸 ${skipped} 개 — 모두 brand`);
+  }
 }
 
 console.log("");
