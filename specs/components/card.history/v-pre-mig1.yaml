@@ -1,0 +1,272 @@
+# Card 의 수치 원본 — 면은 SEED Elevation · stroke.neutral-weak · Feedback(2026-10-08 사용자 결정, 데이터 표시 비교 페이지
+# 4A · 5A · 6B · 7A · 8B · 14B · 15A · 16A · 20A · "따라오는 것"). 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# SEED 에는 카드 컴포넌트가 없다. 면 · 테두리 · 바닥은 SEED Elevation("Level 1 layer-default — Card, List, TextField…")과
+# 토큰 설명("stroke.neutral-weak — 카드, 인풋 필드 … 외곽"), 카드 사이 8 은 Divider 문서의 "Basement 위 Default 층 + 8px Gap",
+# 모서리 16 은 List 동심 모서리 · Skeleton 의 카드 예, 누름은 Feedback(색 + 2px 축소, 대등한 동작이 여럿이면 축소하지 않는다)이다.
+# 카드 머리 · 지표 카드 · 순자산 카드(hero) · 증감 표기는 SEED 에 없어 groo 가 정했다.
+#
+# 변형은 둘이다 — default(바닥 위 흰 면 + 1px 테두리) · hero(순자산 — 브랜드 채움 · 흰 글자, Desk 홈 · 자산 한 자리).
+# 옛 shadow · bordered · muted · brand 와 제품의 raised 는 걷었다(card.md 의 Migration notes).
+# 누름(press) · 본문(body) · 지표 크기(stat) · 증감(delta)은 상태와 곱해지므로 축이다.
+#
+# 카드 안 여백은 폭과 상관없이 24 다(14B) — List 줄의 좌우 24 · Bottom Sheet 의 머리 · 본문 24 와 같아, 카드의 제목 · 숫자 ·
+# 목록 줄 글자가 모두 카드 끝에서 24 에 선다. SEED 도 같은 원칙(모두 16)이고, groo 는 화면 가장자리 규칙(2026-09-14, 24)을 따른다.
+#
+# SEED 와 다른 자리(card.md 의 "SEED 와 다른 점")
+#   - 모서리 16 을 카드 하나로 정한다 — SEED 는 문서 예 16 · React 예 14(r3_5)로 갈리고 카드 토큰이 없다.
+#   - 카드 여백 24(SEED 의 같은 자리는 16 — groo 화면 가장자리 24) · 머리 · 지표 카드 · 순자산 카드 · 증감 색 — SEED 에 카드 규칙이 없다.
+#   - 누름 색은 불투명한 bg-layer-default-pressed — SEED 와 같은 역할(-pressed 짝)이고 값은 groo.
+#   - 순자산 카드의 끝 색(라이트 brand-900)은 지금 제품 값 #012B68(bg-brand-solid 60% + 검정)에 가장 가까운 팔레트 단계다(ΔE00 2.4).
+
+name: Card
+
+slots:
+  root: 카드 면 — 바닥(bg-layer-basement) 위 흰 면 + 1px 테두리, 그림자 없음
+  header: 카드 머리 — 제목 + 오른쪽 동작 한 줄
+  title: 머리 제목 — 무엇의 카드인지
+  headerAction: 머리 동작 — "전체 보기", 글 버튼(SEED Text Button)
+  content: 본문 — 글 · 숫자 · 차트 · 표(CardContent). 목록은 list
+  list: 카드 안 목록 — List 줄이 가장자리까지, 누름 바탕은 동심 모서리
+  statLabel: 지표 라벨 — "이번 달 지출"
+  statValue: 지표 숫자 — 큰 숫자
+  delta: 증감 — ▲ · ▼ + 값
+  deltaText: 증감 글 — 기준 · 뜻("지난달보다")
+  heroLabel: 순자산 라벨 — 흰 글자
+  heroAmount: 순자산 금액 — 흰 큰 숫자
+  heroDetail: 순자산 아래 글 · 증감 — 흰 글자
+  heroGlow: 순자산 장식 빛 — 오른쪽 위
+  focusRing: 키보드 포커스 링(웹)
+
+variants:
+  variant:
+    default: 바닥 위 흰 면 + 1px 테두리 — 모든 카드(기본)
+    hero: 순자산 — 브랜드 채움 · 흰 글자. Desk 홈 · 자산의 한 자리만. 본문은 늘 content — list · accordion 과 곱하지 않는다(순자산 카드는 목록을 담지 않는다 — Q-011-7)
+  press:
+    none: 누르지 않는 카드 — 안의 버튼 · 줄이 각자 눌린다(기본)
+    whole: 카드 전체가 한 곳으로 — 누름 색 + 2px 축소
+    peers: 카드를 누르면 열리고 안에 대등한 동작이 더 있다 — 누름 색만, 축소 없음
+  body:
+    content: 글 · 숫자 · 차트 — 카드 여백 안(기본)
+    list: List · 표를 담는다 — 줄이 가장자리까지(List 줄 · 표의 첫 칸 앞이 제 24 를 가진다), 머리 좌우는 같은 24
+    accordion: Accordion(inline)을 담는다 — 트리거가 가장자리까지(트리거가 제 좌우 24 · 위아래 16 을 가진다), 머리는 목록 카드와 같다
+  stat:
+    none: 지표 없음(기본)
+    large: 카드 하나에 숫자 하나 — 24. 폰은 지표 카드를 한 줄에 하나
+    small: 데스크톱 격자에 셋 · 넷씩 나란한 작은 지표 — 20(여백은 그대로 24)
+  delta:
+    none: 증감 없음(기본)
+    up: 올랐다 · 늘었다 — ▲ fg-critical
+    down: 내렸다 · 줄었다 — ▼ fg-informative
+    flat: 그대로 — 화살표 없이 "변화 없음"
+
+defaults:
+  variant: default
+  press: none
+  body: content
+  stat: none
+  delta: none
+
+states:
+  enabled: 기본
+  hovered: 웹 · 누르는 카드 — 누름과 같은 바탕(v106)
+  pressed: 누르는 카드 — 바탕 + 2px 축소(peers 는 바탕만)
+  focused: 웹 — 키보드 포커스에만 링
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        background: { value: $color-bg-layer-default, note: "바닥 bg-layer-basement 위 — 폰 · 데스크톱 · 라이트 · 다크가 같은 규칙. 흰 바탕 위에 카드를 두지 않는다" }
+        borderWidth: 1px
+        borderColor: { value: $color-stroke-neutral-weak, note: "카드 외곽(SEED 토큰 설명) — 면과 바닥이 1.08 · 다크 1.13 이라 선이 경계를 맡는다" }
+        shadow: { value: none, note: "그림자 없음 — 그림자는 떠 있는 몇 안 되는 요소(Elevation). 누르거나 올려도 그림자가 생기지 않는다" }
+        radius: { value: $radius-r4, note: "16 — 카드 안 목록의 동심 모서리(16 − 6 = 10) · Skeleton 카드 면 16 과 같다" }
+        padding: { value: $spacing-x6, note: "폭과 상관없이 24(14B) — List 줄 24 · Bottom Sheet 24 와 같다. 목록 카드는 좌우 0(body list)" }
+        gap: { value: $spacing-x2, note: "위아래로 쌓인 카드 사이 8(SEED \"8px Gap\") — 폰 · 데스크톱 한 열. 데스크톱 격자의 칸 사이는 layout-gutter 24" }
+        overflow: { value: hidden, note: "목록 줄의 누름 바탕 · 순자산 장식 빛을 모서리에서 자른다" }
+      header:
+        alignItems: center
+        justifyContent: space-between
+        gap: $spacing-x2
+        paddingBottom: { value: $spacing-x2, note: "머리 ↔ 본문 8 — 목록 카드는 4(줄이 제 위 여백 12 를 가진다)" }
+      title:
+        typography: $text-t5
+        fontWeight: 700
+        foreground: $color-fg-neutral
+      headerAction:
+        height: { value: 36px, note: "보이는 상자 — SEED Text Button minHeight x9. 누를 때 바탕 bg-layer-default-pressed · 모서리 8. 2026-10-16 사용자 결정 — 글자 역할 D2(6B 의 32 를 바꿨다)" }
+        paddingLeft: $spacing-x3_5
+        paddingRight: { value: $spacing-x3_5, note: "좌우 14(SEED Text Button paddingX). 머리 줄 끝에서는 오른쪽 14 만큼 바깥으로 내어(margin-right −14) 글자 끝이 카드 여백 24 에 선다" }
+        radius: $radius-r2
+        typography: $text-t4
+        fontWeight: { value: 700, note: "2026-10-16 사용자 결정 — 글자 역할 D2(SEED Text Button t4 · bold, 6B 의 500 을 바꿨다)" }
+        foreground: { value: $color-fg-neutral-muted, note: "2026-10-16 사용자 결정 — 글자 역할 D2(SEED Text Button fg.neutral-muted, 6B 의 subtle 을 바꿨다). 꺾쇠(chevron)는 두지 않는다 — SEED Text Button 에 아이콘이 없다" }
+        touchTarget: { value: 44 × 44, note: "보이는 36 위아래로 4 씩 · 옆은 글 폭 + 여백(44 보다 좁으면 44). AA ✓ · AAA ✓. 앱 — 보이는 자리를 바꾸지 않고 누르는 영역만 위아래 4 넓힌다(부모 상자 밖도 받는다 — 머리 줄 높이 · 여백은 그대로). 6B 44 × 44 의 앱 풀이 — Q-011-8" }
+      content:
+        gap: { value: $spacing-x3, note: "본문 안 요소 사이 기본 12(spacing-component-default)" }
+      list:
+        itemRadius: { value: $radius-r2_5, note: "누름 · 호버 바탕 모서리 10 = 카드 16 − 바탕 들임 6(List 동심 모서리). List 줄의 좌우 24 는 그대로" }
+      statLabel:
+        typography: $text-t3
+        fontWeight: 500
+        foreground: $color-fg-neutral-subtle
+      statValue:
+        fontWeight: 700
+        foreground: $color-fg-neutral
+        numerals: { value: tabular-nums, note: "돈은 줄이지 않고 원까지 · 빼기는 U+2212. 숫자가 굴러가는 애니메이션을 두지 않는다" }
+        lineBreak: { value: 쉼표 뒤, note: "카드보다 긴 금액(큰 글자 · 큰 수)은 쉼표 뒤에서만 줄을 바꾼다 — 세 자리 묶음을 가르지 않는다. 금액 글을 만드는 함수가 보이는 글의 쉼표 뒤마다 웹 <wbr> · 앱 U+200B 를 넣는다(읽는 이름 · 복사에는 넣지 않는다). 묶음 하나가 칸보다 길 때만 v114 의 칸 끝 끊기. 글자를 줄여 맞추지 않는다(2026-10-17 사용자 결정 03-D 결정 2 B — Typography v114 의 예외)" }
+        marginTop: { value: $spacing-x1, note: "라벨 ↔ 숫자" }
+      delta:
+        typography: $text-t3
+        fontWeight: 500
+        numerals: tabular-nums
+        marginTop: { value: $spacing-x1, note: "지표 카드의 숫자 ↔ 증감 줄(지표 묶음 CardStat 이 준다). 순자산 카드 안에서는 0 — 위 4 는 heroDetail 이 준다" }
+      deltaText:
+        typography: $text-t3
+        fontWeight: 400
+        foreground: $color-fg-neutral-subtle
+        gap: { value: $spacing-x1, note: "증감 값 ↔ 글" }
+    hovered:
+      headerAction:
+        background: $color-bg-layer-default-pressed
+    pressed:
+      headerAction:
+        background: $color-bg-layer-default-pressed
+        scale: { value: 2px 거리 축소, note: "글 버튼만 — 카드는 그대로" }
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: 2px, note: "카드 · 머리 동작 바깥" }
+        color: $color-stroke-focus-ring
+
+  # ── 목록 카드 ─────────────────────────────────────────
+  - when: { body: list }
+    enabled:
+      root:
+        padding: { value: 0px, note: "좌우 0 — List 줄이 제 좌우 24 · 위아래 12 를 가진다(Bottom Sheet 본문에 List 를 둘 때와 같다). 머리가 없으면 위 12 — 첫 줄의 12 와 합쳐 보이는 24(아래와 같게)" }
+        paddingBottom: { value: $spacing-x3, note: "12 — 마지막 줄의 아래 12 와 합쳐 보이는 24, 위(머리 24)와 같다" }
+      header:
+        paddingX: { value: $spacing-x6, note: "줄의 글자와 머리 제목이 한 줄에 선다 — 폭과 상관없이 24" }
+        paddingTop: { value: $spacing-x6, note: "폭과 상관없이 24 — 다른 카드 · 시트의 위 여백과 같다" }
+        paddingBottom: $spacing-x1
+
+  # ── 아코디언 카드 ─────────────────────────────────────
+  - when: { body: accordion }
+    enabled:
+      root:
+        padding: { value: 0px, note: "좌우 0 — Accordion 트리거가 제 좌우 24 · 위아래 16 을 가진다(accordion.yaml). 카드 상세의 혜택 · 유의사항(2026-10-10 사용자 결정 6A)" }
+        paddingBottom: { value: $spacing-x2, note: "8 — 마지막 트리거의 아래 16 과 합쳐 보이는 24, 위(머리 24)와 같다(목록 카드는 12 + 줄 12)" }
+      header:
+        paddingX: { value: $spacing-x6, note: "트리거의 제목과 머리 제목이 한 줄에 선다 — 목록 카드와 같다" }
+        paddingTop: $spacing-x6
+        paddingBottom: { value: $spacing-x1, note: "머리 ↔ 첫 트리거 4 — 트리거가 제 위 여백 16 을 가진다" }
+
+  # ── 누름 ──────────────────────────────────────────────
+  - when: { press: whole }
+    enabled:
+      root:
+        cursor: pointer
+        transitionProperty: background-color, scale
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+    hovered:
+      root:
+        background: { value: $color-bg-layer-default-pressed, note: "면만 바뀐다 — 테두리 · 글자색 그대로, 그림자 · 위로 뜨기 없음" }
+    pressed:
+      root:
+        background: $color-bg-layer-default-pressed
+        scale: { value: 2px 거리 축소, note: "카드 전체(Root Scale) — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px(v104). 모션 줄이기면 하지 않는다" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+  - when: { variant: hero, press: whole }
+    pressed:
+      root:
+        background: { value: $color-bg-brand-solid, note: "바뀌지 않는다 — 채움 그라디언트에는 누름 색 짝이 없어 2px 축소만(SEED Feedback: 색은 -pressed 짝이 있는 표면에서만)" }
+    hovered:
+      root:
+        background: { value: $color-bg-brand-solid, note: "바뀌지 않는다" }
+  - when: { press: peers }
+    enabled:
+      root:
+        cursor: pointer
+        transitionProperty: background-color
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+    hovered:
+      root:
+        background: $color-bg-layer-default-pressed
+    pressed:
+      root:
+        background: { value: $color-bg-layer-default-pressed, note: "축소하지 않는다 — 안의 버튼이 각자 제 누름을 가진다(SEED Feedback)" }
+
+  # ── 지표 ──────────────────────────────────────────────
+  - when: { stat: large }
+    enabled:
+      statValue:
+        typography: { value: $text-t9, note: "24 / 32" }
+  - when: { stat: small }
+    enabled:
+      statValue:
+        typography: { value: $text-t7, note: "20 / 27 — 데스크톱 격자에 셋 · 넷씩 둘 때. 여백은 그대로 24. 폰은 지표 카드를 한 줄에 하나(large) — 둘씩이면 \"1,240,000원\" 20 / 700(120)이 칸 101 에 들어가지 않는다(360 폭 실측)" }
+
+  # ── 증감 ──────────────────────────────────────────────
+  - when: { delta: up }
+    enabled:
+      delta:
+        foreground: { value: $color-fg-critical, note: "▲ + 값(\"▲ 12%\") — 어디서나 오르면 빨강(증권과 같은 관례). 좋고 나쁨은 글이 말한다" }
+  - when: { delta: down }
+    enabled:
+      delta:
+        foreground: { value: $color-fg-informative, note: "▼ + 값(\"▼ 3%\") — 부호는 화살표가 말한다(+ · − 를 같이 쓰지 않는다)" }
+  - when: { delta: flat }
+    enabled:
+      delta:
+        foreground: { value: $color-fg-neutral-subtle, note: "화살표 없이 \"변화 없음\"" }
+
+  # ── 순자산 ────────────────────────────────────────────
+  - when: { variant: hero }
+    enabled:
+      root:
+        background: { value: $color-bg-brand-solid, note: "135° 그라디언트의 시작(왼쪽 위) — 라이트 #0147AD(brand-600) · 다크 #1049A4(brand-500-dark). HR 에는 이 카드가 없다" }
+        gradientEnd: { value: $color-brand-900, dark: $color-brand-300-dark, note: "그라디언트의 끝(오른쪽 아래) — 라이트 brand-900 #002460(지금 #012B68 에 가장 가까운 팔레트 단계, ΔE00 2.4) · 다크 brand-300-dark #1F3A69. 다크도 짙은 채움이다" }
+        borderWidth: { value: 0px, note: "테두리 없음 — 채움이 경계다" }
+        padding: { value: $spacing-x6, note: "24 — 다른 카드와 같다" }
+        paddingBottom: { value: $spacing-x6, note: "24 — 본문이 늘 content 라 목록 카드의 아래 12 를 받지 않는다(Q-011-7)" }
+      heroGlow:
+        size: { value: 240px, note: "오른쪽 위 장식 빛 — 원의 오른쪽 −40 · 위 −80(카드 밖으로 나간 부분은 모서리가 자른다)" }
+        background: { value: $color-static-white / 22%, note: "가운데 흰 22% → 지름의 70% 에서 투명. 장식이라 보조 기술에 숨긴다 — 흰 글자 대비는 이 빛 위에서도 4.5 이상(가장 낮은 자리 4.88)" }
+      heroLabel:
+        typography: $text-t3
+        fontWeight: 500
+        foreground: { value: $color-static-white, note: "흐리게(불투명도) 두지 않는다 — 흰 글자 그대로(v106)" }
+      heroAmount:
+        typography: { value: $text-t12, note: "32 / 42" }
+        fontWeight: { value: 700, note: "v100 — 지금 800" }
+        foreground: $color-static-white
+        numerals: tabular-nums
+        lineBreak: { value: 쉼표 뒤, note: "지표 숫자와 같다(statValue.lineBreak) — 글자 200% 에서 18자리 금액이 3 → 4줄이 될 수 있다" }
+        marginTop: $spacing-x1_5
+      heroDetail:
+        typography: $text-t3
+        fontWeight: 400
+        foreground: { value: $color-static-white, note: "증감도 흰 글자 + ▲ · ▼ — 빨강 · 파랑은 브랜드 채움 위 1.66 · 1.65(라이트)라 읽히지 않는다" }
+        marginTop: $spacing-x1
+      delta:
+        foreground: { value: $color-static-white, note: "방향과 상관없이 흰 ▲ · ▼ + 값(16A) — 증감 방향 색의 하나뿐인 예외. 빨강 · 파랑은 브랜드 채움 위 1.66 · 1.65 라 읽히지 않는다(Q-011-3)" }
+        marginTop: { value: 0px, note: "위 4 는 heroDetail 이 준다" }
+      deltaText:
+        foreground: { value: $color-static-white, note: "기준 글도 흰 글자 — 흐리게(불투명도) 두지 않는다(v106)" }
+
+motion:
+  "누름 — 면":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color]
+    note: "누르는 카드의 면 · 머리 동작의 바탕"
+  "누름 — 축소":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "press whole 만 2px 거리 — peers 는 축소 없음, 모션 줄이기면 하지 않는다"

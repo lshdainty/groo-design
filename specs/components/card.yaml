@@ -6,7 +6,7 @@
 # 모서리 16 은 List 동심 모서리 · Skeleton 의 카드 예, 누름은 Feedback(색 + 2px 축소, 대등한 동작이 여럿이면 축소하지 않는다)이다.
 # 카드 머리 · 지표 카드 · 순자산 카드(hero) · 증감 표기는 SEED 에 없어 groo 가 정했다.
 #
-# 변형은 둘이다 — default(바닥 위 흰 면 + 1px 테두리) · hero(순자산 — 브랜드 채움 · 흰 글자, Desk 홈 · 자산 한 자리).
+# 변형은 둘이다 — default(바닥 위 흰 면 + 1px 테두리) · hero(순자산 — 브랜드 채움 · 흰 글자, Desk 홈 한 자리).
 # 옛 shadow · bordered · muted · brand 와 제품의 raised 는 걷었다(card.md 의 Migration notes).
 # 누름(press) · 본문(body) · 지표 크기(stat) · 증감(delta)은 상태와 곱해지므로 축이다.
 #
@@ -41,7 +41,7 @@ slots:
 variants:
   variant:
     default: 바닥 위 흰 면 + 1px 테두리 — 모든 카드(기본)
-    hero: 순자산 — 브랜드 채움 · 흰 글자. Desk 홈 · 자산의 한 자리만. 본문은 늘 content — list · accordion 과 곱하지 않는다(순자산 카드는 목록을 담지 않는다 — Q-011-7)
+    hero: 순자산 — 브랜드 채움 · 흰 글자. Desk 홈의 한 자리만(자산 화면의 순자산 요약은 default — 2026-10-23 I-05 Q2). 본문은 늘 content — list · accordion 과 곱하지 않는다(순자산 카드는 목록을 담지 않는다 — Q-011-7)
   press:
     none: 누르지 않는 카드 — 안의 버튼 · 줄이 각자 눌린다(기본)
     whole: 카드 전체가 한 곳으로 — 누름 색 + 2px 축소

@@ -381,7 +381,7 @@ export function ScreenFloorFigure() {
       draw: (m) => (
         <Phone mode={m}>
           <Nav mode={m} />
-          <div className="absolute inset-x-0 flex flex-col gap-2" style={{ top: 36 }}>
+          <div className="absolute inset-x-0 flex flex-col gap-2" style={{ top: 28 }}>
             <div className="flex flex-col gap-1.5 px-2.5 py-2.5" style={{ background: rc('bg-brand-solid', m) }}>
               <span className="block h-1 w-8 rounded" style={{ background: rc('static-white', m), opacity: 0.8 }} />
               <span className="block h-2 w-16 rounded" style={{ background: rc('static-white', m) }} />
@@ -407,7 +407,7 @@ export function ScreenFloorFigure() {
       draw: (m) => (
         <Phone mode={m}>
           <Nav mode={m} />
-          <div className="absolute inset-x-0 flex flex-col gap-2" style={{ top: 36 }}>
+          <div className="absolute inset-x-0 flex flex-col gap-2" style={{ top: 28 }}>
             {[3, 2, 3].map((n, i) => (
               <div key={i} className="flex flex-col gap-1.5 pb-2 pt-1.5" style={{ background: rc('bg-layer-default', m) }}>
                 <GroupHead mode={m} />

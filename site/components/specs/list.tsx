@@ -80,7 +80,7 @@ const ALERTS: RowSpec[] = [
 ];
 
 // 화면 — DESIGN.md Layout 의 "화면 바탕"(2026-10-16 Q-019-3 C). 묶음 목록 화면(설정 · 알림 …)은 회색 바닥 위에 묶음(목록 제목 + 줄)마다
-// 화면 폭 흰 띠를 8 띄워 쌓는다 — 맨 위 8 · 띠 안 위 4 · 아래 8. 가계부 거래 목록만 흰 화면(floor="white")이다
+// 화면 폭 흰 띠를 8 띄워 쌓는다 — 띠 안 위 4 · 아래 8, 첫 띠 위 · 마지막 띠 아래에는 틈이 없다(2026-10-23). 가계부 거래 목록만 흰 화면(floor="white")이다
 function Screen({ title, children, mode = 'auto', scale = 0.56, h = 600, floor = 'bands' }: { title: string; children: ReactNode; mode?: Mode; scale?: number; h?: number; floor?: 'bands' | 'white' }) {
   if (floor === 'white') {
     return (
@@ -97,7 +97,7 @@ function Screen({ title, children, mode = 'auto', scale = 0.56, h = 600, floor =
   }
   return (
     <Phone title={title} mode={mode} scale={scale} h={h} bg="bg-layer-basement">
-      <div className="flex flex-col gap-2 pt-2">
+      <div className="flex flex-col gap-2">
         {bands.map((b, i) => (
           <div key={i} className="flex flex-col pb-2 pt-1" style={{ background: rc('bg-layer-default', mode) }}>
             {b}

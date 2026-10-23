@@ -186,10 +186,11 @@ export function TxCard({ mode = 'auto', title = '최근 거래', action = '전�
     </CardSurface>
   );
 }
-// 띠 화면 — 회색 바닥 위 화면 폭 흰 띠(묶음마다 하나), 띠 사이 8 · 맨 위 8 · 띠 안 위 4 · 아래 8(DESIGN.md Layout 의 "화면 바탕", 2026-10-16 Q-019-3 C)
+// 띠 화면 — 회색 바닥 위 화면 폭 흰 띠(묶음마다 하나), 띠 사이 8 · 띠 안 위 4 · 아래 8(DESIGN.md Layout 의 "화면 바탕", 2026-10-16 Q-019-3 C).
+// 첫 띠는 머리 바로 아래에 붙고 마지막 띠 아래에도 틈이 없다(2026-10-23 사용자 결정 — 옛 맨 위 8 을 걷었다)
 export function FloorBands({ mode = 'auto', children }: { mode?: Mode; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-2 pt-2">
+    <div className="flex flex-col gap-2">
       {(Array.isArray(children) ? children : [children]).map((c, i) => (
         <div key={i} className="pb-2 pt-1" style={{ background: rc('bg-layer-default', mode) }}>
           {c}
