@@ -16,7 +16,7 @@
     "export:dart:desk": "mkdir -p exports && node scripts/build-dart-tokens.mjs --source DESIGN.desk.md > exports/tokens.desk.dart",
     "export:dart:hr": "mkdir -p exports && node scripts/build-dart-tokens.mjs --source DESIGN.hr.md > exports/tokens.hr.dart",
     "export:dart:all": "npm run export:dart:desk && npm run export:dart:hr",
-    "export:spec": "node scripts/build-spec-json.mjs --source DESIGN.desk.md --out exports/spec/desk && node scripts/build-spec-json.mjs --source DESIGN.hr.md --out exports/spec/hr",
+    "export:spec": "node scripts/build-spec-json.mjs --source DESIGN.desk.md --out exports/spec/desk && node scripts/build-spec-json.mjs --source DESIGN.hr.md --out exports/spec/hr && node scripts/build-spec-json.mjs --source DESIGN.md --out exports/spec/group",
     "export:dtcg": "mkdir -p exports && npx @google/design.md export --format dtcg DESIGN.md > exports/tokens.dtcg.json",
     "snapshot": "cp DESIGN.md DESIGN.history/v$(date +%Y%m%d-%H%M%S).md",
     "sync": "node scripts/sync-shared-tokens.mjs",

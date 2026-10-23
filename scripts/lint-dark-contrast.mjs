@@ -75,7 +75,7 @@ const BODY_TEXTS = ["text-primary-dark", "text-secondary-dark"];
 const TERTIARY_TEXTS = ["text-tertiary-dark"]; // 1.4.3 incidental — warning only
 const BRAND_LIGHT = ["primary-light"]; // brand-specific (HR/Desk)
 const SEMANTIC_LIGHT = ["success-light", "error-light", "warning-light", "info-light"];
-const UI_ELEMENTS_3 = ["border-focus-light"]; // brand-specific
+const UI_ELEMENTS_3 = ["border-focus-light", "stroke-focus-ring-dark"]; // border-focus-light 는 brand 파일만, stroke-focus-ring-dark 는 세 파일(그룹은 짙은 회색 — 2026-10-23)
 const CHART_LIGHT = [
   "chart-red-dark", "chart-orange-dark", "chart-yellow-dark", "chart-green-dark",
   "chart-blue-dark", "chart-indigo-dark", "chart-violet-dark", "chart-pink-dark",

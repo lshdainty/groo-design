@@ -487,6 +487,11 @@ colors:
   stroke-informative-weak-dark: "{colors.blue-400-dark}"
   # @sync:shared-end (colors-3)
   
+  # === 그룹 전용 — sync 비대상. 브랜드 파일은 같은 이름을 브랜드 색으로 따로 둔다 ===
+  # 2026-10-23 — 그룹 화면(홈 그룹 쪽 · 그루 계정 · 그룹 문서)의 키보드 포커스 링. 그룹엔 브랜드 색이 없어 채움(bg-neutral-inverted)과 같은 짙은 회색이다(I-18 Q1-A)
+  stroke-focus-ring: "{colors.gray-1000}"
+  stroke-focus-ring-dark: "{colors.gray-1000-dark}"
+  
   # (border-focus 정의 완료 — v16)
 
 typography:
@@ -1687,6 +1692,7 @@ HR(조직 관리, B2B)과 Desk(개인 생산성, B2C)는 동일한 골격을 공
 ### 그룹 색 · 로고 칠 (v121 — 2026-10-22)
 
 - **그룹(그루)에는 브랜드 색이 없다.** 그룹 화면 — 홈의 그룹 쪽 · 그루 계정 로그인 · 그룹 문서 — 의 채움 · 링크는 짙은 회색 `bg-neutral-inverted`(라이트 `#1A1F2E` 위 흰 글자 · 다크 `#F5F6FA` 위 `#242938` 글자, 글자는 `fg-neutral-inverted`)다. 그룹용 primary 토큰은 두지 않는다.
+- **그룹 화면의 포커스 링도 짙은 회색이다** — 이 파일의 `stroke-focus-ring` 은 채움과 같은 `gray-1000`(라이트 `#1A1F2E` — 흰 면 16.4:1 · 회색 바닥 15.2:1, 다크 `#F5F6FA` — 바닥 15.2:1 · 카드 13.4:1 · 시트 11.6:1). 담다 · 이음 파일은 같은 이름이 브랜드 색이다. 브랜드 역할(fg-brand · bg-brand-* · stroke-brand-*)은 이 파일에 두지 않는다 — 그룹 화면은 brand 변형을 쓰지 않으므로, 이 파일로 만든 스펙 값 JSON 은 brand 칸을 싣지 않고 `skipped` 에 적는다(2026-10-23 그루 계정 지시서 I-18 Q1-A).
 - **색은 로고에만 있다.** 로고 칠은 고정값이고 라이트 · 다크가 같다 — 진한 잎 `#075B3C` · 겹침 `#218D49` · 밝은 잎 `#43BF5E` · 기둥 `#A96D57`. 로고를 그릴 때만 쓰는 값이라 UI 토큰이 아니다 — 화면의 채움 · 글자 · 선에 쓰지 않는다. 다크 바탕(`#1A1F2E`)에서 진한 잎이 2.01:1 로 어두운 것은 받아들였다(다크에서 잎을 밝히거나 타일 · 테두리를 두르지 않는다).
 - **서비스 색** — 담다는 파랑(`DESIGN.desk.md` 브랜드 램프 그대로), 이음은 그룹 초록이다 — 이음 브랜드 램프의 600 이 로고 진한 잎 `#075B3C` 다(`DESIGN.hr.md` v121).
 - 사용자 결정(2026-10-22) — 색 고르기 https://claude.ai/artifact/G4ygEuztK398wjqhEVsdUa · 로고 칠 비교 https://claude.ai/artifact/JH9rn2VGaQjKpfis7m7hWA · 로고 다크 보정 https://claude.ai/artifact/1CV3wbUT88J2RWghmeeLkX.
@@ -1989,7 +1995,7 @@ SEED 의 warning 은 주황이 아니라 yellow 이고 단계도 다르다(채�
 
 #### 브랜드 역할
 
-브랜드 파일(DESIGN.hr.md · DESIGN.desk.md)에만 있다 — fg-brand · fg-brand-contrast · bg-brand-solid · bg-brand-solid-pressed · bg-brand-weak · bg-brand-weak-pressed · stroke-focus-ring · stroke-brand-solid · stroke-brand-weak. 파일 안에서는 같은 이름이다.
+브랜드 파일(DESIGN.hr.md · DESIGN.desk.md)에만 있다 — fg-brand · fg-brand-contrast · bg-brand-solid · bg-brand-solid-pressed · bg-brand-weak · bg-brand-weak-pressed · stroke-focus-ring · stroke-brand-solid · stroke-brand-weak. 파일 안에서는 같은 이름이다. 단 stroke-focus-ring 은 이 그룹 파일에도 있다 — 짙은 회색 gray-1000 / gray-1000(다크 팔레트)(2026-10-23, "그룹 색 · 로고 칠").
 
 #### 값을 만든 규칙
 
@@ -4170,7 +4176,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 - **focus-ring-on-light** (`focus-ring-on-light`): 라이트 표면 위 focus
 - **focus-ring-on-dark** (`focus-ring-on-dark`): 다크 표면 위 focus
 
-(색은 역할 색 `stroke-focus-ring` 하나다(v102) — 라이트 · 다크 값은 brand 파일의 v102 표. 옛 `border-focus` · `border-focus-light` 는 같은 값의 별칭이다.)
+(색은 역할 색 `stroke-focus-ring` 하나다(v102) — 라이트 · 다크 값은 brand 파일의 v102 표, 그룹 화면은 이 파일의 짙은 회색(2026-10-23 "그룹 색 · 로고 칠"). 옛 `border-focus` · `border-focus-light` 는 같은 값의 별칭이다.)
 
 #### Spec
 - **두께**: 2px outline (1px은 시인성 부족)
