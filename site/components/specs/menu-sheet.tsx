@@ -7,7 +7,7 @@ import { buttonLook } from './button-look';
 import { HeaderSheetDemo, MenuSheetPlayground, PhotoSheetDemo } from './menu-demos';
 import { DELETE, DUPLICATE, EDIT, EXPORT_LEAVE, HEADER_MENU, MEMOS, MEMO_MENU, PHOTO_MENU, PIN, RESET_PASSWORD, SWIPE_SHEET } from './menu-data';
 import type { MenuGroup } from './menu-look';
-import { DesktopMemoMenu, Kebab, MemoPhone, PHONE_SAFE, PhoneMemoSheet, Sheet, SheetCrop, SheetOn, iconBtn, mk, modeName } from './menu-screens';
+import { DesktopMemoMenu, Kebab, MemoDetailPhone, MemoPhone, PHONE_SAFE, PhoneMemoSheet, Sheet, SheetCrop, SheetOn, iconBtn, mk, modeName } from './menu-screens';
 import { Band, Legend, Note, Shot, overlayKit, pinAt, pinStyle } from './overlay-screens';
 import { Cap } from './select-screens';
 import { Verdict } from './kit';
@@ -37,13 +37,13 @@ const SafeBand = () => <Band style={{ left: 0, right: 0, bottom: 0, height: PHON
 const PERSON_SHEET: MenuGroup[] = [{ items: [EDIT, { ...RESET_PASSWORD, icon: 'key' }, { ...EXPORT_LEAVE, icon: 'download' }] }, { items: [DELETE] }];
 
 // ── Overview ──────────────────────────────────────────────
-// 메모 줄 ⋮ 의 시트 · 메모 화면 머리 더보기 — 라이트 줄 · 다크 줄
+// 메모 화면 머리 ⋮ 의 시트(목록 줄을 눌러 들어간 화면) · 메모 목록 머리 더보기 — 라이트 줄 · 다크 줄
 const Hero: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex flex-col items-center gap-4">
       {(['light', 'dark'] as const).map((mode) => (
         <div key={mode} className="flex flex-wrap items-start justify-center gap-4">
-          <MemoPhone
+          <MemoDetailPhone
             mode={mode}
             scale={0.52}
             overlay={
@@ -76,7 +76,7 @@ const Anatomy: Fig = ({ caption }) => {
   return (
     <Figure caption={caption}>
       <div className="flex flex-col items-center gap-6">
-        <MemoPhone
+        <MemoDetailPhone
           scale={1}
           overlay={
             <SheetOn>
@@ -233,18 +233,18 @@ const ResponsiveGuide: Fig = ({ caption }) => {
   );
 };
 
-// 스와이프는 지름길 · ⋮ 는 같은 동작의 시트
+// 스와이프는 지름길 · 줄을 누르면 들어간 화면 머리 ⋮ 에 같은 동작(목록 줄에는 ⋮ 를 두지 않는다 — 2026-10-25)
 const SWIPE_MEMOS = [{ title: '주간 회의 메모 — 다음 분기 목표', sub: MEMOS[0].sub }, ...MEMOS.slice(1)];
 const SwipeGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex flex-wrap items-start justify-center gap-6">
-      <NShot w={240} strong="밀면 바로 — 지름길" cap="첫 줄을 왼쪽으로 민 모습(고정 · 수정 · 삭제) · 줄 끝 ⋮ 는 줄과 함께 밀린다">
+      <NShot w={240} strong="밀면 바로 — 지름길" cap="첫 줄을 왼쪽으로 민 모습(고정 · 수정 · 삭제) · 목록 줄에는 ⋮ 가 없다">
         <MemoPhone scale={0.62} swiped memos={SWIPE_MEMOS} />
       </NShot>
-      <NShot w={240} strong="⋮ → 같은 동작의 시트" cap="미는 법을 모르는 사람 · 키보드 · 스크린리더의 길 — 같은 이름 · 같은 확인창">
-        <MemoPhone
+      <NShot w={240} strong="줄을 누르면 — 들어간 화면 머리 ⋮" cap="미는 법을 모르는 사람 · 키보드 · 스크린리더의 길 — 트레이와 같은 동작 · 같은 이름 · 같은 확인창">
+        <MemoDetailPhone
           scale={0.62}
-          memos={SWIPE_MEMOS}
+          memo={SWIPE_MEMOS[0]}
           overlay={
             <SheetOn>
               <Sheet title={SWIPE_MEMOS[0].title} groups={SWIPE_SHEET} />

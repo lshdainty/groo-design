@@ -184,7 +184,5 @@ export const MEMO_ACTIONS: SwipeActionSpec[] = [
   { value: 'edit', kind: 'primary', label: '수정', icon: 'pencil' },
   { value: 'delete', kind: 'destructive', label: '삭제', icon: 'trash' },
 ];
-// 같은 동작의 메뉴(줄 끝 ⋮ → Menu Sheet · Menu) — 트레이와 같은 이름 · 같은 차례
-export const TX_MENU = [{ items: [{ value: 'edit', label: '수정', icon: 'pencil' as const }] }, { items: [{ value: 'delete', label: '삭제', icon: 'trash' as const, tone: 'critical' as const }] }];
 // 확인 창 — 상세에서 지울 때와 같은 문구(부르는 쪽이 넘긴다)
 export const deleteConfirm = (title: string) => ({ title: '거래 삭제', description: `${title} 거래를 지울까요?` });

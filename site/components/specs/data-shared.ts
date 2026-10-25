@@ -314,7 +314,6 @@ export type SwipeKitLook = {
   brightness: number;
   ring: DRing;
   motion: DMotion;
-  more: ButtonLook;
   // 제스처 판정(swipe-actions.md 의 "제스처 판정" 표)
   gesture: { deadzone: number; axis: number; open: number; close: number };
   breakpoint: number;

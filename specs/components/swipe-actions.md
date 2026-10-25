@@ -158,7 +158,7 @@ const actions: SwipeAction[] = [
     title={tx.title}
     detail={tx.meta}
     suffix={<Amount value={tx.amount} />}
-    {/* 줄 끝 ⋮ 는 두지 않는다 — 같은 수정 · 삭제는 상세에 있다(키보드 · 스크린리더의 길) */}
+    /* 줄 끝 ⋮ 는 두지 않는다 — 같은 수정 · 삭제는 상세에 있다(키보드 · 스크린리더의 길) */
     onClick={() => openDetail(tx)}
   />
 </SwipeActions>

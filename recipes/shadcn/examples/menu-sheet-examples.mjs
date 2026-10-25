@@ -1,7 +1,8 @@
 /*
  * shadcn Menu Sheet 예제 — docs site components/menu-sheet.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 둘(머리 더보기 · 글만)은 차례 · 제목 · 코드가 specs/components/menu-sheet.md 의
- * "코드" 절과 같고, 뒤의 둘(줄의 ⋮ · 상태)은 md 의 Guidelines · Properties 를 코드로 더 보인다(줄의 ⋮ 코드는 menu.md 의 것과 같다).
+ * "코드" 절과 같고, 뒤의 둘(들어간 화면 머리 ⋮ · 상태)은 md 의 Guidelines · Properties 를 코드로 더 보인다(머리 ⋮ 코드는 menu.md 의 것과 같다).
+ * 목록 줄에는 ⋮ 를 두지 않는다 — 줄을 누르면 들어간 화면의 머리 ⋮ 가 이 시트를 연다(menu.md "줄의 동작", 2026-10-25).
  *
  * SURFACE · LIST · CLOSE · ITEM · ITEM_ENABLED · ITEM_CONTENT · ITEM_CONTENT_PRESS · TONE 은 recipes/shadcn/components/ui/menu-sheet.tsx 의 상수와,
  * HEADER · TITLE · DESCRIPTION · GROUP · ITEM_ICON · ITEM_BODY · ITEM_LABEL · ITEM_DESCRIPTION 은 그 파일의 JSX 에 적힌 클래스와 글자 하나까지
@@ -253,11 +254,18 @@ const page = (title, rows) =>
   `<div aria-hidden="true" style="padding:var(--spacing-x6); font-family:var(--font-sans);"><div style="margin-bottom:var(--spacing-x2); font-size:var(--text-t7); line-height:var(--text-t7--line-height); font-weight:700; color:var(--color-fg-neutral);">${title}</div>${rows
     .map(([a, b]) => `<div style="${PAGE_ROW}"><span>${a}</span><span style="color:var(--color-fg-neutral-subtle);">${b}</span></div>`)
     .join("")}</div>`;
+// 메모 목록 — 줄 끝 ⋮ 는 두지 않는다(줄을 누르면 메모 화면)
 const MEMO_PAGE = page("메모", [
-  ["주간 회의 메모", "⋮"],
-  ["장보기 목록", "⋮"],
-  ["여행 준비", "⋮"],
-  ["읽을 책", "⋮"],
+  ["주간 회의 메모", "10월 1일"],
+  ["장보기 목록", "9월 30일"],
+  ["여행 준비", "9월 28일"],
+  ["읽을 책", "9월 20일"],
+]);
+// 메모 화면 — 목록 줄을 눌러 들어간 화면(머리 오른쪽 ⋮ 가 시트를 연다)
+const MEMO_DETAIL_PAGE = page("주간 회의 메모", [
+  ["다음 분기 목표를 정리했다.", ""],
+  ["· 신규 기능 두 가지 출시", ""],
+  ["· 응답 속도 20% 줄이기", ""],
 ]);
 const CAPTION =
   "font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:var(--text-t2); line-height:var(--text-t2--line-height); color:var(--color-fg-neutral-subtle);";
@@ -333,7 +341,7 @@ export const menuSheetExamples = [
   {
     title: "머리 더보기 — 늘 시트",
     description:
-      "폰 전용 화면의 머리 더보기처럼 늘 시트인 자리는 MenuSheet 를 바로 쓴다(줄의 동작은 ResponsiveMenu — 아래 예제). 시트는 최대 480 · 위 두 모서리 20 · 위 24(손잡이 자리) · 좌우 화면 여백 24 · 아래 16 + 안전 영역이고, 그림자 없이 딤(0.50 · 다크 0.65) 위에 뜬다. 손잡이(36 × 4)는 늘 있고 위 닫기 버튼은 없다 — 딤 · 끌어내리기 · Esc · 뒤로 가기로 닫는다. 머리는 가운데 — 제목 18/24 · 700(무엇의 동작인지). 묶음은 옅은 회색 상자(bg-neutral-weak · 모서리 16)이고, 줄은 최소 52 · 위아래 14 · 좌우 16 · 아이콘 22 ↔ 이름 16/22 사이 14 다. 줄 사이에 1px stroke-neutral-weak 선을 긋고 묶음의 마지막 줄 아래는 없다. 줄을 누르면 시트를 닫고, 초점이 트리거로 돌아온 뒤 onSelect 를 부른다.",
+      "폰 전용 화면의 머리 더보기처럼 늘 시트인 자리는 MenuSheet 를 바로 쓴다(들어간 화면 머리 ⋮ 처럼 폭마다 바뀌는 자리는 ResponsiveMenu — 아래 예제). 시트는 최대 480 · 위 두 모서리 20 · 위 24(손잡이 자리) · 좌우 화면 여백 24 · 아래 16 + 안전 영역이고, 그림자 없이 딤(0.50 · 다크 0.65) 위에 뜬다. 손잡이(36 × 4)는 늘 있고 위 닫기 버튼은 없다 — 딤 · 끌어내리기 · Esc · 뒤로 가기로 닫는다. 머리는 가운데 — 제목 18/24 · 700(무엇의 동작인지). 묶음은 옅은 회색 상자(bg-neutral-weak · 모서리 16)이고, 줄은 최소 52 · 위아래 14 · 좌우 16 · 아이콘 22 ↔ 이름 16/22 사이 14 다. 줄 사이에 1px stroke-neutral-weak 선을 긋고 묶음의 마지막 줄 아래는 없다. 줄을 누르면 시트를 닫고, 초점이 트리거로 돌아온 뒤 onSelect 를 부른다.",
     jsx: `import { MenuSheet, MenuSheetContent, MenuSheetGroup, MenuSheetItem, MenuSheetTrigger } from "@/components/ui/menu-sheet"
 
 <MenuSheet>
@@ -393,13 +401,14 @@ export const menuSheetExamples = [
   },
 
   {
-    title: "줄의 ⋮ — 1280 미만은 이 시트",
+    title: "들어간 화면 머리 ⋮ — 1280 미만은 이 시트",
     description:
-      "줄의 동작은 menu.tsx 의 ResponsiveMenu 로 짠다 — 1280 이상은 Menu, 미만은 같은 줄 · 같은 순서 · 같은 막힘의 이 시트다. title 은 시트의 제목(무엇의 동작인지 — 줄 이름)이 되고, 메뉴에만 쓰이는 suffixIcon 은 시트에서 그리지 않는다. 폰의 스와이프는 같은 동작의 지름길로 남기고, ⋮ 는 키보드 · 스크린리더 · 미는 법을 모르는 사람이 가는 길이다 — 트레이와 같은 동작 · 같은 이름 · 같은 확인창이다. 트리거는 aria-haspopup=\"dialog\" · aria-expanded 다.",
+      "목록 줄에는 ⋮ 를 두지 않는다 — 줄을 누르면 들어간 화면의 머리 ⋮ 가 menu.tsx 의 ResponsiveMenu 로 연다. 1280 이상은 Menu, 미만은 같은 줄 · 같은 순서 · 같은 막힘의 이 시트다. title 은 시트의 제목(무엇의 동작인지 — 항목 이름)이 되고, 메뉴에만 쓰이는 suffixIcon 은 시트에서 그리지 않는다. 폰의 스와이프는 같은 동작의 지름길로 남고, 줄을 눌러 들어간 이 화면이 키보드 · 스크린리더 · 미는 법을 모르는 사람이 가는 길이다 — 트레이와 같은 동작 · 같은 이름 · 같은 확인창이다. 트리거는 aria-haspopup=\"dialog\" · aria-expanded 다.",
     jsx: `import {
   ResponsiveMenu, ResponsiveMenuContent, ResponsiveMenuGroup, ResponsiveMenuItem, ResponsiveMenuTrigger,
 } from "@/components/ui/menu"
 
+// 들어간 화면(메모)의 머리 오른쪽 — 목록 줄에는 ⋮ 를 두지 않는다
 <ResponsiveMenu>
   <ResponsiveMenuTrigger asChild>
     <Button variant="ghost" layout="iconOnly" aria-label="주간 회의 메모 더보기">
@@ -421,8 +430,9 @@ export const menuSheetExamples = [
 </ResponsiveMenu>`,
     render: () =>
       menuSheet({
-        uid: "menu-sheet-ex-row",
+        uid: "menu-sheet-ex-header-kebab",
         title: "주간 회의 메모",
+        pageHtml: MEMO_DETAIL_PAGE,
         groups: [
           [
             { icon: ICONS.pin, label: "고정" },

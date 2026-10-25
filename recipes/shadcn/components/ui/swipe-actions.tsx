@@ -1,22 +1,18 @@
 import * as React from "react";
-import { EllipsisVertical } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { ResponsiveMenu, ResponsiveMenuContent, ResponsiveMenuGroup, ResponsiveMenuItem, ResponsiveMenuTrigger } from "@/components/ui/menu";
 
 /*
  * Groo Swipe Actions — groo 에만 있는 패턴(SEED 에는 줄 밀기가 없다). 수치 원본은 specs/components/swipe-actions.yaml.
- * 2026-10-02 — 미는 지름길은 남기고 같은 동작을 줄 끝 ⋮ → Menu Sheet 로도 연다. 2026-10-08 — 다크 배지 · 중립 배지 · 라벨 색 ·
- * 줄 높이 1.3 · Esc 뒤 초점을 고쳤다(데이터 표시 결정의 "줄 밀기").
+ * 2026-10-02 — 미는 지름길은 남기고 같은 동작을 줄 끝 ⋮ → Menu Sheet 로도 열었다. 2026-10-08 — 다크 배지 · 중립 배지 · 라벨 색 ·
+ * 줄 높이 1.3 · Esc 뒤 초점을 고쳤다(데이터 표시 결정의 "줄 밀기"). 2026-10-25 — 목록 줄의 ⋮ 를 걷었다(SwipeActionsMenu 걷음) —
+ * 같은 동작은 줄을 눌러 들어간 화면(바닥 [삭제] · 머리 ⋮)에 다 둔다(menu.md "줄의 동작").
  *
  *   SwipeActions          폰(768 미만) 목록 줄을 감싼다 — 왼쪽으로 밀면 오른쪽에서 동작 칸이 드러난다. actions(1 ~ 3개 —
  *                         { kind, label, icon, disabled, onSelect }, 뜻의 차례로) · enabled(폰일 때만 true — 768 이상이면 false 로 넘겨
  *                         줄만 그린다) · rowLabel(동작 이름에 붙는 줄 제목 — "삭제: 스타벅스"). 동작을 누르면 트레이를 닫은 뒤 onSelect.
  *                         감싼 줄은 tabIndex -1 로 초점을 받을 수 있고, 열린 트레이를 Esc 로 닫으면 초점을 줄로 옮긴다
- *   SwipeActionsMenu      줄 끝 ⋮ — 같은 actions · rowLabel 을 ResponsiveMenu 로(이름 "{rowLabel} 더보기" · destructive 는
- *                         tone="critical" · 같은 차례). 트레이와 시트가 한 배열에서 나온다 — 스와이프로만 닿는 동작이 없다
  *   SwipeActionsProvider  목록의 조상 — 한 번에 한 줄만 열리고(다른 줄을 끌면 열린 줄이 닫힌다), 목록을 스크롤하면 닫힌다
  *
  * 줄을 다시 만들지 않는다 — 기존 줄을 감싸기만 한다(모양 · 누르기는 그대로). 동작은 고정 목록이 아니라 부르는 쪽이 1 ~ 3개를 조립한다.
@@ -39,7 +35,7 @@ import { ResponsiveMenu, ResponsiveMenuContent, ResponsiveMenuGroup, ResponsiveM
  *   따라가고, 놓은 뒤 자리를 잡는 것만 150ms(motion-duration-d3) 감속(motion-ease-enter) — 모션 줄이기면 바로. RTL 은 미는 방향이 뒤집힌다.
  * 열린 채 줄을 누르면 닫기만 한다(상세로 가지 않는다). 동작을 누르면 트레이를 먼저 닫고 실행한다 — 확인 창은 그 뒤에 뜬다.
  * 보조 기술: 닫힌 트레이는 aria-hidden · 버튼 tabindex -1(줄마다 "수정 삭제" 를 읽지 않게). 동작 이름은 "라벨: 줄 제목".
- *   키보드 · 스크린리더는 줄 끝 ⋮(SwipeActionsMenu)로 같은 동작에 닿는다.
+ *   키보드 · 스크린리더는 줄을 눌러 들어간 화면에서 같은 동작에 닿는다 — 트레이의 동작은 모두 그 화면에도 둔다.
  */
 
 /** 원형 배지 지름(px). 줄 높이 안에 배지 + 라벨이 함께 들어가는 최대치. */
@@ -367,40 +363,4 @@ const SwipeActions = React.forwardRef<HTMLDivElement, SwipeActionsProps>(
 );
 SwipeActions.displayName = "SwipeActions";
 
-export interface SwipeActionsMenuProps {
-  /** SwipeActions 와 같은 배열 — 같은 이름 · 같은 차례 · 같은 확인 창 */
-  actions: SwipeAction[];
-  /** 줄 제목 — ⋮ 의 이름 "{rowLabel} 더보기" · Menu Sheet 의 제목 */
-  rowLabel: string;
-  className?: string;
-}
-
-/** 줄 끝 ⋮ — Button ghost · iconOnly · medium(보이는 40 · 누르는 44). 1280 이상 Menu · 미만 Menu Sheet */
-function SwipeActionsMenu({ actions, rowLabel, className }: SwipeActionsMenuProps) {
-  return (
-    <ResponsiveMenu>
-      <ResponsiveMenuTrigger asChild>
-        <Button variant="ghost" layout="iconOnly" size="medium" aria-label={`${rowLabel} 더보기`} data-slot="swipe-actions-more" className={className}>
-          <EllipsisVertical />
-        </Button>
-      </ResponsiveMenuTrigger>
-      <ResponsiveMenuContent title={rowLabel}>
-        <ResponsiveMenuGroup>
-          {actions.map((a) => (
-            <ResponsiveMenuItem
-              key={a.label}
-              label={a.label}
-              icon={a.icon}
-              tone={a.kind === "destructive" ? "critical" : "neutral"}
-              disabled={a.disabled}
-              onSelect={a.onSelect}
-            />
-          ))}
-        </ResponsiveMenuGroup>
-      </ResponsiveMenuContent>
-    </ResponsiveMenu>
-  );
-}
-SwipeActionsMenu.displayName = "SwipeActionsMenu";
-
-export { SwipeActions, SwipeActionsMenu, SwipeActionsProvider, swipeActionVariants, swipeBadgeVariants };
+export { SwipeActions, SwipeActionsProvider, swipeActionVariants, swipeBadgeVariants };

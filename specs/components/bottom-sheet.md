@@ -100,6 +100,8 @@
 
 목록 줄을 눌러 들어간 시트(상세 · 수정)에서 동작이 삭제 하나뿐이면 바닥 왼쪽에 [삭제](`ghost` + `critical`)를 둔다 — 주 버튼([저장] · [수정])이 있으면 그 버튼이 남은 폭을 채우고, 없는 조회 시트는 [삭제] 하나만 왼쪽에 선다. 동작이 여럿이면 바닥이 아니라 머리 ⋮ → [Menu Sheet](menu-sheet.md) 다. 목록 줄에는 ⋮ 를 두지 않는다([Menu](menu.md) 의 "줄의 동작", 2026-10-25 사용자 결정).
 
+[그림: 바닥 왼쪽 [삭제] — 상세(삭제 · 수정) · 수정이 없는 조회(삭제 하나)](../../site/components/specs/bottom-sheet.tsx#delete-guide)
+
 [그림: 버튼 — 폼은 위 닫기 + 바닥 저장 · 닫기와 취소를 함께](../../site/components/specs/bottom-sheet.tsx#buttons-guide)
 
 ### 글
@@ -211,7 +213,7 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 
 ### 2026-10-25 — 바닥 왼쪽 [삭제]
 
-사용자 결정 — 목록 줄에는 ⋮ 를 두지 않고 줄을 누르면 들어간다. 들어간 시트의 동작이 하나(삭제)면 바닥 왼쪽 [삭제] `ghost` + `critical`(Button 모달 footer 꼴), 여럿이면 머리 ⋮ → Menu Sheet([Menu](menu.md) 의 "줄의 동작"). Anatomy · 여백 · "닫기 버튼과 바닥 버튼" 에 한 줄씩, yaml `footer.gap` 비고에 같은 말. 그림은 아직 없다(바닥 그림 부품이 폭 전체 · 반씩만 그린다). 값 변경 없음.
+사용자 결정 — 목록 줄에는 ⋮ 를 두지 않고 줄을 누르면 들어간다. 들어간 시트의 동작이 하나(삭제)면 바닥 왼쪽 [삭제] `ghost` + `critical`(Button 모달 footer 꼴), 여럿이면 머리 ⋮ → Menu Sheet([Menu](menu.md) 의 "줄의 동작"). Anatomy · 여백 · "닫기 버튼과 바닥 버튼" 에 한 줄씩, yaml `footer.gap` 비고에 같은 말. 그림 delete-guide(상세 삭제 · 수정 · 삭제 하나)를 더했다. 값 변경 없음.
 
 ### 2026-10-22 — 90% 와 본문 스크롤 · 표면 고르기 표는 한 벌
 

@@ -4,6 +4,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { MARK, MARK_LINE } from '../foundations/ui';
 import { buttonLook } from './button-look';
+import { ButtonView } from './button-view';
 import { listLook } from './list-look';
 import { ListView } from './list-view';
 import type { RowSpec } from './list-shared';
@@ -274,6 +275,21 @@ export function PeriodSheet({ mode, footer, ...rest }: Partial<SheetBits> & { mo
   );
 }
 // 거래 상세 시트 — 위 닫기, 바닥 없음(조회)
+// 시트 바닥 왼쪽 [삭제] — Button ghost + critical(large · 글자만큼), 주 버튼이 있으면 남은 폭(button.md 모달 footer 꼴 — 2026-10-25).
+// 목록 줄을 눌러 들어간 시트에서 동작이 삭제 하나뿐일 때의 자리 — 여럿이면 머리 ⋮ → Menu Sheet
+export function DeleteFooter({ mode, primary }: { mode: Mode; primary?: string }) {
+  const s = ov().sheet.footer.button.size;
+  return (
+    <>
+      <ButtonView look={buttonLook({ variant: 'ghost', ghostColor: 'critical', size: s })} mode={mode} label="삭제" state="enabled" />
+      {primary && (
+        <div style={{ flex: '1 1 0', minWidth: 0 }}>
+          <ButtonView look={btn('neutralSolid', s)} mode={mode} label={primary} fill state="enabled" />
+        </div>
+      )}
+    </>
+  );
+}
 export function DetailSheet({ mode, ...rest }: Partial<SheetBits> & { mode: Mode }) {
   return (
     <SheetSurface look={ov().sheet} mode={mode} title="거래 상세" safe={PHONE_SAFE} bodyPad={false} {...rest}>

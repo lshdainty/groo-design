@@ -1,14 +1,12 @@
 'use client';
-// Swipe Actions 의 미리보기 — 가계부 줄을 실제로 밀어 트레이를 열고(한 번에 한 줄 · 스크롤하면 닫힘), 줄 끝 ⋮ 로 같은 동작을 Menu Sheet · Menu 로 연다.
+// Swipe Actions 의 미리보기 — 가계부 줄을 실제로 밀어 트레이를 열고(한 번에 한 줄 · 스크롤하면 닫힘), 줄을 누르면 상세(같은 동작은 상세에 — 줄 끝 ⋮ 는 두지 않는다, 2026-10-25).
 // 삭제는 트레이를 먼저 닫고 상세와 같은 문구의 확인 창(alert-dialog.yaml)을 띄운다. 값은 swipe-actions.yaml 을 푼 SwipeKitLook 만 쓴다.
 import { useId, useState } from 'react';
-import { LEDGER, TX_ACTIONS, TX_MENU, deleteConfirm, type TxRow } from './data-data';
+import { LEDGER, TX_ACTIONS, deleteConfirm, type TxRow } from './data-data';
 import { formatWon, type SwipeKitLook } from './data-shared';
 import { SwipeGroup, SwipeRowView, type SwipeAct } from './data-swipe-view';
 import type { ListLook, RowSpec } from './list-shared';
 import { ListView } from './list-view';
-import { KebabTrigger, ResponsiveMenu } from './menu-demos';
-import type { MenuGroup, MenuKit } from './menu-shared';
 import { ModalLayer, useMinWidth } from './overlay-live';
 import type { OvKit } from './overlay-shared';
 import { AlertSurface } from './overlay-view';
@@ -21,7 +19,7 @@ function Said({ text }: { text: string }) {
     </span>
   );
 }
-// 트레이 · 시트가 한 배열에서 — 같은 이름 · 같은 차례
+// 트레이의 동작 — 같은 동작 · 같은 이름이 줄을 눌러 들어간 상세에도 있다
 export const txActs = (): SwipeAct[] => TX_ACTIONS.map((a) => ({ value: a.value, kind: a.kind, label: a.label, icon: a.icon }));
 
 function Confirm({ ov, open, title, description, onCancel, onConfirm }: { ov: OvKit; open: boolean; title: string; description: string; onCancel: () => void; onConfirm: () => void }) {
@@ -37,7 +35,7 @@ function Confirm({ ov, open, title, description, onCancel, onConfirm }: { ov: Ov
   );
 }
 
-export function LedgerSwipeDemo({ look, list, menu, ov, rowHeight }: { look: SwipeKitLook; list: ListLook; menu: MenuKit; ov: OvKit; rowHeight: number }) {
+export function LedgerSwipeDemo({ look, list, ov, rowHeight }: { look: SwipeKitLook; list: ListLook; ov: OvKit; rowHeight: number }) {
   const [rows, setRows] = useState<TxRow[]>(LEDGER);
   const [said, setSaid] = useState('');
   const [ask, setAsk] = useState<TxRow | null>(null);
@@ -51,11 +49,6 @@ export function LedgerSwipeDemo({ look, list, menu, ov, rowHeight }: { look: Swi
     title: r.title,
     detail: r.detail,
     suffix: { amount: r.amount > 0 ? `+${formatWon(r.amount)}` : formatWon(r.amount) },
-    suffixNode: (
-      <span onClick={(e) => e.stopPropagation()} onPointerDown={(e) => e.stopPropagation()} style={{ display: 'flex', marginRight: -8 }}>
-        <ResponsiveMenu kit={menu} ov={ov} mode="auto" groups={TX_MENU as MenuGroup[]} title={r.title} label={`${r.title} 더보기`} onAction={(v) => act(r, v)} trigger={(t) => <KebabTrigger look={look.more} mode="auto" label={`${r.title} 더보기`} render={t} />} />
-      </span>
-    ),
   });
   return (
     <div className="flex flex-col items-center gap-3">

@@ -4,10 +4,10 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { MousePointer2 } from 'lucide-react';
 import { Panel, MARK, MARK_LINE } from '../foundations/ui';
-import { MemoMenuDemo, MenuPlayground, PeopleMenuDemo } from './menu-demos';
+import { MemoHeaderMenuDemo, MenuPlayground, PeopleMenuDemo } from './menu-demos';
 import { DELETE, DUPLICATE, EDIT, GUIDE_ITEM, MEMO_MENU, PERSON_MENU, PIN, SHARED_CAL_MENU, THEMES, THEME_MENU, TX_MENU } from './menu-data';
 import type { MenuGroup } from './menu-look';
-import { Anchored, Board, DesktopMemoMenu, IconButton, Menu, MemoWindow, PeopleWindow, PhoneMemoSheet, Scaled, iconBtn, mk, modeName } from './menu-screens';
+import { Anchored, Board, DesktopMemoMenu, IconButton, Menu, MemoDetailWindow, MemoWindow, PeopleWindow, PhoneMemoSheet, Scaled, iconBtn, mk, modeName } from './menu-screens';
 import { Legend, Note, Shot, overlayKit, pinStyle } from './overlay-screens';
 import { listLook } from './list-look';
 import { ListHeaderView, ListView } from './list-view';
@@ -43,14 +43,14 @@ function HeightTag({ label, gap = 12 }: { label: string; gap?: number }) {
 }
 
 // ── Overview ──────────────────────────────────────────────
-// Desk 메모 줄 ⋮(마우스가 고정 위) · HR 직원 줄 ⋮ — 라이트 줄 · 다크 줄
+// Desk 메모 화면 머리 ⋮(마우스가 고정 위 — 목록 줄을 눌러 들어간 화면) · HR 직원 표 줄 ⋮ — 라이트 줄 · 다크 줄
 const Hero: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex flex-col items-center gap-4">
       {(['light', 'dark'] as const).map((mode) => (
         <div key={mode} className="flex flex-wrap items-start justify-center gap-4">
           <Scaled w={400} h={380} s={0.66}>
-            <MemoWindow mode={mode} open={0} states={{ pin: 'hovered' }} />
+            <MemoDetailWindow mode={mode} open states={{ pin: 'hovered' }} />
           </Scaled>
           <Scaled w={460} h={420} s={0.66}>
             <PeopleWindow mode={mode} h={420} open={0} />
@@ -64,7 +64,7 @@ const Hero: Fig = ({ caption }) => (
 const Playground: Fig = () => <MenuPlayground kits={{ desk: mk('desk'), hr: mk('hr') }} ovs={{ desk: overlayKit('desk'), hr: overlayKit('hr') }} kebabs={{ desk: iconBtn('desk'), hr: iconBtn('hr') }} />;
 
 // ── Anatomy ───────────────────────────────────────────────
-// Desk 거래 줄의 ⋮ 메뉴 — 묶음 · 묶음 이름 · 선 · 줄 · 알약(마우스가 복사해 새로 쓰기 위). 아래는 줄의 부위
+// Desk 거래 상세 머리 ⋮ 의 메뉴 — 묶음 · 묶음 이름 · 선 · 줄 · 알약(마우스가 복사해 새로 쓰기 위). 아래는 줄의 부위
 const Anatomy: Fig = ({ caption }) => {
   const m = mk().menu;
   const rowMid = (m.item.height - 20) / 2;
@@ -313,21 +313,31 @@ const RoleGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 줄의 동작 — ⋮ 하나 + 메뉴 · 늘 보이는 아이콘 묶음
+// 줄의 동작 — 목록 줄은 ⋮ 없이 누르면 들어가고, 동작은 들어간 화면 머리 ⋮(2026-10-25) · 줄 끝 ⋮ · 늘 보이는 아이콘 묶음
 const RowGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
-    <Pair>
-      <Verdict ok note="줄 끝 ⋮ 하나(이름 “{줄 이름} 더보기”) — 누르면 메뉴, 줄을 누르면 상세 · 수정" bg={BASEMENT}>
-        <Scaled w={400} h={430} s={0.64}>
-          <MemoWindow open={1} h={430} />
+    <div className="grid w-full max-w-[760px] gap-4 md:grid-cols-2">
+      <Verdict ok note="목록 줄에는 ⋮ 가 없다 — 줄을 누르면 한 단계 들어간다(메모 화면)" bg={BASEMENT}>
+        <Scaled w={400} h={300} s={0.64}>
+          <MemoWindow h={300} />
+        </Scaled>
+      </Verdict>
+      <Verdict ok note="들어간 화면의 동작이 여럿이면 머리 오른쪽 ⋮ 하나(“{메모 제목} 더보기”) → 메뉴. 하나(삭제)면 바닥 왼쪽 [삭제]" bg={BASEMENT}>
+        <Scaled w={400} h={300} s={0.64}>
+          <MemoDetailWindow open h={300} />
+        </Scaled>
+      </Verdict>
+      <Verdict ok={false} note="좁은 목록 줄 끝마다 ⋮ — 같은 아이콘이 줄 수만큼 늘어난다. 줄에 ⋮ 를 둘 수 있는 건 콘텐츠가 높은 카드 머리뿐" bg={BASEMENT}>
+        <Scaled w={400} h={300} s={0.64}>
+          <MemoWindow trailing="kebab" h={300} />
         </Scaled>
       </Verdict>
       <Verdict ok={false} note="수정 · 삭제 아이콘을 줄마다 늘 — 버튼이 줄마다 늘고, 아이콘만으로는 뜻을 다 전하지 못한다" bg={BASEMENT}>
-        <Scaled w={400} h={430} s={0.64}>
-          <MemoWindow trailing="icons" h={430} />
+        <Scaled w={400} h={300} s={0.64}>
+          <MemoWindow trailing="icons" h={300} />
         </Scaled>
       </Verdict>
-    </Pair>
+    </div>
   </Panel>
 );
 
@@ -354,7 +364,7 @@ const GroupGuide: Fig = ({ caption }) => {
   );
 };
 
-// 1280 에서 — 같은 목록이 Menu ↔ Menu Sheet
+// 1280 에서 — 메모 화면 머리 ⋮ 의 같은 목록이 Menu ↔ Menu Sheet
 const ResponsiveGuide: Fig = ({ caption }) => {
   const k = mk();
   return (
@@ -372,7 +382,7 @@ const ResponsiveGuide: Fig = ({ caption }) => {
 };
 
 // ── 코드 미리보기(실제로 열고 닫는다) ────────────────────────
-const ExRow: Fig = () => <MemoMenuDemo kit={mk()} ov={overlayKit()} kebab={iconBtn()} />;
+const ExHeader: Fig = () => <MemoHeaderMenuDemo kit={mk()} ov={overlayKit()} kebab={iconBtn()} />;
 const ExDescription: Fig = () => <PeopleMenuDemo kit={mk('hr')} ov={overlayKit('hr')} kebab={iconBtn('hr')} />;
 
 export const menuFigures: Record<string, Fig> = {
@@ -386,6 +396,6 @@ export const menuFigures: Record<string, Fig> = {
   'row-guide': RowGuide,
   'group-guide': GroupGuide,
   'responsive-guide': ResponsiveGuide,
-  'ex-row': ExRow,
+  'ex-header': ExHeader,
   'ex-description': ExDescription,
 };

@@ -2,13 +2,14 @@
  * shadcn Swipe Actions 예제 — docs site components/swipe-actions.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 하나(가계부 줄)는 차례 · 제목 · 코드가 specs/components/swipe-actions.md 의 "코드" 절과
  * 같고, 뒤의 둘(동작 셋 — 고정 · 수정 · 삭제 · 막힌 동작)은 md 의 동작 · 상태를 코드로 더 보인다. SEED 에는 줄 밀기가 없다 — groo 에만 있는
- * 지름길이고, SEED Inclusive Design 의 "복잡한 제스처는 단순한 터치 동작으로도" 를 따라 같은 동작을 늘 줄 끝 ⋮ → Menu Sheet 로도 연다.
+ * 지름길이고, SEED Inclusive Design 의 "복잡한 제스처는 단순한 터치 동작으로도" 를 따라 같은 동작을 줄을 눌러 들어간 화면에도 다 둔다
+ * (2026-10-25 — 줄 끝 ⋮ · SwipeActionsMenu 를 걷었다, menu.md "줄의 동작").
  * 2026-10-08 — 다크 배지(fg-informative · fg-critical 채움 + fg-neutral-inverted 아이콘) · 중립 배지(bg-neutral-weak + 안쪽 1px) · 라벨 색 ·
  * 줄 높이 1.3 · Esc 뒤 초점을 고쳤다(데이터 표시 결정의 "줄 밀기"). 옛 예제(테두리 상자 · 옛 색 이름)를 대신한다.
  *
  * SWIPE_* · swipeSlotWidth · swipeTrayWidth 는 recipes/shadcn/components/ui/swipe-actions.tsx 의 상수 · 함수(형 표기만 뗐다 — 같은 입력에 같은 답)와,
  * ACTION_* · BADGE_* 는 그 파일의 cva(swipeActionVariants · swipeBadgeVariants)와, ROOT* · TRAY · ROW* 는 그 파일의 JSX 에 적힌 클래스와
- * 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 둘레의 부품은 그 레시피의 값을 옮겨 썼다 — LIST_* 는 list.tsx, BUTTON_* 는 button.tsx 의
+ * 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다. 둘레의 부품은 그 레시피의 값을 옮겨 썼다 — LIST_* 는 list.tsx 의
  * 것과 같다 — 이 파일이 쓰는 줄 · 변형 · 크기와 그에 걸리는 compound 만 옮겼다.
  * 규칙은 specs/components/swipe-actions.md, 수치 원본은 specs/components/swipe-actions.yaml.
  *
@@ -18,7 +19,7 @@
  * (배지 <span data-slot="swipe-action-badge"> + 라벨) — 뜻의 차례를 뒤집어 그린다(삭제가 가장 안쪽) · 줄 <div data-slot="swipe-actions-row" tabindex="-1">
  * (translateX(--swipe-dir × --swipe-offset)). 레시피가 style 로 주는 칸 폭 · 앞 간격 · 최소 높이 · 배지 크기는 style 그대로 적었다.
  * 레시피의 스크립트(끌기 · 축 판정 · 40% 문턱 · 한 줄만 열기 · Esc 로 닫고 초점 옮기기)는 정적 HTML 에 없다 — 그림은 열린 순간을 멈춘 것이다.
- * ⋮ 의 Menu Sheet 는 menu.tsx 가 그리고 그 모습은 Menu Sheet 예제에 있어 닫힌 ⋮ 만 그린다. 줄은 폭 360 의 휴대폰 화면처럼 그린다.
+ * 줄은 폭 360 의 휴대폰 화면처럼 그린다.
  * 아이콘은 lucide-react 와 같은 모양의 inline SVG 다(lucide 의 class · xmlns 는 그리지 않는다).
  */
 
@@ -106,22 +107,6 @@ const LIST_SUFFIX_COMPOUND = [
 const LIST_SUFFIX_DEFAULTS = { value: "node", disabled: false, highlighted: false };
 const LIST_ACTION_BASE = "cursor-pointer appearance-none border-0 bg-transparent p-0 font-[inherit] text-[inherit] no-underline outline-none after:absolute after:inset-0 after:content-[''] focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-stroke-focus-ring data-[disabled]:cursor-not-allowed";
 const LIST_TILE_BASE = "inline-grid size-10 shrink-0 place-items-center rounded-r3 [&>svg]:size-5";
-
-// ── button.tsx 의 cva 와 같은 값 — 줄 끝 ⋮(ghost · iconOnly · medium) ─────
-
-const BUTTON_BASE = "relative inline-flex items-center justify-center whitespace-nowrap font-sans font-bold before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-[''] [transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring disabled:cursor-not-allowed disabled:[scale:1] disabled:bg-bg-disabled disabled:text-fg-disabled aria-busy:cursor-progress aria-busy:text-transparent aria-busy:[&>svg:not([data-slot=progress-circle])]:invisible aria-busy:active:[scale:1] [--progress-thickness:2px] [&_svg]:pointer-events-none [&_svg]:shrink-0";
-const BUTTON_VARIANTS = {
-  variant: {
-    ghost: "bg-transparent text-fg-neutral hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed aria-busy:bg-bg-layer-default-pressed disabled:bg-transparent [--progress-track:var(--color-gray-500)] [--progress-range:var(--color-fg-neutral)]",
-  },
-  size: { medium: "h-10 rounded-r2 [--press-basis:40] [--progress-size:16px]" },
-  layout: { iconOnly: "" },
-  ghostColor: { neutral: "" },
-};
-const BUTTON_COMPOUND = [
-  { size: "medium", layout: "iconOnly", className: "w-10 p-x2_5 [&_svg]:size-[18px]" },
-];
-const BUTTON_DEFAULTS = { variant: "neutralSolid", size: "medium", layout: "withText", ghostColor: "neutral" };
 
 // ── swipe-actions.tsx 의 칸 폭 셈 — 형 표기만 뗐다 ──────────────────────────
 
@@ -217,7 +202,6 @@ const svg = (paths, { strokeWidth = 2, cls = "" } = {}) =>
 const PATHS = {
   chevronRight: '<path d="m9 18 6-6-6-6"/>',
   chevronDown: '<path d="m6 9 6 6 6-6"/>',
-  ellipsisVertical: '<circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>',
   x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
   minus: '<path d="M5 12h14"/>',
@@ -266,10 +250,6 @@ function listButtonItem({ title, detail, prefix, suffix }) {
 
 // <ListTile> — 카테고리 타일 40(모서리 12 · 아이콘 20). 바탕 · 아이콘 색은 부르는 쪽(카테고리 색 — 차트 색의 옅은 바탕 + 그 색 아이콘)
 const listTile = (icon, className) => `<span data-list-tile="" class="${merge(`${listTileVariants()} ${className}`)}">${svg(PATHS[icon])}</span>`;
-const buttonVariants = cvaOf(BUTTON_BASE, { variants: BUTTON_VARIANTS, compoundVariants: BUTTON_COMPOUND, defaultVariants: BUTTON_DEFAULTS });
-// <Button> — 글 버튼 · 아이콘 버튼(이름은 aria-label). 고른 변형 · 크기만 옮겼다
-const button = ({ text = "", icon = "", label = "", variant, size, layout, ghostColor, className = "", extra = "" }) =>
-  `<button ${attrs(['type="button"', label && `aria-label="${esc(label)}"`, extra, `class="${merge(`${buttonVariants({ variant, size, layout, ghostColor })} ${className}`)}"`])}>${icon ? svg(PATHS[icon]) : ""}${esc(text)}</button>`;
 
 const swipeActionVariants = cvaOf(ACTION_BASE, { variants: ACTION_VARIANTS, defaultVariants: ACTION_DEFAULTS });
 const swipeBadgeVariants = cvaOf(BADGE_BASE, { variants: BADGE_VARIANTS, defaultVariants: BADGE_DEFAULTS });
@@ -298,21 +278,10 @@ function swipeActions({ actions, rowLabel, open = false, children }) {
   return `<div data-slot="swipe-actions" data-state="${open ? "open" : "closed"}" class="${ROOT} ${ROOT_VARS} ${ROOT_CALLOUT}" style="--swipe-offset:${open ? width : 0}px"><div data-slot="swipe-actions-tray" class="${TRAY}" aria-hidden="${!open}">${slots}</div><div tabindex="-1" data-slot="swipe-actions-row" class="${ROW} ${ROW_FOCUS} ${ROW_SETTLE}" style="transform:translateX(calc(var(--swipe-dir) * var(--swipe-offset)))">${children}</div></div>`;
 }
 
-// <SwipeActionsMenu> — 줄 끝 ⋮(Button ghost · iconOnly · medium · 이름 "{rowLabel} 더보기"). 같은 배열이 Menu Sheet 를 그린다
-const swipeMenu = (rowLabel) =>
-  button({
-    icon: "ellipsisVertical",
-    label: `${rowLabel} 더보기`,
-    variant: "ghost",
-    layout: "iconOnly",
-    size: "medium",
-    extra: 'aria-haspopup="dialog" aria-expanded="false" data-state="closed" data-slot="swipe-actions-more"',
-  });
-
-// 가계부 줄 — 카테고리 타일 · 제목 · 설명 · 금액(16 · 700) + ⋮
+// 가계부 줄 — 카테고리 타일 · 제목 · 설명 · 금액(16 · 700). 줄 끝 ⋮ 는 두지 않는다 — 같은 동작은 줄을 눌러 들어간 상세에
 const AMOUNT = "font-bold text-fg-neutral tabular-nums";
 const ledgerRow = (tx) =>
-  listButtonItem({ prefix: listTile(tx.icon, tx.tile), title: esc(tx.title), detail: esc(tx.meta), suffix: `<span class="${AMOUNT}">${tx.amount}</span>${swipeMenu(tx.title)}` });
+  listButtonItem({ prefix: listTile(tx.icon, tx.tile), title: esc(tx.title), detail: esc(tx.meta), suffix: `<span class="${AMOUNT}">${tx.amount}</span>` });
 const TX = [
   { title: "스타벅스 강남점", meta: "식비 · 국민카드", amount: "−6,500원", icon: "coffee", tile: "bg-chart-orange-weak text-chart-orange" },
   { title: "지하철", meta: "교통 · 국민카드", amount: "−1,450원", icon: "bus", tile: "bg-chart-blue-weak text-chart-blue" },
@@ -338,10 +307,10 @@ export const swipeActionsExamples = [
   {
     title: "가계부 줄",
     description:
-      "폰(768 미만) 목록 줄을 왼쪽으로 밀면 오른쪽에서 동작이 드러난다 — 기존 줄을 감싸기만 하고(모양 · 누르기는 그대로) 뒤에 트레이를 붙인다. 동작은 1 ~ 3개를 부르는 쪽이 뜻의 차례로 넘기고 그리는 쪽이 뒤집는다 — 되돌리기 어려운 삭제가 가장 안쪽(화면에서 가장 왼쪽)이다. 칸은 원형 배지 36(아이콘 18) + 그 아래 2 에 라벨 12 / 700 / 1.3, 간격은 배지 앞에만(첫 칸 앞 20 · 칸 사이 12)이라 마지막 칸이 화면 끝에 붙는다(칸 폭 56 · 48, 트레이 56 · 104 · 152). 트레이 바탕은 칠하지 않고 색은 배지만 갖는다 — primary 는 fg-informative · destructive 는 fg-critical 로 채우고 아이콘은 fg-neutral-inverted 다(라이트는 짙은 배지 + 흰 아이콘 · 다크는 밝은 배지 + 짙은 아이콘 — 두 모드 모두 줄 바탕과 3:1 이상). 라벨은 primary fg-neutral-muted · destructive 만 fg-critical. 이름은 \"라벨: 줄 제목\" 이다. 끝까지 밀어도 실행하지 않는다. 미는 법을 모르는 사람 · 키보드 · 스크린리더는 줄 끝 ⋮(\"{줄 이름} 더보기\" — 40 · 누르는 44)로 같은 동작 · 같은 이름 · 같은 차례에 닿는다. 위 줄은 밀어 연 순간, 아래 둘은 닫힌 줄(트레이는 aria-hidden)이다.",
+      "폰(768 미만) 목록 줄을 왼쪽으로 밀면 오른쪽에서 동작이 드러난다 — 기존 줄을 감싸기만 하고(모양 · 누르기는 그대로) 뒤에 트레이를 붙인다. 동작은 1 ~ 3개를 부르는 쪽이 뜻의 차례로 넘기고 그리는 쪽이 뒤집는다 — 되돌리기 어려운 삭제가 가장 안쪽(화면에서 가장 왼쪽)이다. 칸은 원형 배지 36(아이콘 18) + 그 아래 2 에 라벨 12 / 700 / 1.3, 간격은 배지 앞에만(첫 칸 앞 20 · 칸 사이 12)이라 마지막 칸이 화면 끝에 붙는다(칸 폭 56 · 48, 트레이 56 · 104 · 152). 트레이 바탕은 칠하지 않고 색은 배지만 갖는다 — primary 는 fg-informative · destructive 는 fg-critical 로 채우고 아이콘은 fg-neutral-inverted 다(라이트는 짙은 배지 + 흰 아이콘 · 다크는 밝은 배지 + 짙은 아이콘 — 두 모드 모두 줄 바탕과 3:1 이상). 라벨은 primary fg-neutral-muted · destructive 만 fg-critical. 이름은 \"라벨: 줄 제목\" 이다. 끝까지 밀어도 실행하지 않는다. 미는 법을 모르는 사람 · 키보드 · 스크린리더는 줄을 눌러 들어간 상세에서 같은 동작 · 같은 이름에 닿는다(줄 끝 ⋮ 는 두지 않는다). 위 줄은 밀어 연 순간, 아래 둘은 닫힌 줄(트레이는 aria-hidden)이다.",
     jsx: `import { Pencil, Trash2 } from "lucide-react"
 import { ListButtonItem } from "@/components/ui/list"
-import { SwipeActions, SwipeActionsMenu, type SwipeAction } from "@/components/ui/swipe-actions"
+import { SwipeActions, type SwipeAction } from "@/components/ui/swipe-actions"
 
 const actions: SwipeAction[] = [
   { kind: "primary", label: "수정", icon: <Pencil />, onSelect: () => edit(tx) },
@@ -354,7 +323,8 @@ const actions: SwipeAction[] = [
     prefix={<CategoryTile category={tx.category} />}
     title={tx.title}
     detail={tx.meta}
-    suffix={<><Amount value={tx.amount} /><SwipeActionsMenu actions={actions} rowLabel={tx.title} /></>}
+    suffix={<Amount value={tx.amount} />}
+    /* 줄 끝 ⋮ 는 두지 않는다 — 같은 수정 · 삭제는 상세에 있다(키보드 · 스크린리더의 길) */
     onClick={() => openDetail(tx)}
   />
 </SwipeActions>`,
@@ -369,7 +339,7 @@ const actions: SwipeAction[] = [
   {
     title: "동작 셋 — 고정 · 수정 · 삭제",
     description:
-      "동작은 셋까지다(트레이 152) — 넷 이상이면 줄 끝 ⋮ 의 Menu Sheet 로 옮긴다. 고정 같은 중립 동작은 neutral — 옅은 바탕 bg-neutral-weak + 안쪽 1px stroke-neutral-weak(바탕만으로는 줄과 1.08 · 다크 1.30 이라 선을 둔다) · 아이콘 fg-neutral · 라벨 fg-neutral-muted 다. 누름 · 호버는 배지 · 라벨 밝기 88%(움직이지 않는다 — 밀어 둔 트레이와 이중으로 움직이면 어지럽다), 키보드 포커스는 칸 안쪽 2px 링이다.",
+      "동작은 셋까지다(트레이 152) — 넷 이상이면 나머지는 줄을 눌러 들어간 화면에만 둔다. 고정 같은 중립 동작은 neutral — 옅은 바탕 bg-neutral-weak + 안쪽 1px stroke-neutral-weak(바탕만으로는 줄과 1.08 · 다크 1.30 이라 선을 둔다) · 아이콘 fg-neutral · 라벨 fg-neutral-muted 다. 누름 · 호버는 배지 · 라벨 밝기 88%(움직이지 않는다 — 밀어 둔 트레이와 이중으로 움직이면 어지럽다), 키보드 포커스는 칸 안쪽 2px 링이다.",
     jsx: `const actions: SwipeAction[] = [
   { kind: "neutral", label: "고정", icon: <Pin />, onSelect: () => togglePin(memo) },
   { kind: "primary", label: "수정", icon: <Pencil />, onSelect: () => edit(memo) },
@@ -391,7 +361,7 @@ const actions: SwipeAction[] = [
   {
     title: "막힌 동작",
     description:
-      "지금 할 수 없는 동작은 빼지 않고 막는다(disabled) — 배지 bg-disabled · 아이콘 · 라벨 fg-disabled 이고 흐리게(불투명도) 그리지 않는다. 누르지 못하고 밝기도 바뀌지 않는다. ⋮ 의 Menu Sheet 에서도 같은 줄이 막힌다(같은 배열).",
+      "지금 할 수 없는 동작은 빼지 않고 막는다(disabled) — 배지 bg-disabled · 아이콘 · 라벨 fg-disabled 이고 흐리게(불투명도) 그리지 않는다. 누르지 못하고 밝기도 바뀌지 않는다. 줄을 눌러 들어간 상세에서도 같은 동작이 막힌다.",
     jsx: `const actions: SwipeAction[] = [
   { kind: "primary", label: "수정", icon: <Pencil />, onSelect: () => edit(tx) },
   // 카드사에서 받은 거래는 지우지 못한다 — 빼지 않고 막는다

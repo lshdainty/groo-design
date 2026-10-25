@@ -1,11 +1,12 @@
 'use client';
-// Menu · Menu Sheet 페이지의 실제로 여닫는 미리보기 — 코드 절(줄의 ⋮ · 데스크톱 표 · 머리 더보기 · 글만)과 플레이그라운드.
+// Menu · Menu Sheet 페이지의 실제로 여닫는 미리보기 — 코드 절(들어간 화면 머리 ⋮ · 데스크톱 표 줄 ⋮ · 목록 머리 더보기 · 글만)과 플레이그라운드.
+// 목록 줄에는 ⋮ 를 두지 않는다 — 줄을 누르면 들어간 화면의 머리 ⋮ 에서 동작을 고른다(menu.md "줄의 동작", 2026-10-25).
 // 메뉴 · 시트는 menu.yaml · menu-sheet.yaml(menu-view), 버튼은 button.yaml(button-view), 확인창은 alert-dialog.yaml(overlay-view · overlay-live)이다.
-// 줄의 ⋮ 은 ResponsiveMenu 처럼 1280 이상 Menu · 미만 Menu Sheet 를 연다. 고른 줄은 메뉴가 닫힌 뒤 실행한다(확인창은 그때 연다).
-import { useId, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+// 머리 ⋮ 는 ResponsiveMenu 처럼 1280 이상 Menu · 미만 Menu Sheet 를 연다. 고른 줄은 메뉴가 닫힌 뒤 실행한다(확인창은 그때 연다).
+import { useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import type { ButtonLook } from './button-look';
 import { ButtonView } from './button-view';
-import { MEMOS, PEOPLE, type Memo } from './menu-data';
+import { MEMOS, PEOPLE } from './menu-data';
 import { mcv, type MTone, type MenuGroup, type MenuItem, type MenuKit, type MenuSheetLayout, type ViewMode } from './menu-shared';
 import { MenuControl, MenuSheetControl, type TriggerRender } from './menu-view';
 import { ModalLayer, useMinWidth } from './overlay-live';
@@ -79,69 +80,74 @@ function ConfirmDelete({ ov, mode, open, title, description, onCancel, onConfirm
   );
 }
 
-// ── Menu 코드 — 메모 줄의 ⋮(1280 에서 Menu Sheet 로) ────────
-type MemoItem = Memo & { id: number; pinned?: boolean };
-export function MemoMenuDemo({ kit, ov, kebab, mode = 'auto' }: { kit: MenuKit; ov: OvKit; kebab: ButtonLook; mode?: ViewMode }) {
-  const [memos, setMemos] = useState<MemoItem[]>(MEMOS.map((m, i) => ({ ...m, id: i })));
+// ── Menu 코드 — 메모 화면 머리의 ⋮(목록 줄을 눌러 들어간 화면 · 1280 에서 Menu Sheet 로) ────────
+const MEMO_TEXT = ['다음 분기 목표를 정리했다.', '· 신규 기능 두 가지 출시', '· 응답 속도 20% 줄이기'];
+export function MemoHeaderMenuDemo({ kit, ov, kebab, mode = 'auto' }: { kit: MenuKit; ov: OvKit; kebab: ButtonLook; mode?: ViewMode }) {
+  const memo = MEMOS[0];
+  const [pinned, setPinned] = useState(false);
+  const [gone, setGone] = useState(false);
   const [status, setStatus] = useState('');
-  const [asking, setAsking] = useState<MemoItem | null>(null);
-  const next = useRef(MEMOS.length);
-  const groups = (m: MemoItem): MenuGroup[] => [
+  const [asking, setAsking] = useState(false);
+  const groups: MenuGroup[] = [
     {
       items: [
-        { value: 'pin', label: m.pinned ? '고정 풀기' : '고정', icon: 'pin' },
+        { value: 'pin', label: pinned ? '고정 풀기' : '고정', icon: 'pin' },
         { value: 'edit', label: '수정', icon: 'pencil' },
         { value: 'duplicate', label: '복사해 새로 쓰기', icon: 'copy' },
       ],
     },
     { items: [{ value: 'delete', label: '삭제', icon: 'trash', tone: 'critical' }] },
   ];
-  const act = (m: MemoItem) => (v: string) => {
+  const act = (v: string) => {
     if (v === 'pin') {
-      setMemos((all) => {
-        const rest = all.filter((x) => x.id !== m.id);
-        const moved = { ...m, pinned: !m.pinned };
-        return moved.pinned ? [moved, ...rest] : [...rest.filter((x) => x.pinned), moved, ...rest.filter((x) => !x.pinned)];
-      });
-      setStatus(m.pinned ? `‘${m.title}’ 메모의 고정을 풀었어요.` : `‘${m.title}’ 메모를 맨 위에 고정했어요.`);
-    } else if (v === 'edit') setStatus(`‘${m.title}’ 메모의 수정 화면을 열어요.`);
-    else if (v === 'duplicate') {
-      const copy = { title: `${m.title} (사본)`, sub: '방금', id: next.current++ };
-      setMemos((all) => {
-        const at = all.findIndex((x) => x.id === m.id);
-        return [...all.slice(0, at + 1), copy, ...all.slice(at + 1)];
-      });
-      setStatus(`‘${copy.title}’ 메모를 만들었어요.`);
-    } else if (v === 'delete') setAsking(m);
+      setPinned(!pinned);
+      setStatus(pinned ? `‘${memo.title}’ 메모의 고정을 풀었어요.` : `‘${memo.title}’ 메모를 목록 맨 위에 고정했어요.`);
+    } else if (v === 'edit') setStatus(`‘${memo.title}’ 메모의 수정 화면을 열어요.`);
+    else if (v === 'duplicate') setStatus(`‘${memo.title} (사본)’ 메모를 만들었어요.`);
+    else if (v === 'delete') setAsking(true);
   };
+  const label = `${memo.title} 더보기`;
   return (
     <DemoFrame kit={kit} mode={mode}>
-      <div style={{ fontFamily: kit.card.title.fontFamily, fontSize: kit.card.title.fontSize, lineHeight: kit.card.title.lineHeight, fontWeight: kit.card.title.fontWeight, color: tone(kit, 'fg-neutral', mode), paddingBottom: kit.card.head.contentBottom }}>메모</div>
-      <div>
-        {memos.map((m, i) => (
-          <div key={m.id} style={rowLine(kit, mode, i === memos.length - 1)}>
-            <RowText kit={kit} mode={mode} title={m.title} sub={m.sub} badge={m.pinned ? <span style={{ fontSize: 12, lineHeight: '16px', fontWeight: 700, color: tone(kit, 'fg-brand', mode) }}>고정됨</span> : undefined} />
-            <ResponsiveMenu kit={kit} ov={ov} mode={mode} groups={groups(m)} title={m.title} label={`${m.title} 더보기`} onAction={act(m)} trigger={(r) => <KebabTrigger look={kebab} mode={mode} label={`${m.title} 더보기`} render={r} />} />
+      {gone ? (
+        <p style={{ margin: 0, fontSize: 14, lineHeight: '20px', color: tone(kit, 'fg-neutral-subtle', mode) }}>
+          메모를 지우고 목록으로 돌아갔어요.{' '}
+          <button type="button" onClick={() => (setGone(false), setPinned(false), setStatus(''))} style={{ padding: 0, border: 0, background: 'none', font: 'inherit', fontWeight: 700, color: tone(kit, 'fg-neutral', mode), textDecoration: 'underline', cursor: 'pointer' }}>
+            다시 열기
+          </button>
+        </p>
+      ) : (
+        <>
+          {/* 들어간 화면의 머리 — 제목 + 오른쪽 ⋮ 하나(동작이 여럿일 때). 목록 줄에는 ⋮ 를 두지 않는다 */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingBottom: kit.card.head.contentBottom }}>
+            <span style={{ display: 'flex', flex: '1 1 0%', minWidth: 0, alignItems: 'center', gap: 6, fontFamily: kit.card.title.fontFamily, fontSize: kit.card.title.fontSize, lineHeight: kit.card.title.lineHeight, fontWeight: kit.card.title.fontWeight, color: tone(kit, 'fg-neutral', mode) }}>
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{memo.title}</span>
+              {pinned && <span style={{ fontSize: 12, lineHeight: '16px', fontWeight: 700, color: tone(kit, 'fg-brand', mode) }}>고정됨</span>}
+            </span>
+            <ResponsiveMenu kit={kit} ov={ov} mode={mode} groups={groups} title={memo.title} label={label} onAction={act} trigger={(r) => <KebabTrigger look={kebab} mode={mode} label={label} render={r} />} />
           </div>
-        ))}
-        {memos.length === 0 && <p style={{ margin: '12px 0', fontSize: 14, color: tone(kit, 'fg-neutral-subtle', mode) }}>메모가 없어요.</p>}
-      </div>
+          <p style={{ margin: '0 0 8px', fontSize: 13, lineHeight: '18px', color: tone(kit, 'fg-neutral-subtle', mode) }}>{memo.sub}</p>
+          {MEMO_TEXT.map((t) => (
+            <p key={t} style={{ margin: 0, fontSize: 15, lineHeight: '24px', color: tone(kit, 'fg-neutral', mode) }}>
+              {t}
+            </p>
+          ))}
+        </>
+      )}
       <Status kit={kit} mode={mode}>
         {status}
       </Status>
       <ConfirmDelete
         ov={ov}
         mode={mode}
-        open={!!asking}
+        open={asking}
         title="메모를 삭제할까요?"
-        description={asking ? `‘${asking.title}’ 메모를 지우면 되돌릴 수 없어요.` : ''}
-        onCancel={() => setAsking(null)}
+        description={`‘${memo.title}’ 메모를 지우면 되돌릴 수 없어요.`}
+        onCancel={() => setAsking(false)}
         onConfirm={() => {
-          if (asking) {
-            setMemos((all) => all.filter((x) => x.id !== asking.id));
-            setStatus(`‘${asking.title}’ 메모를 삭제했어요.`);
-          }
-          setAsking(null);
+          setAsking(false);
+          setGone(true);
+          setStatus(`‘${memo.title}’ 메모를 삭제했어요.`);
         }}
       />
     </DemoFrame>
@@ -298,7 +304,7 @@ const YES_NO = [
 const LUCIDE: Record<string, string> = { pin: 'Pin', pencil: 'Pencil', copy: 'Copy', trash: 'Trash2', undo: 'Undo2', users: 'Users' };
 const attr = (on: boolean, s: string) => (on ? ` ${s}` : '');
 
-// ── Menu 플레이그라운드 — Desk 거래 줄의 ⋮ ───────────────────
+// ── Menu 플레이그라운드 — Desk 거래 상세 머리의 ⋮(목록 줄을 눌러 들어간 화면) ───────────────────
 export function MenuPlayground({ kits, ovs, kebabs }: { kits: Record<Brand, MenuKit>; ovs: Record<Brand, OvKit>; kebabs: Record<Brand, ButtonLook> }) {
   const [brand, setBrand] = useState<Brand>('desk');
   const [mode, setMode] = useState<ViewMode>('auto');
@@ -345,9 +351,9 @@ export function MenuPlayground({ kits, ovs, kebabs }: { kits: Record<Brand, Menu
       surface={tone(kit, 'bg-layer-basement', mode)}
       stage={
         <div className="w-full max-w-[400px]" data-brand={brand}>
-          {/* 카드 — card.yaml 의 면(1px 테두리 · 모서리 16 · 좌우 24, 머리 없는 목록 카드라 위아래 12) */}
-          <div style={{ boxSizing: 'border-box', borderRadius: kit.card.radius, borderWidth: kit.card.borderW, borderStyle: 'solid', borderColor: tone(kit, 'stroke-neutral-weak', mode), paddingTop: kit.card.listBottom, paddingRight: kit.card.pad, paddingBottom: kit.card.listBottom, paddingLeft: kit.card.pad, background: tone(kit, 'bg-layer-default', mode), fontFamily: FONT }}>
-            <div style={rowLine(kit, mode, true)}>
+          {/* 카드 — card.yaml 의 면(1px 테두리 · 모서리 16 · 여백 24). 거래 상세의 머리 — 제목 + 오른쪽 ⋮ 하나(목록 줄에는 ⋮ 를 두지 않는다) */}
+          <div style={{ boxSizing: 'border-box', borderRadius: kit.card.radius, borderWidth: kit.card.borderW, borderStyle: 'solid', borderColor: tone(kit, 'stroke-neutral-weak', mode), padding: kit.card.pad, background: tone(kit, 'bg-layer-default', mode), fontFamily: FONT }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <span aria-hidden style={{ display: 'grid', placeItems: 'center', width: 36, height: 36, borderRadius: 9999, background: tone(kit, 'chart-orange-weak', mode), color: tone(kit, 'chart-orange-contrast', mode), fontSize: 14, fontWeight: 700, flexShrink: 0 }}>
                 점
               </span>
@@ -383,7 +389,7 @@ export function MenuPlayground({ kits, ovs, kebabs }: { kits: Record<Brand, Menu
   );
 }
 
-// ── Menu Sheet 플레이그라운드 — 폰의 메모 줄 ⋮ ────────────────
+// ── Menu Sheet 플레이그라운드 — 폰의 메모 화면 머리 ⋮(목록 줄을 눌러 들어간 화면) ────────────────
 export function MenuSheetPlayground({ kits, ovs, kebabs }: { kits: Record<Brand, MenuKit>; ovs: Record<Brand, OvKit>; kebabs: Record<Brand, ButtonLook> }) {
   const [brand, setBrand] = useState<Brand>('desk');
   const [mode, setMode] = useState<ViewMode>('auto');
@@ -446,32 +452,32 @@ export function MenuSheetPlayground({ kits, ovs, kebabs }: { kits: Record<Brand,
             className="relative w-full overflow-hidden"
             style={{ isolation: 'isolate', height: 520, borderRadius: 28, border: '6px solid var(--p-frame)', background: tone(kit, 'bg-layer-default', mode), fontFamily: FONT }}
           >
+            {/* 메모 목록 줄을 눌러 들어간 메모 화면 — 머리 오른쪽 ⋮ 하나가 시트를 연다(목록 줄에는 ⋮ 를 두지 않는다) */}
             <div style={{ padding: '20px 24px 0' }}>
-              <div style={{ fontFamily: kit.card.title.fontFamily, fontSize: kit.card.title.fontSize, lineHeight: kit.card.title.lineHeight, fontWeight: kit.card.title.fontWeight, color: tone(kit, 'fg-neutral', mode), paddingBottom: kit.card.head.contentBottom }}>메모</div>
-              {MEMOS.map((m, i) => (
-                <div key={m.title} style={rowLine(kit, mode, i === MEMOS.length - 1)}>
-                  <RowText kit={kit} mode={mode} title={m.title} sub={m.sub} />
-                  {i === 0 ? (
-                    <MenuSheetControl
-                      look={kit.sheet}
-                      ov={ovs[brand].ov}
-                      mode={mode}
-                      title={title}
-                      description={description}
-                      layout={layout}
-                      groups={groups}
-                      label="주간 회의 메모 더보기"
-                      container={stage}
-                      onAction={(v) => setStatus(`고른 동작: ${names[v]} — 시트가 닫힌 뒤 실행했어요.`)}
-                      trigger={(r) => <KebabTrigger look={kebabs[brand]} mode={mode} label="주간 회의 메모 더보기" render={r} />}
-                    />
-                  ) : (
-                    <ButtonView look={kebabs[brand]} mode={mode} icon="more-vertical" ariaLabel={`${m.title} 더보기`} state="enabled" />
-                  )}
-                </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingBottom: kit.card.head.contentBottom }}>
+                <span style={{ flex: '1 1 0%', minWidth: 0, fontFamily: kit.card.title.fontFamily, fontSize: kit.card.title.fontSize, lineHeight: kit.card.title.lineHeight, fontWeight: kit.card.title.fontWeight, color: tone(kit, 'fg-neutral', mode), overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{MEMOS[0].title}</span>
+                <MenuSheetControl
+                  look={kit.sheet}
+                  ov={ovs[brand].ov}
+                  mode={mode}
+                  title={title}
+                  description={description}
+                  layout={layout}
+                  groups={groups}
+                  label="주간 회의 메모 더보기"
+                  container={stage}
+                  onAction={(v) => setStatus(`고른 동작: ${names[v]} — 시트가 닫힌 뒤 실행했어요.`)}
+                  trigger={(r) => <KebabTrigger look={kebabs[brand]} mode={mode} label="주간 회의 메모 더보기" render={r} />}
+                />
+              </div>
+              <p style={{ margin: '0 0 8px', fontSize: 13, lineHeight: '18px', color: tone(kit, 'fg-neutral-subtle', mode) }}>{MEMOS[0].sub}</p>
+              {MEMO_TEXT.map((t) => (
+                <p key={t} style={{ margin: 0, fontSize: 15, lineHeight: '24px', color: tone(kit, 'fg-neutral', mode) }}>
+                  {t}
+                </p>
               ))}
               <Status kit={kit} mode={mode}>
-                {status || '첫 줄의 ⋮ 를 눌러 열고, 줄을 누르거나 아래로 끌어 닫아 보세요.'}
+                {status || '머리의 ⋮ 를 눌러 열고, 줄을 누르거나 아래로 끌어 닫아 보세요.'}
               </Status>
             </div>
           </div>

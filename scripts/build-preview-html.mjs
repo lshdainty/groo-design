@@ -1551,7 +1551,7 @@ export function renderListGallery(brand) {
       ])),
       listFrame("작은 버튼 — 따로 눌린다", "suffix button", listOf([
         listRow({ kind: "button", prefix: logoTile({ name: "신한카드" }), title: "신한카드", detail: "이번 달 452,300원", suffix: smallButton("결제") + listChevron() }),
-        listRow({ prefix: listTile("gray", "receipt"), title: "월세", detail: "매월 25일 반복 이체", suffix: iconButton("moreVertical", "월세 더보기") }),
+        listRow({ prefix: listTile("gray", "receipt"), title: "월세", detail: "매월 25일 반복 이체", suffix: smallButton("이체") }),
       ])),
       listFrame("스위치 32", "ListSwitchItem", listOf([
         listRow({ kind: "control", prefix: icon("bell"), title: "결제 알림", detail: "결제 예정일 D-1, 결제일 당일 알림", suffix: switch32({ checked: true }) }),
@@ -4410,13 +4410,25 @@ const helpTrigger = ({ id, name, controls, open = true }) => `<button ${attrsOf(
 // 뒤 화면 — 제목(오른쪽에 버튼을 둘 수 있다) + 내용. desktop 은 03k 처럼 회색 바탕 위 흰 카드에 내용을 둔다. 2026년 10월 1일은 목요일이다
 const menuPage = ({ title, action = "", body = "", desktop = false }) =>
   `<div class="pmenu-page-head"><div class="pov-page-title">${escape(title)}</div>${action}</div>${desktop ? `<div class="pov-page-card">${body}</div>` : body}`;
-// 줄 끝 ⋮ 목록 — 누르는 줄(줄을 누르면 상세)이고 줄마다 ⋮ 를 둔다. open 번째 줄의 ⋮ 에 메뉴를 붙이고, live 면 모든 줄의 ⋮ 가 직접 열린다
+// 데스크톱 표 줄의 ⋮ — 누르는 줄(줄을 누르면 상세)이고 줄마다 ⋮ 를 둔다(표 줄은 menu.md "줄의 동작" 규칙 밖). open 번째 줄의 ⋮ 에 메뉴를 붙인다
 const moreRows = (rows, { open = -1, menu = null, live = false } = {}) => listOf(rows.map((r, i) => listRow({
   kind: "button",
   title: r.title,
   detail: r.detail,
   suffix: menuTrigger({ name: `${r.title} 더보기`, menu: live || i === open ? menu : null, live }),
 })));
+// 메모 목록 — 목록 줄에는 ⋮ 를 두지 않는다(줄을 누르면 메모 화면 — menu.md "줄의 동작", 2026-10-25)
+const memoRows = (rows) => listOf(rows.map((r) => listRow({ kind: "button", title: r.title, detail: r.detail })));
+// 메모 화면 — 목록 줄을 눌러 들어간 화면. 동작이 여럿이라 머리 오른쪽 ⋮ 하나("{메모 제목} 더보기")
+const MEMO_LINES = ["다음 분기 목표를 정리했다.", "· 신규 기능 두 가지 출시", "· 응답 속도 20% 줄이기"];
+const MEMO_LINE = "margin:0; padding:0 var(--spacing-x6); font-size:var(--text-t5); line-height:var(--text-t5--line-height); color:var(--color-fg-neutral);";
+const MEMO_META = "margin:0; padding:var(--spacing-x2) var(--spacing-x6); font-size:var(--text-t3); line-height:var(--text-t3--line-height); color:var(--color-fg-neutral-subtle);";
+const memoDetail = ({ menu = null, live = false, desktop = false } = {}) => menuPage({
+  title: "주간 회의 메모",
+  desktop,
+  action: menuTrigger({ name: "주간 회의 메모 더보기", menu, live }),
+  body: `<p style="${MEMO_META}">10월 1일 (목) · 회의</p>${MEMO_LINES.map((l) => `<p style="${MEMO_LINE}">${escape(l)}</p>`).join("")}`,
+});
 
 const MENU_MEMOS = [
   { title: "주간 회의 메모", detail: "10월 1일 (목) · 회의" },
@@ -4429,13 +4441,13 @@ const MENU_STAFF = [
   { title: "박서준", detail: "프로덕트 본부 · 팀장" },
   { title: "이도윤", detail: "운영 본부 · 팀원" },
 ];
-// 메모 줄의 동작 — menu.md 코드 예와 같다. hover · focus 는 그 순간을 멈출 줄 이름이다
+// 메모 화면 머리 ⋮ 의 동작 — menu.md 코드 예와 같다. hover · focus 는 그 순간을 멈출 줄 이름이다
 const memoMenu = ({ hover = "", focus = "" } = {}) => [
   { items: [{ label: "고정", icon: "pin" }, { label: "수정", icon: "pencil" }, { label: "복사해 새로 쓰기", icon: "copy" }]
     .map(i => ({ ...i, interaction: i.label === hover ? "hover" : i.label === focus ? "focus" : "" })) },
   { items: [{ label: "삭제", icon: "trash", tone: "critical" }] },
 ];
-// 직원 줄의 동작 — menu.md 코드 예와 같다(설명 · 막힌 줄)
+// 직원 표 줄의 동작 — menu.md 코드 예와 같다(설명 · 막힌 줄)
 const STAFF_MENU = [
   { items: [{ label: "수정" }, { label: "비밀번호 초기화", description: "새 비밀번호를 메일로 보내요." }, { label: "휴가 내역 내보내기", disabled: true }] },
   { items: [{ label: "삭제", tone: "critical" }] },
@@ -4483,11 +4495,11 @@ export function renderMenuGallery(brand) {
         }</div>`).join("")}
       </div>`;
 
-  // 1. Menu — 데스크톱 줄의 ⋮(메모 · 직원) · 표의 머리 더보기(묶음 이름 · 뒤 아이콘) · 직접 열어 보기
+  // 1. Menu — 메모 화면 머리 ⋮ · 직원 표 줄 ⋮ · 표의 머리 더보기(묶음 이름 · 뒤 아이콘) · 직접 열어 보기. 목록 줄에는 ⋮ 를 두지 않는다
   const memoFrame = overlayFrame({
     device: "desktop",
     height: 400,
-    page: menuPage({ title: "메모", desktop: true, body: moreRows(MENU_MEMOS, { open: 0, menu: memoMenu({ hover: "수정", focus: "복사해 새로 쓰기" }) }) }),
+    page: memoDetail({ desktop: true, menu: memoMenu({ hover: "수정", focus: "복사해 새로 쓰기" }) }),
   });
   const staffFrame = overlayFrame({
     device: "desktop",
@@ -4502,28 +4514,29 @@ export function renderMenuGallery(brand) {
   const liveFrame = overlayFrame({
     device: "desktop",
     height: 400,
-    page: menuPage({ title: "메모", desktop: true, body: moreRows(MENU_MEMOS.slice(0, 3), { menu: memoMenu(), live: true }) }),
+    page: memoDetail({ desktop: true, menu: memoMenu(), live: true }),
   });
   const menuPanel = panel(
-    "Menu — 줄의 ⋮ · 묶음 · 위험한 동작",
-    "데스크톱 목록 · 표의 줄에서 동작은 줄 끝 ⋮ 하나로 연다 — 버튼 이름은 \"{줄 이름} 더보기\"(Button ghost · iconOnly)이고, 줄 자체를 누르면 상세 · 수정이 열린다. 메뉴는 트리거 아래 8 · 오른쪽 끝에 맞춰(align end — SEED 기본은 가운데) 붙는 폭 200 의 떠 있는 표면이다 — bg-layer-floating · 모서리 20 · shadow-s3 · 위아래 8 이고, 딤이 없고 뒤 화면을 숨기지 않는다(비모달 · L3 200). 아래가 모자라면 위로 연다. 줄은 위아래 10 · 좌우 16 · 이름 14/19 · 앞 아이콘 18(사이 8)이라 한 줄이면 39, 설명(12/16 · fg-neutral-subtle · 사이 2)이 붙으면 57 이다 — 글이 길면 말줄임 없이 단어 단위로 줄을 바꾼다. 선은 묶음 사이에만 긋는다 — 1px stroke-neutral-subtle · 좌우 16 들임 · 위아래 8. 묶음 이름(13/18 · fg-neutral-subtle · 위아래 8)은 같은 동작이 범위마다 있을 때처럼 묶음이 무엇인지 말해야 할 때만 둔다. 마우스를 올린 줄은 좌우 8 들인 알약(모서리 12 · bg-layer-floating-pressed)이고, 키보드로 옮긴 줄은 같은 자리에 2px 링만 그린다 — 마우스와 키보드 위치가 다르면 둘 다 보인다(메모 그림의 수정 · 복사해 새로 쓰기). 되돌릴 수 없는 동작은 맨 아래 묶음에 critical(이름 · 아이콘만 fg-critical)로 두고, 막힌 줄은 fg-disabled 로 눌러도 실행하지 않고 닫히지 않는다. 뒤 아이콘(16)은 바깥 링크처럼 방향을 알릴 때만 둔다. 메뉴에는 고른 표시 · 단축키 · 하위 메뉴가 없다 — 값을 고르는 일은 Select · Segmented Control 이다. 마지막 그림은 실제로 열고, 키보드로 옮기고, 눌러 닫을 수 있다.",
+    "Menu — 머리 ⋮ · 묶음 · 위험한 동작",
+    "목록 줄에는 ⋮ 를 두지 않는다 — 줄을 누르면 한 단계 들어가고, 들어간 화면의 동작이 여럿이면 머리 오른쪽 ⋮ 하나로 연다(하나뿐인 삭제는 바닥 왼쪽 [삭제]). 버튼 이름은 \"{항목 이름} 더보기\"(Button ghost · iconOnly)다. 데스크톱 표의 줄 끝 ⋮ 는 이 규칙 밖이다. 메뉴는 트리거 아래 8 · 오른쪽 끝에 맞춰(align end — SEED 기본은 가운데) 붙는 폭 200 의 떠 있는 표면이다 — bg-layer-floating · 모서리 20 · shadow-s3 · 위아래 8 이고, 딤이 없고 뒤 화면을 숨기지 않는다(비모달 · L3 200). 아래가 모자라면 위로 연다. 줄은 위아래 10 · 좌우 16 · 이름 14/19 · 앞 아이콘 18(사이 8)이라 한 줄이면 39, 설명(12/16 · fg-neutral-subtle · 사이 2)이 붙으면 57 이다 — 글이 길면 말줄임 없이 단어 단위로 줄을 바꾼다. 선은 묶음 사이에만 긋는다 — 1px stroke-neutral-subtle · 좌우 16 들임 · 위아래 8. 묶음 이름(13/18 · fg-neutral-subtle · 위아래 8)은 같은 동작이 범위마다 있을 때처럼 묶음이 무엇인지 말해야 할 때만 둔다. 마우스를 올린 줄은 좌우 8 들인 알약(모서리 12 · bg-layer-floating-pressed)이고, 키보드로 옮긴 줄은 같은 자리에 2px 링만 그린다 — 마우스와 키보드 위치가 다르면 둘 다 보인다(메모 그림의 수정 · 복사해 새로 쓰기). 되돌릴 수 없는 동작은 맨 아래 묶음에 critical(이름 · 아이콘만 fg-critical)로 두고, 막힌 줄은 fg-disabled 로 눌러도 실행하지 않고 닫히지 않는다. 뒤 아이콘(16)은 바깥 링크처럼 방향을 알릴 때만 둔다. 메뉴에는 고른 표시 · 단축키 · 하위 메뉴가 없다 — 값을 고르는 일은 Select · Segmented Control 이다. 마지막 그림은 실제로 열고, 키보드로 옮기고, 눌러 닫을 수 있다.",
     samples([
-      sample("Desk 메모 — 줄의 ⋮ 를 연 순간", "ResponsiveMenu · 1280 이상 — 호버 알약(수정) · 키보드 링(복사해 새로 쓰기) · critical 묶음", memoFrame),
-      sample("HR 직원 — 설명 · 막힌 줄", "MenuItem description · disabled — 한 줄 39 · 설명 57", staffFrame),
+      sample("Desk 메모 화면 — 머리 ⋮ 를 연 순간", "ResponsiveMenu · 1280 이상 — 호버 알약(수정) · 키보드 링(복사해 새로 쓰기) · critical 묶음", memoFrame),
+      sample("HR 직원 표 줄 ⋮ — 설명 · 막힌 줄", "MenuItem description · disabled — 한 줄 39 · 설명 57", staffFrame),
       sample("표의 머리 더보기 — 묶음 이름 · 뒤 아이콘", "MenuGroup label — 같은 동작이 범위마다 · suffixIcon 은 바깥 링크만", ledgerFrame),
       sample("직접 열어 보기", "누르기 · Enter · ↓ 로 열고 ↑ ↓ · Home · End · 글자로 옮긴다 — 줄 누르기 · Esc · 바깥으로 닫힌다", liveFrame),
     ], DESKTOP),
   );
 
-  // 2. Menu Sheet — 폰. 같은 메모 줄 동작(아이콘 + 글) · 글만(가운데) · 머리 더보기(설명 · 보조 기술용 닫기)
+  // 2. Menu Sheet — 폰. 메모 화면 머리 ⋮ 의 같은 동작(아이콘 + 글) · 글만(가운데) · 목록 머리 더보기(설명 · 보조 기술용 닫기)
   const sheetFrame = (page, sheet, height = 600) => overlayFrame({ device: "phone", height, page, layers: [overlayScrim(), overlayLayer("sheet", sheet)] });
-  const memoPhone = menuPage({ title: "메모", body: moreRows(MENU_MEMOS) });
+  const memoPhone = menuPage({ title: "메모", body: memoRows(MENU_MEMOS) });
+  const memoDetailPhone = memoDetail();
   const profilePhone = menuPage({ title: "프로필", body: listOf([["이름", "김지원"], ["이메일", "groo@example.com"], ["가입일", "2026년 3월 2일"]].map(([title, value]) => listRow({ title, suffix: escape(value) }))) });
   const sheetPanel = panel(
     "Menu Sheet — 손잡이 · 가운데 제목 · 묶음 · 글만",
     "1280 미만에서는 같은 목록이 화면 아래에서 올라오는 메뉴 시트로 뜬다 — 같은 줄 · 같은 순서 · 같은 막힘이고, 코드는 폭을 보고 둘 중 하나를 그리는 ResponsiveMenu 하나다. 시트는 최대 480 · 위 두 모서리 20 · 위 24(손잡이 자리) · 좌우 화면 여백 24 · 아래 16 + 안전 영역이고, 그림자 없이 딤(0.50 · 다크 0.65) 위의 떠 있는 표면이다(L2 딤 100 · 시트 101). 손잡이(36 × 4 · stroke-neutral-weak · 위 6)는 늘 있고 위 닫기 버튼 · 바닥 취소는 없다 — 딤 · 끌어내리기 · Esc · 뒤로 가기로 닫는다. 머리는 가운데 정렬이다 — 제목 18/24 · 700(무엇의 동작인지), 설명 14/19 · fg-neutral-muted(사이 4), 그 아래 16. 묶음은 옅은 회색 상자(bg-neutral-weak · 모서리 16)이고 묶음 사이는 선 없이 10 이다. 줄은 최소 52 · 위아래 14 · 좌우 16 · 이름 16/22 · 아이콘 22(사이 14)이고, 줄 사이에 1px stroke-neutral-weak 선을 긋는다(묶음의 마지막 줄 아래는 없다). 아이콘 없이 글만 쓰면 가운데 정렬이고 줄 설명을 두지 않는다 — 한 시트에서 섞지 않는다. 위험한 동작은 맨 아래 묶음에 둔다. 줄을 누르면 시트를 닫고 실행한다. 보조 기술용 닫기는 목록 뒤에 있고 평소에는 보이지 않다가 키보드 초점이 오면 52 높이 · bg-neutral-weak · 모서리 12 버튼으로 보인다.",
     samples([
-      sample("메모 줄 ⋮ — 아이콘 + 글", "ResponsiveMenu · 1280 미만 Menu Sheet — 손잡이 · 제목 가운데 · critical 묶음", sheetFrame(memoPhone, menuSheet({ title: "주간 회의 메모", groups: memoSheetGroups() }))),
+      sample("메모 화면 머리 ⋮ — 아이콘 + 글", "ResponsiveMenu · 1280 미만 Menu Sheet — 손잡이 · 제목 가운데 · critical 묶음", sheetFrame(memoDetailPhone, menuSheet({ title: "주간 회의 메모", groups: memoSheetGroups() }))),
       sample("글만 — 가운데 정렬", "layout=\"textOnly\" — 줄 설명 없음", sheetFrame(profilePhone, menuSheet({ title: "사진", layout: "textOnly", groups: [
         { items: [{ label: "앨범에서 고르기" }, { label: "사진 찍기" }] },
         { items: [{ label: "사진 지우기", tone: "critical" }] },
@@ -4661,7 +4674,7 @@ export function renderMenuGallery(brand) {
     ], DESKTOP)}`,
   );
 
-  const lede = "SEED Menu · Swipeable Menu Sheet · Help Bubble · Help Bubble Tooltip 구조 — 메뉴 가족이다. 줄 · 화면의 동작은 1280 이상에서 트리거(줄 끝 ⋮ · 머리의 더보기)에 붙는 Menu(폭 200 · 줄 39 · 비모달), 1280 미만에서 같은 목록의 Menu Sheet(줄 52 · 손잡이 · 딤)다 — 메뉴는 누르면 바로 실행하고 닫히는 동작만 담고, 값을 고르는 일은 Select · Segmented Control 이다. 도움말은 짙은 말풍선 하나(최대 280 · 13 · 모서리 12 · 화살표)를 두 가지로 연다 — 눌러서 여는 Help Bubble(터치에서도 닿는다)과 마우스 · 키보드로 여는 Tooltip(보조). 쌓임은 specs/z-index.md — 메뉴 L3(z-floating 200) · 시트 L2(z-modal 100 · z-modal-content 101) · 말풍선 L4(z-tooltip 210). 그림은 열린 순간을 멈춘 것이고, 화면 틀은 03k 것이다. 옛 Dropdown Menu(160 · 줄 32 · 1px 테두리 · 체크 · 라디오 · 단축키 · 하위 메뉴) · Context Menu · Menubar · Hover Card · 옛 툴팁(반전 · 모서리 2 · 그림자)은 걷었다."
+  const lede = "SEED Menu · Swipeable Menu Sheet · Help Bubble · Help Bubble Tooltip 구조 — 메뉴 가족이다. 화면의 동작은 1280 이상에서 트리거(들어간 화면 머리의 ⋮ · 표 줄 끝 ⋮ — 목록 줄에는 ⋮ 를 두지 않는다)에 붙는 Menu(폭 200 · 줄 39 · 비모달), 1280 미만에서 같은 목록의 Menu Sheet(줄 52 · 손잡이 · 딤)다 — 메뉴는 누르면 바로 실행하고 닫히는 동작만 담고, 값을 고르는 일은 Select · Segmented Control 이다. 도움말은 짙은 말풍선 하나(최대 280 · 13 · 모서리 12 · 화살표)를 두 가지로 연다 — 눌러서 여는 Help Bubble(터치에서도 닿는다)과 마우스 · 키보드로 여는 Tooltip(보조). 쌓임은 specs/z-index.md — 메뉴 L3(z-floating 200) · 시트 L2(z-modal 100 · z-modal-content 101) · 말풍선 L4(z-tooltip 210). 그림은 열린 순간을 멈춘 것이고, 화면 틀은 03k 것이다. 옛 Dropdown Menu(160 · 줄 32 · 1px 테두리 · 체크 · 라디오 · 단축키 · 하위 메뉴) · Context Menu · Menubar · Hover Card · 옛 툴팁(반전 · 모서리 2 · 그림자)은 걷었다."
     + (brand.key === "shared" ? " 공유 토큰에는 브랜드 역할 색이 없어 포커스 링이 여기서는 중립(fg-neutral)으로 보인다 — HR · Desk 미리보기에서 브랜드 색이다." : "");
 
   return `
@@ -7754,9 +7767,9 @@ function pswipe({ row = "", actions = [], rowLabel = "", open = true, states = {
   const tray = `<div class="pswipe-tray"${open ? "" : ' aria-hidden="true"'}>${shown.map((a, i) => pswipeAction({ ...a, rowLabel, first: i === 0, open, state: states[a.label] || "" })).join("")}</div>`;
   return `<div class="pswipe${open ? " pswipe--open" : ""}" style="--pswipe-tray: ${width}px;">${tray}<div class="pswipe-row" tabindex="-1">${row}</div></div>`;
 }
-// 거래 줄 — 가계부(카테고리 타일 · 제목 · 설명 · 금액 + 줄 끝 ⋮). ⋮ 는 Button ghost · iconOnly · medium(40 · 누르는 44) "{줄 이름} 더보기"
-const pswipeRow = ({ color = "orange", icon = "utensils", title = "스타벅스 강남점", detail = "식비 · 국민카드", amount = -6500, more = true } = {}) =>
-  listOf([listRow({ kind: "button", prefix: listTile(color, icon), title, detail, suffix: `<span class="plst-amount">${escape(pdataWon(amount))}</span>${more ? `<button class="btn btn-ghost btn-icon-only pswipe-more" type="button" aria-label="${escape(title)} 더보기" aria-haspopup="dialog">${DATA_ICON.ellipsisVertical}</button>` : ""}` })]);
+// 거래 줄 — 가계부(카테고리 타일 · 제목 · 설명 · 금액). 줄 끝 ⋮ 는 두지 않는다 — 같은 동작은 줄을 눌러 들어간 상세에(2026-10-25)
+const pswipeRow = ({ color = "orange", icon = "utensils", title = "스타벅스 강남점", detail = "식비 · 국민카드", amount = -6500 } = {}) =>
+  listOf([listRow({ kind: "button", prefix: listTile(color, icon), title, detail, suffix: `<span class="plst-amount">${escape(pdataWon(amount))}</span>` })]);
 
 // 데이터 표시 갤러리 — 표 여섯 · 카드 다섯(순자산 카드는 Desk 만) · 차트 넷 · 검색해서 고르기 둘 · 줄 밀기 하나, 판을 흰 표면(.vignette-card) 위에 그린다.
 // 견본 틀(.ptf-samples · .ptf-cap)과 상태 표(.cb-matrix)는 Text Field 갤러리 것, 라이트 · 다크 나란히 틀(.pdsp-pair · .pdsp-theme)은 03o 것이다 — 나란히 틀에는
@@ -8146,7 +8159,12 @@ export function renderDataGallery(brand) {
   ].map(([html, a, b]) => `<div class="pdata-swipe-item"><div class="pdata-swipe-screen">${html}</div>${cap(a, b)}</div>`).join("")}</div>`;
   // 폰 화면은 바닥이 회색이고 목록은 카드에 담는다 — 줄 띠(목록 카드 모양 · 모서리 16)를 바닥 위에 둔다
   const swipeFloor = (t) => floor(swipeFrame(t), "pdata-floor--swipe");
-  const swipeSheet = overlayFrame({ device: "phone", height: 420, page: overlayPage({ rows: OVERLAY_LEDGER.slice(0, 3) }), layers: [overlayScrim(), overlayLayer("sheet", menuSheet({ title: "스타벅스 강남점", groups: [{ items: [{ label: "수정", icon: "pencil" }, { label: "삭제", icon: "trash", tone: "critical" }] }] }))] });
+  // 줄을 눌러 들어간 상세 — 트레이와 같은 동작(수정 · 삭제)이 바닥에. [삭제] 는 왼쪽 ghost critical 글자만큼, [수정] 이 남은 폭(button.md 모달 footer 꼴)
+  const swipeSheet = overlayFrame({ device: "phone", height: 480, page: overlayPage({ rows: OVERLAY_LEDGER.slice(0, 3) }), layers: [overlayScrim(), overlayLayer("sheet", bottomSheet({
+    title: "거래 상세",
+    body: overlayValueList([["금액", "6,500원"], ["카테고리", "식비"], ["결제 수단", "국민카드"]]),
+    footer: [`<button class="btn btn-ghost btn-ghost-critical btn-size-large pov-sheet-delete" type="button">삭제</button>`, overlayButton("수정", { size: "large" })],
+  }))] });
   const swipeStates = matrix("pdata-matrix pdata-matrix--swipe", "동작 칸", [
     { ko: "기본", en: "enabled", i: "" },
     { ko: "누름", en: "pressed — 밝기 88%", i: "pressed" },
@@ -8158,12 +8176,12 @@ export function renderDataGallery(brand) {
     { ko: "삭제", en: "destructive", a: ACT3[2] },
   ], (r, c) => `<span class="pdata-surface pdata-surface--swipe">${pswipeAction({ ...r.a, rowLabel: "지하철", first: true, state: c.i })}</span>`);
   const swipePanel = panel(
-    "Swipe Actions — 밀어 연 트레이 · 같은 동작은 ⋮ 로",
-    "폰(768 미만) 목록 줄을 왼쪽으로 밀면 오른쪽에서 동작이 드러나는 지름길이다 — 기존 줄을 감싸고 뒤에 트레이를 붙인다. 동작은 1 ~ 3개를 부르는 쪽이 뜻의 차례로 넘기고 그리는 쪽이 뒤집는다 — 되돌리기 어려운 동작(삭제)은 가장 안쪽(화면에서 가장 왼쪽). 칸은 원형 배지 36(아이콘 18) + 그 아래 2 에 라벨 12 / 700 / 1.3 이고, 간격은 배지 앞에만 — 첫 칸 앞 20 · 칸 사이 12, 마지막 칸은 화면 끝에 붙는다(칸 폭 56 · 48, 트레이 56 · 104 · 152). 누르는 자리는 칸 전체(48 ~ 56 × 줄 높이 56 이상)다. 트레이 바탕은 칠하지 않고 색은 배지만 갖는다 — primary 는 fg-informative · destructive 는 fg-critical 로 채우고 아이콘은 fg-neutral-inverted(라이트는 짙은 배지 + 흰 아이콘, 다크는 밝은 배지 + 짙은 아이콘 — 두 모드 모두 줄 바탕과 3:1 이상), neutral 은 bg-neutral-weak + 안쪽 1px stroke-neutral-weak · 아이콘 fg-neutral. 라벨은 neutral · primary fg-neutral-muted, destructive 만 fg-critical. 이름은 \"라벨: 줄 제목\"(\"삭제: 스타벅스 강남점\"). 누름 · 호버는 밝기 88%(움직이지 않는다), 포커스는 칸 안쪽 2px, 막힘은 bg-disabled · fg-disabled. 미는 법을 모르는 사람 · 키보드 · 스크린리더는 줄 끝 ⋮(\"{줄 이름} 더보기\" — 40 · 누르는 44)로 같은 동작 · 같은 이름 · 같은 차례에 닿는다 — 1280 미만이라 Menu Sheet 다(오른쪽). 닫힌 트레이는 aria-hidden · 버튼 tabindex -1 이고, Esc 로 닫으면 초점은 줄로 간다. 그림은 열린 순간을 멈춘 것이다.",
-    `${pair(swipeFloor)}${samples([sample("⋮ → Menu Sheet — 같은 동작 · 같은 차례", "SwipeActionsMenu — 삭제는 tone=\"critical\"", swipeSheet)], NEXT)}${swipeStates}`,
+    "Swipe Actions — 밀어 연 트레이 · 같은 동작은 상세에",
+    "폰(768 미만) 목록 줄을 왼쪽으로 밀면 오른쪽에서 동작이 드러나는 지름길이다 — 기존 줄을 감싸고 뒤에 트레이를 붙인다. 동작은 1 ~ 3개를 부르는 쪽이 뜻의 차례로 넘기고 그리는 쪽이 뒤집는다 — 되돌리기 어려운 동작(삭제)은 가장 안쪽(화면에서 가장 왼쪽). 칸은 원형 배지 36(아이콘 18) + 그 아래 2 에 라벨 12 / 700 / 1.3 이고, 간격은 배지 앞에만 — 첫 칸 앞 20 · 칸 사이 12, 마지막 칸은 화면 끝에 붙는다(칸 폭 56 · 48, 트레이 56 · 104 · 152). 누르는 자리는 칸 전체(48 ~ 56 × 줄 높이 56 이상)다. 트레이 바탕은 칠하지 않고 색은 배지만 갖는다 — primary 는 fg-informative · destructive 는 fg-critical 로 채우고 아이콘은 fg-neutral-inverted(라이트는 짙은 배지 + 흰 아이콘, 다크는 밝은 배지 + 짙은 아이콘 — 두 모드 모두 줄 바탕과 3:1 이상), neutral 은 bg-neutral-weak + 안쪽 1px stroke-neutral-weak · 아이콘 fg-neutral. 라벨은 neutral · primary fg-neutral-muted, destructive 만 fg-critical. 이름은 \"라벨: 줄 제목\"(\"삭제: 스타벅스 강남점\"). 누름 · 호버는 밝기 88%(움직이지 않는다), 포커스는 칸 안쪽 2px, 막힘은 bg-disabled · fg-disabled. 미는 법을 모르는 사람 · 키보드 · 스크린리더는 줄을 눌러 들어간 상세에서 같은 동작 · 같은 이름에 닿는다 — 줄 끝 ⋮ 는 두지 않는다(오른쪽 — 바닥 왼쪽 [삭제] · [수정], 2026-10-25). 닫힌 트레이는 aria-hidden · 버튼 tabindex -1 이고, Esc 로 닫으면 초점은 줄로 간다. 그림은 열린 순간을 멈춘 것이다.",
+    `${pair(swipeFloor)}${samples([sample("줄을 누르면 상세 — 같은 동작 · 같은 확인 창", "Bottom Sheet 바닥 — [삭제] ghost critical 왼쪽 · [수정]", swipeSheet)], NEXT)}${swipeStates}`,
   );
 
-  const lede = "SEED 문서 사이트 표 · 디자인 그림 · 면 · Feedback · 대시보드 그림 · 밑줄 칸 · List 줄 + Radiomark · Result Section 과 groo 의 지표 · 순자산 카드 · 증감 · 줄 밀기 — 데이터를 보이는 자리다. SEED 에는 다섯 모두 컴포넌트가 없어 부품마다 SEED 를 따랐다(2026-10-08 사용자 결정). 표는 머리 41 · 14 / 20 · 500 · 짙은 글자(머리 바탕 · 작은 대문자 없음) · 줄 45(썸네일 · 두 줄이면 72) · 줄 선 stroke-neutral-subtle 마지막 줄까지 · 첫 칸 앞 · 끝 칸 뒤 24 · 숫자 오른쪽 · 정렬할 수 있는 열에 ↑↓ 늘(두 단계) · 줄 끝 ⋮ 하나 · 고른 줄은 체크로만(일괄 작업 바만 bg-brand-weak) · 768 미만은 List 줄이다. 카드는 회색 바닥 위 흰 면 + 1px stroke-neutral-weak · 모서리 16 · 그림자 없음 · 여백 24(목록 카드 24 / 4 / 12) · 쌓은 사이 8 · 머리 16 · 700 + \"전체 보기\"(누르는 44) · 누름은 색 + 2px(대등한 동작이 있으면 색만)이고, 지표 카드는 폰에서 한 줄에 하나다. 증감은 어디서나 ▲ 빨강 · ▼ 파랑 + 값 + 글(순자산 채움 위만 흰 글자). 차트는 차트 10색 · 눈금 11 · 가로 점선 격자 · 이중 축이면 눈금 글자가 계열 색 · 위 지표 타일 · 떠 있는 툴팁 \"■ 라벨 값\" · 도넛은 목록 범례 · 열지도 칸은 112 이상만 원까지이고, 검색해서 고르기는 밑줄 검색칸 + List 줄 + 오른쪽 라디오 + 콤보박스 키보드, 줄 밀기의 같은 동작은 줄 끝 ⋮ 로도 연다. 옛 Data Table · Chart mini · 카드 카탈로그 목록 · 옛 줄 밀기 CSS 는 걷었고, 04 의 지표 위젯(회색 채운 칸) · 05 ~ 08 의 그림자 카드 · 13 의 스켈레톤 카드는 이 카드 면으로 다시 그렸다."
+  const lede = "SEED 문서 사이트 표 · 디자인 그림 · 면 · Feedback · 대시보드 그림 · 밑줄 칸 · List 줄 + Radiomark · Result Section 과 groo 의 지표 · 순자산 카드 · 증감 · 줄 밀기 — 데이터를 보이는 자리다. SEED 에는 다섯 모두 컴포넌트가 없어 부품마다 SEED 를 따랐다(2026-10-08 사용자 결정). 표는 머리 41 · 14 / 20 · 500 · 짙은 글자(머리 바탕 · 작은 대문자 없음) · 줄 45(썸네일 · 두 줄이면 72) · 줄 선 stroke-neutral-subtle 마지막 줄까지 · 첫 칸 앞 · 끝 칸 뒤 24 · 숫자 오른쪽 · 정렬할 수 있는 열에 ↑↓ 늘(두 단계) · 줄 끝 ⋮ 하나 · 고른 줄은 체크로만(일괄 작업 바만 bg-brand-weak) · 768 미만은 List 줄이다. 카드는 회색 바닥 위 흰 면 + 1px stroke-neutral-weak · 모서리 16 · 그림자 없음 · 여백 24(목록 카드 24 / 4 / 12) · 쌓은 사이 8 · 머리 16 · 700 + \"전체 보기\"(누르는 44) · 누름은 색 + 2px(대등한 동작이 있으면 색만)이고, 지표 카드는 폰에서 한 줄에 하나다. 증감은 어디서나 ▲ 빨강 · ▼ 파랑 + 값 + 글(순자산 채움 위만 흰 글자). 차트는 차트 10색 · 눈금 11 · 가로 점선 격자 · 이중 축이면 눈금 글자가 계열 색 · 위 지표 타일 · 떠 있는 툴팁 \"■ 라벨 값\" · 도넛은 목록 범례 · 열지도 칸은 112 이상만 원까지이고, 검색해서 고르기는 밑줄 검색칸 + List 줄 + 오른쪽 라디오 + 콤보박스 키보드, 줄 밀기의 같은 동작은 줄을 눌러 들어간 상세에 있다(줄 끝 ⋮ 는 두지 않는다 — 2026-10-25). 옛 Data Table · Chart mini · 카드 카탈로그 목록 · 옛 줄 밀기 CSS 는 걷었고, 04 의 지표 위젯(회색 채운 칸) · 05 ~ 08 의 그림자 카드 · 13 의 스켈레톤 카드는 이 카드 면으로 다시 그렸다."
     + (desk ? "" : brand.key === "hr" ? " 순자산 카드는 Desk 에만 있어 Desk 미리보기에 그렸다." : " 공유 토큰에는 브랜드 역할 색이 없어 일괄 작업 바 · 포커스 링이 여기서는 중립으로 보이고, 브랜드 채움을 쓰는 순자산 카드 · 열지도는 HR · Desk 미리보기에 그렸다.");
 
   return `
@@ -14084,6 +14102,8 @@ export function pageCss() {
     /* 바닥 — 위 12 · 아래 16(그 아래 안전 영역) · 사이 8. 버튼 large 48 — 하나면 폭 전체, 둘이면 반씩 */
     .pov-sheet-footer { display: flex; flex-shrink: 0; gap: var(--spacing-x2); padding: var(--spacing-x3) var(--spacing-global-gutter) var(--spacing-x4); }
     .pov-sheet-footer > .btn { flex: 1 1 0; min-width: 0; }
+    /* 확인을 여는 [삭제] — 왼쪽에 글자만큼(ghost critical), 주 버튼이 남은 폭(button.md 모달 footer 꼴 — 2026-10-25) */
+    .pov-sheet-footer > .btn.pov-sheet-delete { flex: none; }
     /* 손잡이 — 스냅 높이를 둘 때만. 36 × 4 · stroke-neutral-weak · 위 6 · 가로 가운데, 누르는 영역 44 × 44(보조 기술에는 숨긴다). 누름 색은 두지 않는다 */
     .pov-handle { position: absolute; top: var(--spacing-x1_5); left: 50%; z-index: 1; width: 36px; height: 4px; translate: -50% 0; border-radius: var(--radius-full); background: var(--color-stroke-neutral-weak); }
     .pov-handle::before { content: ""; position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; translate: -50% -50%; }
@@ -17670,7 +17690,6 @@ export function pageCss() {
     .pswipe-action:focus-visible,
     .pswipe-action.pswipe-action--focus { outline: 2px solid var(--pdata-ring); outline-offset: -2px; }
     .pswipe-action:disabled { cursor: not-allowed; --pswipe-badge: var(--color-bg-disabled); --pswipe-icon: var(--color-fg-disabled); --pswipe-label: var(--color-fg-disabled); }
-    .pswipe-more::before { content: ""; position: absolute; inset: -2px; }
     @media (prefers-reduced-motion: reduce) {
       .pswipe-row { transition: none; }
     }

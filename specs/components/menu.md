@@ -136,7 +136,7 @@ import {
   ResponsiveMenu, ResponsiveMenuContent, ResponsiveMenuGroup, ResponsiveMenuItem, ResponsiveMenuTrigger,
 } from "@/components/ui/menu"
 
-{/* 들어간 화면(메모)의 머리 오른쪽 — 목록 줄에는 ⋮ 를 두지 않는다 */}
+// 들어간 화면(메모)의 머리 오른쪽 — 목록 줄에는 ⋮ 를 두지 않는다
 <ResponsiveMenu>
   <ResponsiveMenuTrigger asChild>
     <Button variant="ghost" layout="iconOnly" aria-label="주간 회의 메모 더보기">
@@ -263,7 +263,7 @@ import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/component
 - 규칙 — 목록 줄은 ⋮ 없이 누르면 들어간다. 들어간 화면의 동작이 하나(삭제)면 바닥 왼쪽 [삭제] `ghost` + `critical`, 여럿이면 머리 오른쪽 ⋮ → Menu(1280 미만 Menu Sheet). 밀기는 폰 지름길로 남는다. 줄에 ⋮ 를 둘 수 있는 건 콘텐츠가 높은 카드 머리뿐이다.
 - 경계 — 데스크톱 데이터 표의 줄 끝 ⋮ 는 정하지 않았다(그루 이음 관리 화면 차례에). 2026-10-22 알림 목록 줄 ⋮([Popover](popover.md) 의 "알림 목록" — 알림 지우기 B)도 이 결정에서 다루지 않아 그대로 둔다.
 - 담다 적용 — 가계부(폰 2026-10-24 걷음 · 데스크톱 07-2 도 없음) · 카테고리(줄 ⋮ 를 걷고 수정 시트 머리 ⋮ 에 하위 추가 · 거래 옮기기 · 삭제) · 할 일(⋮ 없음 · 상세 [수정][삭제]) · 할 일 태그(⋮ 없음 · 수정 시트 바닥 [삭제]). 이후 묶음(메모 · 계좌 · 반복 거래 · 프리셋 · 캘린더 관리 …)도 같은 규칙. 아래 2026-10-02 조사의 "→ ⋮ + Menu" · "→ 줄 끝 ⋮ + Menu Sheet" 는 이 규칙으로 읽는다(줄 누름 + 들어간 화면).
-- 사이트 그림 — hero · 1280 그림 · 코드 미리보기를 메모 목록 줄 ⋮ 에서 메모 화면 머리 ⋮ 로 다시 그렸고, row-guide 는 맞음 둘(줄은 ⋮ 없이 · 들어간 화면 머리 ⋮) · 피함 둘(줄 끝 ⋮ · 늘 보이는 아이콘)이다. 코드 절 "줄의 ⋮" 를 "들어간 화면 머리 ⋮" 로(그림 id `ex-row` → `ex-header`). 결정 글 — 디자인시스템 세션 decisions/migration-expense.md "줄 끝 ⋮ 원칙". 값 변경 없음.
+- 사이트 그림 — hero · 1280 그림 · 코드 미리보기를 메모 목록 줄 ⋮ 에서 메모 화면 머리 ⋮ 로, 플레이그라운드를 거래 줄 ⋮ 에서 거래 상세 머리 ⋮ 로 다시 그렸고, row-guide 는 맞음 둘(줄은 ⋮ 없이 · 들어간 화면 머리 ⋮) · 피함 둘(줄 끝 ⋮ · 늘 보이는 아이콘)이다. 코드 절 "줄의 ⋮" 를 "들어간 화면 머리 ⋮" 로(그림 id `ex-row` → `ex-header`) — 레시피 예제(menu-examples)와 미리보기(build-preview-html)도 같게. 결정 글 — 디자인시스템 세션 decisions/migration-expense.md "줄 끝 ⋮ 원칙". 값 변경 없음.
 
 ### 2026-10-22 — 테마는 List 라디오 줄
 
