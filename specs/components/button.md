@@ -96,7 +96,7 @@
 | `neutral`(기본) | 대부분의 ghost |
 | `neutralSubtle` | 목록 행 · 툴바의 보조 아이콘 액션, 가장자리 텍스트 버튼(flush) |
 | `brand` | 강조하는 가벼운 액션 — 본문 속 "자세히 보기" |
-| `critical` | 확인 창을 여는 **삭제** — 모달 footer 왼쪽. 확정은 확인 창의 `criticalSolid` |
+| `critical` | 확인 창을 여는 **삭제** — 모달 footer · 시트 바닥 왼쪽. 확정은 확인 창의 `criticalSolid` |
 
 [표: ghost 글자색](button.yaml#compound)
 
@@ -189,6 +189,8 @@
 
 - 오른쪽에 `[취소 neutralWeak] [저장 neutralSolid]` — 웹은 `small`(36), 모바일 전체 폭은 `large`(48).
 - 확인 창을 여는 **삭제**는 왼쪽에 `ghost` + `critical` 글자. 삭제의 **확정**은 [Alert Dialog](alert-dialog.md) 의 `criticalSolid`.
+- 1280 미만 [Bottom Sheet](bottom-sheet.md) 바닥도 같은 꼴이다 — [삭제] 는 왼쪽 `ghost` + `critical`(`large` · 글자만큼의 폭), 주 버튼([저장] · [수정])이 남은 폭을 채운다.
+- 목록 줄을 눌러 들어간 화면(상세 · 수정)에서 동작이 삭제 하나뿐이면 이 바닥 왼쪽 [삭제] 로 둔다 — 머리 ⋮ 는 동작이 여럿일 때다([Menu](menu.md) 의 "줄의 동작", 2026-10-25 사용자 결정).
 - 모달 footer 의 버튼을 `neutralOutline` 둘로 두지 않는다 — 전체 폭 버튼 둘이 테두리로 서면 위계가 흐려진다.
 
 [그림: Desk 웹의 모달 footer — 상세(삭제 · 수정)와 편집 폼(취소 · 저장)](../../site/components/specs/button.tsx#modal-footer)
@@ -422,6 +424,10 @@ const [saving, setSaving] = useState(false)
 - `neutralSolid` 의 누름은 새 역할 `bg-neutral-inverted-pressed`(gray-800, v112)다.
 
 ## Migration notes
+
+### 2026-10-25 — 시트 바닥의 [삭제] 도 모달 footer 꼴
+
+사용자 결정 — 목록 줄에는 ⋮ 를 두지 않고, 들어간 화면의 동작이 하나(삭제)면 바닥 왼쪽 [삭제] `ghost` + `critical` 이다(button.md 모달 footer 꼴 — 시트도 같게, [Menu](menu.md) 의 "줄의 동작"). "모달 footer" 에 시트 바닥 · 들어간 화면 두 줄을 더하고, `critical` 의 쓰임에 시트 바닥을 적었다. 시트 바닥의 폭(삭제 글자만큼 · 주 버튼이 남은 폭)은 모달 footer 의 왼쪽 삭제를 시트의 전체 폭 버튼에 옮긴 것이다. 값 변경 없음.
 
 ### 2026-10-22 — 셋 이상 나란히는 "피한다"
 

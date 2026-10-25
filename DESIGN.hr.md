@@ -2844,7 +2844,7 @@ SEED 가 자리에 이름을 붙인 간격이다(SEED 이름은 `spacing-x.*` �
 | 주 메뉴 | Desk 하단 탭 바 · HR ☰ → 왼쪽 옆 패널 | 사이드바 접힘 56(손으로 펼침) | 사이드바 펼침 240(손으로 접음 · 기억) |
 | 화면 제목 | 상단 바의 제목 | 본문 맨 위 `h1` | 같다 |
 | 폼 · 상세 · 고르기 | Bottom Sheet | Bottom Sheet | Dialog · Popover |
-| 줄의 동작 | Menu Sheet | Menu Sheet | Menu |
+| 동작 목록(들어간 화면 머리 ⋮ · 표 줄 ⋮ — 목록 줄에는 ⋮ 없음) | Menu Sheet | Menu Sheet | Menu |
 | 접힌 사이드바의 하위 | — | 옆 펼침 메뉴(줄 44 — Menu Sheet 로 바꾸지 않는다, 2026-10-08) | 같다(손으로 접었을 때) |
 | 긴 목록 | 끝없이 불러오기 | 상황에 따라 — 아래 "목록 넘기기" | 같다 |
 | 데이터 표 | Table Pagination(표와 함께 가로 스크롤) | Table Pagination | Table Pagination |

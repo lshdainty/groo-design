@@ -204,7 +204,7 @@ Select 는 늘 [Field](field.md) 의 라벨과 함께 쓴다. 라벨이 없으�
 | 다른 구역 · 화면으로 옮긴다 | **[Tabs](tabs.md)** — 1차 Line · 2차 Chip Tabs | 가계부 · 자산 · 통계 · 예산 |
 | 기능 하나를 켜고 끈다 | 누르는 순간 바뀐다 → **[Switch](switch.md)**(설정 줄이면 List 스위치 줄) · 저장해야 반영 → **[Checkbox](checkbox.md)** | 결제 알림 · 고정 금액으로 기록 |
 | 화면 폭 목록에서 하나를 고르고 바로 바뀐다 | **[List](list.md) 라디오 줄** | 기본 통화 · 테마 |
-| 누르면 동작을 실행한다 | **[Menu](menu.md)**(1280 이상) · [Menu Sheet](menu-sheet.md)(1280 미만) — 값을 고르는 데 쓰지 않는다 | 거래 줄 ⋮ → 수정 · 복사 · 삭제 |
+| 누르면 동작을 실행한다 | **[Menu](menu.md)**(1280 이상) · [Menu Sheet](menu-sheet.md)(1280 미만) — 값을 고르는 데 쓰지 않는다 | 거래 상세 머리 ⋮ → 복사해 새로 쓰기 · 삭제 |
 
 [그림: 첫 갈래 — 폼 값 · 보기 거르기 · 구역 옮기기 · 켜고 끄기 · 화면 폭 목록 하나 · 실행](../../site/components/specs/select.tsx#first-guide)
 
@@ -389,6 +389,10 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
 - **트리거 이름은 라벨 하나** — SEED React 는 트리거에 고른 값을 따로 읽히지 않는다. groo 는 `role="combobox"` 의 값으로 고른 글이 읽힌다(라벨 + 값).
 
 ## Migration notes
+
+### 2026-10-25 — 목록 줄 ⋮ 를 걷은 결정에 맞춤
+
+"고르는 컴포넌트 고르기" 표의 Menu 예 "거래 줄 ⋮ → 수정 · 복사 · 삭제" 를 "거래 상세 머리 ⋮ → 복사해 새로 쓰기 · 삭제" 로 — 목록 줄에는 ⋮ 를 두지 않는다([Menu](menu.md) 의 "줄의 동작", 2026-10-25 사용자 결정). 값 변경 없음.
 
 ### 2026-10-22 — 첫 갈래 그림
 

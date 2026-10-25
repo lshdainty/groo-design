@@ -1,12 +1,12 @@
 # Menu Sheet
 
-> 화면 아래에서 올라오는 동작 목록. 1280 미만에서 [Menu](menu.md) 대신 뜬다 — 같은 줄 · 같은 순서. 줄 끝 ⋮ · 머리의 더보기 버튼이 열고, 폰의 [스와이프](swipe-actions.md)는 같은 동작의 지름길로 남는다. 입력 폼 · 상세 · 고르기는 [Bottom Sheet](bottom-sheet.md), 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md) 다.
+> 화면 아래에서 올라오는 동작 목록. 1280 미만에서 [Menu](menu.md) 대신 뜬다 — 같은 줄 · 같은 순서. 들어간 화면 머리의 ⋮ 가 연다 — 목록 줄에는 ⋮ 를 두지 않는다([Menu](menu.md) 의 "줄의 동작"). 폰의 [스와이프](swipe-actions.md)는 같은 동작의 지름길로 남는다. 입력 폼 · 상세 · 고르기는 [Bottom Sheet](bottom-sheet.md), 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md) 다.
 
 구조는 당근 [SEED Swipeable Menu Sheet](https://seed-design.io/react/components/swipeable-menu-sheet)(Apache-2.0)를 따른다 — 딤 · 시트 · 손잡이 · 머리(제목 · 설명) · 묶음 · 줄. 딤 · 끌어내리기 · 안전 영역 · 모션은 [Bottom Sheet](bottom-sheet.md) 와 같고, 다른 것은 손잡이가 늘 있고 위 닫기 버튼이 없다는 것이다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정).
 
 수치 원본은 [`menu-sheet.yaml`](menu-sheet.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
-[그림: 메모 줄 ⋮ 의 메뉴 시트 · 머리 더보기 — 라이트 · 다크](../../site/components/specs/menu-sheet.tsx#hero)
+[그림: 메모 화면 머리 ⋮ 의 메뉴 시트 · 메모 목록 머리 더보기 — 라이트 · 다크](../../site/components/specs/menu-sheet.tsx#hero)
 
 ### 직접 골라 보기
 
@@ -75,7 +75,7 @@
 
 [Menu](menu.md) 와 같은 목록을 1280 미만에서 시트로 띄운다 — 손가락으로 누르기 좋은 줄 52 에, 화면 아래라 엄지가 닿는다. 코드는 `ResponsiveMenu` 하나로 짜면 폭을 보고 둘 중 하나를 그린다. 입력 · 고르기 · 상세처럼 실행이 아닌 일은 [Bottom Sheet](bottom-sheet.md) 다.
 
-줄 · 화면의 동작은 1280 미만 Menu Sheet · 이상 [Menu](menu.md) 다. 다른 일(입력 폼 · 상세 · 고르기 · 되돌릴 수 없는 확인)에 어느 떠 있는 표면을 쓸지는 DESIGN.md Components 의 "시트 · 대화상자 · 확인창 · 팝오버" 표 한 벌이 정한다(2026-10-22 사용자 결정 3C — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj).
+들어간 화면 · 표 줄의 동작은 1280 미만 Menu Sheet · 이상 [Menu](menu.md) 다(목록 줄에는 ⋮ 를 두지 않는다). 다른 일(입력 폼 · 상세 · 고르기 · 되돌릴 수 없는 확인)에 어느 떠 있는 표면을 쓸지는 DESIGN.md Components 의 "시트 · 대화상자 · 확인창 · 팝오버" 표 한 벌이 정한다(2026-10-22 사용자 결정 3C — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj).
 
 예외 — 접힌 사이드바(768 ~ 1279)의 하위 목록은 이 시트가 아니라 누른 아이콘 옆 펼침 메뉴다([Side Navigation](side-navigation.md) — 사용자 결정 2026-10-08).
 
@@ -87,7 +87,7 @@ SEED Alert Dialog 문서의 "Alert Dialog vs. Menu Sheet" 여섯 줄에 groo 의
 
 | | [Alert Dialog](alert-dialog.md) | Menu Sheet |
 |---|---|---|
-| 목적 | 반드시 골라야 하는 일 — 되돌릴 수 없는 동작의 확인 | 그 줄 · 화면에서 할 수 있는 동작 여럿 |
+| 목적 | 반드시 골라야 하는 일 — 되돌릴 수 없는 동작의 확인 | 그 화면 · 항목에서 할 수 있는 동작 여럿 |
 | 동작 수 | 둘 이하(취소 포함) — 알림은 하나 | 둘 이상 |
 | 동작 짜임 | 둘 중 하나(삭제할까 · 나갈까) | 여럿 중 하나 |
 | 설명 | 무엇이 어떻게 되는지 늘 쓴다 | 없어도 된다 — 줄 이름이 말한다 |
@@ -97,9 +97,9 @@ SEED Alert Dialog 문서의 "Alert Dialog vs. Menu Sheet" 여섯 줄에 groo 의
 
 ### 스와이프의 대신 길
 
-폰 목록의 줄은 밀어서 동작을 꺼내는 [스와이프](swipe-actions.md)를 지름길로 둔다. 같은 동작을 줄 끝 ⋮ 로도 열어 이 시트에 띄운다 — 키보드 · 스크린리더 · 미는 법을 모르는 사람이 가는 길이다. 시트의 줄은 트레이와 같은 동작 · 같은 이름이고, 확인도 같은 Alert Dialog 를 띄운다.
+폰 목록의 줄은 밀어서 동작을 꺼내는 [스와이프](swipe-actions.md)를 지름길로 둔다. 대신 길은 줄 누르기다 — 줄을 누르면 한 단계 들어가고, 들어간 화면에 같은 동작이 다 있다. 동작이 여럿이면 머리 ⋮ 가 이 시트를 띄우고, 하나(삭제)면 바닥 왼쪽 [삭제] 다. 키보드 · 스크린리더 · 미는 법을 모르는 사람이 가는 길이다. 시트의 줄은 트레이와 같은 동작 · 같은 이름이고, 확인도 같은 Alert Dialog 를 띄운다. 줄 끝 ⋮ 는 두지 않는다(2026-10-25 — [Menu](menu.md) 의 "줄의 동작").
 
-[그림: 스와이프는 지름길 · ⋮ 는 같은 동작의 시트](../../site/components/specs/menu-sheet.tsx#swipe-guide)
+[그림: 스와이프는 지름길 · 줄을 누르면 들어간 화면 머리 ⋮ 에 같은 동작](../../site/components/specs/menu-sheet.tsx#swipe-guide)
 
 ### 묶음 · 아이콘 · 설명
 
@@ -116,7 +116,7 @@ SEED Alert Dialog 문서의 "Alert Dialog vs. Menu Sheet" 여섯 줄에 groo 의
 
 ## 코드
 
-레시피 `recipes/shadcn/components/ui/menu-sheet.tsx` 를 쓴다(vaul 위 — Bottom Sheet 와 같은 바탕). 줄의 동작은 [Menu](menu.md) 의 `ResponsiveMenu` 로 짜면 1280 미만에서 이 시트를 그린다. 늘 시트인 자리(폰 전용 화면의 머리 더보기)만 `MenuSheet` 를 바로 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
+레시피 `recipes/shadcn/components/ui/menu-sheet.tsx` 를 쓴다(vaul 위 — Bottom Sheet 와 같은 바탕). 들어간 화면 머리의 ⋮ 는 [Menu](menu.md) 의 `ResponsiveMenu` 로 짜면 1280 미만에서 이 시트를 그린다. 늘 시트인 자리(폰 전용 화면의 머리 더보기)만 `MenuSheet` 를 바로 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
 ### 머리 더보기 — 늘 시트
 
@@ -189,8 +189,8 @@ import { MenuSheet, MenuSheetContent, MenuSheetGroup, MenuSheetItem, MenuSheetTr
 
 ### ✅ Do
 
-- 1280 미만의 줄 · 화면 동작을 시트로 — 1280 이상은 같은 목록을 Menu 로.
-- 스와이프가 있는 줄에도 ⋮ 를 두고 같은 동작을 시트로.
+- 1280 미만의 화면 동작을 시트로 — 1280 이상은 같은 목록을 Menu 로.
+- 스와이프가 있는 목록은 줄을 누르면 들어간 화면에 같은 동작을 다 둔다(여럿이면 머리 ⋮ → 시트).
 - 위험한 동작은 맨 아래 묶음에 `critical` 로.
 - 묶음은 줄이 3개 이상일 때부터, 최대 3묶음.
 
@@ -200,6 +200,7 @@ import { MenuSheet, MenuSheetContent, MenuSheetGroup, MenuSheetItem, MenuSheetTr
 - 아이콘 줄과 글만 줄을 한 시트에 섞기.
 - 위 닫기 버튼 · 바닥 취소 버튼 — 딤 · 끌기 · 뒤로 가기로 닫는다.
 - 스크롤이 생길 만큼 긴 목록.
+- 좁은 목록 줄 끝마다 ⋮ 를 두고 이 시트를 열기 — 줄은 누르면 들어간다([Menu](menu.md) 의 "줄의 동작").
 
 ## Specification
 
@@ -220,6 +221,10 @@ import { MenuSheet, MenuSheetContent, MenuSheetGroup, MenuSheetItem, MenuSheetTr
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 시트 `z-modal-content` 101).
 
 ## Migration notes
+
+### 2026-10-25 — 좁은 목록 줄에서 ⋮ 를 걷는다
+
+사용자 결정 — 목록 줄에는 줄 끝 ⋮ 를 두지 않고, 줄을 누르면 들어간 화면에서 동작을 고른다(여럿이면 머리 ⋮ → 이 시트, 하나면 바닥 왼쪽 [삭제]). 아래 2026-10-02 의 "같은 동작을 ⋮ → Menu Sheet 로도" 는 목록 줄에서 걷었고, 스와이프의 대신 길은 줄 누르기 → 들어간 화면이 맡는다(2026-10-02 조사가 적은 Desk 웹의 지금 길과 같다). 규칙 전문 · 경계(데스크톱 표 줄 · 알림 목록 줄)는 [Menu](menu.md) 의 같은 날 Migration notes. 사이트 그림 hero · 해부 · 여백 · 1280 · swipe-guide 의 뒤 화면을 메모 목록(줄 끝 ⋮)에서 메모 화면(머리 ⋮)으로 다시 그렸다. 값 변경 없음.
 
 ### 2026-10-22 — 적어도 한 묶음은 둘 이상
 
