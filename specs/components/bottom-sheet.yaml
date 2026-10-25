@@ -93,7 +93,7 @@ rules:
         paddingTop: $spacing-x3
         paddingX: $spacing-global-gutter
         paddingBottom: { value: $spacing-x4, note: "그 아래 안전 영역" }
-        gap: { value: $spacing-x2, note: "버튼 둘이면 반씩 나눈다" }
+        gap: { value: $spacing-x2, note: "버튼 둘이면 반씩 나눈다 — 확인을 여는 [삭제](ghost critical)는 왼쪽에 글자만큼, 주 버튼이 남은 폭(2026-10-25)" }
         buttonSize: { value: large 48, note: "Button large — 하나면 폭 전체" }
     pressed:
       closeButton:

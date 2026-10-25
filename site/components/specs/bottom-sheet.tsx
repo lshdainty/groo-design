@@ -14,6 +14,7 @@ import {
   CATEGORY,
   CategorySheet,
   DeleteAlert,
+  DeleteFooter,
   DetailSheet,
   LedgerPhone,
   Legend,
@@ -517,6 +518,20 @@ const ButtonsGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
+// 바닥 왼쪽 [삭제] — 목록 줄을 눌러 들어간 시트에서 동작이 삭제 하나뿐일 때(2026-10-25 — menu.md "줄의 동작")
+const DeleteGuide: Fig = ({ caption }) => (
+  <Panel caption={caption}>
+    <div className="flex flex-wrap items-start justify-center gap-4">
+      <Shot strong="상세 — 삭제 · 수정" cap="[삭제] 는 왼쪽 ghost critical 글자만큼, 주 버튼 [수정] 이 남은 폭">
+        <LedgerPhone mode="auto" scale={0.5} overlay={<SheetOn mode="auto"><DetailSheet mode="auto" footer={<DeleteFooter mode="auto" primary="수정" />} /></SheetOn>} />
+      </Shot>
+      <Shot strong="수정이 없는 조회 — 삭제 하나" cap="주 버튼이 없으면 [삭제] 하나만 왼쪽에. 동작이 여럿이면 바닥이 아니라 머리 ⋮ → Menu Sheet">
+        <LedgerPhone mode="auto" scale={0.5} overlay={<SheetOn mode="auto"><DetailSheet mode="auto" footer={<DeleteFooter mode="auto" />} /></SheetOn>} />
+      </Shot>
+    </div>
+  </Panel>
+);
+
 // ── 코드 미리보기(실제로 열고 닫는다) ────────────────────────
 const ExPick: Fig = () => <PeriodPickDemo kit={overlayKit()} chip={chipLook()} list={listLook()} />;
 const ExForm: Fig = () => <TxFormSheetDemo kit={overlayKit()} date={dateKit()} sel={desk()} field={tf().field} input={tf().input} cta={btn('neutralSolid', 'small')} />;
@@ -532,6 +547,7 @@ export const bottomSheetFigures: Record<string, Fig> = {
   'height-guide': HeightGuide,
   'dismiss-guide': DismissGuide,
   'buttons-guide': ButtonsGuide,
+  'delete-guide': DeleteGuide,
   'ex-pick': ExPick,
   'ex-form': ExForm,
 };

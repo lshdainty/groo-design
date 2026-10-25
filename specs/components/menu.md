@@ -6,7 +6,7 @@
 
 수치 원본은 [`menu.yaml`](menu.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
-[그림: 메모 줄 ⋮ 메뉴 · 직원 줄 ⋮ 메뉴 — 라이트 · 다크](../../site/components/specs/menu.tsx#hero)
+[그림: 메모 화면 머리 ⋮ 메뉴 · 직원 표 줄 ⋮ 메뉴 — 라이트 · 다크](../../site/components/specs/menu.tsx#hero)
 
 ### 직접 골라 보기
 
@@ -73,7 +73,7 @@ Menu 는 누르면 바로 실행되는 명령 목록이다. 값을 고르는 일
 
 | 이런 일 | 쓰는 것 |
 |---|---|
-| 줄 · 화면의 동작(수정 · 복사 · 삭제 · 내보내기) | **Menu**(1280 미만 [Menu Sheet](menu-sheet.md)) |
+| 들어간 화면 · 표 줄의 동작(수정 · 복사 · 삭제 · 내보내기) — 목록 줄에는 두지 않는다(아래 "줄의 동작") | **Menu**(1280 미만 [Menu Sheet](menu-sheet.md)) |
 | 폼에 넣을 값 고르기(결제 수단 · 카테고리) | [Select](select.md) · [Input Button](input-button.md) |
 | 같은 내용의 보기 바꾸기 2 ~ 4개(목록 · 달력) | [Segmented Control](segmented-control.md) |
 | 값 고르기 — 테마처럼 누르는 순간 바뀌는 설정 · 정렬 · 보기 | 테마는 [List](list.md) 의 라디오 줄, 정렬 · 보기는 [Segmented Control](segmented-control.md) · [Select](select.md) — 고르는 표는 Select 의 "고르는 컴포넌트 고르기" |
@@ -81,11 +81,23 @@ Menu 는 누르면 바로 실행되는 명령 목록이다. 값을 고르는 일
 
 [그림: 메뉴는 실행만 — 테마 같은 값은 설정의 List 라디오 줄](../../site/components/specs/menu.tsx#role-guide)
 
-### 줄의 동작 — ⋮ 하나와 메뉴
+### 줄의 동작 — 목록 줄에는 ⋮ 를 두지 않는다
 
-데스크톱 목록 · 표의 줄에서 동작은 줄 끝 ⋮ 하나로 연다 — 버튼 이름은 "{줄 이름} 더보기"(Button `ghost` · `iconOnly`). 줄 자체를 누르면 상세 · 수정이 열린다. 수정 · 삭제 아이콘을 줄마다 늘 보이게 늘어놓지 않는다 — 줄마다 버튼이 둘셋씩 늘고, 아이콘만으로는 뜻을 다 전하지 못한다. 1280 미만에서는 같은 ⋮ 가 [Menu Sheet](menu-sheet.md) 를 열고, 폰의 [스와이프](swipe-actions.md)는 같은 동작의 지름길로 남는다.
+좁은 목록 줄([List](list.md) 줄 — 한두 줄 글 + 타일 · 값)에는 줄 끝 ⋮ 를 두지 않는다. 줄을 누르면 한 단계 들어간다(상세 · 수정). 그 항목의 동작은 들어간 화면에 둔다.
 
-[그림: 줄의 동작 — ⋮ 하나 + 메뉴 · 늘 보이는 아이콘 묶음](../../site/components/specs/menu.tsx#row-guide)
+| 들어간 화면의 동작 | 두는 자리 |
+|---|---|
+| 하나(삭제) | 바닥 왼쪽 [삭제] — Button `ghost` + `critical`([Button](button.md) 의 "모달 footer" 꼴). 1280 미만 [Bottom Sheet](bottom-sheet.md) 도 같은 꼴이다 |
+| 여럿 | 머리 오른쪽 ⋮ 하나 — 이름 "{항목 이름} 더보기"(Button `ghost` · `iconOnly`) → Menu(1280 미만 [Menu Sheet](menu-sheet.md)) |
+
+- 폰 목록의 [밀기](swipe-actions.md)는 같은 동작의 지름길로 남는다 — 트레이의 동작은 모두 들어간 화면에도 있다.
+- 줄에 ⋮ 를 둘 수 있는 건 **콘텐츠가 높은 카드의 머리**뿐이다 — 사진 · 여러 줄 · 버튼이 든 카드 하나가 항목 하나일 때([Card](card.md) 의 "머리 동작은 하나"). 지금 담다 화면에는 이런 카드가 없다.
+- 수정 · 삭제 아이콘을 줄마다 늘 보이게 늘어놓지 않는다 — 줄마다 버튼이 둘셋씩 늘고, 아이콘만으로는 뜻을 다 전하지 못한다.
+- **표 줄은 이 규칙 밖이다** — 데스크톱 데이터 표([Table](table.md))의 줄 끝 ⋮ 는 이번에 정하지 않았다. 그루 이음 관리 화면 차례에 다시 보고, 그때까지 table.md 의 지금 문장을 따른다.
+
+당근도 ⋮ 를 콘텐츠가 높은 카드(구매 내역 카드 · 커뮤니티 글)의 머리에만 두고, 모임 목록 같은 좁은 줄에는 두지 않는다 — 한 단계 들어간 화면의 머리 ⋮ 에서 그 항목의 동작을 고른다. 앞의 규칙(2026-10-02 "데스크톱 줄의 동작은 줄 끝 ⋮ + Menu")은 디자인 시스템 그림을 우리 목록에 그대로 붙인 것이었다(2026-10-25 사용자 결정 — 아래 Migration notes).
+
+[그림: 줄의 동작 — 줄은 ⋮ 없이 누르면 들어간다 · 들어간 화면 머리 ⋮ · 줄 끝 ⋮ · 늘 보이는 아이콘 묶음](../../site/components/specs/menu.tsx#row-guide)
 
 ### 묶음과 순서
 
@@ -111,17 +123,20 @@ Menu 는 누르면 바로 실행되는 명령 목록이다. 값을 고르는 일
 
 ## 코드
 
-레시피 `recipes/shadcn/components/ui/menu.tsx` 를 쓴다(Radix DropdownMenu 위, 비모달). 줄의 동작처럼 폭마다 바뀌는 자리는 `ResponsiveMenu`(1280 이상 Menu · 미만 Menu Sheet)로 짜고, 늘 1280 이상인 자리(데스크톱 표의 머리)만 `Menu` 를 바로 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
+레시피 `recipes/shadcn/components/ui/menu.tsx` 를 쓴다(Radix DropdownMenu 위, 비모달). 들어간 화면 머리의 ⋮ 처럼 폭마다 바뀌는 자리는 `ResponsiveMenu`(1280 이상 Menu · 미만 Menu Sheet)로 짜고, 늘 1280 이상인 자리(데스크톱 표의 줄)만 `Menu` 를 바로 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
-### 줄의 ⋮ — 1280 에서 Menu Sheet 로 바뀐다
+### 들어간 화면 머리 ⋮ — 1280 에서 Menu Sheet 로 바뀐다
 
-[그림: 메모 줄 ⋮](../../site/components/specs/menu.tsx#ex-row)
+메모 목록 줄을 누르면 메모 화면으로 들어가고, 동작이 여럿(고정 · 수정 · 복사 · 삭제)이라 머리 오른쪽 ⋮ 하나에 모은다.
+
+[그림: 메모 화면 머리 ⋮](../../site/components/specs/menu.tsx#ex-header)
 
 ```tsx
 import {
   ResponsiveMenu, ResponsiveMenuContent, ResponsiveMenuGroup, ResponsiveMenuItem, ResponsiveMenuTrigger,
 } from "@/components/ui/menu"
 
+// 들어간 화면(메모)의 머리 오른쪽 — 목록 줄에는 ⋮ 를 두지 않는다
 <ResponsiveMenu>
   <ResponsiveMenuTrigger asChild>
     <Button variant="ghost" layout="iconOnly" aria-label="주간 회의 메모 더보기">
@@ -145,7 +160,9 @@ import {
 
 ### 설명 · 막힌 줄 — 데스크톱 표
 
-[그림: 직원 줄 ⋮](../../site/components/specs/menu.tsx#ex-description)
+표 줄의 ⋮ 는 "줄의 동작" 규칙 밖이다 — 그루 이음 관리 화면 차례에 다시 정할 때까지 [Table](table.md) 의 지금 문장대로 둔다.
+
+[그림: 직원 표 줄 ⋮](../../site/components/specs/menu.tsx#ex-description)
 
 ```tsx
 import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/components/ui/menu"
@@ -200,13 +217,13 @@ import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/component
 | **WCAG 2.4.7** Focus visible | 키보드로 옮긴 줄에 늘 링 — 바탕색만으로 알리지 않는다 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 줄 39 × 184 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 줄 39 ⚠ — 마우스용(1280 이상). 손가락으로 누르는 화면은 [Menu Sheet](menu-sheet.md)(줄 52) ✓ |
-| **ARIA** | 트리거 `aria-haspopup="menu"` · `aria-expanded` · `aria-controls`, 메뉴 `role="menu"` + 트리거로 `aria-labelledby`, 줄 `role="menuitem"`(막히면 `aria-disabled="true"`), 묶음 `role="group"`(이름이 있으면 `aria-labelledby`). 선은 장식이다. ⋮ 의 이름은 "{줄 이름} 더보기" |
+| **ARIA** | 트리거 `aria-haspopup="menu"` · `aria-expanded` · `aria-controls`, 메뉴 `role="menu"` + 트리거로 `aria-labelledby`, 줄 `role="menuitem"`(막히면 `aria-disabled="true"`), 묶음 `role="group"`(이름이 있으면 `aria-labelledby`). 선은 장식이다. ⋮ 의 이름은 "{항목 · 화면 이름} 더보기"(표 줄은 "{줄 이름} 더보기") |
 
 ## Do / Don't
 
 ### ✅ Do
 
-- 줄의 동작은 줄 끝 ⋮ 하나로 열고, 줄을 누르면 상세 · 수정.
+- 목록 줄은 ⋮ 없이 누르면 들어가고, 동작은 들어간 화면에 — 하나(삭제)면 바닥 왼쪽 [삭제], 여럿이면 머리 ⋮ 하나.
 - 위험한 동작은 맨 아래 묶음에 `critical` 로.
 - 이름은 동사로 짧게 — 한 메뉴 안에서 말투를 맞춘다.
 - 1280 미만에서는 같은 목록을 Menu Sheet 로.
@@ -214,6 +231,7 @@ import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/component
 ### ❌ Don't
 
 - 값을 고르는 데 메뉴를 쓰기 — 테마는 List 라디오 줄, 정렬 · 보기는 Segmented Control · Select.
+- 좁은 목록 줄 끝마다 ⋮ — 줄에 ⋮ 를 둘 수 있는 건 콘텐츠가 높은 카드 머리뿐이다(표 줄은 [Table](table.md)).
 - 수정 · 삭제 아이콘을 줄마다 늘 늘어놓기.
 - 일부 줄에만 아이콘.
 - 메뉴 안에 메뉴(하위 메뉴) · 단축키 표기 · 체크 줄.
@@ -234,9 +252,18 @@ import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/component
 - **줄은 단어 단위로 줄을 바꾼다**(v114) — SEED 는 음절에서도 바꾼다.
 - **z-index 는 specs/z-index.md 의 L3**(`z-floating` 200) — SEED 99999 는 Alert Dialog 위로 뜬다.
 - **1280 에서 Menu Sheet 와 바뀌는 `ResponsiveMenu`** — SEED 는 둘을 따로 쓴다.
-- **트리거 끝에 맞춘다** — SEED 기본은 가운데(`bottom`)라 줄 끝 ⋮ 의 메뉴가 표 밖으로 100 넘게 나간다. groo 는 오른쪽 끝(`end`)이 기본이다.
+- **트리거 끝에 맞춘다** — SEED 기본은 가운데(`bottom`)라 표 줄 끝 · 머리 오른쪽 ⋮ 의 메뉴가 표 · 화면 밖으로 100 넘게 나간다. groo 는 오른쪽 끝(`end`)이 기본이다.
 
 ## Migration notes
+
+### 2026-10-25 — 좁은 목록 줄에서 ⋮ 를 걷는다
+
+사용자가 당근 화면 다섯 장을 보고 정했다 — 당근은 ⋮ 를 콘텐츠가 높은 카드(구매 내역 카드 · 커뮤니티 글 — 사진 · 여러 줄 · 버튼)의 머리 옆에만 두고, 좁은 목록 줄(모임 목록)에는 두지 않는다. 좁은 줄은 한 단계 들어간 화면의 머리 ⋮ 에서 동작을 고른다. "디자인 시스템만 보고 우리 목록에 단순하게 붙인 문제" 라 "⋮ 는 목록 줄에서 빼고 대체 길을 준다 — 가계부든 카테고리 설정이든 뭐든". 2026-10-02 결정 중 "데스크톱 줄의 동작은 ⋮ + Menu" · "폰 스와이프는 지름길로 남기고 ⋮ 도" 의 ⋮ 를 목록 줄에서 걷었다 — 그 결정의 나머지(Menu small · 1280 미만 Menu Sheet · 메뉴는 실행만 · 비모달 키보드 …)는 그대로다.
+
+- 규칙 — 목록 줄은 ⋮ 없이 누르면 들어간다. 들어간 화면의 동작이 하나(삭제)면 바닥 왼쪽 [삭제] `ghost` + `critical`, 여럿이면 머리 오른쪽 ⋮ → Menu(1280 미만 Menu Sheet). 밀기는 폰 지름길로 남는다. 줄에 ⋮ 를 둘 수 있는 건 콘텐츠가 높은 카드 머리뿐이다.
+- 경계 — 데스크톱 데이터 표의 줄 끝 ⋮ 는 정하지 않았다(그루 이음 관리 화면 차례에). 2026-10-22 알림 목록 줄 ⋮([Popover](popover.md) 의 "알림 목록" — 알림 지우기 B)도 이 결정에서 다루지 않아 그대로 둔다.
+- 담다 적용 — 가계부(폰 2026-10-24 걷음 · 데스크톱 07-2 도 없음) · 카테고리(줄 ⋮ 를 걷고 수정 시트 머리 ⋮ 에 하위 추가 · 거래 옮기기 · 삭제) · 할 일(⋮ 없음 · 상세 [수정][삭제]) · 할 일 태그(⋮ 없음 · 수정 시트 바닥 [삭제]). 이후 묶음(메모 · 계좌 · 반복 거래 · 프리셋 · 캘린더 관리 …)도 같은 규칙. 아래 2026-10-02 조사의 "→ ⋮ + Menu" · "→ 줄 끝 ⋮ + Menu Sheet" 는 이 규칙으로 읽는다(줄 누름 + 들어간 화면).
+- 사이트 그림 — hero · 1280 그림 · 코드 미리보기를 메모 목록 줄 ⋮ 에서 메모 화면 머리 ⋮ 로, 플레이그라운드를 거래 줄 ⋮ 에서 거래 상세 머리 ⋮ 로 다시 그렸고, row-guide 는 맞음 둘(줄은 ⋮ 없이 · 들어간 화면 머리 ⋮) · 피함 둘(줄 끝 ⋮ · 늘 보이는 아이콘)이다. 코드 절 "줄의 ⋮" 를 "들어간 화면 머리 ⋮" 로(그림 id `ex-row` → `ex-header`) — 레시피 예제(menu-examples)와 미리보기(build-preview-html)도 같게. 결정 글 — 디자인시스템 세션 decisions/migration-expense.md "줄 끝 ⋮ 원칙". 값 변경 없음.
 
 ### 2026-10-22 — 테마는 List 라디오 줄
 

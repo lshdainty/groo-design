@@ -2054,7 +2054,7 @@ const SHADCN_CATALOG = [
   // Data (4) — 데이터 표시(2026-10-08). 옛 Data Table 은 걷었다 — 정렬 · 고르기 · 일괄 작업은 Table 의 부품이다. Card 는 Display 에 있다
   { slug: "chart", name: "Chart", category: "Data", description: "숫자의 흐름 · 비율 · 세기를 그리는 차트 — 이중 축 추이 · 위 지표 타일 · \"■ 라벨 값\" 툴팁 · 목록 범례 도넛 · 칸 112 이상만 원까지 쓰는 열지도, recharts 베이스 (SEED 대시보드 그림 기준)." },
   { slug: "searchable-list", name: "Searchable List", category: "Data", description: "위 밑줄 검색칸에 치는 대로 걸러지는 긴 목록에서 하나를 고르는 묶음 — 분류 머리 · List 줄 + 오른쪽 라디오 · 콤보박스 키보드 · 0건 · 실패 · 불러오는 줄 (SEED Text Input 밑줄형 · List · Radiomark · Result Section 기준)." },
-  { slug: "swipe-actions", name: "Swipe Actions", category: "Data", description: "폰 목록 줄을 왼쪽으로 밀면 동작 칸(원형 배지 36 + 라벨)이 드러나는 지름길 — 같은 동작은 늘 줄 끝 ⋮ → Menu Sheet 로도 연다 (SEED 에는 줄 밀기가 없어 대체 방법을 두라는 SEED Inclusive Design 기준)." },
+  { slug: "swipe-actions", name: "Swipe Actions", category: "Data", description: "폰 목록 줄을 왼쪽으로 밀면 동작 칸(원형 배지 36 + 라벨)이 드러나는 지름길 — 같은 동작은 늘 줄을 눌러 들어간 화면에도 있다(줄 끝 ⋮ 는 두지 않는다) (SEED 에는 줄 밀기가 없어 대체 방법을 두라는 SEED Inclusive Design 기준)." },
   { slug: "table", name: "Table", category: "Data", description: "줄과 열로 된 데이터를 견주어 읽는 표 — 머리 41 · 줄 45(두 줄 칸이면 72) · 마지막 줄까지 줄 선 · 숫자 오른쪽 · 정렬 ↑↓ 늘 · 끝 ⋮ · 고른 줄은 체크로만, 768 미만은 List 줄 (SEED 문서 사이트 표 구조)." },
 ];
 

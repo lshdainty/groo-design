@@ -713,8 +713,6 @@ export function swipeKit(): SwipeKitLook {
   same(brightness, pct(hov['action.brightness'], `${F} hovered action.brightness`), `${F} 호버 · 누름 밝기`);
   const text = md('swipe-actions');
   const row = (head: string) => must(text.split('\n').find((l) => l.startsWith(`| ${head}`)), `swipe-actions.md 제스처 판정 표의 "${head}" 줄`);
-  const more = buttonLook({ variant: 'ghost', layout: 'iconOnly', size: 'medium' }, brand);
-  same(more.faces.light.enabled.height, len(v['moreButton.size'], `${F} moreButton.size`), `${F} ⋮ — button.yaml ghost iconOnly medium`);
   const look: SwipeKitLook = {
     badge: { size: badgeSize, radius: len(v['badge.radius'], `${F} badge.radius`) },
     icon: len(v['icon.size'], `${F} icon.size`),
@@ -728,7 +726,6 @@ export function swipeKit(): SwipeKitLook {
     brightness,
     ring: ringOf(fo, brand, F),
     motion: motionOf('swipe-actions', '열림 · 닫힘'),
-    more,
     gesture: {
       deadzone: numIn(row('데드존'), /(\d+)px/, 'swipe-actions.md 데드존'),
       axis: numIn(row('축 확정'), /×\s*([\d.]+)/, 'swipe-actions.md 축 확정'),

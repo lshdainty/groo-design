@@ -1,6 +1,6 @@
 # Bottom Sheet
 
-> 화면 아래에서 올라오는 모달. 1280 미만에서 폼 · 상세 · 고르기를 띄운다 — 같은 내용을 1280 이상에서는 [Dialog](dialog.md) 로 띄운다(한 부품이 폭으로 바꾼다 — Responsive Dialog). 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md), 줄의 동작 목록은 Menu Sheet(그 차례에), 화면 높이의 90% 를 넘는 내용은 페이지다.
+> 화면 아래에서 올라오는 모달. 1280 미만에서 폼 · 상세 · 고르기를 띄운다 — 같은 내용을 1280 이상에서는 [Dialog](dialog.md) 로 띄운다(한 부품이 폭으로 바꾼다 — Responsive Dialog). 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md), 들어간 화면 머리 ⋮ 의 동작 목록은 [Menu Sheet](menu-sheet.md), 화면 높이의 90% 를 넘는 내용은 페이지다.
 
 구조는 당근 [SEED Bottom Sheet](https://seed-design.io/components/bottom-sheet)(Apache-2.0)를 따른다 — 딤 · 시트 · 머리(제목 · 설명) · 닫기 버튼 · 본문 · 바닥, 손잡이는 고를 때만. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다(2026-10-02 사용자 결정). 옛 Drawer 스펙을 대신한다.
 
@@ -23,7 +23,7 @@
 | ⓒ Header | 머리 — 제목(늘 있다) · 설명(있을 때만). |
 | ⓓ Close Button | 닫기 — 오른쪽 위 원. 조회 · 고르기 · 시트의 입력 폼에 둔다. |
 | ⓔ Body | 본문 — 넘치면 이 안에서 스크롤한다. 넘칠 수 있는 본문은 끝을 흐린다([Scroll Fog](scroll-fog.md)). |
-| ⓕ Footer | 바닥 — 버튼. 하나면 폭 전체, 둘이면 반씩. |
+| ⓕ Footer | 바닥 — 버튼. 하나면 폭 전체, 둘이면 반씩. 확인을 여는 [삭제] 는 왼쪽에 글자만큼. |
 | ⓖ Handle | 손잡이 — 스냅 높이를 둘 때만. |
 
 [표: 부위](bottom-sheet.yaml#slots)
@@ -32,7 +32,7 @@
 
 ### 머리 · 본문 · 바닥
 
-머리는 위 24 · 아래 16 이고 제목 22 / 30 · 700, 설명 16 / 22 다. 좌우는 화면 여백 24 이고, 닫기 버튼이 있으면 제목 오른쪽을 64 비운다. 바닥은 위 12 · 아래 16 이고 그 아래에 안전 영역(홈 표시줄)을 더한다. 바닥 버튼은 Button large 48 — 하나면 폭 전체, 둘이면 반씩 나눈다.
+머리는 위 24 · 아래 16 이고 제목 22 / 30 · 700, 설명 16 / 22 다. 좌우는 화면 여백 24 이고, 닫기 버튼이 있으면 제목 오른쪽을 64 비운다. 바닥은 위 12 · 아래 16 이고 그 아래에 안전 영역(홈 표시줄)을 더한다. 바닥 버튼은 Button large 48 — 하나면 폭 전체, 둘이면 반씩 나눈다. 확인을 여는 [삭제] 는 예외로 왼쪽에 `ghost` + `critical` 글자만큼 두고, 주 버튼이 남은 폭을 채운다([Button](button.md) 의 "모달 footer" 꼴).
 
 [그림: 머리 · 본문 · 바닥의 여백](../../site/components/specs/bottom-sheet.tsx#layout)
 
@@ -70,7 +70,7 @@
 
 ### 시트에 띄우는 것
 
-1280 미만에서 지금 화면을 떠나지 않고 할 일 — 입력 폼(거래 추가 · 수정), 고르기(기간 · 정렬 · 날짜 — Input Button 의 시트), 조회(거래 상세). 같은 내용은 1280 이상에서 [Dialog](dialog.md) 로 뜬다 — 머리 · 본문 · 바닥은 같고 표면만 바뀐다. 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md), 줄의 동작 목록(수정 · 복사 · 삭제)은 Menu Sheet(그 차례에)다.
+1280 미만에서 지금 화면을 떠나지 않고 할 일 — 입력 폼(거래 추가 · 수정), 고르기(기간 · 정렬 · 날짜 — Input Button 의 시트), 조회(거래 상세). 같은 내용은 1280 이상에서 [Dialog](dialog.md) 로 뜬다 — 머리 · 본문 · 바닥은 같고 표면만 바뀐다. 되돌릴 수 없는 확인은 [Alert Dialog](alert-dialog.md), 들어간 화면 머리 ⋮ 의 동작 목록(수정 · 복사 · 삭제)은 [Menu Sheet](menu-sheet.md) 다 — 목록 줄에는 ⋮ 를 두지 않는다([Menu](menu.md) 의 "줄의 동작").
 
 어느 떠 있는 표면을 쓸지 — 시트 · 대화상자 · 확인창 · 팝오버 · 메뉴 · 메뉴 시트 · 옆 패널을 한눈에 견준 "상황 → 고를 것" 표는 DESIGN.md Components 의 "시트 · 대화상자 · 확인창 · 팝오버" 한 벌이다(2026-10-22 사용자 결정 3C — https://claude.ai/artifact/YRPbWzhgD4EDdKsVioU8Zj). Desk 데스크톱 벨의 알림 목록도 그 표에 있다(768 ~ 1279 시트 · 1280 이상 [Popover](popover.md) — 2026-10-16 사용자 결정 Q-017-3b B).
 
@@ -97,6 +97,10 @@
 ### 닫기 버튼과 바닥 버튼
 
 시트의 입력 폼은 위 닫기 버튼 + 바닥 [저장] 하나다 — 바닥에 [취소] 를 따로 두지 않는다(닫기 버튼과 취소를 함께 두지 않는다). 조회 · 고르기도 위 닫기 버튼이고, 바닥 버튼은 고른 것을 넣을 때("완료" · "적용")만 둔다. 둘을 나란히 둘 때는 보조(초기화)를 왼쪽, 주 버튼을 오른쪽에 반씩.
+
+목록 줄을 눌러 들어간 시트(상세 · 수정)에서 동작이 삭제 하나뿐이면 바닥 왼쪽에 [삭제](`ghost` + `critical`)를 둔다 — 주 버튼([저장] · [수정])이 있으면 그 버튼이 남은 폭을 채우고, 없는 조회 시트는 [삭제] 하나만 왼쪽에 선다. 동작이 여럿이면 바닥이 아니라 머리 ⋮ → [Menu Sheet](menu-sheet.md) 다. 목록 줄에는 ⋮ 를 두지 않는다([Menu](menu.md) 의 "줄의 동작", 2026-10-25 사용자 결정).
+
+[그림: 바닥 왼쪽 삭제 — 상세(삭제 · 수정) · 수정이 없는 조회(삭제 하나)](../../site/components/specs/bottom-sheet.tsx#delete-guide)
 
 [그림: 버튼 — 폼은 위 닫기 + 바닥 저장 · 닫기와 취소를 함께](../../site/components/specs/bottom-sheet.tsx#buttons-guide)
 
@@ -178,6 +182,7 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 - 1280 미만의 폼 · 상세 · 고르기를 시트로 — 1280 이상은 같은 내용을 Dialog 로.
 - 입력 폼은 바깥 · 끌기로 닫지 않고, 바뀐 값이 있으면 닫기 전에 묻는다.
 - 시트의 입력 폼은 위 닫기 + 바닥 저장 하나.
+- 들어간 시트의 동작이 삭제 하나면 바닥 왼쪽 [삭제] `ghost` + `critical`.
 - 처음부터 화면 높이의 90% 를 넘게 짠 내용은 페이지로 — 작은 화면 · 큰 글자로 넘친 것은 본문만 스크롤 + 끝 흐림.
 
 ### ❌ Don't
@@ -205,6 +210,10 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 시트 `z-modal-content` 101) — 그 위에 Popover(L3) · Alert Dialog(L5)가 뜬다.
 
 ## Migration notes
+
+### 2026-10-25 — 바닥 왼쪽 [삭제]
+
+사용자 결정 — 목록 줄에는 ⋮ 를 두지 않고 줄을 누르면 들어간다. 들어간 시트의 동작이 하나(삭제)면 바닥 왼쪽 [삭제] `ghost` + `critical`(Button 모달 footer 꼴), 여럿이면 머리 ⋮ → Menu Sheet([Menu](menu.md) 의 "줄의 동작"). Anatomy · 여백 · "닫기 버튼과 바닥 버튼" 에 한 줄씩, yaml `footer.gap` 비고에 같은 말. 그림 delete-guide(상세 삭제 · 수정 · 삭제 하나)를 더했다. 값 변경 없음.
 
 ### 2026-10-22 — 90% 와 본문 스크롤 · 표면 고르기 표는 한 벌
 

@@ -1,4 +1,5 @@
-// Menu · Menu Sheet · Help Bubble · Tooltip 페이지가 같이 쓰는 그림 조각(서버) — Desk 메모 · HR 직원 화면, 줄 끝 ⋮, 폰의 시트, 스와이프 트레이.
+// Menu · Menu Sheet · Help Bubble · Tooltip 페이지가 같이 쓰는 그림 조각(서버) — Desk 메모 목록 · 메모 화면(머리 ⋮) · HR 직원 표(줄 끝 ⋮), 폰의 시트, 스와이프 트레이.
+// 목록 줄에는 ⋮ 를 두지 않는다 — 줄을 누르면 들어간 화면의 머리 ⋮ 에서 동작을 고른다(menu.md "줄의 동작", 2026-10-25). 표 줄의 ⋮ 는 그 규칙 밖이다.
 // 메뉴 · 시트 · 말풍선은 menu-look 이 YAML 에서 푼 값으로(menu-view), 버튼은 button.yaml, 트레이는 swipe-actions.yaml 로 그린다.
 // 화면 틀(폰 · 창)과 뒤 화면의 글자 크기는 그림 안에서 정한다.
 import type { CSSProperties, ReactNode } from 'react';
@@ -19,7 +20,7 @@ import { PHONE_SAFE, Phone, WebWindow, rc, type Mode } from './kit';
 
 export type Brand = 'desk' | 'hr';
 export const mk = (brand: Brand = 'desk'): MenuKit => menuKit(brand);
-// 아이콘만 있는 ghost 버튼(Button ghost · iconOnly · 기본 medium) — 줄 끝 ⋮ · ⓘ · 툴바
+// 아이콘만 있는 ghost 버튼(Button ghost · iconOnly · 기본 medium) — 머리 ⋮ · 표 줄 끝 ⋮ · ⓘ · 툴바
 export const iconBtn = (brand: Brand = 'desk', ghostColor = 'neutral') => buttonLook({ variant: 'ghost', size: 'medium', layout: 'iconOnly', ghostColor }, brand);
 export { PHONE_SAFE };
 
@@ -46,7 +47,7 @@ export function Menu({ groups, mode = 'auto', brand = 'desk', states, marks, dec
 }
 
 // ── 줄 ───────────────────────────────────────────────────
-// 목록 줄 — 제목 · 부제 + 뒤(⋮ · 아이콘 묶음). 줄 사이 선은 마지막 줄에 없다
+// 목록 줄 — 제목 · 부제 + 뒤(나쁜 예의 ⋮ · 아이콘 묶음). 줄 사이 선은 마지막 줄에 없다
 export function ListRow({ title, sub, mode = 'auto', brand = 'desk', trailing, last = false, pad = 10 }: { title: string; sub: string; mode?: Mode; brand?: Brand; trailing?: ReactNode; last?: boolean; pad?: number }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: `${pad}px 0`, borderBottom: last ? 'none' : `1px solid ${rc('stroke-neutral-subtle', mode, brand)}` }}>
@@ -68,7 +69,7 @@ export const EditDeleteIcons = ({ mode = 'auto', title }: { mode?: Mode; title: 
 );
 
 // ── Desk 메모(데스크톱 창) ─────────────────────────────────
-// open — 메뉴를 연 줄. trailing='icons' 면 줄마다 수정 · 삭제 아이콘(나쁜 예)
+// 목록 줄에는 ⋮ 가 없다(trailing='none' — 줄을 누르면 메모 화면). 'kebab' 은 줄 끝 ⋮(나쁜 예 — open 은 메뉴를 연 줄), 'icons' 는 줄마다 수정 · 삭제 아이콘(나쁜 예)
 export function MemoWindow({
   mode = 'auto',
   w = 400,
@@ -76,7 +77,7 @@ export function MemoWindow({
   open,
   groups = MEMO_MENU,
   states,
-  trailing = 'kebab',
+  trailing = 'none',
   menu,
 }: {
   mode?: Mode;
@@ -85,7 +86,7 @@ export function MemoWindow({
   open?: number;
   groups?: MenuGroup[];
   states?: Record<string, MenuItemState>;
-  trailing?: 'kebab' | 'icons';
+  trailing?: 'none' | 'kebab' | 'icons';
   // 열린 메뉴 대신 그릴 것(나쁜 예 · 다른 메뉴)
   menu?: ReactNode;
 }) {
@@ -106,15 +107,49 @@ export function MemoWindow({
               trailing={
                 trailing === 'icons' ? (
                   <EditDeleteIcons mode={mode} title={m.title} />
-                ) : (
+                ) : trailing === 'kebab' ? (
                   <Anchored offset={k.menu.content.offset} trigger={<Kebab label={m.title} mode={mode} />} menu={open === i ? (menu ?? <Menu groups={groups} mode={mode} states={states} />) : undefined} />
-                )
+                ) : undefined
               }
             />
           ))}
         </div>
       </div>
     </WebWindow>
+  );
+}
+
+// ── Desk 메모 화면(데스크톱 창) — 목록 줄을 눌러 들어간 화면, 동작이 여럿이라 머리 오른쪽 ⋮ 하나 ──
+// open — 머리 ⋮ 의 메뉴를 연 모습
+export function MemoDetailWindow({ mode = 'auto', w = 400, h = 380, open = false, groups = MEMO_MENU, states, memo = MEMOS[0] }: { mode?: Mode; w?: number; h?: number; open?: boolean; groups?: MenuGroup[]; states?: Record<string, MenuItemState>; memo?: Memo }) {
+  const k = mk();
+  return (
+    <WebWindow mode={mode} w={w} h={h}>
+      <div style={{ height: '100%', boxSizing: 'border-box', padding: '22px 28px', background: rc('bg-layer-basement', mode) }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingBottom: 14 }}>
+          <span style={{ flex: '1 1 0%', minWidth: 0, fontSize: 20, lineHeight: '28px', fontWeight: 700, color: rc('fg-neutral', mode), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{memo.title}</span>
+          <Anchored offset={k.menu.content.offset} trigger={<Kebab label={memo.title} mode={mode} />} menu={open ? <Menu groups={groups} mode={mode} states={states} /> : undefined} />
+        </div>
+        <MemoBody memo={memo} mode={mode} card />
+      </div>
+    </WebWindow>
+  );
+}
+// 메모 본문 — 분류 · 날짜 + 글 몇 줄. card 면 card.yaml 의 면(흰 면 + 1px 테두리 · 모서리 16 · 여백 24)에 담는다
+const MEMO_TEXT = ['다음 분기 목표를 정리했다.', '· 신규 기능 두 가지 출시', '· 응답 속도 20% 줄이기', '금요일까지 팀 의견을 모은다.'];
+function MemoBody({ memo, mode, card = false }: { memo: Memo; mode: Mode; card?: boolean }) {
+  const face: CSSProperties = card
+    ? { boxSizing: 'border-box', borderRadius: cardFace().radius, borderWidth: cardFace().borderW, borderStyle: 'solid', borderColor: rc('stroke-neutral-weak', mode), padding: cardFace().pad, background: rc('bg-layer-default', mode) }
+    : { padding: '4px 24px 0' };
+  return (
+    <div style={face}>
+      <div style={{ fontSize: 13, lineHeight: '18px', color: rc('fg-neutral-subtle', mode), paddingBottom: 10 }}>{memo.sub}</div>
+      {MEMO_TEXT.map((t) => (
+        <div key={t} style={{ fontSize: 15, lineHeight: '24px', color: rc('fg-neutral', mode) }}>
+          {t}
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -159,6 +194,7 @@ export function PeopleWindow({ mode = 'auto', w = 460, h = 420, open, states, ha
 }
 
 // ── Desk 메모(폰) ─────────────────────────────────────────
+// 목록 줄에는 ⋮ 가 없다 — 줄을 누르면 메모 화면(MemoDetailPhone). right 는 목록 화면 머리의 버튼(목록 전체의 동작)
 // swiped — 첫 줄을 밀어 트레이를 드러낸 모습(스와이프 지름길)
 export function MemoPhone({ mode = 'auto', scale = 0.6, h = 640, overlay, swiped = false, memos = MEMOS, right }: { mode?: Mode; scale?: number; h?: number; overlay?: ReactNode; swiped?: boolean; memos?: Memo[]; right?: ReactNode }) {
   return (
@@ -168,10 +204,18 @@ export function MemoPhone({ mode = 'auto', scale = 0.6, h = 640, overlay, swiped
           swiped && i === 0 ? (
             <SwipedRow key={m.title} memo={m} mode={mode} last={i === memos.length - 1} />
           ) : (
-            <ListRow key={m.title} title={m.title} sub={m.sub} mode={mode} last={i === memos.length - 1} trailing={<Kebab label={m.title} mode={mode} />} />
+            <ListRow key={m.title} title={m.title} sub={m.sub} mode={mode} last={i === memos.length - 1} />
           ),
         )}
       </div>
+    </Phone>
+  );
+}
+// 메모 화면(폰) — 목록 줄을 눌러 들어간 화면. 동작이 여럿이라 머리 오른쪽 ⋮ 하나("{메모 제목} 더보기") → Menu Sheet
+export function MemoDetailPhone({ mode = 'auto', scale = 0.6, h = 640, overlay, memo = MEMOS[0] }: { mode?: Mode; scale?: number; h?: number; overlay?: ReactNode; memo?: Memo }) {
+  return (
+    <Phone title={memo.title} mode={mode} scale={scale} h={h} bg="bg-layer-default" overlay={overlay} right={<Kebab label={memo.title} mode={mode} />}>
+      <MemoBody memo={memo} mode={mode} />
     </Phone>
   );
 }
@@ -182,8 +226,8 @@ export function SwipeTray({ mode = 'auto', height, rowLabel = '메모' }: { mode
   return <SwipeTrayView look={swipeKit()} mode={mode} actions={SWIPE_ACTS} height={height} rowLabel={rowLabel} open />;
 }
 export const trayWidth = () => trayW(swipeKit(), SWIPE_ACTS.length);
-// 밀린 줄 — 줄(⋮ 포함)이 트레이 폭만큼 왼쪽으로 가고, 뒤에서 트레이가 드러난다. 트레이는 화면 끝까지
-// 줄 높이 — ListRow 의 위아래 10 + 제목 20 + 사이 2 + 부제 18(⋮ 40 + 위아래 10 과 같다). 트레이는 줄 높이를 따른다(최소 rowMin)
+// 밀린 줄 — 줄이 트레이 폭만큼 왼쪽으로 가고, 뒤에서 트레이가 드러난다. 트레이는 화면 끝까지
+// 줄 높이 — ListRow 의 위아래 10 + 제목 20 + 사이 2 + 부제 18. 트레이는 줄 높이를 따른다(최소 rowMin)
 const ROW_H = 10 + 20 + 2 + 18 + 10;
 function SwipedRow({ memo, mode, last }: { memo: Memo; mode: Mode; last: boolean }) {
   const tw = trayWidth();
@@ -195,7 +239,7 @@ function SwipedRow({ memo, mode, last }: { memo: Memo; mode: Mode; last: boolean
       </div>
       <div style={{ position: 'absolute', top: 0, bottom: 0, left: -tw, width: '100%', boxSizing: 'border-box', padding: '0 24px', display: 'flex', alignItems: 'center', background: rc('bg-layer-default', mode) }}>
         <div style={{ flex: '1 1 0%', minWidth: 0 }}>
-          <ListRow title={memo.title} sub={memo.sub} mode={mode} last trailing={<Kebab label={memo.title} mode={mode} />} />
+          <ListRow title={memo.title} sub={memo.sub} mode={mode} last />
         </div>
       </div>
     </div>
@@ -223,22 +267,22 @@ export function SheetCrop({ children, w = 360, mode = 'auto', top = 36 }: { chil
   );
 }
 
-// ── 1280 에서 — 같은 목록, Menu ↔ Menu Sheet ─────────────────
+// ── 1280 에서 — 메모 화면 머리 ⋮ 의 같은 목록, Menu ↔ Menu Sheet ──────
 export function DesktopMemoMenu({ mode = 'auto', scale = 0.62 }: { mode?: Mode; scale?: number }) {
   return (
     <Scaled w={400} h={380} s={scale}>
-      <MemoWindow mode={mode} open={0} />
+      <MemoDetailWindow mode={mode} open />
     </Scaled>
   );
 }
 export function PhoneMemoSheet({ mode = 'auto', scale = 0.62 }: { mode?: Mode; scale?: number }) {
   return (
-    <MemoPhone
+    <MemoDetailPhone
       mode={mode}
       scale={scale}
       overlay={
         <SheetOn mode={mode}>
-          <Sheet mode={mode} title="주간 회의 메모" />
+          <Sheet mode={mode} title={MEMOS[0].title} />
         </SheetOn>
       }
     />

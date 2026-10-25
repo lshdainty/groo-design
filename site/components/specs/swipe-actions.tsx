@@ -1,11 +1,10 @@
 // Swipe Actions 페이지의 그림 — specs/components/swipe-actions.md 의 `[그림: …](../../site/components/specs/swipe-actions.tsx#<id>)` 자리.
-// 트레이는 swipe-actions.yaml 을 푼 값(swipeKit — data-swipe-view)으로, 감싼 줄은 list.yaml(ListView), ⋮ 는 button.yaml, 같은 동작의 시트 · 메뉴는
-// menu-sheet · menu.yaml, 확인 창은 alert-dialog.yaml 로 그린다. 가계부 · 메모 · 계좌 줄은 지어낸 것이다.
+// 트레이는 swipe-actions.yaml 을 푼 값(swipeKit — data-swipe-view)으로, 감싼 줄은 list.yaml(ListView), 줄을 눌러 들어간 상세는 bottom-sheet.yaml ·
+// button.yaml, 확인 창은 alert-dialog.yaml 로 그린다. 목록 줄에는 ⋮ 를 두지 않는다(menu.md "줄의 동작", 2026-10-25). 가계부 · 메모 · 계좌 줄은 지어낸 것이다.
 import type { CSSProperties, ReactNode } from 'react';
 import { Panel } from '../foundations/ui';
-import { ButtonView } from './button-view';
 import { contrastPair } from './data-contrast';
-import { LEDGER, MEMO_ACTIONS, TX_ACTIONS, TX_MENU, type TxRow } from './data-data';
+import { LEDGER, MEMO_ACTIONS, TX_ACTIONS, type TxRow } from './data-data';
 import { DimH, DimV, MODES, ModeLabel, PINK, SCREEN_W, SW, type Fig } from './data-screens';
 import { formatWon, trayWidth } from './data-shared';
 import { LedgerSwipeDemo } from './data-swipe-play';
@@ -15,11 +14,8 @@ import { listLook } from './list-look';
 import type { RowSpec } from './list-shared';
 import { ListView } from './list-view';
 import { rowDims } from './loading-screens';
-import { menuKit } from './menu-look';
-import { Sheet as MenuSheet, SheetOn } from './menu-screens';
-import { MenuPanel } from './menu-view';
 import { Arrow, Cap, CodePreview, DeskHeader, Desktop, Legend, ScreenTitle, Shell, Side, pinAt } from './nav-screens';
-import { overlayKit } from './overlay-screens';
+import { DeleteFooter, DetailSheet, SheetOn, overlayKit } from './overlay-screens';
 
 const Wrap = ({ children, gap = 'gap-6' }: { children: ReactNode; gap?: string }) => <div className={`flex flex-wrap items-start justify-center ${gap}`}>{children}</div>;
 const Pair = ({ children }: { children: ReactNode }) => <div className="flex w-full flex-col gap-4 md:flex-row">{children}</div>;
@@ -36,22 +32,17 @@ const Col = ({ children, cap, strong, w }: { children: ReactNode; cap?: ReactNod
 const box: CSSProperties = { outline: `1px dashed ${PINK}`, outlineOffset: -1 };
 const ROW_H = () => rowDims().height;
 const acts = (list = TX_ACTIONS): SwipeAct[] => list.map((a) => ({ value: a.value, kind: a.kind, label: a.label, icon: a.icon }));
-// 가계부 줄 — 앞 타일 · 제목 · 설명 · 금액 + 줄 끝 ⋮(같은 동작을 Menu Sheet 로)
-function txRow(r: TxRow, mode: Mode = 'auto'): RowSpec {
+// 가계부 줄 — 앞 타일 · 제목 · 설명 · 금액. 줄 끝 ⋮ 는 두지 않는다 — 같은 동작은 줄을 눌러 들어간 상세에(2026-10-25)
+function txRow(r: TxRow): RowSpec {
   return {
     kind: 'button',
     prefix: { tile: r.tile, icon: r.icon },
     title: r.title,
     detail: r.detail,
     suffix: { amount: r.amount > 0 ? `+${formatWon(r.amount)}` : formatWon(r.amount) },
-    suffixNode: (
-      <span style={{ display: 'flex', marginRight: -8 }}>
-        <ButtonView look={SW().more} mode={mode} icon="more-vertical" ariaLabel={`${r.title} 더보기`} state="enabled" />
-      </span>
-    ),
   };
 }
-const Row = ({ r, mode = 'auto' }: { r: TxRow; mode?: Mode }) => <ListView look={listLook('desk')} rows={[txRow(r, mode)]} mode={mode} live={false} />;
+const Row = ({ r, mode = 'auto' }: { r: TxRow; mode?: Mode }) => <ListView look={listLook('desk')} rows={[txRow(r)]} mode={mode} live={false} />;
 // 가계부 목록 — 첫 줄을 밀어 둔 모습(swiped)
 function LedgerList({ mode = 'auto', swiped = 0, actions = acts(), n = 5, states, bad }: { mode?: Mode; swiped?: number | null; actions?: SwipeAct[]; n?: number; states?: Parameters<typeof SwipeRowStatic>[0]['states']; bad?: Parameters<typeof SwipeRowStatic>[0]['bad'] }) {
   return (
@@ -114,7 +105,6 @@ const Anatomy: Fig = ({ caption }) => {
             {pinAt('ⓐ', { left: 4, top: 6 })}
             {pinAt('ⓑ', { left: SCREEN_W - tw - 12, top: 6 })}
             {pinAt('ⓒ', { left: SCREEN_W - tw + s.first.lead - 4, top: 6 })}
-            {pinAt('ⓓ', { left: SCREEN_W - tw - 54, top: 6 })}
             <DimH at={{ left: SCREEN_W - tw, top: 16 + h + 6 }} w={s.first.lead} label={`${s.first.lead}`} />
             <DimH at={{ left: SCREEN_W - tw + s.first.width, top: 16 + h + 6 }} w={s.rest.lead} label={`${s.rest.lead}`} />
           </div>
@@ -124,7 +114,6 @@ const Anatomy: Fig = ({ caption }) => {
             ['ⓐ', 'Row — 감싼 줄(높이 · 여백 · 바탕은 원래 줄)'],
             ['ⓑ', 'Track — 바탕을 칠하지 않는다'],
             ['ⓒ', 'Action — 원형 배지 + 라벨'],
-            ['ⓓ', 'More Button — 줄 끝 ⋮'],
           ]}
         />
       </div>
@@ -222,13 +211,13 @@ const MoreGuide: Fig = ({ caption }) => (
       <Col strong="밀어 연 트레이(지름길)" w={240}>
         <LedgerPhone scale={0.62} h={560} />
       </Col>
-      <Col strong="⋮ 로 연 Menu Sheet(늘 있는 길)" cap="같은 동작 · 같은 이름 · 같은 차례 · 같은 확인 창" w={240}>
+      <Col strong="줄을 누르면 상세(늘 있는 길)" cap="같은 동작 · 같은 이름 · 같은 확인 창 — 바닥 왼쪽 [삭제] · [수정]. 동작이 더 많으면 머리 ⋮ → Menu Sheet" w={240}>
         <LedgerPhone
           scale={0.62}
           h={560}
           overlay={
-            <SheetOn>
-              <MenuSheet groups={TX_MENU} title={LEDGER[0].title} />
+            <SheetOn mode="auto">
+              <DetailSheet mode="auto" footer={<DeleteFooter mode="auto" primary="수정" />} />
             </SheetOn>
           }
         >
@@ -249,7 +238,7 @@ const CountGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="동작 둘 — 무엇을 미는지 줄이 보인다. 나머지는 ⋮ 에만">
+        <Verdict ok note="동작 둘 — 무엇을 미는지 줄이 보인다. 나머지는 줄을 눌러 들어간 상세에만">
           <div style={{ width: SCREEN_W - 40, overflow: 'hidden', borderRadius: 12, background: rc('bg-layer-default') }}>
             <LedgerList n={2} />
           </div>
@@ -282,16 +271,15 @@ const ConfirmGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 폰은 트레이 + ⋮ · 데스크톱은 ⋮ + Menu
+// 폰은 트레이 · 데스크톱은 줄만 — 둘 다 줄을 누르면 상세(목록 줄에는 ⋮ 를 두지 않는다)
 const PlatformGuide: Fig = ({ caption }) => {
-  const mk = menuKit('desk');
   return (
     <Panel caption={caption}>
       <div className="flex flex-wrap items-start justify-center gap-5">
-        <Col strong={`폰(${SW().breakpoint} 미만)`} cap="밀기(지름길) · 줄 끝 ⋮ → Menu Sheet" w={240}>
+        <Col strong={`폰(${SW().breakpoint} 미만)`} cap="밀기(지름길) · 줄을 누르면 상세" w={240}>
           <LedgerPhone scale={0.62} h={520} />
         </Col>
-        <Col strong="데스크톱(1280 이상)" cap="트레이 없음 — 줄 끝 ⋮ → Menu(768 ~ 1279 는 Menu Sheet)" w={360}>
+        <Col strong="데스크톱(1280 이상)" cap="트레이 없음 — 줄을 누르면 상세(동작이 여럿이면 상세 머리 ⋮ → Menu)" w={360}>
           <Desktop w={1280} h={560} s={0.42}>
             <Shell side={<Side current="ledger" />} header={<DeskHeader />}>
               <ScreenTitle>가계부</ScreenTitle>
@@ -300,9 +288,6 @@ const PlatformGuide: Fig = ({ caption }) => {
                   {LEDGER.slice(0, 4).map((r) => (
                     <Row key={r.id} r={r} />
                   ))}
-                  <div style={{ position: 'absolute', right: 16, top: 56, zIndex: 5 }}>
-                    <MenuPanel look={mk.menu} groups={TX_MENU} />
-                  </div>
                 </div>
               </div>
             </Shell>
@@ -316,7 +301,7 @@ const PlatformGuide: Fig = ({ caption }) => {
 // ── 코드 예시(미리보기) — swipe-actions.md 의 코드 그대로 ────
 const ExRow: Fig = ({ caption }) => (
   <CodePreview caption={caption} w={SCREEN_W} pad={24} bg="bg-layer-basement">
-    <LedgerSwipeDemo look={SW()} list={listLook('desk')} menu={menuKit('desk')} ov={overlayKit('desk')} rowHeight={ROW_H()} />
+    <LedgerSwipeDemo look={SW()} list={listLook('desk')} ov={overlayKit('desk')} rowHeight={ROW_H()} />
   </CodePreview>
 );
 

@@ -639,7 +639,6 @@ export const PROP_LABEL_BY_COMPONENT = {
     'action.paddingX': '칸 좌우 여백',
     'action.gap': '배지 ↔ 라벨',
     'action.touchTarget': '칸 누르는 영역',
-    'moreButton.size': '⋮ 크기',
     'icon.color': '아이콘 색',
     'icon.size': '아이콘 크기',
     'label.color': '라벨 색',

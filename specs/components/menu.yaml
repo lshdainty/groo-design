@@ -1,7 +1,8 @@
 # Menu 의 수치 원본 — 구조는 SEED Menu(small, 2026-10-02 사용자 결정, 비교 페이지 1 · 2 · 5 · 6).
 # 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
-# 트리거(줄 끝 ⋮ · 머리의 더보기 버튼)에 붙어 열리는 동작 목록 — 누르면 바로 실행하고 닫힌다. 1280 이상에서 쓰고,
+# 트리거(들어간 화면 머리의 ⋮ · 표 줄 끝 ⋮ — 목록 줄에는 ⋮ 를 두지 않는다, 2026-10-25)에 붙어 열리는 동작 목록 — 누르면
+# 바로 실행하고 닫힌다. 1280 이상에서 쓰고,
 # 같은 목록을 1280 미만에서는 Menu Sheet(menu-sheet.yaml)로 띄운다. 값을 고르는 일(테마 · 정렬)은 Menu 가 아니라
 # Select · Segmented Control · Radio 다 — 그래서 고른 표시(체크 · 라디오) · 단축키 · 하위 메뉴가 없다.
 # 목록의 모양은 Select 목록(select.yaml 의 medium)과 같은 계열이다.
@@ -54,7 +55,7 @@ rules:
         shadow: $shadow-s3
         paddingY: $spacing-x2
         offset: { value: $spacing-x2, note: "트리거와 8 — 화면 가장자리와도 8(Menu 는 1280 이상이라 안전 영역이 없다)" }
-        align: { value: end, note: "트리거의 오른쪽 끝에 맞춘다(줄 끝 ⋮ · 머리 더보기) — 왼쪽에 놓인 트리거는 start. 모자라면 화면 안으로 민다" }
+        align: { value: end, note: "트리거의 오른쪽 끝에 맞춘다(머리 ⋮ · 표 줄 끝 ⋮) — 왼쪽에 놓인 트리거는 start. 모자라면 화면 안으로 민다" }
         maxHeight: { value: "min(480px, 남은 화면)", note: "남은 화면이 200 보다 좁아도 200 은 둔다 — 먼저 줄이고, 200 아래로 내려가야 반대편으로 뒤집는다. 넘치면 메뉴 안 스크롤" }
         zIndex: { value: 200, note: "z-floating — specs/z-index.md L3. 페이지에서도, 대화상자 · 시트 안에서도" }
       item:

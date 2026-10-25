@@ -327,7 +327,7 @@ const Suffix: Fig = ({ caption }) => (
             { kind: 'switch', title: '결제 알림', detail: '스위치 32', checked: true },
             { kind: 'check', title: '예산', detail: '체크 24', markPosition: 'suffix', checked: true },
             { kind: 'button', title: '스타벅스 강남점', detail: '금액 — 그 화면이 정한다', suffix: { amount: '−5,800원' } },
-            { kind: 'button', title: '즐겨찾는 가맹점', detail: '작은 버튼 — 따로 눌린다', suffix: { buttons: ['more'] } },
+            { kind: 'button', title: '즐겨찾는 가맹점', detail: '작은 버튼 — 따로 눌린다', suffix: { buttons: ['star'] } },
           ]}
         />
         <L rows={[{ kind: 'radio', title: '대한민국 원', detail: '라디오 24 — 하나 고르기', value: 'a', checked: true }]} ariaLabel="라디오 예" />
@@ -585,14 +585,14 @@ const ChevronGuide: Fig = ({ caption }) => (
 const TargetsGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      {/* 누르는 자리 하나 · 둘 · 셋(SEED List 그림처럼) — 넷 이상은 피한다(2026-10-22 5B) */}
-      <Verdict ok note="하나(줄) · 둘(줄 + ⋮) · 셋(줄 + 즐겨찾기 + ⋮) — 셋 이하로 둔다">
+      {/* 누르는 자리 하나 · 둘 · 셋(SEED List 그림처럼) — 넷 이상은 피한다(2026-10-22 5B). 목록 줄 끝에는 ⋮ 를 두지 않는다(2026-10-25) */}
+      <Verdict ok note="하나(줄) · 둘(줄 + 즐겨찾기) · 셋(줄 + 즐겨찾기 + 알림) — 셋 이하로 둔다">
         <Surface className="w-full">
           <L
             rows={[
               { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '동네 카페', detail: '하나 — 줄' },
-              { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '동네 카페', detail: '둘 — 줄 · 더보기', suffix: { buttons: ['more'] } },
-              { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '동네 카페', detail: '셋 — 줄 · 즐겨찾기 · 더보기', suffix: { buttons: ['star', 'more'] } },
+              { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '동네 카페', detail: '둘 — 줄 · 즐겨찾기', suffix: { buttons: ['star'] } },
+              { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '동네 카페', detail: '셋 — 줄 · 즐겨찾기 · 알림', suffix: { buttons: ['star', 'bell'] } },
             ]}
           />
         </Surface>

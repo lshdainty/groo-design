@@ -1,6 +1,6 @@
 /*
  * shadcn Menu 예제 — docs site components/menu.html 에서 Preview + Code 토글로 보인다.
- * 각 예제 = { title, description, jsx, render() }. 앞의 둘(줄의 ⋮ · 설명과 막힌 줄)은 차례 · 제목 · 코드가 specs/components/menu.md 의
+ * 각 예제 = { title, description, jsx, render() }. 앞의 둘(들어간 화면 머리 ⋮ · 설명과 막힌 줄)은 차례 · 제목 · 코드가 specs/components/menu.md 의
  * "코드" 절과 같고, 뒤의 둘(묶음 이름 · 뒤 아이콘 · 상태)은 md 의 Properties · Guidelines 를 코드로 더 보인다.
  *
  * CONTENT · SCROLL · GROUP · ITEM · PILL · PILL_ON · ITEM_CONTENT · ITEM_CONTENT_PRESS 는 recipes/shadcn/components/ui/menu.tsx 의 상수와,
@@ -19,7 +19,7 @@
  * data-orientation · 막힌 줄의 aria-disabled · data-disabled · 키보드로 옮긴 줄의 data-highlighted 와 높이 계산이 읽는 자리 변수
  * (--radix-dropdown-menu-content-available-height — 미리보기는 틀 안의 남은 높이로 적었다)를 그린다.
  * 레시피는 메뉴를 body 끝(portal)에 띄우고 Radix 가 감싼 div(position: fixed)로 트리거 아래 8 에 놓는다 — 미리보기는 감싼 div 를 틀 안의
- * position: absolute 로 흉내 낸다. 메뉴는 트리거의 오른쪽 끝에 맞춘다(align 기본 end — 줄 끝 ⋮ · 머리 더보기). 화면 가장자리 8 을 넘으면
+ * position: absolute 로 흉내 낸다. 메뉴는 트리거의 오른쪽 끝에 맞춘다(align 기본 end — 머리 ⋮ · 표 줄 끝 ⋮). 목록 줄에는 ⋮ 를 두지 않는다(menu.md "줄의 동작", 2026-10-25). 화면 가장자리 8 을 넘으면
  * 안으로 미는 계산(collisionPadding)은 하지 않는다 — 그림의 트리거는 틀 가장자리에서 24 이상 떨어져 있다. 틀의 isolation 이 z-(--z-floating) 을 틀 안에 가둔다.
  * 레시피가 cn() 으로 합치는 자리는 merge() 로 똑같이 합친다 — 같은 속성을 다시 쓴 클래스는 뒤의 것만 남는다.
  * 모션 클래스(animate-in · zoom-in-95 …)는 tw-animate-css 의 것이라 사이트에서는 아무 일도 하지 않는다 — 열린 순간을 멈춘 그림이다.
@@ -324,6 +324,14 @@ function rowsStage({ uid, title, rows, open = 0, groups, height, availableHeight
   return `<div style="${STAGE(height)}"><div style="${PAGE}"><div style="${PAGE_HEAD}"><div aria-hidden="true" style="${PAGE_TITLE}">${esc(title)}</div></div><div style="${CARD}">${rows.map(row).join("")}</div></div></div>`;
 }
 
+// 들어간 화면(목록 줄을 눌러 연 상세) — 머리 제목 + 오른쪽 ⋮ 하나에 메뉴를 붙이고, 아래 흰 카드에 본문 몇 줄
+function headStage({ uid, title, detail, lines, groups, height, availableHeight }) {
+  const triggerId = `${uid}-trigger`;
+  const head = `<div style="${ANCHOR}">${moreButton({ id: triggerId, name: `${title} 더보기`, open: true, controls: uid })}${menuContent({ uid, triggerId, groups, availableHeight })}</div>`;
+  const body = [`<span style="${ROW_DETAIL}">${esc(detail)}</span>`, ...lines.map((l) => `<span style="${ROW_TITLE}">${esc(l)}</span>`)].join("");
+  return `<div style="${STAGE(height)}"><div style="${PAGE}"><div style="${PAGE_HEAD}"><div aria-hidden="true" style="${PAGE_TITLE}">${esc(title)}</div>${head}</div><div aria-hidden="true" style="${CARD}"><div style="${ROW} flex-direction:column; align-items:flex-start;">${body}</div></div></div></div>`;
+}
+
 // 이름표 아래 견본 — 상태 예제
 const labeled = (html, caption) =>
   `<div style="display:flex; flex-direction:column; align-items:flex-start; gap:var(--spacing-x2); min-width:0;">${html}<span style="${CAPTION}">${caption}</span></div>`;
@@ -343,13 +351,14 @@ const STAFF = [
 
 export const menuExamples = [
   {
-    title: "줄의 ⋮ — 1280 에서 Menu Sheet 로 바뀐다",
+    title: "들어간 화면 머리 ⋮ — 1280 에서 Menu Sheet 로 바뀐다",
     description:
-      "데스크톱 목록 · 표의 줄에서 동작은 줄 끝 ⋮ 하나로 연다 — 버튼 이름은 \"{줄 이름} 더보기\"(Button ghost · iconOnly)이고, 줄 자체를 누르면 상세 · 수정이 열린다. 폭마다 바뀌는 자리는 ResponsiveMenu 로 짠다 — 1280 이상은 이 메뉴, 미만은 같은 줄 · 같은 순서의 Menu Sheet 다(title 은 시트의 제목 — 메뉴에는 머리가 없다). 메뉴는 트리거 아래 8 · 오른쪽 끝에 맞춰 붙는 폭 200 의 떠 있는 표면(모서리 20 · s3 · 위아래 8)이다 — align 기본이 end 라 줄 끝 ⋮ 의 메뉴가 표 밖으로 나가지 않고(SEED 기본은 가운데), 모자라면 화면 가장자리 8 안으로 민다. 왼쪽에 놓인 트리거는 align=\"start\" 다. 비모달이라 뒤 화면을 숨기지 않는다. 줄은 위아래 10 · 좌우 16 · 이름 14/19 · 아이콘 18(사이 8) — 한 줄 39. 되돌릴 수 없는 동작은 맨 아래 묶음에 critical(이름 · 아이콘만 fg-critical)로 두고, 묶음 사이에만 선(8 + 1 + 8)을 긋는다. 고르면 메뉴가 닫히고 초점이 ⋮ 로 돌아온 뒤 onSelect 가 불린다 — 삭제 확인은 그 안에서 Alert Dialog 를 연다.",
+      "목록 줄에는 ⋮ 를 두지 않는다 — 줄을 누르면 한 단계 들어가고, 들어간 화면의 동작이 여럿이면 머리 오른쪽 ⋮ 하나로 연다(하나뿐인 삭제는 바닥 왼쪽 [삭제]). 버튼 이름은 \"{항목 이름} 더보기\"(Button ghost · iconOnly)다. 폭마다 바뀌는 자리는 ResponsiveMenu 로 짠다 — 1280 이상은 이 메뉴, 미만은 같은 줄 · 같은 순서의 Menu Sheet 다(title 은 시트의 제목 — 메뉴에는 머리가 없다). 메뉴는 트리거 아래 8 · 오른쪽 끝에 맞춰 붙는 폭 200 의 떠 있는 표면(모서리 20 · s3 · 위아래 8)이다 — align 기본이 end 라 머리 오른쪽 ⋮ 의 메뉴가 화면 밖으로 나가지 않고(SEED 기본은 가운데), 모자라면 화면 가장자리 8 안으로 민다. 왼쪽에 놓인 트리거는 align=\"start\" 다. 비모달이라 뒤 화면을 숨기지 않는다. 줄은 위아래 10 · 좌우 16 · 이름 14/19 · 아이콘 18(사이 8) — 한 줄 39. 되돌릴 수 없는 동작은 맨 아래 묶음에 critical(이름 · 아이콘만 fg-critical)로 두고, 묶음 사이에만 선(8 + 1 + 8)을 긋는다. 고르면 메뉴가 닫히고 초점이 ⋮ 로 돌아온 뒤 onSelect 가 불린다 — 삭제 확인은 그 안에서 Alert Dialog 를 연다.",
     jsx: `import {
   ResponsiveMenu, ResponsiveMenuContent, ResponsiveMenuGroup, ResponsiveMenuItem, ResponsiveMenuTrigger,
 } from "@/components/ui/menu"
 
+// 들어간 화면(메모)의 머리 오른쪽 — 목록 줄에는 ⋮ 를 두지 않는다
 <ResponsiveMenu>
   <ResponsiveMenuTrigger asChild>
     <Button variant="ghost" layout="iconOnly" aria-label="주간 회의 메모 더보기">
@@ -370,10 +379,11 @@ export const menuExamples = [
   </ResponsiveMenuContent>
 </ResponsiveMenu>`,
     render: () =>
-      rowsStage({
-        uid: "menu-ex-row",
-        title: "메모",
-        rows: MEMOS,
+      headStage({
+        uid: "menu-ex-header",
+        title: MEMOS[0].title,
+        detail: MEMOS[0].detail,
+        lines: ["다음 분기 목표를 정리했다.", "· 신규 기능 두 가지 출시", "· 응답 속도 20% 줄이기"],
         height: 340,
         availableHeight: 220,
         groups: [

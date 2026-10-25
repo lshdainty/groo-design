@@ -1,0 +1,162 @@
+# Menu 의 수치 원본 — 구조는 SEED Menu(small, 2026-10-02 사용자 결정, 비교 페이지 1 · 2 · 5 · 6).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 트리거(줄 끝 ⋮ · 머리의 더보기 버튼)에 붙어 열리는 동작 목록 — 누르면 바로 실행하고 닫힌다. 1280 이상에서 쓰고,
+# 같은 목록을 1280 미만에서는 Menu Sheet(menu-sheet.yaml)로 띄운다. 값을 고르는 일(테마 · 정렬)은 Menu 가 아니라
+# Select · Segmented Control · Radio 다 — 그래서 고른 표시(체크 · 라디오) · 단축키 · 하위 메뉴가 없다.
+# 목록의 모양은 Select 목록(select.yaml 의 medium)과 같은 계열이다.
+#
+# SEED 와 다른 자리(menu.md 의 "SEED 와 다른 점")
+#   - 크기는 small 하나 — SEED medium 240 은 터치용인데, groo 는 1280 미만에서 Menu Sheet 를 쓴다(시트 · 대화상자 결정 1).
+#   - 호버 · 누름 바탕은 불투명한 bg-layer-floating-pressed(SEED bg.transparent-pressed 는 투명도가 있다 — v102).
+#   - 묶음 사이 선은 불투명한 stroke-neutral-subtle(SEED stroke.neutral-muted).
+#   - 그림자는 groo s3(v105), 아이콘은 lucide(v106).
+#   - z-index: specs/z-index.md 의 L3(z-floating 200) — SEED 99999 는 Alert Dialog 위로 뜬다.
+
+name: Menu
+
+slots:
+  content: 메뉴 — 트리거 아래(모자라면 위 · 옆) 8
+  group: 묶음 — 묶음 사이에만 선을 긋는다
+  groupLabel: 묶음 이름 — 있을 때만, 누를 수 없다
+  divider: 묶음 사이 선 — 줄 사이에는 없다
+  item: 줄 — 누르면 실행하고 닫힌다. 글은 메뉴 안에서 줄바꿈된다
+  itemIcon: 앞 아이콘 — 쓰면 모든 줄에
+  itemLabel: 이름 — 동사로 짧게(2 ~ 6자)
+  itemDescription: 설명 — 한 줄, 꼭 필요한 줄에만
+  suffixIcon: 뒤 아이콘 — 바깥 링크처럼 방향을 알릴 때만
+  highlight: 호버 · 누름 바탕 — 좌우 8 들인 알약
+  focusRing: 키보드 포커스 링 — 알약 자리에(웹)
+
+variants:
+  tone:
+    neutral: 대부분의 동작
+    critical: 되돌릴 수 없는 동작(삭제 · 나가기) — 맨 아래 묶음
+
+defaults:
+  tone: neutral
+
+states:
+  enabled: 기본
+  hovered: 웹 — 마우스를 올린 줄에 알약 바탕(누름과 같은 색, 축소 없음). 키보드 위치와 따로 움직인다
+  pressed: 누름 — 알약 바탕 + 내용만 2px 거리 축소
+  focused: 웹 — 키보드로 옮긴 줄에 알약 자리 2px 링(바탕 없음)
+  disabled: 막힌 줄 — 전용 색, 화살표 키가 건너뛴다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      content:
+        width: { value: 200px, note: "글이 길면 줄을 바꾼다 — 폭을 늘리지 않는다" }
+        background: $color-bg-layer-floating
+        radius: $radius-r5
+        shadow: $shadow-s3
+        paddingY: $spacing-x2
+        offset: { value: $spacing-x2, note: "트리거와 8 — 화면 가장자리와도 8(Menu 는 1280 이상이라 안전 영역이 없다)" }
+        align: { value: end, note: "트리거의 오른쪽 끝에 맞춘다(줄 끝 ⋮ · 머리 더보기) — 왼쪽에 놓인 트리거는 start. 모자라면 화면 안으로 민다" }
+        maxHeight: { value: "min(480px, 남은 화면)", note: "남은 화면이 200 보다 좁아도 200 은 둔다 — 먼저 줄이고, 200 아래로 내려가야 반대편으로 뒤집는다. 넘치면 메뉴 안 스크롤" }
+        zIndex: { value: 200, note: "z-floating — specs/z-index.md L3. 페이지에서도, 대화상자 · 시트 안에서도" }
+      item:
+        paddingY: $spacing-x2_5
+        paddingX: $spacing-x4
+        gap: $spacing-x2
+        height: { value: 39px, note: "한 줄 — 설명이 있으면 57. 글이 길면 줄을 바꿔 늘어난다(말줄임 없음)" }
+        cursor: pointer
+        transitionProperty: { value: "background-color, inset, border-radius", note: "알약 바탕 · 들임(0 → 8) · 모서리(0 → 12)가 함께 150ms 에 — SEED menu-item 은 들임 · 모서리 d3, 색 color-transition(둘 다 150ms) 이라 하나로 적었다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-009-3, 안 B)" }
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      itemIcon:
+        size: { value: 18px, note: "lucide · 여러 줄이면 세로 가운데" }
+        color: $color-fg-neutral
+      itemLabel:
+        typography: { value: $text-t4, note: "단어 단위 줄바꿈(v114)" }
+        fontWeight: 400
+        foreground: $color-fg-neutral
+      itemDescription:
+        typography: $text-t2
+        fontWeight: 400
+        foreground: $color-fg-neutral-subtle
+        gap: { value: $spacing-x0_5, note: "이름 ↔ 설명" }
+      suffixIcon:
+        size: 16px
+        color: $color-fg-neutral
+      highlight:
+        background: { value: transparent, note: "마우스를 올리거나 누를 때만 칠한다" }
+        insetX: { value: 0px, note: "줄 폭 전체 — 마우스를 올리거나 누르면 8 로 들어온다(SEED menu-item enabled 에는 marginX 가 없다)" }
+        radius: { value: 0px, note: "모서리 없음 — 들어오며 12 로 둥글어진다" }
+      groupLabel:
+        typography: $text-t3
+        fontWeight: 400
+        foreground: $color-fg-neutral-subtle
+        paddingY: $spacing-x2
+        paddingX: $spacing-x4
+      divider:
+        color: $color-stroke-neutral-subtle
+        height: 1px
+        marginX: { value: $spacing-x4, note: "좌우 16 들인다" }
+        marginY: { value: $spacing-x2, note: "묶음 사이 8 + 선 1 + 8" }
+    hovered:
+      highlight:
+        background: { value: $color-bg-layer-floating-pressed, note: "메뉴 바탕(bg-layer-floating) 위의 누름 색" }
+        insetX: { value: $spacing-x2, note: "좌우 8 들어온 알약 — 글은 알약 안쪽 8 지점에서 시작한다(SEED pressed marginX x2)" }
+        radius: { value: $radius-r3, note: "12(SEED pressed cornerRadius r3)" }
+    pressed:
+      highlight:
+        background: $color-bg-layer-floating-pressed
+        insetX: $spacing-x2
+        radius: $radius-r3
+      item:
+        scale: { value: 콘텐츠 2px 거리 축소, note: "아이콘 · 글만 준다(SEED scaleScope: content) — 알약은 그대로. 모션 줄이기면 하지 않는다" }
+        scaleDuration: $motion-duration-pressed-scale
+        scaleEasing: $motion-ease-pressed-scale
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: -2px, note: "알약 자리(좌우 8 들임 · 모서리 12) 안쪽에 — 바탕은 칠하지 않는다. 링은 그 자리에 고정이라 움직이지 않는다 — 들어오는 중인 호버 알약과 잠깐 폭이 다를 수 있다" }
+        insetX: { value: $spacing-x2, note: "알약이 다 들어온 자리" }
+        radius: $radius-r3
+        color: $color-stroke-focus-ring
+    disabled:
+      item:
+        cursor: not-allowed
+      itemIcon:
+        color: $color-fg-disabled
+      itemLabel:
+        foreground: $color-fg-disabled
+      itemDescription:
+        foreground: $color-fg-disabled
+      suffixIcon:
+        color: $color-fg-disabled
+      highlight:
+        background: { value: transparent, note: "호버 · 누름 바탕이 없다 — 눌러도 실행하지 않고 닫히지 않는다" }
+
+  # ── 위험한 동작 ────────────────────────────────────────
+  - when: { tone: critical }
+    enabled:
+      itemIcon:
+        color: $color-fg-critical
+      itemLabel:
+        foreground: { value: $color-fg-critical, note: "설명은 fg-neutral-subtle 그대로" }
+      suffixIcon:
+        color: $color-fg-critical
+
+motion:
+  "열림":
+    duration: $motion-duration-d3
+    easing: $motion-ease-enter
+    properties: [scale 0.95 → 1, opacity 0 → 1]
+    note: "트리거 쪽 변을 기준점으로 커진다"
+  "닫힘":
+    duration: $motion-duration-d2
+    easing: $motion-ease-exit
+    properties: [scale → 0.95, opacity → 0]
+  "호버 알약":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color, inset, border-radius]
+    note: "알약이 줄 폭 전체에서 좌우 0 → 8 들어오며 모서리 0 → 12 로 둥글어진다(SEED menu-item — 2026-10-15 사용자 결정 Q-009-3 안 B). 떠날 때는 거꾸로 펴지며 투명해진다"
+  "누름":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
