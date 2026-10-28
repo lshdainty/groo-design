@@ -457,9 +457,11 @@ function ControlRow({
   align,
   highlighted,
   disabled,
+  locked,
   rootProps: { className: rootClassName, ...rootRest } = {},
   htmlFor,
-}: ControlRowProps & { as?: "li" | "div"; disabled?: boolean; htmlFor?: string }) {
+}: ControlRowProps & { as?: "li" | "div"; disabled?: boolean; locked?: boolean; htmlFor?: string }) {
+  // 끌 수 없는 켬(locked)은 누르지 못하지만 글 · 앞 붙이개 색은 보통 줄 그대로다
   const tag = React.useContext(ListRowTag);
   const nest = useNest();
   const Comp = (as ?? tag) as React.ElementType;
@@ -468,7 +470,7 @@ function ControlRow({
       <label
         htmlFor={htmlFor}
         data-list-action=""
-        data-disabled={disabled ? "" : undefined}
+        data-disabled={disabled || locked ? "" : undefined}
         className={cn(listContentVariants({ align, nest }), listControlVariants())}
       >
         {prefix && <span className={cn(listPrefixVariants({ disabled }))}>{prefix}</span>}
@@ -508,14 +510,16 @@ ListSwitchItem.displayName = "ListSwitchItem";
 export interface ListCheckItemProps extends Omit<CheckmarkProps, "title" | "prefix">, Omit<ControlRowProps, "suffix"> {
   /** 체크를 앞(기본) · 뒤 어디에 둘지 */
   markPosition?: "prefix" | "suffix";
+  /** 끌 수 없는 켬 — 칸만 막힌 켬, 제목 · 앞 붙이개는 보통 색(2026-10-29 사용자 결정 B) */
+  locked?: boolean;
 }
 
 // 체크 줄 — 여럿 고르기. 체크 24 를 앞(기본)이나 뒤에
 const ListCheckItem = React.forwardRef<React.ElementRef<typeof Checkmark>, ListCheckItemProps>(
-  ({ title, detail, prefix, align, highlighted, rootProps, markPosition = "prefix", size = "large", className, id, disabled, ...props }, ref) => {
+  ({ title, detail, prefix, align, highlighted, rootProps, markPosition = "prefix", size = "large", className, id, disabled, locked, ...props }, ref) => {
     const autoId = React.useId();
     const cid = id ?? autoId;
-    const mark = <Checkmark ref={ref} id={cid} data-list-action="" size={size} disabled={disabled} className={cn(MARK_NO_SCALE, className)} {...props} />;
+    const mark = <Checkmark ref={ref} id={cid} data-list-action="" size={size} className={cn(MARK_NO_SCALE, className)} {...props} {...(locked ? { checked: true, disabled: true } : { disabled })} />;
     return (
       <ControlRow
         title={title}
@@ -526,6 +530,7 @@ const ListCheckItem = React.forwardRef<React.ElementRef<typeof Checkmark>, ListC
         highlighted={highlighted}
         rootProps={rootProps}
         disabled={disabled}
+        locked={locked}
         htmlFor={cid}
       />
     );
