@@ -160,6 +160,10 @@
 
 [그림: 브랜드 색은 한 화면에 하나 — 나머지는 중립색](../../site/components/specs/button.tsx#brand-color)
 
+### 예외 — 증권 매매 단추
+
+증권 종목 상세의 [매도] · [매수] 한 쌍만 국내 통념을 따른다 — [매도] `brandSolid`(파랑) · [매수] `criticalSolid`(빨강), `large` 한 줄에 반씩 · 사이 8. 국내 증권 앱 사용자가 매수 빨강 · 매도 파랑을 이미 익혀 있어 그 기대를 지킨다. 이 자리에서 `criticalSolid` 는 "되돌릴 수 없는 확정" 이 아니고 `brandSolid` 는 "서비스의 중심 동작" 이 아니다 — 이 한 쌍 밖으로 넓히지 않는다(2026-10-29 사용자 결정 C7 B — https://claude.ai/artifact/QLQiAkvfez7bqpc4DEuiCH). 거절: 매수 `neutralSolid` · 매도 `neutralWeak`(스펙 그대로).
+
 ### 버튼 조합
 
 - **Solid 조합** — `neutralWeak` + `neutralSolid`(또는 `brandSolid`). 위계가 분명하고 부담이 적다.
@@ -396,6 +400,7 @@ const [saving, setSaving] = useState(false)
 - 강조 버튼(`brandSolid` · `neutralSolid` · `criticalSolid`)은 한 화면에 하나.
 - 모달 footer 는 `[취소 neutralWeak] [저장 neutralSolid]`, 삭제는 왼쪽 `ghost` + `critical`.
 - 되돌릴 수 없는 작업의 확정은 확인 창의 `criticalSolid`.
+- 증권 매매 한 쌍만 예외 — [매도] `brandSolid` · [매수] `criticalSolid`(국내 통념).
 - 아이콘만 있는 버튼에는 이름을 단다.
 - 모바일 하단 CTA 는 `large` + 채움 + 안전 영역(`pb-safe`).
 
@@ -424,6 +429,10 @@ const [saving, setSaving] = useState(false)
 - `neutralSolid` 의 누름은 새 역할 `bg-neutral-inverted-pressed`(gray-800, v112)다.
 
 ## Migration notes
+
+### 2026-10-29 — 증권 매매 단추 예외
+
+사용자 결정 C7 B — 지시서가 "지금 뜻 그대로" 로 넘긴 [매도] `brandSolid` · [매수] `criticalSolid` 가 변형 뜻(브랜드 = 중심 동작 하나 · 빨강 = 되돌릴 수 없는 확정)과 맞지 않아 그림으로 물었다. 국내 통념을 이 한 쌍의 예외로 적는다. 앱 매도는 옛 `bg-informative-solid` → `brandSolid`, 사이 10 → 8. 값 · 토큰 변경 없음.
 
 ### 2026-10-25 — 시트 바닥의 [삭제] 도 모달 footer 꼴
 
