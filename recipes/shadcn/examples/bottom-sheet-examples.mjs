@@ -1,11 +1,11 @@
 /*
  * shadcn Bottom Sheet 예제 — docs site components/bottom-sheet.html 에서 Preview + Code 토글로 보인다.
  * 각 예제 = { title, description, jsx, render() }. 앞의 둘(고르기 — 기간 · 입력 폼)은 차례 · 제목 · 코드가 specs/components/bottom-sheet.md 의
- * "코드" 절과 같고(목록을 담은 본문에 className="px-0" 만 더했다 — 줄이 제 좌우 24 를 가진다), 뒤의 셋(본문 끝 흐림 · 손잡이 · 닫기 버튼)은
- * md 의 Properties 를 코드로 더 보인다.
+ * "코드" 절과 같고(목록을 담은 본문에 className="px-0" 만 더했다 — 줄이 제 좌우 24 를 가진다), 뒤의 넷(본문 끝 흐림 · 손잡이 · 닫기 버튼 ·
+ * 두 단계 시트의 머리 ←)은 md 의 Properties 를 코드로 더 보인다.
  *
- * OVERLAY · CONTENT · CLOSE · HANDLE · BODY · BODY_PLAIN · BODY_FOG 는 recipes/shadcn/components/ui/bottom-sheet.tsx 의 상수와, HEADER · TITLE ·
- * TITLE_WITH_CLOSE · DESCRIPTION · SNAP_HEIGHT · FOOTER 는 그 파일의 JSX 에 적힌 클래스와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다.
+ * OVERLAY · CONTENT · CLOSE · BACK · HANDLE · BODY · BODY_PLAIN · BODY_FOG 는 recipes/shadcn/components/ui/bottom-sheet.tsx 의 상수와, HEADER · TITLE ·
+ * TITLE_WITH_CLOSE · TITLE_WITH_BACK · DESCRIPTION · SNAP_HEIGHT · FOOTER 는 그 파일의 JSX 에 적힌 클래스와 글자 하나까지 같아야 한다 — 두 파일을 함께 고친다.
  * 끝 흐림의 SOLID · fogStyle 은 scroll-fog.tsx 의 useScrollFog 와 같은 셈이다 — 레시피는 그릴 때 토큰 --gradient-fade-mask 에 방향을 붙여 본문의
  * style(mask-*) · data-fog-axis 로 넣고, 정적 HTML 은 같은 일을 빌드 때 DESIGN.md 의 토큰 값으로 해 style 에 적었다.
  * 둘레의 부품은 그 레시피의 값을 옮겨 썼다 — BUTTON_* 는 button.tsx(button-examples.mjs), LIST_* · RADIOMARK_* · DOT_* 는 list.tsx ·
@@ -67,6 +67,16 @@ const CLOSE = [
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 
+// 머리 왼쪽 ←(onBack) — 보이는 원 40 · 아이콘 24 · 누르는 영역 44(::before). 아이콘이 화면 여백 24 에 오도록 원을 8 당기고, 세로는 제목 첫 줄(30)
+// 가운데(위 24 + 15)에 맞춘다. 누르면 bg-neutral-weak-pressed(축소 없음), 호버도 누름 색
+const BACK = [
+  "absolute left-[calc(var(--spacing-global-gutter)-0.5rem)] top-[calc(var(--spacing-x6)+0.9375rem)] z-1 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-fg-neutral [&>svg]:size-6",
+  "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
+  "hover:bg-bg-neutral-weak-pressed active:bg-bg-neutral-weak-pressed",
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
+].join(" ");
+
 // 손잡이 — 36 × 4 · 위 6 가운데, 누르는 영역 44. 누름 색은 두지 않는다
 const HANDLE = [
   "absolute left-1/2 top-x1_5 h-1 w-9 -translate-x-1/2 cursor-pointer rounded-full bg-stroke-neutral-weak",
@@ -80,6 +90,8 @@ const HEADER = "flex shrink-0 flex-col gap-x2 px-global-gutter pb-x4 pt-x6";
 // 제목 t8 22 / 30 · 700 — 닫기 버튼이 있으면 cn(TITLE, TITLE_WITH_CLOSE)(오른쪽 64 = 24 + 원 28 + 12)
 const TITLE = "m-0 text-t8 font-bold text-fg-neutral";
 const TITLE_WITH_CLOSE = "pr-x10";
+// 머리 ← 가 있으면 cn(TITLE, …, TITLE_WITH_BACK) — 제목은 원 오른쪽 사이 4 에서(화면 여백에서 36 = 40 − 8 + 4)
+const TITLE_WITH_BACK = "pl-[2.25rem]";
 // 설명 t5 · fg-neutral-muted
 const DESCRIPTION = "m-0 text-t5 font-normal text-fg-neutral-muted";
 // 스냅 높이를 두면 시트를 화면의 90% 높이로 둔다 — cn(CONTENT, SNAP_HEIGHT)
@@ -439,6 +451,7 @@ const svg = (paths) =>
   `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
 const ICONS = {
   x: svg('<path d="M18 6 6 18"/><path d="m6 6 12 12"/>'),
+  arrowLeft: svg('<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>'),
   calendarDays: svg(
     '<path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M16 13h.01"/><path d="M8 17h.01"/><path d="M12 17h.01"/><path d="M16 17h.01"/>',
   ),
@@ -477,7 +490,8 @@ function closeButton(force) {
 // <BottomSheet open> + <BottomSheetContent>. uid 는 Radix 가 만드는 id 의 앞말(예제마다 달리한다).
 // body = { html, className, scrollFog } · footer = 버튼 HTML 배열 · snap = 스냅 높이(0 ~ 1 — 손잡이를 달고 시트를 90% 높이로 둔 뒤 그 높이까지 내린다).
 // scrollFog 는 끝 흐림(늘 켜짐 — 위 20 · 아래 80), 넘친 본문의 Tab 자리(tabindex 0)는 레시피가 재서 단다 — 그 순간을 멈춰 적는다(overflow)
-function bottomSheet({ uid, title, description, body, footer = [], snap, form = false, close = true, height = 600 }) {
+// back — 머리 왼쪽 ←(onBack, 두 단계 시트의 2단계). DOM 맨 앞(초점 차례 ← → 제목 → 닫기)
+function bottomSheet({ uid, title, description, body, footer = [], snap, form = false, close = true, back = false, height = 600 }) {
   const titleId = `${uid}-title`;
   const descriptionId = `${uid}-description`;
   const snaps = snap != null;
@@ -500,7 +514,9 @@ function bottomSheet({ uid, title, description, body, footer = [], snap, form = 
     `style="${SHEET_FIT(height)}${snaps ? ` height:${Math.round(height * 0.9)}px; transform:translate3d(0, ${translate}px, 0);` : ""}"`,
   ]);
   const handle = snaps ? `<div aria-hidden="true" data-slot="bottom-sheet-handle" class="${HANDLE}"></div>` : "";
-  const header = `<div data-slot="bottom-sheet-header" class="${HEADER}"><h2 id="${titleId}" data-slot="bottom-sheet-title" class="${close ? `${TITLE} ${TITLE_WITH_CLOSE}` : TITLE}">${esc(title)}</h2>${
+  const backHtml = back ? `<button type="button" aria-label="뒤로" data-slot="bottom-sheet-back" class="${BACK}">${ICONS.arrowLeft}</button>` : "";
+  const titleClass = [TITLE, close && TITLE_WITH_CLOSE, back && TITLE_WITH_BACK].filter(Boolean).join(" ");
+  const header = `${backHtml}<div data-slot="bottom-sheet-header" class="${HEADER}"><h2 id="${titleId}" data-slot="bottom-sheet-title" class="${titleClass}">${esc(title)}</h2>${
     description != null ? `<p id="${descriptionId}" data-slot="bottom-sheet-description" class="${DESCRIPTION}" style="${P_FIX.description}">${esc(description)}</p>` : ""
   }</div>`;
   const bodyClass = merge([BODY, body.scrollFog ? BODY_FOG : BODY_PLAIN, body.className].filter(Boolean).join(" "));
@@ -726,5 +742,31 @@ export const bottomSheetExamples = [
             )}</span><span style="${CAPTION}">${caption}</span></div>`,
         )
         .join("")}</div>`,
+  },
+
+  {
+    title: "두 단계 시트 — 2단계 머리 ←",
+    description:
+      "한 시트 안에서 1단계(종류 고르기) → 2단계(폼)로 가는 흐름은 2단계 머리 왼쪽에 ← 를 단다(onBack — 이름 \"뒤로\"). 보이는 원 40 · 아이콘 lucide arrow-left 24 fg-neutral · 누르는 영역 44 이고, 아이콘이 화면 여백 24 에 오도록 원을 8 바깥에 두며 세로는 제목 첫 줄 가운데다. 제목은 원 오른쪽 4 에서 시작한다. 누르면 원 바탕 bg-neutral-weak-pressed(축소 없음). ← 는 시트를 닫지 않고 1단계로 한 단계 되돌린다 — 쓴 값이 있으면 \"작성한 내용이 사라져요\" 를 먼저 묻고 돌아가며 그 값을 버린다(종류가 바뀌면 칸이 달라진다). 오른쪽 위 닫기 버튼은 그대로다. 1280 이상의 대화상자(ResponsiveDialogContent onBack)도 같은 값이다. 단계가 셋을 넘으면 시트가 아니라 페이지다.",
+    jsx: `<ResponsiveDialog open={open} onOpenChange={setOpen} form dirty={step === "form" && isDirty}>
+  <ResponsiveDialogContent
+    title={step === "kind" ? "무엇을 추가할까요?" : "입출금 추가"}
+    // 2단계에만 — 쓴 값이 있으면 묻고(작성한 내용이 사라져요), 돌아가면 그 값을 버린다
+    onBack={step === "form" ? () => confirmLeave(() => { reset(); setStep("kind") }) : undefined}
+  >
+    {step === "kind" ? <KindStep onNext={() => setStep("form")} /> : <FormStep />}
+  </ResponsiveDialogContent>
+</ResponsiveDialog>`,
+    render: () =>
+      bottomSheet({
+        uid: "bottom-sheet-ex-back",
+        title: "입출금 추가",
+        form: true,
+        back: true,
+        body: {
+          html: field("bottom-sheet-ex-back-balance", "잔액", (id) => amountInput(id, "1,250,000")),
+        },
+        footer: [button({ variant: "neutralSolid", label: "추가", type: "submit" })],
+      }),
   },
 ];
