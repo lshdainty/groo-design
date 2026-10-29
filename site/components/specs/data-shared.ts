@@ -275,7 +275,8 @@ export type SearchLook = {
   // 1280 미만 large · 이상 medium(웹)
   breakpoint: number;
   field: { look: TfInputLook; marginX: number; heights: Record<SearchSize, number> };
-  option: { padY: number; padX: number };
+  // 줄 — 위아래 · 좌우 · 최소 높이(라디오가 없는 줄도 48 — selectionMark off)
+  option: { padY: number; padX: number; minHeight: number };
   title: DType & { fg: DColor };
   detail: DType & { fg: DColor };
   highlight: { insetX: number; radius: number; bg: DColor };

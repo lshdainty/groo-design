@@ -22,7 +22,7 @@ SEED 에는 이 컴포넌트가 없다 — Select 문서가 "옵션이 매우 �
 | ⓑ Group Header | 분류 머리 — [List](list.md) 의 목록 제목("시중은행" · "증권사"). |
 | ⓒ Option | 결과 줄 — List 의 누르는 줄(16 / 22 · 13 / 18). |
 | ⓓ Prefix | 앞 붙이개 — [Logo Tile](logo-tile.md) 40 · 카드 그림 56 · [Avatar](avatar.md). |
-| ⓔ Radio | 오른쪽 라디오 — 지금 고른 값. |
+| ⓔ Radio | 오른쪽 라디오 — 지금 고른 값. 누르면 바로 더하는 목록(`selectionMark={false}`)에는 없다. |
 | ⓕ Highlight | 강조 바탕 — 화살표 · 마우스로 짚은 줄. 초점은 검색칸에 그대로다. |
 
 [표: 부위](searchable-list.yaml#slots)
@@ -62,6 +62,19 @@ SEED 에는 이 컴포넌트가 없다 — Select 문서가 "옵션이 매우 �
 [표: 고름](searchable-list.yaml#selected)
 
 [표: 라디오](searchable-list.yaml#base.enabled@radio)
+
+### 누르면 바로 더하는 목록 — 라디오 없음
+
+줄을 누르는 것이 "고르기" 가 아니라 "더하기" 인 목록 — 투자 폼의 "종목 추가" 처럼 누른 줄이 바로 더해지고 시트 · 팝오버가 닫히는 목록 — 에는 라디오를 두지 않는다(`selectionMark={false}`). 지금 값이 없으니 동그라미가 채워질 일이 없고, 빈 동그라미는 "골라 두고 확인을 누르는" 목록으로 읽힌다. 라디오만 빼고 나머지는 그대로다 — 검색칸 · 키보드(↓ · ↑ · `Enter`) · 강조 바탕 · 결과 없음 · 줄 좌우 24 · 제목 오른쪽 10. 줄 높이는 라디오가 없어도 최소 48 이다(한 줄 46 으로 줄지 않는다). 하나를 골라 칸에 넣는 목록(은행 · 증권 · 카드 상품 · 결재자)은 지금 값이 보여야 하므로 라디오 그대로다(2026-10-29 사용자 결정 17-1 Q4 = B).
+
+| 목록 | 줄을 누르면 | 오른쪽 |
+|---|---|---|
+| 칸에 넣는 고르기(은행 · 카드 상품 · 결재자) | 그 값을 고른다 — 시트는 닫히고 칸에 들어간다, 단계 안은 라디오만 바뀐다 | 라디오(지금 값) |
+| 누르면 바로 더하는 목록(종목 추가 · 맨 아래 "직접 추가" 줄도) | 그 줄을 더하고 닫는다 — 지금 값을 들지 않는다 | 없음 |
+
+[그림: 종목 추가 — 라디오 없는 줄 · 은행 고르기 — 라디오](../../site/components/specs/searchable-list.tsx#action-guide)
+
+[표: 지금 값 표시](searchable-list.yaml#selectionMark)
 
 ### 분류 머리
 
@@ -167,13 +180,13 @@ placeholder 는 "{무엇} 검색"("은행 이름 검색" · "카드 이름 검�
 
 레시피 `recipes/shadcn/components/ui/searchable-list.tsx` 를 쓴다. 아래 미리보기는 스펙 값으로 그린 모습이다.
 
-- `SearchableList` — 묶음. `value` · `defaultValue` · `onValueChange(value)`(고르면 — 시트는 여기서 닫는다) · `query` · `defaultQuery` · `onQueryChange(query)`(치는 대로) · `onSearch(query)`(서버 검색 — 마지막 입력 뒤 `searchDelay` 기본 300ms 에 한 번) · `placement`(`"sheet"` 기본 · `"inline"`) · `size`(`"responsive"` 기본 — 1280 미만 large · 이상 medium, 앱은 large).
+- `SearchableList` — 묶음. `value` · `defaultValue` · `onValueChange(value)`(고르면 — 시트는 여기서 닫는다) · `query` · `defaultQuery` · `onQueryChange(query)`(치는 대로) · `onSearch(query)`(서버 검색 — 마지막 입력 뒤 `searchDelay` 기본 300ms 에 한 번) · `placement`(`"sheet"` 기본 · `"inline"`) · `size`(`"responsive"` 기본 — 1280 미만 large · 이상 medium, 앱은 large) · `selectionMark`(기본 `true` — 줄 오른쪽 라디오. 누르면 바로 더하고 닫는 목록은 `false`, 그때는 `value` 를 주지 않는다).
 - `SearchableListInput` — 검색칸(Input 밑줄형 · 앞 돋보기 · 지우기 — `variant="underline"` 을 스스로 건다). `placeholder` · `aria-label`(기본 "검색"). `role="combobox"` · `aria-controls` · `aria-activedescendant` · 화살표 · `Enter` · `Esc` 를 맡는다. 스스로 초점을 옮기지 않는다 — 시트 · 팝오버가 열릴 때 `focusSearchableList` 로 넘겨받는다.
 - `focusSearchableList(event)` — 시트 · 팝오버의 `onOpenAutoFocus` 에 건다. 첫 초점을 표면 대신 검색칸에 주고, 지금 값이 보이게 가운데로 스크롤한다(열린 뒤 다시 옮기지 않는다).
 - `matchesSearch(query, ...names)` — 거르는 규칙(NFC · 대소문자 · 공백 무시 · 포함). 들고 있는 목록은 이름 · 별칭을 넘겨 거른다. 서버 검색도 같은 규칙이다.
 - `SearchableListResults` — 결과 목록(`role="listbox"`). `aria-label`(대상 — "은행").
 - `SearchableListGroup` — 분류. `label`(List Header `mediumWeak`, `role="group"` 의 이름).
-- `SearchableListItem` — 결과 줄(`role="option"`). `value` · `title` · `detail` · `prefix`(LogoTile · 카드 그림 · Avatar). 라디오는 스스로 그린다.
+- `SearchableListItem` — 결과 줄(`role="option"`). `value` · `title` · `detail` · `prefix`(LogoTile · 카드 그림 · Avatar). 라디오는 스스로 그린다(묶음의 `selectionMark` 가 `false` 면 그리지 않는다 — 줄 높이는 최소 48 그대로).
 - `SearchableListEmpty` — 0건(Result Section `medium` — 제목은 검색어로 만든다 · 알린다). `description` · `title`(검색어 제목 대신).
 - `SearchableListError` — 실패(Result Section `failure` + "다시 시도"). `onRetry` · `retrying`(다시 시도 중 — 버튼 로딩) · `title` · `description`.
 - `SearchableListSkeleton` — 불러오는 줄. `rows`(기본 5) · `prefix`(`"logo"` · `"cardArt"` · `"avatar"` · `"none"`).
@@ -263,6 +276,35 @@ import {
 <Button size="large" disabled={!cardId} onClick={next}>다음</Button>
 ```
 
+### 종목 추가 — 누르면 바로 더한다
+
+[그림: 종목 추가 — 라디오 없는 결과 줄](../../site/components/specs/searchable-list.tsx#ex-stock)
+
+```tsx
+import { BottomSheet, BottomSheetBody, BottomSheetContent } from "@/components/ui/bottom-sheet"
+import {
+  SearchableList, SearchableListEmpty, SearchableListInput, SearchableListItem, SearchableListResults, focusSearchableList,
+} from "@/components/ui/searchable-list"
+
+<BottomSheetContent title="종목 추가" onOpenAutoFocus={focusSearchableList}>
+  <BottomSheetBody className="px-0">
+    {/* 지금 값이 없다 — value 를 주지 않고 라디오를 끈다. 누르면 더하고 닫는다 */}
+    <SearchableList selectionMark={false} onValueChange={(code) => { addStock(byCode(code)); setOpen(false) }} query={query} onQueryChange={setQuery} onSearch={setSearch}>
+      <SearchableListInput placeholder="종목 이름 검색" />
+      {stocks.length === 0 ? (
+        <SearchableListEmpty />
+      ) : (
+        <SearchableListResults aria-label="종목">
+          {stocks.map((s) => (
+            <SearchableListItem key={s.code} value={s.code} title={s.name} detail={s.market} />
+          ))}
+        </SearchableListResults>
+      )}
+    </SearchableList>
+  </BottomSheetBody>
+</BottomSheetContent>
+```
+
 ## Behavior
 
 | 인터랙션 | 동작 |
@@ -271,7 +313,7 @@ import {
 | 치기 | 들고 있는 목록은 바로 거르고, 서버 검색은 마지막 입력 뒤 300ms 에 한 번 — 강조를 지운다. 거르는 규칙은 둘이 같다(NFC · 대소문자 · 공백 무시) |
 | `↓` · `↑` | 강조를 옮긴다(초점은 검색칸) |
 | `Enter` | 강조한 줄을 고른다 — 시트 · 팝오버는 닫힌다, 단계 안은 라디오만 |
-| 줄 누르기 · 클릭 | 그 줄을 고른다 — 마우스를 올린 줄은 강조와 같은 바탕 |
+| 줄 누르기 · 클릭 | 그 줄을 고른다 — 마우스를 올린 줄은 강조와 같은 바탕. 누르면 바로 더하는 목록(`selectionMark={false}`)은 그 줄을 더하고 닫는다 |
 | 마우스가 목록을 떠남 | 마우스로 짚은 강조를 지운다 — 키보드로 짚은 강조는 남는다 |
 | 지우기 버튼 | 검색어를 비우고 검색칸에 초점 — 전체 목록으로 |
 | `Esc` | 검색어를 지운다 → 비었으면 닫는다 |
@@ -295,6 +337,7 @@ import {
 
 - 검색칸은 Input 밑줄형 + 돋보기 · 지우기 · 이름 "검색", 위에 붙인다.
 - 결과는 List 줄 — 물건은 로고 타일 40, 카드는 카드 그림 56, 지금 값은 오른쪽 라디오.
+- 누르면 바로 더하고 닫는 목록(종목 추가)은 라디오를 끈다(`selectionMark={false}`) — 줄 높이 48 · 좌우 24 는 그대로.
 - 초점은 검색칸 · 화살표는 강조만 · `Enter` 로 고른다.
 - 서버 검색은 300ms 뒤 한 번.
 - 0건은 "'{검색어}'에 대한 검색 결과가 없어요" + 알림, 실패는 따로 + 다시 시도.
@@ -309,6 +352,7 @@ import {
 - 실패를 "검색 결과가 없어요" 로.
 - 기관을 칩 묶음으로 고르기.
 - 시트에서 하나를 고르는데 "완료" 를 한 번 더 누르게 하기.
+- 누르면 바로 더하는 목록에 늘 빈 라디오를 두기 · 라디오를 빼며 줄 높이를 46 으로 줄이기 · 칸에 넣는 고르기(은행 · 카드 상품)에서 라디오를 빼기.
 
 ## Specification
 
@@ -327,6 +371,10 @@ import {
 
 ## Migration notes
 
+### 2026-10-29 — 누르면 바로 더하는 목록은 라디오 없음
+
+사용자 결정 17-1 Q4 = B — 투자 폼 "종목 추가" 의 결과 줄은 누르면 고르는 게 아니라 그 종목이 바로 더해지고 시트가 닫혀서, 오른쪽 동그라미가 한 번도 채워지지 않았다(맨 아래 "직접 추가" 줄에도 붙어 있었다). 그런 목록은 라디오를 뺀다 — 묶음에 `selectionMark={false}`(yaml 축 `selectionMark` "on" · "off"). 나머지(검색칸 · 키보드 · 강조 · 결과 없음 · 줄 좌우 24 · 제목 오른쪽 10)는 그대로이고, 줄 높이는 라디오가 없어도 최소 48 이다 — yaml `option.minHeight` 48 을 더하고 `paddingY` 비고의 "한 줄 48(라디오 24)" 를 고쳤다. 은행 · 카드 상품 고르기는 라디오 그대로. 고르지 않은 안: A(지금 그대로 — 줄마다 빈 라디오) · C(검색칸 + 누르는 List 줄 — B 와 겉모습이 같고 키보드 · 빈 결과 화면을 다시 만들어야 한다). 설명 https://claude.ai/artifact/2wHgeNPdst2q6LQzdD1AvS. 레시피 `SearchableList` 에 `selectionMark` 를 더하고 결과 줄에 최소 높이 48(`min-h-12`)을 걸었다. 새 토큰 없음.
+
 ### 2026-10-22 — 폼 값 칩과 거르기 칩을 나눠 읽는다
 
 결정 13A(기관은 칩 묶음이 아니라 검색 + List 줄)의 까닭 글 "칩은 2 ~ 4개 짧은 폼 값에만" 이 일반 규칙으로 읽혀 Chip 의 거르기 칩 결정(5개 이상 · 개수가 바뀌는 축)과 부딪쳤다. 결정 문장은 그대로 두고, 폼 값 칩(2 ~ 4)과 거르기 칩(필터 바)을 나눠 적었다(3B). "언제 쓰나" 표의 개수 줄은 Select 의 판단 순서로 링크한다(1B) — 사용자 결정 https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym.
@@ -338,7 +386,7 @@ import {
 - **거르는 규칙**(Q-007-1, 사용자 결정 안 C) — 지금 제품 규칙(이름 · 별칭, NFC · 대소문자 · 공백 무시)을 공용으로 적었다. 웹 · 앱 견본은 별칭을 넣고(앱은 NFC 도), 서버 카드 검색(가운데 공백을 그대로 본다)도 공백을 무시하게 고친다(백엔드). 초성 검색은 아직 정하지 않았다(따로 정한다).
 - **마우스 강조는 목록을 떠나면 지운다**(Q-007-2, 사용자 결정 안 B) — 웹은 목록에 `pointerleave`, 앱은 `MouseRegion.onExit` 를 단다. 키보드로 짚은 강조는 남긴다.
 - **첫 초점은 시트가 넘겨준다**(Q-007-3, 정리 — 두 스펙이 어긋나 있었다) — 검색칸이 스스로 초점을 잡고 한 프레임 뒤 다시 잡지 않는다. 시트 · 팝오버의 `onOpenAutoFocus` 가 검색칸에 준다(앱은 `PBottomSheet` 가 첫 초점 노드를 받는다).
-- **줄 높이 48**(Q-007-4, 정리) — 비고의 46 은 숫자 오류였다. 결과 줄은 늘 라디오(24)가 있어 48 이다(웹 · 앱 그대로).
+- **줄 높이 48**(Q-007-4, 정리) — 비고의 46 은 숫자 오류였다. 결과 줄은 늘 라디오(24)가 있어 48 이다(웹 · 앱 그대로). — 2026-10-29 라디오 없는 줄이 생겨 "최소 높이 48" 로 고쳐 적었다(아래 같은 날 notes).
 - **강조 바탕이 들어오며 둥글어진다**(Q-009-3 안 B 를 따른다) — 좌우 6 · 모서리 10 고정에서 0 → 6 · 0 → 10(150ms). 웹 · 앱 모두 마우스 · 누름일 때 들임 · 모서리도 전환한다(화살표는 바로).
 
 ### 2026-10-08 — List 줄 · 콤보박스 키보드로 다시 쓴다

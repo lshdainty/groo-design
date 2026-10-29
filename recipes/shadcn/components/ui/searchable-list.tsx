@@ -19,7 +19,9 @@ import { imageFrameRadius } from "@/components/ui/image-frame";
  *   SearchableList          묶음. value · onValueChange(value — 고르면. 시트는 여기서 닫는다) · query · onQueryChange(query — 치는 대로) ·
  *                           onSearch(query — 서버 검색, 마지막 입력 뒤 searchDelay 기본 300ms 에 한 번) · placement "sheet"(기본 —
  *                           Input Button 의 검색 시트 · 팝오버, 고르면 닫힌다) · "inline"(화면 · 단계 안 — 라디오만 바뀐다) ·
- *                           size "responsive"(기본 — 1280 미만 large 40 · 이상 medium 34, 앱은 large)
+ *                           size "responsive"(기본 — 1280 미만 large 40 · 이상 medium 34, 앱은 large) · selectionMark(기본 true — 줄 오른쪽
+ *                           라디오. 누르면 바로 더하고 닫는 목록(종목 추가)은 false — 지금 값이 없어 라디오를 그리지 않는다, value 를 주지 않는다 ·
+ *                           2026-10-29 사용자 결정 17-1 Q4 = B)
  *   SearchableListInput     검색칸 — Input variant="underline" 을 스스로 건다(앞 돋보기 · 지우기). placeholder("{무엇} 검색") · aria-label(기본 "검색").
  *                           role="combobox" · aria-expanded · aria-controls · aria-autocomplete="list" · aria-activedescendant(강조한 줄, 없으면 비움).
  *                           ↓ ↑ 강조 · Enter 고름 · Esc 지움(비었으면 시트 · 팝오버를 닫게 둔다). 스스로 초점을 옮기지 않는다 —
@@ -27,7 +29,7 @@ import { imageFrameRadius } from "@/components/ui/image-frame";
  *   SearchableListResults   결과 목록 — role="listbox", aria-label(대상 — "은행")
  *   SearchableListGroup     분류 — label(List Header mediumWeak — 14 · 500 · fg-neutral-subtle), role="group" 의 이름. 줄이 없으면 머리째 숨긴다
  *   SearchableListItem      결과 줄 — role="option" · aria-selected(지금 값). value · title · detail · prefix(Logo Tile 40 · 카드 그림 56 · Avatar).
- *                           오른쪽 라디오(24)는 스스로 그린다(보는 표시 — 보조 기술에 숨긴다)
+ *                           오른쪽 라디오(24)는 스스로 그린다(보는 표시 — 보조 기술에 숨긴다). selectionMark false 면 그리지 않는다 — 줄은 최소 48 그대로
  *   SearchableListEmpty     0건 — Result Section medium "'{검색어}'에 대한 검색 결과가 없어요"(제목은 검색어로 만든다 · role="status" 로 알린다) · description
  *   SearchableListError     실패 — Result Section failure "검색 결과를 불러오지 못했어요" + "다시 시도"(onRetry) · 0건과 따로
  *   SearchableListSkeleton  불러오는 줄 — rows(기본 5) · prefix "logo" · "cardArt" · "avatar" · "none"(기본). 줄 높이 그대로
@@ -66,6 +68,7 @@ type SearchableListContextValue = {
   changeQuery: (query: string) => void;
   placement: SearchableListPlacement;
   size: SearchableListSize;
+  selectionMark: boolean;
   listboxId: string;
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   listboxRef: React.MutableRefObject<HTMLElement | null>;
@@ -169,6 +172,11 @@ export interface SearchableListProps extends Omit<React.HTMLAttributes<HTMLDivEl
   placement?: SearchableListPlacement;
   /** "responsive"(기본 — 1280 미만 large 40 · 이상 medium 34) · "large"(앱) · "medium" */
   size?: SearchableListSize;
+  /**
+   * 줄 오른쪽 라디오(지금 값 표시, 기본 true). 누르면 바로 더하고 닫는 목록(종목 추가)은 false — 지금 값이 없어 라디오를 그리지 않는다.
+   * 그때는 value 를 주지 않는다. 줄 높이(최소 48) · 좌우 24 · 키보드는 그대로(searchable-list.md "누르면 바로 더하는 목록")
+   */
+  selectionMark?: boolean;
 }
 
 const SearchableList = React.forwardRef<HTMLDivElement, SearchableListProps>(
@@ -184,6 +192,7 @@ const SearchableList = React.forwardRef<HTMLDivElement, SearchableListProps>(
       searchDelay = 300,
       placement = "sheet",
       size = "responsive",
+      selectionMark = true,
       className,
       ...props
     },
@@ -236,8 +245,8 @@ const SearchableList = React.forwardRef<HTMLDivElement, SearchableListProps>(
     }, []);
 
     const ctx = React.useMemo<SearchableListContextValue>(
-      () => ({ value, select, query, changeQuery, placement, size, listboxId, inputRef, listboxRef, highlighted, highlightSource, highlight, release }),
-      [value, select, query, changeQuery, placement, size, listboxId, highlighted, highlightSource, highlight, release],
+      () => ({ value, select, query, changeQuery, placement, size, selectionMark, listboxId, inputRef, listboxRef, highlighted, highlightSource, highlight, release }),
+      [value, select, query, changeQuery, placement, size, selectionMark, listboxId, highlighted, highlightSource, highlight, release],
     );
 
     return (
@@ -246,6 +255,7 @@ const SearchableList = React.forwardRef<HTMLDivElement, SearchableListProps>(
           ref={ref}
           data-slot="searchable-list"
           data-placement={placement}
+          data-selection-mark={selectionMark ? undefined : "off"}
           className={cn("flex flex-col gap-x2 font-sans", className)}
           {...props}
         />
@@ -395,8 +405,9 @@ const OPTION = [
   "before:[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),inset_var(--motion-duration-color-transition)_var(--motion-ease-easing),border-radius_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
   "[[data-highlight-source=keyboard]_&]:before:transition-none",
 ].join(" ");
+// 콘텐츠 — 위아래 12 · 좌우 24, 최소 48(라디오 24 가 있으면 내용이 채우고, 라디오가 없는 줄 — selectionMark false — 도 46 으로 줄지 않는다)
 const OPTION_CONTENT = [
-  "relative flex w-full items-center px-global-gutter py-x3",
+  "relative flex min-h-12 w-full items-center px-global-gutter py-x3",
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "group-active/sl-option:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-active/sl-option:[scale:1]",
 ].join(" ");
@@ -468,10 +479,12 @@ const SearchableListItem = React.forwardRef<HTMLDivElement, SearchableListItemPr
               </span>
             )}
           </span>
-          {/* 지금 값 — 라디오 모양(보는 표시). 고름은 줄의 aria-selected 가 알린다 */}
-          <span aria-hidden data-slot="searchable-list-item-radio" data-state={state} className={cn(radiomarkVariants({ size: "large" }), "pointer-events-none")}>
-            <span data-state={state} className={radiomarkDotVariants({ size: "large" })} />
-          </span>
+          {/* 지금 값 — 라디오 모양(보는 표시). 고름은 줄의 aria-selected 가 알린다. 누르면 바로 더하는 목록(selectionMark false)은 두지 않는다 */}
+          {ctx.selectionMark && (
+            <span aria-hidden data-slot="searchable-list-item-radio" data-state={state} className={cn(radiomarkVariants({ size: "large" }), "pointer-events-none")}>
+              <span data-state={state} className={radiomarkDotVariants({ size: "large" })} />
+            </span>
+          )}
         </div>
       </div>
     );

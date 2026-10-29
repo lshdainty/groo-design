@@ -83,6 +83,17 @@ function Cards({ mode = 'auto', ...p }: ListProps & { mode?: Mode }) {
 function People({ mode = 'auto', ...p }: ListProps & { mode?: Mode }) {
   return <SearchableListView look={SL()} mode={mode} groups={peopleGroups()} prefixes={peoplePrefixes(mode)} prefixKind="avatar" placeholder="이름 · 팀 검색" ariaLabel="결재자" {...p} />;
 }
+// 종목 — 지어낸 이름(실제 회사가 아니다). 누르면 바로 더하는 목록이라 앞 붙이개 · 지금 값이 없다
+const STOCKS = [
+  ['하늘전자', '코스피'],
+  ['하늘바이오', '코스닥'],
+  ['하늘화학', '코스피'],
+  ['하늘에너지', '코스닥'],
+] as const;
+const stockGroups = (): SGroup[] => [{ items: STOCKS.map(([name, market]) => ({ value: name, title: name, detail: market, detailText: market })) }];
+function Stocks({ mode = 'auto', ...p }: ListProps & { mode?: Mode }) {
+  return <SearchableListView look={SL()} mode={mode} groups={stockGroups()} placeholder="종목 이름 검색" ariaLabel="종목" mark={false} {...p} />;
+}
 const firstGroups = (n: number, k = 4) => bankGroups(BANK_GROUPS.slice(0, n).map((g) => ({ ...g, items: g.items.slice(0, k) })));
 // 시트 판 · 흰 판
 const ov = () => overlayLook('desk');
@@ -404,6 +415,24 @@ function ChipGroups() {
     </div>
   );
 }
+// 누르면 바로 더하는 목록 — 라디오 없음(selectionMark off) · 칸에 넣는 고르기 — 라디오(2026-10-29 17-1 Q4 = B)
+const ActionGuide: Fig = ({ caption }) => (
+  <Panel caption={caption}>
+    <Wrap>
+      <Col strong="종목 추가 — 라디오 없음" cap={`누르면 그 종목을 더하고 닫는다 — 지금 값이 없어 동그라미가 채워질 일이 없다. 줄은 최소 ${SL().option.minHeight} · 좌우 ${SL().option.padX} 그대로`} w={SCREEN_W}>
+        <SheetBox title="종목 추가">
+          <Stocks query="하늘" pressed="하늘바이오" />
+        </SheetBox>
+      </Col>
+      <Col strong="은행 고르기 — 라디오" cap="고른 값이 칸에 들어간다 — 지금 값이 보여야 해서 오른쪽 라디오" w={SCREEN_W}>
+        <SheetBox title="은행 선택">
+          <Banks value="신한" groups={firstGroups(1, 4)} />
+        </SheetBox>
+      </Col>
+    </Wrap>
+  </Panel>
+);
+
 const ChipsGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
@@ -423,6 +452,14 @@ const ChipsGuide: Fig = ({ caption }) => (
 const ExInstitution: Fig = ({ caption }) => (
   <CodePreview caption={caption} w={360} pad={24}>
     <ExInstitutionDemo look={SL()} set={SETS()[0]} select={selectLook('desk')} field={tf().field} kit={overlayKit('desk')} />
+  </CodePreview>
+);
+// 종목 추가 — searchable-list.md 코드 그대로(selectionMark={false}). 멈춘 그림 — "하늘" 을 친 순간
+const ExStock: Fig = ({ caption }) => (
+  <CodePreview caption={caption} w={360} pad={24}>
+    <SheetBox title="종목 추가">
+      <Stocks query="하늘" />
+    </SheetBox>
   </CodePreview>
 );
 const ExCard: Fig = ({ caption }) => (
@@ -445,6 +482,8 @@ export const searchableListFigures: Record<string, Fig> = {
   'debounce-guide': DebounceGuide,
   'status-guide': StatusGuide,
   'chips-guide': ChipsGuide,
+  'action-guide': ActionGuide,
   'ex-institution': ExInstitution,
   'ex-card': ExCard,
+  'ex-stock': ExStock,
 };

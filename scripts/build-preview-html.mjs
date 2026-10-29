@@ -17621,7 +17621,7 @@ export function pageCss() {
     .psl-option.psl-option--hl::before,
     .psl-option.psl-option--pressed::before,
     .psl-option:not(.psl-option--skeleton):active::before { inset-inline: var(--spacing-x1_5); border-radius: var(--radius-r2_5); background: var(--color-bg-layer-default-pressed); }
-    .psl-option-content { position: relative; display: flex; align-items: center; width: 100%; box-sizing: border-box; padding: var(--spacing-x3) var(--spacing-global-gutter); transition: scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale); }
+    .psl-option-content { position: relative; display: flex; align-items: center; width: 100%; min-height: 48px; box-sizing: border-box; padding: var(--spacing-x3) var(--spacing-global-gutter); transition: scale var(--motion-duration-pressed-scale) var(--motion-ease-pressed-scale); }
     .psl-option.psl-option--pressed > .psl-option-content,
     .psl-option:not(.psl-option--skeleton):active > .psl-option-content { scale: calc(1 - 2 / var(--press-basis, 90)); }
     .psl-prefix { display: flex; flex-shrink: 0; padding-right: var(--spacing-x3); }

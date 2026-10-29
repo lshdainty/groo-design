@@ -1,6 +1,6 @@
 /*
  * shadcn Searchable List 예제 — docs site components/searchable-list.html 에서 Preview + Code 토글로 보인다.
- * 각 예제 = { title, description, jsx, render() }. 앞의 둘(은행 고르기 — 검색 시트 · 카드 상품 — 서버 검색 · 단계 안)은 차례 · 제목 · 코드가
+ * 각 예제 = { title, description, jsx, render() }. 앞의 셋(은행 고르기 — 검색 시트 · 카드 상품 — 서버 검색 · 단계 안 · 종목 추가 — 라디오 없음)은 차례 · 제목 · 코드가
  * specs/components/searchable-list.md 의 "코드" 절과 같고, 뒤의 둘(강조 · 누름 · 0건 · 실패 · 불러오는 줄)은 md 의 상태 · 키보드를 코드로 더 보인다.
  * SEED 에는 이 컴포넌트가 없다(Combobox 를 아직 두지 않았다) — 부품마다 SEED 를 따른다: 검색칸은 Text Input 밑줄형(사용자 결정 17A),
  * 결과는 List 줄 + 오른쪽 Radiomark, 결과 없음은 Result Section, 키보드는 SEED 문서 사이트 검색 창(초점은 입력칸, 화살표는 강조만 옮긴다 — 12A).
@@ -34,7 +34,7 @@ const OPTION = [
   "[[data-highlight-source=keyboard]_&]:before:transition-none",
 ].join(" ");
 const OPTION_CONTENT = [
-  "relative flex w-full items-center px-global-gutter py-x3",
+  "relative flex min-h-12 w-full items-center px-global-gutter py-x3",
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "group-active/sl-option:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-active/sl-option:[scale:1]",
 ].join(" ");
@@ -456,7 +456,8 @@ function searchInput({ id, placeholder, query = "", activeId = "", placement = "
 
 // <SearchableListItem> — 줄(role="option"). 오른쪽 라디오는 보는 표시(aria-hidden), 고름은 aria-selected 가 알린다.
 // highlighted 는 ↓ ↑("keyboard") · 마우스("pointer")로 짚은 줄 — 줄 폭 전체에서 좌우 6 · 모서리 10 으로 들어온 bg-layer-default-pressed
-function option({ id, value, title, detail, prefix, selected = false, highlighted = "" }) {
+// mark = false — 묶음의 selectionMark={false}(누르면 바로 더하는 목록). 라디오를 그리지 않고 줄은 최소 48 그대로
+function option({ id, value, title, detail, prefix, selected = false, highlighted = "", mark = true }) {
   const state = selected ? "checked" : "unchecked";
   return `<div ${attrs([
     `id="${id}"`,
@@ -470,7 +471,11 @@ function option({ id, value, title, detail, prefix, selected = false, highlighte
     prefix ? `<span aria-hidden="true" data-slot="searchable-list-item-prefix" class="${ITEM_PREFIX}">${prefix}</span>` : ""
   }<span class="${ITEM_BODY}"><span data-slot="searchable-list-item-title" class="${ITEM_TITLE}">${esc(title)}</span>${
     detail ? `<span data-slot="searchable-list-item-detail" class="${ITEM_DETAIL}">${detail}</span>` : ""
-  }</span><span aria-hidden="true" data-slot="searchable-list-item-radio" data-state="${state}" class="${merge(`${radiomarkVariants({ size: "large" })} ${ITEM_RADIO}`)}"><span data-state="${state}" class="${radiomarkDotVariants({ size: "large" })}"></span></span></div></div>`;
+  }</span>${
+    mark
+      ? `<span aria-hidden="true" data-slot="searchable-list-item-radio" data-state="${state}" class="${merge(`${radiomarkVariants({ size: "large" })} ${ITEM_RADIO}`)}"><span data-state="${state}" class="${radiomarkDotVariants({ size: "large" })}"></span></span>`
+      : ""
+  }</div></div>`;
 }
 
 // <SearchableListGroup label> — 분류 머리(List Header mediumWeak)가 묶음(role="group")의 이름
@@ -478,8 +483,9 @@ const group = (id, label, options) =>
   `<div role="group" aria-labelledby="${id}" data-slot="searchable-list-group" class="${GROUP}"><div id="${id}" role="presentation" data-slot="searchable-list-group-label" class="${listHeaderVariants({ variant: "mediumWeak" })}">${esc(label)}</div>${options.join("")}</div>`;
 // <SearchableListResults aria-label> — role="listbox". data-highlight-source 는 강조를 짚은 손(keyboard 면 바탕 전환 없이) — 레시피의 처음 값 keyboard
 const results = (id, label, html) => `<div id="${id}-listbox" role="listbox" aria-label="${esc(label)}" data-slot="searchable-list-results" data-highlight-source="keyboard" class="${RESULTS}">${html}</div>`;
-// <SearchableList placement>
-const searchableList = (placement, html) => `<div data-slot="searchable-list" data-placement="${placement}" class="${SL_ROOT}">${html}</div>`;
+// <SearchableList placement selectionMark>
+const searchableList = (placement, html, mark = true) =>
+  `<div data-slot="searchable-list" data-placement="${placement}"${mark ? "" : ' data-selection-mark="off"'} class="${SL_ROOT}">${html}</div>`;
 // <SearchableListSkeleton prefix rows> — 줄 높이 그대로(위아래 12 · 좌우 24), 제목 t5 40% + 설명 t3 60%
 const skeletonRows = (prefix, rows = 5) =>
   `<div aria-hidden="true" data-slot="searchable-list-skeleton" class="${SKELETON_LIST}">${Array.from(
@@ -624,6 +630,50 @@ import {
             CARDS.map((c, i) => option({ id: `sl-ex-card-o${i}`, value: c.id, title: c.name, detail: cardDetail(c), prefix: cardArt56(c), selected: c.id === "m-edition3" })).join(""),
           )}`,
         )}<div style="padding:var(--spacing-x4) var(--spacing-x6) 0;">${button({ text: "다음", variant: "neutralSolid", size: "large", className: "w-full" })}</div>`,
+      ),
+  },
+
+  {
+    title: "종목 추가 — 누르면 바로 더한다",
+    description:
+      "줄을 누르는 것이 고르기가 아니라 더하기인 목록 — 투자 폼의 \"종목 추가\" 처럼 누른 종목이 바로 더해지고 시트가 닫히는 목록은 라디오를 두지 않는다(selectionMark={false}). 지금 값이 없어 동그라미가 채워질 일이 없고, value 를 주지 않는다. 라디오만 빠지고 나머지는 그대로다 — 검색칸 · ↓ ↑ 강조 · Enter(강조한 줄을 더한다) · 결과 없음 · 줄 좌우 24 · 제목 오른쪽 10. 줄 높이는 라디오가 없어도 최소 48(min-h-12 — 한 줄 46 으로 줄지 않는다)이다. 하나를 골라 칸에 넣는 목록(은행 · 증권 · 카드 상품 · 결재자)은 라디오 그대로다(2026-10-29 사용자 결정 17-1 Q4 = B). 종목 이름은 지어낸 것이다.",
+    jsx: `<BottomSheetContent title="종목 추가" onOpenAutoFocus={focusSearchableList}>
+  <BottomSheetBody className="px-0">
+    {/* 지금 값이 없다 — value 를 주지 않고 라디오를 끈다. 누르면 더하고 닫는다 */}
+    <SearchableList selectionMark={false} onValueChange={(code) => { addStock(byCode(code)); setOpen(false) }} query={query} onQueryChange={setQuery} onSearch={setSearch}>
+      <SearchableListInput placeholder="종목 이름 검색" />
+      {stocks.length === 0 ? (
+        <SearchableListEmpty />
+      ) : (
+        <SearchableListResults aria-label="종목">
+          {stocks.map((s) => (
+            <SearchableListItem key={s.code} value={s.code} title={s.name} detail={s.market} />
+          ))}
+        </SearchableListResults>
+      )}
+    </SearchableList>
+  </BottomSheetBody>
+</BottomSheetContent>`,
+    render: () =>
+      sheet(
+        "종목 추가",
+        searchableList(
+          "sheet",
+          `${searchInput({ id: "sl-ex-stock", placeholder: "종목 이름 검색", query: "하늘" })}${results(
+            "sl-ex-stock",
+            "종목",
+            [
+              ["하늘전자", "코스피"],
+              ["하늘바이오", "코스닥"],
+              ["하늘화학", "코스피"],
+              ["하늘에너지", "코스닥"],
+            ]
+              .map(([name, market], i) => option({ id: `sl-ex-stock-o${i}`, value: name, title: name, detail: esc(market), mark: false }))
+              .join(""),
+          )}`,
+          false,
+        ),
+        420,
       ),
   },
 
