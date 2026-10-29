@@ -11,7 +11,8 @@
 # 상태는 결과 줄의 상태다 — highlighted(화살표 · 마우스로 짚음 — 같은 바탕) · pressed(누름). 줄은 초점을 받지 않는다(초점은 늘 입력칸).
 # 마우스로 짚은 강조는 포인터가 목록을 떠나면 지운다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-007-2, 안 B). 강조 바탕은 Menu · List 처럼
 # 좌우 0 → 6 · 모서리 0 → 10 으로 들어오며 둥글어진다(Q-009-3 안 B 를 따른다).
-# 크기(size) · 놓인 자리(placement) · 앞 붙이개(prefix) · 고름(selected)은 상태와 곱해지므로 축이다.
+# 크기(size) · 놓인 자리(placement) · 앞 붙이개(prefix) · 고름(selected) · 지금 값 표시(selectionMark)는 상태와 곱해지므로 축이다.
+# selectionMark off 는 누르면 바로 더하고 닫는 목록(종목 추가)이다 — 지금 값이 없어 라디오를 두지 않는다(2026-10-29 사용자 결정 17-1 Q4 = B).
 #
 # SEED 와 다른 자리(searchable-list.md 의 "SEED 와 다른 점")
 #   - 강조 바탕은 불투명한 bg-layer-default-pressed(List 의 누름 바탕) — SEED 문서 검색은 bg.transparent-pressed(투명도 있음).
@@ -30,7 +31,7 @@ slots:
   prefix: 앞 붙이개 — Logo Tile 40 · 카드 그림 56 · Avatar
   title: 제목 — 16 / 22
   detail: 설명 — 13 / 18
-  radio: 오른쪽 라디오 — 지금 고른 값
+  radio: 오른쪽 라디오 — 지금 고른 값. 누르면 바로 더하는 목록(selectionMark off)에는 없다
   status: 결과 없음 · 실패 — Result Section medium
   skeleton: 불러오는 줄 — 줄 모양 스켈레톤
 
@@ -49,12 +50,16 @@ variants:
   selected:
     other: 고르지 않은 줄(기본)
     current: 지금 고른 값 — 오른쪽 라디오 켬
+  selectionMark:
+    "on": 기본 — 오른쪽 라디오. 하나를 골라 칸에 넣는 목록(은행 · 증권 · 카드 상품 · 결재자)
+    "off": 누르면 바로 더하고 닫는 목록(투자 폼의 "종목 추가") — 지금 값이 없어 라디오를 두지 않는다
 
 defaults:
   size: large
   placement: sheet
   prefix: none
   selected: other
+  selectionMark: "on"
 
 states:
   enabled: 기본
@@ -82,8 +87,9 @@ rules:
         variant: { value: mediumWeak, note: "List Header — 14 · 500 · fg-neutral-subtle · 좌우 24 · 위아래 8(list-header.yaml). 분류마다 하나, 걸러져 줄이 없는 분류는 머리도 숨긴다" }
       option:
         role: option
-        paddingY: { value: $spacing-x3, note: "List 줄 그대로 — 좌우 24. 높이는 내용 + 위아래 24: 한 줄 48(라디오 24) · 두 줄 66 · 앞 40 64" }
+        paddingY: { value: $spacing-x3, note: "List 줄 그대로 — 좌우 24. 높이는 내용 + 위아래 24: 한 줄 48(라디오 24 — 라디오가 없으면 최소 높이 48) · 두 줄 66 · 앞 40 64" }
         paddingX: $spacing-global-gutter
+        minHeight: { value: 48px, note: "한 줄 줄의 바닥 — 라디오(24)가 있으면 내용이 48 을 채우고, 라디오가 없는 줄(selectionMark off — 제목 22 + 위아래 24 = 46)도 48 을 지킨다(2026-10-29)" }
         cursor: pointer
         touchTarget: { value: 줄 전체, note: "48 이상 — AA ✓ · AAA ✓" }
       highlight:
@@ -151,6 +157,14 @@ rules:
     enabled:
       radio:
         display: { value: 켬, note: "Radio 켬 모양 — 바탕 bg-neutral-inverted + 가운데 점(radio-group.yaml). 줄 바탕은 그대로 — 고른 줄을 칠하지 않는다" }
+
+  # ── 지금 값 표시 ──────────────────────────────────────
+  - when: { selectionMark: "off" }
+    enabled:
+      radio:
+        display: { value: 없음, note: "누르면 바로 더하고 닫는 목록 — 채워질 일이 없는 동그라미를 두지 않는다. 줄 높이(최소 48) · 좌우 24 · 제목 오른쪽 10 은 그대로다(2026-10-29 사용자 결정 17-1 Q4 = B)" }
+      option:
+        press: { value: 더하고 닫는다, note: "누른 줄을 바로 더하고(onValueChange) 시트 · 팝오버를 닫는다 — 지금 값을 들지 않는다(value 를 주지 않는다). 칸에 넣는 목록이 아니라 \"종목 추가\" 같은 동작이다" }
 
 motion:
   "강조 · 누름 — 바탕":

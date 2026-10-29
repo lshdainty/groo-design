@@ -618,6 +618,7 @@ export function searchLook(): SearchLook {
   sameSet(axisValues(spec, 'placement'), ['sheet', 'inline'], `${F} placement`);
   sameSet(axisValues(spec, 'prefix'), ['none', 'logo', 'cardArt', 'avatar'], `${F} prefix`);
   sameSet(axisValues(spec, 'selected'), ['other', 'current'], `${F} selected`);
+  sameSet(axisValues(spec, 'selectionMark'), ['on', 'off'], `${F} selectionMark`);
   sameSet(stateNames(spec), ['enabled', 'highlighted', 'pressed'], `${F} states`);
   const b = resolveState(spec, {}, 'enabled');
   const hl = resolveState(spec, {}, 'highlighted');
@@ -637,6 +638,10 @@ export function searchLook(): SearchLook {
   same(optPadY, list.faces.none.light.enabled.pad.y, `${F} 결과 줄 위아래 — list.yaml`);
   const optPadX = len(b['option.paddingX'], `${F} option.paddingX`);
   same(optPadX, list.faces.none.light.enabled.pad.x, `${F} 결과 줄 좌우 — list.yaml`);
+  // 최소 높이 — 라디오가 있는 한 줄 줄(위아래 + 라디오)과 같은 48. 라디오가 없는 줄(selectionMark off)도 이 높이를 지킨다
+  const optMinH = len(b['option.minHeight'], `${F} option.minHeight`);
+  same(optMinH, optPadY * 2 + radioSize, `${F} 결과 줄 최소 높이 — 위아래 + 라디오`);
+  if (String(unbox(resolveState(spec, { selectionMark: 'off' }, 'enabled')['radio.display'])) !== '없음') throw new Error(`${F} selectionMark off 의 radio.display 가 "없음" 이 아니다 — 그림은 라디오를 빼고 그린다`);
   // 강조 바탕은 줄 폭 전체(0 · 모서리 0)에서 짚으면 들어온다(Menu · List — Q-009-3 B)
   same(len(b['highlight.insetX'], `${F} highlight.insetX`), 0, `${F} 강조 없는 바탕 들임 0`);
   same(len(b['highlight.radius'], `${F} highlight.radius`), 0, `${F} 강조 없는 바탕 모서리 0`);
@@ -649,7 +654,7 @@ export function searchLook(): SearchLook {
     gap: len(b['root.gap'], `${F} root.gap`),
     breakpoint,
     field: { look: tf, marginX: len(b['field.marginX'], `${F} field.marginX`), heights },
-    option: { padY: optPadY, padX: optPadX },
+    option: { padY: optPadY, padX: optPadX, minHeight: optMinH },
     title: { ...typeOf(b['title.typography'], `${F} title.typography`, b['title.fontWeight']), fg: tok(b['title.foreground'], brand, `${F} title.foreground`) },
     detail: { ...typeOf(b['detail.typography'], `${F} detail.typography`), fg: tok(b['detail.foreground'], brand, `${F} detail.foreground`) },
     highlight: { insetX, radius: len(hl['highlight.radius'], `${F} highlighted highlight.radius`), bg: tok(hl['highlight.background'], brand, `${F} highlighted highlight.background`) },

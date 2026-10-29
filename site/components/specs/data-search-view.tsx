@@ -57,6 +57,8 @@ export type SearchableListProps = {
   autoFocus?: boolean;
   marks?: Partial<Record<SearchPart, CSSProperties>>;
   pins?: Partial<Record<SearchPart, ReactNode>>;
+  // 지금 값 표시(축 selectionMark) — false 면 오른쪽 라디오를 그리지 않는다(누르면 바로 더하는 목록). 줄 높이는 최소 48 그대로
+  mark?: boolean;
   // 나쁜 예 — 상자형 52 검색칸 · 고른 줄 브랜드 바탕 · 라디오 목록 키보드(Tab 으로 줄마다)
   bad?: { boxField?: boolean; brandTint?: boolean; tabRows?: boolean };
   onSaid?: (s: string) => void;
@@ -87,6 +89,7 @@ export function SearchableListView({
   autoFocus = false,
   marks,
   pins,
+  mark = true,
   bad,
   onSaid,
 }: SearchableListProps) {
@@ -261,6 +264,8 @@ export function SearchableListView({
             paddingBottom: look.option.padY,
             paddingLeft: look.option.padX,
             paddingRight: look.option.padX,
+            minHeight: look.option.minHeight,
+            boxSizing: 'border-box',
             fontFamily: f.title.fontFamily,
             transform: ratio !== 1 ? `scale(${ratio})` : undefined,
             transition: `transform ${look.press.motion.duration} ${look.press.motion.easing}`,
@@ -285,7 +290,7 @@ export function SearchableListView({
               </span>
             )}
           </span>
-          {!bad?.brandTint && (
+          {!bad?.brandTint && mark && (
             <span aria-hidden style={{ position: 'relative', display: 'flex', flexShrink: 0, pointerEvents: 'none', ...(first ? marks?.radio : undefined) }}>
               {first && pins?.radio}
               <RadioView look={look.radio} mode={mode} checked={on ? 'checked' : 'unchecked'} state={radioState(o.value)} tabIndex={-1} />
