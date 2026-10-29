@@ -22,6 +22,8 @@ import { Radiomark, ignoreRadioJumpKeys, submitOnRadioEnter } from "@/components
  * 키보드 포커스 링은 상자 바깥에 하나만 — 컨트롤은 자기 링을 끈다(SEED).
  * 컨트롤이 '없음' 이어도 라디오 · 체크는 화면 밖에 두어(sr-only) 키보드 · 화면 읽기 프로그램이 그대로 쓴다.
  * 1열은 가로형(기본), 2 ~ 3열이면 세로형 — 묶음의 columns 가 정하고 상자마다 layout 으로 바꿀 수 있다.
+ * 묶음의 density="compact" 는 세로형의 낮은 상자다 — 위아래 20 → 12 · 앞 ↔ 글 10 → 4(가로형에는 걸리지 않는다). 한 시트에 상자가 많아
+ * 100% 글자에서 모두 보여야 할 때만 쓴다(자산 종류 아홉 — 2026-10-29 사용자 결정 17-1 Q5 = B). 선택지 2 ~ 4개는 기본.
  * 펼침은 고른 상자 아래로 열린다(높이 400ms · 투명도 300ms, 닫을 때 300ms · 400ms). 닫히면 보이지 않고 Tab 도 닿지 않는다.
  */
 
@@ -79,10 +81,16 @@ const selectBoxTriggerVariants = cva(
     variants: {
       layout: {
         horizontal: "items-center py-x4 pl-x5 pr-x4",
-        vertical: "items-start px-x4 py-x5",
+        vertical: "items-start px-x4",
       },
+      // 낮은 상자(compact)는 세로형에만 — 위아래 20 → 12
+      density: { default: "", compact: "" },
     },
-    defaultVariants: { layout: "horizontal" },
+    compoundVariants: [
+      { layout: "vertical", density: "default", className: "py-x5" },
+      { layout: "vertical", density: "compact", className: "py-x3" },
+    ],
+    defaultVariants: { layout: "horizontal", density: "default" },
   },
 );
 
@@ -90,10 +98,16 @@ const selectBoxContentVariants = cva("flex min-w-0 flex-1", {
   variants: {
     layout: {
       horizontal: "flex-row items-center gap-x3",
-      vertical: "flex-col gap-x2_5",
+      vertical: "flex-col",
     },
+    // 낮은 상자(compact)는 세로형에만 — 앞(위) ↔ 본문 10 → 4
+    density: { default: "", compact: "" },
   },
-  defaultVariants: { layout: "horizontal" },
+  compoundVariants: [
+    { layout: "vertical", density: "default", className: "gap-x2_5" },
+    { layout: "vertical", density: "compact", className: "gap-x1" },
+  ],
+  defaultVariants: { layout: "horizontal", density: "default" },
 });
 
 const selectBoxPrefixVariants = cva("flex shrink-0 text-fg-neutral [&>svg]:size-[22px]", {
@@ -143,7 +157,8 @@ const GHOST_NO_BG =
   "hover:bg-transparent active:bg-transparent data-[state=checked]:hover:bg-transparent data-[state=checked]:active:bg-transparent";
 
 type Layout = "horizontal" | "vertical";
-const SelectBoxGroupContext = React.createContext<{ columns: 1 | 2 | 3 }>({ columns: 1 });
+type Density = "default" | "compact";
+const SelectBoxGroupContext = React.createContext<{ columns: 1 | 2 | 3; density: Density }>({ columns: 1, density: "default" });
 const useLayout = (layout?: Layout): Layout => {
   const { columns } = React.useContext(SelectBoxGroupContext);
   return layout ?? (columns > 1 ? "vertical" : "horizontal");
@@ -177,16 +192,17 @@ function Box({
   control,
 }: BoxBase & { disabled?: boolean; htmlFor: string; control: React.ReactNode }) {
   const layout = useLayout(layoutProp);
+  const { density } = React.useContext(SelectBoxGroupContext);
   return (
     <div className={cn(selectBoxVariants(), rootClassName)} {...rootRest}>
       <label
         htmlFor={htmlFor}
         data-select-box-action=""
         data-disabled={disabled ? "" : undefined}
-        className={selectBoxTriggerVariants({ layout })}
+        className={selectBoxTriggerVariants({ layout, density })}
         {...pressHandlers}
       >
-        <span className={selectBoxContentVariants({ layout })}>
+        <span className={selectBoxContentVariants({ layout, density })}>
           {prefix && <span className={cn(selectBoxPrefixVariants({ disabled }))}>{prefix}</span>}
           <span className={selectBoxBodyVariants()}>
             <span className={cn(selectBoxLabelVariants({ disabled }))}>{label}</span>
@@ -209,15 +225,21 @@ function Box({
   );
 }
 
+type GroupDensity = {
+  /** 세로형의 낮은 상자(compact — 위아래 12 · 앞 ↔ 글 4). 한 시트에 상자가 많아 모두 보여야 할 때만 — 선택지 2 ~ 4개는 기본(default) */
+  density?: Density;
+};
+
 export interface RadioSelectBoxGroupProps
   extends React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>,
-    VariantProps<typeof selectBoxGroupVariants> {}
+    VariantProps<typeof selectBoxGroupVariants>,
+    GroupDensity {}
 
 // 하나 고르기 묶음 — role=radiogroup, 이름 필수(Field 로 감싸면 라벨이 이름 · 오류가 설명이 된다, 아니면 aria-label · aria-labelledby).
 // 화살표로 옮기며 고른다(Home · End 는 받지 않는다 — Radio 와 같다). Enter 는 폼을 제출한다(Radio 와 같다 — 여럿 고르기는 Checkmark 가 한다)
 const RadioSelectBoxGroup = React.forwardRef<React.ElementRef<typeof RadioGroupPrimitive.Root>, RadioSelectBoxGroupProps>(
-  ({ className, columns = 1, onKeyDown, onKeyDownCapture, ...props }, ref) => (
-    <SelectBoxGroupContext.Provider value={{ columns: columns ?? 1 }}>
+  ({ className, columns = 1, density = "default", onKeyDown, onKeyDownCapture, ...props }, ref) => (
+    <SelectBoxGroupContext.Provider value={{ columns: columns ?? 1, density }}>
       <RadioGroupPrimitive.Root
         ref={ref}
         className={cn(selectBoxGroupVariants({ columns }), className)}
@@ -275,12 +297,12 @@ const RadioSelectBox = React.forwardRef<React.ElementRef<typeof RadioGroupPrimit
 );
 RadioSelectBox.displayName = "RadioSelectBox";
 
-export interface CheckSelectBoxGroupProps extends React.FieldsetHTMLAttributes<HTMLFieldSetElement>, VariantProps<typeof selectBoxGroupVariants> {}
+export interface CheckSelectBoxGroupProps extends React.FieldsetHTMLAttributes<HTMLFieldSetElement>, VariantProps<typeof selectBoxGroupVariants>, GroupDensity {}
 
 // 여럿 고르기 묶음 — fieldset, 이름 필수(Field 로 감싸면 라벨이 이름 · 오류가 설명이 된다, 아니면 aria-label · aria-labelledby).
 // "없음" 으로 여럿을 고르게 하면 몇 개까지인지 미리 적는다
-const CheckSelectBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckSelectBoxGroupProps>(({ className, columns = 1, ...props }, ref) => (
-  <SelectBoxGroupContext.Provider value={{ columns: columns ?? 1 }}>
+const CheckSelectBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckSelectBoxGroupProps>(({ className, columns = 1, density = "default", ...props }, ref) => (
+  <SelectBoxGroupContext.Provider value={{ columns: columns ?? 1, density }}>
     <fieldset ref={ref} className={cn(selectBoxGroupVariants({ columns }), "m-0 min-w-0 border-0 p-0", className)} {...useFieldGroup(props)} />
   </SelectBoxGroupContext.Provider>
 ));

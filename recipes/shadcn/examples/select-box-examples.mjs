@@ -1,7 +1,7 @@
 /*
  * shadcn Select Box 예제 — docs site components/select-box.html 에서 Preview + Code 토글로 보인다.
- * 각 예제 = { title, description, jsx, render() }. 앞의 여섯은 차례 · 제목 · 코드가 specs/components/select-box.md 의 "코드" 절과 같고,
- * 뒤의 둘(2열 · 앞 · 펼침 보이기)은 md 에 없는 쓰임을 더 보인다. 여섯째(여럿 고르고 저장 — HR 역할, 2026-10-15 마무리 10A)의 칸 둘레 FIELD_* 는
+ * 각 예제 = { title, description, jsx, render() }. 앞의 일곱은 차례 · 제목 · 코드가 specs/components/select-box.md 의 "코드" 절과 같고,
+ * 뒤의 둘(2열 · 앞 · 펼침 보이기)은 md 에 없는 쓰임을 더 보인다. 일곱째(여럿 고르고 저장 — HR 역할, 2026-10-15 마무리 10A)의 칸 둘레 FIELD_* 는
  * field.tsx 의 클래스, "저장" 의 BUTTON_* 는 button.tsx 의 값(neutralSolid · medium)이다.
  *
  * GROUP_* · CHECK_GROUP · BOX_BASE · TRIGGER_* · CONTENT_* · PREFIX_* · BODY_BASE · LABEL_* · DESCRIPTION_* · FOOTER_BASE · FOOTER_OPEN ·
@@ -65,11 +65,18 @@ const TRIGGER_BASE = [
 const TRIGGER_VARIANTS = {
   layout: {
     horizontal: "items-center py-x4 pl-x5 pr-x4",
-    vertical: "items-start px-x4 py-x5",
+    vertical: "items-start px-x4",
   },
+  // 낮은 상자(compact)는 세로형에만 — 위아래 20 → 12
+  density: { default: "", compact: "" },
 };
 
-const TRIGGER_DEFAULTS = { layout: "horizontal" };
+const TRIGGER_COMPOUND = [
+  { layout: "vertical", density: "default", className: "py-x5" },
+  { layout: "vertical", density: "compact", className: "py-x3" },
+];
+
+const TRIGGER_DEFAULTS = { layout: "horizontal", density: "default" };
 
 // 콘텐츠(selectBoxContentVariants) — 앞 · 본문. 가로형은 한 줄, 세로형은 앞이 위
 const CONTENT_BASE = "flex min-w-0 flex-1";
@@ -77,11 +84,18 @@ const CONTENT_BASE = "flex min-w-0 flex-1";
 const CONTENT_VARIANTS = {
   layout: {
     horizontal: "flex-row items-center gap-x3",
-    vertical: "flex-col gap-x2_5",
+    vertical: "flex-col",
   },
+  // 낮은 상자(compact)는 세로형에만 — 앞(위) ↔ 본문 10 → 4
+  density: { default: "", compact: "" },
 };
 
-const CONTENT_DEFAULTS = { layout: "horizontal" };
+const CONTENT_COMPOUND = [
+  { layout: "vertical", density: "default", className: "gap-x2_5" },
+  { layout: "vertical", density: "compact", className: "gap-x1" },
+];
+
+const CONTENT_DEFAULTS = { layout: "horizontal", density: "default" };
 
 // 앞(selectBoxPrefixVariants) — 아이콘 22. 막히면 비활성 색
 const PREFIX_BASE = "flex shrink-0 text-fg-neutral [&>svg]:size-[22px]";
@@ -312,8 +326,8 @@ function cvaOf(base, { variants = {}, compoundVariants = [], defaultVariants = {
 
 const selectBoxGroupVariants = cvaOf(GROUP_BASE, { variants: GROUP_VARIANTS, defaultVariants: GROUP_DEFAULTS });
 const selectBoxVariants = cvaOf(BOX_BASE);
-const selectBoxTriggerVariants = cvaOf(TRIGGER_BASE, { variants: TRIGGER_VARIANTS, defaultVariants: TRIGGER_DEFAULTS });
-const selectBoxContentVariants = cvaOf(CONTENT_BASE, { variants: CONTENT_VARIANTS, defaultVariants: CONTENT_DEFAULTS });
+const selectBoxTriggerVariants = cvaOf(TRIGGER_BASE, { variants: TRIGGER_VARIANTS, compoundVariants: TRIGGER_COMPOUND, defaultVariants: TRIGGER_DEFAULTS });
+const selectBoxContentVariants = cvaOf(CONTENT_BASE, { variants: CONTENT_VARIANTS, compoundVariants: CONTENT_COMPOUND, defaultVariants: CONTENT_DEFAULTS });
 const selectBoxPrefixVariants = cvaOf(PREFIX_BASE, { variants: PREFIX_VARIANTS, defaultVariants: PREFIX_DEFAULTS });
 const selectBoxBodyVariants = cvaOf(BODY_BASE);
 const selectBoxLabelVariants = cvaOf(LABEL_BASE, { variants: LABEL_VARIANTS, defaultVariants: LABEL_DEFAULTS });
@@ -398,6 +412,20 @@ const ICONS = {
   sun: svg(
     '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
   ),
+  landmark: svg(
+    '<path d="M10 18v-7"/><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/>',
+  ),
+  piggyBank: svg(
+    '<path d="M11 17h3v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3a3.16 3.16 0 0 0 2-2h1a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-1a5 5 0 0 0-2-4V3a4 4 0 0 0-3.2 1.6l-.3.4H11a6 6 0 0 0-6 6v1a5 5 0 0 0 2 4v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/><path d="M16 10h.01"/><path d="M2 8v1a2 2 0 0 0 2 2h1"/>',
+  ),
+  calendarDays: svg(
+    '<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/>',
+  ),
+  percent: svg('<line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>'),
+  wallet: svg(
+    '<path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>',
+  ),
+  coins: svg('<path d="M13.744 17.736a6 6 0 1 1-7.48-7.48"/><path d="M15 6h1v4"/><path d="m6.134 14.768.866-.5 2 3.464"/><circle cx="16" cy="8" r="6"/>'),
   moon: svg(
     '<path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>',
   ),
@@ -477,6 +505,7 @@ function box({
   htmlFor,
   control,
   layout,
+  density = "default",
   disabled,
   label,
   description,
@@ -488,14 +517,14 @@ function box({
     `for="${htmlFor}"`,
     'data-select-box-action=""',
     disabled && 'data-disabled=""',
-    `class="${selectBoxTriggerVariants({ layout })}"`,
+    `class="${selectBoxTriggerVariants({ layout, density })}"`,
   ]);
   const head = prefix ? `<span class="${merge(selectBoxPrefixVariants({ disabled }))}">${prefix}</span>` : "";
   const text = description
     ? `<span class="${merge(selectBoxDescriptionVariants({ disabled }))}">${description}</span>`
     : "";
   const body = `<span class="${selectBoxBodyVariants()}"><span class="${merge(selectBoxLabelVariants({ disabled }))}">${label}</span>${text}</span>`;
-  const content = `<span class="${selectBoxContentVariants({ layout })}">${head}${body}</span>`;
+  const content = `<span class="${selectBoxContentVariants({ layout, density })}">${head}${body}</span>`;
   return `<div class="${merge(selectBoxVariants())}"><label ${trigger}>${content}${control}</label>${footer ? footerOf(footer, footerVisibility) : ""}</div>`;
 }
 
@@ -504,27 +533,28 @@ const layoutOf = (columns, layout) => layout ?? (columns > 1 ? "vertical" : "hor
 
 // <RadioSelectBoxGroup> — Radix RadioGroup.Root 가 role="radiogroup" 을 단다. 고른 값(value)과 같은 상자 하나만 고른 상태다.
 // 상자는 { id, value, label, … } — control 은 "radio"(기본) · "none"
-function radioSelectBoxGroup(items, { value, columns = 1, ariaLabel } = {}) {
+// density 는 묶음이 정한다(레시피의 SelectBoxGroupContext) — "compact" 는 세로형의 낮은 상자
+function radioSelectBoxGroup(items, { value, columns = 1, density = "default", ariaLabel } = {}) {
   const boxes = items.map(({ id, value: own, control = "radio", disabled = false, layout, ...it }) => {
     const checked = own === value;
     const mark =
       control === "radio"
         ? radiomark({ id, value: own, checked, disabled })
         : hiddenControl({ id, role: "radio", value: own, checkState: state(checked), disabled });
-    return box({ ...it, disabled, htmlFor: id, control: mark, layout: layoutOf(columns, layout) });
+    return box({ ...it, disabled, htmlFor: id, control: mark, layout: layoutOf(columns, layout), density });
   });
   return `<div ${attrs(['role="radiogroup"', `class="${merge(selectBoxGroupVariants({ columns }))}"`, ariaLabel && `aria-label="${ariaLabel}"`])}>${boxes.join("")}</div>`;
 }
 
 // <CheckSelectBoxGroup> — 여럿 고르기 묶음. <fieldset>(role=group)이고 이름은 aria-label.
 // 상자는 { id, checkState, label, … } — control 은 "check"(기본) · "none"
-function checkSelectBoxGroup(items, { columns = 1, ariaLabel } = {}) {
+function checkSelectBoxGroup(items, { columns = 1, density = "default", ariaLabel } = {}) {
   const boxes = items.map(({ id, checkState = "unchecked", control = "check", disabled = false, layout, ...it }) => {
     const mark =
       control === "check"
         ? checkmark({ id, checkState, disabled })
         : hiddenControl({ id, role: "checkbox", checkState, disabled });
-    return box({ ...it, disabled, htmlFor: id, control: mark, layout: layoutOf(columns, layout) });
+    return box({ ...it, disabled, htmlFor: id, control: mark, layout: layoutOf(columns, layout), density });
   });
   return `<fieldset ${attrs([`class="${merge(`${selectBoxGroupVariants({ columns })} ${CHECK_GROUP}`)}"`, ariaLabel && `aria-label="${ariaLabel}"`])}>${boxes.join("")}</fieldset>`;
 }
@@ -707,6 +737,38 @@ import { RadioSelectBox, RadioSelectBoxGroup } from "@/components/ui/select-box"
             { value: "json", prefix: ICONS.braces, label: "JSON", description: "백업용" },
           ].map((it) => ({ ...it, id: `select-box-ex-format-${it.value}`, control: "none" })),
           { value: "csv", columns: 3, ariaLabel: "파일 형식" },
+        ),
+      ),
+  },
+
+  {
+    title: "낮은 상자 — 자산 종류",
+    description:
+      "세로형(2 ~ 3열)의 낮은 꼴 — 묶음에 density=\"compact\" 를 주면 위아래 20 → 12, 앞(위) ↔ 글 10 → 4 다(좌우 16 · 앞 22 · 글자 · 테두리 · 열 · 줄 사이는 그대로, 제목만 있는 상자 94 → 72). 한 시트에 상자가 많아 100% 글자에서 모두 보여야 할 때만 쓴다 — 자산 추가 1단계의 종류 아홉(계좌 여섯 · 카드 둘 · 투자 하나)이 기본 높이면 마지막 상자가 화면 아래 흐림 속에 숨는다. 선택지 2 ~ 4개는 기본 높이로 두고, 한 묶음에서 기본과 낮은 상자를 섞지 않는다. 가로형(1열)에는 걸리지 않는다(2026-10-29 사용자 결정 17-1 Q5 = B).",
+    jsx: `import { CalendarDays, Coins, Landmark, Percent, PiggyBank, Wallet } from "lucide-react"
+import { RadioSelectBox, RadioSelectBoxGroup } from "@/components/ui/select-box"
+
+{/* 한 시트에 종류 아홉(계좌 여섯 · 카드 둘 · 투자 하나) — 묶음마다 낮은 상자로, 100% 글자에서 모두 보이게 */}
+<RadioSelectBoxGroup columns={2} density="compact" value={kind} onValueChange={setKind} aria-label="계좌">
+  <RadioSelectBox value="checking" control="none" prefix={<Landmark />} label="입출금" />
+  <RadioSelectBox value="deposit" control="none" prefix={<PiggyBank />} label="예금" />
+  <RadioSelectBox value="savings" control="none" prefix={<CalendarDays />} label="적금" />
+  <RadioSelectBox value="overdraft" control="none" prefix={<Percent />} label="마이너스 통장" />
+  <RadioSelectBox value="cash" control="none" prefix={<Wallet />} label="현금" />
+  <RadioSelectBox value="loan" control="none" prefix={<Coins />} label="대출" />
+</RadioSelectBoxGroup>`,
+    render: () =>
+      screen(
+        radioSelectBoxGroup(
+          [
+            { value: "checking", prefix: ICONS.landmark, label: "입출금" },
+            { value: "deposit", prefix: ICONS.piggyBank, label: "예금" },
+            { value: "savings", prefix: ICONS.calendarDays, label: "적금" },
+            { value: "overdraft", prefix: ICONS.percent, label: "마이너스 통장" },
+            { value: "cash", prefix: ICONS.wallet, label: "현금" },
+            { value: "loan", prefix: ICONS.coins, label: "대출" },
+          ].map((it) => ({ ...it, id: `select-box-ex-compact-${it.value}`, control: "none" })),
+          { value: "checking", columns: 2, density: "compact", ariaLabel: "계좌" },
         ),
       ),
   },

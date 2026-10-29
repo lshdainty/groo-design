@@ -13,6 +13,9 @@ export const SB_SELECTED = ['unselected', 'selected'] as const;
 export type SbSelected = (typeof SB_SELECTED)[number];
 export const SB_LAYOUTS = ['horizontal', 'vertical'] as const;
 export type SbLayout = (typeof SB_LAYOUTS)[number];
+// 밀도 — compact 는 세로형의 낮은 상자(위아래 12 · 앞 ↔ 글 4, 2026-10-29 17-1 Q5 = B)
+export const SB_DENSITIES = ['default', 'compact'] as const;
+export type SbDensity = (typeof SB_DENSITIES)[number];
 
 export type SbType = { fontSize: string; lineHeight?: string; fontWeight: number | string; fontFamily: string };
 export type SbMotion = { duration: string; easing: string };
@@ -47,6 +50,8 @@ export type SbLayoutFace = {
 export type SbLook = {
   faces: Record<SbSelected, Record<Mode, Record<SbState, SbFace>>>;
   layouts: Record<SbLayout, SbLayoutFace>;
+  // 세로형의 낮은 상자(density compact) — 가로형에는 걸리지 않는다
+  compact: SbLayoutFace;
   group: { gapX: number; gapY: number };
   press: { distance: number; widthDivisor: number; minBasis: number };
   motion: {

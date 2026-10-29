@@ -113,6 +113,28 @@ const ACCOUNT: BoxSpec[] = [
   { value: 'loan', title: '대출', description: '빌린 돈 · 이자 · 갚을 날', prefix: { icon: 'landmark' } },
   { value: 'etc', title: '기타', description: '포인트 · 상품권', prefix: { icon: 'gift' } },
 ];
+// Desk — 자산 추가 1단계 "무엇을 추가할까요?" 의 종류 아홉(계좌 여섯 · 카드 둘 · 투자 하나) — 2열 · 앞 아이콘 · 컨트롤 없음
+const KINDS: { label: string; boxes: BoxSpec[] }[] = [
+  {
+    label: '계좌',
+    boxes: [
+      { value: 'checking', title: '입출금', prefix: { icon: 'landmark' } },
+      { value: 'deposit', title: '예금', prefix: { icon: 'piggy-bank' } },
+      { value: 'savings', title: '적금', prefix: { icon: 'calendar-days' } },
+      { value: 'overdraft', title: '마이너스 통장', prefix: { icon: 'percent' } },
+      { value: 'cash', title: '현금', prefix: { icon: 'wallet' } },
+      { value: 'loan', title: '대출', prefix: { icon: 'coins' } },
+    ],
+  },
+  {
+    label: '카드',
+    boxes: [
+      { value: 'credit', title: '신용카드', prefix: { icon: 'credit-card' } },
+      { value: 'check', title: '체크카드', prefix: { icon: 'credit-card' } },
+    ],
+  },
+  { label: '투자', boxes: [{ value: 'invest', title: '투자', prefix: { icon: 'trending-up' } }] },
+];
 // Desk — 홈에 둘 요약(여럿 · 최대 2)
 const SUMMARY: BoxSpec[] = [
   { value: 'spend', title: '이번 달 지출', prefix: { icon: 'wallet' } },
@@ -284,6 +306,40 @@ const Layout: Fig = ({ caption }) => (
     </div>
   </Panel>
 );
+
+// 밀도 — 같은 종류 아홉을 기본 · 낮은 상자로. 여백 · 사이 값은 select-box.yaml(look)에서
+function Kinds({ density, mode = 'auto' }: { density: 'default' | 'compact'; mode?: Mode }) {
+  return (
+    <div className="flex flex-col gap-3">
+      {KINDS.map((g, i) => (
+        <div key={g.label}>
+          <Label mode={mode}>{g.label}</Label>
+          <G kind="radio" control="none" columns={2} density={density} boxes={g.boxes} value={i === 0 ? 'checking' : undefined} ariaLabel={g.label} mode={mode} />
+        </div>
+      ))}
+    </div>
+  );
+}
+const Density: Fig = ({ caption }) => {
+  const d = look().layouts.vertical;
+  const c = look().compact;
+  return (
+    <Panel caption={caption}>
+      <div className="flex flex-wrap items-start justify-center gap-6">
+        <Wide>
+          <Cell label={<><b className="pk-text">기본 default</b> 위아래 {d.pad.top} · 앞 ↔ 글 {d.content.gap} — 선택지 2 ~ 4개 · 설명이 붙는 상자</>}>
+            <Kinds density="default" />
+          </Cell>
+        </Wide>
+        <Wide>
+          <Cell label={<><b className="pk-text">낮은 상자 compact</b> 위아래 {c.pad.top} · 앞 ↔ 글 {c.content.gap} — 한 시트에 상자가 많을 때만(자산 종류 아홉). 좌우 {c.pad.left} · 앞 · 글자 · 열 · 줄 사이는 그대로</>}>
+            <Kinds density="compact" />
+          </Cell>
+        </Wide>
+      </div>
+    </Panel>
+  );
+};
 
 const States: Fig = ({ caption }) => (
   <Panel caption={caption}>
@@ -573,6 +629,11 @@ const ExColumns: Fig = ({ caption }) => (
     <G kind="radio" control="none" columns={3} boxes={FORMAT} value="csv" ariaLabel="파일 형식" />
   </Preview>
 );
+const ExCompact: Fig = ({ caption }) => (
+  <Preview caption={caption}>
+    <G kind="radio" control="none" columns={2} density="compact" boxes={KINDS[0].boxes} value="checking" ariaLabel="계좌" />
+  </Preview>
+);
 const ExStates: Fig = ({ caption }) => (
   <Preview caption={caption}>
     <G kind="radio" boxes={FLEX.map((b) => ({ ...b, footer: undefined, disabled: true }))} value="fixed" ariaLabel="가변 부여 여부" brand="hr" />
@@ -639,6 +700,7 @@ export const selectBoxFigures: Record<string, Fig> = {
   anatomy: Anatomy,
   control: Control,
   layout: Layout,
+  density: Density,
   states: States,
   live: Live,
   prefix: Prefix,
@@ -654,6 +716,7 @@ export const selectBoxFigures: Record<string, Fig> = {
   'ex-footer': ExFooter,
   'ex-check': ExCheck,
   'ex-columns': ExColumns,
+  'ex-compact': ExCompact,
   'ex-states': ExStates,
   'ex-roles': ExRoles,
 };

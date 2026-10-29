@@ -1,0 +1,185 @@
+# Select Box 의 수치 원본 — 구조는 SEED Select Box(Radio · Check Select Box · Group · Checkmark, 2026-10-01 사용자 결정).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 부위: root 는 상자(테두리 · 바탕 · 모서리), trigger 는 누르는 자리(콘텐츠 + 컨트롤 — 상자에서 펼침을 뺀 전부),
+# content 는 앞 · 본문, footer 는 고른 상자 아래로 펼쳐지는 딸린 내용, group 은 묶음(1 ~ 3열 격자).
+# 고른 테두리는 상자 안쪽 2px 로 덧그린다 — 테두리 두께가 바뀌어도 내용이 밀리지 않는다(SEED ::after).
+# 누르면 바탕이 바뀌고 누르는 자리(콘텐츠 + 컨트롤)만 2px 거리로 준다(SEED scaleScope: content · 기초 Feedback v104).
+#
+# 선택 여부(selected)는 hover · pressed · disabled 와 곱해지므로 상태가 아니라 축이다(specs/CLAUDE.md).
+# 배치(layout)는 열 수에서 온다 — 1열은 가로형, 2 ~ 3열은 세로형(SEED columns > 1 이면 vertical).
+#
+# SEED 와 다른 자리(select-box.md 의 "SEED 와 다른 점")
+#   - 누름 · 호버 바탕은 불투명한 bg-layer-default-pressed(SEED transparent-pressed 는 투명도가 있어 검사기가 받지 않는다 — v102).
+#   - 웹의 hovered · focused 상태를 더한다(v106). 호버는 누름과 같은 바탕.
+#   - 펼침 안쪽 여백을 컴포넌트가 정한다(SEED 는 쓰는 쪽이 Box 로 준다 — 예제 값 좌우 20 · 아래 16).
+#   - 체크는 Checkbox 의 Ghost 칸(medium — 체크 14)을 쓴다. SEED 는 선택 상자 전용 체크(15).
+
+name: Select Box
+
+slots:
+  root: 상자 — 테두리 · 바탕 · 모서리. 펼침을 뺀 전부가 누르는 영역
+  trigger: 누르는 자리(label) — 콘텐츠 + 오른쪽 컨트롤. 누르면 이 자리만 준다
+  content: 콘텐츠 — 앞 · 본문
+  prefix: 앞 — 아이콘 22 · 그림
+  body: 본문 — 제목 + 설명
+  label: 제목 — 배지를 옆에 둘 수 있다
+  description: 설명 — 두 줄까지
+  control: 오른쪽 컨트롤 — Radiomark(하나 고르기) · 칸 없는 체크(여럿) · 없음
+  footer: 펼침 — 고른 상자 아래 딸린 입력 · 안내
+  focusRing: 키보드 포커스 링(웹) — 상자 바깥
+  group: 묶음 — 1 ~ 3열 격자(하나 고르기 radiogroup · 여럿 fieldset)
+
+variants:
+  layout:
+    horizontal: 가로형 — 1열(기본). 앞 · 본문 · 컨트롤이 한 줄, 세로 가운데
+    vertical: 세로형 — 2 ~ 3열. 앞이 위, 컨트롤은 위 오른쪽
+  selected:
+    unselected: 고르지 않음
+    selected: 고름
+
+defaults:
+  layout: horizontal
+  selected: unselected
+
+states:
+  enabled: 기본
+  hovered: 웹 — 누름과 같은 바탕(v106)
+  focused: 웹 — 키보드 포커스에만 상자 바깥 링
+  pressed: 바탕 + 누르는 자리만 2px 거리 축소(v104)
+  disabled: 전용 색(v106) — 불투명도로 흐리게 하지 않는다
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        radius: $radius-r3
+        background: transparent
+        borderWidth: { value: 1px, note: "상자 안쪽에 그린다(inset) — 고른 테두리 2px 도 안쪽에 덧그려 내용이 밀리지 않는다" }
+        borderColor: $color-stroke-neutral-weak
+        touchTarget: { value: 44 × 44, note: "펼침을 뺀 상자 전체 — 가장 작은 상자(가로형 · 제목만)도 54" }
+        transitionProperty: { value: background-color, note: "고른 테두리는 따로 — 아래 motion" }
+        transitionDuration: $motion-duration-color-transition
+        transitionEasing: $motion-ease-easing
+      trigger:
+        gap: { value: $spacing-x1_5, note: "콘텐츠와 컨트롤 사이" }
+        grow: { value: 1, note: "상자가 같은 높이로 늘면 남는 자리까지 채운다 — 내용이 짧은 상자의 빈 아래쪽도 눌린다(SEED flex-grow: 1)" }
+        cursor: { value: pointer, note: "누르는 자리에만 — 펼침은 누르는 영역이 아니다" }
+        transitionProperty: scale
+        transitionDuration: $motion-duration-pressed-scale
+        transitionEasing: $motion-ease-pressed-scale
+      prefix:
+        size: 22px
+        color: $color-fg-neutral
+      body:
+        gap: $spacing-x0_5
+        paddingRight: { value: $spacing-x1, note: "본문과 컨트롤 사이(trigger 간격에 더한다)" }
+      label:
+        typography: $text-t5
+        fontWeight: { value: 500, note: "SEED 와 같다 — 선택지를 비교하며 읽는 자리라 List 제목(400)보다 한 단계 굵다(사용자 결정)" }
+        foreground: $color-fg-neutral
+        gap: { value: $spacing-x1, note: "제목 옆 배지 사이" }
+      description:
+        typography: $text-t3
+        foreground: { value: $color-fg-neutral-muted, note: "SEED 와 같다 — List 설명(fg-neutral-subtle)보다 한 단계 진하다. 두 줄까지" }
+      control:
+        size: { value: 20px, note: "하나 고르기 = Radiomark medium(neutral) · 여럿 = Checkbox Ghost medium(체크 14) · 없음. 따로 줄지 않고 자기 포커스 링도 그리지 않는다(링은 상자가). 상자를 올리거나 누르면 라디오는 자기 누름 색이 된다(고른 라디오는 한 단계 짙게 — SEED Radiomark pressed), 칸 없는 체크는 바탕이 없다" }
+      footer:
+        paddingX: { value: $spacing-x5, note: "SEED 예제 값 — 화면마다 갈리지 않게 컴포넌트가 정한다" }
+        paddingBottom: $spacing-x4
+      group:
+        gapY: { value: $spacing-component-default, note: "SEED spacing-y.component-default" }
+        gapX: $spacing-x3
+        columns: { value: 1 ~ 3, note: "2열 이상은 세로형 · 상자 높이를 가장 긴 상자에 맞춘다(줄마다 같은 높이 — SEED grid-auto-rows 1fr). 칸이 비면 1열로 쌓거나 열 수를 맞춘다" }
+    hovered:
+      root:
+        background: $color-bg-layer-default-pressed
+    pressed:
+      root:
+        background: $color-bg-layer-default-pressed
+      trigger:
+        scale: { value: 2px 거리 축소, note: "누르는 자리(콘텐츠 + 컨트롤)만 — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px. 테두리 · 바탕은 그대로, 컨트롤은 따로 줄지 않는다" }
+    focused:
+      focusRing:
+        width: 2px
+        offset: { value: 2px, note: "상자 바깥 — SEED 와 같다(상자는 화면 폭이 아니라 링이 잘리지 않는다). 컨트롤은 자기 링을 끈다 — 링이 두 겹이 되지 않는다" }
+        color: $color-stroke-focus-ring
+    disabled:
+      root:
+        borderColor: $color-stroke-neutral-weak
+      trigger:
+        cursor: not-allowed
+      prefix:
+        color: $color-fg-disabled
+      label:
+        foreground: $color-fg-disabled
+      description:
+        foreground: $color-fg-disabled
+
+  # ── 배치 ──────────────────────────────────────────────
+  - when: { layout: horizontal }
+    enabled:
+      trigger:
+        paddingY: $spacing-x4
+        paddingLeft: $spacing-x5
+        paddingRight: $spacing-x4
+        alignItems: center
+      content:
+        gap: { value: $spacing-x3, note: "앞 ↔ 본문" }
+        direction: row
+
+  - when: { layout: vertical }
+    enabled:
+      trigger:
+        paddingY: $spacing-x5
+        paddingX: $spacing-x4
+        alignItems: { value: flex-start, note: "컨트롤은 위 오른쪽" }
+      content:
+        gap: { value: $spacing-x2_5, note: "앞(위) ↔ 본문" }
+        direction: column
+
+  # ── 고름 ──────────────────────────────────────────────
+  - when: { selected: selected }
+    enabled:
+      root:
+        borderWidth: 2px
+        borderColor: { value: $color-stroke-neutral-contrast, note: "고른 상자만 짙은 테두리 — 바탕은 바꾸지 않는다(사용자 결정, SEED). v113" }
+    disabled:
+      root:
+        borderColor: { value: $color-stroke-neutral-weak, note: "고른 채 막히면 2px 옅은 선" }
+
+motion:
+  "누름 · 호버 — 바탕":
+    duration: $motion-duration-color-transition
+    easing: $motion-ease-easing
+    properties: [background-color]
+  "고름 — 테두리":
+    duration: $motion-duration-d2
+    easing: $motion-ease-easing
+    properties: [border-color]
+    note: "SEED 는 0.1s 를 바로 적었다 — groo d2 = 100ms"
+  "누름 — 누르는 자리":
+    duration: $motion-duration-pressed-scale
+    easing: $motion-ease-pressed-scale
+    properties: [scale]
+    note: "콘텐츠 + 컨트롤만 2px 거리 축소 — 모션 줄이기면 하지 않는다"
+  "펼침 — 열 때 · 높이":
+    duration: 400ms
+    easing: $motion-ease-easing
+    properties: [height]
+    note: "SEED 도 토큰 없이 400ms. 높이는 grid-template-rows 0fr → 1fr 로 바꾼다(내용 높이를 재지 않는다)"
+  "펼침 — 열 때 · 투명도":
+    duration: $motion-duration-d6
+    easing: $motion-ease-easing
+    properties: [opacity]
+  "펼침 — 닫을 때 · 높이":
+    duration: $motion-duration-d6
+    easing: $motion-ease-easing
+    properties: [height]
+    note: "grid-template-rows 1fr → 0fr"
+  "펼침 — 닫을 때 · 투명도":
+    duration: 400ms
+    easing: $motion-ease-easing
+    properties: [opacity]
+    note: "내용이 높이보다 먼저 사라지지 않게 투명도가 늦다. 모션 줄이기면 높이는 바로 바뀌고 투명도만 150ms(기초 Motion)"

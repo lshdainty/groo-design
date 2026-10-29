@@ -50,6 +50,14 @@
 
 [표: 배치](select-box.yaml#grid.layout)
 
+### Density — 낮은 상자
+
+세로형(2 ~ 3열)에는 낮은 꼴(`density="compact"`)이 있다 — 위아래 20 → 12, 앞(위) ↔ 글 10 → 4. 좌우 16 · 앞 아이콘 22 · 글자 · 테두리 · 컨트롤 자리 · 열 · 줄 사이는 그대로다. 제목만 있는 상자는 94 → 72 로 낮아진다(위아래 + 앞 22 + 사이 + 제목 줄 22). 묶음이 정하고(`RadioSelectBoxGroup` · `CheckSelectBoxGroup` 의 `density`) 가로형에는 걸리지 않는다. 언제 쓰는지는 Guidelines 의 "낮은 상자는 선택지가 많을 때만"(2026-10-29 사용자 결정 17-1 Q5 = B).
+
+[그림: 밀도 — 기본(위아래 20 · 앞 ↔ 글 10) · 낮은 상자(12 · 4)](../../site/components/specs/select-box.tsx#density)
+
+[표: 밀도 — 세로형](select-box.yaml#grid.density.layout.vertical)
+
 모든 상자에 공통인 값(상태마다 바뀌는 값은 아래 State):
 
 [표: 공통](select-box.yaml#base.enabled)
@@ -131,6 +139,15 @@ Select Box 는 고르는 도구이고 그 자체로 무언가를 실행하지 �
 2열 이상이면 가장 긴 내용을 담은 상자에 높이를 맞춘다(SEED — 묶음의 모든 줄이 같은 높이). 열 수는 화면 폭에 맞춘다. 마지막 줄에 빈 칸이 생겨(5개를 2열에 두는 것처럼) 어색하면 1열로 쌓는 것을 권한다 — 설명이 짧은 2열처럼 빈 칸이 어색하지 않으면 그대로 둘 수 있다. 화면마다 고른다(2026-10-22 사용자 결정 4B — https://claude.ai/artifact/SmHD31RQxTjWbfK83nbcym).
 
 [그림: 같은 높이 · 들쭉날쭉한 높이와 빈 칸](../../site/components/specs/select-box.tsx#height-guide)
+
+### 낮은 상자는 선택지가 많을 때만
+
+한 시트 · 한 단계에 상자가 많아 100% 글자에서 모두 한 화면에 보여야 할 때만 낮은 상자(`density="compact"`)를 쓴다 — 자산 추가 1단계의 종류 아홉(계좌 여섯 · 카드 둘 · 투자 하나, 2열 · 앞 아이콘 · 컨트롤 없음)처럼 기본 높이면 마지막 상자가 화면 아래 흐림 속에 숨는 자리다. 선택지가 2 ~ 4개면 기본 높이로 둔다 — 낮출 까닭이 없고, 누르는 자리만 작아진다. 낮춰도 넘치는 자리(글자 200% · 작은 화면)는 본문 스크롤 + 끝 흐림 그대로다([Bottom Sheet](bottom-sheet.md) 의 "90% 를 넘으면 페이지" — 보통은 들어맞는 시트가 큰 글자로 넘친 것). 한 묶음 안에서 기본 상자와 낮은 상자를 섞지 않는다.
+
+| 자리 | 밀도 |
+|---|---|
+| 선택지 2 ~ 4개 · 설명이 붙는 상자 · 가로형(1열) | 기본 |
+| 한 시트에 세로형 상자가 많아 기본 높이로는 마지막 상자가 화면 밖(자산 종류 아홉) | 낮은 상자 |
 
 ### 여럿 고르기의 최대 개수
 
@@ -217,6 +234,25 @@ import { RadioSelectBox, RadioSelectBoxGroup } from "@/components/ui/select-box"
   <RadioSelectBox value="csv" control="none" prefix={<FileText />} label="CSV" description="구글시트" />
   <RadioSelectBox value="xlsx" control="none" prefix={<Sheet />} label="Excel" description="엑셀" />
   <RadioSelectBox value="json" control="none" prefix={<Braces />} label="JSON" description="백업용" />
+</RadioSelectBoxGroup>
+```
+
+### 낮은 상자 — 자산 종류
+
+[그림: 낮은 상자 — 자산 추가 1단계, 2열 · 앞 아이콘 · 컨트롤 없음](../../site/components/specs/select-box.tsx#ex-compact)
+
+```tsx
+import { CalendarDays, Coins, Landmark, Percent, PiggyBank, Wallet } from "lucide-react"
+import { RadioSelectBox, RadioSelectBoxGroup } from "@/components/ui/select-box"
+
+{/* 한 시트에 종류 아홉(계좌 여섯 · 카드 둘 · 투자 하나) — 묶음마다 낮은 상자로, 100% 글자에서 모두 보이게 */}
+<RadioSelectBoxGroup columns={2} density="compact" value={kind} onValueChange={setKind} aria-label="계좌">
+  <RadioSelectBox value="checking" control="none" prefix={<Landmark />} label="입출금" />
+  <RadioSelectBox value="deposit" control="none" prefix={<PiggyBank />} label="예금" />
+  <RadioSelectBox value="savings" control="none" prefix={<CalendarDays />} label="적금" />
+  <RadioSelectBox value="overdraft" control="none" prefix={<Percent />} label="마이너스 통장" />
+  <RadioSelectBox value="cash" control="none" prefix={<Wallet />} label="현금" />
+  <RadioSelectBox value="loan" control="none" prefix={<Coins />} label="대출" />
 </RadioSelectBoxGroup>
 ```
 
@@ -313,6 +349,7 @@ const toggle = (code: string, on: boolean) =>
 - 고른 값은 저장 · 다음 같은 버튼으로 반영한다.
 - 고를 때만 필요한 칸은 그 상자의 펼침에 둔다.
 - 여러 열이면 상자 높이를 가장 긴 상자에 맞춘다.
+- 한 시트에 세로형 상자가 많아 마지막 상자가 화면 밖이면 낮은 상자(`density="compact"`)로 모두 보이게 한다.
 
 ### ❌ Don't
 
@@ -320,6 +357,7 @@ const toggle = (code: string, on: boolean) =>
 - 상자 안 일부(체크박스 · 글자)만 눌리게 짜기.
 - 고른 상자를 바탕 색만으로 알리기.
 - 선택지마다의 설명을 아래 한 문단에 몰아 쓰기.
+- 선택지 2 ~ 4개에 낮은 상자 · 한 묶음에서 기본 상자와 낮은 상자 섞기 · 위아래를 12 보다 더 줄이기.
 
 ## Specification
 
@@ -338,6 +376,10 @@ const toggle = (code: string, on: boolean) =>
 - 고른 테두리 `stroke-neutral-contrast` 는 v113 에 더한 역할이다(SEED 와 같은 gray-1000).
 
 ## Migration notes
+
+### 2026-10-29 — 세로형 낮은 상자(density compact)
+
+사용자 결정 17-1 Q5 = B — 자산 추가 1단계 "무엇을 추가할까요?" 의 종류 아홉(2열 세로형 · 앞 아이콘 · 컨트롤 없음)이 폰 시트를 넘어 마지막 "투자" 상자가 화면 아래 흐림 속에 숨었다. 세로형 상자의 위아래를 20 → 12, 앞 ↔ 글을 10 → 4 로 낮춰 100% 글자에서 아홉이 시트 한 화면에 다 보이게 한다. 한 화면만의 값으로 두지 않고 축 `density`(default · compact)로 스펙에 올렸다 — 세로형에만 걸리고, 선택지가 많을 때만 쓴다. 고르지 않은 안: A(지금 그대로 — 스크롤 + 아래 흐림, 투자를 찾지 못할 수 있다) · C(1열 목록 + 라디오 — 상자 모양 결정을 바꾸고 웹 390 에서 여전히 넘친다) · D(시트 대신 페이지 — 2단계 폼까지 흐름이 바뀐다). 글자 200% 에서는 어느 안도 한 화면에 들지 않아 본문 스크롤 + 끝 흐림 그대로다. 설명 https://claude.ai/artifact/2wHgeNPdst2q6LQzdD1AvS. 레시피 묶음에 `density` 를, 미리보기에 `.psb--compact` 를, 사이트에 그림 density · ex-compact 를 더했다. 새 토큰 없음.
 
 ### 2026-10-22 — 개수는 판단 순서 하나 · 홀수 2열은 권장
 
