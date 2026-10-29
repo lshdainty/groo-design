@@ -8,6 +8,8 @@
 #
 # 선택 여부(selected)는 hover · pressed · disabled 와 곱해지므로 상태가 아니라 축이다(specs/CLAUDE.md).
 # 배치(layout)는 열 수에서 온다 — 1열은 가로형, 2 ~ 3열은 세로형(SEED columns > 1 이면 vertical).
+# 밀도(density)는 세로형에만 걸린다 — compact 는 한 화면(시트)에 상자가 많아 모두 보여야 할 때 위아래 20 → 12 · 앞 ↔ 글 10 → 4
+# (2026-10-29 사용자 결정 17-1 Q5 = B — 자산 추가 1단계 종류 아홉이 100% 폰 시트에 다 보이게). 가로형에는 값이 바뀌지 않는다.
 #
 # SEED 와 다른 자리(select-box.md 의 "SEED 와 다른 점")
 #   - 누름 · 호버 바탕은 불투명한 bg-layer-default-pressed(SEED transparent-pressed 는 투명도가 있어 검사기가 받지 않는다 — v102).
@@ -37,10 +39,14 @@ variants:
   selected:
     unselected: 고르지 않음
     selected: 고름
+  density:
+    default: 기본 — 세로형 위아래 20 · 앞 ↔ 글 10
+    compact: 낮은 상자 — 세로형만. 한 시트에 상자가 많아 100% 글자에서 모두 보여야 할 때(자산 종류 아홉). 선택지 2 ~ 4개에는 쓰지 않는다
 
 defaults:
   layout: horizontal
   selected: unselected
+  density: default
 
 states:
   enabled: 기본
@@ -138,6 +144,14 @@ rules:
       content:
         gap: { value: $spacing-x2_5, note: "앞(위) ↔ 본문" }
         direction: column
+
+  # ── 밀도 — 낮은 상자(세로형만) ─────────────────────────
+  - when: { layout: vertical, density: compact }
+    enabled:
+      trigger:
+        paddingY: { value: $spacing-x3, note: "20 → 12 — 좌우 16 · 컨트롤 자리 · 글자 · 앞 22 는 그대로(2026-10-29 17-1 Q5 = B)" }
+      content:
+        gap: { value: $spacing-x1, note: "앞(위) ↔ 본문 10 → 4" }
 
   # ── 고름 ──────────────────────────────────────────────
   - when: { selected: selected }

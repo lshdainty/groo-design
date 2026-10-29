@@ -1,12 +1,12 @@
 // Select Box 의 모양 — specs/components/select-box.yaml 을 고름 · 모드 · 상태 · 배치마다 풀어 둔다(서버, 빌드 때).
 // 그림(SelectBoxView)은 이 값만 받아 그린다. 오른쪽 라디오 · 체크는 그 컴포넌트의 YAML 에서 온다.
-import { loadComponentSpec, num, resolveState, tokenValue, type TypeValue } from '@/lib/component-spec';
+import { axisValues, loadComponentSpec, num, resolveState, tokenValue, type TypeValue } from '@/lib/component-spec';
 import type { Mode } from '@/lib/component-spec';
 import { color, design, pressScale, reducedMotion, type Brand } from '@/lib/design-tokens';
 import { checkLook } from './checkbox-look';
 import { snackbarLook } from './feedback-look';
 import { radioLook } from './radio-group-look';
-import { SB_LAYOUTS, SB_SELECTED, SB_STATES, type SbFace, type SbLayoutFace, type SbLook, type SbMotion, type SbState, type SbType } from './select-box-shared';
+import { SB_DENSITIES, SB_LAYOUTS, SB_SELECTED, SB_STATES, type SbFace, type SbLayoutFace, type SbLook, type SbMotion, type SbState, type SbType } from './select-box-shared';
 export * from './select-box-shared';
 
 const str = (v: unknown) => (typeof v === 'string' ? v : undefined);
@@ -81,6 +81,12 @@ export function selectBoxLook(brand: Brand = 'desk'): SbLook {
     for (const mode of ['light', 'dark'] as Mode[]) for (const st of SB_STATES) faces[selected][mode][st] = face(resolveState(spec, when, st), focused, st, mode, brand);
   }
   const layouts = Object.fromEntries(SB_LAYOUTS.map((l) => [l, layoutFace(resolveState(spec, { layout: l }, 'enabled'))])) as SbLook['layouts'];
+  // 밀도 — 세로형의 낮은 상자. 가로형은 밀도가 바꾸지 않는다(바뀌면 그림이 그 값을 못 그린다 — 여기서 멈춘다)
+  const densities = axisValues(spec, 'density');
+  if (densities.join() !== SB_DENSITIES.join()) throw new Error(`select-box.yaml 의 density 가 ${SB_DENSITIES.join(' · ')} 가 아니다(${densities.join(' · ')})`);
+  const compact = layoutFace(resolveState(spec, { layout: 'vertical', density: 'compact' }, 'enabled'));
+  if (JSON.stringify(layoutFace(resolveState(spec, { layout: 'horizontal', density: 'compact' }, 'enabled'))) !== JSON.stringify(layouts.horizontal))
+    throw new Error('select-box.yaml 의 density compact 가 가로형 값을 바꾼다 — 그림은 세로형에만 낮은 상자를 그린다');
   const base = resolveState(spec, {}, 'enabled');
   const group = { gapX: must(num(tokenValue(base['group.gapX'])), 'group.gapX'), gapY: must(num(tokenValue(base['group.gapY'])), 'group.gapY') };
 
@@ -96,6 +102,7 @@ export function selectBoxLook(brand: Brand = 'desk'): SbLook {
   const look: SbLook = {
     faces,
     layouts,
+    compact,
     group,
     press: { distance, widthDivisor, minBasis },
     motion: {

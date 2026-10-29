@@ -40,7 +40,7 @@ import {
 import { CheckboxView } from './checkbox-view';
 import { RadioView } from './radio-group-view';
 import { SnackbarRegion, useSnackbarHost } from './feedback-view';
-import { sbGroupVars, type BoxSpec, type SbFooter, type SbIcon, type SbLayout, type SbLook, type SbState } from './select-box-shared';
+import { sbGroupVars, type BoxSpec, type SbFooter, type SbIcon, type SbDensity, type SbLayout, type SbLook, type SbState } from './select-box-shared';
 
 const ICONS: Record<SbIcon, LucideIcon> = {
   'file-text': FileText,
@@ -97,6 +97,8 @@ type BoxProps = {
   kind: 'radio' | 'check';
   control: 'mark' | 'none';
   layout: SbLayout;
+  // 밀도 — compact 는 세로형의 낮은 상자(묶음이 정한다)
+  density: SbDensity;
   mode: ViewMode;
   live: boolean;
   on: boolean;
@@ -113,7 +115,7 @@ type BoxProps = {
 };
 export type Zone = { fill: string; line: string };
 
-function Box({ look, box, kind, control, layout, mode, live, on, onToggle, onArrow, tabIndex, registerRef, width, partialTarget, zone }: BoxProps) {
+function Box({ look, box, kind, control, layout, density, mode, live, on, onToggle, onArrow, tabIndex, registerRef, width, partialTarget, zone }: BoxProps) {
   const { title, description, prefix, footer, footerVisibility = 'when-selected', disabled = false } = box;
   const [hover, setHover] = useState(false);
   const [press, setPress] = useState(false);
@@ -141,7 +143,8 @@ function Box({ look, box, kind, control, layout, mode, live, on, onToggle, onArr
   const L = look.faces[sel][pickL(mode)][st];
   const D = look.faces[sel][pickD(mode)][st];
   const f = L;
-  const lay = look.layouts[box.layout ?? layout];
+  const layKey = box.layout ?? layout;
+  const lay = density === 'compact' && layKey === 'vertical' ? look.compact : look.layouts[layKey];
   const vars = {
     '--psb-bg-l': L.bg,
     '--psb-bg-d': D.bg,
@@ -378,6 +381,8 @@ export type SelectBoxGroupViewProps = {
   columns?: 1 | 2 | 3;
   // 열 수에서 오는 배치를 바꿀 때만
   layout?: SbLayout;
+  // 세로형의 낮은 상자(compact) — 한 시트에 상자가 많을 때만
+  density?: SbDensity;
   mode?: ViewMode;
   live?: boolean;
   // 하나 고르기의 처음 값
@@ -397,7 +402,7 @@ export type SelectBoxGroupViewProps = {
 };
 
 // 묶음 — 하나 고르기는 radiogroup(화살표로 옮기며 고른다), 여럿은 fieldset. 1 ~ 3열 격자
-export function SelectBoxGroupView({ look, kind, control = 'mark', boxes, columns = 1, layout, mode = 'auto', live = true, value: initial, max, ariaLabel, ariaLabelledby, onChecksChange, width = '100%', ragged, partialTarget, zone, style }: SelectBoxGroupViewProps) {
+export function SelectBoxGroupView({ look, kind, control = 'mark', boxes, columns = 1, layout, density = 'default', mode = 'auto', live = true, value: initial, max, ariaLabel, ariaLabelledby, onChecksChange, width = '100%', ragged, partialTarget, zone, style }: SelectBoxGroupViewProps) {
   const [value, setValue] = useState(initial);
   const [checks, setChecks] = useState<Record<string, boolean>>(() => Object.fromEntries(boxes.map((b) => [b.value, !!b.checked])));
   const notify = useRef(onChecksChange);
@@ -461,6 +466,7 @@ export function SelectBoxGroupView({ look, kind, control = 'mark', boxes, column
       kind={kind}
       control={control}
       layout={lay}
+      density={density}
       mode={mode}
       live={live}
       width={columns > 1 ? (w - look.group.gapX * (columns - 1)) / columns : w}

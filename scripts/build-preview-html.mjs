@@ -1826,6 +1826,7 @@ const SELECT_BOX_ICON = {
   piggyBank: listSvg('<path d="M11 17h3v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3a3.16 3.16 0 0 0 2-2h1a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-1a5 5 0 0 0-2-4V3a4 4 0 0 0-3.2 1.6l-.3.4H11a6 6 0 0 0-6 6v1a5 5 0 0 0 2 4v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/><path d="M16 10h.01"/><path d="M2 8v1a2 2 0 0 0 2 2h1"/>'),
   trendingUp: listSvg('<path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/>'),
   landmark: listSvg('<path d="M10 18v-7"/><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/>'),
+  calendarDays: listSvg('<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/>'),
 };
 
 // 상자 하나(RadioSelectBox · CheckSelectBox) — 글(title · description)은 여기서 escape 하고, 앞(prefix) · 펼침(footer)은 HTML 조각으로 받는다.
@@ -1835,16 +1836,17 @@ const SELECT_BOX_ICON = {
 //   checked      고름
 //   disabled     막힘 — 컨트롤은 disabled, 누르는 자리와 컨트롤에 data-disabled
 //   layout       horizontal(가로형 — 1열, 기본) · vertical(세로형 — 2 ~ 3열). 묶음(selectBoxGroup)이 열 수에서 정한다
+//   density      default(기본) · compact(세로형의 낮은 상자 — 위아래 12 · 앞 ↔ 글 4). 묶음이 정한다
 //   tabindex     하나 고르기 묶음의 Tab 자리 — 고른 상자(없으면 처음 상자)만 0, 나머지 -1(Radix 의 roving focus)
 //   interaction  hover · focus · pressed — 갤러리에서 그 순간을 고정해 보여 줄 때만(.btn-state-* 와 같은 역할)
-export function selectBox({ type = "radio", control = "", id, title, description = "", prefix = "", footer = "", checked = false, disabled = false, layout = "horizontal", tabindex = null, interaction = "" } = {}) {
+export function selectBox({ type = "radio", control = "", id, title, description = "", prefix = "", footer = "", checked = false, disabled = false, layout = "horizontal", density = "default", tabindex = null, interaction = "" } = {}) {
   const check = type === "check";
   const off = disabled ? ' data-disabled=""' : "";
   const mark = control === "none"
     ? `<button type="button" role="${check ? "checkbox" : "radio"}" aria-checked="${checked ? "true" : "false"}" class="psb-sr-only"${disabled ? " disabled" : ""}></button>`
     : check ? cbox({ shape: "ghost", state: checked ? "checked" : "unchecked", disabled }) : radio({ checked, disabled });
   const markAttrs = ` id="${escape(id)}" data-select-box-control="" data-select-box-action=""${off}${tabindex === null ? "" : ` tabindex="${tabindex}"`}`;
-  const cls = ["psb", layout === "vertical" && "psb--vertical", SELECT_BOX_INTERACTIONS.includes(interaction) && `psb--${interaction}`].filter(Boolean).join(" ");
+  const cls = ["psb", layout === "vertical" && "psb--vertical", density === "compact" && "psb--compact", SELECT_BOX_INTERACTIONS.includes(interaction) && `psb--${interaction}`].filter(Boolean).join(" ");
   const pre = prefix ? `<span class="psb-prefix">${prefix}</span>` : "";
   const desc = description ? `<span class="psb-desc">${escape(description)}</span>` : "";
   const foot = footer ? `<div class="psb-footer" data-select-box-footer=""><div class="psb-footer-clip"><div class="psb-footer-inner">${footer}</div></div></div>` : "";
@@ -1853,14 +1855,15 @@ export function selectBox({ type = "radio", control = "", id, title, description
 
 // 묶음 — 하나 고르기는 role=radiogroup(RadioSelectBoxGroup), 여럿은 fieldset(CheckSelectBoxGroup). 이름(aria-labelledby · aria-label)을 꼭 단다.
 //   columns  1(가로형, 기본) · 2 · 3(세로형 — 상자 높이를 가장 긴 상자에 맞춘다)
+//   density  default(기본) · compact(세로형의 낮은 상자 — 한 시트에 상자가 많을 때만, select-box.yaml density)
 //   items    상자마다 selectBox() 의 인자 — type · layout · tabindex 는 묶음이 채운다
 //   live     섹션 끝 스크립트가 고르기를 맡는다 — 그 순간을 멈춘 칸은 false
-export function selectBoxGroup({ type = "radio", columns = 1, labelledby = "", label = "", live = true, items = [] } = {}) {
+export function selectBoxGroup({ type = "radio", columns = 1, density = "default", labelledby = "", label = "", live = true, items = [] } = {}) {
   const layout = columns > 1 ? "vertical" : "horizontal";
   // 하나 고르기의 Tab 자리 — 고른 상자, 없거나 막혔으면 막히지 않은 처음 상자
   const open = items.filter(i => !i.disabled);
   const stop = type === "radio" ? open.find(i => i.checked) || open[0] : null;
-  const boxes = items.map(i => selectBox({ ...i, type, layout, tabindex: stop && !i.disabled ? (i === stop ? 0 : -1) : null }));
+  const boxes = items.map(i => selectBox({ ...i, type, layout, density, tabindex: stop && !i.disabled ? (i === stop ? 0 : -1) : null }));
   const cls = `psb-group${columns > 1 ? ` psb-group--cols-${columns}` : ""}`;
   const attrs = (labelledby ? ` aria-labelledby="${escape(labelledby)}"` : ` aria-label="${escape(label)}"`) + (live ? ' data-psb-live=""' : "");
   return type === "check"
@@ -1937,6 +1940,15 @@ export function renderSelectBoxGallery(brand) {
     { title: "투자", description: "증권 · 연금", prefix: icon("trendingUp") },
     { title: "대출", description: "빌린 돈 · 이자 · 갚을 날", prefix: icon("landmark") },
   ];
+  // 자산 추가 1단계의 계좌 묶음 — 한 시트에 종류 아홉이라 낮은 상자(2026-10-29 17-1 Q5 = B)
+  const kinds = [
+    { title: "입출금", prefix: icon("landmark"), control: "none", checked: true },
+    { title: "예금", prefix: icon("piggyBank"), control: "none" },
+    { title: "적금", prefix: icon("calendarDays"), control: "none" },
+    { title: "마이너스 통장", prefix: icon("percent"), control: "none" },
+    { title: "현금", prefix: icon("wallet"), control: "none" },
+    { title: "대출", prefix: icon("coins"), control: "none" },
+  ];
   const columnsPanel = panel(
     "여러 열 — 세로형 · 앞 아이콘 · 컨트롤 없음",
     "2 ~ 3열이면 세로형이다 — 앞이 위에 서고 컨트롤은 위 오른쪽, 위아래 20 · 좌우 16, 앞과 본문 사이 10, 열 사이 12 · 줄 사이 12. 앞 아이콘은 22 · fg-neutral. 상자 높이는 가장 긴 상자에 맞춘다 — 같은 줄뿐 아니라 묶음의 모든 줄이 같은 높이다. 누르는 자리도 상자 끝까지 늘어, 내용이 짧은 상자의 빈 아래쪽도 눌린다. 3열은 폭이 좁으니 제목과 짧은 설명만 두고 컨트롤을 없앤다 — 테두리만으로 고른 것이 보이고, 라디오는 화면 밖에 남아 키보드와 화면 읽기 프로그램이 쓴다. 칸이 비지 않게 열 수를 맞춘다. 선택지는 Desk 내보내기의 파일 형식 · 더치페이의 분배 방식(개별 금액은 설명을 빼 높이 맞춤을 보였다) · 계좌 종류에서 빌렸다.",
@@ -1944,6 +1956,7 @@ export function renderSelectBoxGallery(brand) {
       sample("3열 · 앞 아이콘 · 컨트롤 없음", "RadioSelectBoxGroup columns={3} · control=\"none\"", "파일 형식", { type: "radio", columns: 3, items: formats }),
       sample("3열 · 같은 높이", "설명 없는 상자도 가장 긴 상자에 맞춘다", "분배 방식", { type: "radio", columns: 3, items: splits }),
       sample("2열 · 앞 아이콘 · 라디오 · 두 줄", "RadioSelectBoxGroup columns={2} — 모든 줄이 같은 높이", "계좌 종류", { type: "radio", columns: 2, items: accounts }),
+      sample("2열 · 낮은 상자 · 컨트롤 없음", "RadioSelectBoxGroup columns={2} density=\"compact\" — 위아래 12 · 앞 ↔ 글 4", "계좌", { type: "radio", columns: 2, density: "compact", items: kinds }),
     ]),
   );
 
@@ -12682,6 +12695,9 @@ export function pageCss() {
     /* 콘텐츠 — 가로형은 앞 · 본문이 한 줄(사이 12), 세로형은 앞이 위(사이 10) */
     .psb-content { display: flex; flex: 1; flex-direction: row; align-items: center; gap: var(--spacing-x3); min-width: 0; }
     .psb--vertical .psb-content { flex-direction: column; align-items: normal; gap: var(--spacing-x2_5); }
+    /* 낮은 상자(density compact — 세로형만) — 위아래 12 · 앞 ↔ 글 4. 한 시트에 상자가 많을 때만(select-box.yaml) */
+    .psb--vertical.psb--compact > .psb-trigger { padding-top: var(--spacing-x3); padding-bottom: var(--spacing-x3); }
+    .psb--vertical.psb--compact .psb-content { gap: var(--spacing-x1); }
     /* 앞 — 아이콘 22 · fg-neutral */
     .psb-prefix { display: flex; flex-shrink: 0; color: var(--color-fg-neutral); }
     .psb-prefix > svg { width: 22px; height: 22px; }
