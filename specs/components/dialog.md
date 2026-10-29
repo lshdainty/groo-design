@@ -20,7 +20,7 @@
 
 | ⓐ Overlay | 딤 — 대화상자 뒤 화면 전체. 조회 대화상자는 누르면 닫힌다(입력 폼은 무시). |
 | ⓑ Container | 대화상자 — 화면 정중앙, medium 480 · large 800, 높이는 화면의 80% 까지. |
-| ⓒ Header | 머리 — 제목 · 설명. 조회 · 안내 대화상자만 오른쪽에 닫기 버튼. |
+| ⓒ Header | 머리 — 제목 · 설명. 조회 · 안내 대화상자만 오른쪽에 닫기 버튼. 두 단계 흐름의 2단계는 왼쪽에 ←(아래 "두 단계 흐름의 머리 ←"). |
 | ⓓ Body | 본문 — 넘치면 이 안에서만 스크롤한다(머리 · 바닥은 그대로). 넘칠 수 있는 본문은 끝을 흐린다([Scroll Fog](scroll-fog.md)). |
 | ⓔ Footer | 바닥 — 버튼, 오른쪽 정렬. |
 
@@ -87,6 +87,10 @@
 닫기 버튼과 바닥 취소를 함께 두지 않는다. 1280 미만의 시트에서는 입력 폼도 위 닫기 버튼 + 바닥 [저장] 이다([Bottom Sheet](bottom-sheet.md)).
 
 [그림: 닫는 자리 — 폼은 바닥 취소 · 조회는 머리 닫기 · 둘을 함께](../../site/components/specs/dialog.tsx#close-guide)
+
+### 두 단계 흐름의 머리 ←
+
+한 부품 안에서 1단계(종류 고르기) → 2단계(폼)로 가는 흐름은 1280 이상의 대화상자에서도 2단계 머리 왼쪽에 ← 를 단다 — 시트와 같은 부품(`onBack`) · 같은 값(보이는 원 40 · 아이콘 24 · 누르는 영역 44 · 아이콘이 왼쪽 24 · 제목은 원 오른쪽 4 에서 · 제목 첫 줄 가운데)이다. 수치 원본은 [`bottom-sheet.yaml`](bottom-sheet.yaml) 의 축 `back` 하나다. ← 는 1단계로 한 단계 되돌리고, 쓴 값이 있으면 "작성한 내용이 사라져요" 를 묻고 돌아가며 그 값을 버린다. 입력 폼 대화상자라 머리 닫기 버튼은 없고 바닥 [취소] 가 닫는다 — ← 는 닫지 않는다. 규칙 전문은 [Bottom Sheet](bottom-sheet.md) 의 "두 단계 시트의 머리 ←"(2026-10-29 사용자 결정 17-1 Q3).
 
 ### Alert Dialog 와 견주기
 
@@ -163,6 +167,7 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 | 열기 | 200ms 로 크게 나타나며 줄어든다(1.3 → 1). 처음 초점은 대화상자에 간다. |
 | 바닥 취소 · 닫기 버튼 · `Esc` | 닫는다. 입력 폼에 바뀐 값이 있으면 먼저 묻는다. 뒤로 가기로 닫는 것은 1280 미만(시트)뿐이다 — 데스크톱 브라우저의 뒤로 가기는 페이지를 떠난다. |
 | 바깥(딤) 누르기 | 조회 · 안내는 닫는다. **입력 폼은 무시한다.** |
+| 머리 ← 누르기 | 두 단계 흐름의 2단계 — 같은 대화상자 안에서 1단계로 한 단계 되돌린다(닫지 않는다). 쓴 값이 있으면 먼저 "작성한 내용이 사라져요" 를 묻고, 돌아가면 그 값을 버린다. |
 | 본문 스크롤 | 본문만 스크롤 — 위로 스크롤되면 머리 아래 선. 끝 흐림(`scrollFog`)은 걸었으면 늘 그대로다. |
 | 닫힌 뒤 | 100ms 로 사라지고, 초점은 연 자리(트리거)로 돌아간다. |
 | 열린 동안 | 뒤 화면을 보조 기술에서 숨기고 스크롤을 잠근다. 초점은 대화상자 안을 돈다. |
@@ -178,7 +183,7 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 | **WCAG 1.4.10** Reflow | 1280 미만은 시트로 바뀌고, 대화상자 높이는 화면의 80% 까지 — 넘치면 본문이 스크롤된다(머리 · 바닥이 화면 밖으로 나가지 않는다) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 52 · 바닥 버튼 36 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 닫기 버튼 52 ✓ · 바닥 버튼은 누르는 영역을 44 까지 넓힌다(Button) ✓ |
-| **ARIA** | `role="dialog"` + `aria-modal="true"`, 제목 `aria-labelledby` · 설명 `aria-describedby`(있을 때만), 닫기 버튼 이름 "닫기" |
+| **ARIA** | `role="dialog"` + `aria-modal="true"`, 제목 `aria-labelledby` · 설명 `aria-describedby`(있을 때만), 닫기 버튼 이름 "닫기", 머리 ← 이름 "뒤로"(초점 차례 맨 앞) |
 
 ## Do / Don't
 
@@ -188,6 +193,7 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 - 입력 폼은 바닥 [취소] [저장], 조회는 머리 닫기 버튼.
 - 입력 폼은 바깥 누르기로 닫지 않고, 바뀐 값이 있으면 닫기 전에 묻는다.
 - 긴 내용은 본문만 스크롤 — 머리 · 바닥은 늘 보인다.
+- 두 단계 흐름의 2단계는 머리 왼쪽 ← 로 1단계에 돌아간다(시트와 같은 값).
 
 ### ❌ Don't
 
@@ -213,6 +219,10 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 대화상자 `z-modal-content` 101) — 그 안에서 연 Popover(L3) · Alert Dialog(L5)가 위에 뜬다(SEED 는 모두 2 + layerIndex).
 
 ## Migration notes
+
+### 2026-10-29 — 두 단계 흐름의 머리 ←
+
+사용자 결정 17-1 Q3 = A — 한 부품 안 두 단계 흐름(자산 추가 — 종류 고르기 → 폼)의 2단계 머리 왼쪽 ← 를 1280 이상의 대화상자에도 같은 값으로 둔다. 고르지 않은 안 B(2단계 폼 맨 위 "종류" 칸)와 결정 전문은 [Bottom Sheet](bottom-sheet.md) 의 같은 날 Migration notes. 수치는 `bottom-sheet.yaml` 의 축 `back` 한 벌이고 `dialog.yaml` 은 고치지 않았다. 레시피 `DialogContent` · `ResponsiveDialogContent` 에 `onBack` 을 더했다.
 
 ### 2026-10-22 — 대화상자 위 대화상자의 갈 곳
 

@@ -25,6 +25,7 @@
 | ⓔ Body | 본문 — 넘치면 이 안에서 스크롤한다. 넘칠 수 있는 본문은 끝을 흐린다([Scroll Fog](scroll-fog.md)). |
 | ⓕ Footer | 바닥 — 버튼. 하나면 폭 전체, 둘이면 반씩. 확인을 여는 [삭제] 는 왼쪽에 글자만큼. |
 | ⓖ Handle | 손잡이 — 스냅 높이를 둘 때만. |
+| ⓗ Back Button | 뒤로 — 머리 왼쪽 ←. 한 시트 안 두 단계 흐름의 2단계에만 단다(그림에는 없다 — 아래 "두 단계 시트의 머리 ←"). 닫기 버튼은 그대로 있다. |
 
 [표: 부위](bottom-sheet.yaml#slots)
 
@@ -54,12 +55,18 @@
 
 [표: 손잡이](bottom-sheet.yaml#handle)
 
+### 머리 ← — 두 단계 시트의 2단계
+
+한 시트 안에서 두 단계로 나아가는 흐름(1단계 종류 고르기 → 2단계 폼)은 2단계 머리 왼쪽에 ← 를 단다(`back`). 보이는 원 40 · 아이콘 24 · 누르는 영역 44 이고, 아이콘이 화면 여백 24 에 오도록 원을 8 바깥에 둔다. 세로는 제목 첫 줄 가운데다. 제목은 원 오른쪽 4 에서 시작한다 — 화면 여백에서 36 들어간다. 원 바탕은 누를 때만 `bg-neutral-weak-pressed` 이고, 닫기 버튼과 달리 거리 축소는 없다. 쓰는 법은 Guidelines 의 "두 단계 시트의 머리 ←".
+
+[표: 머리 ←](bottom-sheet.yaml#back)
+
 ### State
 
 | 상태 | 모습 |
 |---|---|
 | `enabled` | 열림 — 딤 위 시트 |
-| `pressed` | 닫기 버튼 — 원 바탕 `bg-neutral-weak-pressed` + 2px 거리 축소 |
+| `pressed` | 닫기 버튼 — 원 바탕 `bg-neutral-weak-pressed` + 2px 거리 축소. 머리 ← — 원 바탕 `bg-neutral-weak-pressed`(축소 없음) |
 | `focused` | 키보드 포커스에만 링 2px · 띄움 2px |
 
 [표: 상태](bottom-sheet.yaml#matrix)
@@ -87,6 +94,15 @@
 | 개수가 데이터에 따라 느는 목록(알림 · 검색 결과) | 시트 + 끝 흐림 — 길어질 수 있으면 페이지를 먼저 생각 | 시트에 둔다면 Scroll Fog 는 넘쳤는지 재지 않고 늘 건다 |
 
 [그림: 높이 — 내용만큼 · 90% 를 넘는 시트](../../site/components/specs/bottom-sheet.tsx#height-guide)
+
+### 두 단계 시트의 머리 ←
+
+종류를 먼저 고르고(1단계) 그 종류의 폼을 쓰는(2단계) 흐름은 한 시트 안에서 단계를 바꾼다 — 2단계 머리 왼쪽 ← 가 1단계로 한 단계 되돌린다(자산 추가 — "무엇을 추가할까요?" → "입출금 추가"). 저장 전 본인 확인(가린 금액 보기 인증)처럼 시트 안에 끼어든 한 단계도 같은 ← 로 앞 단계에 돌아간다(저장하지 않는다). 수정처럼 1단계가 없는 시트에는 ← 가 없다. 오른쪽 위 닫기 버튼은 그대로 두고, ← 는 시트를 닫지 않는다.
+
+- **쓴 값이 있으면 묻고 버린다** — 2단계에서 쓴 값이 있으면 ← 를 누를 때 "작성한 내용이 사라져요" 를 먼저 묻고, [나가기] 면 1단계로 돌아가며 그 값을 버린다. 종류가 바뀌면 폼의 칸이 달라지므로 앞 종류에서 쓴 값을 들고 가지 않는다(2026-10-29 사용자 결정 — "종류가 바뀐다는 건 폼의 입력 데이터를 초기화하는 게 맞음"). 쓴 값이 없으면 묻지 않고 돌아간다.
+- **종류는 1단계에서만 바꾼다** — 2단계 폼 맨 위에 "종류" 고르기 칸을 두지 않는다. 다른 묶음(계좌 → 카드)으로 바꾸면 칸이 달라져 쓴 값을 어떻게 할지 따로 정해야 하고 폼이 칸 하나만큼 길어진다.
+- **같은 시트 안의 단계에만** — 단계가 셋을 넘는 흐름은 시트가 아니라 페이지다("90% 를 넘으면 페이지" 표). 페이지의 ← 는 [Top Navigation](top-navigation.md) 의 것이고, 이 ← 는 시트 머리에서 한 단계만 되돌린다.
+- **1280 이상의 대화상자도 같다** — 같은 흐름을 [Dialog](dialog.md) 로 띄우면 머리 왼쪽에 같은 값의 ← 를 단다.
 
 ### 입력 폼은 실수로 닫히지 않게
 
@@ -160,6 +176,7 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 | 바깥(딤) 누르기 | 조회 · 고르기 시트는 닫는다. **입력 폼은 무시한다.** |
 | 아래로 끌기 | 조회 · 고르기 시트는 놓을 때 빠르게(0.4px/ms 넘게) 끌었거나 높이의 25% 이상 내려왔으면 닫고, 아니면 제자리로 돌아간다. 열린 뒤 0.5초는 끌리지 않는다. 본문을 스크롤하는 중이면 끌지 않는다. **입력 폼은 끌리지 않는다.** |
 | 손잡이 누르기 | 다음(더 높은) 스냅 높이로 — 가장 높은 높이에서 누르면 닫는다. |
+| 머리 ← 누르기 | 두 단계 시트의 2단계 — 같은 시트 안에서 1단계로 한 단계 되돌린다(시트는 닫지 않는다). 2단계에 쓴 값이 있으면 먼저 "작성한 내용이 사라져요" 를 묻고, 돌아가면 그 값을 버린다. |
 | 닫힌 뒤 | 200ms 로 내려가고, 초점은 연 자리(트리거)로 돌아간다. |
 | 열린 동안 | 뒤 화면을 보조 기술에서 숨기고 스크롤을 잠근다. 초점은 시트 안을 돈다. |
 | 키보드(폰) | 입력에 초점이 가면 시트가 키보드 위로 올라간다. |
@@ -171,9 +188,9 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 떠 있는 표면(`bg-layer-floating`) 위 16.41 · 다크 11.62, 설명 `fg-neutral-muted` 7.11 · 다크 6.67 ✓ |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 닫기 버튼은 아이콘 `fg-neutral`(16.41 · 11.62)이 버튼을 알린다 — 원 바탕(1.08 · 1.13)은 장식. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ |
 | **WCAG 2.4.3** Focus order | 열면 시트로, 닫으면 연 자리로 초점이 간다. 열린 동안 초점이 뒤 화면으로 나가지 않는다 |
-| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 44 · 손잡이 44 · 바닥 버튼 48 ✓ |
-| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 닫기 버튼(보이는 원 28)은 누르는 영역 44 ✓ · 바닥 버튼 48 ✓ |
-| **ARIA** | `role="dialog"` + `aria-modal="true"`, 제목 `aria-labelledby` · 설명 `aria-describedby`, 닫기 버튼 이름 "닫기", 손잡이는 보조 기술에 숨긴다 |
+| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 44 · 머리 ← 44 · 손잡이 44 · 바닥 버튼 48 ✓ |
+| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 닫기 버튼(보이는 원 28)은 누르는 영역 44 ✓ · 머리 ←(보이는 원 40)는 44 ✓ · 바닥 버튼 48 ✓ |
+| **ARIA** | `role="dialog"` + `aria-modal="true"`, 제목 `aria-labelledby` · 설명 `aria-describedby`, 닫기 버튼 이름 "닫기", 머리 ← 이름 "뒤로"(초점 차례 맨 앞 — ← → 제목 → 닫기), 손잡이는 보조 기술에 숨긴다 |
 
 ## Do / Don't
 
@@ -184,6 +201,7 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 - 시트의 입력 폼은 위 닫기 + 바닥 저장 하나.
 - 들어간 시트의 동작이 삭제 하나면 바닥 왼쪽 [삭제] `ghost` + `critical`.
 - 처음부터 화면 높이의 90% 를 넘게 짠 내용은 페이지로 — 작은 화면 · 큰 글자로 넘친 것은 본문만 스크롤 + 끝 흐림.
+- 한 시트 안 두 단계 흐름의 2단계는 머리 왼쪽 ← 로 1단계에 돌아간다 — 쓴 값이 있으면 묻고 버린다, 닫기 버튼은 그대로.
 
 ### ❌ Don't
 
@@ -192,6 +210,7 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 - 되돌릴 수 없는 확인을 시트로(Alert Dialog).
 - 처음부터 화면을 넘게 짠 내용을 시트에 — 시트를 90% 로 늘려 버티기(페이지).
 - 입력 폼 시트 위에 또 입력 폼 시트를 겹치기 — 그 위에는 고르기 시트(Input Button)와 확인창만 뜬다.
+- 2단계 폼 맨 위에 "종류" 칸을 둬 단계를 건너 종류를 바꾸기 · 단계가 셋을 넘는 흐름을 시트 머리 ← 로 잇기(페이지) · ← 를 두고 닫기 버튼을 걷기.
 
 ## Specification
 
@@ -210,6 +229,10 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 시트 `z-modal-content` 101) — 그 위에 Popover(L3) · Alert Dialog(L5)가 뜬다.
 
 ## Migration notes
+
+### 2026-10-29 — 두 단계 시트 머리 ←
+
+사용자 결정 17-1 Q3 = A — 자산 추가처럼 한 시트 안에서 1단계(종류 고르기) → 2단계(폼)로 가는 흐름은 2단계 머리 왼쪽 ← 로 1단계에 돌아가 종류를 다시 고른다. 쓴 값이 있으면 "작성한 내용이 사라져요" 를 묻고 돌아가며 그 값을 버린다(사용자: "종류가 바뀐다는 건 폼의 입력 데이터를 초기화하는 게 맞음"). 고르지 않은 안: B(← 없이 2단계 폼 맨 위 "종류" 칸) — 다른 묶음으로 바꿀 때 쓴 값의 규칙을 새로 정해야 하고(그때 앱은 묻지 않고 지웠다) 폼이 칸 하나만큼 길어진다. 설명 https://claude.ai/artifact/2wHgeNPdst2q6LQzdD1AvS. yaml 에 축 `back`(hidden · shown)과 부위 `backButton` 을 더했다 — 값(원 40 · 아이콘 24 · 누르는 44 · 아이콘이 여백 24 · 제목 앞 4 · 제목 첫 줄 가운데 · 누름 `bg-neutral-weak-pressed`)은 구현한 Desk 웹(`onBack`) · 앱(`PBottomSheetContent.onBack`)에서 옮겼다. 레시피 `BottomSheetContent` · `DialogContent` · `ResponsiveDialogContent` 에 `onBack` 을 더했다. 새 토큰 없음.
 
 ### 2026-10-25 — 바닥 왼쪽 [삭제]
 

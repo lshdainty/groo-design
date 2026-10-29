@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
-import { X } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useBackClose, useLeaveConfirm } from "@/components/ui/alert-dialog";
@@ -12,7 +12,9 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *
  *   BottomSheet          화면 아래에서 올라오는 모달 — open · defaultOpen · onOpenChange · form · dirty · snapPoints
  *   BottomSheetTrigger   여는 버튼 — 닫으면 초점이 여기로 돌아온다
- *   BottomSheetContent   시트 — title(늘) · description(덧붙일 말이 있을 때만). 오른쪽 위 닫기 버튼(showCloseButton, 기본 켬)
+ *   BottomSheetContent   시트 — title(늘) · description(덧붙일 말이 있을 때만). 오른쪽 위 닫기 버튼(showCloseButton, 기본 켬).
+ *                        onBack 이면 머리 왼쪽 ←(이름 "뒤로") — 한 시트 안 두 단계 흐름의 2단계에서 1단계로 한 단계 되돌린다
+ *                        (bottom-sheet.yaml 축 back · 2026-10-29). 쓴 값을 묻고 버리는 일은 부르는 쪽(폼)이 한다
  *   BottomSheetBody      본문 — 좌우 화면 여백 24, 넘치면 이 안에서 스크롤. scrollFog 면 끝 흐림(Scroll Fog — 늘 켜진
  *                        위 20 · 아래 80 + 본문 안 여백 위 20 · 아래 80) — 넘칠 수 있는 본문(목록 · 긴 폼)에만 준다
  *   BottomSheetFooter    바닥 — 버튼 하나면 폭 전체, 둘이면 반씩(사이 8). Button large 48 을 크기를 주지 않은 바로 아래 자식에 넣는다
@@ -258,6 +260,16 @@ const CLOSE = [
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 
+// 머리 왼쪽 ←(onBack) — 보이는 원 40 · 아이콘 24 · 누르는 영역 44(::before). 아이콘이 화면 여백 24 에 오도록 원을 8 당기고, 세로는 제목 첫 줄(30)
+// 가운데(위 24 + 15)에 맞춘다. 제목은 원 오른쪽 사이 4 에서 시작한다(36 = 2.25rem — 글자 배율을 따른다). 누르면 bg-neutral-weak-pressed(축소 없음), 호버도 누름 색
+const BACK = [
+  "absolute left-[calc(var(--spacing-global-gutter)-0.5rem)] top-[calc(var(--spacing-x6)+0.9375rem)] z-1 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-fg-neutral [&>svg]:size-6",
+  "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
+  "hover:bg-bg-neutral-weak-pressed active:bg-bg-neutral-weak-pressed",
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
+].join(" ");
+
 // 손잡이 — 36 × 4 · 위 6 가운데, 누르는 영역 44. 누름 색은 두지 않는다(bottom-sheet.yaml)
 const HANDLE = [
   "absolute left-1/2 top-x1_5 h-1 w-9 -translate-x-1/2 cursor-pointer rounded-full bg-stroke-neutral-weak",
@@ -356,10 +368,15 @@ export interface BottomSheetContentProps
   description?: React.ReactNode;
   /** 오른쪽 위 닫기 버튼(기본 켬) — 조회 · 고르기 · 시트의 입력 폼 모두에 둔다 */
   showCloseButton?: boolean;
+  /**
+   * 머리 왼쪽 ←(이름 "뒤로") — 한 시트 안 두 단계 흐름의 2단계에서 1단계로 한 단계 되돌릴 때만(bottom-sheet.md "두 단계 시트의 머리 ←").
+   * 시트를 닫지 않는다. 쓴 값이 있으면 부르는 쪽이 "작성한 내용이 사라져요" 를 묻고, 돌아가면 그 값을 버린다
+   */
+  onBack?: () => void;
 }
 
 const BottomSheetContent = React.forwardRef<React.ElementRef<typeof DrawerPrimitive.Content>, BottomSheetContentProps>(
-  ({ title, description, showCloseButton = true, children, ...props }, ref) => {
+  ({ title, description, showCloseButton = true, onBack, children, ...props }, ref) => {
     const ctx = useSheetContext("BottomSheetContent");
     return (
       <BottomSheetSurface
@@ -369,10 +386,16 @@ const BottomSheetContent = React.forwardRef<React.ElementRef<typeof DrawerPrimit
         {...(description == null ? { "aria-describedby": undefined } : null)}
         {...props}
       >
+        {/* 머리 ← — DOM 맨 앞이라 초점 차례도 맨 앞: ← → 제목 → 닫기 */}
+        {onBack && (
+          <button type="button" aria-label="뒤로" data-slot="bottom-sheet-back" className={BACK} onClick={onBack}>
+            <ArrowLeft aria-hidden strokeWidth={2} />
+          </button>
+        )}
         <div data-slot="bottom-sheet-header" className="flex shrink-0 flex-col gap-x2 px-global-gutter pb-x4 pt-x6">
           <DrawerPrimitive.Title
             data-slot="bottom-sheet-title"
-            className={cn("m-0 text-t8 font-bold text-fg-neutral", showCloseButton && "pr-x10")}
+            className={cn("m-0 text-t8 font-bold text-fg-neutral", showCloseButton && "pr-x10", onBack && "pl-[2.25rem]")}
           >
             {title}
           </DrawerPrimitive.Title>
