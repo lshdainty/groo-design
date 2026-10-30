@@ -40,7 +40,7 @@ import { Switchmark, type SwitchmarkProps } from "@/components/ui/switch";
  *
  * 값이 길 때(2026-10-15 사용자 결정 — 구현 세션 질문 Q-001, 안 A): 뒤 붙이개는 줄지 않고(SEED suffix flexShrink 0) 본문이 양보한다(content flexGrow 1).
  * 겹침만 막는다 — 본문은 한 글자(제목 글자 1em, 뒤 여백 10 은 따로)까지 주고, 제목 · 글 설명은 칸 끝에서 끊는다(overflow-wrap: anywhere). suffix 에 글을 그대로 넘긴
- * 값 글자(이메일 · 계좌번호 · 긴 이름)는 본문이 1em 이 된 뒤에야 줄고 줄 끝에서 끊는다 — 본문 위로 넘쳐 덮지 않는다. 금액 · 화살표 · 컨트롤 같은
+ * 값 글자(이메일 · 계좌번호 · 긴 이름)는 본문이 제목 낱말 폭이 된 뒤에야 줄고 줄 끝에서 끊는다 — 본문 위로 넘쳐 덮지 않는다. 금액 · 화살표 · 컨트롤 같은
  * 요소는 한 덩어리 그대로다. 값을 줄여 적는 것(억 단위 등)은 그 화면이 정한다.
  */
 
@@ -97,12 +97,12 @@ const listPrefixVariants = cva("flex shrink-0 items-center pr-x3 text-fg-neutral
   defaultVariants: { disabled: false },
 });
 
-// 본문 — 남는 폭을 쓰고 먼저 양보한다. 한 글자(1em) + 뒤 여백 10 아래로는 줄지 않는다(Q-001 A). 1em 은 제목 글자(t5) —
-// 버튼이 물려받은 글자(14)가 아니라 --text-t5 로 잰다(보통 글자에서 16 + 10 = 26, 2026-10-17 고침 03D-005)
-const listBodyVariants = cva("flex min-w-[calc(var(--text-t5)+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left");
+// 본문 — 남는 폭을 쓰고 먼저 양보한다. 제목의 가장 긴 낱말 + 뒤 여백 10 아래로는 줄지 않는다(min-content — 제목이 keep-all,
+// 2026-10-30 결정 B. 옛 1em 은 줄 칸 폼 긴 값 옆 제목을 "장 / 소" 로 쪼갰다)
+const listBodyVariants = cva("flex min-w-min flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left");
 
-// 제목 — 평소에는 단어 단위로 바꾸고, 본문이 낱말 하나보다 좁아질 때만 글자 사이에서 끊는다(칸 밖으로 넘치지 않게)
-const listTitleVariants = cva("font-sans text-t5 font-normal text-fg-neutral [overflow-wrap:anywhere]", {
+// 제목 — 낱말 단위로만 바꾼다(keep-all + break-word). 본문이 가장 긴 낱말보다 좁아지지 않으니 글자 사이에서 끊지 않는다(결정 B)
+const listTitleVariants = cva("font-sans text-t5 font-normal text-fg-neutral [word-break:keep-all] [overflow-wrap:break-word]", {
   variants: { disabled: { true: "text-fg-disabled", false: "" } },
   defaultVariants: { disabled: false },
 });
@@ -122,7 +122,7 @@ const listDetailVariants = cva("font-sans text-t3 text-fg-neutral-subtle [overfl
 
 // 뒤 붙이개 — 값 글자(t5 · 옅은 색) · 화살표 18. 안의 버튼 · 링크는 줄의 ::after 위로 올라 따로 눌린다
 // 강조 줄을 올리거나 누르면 값 글자만 짙어진다 — 화살표는 그대로 옅은 색
-// value: node(기본 — 금액 · 화살표 · 컨트롤 · 작은 버튼, 줄지 않는다) · text(suffix 에 글을 그대로 넘긴 값 글자 — 본문이 1em 이 된 뒤에야 줄고
+// value: node(기본 — 금액 · 화살표 · 컨트롤 · 작은 버튼, 줄지 않는다) · text(suffix 에 글을 그대로 넘긴 값 글자 — 본문이 제목 낱말 폭이 된 뒤에야 줄고
 // 줄 끝에서 끊는다, Q-001 A). 줄은 suffix 가 글(string · number)이면 text 를 고른다
 const listSuffixVariants = cva(
   "flex items-center gap-x1 font-sans text-t5 text-fg-neutral-subtle [&>svg]:size-[18px] [&_a]:relative [&_a]:z-[1] [&_button]:relative [&_button]:z-[1]",

@@ -89,10 +89,10 @@ const PREFIX_VARIANTS = {
 const PREFIX_DEFAULTS = { disabled: false };
 
 // 본문(listBodyVariants) — 제목 + 설명. 남는 폭을 쓰고 먼저 양보한다 — 한 글자(제목 글자 t5) + 뒤 여백 10 아래로는 줄지 않는다(Q-001 A · 03D-005)
-const BODY_BASE = "flex min-w-[calc(var(--text-t5)+var(--spacing-x2_5))] flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
+const BODY_BASE = "flex min-w-min flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left";
 
 // 제목(listTitleVariants) — 본문이 낱말 하나보다 좁아질 때만 글자 사이에서 끊는다
-const TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral [overflow-wrap:anywhere]";
+const TITLE_BASE = "font-sans text-t5 font-normal text-fg-neutral [word-break:keep-all] [overflow-wrap:break-word]";
 const TITLE_VARIANTS = { disabled: { true: "text-fg-disabled", false: "" } };
 const TITLE_DEFAULTS = { disabled: false };
 
@@ -111,7 +111,7 @@ const DETAIL_VARIANTS = {
 const DETAIL_DEFAULTS = { disabled: false, highlighted: false };
 
 // 뒤 붙이개(listSuffixVariants) — 값 글자 · 화살표 18. 강조 줄을 올리거나 누르면 값 글자만 짙어지고 화살표는 그대로.
-// value: node(금액 · 화살표 · 컨트롤 · 작은 버튼 — 줄지 않는다) · text(글을 그대로 넘긴 값 글자 — 본문이 1em 이 된 뒤에야 줄고 줄 끝에서 끊는다, Q-001 A)
+// value: node(금액 · 화살표 · 컨트롤 · 작은 버튼 — 줄지 않는다) · text(글을 그대로 넘긴 값 글자 — 본문이 제목 낱말 폭이 된 뒤에야 줄고 줄 끝에서 끊는다, Q-001 A)
 const SUFFIX_BASE =
   "flex items-center gap-x1 font-sans text-t5 text-fg-neutral-subtle [&>svg]:size-[18px] [&_a]:relative [&_a]:z-[1] [&_button]:relative [&_button]:z-[1]";
 

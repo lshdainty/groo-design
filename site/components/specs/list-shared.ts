@@ -32,7 +32,7 @@ export type ListFace = {
   // 본문 — 값이 길면 먼저 양보하고 minWidth(1em — 뒤 여백은 따로)까지 준다(Q-001 A)
   body: { gap: number; padRight: number; minWidth: string };
   // 제목 — 본문이 낱말 하나보다 좁아지면 글자 사이에서 끊는다(overflow-wrap)
-  title: ListType & { color: string; overflowWrap: string };
+  title: ListType & { color: string; overflowWrap: string; wordBreak: string };
   detail: ListType & { color: string; overflowWrap: string };
   // 뒤 붙이개 — 요소는 줄지 않고(shrink 0), 글을 그대로 넘긴 값 글자는 본문이 1em 이 된 뒤에야 줄고(textShrink) 줄 끝에서 끊는다(textOverflowWrap)
   suffix: ListType & { gap: number; color: string; iconSize: number; iconColor: string; shrink: number; textShrink: number; textOverflowWrap: string };
