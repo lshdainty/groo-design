@@ -55,9 +55,11 @@ rules:
         paddingX: $spacing-x0_5
         gap: { value: $spacing-x2_5, note: "라벨 ↔ 보조 액션" }
         alignItems: center
+        flexWrap: { value: wrap, note: "머리는 줄을 바꿀 수 있다 — 라벨 옆에 보조 액션이 들 자리가 모자라면(큰 글자 · 좁은 칸) 액션이 라벨 아래 줄 오른쪽 끝으로 내려간다. 라벨을 한 글자 폭으로 눌러 세우지 않는다(2026-10-29 17-1 앱 — 200% 에서 라벨이 한 글자씩 깨졌다)" }
       label:
         typography: $text-t5
         foreground: $color-fg-neutral
+        wordBreak: { value: keep-all, note: "낱말 단위(Typography v114 — keep-all + break-word). 앱은 공용 글자 위젯의 이음 문자(U+2060)" }
       requiredIndicator:
         size: { value: 0.375rem, note: "6px — 동그란 점. 글자 크기를 따라 커진다. 점은 화면 읽기 프로그램에 숨기고 필수는 칸의 aria-required 가 알린다" }
         color: $color-fg-critical
@@ -77,6 +79,7 @@ rules:
       description:
         typography: $text-t4
         foreground: $color-fg-neutral-subtle
+        wordBreak: { value: keep-all, note: "낱말 단위(v114) — 도움말이 낱말 가운데서 끊기지 않는다. 앱 PField 메시지에서 빠져 있던 것을 고쳤다(2026-10-25 I-20 앱)" }
       descriptionIcon:
         size: 16px
         color: $color-fg-neutral-subtle
@@ -84,6 +87,7 @@ rules:
       errorMessage:
         typography: $text-t4
         foreground: $color-fg-critical
+        wordBreak: { value: keep-all, note: "낱말 단위(v114) — 도움말과 같다" }
       errorIcon:
         size: { value: 16px, note: "lucide circle-alert" }
         color: $color-fg-critical

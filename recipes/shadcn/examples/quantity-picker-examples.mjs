@@ -22,14 +22,14 @@
 
 // ── quantity-picker.tsx 의 상수와 같은 값 ─────────────────────────────────
 
-// 상자 — 안쪽 1px 테두리(오류는 2px). 크기마다 높이 · 모서리
+// 상자 — 안쪽 1px 테두리(오류는 2px). 크기마다 최소 높이 · 모서리 — 글자가 커지면 상자가 값을 따라 커진다(Input · Select 와 같다)
 const ROOT =
   "relative inline-flex shrink-0 items-center bg-bg-layer-default font-sans shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] data-[invalid]:shadow-[inset_0_0_0_2px_var(--color-stroke-critical-solid)]";
 const ROOT_SIZE = {
-  small: "h-9 rounded-r2",
-  medium: "h-10 rounded-r2",
-  large: "h-13 rounded-r3",
-  responsive: "h-13 rounded-r3 lg:h-10 lg:rounded-r2",
+  small: "min-h-9 rounded-r2",
+  medium: "min-h-10 rounded-r2",
+  large: "min-h-13 rounded-r3",
+  responsive: "min-h-13 rounded-r3 lg:min-h-10 lg:rounded-r2",
 };
 // hug — 내용 폭(Field 같은 세로 Flex 안에서도 늘어나지 않는다) · fill — 부모 Flex 의 남은 폭(세로 Flex 면 칸 폭)
 const ROOT_LAYOUT = {

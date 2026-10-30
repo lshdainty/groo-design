@@ -142,21 +142,21 @@ rules:
   # ── 크기 ──────────────────────────────────────────────
   - when: { size: small }
     enabled:
-      root: { height: { value: 36px, note: "SEED x9" }, radius: $radius-r2 }
+      root: { minHeight: { value: 36px, note: "SEED x9 — 최소 높이다. 글자가 커져 값이 상자보다 높아지면 상자가 글을 따라 커지고 숫자를 자르지 않는다(Input · Select 와 같다 — Button 큰 글자 A, 2026-10-29 I-29)" }, radius: $radius-r2 }
       button: { size: { value: 36px, note: "정사각" }, radius: $radius-r2, touchTarget: { value: 44 × 44, note: "보이는 36 둘레로 4 씩 보이지 않는 여백 — 상자 밖으로도 나간다. 표 칸 위아래 여백(16) 안이라 이웃 줄과 겹치지 않는다. AA ✓ · AAA ✓" }, touchExtend: 4px }
       icon: { size: 16px }
       value: { typography: { value: $text-t5, note: "16 / 22 — SEED small t5" } }
       progressCircle: { size: 16px }
   - when: { size: medium }
     enabled:
-      root: { height: { value: 40px, note: "SEED x10" }, radius: $radius-r2 }
+      root: { minHeight: { value: 40px, note: "SEED x10 — 최소 높이(small 비고)" }, radius: $radius-r2 }
       button: { size: 40px, radius: $radius-r2, touchTarget: { value: 44 × 44, note: "보이는 40 둘레로 2 씩 — DESIGN Iconography \"40px 버튼은 보이지 않는 여백을 2px 씩 더한다\". AA ✓ · AAA ✓" }, touchExtend: 2px }
       icon: { size: 18px }
       value: { typography: { value: $text-t5, note: "16 / 22 — SEED medium t5" } }
       progressCircle: { size: 18px }
   - when: { size: large }
     enabled:
-      root: { height: { value: 52px, note: "SEED x13 — 옆 Input · Select large 와 같은 높이" }, radius: $radius-r3 }
+      root: { minHeight: { value: 52px, note: "SEED x13 — 옆 Input · Select large 와 같은 높이. 최소 높이(small 비고)" }, radius: $radius-r3 }
       button: { size: 52px, radius: $radius-r3, touchTarget: { value: 52 × 52, note: "보이는 크기 그대로 — AA ✓ · AAA ✓" }, touchExtend: 0px }
       icon: { size: 22px }
       value: { typography: { value: $text-t6, note: "18 / 24 — SEED large t6" } }

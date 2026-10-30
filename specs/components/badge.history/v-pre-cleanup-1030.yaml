@@ -1,0 +1,160 @@
+# Badge 의 수치 원본 — 구조는 SEED Badge(2026-10-03 사용자 결정, 표시 비교 페이지 1A · 2A · 14).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+#
+# 대상의 상태 · 분류를 보이는 작은 라벨. 누르지 않는다 — 상태가 enabled 하나뿐이다(호버 · 누름 · 포커스 · 비활성 없음).
+# 고르고 거르는 것은 Chip, 실행은 Button, 시간 · 개수 · 길이 같은 메타 정보는 Tag Group, 안 읽은 알림은 Notification Badge.
+#
+# 색은 variant 마다 규칙 하나다 — weak = bg-{tone}-weak + fg-{tone}-contrast, solid = bg-{tone}-solid + 흰 글자,
+# outline = 투명 + 안쪽 1px stroke-{tone}-weak + fg-{tone}. 그래서 색은 variant × tone 두 축을 함께 건 규칙(#grid.tone.variant.*)에 있다.
+#
+# SEED 와 다른 자리(badge.md 의 "SEED 와 다른 점")
+#   - neutral solid 는 bg-neutral-inverted + fg-neutral-inverted(SEED 는 palette gray-800 + fg.on-neutral-solid) — 역할 색만 부른다.
+#   - warning solid 는 주황(bg-warning-solid) + 흰 글자(SEED 는 노랑 + 검정 81.6%) — groo 의 주의 색은 주황이다(v108). 5.06 · 5.79:1.
+#   - neutral outline 테두리는 stroke-neutral-weak(SEED stroke.neutral-muted 는 투명도가 있는 색 — groo 에 없다).
+#   - 의미 색 outline 테두리 stroke-*-weak 의 다크는 팔레트 400(SEED 300) — v117.
+#   - 기본값은 weak · neutral · medium(SEED React 는 solid · neutral · medium) — 반복 목록 · 분류는 weak 가 기본이라는 SEED 문서를 따른다.
+#   - Action(정보 아이콘 버튼, SEED React 3)은 두지 않는다 — 배지 안에서 따로 눌리는 것이 생기고 누르는 영역이 12 · 14 다. 설명은 옆의 Help Bubble.
+
+name: Badge
+
+slots:
+  root: 상자 — 둥근 사각. 글만큼 넓어지고 최대 폭이 없다(부모가 좁을 때만 글이 말줄임)
+  prefixIcon: 앞 아이콘 — 글자색을 따른다. 없어도 된다
+  label: 글 — 한 줄
+  group: 배지 여럿 — 한 대상에 둘까지, 사이 4
+
+variants:
+  variant:
+    weak: 옅은 바탕 + 진한 글자 — 기본. 반복되는 목록 · 분류 · 부가 정보
+    solid: 채움 + 흰 글자 — 눈에 띄어야 할 상태 하나 · 사진 위
+    outline: 테두리 + 의미 색 글자 — 상세 · 본문의 중간 강조
+  tone:
+    neutral: 상태가 따로 없거나 분명하지 않은 것 · 분류 — 예정 · 기록만 · 일시정지 · 단종 · 기본
+    brand: 브랜드와 닿는 자리만 — 요금제(Pro) · 본인 표시(나). 아껴 쓴다
+    informative: 안내 · 권한 제한 · 베타 — 읽기 전용 · 새로
+    positive: 완료 · 승인 · 연결 — 달성 · 승인 · 연결됨
+    warning: 곧 문제가 될 것 · 빠진 것 — 만료 임박 · 빠른 속도 · 투자 주의
+    critical: 거절 · 실패 · 넘침 · 제재 — 반려 · 연체 · 한도 초과
+  size:
+    medium: 20 — 목록 줄 · 표 · 이름 옆(기본)
+    large: 24 — 상세 머리 · 카드 제목 옆
+
+defaults:
+  variant: weak
+  tone: neutral
+  size: medium
+
+states:
+  enabled: 하나뿐 — 누르지 않는다(호버 · 누름 · 포커스 · 비활성이 없다)
+
+rules:
+  # ── 공통 ──────────────────────────────────────────────
+  - when: {}
+    enabled:
+      root:
+        alignItems: center
+        gap: { value: $spacing-x0_5, note: "앞 아이콘 ↔ 글" }
+        maxWidth: { value: none, note: "최대 폭이 없다(SEED 3.0 — 옛 108 · 120 을 걷었다). 부모가 좁거나 따로 막을 때만 글이 한 줄 말줄임(min-width 0 · overflow hidden)" }
+        cursor: { value: default, note: "누르지 않는다 — 누르는 자리 · 포커스가 없다" }
+      prefixIcon:
+        color: { value: currentColor, note: "글자색을 따른다 — 보조 기술에는 숨긴다(aria-hidden)" }
+      label:
+        overflowX: { value: 말줄임, note: "한 줄(nowrap · text-overflow ellipsis) — 줄바꿈하지 않는다. 글 전체는 DOM 에 남아 보조 기술이 다 읽는다" }
+      group:
+        gap: { value: $spacing-x1, note: "배지 사이 4(SEED 그림) — 한 대상에 둘까지. 넘치면 줄바꿈하지 않고 줄인다(배지를 고른다)" }
+
+  # ── 크기 ──────────────────────────────────────────────
+  - when: { size: medium }
+    enabled:
+      root:
+        minHeight: 20px
+        paddingX: $spacing-x1_5
+        paddingY: $spacing-x0_5
+        radius: $radius-r1
+      prefixIcon: { size: 12px }
+      label:
+        typography: { value: $text-t1, note: "11 / 15 — 글자 크기 설정을 따른다(SEED rem). 최소 높이는 그대로, 글이 커지면 상자가 따라 커진다" }
+  - when: { size: large }
+    enabled:
+      root:
+        minHeight: 24px
+        paddingX: $spacing-x2
+        paddingY: $spacing-x1
+        radius: $radius-r1_5
+      prefixIcon: { size: 14px }
+      label:
+        typography: { value: $text-t2, note: "12 / 16 — 글자 크기 설정을 따른다(SEED rem)" }
+
+  # ── 변형 — 굵기 ───────────────────────────────────────
+  - when: { variant: weak }
+    enabled:
+      label: { fontWeight: 500 }
+  - when: { variant: solid }
+    enabled:
+      label: { fontWeight: 700 }
+  - when: { variant: outline }
+    enabled:
+      root:
+        background: transparent
+        borderWidth: { value: 1px, note: "안쪽 1px(inset box-shadow) — 상자 크기가 변하지 않는다(SEED)" }
+      label: { fontWeight: 700 }
+
+  # ── weak — 옅은 바탕 + 진한 글자 ───────────────────────
+  - when: { variant: weak, tone: neutral }
+    enabled:
+      root: { background: { value: $color-bg-neutral-weak, note: "회색 바탕(bg-layer-basement)과 같은 색 — 흰 표면 위에서만 쓴다" }, foreground: { value: $color-fg-neutral-muted, note: "6.58 · 다크 5.93" } }
+  - when: { variant: weak, tone: brand }
+    enabled:
+      root: { background: $color-bg-brand-weak, foreground: { value: $color-fg-brand-contrast, note: "Desk 8.74 · 다크 5.48 · HR 8.49 · 5.47" } }
+  - when: { variant: weak, tone: informative }
+    enabled:
+      root: { background: $color-bg-informative-weak, foreground: { value: $color-fg-informative-contrast, note: "5.67 · 7.80" } }
+  - when: { variant: weak, tone: positive }
+    enabled:
+      root: { background: $color-bg-positive-weak, foreground: { value: $color-fg-positive-contrast, note: "5.72 · 7.78" } }
+  - when: { variant: weak, tone: warning }
+    enabled:
+      root: { background: $color-bg-warning-weak, foreground: { value: $color-fg-warning-contrast, note: "5.70 · 7.84" } }
+  - when: { variant: weak, tone: critical }
+    enabled:
+      root: { background: $color-bg-critical-weak, foreground: { value: $color-fg-critical-contrast, note: "5.65 · 7.79" } }
+
+  # ── solid — 채움 + 흰 글자 ─────────────────────────────
+  - when: { variant: solid, tone: neutral }
+    enabled:
+      root: { background: { value: $color-bg-neutral-inverted, note: "다크는 밝은 면 + 짙은 글자로 뒤집힌다(SEED 와 같은 방식)" }, foreground: { value: $color-fg-neutral-inverted, note: "16.41 · 13.42" } }
+  - when: { variant: solid, tone: brand }
+    enabled:
+      root: { background: $color-bg-brand-solid, foreground: { value: $color-static-white, note: "Desk 8.38 · 8.36 · HR 8.17 · 8.36" } }
+  - when: { variant: solid, tone: informative }
+    enabled:
+      root: { background: $color-bg-informative-solid, foreground: { value: $color-static-white, note: "5.09 · 5.78" } }
+  - when: { variant: solid, tone: positive }
+    enabled:
+      root: { background: $color-bg-positive-solid, foreground: { value: $color-static-white, note: "5.07 · 5.79" } }
+  - when: { variant: solid, tone: warning }
+    enabled:
+      root: { background: { value: $color-bg-warning-solid, note: "주황 — SEED 의 노랑 + 검정 글자가 아니다(groo 주의 색은 주황, Page Banner 와 같다)" }, foreground: { value: $color-static-white, note: "5.06 · 5.79" } }
+  - when: { variant: solid, tone: critical }
+    enabled:
+      root: { background: $color-bg-critical-solid, foreground: { value: $color-static-white, note: "5.06 · 5.77" } }
+
+  # ── outline — 투명 + 안쪽 1px 옅은 선 + 의미 색 글자 ────
+  - when: { variant: outline, tone: neutral }
+    enabled:
+      root: { borderColor: { value: $color-stroke-neutral-weak, note: "1.23 · 1.56 — 글이 배지를 알린다(선은 장식)" }, foreground: { value: $color-fg-neutral-muted, note: "7.11 · 7.70" } }
+  - when: { variant: outline, tone: brand }
+    enabled:
+      root: { borderColor: { value: $color-stroke-brand-weak, note: "Desk 2.45 · 3.86 · HR 2.47 · 3.83 — 의미 색 넷보다 짙다(v109 값 그대로 · HR 은 v121 그루 초록)" }, foreground: { value: $color-fg-brand, note: "Desk 8.38 · 6.10 · HR 8.17 · 6.07" } }
+  - when: { variant: outline, tone: informative }
+    enabled:
+      root: { borderColor: { value: $color-stroke-informative-weak, note: "v117 — 1.52 · 1.73(시트 위 1.50)" }, foreground: { value: $color-fg-informative, note: "5.09 · 6.12" } }
+  - when: { variant: outline, tone: positive }
+    enabled:
+      root: { borderColor: { value: $color-stroke-positive-weak, note: "v117 — 1.51 · 1.71" }, foreground: { value: $color-fg-positive, note: "5.07 · 6.07" } }
+  - when: { variant: outline, tone: warning }
+    enabled:
+      root: { borderColor: { value: $color-stroke-warning-weak, note: "v117 — 1.53 · 1.73" }, foreground: { value: $color-fg-warning, note: "5.06 · 6.11" } }
+  - when: { variant: outline, tone: critical }
+    enabled:
+      root: { borderColor: { value: $color-stroke-critical-weak, note: "v117 — 1.52 · 1.73" }, foreground: { value: $color-fg-critical, note: "5.06 · 6.08" } }

@@ -73,7 +73,9 @@ outline 의 의미 색 테두리 넷(`stroke-informative-weak` · `-positive-wea
 
 ### State
 
-상태는 `enabled` 하나다 — 배지는 누르지 않아 호버 · 누름 · 포커스 · 비활성이 없다(SEED).
+상태는 `enabled` 하나다 — 배지는 누르지 않아 호버 · 누름 · 포커스가 없다(SEED).
+
+**끝낸 항목 안 배지는 꺼진 모양** — 끝낸 할 일 줄처럼 항목이 끝나 줄 전체를 흐린 색으로 둘 때, 그 안의 배지도 꺼진 모양이다 — 바탕 `bg-disabled` · 글 `fg-disabled`(List 막힌 줄의 타일과 같은 짝)로, 변형 · 톤과 상관없이 같다. 불투명도로 흐리지 않는다(v106). 배지만 진한 색으로 남으면 끝낸 줄에서 배지가 가장 먼저 읽힌다(2026-10-25 I-10 앱 — 앱 `PBadge.disabled`, 웹은 화면 `className` 으로 덮던 것을 같은 이름의 prop 으로 옮긴다).
 
 ## Guidelines
 
@@ -235,6 +237,11 @@ import { Badge } from "@/components/ui/badge"
 - **Action(정보 아이콘 버튼)은 두지 않는다** — SEED React 3(2026-10-01)의 배지 안 정보 버튼은 누르는 영역이 12 · 14 이고, 누르지 않는 배지 안에 따로 눌리는 것이 생긴다. 설명은 배지 옆 ⓘ Help Bubble 이다.
 
 ## Migration notes
+
+### 2026-10-30 — 끝낸 항목 안 배지
+
+구현 검수(I-10 할 일 "끝낸 줄")에서 앱 ds 가 먼저 만든 `PBadge.disabled`(바탕 `bg-disabled` · 글 `fg-disabled` · 변형 · 톤 무시)를 State 에 적고, "비활성이 없다" 던 `badge.yaml` 머리 주석 · `states` 설명을 고쳤다. YAML 에 상태 `disabled` 는 아직 두지 않았다 — 사이트 그림 로더(`display-look.ts` 가 상태를 `enabled` 하나로 묶는다) · 레시피 · 웹 ds prop 을 함께 옮길 일이라 따로 남았다. 새 토큰 없음. 옛 스펙은 `badge.history/v-pre-cleanup-1030.*`.
+
 
 ### 2026-10-22 — solid 는 드물게
 

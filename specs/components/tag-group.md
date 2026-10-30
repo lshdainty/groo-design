@@ -69,7 +69,7 @@
 
 ### State
 
-상태는 `enabled` 하나다 — 누르지 않는다. 막힌 줄 안에 있으면 그 줄의 규칙(List 의 비활성 — 모든 글 `fg-disabled`)을 따른다.
+상태는 `enabled` 하나다 — 누르지 않는다. 막힌 줄 안에 있으면 그 줄의 규칙(List 의 비활성 — 모든 글 `fg-disabled`)을 따른다. 끝낸 줄(끝낸 할 일 — 줄은 막히지 않고 누를 수 있다) 안도 항목 글을 모두 `fg-disabled` 로 둔다 — 톤 · 굵기와 상관없이, 구분 " · " 는 원래 `fg-disabled` 그대로다(2026-10-25 I-10 앱 `PTagTone.disabled`, 같은 줄의 배지는 [Badge](badge.md) 의 "끝낸 항목 안").
 
 ## Guidelines
 
@@ -214,6 +214,11 @@ import { Eye } from "lucide-react"
 - **줄어드는 항목의 최소 폭** — 한 줄 말줄임에서 항목은 첫 글자 + "…"(2.1em) 까지만 준다. SEED 는 최소 폭이 없어 좁은 줄에서 글자 조각만 남는다(2026-10-17 사용자 결정 — 03-E 결정 5 B).
 
 ## Migration notes
+
+### 2026-10-30 — 끝낸 줄 안
+
+구현 검수(I-10)에서 앱 ds 가 먼저 만든 `PTagTone.disabled` 를 State 에 한 줄로 적었다 — 끝낸 줄 안의 Tag Group 은 모든 항목 글이 `fg-disabled`. 값 · 토큰 변경 없음(`tag-group.yaml` 은 그대로). 옛 스펙은 `tag-group.history/v-pre-cleanup-1030.md`.
+
 
 ### 2026-10-22 — 앞세울 항목은 되도록 하나
 

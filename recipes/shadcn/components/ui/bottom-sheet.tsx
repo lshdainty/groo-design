@@ -15,9 +15,11 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *   BottomSheetContent   시트 — title(늘) · description(덧붙일 말이 있을 때만). 오른쪽 위 닫기 버튼(showCloseButton, 기본 켬).
  *                        onBack 이면 머리 왼쪽 ←(이름 "뒤로") — 한 시트 안 두 단계 흐름의 2단계에서 1단계로 한 단계 되돌린다
  *                        (bottom-sheet.yaml 축 back · 2026-10-29). 쓴 값을 묻고 버리는 일은 부르는 쪽(폼)이 한다
+ *                        headerAction 이면 닫기 왼쪽 사이 4 에 머리 동작 하나(⋮ — 동작이 여럿인 상세, bottom-sheet.yaml 축 headerAction · 2026-10-30)
  *   BottomSheetBody      본문 — 좌우 화면 여백 24, 넘치면 이 안에서 스크롤. scrollFog 면 끝 흐림(Scroll Fog — 늘 켜진
  *                        위 20 · 아래 80 + 본문 안 여백 위 20 · 아래 80) — 넘칠 수 있는 본문(목록 · 긴 폼)에만 준다
  *   BottomSheetFooter    바닥 — 버튼 하나면 폭 전체, 둘이면 반씩(사이 8). Button large 48 을 크기를 주지 않은 바로 아래 자식에 넣는다
+ *                        확인을 여는 [삭제](ghost critical)를 두면 맨 앞(왼쪽) 자식 — 바닥 왼쪽은 [삭제] 의 자리다(상세 · 입력 폼 시트 모두)
  *   BottomSheetSurface   바탕 — 딤 · 시트 · 손잡이와 닫는 길(Esc · 바깥 · 끌기 · 초점)만. 머리가 다른 시트(Menu Sheet)가 이 위에 짠다.
  *                        BottomSheetContent 도 이것 위에 머리 · 닫기 버튼을 얹은 것이다. handle="always" 면 스냅 높이가 없어도 손잡이를 단다
  *
@@ -270,6 +272,11 @@ const BACK = [
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 
+// 머리 오른쪽 동작(headerAction) — Button ghost 아이콘만 36 하나. 닫기 원(28) 왼쪽 사이 4 · 세로는 닫기 원 가운데(위 24 + 14),
+// 닫기 버튼이 없으면 닫기 자리(오른쪽 화면 여백). 제목은 남은 폭(닫기 자리 40 + 4 + 36 = 80, 닫기가 없으면 36 + 4 + 8 = 48)을 비운다(bottom-sheet.yaml 축 headerAction)
+const HEADER_ACTION = "absolute right-[calc(var(--spacing-global-gutter)+28px+var(--spacing-x1))] top-[calc(var(--spacing-x6)+14px)] z-1 flex -translate-y-1/2 items-center";
+const HEADER_ACTION_NO_CLOSE = "absolute right-global-gutter top-[calc(var(--spacing-x6)+14px)] z-1 flex -translate-y-1/2 items-center";
+
 // 손잡이 — 36 × 4 · 위 6 가운데, 누르는 영역 44. 누름 색은 두지 않는다(bottom-sheet.yaml)
 const HANDLE = [
   "absolute left-1/2 top-x1_5 h-1 w-9 -translate-x-1/2 cursor-pointer rounded-full bg-stroke-neutral-weak",
@@ -373,11 +380,17 @@ export interface BottomSheetContentProps
    * 시트를 닫지 않는다. 쓴 값이 있으면 부르는 쪽이 "작성한 내용이 사라져요" 를 묻고, 돌아가면 그 값을 버린다
    */
   onBack?: () => void;
+  /**
+   * 머리 오른쪽 동작 하나 — Button ghost 아이콘만(⋮ · 이름 "{항목 이름} 더보기"). 들어간 시트에서 동작이 여럿일 때만, Menu Sheet 를 연다
+   * (bottom-sheet.md "머리 오른쪽 동작"). 닫기 왼쪽 사이 4, 제목은 남은 폭에서 줄을 바꾼다. 초점 차례: 제목 → 동작 → 닫기
+   */
+  headerAction?: React.ReactNode;
 }
 
 const BottomSheetContent = React.forwardRef<React.ElementRef<typeof DrawerPrimitive.Content>, BottomSheetContentProps>(
-  ({ title, description, showCloseButton = true, onBack, children, ...props }, ref) => {
+  ({ title, description, showCloseButton = true, onBack, headerAction, children, ...props }, ref) => {
     const ctx = useSheetContext("BottomSheetContent");
+    const hasAction = headerAction != null && headerAction !== false;
     return (
       <BottomSheetSurface
         ref={ref}
@@ -395,7 +408,15 @@ const BottomSheetContent = React.forwardRef<React.ElementRef<typeof DrawerPrimit
         <div data-slot="bottom-sheet-header" className="flex shrink-0 flex-col gap-x2 px-global-gutter pb-x4 pt-x6">
           <DrawerPrimitive.Title
             data-slot="bottom-sheet-title"
-            className={cn("m-0 text-t8 font-bold text-fg-neutral", showCloseButton && "pr-x10", onBack && "pl-[2.25rem]")}
+            className={cn(
+              "m-0 text-t8 font-bold text-fg-neutral",
+              hasAction
+                ? showCloseButton
+                  ? "pr-[calc(var(--spacing-x10)+var(--spacing-x1)+36px)]"
+                  : "pr-[calc(36px+var(--spacing-x1)+var(--spacing-x2))]"
+                : showCloseButton && "pr-x10",
+              onBack && "pl-[2.25rem]",
+            )}
           >
             {title}
           </DrawerPrimitive.Title>
@@ -405,6 +426,12 @@ const BottomSheetContent = React.forwardRef<React.ElementRef<typeof DrawerPrimit
             </DrawerPrimitive.Description>
           )}
         </div>
+        {/* 머리 오른쪽 동작 — DOM 차례가 초점 차례: 제목 → 동작 → 닫기 */}
+        {hasAction && (
+          <div data-slot="bottom-sheet-header-action" className={showCloseButton ? HEADER_ACTION : HEADER_ACTION_NO_CLOSE}>
+            {headerAction}
+          </div>
+        )}
         {showCloseButton && (
           <button
             type="button"

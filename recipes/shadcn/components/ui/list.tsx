@@ -510,22 +510,29 @@ ListSwitchItem.displayName = "ListSwitchItem";
 export interface ListCheckItemProps extends Omit<CheckmarkProps, "title" | "prefix">, Omit<ControlRowProps, "suffix"> {
   /** 체크를 앞(기본) · 뒤 어디에 둘지 */
   markPosition?: "prefix" | "suffix";
+  /**
+   * 뒤 값 — 체크가 앞일 때만. 내용 줄(거래 · 이체)의 고르기 모드는 체크 + 앞 타일(prefix) + 뒤 값(금액)이고, 값은 보이기만 한다
+   * (따로 누르는 것을 두지 않는다 — list.md "하나 고르기 · 여럿 고르기", 2026-10-25 07-2). 체크가 뒤면 뒤 붙이개는 체크 하나다
+   */
+  suffix?: React.ReactNode;
   /** 끌 수 없는 켬 — 칸만 막힌 켬, 제목 · 앞 붙이개는 보통 색(2026-10-29 사용자 결정 B) */
   locked?: boolean;
 }
 
 // 체크 줄 — 여럿 고르기. 체크 24 를 앞(기본)이나 뒤에
 const ListCheckItem = React.forwardRef<React.ElementRef<typeof Checkmark>, ListCheckItemProps>(
-  ({ title, detail, prefix, align, highlighted, rootProps, markPosition = "prefix", size = "large", className, id, disabled, locked, ...props }, ref) => {
+  ({ title, detail, prefix, suffix, align, highlighted, rootProps, markPosition = "prefix", size = "large", className, id, disabled, locked, ...props }, ref) => {
     const autoId = React.useId();
     const cid = id ?? autoId;
     const mark = <Checkmark ref={ref} id={cid} data-list-action="" size={size} className={cn(MARK_NO_SCALE, className)} {...props} {...(locked ? { checked: true, disabled: true } : { disabled })} />;
+    // 체크가 앞이면 체크 다음에 앞 타일을 앞 붙이개 사이(12)만큼 띄워 잇는다 — 고르기 모드 줄(체크 + 타일 + 뒤 값)
+    const front = prefix != null && prefix !== false ? <span className="flex items-center gap-x3">{mark}{prefix}</span> : mark;
     return (
       <ControlRow
         title={title}
         detail={detail}
-        prefix={markPosition === "prefix" ? mark : prefix}
-        suffix={markPosition === "suffix" ? mark : undefined}
+        prefix={markPosition === "prefix" ? front : prefix}
+        suffix={markPosition === "suffix" ? mark : suffix}
         align={align}
         highlighted={highlighted}
         rootProps={rootProps}

@@ -32,7 +32,7 @@
 
 ### Size
 
-SEED 의 세 크기를 그대로 둔다(사용자 결정 1A) — `small` 36 · `medium` 40 · `large` 52, 모서리 8 · 8 · 12, 아이콘 16 · 18 · 22, 값 16 / 22 · 16 / 22 · 18 / 24(500). 크기는 **옆 입력과 같은 높이**로 고른다(SEED — "다른 입력 요소와 함께 배치할 때는 사이즈를 맞춰"). 폼의 기본은 [Input](input.md) 처럼 `responsive` 다 — 1280 미만 large 52 · 이상 medium 40. 앱은 늘 large 다. `small` 36 은 표 칸 · 목록 줄 안에만 쓴다(HR 업무 보고 소요시간).
+SEED 의 세 크기를 그대로 둔다(사용자 결정 1A) — `small` 36 · `medium` 40 · `large` 52, 모서리 8 · 8 · 12, 아이콘 16 · 18 · 22, 값 16 / 22 · 16 / 22 · 18 / 24(500). 크기는 **옆 입력과 같은 높이**로 고른다(SEED — "다른 입력 요소와 함께 배치할 때는 사이즈를 맞춰"). 폼의 기본은 [Input](input.md) 처럼 `responsive` 다 — 1280 미만 large 52 · 이상 medium 40. 앱은 늘 large 다. `small` 36 은 표 칸 · 목록 줄 안에만 쓴다(HR 업무 보고 소요시간). 크기마다의 높이는 최소 높이다 — 글자가 커져 값이 상자보다 높아지면 상자가 글을 따라 커지고 숫자를 자르지 않는다. [Input](input.md) · [Select](select.md) 와 같고, [Button](button.md) 의 "큰 글자에서 높이"(버튼 큰 글자 A)와 같은 규칙이다(2026-10-29 I-29).
 
 36 · 40 버튼은 누르는 자리를 44 로 넓힌다 — 보이는 상자 둘레에 보이지 않는 여백을 4 · 2 씩 더한다(기초 Iconography — "40px 버튼은 보이지 않는 여백을 2px 씩 더한다"). 52 는 그대로 52 다. Button 의 크기(large 48)를 따르는 안(1B)과 40 하나(1C)는 고르지 않았다 — 폰 폼에서 옆 칸(52)과 4 · 12 어긋난다.
 
@@ -279,6 +279,11 @@ const change = (next: number) => {
 - 로딩 원 · 지우기 · fill 은 SEED 그대로다(사용자 결정 3A).
 
 ## Migration notes
+
+### 2026-10-30 — 높이는 최소 높이
+
+`quantity-picker.yaml` 의 크기마다 `root.height` 를 `root.minHeight` 로 바꿨다 — 글자 200% 에서 상자가 숫자를 자르지 않게, Input · Select 와 같게(Button 큰 글자 A — 2026-10-29 I-29, 웹은 I-29 에서 `min-h` 로 시켰다). 값(36 · 40 · 52)은 그대로다. 레시피 · 예제의 상자 높이 클래스를 `min-h-*` 로, 사이트 그림 로더(`finish-look.ts`)가 읽는 키를 `root.minHeight` 로 옮겼다. 두 버튼은 정사각 그대로다. 옛 스펙은 `quantity-picker.history/v-pre-cleanup-1030.*`.
+
 
 ### 2026-10-15 — SEED Quantity Picker 로 새로 둔다
 

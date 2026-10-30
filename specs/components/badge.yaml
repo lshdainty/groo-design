@@ -1,7 +1,8 @@
 # Badge 의 수치 원본 — 구조는 SEED Badge(2026-10-03 사용자 결정, 표시 비교 페이지 1A · 2A · 14).
 # 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
-# 대상의 상태 · 분류를 보이는 작은 라벨. 누르지 않는다 — 상태가 enabled 하나뿐이다(호버 · 누름 · 포커스 · 비활성 없음).
+# 대상의 상태 · 분류를 보이는 작은 라벨. 누르지 않는다 — 상태가 enabled 하나뿐이다(호버 · 누름 · 포커스 없음). 막힌 배지는 없지만,
+# 끝낸 항목(끝낸 할 일 줄) 안의 배지는 꺼진 모양이다 — 바탕 bg-disabled · 글 fg-disabled, 변형 · 톤과 상관없이(badge.md "끝낸 항목 안", 2026-10-25 I-10 앱 PBadge.disabled).
 # 고르고 거르는 것은 Chip, 실행은 Button, 시간 · 개수 · 길이 같은 메타 정보는 Tag Group, 안 읽은 알림은 Notification Badge.
 #
 # 색은 variant 마다 규칙 하나다 — weak = bg-{tone}-weak + fg-{tone}-contrast, solid = bg-{tone}-solid + 흰 글자,
@@ -45,7 +46,7 @@ defaults:
   size: medium
 
 states:
-  enabled: 하나뿐 — 누르지 않는다(호버 · 누름 · 포커스 · 비활성이 없다)
+  enabled: 하나뿐 — 누르지 않는다(호버 · 누름 · 포커스가 없다). 끝낸 항목 안에서는 꺼진 모양(bg-disabled · fg-disabled — 변형 · 톤 무시, badge.md)
 
 rules:
   # ── 공통 ──────────────────────────────────────────────

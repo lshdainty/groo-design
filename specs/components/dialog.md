@@ -20,7 +20,7 @@
 
 | ⓐ Overlay | 딤 — 대화상자 뒤 화면 전체. 조회 대화상자는 누르면 닫힌다(입력 폼은 무시). |
 | ⓑ Container | 대화상자 — 화면 정중앙, medium 480 · large 800, 높이는 화면의 80% 까지. |
-| ⓒ Header | 머리 — 제목 · 설명. 조회 · 안내 대화상자만 오른쪽에 닫기 버튼. 두 단계 흐름의 2단계는 왼쪽에 ←(아래 "두 단계 흐름의 머리 ←"). |
+| ⓒ Header | 머리 — 제목 · 설명. 조회 · 안내 대화상자만 오른쪽에 닫기 버튼. 두 단계 흐름의 2단계는 왼쪽에 ←(아래 "두 단계 흐름의 머리 ←"), 동작이 여럿인 상세는 닫기 왼쪽에 ⋮ 하나(아래 "머리 오른쪽 동작"). |
 | ⓓ Body | 본문 — 넘치면 이 안에서만 스크롤한다(머리 · 바닥은 그대로). 넘칠 수 있는 본문은 끝을 흐린다([Scroll Fog](scroll-fog.md)). |
 | ⓔ Footer | 바닥 — 버튼, 오른쪽 정렬. |
 
@@ -91,6 +91,12 @@
 ### 두 단계 흐름의 머리 ←
 
 한 부품 안에서 1단계(종류 고르기) → 2단계(폼)로 가는 흐름은 1280 이상의 대화상자에서도 2단계 머리 왼쪽에 ← 를 단다 — 시트와 같은 부품(`onBack`) · 같은 값(보이는 원 40 · 아이콘 24 · 누르는 영역 44 · 아이콘이 왼쪽 24 · 제목은 원 오른쪽 4 에서 · 제목 첫 줄 가운데)이다. 수치 원본은 [`bottom-sheet.yaml`](bottom-sheet.yaml) 의 축 `back` 하나다. ← 는 1단계로 한 단계 되돌리고, 쓴 값이 있으면 "작성한 내용이 사라져요" 를 묻고 돌아가며 그 값을 버린다. 입력 폼 대화상자라 머리 닫기 버튼은 없고 바닥 [취소] 가 닫는다 — ← 는 닫지 않는다. 규칙 전문은 [Bottom Sheet](bottom-sheet.md) 의 "두 단계 시트의 머리 ←"(2026-10-29 사용자 결정 17-1 Q3).
+
+### 머리 오른쪽 동작 — ⋮ 하나
+
+들어간 상세에서 그 항목의 동작이 여럿이면 머리 오른쪽에 ⋮ 하나를 둔다(`headerAction`) — 시트와 같은 부품 · 같은 규칙이다([Bottom Sheet](bottom-sheet.md) 의 "머리 오른쪽 동작"). 누르면 [Menu](menu.md) 가 열린다. 자리는 닫기 버튼 왼쪽 사이 4 — 닫기가 없는 입력 폼은 오른쪽 끝이다. 단추는 Button `ghost` 아이콘만(보이는 36 · 누르는 44), 이름 "{항목 이름} 더보기", 세로는 제목 첫 줄 가운데(닫기 아이콘과 같다). 제목 · 설명은 단추 자리를 비운 남은 폭에서 줄을 바꾼다. 초점 차례는 제목 → 동작 → 닫기, 머리 동작은 하나만 둔다(2026-10-25 I-20 — 웹 `DialogContent.headerAction`).
+
+[표: 머리 오른쪽 동작](dialog.yaml#headerAction)
 
 ### Alert Dialog 와 견주기
 
@@ -167,6 +173,7 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 | 열기 | 200ms 로 크게 나타나며 줄어든다(1.3 → 1). 처음 초점은 대화상자에 간다. |
 | 바닥 취소 · 닫기 버튼 · `Esc` | 닫는다. 입력 폼에 바뀐 값이 있으면 먼저 묻는다. 뒤로 가기로 닫는 것은 1280 미만(시트)뿐이다 — 데스크톱 브라우저의 뒤로 가기는 페이지를 떠난다. |
 | 바깥(딤) 누르기 | 조회 · 안내는 닫는다. **입력 폼은 무시한다.** |
+| 머리 ⋮ 누르기 | 그 항목의 동작 목록 [Menu](menu.md) 를 연다(대화상자 위 L3). |
 | 머리 ← 누르기 | 두 단계 흐름의 2단계 — 같은 대화상자 안에서 1단계로 한 단계 되돌린다(닫지 않는다). 쓴 값이 있으면 먼저 "작성한 내용이 사라져요" 를 묻고, 돌아가면 그 값을 버린다. |
 | 본문 스크롤 | 본문만 스크롤 — 위로 스크롤되면 머리 아래 선. 끝 흐림(`scrollFog`)은 걸었으면 늘 그대로다. |
 | 닫힌 뒤 | 100ms 로 사라지고, 초점은 연 자리(트리거)로 돌아간다. |
@@ -181,9 +188,9 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 닫기 아이콘 `fg-neutral-subtle` 5.50 · 5.27 ✓. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ |
 | **WCAG 2.4.3** Focus order | 열면 대화상자로, 닫으면 연 자리로 초점이 간다. 열린 동안 초점이 뒤 화면으로 나가지 않는다 |
 | **WCAG 1.4.10** Reflow | 1280 미만은 시트로 바뀌고, 대화상자 높이는 화면의 80% 까지 — 넘치면 본문이 스크롤된다(머리 · 바닥이 화면 밖으로 나가지 않는다) |
-| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 52 · 바닥 버튼 36 ✓ |
-| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 닫기 버튼 52 ✓ · 바닥 버튼은 누르는 영역을 44 까지 넓힌다(Button) ✓ |
-| **ARIA** | `role="dialog"` + `aria-modal="true"`, 제목 `aria-labelledby` · 설명 `aria-describedby`(있을 때만), 닫기 버튼 이름 "닫기", 머리 ← 이름 "뒤로"(초점 차례 맨 앞) |
+| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 52 · 머리 ⋮ 36 · 바닥 버튼 36 ✓ |
+| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 닫기 버튼 52 ✓ · 머리 ⋮ · 바닥 버튼은 누르는 영역을 44 까지 넓힌다(Button) ✓ |
+| **ARIA** | `role="dialog"` + `aria-modal="true"`, 제목 `aria-labelledby` · 설명 `aria-describedby`(있을 때만), 닫기 버튼 이름 "닫기", 머리 ← 이름 "뒤로"(초점 차례 맨 앞), 머리 ⋮ 이름 "{항목 이름} 더보기"(제목 → 동작 → 닫기) |
 
 ## Do / Don't
 
@@ -219,6 +226,10 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 대화상자 `z-modal-content` 101) — 그 안에서 연 Popover(L3) · Alert Dialog(L5)가 위에 뜬다(SEED 는 모두 2 + layerIndex).
 
 ## Migration notes
+
+### 2026-10-30 — 머리 오른쪽 동작
+
+구현 검수(I-20)에서 정해 웹 ds 가 먼저 만든 머리 ⋮ 자리를 적었다 — 시트와 같은 규칙이고, 자리 값만 대화상자의 닫기(52 상자 · 아이콘 22)에 맞췄다. `dialog.yaml` 에 축 `headerAction` · 부위 `headerAction`(Button ghost 아이콘만 36 · 닫기 아이콘 왼쪽 4 · 닫기가 없으면 오른쪽 16 · 제목 첫 줄 가운데 · 머리 오른쪽 100 / 60)을 더했다 — 웹 `DialogContent.headerAction`(67de7f1c)의 값이다. 레시피 `DialogContent` · `ResponsiveDialogContent` 에 `headerAction` 을 더했다. 새 토큰 없음. 옛 스펙은 `dialog.history/v-pre-cleanup-1030.*`.
 
 ### 2026-10-29 — 두 단계 흐름의 머리 ←
 
