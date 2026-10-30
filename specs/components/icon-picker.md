@@ -18,7 +18,7 @@ SEED 에는 아이콘을 고르는 부품이 없다 — SEED 팀이 만든 아�
 
 [그림: 트리거(라벨 · 지금 아이콘 · 이름) · 시트 · 찾기 칸 · 묶음 머리 · 칸 48 · 고른 칸](../../site/components/specs/icon-picker.tsx#anatomy)
 
-| ⓐ Trigger | 트리거 — Input Button. 라벨 "아이콘", 앞에 지금 아이콘, 값은 그 이름("커피"). |
+| ⓐ Trigger | 트리거 — Input Button(줄 칸 폼에서는 줄 — 아래 "트리거"). 라벨 "아이콘", 앞에 지금 아이콘, 값은 그 이름("커피"). |
 | ⓑ Surface | 여는 자리 — 1280 미만 Bottom Sheet("아이콘") · 이상 Popover. |
 | ⓒ Search | 찾기 칸 — Input 밑줄형 · 앞 돋보기 · 지우기, 위에 붙는다. |
 | ⓓ Group Header | 묶음 머리 — "식비" · "카페" … 찾는 동안은 없다. |
@@ -32,6 +32,8 @@ SEED 에는 아이콘을 고르는 부품이 없다 — SEED 팀이 만든 아�
 ### 트리거 — Input Button
 
 트리거는 [Input Button](input-button.md) 이다 — 라벨 "아이콘"([Field](field.md)), 앞 붙이개에 지금 아이콘(large 20 · medium 16), 값에 그 아이콘의 한국어 이름("커피"), 뒤에 아래 화살표(사용자 결정 — 2026-10-01 Input Button). 이름은 "아이콘, 커피" 로 읽힌다. 아이콘이 없는 항목은 태그 + "태그", 세트 밖 아이콘이 저장된 항목은 그 아이콘 + "지금 아이콘" 이다. 크기는 반응형(1280 미만 large 52 · 이상 medium 40)이고 앱은 large 다.
+
+폼이 줄 칸 문법(치는 값은 칸 · 고르는 값은 줄)이면 트리거는 Input Button 이 아니라 줄이다 — 줄 제목 "아이콘", 값 자리에 지금 아이콘 + 한국어 이름(세트 밖은 "지금 아이콘"), 누르면 아래 "여는 자리" 가 그대로 열린다(2026-10-23 사용자 결정 — 저축 목표 3-B, 색 줄과 같은 길).
 
 [그림: 트리거 — "아이콘" · 커피 아이콘 + "커피" · 아래 화살표, large · medium](../../site/components/specs/icon-picker.tsx#trigger)
 

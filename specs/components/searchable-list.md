@@ -165,8 +165,8 @@ SEED 에는 이 컴포넌트가 없다 — Select 문서가 "옵션이 매우 �
 
 | 선택지 | 쓰는 것 |
 |---|---|
-| 스크롤로 찾기 어렵다(기관 · 상품 · 종목 · 사람) | Searchable List — [Input Button](input-button.md) 의 검색 시트 |
-| 고르는 것이 그 단계의 일(자산 추가의 "기관 고르기") | Searchable List `inline` |
+| 스크롤로 찾기 어렵다(기관 · 상품 · 종목 · 사람 — 자산 추가 · 수정의 기관 · 카드 상품도, 2026-10-23 계좌 5-B) | Searchable List — [Input Button](input-button.md) 의 검색 시트 |
+| 고르는 것이 그 단계의 일 | Searchable List `inline` |
 
 ### 다음 차례
 

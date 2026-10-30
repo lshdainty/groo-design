@@ -98,7 +98,7 @@ rules:
     enabled:
       action:
         height: { value: 줄 높이, note: "min 56 — 줄이 56 보다 낮으면 56" }
-        width: { value: 배지 + 앞 간격, note: "첫 액션 56, 이후 48 — 앞 간격(첫 20 · 다음 12) + 배지 36" }
+        width: { value: 배지 + 앞 간격, note: "첫 액션 56, 이후 48 — 앞 간격(첫 20 · 다음 12) + 배지 36. 라벨 글이 배지보다 넓으면(영어 · 큰 글자) 배지 자리가 글 폭만큼 넓어진다 — 최소 36(2026-10-23 07-1 검수)" }
         paddingY: 0
         paddingX: { value: 앞 간격만, note: "첫 동작 앞 20 · 동작끼리 12 — 마지막 동작은 화면 끝에 붙는다" }
         gap: { value: $spacing-x0_5, note: "배지 ↔ 라벨 2" }
