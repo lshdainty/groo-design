@@ -76,6 +76,10 @@ Segmented Control 은 **조작**이다 — 고르면 화면의 그 내용만 바
 
 [그림: 자리 — 내용 바로 위 하나 · 한 화면에 둘](../../site/components/specs/segmented-control.tsx#placement-guide)
 
+### 머리 오른쪽에 둘 때
+
+카드 · 구역 머리의 오른쪽(제목과 같은 줄)에 두면 트랙이 자리를 채우지 않고 **내용 폭**이다 — 모든 칸이 가장 긴 칸 글에 칸 좌우 여백을 더한 같은 폭이고, 트랙은 그 칸들에 안쪽 여백을 더한 폭이다(셈은 `segmented-control.yaml` 의 `root.width` 비고). 칸 글은 글자 크기를 따르지 않으므로 큰 글자에서도 폭이 그대로다. 제목은 머리 폭의 절반 이상을 지킨다 — 그 자리가 남지 않으면 Segmented 가 머리 아래 줄 오른쪽 끝으로 내려간다. [List](list.md) 목록 제목 · Card 머리 동작의 반 폭 판정과 같은 결이다(2026-10-25 08-2 — 통계 고정 탭 월별 "지출 · 수입", 웹 · 앱이 이 규칙으로 맞췄다). 머리 오른쪽에 둬도 "자기가 바꾸는 내용 바로 위" 다 — 머리 아래가 곧 그 내용일 때만 둔다.
+
 ### 2 ~ 4개, 글은 짧게
 
 칸은 2 ~ 4개다. 5개 이상이면 Chip 의 하나 고르기 줄 · Select 로 둔다. 글은 짧게("이름순" · "최근 사용") — 칸에 비해 글이 길면 줄이 바뀌어 모든 칸이 높아진다. 그러면 다른 컴포넌트를 쓴다.
@@ -155,6 +159,10 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 - **알림 점은 브랜드 글자색**(`fg-brand`)이고, 보조 기술에 "새 소식" 을 덧붙인다. SEED 의 `bg.brand-solid` 짝은 groo 다크에서 트랙과 Desk · HR 1.33:1 이라 쓰지 않는다. 고른 칸에는 점을 그리지 않는다.
 
 ## Migration notes
+
+### 2026-10-30 — 머리 오른쪽에 둘 때는 내용 폭
+
+통계 고정 탭(08-2)에서 웹 · 앱이 맞춘 규칙을 적었다 — 머리 오른쪽 Segmented 는 내용 폭 = (가장 긴 칸 글 + 24) × 칸 수 + 8, 제목 50% 를 지키고 넘치면 머리 아래 오른쪽 끝. 셈은 `segmented-control.yaml` `root.width` 비고에 두고 md 에는 규칙만 적었다. 값 · 토큰 변경 없음 — 레시피에 따로 크기 축을 두지 않고 놓는 자리가 내용 폭 상자(웹 `w-max max-w-full`)로 감싼다. 옛 스펙은 `segmented-control.history/v-pre-cleanup-1030.*`.
 
 ### 2026-10-22 — Chip 필터 바 · Tabs 와 견주는 표
 

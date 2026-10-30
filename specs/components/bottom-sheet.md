@@ -26,6 +26,7 @@
 | ⓕ Footer | 바닥 — 버튼. 하나면 폭 전체, 둘이면 반씩. 확인을 여는 [삭제] 는 왼쪽에 글자만큼. |
 | ⓖ Handle | 손잡이 — 스냅 높이를 둘 때만. |
 | ⓗ Back Button | 뒤로 — 머리 왼쪽 ←. 한 시트 안 두 단계 흐름의 2단계에만 단다(그림에는 없다 — 아래 "두 단계 시트의 머리 ←"). 닫기 버튼은 그대로 있다. |
+| ⓘ Header Action | 머리 오른쪽 동작 — 닫기 왼쪽의 ⋮ 하나. 들어간 시트에서 동작이 여럿일 때만 단다(그림에는 없다 — 아래 "머리 오른쪽 동작"). |
 
 [표: 부위](bottom-sheet.yaml#slots)
 
@@ -60,6 +61,12 @@
 한 시트 안에서 두 단계로 나아가는 흐름(1단계 종류 고르기 → 2단계 폼)은 2단계 머리 왼쪽에 ← 를 단다(`back`). 보이는 원 40 · 아이콘 24 · 누르는 영역 44 이고, 아이콘이 화면 여백 24 에 오도록 원을 8 바깥에 둔다. 세로는 제목 첫 줄 가운데다. 제목은 원 오른쪽 4 에서 시작한다 — 화면 여백에서 36 들어간다. 원 바탕은 누를 때만 `bg-neutral-weak-pressed` 이고, 닫기 버튼과 달리 거리 축소는 없다. 쓰는 법은 Guidelines 의 "두 단계 시트의 머리 ←".
 
 [표: 머리 ←](bottom-sheet.yaml#back)
+
+### 머리 오른쪽 동작 — ⋮ 하나
+
+들어간 시트(상세 · 수정)에서 그 항목의 동작이 여럿이면 머리 오른쪽에 ⋮ 하나를 둔다(`headerAction`) — 누르면 [Menu Sheet](menu-sheet.md) 가 동작 목록을 연다. 자리는 닫기 버튼 왼쪽 사이 4 이고(닫기 버튼이 없으면 닫기 자리인 오른쪽 끝), 세로는 닫기 원과 가운데를 맞춘다. 단추는 [Button](button.md) `ghost` 아이콘만(보이는 36 · 누르는 44)이고, 이름은 "{항목 이름} 더보기"("거래 더보기")다. 제목은 단추 자리를 비운 남은 폭에서 줄을 바꾸고 단추와 겹치지 않는다. 초점 차례는 제목 → 동작 → 닫기다(← 가 있으면 맨 앞). 머리 동작은 **하나만** 둔다 — 둘째 동작을 머리에 나란히 늘어놓지 않고 ⋮ 의 메뉴에 넣는다(2026-10-25 I-20 — 웹 `headerAction` · 앱 `PBottomSheetContent.headerAction`).
+
+[표: 머리 오른쪽 동작](bottom-sheet.yaml#headerAction)
 
 ### State
 
@@ -114,7 +121,7 @@
 
 시트의 입력 폼은 위 닫기 버튼 + 바닥 [저장] 하나다 — 바닥에 [취소] 를 따로 두지 않는다(닫기 버튼과 취소를 함께 두지 않는다). 조회 · 고르기도 위 닫기 버튼이고, 바닥 버튼은 고른 것을 넣을 때("완료" · "적용")만 둔다. 둘을 나란히 둘 때는 보조(초기화)를 왼쪽, 주 버튼을 오른쪽에 반씩.
 
-목록 줄을 눌러 들어간 시트(상세 · 수정)에서 동작이 삭제 하나뿐이면 바닥 왼쪽에 [삭제](`ghost` + `critical`)를 둔다 — 주 버튼([저장] · [수정])이 있으면 그 버튼이 남은 폭을 채우고, 없는 조회 시트는 [삭제] 하나만 왼쪽에 선다. 동작이 여럿이면 바닥이 아니라 머리 ⋮ → [Menu Sheet](menu-sheet.md) 다. 목록 줄에는 ⋮ 를 두지 않는다([Menu](menu.md) 의 "줄의 동작", 2026-10-25 사용자 결정).
+목록 줄을 눌러 들어간 시트(상세 · 수정)에서 동작이 삭제 하나뿐이면 바닥 왼쪽에 [삭제](`ghost` + `critical`)를 둔다 — 주 버튼([저장] · [수정])이 있으면 그 버튼이 남은 폭을 채우고, 없는 조회 시트는 [삭제] 하나만 왼쪽에 선다. 입력 폼 시트(태그 · 거래 수정)도 같다 — 바닥 왼쪽 [삭제] + 오른쪽 [저장] 으로, [Button](button.md) 의 모달 footer("삭제는 왼쪽 ghost + critical, 저장은 오른쪽")와 같은 꼴이다(2026-10-25 I-10). 바닥의 왼쪽 자리는 이 [삭제] 의 자리다 — 다른 버튼을 두지 않는다(앱 `PBottomSheetContent.footerRow` 는 이 [삭제] + 주 버튼 줄을 그리는 자리, 웹 · 레시피는 `BottomSheetFooter` 안에 [삭제] 를 먼저 둔다). 동작이 여럿이면 바닥이 아니라 머리 ⋮(위 "머리 오른쪽 동작") → [Menu Sheet](menu-sheet.md) 다. 목록 줄에는 ⋮ 를 두지 않는다([Menu](menu.md) 의 "줄의 동작", 2026-10-25 사용자 결정).
 
 [그림: 바닥 왼쪽 삭제 — 상세(삭제 · 수정) · 수정이 없는 조회(삭제 하나)](../../site/components/specs/bottom-sheet.tsx#delete-guide)
 
@@ -176,6 +183,7 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 | 바깥(딤) 누르기 | 조회 · 고르기 시트는 닫는다. **입력 폼은 무시한다.** |
 | 아래로 끌기 | 조회 · 고르기 시트는 놓을 때 빠르게(0.4px/ms 넘게) 끌었거나 높이의 25% 이상 내려왔으면 닫고, 아니면 제자리로 돌아간다. 열린 뒤 0.5초는 끌리지 않는다. 본문을 스크롤하는 중이면 끌지 않는다. **입력 폼은 끌리지 않는다.** |
 | 손잡이 누르기 | 다음(더 높은) 스냅 높이로 — 가장 높은 높이에서 누르면 닫는다. |
+| 머리 ⋮ 누르기 | 그 항목의 동작 목록 [Menu Sheet](menu-sheet.md) 를 연다(시트 위에 뜬다). 고른 동작이 확인을 열면 메뉴 시트가 닫힌 뒤 연다. |
 | 머리 ← 누르기 | 두 단계 시트의 2단계 — 같은 시트 안에서 1단계로 한 단계 되돌린다(시트는 닫지 않는다). 2단계에 쓴 값이 있으면 먼저 "작성한 내용이 사라져요" 를 묻고, 돌아가면 그 값을 버린다. |
 | 닫힌 뒤 | 200ms 로 내려가고, 초점은 연 자리(트리거)로 돌아간다. |
 | 열린 동안 | 뒤 화면을 보조 기술에서 숨기고 스크롤을 잠근다. 초점은 시트 안을 돈다. |
@@ -188,9 +196,9 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 떠 있는 표면(`bg-layer-floating`) 위 16.41 · 다크 11.62, 설명 `fg-neutral-muted` 7.11 · 다크 6.67 ✓ |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 닫기 버튼은 아이콘 `fg-neutral`(16.41 · 11.62)이 버튼을 알린다 — 원 바탕(1.08 · 1.13)은 장식. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ |
 | **WCAG 2.4.3** Focus order | 열면 시트로, 닫으면 연 자리로 초점이 간다. 열린 동안 초점이 뒤 화면으로 나가지 않는다 |
-| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 44 · 머리 ← 44 · 손잡이 44 · 바닥 버튼 48 ✓ |
-| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 닫기 버튼(보이는 원 28)은 누르는 영역 44 ✓ · 머리 ←(보이는 원 40)는 44 ✓ · 바닥 버튼 48 ✓ |
-| **ARIA** | `role="dialog"` + `aria-modal="true"`, 제목 `aria-labelledby` · 설명 `aria-describedby`, 닫기 버튼 이름 "닫기", 머리 ← 이름 "뒤로"(초점 차례 맨 앞 — ← → 제목 → 닫기), 손잡이는 보조 기술에 숨긴다 |
+| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 44 · 머리 ← 44 · 머리 ⋮ 44 · 손잡이 44 · 바닥 버튼 48 ✓ |
+| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 닫기 버튼(보이는 원 28)은 누르는 영역 44 ✓ · 머리 ←(보이는 원 40)는 44 ✓ · 머리 ⋮(보이는 36)는 44 ✓ — 닫기와 겹치는 자리는 닫기가 받는다 · 바닥 버튼 48 ✓ |
+| **ARIA** | `role="dialog"` + `aria-modal="true"`, 제목 `aria-labelledby` · 설명 `aria-describedby`, 닫기 버튼 이름 "닫기", 머리 ← 이름 "뒤로"(초점 차례 맨 앞 — ← → 제목 → 동작 → 닫기), 머리 ⋮ 이름 "{항목 이름} 더보기", 손잡이는 보조 기술에 숨긴다 |
 
 ## Do / Don't
 
@@ -229,6 +237,10 @@ import { BottomSheet, BottomSheetBody, BottomSheetContent, BottomSheetFooter } f
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 시트 `z-modal-content` 101) — 그 위에 Popover(L3) · Alert Dialog(L5)가 뜬다.
 
 ## Migration notes
+
+### 2026-10-30 — 머리 오른쪽 동작 · 바닥 왼쪽 [삭제] 의 자리
+
+구현 검수(I-10 · I-20)에서 정해 웹 · 앱 ds 가 먼저 만든 것을 적었다. ① 머리 오른쪽 동작(`headerAction`) — 2026-10-25 "동작이 여럿이면 들어간 화면 머리 ⋮" 의 시트 쪽 자리. yaml 에 축 `headerAction`(hidden · shown)과 부위 `headerAction` 을 더했다 — 값(Button ghost 아이콘만 36 · 닫기 왼쪽 4 · 닫기 원 가운데 · 누르는 44 · 이름 "{항목 이름} 더보기" · 초점 제목 → 동작 → 닫기 · 제목 오른쪽 80)은 구현한 웹(`headerAction` — 67de7f1c) · 앱(`PBottomSheetContent.headerAction`)에서 옮겼다. 레시피 `BottomSheetContent` · `DialogContent` · `ResponsiveDialogContent` 에 `headerAction` 을 더했다. ② 입력 폼 시트의 바닥 왼쪽 [삭제] — Button 모달 footer 와 같은 꼴(I-10 태그 수정), 바닥 왼쪽 자리는 [삭제] 의 자리다. 앱 `footerRow` 를 `deleteAction` 처럼 좁힐지는 정하지 않았다(이름 · API 는 그대로). 새 토큰 없음. 옛 스펙은 `bottom-sheet.history/v-pre-cleanup-1030.*`.
 
 ### 2026-10-29 — 두 단계 시트 머리 ←
 

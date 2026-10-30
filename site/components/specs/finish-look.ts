@@ -102,7 +102,7 @@ export function qpLook(brand: Brand = 'desk'): QpLook {
   const sizes = {} as QpLook['sizes'];
   for (const size of QP_SIZES) {
     const v = resolveState(spec, { size }, 'enabled');
-    const h = k.len(v['root.height'], `${size} root.height`);
+    const h = k.len(v['root.minHeight'], `${size} root.minHeight`);
     k.same(k.len(v['button.size'], `${size} button.size`), h, `${size} button.size(정사각 — 상자 높이)`);
     k.same(k.str(v['button.radius'], `${size} button.radius`), k.str(v['root.radius'], `${size} root.radius`), `${size} button.radius`);
     const touch = k.square(v['button.touchTarget'], `${size} button.touchTarget`);

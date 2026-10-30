@@ -30,6 +30,7 @@ Groo 는 Bootstrap 식 **명시적 z-index 계층 분기** 정책을 채택. sha
 | page sticky(L1=50) 위 dropdown 열림 | dropdown(L3=200) 가 sticky 위 ✓ |
 | page 에서 dialog 열림 | dialog(L2=100) 가 page 위 ✓ |
 | dialog 안 select / popover 열림 | floating(L3=200) 가 dialog content(L2=101) 위 ✓ |
+| 폼 시트 안에서 고르기 시트 열림(겹친 시트 — bottom-sheet.md 가 허용하는 자리) | 위 시트의 딤 · 표면이 아래 시트 표면(L2=101) 바로 위 · Popover(L3=200) 아래 — 웹은 `calc(var(--z-modal-content) + 1)` · `+ 2` 로 세운다(층 표에 새 층 · 이름 토큰은 두지 않았다 — 둘지는 정하지 않았다). 같은 100 · 101 이면 위 시트의 딤이 아래 시트 뒤에 가려진다(2026-10-25 I-19-1 — desk-front 9463b038). 앱은 라우트를 연 순서로 쌓아 저절로 맞다 ✓ |
 | dialog 안 tooltip hover | tooltip(L4=210) 가 popover(L3=200) 위 ✓ |
 | dialog 안 alert-dialog 열림 (삭제 확인 등) | alert(L5=300) 가 dialog(L2=101) 위 ✓ |
 | 모든 layer 위 snackbar | snackbar(L6=400) 가 alert(L5=301) 위 ✓ |

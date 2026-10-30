@@ -23,6 +23,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *   DialogContent           대화상자 — title · description(있을 때만) · size medium 480(기본) | large 800.
  *                           조회 · 안내(form 이 아니면)는 머리 오른쪽에 닫기 버튼, 입력 폼은 두지 않는다(바닥 [취소]).
  *                           onBack 이면 머리 왼쪽 ←(이름 "뒤로") — 두 단계 흐름의 2단계에서 1단계로. 값은 시트와 같다(bottom-sheet.yaml 축 back)
+ *                           headerAction 이면 닫기 왼쪽 사이 4(닫기가 없으면 오른쪽 끝)에 머리 동작 하나(⋮ — dialog.yaml 축 headerAction)
  *   DialogBody              본문 — 이 안에서만 스크롤, 위로 스크롤되면 머리 아래 1px 선. scrollFog 면 끝 흐림(Scroll Fog —
  *                           늘 켜진 위 20 · 아래 80 + 본문 안 여백 위 20 · 아래 80) — 넘칠 수 있는 본문(목록 · 긴 폼)에만 준다
  *   DialogFooter            바닥 — 오른쪽 정렬, 사이 8. Button small 36 을 크기를 주지 않은 바로 아래 자식에 넣는다
@@ -244,6 +245,13 @@ const BACK = [
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 
+// 머리 오른쪽 동작(headerAction) — Button ghost 아이콘만 36 하나. 닫기 아이콘(22) 왼쪽 사이 4 · 세로는 제목 첫 줄 가운데(39),
+// 닫기가 없는 입력 폼은 오른쪽 16. 머리 오른쪽 여백은 닫기 자리 52 + 4 + 36 + 8 = 100, 닫기가 없으면 16 + 36 + 8 = 60(dialog.yaml 축 headerAction)
+const HEADER_WITH_ACTION_CLOSE = "pr-[calc(var(--spacing-x13)+var(--spacing-x1)+36px+var(--spacing-x2))]";
+const HEADER_WITH_ACTION = "pr-[calc(var(--spacing-x4)+36px+var(--spacing-x2))]";
+const HEADER_ACTION_CLOSE = "absolute right-[calc(var(--spacing-x6)+22px+var(--spacing-x1))] top-[39px] z-1 flex -translate-y-1/2 items-center";
+const HEADER_ACTION = "absolute right-x4 top-[39px] z-1 flex -translate-y-1/2 items-center";
+
 export interface DialogContentProps extends Omit<React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>, "title"> {
   /** 제목 — 하는 일("휴가 신청" · "거래 상세"). 없으면 aria-label 로 이름을 단다 */
   title?: React.ReactNode;
@@ -253,6 +261,8 @@ export interface DialogContentProps extends Omit<React.ComponentPropsWithoutRef<
   size?: keyof typeof SIZE;
   /** 머리 왼쪽 ←(이름 "뒤로") — 두 단계 흐름의 2단계에서 1단계로 한 단계 되돌릴 때만. 닫지 않는다(dialog.md "두 단계 흐름의 머리 ←") */
   onBack?: () => void;
+  /** 머리 오른쪽 동작 하나 — Button ghost 아이콘만(⋮ · "{항목 이름} 더보기"). 닫기 왼쪽 사이 4(닫기가 없으면 오른쪽 끝). 초점 차례: 제목 → 동작 → 닫기 */
+  headerAction?: React.ReactNode;
 }
 
 const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
@@ -268,6 +278,7 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
       onCloseAutoFocus,
       onInteractOutside,
       onBack,
+      headerAction,
       ...props
     },
     ref,
@@ -279,6 +290,7 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
     const hasHeader = title != null;
     // 닫기 버튼은 조회 · 안내의 머리에만 — 입력 폼은 바닥 [취소] 가 닫는다(닫기 버튼과 취소를 함께 두지 않는다)
     const showClose = hasHeader && !form;
+    const hasAction = headerAction != null && headerAction !== false;
     return (
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay data-slot="dialog-overlay" className={OVERLAY} />
@@ -318,8 +330,11 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
           {...props}
         >
           {hasHeader && (
-            <div data-slot="dialog-header" className={cn(HEADER, showClose && "pr-x13")}>
-              {/* 머리 ← — 초점 차례 맨 앞: ← → 제목 → 닫기 */}
+            <div
+              data-slot="dialog-header"
+              className={cn(HEADER, showClose && "pr-x13", hasAction && (showClose ? HEADER_WITH_ACTION_CLOSE : HEADER_WITH_ACTION))}
+            >
+              {/* 머리 ← — 초점 차례 맨 앞: ← → 제목 → 동작 → 닫기 */}
               {onBack && (
                 <button type="button" aria-label="뒤로" data-slot="dialog-back" className={BACK} onClick={onBack}>
                   <ArrowLeft aria-hidden strokeWidth={2} />
@@ -332,6 +347,12 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
                 <DialogPrimitive.Description data-slot="dialog-description" className="m-0 text-t5 font-normal text-fg-neutral-muted">
                   {description}
                 </DialogPrimitive.Description>
+              )}
+              {/* 머리 오른쪽 동작 — DOM 차례가 초점 차례: 제목 → 동작 → 닫기 */}
+              {hasAction && (
+                <div data-slot="dialog-header-action" className={showClose ? HEADER_ACTION_CLOSE : HEADER_ACTION}>
+                  {headerAction}
+                </div>
               )}
               {showClose && (
                 <DialogPrimitive.Close aria-label="닫기" data-slot="dialog-close" className={CLOSE}>
@@ -451,6 +472,8 @@ export interface ResponsiveDialogContentProps extends Omit<React.HTMLAttributes<
   size?: keyof typeof SIZE;
   /** 머리 왼쪽 ← — 두 단계 흐름의 2단계에서 1단계로(두 표면 같은 값). 쓴 값을 묻고 버리는 일은 부르는 쪽(폼)이 한다 */
   onBack?: () => void;
+  /** 머리 오른쪽 동작 하나(⋮ · "{항목 이름} 더보기") — 들어간 상세에서 동작이 여럿일 때. 두 표면 같은 규칙, 자리는 표면의 닫기에 맞춘다 */
+  headerAction?: React.ReactNode;
 }
 
 const ResponsiveDialogContent = React.forwardRef<HTMLDivElement, ResponsiveDialogContentProps>(({ size, ...props }, ref) => {

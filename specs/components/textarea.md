@@ -67,6 +67,10 @@ Input 의 상자형과 같다 — 포커스는 안쪽 2px `stroke-neutral-contra
 
 [그림: 최대 높이 — 시트 안에서 칸이 멈추고 스크롤 · 칸이 자라 저장 버튼을 밀어낸 시트](../../site/components/specs/textarea.tsx#max-guide)
 
+### 예시 글은 최소 높이 안에
+
+예시 글(placeholder)은 빈 칸의 최소 높이(3줄) 안에 들게 쓴다 — 칸은 쓴 글로 자라지 예시 글로 자라지 않는다. 앱은 넘는 예시 줄이 소리 없이 잘리고, 웹은 브라우저가 예시 글만큼 칸을 키워(`field-sizing`) 웹 · 앱이 갈린다. 예시가 길면 줄여 쓰고, 꼭 필요한 안내는 Field 설명으로 옮긴다(2026-10-30 12-2 — 앱 문자 붙여넣기 칸의 예시 5줄이 3줄 높이 밖으로 잘렸다).
+
 ## 코드
 
 레시피 `recipes/shadcn/components/ui/textarea.tsx`(Textarea)를 [Field](field.md) 안에 둔다. 아래 미리보기는 스펙 값으로 그린 모습이다.
@@ -155,6 +159,11 @@ import { Textarea } from "@/components/ui/textarea"
 - **자동 높이를 끈 2줄 최소 높이를 줄 높이로 계산해 적었다**(large 72 · medium 62) — SEED 문서는 70 하나다.
 
 ## Migration notes
+
+### 2026-10-30 — 예시 글은 최소 높이 안에
+
+Guidelines 에 "예시 글은 최소 높이 안에" 를 더했다 — 앱 문자 붙여넣기 칸(12-2)의 예시 5줄이 최소 높이 3줄 밖으로 잘렸고, 웹은 예시 글만큼 자라 둘이 갈렸다. 값 변경 없음. 옛 스펙은 `textarea.history/v-pre-cleanup-1030.md`.
+
 
 ### 2026-10-08 — 앱 적용이 남긴 것
 
