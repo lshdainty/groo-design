@@ -1424,7 +1424,7 @@ export function listRow({ kind = "item", title, detail = "", prefix = "", suffix
   const off = disabled && (kind === "button" || kind === "control");
   const body = `<span class="plst-title">${escape(title)}</span>${detail ? `<span class="plst-detail">${escape(detail)}</span>` : ""}`;
   const pre = prefix ? `<span class="plst-prefix">${prefix}</span>` : "";
-  // 글을 그대로 넘긴 값 글자(태그 없는 글)는 .plst-suffix--text — list.tsx 의 suffix value text(본문이 1em 이 된 뒤에야 줄고 줄 끝에서 끊는다, Q-001 A)
+  // 글을 그대로 넘긴 값 글자(태그 없는 글)는 .plst-suffix--text — list.tsx 의 suffix value text(본문이 제목 낱말 폭이 된 뒤에야 줄고 줄 끝에서 끊는다, Q-001 A)
   const suf = suffix ? `<span class="plst-suffix${/</.test(suffix) ? "" : " plst-suffix--text"}">${suffix}</span>` : "";
   let inner;
   if (kind === "button") inner = `<div class="${contentCls}">${pre}<button type="button" class="plst-body plst-action" data-list-action=""${off ? ' disabled data-disabled=""' : ""}>${body}</button>${suf}</div>`;
@@ -1733,7 +1733,7 @@ export function renderListGallery(brand) {
   // 3-1. 값이 길 때 — 가장 나쁜 값(list.md Suffix "값이 길 때" — 2026-10-15 사용자 결정 Q-001 A). 이름은 지어낸 것이다
   const longPanel = panel(
     "값이 길 때 — 가장 나쁜 값(폭 320 · 360)",
-    "뒤 붙이개는 줄지 않고 본문이 양보한다(SEED 와 같다). 겹침만 막는다 — 본문은 한 글자(1em, 뒤 여백 10 은 따로)까지 주고, 제목 · 설명은 칸 끝에서 끊는다(overflow-wrap: anywhere — Tag Group 설명은 한 줄 말줄임). 글을 그대로 넘긴 값 글자(이메일 · 계좌번호 · 긴 이름)는 본문이 한 글자 폭이 된 뒤에야 줄고 줄 끝에서 끊는다 — 본문 위로 넘쳐 덮지 않는다. 금액은 한 줄 그대로다 — 줄여 적는 것(억 단위 등)은 그 화면이 정한다. 폭 320 · 360 은 줄 폭이다(좌우 24 를 빼면 272 · 312).",
+    "뒤 붙이개는 줄지 않고 본문이 양보한다(SEED 와 같다). 겹침만 막는다 — 본문은 제목의 가장 긴 낱말(뒤 여백 10 은 따로)까지 주고, 제목 · 설명은 칸 끝에서 끊는다(overflow-wrap: anywhere — Tag Group 설명은 한 줄 말줄임). 글을 그대로 넘긴 값 글자(이메일 · 계좌번호 · 긴 이름)는 본문이 한 글자 폭이 된 뒤에야 줄고 줄 끝에서 끊는다 — 본문 위로 넘쳐 덮지 않는다. 금액은 한 줄 그대로다 — 줄여 적는 것(억 단위 등)은 그 화면이 정한다. 폭 320 · 360 은 줄 폭이다(좌우 24 를 빼면 272 · 312).",
     `
       <div class="plst-frames plst-frames--fixed">${[
       listFrame("320 · 거래 줄 — 긴 제목 · 아주 큰 금액", "ListButtonItem + ListTile · 금액(화면의 16 · 700)", listOf([
@@ -12464,14 +12464,14 @@ export function pageCss() {
     .plst-tile--indigo { --plst-tile-bg: var(--color-chart-indigo-weak); --plst-tile-fg: var(--color-chart-indigo); }
     .plst-tile--violet { --plst-tile-bg: var(--color-chart-violet-weak); --plst-tile-fg: var(--color-chart-violet); }
     .plst-tile--gray { --plst-tile-bg: var(--color-chart-gray-weak); --plst-tile-fg: var(--color-chart-gray); }
-    /* 본문 — 제목 + 설명(사이 2), 뒤 붙이개와 10. 남는 폭을 쓰고 먼저 양보한다 — 한 글자(1em) + 뒤 여백 10 아래로는 줄지 않는다(Q-001 A) */
+    /* 본문 — 제목 + 설명(사이 2), 뒤 붙이개와 10. 남는 폭을 쓰고 먼저 양보한다 — 제목의 가장 긴 낱말 + 뒤 여백 10 아래로는 줄지 않는다(Q-001 A · 2026-10-30 결정 B) */
     .plst-body {
       display: flex;
       flex: 1;
       flex-direction: column;
       align-items: flex-start;
       gap: var(--spacing-x0_5);
-      min-width: calc(var(--text-t5) + var(--spacing-x2_5)); /* 1em = 제목 글자(t5) — 03D-005 */
+      min-width: min-content; /* 제목의 가장 긴 낱말 + 뒤 여백 — 2026-10-30 결정 B(옛 1em) */
       padding-right: var(--spacing-x2_5);
       text-align: left;
     }
@@ -12494,14 +12494,15 @@ export function pageCss() {
     .plst-action:focus-visible::after,
     .plst-row--focus .plst-action::after { outline: 2px solid var(--plst-focus-ring); outline-offset: -2px; }
     .plst-action[data-disabled] { cursor: not-allowed; }
-    /* 제목 t5 · 400 · fg-neutral, 설명 t3 · fg-neutral-subtle(SEED 그대로). 제목 · 설명은 본문이 낱말 하나보다 좁아질 때만 글자 사이에서 끊는다(칸 밖으로 넘치지 않게) */
+    /* 제목 t5 · 400 · fg-neutral, 설명 t3 · fg-neutral-subtle(SEED 그대로). 제목은 낱말 단위로만(keep-all — 본문 최소 폭이 그 낱말), 설명은 본문이 낱말 하나보다 좁아질 때만 글자 사이에서 끊는다(결정 B) */
     .plst-title {
       font-family: var(--font-sans);
       font-size: var(--text-t5);
       line-height: var(--text-t5--line-height);
       font-weight: 400;
       color: var(--color-fg-neutral);
-      overflow-wrap: anywhere;
+      word-break: keep-all;
+      overflow-wrap: break-word;
     }
     .plst-detail {
       font-family: var(--font-sans);
@@ -12525,7 +12526,7 @@ export function pageCss() {
     }
     .plst-suffix > svg { width: 18px; height: 18px; }
     .plst-suffix :is(a, button) { position: relative; z-index: 1; }
-    /* 글 값(이메일 · 계좌번호 · 긴 이름 — 글을 그대로 넘긴 값 글자) — 본문이 1em 이 된 뒤에야 줄고 줄 끝에서 끊는다. 본문 위로 넘쳐 덮지 않는다(Q-001 A).
+    /* 글 값(이메일 · 계좌번호 · 긴 이름 — 글을 그대로 넘긴 값 글자) — 본문이 제목 낱말 폭이 된 뒤에야 줄고 줄 끝에서 끊는다. 본문 위로 넘쳐 덮지 않는다(Q-001 A).
        금액 · 화살표 · 컨트롤 · 작은 버튼은 위 .plst-suffix 그대로 줄지 않는다(SEED suffix flexShrink 0) */
     .plst-suffix--text { flex-shrink: 1; min-width: 0; overflow-wrap: anywhere; }
     /* 가계부 금액 — List 의 값 글자가 아니라 그 화면이 정한 자리다(list.md Suffix — 16 · 700) */

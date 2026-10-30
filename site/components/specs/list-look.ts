@@ -51,7 +51,7 @@ function face(v: Record<string, unknown>, focused: Record<string, unknown>, stat
       fg: isColor(t('tile.color')) ? c('tile.color') : undefined,
     },
     body: { gap: n('body.gap'), padRight: n('body.paddingRight'), minWidth: c('body.minWidth') },
-    title: { ...type(t('title.typography'), boxed('title.fontWeight')), color: c('title.foreground'), overflowWrap: c('title.overflowWrap') },
+    title: { ...type(t('title.typography'), boxed('title.fontWeight')), color: c('title.foreground'), overflowWrap: c('title.overflowWrap'), wordBreak: c('title.wordBreak') },
     detail: { ...type(t('detail.typography'), boxed('detail.fontWeight')), color: c('detail.foreground'), overflowWrap: c('detail.overflowWrap') },
     suffix: {
       ...type(t('suffixText.typography'), boxed('suffixText.fontWeight')),
