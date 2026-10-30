@@ -69,7 +69,7 @@
 - `square` — 칸 + 체크. 여러 개를 고르는 목록, 사용자가 알고 골라야 하는 선택(기본).
 - `ghost` — 칸 없이 체크만. 선택 안 됨도 옅은 체크로 보인다. 필수가 아니고 셋 이하일 때.
 
-Desk 할 일 완료의 동그라미 체크는 Checkbox 의 모양이 아니다 — 할 일 목록 컴포넌트 차례에 정한다(사용자 결정).
+Desk 할 일 완료도 Checkbox `square` 다 — 옛 동그라미 체크는 따로 두지 않는다(2026-10-23 할 일 결정 — 할 일 줄 앞 Checkbox).
 
 [그림: 모양 두 가지 — Square · Ghost](../../site/components/specs/checkbox.tsx#shapes)
 
