@@ -184,7 +184,7 @@ export const alertDialogExamples = [
 
 <AlertDialog open={open} onOpenChange={setOpen}>
   <AlertDialogContent>
-    <AlertDialogTitle>거래를 삭제할까요?</AlertDialogTitle>
+    <AlertDialogTitle>거래 삭제</AlertDialogTitle>
     {/* 이름 없는 대상은 무엇인지 알 만큼 — 날짜 · 금액 */}
     <AlertDialogDescription>{tx.dateLabel} {tx.title} {formatWon(tx.amount)} 거래를 지워요. 삭제한 거래는 되돌릴 수 없어요.</AlertDialogDescription>
     <AlertDialogFooter>
@@ -196,7 +196,7 @@ export const alertDialogExamples = [
     render: () =>
       alertDialog({
         uid: "alert-dialog-ex-delete",
-        title: "거래를 삭제할까요?",
+        title: "거래 삭제",
         description: "10월 22일 점심 식사 12,000원 거래를 지워요. 삭제한 거래는 되돌릴 수 없어요.",
         action: "삭제",
         variant: "criticalSolid",
@@ -231,7 +231,7 @@ export const alertDialogExamples = [
     description:
       "버튼 배치를 고르는 prop 은 없다 — AlertDialogFooter 가 글 폭으로 정한다. 버튼마다 반 폭(사이 8 을 뺀)을 바탕으로 두고 글 폭보다 줄지 않게 해, 한쪽 글이 반 폭을 넘으면 줄이 넘어가 세로로 쌓이고(wrap-reverse) 확정이 위, 취소가 아래로 간다 — 둘 다 폭 전체다. 코드의 차례(DOM 순서)는 늘 [취소] [확정] 이다.",
     jsx: `<AlertDialogContent>
-  <AlertDialogTitle>관심 그룹을 삭제할까요?</AlertDialogTitle>
+  <AlertDialogTitle>관심 그룹 삭제</AlertDialogTitle>
   <AlertDialogDescription>그룹에 담은 종목 12개도 함께 빠져요.</AlertDialogDescription>
   <AlertDialogFooter>
     <AlertDialogCancel>취소</AlertDialogCancel>
@@ -241,7 +241,7 @@ export const alertDialogExamples = [
     render: () =>
       alertDialog({
         uid: "alert-dialog-ex-vertical",
-        title: "관심 그룹을 삭제할까요?",
+        title: "관심 그룹 삭제",
         description: "그룹에 담은 종목 12개도 함께 빠져요.",
         action: "그룹과 종목 함께 삭제",
         variant: "criticalSolid",
@@ -287,7 +287,7 @@ export const alertDialogExamples = [
           ([size, caption]) =>
             `<div><span style="${CAPTION}">${caption}</span>${alertDialog({
               uid: `alert-dialog-ex-size-${size}`,
-              title: "거래를 삭제할까요?",
+              title: "거래 삭제",
               description: "삭제한 거래는 되돌릴 수 없어요.",
               action: "삭제",
               variant: "criticalSolid",
