@@ -215,7 +215,7 @@ const ToneGuide: Fig = ({ caption }) => {
         </Verdict>
         <Verdict ok={false} note="취소를 Critical 로 — 위험한 쪽이 어느 버튼인지 헷갈린다">
           <Stage h={260}>
-            <AlertSurface look={al()} title="거래를 삭제할까요?" description="삭제한 거래는 되돌릴 수 없어요." cancel={{ label: '취소', look: b('criticalSolid') }} confirm={{ label: '삭제', look: b('neutralSolid') }} />
+            <AlertSurface look={al()} title="거래 삭제" description="삭제한 거래는 되돌릴 수 없어요." cancel={{ label: '취소', look: b('criticalSolid') }} confirm={{ label: '삭제', look: b('neutralSolid') }} />
           </Stage>
         </Verdict>
       </div>

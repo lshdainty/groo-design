@@ -40,6 +40,8 @@ export type ResultSectionSize = "large" | "medium";
 export interface ResultSectionAction {
   /** 동작 이름 — "다시 시도" · "홈으로" · "거래 추가" */
   label: string;
+  /** 앞 아이콘 — 빈 화면의 만들기 버튼(plus) 처럼 동작을 더 짚을 때 */
+  icon?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLElement>;
   /** 주면 링크(<a href>)로 그린다 */
   href?: string;
@@ -112,6 +114,7 @@ function ActionButton({ action, variant, size, className }: { action: ResultSect
     return (
       <Button asChild variant={variant} size={size} className={className}>
         <a href={action.href} onClick={action.onClick}>
+          {action.icon}
           {action.label}
         </a>
       </Button>
@@ -119,6 +122,7 @@ function ActionButton({ action, variant, size, className }: { action: ResultSect
   }
   return (
     <Button type="button" variant={variant} size={size} className={className} loading={action.loading} onClick={action.onClick}>
+      {action.icon}
       {action.label}
     </Button>
   );

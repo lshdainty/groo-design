@@ -117,7 +117,7 @@ import { ResultSection } from "@/components/ui/result-section"
   icon={<ReceiptText />}
   title="이번 달 거래가 없어요"
   description="거래를 기록하면 여기에 모여요."
-  primaryAction={{ label: "거래 추가", onClick: openAddTx }}
+  primaryAction={{ label: "거래 추가", icon: <Plus />, onClick: openAddTx }}
 />
 ```
 

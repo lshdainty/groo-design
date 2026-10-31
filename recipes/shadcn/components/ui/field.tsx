@@ -194,6 +194,8 @@ export interface FieldProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
   showRequiredIndicator?: boolean;
   /** 라벨 뒤 글 — 2/3 이상이 필수인 화면의 선택 칸에 "선택" */
   indicator?: React.ReactNode;
+  /** 머리 줄째 숨긴다 — 자리 글이 이름을 대신하는 칸. 읽는 이름은 그대로. headerAction 이 있으면 무시 */
+  labelHidden?: boolean;
   /** 라벨 오른쪽 보조 액션 — Button ghost · neutralSubtle · xsmall · flush="right" */
   headerAction?: React.ReactNode;
   /** 설명 — 오류가 있으면 오류가 대신한다 */
@@ -221,6 +223,7 @@ const Field = React.forwardRef<HTMLDivElement, FieldProps>(
       showRequiredIndicator = false,
       indicator,
       headerAction,
+      labelHidden = false,
       description,
       descriptionIcon,
       errorMessage,
@@ -296,7 +299,10 @@ const Field = React.forwardRef<HTMLDivElement, FieldProps>(
           {...props}
         >
           {(label != null || headerAction != null) && (
-            <div data-slot="field-header" className="flex items-center justify-between gap-x2_5 px-x0_5">
+            <div
+              data-slot="field-header"
+              className={labelHidden && headerAction == null ? "sr-only" : "flex items-center justify-between gap-x2_5 px-x0_5"}
+            >
               {label != null &&
                 (group ? (
                   <span id={labelId} className={labelClass}>
@@ -336,7 +342,7 @@ const Field = React.forwardRef<HTMLDivElement, FieldProps>(
               {showCount && (
                 <p id={countId} className="m-0 ml-auto shrink-0 text-t4 tabular-nums">
                   <span className={invalid ? "text-fg-critical" : count === 0 ? "text-fg-neutral-subtle" : "text-fg-neutral"}>{count}</span>
-                  <span className={invalid ? "text-fg-critical" : "text-fg-neutral-subtle"}>/{maxGraphemeCount}</span>
+                  <span className={invalid ? "text-fg-critical" : "text-fg-neutral-subtle"}>/{maxGraphemeCount.toLocaleString("en-US")}</span>
                 </p>
               )}
             </div>
