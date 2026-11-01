@@ -2,7 +2,7 @@
 pipeline {
     agent any
     environment {
-        REPO_URL = "https://github.com/lshdainty/porest-design.git"
+        REPO_URL = "https://github.com/lshdainty/groo-design.git"
         IMAGE_NAME = "porest-design"
         SRC_DIR = "${env.POREST_BASE_DIR}/src/design"
         CONTAINER_NAME = "design-prod"
