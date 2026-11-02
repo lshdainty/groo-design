@@ -508,7 +508,7 @@ export function FooterPlayground({ look, year }: { look: FtLook; year: number })
       L.push('  <FooterInfo>');
       if (on.policy) {
         used.add('FooterLinks').add('FooterLink');
-        L.push('    <FooterLinks>', '      <FooterLink href="https://sso.porest.cloud/privacy" external>개인정보 처리방침</FooterLink>', '    </FooterLinks>');
+        L.push('    <FooterLinks>', '      <FooterLink href="https://sso.hangroo.io/privacy" external>개인정보 처리방침</FooterLink>', '    </FooterLinks>');
       }
       if (on.text) {
         used.add('FooterText');

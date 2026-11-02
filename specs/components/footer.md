@@ -1,6 +1,6 @@
 # Footer
 
-> 사이트 맨 아래의 바닥 — 브랜드 · 사이트맵(탐색 영역)과 정책 링크 · 안내 글 · 저작권(안내 영역)을 블록으로 골라 조립한다. 지금은 groo-home(porest.cloud) 맨 아래 하나이고, 나중에 SSO 로그인 · 가입 아래와 설명서 · 문서 사이트의 바닥이 같은 블록을 쓴다. Desk · HR 의 제품 화면에는 두지 않는다 — 정책 링크는 설정 목록의 줄([List](list.md))이다.
+> 사이트 맨 아래의 바닥 — 브랜드 · 사이트맵(탐색 영역)과 정책 링크 · 안내 글 · 저작권(안내 영역)을 블록으로 골라 조립한다. 지금은 groo-home(hangroo.io) 맨 아래 하나이고, 나중에 SSO 로그인 · 가입 아래와 설명서 · 문서 사이트의 바닥이 같은 블록을 쓴다. Desk · HR 의 제품 화면에는 두지 않는다 — 정책 링크는 설정 목록의 줄([List](list.md))이다.
 
 구조는 당근 [SEED Footer](https://seed-design.io/components/footer)(디자인 문서 · registry block `footer-01` ~ `footer-04` · qvism-preset `footer` recipe — Apache-2.0)를 따른다 — 정해진 한 덩어리가 아니라 "제품마다 필요한 구성을 골라 조립하는 조합 예시" 이고, 필수 블록 없이 위 → 아래 순서만 있다. SEED 에는 rootage 가 없어 수치는 블록 코드(틀 1040 · 40 / 32 · 영역 사이 40 · 열 최소 100 …)와 `Footer.LinkText` 레시피에서 가져왔다. groo-home 의 짜임(7B — SEED footer-04 를 줄인 것) · 1280 미만 좌우 24 · 위 선 · 저작권 형식(9A)은 groo 가 정했다(2026-10-15 사용자 결정 — 마무리 7B · 8A · 9A). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. groo 에 처음 두는 부품이다.
 
@@ -195,13 +195,13 @@ import {
     />
     <FooterSitemap>
       <FooterColumn title="서비스">
-        <FooterLink href="https://hr.porest.cloud">HR</FooterLink>
-        <FooterLink href="https://desk.porest.cloud">Desk</FooterLink>
-        <FooterLink href="https://desk.porest.cloud/guide/">Desk 설명서</FooterLink>
+        <FooterLink href="https://ieum.hangroo.io">HR</FooterLink>
+        <FooterLink href="https://damda.hangroo.io">Desk</FooterLink>
+        <FooterLink href="https://damda.hangroo.io/guide/">Desk 설명서</FooterLink>
       </FooterColumn>
       <FooterColumn title="계정">
-        <FooterLink href="https://sso.porest.cloud">로그인</FooterLink>
-        <FooterLink href="https://sso.porest.cloud">회원가입</FooterLink>
+        <FooterLink href="https://sso.hangroo.io">로그인</FooterLink>
+        <FooterLink href="https://sso.hangroo.io">회원가입</FooterLink>
       </FooterColumn>
     </FooterSitemap>
   </FooterNav>
@@ -209,7 +209,7 @@ import {
   <FooterInfo>
     <FooterLinks>
       {/* 읽고 돌아오는 문서 — 새 탭 + ↗ */}
-      <FooterLink href="https://sso.porest.cloud/privacy" external>
+      <FooterLink href="https://sso.hangroo.io/privacy" external>
         개인정보 처리방침
       </FooterLink>
     </FooterLinks>
@@ -291,8 +291,8 @@ import {
 
 제품은 각 레포에서 옮긴다(2026-10-15 조사 — 각 레포 origin/main 을 코드로 읽었다). 홈은 코디네이터가 이번에 고친다.
 
-- **groo-home 바닥** — `index.html:327-333`(CSS `:110-116` · 반응형 `:127` · `:129`). 지금은 4열 격자(`1.4fr 1fr 1fr 1fr` → 960 이하 2열 → 560 이하 1열) — 브랜드(`<b>` "그루" 17 · `--blue` + "People + Forest." 소개) · "서비스"(HR · Desk · Desk 가이드) · "계정"(로그인 · 회원가입 — 둘 다 `https://sso.porest.cloud`) · **"HR 기능" — 링크 없는 글 넷**(일정관리 · 휴가관리 · 전자결재 · 권한 관리) · `.fine`(도메인 넷 · "화면의 숫자와 이름은 소개용 예시입니다. 사진: Unsplash." · "© 그루" — 위 `border-top`). 글 13 · 제목 14, 작은 글은 모두 `--ink3`(#8B95A1 — 흰 바탕 3.04). 7B 짜임으로 — "HR 기능" 열과 도메인 줄을 걷고, "Desk 가이드" 는 "Desk 설명서" 로, 처리방침 링크를 더하고, 저작권은 "© {해} 그루"(정적 페이지라 스크립트 한 줄 또는 빌드 때). 색 · 글꼴은 홈 것 — `--ink3` 은 4.5 이상으로 짙게.
-- **개인정보 처리방침 — 공개 진입점이 없다** — 문서는 SSO 의 공개 라우트 하나뿐이다(`https://sso.porest.cloud/privacy` — sso-front `src/pages/privacy/ui/PrivacyPolicyPage.tsx`, `src/app/router/routes.tsx:44-46`). 링크는 Desk 웹 · 앱 설정 안쪽(로그인 뒤)에만 있다(desk-front `src/pages/settings/ui/SettingsPage.tsx:233-239` · desk-app `lib/features/settings/presentation/settings_screen.dart:134-137`) — SSO 로그인 · 가입 · 홈 · HR 웹 어디에도 없다. 홈 바닥이 첫 공개 진입점이 된다(새 탭 ↗). 처리방침의 보호책임자는 "미지정"(`PrivacyPolicyPage.tsx:17-21`)이다. 이용약관 · 운영정책 문서는 어느 레포에도 없다 — 생기면 정책 링크 줄에 더한다.
+- **groo-home 바닥** — `index.html:327-333`(CSS `:110-116` · 반응형 `:127` · `:129`). 지금은 4열 격자(`1.4fr 1fr 1fr 1fr` → 960 이하 2열 → 560 이하 1열) — 브랜드(`<b>` "그루" 17 · `--blue` + "People + Forest." 소개) · "서비스"(HR · Desk · Desk 가이드) · "계정"(로그인 · 회원가입 — 둘 다 `https://sso.hangroo.io`) · **"HR 기능" — 링크 없는 글 넷**(일정관리 · 휴가관리 · 전자결재 · 권한 관리) · `.fine`(도메인 넷 · "화면의 숫자와 이름은 소개용 예시입니다. 사진: Unsplash." · "© 그루" — 위 `border-top`). 글 13 · 제목 14, 작은 글은 모두 `--ink3`(#8B95A1 — 흰 바탕 3.04). 7B 짜임으로 — "HR 기능" 열과 도메인 줄을 걷고, "Desk 가이드" 는 "Desk 설명서" 로, 처리방침 링크를 더하고, 저작권은 "© {해} 그루"(정적 페이지라 스크립트 한 줄 또는 빌드 때). 색 · 글꼴은 홈 것 — `--ink3` 은 4.5 이상으로 짙게.
+- **개인정보 처리방침 — 공개 진입점이 없다** — 문서는 SSO 의 공개 라우트 하나뿐이다(`https://sso.hangroo.io/privacy` — sso-front `src/pages/privacy/ui/PrivacyPolicyPage.tsx`, `src/app/router/routes.tsx:44-46`). 링크는 Desk 웹 · 앱 설정 안쪽(로그인 뒤)에만 있다(desk-front `src/pages/settings/ui/SettingsPage.tsx:233-239` · desk-app `lib/features/settings/presentation/settings_screen.dart:134-137`) — SSO 로그인 · 가입 · 홈 · HR 웹 어디에도 없다. 홈 바닥이 첫 공개 진입점이 된다(새 탭 ↗). 처리방침의 보호책임자는 "미지정"(`PrivacyPolicyPage.tsx:17-21`)이다. 이용약관 · 운영정책 문서는 어느 레포에도 없다 — 생기면 정책 링크 줄에 더한다.
 - **저작권 네 벌 → 한 벌(9A)** — 홈 "© 그루"(`index.html:332`) · SSO 로그인 "Copyright © 그루. All Rights Reserved."(sso-front `src/pages/login/ui/LoginPage.tsx:125-128`) · HR 문서 VitePress "© 2025 그루. All rights reserved."(groo-ieum-docs `.vitepress/config.ts:241-244` — 해가 2025 에 멈춰 있다) · Desk 설명서 Docusaurus "그루 담다 사용자 설명서"(porest-desk-guide `docusaurus.config.ts:87-91` — 저작권이 아니다. 이름은 위 막대 "그루 담다 가이드" 에 있다). 네 곳 모두 "© {해} 그루" — VitePress · Docusaurus 는 설정 파일에서 빌드 때의 해를 넣는다. Desk · HR 제품 화면에는 저작권 줄이 없다(그대로 둔다).
 - **나중 — SSO 로그인 · 가입 아래와 문서 사이트 바닥** — 로그인 아래는 "비밀번호 찾기 | 회원가입" + 저작권이고(`LoginPage.tsx:114-128`), 가입 화면(`RegisterPage.tsx`)에는 저작권 · 정책 링크가 없다. 설명서 바닥은 링크 0(`links: []`), HR 문서 바닥은 "Where People Grow into a Forest" + GitHub 링크 하나(`config.ts:237-239` — 공개 소셜 채널이 아니라 개발 레포)다. 정책 링크 + 저작권 줄로 맞추는 것은 그 차례에 정한다.
 - **사업자 · 운영자 정보 — 값이 없다** — groo-home · desk · hr · sso · 설명서 · 문서 · 앱 · 백엔드 어디에도 상호 · 사업자 등록번호 · 대표자 · 주소 · 통신판매업 신고번호 · 전화 · 문의 메일이 없다(처리방침도 "운영 주체 확정 후 채운다"). 처리방침이 Desk 의 유료 구독을 말하므로(`PrivacyPolicyPage.tsx:149`) 표시가 필요해질 수 있다 — 값은 사용자만 정한다.
