@@ -1,0 +1,11 @@
+# COPY . . 가 호스트 산출물로 이미지 내부 의존성·빌드 결과를 덮어쓰지 않게 한다.
+node_modules
+site/node_modules
+site/.next
+site/out
+site/.source
+exports
+.git
+.github
+.claude
+.husky
