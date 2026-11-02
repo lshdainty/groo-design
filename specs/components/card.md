@@ -303,7 +303,7 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 
 ### ✅ Do
 
-- 회색 바닥 위 흰 면 + 1px `stroke-neutral-weak`, 모서리 16, 그림자 없음 — 폰도 같다.
+- 회색 바닥 위 흰 면 + 1px `stroke-neutral-weak`, 모서리 16, 그림자 없음 — HR 폰도 같다. Desk 폰(앱 · 768 미만 웹)은 카드 대신 화면 폭 띠다(위 "면").
 - 쌓은 카드 사이 8, 데스크톱 격자 칸 사이 24.
 - 머리는 제목 16 · 700 + 동작 하나(누르는 영역 44).
 - 카드 안 여백 24 — 폭과 상관없이, List 줄 · 시트와 같다. 목록 카드는 List 줄을 가장자리까지, 머리 위 · 좌우 24 · 아래 12.
@@ -411,7 +411,7 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 
 - **Desk 웹 `Card`(115곳)** — 기본 `shadow`(inline `--shadow-sm`) · `bordered` 7 · `brand` 4 · `muted` 2 · **`raised` 12**(`shared/ui/card.tsx:28-56`). 데스크톱 카드 면 #FFFFFF 가 #F5F6FA 위 1.08(다크 1.13) · 모서리 12 · 테두리 0. 여백 문턱이 `min-[736px]`(`:83 · 126 · 142`)이라 750 폭 폰 틀에서 데스크톱 여백 24 가 나온다(D25). `CardTitle` 이 `text-title-md leading-none`(`:98`)이라 18 / 600 · 줄 높이 18 이다. 여백 24 하나 · `default` 로.
 - **Desk 웹 머리 제목 두 벌 · 머리 동작 18.6** — 홈 18 / 600(`CardTitle`), 통계 · 예산 · 자산 16 / 600(`shared/ui/groo/section.tsx:75` 가 `text-body-lg` 로 덮음), 폰 평면 머리 16 / 700(`.flat-group__head` — `shared/styles/groo.css:490-501`). 머리 동작 "전체 보기 · 자세히 · 예산 관리 · 관리 · 캘린더" 는 13 / 500 글 버튼 높이 18.6 ~ 19.5(`groo.css:513-530`, D21). 16 · 700 + 누르는 영역 44 로.
-- **Desk 웹 · 앱 폰 '카드 다이어트'** — 폰은 흰 바탕 위 평면 묶음(`Section` 의 모바일 분기 · 앱 `PFlatSection` 15 / 700 — `shared/widgets/p_flat_section.dart`) + 흰 위 흰 `raised` 카드다. 바닥을 회색으로 두고 묶음마다 카드(목록 카드)로 바꾼다 — 줄은 List 그대로.
+- **Desk 웹 · 앱 폰 '카드 다이어트'** — 폰은 흰 바탕 위 평면 묶음(`Section` 의 모바일 분기 · 앱 `PFlatSection` 15 / 700 — `shared/widgets/p_flat_section.dart`) + 흰 위 흰 `raised` 카드다. 바닥을 회색으로 두고 구역마다 화면 폭 흰 띠로 바꾼다(2026-10-21 사용자 결정 — I-01 결과 확인 결정 3, 띠 안 값은 카드 안과 같다. 카드는 데스크톱만) — 줄은 List 그대로.
 - **Desk 앱 `PCard`(50곳)** — `raised` 18 · `bordered` 15 · `brand` 6 · `muted` 5, 기본 여백 16 · 모서리 12(`shared/widgets/p_card.dart`). 주석은 "shadow 패딩 24(spacing-xl)" 인데 코드는 16 이다 — 24 로. 통계 `_Card` 는 면 없는 껍데기다(`features/stats/presentation/stats_screen.dart:649-656`).
 - **순자산 카드 다크 대비** — 웹 `.dark .balance-hero` 가 `--color-primary-light`(#7AA9F6) → `--color-primary`(`shared/styles/groo.css:369-375`)라 흰 글자가 머리 2.58 · 금액 32 / 800 **2.7** · 부제 2.84 · 자산 / 부채 3.09 · 3.17 이다. 앱은 같은 짝(`app/theme/tokens.dart:333-334`)으로 흰 2.38 · 흰 72% 머리 라벨 **1.9** 다. 라이트 끝 #012B68 은 `color-mix(bg-brand 60%, #000)`(`groo.css:353-358` · 앱 `tokens.dart:271-273`) — brand-900 으로. 머리 라벨의 불투명도 0.72(`groo.css:391-394`) · 부제 0.78(`:416-422`)을 걷고, 증감 색(초록 · 빨강 80% 섞기 — `:431-444`, 앱 `heroChgUp` · `heroChgDown` — `app/theme/colors.dart:62-65`)은 흰 글자 + ▲ · ▼ 로.
 - **HR 카드** — shadcn `Card` 가 흰 바탕 위 흰 면(1.0)에 테두리 + `shadow-sm` · 모서리 12 · 여백 24(`shared/ui/shadcn/card.tsx:10 · 23 · 68 · 78`), 대시보드 위젯 틀은 모서리 12 · 테두리 · 그림자 · 머리 12 + 아래 선 · 제목 14 / 600(`features/dashboard/ui/WidgetWrapper.tsx:14-41`). 페이지 바닥을 회색으로, 카드는 `default` 로.

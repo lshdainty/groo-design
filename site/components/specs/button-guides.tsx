@@ -6,7 +6,7 @@ import { buttonLook, type ButtonCombo, type ButtonState } from './button-look';
 import { ButtonView, LoadingDemo, type IconName } from './button-view';
 import { chipLook } from './chip-look';
 import { ChipGroupView, ChipView } from './chip-view';
-import { AlertBox, Card, Field, Heading, KV, Line, Phone, Row, Sheet, Stat, Verdict, WebDialog, WebWindow, cardStack, rc, type Mode } from './kit';
+import { AlertBox, Card, Field, Heading, KV, Line, Phone, Row, ScreenBand, Sheet, Stat, Verdict, WebDialog, WebWindow, bandStack, cardStack, rc, type Mode } from './kit';
 
 type Fig = (p: { caption?: string }) => ReactNode;
 type Brand = 'desk' | 'hr';
@@ -32,9 +32,10 @@ function Cap({ children, strong }: { children: ReactNode; strong?: ReactNode }) 
 }
 
 // ── 화면 조각 — Desk 홈 · 예산 · HR 휴가 ──────────────────
-function SpendCard({ mode = 'auto', actions }: { mode?: Mode; actions?: ReactNode }) {
+// Desk 폰 홈은 띠 화면이다(구역마다 화면 폭 흰 띠 — DESIGN.md Layout "화면 바탕", 2026-10-21 I-01 결정 3). 띠 안 값은 카드 안과 같다
+function SpendBody({ mode = 'auto', actions }: { mode?: Mode; actions?: ReactNode }) {
   return (
-    <Card mode={mode}>
+    <>
       <Stat mode={mode} label="9월에 쓴 돈" value="1,284,500원" />
       <div className="mt-3 h-2 overflow-hidden rounded-full" style={{ background: rc('bg-neutral-weak', mode) }}>
         <div className="h-full rounded-full" style={{ width: '64%', background: rc('chart-blue', mode) }} />
@@ -43,16 +44,24 @@ function SpendCard({ mode = 'auto', actions }: { mode?: Mode; actions?: ReactNod
         예산 2,000,000원의 64%
       </span>
       {actions && <div className="mt-4 flex gap-2">{actions}</div>}
-    </Card>
+    </>
   );
 }
-function RecentCard({ mode = 'auto', action }: { mode?: Mode; action?: ReactNode }) {
+function RecentRows({ mode = 'auto', action }: { mode?: Mode; action?: ReactNode }) {
   return (
-    <Card mode={mode} title="최근 거래" action={action ? undefined : '전체 보기'}>
+    <>
       <Row title="점심 식사" sub="식비 · 오늘" amount="−12,000원" hue="orange" mode={mode} />
       <Row title="버스" sub="교통 · 오늘" amount="−1,500원" hue="blue" mode={mode} />
       <Row title="월급" sub="수입 · 9월 25일" amount="+3,200,000원" hue="green" mode={mode} />
       {action && <div className="mt-2 flex justify-center">{action}</div>}
+    </>
+  );
+}
+// 회색 바탕 위 카드 하나(폰 화면이 아니라 놓는 바탕 그림)
+function RecentCard({ mode = 'auto', action }: { mode?: Mode; action?: ReactNode }) {
+  return (
+    <Card mode={mode} title="최근 거래" action={action ? undefined : '전체 보기'}>
+      <RecentRows mode={mode} action={action} />
     </Card>
   );
 }
@@ -151,18 +160,19 @@ const Usage: Fig = ({ caption }) => {
         )}
         {cell(
           <Phone title="고정 지출" h={560} scale={s}>
-            <div style={cardStack()}>
+            {/* Desk 폰은 띠 화면 — 항목마다 띠 하나 */}
+            <div style={bandStack()}>
               {[
-                ['넷플릭스', '매달 18일 · 13,500원', 'red'],
+                ['숲길 스트리밍', '매달 18일 · 13,500원', 'red'],
                 ['휴대폰 요금', '매달 25일 · 49,000원', 'blue'],
               ].map(([t, sub, hue]) => (
-                <Card key={t}>
+                <ScreenBand key={t}>
                   <Row title={t} sub={sub} hue={hue} />
                   <div className="mt-2 flex gap-2">
                     <B variant="neutralOutline" size="small" grow={1} label="건너뛰기" />
                     <B variant="brandOutline" size="small" grow={1} label="지금 기록" />
                   </div>
-                </Card>
+                </ScreenBand>
               ))}
             </div>
           </Phone>,
@@ -185,16 +195,20 @@ function Home({ brandy }: { brandy: boolean }) {
       right={<B variant={brandy ? 'brandSolid' : 'ghost'} ghostColor="neutralSubtle" size="small" layout="iconOnly" icon="bell" label="알림" />}
       bottom={<B variant="brandSolid" size="large" fill label="거래 추가" prefix="plus" />}
     >
-      <div style={cardStack()}>
-        <SpendCard
-          actions={
-            <>
-              <B variant={brandy ? 'brandSolid' : 'neutralWeak'} size="small" grow={1} label="예산 설정" />
-              <B variant={brandy ? 'brandSolid' : 'neutralWeak'} size="small" grow={1} label="카테고리" />
-            </>
-          }
-        />
-        <RecentCard action={<B variant={brandy ? 'brandOutline' : 'neutralWeak'} size="small" label="내역 더보기" />} />
+      <div style={bandStack()}>
+        <ScreenBand>
+          <SpendBody
+            actions={
+              <>
+                <B variant={brandy ? 'brandSolid' : 'neutralWeak'} size="small" grow={1} label="예산 설정" />
+                <B variant={brandy ? 'brandSolid' : 'neutralWeak'} size="small" grow={1} label="카테고리" />
+              </>
+            }
+          />
+        </ScreenBand>
+        <ScreenBand title="최근 거래">
+          <RecentRows action={<B variant={brandy ? 'brandOutline' : 'neutralWeak'} size="small" label="내역 더보기" />} />
+        </ScreenBand>
       </div>
     </Phone>
   );

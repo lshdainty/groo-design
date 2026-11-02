@@ -9,12 +9,12 @@ import { buttonLook } from './button-look';
 import { ButtonView } from './button-view';
 import { resultSectionLook, snackbarLook } from './feedback-look';
 import { ResultSectionView } from './feedback-view';
-import { Verdict, rc, type Mode } from './kit';
+import { ScreenBand, Verdict, bandStack, rc, type Mode } from './kit';
 import { listLook } from './list-look';
 import { CircleBasicDemo, CircleUploadDemo, PullToRefreshDemo } from './loading-demos';
 import { PC_SIZES, PC_TONES, lcv, type PcTone } from './loading-look';
 import { ProgressCirclePlayground } from './loading-playground';
-import { CardBox, Circle, L, LdPhone, SCREEN, SK_ROW, SlowText, SpendHead, TxList, TxSkeletonRows, cardStack, type Fig } from './loading-screens';
+import { CardBox, Circle, L, LdPhone, SCREEN, SK_ROW, SlowText, SpendHead, TxList, TxSkeletonRows, type Fig } from './loading-screens';
 import { Band, Legend, Note, Pin, Shot } from './overlay-screens';
 import { PcArc } from './pc-arc';
 import { searchLook } from './data-look';
@@ -69,14 +69,15 @@ const Hero: Fig = ({ caption }) => (
     <div className="flex flex-col gap-4">
       {(['light', 'dark'] as const).map((mode) => (
         <div key={mode} className="flex items-start gap-4">
+          {/* Desk 폰 홈은 띠 화면 — 구역마다 화면 폭 흰 띠(DESIGN.md Layout "화면 바탕") */}
           <LdPhone mode={mode} title="홈" scale={0.52}>
-            <div style={cardStack()}>
-              <CardBox mode={mode}>
+            <div style={bandStack()}>
+              <ScreenBand mode={mode}>
                 <SpendHead mode={mode} amount="412,300원" />
-              </CardBox>
-              <CardBox mode={mode} title="최근 거래" right={<Circle mode={mode} size="24" label="최근 거래 새로 고치는 중" />}>
+              </ScreenBand>
+              <ScreenBand mode={mode} title="최근 거래" right={<Circle mode={mode} size="24" label="최근 거래 새로 고치는 중" />} body="list">
                 <TxList mode={mode} n={3} />
-              </CardBox>
+              </ScreenBand>
             </div>
           </LdPhone>
           <LdPhone mode={mode} title="검색" back tabs={false} scale={0.52} bg="bg-layer-default">
@@ -358,12 +359,12 @@ const PlacementGuide: Fig = ({ caption }) => {
         </Verdict>
         <Pair>
           <Verdict ok={false} note='화면을 덮는 회색 막 위 원 · "Loading" — 뒤 화면이 보이지 않고 무엇을 기다리는지 알 수 없다' bg={BASEMENT}>
-            <LdPhone title="가계부" scale={0.5} h={520}>
+            <LdPhone title="홈" scale={0.5} h={520}>
               <div className="relative h-full">
-                <div style={cardStack()}>
-                  <CardBox title="최근 거래">
+                <div style={bandStack()}>
+                  <ScreenBand title="최근 거래" body="list">
                     <TxSkeletonRows n={3} widths={small} />
-                  </CardBox>
+                  </ScreenBand>
                 </div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-3" style={{ background: 'rgba(120,124,135,0.72)' }}>
                   <Circle size="40" tone="staticWhite" decorative />
