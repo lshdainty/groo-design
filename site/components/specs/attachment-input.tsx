@@ -70,11 +70,11 @@ function TxHead({ mode = 'auto' }: { mode?: Mode }) {
     </div>
   );
 }
-// 폰 390 — 가계부 위 거래 상세 시트(조회 — 머리 닫기). overlay 를 주면 그 위에 하나 더(메뉴 시트)
+// 폰 390 — 가계부 위 거래 상세 시트(조회 — 머리 닫기). overlay 를 주면 그 위에 하나 더(메뉴 시트). 가계부 거래는 흰 화면(DESIGN.md Layout "화면 바탕")
 function TxPhone({ mode, body, h = 600, overlay }: { mode: Mode; body: ReactNode; h?: number; overlay?: ReactNode }) {
   const o = OV();
   return (
-    <Phone mode={mode} h={h} screenW={PHONE} title="가계부" back={false} bg="bg-layer-basement">
+    <Phone mode={mode} h={h} screenW={PHONE} title="가계부" back={false} bg="bg-layer-default">
       <DimView dim={o.sheet.dim} mode={mode} place="end">
         <SheetSurface look={o.sheet} mode={mode} title="거래 상세" safe={12} maxHeight={h - 100}>
           <TxHead mode={mode} />

@@ -3,11 +3,11 @@
 // 진행(올리기)의 원은 progress-circle.yaml 이다. 화면 틀(폰 · 카드 제목)의 글자 크기는 그림 안에서 정한다.
 import type { CSSProperties, ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
-import { Verdict, rc, type Mode } from './kit';
+import { ScreenBand, Verdict, bandStack, rc, type Mode } from './kit';
 import { comma } from './loading-look';
 import type { PgPart } from './loading-view';
 import { ProgressPlayground } from './loading-playground';
-import { CardBox, Circle, L, LdPhone, Meter, SCREEN, cardStack, type Fig } from './loading-screens';
+import { Circle, L, LdPhone, Meter, SCREEN, type Fig } from './loading-screens';
 import { Legend, Note, Pin, Scaled, Shot } from './overlay-screens';
 
 const pg = (brand: 'desk' | 'hr' = 'desk') => L(brand).progress;
@@ -23,16 +23,17 @@ const BARS: { label: string; value: number; max: number; meaning: 'limit' | 'goa
   { label: '여행 자금', value: 1200000, max: 2000000, meaning: 'goal' },
   { label: '현대카드 M 전월 실적', value: 390000, max: 300000, meaning: 'goal' },
 ];
+// Desk 폰은 띠 화면 — 구역마다 화면 폭 흰 띠(DESIGN.md Layout "화면 바탕")
 function Budget({ mode = 'auto', brand = 'desk' }: { mode?: Mode; brand?: 'desk' | 'hr' }) {
   return (
-    <div style={cardStack()}>
-      <CardBox mode={mode}>
+    <div style={bandStack()}>
+      <ScreenBand mode={mode}>
         <div className="flex flex-col" style={{ gap: 24 }}>
           {BARS.map((b) => (
             <Meter key={b.label} brand={brand} mode={mode} {...b} />
           ))}
         </div>
-      </CardBox>
+      </ScreenBand>
     </div>
   );
 }

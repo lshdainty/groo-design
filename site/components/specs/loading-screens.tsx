@@ -68,8 +68,6 @@ export function CardBox({ mode = 'auto', title, right, children, style, body }: 
     </div>
   );
 }
-// 폰 화면의 카드 묶음 — 화면 끝 24(spacing-global-gutter) · 쌓은 카드 사이 8(card.yaml root.gap) · 상단 바 아래 8
-export { cardStack } from './kit';
 // 달 넘기기 머리 — ‹ 2026년 10월 › (틀 — 고른 달은 바로 바뀐다)
 export function MonthNav({ mode = 'auto', month, right }: { mode?: Mode; month: string; right?: ReactNode }) {
   return (

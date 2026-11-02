@@ -6,7 +6,7 @@
 
 수치 원본은 [`skeleton.yaml`](skeleton.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
-[그림: 가계부 · 카드 혜택 · 거래 상세를 불러오는 동안 — 라이트 · 다크](../../site/components/specs/skeleton.tsx#hero)
+[그림: 홈 · 카드 혜택 · 거래 상세를 불러오는 동안 — 라이트 · 다크](../../site/components/specs/skeleton.tsx#hero)
 
 ### 직접 골라 보기
 

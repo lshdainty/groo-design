@@ -10,14 +10,14 @@ import { listLook } from './list-look';
 import { ButtonView } from './button-view';
 import { resultSectionLook, snackbarLook } from './feedback-look';
 import { ResultSectionView, SnackbarView } from './feedback-view';
-import { Verdict, rc, type Mode } from './kit';
+import { ScreenBand, Verdict, bandStack, rc, type Mode } from './kit';
 import { ChipGroupView, ChipView } from './chip-view';
 import { chipLook } from './chip-look';
 import { SK_RADII, type SkRadius, type SkText } from './loading-look';
 import { imageFrameLook, imageFrameRadius } from './image-look';
 import { SkeletonListDemo, SkeletonPeriodDemo } from './loading-demos';
 import { SkeletonPlayground } from './loading-playground';
-import { Bone, CardBox, Circle, L, LdPhone, MonthNav, SCREEN, SK_ROW, SlowText, SpendHead, StatRows, TimelineBar, TxList, TxSkeletonRows, cardStack, keepMark, ldCard, rowDims, type Fig } from './loading-screens';
+import { Bone, CardBox, Circle, L, LdPhone, MonthNav, SCREEN, SK_ROW, SlowText, SpendHead, StatRows, TimelineBar, TxList, TxSkeletonRows, keepMark, ldCard, rowDims, type Fig } from './loading-screens';
 import { Band, Legend, Note, Pin, Shot } from './overlay-screens';
 
 const sk = () => L().skeleton;
@@ -32,16 +32,16 @@ const pin = (n: string, style: CSSProperties) => (
 );
 
 // ── 화면 예시 ─────────────────────────────────────────────
-// 가계부 — 요약 머리 · 최근 거래(틀은 그리고 데이터 자리만)
-function LedgerLoading({ mode, still }: { mode: Mode; still?: boolean }) {
+// 홈 — 요약 머리 · 최근 거래(틀은 그리고 데이터 자리만). Desk 폰은 띠 화면 — 구역마다 화면 폭 흰 띠(DESIGN.md Layout "화면 바탕")
+function HomeLoading({ mode, still }: { mode: Mode; still?: boolean }) {
   return (
-    <div style={cardStack()}>
-      <CardBox mode={mode}>
+    <div style={bandStack()}>
+      <ScreenBand mode={mode}>
         <SpendHead mode={mode} still={still} />
-      </CardBox>
-      <CardBox mode={mode} title="최근 거래">
+      </ScreenBand>
+      <ScreenBand mode={mode} title="최근 거래" body="list">
         <TxSkeletonRows n={4} mode={mode} still={still} />
-      </CardBox>
+      </ScreenBand>
     </div>
   );
 }
@@ -51,8 +51,8 @@ function BenefitLoading({ mode }: { mode: Mode }) {
   const d = rowDims();
   const f = imageFrameLook();
   return (
-    <div style={cardStack()}>
-      <CardBox mode={mode}>
+    <div style={bandStack()}>
+      <ScreenBand mode={mode}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <Bone mode={mode} radius={imageFrameRadius(CARD_W, f.bands)} width={CARD_W} height={CARD_W / f.ratios.card.value} />
           <span className="flex flex-col" style={{ gap: d.bodyGap }}>
@@ -60,10 +60,10 @@ function BenefitLoading({ mode }: { mode: Mode }) {
             <Bone mode={mode} text="t3" width={88} />
           </span>
         </div>
-      </CardBox>
-      <CardBox mode={mode} title="받을 수 있는 혜택">
+      </ScreenBand>
+      <ScreenBand mode={mode} title="받을 수 있는 혜택" body="list">
         <TxSkeletonRows n={3} mode={mode} avatar={imageFrameRadius(SK_ROW.avatar, imageFrameLook().bands)} amount={false} widths={{ ...SK_ROW, title: 150, detail: 110 }} />
-      </CardBox>
+      </ScreenBand>
     </div>
   );
 }
@@ -94,8 +94,8 @@ const Hero: Fig = ({ caption }) => (
     <div className="flex flex-col gap-4">
       {(['light', 'dark'] as const).map((mode) => (
         <div key={mode} className="flex items-start gap-4">
-          <LdPhone mode={mode} title="가계부" scale={0.52}>
-            <LedgerLoading mode={mode} />
+          <LdPhone mode={mode} title="홈" scale={0.52}>
+            <HomeLoading mode={mode} />
           </LdPhone>
           <LdPhone mode={mode} title="카드 혜택" back tabs={false} scale={0.52}>
             <BenefitLoading mode={mode} />
@@ -575,27 +575,27 @@ const PeriodGuide: Fig = ({ caption }) => (
     <Pair>
       <Verdict ok note="고른 달 이름은 바로 9월 — 바뀔 숫자 자리만 스켈레톤, 10월 숫자는 지운다" bg={BASEMENT}>
         <LdPhone title="통계" scale={0.6} h={520} tabs={false}>
-          <div style={cardStack()}>
-            <CardBox body="list">
+          <div style={bandStack()}>
+            <ScreenBand body="list">
               <MonthNav month="2026년 9월" />
               <div style={{ paddingTop: 4, paddingRight: 24, paddingBottom: 8, paddingLeft: 24 }}>
                 <SpendHead label="지출" bone={144} />
               </div>
               <StatRows amounts={false} />
-            </CardBox>
+            </ScreenBand>
           </div>
         </LdPhone>
       </Verdict>
       <Verdict ok={false} note="9월 머리 아래 10월 숫자 — 새 값이 올 때까지 돈 숫자가 잘못 읽힌다" bg={BASEMENT}>
         <LdPhone title="통계" scale={0.6} h={520} tabs={false}>
-          <div style={cardStack()}>
-            <CardBox body="list">
+          <div style={bandStack()}>
+            <ScreenBand body="list">
               <MonthNav month="2026년 9월" right={<span className="ml-1.5"><Circle size="24" decorative /></span>} />
               <div style={{ paddingTop: 4, paddingRight: 24, paddingBottom: 8, paddingLeft: 24 }}>
                 <SpendHead label="지출" amount="656,500원" />
               </div>
               <StatRows />
-            </CardBox>
+            </ScreenBand>
           </div>
         </LdPhone>
       </Verdict>
@@ -611,26 +611,26 @@ const RefreshGuide: Fig = ({ caption }) => {
     <Panel caption={caption}>
       <Pair wide>
         <Verdict ok note={`당겨서 새로 고침 — 원이 돌고 보던 내용은 그대로(${pull.threshold} 아래로 내려와 머문다)`} bg={BASEMENT}>
-          <LdPhone title="가계부" scale={0.56} h={560}>
+          <LdPhone title="홈" scale={0.56} h={560}>
             <div className="relative h-full">
               <div className="absolute inset-x-0 top-0 flex items-center justify-center" style={{ height: pull.indicator }}>
                 <Circle size="24" label="새로 고치는 중" />
               </div>
-              <div style={{ ...cardStack(), transform: `translateY(${pull.threshold}px)` }}>
-                <CardBox title="최근 거래">
+              <div style={{ ...bandStack(), transform: `translateY(${pull.threshold}px)` }}>
+                <ScreenBand title="최근 거래" body="list">
                   <TxList n={3} />
-                </CardBox>
+                </ScreenBand>
               </div>
             </div>
           </LdPhone>
         </Verdict>
         <Verdict ok note="실패해도 내용을 둔 채 스낵바로 가볍게 알린다" bg={BASEMENT}>
-          <LdPhone title="가계부" scale={0.56} h={560}>
+          <LdPhone title="홈" scale={0.56} h={560}>
             <div className="relative h-full">
-              <div style={cardStack()}>
-                <CardBox title="최근 거래">
+              <div style={bandStack()}>
+                <ScreenBand title="최근 거래" body="list">
                   <TxList n={3} />
-                </CardBox>
+                </ScreenBand>
               </div>
               <div className="absolute inset-x-0 bottom-0 flex justify-center px-4 pb-4">
                 <SnackbarView look={sb} tone="critical" message="새로 고치지 못했어요. 잠시 후 다시 당겨주세요." state="enabled" />
@@ -639,11 +639,11 @@ const RefreshGuide: Fig = ({ caption }) => {
           </LdPhone>
         </Verdict>
         <Verdict ok={false} note="다시 받는다고 스켈레톤으로 돌아간다 — 보던 내용이 사라지고 화면이 깜빡인다" bg={BASEMENT}>
-          <LdPhone title="가계부" scale={0.56} h={560}>
-            <div style={cardStack()}>
-              <CardBox title="최근 거래">
+          <LdPhone title="홈" scale={0.56} h={560}>
+            <div style={bandStack()}>
+              <ScreenBand title="최근 거래" body="list">
                 <TxSkeletonRows n={3} />
-              </CardBox>
+              </ScreenBand>
             </div>
           </LdPhone>
         </Verdict>

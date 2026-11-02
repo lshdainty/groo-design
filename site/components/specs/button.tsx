@@ -6,7 +6,7 @@ import { axisDesc, axisValues, loadComponentSpec } from '@/lib/component-spec';
 import { buttonLook, buttonParts, BUTTON_STATES, type ButtonCombo } from './button-look';
 import { ButtonPlayground } from './button-playground';
 import { ButtonView, Icon, LoadingDemo, PressLockDemo, type IconName } from './button-view';
-import { rc, Card, Row, Phone, Field, cardStack, type Mode } from './kit';
+import { rc, Row, Phone, Field, ScreenBand, bandStack, type Mode } from './kit';
 
 type Fig = (p: { caption?: string }) => ReactNode;
 const spec = () => loadComponentSpec('button');
@@ -353,15 +353,16 @@ const Width: Fig = ({ caption }) => (
   <Figure caption={caption}>
     <div className="flex gap-6">
       <div className="flex flex-col items-center gap-3">
-        <Phone title="9월 가계부" h={420} scale={0.8}>
-          <div style={cardStack()}>
-            <Card title="최근 거래" action="전체 보기">
+        {/* Desk 폰 홈은 띠 화면 — 구역마다 화면 폭 흰 띠(DESIGN.md Layout "화면 바탕") */}
+        <Phone title="홈" back={false} h={420} scale={0.8}>
+          <div style={bandStack()}>
+            <ScreenBand title="최근 거래" action="전체 보기">
               <Row title="점심 식사" sub="식비 · 오늘" amount="−12,000원" hue="orange" />
               <Row title="버스" sub="교통 · 오늘" amount="−1,500원" hue="blue" />
               <div className="mt-2 flex justify-center">
                 <B variant="neutralWeak" size="small" label="내역 더보기" />
               </div>
-            </Card>
+            </ScreenBand>
           </div>
         </Phone>
         <Cap strong="Hug">글자에 맞춘 폭 — 화면 안의 액션</Cap>

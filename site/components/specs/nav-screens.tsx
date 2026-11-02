@@ -6,7 +6,7 @@ import { menuKit } from './menu-look';
 import { loadingKit } from './loading-look';
 import { tabsLook } from './tabs-look';
 import { LineTabsView } from './tabs-view';
-import { Phone, Row, WebWindow, cardStack, rc, type Mode } from './kit';
+import { BAND, Phone, Row, WebWindow, bandStack, cardStack, rc, type Mode } from './kit';
 import { cardLook, tableLook } from './data-look';
 import { CardHeaderView, CardSurface, StatView } from './data-card-view';
 import { TableView, type TBadge, type TCol, type TRow } from './data-table-view';
@@ -189,9 +189,9 @@ export function TxCard({ mode = 'auto', title = '최근 거래', action = '전�
 // 띠 화면 — 회색 바닥 위 화면 폭 흰 띠(묶음마다 하나), 띠 사이 8 · 맨 위 8 · 띠 안 위 4 · 아래 8(DESIGN.md Layout 의 "화면 바탕", 2026-10-16 Q-019-3 C)
 export function FloorBands({ mode = 'auto', children }: { mode?: Mode; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-2 pt-2">
+    <div style={bandStack()}>
       {(Array.isArray(children) ? children : [children]).map((c, i) => (
-        <div key={i} className="pb-2 pt-1" style={{ background: rc('bg-layer-default', mode) }}>
+        <div key={i} style={{ background: rc('bg-layer-default', mode), paddingTop: BAND.padTop, paddingBottom: BAND.padBottom }}>
           {c}
         </div>
       ))}

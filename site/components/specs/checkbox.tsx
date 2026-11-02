@@ -10,7 +10,7 @@ import { buttonLook } from './button-look';
 import { ButtonView } from './button-view';
 import { switchLook } from './switch-look';
 import { SwitchView } from './switch-view';
-import { Card, Phone, Sheet, Verdict, cardStack, rc, type Mode } from './kit';
+import { Phone, ScreenBand, Sheet, Verdict, bandStack, rc, type Mode } from './kit';
 
 type Fig = (p: { caption?: string }) => ReactNode;
 const spec = () => loadComponentSpec('checkbox');
@@ -447,8 +447,9 @@ const VsSwitch: Fig = ({ caption }) => (
     <div className="flex gap-6">
       <div className="flex flex-col items-center gap-3">
         <Phone title="알림" h={500} scale={0.72}>
-          <div style={cardStack()}>
-            <Card>
+          {/* Desk 폰 설정은 띠 화면 — 묶음마다 화면 폭 흰 띠 */}
+          <div style={bandStack()}>
+            <ScreenBand>
               {[
                 ['결제일 하루 전', true],
                 ['예산 초과', true],
@@ -459,7 +460,7 @@ const VsSwitch: Fig = ({ caption }) => (
                   <MiniSwitch on={!!on} name={String(t)} />
                 </div>
               ))}
-            </Card>
+            </ScreenBand>
           </div>
         </Phone>
         <Cap strong="Switch">누르는 순간 적용 — 항목마다 따로</Cap>

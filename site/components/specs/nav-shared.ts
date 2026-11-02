@@ -9,6 +9,10 @@ import type { SelectLook } from './select-shared';
 export type ViewMode = 'light' | 'dark' | 'auto';
 export type Brand = 'desk' | 'hr';
 
+// Desk 폰 띠 화면(앱 · 768 미만 웹) — 회색 바닥 위 화면 폭 흰 띠. 띠 사이 8 · 맨 위 8 · 띠 안 위 4 · 아래 8, 모서리 · 테두리 없음
+// (DESIGN.md Layout 의 "화면 바탕" — 2026-10-16 Q-019-3 C, 폰의 카드 화면은 2026-10-21 I-01 결정 3 으로 띠). 띠 안 값은 카드 안과 같다(card.yaml)
+export const BAND = { top: 8, gap: 8, padTop: 4, padBottom: 8 } as const;
+
 // 색 — name 은 사이트 모드를 따를 때 쓰는 CSS 변수(--p-<name>, HR 에서 값이 다른 브랜드 토큰은 hr-<토큰>), light · dark 는 풀어 둔 값
 export type NColor = { name?: string; light: string; dark: string };
 export type NType = { fontSize: string; lineHeight: string; fontWeight: number | string; fontFamily: string };
