@@ -181,20 +181,20 @@ export const FT_HOME = {
     {
       title: '서비스',
       links: [
-        { label: 'HR', href: 'https://hr.porest.cloud' },
-        { label: 'Desk', href: 'https://desk.porest.cloud' },
-        { label: 'Desk 설명서', href: 'https://desk.porest.cloud/guide/' },
+        { label: 'HR', href: 'https://ieum.hangroo.io' },
+        { label: 'Desk', href: 'https://damda.hangroo.io' },
+        { label: 'Desk 설명서', href: 'https://damda.hangroo.io/guide/' },
       ],
     },
     {
       title: '계정',
       links: [
-        { label: '로그인', href: 'https://sso.porest.cloud', key: 'login' },
-        { label: '회원가입', href: 'https://sso.porest.cloud', key: 'join' },
+        { label: '로그인', href: 'https://sso.hangroo.io', key: 'login' },
+        { label: '회원가입', href: 'https://sso.hangroo.io', key: 'join' },
       ],
     },
   ],
-  policy: [{ label: '개인정보 처리방침', href: 'https://sso.porest.cloud/privacy', external: true }],
+  policy: [{ label: '개인정보 처리방침', href: 'https://sso.hangroo.io/privacy', external: true }],
   text: ['화면의 숫자와 이름은 소개용 예시입니다. 사진: Unsplash.'],
 };
 // 값이 없는 블록의 자리표시 — 지어낸 값이 아니라 "무엇이 들어갈 자리" 인지만 쓴다(footer.md "값이 없는 블록은 비워 둔다")

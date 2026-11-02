@@ -152,13 +152,13 @@ function footer({ id = "ft", extra = "", social = "" } = {}) {
   return `<footer data-slot="footer" class="${ROOT} ${ROOT_TOP_LINE}"><div data-slot="footer-frame" class="${FRAME}"><div data-slot="footer-nav" class="${NAV}"><div data-slot="footer-brand" class="${BRAND}"><p data-slot="footer-brand-name" class="${BRAND_NAME}" style="${P_FIX.brandName}">그루</p><p data-slot="footer-brand-description" class="${BRAND_INTRO}" style="${P_FIX.subtle}">${esc(
     "People + Forest. 사람(People)이 모여 숲(Forest)처럼 자라나는 조직 생태계를 설계합니다.",
   )}</p></div><nav data-slot="footer-sitemap" aria-label="사이트 지도" class="${SITEMAP}">${column(`${id}-service`, "서비스", [
-    ["HR", "https://hr.porest.cloud"],
-    ["Desk", "https://desk.porest.cloud"],
-    ["Desk 설명서", "https://desk.porest.cloud/guide/"],
+    ["HR", "https://ieum.hangroo.io"],
+    ["Desk", "https://damda.hangroo.io"],
+    ["Desk 설명서", "https://damda.hangroo.io/guide/"],
   ])}${column(`${id}-account`, "계정", [
-    ["로그인", "https://sso.porest.cloud"],
-    ["회원가입", "https://sso.porest.cloud"],
-  ])}</nav></div><div aria-hidden="true" data-slot="footer-divider" class="${DIVIDER}"></div><div data-slot="footer-info" class="${INFO}"><div data-slot="footer-links" class="${LINKS}">${link(["개인정보 처리방침", "https://sso.porest.cloud/privacy"], { external: true })}</div><p data-slot="footer-text" class="${TEXT}" style="${P_FIX.subtle}">${esc(
+    ["로그인", "https://sso.hangroo.io"],
+    ["회원가입", "https://sso.hangroo.io"],
+  ])}</nav></div><div aria-hidden="true" data-slot="footer-divider" class="${DIVIDER}"></div><div data-slot="footer-info" class="${INFO}"><div data-slot="footer-links" class="${LINKS}">${link(["개인정보 처리방침", "https://sso.hangroo.io/privacy"], { external: true })}</div><p data-slot="footer-text" class="${TEXT}" style="${P_FIX.subtle}">${esc(
     "화면의 숫자와 이름은 소개용 예시입니다. 사진: Unsplash.",
   )}</p>${extra}<div data-slot="footer-bottom" class="${BOTTOM}"><p data-slot="footer-copyright" class="${COPYRIGHT}" style="${P_FIX.muted}">© ${YEAR} 그루</p>${social}</div></div></div></footer>`;
 }
@@ -200,13 +200,13 @@ export const footerExamples = [
     />
     <FooterSitemap>
       <FooterColumn title="서비스">
-        <FooterLink href="https://hr.porest.cloud">HR</FooterLink>
-        <FooterLink href="https://desk.porest.cloud">Desk</FooterLink>
-        <FooterLink href="https://desk.porest.cloud/guide/">Desk 설명서</FooterLink>
+        <FooterLink href="https://ieum.hangroo.io">HR</FooterLink>
+        <FooterLink href="https://damda.hangroo.io">Desk</FooterLink>
+        <FooterLink href="https://damda.hangroo.io/guide/">Desk 설명서</FooterLink>
       </FooterColumn>
       <FooterColumn title="계정">
-        <FooterLink href="https://sso.porest.cloud">로그인</FooterLink>
-        <FooterLink href="https://sso.porest.cloud">회원가입</FooterLink>
+        <FooterLink href="https://sso.hangroo.io">로그인</FooterLink>
+        <FooterLink href="https://sso.hangroo.io">회원가입</FooterLink>
       </FooterColumn>
     </FooterSitemap>
   </FooterNav>
@@ -214,7 +214,7 @@ export const footerExamples = [
   <FooterInfo>
     <FooterLinks>
       {/* 읽고 돌아오는 문서 — 새 탭 + ↗ */}
-      <FooterLink href="https://sso.porest.cloud/privacy" external>
+      <FooterLink href="https://sso.hangroo.io/privacy" external>
         개인정보 처리방침
       </FooterLink>
     </FooterLinks>
