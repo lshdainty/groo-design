@@ -633,7 +633,7 @@ const RefreshGuide: Fig = ({ caption }) => {
                 </CardBox>
               </div>
               <div className="absolute inset-x-0 bottom-0 flex justify-center px-4 pb-4">
-                <SnackbarView look={sb} tone="critical" message="새로 고치지 못했어요. 잠시 후 다시 당겨주세요." state="enabled" />
+                <SnackbarView look={sb} tone="critical" message="새로 고치지 못했어요." state="enabled" />
               </div>
             </div>
           </LdPhone>

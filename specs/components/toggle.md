@@ -77,6 +77,8 @@ SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 To
 
 [그림: 상태 — 기본 · 호버 · 포커스 · 누름 · 막힘 × 끔 · 켬](../../site/components/specs/toggle.tsx#states)
 
+예외 — 입력칸 안 뒤 단추(비밀 보기 눈)로 쓰면 호버 · 누름 바탕 상자를 그리지 않는다. 켬 · 끔은 아이콘으로만 갈린다 — 칸 안 지우기 버튼과 같은 모양이다([Text Field](input.md) 의 "뒤 단추", 2026-11-07 담다 마무리 β 판단).
+
 [표: 상태 — 끔](toggle.yaml#matrix)
 
 [표: 상태 — 켬](toggle.yaml#matrix.toggled.on)
@@ -245,6 +247,10 @@ import { toggleVariants } from "@/components/ui/toggle"
 - **막힘은 진짜 `disabled`**(Tab 에서 빠진다 — Button 과 같다). SEED 는 `aria-disabled`(포커스가 남는다)다. 불러오는 중(loading)은 두지 않는다 — 누르면 바로 바뀐다.
 
 ## Migration notes
+
+### 2026-11-07 — 입력칸 안 뒤 단추는 바탕 상자 없음
+
+담다 마무리 β 판단 — 비밀 보기 눈처럼 입력칸 안에 둘 때는 호버 · 누름 바탕을 그리지 않는다([Text Field](input.md) 의 "뒤 단추"). 옛 스펙은 `toggle.history/v-pre-cleanup-1107.md`.
 
 ### 2026-10-16 — 금액 가리기 눈은 Toggle 이 아니다
 

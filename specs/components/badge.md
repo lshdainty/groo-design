@@ -219,6 +219,7 @@ import { Badge } from "@/components/ui/badge"
 - 알약 모양 배지 — 알약은 누르는 Chip 의 모양이다.
 - 배지가 든 줄을 불투명도로 흐리기 — 배지까지 흐려진다.
 - 영어 대문자 · 코드값 배지("NEW" · `ROLE_ADMIN`).
+- 뜻 없는 표시를 브랜드 톤으로 — "기본" 은 상태가 아니라 분류라 `neutral` 이다(증권사 "기본" 배지가 `brand` 로 만들어졌던 사례, 2026-11-07 담다 마무리 β). `brand` 는 요금제 · 브랜드와 닿는 자리만.
 
 ## Specification
 
@@ -237,6 +238,10 @@ import { Badge } from "@/components/ui/badge"
 - **Action(정보 아이콘 버튼)은 두지 않는다** — SEED React 3(2026-10-01)의 배지 안 정보 버튼은 누르는 영역이 12 · 14 이고, 누르지 않는 배지 안에 따로 눌리는 것이 생긴다. 설명은 배지 옆 ⓘ Help Bubble 이다.
 
 ## Migration notes
+
+### 2026-11-07 — "기본" 은 neutral
+
+담다 마무리 β — 증권사 "기본" 배지가 `brand` 로 만들어졌던 사례를 Don't 에 적었다. 옛 스펙은 `badge.history/v-pre-cleanup-1107.md`.
 
 ### 2026-10-30 — 끝낸 항목 안 배지
 

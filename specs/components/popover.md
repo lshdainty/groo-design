@@ -201,6 +201,10 @@ const description = unread > 0 ? `읽지 않은 알림 ${unread}개` : "새 알�
 
 ## Migration notes
 
+### 2026-11-07 — 알림 지우기 실패는 확인창을 닫고 스낵바
+
+2026-11-05 담다 마무리 15-4 — `popover.yaml` rowDelete 의 "확인창은 열어 두고 오류 알림" 을 [Alert Dialog](alert-dialog.md) 의 실패 규칙(닫고 critical 스낵바 + [다시 시도])으로 고쳤다. 옛 스펙은 `popover.history/v-pre-cleanup-1107.yaml`.
+
 ### 2026-10-22 — 알림 줄 ⋮ 와 지우기(알림 지우기 B)
 
 사용자가 [알림 지우기 비교 페이지](https://claude.ai/artifact/RXwXuA8Xm5oYXqjGafNvjU)에서 정했다 — 줄 끝 ⋮ → "삭제" → 확인창, 웹 · 앱 같게(B). 웹 폰 알림 줄의 × 를 걷자 웹에서 알림을 지울 길이 없었고(데스크톱 벨에는 원래 없었다), 앱은 줄마다 × 로 확인 없이 바로 지웠다. 앱의 × 는 걷는다. 거절: 지우기 없음(A) · 폰은 밀기 + ⋮(C) · 편집 → 골라 삭제 · 모두 삭제(D). I-04 검수 뒤 디자인 세션이 맞춘 것 — ⋮ 는 Button xsmall(32) `neutralSubtle`(앱은 small 이었다), 지우기 실패는 확인창을 남기고 오류 알림(앱은 조용히 닫혔다).

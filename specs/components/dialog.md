@@ -75,6 +75,8 @@
 
 입력 폼 대화상자는 바깥(딤)을 눌러도 닫히지 않는다. 바닥 [취소] · `Esc` 로 닫고(1280 미만의 시트는 뒤로 가기로도), 바뀐 값이 있으면 닫기 전에 "작성한 내용이 사라져요" 를 묻는다([Field](field.md) 의 규칙). 조회 · 안내 대화상자는 바깥 누르기 · `Esc` 로 닫힌다.
 
+저장 중에는 닫히지 않는다 — 바닥 [저장] 이 로딩인 동안은 [취소] · `Esc` · 바깥 · 머리 ← 를 무시한다(시트와 같은 규칙 — [Bottom Sheet](bottom-sheet.md) 의 "입력 폼은 실수로 닫히지 않게", 2026-11-06 담다 마무리 B2b 판단). 쓰기 실패는 폼 맨 위 [Callout](callout.md) 이라 그 자리가 남아 있어야 한다. 두 단계 흐름의 초점 · 끝난 뒤 · 한 번만 보이는 비밀도 시트와 같다(2026-11-07 β).
+
 [그림: 닫기 — 입력 폼은 바깥을 눌러도 닫히지 않는다](../../site/components/specs/dialog.tsx#dismiss-guide)
 
 ### 닫기 버튼과 취소 — 하나만
@@ -226,6 +228,10 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 대화상자 `z-modal-content` 101) — 그 안에서 연 Popover(L3) · Alert Dialog(L5)가 위에 뜬다(SEED 는 모두 2 + layerIndex).
 
 ## Migration notes
+
+### 2026-11-07 — 저장 중에는 닫히지 않는다
+
+담다 마무리 B2b · β 판단 — 저장 중 닫기 무시, 두 단계 흐름의 초점 · 끝난 뒤 · 한 번만 보이는 비밀은 [Bottom Sheet](bottom-sheet.md) 와 같다. 옛 스펙은 `dialog.history/v-pre-cleanup-1107.md`.
 
 ### 2026-10-30 — 머리 오른쪽 동작
 
