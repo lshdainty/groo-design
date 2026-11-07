@@ -84,6 +84,8 @@ Segmented Control 은 **조작**이다 — 고르면 화면의 그 내용만 바
 
 칸은 2 ~ 4개다. 5개 이상이면 Chip 의 하나 고르기 줄 · Select 로 둔다. 글은 짧게("이름순" · "최근 사용") — 칸에 비해 글이 길면 줄이 바뀌어 모든 칸이 높아진다. 그러면 다른 컴포넌트를 쓴다.
 
+예외 하나 — 증권 차트의 기간(1일 · 1주 · 1개월 · 3개월 · 1년)만 5칸이고 칸 좌우는 4 다. 짧은 글 다섯이 한 줄에 서야 차트와 함께 읽히기 때문이다(2026-10-30 담다 I-13 디자인시스템 판단 — 고른 그림 그대로). 다른 자리로 넓히지 않는다 — 5개 이상은 위 규칙대로 Chip · Select 다.
+
 [그림: 글 — 짧게 · 길어서 두 줄](../../site/components/specs/segmented-control.tsx#label-guide)
 
 ## 코드
@@ -159,6 +161,10 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 - **알림 점은 브랜드 글자색**(`fg-brand`)이고, 보조 기술에 "새 소식" 을 덧붙인다. SEED 의 `bg.brand-solid` 짝은 groo 다크에서 트랙과 Desk · HR 1.33:1 이라 쓰지 않는다. 고른 칸에는 점을 그리지 않는다.
 
 ## Migration notes
+
+### 2026-11-07 — 증권 차트 기간 5칸 예외
+
+2026-10-30 I-13 에서 웹 · 앱이 증권 차트 기간을 5칸(칸 좌우 4)으로 만든 판단을 적었다 — 이 자리 하나만이다. 옛 스펙은 `segmented-control.history/v-pre-cleanup-1107.*`.
 
 ### 2026-10-30 — 머리 오른쪽에 둘 때는 내용 폭
 

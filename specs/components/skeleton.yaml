@@ -109,4 +109,4 @@ motion:
     duration: $motion-duration-d3
     easing: $motion-ease-enter
     properties: [opacity 0 → 1]
-    note: "스켈레톤을 걷고 내용을 투명도로 — Result Section 의 결과로 바뀜과 같다. 자리 크기는 그대로"
+    note: "스켈레톤을 걷고 내용을 투명도로 — Result Section 의 결과로 바뀜과 같다. 자리 크기는 그대로. 웹만 — 앱은 전환 없이 바로 바꾼다(2026-11-07 담다 마무리 B6)"

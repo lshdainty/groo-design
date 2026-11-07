@@ -415,7 +415,7 @@ export function PullToRefreshDemo({ kit, screen, list, snack, mode = 'auto' }: {
       setAnim(reduce ? null : `transform ${p.motion.done.duration} ${p.motion.done.easing}`);
       setPull(0);
       setPhase('idle');
-      if (!ok) host.show({ tone: 'critical', message: '새로 고치지 못했어요. 잠시 후 다시 당겨주세요.' });
+      if (!ok) host.show({ tone: 'critical', message: '새로 고치지 못했어요.' });
     }, ms);
   };
   const onDown = (e: ReactPointerEvent<HTMLDivElement>) => {
