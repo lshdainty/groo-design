@@ -6,7 +6,7 @@ SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 To
 
 수치 원본은 [`toggle.yaml`](toggle.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
-[그림: 종목 머리의 관심 등록 · 메모 카드의 고정 · 증권 연결의 App Key 보기 — 라이트 · 다크](../../site/components/specs/toggle.tsx#hero)
+[그림: 종목 머리의 관심 등록 · 메모 목록 줄의 고정 · 증권 연결의 App Key 보기 — 라이트 · 다크](../../site/components/specs/toggle.tsx#hero)
 
 ### 직접 골라 보기
 
@@ -158,7 +158,7 @@ import { Toggle } from "@/components/ui/toggle"
 
 ### 메모 고정 — 바로 바꾸고 보낸다
 
-[그림: 메모 카드 — 위 하나만 고정, 실패하면 되돌리고 알림](../../site/components/specs/toggle.tsx#ex-pin)
+[그림: 메모 목록 — 위 하나만 고정, 실패하면 되돌리고 알림](../../site/components/specs/toggle.tsx#ex-pin)
 
 ```tsx
 import { Pin } from "lucide-react"
@@ -247,6 +247,10 @@ import { toggleVariants } from "@/components/ui/toggle"
 - **막힘은 진짜 `disabled`**(Tab 에서 빠진다 — Button 과 같다). SEED 는 `aria-disabled`(포커스가 남는다)다. 불러오는 중(loading)은 두지 않는다 — 누르면 바로 바뀐다.
 
 ## Migration notes
+
+### 2026-11-08 — 메모 · 증권 연결 그림을 폰 화면 바탕대로
+
+Desk 폰에는 카드 화면이 없다(DESIGN.md Layout "화면 바탕"). 메모 폰 그림(맨 위 · 메모 고정 예)을 제품과 같은 흰 화면 하나(목록 제목 "고정 · N" · "모든 메모 · N" + 줄 — 2026-10-23 메모 1-A)로, 증권 연결 폰을 띠 하나로 다시 그렸다. 단추 값 · 동작은 그대로다. 지금 제품의 메모 줄에는 고정 단추가 없다(고정은 밀기 · 상세 · 폼 — 웹 `MemoRow.tsx:13-14`) — 이 쓰임을 남길지는 따로 묻는다.
 
 ### 2026-11-07 — 입력칸 안 뒤 단추는 바탕 상자 없음
 

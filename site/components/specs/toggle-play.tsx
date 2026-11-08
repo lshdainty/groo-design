@@ -9,6 +9,8 @@ import { dcv } from './display-shared';
 import type { SnackbarLook } from './feedback-shared';
 import { SnackbarRegion, useSnackbarHost } from './feedback-view';
 import { ScreenFrame } from './feedback-demos';
+import type { ListLook, RowSpec } from './list-shared';
+import { ListHeaderView, ListView } from './list-view';
 import { FONT, TOGGLES, toggleReadout, type ToggleKind, type ToggleLook, type ViewMode } from './input-shared';
 import { BRANDS, MODES, PlayFrame, Seg } from './select-playground';
 import { ToggleView } from './toggle-view';
@@ -178,13 +180,46 @@ export function ExEyeDemo({ look, card }: { look: ToggleLook; card: CardLook }) 
 }
 
 // 메모 고정 — 화면을 바로 바꾸고 요청은 뒤에서. 실패하면 되돌리고 Snackbar critical + "다시 시도"(20A)
-const MEMOS = [
-  { id: 'groceries', title: '장보기 목록', body: '우유 · 계란 · 두부 · 대파', pinned: true },
-  { id: 'trip', title: '제주 여행 준비', body: '숙소 예약 · 렌터카 · 우산', pinned: false },
-  { id: 'gift', title: '부모님 선물', body: '안마기 · 꽃바구니', pinned: false },
+const MEMOS: MemoItem[] = [
+  { id: 'groceries', title: '장보기 목록', body: '우유 · 계란 · 두부 · 대파', pinned: true, dot: 'var(--p-chart-orange)' },
+  { id: 'trip', title: '제주 여행 준비', body: '숙소 예약 · 렌터카 · 우산', pinned: false, dot: 'var(--p-chart-blue)' },
+  { id: 'gift', title: '부모님 선물', body: '안마기 · 꽃바구니', pinned: false, dot: 'var(--p-chart-green)' },
 ];
-// gutter — 화면 여백(spacing-global-gutter) · 카드는 그 안에 card.yaml 간격으로 쌓인다
-export function ExPinDemo({ look, card, snack, gutter }: { look: ToggleLook; card: CardLook; snack: SnackbarLook; gutter: number }) {
+// 메모 목록 — 제품(웹 MemoMobile · 앱 memo_screen, 2026-10-23 메모 1-A)과 같은 흰 화면 하나: 목록 제목 "고정 · N" · "모든 메모 · N"
+// (고정이 없으면 둘째 제목도 없다) + 줄(앞 색 점 8 · 제목 · 본문 한 줄, 위 맞춤). 띠 · 카드 · 줄 사이 선이 없다.
+// 줄 끝 고정 단추는 Toggle 스펙의 쓰임이다 — 지금 제품 줄에는 없고 고정은 밀기 · 상세 · 폼이 맡는다(판단 필요로 올렸다)
+export type MemoItem = { id: string; title: string; body: string; pinned: boolean; dot: string };
+export function MemoListView({ list, mode = 'auto', memos, toggles }: { list: ListLook; mode?: ViewMode; memos: MemoItem[]; toggles: Record<string, ReactNode> }) {
+  const pinned = memos.filter((m) => m.pinned);
+  const others = memos.filter((m) => !m.pinned);
+  const rows = (ms: MemoItem[]): RowSpec[] =>
+    ms.map((m) => ({
+      kind: 'view',
+      align: 'top',
+      title: m.title,
+      detail: m.body,
+      prefix: { node: <span aria-hidden style={{ display: 'block', width: 8, height: 8, marginTop: 7, borderRadius: 999, background: m.dot }} /> },
+      suffixNode: toggles[m.id],
+    }));
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      {pinned.length > 0 && (
+        <section>
+          <ListHeaderView look={list} mode={mode} title={`고정 · ${pinned.length}`} />
+          <ListView look={list} mode={mode} rows={rows(pinned)} live={false} ariaLabel="고정" />
+        </section>
+      )}
+      {others.length > 0 && (
+        <section>
+          {pinned.length > 0 && <ListHeaderView look={list} mode={mode} title={`모든 메모 · ${others.length}`} />}
+          <ListView look={list} mode={mode} rows={rows(others)} live={false} ariaLabel="모든 메모" />
+        </section>
+      )}
+    </div>
+  );
+}
+// 메모 고정 — 흰 화면 메모 목록(MemoListView)의 줄 끝 단추. 누르면 고정 묶음으로 옮겨 가고, 실패하면 되돌리고 알린다
+export function ExPinDemo({ look, list, snack }: { look: ToggleLook; list: ListLook; snack: SnackbarLook }) {
   const host = useSnackbarHost(snack);
   const s = snack.screen;
   const [memos, setMemos] = useState(MEMOS);
@@ -210,22 +245,8 @@ export function ExPinDemo({ look, card, snack, gutter }: { look: ToggleLook; car
   const ordered = [...memos.filter((m) => m.pinned), ...memos.filter((m) => !m.pinned)];
   return (
     <ToggleDemoFrame w={400}>
-      <ScreenFrame screen={s} title="메모" height={430} bg="bg-layer-basement">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: card.surface.gap, paddingTop: card.surface.gap, paddingLeft: gutter, paddingRight: gutter }}>
-          {ordered.map((m) => (
-            <CardSurface key={m.id} look={card}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: card.content.gap }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: card.header.gap }}>
-                  <span style={{ fontFamily: card.title.fontFamily, fontSize: card.title.fontSize, lineHeight: card.title.lineHeight, fontWeight: card.title.fontWeight, color: dcv(card.title.fg, 'auto'), minWidth: 0 }}>{m.title}</span>
-                  <span style={{ display: 'flex', flexShrink: 0, marginTop: -card.header.gap, marginRight: -card.header.gap }}>
-                    <ToggleView look={look} ariaLabel={`${m.title} 고정`} pressed={m.pinned} onPressedChange={(p) => set(m.id, p)} icon="pin" />
-                  </span>
-                </div>
-                <span style={{ fontFamily: FONT, fontSize: card.stat.label.fontSize, lineHeight: card.stat.label.lineHeight, color: dcv(card.stat.label.fg, 'auto') }}>{m.body}</span>
-              </div>
-            </CardSurface>
-          ))}
-        </div>
+      <ScreenFrame screen={s} title="메모" height={430} bg="bg-layer-default">
+        <MemoListView list={list} memos={ordered} toggles={Object.fromEntries(ordered.map((m) => [m.id, <ToggleView key={m.id} look={look} ariaLabel={`${m.title} 고정`} pressed={m.pinned} onPressedChange={(p) => set(m.id, p)} icon="pin" />]))} />
         <SnackbarRegion host={host} look={snack} />
       </ScreenFrame>
       <div className="flex flex-col items-center gap-2">

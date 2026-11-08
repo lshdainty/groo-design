@@ -20,7 +20,8 @@ import { Band, Legend, Shot, pinStyle } from './overlay-screens';
 import { Cap, Surface } from './select-screens';
 import { switchLook } from './switch-look';
 import { SwitchView } from './switch-view';
-import { ExEyeDemo, ExInvertedDemo, ExPinDemo, ExWatchDemo, Readout, TogglePlayground } from './toggle-play';
+import { listLook } from './list-look';
+import { ExEyeDemo, ExInvertedDemo, ExPinDemo, ExWatchDemo, MemoListView, Readout, TogglePlayground } from './toggle-play';
 import { ToggleView } from './toggle-view';
 import { TOGGLES, toggleReadout, type ToggleIcon, type ToggleKind } from './input-shared';
 
@@ -65,7 +66,6 @@ function ToggleCard({ title, sub, toggle, mode = 'auto', face = 'card' }: { titl
     </CardSurface>
   );
 }
-const stack = (): CSSProperties => ({ display: 'flex', flexDirection: 'column', gap: CL().surface.gap, paddingTop: CL().surface.gap, paddingLeft: gutter(), paddingRight: gutter() });
 
 // ── 화면 ──────────────────────────────────────────────────
 // 종목 상세 — 머리(이름 · 값) 오른쪽 관심 등록
@@ -96,19 +96,16 @@ function StockPhone({ mode, scale = 0.5, h = 500, watched = true }: { mode: Mode
     </Phone>
   );
 }
-const MEMO_ROWS: [string, string, boolean][] = [
-  ['장보기 목록', '우유 · 계란 · 두부 · 대파', true],
-  ['제주 여행 준비', '숙소 예약 · 렌터카 · 우산', false],
-  ['부모님 선물', '안마기 · 꽃바구니', false],
+const MEMO_ROWS: [string, string, boolean, string][] = [
+  ['장보기 목록', '우유 · 계란 · 두부 · 대파', true, 'chart-orange'],
+  ['제주 여행 준비', '숙소 예약 · 렌터카 · 우산', false, 'chart-blue'],
+  ['부모님 선물', '안마기 · 꽃바구니', false, 'chart-green'],
 ];
+// 메모 — 제품과 같은 흰 화면 하나(DESIGN.md Layout "화면 바탕" — 2026-10-23 메모 1-A): 목록 제목 + 줄, 띠 · 카드 없음
 function MemoPhone({ mode, scale = 0.5, h = 500 }: { mode: Mode; scale?: number; h?: number }) {
   return (
-    <Phone title="메모" back={false} mode={mode} scale={scale} h={h} screenW={360}>
-      <div style={stack()}>
-        {MEMO_ROWS.map(([t, s, on]) => (
-          <ToggleCard key={t} mode={mode} title={t} sub={s} toggle={<Tg kind="pin" pressed={on} mode={mode} />} />
-        ))}
-      </div>
+    <Phone title="메모" mode={mode} scale={scale} h={h} screenW={360} bg="bg-layer-default">
+      <MemoListView list={listLook('desk')} mode={mode} memos={MEMO_ROWS.map(([title, body, pinned, dot]) => ({ id: title, title, body, pinned, dot: rc(dot, mode) }))} toggles={Object.fromEntries(MEMO_ROWS.map(([title, , pinned]) => [title, <Tg key={title} kind="pin" pressed={pinned} mode={mode} />]))} />
     </Phone>
   );
 }
@@ -484,7 +481,7 @@ const RoleGuide: Fig = ({ caption }) => {
 // ── 코드 미리보기(실제로 누를 수 있다) ───────────────────
 const ExWatch: Fig = () => <ExWatchDemo look={T()} card={CL()} />;
 const ExEye: Fig = () => <ExEyeDemo look={T()} card={CL()} />;
-const ExPin: Fig = () => <ExPinDemo look={T()} card={CL()} snack={snackbarLook()} gutter={gutter()} />;
+const ExPin: Fig = () => <ExPinDemo look={T()} list={listLook('desk')} snack={snackbarLook()} />;
 const ExInverted: Fig = () => <ExInvertedDemo look={T()} card={CL()} />;
 
 export const toggleFigures: Record<string, Fig> = {

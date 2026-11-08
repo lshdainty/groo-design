@@ -48,22 +48,14 @@ function SpendBody({ mode = 'auto', actions }: { mode?: Mode; actions?: ReactNod
     </>
   );
 }
-function RecentRows({ mode = 'auto', action }: { mode?: Mode; action?: ReactNode }) {
+// 최근 거래 미리보기 — 몇 줄만, 목록 화면으로는 머리의 "전체 보기"(미리보기 끝에 "더 보기" 버튼을 두지 않는다 — card.md 6B)
+function RecentRows({ mode = 'auto' }: { mode?: Mode }) {
   return (
     <>
       <Row title="점심 식사" sub="식비 · 오늘" amount="−12,000원" hue="orange" mode={mode} />
       <Row title="버스" sub="교통 · 오늘" amount="−1,500원" hue="blue" mode={mode} />
       <Row title="월급" sub="수입 · 9월 25일" amount="+3,200,000원" hue="green" mode={mode} />
-      {action && <div className="mt-2 flex justify-center">{action}</div>}
     </>
-  );
-}
-// 회색 바탕 위 카드 하나(폰 화면이 아니라 놓는 바탕 그림)
-function RecentCard({ mode = 'auto', action }: { mode?: Mode; action?: ReactNode }) {
-  return (
-    <Card mode={mode} title="최근 거래" action={action ? undefined : '전체 보기'}>
-      <RecentRows mode={mode} action={action} />
-    </Card>
   );
 }
 
@@ -211,8 +203,8 @@ function Home({ brandy }: { brandy: boolean }) {
             }
           />
         </ScreenBand>
-        <ScreenBand title="최근 거래">
-          <RecentRows action={<B variant={brandy ? 'brandOutline' : 'neutralWeak'} size="small" label="내역 더보기" />} />
+        <ScreenBand title="최근 거래" action="전체 보기">
+          <RecentRows />
         </ScreenBand>
       </div>
     </Phone>
@@ -435,13 +427,17 @@ const Surface: Fig = ({ caption }) => (
     <Pair>
       <Verdict ok note="neutralWeak 는 흰 표면(카드 · 시트 · 모달) 위에" bg={rc('bg-layer-basement', 'light')}>
         <div className="w-[240px]">
-          <RecentCard mode="light" action={<B variant="neutralWeak" size="small" mode="light" label="내역 더보기" />} />
+          <Card mode="light">
+            <SpendBody mode="light" actions={<B variant="neutralWeak" size="small" mode="light" grow={1} label="예산 설정" />} />
+          </Card>
         </div>
       </Verdict>
       <Verdict ok={false} note="라이트에서 페이지 바탕 위에 바로 두면 채움이 사라진다 — neutralOutline 을 쓴다" bg={rc('bg-layer-basement', 'light')}>
         <div className="flex w-[240px] flex-col items-center gap-3">
-          <RecentCard mode="light" />
-          <B variant="neutralWeak" size="small" mode="light" label="내역 더보기" />
+          <Card mode="light">
+            <SpendBody mode="light" />
+          </Card>
+          <B variant="neutralWeak" size="small" mode="light" label="예산 설정" />
         </div>
       </Verdict>
     </Pair>
