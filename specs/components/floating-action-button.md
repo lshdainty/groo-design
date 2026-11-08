@@ -74,7 +74,7 @@
 
 ### 스낵바는 위에
 
-떠 있는 버튼이 있으면 [Snackbar](snackbar.md) 는 그 위 8 에 뜬다(SEED — "Snackbar는 항상 Floating Action Button 위에 표시됩니다") — 버튼을 `SnackbarAvoidOverlap` 으로 감싼다. 목록의 마지막 줄이 버튼에 가리지 않게 목록 아래에 버튼 높이만큼 여백을 둔다(56 + 20 + 20).
+떠 있는 버튼이 있으면 [Snackbar](snackbar.md) 는 그 위 8 에 뜬다(SEED — "Snackbar는 항상 Floating Action Button 위에 표시됩니다") — 버튼을 `SnackbarAvoidOverlap` 으로 감싼다 — 감싸기는 이 부품 안에서 한다. 부르는 화면이 따로 감싸지 않는다(빠뜨린 화면에서 띠가 버튼을 덮는다 — 2026-11-07 담다 마무리 δ 판단). 목록의 마지막 줄이 버튼에 가리지 않게 목록 아래에 버튼 높이만큼 여백을 둔다(56 + 20 + 20).
 
 [그림: 스낵바는 버튼 위 8 · 마지막 줄 아래 여백](../../site/components/specs/floating-action-button.tsx#stack-guide)
 
@@ -165,6 +165,10 @@ import { SnackbarAvoidOverlap } from "@/components/ui/snackbar"
 - **z-index 는 specs/z-index.md 의 L1**(`z-sticky` 50).
 
 ## Migration notes
+
+### 2026-11-07 — 스낵바 피하기는 부품 안에서
+
+담다 마무리 δ 판단 — `SnackbarAvoidOverlap` 감싸기를 부르는 화면이 아니라 부품이 한다. 옛 스펙은 `floating-action-button.history/v-pre-cleanup-1107.md`.
 
 ### 2026-10-21 — 단위(03-G 1A)
 

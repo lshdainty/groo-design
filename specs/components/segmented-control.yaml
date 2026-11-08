@@ -60,7 +60,7 @@ rules:
         columns: { value: 칸 수(2 ~ 4), note: "모든 칸이 같은 폭 · 같은 높이(가장 높은 칸에 맞춘다)" }
       item:
         minHeight: { value: 34px, note: "트랙 안쪽 4 를 더해 42" }
-        paddingX: { value: $spacing-x3, note: "SEED 24 → 12 — 칸이 트랙을 나누므로 폰에서 4개도 들어간다" }
+        paddingX: { value: $spacing-x3, note: "SEED 24 → 12 — 칸이 트랙을 나누므로 폰에서 4개도 들어간다. 예외 — 증권 차트 기간 5칸만 4(2026-10-30 I-13)" }
         paddingY: $spacing-x1_5
         radius: $radius-full
         cursor: pointer

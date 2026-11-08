@@ -413,7 +413,7 @@ const ExTruncate: Fig = ({ caption }) => (
   <Preview caption={caption} w={312}>
     <div className="flex flex-col items-start gap-2">
       <div style={{ width: 220, maxWidth: '100%', outline: `1px dashed ${MARK_LINE}`, outlineOffset: 3, background: MARK }}>
-        <T items={items({ label: '교통', shrink: 0 }, { label: '신한카드 Deep Dream 체크(1234)', shrink: 2 }, { label: '오후 2:10', shrink: 0 })} size="t3" truncate />
+        <T items={items({ label: '교통', shrink: 1 }, { label: '신한카드 Deep Dream 체크(1234)', shrink: 2 }, { label: '오후 2:10', shrink: 0 })} size="t3" truncate />
       </div>
       <span className="text-[12px] leading-4 pk-muted">분홍 칸 — 폭 220</span>
     </div>

@@ -325,6 +325,10 @@ import {
 
 ## Migration notes
 
+### 2026-11-07 — 접힌 항목의 누르는 영역
+
+담다 마무리 B5 판단 — 접힌 사이드바 항목은 보이는 40 · 누르는 영역 가로 44(`side-navigation.yaml` 접힘 item 비고). 옛 스펙은 `side-navigation.history/v-pre-cleanup-1107.yaml`.
+
 ### 2026-10-30 — 그루 이음 바닥 계정 줄 · 하위 페이지 돌아가기(스펙 정리)
 
 화면 결정으로 틀리게 된 문장을 결정대로 고쳤다 — 새 규칙이 아니다.

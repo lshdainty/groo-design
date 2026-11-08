@@ -283,6 +283,7 @@ import { Chip, ChipGroup, InputChip } from "@/components/ui/chip"
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 바깥 링 2px · 띄움 2px |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 모든 크기 ✓(가장 작은 small 32 · 최소 폭 44). 입력값 칩의 지우기는 누르는 영역 24 × 24 |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 누르는 영역을 가로 · 세로 44 까지 넓힌다 ✓(보이는 칩 32 · 36 · 40, 아이콘만 있는 칩도) — 줄바꿈 묶음에서 small 만 위아래 줄의 영역이 4 겹친다. 입력값 칩의 지우기는 24 × 24 라 AAA 밖이다 |
+| **앱(Flutter) — 누르는 영역은 놓인 자리** | 앱은 부모 상자 밖으로 누르는 영역을 넓히지 못한다 — 칩이 놓인 자리가 곧 누르는 영역이다. 2.5.8(AA 24)은 늘 지키고, 44 는 줄 높이를 늘릴 수 있는 자리에서만 맞춘다. 24 아래(글 버튼 20 · 22 같은 자리)는 두지 않는다(2026-11-07 담다 마무리 B5 판단 — 칩을 44 로 키우면 칩 높이 36 · 카드 머리 36 규칙과 부딪친다) |
 | **ARIA** | 하나 고르기 `role="radiogroup"` + 라디오(묶음 이름은 Field 라벨 · `aria-label`), 여럿 고르기 체크박스, 제안 · 여는 칩 `<button>`(여는 칩 `aria-haspopup="dialog"`), 입력값 지우기 "{글} 지우기". `aria-pressed` 는 쓰지 않는다. 아이콘만 있는 칩은 `aria-label` 필수 |
 
 ## Do / Don't
@@ -322,6 +323,10 @@ import { Chip, ChipGroup, InputChip } from "@/components/ui/chip"
 - **아이콘은 lucide 선 아이콘**(v106) — 여는 칩 `chevron-down`, 지우기 `x`, 필터 지우기 `rotate-ccw`.
 
 ## Migration notes
+
+### 2026-11-07 — 앱의 누르는 영역은 놓인 자리
+
+담다 마무리 B5 판단 — 앱(Flutter)은 부모 밖으로 누르는 영역을 넓히지 못하므로 놓인 자리 = 누르는 영역, AA 24 는 늘 · 44 는 줄 높이를 늘릴 수 있는 자리에서만. 옛 스펙은 `chip.history/v-pre-cleanup-1107.md`.
 
 ### 2026-10-17 — 큰 글자 · 줄보다 긴 칩 · Home · End · 막힌 Solid(03-E · 03-B 사용자 결정)
 

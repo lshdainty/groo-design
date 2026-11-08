@@ -230,6 +230,8 @@
 
 저장처럼 시간이 걸리는 액션은 누른 버튼을 로딩으로 바꾼다. 라벨을 바꾸거나 비활성으로 돌리지 않는다.
 
+`loading` 은 `disabled` 보다 먼저다 — 저장 중에 부르는 쪽이 버튼을 막아도(폼 검사가 다시 돌아 `disabled` 가 켜져도) 누름 색 위 로딩 원을 보인다. 막힌 모양으로 바뀌면 저장이 멈춘 것처럼 읽힌다(2026-11-06, 담다 마무리 B2b 판단 — 앱 `PButton` 이 반대 차례였다).
+
 [그림: 로딩은 그 자리에서 — 폭은 그대로](../../site/components/specs/button.tsx#loading)
 
 ## Button 과 Chip
@@ -430,6 +432,10 @@ const [saving, setSaving] = useState(false)
 - `neutralSolid` 의 누름은 새 역할 `bg-neutral-inverted-pressed`(gray-800, v112)다.
 
 ## Migration notes
+
+### 2026-11-07 — 로딩이 막힘보다 먼저
+
+담다 마무리 B2b 판단 — 저장 중 부르는 쪽이 `disabled` 를 켜도 로딩 원을 보인다(앱 `PButton` 이 반대 차례였다). 값 변경 없음. 옛 스펙은 `button.history/v-pre-cleanup-1107.md`.
 
 ### 2026-10-30 — 아이콘 단추의 가장자리 맞춤
 

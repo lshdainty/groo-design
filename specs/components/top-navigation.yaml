@@ -114,7 +114,7 @@ rules:
         top: { value: 1px, note: "아이콘(24) 상자 위에서 1 — y 1 ~ 7" }
         right: { value: 1px, note: "아이콘 상자 오른쪽에서 1 — x 17 ~ 23(notification-badge.yaml 의 icon · small)" }
       searchField:
-        textField: { value: outline medium, note: "Text Field(input.yaml) 상자형 medium 40 · 앞 돋보기 16 · 지우기 18 — 바 56 안이라 폰에서도 medium(Text Field 의 '1280 이상' 규칙의 예외). 2026-10-16 Q-017-3a C · Q-017-5 정리" }
+        textField: { value: outline medium, note: "Text Field(input.yaml) 상자형 medium 40 · 앞 돋보기 16 · 지우기 18 — 바 56 안이라 폰에서도 medium(Text Field 의 '1280 이상' 규칙의 예외). 2026-10-16 Q-017-3a C · Q-017-5 정리. 칸 글자는 글자 크기 설정 1.0 ~ 1.2배(제목과 같은 상한 — 2026-11-06 B1 α)" }
         height: { value: 40px, note: "바 56 의 가운데 — 위아래 8" }
         width: { value: 남은 폭, note: "검색 화면 — ← 다음 6(화면 끝에서 56)부터 오른쪽 자리 앞 8 까지(제목 자리 — SEED Standard Title Slot)" }
         heading: { value: 보이지 않는 h1 "검색", note: "화면 이름 대신 칸이 서므로 머리말은 보조 기술에만 — 화면을 옮기면 초점이 이 h1 로 온다" }
