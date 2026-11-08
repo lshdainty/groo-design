@@ -147,7 +147,7 @@ export function cardStack(): CSSProperties {
   const x = parseFloat(String(tokenValue('$spacing-global-gutter')));
   return { display: 'flex', flexDirection: 'column', gap, paddingTop: gap, paddingLeft: x, paddingRight: x };
 }
-// Desk 폰 띠 화면(앱 · 768 미만 웹) — 회색 바닥 위 화면 폭 흰 띠(bg-layer-default). 띠 사이 8 · 맨 위 8 · 띠 안 위 4 · 아래 8,
+// Desk 폰 띠 화면(앱 · 768 미만 웹) — 회색 바닥 위 화면 폭 흰 띠(bg-layer-default). 띠 사이 8 · 띠 안 위 4 · 아래 8, 첫 띠 위 · 마지막 띠 아래 틈 없음(BAND.top 0 — 2026-10-23),
 // 모서리 · 테두리 없음(DESIGN.md Layout 의 "화면 바탕" — 2026-10-21 I-01 결정 3: 폰의 카드 화면은 띠, 데스크톱은 카드). HR 폰은 카드 그대로 — cardStack
 export { BAND };
 export function bandStack(): CSSProperties {

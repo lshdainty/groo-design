@@ -5,6 +5,7 @@ import { Figure, Panel } from '../foundations/ui';
 import { buttonLook, type ButtonCombo, type ButtonState } from './button-look';
 import { ButtonView, LoadingDemo, type IconName } from './button-view';
 import { chipLook } from './chip-look';
+import { cardLook } from './data-look';
 import { ChipGroupView, ChipView } from './chip-view';
 import { AlertBox, Card, Field, Heading, KV, Line, Phone, Row, ScreenBand, Sheet, Stat, Verdict, WebDialog, WebWindow, bandStack, cardStack, rc, type Mode } from './kit';
 
@@ -160,20 +161,24 @@ const Usage: Fig = ({ caption }) => {
         )}
         {cell(
           <Phone title="고정 지출" h={560} scale={s}>
-            {/* Desk 폰은 띠 화면 — 항목마다 띠 하나 */}
+            {/* Desk 폰은 띠 화면 — 같은 묶음(고정 지출)은 띠 하나, 항목은 띠 안 여백 24(카드 안 여백과 같다)로 가른다(한 줄짜리 띠를 잇지 않는다 — DESIGN.md Layout "화면을 나누는 법") */}
             <div style={bandStack()}>
-              {[
-                ['숲길 스트리밍', '매달 18일 · 13,500원', 'red'],
-                ['휴대폰 요금', '매달 25일 · 49,000원', 'blue'],
-              ].map(([t, sub, hue]) => (
-                <ScreenBand key={t}>
-                  <Row title={t} sub={sub} hue={hue} />
-                  <div className="mt-2 flex gap-2">
-                    <B variant="neutralOutline" size="small" grow={1} label="건너뛰기" />
-                    <B variant="brandOutline" size="small" grow={1} label="지금 기록" />
-                  </div>
-                </ScreenBand>
-              ))}
+              <ScreenBand>
+                <div className="flex flex-col" style={{ gap: cardLook().surface.pad }}>
+                  {[
+                    ['숲길 스트리밍', '매달 18일 · 13,500원', 'red'],
+                    ['휴대폰 요금', '매달 25일 · 49,000원', 'blue'],
+                  ].map(([t, sub, hue]) => (
+                    <div key={t}>
+                      <Row title={t} sub={sub} hue={hue} />
+                      <div className="mt-2 flex gap-2">
+                        <B variant="neutralOutline" size="small" grow={1} label="건너뛰기" />
+                        <B variant="brandOutline" size="small" grow={1} label="지금 기록" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScreenBand>
             </div>
           </Phone>,
           'neutralOutline + brandOutline',

@@ -1,4 +1,4 @@
-// 펼치고 접기 · 나누기 묶음 그림이 같이 쓰는 화면 조각 — Desk 카드 상세(카드 요약 · 혜택 · 유의사항 카드), 카드 혜택 상세 시트,
+// 펼치고 접기 · 나누기 묶음 그림이 같이 쓰는 화면 조각 — Desk 카드 상세(폰 — 카드 요약 · 혜택 · 유의사항 띠), 카드 혜택 상세 시트,
 // 거래 상세의 분할 내역, HR 업무 보고의 상세 검색 조건. 아코디언 · 접기는 YAML 을 푼 값(accordionLook · collapsibleLook — collapse-view)으로,
 // 카드 면은 card.yaml(data-card-view), 시트 · 대화상자는 bottom-sheet · dialog.yaml(overlay-view)로 그린다. 화면 틀의 글자 크기는 그림 안에서 정한다.
 import type { CSSProperties, ReactNode } from 'react';
@@ -12,7 +12,7 @@ import { cardLook } from './data-look';
 import { CardSurface, StatView } from './data-card-view';
 import { overlayLook } from './overlay-look';
 import { DimView, SheetSurface, DialogSurface } from './overlay-view';
-import { PHONE_SAFE, Phone, rc, type Mode } from './kit';
+import { BAND, PHONE_SAFE, Phone, ScreenBand, bandStack, rc, type Mode } from './kit';
 import { won } from './collapse-shared';
 
 type Brand = 'desk' | 'hr';
@@ -46,30 +46,58 @@ export function AccCard({ mode = 'auto', title, items, open = [], expandAll = tr
   );
 }
 
+// 띠 안 inline 아코디언 — Desk 폰 카드 상세는 띠 화면이다(DESIGN.md Layout "화면 바탕" — 2026-10-21 I-01 결정 3). 띠 안 값은 카드 body="accordion" 과 같다:
+// 머리 글 위 24 · 좌우 24 · 아래, 트리거가 화면 끝까지, 아래 8(띠 안 아래 8 이 그 8 이다). 띠 안에 카드를 두지 않는다
+export function AccBand({ mode = 'auto', title, items, open = [], expandAll = true, look = AL() }: { mode?: Mode; title: string; items: AccItem[]; open?: string[]; expandAll?: boolean; look?: AccLook }) {
+  const c = CDL();
+  const ah = c.accordion.header;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', background: rc('bg-layer-default', mode), paddingTop: BAND.padTop, paddingBottom: BAND.padBottom }}>
+      <div style={{ marginTop: -BAND.padTop, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: c.header.gap, paddingTop: ah.top, paddingRight: ah.x, paddingBottom: ah.bottom, paddingLeft: ah.x }}>
+        <span style={{ minWidth: 0, fontFamily: c.title.fontFamily, fontSize: c.title.fontSize, lineHeight: c.title.lineHeight, fontWeight: c.title.fontWeight, color: rc('fg-neutral', mode) }}>{title}</span>
+        {expandAll && <ExpandAllView look={look} mode={mode} allOpen={allExpanded(open, expandableOf(items))} />}
+      </div>
+      <div style={{ paddingBottom: Math.max(0, c.accordion.padBottom - BAND.padBottom) }}>
+        <AccordionView look={look} mode={mode} items={items} open={open} />
+      </div>
+    </div>
+  );
+}
+
 // 카드 요약 — 발급사 · 이름(줄을 바꾼다) · 연회비 · 전월 실적
-export function CardSummary({ mode = 'auto' }: { mode?: Mode }) {
+function CardSummaryBody({ mode = 'auto' }: { mode?: Mode }) {
   const c = CDL();
   return (
-    <CardSurface look={c} mode={mode}>
+    <>
       <span style={{ fontFamily: c.stat.label.fontFamily, fontSize: c.stat.label.fontSize, lineHeight: c.stat.label.lineHeight, fontWeight: c.stat.label.fontWeight, color: rc('fg-neutral-subtle', mode) }}>{CARD.issuer}</span>
       <span style={{ marginTop: 4, fontFamily: c.title.fontFamily, fontSize: 20, lineHeight: '27px', fontWeight: 700, color: rc('fg-neutral', mode) }}>{CARD.name}</span>
       <div style={{ display: 'flex', gap: 24, marginTop: 16 }}>
         <StatView look={c} mode={mode} label="연회비" value={CARD.fee} size="small" />
         <StatView look={c} mode={mode} label="전월 실적" value={CARD.performance} size="small" />
       </div>
+    </>
+  );
+}
+// 카드 요약 카드(데스크톱 — 회색 바닥 위)
+export function CardSummary({ mode = 'auto' }: { mode?: Mode }) {
+  return (
+    <CardSurface look={CDL()} mode={mode}>
+      <CardSummaryBody mode={mode} />
     </CardSurface>
   );
 }
 
-// 카드 상세 화면의 몸 — 카드 요약 · 혜택 · 유의사항(카드 사이 8 · 화면 가장자리 24)
+// 카드 상세 화면의 몸(폰) — 카드 요약 · 혜택 · 유의사항 띠(띠 사이 8 · 첫 띠는 머리 바로 아래 · 마지막 띠 아래 틈 없음 — bottom 은 그림 아래 바닥)
 export function CardDetailBody({ mode = 'auto', benefitsOpen = [], cautionsOpen = [], bottom = 0 }: { mode?: Mode; benefitsOpen?: string[]; cautionsOpen?: string[]; bottom?: number }) {
-  const c = CDL();
-  const g = gutter();
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: c.surface.gap, paddingTop: c.surface.gap, paddingLeft: g, paddingRight: g, paddingBottom: bottom }}>
-      <CardSummary mode={mode} />
-      <AccCard mode={mode} title={`혜택 · ${BENEFITS.length}건`} items={benefitItems()} open={benefitsOpen} />
-      <AccCard mode={mode} title={`유의사항 · ${CAUTIONS.length}건`} items={cautionItems()} open={cautionsOpen} />
+    <div style={{ ...bandStack(), paddingBottom: bottom }}>
+      <ScreenBand mode={mode}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <CardSummaryBody mode={mode} />
+        </div>
+      </ScreenBand>
+      <AccBand mode={mode} title={`혜택 · ${BENEFITS.length}건`} items={benefitItems()} open={benefitsOpen} />
+      <AccBand mode={mode} title={`유의사항 · ${CAUTIONS.length}건`} items={cautionItems()} open={cautionsOpen} />
     </div>
   );
 }

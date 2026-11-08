@@ -556,7 +556,7 @@ export function ResultFailureDemo({ look }: { look: ResultSectionLook }) {
   return (
     <DemoStage controls={phase === 'done' ? <DemoButton onClick={() => setPhase('failed')}>실패 다시 보기</DemoButton> : undefined} note="다시 시도를 누르면 버튼에 로딩이 걸리고, 불러오면 내용이 투명도로 바뀐다. 이미 보이던 내용이 있으면 지우지 않는다.">
       <ScreenFrame screen={s} title="홈" height={440} bg="bg-layer-basement" bottom={<DemoTabBar screen={s} tab="home" />}>
-        {/* Desk 폰 홈은 띠 화면 — 회색 바닥 위 화면 폭 흰 띠(맨 위 8 · 띠 안 위 4 · 아래 8), 띠 안은 목록 카드와 같은 값(머리 글 위 24 · 좌우 24 · 아래 4) */}
+        {/* Desk 폰 홈은 띠 화면 — 회색 바닥 위 화면 폭 흰 띠(첫 띠는 머리 바로 아래 · 띠 안 위 4 · 아래 8), 띠 안은 목록 카드와 같은 값(머리 글 위 24 · 좌우 24 · 아래 4) */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: BAND.gap, paddingTop: BAND.top }}>
           <section aria-label="최근 거래" style={{ display: 'flex', flexDirection: 'column', minHeight: 300, boxSizing: 'border-box', background: c(s, 'bg-layer-default', 'auto'), paddingTop: BAND.padTop, paddingRight: 0, paddingBottom: BAND.padBottom, paddingLeft: 0 }}>
             <span style={{ paddingTop: s.card.head.top - BAND.padTop, paddingRight: s.card.head.x, paddingBottom: s.card.head.bottom, paddingLeft: s.card.head.x, fontFamily: s.card.title.fontFamily, fontSize: s.card.title.fontSize, lineHeight: s.card.title.lineHeight, fontWeight: s.card.title.fontWeight }}>최근 거래</span>

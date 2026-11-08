@@ -13,7 +13,7 @@ import { CardSurface, HeroCardView } from './data-card-view';
 import { snackbarLook } from './feedback-look';
 import { tokenValue } from '@/lib/component-spec';
 import { toggleLook, type ToggleLook, type ToggleState } from './input-look';
-import { Phone, Verdict, rc, type Mode } from './kit';
+import { Phone, ScreenBand, Verdict, bandStack, rc, type Mode } from './kit';
 import { NK } from './nav-screens';
 import { TopIconButton } from './nav-view';
 import { Band, Legend, Shot, pinStyle } from './overlay-screens';
@@ -46,11 +46,11 @@ const EyeLink = ({ hidden = false, mode = 'auto', tone = 'inverted', state }: { 
   <ToggleView look={T()} mode={mode} tone={tone} link ariaLabel="금액 가리기 설정" icon={hidden ? 'eye-off' : 'eye'} state={state} />
 );
 
-// 카드 한 장 — 제목 줄 오른쪽에 단추(위 · 오른쪽 8 당김 — card.md 의 peers 코드), 아래 한 줄
-function ToggleCard({ title, sub, toggle, mode = 'auto' }: { title: string; sub: string; toggle: ReactNode; mode?: Mode }) {
+// 카드 한 장 — 제목 줄 오른쪽에 단추(위 · 오른쪽 8 당김 — card.md 의 peers 코드), 아래 한 줄.
+// face="none" 은 면 없이 내용만(Desk 폰 띠 안 — 띠 안 값은 카드 안과 같다)
+function ToggleCard({ title, sub, toggle, mode = 'auto', face = 'card' }: { title: string; sub: string; toggle: ReactNode; mode?: Mode; face?: 'card' | 'none' }) {
   const c = CL();
-  return (
-    <CardSurface look={c} mode={mode}>
+  const body = (
       <div style={{ display: 'flex', flexDirection: 'column', gap: c.content.gap }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: c.header.gap }}>
           <span style={{ fontFamily: c.title.fontFamily, fontSize: c.title.fontSize, lineHeight: c.title.lineHeight, fontWeight: c.title.fontWeight, color: rc('fg-neutral', mode), minWidth: 0 }}>{title}</span>
@@ -58,6 +58,10 @@ function ToggleCard({ title, sub, toggle, mode = 'auto' }: { title: string; sub:
         </div>
         <span style={{ fontFamily: c.stat.label.fontFamily, fontSize: c.stat.label.fontSize, lineHeight: c.stat.label.lineHeight, color: rc('fg-neutral-subtle', mode), fontVariantNumeric: 'tabular-nums' }}>{sub}</span>
       </div>
+  );
+  return face === 'none' ? body : (
+    <CardSurface look={c} mode={mode}>
+      {body}
     </CardSurface>
   );
 }
@@ -108,13 +112,18 @@ function MemoPhone({ mode, scale = 0.5, h = 500 }: { mode: Mode; scale?: number;
     </Phone>
   );
 }
-// 증권 연결 — App Key 보기(기능 단추 — 가려져 있으면 끔 · eye-off)
+// 증권 연결 — App Key 보기(기능 단추 — 가려져 있으면 끔 · eye-off). Desk 폰 증권은 띠 화면 — 같은 묶음(연결한 증권)은 띠 하나,
+// 증권마다 띠 안 여백 24 로 가른다(DESIGN.md Layout "화면 바탕" · "화면을 나누는 법")
 function KeyPhone({ mode, scale = 0.5, h = 500 }: { mode: Mode; scale?: number; h?: number }) {
   return (
     <Phone title="증권 연결" mode={mode} scale={scale} h={h} screenW={360}>
-      <div style={stack()}>
-        <ToggleCard mode={mode} title="가나증권" sub="App Key ••••••••••••••••" toggle={<Tg kind="key" mode={mode} />} />
-        <ToggleCard mode={mode} title="다라투자증권" sub="App Key PSq7·Kx2m·9WdA·tL4e" toggle={<Tg kind="key" pressed mode={mode} />} />
+      <div style={bandStack()}>
+        <ScreenBand mode={mode}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: CL().surface.pad }}>
+            <ToggleCard face="none" mode={mode} title="가나증권" sub="App Key ••••••••••••••••" toggle={<Tg kind="key" mode={mode} />} />
+            <ToggleCard face="none" mode={mode} title="다라투자증권" sub="App Key PSq7·Kx2m·9WdA·tL4e" toggle={<Tg kind="key" pressed mode={mode} />} />
+          </div>
+        </ScreenBand>
       </div>
     </Phone>
   );
