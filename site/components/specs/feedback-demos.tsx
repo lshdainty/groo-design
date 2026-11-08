@@ -11,7 +11,7 @@ import { CalloutView, PageBannerView, ResultSectionView, SnackbarRegion, useSnac
 import type { TfFieldLook, TfInputLook } from './text-field-shared';
 import { TfFieldView, TfInputView } from './text-field-view';
 import { DESK_TABS, addLabelFor } from './nav-data';
-import { tabBottom } from './nav-shared';
+import { BAND, tabBottom } from './nav-shared';
 import { TabBar, TopNavBar } from './nav-view';
 
 const c = (s: FbScreen, name: FbScreenTone, mode: ViewMode) => fcv(s[name], mode);
@@ -556,10 +556,10 @@ export function ResultFailureDemo({ look }: { look: ResultSectionLook }) {
   return (
     <DemoStage controls={phase === 'done' ? <DemoButton onClick={() => setPhase('failed')}>실패 다시 보기</DemoButton> : undefined} note="다시 시도를 누르면 버튼에 로딩이 걸리고, 불러오면 내용이 투명도로 바뀐다. 이미 보이던 내용이 있으면 지우지 않는다.">
       <ScreenFrame screen={s} title="홈" height={440} bg="bg-layer-basement" bottom={<DemoTabBar screen={s} tab="home" />}>
-        {/* 회색 바닥 위 목록 카드 — card.yaml(흰 면 + 1px 테두리 · 머리 위 24 · 좌우 24 · 아래 4 · 카드 아래 12) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: s.card.gap, paddingTop: s.card.gap, paddingRight: s.card.edge, paddingBottom: s.card.edge, paddingLeft: s.card.edge }}>
-          <section aria-label="최근 거래" style={{ display: 'flex', flexDirection: 'column', minHeight: 300, boxSizing: 'border-box', borderRadius: s.card.radius, borderWidth: s.card.borderW, borderStyle: 'solid', borderColor: c(s, 'stroke-neutral-weak', 'auto'), background: c(s, 'bg-layer-default', 'auto'), paddingTop: 0, paddingRight: 0, paddingBottom: s.card.listBottom, paddingLeft: 0 }}>
-            <span style={{ paddingTop: s.card.head.top, paddingRight: s.card.head.x, paddingBottom: s.card.head.bottom, paddingLeft: s.card.head.x, fontFamily: s.card.title.fontFamily, fontSize: s.card.title.fontSize, lineHeight: s.card.title.lineHeight, fontWeight: s.card.title.fontWeight }}>최근 거래</span>
+        {/* Desk 폰 홈은 띠 화면 — 회색 바닥 위 화면 폭 흰 띠(첫 띠는 머리 바로 아래 · 띠 안 위 4 · 아래 8), 띠 안은 목록 카드와 같은 값(머리 글 위 24 · 좌우 24 · 아래 4) */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: BAND.gap, paddingTop: BAND.top }}>
+          <section aria-label="최근 거래" style={{ display: 'flex', flexDirection: 'column', minHeight: 300, boxSizing: 'border-box', background: c(s, 'bg-layer-default', 'auto'), paddingTop: BAND.padTop, paddingRight: 0, paddingBottom: BAND.padBottom, paddingLeft: 0 }}>
+            <span style={{ paddingTop: s.card.head.top - BAND.padTop, paddingRight: s.card.head.x, paddingBottom: s.card.head.bottom, paddingLeft: s.card.head.x, fontFamily: s.card.title.fontFamily, fontSize: s.card.title.fontSize, lineHeight: s.card.title.lineHeight, fontWeight: s.card.title.fontWeight }}>최근 거래</span>
             <div role="status" style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto' }}>
               {phase === 'done' ? (
                 <ul ref={list} style={{ margin: 0, paddingTop: 0, paddingRight: s.card.head.x, paddingBottom: 0, paddingLeft: s.card.head.x }}>
@@ -568,7 +568,7 @@ export function ResultFailureDemo({ look }: { look: ResultSectionLook }) {
                   ))}
                 </ul>
               ) : (
-                // 카드 안 — 결과 자리의 좌우 0, 목록 카드의 24 는 감싼 칸이 맡는다
+                // 띠(카드) 안 — 결과 자리의 좌우 0, 띠 안의 24 는 감싼 칸이 맡는다
                 <div style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', paddingLeft: s.card.head.x, paddingRight: s.card.head.x }}>
                   <ResultSectionView look={look} kind="failure" size="medium" inCard title="거래를 불러오지 못했어요" description="잠시 뒤 다시 시도해 주세요." primary={{ label: '다시 시도', onClick: retry, loading: phase === 'loading' }} heading={3} live />
                 </div>

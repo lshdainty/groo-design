@@ -9,7 +9,7 @@ import { SwitchView } from './switch-view';
 import { SwitchPlayground } from './switch-playground';
 import { buttonLook } from './button-look';
 import { ButtonView } from './button-view';
-import { Card, Phone, Sheet, Verdict, cardStack, rc, type Mode } from './kit';
+import { Phone, ScreenBand, Sheet, Verdict, bandStack, rc, type Mode } from './kit';
 import { listLook, type RowSpec } from './list-look';
 import { ListView } from './list-view';
 
@@ -301,13 +301,14 @@ const Pair = ({ children }: { children: ReactNode }) => <div className="flex w-f
 function NotiPhone({ tone, masterOn = true, forceOff = false }: { tone?: string; masterOn?: boolean; forceOff?: boolean }) {
   return (
     <Phone title="알림 설정" h={500} scale={0.68}>
-      <div style={cardStack()}>
-        <Card body="list">
+      {/* Desk 폰 설정은 띠 화면 — 묶음마다 화면 폭 흰 띠(DESIGN.md Layout "화면 바탕") */}
+      <div style={bandStack()}>
+        <ScreenBand body="list">
           <SettingRows rows={[{ title: '푸시 알림', desc: masterOn ? '모든 알림이 활성화되어 있어요' : '알림이 꺼져 있어요', on: masterOn }]} tone={tone} />
-        </Card>
-        <Card body="list">
+        </ScreenBand>
+        <ScreenBand body="list">
           <SettingRows rows={NOTI.map(([title, desc, on]) => ({ title, desc, on: forceOff ? false : on, disabled: !masterOn && !forceOff }))} tone={tone} />
-        </Card>
+        </ScreenBand>
       </div>
     </Phone>
   );

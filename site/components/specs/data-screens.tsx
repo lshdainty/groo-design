@@ -17,11 +17,11 @@ import { imageFrameLook } from './image-look';
 import { AvatarView } from './display-view';
 import type { AvatarSize } from './display-shared';
 import { avatarLook } from './display-look';
-import { Phone, rc, type Mode } from './kit';
+import { Phone, ScreenBand, bandStack, rc, type Mode } from './kit';
 import { listLook } from './list-look';
 import type { ListState, RowSpec } from './list-shared';
 import { ListView } from './list-view';
-import { Desktop, DeskHeader, ScreenTitle, Shell, Side } from './nav-screens';
+import { Bar, Desktop, DeskHeader, NPhone, ScreenTitle, Shell, Side } from './nav-screens';
 
 export type Fig = (p: { caption?: string }) => ReactNode;
 export type Brand = 'desk' | 'hr';
@@ -126,22 +126,76 @@ export function NetWorth({ mode = 'auto', width = '100%' }: { mode?: Mode; width
   return <HeroCardView look={CL()} mode={mode} label={NET_WORTH.label} amount={won(NET_WORTH.amount)} delta={NET_WORTH.delta} width={width} />;
 }
 
-// 폰 — Desk 홈(회색 바닥 위 카드: 순자산 · 지표 둘(한 줄에 하나) · 오늘 쓴 돈)
+// 폰 — Desk 홈 띠 화면(앱 · 768 미만 웹 — DESIGN.md Layout "화면 바탕", 2026-10-21 I-01 결정 3). 회색 바닥 위 화면 폭 띠:
+// 순자산(채움 그라디언트 · 모서리 0 — 첫 띠, 머리 바로 아래) · 이번 달 지표(한 묶음의 지표는 한 띠 안에 쌓는다) · 오늘 쓴 돈. 띠 안에 카드를 두지 않는다
 export function HomePhone({ mode = 'auto', scale = 0.62, h = 760, children }: { mode?: Mode; scale?: number; h?: number; children?: ReactNode }) {
-  const c = CL();
   return (
     <Phone title="홈" back={false} mode={mode} scale={scale} h={h} bg="bg-layer-basement" screenW={SCREEN_W} tabs>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: c.surface.gap, paddingTop: 8, paddingLeft: EDGE, paddingRight: EDGE }}>
+      <div style={bandStack()}>
         {children ?? (
           <>
-            <NetWorth mode={mode} />
-            <StatCard mode={mode} i={0} />
-            <StatCard mode={mode} i={1} />
-            <ListCard mode={mode} />
+            <HeroCardView look={CL()} mode={mode} label={NET_WORTH.label} amount={won(NET_WORTH.amount)} delta={NET_WORTH.delta} override={{ radius: 0 }} />
+            <StatBand mode={mode} stats={[0, 1]} />
+            <ScreenBand mode={mode} title="오늘 쓴 돈" action="전체 보기" body="list">
+              <ListView look={CL().list.look} rows={TODAY.map((s) => spendRow(s))} mode={mode} live={false} ariaLabel="오늘 쓴 돈" />
+            </ScreenBand>
           </>
         )}
       </div>
     </Phone>
+  );
+}
+// 지표 띠 — 한 묶음의 지표(이번 달 지출 · 수입)를 한 띠 안에 쌓는다. 지표마다 띠를 나누지 않는다 · 사이는 띠 안 여백 24(카드 안 여백과 같다)
+export function StatBand({ mode = 'auto', stats, children }: { mode?: Mode; stats: number[]; children?: ReactNode }) {
+  const c = CL();
+  return (
+    <ScreenBand mode={mode}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: c.surface.pad }}>
+        {stats.map((i) => (
+          <StatView key={i} look={c} mode={mode} label={STATS[i].label} value={won(STATS[i].amount)} delta={STATS[i].delta} />
+        ))}
+        {children}
+      </div>
+    </ScreenBand>
+  );
+}
+
+// ── HR 폰 — HR 은 폰도 회색 바닥 위 카드다(card.md 면 — 띠는 Desk 폰만). 휴가 현황 ────────
+export const HR_STATS = [
+  { label: '남은 연차', value: '11.5일' },
+  { label: '올해 쓴 연차', value: '4일' },
+];
+export const HR_LEAVES: RowSpec[] = [
+  { kind: 'button', title: '연차', detail: '2026-09-21 · 1일', suffix: { text: '승인' } },
+  { kind: 'button', title: '반차(오후)', detail: '2026-09-04 · 0.5일', suffix: { text: '승인' } },
+  { kind: 'button', title: '연차', detail: '2026-08-18 · 2일', suffix: { text: '승인' } },
+];
+export function HrStatCard({ mode = 'auto', i = 0, width = '100%' }: { mode?: Mode; i?: number; width?: number | string }) {
+  const s = HR_STATS[i];
+  return (
+    <CardSurface look={CL()} mode={mode} width={width} label={s.label}>
+      <StatView look={CL()} mode={mode} label={s.label} value={s.value} />
+    </CardSurface>
+  );
+}
+export function HrLeaveCard({ mode = 'auto', rows = HR_LEAVES, width = '100%' }: { mode?: Mode; rows?: RowSpec[]; width?: number | string }) {
+  return <ListCard mode={mode} title="휴가 내역" rows={rows} width={width} />;
+}
+// HR 폰 화면 — ☰ + 휴가 현황(HR 은 모든 화면이 standard, 왼쪽 ☰). 회색 바닥 위 카드 — 화면 끝 24 · 카드 사이 8 · 상단 바 아래 8
+export function HrHomePhone({ mode = 'auto', scale = 0.62, h = 760, overlay, children }: { mode?: Mode; scale?: number; h?: number; overlay?: ReactNode; children?: ReactNode }) {
+  const c = CL();
+  return (
+    <NPhone mode={mode} brand="hr" h={h} scale={scale} overlay={overlay} bg="bg-layer-basement" bar={<Bar brand="hr" mode={mode} leading="menu" title="휴가 현황" />}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: c.surface.gap, paddingTop: c.surface.gap, paddingLeft: EDGE, paddingRight: EDGE }}>
+        {children ?? (
+          <>
+            <HrStatCard mode={mode} i={0} />
+            <HrStatCard mode={mode} i={1} />
+            <HrLeaveCard mode={mode} />
+          </>
+        )}
+      </div>
+    </NPhone>
   );
 }
 

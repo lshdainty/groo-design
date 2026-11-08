@@ -1,12 +1,12 @@
 # Card
 
-> 회색 바닥 위에 놓는 흰 면 하나 — 한 가지 내용(오늘 쓴 돈 · 예산 · 차트 · 표 · 지표)을 묶어 화면을 나눈다. 폰과 데스크톱, 라이트와 다크가 같은 규칙이다. 줄을 늘어놓는 것은 카드 안의 [List](list.md), 줄과 열을 견주는 것은 카드 안의 [Table](table.md), 고르는 상자는 [Select Box](select-box.md) 다.
+> 회색 바닥 위에 놓는 흰 면 하나 — 한 가지 내용(오늘 쓴 돈 · 예산 · 차트 · 표 · 지표)을 묶어 화면을 나눈다. 데스크톱과 HR 폰, 라이트와 다크가 같은 규칙이다 — Desk 폰에는 카드 화면이 없다(띠 · 흰 화면 — 아래 "면"). 줄을 늘어놓는 것은 카드 안의 [List](list.md), 줄과 열을 견주는 것은 카드 안의 [Table](table.md), 고르는 상자는 [Select Box](select-box.md) 다.
 
 SEED 에는 카드 컴포넌트가 없다. 그래도 SEED 가 그린 카드는 모두 같다 — 바닥(`bg.layer-basement`) 위 흰 면(`bg.layer-default`)에 1px `stroke.neutral-weak` 테두리, 그림자는 없다(React List 카드 예제 · 디자인 문서 그림 · 대시보드의 요약 타일과 차트 카드). SEED Elevation 은 카드를 "Level 1 layer-default — Card, List, TextField처럼 페이지를 구성하는 개별 콘텐츠 블록" 에 두고, 그림자는 "화면 전체에서 주목도가 높은 몇 안 되는 요소" 에만 쓴다(당근 SEED, Apache-2.0). 카드 사이 8 은 Divider 문서의 "Basement 레이어 위에 Default 레이어를 올려 8px Gap", 누름은 Feedback 의 규칙이다. 카드 머리 · 여백 · 지표 카드 · 순자산 카드 · 증감 표기는 SEED 에 없어 groo 가 정했다(2026-10-08 사용자 결정). 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다. 옛 Card 스펙(그림자 기본 · 변형 넷 · 모서리 12)을 대신한다.
 
 수치 원본은 [`card.yaml`](card.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
-[그림: Desk 홈 — 순자산 · 지표 둘 · 오늘 쓴 돈(데스크톱 · 폰) — 라이트 · 다크](../../site/components/specs/card.tsx#hero)
+[그림: Desk 홈 — 순자산 · 지표 둘 · 오늘 쓴 돈(데스크톱 카드 · 폰 띠) — 라이트 · 다크](../../site/components/specs/card.tsx#hero)
 
 ### 직접 골라 보기
 
@@ -33,7 +33,7 @@ SEED 에는 카드 컴포넌트가 없다. 그래도 SEED 가 그린 카드는 �
 
 카드는 바닥(`bg-layer-basement`) 위 흰 면(`bg-layer-default`)에 1px `stroke-neutral-weak` 테두리다. 그림자는 없다 — 면과 바닥이 라이트 1.08 · 다크 1.13 으로 거의 같아 선이 경계를 맡는다. 데스크톱 · 폰 · 라이트 · 다크가 같은 규칙이고, 폰도 바닥이 회색이다 — 흰 바탕 위에 카드를 두거나, 흰 바탕에 평면 묶음 · 흰 위 흰 그림자 카드(raised)를 두지 않는다(사용자 결정). Desk 폰(앱 · 768 미만 웹)에는 카드 화면이 없다 — 폰 화면은 띠 · 흰 화면이고(띠 안 값은 카드 안과 같다), 어느 화면이 어느 쪽인지는 DESIGN.md Layout 의 "화면 바탕" 한 곳에 적는다(폰은 이관 때 화면마다 고른다 — 2026-10-22 사용자 결정 3B, https://claude.ai/artifact/KrXqAymDPz1JKL5AWqdwKS). Desk 에서 카드는 데스크톱(768 이상) 화면의 구역이다(2026-10-16 사용자 결정 Q-019-3 C, 폰은 2026-10-21 사용자 결정 — I-01 결과 확인 결정 3). HR 폰 화면은 카드 그대로다.
 
-[그림: 바닥 위 테두리 카드 — 데스크톱 · 폰 · 다크](../../site/components/specs/card.tsx#surface)
+[그림: 바닥 위 테두리 카드 — 데스크톱 · HR 폰 · 다크](../../site/components/specs/card.tsx#surface)
 
 [표: 면](card.yaml#base.enabled@root)
 
@@ -89,9 +89,9 @@ SEED 에는 카드 컴포넌트가 없다. 그래도 SEED 가 그린 카드는 �
 
 ### 지표 카드
 
-숫자 하나를 보이는 카드다 — 라벨 13 · 500 · `fg-neutral-subtle`, 아래 4 에 큰 숫자 700 · 고정폭 숫자, 아래 4 에 증감 줄. 카드 하나에 숫자 하나면 24(`large`)다. 폰에서는 지표 카드를 한 줄에 하나 둔다 — 둘씩 놓으면 360 폭에서 칸 안쪽이 101(여백 16 이어도 117)인데 "1,240,000원" 20 / 700 은 120 이라 들어가지 않는다(실측). 데스크톱 격자에 셋 · 넷씩 나란히 놓을 때만 20(`small`)이고, 여백은 그대로 24 다. 돈은 줄이지 않고 원까지 쓴다. 숫자가 굴러가며 바뀌는 애니메이션은 두지 않는다 — 금액은 처음부터 그 값으로 보인다. 카드보다 긴 금액(큰 글자 · 큰 수)은 **쉼표 뒤에서만** 줄을 바꾼다 — 세 자리 묶음을 가르지 않는다("−123,456,789, / 012원"). 금액 글을 만드는 함수가 보이는 글의 쉼표 뒤마다 웹 `<wbr>` · 앱 U+200B 를 넣고, 읽는 이름 · 복사에는 넣지 않는다. 글자를 줄여 맞추지 않는다(2026-10-17 사용자 결정 — [03-D 비교 페이지](https://claude.ai/artifact/7TVGy8o47HBg4R3SefDmf6) 결정 2 B, Typography v114 의 예외). 줄이 하나 늘 수 있다.
+숫자 하나를 보이는 카드다 — 라벨 13 · 500 · `fg-neutral-subtle`, 아래 4 에 큰 숫자 700 · 고정폭 숫자, 아래 4 에 증감 줄. 카드 하나에 숫자 하나면 24(`large`)다. HR 폰에서는 지표 카드를 한 줄에 하나 둔다(Desk 폰 띠 화면은 지표 카드 없이 한 묶음의 지표를 한 띠 안에 쌓는다 — DESIGN.md Layout "화면 바탕") — 둘씩 놓으면 360 폭에서 칸 안쪽이 101(여백 16 이어도 117)인데 "1,240,000원" 20 / 700 은 120 이라 들어가지 않는다(실측). 데스크톱 격자에 셋 · 넷씩 나란히 놓을 때만 20(`small`)이고, 여백은 그대로 24 다. 돈은 줄이지 않고 원까지 쓴다. 숫자가 굴러가며 바뀌는 애니메이션은 두지 않는다 — 금액은 처음부터 그 값으로 보인다. 카드보다 긴 금액(큰 글자 · 큰 수)은 **쉼표 뒤에서만** 줄을 바꾼다 — 세 자리 묶음을 가르지 않는다("−123,456,789, / 012원"). 금액 글을 만드는 함수가 보이는 글의 쉼표 뒤마다 웹 `<wbr>` · 앱 U+200B 를 넣고, 읽는 이름 · 복사에는 넣지 않는다. 글자를 줄여 맞추지 않는다(2026-10-17 사용자 결정 — [03-D 비교 페이지](https://claude.ai/artifact/7TVGy8o47HBg4R3SefDmf6) 결정 2 B, Typography v114 의 예외). 줄이 하나 늘 수 있다.
 
-[그림: 지표 카드 — 폰은 한 줄에 하나(24) · 데스크톱 격자 넷(20), 여백은 모두 24](../../site/components/specs/card.tsx#stat)
+[그림: 지표 카드 — HR 폰은 한 줄에 하나(24) · Desk 폰은 띠 하나에 쌓는다 · 데스크톱 격자 넷(20), 여백은 모두 24](../../site/components/specs/card.tsx#stat)
 
 [그림: 큰 글자 — 카드보다 긴 금액은 쉼표 뒤에서만 줄을 바꾼다(폭 360 · 글자 200%)](../../site/components/specs/card.tsx#big-text)
 
@@ -156,9 +156,9 @@ Desk 홈 맨 위의 순자산은 브랜드 색으로 채운 카드다(`hero`) �
 
 ### 카드 안에 카드를 두지 않는다
 
-카드 안을 나누려면 머리 · 간격 · [Divider](divider.md) 로 나눈다 — 카드 안에 테두리 상자를 또 두면 어느 것이 한 덩어리인지 흐려진다. 예외는 띠 안 카드의 예외와 같은 셋이다 — Accordion `separated` · [Callout](callout.md) · [Select Box](select-box.md)(DESIGN.md Layout 의 "화면 바탕"). 지표 여럿은 카드 하나에 넣지 않고 지표 카드를 따로 둔다 — 폰은 한 줄에 하나, 데스크톱은 격자로.
+카드 안을 나누려면 머리 · 간격 · [Divider](divider.md) 로 나눈다 — 카드 안에 테두리 상자를 또 두면 어느 것이 한 덩어리인지 흐려진다. 예외는 띠 안 카드의 예외와 같은 셋이다 — Accordion `separated` · [Callout](callout.md) · [Select Box](select-box.md)(DESIGN.md Layout 의 "화면 바탕"). 지표 여럿은 카드 하나에 넣지 않고 지표 카드를 따로 둔다 — HR 폰은 한 줄에 하나, 데스크톱은 격자로(Desk 폰 띠 화면은 카드 없이 한 묶음의 지표를 한 띠 안에 쌓는다).
 
-[그림: 카드 안 카드 · 지표 카드를 따로(폰은 한 줄에 하나)](../../site/components/specs/card.tsx#nest-guide)
+[그림: 카드 안 카드 · 지표 카드를 따로(HR 폰은 한 줄에 하나)](../../site/components/specs/card.tsx#nest-guide)
 
 ### 머리 동작은 하나, 누르는 영역 44
 
@@ -180,7 +180,7 @@ Desk 홈 맨 위의 순자산은 브랜드 색으로 채운 카드다(`hero`) �
 
 카드 면 · 머리 · 라벨은 처음부터 그리고, 서버에서 올 숫자 · 줄 자리만 [Skeleton](skeleton.md) 이다. 카드 하나가 통째로 기다리면 카드 면 모양 스켈레톤(모서리 16)이다. 카드의 데이터를 못 불러오면 그 카드 안에 [Result Section](result-section.md) `medium` + "다시 시도" 를 둔다 — 다른 카드는 그대로 보인다. 카드 안의 Result Section 은 좌우 여백이 0 이다 — 카드 24 만 둔다(사용자 결정 23B). 목록 카드(`body="list"`)는 줄마다 24 를 갖고 카드 여백이 없으니, 목록을 못 불러와 Result Section 을 카드에 바로 두면 Result Section 이 좌우 24 를 갖는다 — 어느 카드에서나 글이 24 에 선다. 제 여백 48 을 그대로 두면 72 가 되어 좁은 카드에서 제목이 두 줄로 넘어간다. 데이터 하나가 실패했다고 화면 전체를 스켈레톤으로 되돌리지 않는다(같은 요청을 끝없이 다시 보내게 된다).
 
-[그림: 카드마다 기다림 · 실패 — 순자산 실패 + 다시 시도, 나머지는 보임](../../site/components/specs/card.tsx#status-guide)
+[그림: 구역마다 기다림 · 실패(Desk 폰 — 띠마다) — 순자산 실패 + 다시 시도, 나머지는 보임](../../site/components/specs/card.tsx#status-guide)
 
 ### 글
 
@@ -303,11 +303,11 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 
 ### ✅ Do
 
-- 회색 바닥 위 흰 면 + 1px `stroke-neutral-weak`, 모서리 16, 그림자 없음 — 폰도 같다.
+- 회색 바닥 위 흰 면 + 1px `stroke-neutral-weak`, 모서리 16, 그림자 없음 — HR 폰도 같다. Desk 폰(앱 · 768 미만 웹)은 카드 없이 띠 · 흰 화면이다(위 "면").
 - 쌓은 카드 사이 8, 데스크톱 격자 칸 사이 24.
 - 머리는 제목 16 · 700 + 동작 하나(누르는 영역 44).
 - 카드 안 여백 24 — 폭과 상관없이, List 줄 · 시트와 같다. 목록 카드는 List 줄을 가장자리까지, 머리 위 · 좌우 24 · 아래 12.
-- 폰의 지표 카드는 한 줄에 하나.
+- HR 폰의 지표 카드는 한 줄에 하나(Desk 폰 띠는 한 띠 안에 쌓는다).
 - 증감은 ▲ 빨강 · ▼ 파랑 + 값 + 글, 어디서나.
 - 순자산 카드는 다크도 짙은 채움 + 흰 글자.
 
@@ -340,6 +340,10 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 - **증감 색** — SEED 에 증감 규칙이 없다. groo 는 방향 색(▲ 빨강 · ▼ 파랑)이다.
 
 ## Migration notes
+
+### 2026-11-08 — 폰 그림은 HR 폰 · Desk 폰 띠
+
+Desk 폰에는 카드 화면이 없는데(면 절 — 2026-10-21 결정 3) 이 페이지 그림이 Desk 홈 폰을 카드로 그리고 있었다. 맨 위 · 구역마다 기다림 그림의 폰은 띠 화면(순자산 띠 · 지표 띠 · 오늘 쓴 돈 띠)으로, 면 · 모서리 · 여백 · 지표 그림의 폰은 HR 폰(HR 은 폰도 카드)으로 다시 그렸다. 지표 여럿은 Desk 폰 띠에서 한 띠 안에 쌓는다(묶음마다 띠 하나 — 지표마다 띠를 나누지 않는다). 캡션 · 문장의 "폰" 을 "HR 폰" 으로 밝혔다. 값 변경 없음.
 
 ### 2026-10-25 — ⋮ 는 콘텐츠가 높은 카드 머리에만
 
@@ -411,7 +415,7 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 
 - **Desk 웹 `Card`(115곳)** — 기본 `shadow`(inline `--shadow-sm`) · `bordered` 7 · `brand` 4 · `muted` 2 · **`raised` 12**(`shared/ui/card.tsx:28-56`). 데스크톱 카드 면 #FFFFFF 가 #F5F6FA 위 1.08(다크 1.13) · 모서리 12 · 테두리 0. 여백 문턱이 `min-[736px]`(`:83 · 126 · 142`)이라 750 폭 폰 틀에서 데스크톱 여백 24 가 나온다(D25). `CardTitle` 이 `text-title-md leading-none`(`:98`)이라 18 / 600 · 줄 높이 18 이다. 여백 24 하나 · `default` 로.
 - **Desk 웹 머리 제목 두 벌 · 머리 동작 18.6** — 홈 18 / 600(`CardTitle`), 통계 · 예산 · 자산 16 / 600(`shared/ui/groo/section.tsx:75` 가 `text-body-lg` 로 덮음), 폰 평면 머리 16 / 700(`.flat-group__head` — `shared/styles/groo.css:490-501`). 머리 동작 "전체 보기 · 자세히 · 예산 관리 · 관리 · 캘린더" 는 13 / 500 글 버튼 높이 18.6 ~ 19.5(`groo.css:513-530`, D21). 16 · 700 + 누르는 영역 44 로.
-- **Desk 웹 · 앱 폰 '카드 다이어트'** — 폰은 흰 바탕 위 평면 묶음(`Section` 의 모바일 분기 · 앱 `PFlatSection` 15 / 700 — `shared/widgets/p_flat_section.dart`) + 흰 위 흰 `raised` 카드다. 바닥을 회색으로 두고 묶음마다 카드(목록 카드)로 바꾼다 — 줄은 List 그대로.
+- **Desk 웹 · 앱 폰 '카드 다이어트'** — 폰은 흰 바탕 위 평면 묶음(`Section` 의 모바일 분기 · 앱 `PFlatSection` 15 / 700 — `shared/widgets/p_flat_section.dart`) + 흰 위 흰 `raised` 카드다. 바닥을 회색으로 두고 카드 없이 띠 · 흰 화면으로 바꾼다(2026-10-21 사용자 결정 — I-01 결과 확인 결정 3, 띠 안 값은 카드 안과 같다. 어느 화면이 어느 쪽인지는 DESIGN.md Layout 의 "화면 바탕", 카드는 데스크톱만) — 줄은 List 그대로.
 - **Desk 앱 `PCard`(50곳)** — `raised` 18 · `bordered` 15 · `brand` 6 · `muted` 5, 기본 여백 16 · 모서리 12(`shared/widgets/p_card.dart`). 주석은 "shadow 패딩 24(spacing-xl)" 인데 코드는 16 이다 — 24 로. 통계 `_Card` 는 면 없는 껍데기다(`features/stats/presentation/stats_screen.dart:649-656`).
 - **순자산 카드 다크 대비** — 웹 `.dark .balance-hero` 가 `--color-primary-light`(#7AA9F6) → `--color-primary`(`shared/styles/groo.css:369-375`)라 흰 글자가 머리 2.58 · 금액 32 / 800 **2.7** · 부제 2.84 · 자산 / 부채 3.09 · 3.17 이다. 앱은 같은 짝(`app/theme/tokens.dart:333-334`)으로 흰 2.38 · 흰 72% 머리 라벨 **1.9** 다. 라이트 끝 #012B68 은 `color-mix(bg-brand 60%, #000)`(`groo.css:353-358` · 앱 `tokens.dart:271-273`) — brand-900 으로. 머리 라벨의 불투명도 0.72(`groo.css:391-394`) · 부제 0.78(`:416-422`)을 걷고, 증감 색(초록 · 빨강 80% 섞기 — `:431-444`, 앱 `heroChgUp` · `heroChgDown` — `app/theme/colors.dart:62-65`)은 흰 글자 + ▲ · ▼ 로.
 - **HR 카드** — shadcn `Card` 가 흰 바탕 위 흰 면(1.0)에 테두리 + `shadow-sm` · 모서리 12 · 여백 24(`shared/ui/shadcn/card.tsx:10 · 23 · 68 · 78`), 대시보드 위젯 틀은 모서리 12 · 테두리 · 그림자 · 머리 12 + 아래 선 · 제목 14 / 600(`features/dashboard/ui/WidgetWrapper.tsx:14-41`). 페이지 바닥을 회색으로, 카드는 `default` 로.

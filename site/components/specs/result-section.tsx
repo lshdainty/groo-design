@@ -9,7 +9,7 @@ import { ResultDoneDemo, ResultEmptyDemo, ResultFailureDemo } from './feedback-d
 import { ResultSectionPlayground } from './feedback-playground';
 import { Band, FilterStrip, Legend, Muted, Pair, Pin, markBox, type Fig } from './feedback-screens';
 import { ResultSectionView, type ResultSectionViewProps } from './feedback-view';
-import { Card, Phone, Stat, Verdict, cardStack, rc, type Mode } from './kit';
+import { Card, Phone, ScreenBand, Stat, Verdict, bandStack, cardStack, rc, type Mode } from './kit';
 import { Cap, cta, tf } from './select-screens';
 import { SheetOverlay, SheetPanel } from './input-button-pickers';
 import { PHONE_SAFE, ov } from './overlay-screens';
@@ -38,19 +38,18 @@ function ResultPhone({ mode, title, scale = 0.65, h = 620, tabs = true, bottom, 
     </Phone>
   );
 }
-// 화면 일부(medium) — 홈의 카드 안
+// 화면 일부(medium) — 홈의 구역 안. Desk 폰 홈은 띠 화면이다(구역마다 화면 폭 흰 띠, 띠 안 값은 카드 안과 같다 — DESIGN.md Layout "화면 바탕")
 function HomePhone({ mode, scale = 0.65, h = 620, children }: { mode: Mode; scale?: number; h?: number; children: ReactNode }) {
   return (
     <Phone title="홈" back={false} mode={mode} scale={scale} h={h} bg="bg-layer-basement" tabs>
-      {/* 회색 바닥 위 카드 — card.yaml(흰 면 + 1px 테두리 · 여백 24 · 지표 카드 · 목록 카드 머리) */}
-      <div style={cardStack()}>
-        <Card mode={mode}>
+      <div style={bandStack()}>
+        <ScreenBand mode={mode}>
           <Stat mode={mode} label="10월 지출" value="412,300원" />
-        </Card>
-        <Card mode={mode} body="list" title="최근 거래" style={{ minHeight: 280 }}>
-          {/* 카드 안 결과 — 결과 자리의 좌우 0, 목록 카드의 24 는 감싼 칸이 맡는다(result-section.yaml root.paddingX 비고) */}
+        </ScreenBand>
+        <ScreenBand mode={mode} body="list" title="최근 거래" style={{ minHeight: 280 }}>
+          {/* 구역 안 결과 — 결과 자리의 좌우 0, 띠(카드) 안의 24 는 감싼 칸이 맡는다(result-section.yaml root.paddingX 비고) */}
           <div style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', paddingLeft: cardFace().head.x, paddingRight: cardFace().head.x }}>{children}</div>
-        </Card>
+        </ScreenBand>
       </div>
     </Phone>
   );

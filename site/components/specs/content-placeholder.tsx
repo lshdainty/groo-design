@@ -5,13 +5,13 @@ import type { CSSProperties, ReactNode } from 'react';
 import { ImageOff } from 'lucide-react';
 import { contrast } from '@/lib/design-tokens';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
-import { Verdict, rc, type Mode } from './kit';
+import { ScreenBand, Verdict, bandStack, rc, type Mode } from './kit';
 import { FrameCardDemo, type CardRow } from './image-demos';
 import { cardFace } from './card-face';
 import { dcv, findInstitution, imageFrameLook, imageFrameRadius, imageTones, institutions } from './image-look';
 import { CP_GLYPHS, glyphSize, type CpGlyph } from './loading-look';
 import { PlaceholderPlayground } from './loading-playground';
-import { Bone, CardBox, L, LdPhone, Placeholder, SCREEN, cardStack, type Fig } from './loading-screens';
+import { Bone, L, LdPhone, Placeholder, SCREEN, type Fig } from './loading-screens';
 import { Legend, Note, Pin } from './overlay-screens';
 import { resultSectionLook } from './feedback-look';
 import { ResultSectionView, type ResultSectionViewProps } from './feedback-view';
@@ -53,8 +53,8 @@ function CardList({ mode }: { mode: Mode }) {
     ['BC 그린 카드', '10월 64,500원', 'none'],
   ];
   return (
-    <div style={cardStack()}>
-      <CardBox mode={mode} title="카드">
+    <div style={bandStack()}>
+      <ScreenBand mode={mode} title="카드" body="list">
         {rows.map(([name, sub, img]) => (
           <div key={name} className="flex items-center gap-4" style={{ padding: '12px 24px' }}>
             <Frame w={w} h={h} mode={mode}>{img === 'ok' ? <CardArt /> : <Placeholder mode={mode} icon="credit-card" label={`${name} 카드 그림`} w={w} h={h} />}</Frame>
@@ -68,7 +68,7 @@ function CardList({ mode }: { mode: Mode }) {
             </span>
           </div>
         ))}
-      </CardBox>
+      </ScreenBand>
     </div>
   );
 }
@@ -80,8 +80,8 @@ function BenefitList({ mode }: { mode: Mode }) {
     ['편의점 10% 할인', 'GS25 · CU', 'none'],
   ];
   return (
-    <div style={cardStack()}>
-      <CardBox mode={mode} title="받을 수 있는 혜택">
+    <div style={bandStack()}>
+      <ScreenBand mode={mode} title="받을 수 있는 혜택" body="list">
         {rows.map(([name, sub, img]) => (
           <div key={name} className="flex items-center gap-4" style={{ padding: '12px 24px' }}>
             <Frame w={s} h={s} mode={mode}>{img === 'ok' ? <GiftArt /> : <Placeholder mode={mode} label={`${name} 그림`} w={s} h={s} />}</Frame>
@@ -95,7 +95,7 @@ function BenefitList({ mode }: { mode: Mode }) {
             </span>
           </div>
         ))}
-      </CardBox>
+      </ScreenBand>
     </div>
   );
 }

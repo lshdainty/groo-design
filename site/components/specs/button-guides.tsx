@@ -5,8 +5,9 @@ import { Figure, Panel } from '../foundations/ui';
 import { buttonLook, type ButtonCombo, type ButtonState } from './button-look';
 import { ButtonView, LoadingDemo, type IconName } from './button-view';
 import { chipLook } from './chip-look';
+import { cardLook } from './data-look';
 import { ChipGroupView, ChipView } from './chip-view';
-import { AlertBox, Card, Field, Heading, KV, Line, Phone, Row, Sheet, Stat, Verdict, WebDialog, WebWindow, cardStack, rc, type Mode } from './kit';
+import { AlertBox, Card, Field, Heading, KV, Line, Phone, Row, ScreenBand, Sheet, Stat, Verdict, WebDialog, WebWindow, bandStack, cardStack, rc, type Mode } from './kit';
 
 type Fig = (p: { caption?: string }) => ReactNode;
 type Brand = 'desk' | 'hr';
@@ -32,9 +33,10 @@ function Cap({ children, strong }: { children: ReactNode; strong?: ReactNode }) 
 }
 
 // ── 화면 조각 — Desk 홈 · 예산 · HR 휴가 ──────────────────
-function SpendCard({ mode = 'auto', actions }: { mode?: Mode; actions?: ReactNode }) {
+// Desk 폰 홈은 띠 화면이다(구역마다 화면 폭 흰 띠 — DESIGN.md Layout "화면 바탕", 2026-10-21 I-01 결정 3). 띠 안 값은 카드 안과 같다
+function SpendBody({ mode = 'auto', actions }: { mode?: Mode; actions?: ReactNode }) {
   return (
-    <Card mode={mode}>
+    <>
       <Stat mode={mode} label="9월에 쓴 돈" value="1,284,500원" />
       <div className="mt-3 h-2 overflow-hidden rounded-full" style={{ background: rc('bg-neutral-weak', mode) }}>
         <div className="h-full rounded-full" style={{ width: '64%', background: rc('chart-blue', mode) }} />
@@ -43,17 +45,17 @@ function SpendCard({ mode = 'auto', actions }: { mode?: Mode; actions?: ReactNod
         예산 2,000,000원의 64%
       </span>
       {actions && <div className="mt-4 flex gap-2">{actions}</div>}
-    </Card>
+    </>
   );
 }
-function RecentCard({ mode = 'auto', action }: { mode?: Mode; action?: ReactNode }) {
+// 최근 거래 미리보기 — 몇 줄만, 목록 화면으로는 머리의 "전체 보기"(미리보기 끝에 "더 보기" 버튼을 두지 않는다 — card.md 6B)
+function RecentRows({ mode = 'auto' }: { mode?: Mode }) {
   return (
-    <Card mode={mode} title="최근 거래" action={action ? undefined : '전체 보기'}>
+    <>
       <Row title="점심 식사" sub="식비 · 오늘" amount="−12,000원" hue="orange" mode={mode} />
       <Row title="버스" sub="교통 · 오늘" amount="−1,500원" hue="blue" mode={mode} />
       <Row title="월급" sub="수입 · 9월 25일" amount="+3,200,000원" hue="green" mode={mode} />
-      {action && <div className="mt-2 flex justify-center">{action}</div>}
-    </Card>
+    </>
   );
 }
 
@@ -151,19 +153,24 @@ const Usage: Fig = ({ caption }) => {
         )}
         {cell(
           <Phone title="고정 지출" h={560} scale={s}>
-            <div style={cardStack()}>
-              {[
-                ['넷플릭스', '매달 18일 · 13,500원', 'red'],
-                ['휴대폰 요금', '매달 25일 · 49,000원', 'blue'],
-              ].map(([t, sub, hue]) => (
-                <Card key={t}>
-                  <Row title={t} sub={sub} hue={hue} />
-                  <div className="mt-2 flex gap-2">
-                    <B variant="neutralOutline" size="small" grow={1} label="건너뛰기" />
-                    <B variant="brandOutline" size="small" grow={1} label="지금 기록" />
-                  </div>
-                </Card>
-              ))}
+            {/* Desk 폰은 띠 화면 — 같은 묶음(고정 지출)은 띠 하나, 항목은 띠 안 여백 24(카드 안 여백과 같다)로 가른다(한 줄짜리 띠를 잇지 않는다 — DESIGN.md Layout "화면을 나누는 법") */}
+            <div style={bandStack()}>
+              <ScreenBand>
+                <div className="flex flex-col" style={{ gap: cardLook().surface.pad }}>
+                  {[
+                    ['숲길 스트리밍', '매달 18일 · 13,500원', 'red'],
+                    ['휴대폰 요금', '매달 25일 · 49,000원', 'blue'],
+                  ].map(([t, sub, hue]) => (
+                    <div key={t}>
+                      <Row title={t} sub={sub} hue={hue} />
+                      <div className="mt-2 flex gap-2">
+                        <B variant="neutralOutline" size="small" grow={1} label="건너뛰기" />
+                        <B variant="brandOutline" size="small" grow={1} label="지금 기록" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScreenBand>
             </div>
           </Phone>,
           'neutralOutline + brandOutline',
@@ -185,16 +192,20 @@ function Home({ brandy }: { brandy: boolean }) {
       right={<B variant={brandy ? 'brandSolid' : 'ghost'} ghostColor="neutralSubtle" size="small" layout="iconOnly" icon="bell" label="알림" />}
       bottom={<B variant="brandSolid" size="large" fill label="거래 추가" prefix="plus" />}
     >
-      <div style={cardStack()}>
-        <SpendCard
-          actions={
-            <>
-              <B variant={brandy ? 'brandSolid' : 'neutralWeak'} size="small" grow={1} label="예산 설정" />
-              <B variant={brandy ? 'brandSolid' : 'neutralWeak'} size="small" grow={1} label="카테고리" />
-            </>
-          }
-        />
-        <RecentCard action={<B variant={brandy ? 'brandOutline' : 'neutralWeak'} size="small" label="내역 더보기" />} />
+      <div style={bandStack()}>
+        <ScreenBand>
+          <SpendBody
+            actions={
+              <>
+                <B variant={brandy ? 'brandSolid' : 'neutralWeak'} size="small" grow={1} label="예산 설정" />
+                <B variant={brandy ? 'brandSolid' : 'neutralWeak'} size="small" grow={1} label="카테고리" />
+              </>
+            }
+          />
+        </ScreenBand>
+        <ScreenBand title="최근 거래" action="전체 보기">
+          <RecentRows />
+        </ScreenBand>
       </div>
     </Phone>
   );
@@ -416,13 +427,17 @@ const Surface: Fig = ({ caption }) => (
     <Pair>
       <Verdict ok note="neutralWeak 는 흰 표면(카드 · 시트 · 모달) 위에" bg={rc('bg-layer-basement', 'light')}>
         <div className="w-[240px]">
-          <RecentCard mode="light" action={<B variant="neutralWeak" size="small" mode="light" label="내역 더보기" />} />
+          <Card mode="light">
+            <SpendBody mode="light" actions={<B variant="neutralWeak" size="small" mode="light" grow={1} label="예산 설정" />} />
+          </Card>
         </div>
       </Verdict>
       <Verdict ok={false} note="라이트에서 페이지 바탕 위에 바로 두면 채움이 사라진다 — neutralOutline 을 쓴다" bg={rc('bg-layer-basement', 'light')}>
         <div className="flex w-[240px] flex-col items-center gap-3">
-          <RecentCard mode="light" />
-          <B variant="neutralWeak" size="small" mode="light" label="내역 더보기" />
+          <Card mode="light">
+            <SpendBody mode="light" />
+          </Card>
+          <B variant="neutralWeak" size="small" mode="light" label="예산 설정" />
         </div>
       </Verdict>
     </Pair>

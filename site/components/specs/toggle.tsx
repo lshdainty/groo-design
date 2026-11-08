@@ -13,14 +13,15 @@ import { CardSurface, HeroCardView } from './data-card-view';
 import { snackbarLook } from './feedback-look';
 import { tokenValue } from '@/lib/component-spec';
 import { toggleLook, type ToggleLook, type ToggleState } from './input-look';
-import { Phone, Verdict, rc, type Mode } from './kit';
+import { Phone, ScreenBand, Verdict, bandStack, rc, type Mode } from './kit';
 import { NK } from './nav-screens';
 import { TopIconButton } from './nav-view';
 import { Band, Legend, Shot, pinStyle } from './overlay-screens';
 import { Cap, Surface } from './select-screens';
 import { switchLook } from './switch-look';
 import { SwitchView } from './switch-view';
-import { ExEyeDemo, ExInvertedDemo, ExPinDemo, ExWatchDemo, Readout, TogglePlayground } from './toggle-play';
+import { listLook } from './list-look';
+import { ExEyeDemo, ExInvertedDemo, ExPinDemo, ExWatchDemo, MemoListView, Readout, TogglePlayground } from './toggle-play';
 import { ToggleView } from './toggle-view';
 import { TOGGLES, toggleReadout, type ToggleIcon, type ToggleKind } from './input-shared';
 
@@ -46,11 +47,11 @@ const EyeLink = ({ hidden = false, mode = 'auto', tone = 'inverted', state }: { 
   <ToggleView look={T()} mode={mode} tone={tone} link ariaLabel="금액 가리기 설정" icon={hidden ? 'eye-off' : 'eye'} state={state} />
 );
 
-// 카드 한 장 — 제목 줄 오른쪽에 단추(위 · 오른쪽 8 당김 — card.md 의 peers 코드), 아래 한 줄
-function ToggleCard({ title, sub, toggle, mode = 'auto' }: { title: string; sub: string; toggle: ReactNode; mode?: Mode }) {
+// 카드 한 장 — 제목 줄 오른쪽에 단추(위 · 오른쪽 8 당김 — card.md 의 peers 코드), 아래 한 줄.
+// face="none" 은 면 없이 내용만(Desk 폰 띠 안 — 띠 안 값은 카드 안과 같다)
+function ToggleCard({ title, sub, toggle, mode = 'auto', face = 'card' }: { title: string; sub: string; toggle: ReactNode; mode?: Mode; face?: 'card' | 'none' }) {
   const c = CL();
-  return (
-    <CardSurface look={c} mode={mode}>
+  const body = (
       <div style={{ display: 'flex', flexDirection: 'column', gap: c.content.gap }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: c.header.gap }}>
           <span style={{ fontFamily: c.title.fontFamily, fontSize: c.title.fontSize, lineHeight: c.title.lineHeight, fontWeight: c.title.fontWeight, color: rc('fg-neutral', mode), minWidth: 0 }}>{title}</span>
@@ -58,10 +59,13 @@ function ToggleCard({ title, sub, toggle, mode = 'auto' }: { title: string; sub:
         </div>
         <span style={{ fontFamily: c.stat.label.fontFamily, fontSize: c.stat.label.fontSize, lineHeight: c.stat.label.lineHeight, color: rc('fg-neutral-subtle', mode), fontVariantNumeric: 'tabular-nums' }}>{sub}</span>
       </div>
+  );
+  return face === 'none' ? body : (
+    <CardSurface look={c} mode={mode}>
+      {body}
     </CardSurface>
   );
 }
-const stack = (): CSSProperties => ({ display: 'flex', flexDirection: 'column', gap: CL().surface.gap, paddingTop: CL().surface.gap, paddingLeft: gutter(), paddingRight: gutter() });
 
 // ── 화면 ──────────────────────────────────────────────────
 // 종목 상세 — 머리(이름 · 값) 오른쪽 관심 등록
@@ -92,29 +96,31 @@ function StockPhone({ mode, scale = 0.5, h = 500, watched = true }: { mode: Mode
     </Phone>
   );
 }
-const MEMO_ROWS: [string, string, boolean][] = [
-  ['장보기 목록', '우유 · 계란 · 두부 · 대파', true],
-  ['제주 여행 준비', '숙소 예약 · 렌터카 · 우산', false],
-  ['부모님 선물', '안마기 · 꽃바구니', false],
+const MEMO_ROWS: [string, string, boolean, string][] = [
+  ['장보기 목록', '우유 · 계란 · 두부 · 대파', true, 'chart-orange'],
+  ['제주 여행 준비', '숙소 예약 · 렌터카 · 우산', false, 'chart-blue'],
+  ['부모님 선물', '안마기 · 꽃바구니', false, 'chart-green'],
 ];
+// 메모 — 제품과 같은 흰 화면 하나(DESIGN.md Layout "화면 바탕" — 2026-10-23 메모 1-A): 목록 제목 + 줄, 띠 · 카드 없음
 function MemoPhone({ mode, scale = 0.5, h = 500 }: { mode: Mode; scale?: number; h?: number }) {
   return (
-    <Phone title="메모" back={false} mode={mode} scale={scale} h={h} screenW={360}>
-      <div style={stack()}>
-        {MEMO_ROWS.map(([t, s, on]) => (
-          <ToggleCard key={t} mode={mode} title={t} sub={s} toggle={<Tg kind="pin" pressed={on} mode={mode} />} />
-        ))}
-      </div>
+    <Phone title="메모" mode={mode} scale={scale} h={h} screenW={360} bg="bg-layer-default">
+      <MemoListView list={listLook('desk')} mode={mode} memos={MEMO_ROWS.map(([title, body, pinned, dot]) => ({ id: title, title, body, pinned, dot: rc(dot, mode) }))} toggles={Object.fromEntries(MEMO_ROWS.map(([title, , pinned]) => [title, <Tg key={title} kind="pin" pressed={pinned} mode={mode} />]))} />
     </Phone>
   );
 }
-// 증권 연결 — App Key 보기(기능 단추 — 가려져 있으면 끔 · eye-off)
+// 증권 연결 — App Key 보기(기능 단추 — 가려져 있으면 끔 · eye-off). Desk 폰 증권은 띠 화면 — 같은 묶음(연결한 증권)은 띠 하나,
+// 증권마다 띠 안 여백 24 로 가른다(DESIGN.md Layout "화면 바탕" · "화면을 나누는 법")
 function KeyPhone({ mode, scale = 0.5, h = 500 }: { mode: Mode; scale?: number; h?: number }) {
   return (
     <Phone title="증권 연결" mode={mode} scale={scale} h={h} screenW={360}>
-      <div style={stack()}>
-        <ToggleCard mode={mode} title="가나증권" sub="App Key ••••••••••••••••" toggle={<Tg kind="key" mode={mode} />} />
-        <ToggleCard mode={mode} title="다라투자증권" sub="App Key PSq7·Kx2m·9WdA·tL4e" toggle={<Tg kind="key" pressed mode={mode} />} />
+      <div style={bandStack()}>
+        <ScreenBand mode={mode}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: CL().surface.pad }}>
+            <ToggleCard face="none" mode={mode} title="가나증권" sub="App Key ••••••••••••••••" toggle={<Tg kind="key" mode={mode} />} />
+            <ToggleCard face="none" mode={mode} title="다라투자증권" sub="App Key PSq7·Kx2m·9WdA·tL4e" toggle={<Tg kind="key" pressed mode={mode} />} />
+          </div>
+        </ScreenBand>
       </div>
     </Phone>
   );
@@ -475,7 +481,7 @@ const RoleGuide: Fig = ({ caption }) => {
 // ── 코드 미리보기(실제로 누를 수 있다) ───────────────────
 const ExWatch: Fig = () => <ExWatchDemo look={T()} card={CL()} />;
 const ExEye: Fig = () => <ExEyeDemo look={T()} card={CL()} />;
-const ExPin: Fig = () => <ExPinDemo look={T()} card={CL()} snack={snackbarLook()} gutter={gutter()} />;
+const ExPin: Fig = () => <ExPinDemo look={T()} list={listLook('desk')} snack={snackbarLook()} />;
 const ExInverted: Fig = () => <ExInvertedDemo look={T()} card={CL()} />;
 
 export const toggleFigures: Record<string, Fig> = {

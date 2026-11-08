@@ -7,7 +7,7 @@ import { tokenValue } from '@/lib/component-spec';
 import { buttonLook } from './button-look';
 import { DESK_TABS, addLabelFor, tabForTitle } from './nav-data';
 import { navKit } from './nav-look';
-import { tabBottom, type TabSize } from './nav-shared';
+import { BAND, tabBottom, type TabSize } from './nav-shared';
 import { TabBar as NavTabBar, TopNavBar } from './nav-view';
 import { overlayLook } from './overlay-look';
 import { AlertSurface, DialogSurface, DimView, SheetSurface } from './overlay-view';
@@ -140,11 +140,48 @@ export function Card({ children, mode = 'auto', style, body = 'content', title, 
     </CardSurface>
   );
 }
-// 폰 화면의 카드 묶음 — 화면 끝 spacing-global-gutter(24) 안에 카드를 8(card.yaml root.gap) 띄워 쌓는다. 상단 바 아래도 8
+// HR 폰 화면의 카드 묶음 — 화면 끝 spacing-global-gutter(24) 안에 카드를 8(card.yaml root.gap) 띄워 쌓는다. 상단 바 아래도 8.
+// Desk 폰은 카드 화면이 없다 — bandStack · ScreenBand(띠)
 export function cardStack(): CSSProperties {
   const gap = cardLook().surface.gap;
   const x = parseFloat(String(tokenValue('$spacing-global-gutter')));
   return { display: 'flex', flexDirection: 'column', gap, paddingTop: gap, paddingLeft: x, paddingRight: x };
+}
+// Desk 폰 띠 화면(앱 · 768 미만 웹) — 회색 바닥 위 화면 폭 흰 띠(bg-layer-default). 띠 사이 8 · 띠 안 위 4 · 아래 8, 첫 띠 위 · 마지막 띠 아래 틈 없음(BAND.top 0 — 2026-10-23),
+// 모서리 · 테두리 없음(DESIGN.md Layout 의 "화면 바탕" — 2026-10-21 I-01 결정 3: 폰의 카드 화면은 띠, 데스크톱은 카드). HR 폰은 카드 그대로 — cardStack
+export { BAND };
+export function bandStack(): CSSProperties {
+  return { display: 'flex', flexDirection: 'column', gap: BAND.gap, paddingTop: BAND.top };
+}
+// 구역 띠 하나 — 띠 안은 카드 안과 같은 값이다: 머리(카드 머리 글 16/22 · 700 + 글 버튼)는 글 위 24 · 좌우 24 · 아래 4,
+// 내용은 좌우 24 · 아래 24(머리 없으면 위도 24). 띠 안 위 4 · 아래 8 은 그 24 안에 든다. body="list" 는 줄이 제 좌우 24 를 가진다
+// (머리 없는 목록은 목록 카드처럼 위 12 — 띠 안 위 4 + 8). 띠 안에 카드를 두지 않는다
+// right 는 제목 바로 뒤에 붙는 것(머리의 로딩 원 등) — 글 버튼이면 action
+export function ScreenBand({ children, mode = 'auto', title, action, right, body = 'content', style }: { children?: ReactNode; mode?: Mode; title?: string; action?: string; right?: ReactNode; body?: 'content' | 'list'; style?: CSSProperties }) {
+  const c = cardLook();
+  const h = c.header.list;
+  const x = parseFloat(String(tokenValue('$spacing-global-gutter')));
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', background: rc('bg-layer-default', mode), paddingTop: BAND.padTop, paddingBottom: BAND.padBottom, ...style }}>
+      {title && (
+        <div style={{ marginTop: -BAND.padTop }}>
+          {right ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: c.header.gap, paddingTop: h.top, paddingRight: h.x, paddingBottom: h.bottom, paddingLeft: h.x }}>
+              <span style={{ fontFamily: c.title.fontFamily, fontSize: c.title.fontSize, lineHeight: c.title.lineHeight, fontWeight: c.title.fontWeight, color: rc('fg-neutral', mode) }}>{title}</span>
+              {right}
+            </div>
+          ) : (
+            <CardHeaderView look={c} mode={mode} title={title} action={action} body="list" heading="span" />
+          )}
+        </div>
+      )}
+      {body === 'list' ? (
+        <div style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', paddingTop: title ? 0 : c.list.padBottom - BAND.padTop }}>{children}</div>
+      ) : (
+        <div style={{ paddingTop: title ? 0 : c.surface.pad - BAND.padTop, paddingRight: x, paddingBottom: c.surface.pad - BAND.padBottom, paddingLeft: x }}>{children}</div>
+      )}
+    </div>
+  );
 }
 // 지표 — 카드 안 라벨 · 큰 숫자 · 증감(card.yaml statLabel · statValue · delta)
 export function Stat(p: Omit<Parameters<typeof StatView>[0], 'look'>) {

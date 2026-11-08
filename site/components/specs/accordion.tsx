@@ -441,7 +441,7 @@ function SheetOver({ open }: { open: string[] }) {
   );
 }
 
-// 카드 상세의 혜택 · 유의사항 — 처음 모습(모두 접힘)의 전체 길이
+// 카드 상세(폰 — 띠 화면)의 혜택 · 유의사항 — 처음 모습(모두 접힘)의 전체 길이
 const CardGuide: Fig = ({ caption }) => {
   const c = CDL();
   return (
@@ -453,7 +453,7 @@ const CardGuide: Fig = ({ caption }) => {
               <ScaledAuto w={360} s={0.5}>
                 <div style={{ background: rc('bg-layer-basement', mode), borderRadius: 24, overflow: 'hidden' }}>
                   <div style={{ height: 56, display: 'flex', alignItems: 'center', paddingLeft: 24, fontSize: 18, fontWeight: 700, background: rc('bg-layer-default', mode), color: rc('fg-neutral', mode) }}>카드 상세</div>
-                  <CardDetailBody mode={mode} bottom={24} />
+                  <CardDetailBody mode={mode} />
                 </div>
               </ScaledAuto>
             </MeasureH>
@@ -463,7 +463,7 @@ const CardGuide: Fig = ({ caption }) => {
       </div>
       <div className="mt-4 flex justify-center">
         <Cap w={640}>
-          카드 안 inline — 머리(위 {c.accordion.header.top} · 좌우 {c.accordion.header.x} · 아래 {c.accordion.header.bottom}) 아래 트리거가 카드 가장자리까지, 카드 아래 {c.accordion.padBottom}(마지막 트리거의 아래 {AL().padY} 와 합쳐 {c.accordion.padBottom + AL().padY}). 84자 유의사항 제목도 줄을 바꿔 다 보인다
+          폰은 띠 안 inline — 띠 안 값은 카드 안과 같다. 머리(위 {c.accordion.header.top} · 좌우 {c.accordion.header.x} · 아래 {c.accordion.header.bottom}) 아래 트리거가 화면 끝까지, 띠 아래 {c.accordion.padBottom}(마지막 트리거의 아래 {AL().padY} 와 합쳐 {c.accordion.padBottom + AL().padY}). 첫 띠는 머리 바로 아래, 마지막 띠 아래 틈 없음. 84자 유의사항 제목도 줄을 바꿔 다 보인다
         </Cap>
       </div>
     </Panel>

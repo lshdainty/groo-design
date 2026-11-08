@@ -6,6 +6,7 @@ import { fcv, type BannerVariant, type CalloutLook, type FbInteraction, type FbT
 import { DemoRowView, DemoTabBar, ScreenFrame, type DemoRow } from './feedback-demos';
 import { CalloutView, PageBannerView, ResultSectionView, SnackbarRegion, useSnackbarHost, type SnackbarHost } from './feedback-view';
 import { BRANDS, MODES, PlayFrame, Seg } from './select-playground';
+import { BAND } from './nav-shared';
 
 type Brand = 'desk' | 'hr';
 const attr = (cond: boolean, s: string) => (cond ? [s] : []);
@@ -333,7 +334,7 @@ export function ResultSectionPlayground({ looks }: { looks: Record<Brand, Result
     return `${kind === 'empty' ? 'import { ReceiptText } from "lucide-react"\n' : ''}import { ResultSection } from "@/components/ui/result-section"\n\n<ResultSection\n${a.map((x) => `  ${x}`).join('\n')}\n/>`;
   }, [kind, size, t, desc, buttons]);
   const s = look.screen;
-  // medium 은 카드 안 — 결과 자리의 좌우 0, 목록 카드라 카드의 24 를 감싼 칸이 맡는다(result-section.yaml root.paddingX 비고)
+  // medium 은 구역 안(Desk 폰 띠 · HR 카드) — 결과 자리의 좌우 0, 띠 · 카드 안의 24 를 감싼 칸이 맡는다(result-section.yaml root.paddingX 비고)
   const inCard = size === 'medium';
   const view = (
     <div role="status" style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', paddingLeft: inCard ? s.card.head.x : 0, paddingRight: inCard ? s.card.head.x : 0 }}>
@@ -364,20 +365,30 @@ export function ResultSectionPlayground({ looks }: { looks: Record<Brand, Result
           </ScreenFrame>
         ) : (
           <ScreenFrame screen={s} mode={mode} title="홈" height={440} bg="bg-layer-basement">
-            {/* 회색 바닥 위 목록 카드 — card.yaml(흰 면 + 1px 테두리 · 머리 위 24 · 좌우 24 · 아래 4 · 카드 아래 12) */}
-            <div style={{ paddingTop: s.card.gap, paddingRight: s.card.edge, paddingBottom: s.card.edge, paddingLeft: s.card.edge }}>
-              <section aria-label="최근 거래" style={{ display: 'flex', flexDirection: 'column', minHeight: 300, boxSizing: 'border-box', borderRadius: s.card.radius, borderWidth: s.card.borderW, borderStyle: 'solid', borderColor: fcv(s['stroke-neutral-weak'], mode), background: fcv(s['bg-layer-default'], mode), paddingTop: 0, paddingRight: 0, paddingBottom: s.card.listBottom, paddingLeft: 0 }}>
-                <span style={{ paddingTop: s.card.head.top, paddingRight: s.card.head.x, paddingBottom: s.card.head.bottom, paddingLeft: s.card.head.x, fontFamily: s.card.title.fontFamily, fontSize: s.card.title.fontSize, lineHeight: s.card.title.lineHeight, fontWeight: s.card.title.fontWeight }}>최근 거래</span>
-                {view}
-              </section>
-            </div>
+            {brand === 'desk' ? (
+              // Desk 폰 홈은 띠 화면 — 회색 바닥 위 화면 폭 흰 띠(첫 띠는 머리 바로 아래 · 띠 안 위 4 · 아래 8), 띠 안은 목록 카드와 같은 값(머리 글 위 24 · 좌우 24 · 아래 4)
+              <div style={{ paddingTop: BAND.top }}>
+                <section aria-label="최근 거래" style={{ display: 'flex', flexDirection: 'column', minHeight: 300, boxSizing: 'border-box', background: fcv(s['bg-layer-default'], mode), paddingTop: BAND.padTop, paddingRight: 0, paddingBottom: BAND.padBottom, paddingLeft: 0 }}>
+                  <span style={{ paddingTop: s.card.head.top - BAND.padTop, paddingRight: s.card.head.x, paddingBottom: s.card.head.bottom, paddingLeft: s.card.head.x, fontFamily: s.card.title.fontFamily, fontSize: s.card.title.fontSize, lineHeight: s.card.title.lineHeight, fontWeight: s.card.title.fontWeight }}>최근 거래</span>
+                  {view}
+                </section>
+              </div>
+            ) : (
+              // HR 폰은 카드 그대로 — 회색 바닥 위 목록 카드(card.yaml — 흰 면 + 1px 테두리 · 머리 위 24 · 좌우 24 · 아래 4 · 카드 아래 12)
+              <div style={{ paddingTop: s.card.gap, paddingRight: s.card.edge, paddingBottom: s.card.edge, paddingLeft: s.card.edge }}>
+                <section aria-label="최근 거래" style={{ display: 'flex', flexDirection: 'column', minHeight: 300, boxSizing: 'border-box', borderRadius: s.card.radius, borderWidth: s.card.borderW, borderStyle: 'solid', borderColor: fcv(s['stroke-neutral-weak'], mode), background: fcv(s['bg-layer-default'], mode), paddingTop: 0, paddingRight: 0, paddingBottom: s.card.listBottom, paddingLeft: 0 }}>
+                  <span style={{ paddingTop: s.card.head.top, paddingRight: s.card.head.x, paddingBottom: s.card.head.bottom, paddingLeft: s.card.head.x, fontFamily: s.card.title.fontFamily, fontSize: s.card.title.fontSize, lineHeight: s.card.title.lineHeight, fontWeight: s.card.title.fontWeight }}>최근 거래</span>
+                  {view}
+                </section>
+              </div>
+            )}
           </ScreenFrame>
         )
       }
       controls={
         <>
           <Seg label="결과 kind" value={kind} options={[['empty', 'empty(기본)'], ['failure', 'failure'], ['done', 'done']] as const} onChange={(v) => (setKind(v), setBusy(false))} />
-          <Seg label="크기 size" value={size} options={[['large', 'large(기본) — 화면 전체'], ['medium', 'medium — 카드 · 시트 안']] as const} onChange={setSize} />
+          <Seg label="크기 size" value={size} options={[['large', 'large(기본) — 화면 전체'], ['medium', 'medium — 카드 · 띠 · 시트 안']] as const} onChange={setSize} />
           <Seg label="버튼" value={buttons} options={[['0', '없음'], ['1', '하나'], ['2', '둘']] as const} onChange={setButtons} />
           <Seg label="설명 description" value={desc} options={[['yes', '있음'], ['no', '없음']] as const} onChange={setDesc} />
           <div className="flex flex-wrap gap-5">
