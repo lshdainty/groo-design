@@ -37,12 +37,12 @@
 
 ### Minute Step
 
-분 간격은 기본 5 이고, 자리에 따라 1 · 10 · 15 · 30 을 쓴다 — 넓을수록 빨리 고르고 좁을수록 정밀하다. 칼럼에는 그 간격의 분만 있다.
+분 간격은 기본 1 이고, 자리에 따라 5 · 10 · 15 · 30 을 쓴다 — 넓을수록 빨리 고르고 좁을수록 정밀하다. 칼럼에는 그 간격의 분만 있다. 휠만으로 값을 넣으므로(치는 칸이 없다) 실제 시각을 그대로 적어야 하는 자리(카드 결제 시각 · 일정)는 1 이다 — 5 로 두면 "오후 7:57" 을 넣을 길이 없다(2026-11-10 사용자 결정).
 
 | 간격 | 쓰는 곳 |
 |---|---|
-| 1 | 분이 중요한 자리 — 방해 금지 시작 · 끝, 알림 |
-| 5 | 기본 — 일정 · 거래 · 반복 실행 |
+| 1 | 기본 — 거래(추가 · 수정 · 환불 · 반복 실행) · 일정 · 할 일 · 알림 · 방해 금지 |
+| 5 | 5분이면 충분하고 빨리 골라야 하는 자리 — 지금 쓰는 곳 없음 |
 | 10 · 15 | 느슨한 시간대 · 15분 단위 예약 |
 | 30 | 근무 · 일정 시간표(HR 일정) |
 
@@ -56,7 +56,7 @@
 
 ### "완료" 로 넣는다
 
-휠을 굴리는 동안 칸 값은 그대로다 — "완료" 를 누를 때 들어간다. 바깥 · 끌어내리기 · `Esc` 로 닫으면 버린다. 칸이 비었으면 지금 시각을 분 간격에 맞춰 반올림한 자리(9시 13분 → 9시 15분)를 짚어 열기만 한다.
+휠을 굴리는 동안 칸 값은 그대로다 — "완료" 를 누를 때 들어간다. 닫기 버튼 · `Esc` 로 닫으면 버린다 — 휠을 굴리다 시트가 끌려 닫히지 않게, 시각 시트는 끌어내리기 · 바깥 누르기로 닫지 않는다([Bottom Sheet](bottom-sheet.md) 의 휠 시트, 2026-11-10 사용자 결정). 칸이 비었으면 지금 시각(분 간격이 1 이 아니면 그 간격에 맞춰 반올림한 자리 — 5 면 9시 13분 → 9시 15분)을 짚어 열기만 한다.
 
 ### 어디에 놓나
 
@@ -88,7 +88,7 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 
 <InputButton value={formatTimeValue(time)} placeholder="시간 선택" suffixIcon={<Clock />} onClick={() => { setDraft(time ?? roundToStep(new Date(), 5)); setOpen(true) }} />
 
-<TimePicker minuteStep={5} value={draft} onValueChange={setDraft} />
+<TimePicker value={draft} onValueChange={setDraft} />
 <Button onClick={() => { setTime(draft); setOpen(false) }}>완료</Button>
 ```
 
@@ -113,7 +113,7 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 | 시 11 ↔ 12 | 오전 · 오후가 따라 바뀐다 |
 | 분 55 → 00 | 시는 그대로다 |
 | 오전 · 오후 바꾸기 | 시 · 분은 그대로, 12시간을 더하거나 뺀다 |
-| 열 때 | 칸 값(비었으면 지금을 분 간격에 맞춰 반올림한 자리)이 가운데 — 초점은 시 칼럼으로 |
+| 열 때 | 칸 값(비었으면 지금 — 분 간격이 1 이 아니면 반올림한 자리)이 가운데 — 초점은 시 칼럼으로 |
 
 ### 키보드
 
@@ -139,7 +139,7 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 ### ✅ Do
 
 - 칸 표기와 같은 오전·오후 · 시 · 분 휠.
-- 분 간격은 기본 5, 분이 중요한 자리만 1.
+- 분 간격은 기본 1 — 휠만으로 정확한 시각을 넣는다.
 - 날짜 칸 옆에 시각 칸을 나란히.
 
 ### ❌ Don't
@@ -160,6 +160,10 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 - **색은 groo 역할 짝** — 띠 `bg-neutral-weak`, 고른 글자 `fg-neutral`, 둘레 글자 `fg-disabled`(SEED 와 같은 역할).
 
 ## Migration notes
+
+### 2026-11-10 — 분 간격 기본 1 · 휠 시트는 끌어 닫지 않는다
+
+사용자가 담다 앱에서 카드 결제 시각을 넣다가 짚었다 — "왜 5분단위인건데? … 당연히 1분 단위로 다 넣어놔야하는거 아니냐?"(2026-11-10). 치는 칸을 걷고 휠만 남겼는데(10-03) 기본을 5 로 둬서 실제 시각을 넣을 길이 없어졌다(이관 전 앱은 1분 휠, 웹은 치는 칸). 기본을 1 로, 5 는 "지금 쓰는 곳 없음" 으로 내렸다. 함께 — 휠을 아래로 굴리다 시트가 끌려 내려가 조작이 안 된다는 지적("x표시 아니면 안내려가도록")으로 시각 시트는 끌어내리기 · 바깥 누르기로 닫지 않는다(규칙 전문은 [Bottom Sheet](bottom-sheet.md)). 옛 스펙은 `time-picker.history/v-pre-1min-default.*`.
 
 ### 2026-10-22 — 어디에 놓나 · 날짜가 주된 단계일 때
 

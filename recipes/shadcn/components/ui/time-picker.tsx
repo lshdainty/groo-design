@@ -6,7 +6,7 @@ import { WheelPicker, WheelPickerColumn, type WheelPickerValueChangeDetails } fr
  * Groo Time Picker — 구조는 SEED Time Picker(2026-10-03). 수치 원본은 specs/components/time-picker.yaml(휠은 wheel-picker.yaml medium · 5칸).
  *
  *   TimePicker        12시간 휠 — 오전·오후 → 시 → 분. value · onValueChange 는 24시간 { hour 0 ~ 23, minute 0 ~ 59 }.
- *                     minuteStep(1 · 5 · 10 · 15 · 30, 기본 5) · disabled · autoFocus(열 때 시 칼럼에 초점) · aria-label(칸 라벨, 기본 "시간 선택")
+ *                     minuteStep(1 · 5 · 10 · 15 · 30, 기본 1) · disabled · autoFocus(열 때 시 칼럼에 초점) · aria-label(칸 라벨, 기본 "시간 선택")
  *   roundToStep       시각 · Date 를 분 간격에 맞춰 반올림한다(시각 전체 기준 — 9시 58분 → 10시 00분). 빈 칸을 열 때 지금을 짚는 데 쓴다
  *   formatTimeValue   칸에 넣는 글 — "오후 3:00"(International Design v106, 초 없음)
  *
@@ -95,7 +95,7 @@ export interface TimePickerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   value?: TimeValue;
   /** 휠이 멈춰 값이 정해졌을 때 — 칸이 아니라 draft 에 넣는다 */
   onValueChange?: (value: TimeValue) => void;
-  /** 분 간격 — 기본 5. 분이 중요한 자리만 1, HR 일정 30 */
+  /** 분 간격 — 기본 1(휠만으로 정확한 시각을 넣는다, 2026-11-10). HR 일정 시간표 30 */
   minuteStep?: MinuteStep;
   disabled?: boolean;
   /** 처음 그릴 때 시 칼럼에 초점을 둔다(시트 · 팝오버가 열 때 — input-button.md "열린 뒤 포커스") */
@@ -108,11 +108,11 @@ export interface TimePickerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
 
 const TimePicker = React.forwardRef<HTMLDivElement, TimePickerProps>(
   (
-    { value: valueProp, onValueChange, minuteStep = 5, disabled = false, autoFocus = false, now, labels: labelsProp, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...props },
+    { value: valueProp, onValueChange, minuteStep = 1, disabled = false, autoFocus = false, now, labels: labelsProp, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...props },
     ref,
   ) => {
     const labels = React.useMemo(() => ({ ...TIME_PICKER_LABELS, ...labelsProp }), [labelsProp]);
-    const step: MinuteStep = MINUTE_STEPS.includes(minuteStep) ? minuteStep : 5;
+    const step: MinuteStep = MINUTE_STEPS.includes(minuteStep) ? minuteStep : 1;
     // 빈 칸 — 지금을 반올림한 자리(처음 한 번만 잰다)
     const [fallback] = React.useState(() => {
       const d = now ?? new Date();

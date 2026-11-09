@@ -4877,7 +4877,7 @@ function wheelPicker({ id = "", label, size = "medium", rows = 5, columns = [], 
 
 // Time Picker — 오전·오후 → 시 → 분 세 칼럼의 12시간 휠(값은 24시간 hour · minute). 시는 1 ~ 12(0 을 채우지 않는다 · 오른쪽 정렬 · 반복),
 // 분은 2자리 · 분 간격대로(반복), 오전 · 오후는 두 칸에서 멈춘다. 시 · 분 글자는 쓰지 않는다 — 칼럼 이름과 자리가 단위를 알린다
-function timePicker({ id = "", label = "시간 선택", hour = 15, minute = 0, step = 5, size = "medium", live = true, focus = "", width = "" } = {}) {
+function timePicker({ id = "", label = "시간 선택", hour = 15, minute = 0, step = 1, size = "medium", live = true, focus = "", width = "" } = {}) {
   const minutes = Array.from({ length: 60 / step }, (_, i) => String(i * step).padStart(2, "0"));
   return wheelPicker({ id, label, size, live, width, format: "time", columns: [
     { label: "오전/오후", options: ["오전", "오후"], index: hour >= 12 ? 1 : 0, role: "period", focus: focus === "period" },
@@ -5138,10 +5138,10 @@ export function renderDateTimeGallery(brand) {
     "Time Picker — 오전·오후 · 시 · 분 · 시트 · 팝오버",
     "시각 칸(뒤 아이콘 clock)을 누르면 1280 미만 시트 · 이상 팝오버로 12시간 휠이 열린다 — 칼럼은 오전·오후 → 시 → 분(한국어 순서)이고 시 · 분 글자 없이 숫자만 쓴다(\"오후 3 00\" = 오후 3시 00분 — 단위는 칼럼 이름과 자리가 알린다). 칸 표기(\"오후 3:00\", International Design v106)와 같은 말이라 24시간 휠을 두지 않고, 값은 24시간 {hour, minute} 로 다룬다. 휠은 Wheel Picker medium 5칸(44 × 5 = 220) · 글자 26 / 35 · 500 이다. 오전 · 오후는 두 칸에서 멈추고, 시는 1 ~ 12(0 을 채우지 않는다)를 오른쪽에 맞춰 한 자리 · 두 자리 수의 끝을 맞추고 돌아간다, 분은 2자리로 분 간격의 분만 있고 돌아간다. 분 간격은 기본 5 — 분이 중요한 자리(방해 금지 · 알림)는 1, 느슨한 시간대는 10 · 15, 근무 · 일정 시간표(HR 일정)는 30 이다. 시 휠이 11 ↔ 12 를 넘으면 오전 · 오후가 따라 바뀌고(오전 11 → 오후 12), 분 휠은 55 → 00 을 넘어도 시는 그대로다. 휠을 굴리는 동안 칸 값은 그대로이고 \"완료\" 로 넣는다 — 칸이 비었으면 지금 시각을 분 간격에 맞춰 반올림한 자리(9시 13분 → 9시 15분)를 짚어 열기만 한다. 두 그림은 실제로 끌고 · 휠로 굴리고 · 항목을 누르고 · ↑ ↓ 로 옮기고 \"완료\" 로 칸에 넣을 수 있다.",
     `${samples([
-      sample("폰 — 시트 · 휠 220 · 완료 large 48", "TimePicker minuteStep={5} — 제목 \"시간 선택\"", timePhone),
+      sample("폰 — 시트 · 휠 220 · 완료 large 48", "TimePicker(기본 1분) — 제목 \"시간 선택\"", timePhone),
       sample("데스크톱 웹 — 팝오버 · 완료 small 36", "useInputButtonSurface() → \"popover\" — 칸 아래 8 · 왼쪽 맞춤", timeDesktop),
     ], "ptf-samples ptf-samples--forms")}${samples([
-      sample("분 간격 1 — 방해 금지 시작", "minuteStep={1} — 00 ~ 59(60칸)", demo(timePicker({ label: "방해 금지 시작", hour: 22, minute: 30, step: 1, width: "272px" }))),
+      sample("분 간격 1(기본) — 방해 금지 시작", "minuteStep 기본 1 — 00 ~ 59(60칸)", demo(timePicker({ label: "방해 금지 시작", hour: 22, minute: 30, step: 1, width: "272px" }))),
       sample("분 간격 30 — HR 일정 시간표", "minuteStep={30} — 00 · 30(2칸)", demo(timePicker({ label: "일정 시작", hour: 9, minute: 30, step: 30, width: "272px" }))),
     ], "ptf-samples pov-samples--next")}`,
   );

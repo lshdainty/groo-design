@@ -505,7 +505,7 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 
 <InputButton value={formatTimeValue(time)} placeholder="시간 선택" suffixIcon={<Clock />} onClick={() => { setDraft(time ?? roundToStep(new Date(), 5)); setOpen(true) }} />
 
-<TimePicker minuteStep={5} value={draft} onValueChange={setDraft} />
+<TimePicker value={draft} onValueChange={setDraft} />
 <Button onClick={() => { setTime(draft); setOpen(false) }}>완료</Button>`,
     render: () =>
       stack([
