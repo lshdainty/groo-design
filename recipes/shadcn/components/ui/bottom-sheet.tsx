@@ -10,7 +10,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
 /*
  * Groo Bottom Sheet — 구조는 SEED Bottom Sheet(2026-10-02). 수치 원본은 specs/components/bottom-sheet.yaml. vaul 위에 짰다.
  *
- *   BottomSheet          화면 아래에서 올라오는 모달 — open · defaultOpen · onOpenChange · form · dirty · snapPoints
+ *   BottomSheet          화면 아래에서 올라오는 모달 — open · defaultOpen · onOpenChange · form · dirty · dismissible · snapPoints
  *   BottomSheetTrigger   여는 버튼 — 닫으면 초점이 여기로 돌아온다
  *   BottomSheetContent   시트 — title(늘) · description(덧붙일 말이 있을 때만). 오른쪽 위 닫기 버튼(showCloseButton, 기본 켬).
  *                        onBack 이면 머리 왼쪽 ←(이름 "뒤로") — 한 시트 안 두 단계 흐름의 2단계에서 1단계로 한 단계 되돌린다
@@ -28,6 +28,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  * 닫는 길(bottom-sheet.md Behavior)
  *   - 닫기 버튼 · Esc · 뒤로 가기(1280 미만)는 늘 닫는다.
  *   - 바깥(딤) 누르기 · 아래로 끌기는 조회 · 고르기 시트만 닫는다. form(입력 폼)이면 둘 다 아무 일도 하지 않는다 — 손잡이도 없다.
+ *     dismissible={false}(휠 시트 — 시각 · 날짜 휠)도 둘 다 무시한다: 휠을 굴리는 손이 시트 끌기로 읽히지 않게(2026-11-10).
  *   - 끌기는 vaul 의 기준 그대로다 — 놓을 때 0.4px/ms 보다 빠르거나 높이의 25% 이상 내려왔으면 닫고 아니면 200ms exit 로 제자리.
  *     열린 뒤 0.5초는 끌리지 않고, 본문이 스크롤돼 있으면(맨 위가 아니면) 끌지 않고 스크롤한다.
  *   - dirty 면 어느 길이든 닫기 전에 "작성한 내용이 사라져요" 를 묻는다 — [계속 작성] 이면 그대로(끌던 시트는 제자리로).
@@ -103,6 +104,8 @@ function focusOpener(trigger: HTMLElement | null, opener: Element | null) {
 // ── 시트 문맥 ─────────────────────────────────────────────────
 type SheetContextValue = {
   form: boolean;
+  /** 끌기 · 바깥으로 닫지 않는다 — form 이거나 dismissible 이 false */
+  locked: boolean;
   /** 닫기를 청한다 — 바로 닫았으면 true, 바뀐 값이 있어 물었으면 false */
   requestClose: () => boolean;
   contentRef: React.RefObject<HTMLDivElement | null>;
@@ -129,6 +132,8 @@ export interface BottomSheetProps {
   form?: boolean;
   /** 바뀐 값이 있다 — 닫기 전에 "작성한 내용이 사라져요" 를 묻는다 */
   dirty?: boolean;
+  /** 끌어내리기 · 바깥 누르기로 닫는다(기본). false 면 닫기 버튼 · 바닥 버튼 · Esc · 뒤로 가기로만 — 휠 시트(시각 · 날짜 휠)에 쓴다. form 은 늘 false 와 같다 */
+  dismissible?: boolean;
   /** 스냅 높이(vaul — 화면 높이 비율 0 ~ 1 또는 "300px", 낮은 것부터) — 주면 손잡이를 단다. form 이면 쓰지 않는다 */
   snapPoints?: SnapPoint[];
   /** 지금 스냅 높이 — 주면 제어한다(기본은 가장 낮은 높이에서 연다) */
@@ -143,6 +148,7 @@ function BottomSheet({
   onOpenChange,
   form = false,
   dirty = false,
+  dismissible = true,
   snapPoints,
   activeSnapPoint,
   onActiveSnapPointChange,
@@ -163,6 +169,8 @@ function BottomSheet({
     if (!leave.request()) keepBackSlot();
   });
 
+  // 끌기 · 바깥으로 닫지 않는 시트 — 입력 폼 · 휠 시트
+  const locked = form || !dismissible;
   const snaps = form ? undefined : snapPoints;
   const [snapInner, setSnapInner] = React.useState<SnapPoint | null>(snaps?.[0] ?? null);
   const snap = activeSnapPoint !== undefined ? activeSnapPoint : snapInner;
@@ -187,8 +195,8 @@ function BottomSheet({
   }, []);
 
   const value = React.useMemo<SheetContextValue>(
-    () => ({ form, requestClose: leave.request, contentRef, overlayRef, triggerRef, openRef, snapPoints: snaps, snap, setSnap }),
-    [form, leave.request, snaps, snap, setSnap],
+    () => ({ form, locked, requestClose: leave.request, contentRef, overlayRef, triggerRef, openRef, snapPoints: snaps, snap, setSnap }),
+    [form, locked, leave.request, snaps, snap, setSnap],
   );
 
   return (
@@ -200,8 +208,8 @@ function BottomSheet({
           if (next) setOpen(true);
           else if (!leave.request()) snapBack();
         }}
-        // 입력 폼은 끌리지 않는다 — 손잡이가 없으므로 어디서도 끌 수 없다
-        handleOnly={form}
+        // 입력 폼 · 휠 시트는 끌리지 않는다 — 손잡이가 없으므로 어디서도 끌 수 없다
+        handleOnly={locked}
         snapPoints={snaps}
         activeSnapPoint={snaps ? snap : undefined}
         setActiveSnapPoint={snaps ? setSnap : undefined}
@@ -354,7 +362,7 @@ const BottomSheetSurface = React.forwardRef<React.ElementRef<typeof DrawerPrimit
             e.preventDefault();
             const pointer = e.detail.originalEvent;
             const secondary = pointer.button === 2 || (pointer.button === 0 && pointer.ctrlKey);
-            if (!ctx.form && !secondary) ctx.requestClose();
+            if (!ctx.locked && !secondary) ctx.requestClose();
           }}
           {...props}
         >
