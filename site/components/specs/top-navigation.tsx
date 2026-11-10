@@ -169,7 +169,7 @@ const Title: Fig = ({ caption }) => {
           <Band style={{ left: 0, top: H - 6, width: t.types.standard.left, height: 4 }} label={`${t.types.standard.left}`} tag="below" />
         </BarBoard>
         <BarBoard label={`긴 제목 — 오른쪽 자리 앞 ${t.title.gap} 에서 말줄임(…), 한 줄`}>
-          <Bar title="현대카드 M 결제 예정 금액과 받을 혜택" actions={CARD_ACTIONS} zone={{ title: markBox }} />
+          <Bar title="현대카드 신용카드 결제 예정 금액과 받을 혜택" actions={CARD_ACTIONS} zone={{ title: markBox }} />
           <Band style={{ left: trail - t.title.gap, top: 8, width: t.title.gap, height: H - 16 }} label={`${t.title.gap}`} tag="above" />
         </BarBoard>
       </div>

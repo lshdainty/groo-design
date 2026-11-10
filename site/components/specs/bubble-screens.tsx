@@ -87,7 +87,7 @@ export function LeaveWindow({ mode = 'auto', w = 460, h = 280, overlay, gesture 
 // Desk 홈(폰) — 머리 오른쪽 검색 버튼(오른쪽 끝은 알림) 아래에 처음부터 열린 안내(닫기 버튼)
 const ASSETS: [string, string][] = [
   ['국민 주계좌', '1,250,000원'],
-  ['현대카드 M', '−352,400원'],
+  ['현대카드 신용카드', '−352,400원'],
   ['토스뱅크 통장', '820,000원'],
 ];
 export function AssetsPhone({ mode = 'auto', scale = 0.62, h = 560, bubble = true }: { mode?: Mode; scale?: number; h?: number; bubble?: boolean }) {

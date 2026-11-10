@@ -65,20 +65,20 @@ const weekStrip = () =>
 const ledgerHeader = ({ chips = false } = {}) =>
   `<div style="${TEXT}"><div style="display:flex; align-items:center; justify-content:space-between; padding:var(--spacing-x2) var(--spacing-x2) 0;">${iconButton("이전 달", "chevronLeft")}<span style="font-size:var(--text-t6); line-height:var(--text-t6--line-height); font-weight:700;">2026년 10월</span>${iconButton("다음 달", "chevronRight")}</div><div style="padding:var(--spacing-x1) var(--spacing-global-gutter) var(--spacing-x3);"><div style="font-size:var(--text-t3); line-height:var(--text-t3--line-height); color:var(--color-fg-neutral-subtle);">10월 지출</div><div style="font-size:var(--text-t9); line-height:var(--text-t9--line-height); font-weight:700; font-variant-numeric:tabular-nums;">${won(-125870220)}</div></div><div style="display:flex; gap:var(--spacing-x2); padding:0 var(--spacing-global-gutter);">${pillButton("소비 요약", false)}${pillButton("월 달력", false)}</div>${
     chips
-      ? `<div role="group" aria-label="필터" style="display:flex; gap:var(--spacing-x2); padding:var(--spacing-x3) var(--spacing-global-gutter) 0; overflow-x:auto;" class="scrollbar-hide">${["식비", "현대카드 M", "1만 원 이상"].map((c) => `<span style="flex-shrink:0; padding:var(--spacing-x1_5) var(--spacing-x3); border-radius:var(--radius-full); background:var(--color-bg-neutral-inverted); font-size:var(--text-t4); font-weight:500; color:var(--color-fg-neutral-inverted);">${esc(c)}</span>`).join("")}</div>`
+      ? `<div role="group" aria-label="필터" style="display:flex; gap:var(--spacing-x2); padding:var(--spacing-x3) var(--spacing-global-gutter) 0; overflow-x:auto;" class="scrollbar-hide">${["식비", "현대카드 신용카드", "1만 원 이상"].map((c) => `<span style="flex-shrink:0; padding:var(--spacing-x1_5) var(--spacing-x3); border-radius:var(--radius-full); background:var(--color-bg-neutral-inverted); font-size:var(--text-t4); font-weight:500; color:var(--color-fg-neutral-inverted);">${esc(c)}</span>`).join("")}</div>`
       : ""
   }${weekStrip()}</div>`;
 
 // 거래 40줄(화면의 내용) — 10월 8일부터 하루 4줄, 첫 줄은 1억 넘는 이체
 const POOL = [
-  ["가나김밥 강남점", "식비 · 삼성카드 taptap O", 9500],
+  ["가나김밥 강남점", "식비 · 삼성카드 신용카드", 9500],
   ["다라베이커리", "카페 · 간식 · 토스 체크카드", 4800],
   ["다라교통", "교통 · 토스 체크카드", 1450],
-  ["마바패션", "쇼핑 · 삼성카드 taptap O", 58900],
-  ["다라커피 역삼점", "카페 · 간식 · 현대카드 M", 6300],
+  ["마바패션", "쇼핑 · 삼성카드 신용카드", 58900],
+  ["다라커피 역삼점", "카페 · 간식 · 현대카드 신용카드", 6300],
   ["가나24 역삼점", "식비 · 토스 체크카드", 3200],
-  ["가나몰", "쇼핑 · 현대카드 M", 27400],
-  ["가나배달", "식비 · 삼성카드 taptap O", 23900],
+  ["가나몰", "쇼핑 · 현대카드 신용카드", 27400],
+  ["가나배달", "식비 · 삼성카드 신용카드", 23900],
 ];
 const DAYS = ["10월 8일 (목) · 오늘", "10월 7일 (수)", "10월 6일 (화)", "10월 5일 (월)", "10월 4일 (일)", "10월 3일 (토)", "10월 2일 (금)", "10월 1일 (목)", "9월 30일 (수)", "9월 29일 (화)"];
 const transactionList = () =>

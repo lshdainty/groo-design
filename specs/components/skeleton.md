@@ -231,7 +231,7 @@ function TransactionRowsSkeleton({ rows }: { rows: number }) {
         kind="failure"
         size="medium"
         title="거래를 불러오지 못했어요"
-        description="잠시 후 다시 시도해주세요."
+        description="잠시 뒤 다시 시도해주세요."
         primaryAction={{ label: "다시 시도", onClick: () => query.refetch() }}
       />
     }
@@ -358,6 +358,10 @@ new QueryClient({
 - **기다리는 동안의 시간표 · 요청 제한 · 다시 시도를 수치로 둔다** — SEED 는 Loading 패턴의 시나리오(5초 안내 · 10초 실패)로만 적었고 구현에는 장치가 없다.
 
 ## Migration notes
+
+### 2026-11-10 — "잠시 뒤"
+
+실패 글 "잠시 후 다시 시도해주세요." 를 Snackbar · Callout · Result Section 과 같은 "잠시 뒤" 로 맞췄다(Writing 예시도 같이). 값 변경 없음. 옛 스펙은 `skeleton.history/v-pre-decisions-1110.md`.
 
 ### 2026-11-07 — 다시 받기 실패 글 · 연달아 실패 · 폴링 실패 · 5초 글은 화면에 한 번 · 앱은 바로 바꿈
 

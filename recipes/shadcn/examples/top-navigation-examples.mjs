@@ -291,13 +291,13 @@ const rows = (list) =>
   list.map(([t, d, v]) => `<div style="${ROW_TEXT}"><span>${esc(t)}${d ? `<span style="${ROW_DETAIL}">${esc(d)}</span>` : ""}</span>${v ? `<b>${esc(v)}</b>` : ""}</div>`).join("");
 const phone = (bar, list, height = 260) => `<div style="${PHONE} height:${height}px;">${bar}<div style="${BODY}">${rows(list)}</div></div>`;
 const LEDGER = [
-  ["가나김밥", "식비 · 현대카드 M", "8,000원"],
-  ["버스", "교통 · 현대카드 M", "1,500원"],
-  ["가나생활", "쇼핑 · 현대카드 M", "12,300원"],
+  ["가나김밥", "식비 · 현대카드 신용카드", "8,000원"],
+  ["버스", "교통 · 현대카드 신용카드", "1,500원"],
+  ["가나생활", "쇼핑 · 현대카드 신용카드", "12,300원"],
   ["월급", "수입 · 국민 주계좌", "3,200,000원"],
 ];
 const ALERTS = [
-  ["카드 결제 예정", "현대카드 M · 10월 15일", "184,000원"],
+  ["카드 결제 예정", "현대카드 신용카드 · 10월 15일", "184,000원"],
   ["예산 80% 사용", "식비 · 10월", ""],
   ["자동 이체 완료", "관리비 · 국민 주계좌", "184,000원"],
 ];
@@ -508,7 +508,7 @@ import { ScreenTitle, TopNavigation, TopNavigationActions, TopNavigationIconButt
         ),
         labeled(
           phone(
-            topNavigation("standard", `${iconButton({ icon: "chevronLeft", name: "뒤로", slot: "top-navigation-back-button" })}${title("standard", "현대카드 M Edition3 카드 혜택 자세히 보기")}${actions(`${iconButton({ icon: "share", name: "공유" })}${iconButton({ icon: "ellipsis", name: "카드 혜택 더보기" })}`)}`),
+            topNavigation("standard", `${iconButton({ icon: "chevronLeft", name: "뒤로", slot: "top-navigation-back-button" })}${title("standard", "현대카드 신용카드 해외 결제 혜택 자세히 보기")}${actions(`${iconButton({ icon: "share", name: "공유" })}${iconButton({ icon: "ellipsis", name: "카드 혜택 더보기" })}`)}`),
             [["전월 실적", "", "30만원 이상"], ["연회비", "", "2만원"]],
             220,
           ),

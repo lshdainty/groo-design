@@ -184,7 +184,7 @@ const ledgerRow = (title, tags, amount) =>
 const TX = [{ text: "식비" }, { text: "신한카드" }, { text: "오후 2:10", shrink: 0 }];
 const CARD_BENEFIT = [{ text: "전월 30만원 이상", tone: "neutral", weight: "bold" }, { text: "할인형" }, { text: "연회비 2만원" }];
 const NOTICE = [{ text: "인사팀" }, { text: "10월 2일" }, { text: "12", prefixIcon: LUCIDE.eye, srLabel: "조회 12" }];
-const LONG_ASSET = [{ text: "교통", shrink: 0 }, { text: "신한카드 Deep Dream 체크(1234)", shrink: 2 }, { text: "오후 2:10", shrink: 0 }];
+const LONG_ASSET = [{ text: "교통", shrink: 0 }, { text: "신한카드 체크카드(1234)", shrink: 2 }, { text: "오후 2:10", shrink: 0 }];
 
 // ── 예제 ──────────────────────────────────────────────────────────────────
 
@@ -242,7 +242,7 @@ export const tagGroupExamples = [
       "truncate 는 한 줄이다 — 넘치면 항목 글이 각자 말줄임(…)하고 구분은 줄지 않는다. 줄어드는 정도는 항목의 shrink — 기본 1, 0 은 줄지 않고 1 이상은 넘친 폭을 '글 폭 × shrink' 비율로 나눠 함께 준다(차례대로가 아니다). 줄어드는 항목도 첫 글자 + \"…\"(2.1em) 까지만 준다 — 두 글자 이하 항목은 글 폭 그대로다. 좁은 폭에서 긴 자산 이름(shrink={2})만 줄고 분류 · 시각(shrink={0})은 그대로다. 말줄임해도 보조 기술은 글 전체를 읽는다. 가게 이름 · 주소처럼 말줄임하면 읽기 어려운 자리는 줄바꿈(기본)이 낫다. 미리보기 칸은 폭 240 이다.",
     jsx: `<TagGroup size="t3" truncate>
   <TagGroupItem shrink={0}>교통</TagGroupItem>
-  <TagGroupItem shrink={2}>신한카드 Deep Dream 체크(1234)</TagGroupItem>
+  <TagGroupItem shrink={2}>신한카드 체크카드(1234)</TagGroupItem>
   <TagGroupItem shrink={0}>오후 2:10</TagGroupItem>
 </TagGroup>`,
     render: () =>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { ArrowLeft, X } from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "@/components/ui/button";
@@ -337,7 +337,7 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
               {/* 머리 ← — 초점 차례 맨 앞: ← → 제목 → 동작 → 닫기 */}
               {onBack && (
                 <button type="button" aria-label="뒤로" data-slot="dialog-back" className={BACK} onClick={onBack}>
-                  <ArrowLeft aria-hidden strokeWidth={2} />
+                  <ChevronLeft aria-hidden strokeWidth={2} />
                 </button>
               )}
               <DialogPrimitive.Title data-slot="dialog-title" className={cn("m-0 text-t8 font-bold text-fg-neutral", onBack && "pl-[2.25rem]")}>

@@ -148,7 +148,7 @@ export function SkeletonPlayground({ kit, screen, result }: { kit: LoadingKit; s
             {phase === 'failed' ? (
               // 카드 안 결과 — 좌우는 카드의 24 만(결과 자리의 좌우 0)
               <div style={{ paddingTop: 24, paddingRight: sk.slowText.padXList, paddingBottom: 24, paddingLeft: sk.slowText.padXList }}>
-                <ResultSectionView look={result} mode={mode} kind="failure" size="medium" inCard live title={failTitle} description="잠시 후 다시 시도해주세요." primary={{ label: '다시 시도', onClick: play }} />
+                <ResultSectionView look={result} mode={mode} kind="failure" size="medium" inCard live title={failTitle} description="잠시 뒤 다시 시도해주세요." primary={{ label: '다시 시도', onClick: play }} />
               </div>
             ) : (
               <div aria-busy style={{ display: 'flex', flexDirection: 'column', gap: sk.slowText.gap, padding: photo ? '0 0 24px' : '0 24px 24px' }}>

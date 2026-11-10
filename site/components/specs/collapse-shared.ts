@@ -100,18 +100,6 @@ export type SplitLook = {
   grip: { w: number; h: number; radius: number; color: IColor };
   ring: CRing;
 };
-export type WidgetLook = {
-  columns: number;
-  rowHeight: number;
-  gap: number;
-  handle: { size: number; cursor: string };
-  mark: { size: number; borderW: number; color: IColor; right: number; bottom: number };
-  placeholder: { bg: IColor; borderW: number; borderStyle: string; border: IColor; radius: number };
-  ghost: { shadow: IShadow; radius: number };
-  more: { size: number; icon: number; touch: number };
-  sizeMenu: { label: string; items: { label: string; columns: number }[] };
-  ring: { width: number; offset: number; color: IColor };
-};
 export const SPLIT_STATES = ['enabled', 'hovered', 'focused', 'pressed'] as const;
 export type SplitState = (typeof SPLIT_STATES)[number];
 

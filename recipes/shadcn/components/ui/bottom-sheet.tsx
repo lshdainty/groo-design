@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
-import { ArrowLeft, X } from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useBackClose, useLeaveConfirm } from "@/components/ui/alert-dialog";
@@ -410,7 +410,7 @@ const BottomSheetContent = React.forwardRef<React.ElementRef<typeof DrawerPrimit
         {/* 머리 ← — DOM 맨 앞이라 초점 차례도 맨 앞: ← → 제목 → 닫기 */}
         {onBack && (
           <button type="button" aria-label="뒤로" data-slot="bottom-sheet-back" className={BACK} onClick={onBack}>
-            <ArrowLeft aria-hidden strokeWidth={2} />
+            <ChevronLeft aria-hidden strokeWidth={2} />
           </button>
         )}
         <div data-slot="bottom-sheet-header" className="flex shrink-0 flex-col gap-x2 px-global-gutter pb-x4 pt-x6">

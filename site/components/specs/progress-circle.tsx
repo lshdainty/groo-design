@@ -394,7 +394,7 @@ function SearchCard({ mode = 'auto', phase }: { mode?: Mode; phase: 'quiet' | 'w
       {phase === 'failed' ? (
         // 카드 안 결과 — 좌우는 목록 카드의 24 만(결과 자리의 좌우 0)
         <div style={{ paddingTop: 20, paddingRight: L().skeleton.slowText.padXList, paddingBottom: 12, paddingLeft: L().skeleton.slowText.padXList }}>
-          <ResultSectionView look={resultSectionLook()} mode={mode} kind="failure" size="medium" inCard title="검색 결과를 불러오지 못했어요" description="잠시 후 다시 시도해주세요." primary={{ label: '다시 시도' }} />
+          <ResultSectionView look={resultSectionLook()} mode={mode} kind="failure" size="medium" inCard title="검색 결과를 불러오지 못했어요" description="잠시 뒤 다시 시도해주세요." primary={{ label: '다시 시도' }} />
         </div>
       ) : (
         // 목록 카드 바로 아래 영역 — 원 · 오래 걸림 글은 좌우 24 안에(skeleton.yaml slowText.paddingX 비고)

@@ -32,11 +32,11 @@ function TxFormPhone({ mode, scale = 0.56, overlay }: { mode: Mode; scale?: numb
 }
 // 관심 종목 — 그룹 줄
 const STOCKS: [string, string, string, string][] = [
-  ['삼성전자', '국내 · 30주', '+1.2%', 'blue'],
-  ['애플', '미국 · 4주', '-0.4%', 'violet'],
-  ['카카오', '국내 · 12주', '+0.8%', 'orange'],
-  ['테슬라', '미국 · 2주', '+3.1%', 'green'],
-  ['네이버', '국내 · 5주', '-1.1%', 'green'],
+  ['가람전자', '국내 · 30주', '+1.2%', 'blue'],
+  ['파인테크', '미국 · 4주', '-0.4%', 'violet'],
+  ['라온톡', '국내 · 12주', '+0.8%', 'orange'],
+  ['볼트모터스', '미국 · 2주', '+3.1%', 'green'],
+  ['다온포털', '국내 · 5주', '-1.1%', 'green'],
 ];
 function StockPhone({ mode, scale = 0.56, overlay }: { mode: Mode; scale?: number; overlay?: ReactNode }) {
   return (

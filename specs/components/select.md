@@ -285,8 +285,8 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
       <SelectItem value="none" label="결제 수단 없음" prefixIcon={<CircleSlash />} />
     </SelectGroup>
     <SelectGroup label="카드">
-      <SelectItem value="hyundai-m" label="현대카드 M" prefixIcon={<CreditCard />} />
-      <SelectItem value="shinhan-deep" label="신한카드 Deep" prefixIcon={<CreditCard />} />
+      <SelectItem value="hyundai-m" label="현대카드 신용카드" prefixIcon={<CreditCard />} />
+      <SelectItem value="shinhan-deep" label="신한카드 체크카드" prefixIcon={<CreditCard />} />
     </SelectGroup>
     <SelectGroup label="계좌 · 현금">
       <SelectItem value="kb" label="국민 주계좌" description="123-45-6789" prefixIcon={<Landmark />} />
@@ -389,6 +389,10 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
 - **트리거 이름은 라벨 하나** — SEED React 는 트리거에 고른 값을 따로 읽히지 않는다. groo 는 `role="combobox"` 의 값으로 고른 글이 읽힌다(라벨 + 값).
 
 ## Migration notes
+
+### 2026-11-10 — 예시 이름
+
+예시 카드 상품 이름("현대카드 M" · "신한카드 Deep")을 카드사 + 종류("현대카드 신용카드" · "신한카드 체크카드")로 바꿨다 — 예시에 실제 상품 이름을 쓰지 않는다(2026-11-10 사용자 결정 15B). 값 변경 없음. 옛 스펙은 `select.history/v-pre-decisions-1110.md`.
 
 ### 2026-11-07 — 고른 선택지를 다시 누르면 닫힌다
 

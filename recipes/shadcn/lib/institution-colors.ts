@@ -10,7 +10,7 @@
  *   institutionColor(name)  기관 이름 → 표의 한 줄(color · text …), 없으면 null. 웹 · 앱이 같은 순서로 찾는다(institution-colors.yaml)
  *     1. 찾는 이름과 표의 name · aliases 의 공백을 모두 뺀다
  *     2. name 또는 aliases 와 같으면 그 기관이다
- *     3. 아니면 찾는 이름에 들어 있는 name · aliases 가운데 가장 긴 것("NH농협카드 올원" → NH농협카드). 대소문자는 그대로 견준다.
+ *     3. 아니면 찾는 이름에 들어 있는 name · aliases 가운데 가장 긴 것("NH농협카드 체크" → NH농협카드). 대소문자는 그대로 견준다.
  *        길이가 같으면 표에서 먼저 나온 기관이다. 표의 이름이 찾는 이름을 품는 거꾸로 맞추기("NH농협" ↔ "NH농협카드")는 하지 않는다
  *     4. 없으면 null — Logo Tile 은 Avatar 의 이름 색, 카드 면은 Content Placeholder(credit-card)
  *     기관 이름(자산의 기관 · 카드의 카드사)으로만 찾는다 — 사용자가 지은 자산 이름 · HR 회사 이름으로 찾지 않는다

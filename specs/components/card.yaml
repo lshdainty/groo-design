@@ -215,7 +215,7 @@ rules:
   - when: { delta: up }
     enabled:
       delta:
-        foreground: { value: $color-fg-critical, note: "▲ + 값(\"▲ 12%\") — 어디서나 오르면 빨강(증권과 같은 관례). 좋고 나쁨은 글이 말한다" }
+        foreground: { value: $color-fg-critical, note: "▲ + 값(\"▲ 12.00%\") — 어디서나 오르면 빨강(증권과 같은 관례). 좋고 나쁨은 글이 말한다" }
   - when: { delta: down }
     enabled:
       delta:

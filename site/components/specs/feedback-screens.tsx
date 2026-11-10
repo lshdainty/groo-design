@@ -91,8 +91,8 @@ export function ModeTag({ mode }: { mode: 'light' | 'dark' }) {
 // ── 화면 조각 ───────────────────────────────────────────
 // 오늘 2026. 10. 2. (금) — 가계부의 하루 묶음
 export const LEDGER: [string, string, string, string][] = [
-  ['점심 식사', '식비 · 현대카드 M', '−12,000원', 'orange'],
-  ['다라커피', '카페 · 현대카드 M', '−5,600원', 'brown'],
+  ['점심 식사', '식비 · 현대카드 신용카드', '−12,000원', 'orange'],
+  ['다라커피', '카페 · 현대카드 신용카드', '−5,600원', 'brown'],
   ['지하철', '교통 · 국민 체크카드', '−1,450원', 'blue'],
   ['월급', '수입 · 토스뱅크 통장', '+3,200,000원', 'green'],
 ];
@@ -115,9 +115,9 @@ export function LedgerRows({ mode = 'auto', n = LEDGER.length, from = 0 }: { mod
 }
 // 증권 — 보유 종목
 export const STOCKS: [string, string, string, string][] = [
-  ['삼성전자', '10주 · 국내', '712,000원', 'blue'],
-  ['SK하이닉스', '2주 · 국내', '452,000원', 'red'],
-  ['Apple', '3주 · 해외', '1,021,500원', 'violet'],
+  ['가람전자', '10주 · 국내', '712,000원', 'blue'],
+  ['나래반도체', '2주 · 국내', '452,000원', 'red'],
+  ['파인테크', '3주 · 해외', '1,021,500원', 'violet'],
 ];
 export function StockRows({ mode = 'auto', n = STOCKS.length }: { mode?: Mode; n?: number }) {
   return (

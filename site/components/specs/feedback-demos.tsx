@@ -137,8 +137,8 @@ export function DemoButton({ children, onClick, disabled = false }: { children: 
 }
 
 const LEDGER: DemoRow[] = [
-  { id: 'lunch', title: '점심 식사', sub: '식비 · 현대카드 M', amount: '−12,000원', hue: 'orange' },
-  { id: 'cafe', title: '다라커피', sub: '카페 · 현대카드 M', amount: '−5,600원', hue: 'orange' },
+  { id: 'lunch', title: '점심 식사', sub: '식비 · 현대카드 신용카드', amount: '−12,000원', hue: 'orange' },
+  { id: 'cafe', title: '다라커피', sub: '카페 · 현대카드 신용카드', amount: '−5,600원', hue: 'orange' },
   { id: 'subway', title: '지하철', sub: '교통 · 국민 체크카드', amount: '−1,450원', hue: 'blue' },
   { id: 'salary', title: '월급', sub: '수입 · 토스뱅크 통장', amount: '+3,200,000원', hue: 'green' },
 ];
@@ -156,7 +156,7 @@ export function SnackBasicDemo({ look, cta }: { look: SnackbarLook; cta: ButtonL
   const n = useRef(0);
   const save = () => {
     const id = `new-${++n.current}`;
-    const row: DemoRow = { id, title: '점심 식사', sub: '식비 · 현대카드 M', amount: '−12,000원', hue: 'orange' };
+    const row: DemoRow = { id, title: '점심 식사', sub: '식비 · 현대카드 신용카드', amount: '−12,000원', hue: 'orange' };
     setRows((r) => [row, ...r].slice(0, 6));
     setFresh(id);
     host.show({ message: '거래를 저장했어요.' });
@@ -335,7 +335,7 @@ export function CalloutErrorDemo({ look, snack, field, input, cta }: { look: Cal
         <ScreenFrame screen={s} title="가계부" height={480} bottom={<DemoTabBar screen={s} />}>
           <ul style={{ margin: 0, padding: '0 24px' }}>
             <DayLine screen={s} />
-            <DemoRowView screen={s} row={{ id: 'saved', title: memo || '거래', sub: '식비 · 현대카드 M', amount: `−${amount || '0'}원`, hue: 'orange' }} />
+            <DemoRowView screen={s} row={{ id: 'saved', title: memo || '거래', sub: '식비 · 현대카드 신용카드', amount: `−${amount || '0'}원`, hue: 'orange' }} />
             {LEDGER.slice(1, 3).map((r) => (
               <DemoRowView key={r.id} screen={s} row={r} />
             ))}
@@ -405,9 +405,9 @@ export function CalloutInteractiveDemo({ look }: { look: CalloutLook }) {
 
 // ══ Page Banner ═══════════════════════════════════════════
 const STOCKS: DemoRow[] = [
-  { id: 'samsung', title: '삼성전자', sub: '10주 · 국내', amount: '712,000원', hue: 'blue' },
-  { id: 'hynix', title: 'SK하이닉스', sub: '2주 · 국내', amount: '452,000원', hue: 'red' },
-  { id: 'apple', title: 'Apple', sub: '3주 · 해외', amount: '1,021,500원', hue: 'violet' },
+  { id: 'samsung', title: '가람전자', sub: '10주 · 국내', amount: '712,000원', hue: 'blue' },
+  { id: 'hynix', title: '나래반도체', sub: '2주 · 국내', amount: '452,000원', hue: 'red' },
+  { id: 'apple', title: '파인테크', sub: '3주 · 해외', amount: '1,021,500원', hue: 'violet' },
 ];
 // 증권 연결 끊김 — 다시 연결하면 띠가 걷히고 결과는 스낵바로
 export function BannerDisplayDemo({ look, snack }: { look: PageBannerLook; snack: SnackbarLook }) {
@@ -525,7 +525,7 @@ export function ResultEmptyDemo({ look, snack, field, input, cta }: { look: Resu
           ) : (
             <ul style={{ margin: 0, padding: '0 24px' }}>
               <DayLine screen={s} />
-              <DemoRowView screen={s} row={{ id: 'first', title: '점심 식사', sub: '식비 · 현대카드 M', amount: `−${amount || '0'}원`, hue: 'orange' }} />
+              <DemoRowView screen={s} row={{ id: 'first', title: '점심 식사', sub: '식비 · 현대카드 신용카드', amount: `−${amount || '0'}원`, hue: 'orange' }} />
             </ul>
           )}
           <SnackbarRegion host={host} look={snack} />

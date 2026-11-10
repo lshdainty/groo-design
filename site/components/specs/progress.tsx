@@ -21,7 +21,7 @@ const BARS: { label: string; value: number; max: number; meaning: 'limit' | 'goa
   { label: '식비 예산', value: 350000, max: 400000, meaning: 'limit' },
   { label: '교통 예산', value: 120000, max: 100000, meaning: 'limit' },
   { label: '여행 자금', value: 1200000, max: 2000000, meaning: 'goal' },
-  { label: '현대카드 M 전월 실적', value: 390000, max: 300000, meaning: 'goal' },
+  { label: '현대카드 신용카드 전월 실적', value: 390000, max: 300000, meaning: 'goal' },
 ];
 // Desk 폰은 띠 화면 — 구역마다 화면 폭 흰 띠(DESIGN.md Layout "화면 바탕")
 function Budget({ mode = 'auto', brand = 'desk' }: { mode?: Mode; brand?: 'desk' | 'hr' }) {
@@ -285,7 +285,7 @@ const ExGoal: Fig = () => (
   <Figure>
     <div className="flex w-[340px] flex-col gap-6 rounded-2xl px-6 py-5 pk-surface">
       <Meter meaning="goal" label="여행 자금" value={1200000} max={2000000} />
-      <Meter meaning="goal" label="현대카드 M 전월 실적" value={390000} max={300000} />
+      <Meter meaning="goal" label="현대카드 신용카드 전월 실적" value={390000} max={300000} />
       <Meter meaning="goal" label="오늘 근무" value={6} max={8} unit="시간" />
     </div>
   </Figure>

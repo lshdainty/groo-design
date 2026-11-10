@@ -138,7 +138,7 @@ rules:
         size: { value: 40px, note: "원 — 바탕은 누를 때만. 누르는 영역은 사방 2 넓혀 44 × 44" }
         radius: $radius-full
         background: { value: transparent, note: "제목과 같은 면 — 누르기 · 호버에만 바탕" }
-        iconSize: { value: 24px, note: "lucide arrow-left" }
+        iconSize: { value: 24px, note: "lucide chevron-left — 페이지 머리(Top Navigation) ← 와 같은 꺾쇠. 돌아가기 모양은 어디서나 하나다(2026-11-10 사용자 결정 8A)" }
         color: $color-fg-neutral
         iconLeft: { value: $spacing-global-gutter, note: "아이콘이 화면 여백 24 에 온다 — 원 40 은 그보다 8 바깥(시트 왼쪽에서 16)" }
         centerY: { value: 제목 첫 줄 가운데, note: "시트 위 24 + 줄 높이 30 의 절반 = 39 — 글자 배율을 따라 함께 내려간다" }

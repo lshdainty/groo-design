@@ -1,12 +1,11 @@
-# Resizable 의 수치 원본 — HR 관리 화면 나누기 · 대시보드 위젯 크기(2026-10-10 사용자 결정, 펼치고 접기 · 나누기 비교 페이지
-# 12B · 13A). 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Resizable 의 수치 원본 — HR 관리 화면 나누기(2026-10-10 사용자 결정, 펼치고 접기 · 나누기 비교 페이지 12B).
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
-# 두 가지다(축 kind).
+# 축 kind 는 split 하나다. 대시보드 위젯 크기(widget — 13A)는 제품에서 걷어(2026-10-23 사용자 결정 HB1 C)
+# 스펙에서도 걷었다(2026-11-10 사용자 결정 11A — 옛 값은 resizable.history/v-pre-decisions-1110.yaml).
 #   split  — 목록 | 상세 두 패널 사이 손잡이로 목록 폭을 바꾼다(HR 관리 > 역할 · 사용자 · 회사 · 부서 사용자). 768 이상만.
 #            보이는 선 1px + 가운데 손잡이 표시(대비 3 이상) · 누르는 폭 16 · 이름 "목록 너비" · ← → 5% · Home · End ·
 #            목록 20 ~ 40%(오른쪽은 60% 아래로 줄지 않는다) · 화면마다 폭을 기억 · 손잡이를 한 번 누르면 25 ↔ 40(끌지 않는 대안).
-#   widget — HR 대시보드 편집 모드의 위젯 크기. 오른쪽 아래 모서리 손잡이(표식 대비 3 이상) · 끄는 동안 토큰 색 자리표시 ·
-#            끌지 않는 대안은 위젯 ⋮ 의 "크기".
 #
 # SEED 와 다른 자리(resizable.md 의 "SEED 와 다른 점")
 #   - SEED 에는 Resizable 이 없다(모바일 앱 중심이라 끌어서 나누는 패널이 없다) — 값은 모두 groo 가 정했다.
@@ -14,23 +13,16 @@
 name: Resizable
 
 slots:
-  group: 나눈 자리 — split 은 목록 | 상세 두 패널, widget 은 대시보드 칸(격자)
+  group: 나눈 자리 — 목록 | 상세 두 패널
   panel: 목록 패널(왼쪽) — 폭이 바뀐다. 상세 패널은 남는 폭
   handle: 손잡이 — 두 패널 사이. role="separator", 누르는 폭 16
   line: 보이는 선 — 1px
   grip: 가운데 손잡이 표시 — 4 × 24
-  widgetHandle: 위젯 모서리 손잡이 — 오른쪽 아래, 누르는 24 × 24
-  widgetMark: 모서리 표식 — 9 × 9 꺾쇠
-  placeholder: 끄는 동안 자리표시 — 위젯이 놓일 칸
-  ghost: 끄는 동안 포인터를 따라오는 위젯
-  moreButton: 위젯 머리 ⋮ — "크기" 메뉴를 연다(Button ghost · iconOnly · medium)
-  sizeMenu: 위젯 ⋮ 의 "크기" — 끌지 않는 대안(Menu)
   focusRing: 키보드 포커스 링(웹) — 손잡이 둘레
 
 variants:
   kind:
-    split: 패널 나누기 — 목록 | 상세(기본)
-    widget: 대시보드 위젯 크기 — 편집 모드에서만
+    split: 패널 나누기 — 목록 | 상세(기본 · 하나뿐)
 
 defaults:
   kind: split
@@ -92,54 +84,6 @@ rules:
         background: $color-stroke-neutral-solid
       group:
         cursor: { value: col-resize, note: "끄는 동안 화면 전체 — 글을 고르지 않는다(user-select none)" }
-
-  # ── 위젯 크기 ─────────────────────────────────────────
-  - when: { kind: widget }
-    enabled:
-      group:
-        columns: { value: 12, note: "대시보드 격자 — 지금 HR 값(react-grid-layout). 크기 · 위치는 편집 모드에서만 바꾸고 저장 단추로 서버에 저장한다" }
-        rowHeight: { value: 72px, note: "격자 한 줄 — 지금 HR 값" }
-        gap: { value: $spacing-x4, note: "칸 사이 16 — 지금 HR 값" }
-      widgetHandle:
-        size: { value: 24px, note: "누르는 자리 24 × 24 — 오른쪽 아래 모서리. 지금 20" }
-        cursor: se-resize
-        touchAction: none
-        touchTarget: { value: 24 × 24, note: "AA ✓ · AAA ✗ — 끌지 않는 대안은 ⋮ 의 \"크기\"(moreButton)" }
-      widgetMark:
-        size: { value: 9px, note: "오른쪽 · 아래 두 변만 그린 꺾쇠 — 지금 5" }
-        borderWidth: 2px
-        borderColor: { value: $color-stroke-neutral-solid, note: "카드 면 위 4.18 · 다크 4.13(≥ 3) — 지금 rgba(0,0,0,.4) 는 2.85 · 다크 1.14" }
-        right: { value: 6px, note: "위젯 오른쪽 끝에서" }
-        bottom: { value: 6px, note: "위젯 아래 끝에서" }
-      placeholder:
-        display: { value: 숨김, note: "끄는 동안만 보인다" }
-        background: { value: $color-bg-brand-weak, note: "놓일 칸 — 브랜드 옅은 바탕. 지금은 라이브러리 기본 빨강 20%" }
-        borderWidth: { value: 1px, note: "비교 페이지 13A 그림은 1.5 였지만 크로미움은 1.5px 테두리를 1px 로 그린다(1 · 2배 화면 모두 — 레시피 하네스 실측) — 사용자가 본 모습 그대로 1" }
-        borderStyle: dashed
-        borderColor: { value: $color-stroke-brand-solid, note: "바닥 위 HR 7.56 · 다크 6.88 · 옅은 바탕 위 7.18 · 5.47(≥ 3) — 자리표시의 경계" }
-        radius: { value: $radius-r4, note: "위젯(Card 면)과 같은 16" }
-      ghost:
-        display: { value: 숨김, note: "끄는 동안 포인터를 따라오는 위젯 — 위젯 모양 그대로" }
-        shadow: { value: $shadow-s3, note: "떠 있는 동안만" }
-        radius: $radius-r4
-      moreButton:
-        size: { value: 40px, note: "Button ghost · iconOnly · medium — 표 · 줄의 ⋮ 와 같다. 위젯 머리 오른쪽" }
-        iconSize: { value: 18px, note: "lucide ellipsis-vertical" }
-        touchTarget: { value: 44 × 44, note: "보이는 40 바깥으로 2 씩 — 모서리 손잡이(24)의 끌지 않는 대안. AA ✓ · AAA ✓" }
-        name: { value: "{위젯} 더보기", note: "편집 모드에서만 — 위젯 제목을 붙인다" }
-      sizeMenu:
-        label: { value: 크기, note: "메뉴 묶음 이름(MenuGroupLabel) — 1280 미만은 Menu Sheet" }
-        items: { value: "작게 — 4칸 · 보통 — 6칸 · 넓게 — 8칸 · 가득 — 12칸", note: "누르면 바로 그 폭 — 높이는 그대로. 메뉴는 실행만이라 체크 · 라디오가 없고, 지금 크기 줄에 설명 \"지금 크기\"(menu.md)" }
-    pressed:
-      placeholder:
-        display: { value: 보임, note: "손잡이를 끄는 동안 — 놓을 칸을 칸 단위로" }
-      ghost:
-        display: 보임
-    focused:
-      focusRing:
-        width: 2px
-        offset: 2px
-        color: { value: $color-stroke-focus-ring, note: "⋮ 단추의 링(Button) — 모서리 손잡이는 키보드로 닿지 않는다(대안이 ⋮ \"크기\")" }
 
 motion:
   "선 — 색":

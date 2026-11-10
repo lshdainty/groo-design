@@ -479,7 +479,7 @@ import { ListRadioGroup, ListRadioItem } from "@/components/ui/list"
           axis: "x",
           className: "overflow-x-auto overflow-y-hidden",
           extra: ['tabindex="0"', 'role="region"', 'aria-label="카드"'],
-          html: `<div class="flex gap-x3">${["현대카드 M", "신한 SOL", "국민 노리", "삼성 taptap", "롯데 라이킷"]
+          html: `<div class="flex gap-x3">${["현대카드 신용카드", "신한카드 체크카드", "KB국민카드 체크카드", "삼성카드 신용카드", "롯데카드 신용카드"]
             .map((n) => `<span aria-hidden="true" style="display:flex; align-items:flex-end; width:112px; height:70px; flex-shrink:0; padding:var(--spacing-x2); border-radius:var(--radius-r2); background:linear-gradient(135deg, var(--color-gray-1000), var(--color-gray-800)); font-family:var(--font-sans); font-size:11px; font-weight:700; color:var(--color-static-white);">${n}</span>`)
             .join("")}</div>`,
         })}</div>`,

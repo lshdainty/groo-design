@@ -3,8 +3,9 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Resizable — HR 관리 화면 나누기 · 대시보드 위젯 크기(2026-10-10). 수치 원본은 specs/components/resizable.yaml.
- * SEED 에는 Resizable 이 없다(모바일 앱 중심) — 손잡이 · 범위 · 키보드 · 기억 · 위젯 크기는 groo 가 정했고, 키보드는 APG Window Splitter 다.
+ * Groo Resizable — HR 관리 화면 나누기(2026-10-10). 수치 원본은 specs/components/resizable.yaml.
+ * SEED 에는 Resizable 이 없다(모바일 앱 중심) — 손잡이 · 범위 · 키보드 · 기억은 groo 가 정했고, 키보드는 APG Window Splitter 다.
+ * 대시보드 위젯 크기(WidgetResizeHandle)는 걷었다(2026-11-10 사용자 결정 11A — 제품은 2026-10-23 HB1 C).
  * 옛 shadcn 그대로(react-resizable-panels · 가로 · 세로 · 손잡이 상자 12 × 16 · 누르는 폭 4 · 10%)를 대신한다 — 라이브러리 없이 짰다.
  *
  *   ResizablePanelGroup   나눈 자리 — storageKey(화면마다 폭을 기억할 이름 — 필수), 가로로만 나눈다. 768 이상에서만 쓴다
@@ -12,9 +13,6 @@ import { cn } from "@/lib/utils";
  *   ResizablePanel        패널 — 첫째가 목록 패널: defaultSize(기본 25) · minSize(20) · maxSize(40) · id(손잡이의 aria-controls).
  *                         둘째(오른쪽 상세)는 크기를 적지 않는다 — 남는 폭이다. 패널은 나눈 자리의 바로 아래 자식으로 둔다
  *   ResizableHandle       손잡이 — label(이름 — 필수, "목록 너비") · toggleSize(누르기 · Enter 로 오가는 넓은 폭 — 기본 40)
- *   WidgetResizeHandle    위젯 모서리 손잡이 — 대시보드 격자(react-grid-layout)의 resizeHandle 로 넘긴다(<WidgetResizeHandle />).
- *                         누르는 24 × 24 · 표식 9 × 9 꺾쇠 2px stroke-neutral-solid, 보조 기술에는 숨긴다(끌지 않는 대안은 위젯 ⋮ 의 "크기" — Menu).
- *                         끄는 동안 자리표시 · 따라오는 위젯의 모양은 styles/groo-shadcn-bridge.css 가 이 스펙 값으로 덮는다
  *
  * 손잡이 — 선 1px stroke-neutral-weak(경계일 뿐) + 가운데 손잡이 표시 4 × 24 stroke-neutral-solid(대비 3 이상 — 끌 수 있는 자리를 알린다).
  *   마우스를 올리거나 키보드 초점 · 누르는 동안 선 전체가 stroke-neutral-solid 로 짙어진다(150ms). 누르는 폭은 선 가운데로 양쪽 8 — 16
@@ -293,24 +291,4 @@ const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps>(
 );
 ResizableHandle.displayName = "ResizableHandle";
 
-export interface WidgetResizeHandleProps extends React.HTMLAttributes<HTMLSpanElement> {
-  /** react-resizable 이 넘기는 손잡이 방향 — 오른쪽 아래(se)만 그린다 */
-  handleAxis?: string;
-}
-
-// 위젯 모서리 손잡이 — 오른쪽 아래 누르는 24 × 24 · 표식 9 × 9(오른쪽 · 아래 두 변만, 2px stroke-neutral-solid, 끝에서 6).
-// react-grid-layout 이 ref · 끄는 이벤트를 붙인다 — 받은 속성을 그대로 span 에 넘긴다
-const WidgetResizeHandle = React.forwardRef<HTMLSpanElement, WidgetResizeHandleProps>(({ handleAxis: _handleAxis, className, ...props }, ref) => (
-  <span
-    ref={ref}
-    aria-hidden
-    data-slot="widget-resize-handle"
-    className={cn("absolute bottom-0 right-0 z-[1] size-6 cursor-se-resize touch-none", className)}
-    {...props}
-  >
-    <span data-slot="widget-resize-mark" className="pointer-events-none absolute bottom-[6px] right-[6px] size-[9px] border-0 border-b-2 border-r-2 border-solid border-stroke-neutral-solid" />
-  </span>
-));
-WidgetResizeHandle.displayName = "WidgetResizeHandle";
-
-export { ResizablePanelGroup, ResizablePanel, ResizableHandle, WidgetResizeHandle };
+export { ResizablePanelGroup, ResizablePanel, ResizableHandle };

@@ -57,7 +57,7 @@ function Screen({ kit, mode, desktop, height, title, setEl, children }: { kit: O
 }
 function Rows({ kit, mode, n = 4 }: { kit: OvKit; mode: ViewMode; n?: number }) {
   const rows: [string, string, string, 'orange' | 'blue' | 'green' | 'violet'][] = [
-    ['점심 식사', '식비 · 현대카드 M', '−12,000원', 'orange'],
+    ['점심 식사', '식비 · 현대카드 신용카드', '−12,000원', 'orange'],
     ['지하철', '교통 · 국민 체크카드', '−1,450원', 'blue'],
     ['월급', '수입 · 국민 주계좌', '+3,200,000원', 'green'],
     ['영화', '문화 · 국민 체크카드', '−15,000원', 'violet'],
@@ -120,7 +120,7 @@ const DETAIL: RowSpec[] = [
   { kind: 'view', title: '금액', suffix: { text: '−12,000원' } },
   { kind: 'view', title: '내용', suffix: { text: '점심 식사' } },
   { kind: 'view', title: '카테고리', suffix: { text: '식비' } },
-  { kind: 'view', title: '결제 수단', suffix: { text: '현대카드 M' } },
+  { kind: 'view', title: '결제 수단', suffix: { text: '현대카드 신용카드' } },
 ];
 // 스냅 높이 — 절반 · 가득(화면 높이에 대해, 가득은 시트 상한)
 const snapsOf = (kit: OvKit) => [0.5, kit.ov.sheet.maxHeight];

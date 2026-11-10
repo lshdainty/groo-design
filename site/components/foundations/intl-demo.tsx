@@ -16,6 +16,7 @@ function dateRows(now: Date): Row[] {
     ['표준', ko(lastYear, { year: 'numeric', month: 'long', day: 'numeric' }), en(lastYear, { year: 'numeric', month: 'short', day: 'numeric' })],
     ['줄임', ko(now, { month: 'long', day: 'numeric' }), en(now, { month: 'short', day: 'numeric' })],
     ['점', ko(now, { year: 'numeric', month: 'numeric', day: 'numeric' }), '—'],
+    ['점 · 두 자리 연도', ko(now, { year: '2-digit', month: 'numeric', day: 'numeric' }), `${en(now, { month: 'short', day: 'numeric' })}, '${String(now.getFullYear()).slice(2)}`],
     ['요일', `${ko(now, { month: 'long', day: 'numeric' })} (${ko(now, { weekday: 'short' })})`, en(now, { weekday: 'short', month: 'short', day: 'numeric' })],
     ['요일 풀어 씀', `${ko(now, { month: 'long', day: 'numeric' })} ${ko(now, { weekday: 'long' })}`, en(now, { weekday: 'long', month: 'short', day: 'numeric' })],
     ['요일 · 시각', `${ko(now, { month: 'long', day: 'numeric' })} (${ko(now, { weekday: 'short' })}) ${ko(now, TIME)}`, `${en(now, { weekday: 'short', month: 'short', day: 'numeric' })} at ${en(now, TIME)}`],

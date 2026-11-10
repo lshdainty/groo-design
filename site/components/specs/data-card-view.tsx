@@ -242,7 +242,7 @@ export function CardActionView({ look, mode = 'auto', label, title, live = false
 
 // ── 지표 · 증감 ────────────────────────────────────────────
 export type DeltaSpec = { direction: DeltaDir; value: string; text: string; srText?: string };
-// 값 앞의 부호(+ · − · ±)는 뗀다 — 방향은 화살표가 말한다("+12%" 가 아니라 "▲ 12%", card.md Delta)
+// 값 앞의 부호(+ · − · ±)는 뗀다 — 방향은 화살표가 말한다("+12.00%" 가 아니라 "▲ 12.00%", card.md Delta)
 export const unsigned = (v: string) => v.replace(/^[+\-−±]\s*/, '');
 // 보조 기술이 읽는 문장 — 기본 "{text} {value} 늘었어요 · 줄었어요", 그대로면 "{text} 변화가 없어요". 화살표는 숨긴다
 export const deltaSentence = (d: DeltaSpec) => d.srText ?? (d.direction === 'flat' ? `${d.text} 변화가 없어요` : `${d.text} ${unsigned(d.value)} ${d.direction === 'up' ? '늘었어요' : '줄었어요'}`);

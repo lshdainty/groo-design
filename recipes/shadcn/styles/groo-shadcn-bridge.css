@@ -103,22 +103,3 @@ html {
 /* 가로 줄만 — 세로 스크롤바에는 쓰지 않는다 */
 .scrollbar-hide { scrollbar-width: none; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
-
-/*
- * 위젯 크기 — HR 대시보드 편집 모드(Resizable widget, specs/components/resizable.yaml). react-grid-layout 의 기본 모양(빨강 20% 자리표시 ·
- * 끄는 위젯 투명도 0.9)을 덮는다. 끄는 동안 놓일 칸은 브랜드 옅은 바탕 + 1px 브랜드 점선 · 모서리 16, 따라오는 위젯은 위젯 모양 그대로
- * 그림자 s3 · 모서리 16. 모서리 손잡이는 resizable.tsx 의 WidgetResizeHandle 이 그린다. 라이브러리 CSS 가 뒤에 와도 이기도록 격자(.react-grid-layout)부터 짚는다.
- */
-.react-grid-layout .react-grid-item.react-grid-placeholder {
-  background: var(--color-bg-brand-weak);
-  opacity: 1;
-  border: 1px dashed var(--color-stroke-brand-solid);
-  border-radius: var(--radius-r4);
-  box-sizing: border-box;
-}
-.react-grid-layout .react-grid-item.resizing,
-.react-grid-layout .react-grid-item.react-draggable-dragging {
-  opacity: 1;
-  border-radius: var(--radius-r4);
-  box-shadow: var(--shadow-s3);
-}

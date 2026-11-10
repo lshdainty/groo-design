@@ -306,7 +306,7 @@ const Prefix: Fig = ({ caption }) => (
             { kind: 'button', prefix: { icon: 'bell' }, title: '알림', detail: '아이콘 22 — 설정 · 메뉴 줄', suffix: { chevron: true } },
             { kind: 'button', prefix: { tile: 'orange', icon: 'utensils' }, title: '점심 식사', detail: '타일 40 — 색이 뜻을 가진 내용 줄', suffix: { amount: '−12,000원' } },
             { kind: 'button', prefix: { node: <Logo name="신한" /> }, title: '신한 주거래 통장', detail: `로고 타일 ${LTL().sizes[LTL().defaults.size].size} — 은행 · 카드 같은 물건 줄`, suffix: { amount: '1,250,000원' } },
-            { kind: 'button', prefix: { node: <CardArt width={CARD_ROW_W} issuer="신한카드" name="데일리 플러스" pic="card-h" /> }, title: '데일리 플러스', detail: `카드 그림 ${CARD_ROW_W} — 카드 자체가 줄인 자리`, suffix: { chevron: true } },
+            { kind: 'button', prefix: { node: <CardArt width={CARD_ROW_W} issuer="신한카드" name="신용카드" pic="card-h" /> }, title: '신용카드', detail: `카드 그림 ${CARD_ROW_W} — 카드 자체가 줄인 자리`, suffix: { chevron: true } },
             { kind: 'button', prefix: { person: '김포레' }, title: '김포레', detail: `아바타 ${look().avatarSize.two} — 사람(한 줄이면 ${look().avatarSize.one})`, suffix: { chevron: true } },
             { kind: 'check', title: '거래 내역', detail: '체크 24 — 여럿 고르기', checked: true },
           ]}

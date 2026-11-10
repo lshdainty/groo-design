@@ -42,12 +42,12 @@ export const at = (placement: IfPlacement, node: ReactNode) => ({ placement, nod
 // 카드 혜택 — 그림 있음(가로 · 세로) · 그림 없음(아는 카드사 — 흰 글자 · 짙은 글자) · 모르는 카드사 · 단종
 export type CardItem = { name: string; issuer: string; type: string; pic: PicKind | null; discontinued?: boolean };
 export const CARDS: CardItem[] = [
-  { name: '데일리 플러스', issuer: '신한카드', type: '신용', pic: 'card-h' },
-  { name: '트래블로그', issuer: '하나카드', type: '체크', pic: 'card-v' },
-  { name: 'NH올원 Pay', issuer: 'NH농협카드', type: '체크', pic: null },
-  { name: '톡톡 With', issuer: 'KB국민카드', type: '신용', pic: null },
-  { name: '바로 카드', issuer: 'BC카드', type: '신용', pic: null },
-  { name: 'M 에디션', issuer: '현대카드', type: '신용', pic: 'card-h2', discontinued: true },
+  { name: '신용카드', issuer: '신한카드', type: '신용', pic: 'card-h' },
+  { name: '체크카드', issuer: '하나카드', type: '체크', pic: 'card-v' },
+  { name: '체크카드', issuer: 'NH농협카드', type: '체크', pic: null },
+  { name: '신용카드', issuer: 'KB국민카드', type: '신용', pic: null },
+  { name: '신용카드', issuer: 'BC카드', type: '신용', pic: null },
+  { name: '신용카드', issuer: '현대카드', type: '신용', pic: 'card-h2', discontinued: true },
 ];
 // 자산 — 은행 · 적금 · 증권 · 코인 · 기관 없는 자산(이름 색)
 export type AssetItem = { name: string; institution?: string; type: string; balance: string };
@@ -73,7 +73,7 @@ export function Rows({ rows, mode = 'auto', brand = 'desk', ariaLabel }: { rows:
 }
 // 카드 혜택 줄 — 카드 그림 56 · 이름 · "신용 · 신한카드"(image-frame.md 코드)
 export function cardRow(c: CardItem, mode: Mode = 'auto', extra?: Partial<RowSpec>): RowSpec {
-  return { kind: 'button', prefix: { node: <Card width={56} issuer={c.issuer} name={c.name} pic={c.pic} mode={mode} /> }, title: c.name, detail: `${c.type} · ${c.issuer}`, ...extra };
+  return { kind: 'button', prefix: { node: <Card width={56} issuer={c.issuer} name={c.name} pic={c.pic} mode={mode} /> }, title: `${c.issuer} ${c.name}`, detail: `${c.type} · ${c.issuer}`, ...extra };
 }
 // 자산 줄 — 로고 타일 40 · 자산 이름 · "기관 · 종류" · 잔액(logo-tile.md 코드)
 export function assetRow(a: AssetItem, mode: Mode = 'auto', extra?: Partial<RowSpec> & { image?: LtImage; pic?: PicKind; load?: LogoState; size?: LtSize }): RowSpec {
@@ -97,7 +97,7 @@ export function CardCell({ c, mode = 'auto', width = GRID.cell }: { c: CardItem;
       <Card width={width} issuer={c.issuer} name={c.name} pic={c.pic} mode={mode} floaters={c.discontinued ? [at('top-start', <Discontinued mode={mode} />)] : undefined} />
       <span className="flex flex-col">
         <span className="truncate text-[14px] font-bold leading-[19px]" style={{ color: tone('fg-neutral', mode) }}>
-          {c.name}
+          {`${c.issuer} ${c.name}`}
         </span>
         <span className="truncate text-[12px] leading-4" style={{ color: tone('fg-neutral-subtle', mode) }}>
           {c.issuer}
@@ -111,7 +111,7 @@ export function BenefitGridScreen({ mode = 'auto', scale, h, n = 6 }: { mode?: M
     <Screen title="카드 혜택" mode={mode} scale={scale} h={h}>
       <div className="grid" style={{ gridTemplateColumns: `repeat(2, ${GRID.cell}px)`, columnGap: GRID.gap, rowGap: 16, paddingLeft: GRID.gutter, paddingRight: GRID.gutter, paddingTop: 8 }}>
         {CARDS.slice(0, n).map((c) => (
-          <CardCell key={c.name} c={c} mode={mode} />
+          <CardCell key={`${c.issuer}-${c.name}`} c={c} mode={mode} />
         ))}
       </div>
     </Screen>

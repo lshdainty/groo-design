@@ -35,7 +35,7 @@ function FilterHead({ mode = 'auto' }: { mode?: Mode }) {
   return (
     <div style={{ paddingTop: 8, paddingBottom: 8, paddingLeft: 24, paddingRight: 24, background: 'transparent' }}>
       <ChipGroupView look={chip} layout="scroll" ariaLabel="적용한 필터" mode={mode}>
-        {['식비', '현대카드 M', '10월 1일 ~ 8일', '1만 원 이상'].map((t) => (
+        {['식비', '현대카드 신용카드', '10월 1일 ~ 8일', '1만 원 이상'].map((t) => (
           <ChipView key={t} look={chip} mode={mode} state="enabled" selected label={t} />
         ))}
       </ChipGroupView>

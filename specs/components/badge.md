@@ -53,6 +53,8 @@
 | `critical` | 거절 · 실패 · 넘침 · 제재 | 반려 · 연체 · 한도 초과 |
 | `brand` | 브랜드와 닿는 자리만 — 아껴 쓴다 | 요금제(Pro) · 본인 표시(나) |
 
+**D-day — 며칠 남은 일은 어디서나 `warning`.** 다가오는 결제 · 일정의 "D-3" · "3일 남음" 은 배지든 글이든 주황(`warning` — 글은 `fg-warning`)이다. 아직 문제가 아니라 곧 닥칠 일이라 SEED 의 "만료 임박" 과 같다. 빨강(`critical`)은 연체 · 한도 초과처럼 이미 문제가 된 일에만 쓴다 — 화면마다 갈리지 않는다(2026-11-10 사용자 결정 1A). 며칠 전부터 칠할지는 이 결정에 들지 않는다.
+
 [표: weak — 옅은 바탕](badge.yaml#grid.tone.variant.weak)
 
 [표: solid — 채움](badge.yaml#grid.tone.variant.solid)
@@ -238,6 +240,10 @@ import { Badge } from "@/components/ui/badge"
 - **Action(정보 아이콘 버튼)은 두지 않는다** — SEED React 3(2026-10-01)의 배지 안 정보 버튼은 누르는 영역이 12 · 14 이고, 누르지 않는 배지 안에 따로 눌리는 것이 생긴다. 설명은 배지 옆 ⓘ Help Bubble 이다.
 
 ## Migration notes
+
+### 2026-11-10 — D-day 는 warning
+
+며칠 남은 일(결제 · 일정)의 색을 Tone 절에 한 줄로 적었다 — 어디서나 `warning`(2026-11-10 사용자 결정 1A). 홈 두 곳 · 일정 상세 배지는 주황, 자산의 예정된 결제 글만 빨강으로 갈려 있었다(담다 웹 asset-parts 한 줄이 따라 고칠 자리). 값 변경 없음. 옛 스펙은 `badge.history/v-pre-decisions-1110.md`.
 
 ### 2026-11-10 — 예시 이름
 

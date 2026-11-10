@@ -392,8 +392,8 @@ const Delta: Fig = ({ caption }) => {
   const items: [string, number, { direction: 'up' | 'down' | 'flat'; value: string; text: string; srText?: string }][] = [
     ['이번 달 지출', 1240000, STATS[0].delta],
     ['이번 달 수입', 4200000, STATS[1].delta],
-    ['순자산', 42898100, { direction: 'up', value: '1.8%', text: '지난달보다' }],
-    ['삼성전자', 71200, { direction: 'up', value: '1.28%', text: '어제보다' }],
+    ['순자산', 42898100, { direction: 'up', value: '1.80%', text: '지난달보다' }],
+    ['가람전자', 71200, { direction: 'up', value: '1.28%', text: '어제보다' }],
     ['남은 예산', 260000, { direction: 'flat', value: '', text: '지난달보다' }],
   ];
   return (
@@ -408,7 +408,7 @@ const Delta: Fig = ({ caption }) => {
             ))}
           </Floor>
         ))}
-        <Cap>▲ fg-critical · ▼ fg-informative · 변화 없음 fg-neutral-subtle — 지출 · 수입 · 순자산 · 주식이 같은 규칙. 보조 기술에는 문장("지난달보다 12% 더 썼어요")으로 읽힌다</Cap>
+        <Cap>▲ fg-critical · ▼ fg-informative · 변화 없음 fg-neutral-subtle — 지출 · 수입 · 순자산 · 주식이 같은 규칙. 보조 기술에는 문장("지난달보다 12.00% 더 썼어요")으로 읽힌다</Cap>
       </div>
     </Panel>
   );
@@ -605,13 +605,13 @@ const DeltaGuide: Fig = ({ caption }) => {
         <Verdict ok note="방향 색 — ▲ 빨강 · ▼ 파랑, 어디서나. 좋고 나쁨은 글이 말한다">
           <Floor style={{ width: 296 }}>
             <StatCard i={0} />
-            <StatCard label="순자산" amount={42898100} delta={{ direction: 'up', value: '1.8%', text: '지난달보다' }} />
+            <StatCard label="순자산" amount={42898100} delta={{ direction: 'up', value: '1.80%', text: '지난달보다' }} />
           </Floor>
         </Verdict>
         <Verdict ok={false} note="좋고 나쁨 색 — 지출 ▲ 빨강 · 순자산 ▲ 초록. 같은 화면의 주식(▲ 빨강 = 올랐다)과 뜻이 엇갈린다">
           <Floor style={{ width: 296 }}>
-            <BadStat label="이번 달 지출" amount={1240000} dir="up" value="12%" good={false} />
-            <BadStat label="순자산" amount={42898100} dir="up" value="1.8%" good />
+            <BadStat label="이번 달 지출" amount={1240000} dir="up" value="12.00%" good={false} />
+            <BadStat label="순자산" amount={42898100} dir="up" value="1.80%" good />
           </Floor>
         </Verdict>
       </Pair>

@@ -135,7 +135,7 @@ export function ImageFramePlayground({ look, ca, faces, badge, tones }: { look: 
     setState('loading');
     timer.current = window.setTimeout(() => setState('loaded'), 1200);
   };
-  const cardName = kind === 'vertical' ? '트래블로그' : issuer === 'BC카드' ? '바로 카드' : issuer === 'KB국민카드' ? '톡톡 With' : issuer === '신한카드' ? '데일리 플러스' : 'NH올원 Pay';
+  const cardName = kind === 'vertical' ? '체크카드' : issuer === 'BC카드' ? '신용카드' : issuer === 'KB국민카드' ? '신용카드' : issuer === '신한카드' ? '신용카드' : '체크카드';
   const cardIssuer = kind === 'vertical' ? '하나카드' : issuer;
   const face = card ? (faces[cardIssuer] ?? null) : null;
   const frameProps = { look, mode, width: sizing === 'fixed' ? width : w, fill: sizing !== 'fixed', bleed: sizing === 'bleed', state: st, floaters, reveal };
@@ -228,7 +228,7 @@ export function ImageFramePlayground({ look, ca, faces, badge, tones }: { look: 
 }
 
 // ══ Logo Tile ════════════════════════════════════════════
-const NAME_PRESETS = ['신한', 'KB국민', 'NH농협카드 올원', 'IBK기업은행', '유안타증권', '카카오뱅크', 'Upbit', '비상금'] as const;
+const NAME_PRESETS = ['신한', 'KB국민', 'NH농협카드 체크', 'IBK기업은행', '유안타증권', '카카오뱅크', 'Upbit', '비상금'] as const;
 export function LogoTilePlayground({ look, frame, table, list, tones }: { look: LogoTileLook; frame: ImageFrameLook; table: Institution[]; list: ListLook; tones: Tones }) {
   const [name, setName] = useState('신한');
   const [face, setFace] = useState<LtFace>(look.defaults.face);

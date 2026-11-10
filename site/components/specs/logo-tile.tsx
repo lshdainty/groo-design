@@ -321,7 +321,7 @@ const ImageFig: Fig = ({ caption }) => {
 
 // 그림이 늦을 때 · 실패할 때 — 첫 글자 먼저 → 그림이 오면 덮기 → 실패하면 첫 글자 그대로
 const Loading: Fig = ({ caption }) => {
-  const a = { name: '삼성카드 데일리', institution: '삼성카드', type: '신용카드', balance: '−352,400원' };
+  const a = { name: '삼성카드 신용카드', institution: '삼성카드', type: '신용카드', balance: '−352,400원' };
   const step = (strong: string, cap: string, state: 'initial' | 'loaded' | 'failed') => (
     <div className="flex flex-col items-center gap-2">
       <PhoneBoard>
@@ -562,7 +562,7 @@ const ExCard: Fig = ({ caption }) => {
   const f = logoFace('삼성카드', 'institution', institutions(), LTL());
   return (
     <Preview caption={caption}>
-      <LogoCardDemo look={LTL()} frame={IFL()} list={listLook('desk')} paint={{ bg: f.bg, fg: f.fg }} name="삼성카드" title="삼성카드 데일리" detail="삼성카드 · 신용카드" amount="−352,400원" pic="card-v" />
+      <LogoCardDemo look={LTL()} frame={IFL()} list={listLook('desk')} paint={{ bg: f.bg, fg: f.fg }} name="삼성카드" title="삼성카드 신용카드" detail="삼성카드 · 신용카드" amount="−352,400원" pic="card-v" />
     </Preview>
   );
 };
@@ -591,7 +591,7 @@ const ExCompany: Fig = ({ caption }) => (
 // 코드 절의 예시 표(이름 → 찾은 기관 · 면 → 글자)가 찾기 함수 · 표 · 대비와 맞는지 — 표는 스펙 md 의 글이라 바뀌면 여기서 멈춘다
 function checkCodeTable() {
   const md = readFileSync(join(process.cwd(), '..', 'specs/components/logo-tile.md'), 'utf8');
-  const rows = md.split('\n').filter((l) => /^\| (신한|NH농협카드 올원|IBK기업은행|비상금)/.test(l));
+  const rows = md.split('\n').filter((l) => /^\| (신한|NH농협카드 체크|IBK기업은행|비상금)/.test(l));
   if (rows.length !== 4) throw new Error(`logo-tile.md 코드 절의 예시 표(${rows.length}줄)를 찾지 못했다 — logo-tile.tsx 를 고친다`);
   for (const row of rows) {
     const [name, foundCell, textCell] = row.split('|').slice(1, 4).map((c) => c.trim());

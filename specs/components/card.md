@@ -103,7 +103,9 @@ SEED 에는 카드 컴포넌트가 없다. 그래도 SEED 가 그린 카드는 �
 
 ### 증감 표기
 
-지난달 · 지난 기간에 견준 변화는 방향으로 칠한다 — 어디서나 오르면 ▲ `fg-critical`(빨강), 내리면 ▼ `fg-informative`(파랑)이다(증권과 같은 관례, 사용자 결정). 늘 ▲ · ▼ 와 값을 함께 쓰고, 그 뒤에 기준을 옅은 글로 둔다 — "▲ 12% 지난달보다". 부호는 화살표가 말한다 — "+12%" · "−12%" 를 화살표와 같이 쓰지 않는다. 좋은지 나쁜지는 색이 아니라 글이 말한다 — 지출이 늘었으면 "지난달보다 12% 더 썼어요". 변화가 없으면 화살표 없이 "변화 없음" 이다. 하나뿐인 예외는 짙은 브랜드 채움(순자산 카드) 위 — 흰 ▲ · ▼ + 글이다. 보조 기술에는 문장으로 읽힌다("지난달보다 12% 늘었어요" — 화살표는 숨긴다).
+지난달 · 지난 기간에 견준 변화는 방향으로 칠한다 — 어디서나 오르면 ▲ `fg-critical`(빨강), 내리면 ▼ `fg-informative`(파랑)이다(증권과 같은 관례, 사용자 결정). 늘 ▲ · ▼ 와 값을 함께 쓰고, 그 뒤에 기준을 옅은 글로 둔다 — "▲ 12.00% 지난달보다". 부호는 화살표가 말한다 — "+12.00%" · "−12.00%" 를 화살표와 같이 쓰지 않는다. 좋은지 나쁜지는 색이 아니라 글이 말한다 — 지출이 늘었으면 "지난달보다 12.00% 더 썼어요". 변화가 없으면 화살표 없이 "변화 없음" 이다. 하나뿐인 예외는 짙은 브랜드 채움(순자산 카드) 위 — 흰 ▲ · ▼ + 글이다. 보조 기술에는 문장으로 읽힌다("지난달보다 12.00% 늘었어요" — 화살표는 숨긴다).
+
+**지난 기간 대비 % 는 늘 소수 둘째 자리다** — 지출 · 수입 · 순자산 · 주식 어디서나 "▲ 12.00%" · "▼ 1.80%" 다. 2026-10-25 "등락률은 어디서나 소수 둘째 자리" 결정 뒤 제품(홈 순자산 "8.90%" · 통계 "216.90%")이 이미 이렇다(2026-11-10 사용자 결정 13A — 지출 · 자산 증감만 "12%" 로 줄이는 안은 고르지 않았다). 자리 규칙은 DESIGN.md International Design 의 "퍼센트" 표 한 곳이다.
 
 [그림: 증감 — ▲ 빨강 · ▼ 파랑 · 변화 없음, 지출 · 수입 · 순자산 · 주식이 같은 규칙](../../site/components/specs/card.tsx#delta)
 
@@ -195,7 +197,7 @@ Desk 홈 맨 위의 순자산은 브랜드 색으로 채운 카드다(`hero`) �
 - `CardContent` — 본문(여백 안). 목록 카드는 `CardContent` 없이 `List` 를 바로 넣는다. 머리 설명(`CardDescription`) · 아래 버튼 줄(`CardFooter`)은 두지 않는다 — 머리는 제목 하나, 버튼은 본문 끝에 둔다.
 - `CardLink` — `peers` 카드의 누르는 자리(카드 전체를 덮는 링크 · 버튼, 이름은 카드 제목).
 - `CardStat` — 지표. `label` · `value`(글 — 쓰는 쪽이 원까지 만든다) · `size`(`"large"` 기본 · `"small"`) · `delta`.
-- `Delta` — 증감 줄. `direction`(`"up"` · `"down"` · `"flat"`) · `value`("12%") · `text`("지난달보다") · `srText`(보조 기술 문장 — 기본 "{text} {value} 늘었어요 · 줄었어요", `flat` 은 "{text} 변화가 없어요", 화살표는 숨긴다). `flat` 은 화살표도 기준 글도 없이 "변화 없음" 만 보인다 — "변화 없음 지난달보다" 가 되지 않게 기준 글은 숨긴 문장에만 들어간다. `value` 앞의 부호(+ · − · ±)는 떼고 보인다 — 방향은 화살표가 말한다("+-12.5%" 가 아니라 "▼ 12.5%"). 표 · 차트의 증감 칸도 이것을 쓴다.
+- `Delta` — 증감 줄. `direction`(`"up"` · `"down"` · `"flat"`) · `value`("12.00%") · `text`("지난달보다") · `srText`(보조 기술 문장 — 기본 "{text} {value} 늘었어요 · 줄었어요", `flat` 은 "{text} 변화가 없어요", 화살표는 숨긴다). `flat` 은 화살표도 기준 글도 없이 "변화 없음" 만 보인다 — "변화 없음 지난달보다" 가 되지 않게 기준 글은 숨긴 문장에만 들어간다. `value` 앞의 부호(+ · − · ±)는 떼고 보인다 — 방향은 화살표가 말한다("+-12.5%" 가 아니라 "▼ 12.5%"). 표 · 차트의 증감 칸도 이것을 쓴다.
 - `CardHeroLabel` · `CardHeroAmount` · `CardHeroDetail` — `variant="hero"` 의 흰 글자 셋. 장식 빛은 카드가 그린다.
 
 ### 목록 카드 — 오늘 쓴 돈
@@ -227,7 +229,7 @@ import { Card, CardStat } from "@/components/ui/card"
 <div className="grid gap-2 md:grid-cols-2 md:gap-6">
   <Card>
     <CardStat label="이번 달 지출" value="1,240,000원"
-      delta={{ direction: "up", value: "12%", text: "지난달보다", srText: "지난달보다 12% 더 썼어요" }} />
+      delta={{ direction: "up", value: "12.00%", text: "지난달보다", srText: "지난달보다 12.00% 더 썼어요" }} />
   </Card>
   <Card>
     <CardStat label="이번 달 수입" value="4,200,000원"
@@ -272,7 +274,7 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
   <CardHeroLabel>순자산</CardHeroLabel>
   <CardHeroAmount>42,898,100원</CardHeroAmount>
   {/* 히어로 위 증감은 흰 글자 — Delta 가 hero 안에서 색을 흰색으로 바꾼다 */}
-  <CardHeroDetail><Delta direction="up" value="1.8%" text="지난달보다" /></CardHeroDetail>
+  <CardHeroDetail><Delta direction="up" value="1.80%" text="지난달보다" /></CardHeroDetail>
 </Card>
 ```
 
@@ -340,6 +342,10 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 - **증감 색** — SEED 에 증감 규칙이 없다. groo 는 방향 색(▲ 빨강 · ▼ 파랑)이다.
 
 ## Migration notes
+
+### 2026-11-10 — 증감 % 는 소수 둘째 자리
+
+증감 절에 "지난 기간 대비 % 는 늘 소수 둘째 자리" 를 적고(2026-11-10 사용자 결정 13A), 예시 "12%" · "1.8%" 를 "12.00%" · "1.80%" 로 고쳤다 — 이 문서 · `card.yaml` 비고 · 사이트 그림(card · data-card-play · data-data) · 레시피 `card.tsx` 주석 · 예제 · 미리보기, DESIGN 세 벌의 증감 · 퍼센트 표. 제품은 이미 둘째 자리다(앱 card_demo 예시만 따라 고칠 자리). 값 변경 없음. 옛 스펙은 `card.history/v-pre-decisions-1110.*`.
 
 ### 2026-11-10 — HR 폰도 카드 화면이 없다
 

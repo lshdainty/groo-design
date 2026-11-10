@@ -1,30 +1,27 @@
 # Resizable
 
-> 화면 안의 크기를 손으로 바꾸는 손잡이 — HR 관리 화면의 목록 | 상세 나누기(목록 폭)와 HR 대시보드 편집 모드의 위젯 크기. 768 이상의 데스크톱에서만 쓴다. 폰은 나누지 않는다 — 목록 → 상세 · 탭이고, 옆 패널은 [Side Panel](side-panel.md)(1280 미만은 Bottom Sheet)이다.
+> 화면 안의 크기를 손으로 바꾸는 손잡이 — HR 관리 화면의 목록 | 상세 나누기(목록 폭). 768 이상의 데스크톱에서만 쓴다. 폰은 나누지 않는다 — 목록 → 상세 · 탭이고, 옆 패널은 [Side Panel](side-panel.md)(1280 미만은 Bottom Sheet)이다.
 
-SEED 에는 Resizable 이 없다 — 모바일 앱 중심이라 끌어서 나누는 패널이 없다. 그래서 값은 모두 groo 가 정했다(2026-10-10 사용자 결정 12B · 13A) — 나누기는 남기고 고친다(보이는 선 1px + 가운데 손잡이 표시 · 누르는 폭 16 · 이름 "목록 너비" · `←` `→` 5% · `Home` · `End` · 목록 20 ~ 40% · 화면마다 폭 기억 · 한 번 누르면 25 ↔ 40), 위젯 크기도 남기고 고친다(모서리 손잡이 대비 3 이상 · 토큰 색 자리표시 · ⋮ "크기"). 키보드는 [WAI-ARIA APG Window Splitter](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/) 다. 옛 Resizable 스펙(가로 · 세로 · 손잡이 상자 12 × 16 · 누르는 폭 4 · hover 변화 없음)과 DESIGN.md v71 의 반대되던 글(손잡이 4 ~ 6px · hover 브랜드 색 · ±1% · "localStorage 권장")을 대신한다.
+SEED 에는 Resizable 이 없다 — 모바일 앱 중심이라 끌어서 나누는 패널이 없다. 그래서 값은 모두 groo 가 정했다(2026-10-10 사용자 결정 12B) — 나누기는 남기고 고친다(보이는 선 1px + 가운데 손잡이 표시 · 누르는 폭 16 · 이름 "목록 너비" · `←` `→` 5% · `Home` · `End` · 목록 20 ~ 40% · 화면마다 폭 기억 · 한 번 누르면 25 ↔ 40). 대시보드 위젯 크기 바꾸기는 제품에서 걷었다(2026-10-23 사용자 결정 HB1 C) — 이 스펙에도 두지 않는다(2026-11-10 사용자 결정 11A). 키보드는 [WAI-ARIA APG Window Splitter](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/) 다. 옛 Resizable 스펙(가로 · 세로 · 손잡이 상자 12 × 16 · 누르는 폭 4 · hover 변화 없음)과 DESIGN.md v71 의 반대되던 글(손잡이 4 ~ 6px · hover 브랜드 색 · ±1% · "localStorage 권장")을 대신한다.
 
 수치 원본은 [`resizable.yaml`](resizable.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
-[그림: HR 관리 > 회사 1280 — 부서 나무 25% | 조직도, 손잡이에 초점 · 대시보드 편집 모드의 위젯 크기 — 라이트 · 다크](../../site/components/specs/resizable.tsx#hero)
+[그림: HR 관리 > 회사 1280 — 부서 나무 25% | 조직도, 손잡이에 초점 — 라이트 · 다크](../../site/components/specs/resizable.tsx#hero)
 
 ### 직접 골라 보기
 
-손잡이를 끌거나, 한 번 눌러 25 ↔ 40 으로 바꾸거나, 초점을 두고 `←` `→` · `Home` · `End` · `Enter` 를 눌러 보라 — 아래 글이 왼쪽 · 오른쪽 폭과 읽기를 따라간다. "화면 다시 열기" 는 기억한 폭으로 연다. 위젯은 모서리를 끌거나 ⋮ → 크기를 골라 보라.
+손잡이를 끌거나, 한 번 눌러 25 ↔ 40 으로 바꾸거나, 초점을 두고 `←` `→` · `Home` · `End` · `Enter` 를 눌러 보라 — 아래 글이 왼쪽 · 오른쪽 폭과 읽기를 따라간다. "화면 다시 열기" 는 기억한 폭으로 연다.
 
 [그림: 플레이그라운드](../../site/components/specs/resizable.tsx#playground)
 
 ## Anatomy
 
-[그림: 나누기 — 목록 패널 · 선 1px · 가운데 손잡이 4 × 24 · 누르는 폭 16 / 위젯 — 모서리 손잡이 24 · 표식 9 · 끄는 동안 자리표시](../../site/components/specs/resizable.tsx#anatomy)
+[그림: 나누기 — 목록 패널 · 선 1px · 가운데 손잡이 4 × 24 · 누르는 폭 16](../../site/components/specs/resizable.tsx#anatomy)
 
 | ⓐ Panel | 목록 패널 — 왼쪽, 폭이 바뀐다(20 ~ 40%). 상세 패널은 남는 폭이다. |
 | ⓑ Line | 선 — 1px `stroke-neutral-weak`. 올리거나 초점 · 끄는 동안 짙어진다. |
 | ⓒ Grip | 손잡이 표시 — 선 가운데 4 × 24 `stroke-neutral-solid`. |
 | ⓓ Handle | 손잡이 — 선 가운데로 누르는 폭 16. 이름 "목록 너비". |
-| ⓔ Widget Handle | 위젯 모서리 손잡이 — 오른쪽 아래 24 × 24, 표식 9 × 9. |
-| ⓕ Placeholder | 끄는 동안 자리표시 — 위젯이 놓일 칸. |
-| ⓖ Size Menu | 위젯 머리 ⋮ 와 그 "크기" 메뉴 — 끌지 않는 대안. |
 
 [표: 부위](resizable.yaml#slots)
 
@@ -48,20 +45,6 @@ HR 관리 > 역할 · 사용자 · 회사 · 부서 사용자는 목록 | 상세
 
 [표: 선 · 손잡이 표시](resizable.yaml#kind@line+grip)
 
-### 위젯 크기(`widget`)
-
-HR 대시보드 편집 모드에서 위젯의 크기를 바꾼다 — 크기 · 위치는 편집 모드에서만 바꾸고 저장 단추로 서버에 저장한다(지금과 같다). 오른쪽 아래 모서리 손잡이는 누르는 자리 24 × 24 · 표식 9 × 9 꺾쇠 2px `stroke-neutral-solid`(카드 면 위 4.18 · 다크 4.13)다. 끄는 동안에는 놓일 칸에 자리표시(옅은 브랜드 바탕 + 1px 브랜드 점선 · 모서리 16)를 보이고, 위젯은 그림자 `shadow-s3` 로 포인터를 따라온다. 끌지 못하는 사람은 위젯 ⋮ 의 "크기" 에서 고른다(아래). 크기를 위젯마다 고정하는 안(13B)은 고르지 않았다.
-
-[그림: 대시보드 편집 — 모서리를 끄는 동안 자리표시 6칸 · ⋮ → 크기](../../site/components/specs/resizable.tsx#widget)
-
-[표: 위젯 격자](resizable.yaml#kind@group)
-
-[표: 모서리 손잡이 · 표식](resizable.yaml#kind@widgetHandle+widgetMark)
-
-[표: 자리표시 · 따라오는 위젯](resizable.yaml#kind@placeholder+ghost)
-
-[표: ⋮ · 크기 메뉴](resizable.yaml#kind@moreButton+sizeMenu)
-
 ### State
 
 | 상태 | 모습 |
@@ -69,11 +52,9 @@ HR 대시보드 편집 모드에서 위젯의 크기를 바꾼다 — 크기 · 
 | `enabled` | 선 `stroke-neutral-weak` + 손잡이 표시 `stroke-neutral-solid` |
 | `hovered` | 웹 — 선 전체가 `stroke-neutral-solid` · 커서 `col-resize` |
 | `focused` | 웹 — 누르는 폭 16 둘레에 링 2px(모서리 4) · 선이 짙어진다 |
-| `pressed` | 끄는 동안 — 선이 짙고, 화면 전체 커서 `col-resize` · 글을 고르지 않는다. 위젯은 자리표시 + 따라오는 위젯 |
+| `pressed` | 끄는 동안 — 선이 짙고, 화면 전체 커서 `col-resize` · 글을 고르지 않는다 |
 
 [표: 상태 — 나누기](resizable.yaml#matrix@line+focusRing)
-
-[표: 상태 — 위젯](resizable.yaml#states.kind)
 
 [표: 모션](resizable.yaml#motion)
 
@@ -85,19 +66,19 @@ HR 대시보드 편집 모드에서 위젯의 크기를 바꾼다 — 크기 · 
 
 ### 끌지 않아도 된다
 
-끌기는 지름길이다 — 손잡이를 한 번 누르면 25 ↔ 40, 키보드는 `←` `→` 5% · `Home` 20% · `End` 40% · `Enter` 25 ↔ 40 이다. 위젯은 ⋮ → "크기" 에서 작게 — 4칸 · 보통 — 6칸 · 넓게 — 8칸 · 가득 — 12칸을 고른다(높이는 그대로). 메뉴는 실행만이라 체크 · 라디오를 두지 않고, 지금 크기 줄에는 설명 "지금 크기" 를 단다([Menu](menu.md)).
+끌기는 지름길이다 — 손잡이를 한 번 누르면 25 ↔ 40, 키보드는 `←` `→` 5% · `Home` 20% · `End` 40% · `Enter` 25 ↔ 40 이다.
 
-[그림: 끌지 않는 길 — 손잡이 한 번 누르기 25 → 40 · 위젯 ⋮ → 크기 메뉴](../../site/components/specs/resizable.tsx#alt-guide)
+[그림: 끌지 않는 길 — 손잡이 한 번 누르기 25 → 40](../../site/components/specs/resizable.tsx#alt-guide)
 
 ### 화면마다 폭을 기억한다
 
-끌거나 누른 목록 폭은 화면마다 브라우저에 기억한다(localStorage — 키는 화면 이름) — 다시 열면 그 폭이다. 사이드바의 손으로 접은 상태처럼 사용자의 기기에 남긴다. 위젯 크기는 지금처럼 저장 단추로 서버에 저장한다.
+끌거나 누른 목록 폭은 화면마다 브라우저에 기억한다(localStorage — 키는 화면 이름) — 다시 열면 그 폭이다. 사이드바의 손으로 접은 상태처럼 사용자의 기기에 남긴다.
 
 [그림: 회사 화면을 35% 로 넓히고 다시 열기 — 기억한 35%](../../site/components/specs/resizable.tsx#persist-guide)
 
 ### 글
 
-손잡이의 이름은 바뀌는 것을 말한다 — "목록 너비". 위젯 ⋮ 는 "{위젯} 더보기", 크기 줄은 "작게 — 4칸" 처럼 크기와 칸 수를 함께 쓴다.
+손잡이의 이름은 바뀌는 것을 말한다 — "목록 너비".
 
 ## 코드
 
@@ -106,7 +87,6 @@ HR 대시보드 편집 모드에서 위젯의 크기를 바꾼다 — 크기 · 
 - `ResizablePanelGroup` — 나눈 자리. `storageKey`(화면마다 폭을 기억할 이름 — 필수)를 받고 가로로만 나눈다. 768 미만에서는 쓰지 않는다(화면이 목록 → 상세 · 탭으로 바꾼다).
 - `ResizablePanel` — 목록 패널. `defaultSize`(기본 25) · `minSize`(20) · `maxSize`(40) · `id`. 오른쪽 상세 패널은 `ResizablePanel` 하나 더 — 크기를 적지 않는다(남는 폭).
 - `ResizableHandle` — 손잡이. `label`(이름 — 필수, "목록 너비") · `toggleSize`(누르기 · `Enter` 로 오가는 넓은 폭 — 기본 40). 선 · 손잡이 표시 · 누르는 폭 16 · `role="separator"`(`aria-valuenow` · `aria-valuemin` · `aria-valuemax` · `aria-orientation` · `aria-controls`) · `←` `→` 5% · `Home` · `End` 를 손잡이가 맡는다.
-- `WidgetResizeHandle` — 위젯 모서리 손잡이(누르는 24 · 표식 9 꺾쇠). 대시보드 격자(react-grid-layout)의 `resizeHandle` 로 넘긴다 — 보조 기술에는 숨긴다. 끄는 동안 자리표시 · 따라오는 위젯의 모양은 레시피의 CSS 가 이 스펙 값으로 덮는다. ⋮ 의 "크기" 는 [Menu](menu.md) 로 짠다.
 
 ### HR 관리 — 부서 나무 | 조직도
 
@@ -125,43 +105,6 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 </ResizablePanelGroup>
 ```
 
-### HR 대시보드 — 위젯 ⋮ 의 크기
-
-[그림: 내 휴가 위젯 ⋮ → 크기 — 작게 · 보통(지금 크기) · 넓게 · 가득](../../site/components/specs/resizable.tsx#ex-widget)
-
-```tsx
-import { EllipsisVertical } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Menu, MenuContent, MenuGroup, MenuGroupLabel, MenuItem, MenuTrigger } from "@/components/ui/menu"
-
-<Menu>
-  <MenuTrigger asChild>
-    <Button variant="ghost" layout="iconOnly" aria-label={`${widget.title} 더보기`}>
-      <EllipsisVertical />
-    </Button>
-  </MenuTrigger>
-  <MenuContent>
-    <MenuGroup>
-      <MenuGroupLabel>크기</MenuGroupLabel>
-      {/* 끌지 않는 대안 — 누르면 바로 그 폭, 높이는 그대로. 메뉴는 실행만이라 체크가 없다 */}
-      {[
-        { label: "작게 — 4칸", columns: 4 },
-        { label: "보통 — 6칸", columns: 6 },
-        { label: "넓게 — 8칸", columns: 8 },
-        { label: "가득 — 12칸", columns: 12 },
-      ].map((size) => (
-        <MenuItem
-          key={size.columns}
-          label={size.label}
-          description={widget.columns === size.columns ? "지금 크기" : undefined}
-          onSelect={() => resizeWidget(widget.id, size.columns)}
-        />
-      ))}
-    </MenuGroup>
-  </MenuContent>
-</Menu>
-```
-
 ## Behavior
 
 | 인터랙션 | 동작 |
@@ -172,20 +115,18 @@ import { Menu, MenuContent, MenuGroup, MenuGroupLabel, MenuItem, MenuTrigger } f
 | `Home` · `End` | 20% · 40% |
 | 마우스 올리기 · 초점 | 선이 짙어진다 · 커서 `col-resize` |
 | 다시 열기 | 그 화면에 기억한 폭 — 없으면 25 |
-| 위젯 모서리 끌기(편집 모드) | 놓일 칸에 자리표시 · 위젯이 따라온다 — 놓으면 그 칸. 저장 단추로 서버에 |
-| 위젯 ⋮ → 크기 | 고른 폭(4 · 6 · 8 · 12칸)으로 바로 — 높이는 그대로 · 초점은 ⋮ 로 |
 
 ## Accessibility
 
 | 기준 | 검증 |
 |---|---|
-| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 손잡이 표시 · 위젯 표식 `stroke-neutral-solid` 흰 면 위 4.18 · 다크 4.13 ✓ · 자리표시 점선 `stroke-brand-solid` 바닥 위 HR 7.56 · 다크 6.88 ✓. 선 `stroke-neutral-weak`(1.23 · 1.56)는 경계일 뿐 — 손잡이는 표시가 알린다. 키보드 포커스 링 HR 8.17 · 6.07 ✓ |
-| **WCAG 2.1.1** Keyboard | 손잡이 `←` `→` `Home` `End` `Enter` ✓ · 위젯 크기는 ⋮ 메뉴 ✓ |
-| **WCAG 2.5.7** Dragging Movements | 끌지 않고 손잡이를 한 번 눌러 25 ↔ 40 · 위젯은 ⋮ "크기" ✓ |
+| **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 손잡이 표시 `stroke-neutral-solid` 흰 면 위 4.18 · 다크 4.13 ✓. 선 `stroke-neutral-weak`(1.23 · 1.56)는 경계일 뿐 — 손잡이는 표시가 알린다. 키보드 포커스 링 HR 8.17 · 6.07 ✓ |
+| **WCAG 2.1.1** Keyboard | 손잡이 `←` `→` `Home` `End` `Enter` ✓ |
+| **WCAG 2.5.7** Dragging Movements | 끌지 않고 손잡이를 한 번 눌러 25 ↔ 40 ✓ |
 | **WCAG 2.4.7** Focus visible | 누르는 폭 16 둘레 링 2px ✓ |
-| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 손잡이 16 × 패널 높이 ⚠ — 데스크톱 마우스 경계(사용자 결정 12B), 같은 일을 키보드 · 누르기로 한다 · 위젯 모서리 24 × 24 ✓ · ⋮ 44 ✓ |
-| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 손잡이 16 ✗ · 위젯 모서리 24 ✗ — 대안 ⋮ "크기" 44 ✓ |
-| **WCAG 4.1.2** Name, Role, Value | 손잡이 `role="separator"` · 이름 "목록 너비" · `aria-orientation="vertical"` · `aria-valuenow`(목록 %) · `aria-valuemin` 20 · `aria-valuemax` 40 · `aria-controls`(목록 패널) ✓. 위젯 모서리 손잡이는 마우스 · 터치용(보조 기술에 숨긴다) — 대안은 ⋮ |
+| **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 손잡이 16 × 패널 높이 ⚠ — 데스크톱 마우스 경계(사용자 결정 12B), 같은 일을 키보드 · 누르기로 한다 |
+| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 손잡이 16 ✗ — 대안은 키보드 · 한 번 누르기 |
+| **WCAG 4.1.2** Name, Role, Value | 손잡이 `role="separator"` · 이름 "목록 너비" · `aria-orientation="vertical"` · `aria-valuenow`(목록 %) · `aria-valuemin` 20 · `aria-valuemax` 40 · `aria-controls`(목록 패널) ✓ |
 | **Reduced motion** | 폭이 바뀌는 모션이 없다(끄는 동안 1:1 · 키보드 · 누르기는 바로) — 그대로 |
 
 ## Do / Don't
@@ -194,7 +135,7 @@ import { Menu, MenuContent, MenuGroup, MenuGroupLabel, MenuItem, MenuTrigger } f
 
 - 768 이상 목록 | 상세에서 목록 폭만 — 20 ~ 40%, 오른쪽은 60% 아래로 줄지 않게.
 - 손잡이 표시를 3 이상의 대비로 보이고, 이름 "목록 너비" 를 단다.
-- 끌지 않는 길 — 한 번 누르기 25 ↔ 40 · 키보드 5% · 위젯 ⋮ "크기".
+- 끌지 않는 길 — 한 번 누르기 25 ↔ 40 · 키보드 5%.
 - 화면마다 넓힌 폭을 기억한다.
 
 ### ❌ Don't
@@ -202,19 +143,24 @@ import { Menu, MenuContent, MenuGroup, MenuGroupLabel, MenuItem, MenuTrigger } f
 - 폰에 끄는 패널 · 세로 나누기 · 셋 이상 나누기.
 - 손잡이를 배경과 같은 색(1.11)으로 · 누르는 폭 5 · 이름 없는 손잡이.
 - 오른쪽 패널을 0폭까지 밀기 · 키보드 한 번에 10%.
-- 브랜드 색 손잡이 · 빨간 자리표시 · 끌기로만 바뀌는 위젯 크기.
+- 브랜드 색 손잡이.
+- 대시보드 위젯 크기 바꾸기(걷었다 — 2026-10-23 HB1 C).
 
 ## Specification
 
-`resizable.yaml` 의 규칙을 하나도 빼지 않고 조건마다 그린다 — HR 웹이 나누기 · 위젯 크기를 만들 때 이 값을 그대로 쓴다. 조건이 없는 `Base` 가 모든 조합에 걸리고, 뒤의 규칙이 앞의 같은 값을 덮는다. 상태는 `enabled` 에서 바뀌는 값만 적었다.
+`resizable.yaml` 의 규칙을 하나도 빼지 않고 조건마다 그린다 — HR 웹이 나누기를 만들 때 이 값을 그대로 쓴다. 조건이 없는 `Base` 가 모든 조합에 걸리고, 뒤의 규칙이 앞의 같은 값을 덮는다. 상태는 `enabled` 에서 바뀌는 값만 적었다.
 
 [그림: Specification — resizable.yaml 의 규칙 전부](../../site/components/specs/spec-sheet.tsx#resizable)
 
 ## SEED 와 다른 점
 
-- **SEED 에는 Resizable 이 없다** — 모바일 앱 중심이라 끌어서 나누는 패널이 없다. 손잡이 · 범위 · 키보드 · 기억 · 위젯 크기는 모두 groo 가 정했다(키보드는 APG Window Splitter).
+- **SEED 에는 Resizable 이 없다** — 모바일 앱 중심이라 끌어서 나누는 패널이 없다. 손잡이 · 범위 · 키보드 · 기억은 모두 groo 가 정했다(키보드는 APG Window Splitter).
 
 ## Migration notes
+
+### 2026-11-10 — 위젯 크기(`widget`)를 걷는다
+
+대시보드 위젯 크기 바꾸기는 2026-10-23 사용자 결정 HB1 C 로 제품에서 걷었는데 이 스펙에 변형 · 그림 · 레시피가 남아 있었고, DESIGN.md 는 한쪽에서 "걷었다", 다른 쪽에서 "모서리를 끌거나 ⋮ 크기로" 라고 갈려 있었다. 스펙 · 그림 · 레시피에서 한 번에 걷었다(2026-11-10 사용자 결정 11A) — `resizable.yaml` 의 변형 `widget` · 부위 여섯(`widgetHandle` · `widgetMark` · `placeholder` · `ghost` · `moreButton` · `sizeMenu`), 이 문서의 위젯 절 · 코드 예 · 동작 · 접근성 줄, 사이트 그림(맨 위 · 해부 · 위젯 · 끌지 않는 길 · 코드 미리보기 · 플레이그라운드), 레시피 `WidgetResizeHandle` · 예제, DESIGN.md "펼치고 접기 · 나누기" 의 한 줄. 축 `kind` 는 `split` 하나로 남겼다. 나누기 값 변경 없음. 아래 2026-10-10 노트의 위젯 이야기(13A)는 기록이다. 옛 스펙은 `resizable.history/v-pre-decisions-1110.*`.
 
 ### 2026-10-10 — 남기고 고친다
 

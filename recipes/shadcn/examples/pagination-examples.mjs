@@ -287,12 +287,12 @@ function infiniteListEnd({ status, endText = "모두 봤어요." }) {
 
 // 목록 · 카드 · 폰 틀 — 미리보기 그림(레시피가 아니다)
 const CARDS = [
-  ["현대카드 M", "포인트 적립 · 연회비 3만원"],
-  ["신한카드 Deep Dream", "모든 가맹점 0.7% 적립"],
-  ["KB국민 My WE:SH", "통신 · 배달 10% 할인"],
-  ["삼성카드 taptap O", "커피 · 대중교통 할인"],
-  ["우리카드 카드의정석", "온라인 쇼핑 5% 할인"],
-  ["하나카드 원더카드", "해외 결제 수수료 면제"],
+  ["현대카드 신용카드", "포인트 적립 · 연회비 3만원"],
+  ["신한카드 체크카드", "모든 가맹점 0.7% 적립"],
+  ["KB국민카드 신용카드", "통신 · 배달 10% 할인"],
+  ["삼성카드 신용카드", "커피 · 대중교통 할인"],
+  ["우리카드 신용카드", "온라인 쇼핑 5% 할인"],
+  ["하나카드 신용카드", "해외 결제 수수료 면제"],
 ];
 const SECTION =
   "padding:var(--spacing-x5) var(--spacing-x6) var(--spacing-x6); border:1px solid var(--color-stroke-neutral-subtle); border-radius:var(--radius-r4); background:var(--color-bg-layer-default); font-family:var(--font-sans);";

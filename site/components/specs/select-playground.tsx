@@ -56,8 +56,8 @@ const PAY: { label?: string; items: Opt[] }[] = [
     label: '카드',
     items: [
       { value: 'kb-check', label: '국민 체크카드', description: '국민 주계좌에서 바로 출금', icon: 'credit-card' },
-      { value: 'hyundai-m', label: '현대카드 M', description: '매월 14일 결제', icon: 'credit-card' },
-      { value: 'shinhan', label: '신한카드 Deep', description: '매월 25일 결제', icon: 'credit-card' },
+      { value: 'hyundai-m', label: '현대카드 신용카드', description: '매월 14일 결제', icon: 'credit-card' },
+      { value: 'shinhan', label: '신한카드 체크카드', description: '매월 25일 결제', icon: 'credit-card' },
     ],
   },
   {

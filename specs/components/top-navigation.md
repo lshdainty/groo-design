@@ -493,6 +493,10 @@ useEffect(() => {
 
 ## Migration notes
 
+### 2026-11-10 — 돌아가기는 어디서나 꺾쇠
+
+페이지 머리 ← 는 이미 `chevron-left` 다. 시트 · 대화상자 머리 ← 가 화살표(`arrow-left`)라 모양이 둘이었다 — 그쪽을 꺾쇠로 맞췄다(2026-11-10 사용자 결정 8A, `bottom-sheet.md`). `top-navigation.yaml` 의 `leadingIcon: back` 비고에 한 줄. 값 변경 없음. 옛 스펙은 `top-navigation.history/v-pre-decisions-1110.*`.
+
 ### 2026-11-10 — ScreenTitle 설명 글자
 
 코드 절의 `ScreenTitle` `description` 이 옛 값(t3 `fg-neutral-subtle`)으로 남아 있었다 — "데스크톱 화면 제목 — 한 줄" 의 16 / 22 · 400 · `fg-neutral-muted`(2026-10-16 사용자 결정 D6)로 맞췄다(2026-11-09 그루 이음 22-1). 값 변경 없음. 옛 스펙은 `top-navigation.history/v-pre-cleanup-1110.md`.

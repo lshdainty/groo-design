@@ -357,7 +357,7 @@ export function MenuPlayground({ kits, ovs, kebabs }: { kits: Record<Brand, Menu
               <span aria-hidden style={{ display: 'grid', placeItems: 'center', width: 36, height: 36, borderRadius: 9999, background: tone(kit, 'chart-orange-weak', mode), color: tone(kit, 'chart-orange-contrast', mode), fontSize: 14, fontWeight: 700, flexShrink: 0 }}>
                 점
               </span>
-              <RowText kit={kit} mode={mode} title="점심 식사" sub="식비 · 현대카드 M · −12,000원" />
+              <RowText kit={kit} mode={mode} title="점심 식사" sub="식비 · 현대카드 신용카드 · −12,000원" />
               <MenuControl
                 look={kit.menu}
                 mode={mode}

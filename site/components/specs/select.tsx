@@ -191,7 +191,7 @@ const States: Fig = ({ caption }) => {
               <div className="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 md:grid-cols-3">
                 {list.map((st) => (
                   <div key={st} className="flex min-w-0 flex-col gap-1.5">
-                    <SelectTriggerView look={lk} mode={mode} size="large" state={st} labels={st === 'enabled' || st === 'invalid' ? [] : ['현대카드 M']} placeholder="결제 수단 선택" />
+                    <SelectTriggerView look={lk} mode={mode} size="large" state={st} labels={st === 'enabled' || st === 'invalid' ? [] : ['현대카드 신용카드']} placeholder="결제 수단 선택" />
                     <span className="text-center text-[12px]" style={{ color: rc('fg-neutral-subtle', mode) }}>
                       {STATE_KO[st]}
                     </span>
@@ -288,7 +288,7 @@ const PrefixIcon: Fig = ({ caption }) => {
         </div>
         <Surface className="flex flex-col justify-center gap-5">
           {row('고르기 전', '트리거에 준 아이콘(wallet)', <SelectTriggerView look={lk} size="large" state="enabled" icon="wallet" placeholder="결제 수단 선택" />)}
-          {row('하나를 골랐다', '그 선택지의 아이콘이 덮는다', <SelectTriggerView look={lk} size="large" state="enabled" icon="credit-card" labels={['현대카드 M']} />)}
+          {row('하나를 골랐다', '그 선택지의 아이콘이 덮는다', <SelectTriggerView look={lk} size="large" state="enabled" icon="credit-card" labels={['현대카드 신용카드']} />)}
           {row('둘 이상 골랐다', '트리거의 아이콘(tag)', <SelectTriggerView look={lk} size="large" state="enabled" icon="tag" multiple labels={['식비', '교통']} />)}
         </Surface>
       </div>
@@ -445,7 +445,7 @@ const LabelGuide: Fig = ({ caption }) => {
           <W280>
             <Form gap={16}>
               <F label="결제 수단">
-                <SelectTriggerView look={lk} size="large" state="enabled" labels={['현대카드 M']} />
+                <SelectTriggerView look={lk} size="large" state="enabled" labels={['현대카드 신용카드']} />
               </F>
               <F label="통화">
                 <SelectTriggerView look={lk} size="large" state="enabled" labels={['원']} />
@@ -456,7 +456,7 @@ const LabelGuide: Fig = ({ caption }) => {
         <Verdict ok={false} note="라벨 없이 값만 — placeholder 는 고르면 사라져 칸의 뜻이 남지 않는다">
           <W280>
             <div className="flex flex-col gap-4">
-              <SelectTriggerView look={lk} size="large" state="enabled" labels={['현대카드 M']} />
+              <SelectTriggerView look={lk} size="large" state="enabled" labels={['현대카드 신용카드']} />
               <SelectTriggerView look={lk} size="large" state="enabled" labels={['원']} />
             </div>
           </W280>
@@ -623,7 +623,7 @@ const MobileGuide: Fig = ({ caption }) => {
         </Verdict>
         <Verdict ok={false} note="짧은 선택지를 시트로 — 손이 더 가고 폼이 가려진다(시트는 Input Button 의 몫)">
           <PayPhone
-            payment={<SelectTriggerView look={lk} mode="light" size="large" state="open" labels={['현대카드 M']} />}
+            payment={<SelectTriggerView look={lk} mode="light" size="large" state="open" labels={['현대카드 신용카드']} />}
             overlay={
               <SheetOverlay ov={ov()} mode="light">
                 <SheetPanel ov={ov()} mode="light" title="결제 수단" bodyPad={false} safe={PHONE_SAFE}>
@@ -671,7 +671,7 @@ const PickGuide: Fig = ({ caption }) => {
         </Cell>
         <Cell label={<><b className="pk-text">2 · Select</b> 5개 이상이거나 한 줄 설명이면 충분하다</>}>
           <F label="결제 수단">
-            <SelectTriggerView look={lk} size="large" state="enabled" labels={['현대카드 M']} />
+            <SelectTriggerView look={lk} size="large" state="enabled" labels={['현대카드 신용카드']} />
           </F>
         </Cell>
         <Cell label={<><b className="pk-text">3 · Chip</b> 2 ~ 4개, 설명 없이 글이 짧다(모양만 — Chip 차례에 정한다)</>}>
@@ -780,7 +780,7 @@ const ExBasic: Fig = () => (
 // md 의 "묶음 · 아이콘 · "없음"" 코드와 같은 선택지
 const PAY_CODE: SelGroup[] = [
   PAY_NONE,
-  { label: '카드', items: [{ value: 'hyundai-m', label: '현대카드 M', icon: 'credit-card' }, { value: 'shinhan-deep', label: '신한카드 Deep', icon: 'credit-card' }] },
+  { label: '카드', items: [{ value: 'hyundai-m', label: '현대카드 신용카드', icon: 'credit-card' }, { value: 'shinhan-deep', label: '신한카드 체크카드', icon: 'credit-card' }] },
   { label: '계좌 · 현금', items: [{ value: 'kb', label: '국민 주계좌', description: '123-45-6789', icon: 'landmark' }, { value: 'cash', label: '현금', icon: 'banknote' }] },
 ];
 const ExGroup: Fig = () => (

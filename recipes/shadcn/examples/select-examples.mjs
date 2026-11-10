@@ -621,8 +621,8 @@ const PAY_GROUPS = [
   {
     label: "카드",
     items: [
-      { value: "hyundai-m", label: "현대카드 M", icon: ICONS.creditCard },
-      { value: "shinhan-deep", label: "신한카드 Deep", icon: ICONS.creditCard },
+      { value: "hyundai-m", label: "현대카드 신용카드", icon: ICONS.creditCard },
+      { value: "shinhan-deep", label: "신한카드 체크카드", icon: ICONS.creditCard },
     ],
   },
   {
@@ -641,7 +641,7 @@ const plain = (groups) => groups.map((g) => ({ ...g, items: g.items.map(({ icon,
 const PAY_FLAT = [
   { value: "cash", label: "현금", icon: ICONS.banknote },
   { value: "kb-check", label: "국민 체크카드", icon: ICONS.creditCard },
-  { value: "hyundai-m", label: "현대카드 M", icon: ICONS.creditCard },
+  { value: "hyundai-m", label: "현대카드 신용카드", icon: ICONS.creditCard },
   { value: "toss", label: "토스뱅크 통장", icon: ICONS.landmark },
   { value: "kakao", label: "카카오뱅크 통장", icon: ICONS.landmark },
 ];
@@ -714,7 +714,7 @@ import { Select, SelectItem } from "@/components/ui/select"
   {
     title: "묶음 · 아이콘 · \"없음\"",
     description:
-      "성격이 다른 선택지는 묶음(SelectGroup)으로 나눈다 — 제목(label)은 없어도 되고(large 14 · 500 · medium 13 · 400, fg-neutral-subtle), 묶음이 둘 이상이면 사이에 1px stroke-neutral-subtle 선(좌우 16 들임)을 저절로 그린다(묶음 사이 8 + 1 + 8). 선택지 사이에는 선이 없다. \"없음\" 이 답이 될 수 있는 칸은 \"{칸 이름} 없음\" 선택지를 맨 앞 따로 묶음에 둔다 — 고르면 값을 고른 것으로 친다(Select 에는 지우기 버튼이 없다). 선택지 앞 아이콘(22 · 18, fg-neutral)은 묶음 안에서 모두 두거나 모두 빼고, 하나를 고르면 그 아이콘이 트리거의 앞 아이콘이 된다. 미리보기는 \"현대카드 M\" 을 고른 채 키(↓)로 연 모습이다 — 키로 열면 고른 선택지를 짚는다(마우스 호버와 같은 알약, 링은 없다).",
+      "성격이 다른 선택지는 묶음(SelectGroup)으로 나눈다 — 제목(label)은 없어도 되고(large 14 · 500 · medium 13 · 400, fg-neutral-subtle), 묶음이 둘 이상이면 사이에 1px stroke-neutral-subtle 선(좌우 16 들임)을 저절로 그린다(묶음 사이 8 + 1 + 8). 선택지 사이에는 선이 없다. \"없음\" 이 답이 될 수 있는 칸은 \"{칸 이름} 없음\" 선택지를 맨 앞 따로 묶음에 둔다 — 고르면 값을 고른 것으로 친다(Select 에는 지우기 버튼이 없다). 선택지 앞 아이콘(22 · 18, fg-neutral)은 묶음 안에서 모두 두거나 모두 빼고, 하나를 고르면 그 아이콘이 트리거의 앞 아이콘이 된다. 미리보기는 \"현대카드 신용카드\" 을 고른 채 키(↓)로 연 모습이다 — 키로 열면 고른 선택지를 짚는다(마우스 호버와 같은 알약, 링은 없다).",
     jsx: `import { Banknote, CircleSlash, CreditCard, Landmark } from "lucide-react"
 import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
 
@@ -724,8 +724,8 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
       <SelectItem value="none" label="결제 수단 없음" prefixIcon={<CircleSlash />} />
     </SelectGroup>
     <SelectGroup label="카드">
-      <SelectItem value="hyundai-m" label="현대카드 M" prefixIcon={<CreditCard />} />
-      <SelectItem value="shinhan-deep" label="신한카드 Deep" prefixIcon={<CreditCard />} />
+      <SelectItem value="hyundai-m" label="현대카드 신용카드" prefixIcon={<CreditCard />} />
+      <SelectItem value="shinhan-deep" label="신한카드 체크카드" prefixIcon={<CreditCard />} />
     </SelectGroup>
     <SelectGroup label="계좌 · 현금">
       <SelectItem value="kb" label="국민 주계좌" description="123-45-6789" prefixIcon={<Landmark />} />
@@ -825,7 +825,7 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
   {
     title: "크기 — large · medium · responsive",
     description:
-      "large(트리거 52 · 선택지 46)는 폰 · 앱에서, medium(트리거 40 · 선택지 39)은 1280 이상 데스크톱 웹(마우스)에서만 쓴다. 웹의 기본은 responsive 다 — 1280 미만은 large, 이상은 medium(SEED lg). 트리거와 목록은 같은 크기를 쓴다 — 트리거는 모서리 12 · 8 · 좌우 여백 16 · 14 · 셰브론 20 · 16, 글자는 둘 다 16 · 14, 목록은 선택지 아이콘 22 · 18 · 체크 14 · 12 · 묶음 제목 14 · 500 · 13 · 400 · 한 줄 설명이 붙은 선택지 66 · 57. 목록의 모서리(20) · 위아래(8) · 선택지 좌우 여백(16) · 알약의 들임(8)과 모서리(12)는 크기와 관계없다. 앱은 늘 large 이고, 한 폼 안에서 크기를 섞지 않는다. 미리보기는 \"현대카드 M\" 을 고른 채 마우스를 \"신한카드 Deep\" 에 올린 모습이다. 창 폭을 1280 앞뒤로 바꾸면 responsive 칸이 바뀐다.",
+      "large(트리거 52 · 선택지 46)는 폰 · 앱에서, medium(트리거 40 · 선택지 39)은 1280 이상 데스크톱 웹(마우스)에서만 쓴다. 웹의 기본은 responsive 다 — 1280 미만은 large, 이상은 medium(SEED lg). 트리거와 목록은 같은 크기를 쓴다 — 트리거는 모서리 12 · 8 · 좌우 여백 16 · 14 · 셰브론 20 · 16, 글자는 둘 다 16 · 14, 목록은 선택지 아이콘 22 · 18 · 체크 14 · 12 · 묶음 제목 14 · 500 · 13 · 400 · 한 줄 설명이 붙은 선택지 66 · 57. 목록의 모서리(20) · 위아래(8) · 선택지 좌우 여백(16) · 알약의 들임(8)과 모서리(12)는 크기와 관계없다. 앱은 늘 large 이고, 한 폼 안에서 크기를 섞지 않는다. 미리보기는 \"현대카드 신용카드\" 을 고른 채 마우스를 \"신한카드 체크카드\" 에 올린 모습이다. 창 폭을 1280 앞뒤로 바꾸면 responsive 칸이 바뀐다.",
     jsx: `<Field label="결제 수단">
   <Select size="large" defaultValue="hyundai-m">…</Select>   {/* 트리거 52 · 선택지 46 — 폰 · 앱 */}
 </Field>
@@ -913,7 +913,7 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
     jsx: `<Select size="large" aria-label="결제 수단" defaultValue="hyundai-m">
   <SelectItem value="cash" label="현금" />                    {/* enabled */}
   <SelectItem value="kb-check" label="국민 체크카드" />         {/* pressed — 누르는 동안 알약 + 콘텐츠 2px 축소 */}
-  <SelectItem value="hyundai-m" label="현대카드 M" />           {/* selected — 오른쪽 체크 */}
+  <SelectItem value="hyundai-m" label="현대카드 신용카드" />           {/* selected — 오른쪽 체크 */}
   <SelectItem value="toss" label="토스뱅크 통장" />             {/* highlighted — 키보드 위치 · 마우스 호버, 같은 알약 · 축소 없음 */}
   <SelectItem value="kakao" label="카카오뱅크 통장" disabled /> {/* disabled */}
 </Select>`,
@@ -951,7 +951,7 @@ import { Select, SelectGroup, SelectItem } from "@/components/ui/select"
 <Field label="결제 수단">
   <Select prefixIcon={<Wallet />} placeholder="결제 수단 선택">
     <SelectItem value="cash" label="현금" prefixIcon={<Banknote />} />
-    <SelectItem value="hyundai-m" label="현대카드 M" prefixIcon={<CreditCard />} />
+    <SelectItem value="hyundai-m" label="현대카드 신용카드" prefixIcon={<CreditCard />} />
     <SelectItem value="toss" label="토스뱅크 통장" prefixIcon={<Landmark />} />
   </Select>
 </Field>

@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
  * 진행에는 쓰지 않는다 — 그건 Progress Circle(progress-circle.tsx)이다. 옛 Progress(높이 2 · 4 · 8 · 흐르는 막대 · Radix)를 대신한다.
  *
  *   Progress      이름 줄 · 막대 · 금액 줄 한 묶음
- *     label         이름 — 무엇이 얼마나 찼나("식비 예산" · "여행 자금" · "현대카드 M 전월 실적")
+ *     label         이름 — 무엇이 얼마나 찼나("식비 예산" · "여행 자금" · "현대카드 신용카드 전월 실적")
  *     value · max   현재 · 목표(한도). 0 보다 작은 값은 0 으로 본다
  *     meaning       limit(기본 — 쓸수록 차는 막대. 넘으면 채움 끝까지 + 위험 색 + "N원 초과") ·
  *                   goal(모을수록 차는 막대. 닿으면 채움 끝까지 + 글 "달성" 만 — 색은 그대로)

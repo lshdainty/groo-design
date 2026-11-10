@@ -116,8 +116,8 @@ function Bar({ mode = 'auto', s, bleed = true }: { mode?: Mode; s?: ChipSize; bl
 }
 // 이번 달 · 식비 · 카페 · 교통으로 거른 거래
 const LEDGER: [string, string, string, string][] = [
-  ['점심 식사', '식비 · 현대카드 M', '−12,000원', 'orange'],
-  ['다라커피', '카페 · 현대카드 M', '−5,600원', 'brown'],
+  ['점심 식사', '식비 · 현대카드 신용카드', '−12,000원', 'orange'],
+  ['다라커피', '카페 · 현대카드 신용카드', '−5,600원', 'brown'],
   ['지하철', '교통 · 국민 체크카드', '−1,450원', 'blue'],
   ['편의점', '식비 · 현금', '−4,300원', 'orange'],
 ];
