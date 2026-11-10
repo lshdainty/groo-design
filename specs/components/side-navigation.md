@@ -325,6 +325,10 @@ import {
 
 ## Migration notes
 
+### 2026-11-10 — 사이드바는 z-sticky
+
+접힌 사이드바의 펼침 메뉴가 본문 카드 뒤로 가렸다(그루 이음 — 사이드바가 sticky 라 스스로 쌓임 맥락인데 층이 L0 이었다). 사이드바 루트에 `z-sticky` 50(L1)을 적었다 — `side-navigation.yaml` root `zIndex` · `specs/z-index.md`. 이음은 `HrSidebar` 에서 이미 고쳤다. 담다 · 그루 계정 셸은 같은 구조인지 확인할 몫이다. 옛 스펙은 `side-navigation.history/v-pre-cleanup-1110.*`.
+
 ### 2026-11-07 — 접힌 항목의 누르는 영역
 
 담다 마무리 B5 판단 — 접힌 사이드바 항목은 보이는 40 · 누르는 영역 가로 44(`side-navigation.yaml` 접힘 item 비고). 옛 스펙은 `side-navigation.history/v-pre-cleanup-1107.yaml`.

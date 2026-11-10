@@ -18,7 +18,7 @@
 
 [그림: 스크롤 상자 안 맨 위의 숨는 영역(sticky top 0) — 위로 옮겨 숨고, 높이는 그대로](../../site/components/specs/scroll-auto-hide.tsx#anatomy)
 
-| ⓐ Scroll Container | 스크롤 상자 — 쓰는 쪽. 상단 바 · 탭 아래부터다. |
+| ⓐ Scroll Container | 스크롤 상자 — 쓰는 쪽. 상단 바 · 탭 아래부터의 overflow 상자, 또는 창(문서)이다(아래 "스크롤 상자 안에"). |
 | ⓑ Root | 숨는 영역 — 상자 맨 위에 붙고(`sticky` · `top: 0`) 스크롤 거리만큼 위로 옮겨 숨는다. 바탕은 쓰는 쪽. |
 | ⓒ Content | 그 아래 목록 — 머리가 숨으면 화면을 다 쓴다. |
 
@@ -80,13 +80,15 @@
 
 ### 스크롤 상자 안에
 
-숨는 영역은 스크롤 상자 안 맨 위에 둔다(`position: sticky; top: 0`) — 화면 전체(문서)가 스크롤되면 상단 바 · 탭 아래를 스크롤 상자로 나눈다. 영역의 `transform` 은 숨기는 데 쓰므로 다른 `transform` 은 자식에 건다.
+숨는 영역은 스크롤 상자 안 맨 위에 둔다(`position: sticky; top: 0`). 영역의 `transform` 은 숨기는 데 쓰므로 다른 `transform` 은 자식에 건다.
+
+**스크롤 상자는 창(문서)일 수도 있다** — 담다 웹 폰처럼 화면 전체가 문서 스크롤이면(브라우저 주소창이 스크롤 따라 숨게 — 2026-11-09 사용자 결정) 상단 바 · 탭 아래를 따로 나누지 않고 창을 스크롤 상자로 쓴다. 그때 스크롤 위치는 `document.scrollingElement.scrollTop`, `scroll` · `scrollend` 는 `document`(창)에서 받는다. 영역은 문서 흐름 맨 위(상단 바 · 탭 아래)에 sticky 로 붙고, `top` 은 0 이 아니라 그 위에 붙은 상단 바 · 탭의 높이 합이다 — 숨는 영역은 그 아래로 들어가 가려진다.
 
 ## 코드
 
 레시피 `recipes/shadcn/components/ui/scroll-auto-hide.tsx` 를 쓴다(SEED Breeze 의 `ScrollAutoHide` 를 옮긴 새 부품 — `npx @seed-design/cli add breeze:scroll-auto-hide` 의 코드를 groo 토큰으로). 아래 미리보기는 스펙 값으로 그린 모습이다.
 
-- `ScrollAutoHide` — 숨는 영역. `scrollContainerRef`(스크롤 상자의 ref — 필수) · `asChild`(자식 하나를 루트로), 나머지는 `div` 속성. `sticky` · `top: 0` · 1:1 따라가기 · 50% 스냅(200ms `motion-ease-enter`) · 모션 줄이기면 끔 · 초점이 들어오면 드러냄은 부품이 맡는다. 바탕 · z-index 는 `className` 으로 쓰는 쪽이.
+- `ScrollAutoHide` — 숨는 영역. `scrollContainerRef`(스크롤 상자의 ref — 필수. 창이 스크롤 상자면 `document.scrollingElement` 를 가리킨다) · `asChild`(자식 하나를 루트로), 나머지는 `div` 속성. `sticky` · `top: 0` · 1:1 따라가기 · 50% 스냅(200ms `motion-ease-enter`) · 모션 줄이기면 끔 · 초점이 들어오면 드러냄은 부품이 맡는다. 바탕 · z-index 는 `className` 으로 쓰는 쪽이.
 
 ### 가계부 원장 머리
 
@@ -159,6 +161,10 @@ const scrollRef = useRef<HTMLDivElement>(null)
 - **남는 부분 · 위에 붙은 줄 보정**(groo 확장, 2026-11-06) — SEED 는 영역 전체가 숨는다. 위 "남는 부분 · 위에 붙은 줄".
 
 ## Migration notes
+
+### 2026-11-10 — 스크롤 상자는 창일 수 있다
+
+스펙이 스크롤 상자를 overflow 상자로만 가정했다. 담다 웹 폰이 문서(창) 스크롤로 바뀌어(2026-11-09 사용자 결정 "브라우저 바가 숨게") 창도 스크롤 상자로 적었다 — `document.scrollingElement` · `scroll` / `scrollend` 는 `document`, `top` 은 위에 붙은 머리 높이. 근거 damda-2.0.0-seam I-fix-2.0.0-B-survey 5절 6. 값 변경 없음. 옛 스펙은 `scroll-auto-hide.history/v-pre-cleanup-1110.*`.
 
 ### 2026-11-07 — 원장 머리는 위쪽만 숨고 달 줄 · 주 달력은 남는다 · 거르는 줄 48
 

@@ -107,6 +107,8 @@ HR 웹 768 미만의 [Top Navigation](top-navigation.md) ☰ 가 연다.
 
 오른쪽 패널에 입력 폼을 띄우면 [Dialog](dialog.md) 와 같다 — 바깥(딤)을 눌러도, 끌어도 닫히지 않고, 바닥 [취소] · `Esc` 로 닫으며, 바뀐 값이 있으면 닫기 전에 "작성한 내용이 사라져요" 를 묻는다. 입력 폼에는 머리 닫기 버튼을 두지 않는다(닫기와 취소는 하나만). 조회 · 주 메뉴는 머리 닫기 · 딤 누르기 · `Esc` · 끌기로 닫힌다.
 
+**저장 중에는 닫히지 않는다** — 바닥 [저장] 이 로딩인 동안은 [취소] · `Esc` · 딤 누르기 · 끌기 · 뒤로 가기를 모두 무시한다. [Bottom Sheet](bottom-sheet.md) · [Dialog](dialog.md) 와 같은 계약이다 — 표면이 막아야 한다. [취소] 만 막으면 `Esc` · 딤으로 닫혀 쓰기 실패를 알릴 폼 맨 위 [Callout](callout.md) 자리가 사라진다(2026-11-09 그루 이음 홈 편집 23-1b 에서 드러남).
+
 [그림: 닫기 — 주 메뉴는 딤 · 끌기로 닫힘 · 폼은 바닥 취소](../../site/components/specs/side-panel.tsx#dismiss-guide)
 
 ### 평평하게
@@ -121,7 +123,7 @@ HR 웹 768 미만의 [Top Navigation](top-navigation.md) ☰ 가 연다.
 
 레시피 `recipes/shadcn/components/ui/side-panel.tsx` 를 쓴다(Radix Dialog 위 — 끌어 닫기 · 뒤로 가기 닫기는 레시피가 더한다). 아래 미리보기는 스펙 값으로 그린 모습이다.
 
-- `SidePanel` — `open` · `onOpenChange` · `form`(바깥 누르기 · 끌기로 닫지 않는다) · `dirty`(닫기 전에 묻는다).
+- `SidePanel` — `open` · `onOpenChange` · `form`(바깥 누르기 · 끌기로 닫지 않는다) · `dirty`(닫기 전에 묻는다) · `busy`(저장 중 — 모든 닫는 길을 무시한다, Bottom Sheet 의 `busy` 와 같다).
 - `SidePanelTrigger` — `asChild`.
 - `SidePanelContent` — 패널. `side`(`"left"` · `"right"` 기본) · `size`(`"small"` · `"medium"` 기본 · `"large"` — 오른쪽만) · `title`(필수) · `description` · `showCloseButton`(기본 `true`, `form` 이면 그리지 않는다).
 - `SidePanelBody` — 본문. `scrollFog`(위 20 · 아래 80).
@@ -174,7 +176,7 @@ import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNav
 | 인터랙션 | 동작 |
 |---|---|
 | 열기 | 붙은 쪽에서 300ms 로 미끄러져 들어온다. 처음 초점은 패널에 간다 |
-| 닫기 버튼 · `Esc` | 닫는다. 입력 폼에 바뀐 값이 있으면 먼저 묻는다 |
+| 닫기 버튼 · `Esc` | 닫는다. 입력 폼에 바뀐 값이 있으면 먼저 묻는다. 저장 중(`busy`)에는 무시한다 |
 | 뒤로 가기(기기 · 브라우저) | 1280 미만에서만 닫는다 — 열 때 기록을 하나 쌓고 뒤로 가기가 그것을 걷는다(Dialog · Bottom Sheet 와 같은 규칙). 1280 이상의 오른쪽 패널은 기록을 쌓지 않아 뒤로 가기가 화면을 옮긴다 |
 | 바깥(딤) 누르기 | 주 메뉴 · 조회는 닫는다. **입력 폼은 무시한다** |
 | 붙은 쪽으로 끌기(손가락 · 펜) | 놓을 때 빠르게(0.4px/ms 넘게) 끌었거나 폭의 25% 이상 밀었으면 닫고, 아니면 제자리로(Bottom Sheet 와 같은 기준). 마우스로는 끌지 않는다 — 글 고르기와 겹친다. **입력 폼은 끌리지 않는다** |
@@ -233,6 +235,10 @@ import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNav
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 패널 `z-modal-content` 101).
 
 ## Migration notes
+
+### 2026-11-10 — 저장 중에는 닫히지 않는다(`busy`)
+
+`SidePanel` 에 `busy` 가 없어 저장 중 `Esc` · 딤 닫기를 표면이 막지 못했다(그루 이음 홈 편집 23-1b — [취소] 만 비활성). Bottom Sheet · Dialog 와 같은 `busy` 계약을 적었다. 웹 ds 부품은 코드 몫이다. 값 변경 없음. 옛 스펙은 `side-panel.history/v-pre-cleanup-1110.md`.
 
 ### 2026-10-22 — 이동 부품 표 링크
 

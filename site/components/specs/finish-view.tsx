@@ -132,6 +132,8 @@ export type QpViewProps = {
   step?: number;
   // 값 칸 글 = 값 + unit("3회" · "8h") — getValueText 의 그림판(서버 그림은 함수를 넘기지 못한다)
   unit?: string;
+  // 'hours' — 시간 글(정수 "6시간" · 반 "4시간 30분", step 0.5 — quantity-picker.md "반 단위"). 주면 unit 은 쓰지 않는다
+  format?: 'hours';
   // 값 칸의 폭을 잡는 가장 긴 글 — 없으면 최대값의 글
   placeholder?: string;
   removable?: boolean;
@@ -167,6 +169,7 @@ export function QpView({
   max = Number.MAX_SAFE_INTEGER,
   step = 1,
   unit = '',
+  format,
   placeholder,
   removable = false,
   removeLabel,
@@ -192,9 +195,10 @@ export function QpView({
   const set = (n: number) => (onValueChange ? onValueChange(n) : setOwn(n));
   const lo = v <= min;
   const hi = v >= max;
-  const text = `${v}${unit}`;
+  const valueText = (n: number) => (format === 'hours' ? (Number.isInteger(n) ? `${n}시간` : `${Math.floor(n)}시간 30분`) : `${n}${unit}`);
+  const text = valueText(v);
   // 값 칸 폭 — getValueText(min) · getValueText(max) 가운데 긴 글(max 를 주지 않으면 max 글은 빼고 min 과 지금 값)
-  const ph = placeholder ?? [`${min}${unit}`, max === Number.MAX_SAFE_INTEGER ? text : `${max}${unit}`].reduce((a, c) => (c.length >= a.length ? c : a));
+  const ph = placeholder ?? [valueText(min), max === Number.MAX_SAFE_INTEGER ? text : valueText(max)].reduce((a, c) => (c.length >= a.length ? c : a));
   const rm = removable && lo;
   const loadDec = loading === 'decrement' || loading === 'both';
   const loadInc = loading === 'increment' || loading === 'both';

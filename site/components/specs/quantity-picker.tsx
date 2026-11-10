@@ -250,8 +250,8 @@ const Size: Fig = ({ caption }) => {
     },
     {
       size: 'small',
-      strong: `표 칸 — small ${l.sizes.small.h}`,
-      cap: `표 · 목록 줄 안. 옆 Button small 과 같은 높이, 누르는 자리 ${l.sizes.small.touch}(둘레 ${l.sizes.small.extend} 씩)`,
+      strong: `줄 안 — small ${l.sizes.small.h}`,
+      cap: `옆 칸이 36 인 목록 줄 안. 옆 Button small 과 같은 높이, 누르는 자리 ${l.sizes.small.touch}(둘레 ${l.sizes.small.extend} 씩). 표 안 편집 줄은 medium`,
       other: <ButtonView look={buttonLook({ variant: 'neutralSolid', size: 'small' }, 'hr')} label="저장" state="enabled" />,
     },
   ];
