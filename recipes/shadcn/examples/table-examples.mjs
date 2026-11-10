@@ -33,7 +33,8 @@ const CELL = [
 const HEAD_CELL = "py-x2_5 font-medium whitespace-nowrap";
 const HEAD_STICKY = "sticky top-0 z-[1] bg-bg-layer-default";
 const BODY_CELL = "py-x3 font-normal [&>*]:align-top";
-const BODY_RICH = "h-[72px] py-0";
+// 72 는 최소 — 칸 위아래 12, Image Frame 48 칸만 위아래 0(2026-11-10 14C)
+const BODY_RICH = "h-[72px] py-x3 has-[[data-slot=image-frame]]:py-0";
 const ALIGN = {
   start: "text-start",
   end: "text-end tabular-nums",

@@ -2573,7 +2573,7 @@ export function renderTextFieldGallery(brand) {
       sample("자동 높이 · large — 3줄 94 에서", "autoSize(기본) · maxGraphemeCount={1000}", textField({ label: "휴가 사유", max: 1000, control: { kind: "textarea", size: "large", placeholder: "예: 가족 행사 참석" } })),
       sample("자동 높이 — 쓴 만큼 자란다", "글이 길면 상자가 자란다 — 움직임 없이", textField({ label: "휴가 사유", max: 1000, control: { kind: "textarea", size: "large", value: reason } })),
       sample("고정 높이 · large — 2줄 72", "autoSize={false} — 넘치면 칸 안에서 스크롤", textField({ label: "공지 본문", control: { kind: "textarea", size: "large", autoSize: false, value: notice } })),
-      sample("medium — 3줄 82 에서", "size=\"medium\" — 1280 이상 데스크톱 웹만", textField({ label: "메모", max: 100, control: { kind: "textarea", size: "medium", value: "점심 · 김밥천국 강남점" } })),
+      sample("medium — 3줄 82 에서", "size=\"medium\" — 1280 이상 데스크톱 웹만", textField({ label: "메모", max: 100, control: { kind: "textarea", size: "medium", value: "점심 · 가나김밥 강남점" } })),
       sample("오류 — 비운 채 제출", "invalid · errorMessage — 글자 수도 빨갛다", textField({ label: "탈퇴 사유", max: 200, invalid: true, error: "탈퇴 사유를 입력해주세요.", control: { kind: "textarea", size: "large", placeholder: "예: 쓰지 않는 기능이 많아요" } })),
       sample("읽기 전용", "readOnly — 바탕 bg-disabled · 값은 진한 그대로", textField({ label: "반려 사유", readonly: true, control: { kind: "textarea", size: "large", value: rejection } })),
       sample("비활성", "disabled — 바탕 bg-disabled · 글자 fg-disabled", textField({ label: "반려 사유", disabled: true, control: { kind: "textarea", size: "large", value: rejection } })),
@@ -3085,10 +3085,10 @@ export function renderChipGallery(brand) {
             <div class="pchip-phone-head"><div class="ptf-screen-title">가계부</div></div>
             <div class="pchip-phone-bar">${chipGroup({ layout: "scroll", gutter: true, label: "거래 거르기", live: true, items: chipFilterBar(filterConds(true)) })}</div>
             <div class="pchip-phone-list">${day("10월 1일 (목)", [
-              { color: "orange", icon: LIST_ICON.utensils, title: "김밥천국", detail: "식비 · 현대카드 신용카드", amount: "8,000원" },
+              { color: "orange", icon: LIST_ICON.utensils, title: "가나김밥", detail: "식비 · 현대카드 신용카드", amount: "8,000원" },
               { color: "blue", icon: LIST_ICON.bus, title: "버스", detail: "교통 · 현대카드 신용카드", amount: "1,500원" },
             ])}${day("9월 30일 (수)", [
-              { color: "violet", icon: LIST_ICON.bag, title: "다이소", detail: "쇼핑 · 현대카드 신용카드", amount: "12,300원" },
+              { color: "violet", icon: LIST_ICON.bag, title: "가나생활", detail: "쇼핑 · 현대카드 신용카드", amount: "12,300원" },
             ])}</div>
           </div>`;
   // 거래 추가 — 칸이 모두 필수라 2/3 규칙으로 점 · "선택" 이 붙지 않는다(textFieldMarks). 저장을 누르면 비운 필수 입력칸에 오류가 보인다
@@ -3652,9 +3652,9 @@ const overlayAnchor = (trigger, popover) => `<div class="pov-anchor">${trigger}$
 // 뒤 화면 — 제목 + 내용. rows 는 목록 줄(List — 보기만 하는 줄), body 는 화면 여백 안의 조각(폼 · 칸), lead 는 제목과 내용 사이 한 줄이다.
 // 데스크톱은 회색 바탕(bg-layer-basement) 위 흰 카드에 내용을 둔다. 2026년 10월 1일은 목요일이다
 const OVERLAY_LEDGER = [
-  { color: "orange", icon: "utensils", title: "김밥천국", detail: "식비 · 현대카드 신용카드", amount: "8,000원" },
+  { color: "orange", icon: "utensils", title: "가나김밥", detail: "식비 · 현대카드 신용카드", amount: "8,000원" },
   { color: "blue", icon: "bus", title: "버스", detail: "교통 · 현대카드 신용카드", amount: "1,500원" },
-  { color: "violet", icon: "bag", title: "다이소", detail: "쇼핑 · 현대카드 신용카드", amount: "12,300원" },
+  { color: "violet", icon: "bag", title: "가나생활", detail: "쇼핑 · 현대카드 신용카드", amount: "12,300원" },
   { color: "indigo", icon: "wallet", title: "월급", detail: "수입 · 국민 주계좌", amount: "3,200,000원" },
 ];
 const OVERLAY_LEAVE = [
@@ -4017,10 +4017,10 @@ export function renderFeedbackGallery(brand) {
   const tile = (color, icon) => `<span class="plst-tile plst-tile--${color}">${LIST_ICON[icon]}</span>`;
   const won = (v) => `<span class="plst-amount">${escape(v)}</span>`;
   const ledgerRows = () => listOf([
-    listRow({ prefix: tile("orange", "utensils"), title: "김밥천국", detail: "식비 · 현대카드 신용카드", suffix: won("8,000원") }),
+    listRow({ prefix: tile("orange", "utensils"), title: "가나김밥", detail: "식비 · 현대카드 신용카드", suffix: won("8,000원") }),
     listRow({ prefix: tile("blue", "bus"), title: "버스", detail: "교통 · 현대카드 신용카드", suffix: won("1,500원") }),
-    listRow({ prefix: tile("violet", "bag"), title: "다이소", detail: "쇼핑 · 현대카드 신용카드", suffix: won("12,300원") }),
-    listRow({ prefix: tile("orange", "utensils"), title: "스타벅스", detail: "식비 · 국민 주계좌", suffix: won("6,800원") }),
+    listRow({ prefix: tile("violet", "bag"), title: "가나생활", detail: "쇼핑 · 현대카드 신용카드", suffix: won("12,300원") }),
+    listRow({ prefix: tile("orange", "utensils"), title: "다라커피", detail: "식비 · 국민 주계좌", suffix: won("6,800원") }),
   ], ' aria-label="10월 거래"');
 
   // 1. Snackbar — 톤 · 액션 · 상태. 띠는 폰 폭(360)에서 자리 여백 8 을 뺀 폭이다(344)
@@ -4227,7 +4227,7 @@ export function renderFeedbackGallery(brand) {
 
   // 8. Result Section — large · medium × 비어 있음 · 실패 · 완료 · 404. 실패 카드의 다시 시도는 눌러 볼 수 있다(로딩 → 내용)
   const retryHost = `<div class="pfb-card" data-presult-host="">${resultSection({ kind: "failure", size: "medium", title: "거래를 불러오지 못했어요", description: "잠시 뒤 다시 시도해 주세요.", primary: "다시 시도", retry: true })}<template>${listOf([
-    listRow({ prefix: tile("orange", "utensils"), title: "김밥천국", detail: "식비 · 10월 1일", suffix: won("8,000원") }),
+    listRow({ prefix: tile("orange", "utensils"), title: "가나김밥", detail: "식비 · 10월 1일", suffix: won("8,000원") }),
     listRow({ prefix: tile("blue", "bus"), title: "버스", detail: "교통 · 10월 1일", suffix: won("1,500원") }),
   ], ' aria-label="이번 달 거래"')}</template></div>`;
   const resultPanel = panel(
@@ -5466,11 +5466,11 @@ export function renderDisplayGallery(brand) {
 
   // 4. 합계에 안 드는 줄 — 예정 · 환불(list.md). 줄을 흐리지 않고 제목 · 금액만 옅게, 환불 금액은 취소선, 배지는 보통 대비
   const ledger = phone("가계부", `<div class="pdsp-total"><span class="pdsp-total-label">10월 지출</span><span class="pdsp-total-value">17,900원</span></div>${listOf([
-    ledgerRow({ color: "orange", icon: "coffee", title: "스타벅스 강남역점", tags: [{ text: "카페" }, { text: "신한카드" }, { text: "오후 2:10", shrink: 0 }], amount: "5,600원" }),
-    ledgerRow({ color: "violet", icon: "tv", title: "넷플릭스", badges: [badge({ text: "예정" })], tags: [{ text: "구독" }, { text: "현대카드" }, { text: "10월 18일", shrink: 0 }], amount: "17,000원", excluded: true }),
-    ledgerRow({ color: "blue", icon: "bag", title: "쿠팡", badges: [badge({ text: "환불됨" })], tags: [{ text: "쇼핑" }, { text: "국민카드" }, { text: "10월 2일", shrink: 0 }], amount: "32,000원", excluded: true, refunded: true }),
+    ledgerRow({ color: "orange", icon: "coffee", title: "다라커피 강남역점", tags: [{ text: "카페" }, { text: "신한카드" }, { text: "오후 2:10", shrink: 0 }], amount: "5,600원" }),
+    ledgerRow({ color: "violet", icon: "tv", title: "가나영상", badges: [badge({ text: "예정" })], tags: [{ text: "구독" }, { text: "현대카드" }, { text: "10월 18일", shrink: 0 }], amount: "17,000원", excluded: true }),
+    ledgerRow({ color: "blue", icon: "bag", title: "가나몰", badges: [badge({ text: "환불됨" })], tags: [{ text: "쇼핑" }, { text: "국민카드" }, { text: "10월 2일", shrink: 0 }], amount: "32,000원", excluded: true, refunded: true }),
     ledgerRow({ color: "gray", icon: "bus", title: "버스", tags: [{ text: "교통" }, { text: "체크카드" }, { text: "오전 8:42", shrink: 0 }], amount: "1,500원" }),
-    ledgerRow({ color: "indigo", icon: "wallet", title: "다이소", tags: [{ text: "생활" }, { text: "현금" }, { text: "오전 11:05", shrink: 0 }], amount: "10,800원" }),
+    ledgerRow({ color: "indigo", icon: "wallet", title: "가나생활", tags: [{ text: "생활" }, { text: "현금" }, { text: "오전 11:05", shrink: 0 }], amount: "10,800원" }),
   ])}`);
   const excludedPanel = panel(
     "합계에 안 드는 줄 — 예정 · 환불",
@@ -5504,7 +5504,7 @@ export function renderDisplayGallery(brand) {
   };
   const topBar = (title, buttons) => `<div class="pdsp-bar"><div class="pdsp-bar-title">${escape(title)}</div><div class="pdsp-bar-actions">${buttons.join("")}</div></div>`;
   const nbPhone = phone("", listOf([
-    listRow({ prefix: tile("orange", "coffee"), title: "스타벅스 강남역점", detail: "카페 · 신한카드", suffix: '<span class="plst-amount">5,600원</span>' }),
+    listRow({ prefix: tile("orange", "coffee"), title: "다라커피 강남역점", detail: "카페 · 신한카드", suffix: '<span class="plst-amount">5,600원</span>' }),
     listRow({ prefix: tile("gray", "bus"), title: "버스", detail: "교통 · 체크카드", suffix: '<span class="plst-amount">1,500원</span>' }),
   ]), { bar: topBar("가계부", [bellButton({ size: "small" })]) });
   const nbDesk = `<div class="pdsp-desk">${topBar("groo", [`<button class="btn btn-ghost btn-icon-only btn-size-medium" type="button" aria-label="검색">${DISPLAY_ICON.search}</button>`, bellButton({ size: "large", count: 3 })])}<div class="pdsp-desk-body">${note("한 자리 숫자는 아이콘 버튼(40) 안에 들고, 두 자리 · \"99+\" 는 버튼 오른쪽 밖으로 나간다.")}</div></div>`;
@@ -5914,11 +5914,11 @@ export function renderLoadingGallery(brand) {
     ["0.6초에 옴", 'data-pld-run="600"'],
   ]);
   const SEARCH = [
-    { color: "orange", icon: "utensils", title: "스타벅스 강남점", detail: "식비 · 10월 1일 (목)", amount: "6,500원" },
-    { color: "orange", icon: "utensils", title: "스타벅스 역삼점", detail: "식비 · 9월 28일 (월)", amount: "5,900원" },
-    { color: "orange", icon: "utensils", title: "스타벅스 선릉점", detail: "식비 · 9월 21일 (월)", amount: "11,200원" },
+    { color: "orange", icon: "utensils", title: "다라커피 강남점", detail: "식비 · 10월 1일 (목)", amount: "6,500원" },
+    { color: "orange", icon: "utensils", title: "다라커피 역삼점", detail: "식비 · 9월 28일 (월)", amount: "5,900원" },
+    { color: "orange", icon: "utensils", title: "다라커피 선릉점", detail: "식비 · 9월 21일 (월)", amount: "11,200원" },
   ];
-  const searchBox = `<div class="pld-search">${PLD_ICON.search}<span>스타벅스</span></div>`;
+  const searchBox = `<div class="pld-search">${PLD_ICON.search}<span>다라커피</span></div>`;
   const liveCircle = live("circle", 440, `${title("검색")}${searchBox}<div class="pld-area" data-pld-host="">${pldRegion({ phase: "done", content: ledgerRows(SEARCH) })}</div>${tpl("failure", failCard("검색 결과"))}${tpl("content", ledgerRows(SEARCH))}`, [
     ["10초까지 — 오지 않음", 'data-pld-run="never"'],
     ["3초에 옴", 'data-pld-run="3000"'],
@@ -6070,9 +6070,9 @@ export function renderLoadingGallery(brand) {
   const rowFrame = (cls, label, scroll = "") => `<div class="pld-fog-row ${cls}"${scroll ? ` data-pfog-scroll="${scroll}"` : ""}>${chipRow(label)}</div>`;
   const CATS = ["식비", "교통", "쇼핑", "카페", "구독", "의료", "여행", "주거", "통신", "교육"];
   const sheet = (scroll) => `<div${scroll ? ` data-pfog-scroll="${scroll}"` : ""}>${phone(560, overlayPage(), [overlayScrim(), overlayLayer("sheet", bottomSheet({ title: "카테고리 고르기", body: overlayRadioList("카테고리", CATS, "식비"), footer: [overlayButton("완료", { size: "large" })], scrollFog: true }))])}</div>`;
-  const longDetail = [["금액", "8,000원"], ["카테고리", "식비"], ["결제 수단", "현대카드 신용카드"], ["날짜", "10월 1일 (목)"], ["시간", "오후 12:30"], ["가맹점", "김밥천국 강남점"], ["할부", "일시불"], ["메모", "친구와 점심"], ["태그", "회사 근처"], ["더치페이", "2명 · 4,000원씩"]];
+  const longDetail = [["금액", "8,000원"], ["카테고리", "식비"], ["결제 수단", "현대카드 신용카드"], ["날짜", "10월 1일 (목)"], ["시간", "오후 12:30"], ["가맹점", "가나김밥 강남점"], ["할부", "일시불"], ["메모", "친구와 점심"], ["태그", "회사 근처"], ["더치페이", "2명 · 4,000원씩"]];
   const fogDialog = desktop(520, overlayPage({ desktop: true }), [overlayScrim(), overlayLayer("dialog", overlayDialog({ title: "거래 상세", close: true, body: overlayValueList(longDetail), scrollFog: true }))]);
-  const IMPORTED = ["김밥천국", "버스", "다이소", "스타벅스", "GS25", "교보문고", "올리브영", "택시", "넷플릭스", "쿠팡"].map((t, i) => ({ title: t, detail: `10월 ${i + 1}일 · 현대카드 신용카드`, value: "가져옴" }));
+  const IMPORTED = ["가나김밥", "버스", "가나생활", "다라커피", "가나24", "가나문고", "다라뷰티", "택시", "가나영상", "가나몰"].map((t, i) => ({ title: t, detail: `10월 ${i + 1}일 · 현대카드 신용카드`, value: "가져옴" }));
   const fogPage = phone(560, `${title("가져오기 결과")}<div class="pld-page-fog"><div class="pfog pfog--page" tabindex="0" role="region" aria-label="가져온 거래">${listOf(IMPORTED.map((r) => listRow({ title: r.title, detail: r.detail, suffix: escape(r.value) })))}</div><div class="pld-page-cta">${overlayButton("가계부에 넣기", { size: "large" })}</div></div>`);
   const TERMS = "제1조(목적) 이 약관은 그루 담다 가 제공하는 가계부 · 메모 · 할 일 서비스의 이용 조건과 절차를 정한다. 제2조(계정) 이용자는 하나의 계정만 만들 수 있고, 계정 정보는 본인만 쓴다. 제3조(데이터) 이용자가 넣은 거래 · 메모는 이용자의 것이며, 서비스는 보관과 백업에만 쓴다. 제4조(해지) 이용자는 언제든 설정에서 이용을 해지할 수 있고, 해지하면 아이디와 이메일은 다시 쓸 수 없다. 제5조(변경) 약관이 바뀌면 시행 7일 전에 앱 안에서 알린다.";
   const box = (scroll) => `<div class="pld-box"${scroll ? ` data-pfog-scroll="${scroll}"` : ""}><div class="pfog pfog--box" tabindex="0" role="region" aria-label="이용 약관"><p class="pld-terms">${escape(TERMS)}</p></div></div>`;
@@ -6517,7 +6517,7 @@ export function renderImageGallery(brand, tokens) {
   const zoomTile = (html, cap, sub) => item(`<span class="pimg-zoom pimg-zoom--tile" aria-hidden="true"><span class="pimg-zoom-in pimg-zoom-in--tile">${html}</span></span>`, cap, sub);
   const strokeTiles = (t) => surface(row(t === "dark"
     ? [zoomTile(logoTile({ name: "케이뱅크", size: 48 }), "케이뱅크 × 3 — 윤곽", "다크 표면과 1.12 → 둘레 1.14"), zoomTile(logoTile({ name: "케이뱅크", size: 48, cls: "pimg-no-stroke" }), "윤곽 없음 — 쓰지 않는다", "타일이 사라지고 글자만 뜬다"), item(row(["BoA", "현대차증권", "삼성증권"].map((n) => logoTile({ name: n }))), "짙은 남색 — 다크 표면 위", "BoA 1.02 · 현대차증권 1.05 · 삼성증권")]
-    : [zoomTile(logoTile({ name: "카카오뱅크", size: 48 }), "카카오뱅크 × 3 — 윤곽", "흰 표면과 1.28 → 둘레 1.11"), zoomTile(logoTile({ name: "카카오뱅크", size: 48, cls: "pimg-no-stroke" }), "윤곽 없음 — 쓰지 않는다", "노랑이 흰 바탕에 묻힌다"), item(row(["카카오페이증권", "OK저축", "KB국민"].map((n) => logoTile({ name: n }))), "노랑 — 흰 표면 위", "짙은 글자")], "pimg-row--zoom"));
+    : [zoomTile(logoTile({ name: "카카오뱅크", size: 48 }), "카카오뱅크 × 3 — 윤곽", "흰 표면과 1.28 → 둘레 1.11"), zoomTile(logoTile({ name: "카카오뱅크", size: 48, cls: "pimg-no-stroke" }), "윤곽 없음 — 쓰지 않는다", "노랑이 흰 바탕에 묻힌다"), item(row(["다라페이증권", "OK저축", "KB국민"].map((n) => logoTile({ name: n }))), "노랑 — 흰 표면 위", "짙은 글자")], "pimg-row--zoom"));
   const imageRow = row([
     item(logoTile({ name: "삼성카드", src: PIMG.cardV, imageType: "card", rotated: true, state: "initial" }), "1. 첫 글자 먼저", "이름을 아니까 바로 — 스켈레톤을 두지 않는다"),
     item(logoTile({ name: "삼성카드", src: PIMG.cardV, imageType: "card", rotated: true }), "2. 그림이 오면 덮는다", "옅은 판 + 카드 32 × 20(모서리 6) · 세로는 돌림"),
@@ -6532,7 +6532,7 @@ export function renderImageGallery(brand, tokens) {
   const tileLive = `<div class="pld-live" data-plt-live="">${surface(`<div class="pimg-live-tile">${logoTile({ name: "삼성카드", size: 48, src: PIMG.cardV, imageType: "card", rotated: true, state: "initial" })}<span class="pimg-live-name">삼성카드 신용카드</span></div>`, "pimg-surface--live")}<template data-plt-plate="">${logoTilePlate({ size: 48, src: PIMG.cardV, imageType: "card", rotated: true })}</template><div class="pld-controls"><button class="btn btn-neutral-weak btn-size-small" type="button" data-plt-run="load"><span>그림이 옴 — 0.8초</span></button><button class="btn btn-neutral-weak btn-size-small" type="button" data-plt-run="fail"><span>실패</span></button></div><p class="pld-clock" data-plt-clock="" aria-hidden="true">처음에는 첫 글자 — 그림이 오면 전환 없이 바로 덮는다</p></div>`;
   const tileImagePanel = panel(
     "Logo Tile — 투명 윤곽 · 그림(카드 · 로고) · 첫 글자 먼저",
-    "안쪽 1px 투명 윤곽(stroke-neutral-overlay)을 늘 그린다 — 다크 표면과 1.02 ~ 1.12 인 짙은 남색 타일(케이뱅크 · BoA · 현대차증권 …), 흰 표면과 1.28 인 노랑 타일(카카오뱅크 · 카카오페이증권)이 표면에 묻히지 않게 둘레를 잡는다(장식 — 이름 글이 물건을 알린다). 타일 색을 바꾸지 않는다. 그림이 있으면 첫 글자를 먼저 그리고 그림이 오면 판 · 그림이 덮는다(전환 없이 바로 — Avatar 와 같다), 못 불러오면 첫 글자 그대로다 — 줄의 이름 · 금액은 이미 와 있으니 스켈레톤을 따로 두지 않는다. 판 안쪽은 4 다. 카드 그림은 옅은 판(bg-neutral-weak) 위에 카드 비율의 Image Frame(32 → 24 × 15 · 40 → 32 × 20 · 48 → 40 × 25, 모서리는 그 폭으로 4 · 6 · 6)으로 카드 전체를 보이고 세로 그림은 돌린다 — 정사각에 잘라 넣으면 카드의 63% 만 보인다. 로고 그림은 흰 판(static-white — 두 모드 같다) 위에 잘리지 않게(contain) 둔다. 옆에 이름이 있으면 타일은 장식이다(첫 글자 · 그림을 읽지 않는다).",
+    "안쪽 1px 투명 윤곽(stroke-neutral-overlay)을 늘 그린다 — 다크 표면과 1.02 ~ 1.12 인 짙은 남색 타일(케이뱅크 · BoA · 현대차증권 …), 흰 표면과 1.28 인 노랑 타일(카카오뱅크 · 다라페이증권)이 표면에 묻히지 않게 둘레를 잡는다(장식 — 이름 글이 물건을 알린다). 타일 색을 바꾸지 않는다. 그림이 있으면 첫 글자를 먼저 그리고 그림이 오면 판 · 그림이 덮는다(전환 없이 바로 — Avatar 와 같다), 못 불러오면 첫 글자 그대로다 — 줄의 이름 · 금액은 이미 와 있으니 스켈레톤을 따로 두지 않는다. 판 안쪽은 4 다. 카드 그림은 옅은 판(bg-neutral-weak) 위에 카드 비율의 Image Frame(32 → 24 × 15 · 40 → 32 × 20 · 48 → 40 × 25, 모서리는 그 폭으로 4 · 6 · 6)으로 카드 전체를 보이고 세로 그림은 돌린다 — 정사각에 잘라 넣으면 카드의 63% 만 보인다. 로고 그림은 흰 판(static-white — 두 모드 같다) 위에 잘리지 않게(contain) 둔다. 옆에 이름이 있으면 타일은 장식이다(첫 글자 · 그림을 읽지 않는다).",
     `${samples([sample("윤곽 — 라이트 노랑 · 다크 짙은 남색(× 3)", "stroke-neutral-overlay — 윤곽 없음은 쓰지 않는 모습", pair(strokeTiles))], "ptf-samples pimg-samples--wide")}${samples([
       sample("그림 — 카드: 첫 글자 먼저 · 덮기 · 실패", "imageType=\"card\" — 옅은 판 + 카드 비율 Image Frame", surface(imageRow)),
       sample("직접 — 그림이 옴 · 실패", "LogoTile size={48} src imageType=\"card\"", tileLive),
@@ -6962,9 +6962,9 @@ const pnavTitleRow = (t, desc, buttons) =>
 const pnavCard = (body, cls = "") => `<div class="pnav-card${cls ? ` ${cls}` : ""}">${body}</div>`;
 const pnavRow = ([title, detail, value]) => `<div class="pnav-row"><span class="pnav-row-body"><span class="pnav-row-title">${escape(title)}</span>${detail ? `<span class="pnav-row-detail">${escape(detail)}</span>` : ""}</span>${value ? `<span class="pnav-row-value">${escape(value)}</span>` : ""}</div>`;
 const PNAV_LEDGER = [
-  ["김밥천국", "식비 · 현대카드 신용카드", "8,000원"], ["버스", "교통 · 현대카드 신용카드", "1,500원"], ["다이소", "쇼핑 · 현대카드 신용카드", "12,300원"], ["월급", "수입 · 국민 주계좌", "3,200,000원"],
-  ["스타벅스", "식비 · 국민 주계좌", "6,800원"], ["GS25", "식비 · 현대카드 신용카드", "3,200원"], ["교보문고", "문화 · 현대카드 신용카드", "15,000원"], ["올리브영", "쇼핑 · 국민 주계좌", "21,900원"],
-  ["택시", "교통 · 현대카드 신용카드", "9,800원"], ["넷플릭스", "구독 · 현대카드 신용카드", "13,500원"], ["쿠팡", "쇼핑 · 국민 주계좌", "32,000원"], ["관리비", "주거 · 국민 주계좌", "184,000원"],
+  ["가나김밥", "식비 · 현대카드 신용카드", "8,000원"], ["버스", "교통 · 현대카드 신용카드", "1,500원"], ["가나생활", "쇼핑 · 현대카드 신용카드", "12,300원"], ["월급", "수입 · 국민 주계좌", "3,200,000원"],
+  ["다라커피", "식비 · 국민 주계좌", "6,800원"], ["가나24", "식비 · 현대카드 신용카드", "3,200원"], ["가나문고", "문화 · 현대카드 신용카드", "15,000원"], ["다라뷰티", "쇼핑 · 국민 주계좌", "21,900원"],
+  ["택시", "교통 · 현대카드 신용카드", "9,800원"], ["가나영상", "구독 · 현대카드 신용카드", "13,500원"], ["가나몰", "쇼핑 · 국민 주계좌", "32,000원"], ["관리비", "주거 · 국민 주계좌", "184,000원"],
 ];
 const PNAV_LEAVE = [["연차", "10월 12일 (월) ~ 14일 (수)", "승인 대기"], ["반차(오전)", "9월 30일 (수)", "승인"], ["병가", "9월 8일 (화)", "승인"], ["연차", "8월 18일 (화)", "승인"], ["경조 휴가", "7월 3일 (금)", "승인"]];
 const pnavRows = (rows, n = rows.length) => Array.from({ length: n }, (_, i) => pnavRow(rows[i % rows.length])).join("");
@@ -7545,9 +7545,9 @@ const pcardHero = ({ label = "순자산", amount = "42,898,100원", delta = { di
   pcard({ variant: "hero", interaction, attrs, content: `<div class="pcard-hero-label">${escape(label)}</div><div class="pcard-hero-amount">${escape(amount)}</div><div class="pcard-hero-detail">${pdelta(delta)}</div>` });
 // 오늘 쓴 돈 — card.md 의 목록 카드 줄(카테고리 타일 40 · 제목 · 설명 · 금액). 금액은 가계부 화면의 자리(16 · 700)
 const PCARD_SPEND = [
-  { color: "orange", icon: "utensils", title: "스타벅스 강남점", detail: "식비 · 국민카드", amount: -6500 },
+  { color: "orange", icon: "utensils", title: "다라커피 강남점", detail: "식비 · 국민카드", amount: -6500 },
   { color: "blue", icon: "bus", title: "지하철", detail: "교통 · 국민카드", amount: -1450 },
-  { color: "violet", icon: "bag", title: "이마트 성수점", detail: "생활 · 신한카드", amount: -42300 },
+  { color: "violet", icon: "bag", title: "가나마트 성수점", detail: "생활 · 신한카드", amount: -42300 },
 ];
 const pcardSpendRows = (rows = PCARD_SPEND, { kind = "button", pressAt = -1 } = {}) => listOf(rows.map((r, i) => listRow({ kind, prefix: listTile(r.color, r.icon), title: r.title, detail: r.detail, suffix: `<span class="plst-amount">${escape(pdataWon(r.amount))}</span>`, interaction: i === pressAt ? "pressed" : "" })), ' aria-label="오늘 쓴 돈"');
 
@@ -7781,7 +7781,7 @@ function pswipe({ row = "", actions = [], rowLabel = "", open = true, states = {
   return `<div class="pswipe${open ? " pswipe--open" : ""}" style="--pswipe-tray: ${width}px;">${tray}<div class="pswipe-row" tabindex="-1">${row}</div></div>`;
 }
 // 거래 줄 — 가계부(카테고리 타일 · 제목 · 설명 · 금액). 줄 끝 ⋮ 는 두지 않는다 — 같은 동작은 줄을 눌러 들어간 상세에(2026-10-25)
-const pswipeRow = ({ color = "orange", icon = "utensils", title = "스타벅스 강남점", detail = "식비 · 국민카드", amount = -6500 } = {}) =>
+const pswipeRow = ({ color = "orange", icon = "utensils", title = "다라커피 강남점", detail = "식비 · 국민카드", amount = -6500 } = {}) =>
   listOf([listRow({ kind: "button", prefix: listTile(color, icon), title, detail, suffix: `<span class="plst-amount">${escape(pdataWon(amount))}</span>` })]);
 
 // 데이터 표시 갤러리 — 표 여섯 · 카드 다섯(순자산 카드는 Desk 만) · 차트 넷 · 검색해서 고르기 둘 · 줄 밀기 하나, 판을 흰 표면(.vignette-card) 위에 그린다.
@@ -7926,7 +7926,7 @@ export function renderDataGallery(brand) {
     ], WIDE)}${samples([
       sample("72 — Avatar 42 + 이름 · 이메일", "TableCellContent media · title · detail", wide(floor(tableCard("사용자", richPeople)))),
       sample("72 — Logo Tile 40 + 자산 · 종류", "잔액은 원까지 · 오른쪽", wide(floor(tableCard("자산", richAssets)))),
-      sample("72 — Image Frame 1:1 48 + 제목 · 설명", "썸네일 48 이 세로 가운데 — 칸 여백 12 보다 높이가 먼저", wide(floor(tableCard("문화 · 규정", richRules)))),
+      sample("72 — Image Frame 1:1 48 + 제목 · 설명", "썸네일 48 칸만 위아래 0 — 줄은 72 그대로", wide(floor(tableCard("문화 · 규정", richRules)))),
     ], `${WIDE} pov-samples--next`)}`,
   );
 
@@ -8166,9 +8166,9 @@ export function renderDataGallery(brand) {
   const ACT2 = [{ kind: "primary", label: "수정", icon: "pencil" }, { kind: "destructive", label: "삭제", icon: "trash" }];
   const ACT3 = [{ kind: "neutral", label: "고정", icon: "pin" }, ...ACT2];
   const swipeFrame = (t) => `<div class="pdata-swipe-stack">${[
-    [pswipe({ row: pswipeRow({}), actions: ACT2, rowLabel: "스타벅스 강남점" }), "동작 둘 — 104 · 삭제가 가장 안쪽", "[수정, 삭제] → 그릴 때 뒤집는다"],
+    [pswipe({ row: pswipeRow({}), actions: ACT2, rowLabel: "다라커피 강남점" }), "동작 둘 — 104 · 삭제가 가장 안쪽", "[수정, 삭제] → 그릴 때 뒤집는다"],
     [pswipe({ row: pswipeRow({ color: "blue", icon: "bus", title: "지하철", detail: "교통 · 국민카드", amount: -1450 }), actions: ACT3, rowLabel: "지하철" }), "동작 셋 — 152 · 고정(neutral)", "[고정, 수정, 삭제] — 셋까지"],
-    [pswipe({ row: pswipeRow({ color: "violet", icon: "bag", title: "이마트 성수점", detail: "생활 · 신한카드", amount: -42300 }), actions: ACT2, rowLabel: "이마트 성수점", open: false }), "닫힘 — 트레이는 aria-hidden", "줄 끝 ⋮ 가 같은 동작을 연다"],
+    [pswipe({ row: pswipeRow({ color: "violet", icon: "bag", title: "가나마트 성수점", detail: "생활 · 신한카드", amount: -42300 }), actions: ACT2, rowLabel: "가나마트 성수점", open: false }), "닫힘 — 트레이는 aria-hidden", "줄 끝 ⋮ 가 같은 동작을 연다"],
   ].map(([html, a, b]) => `<div class="pdata-swipe-item"><div class="pdata-swipe-screen">${html}</div>${cap(a, b)}</div>`).join("")}</div>`;
   // 폰 화면은 바닥이 회색이고 목록은 카드에 담는다 — 줄 띠(목록 카드 모양 · 모서리 16)를 바닥 위에 둔다
   const swipeFloor = (t) => floor(swipeFrame(t), "pdata-floor--swipe");
@@ -8190,7 +8190,7 @@ export function renderDataGallery(brand) {
   ], (r, c) => `<span class="pdata-surface pdata-surface--swipe">${pswipeAction({ ...r.a, rowLabel: "지하철", first: true, state: c.i })}</span>`);
   const swipePanel = panel(
     "Swipe Actions — 밀어 연 트레이 · 같은 동작은 상세에",
-    "폰(768 미만) 목록 줄을 왼쪽으로 밀면 오른쪽에서 동작이 드러나는 지름길이다 — 기존 줄을 감싸고 뒤에 트레이를 붙인다. 동작은 1 ~ 3개를 부르는 쪽이 뜻의 차례로 넘기고 그리는 쪽이 뒤집는다 — 되돌리기 어려운 동작(삭제)은 가장 안쪽(화면에서 가장 왼쪽). 칸은 원형 배지 36(아이콘 18) + 그 아래 2 에 라벨 12 / 700 / 1.3 이고, 간격은 배지 앞에만 — 첫 칸 앞 20 · 칸 사이 12, 마지막 칸은 화면 끝에 붙는다(칸 폭 56 · 48, 트레이 56 · 104 · 152). 누르는 자리는 칸 전체(48 ~ 56 × 줄 높이 56 이상)다. 트레이 바탕은 칠하지 않고 색은 배지만 갖는다 — primary 는 fg-informative · destructive 는 fg-critical 로 채우고 아이콘은 fg-neutral-inverted(라이트는 짙은 배지 + 흰 아이콘, 다크는 밝은 배지 + 짙은 아이콘 — 두 모드 모두 줄 바탕과 3:1 이상), neutral 은 bg-neutral-weak + 안쪽 1px stroke-neutral-weak · 아이콘 fg-neutral. 라벨은 neutral · primary fg-neutral-muted, destructive 만 fg-critical. 이름은 \"라벨: 줄 제목\"(\"삭제: 스타벅스 강남점\"). 누름 · 호버는 밝기 88%(움직이지 않는다), 포커스는 칸 안쪽 2px, 막힘은 bg-disabled · fg-disabled. 미는 법을 모르는 사람 · 키보드 · 스크린리더는 줄을 눌러 들어간 상세에서 같은 동작 · 같은 이름에 닿는다 — 줄 끝 ⋮ 는 두지 않는다(오른쪽 — 바닥 왼쪽 [삭제] · [수정], 2026-10-25). 닫힌 트레이는 aria-hidden · 버튼 tabindex -1 이고, Esc 로 닫으면 초점은 줄로 간다. 그림은 열린 순간을 멈춘 것이다.",
+    "폰(768 미만) 목록 줄을 왼쪽으로 밀면 오른쪽에서 동작이 드러나는 지름길이다 — 기존 줄을 감싸고 뒤에 트레이를 붙인다. 동작은 1 ~ 3개를 부르는 쪽이 뜻의 차례로 넘기고 그리는 쪽이 뒤집는다 — 되돌리기 어려운 동작(삭제)은 가장 안쪽(화면에서 가장 왼쪽). 칸은 원형 배지 36(아이콘 18) + 그 아래 2 에 라벨 12 / 700 / 1.3 이고, 간격은 배지 앞에만 — 첫 칸 앞 20 · 칸 사이 12, 마지막 칸은 화면 끝에 붙는다(칸 폭 56 · 48, 트레이 56 · 104 · 152). 누르는 자리는 칸 전체(48 ~ 56 × 줄 높이 56 이상)다. 트레이 바탕은 칠하지 않고 색은 배지만 갖는다 — primary 는 fg-informative · destructive 는 fg-critical 로 채우고 아이콘은 fg-neutral-inverted(라이트는 짙은 배지 + 흰 아이콘, 다크는 밝은 배지 + 짙은 아이콘 — 두 모드 모두 줄 바탕과 3:1 이상), neutral 은 bg-neutral-weak + 안쪽 1px stroke-neutral-weak · 아이콘 fg-neutral. 라벨은 neutral · primary fg-neutral-muted, destructive 만 fg-critical. 이름은 \"라벨: 줄 제목\"(\"삭제: 다라커피 강남점\"). 누름 · 호버는 밝기 88%(움직이지 않는다), 포커스는 칸 안쪽 2px, 막힘은 bg-disabled · fg-disabled. 미는 법을 모르는 사람 · 키보드 · 스크린리더는 줄을 눌러 들어간 상세에서 같은 동작 · 같은 이름에 닿는다 — 줄 끝 ⋮ 는 두지 않는다(오른쪽 — 바닥 왼쪽 [삭제] · [수정], 2026-10-25). 닫힌 트레이는 aria-hidden · 버튼 tabindex -1 이고, Esc 로 닫으면 초점은 줄로 간다. 그림은 열린 순간을 멈춘 것이다.",
     `${pair(swipeFloor)}${samples([sample("줄을 누르면 상세 — 같은 동작 · 같은 확인 창", "Bottom Sheet 바닥 — [삭제] ghost critical 왼쪽 · [수정]", swipeSheet)], NEXT)}${swipeStates}`,
   );
 
@@ -9153,7 +9153,7 @@ const PCOL_STATES = ["hover", "pressed", "focus"];
 
 // ── 내용 — 지어낸 것이다(가장 나쁜 값: 28자 혜택 제목 · 7줄 상세 · 84자 유의사항 · 23자 부서 이름 · −123,456,789원) ──────────
 const PCOL_LONG_DETAIL = [
-  "■ 할인 대상: 네이버페이 · 카카오페이 · 토스페이 · 페이코 · SSG페이에서 이 카드로 결제한 온라인 가맹점 이용금액",
+  "■ 할인 대상: 가나페이 · 다라페이 · 마바페이 · 사아페이 · 자차페이에서 이 카드로 결제한 온라인 가맹점 이용금액",
   "■ 할인율: 이용금액의 10% 결제일 할인(건당 이용금액 1만 원 이상)",
   "■ 월 할인 한도: 전월 이용실적 30만 원 이상 50만 원 미만 5천 원 / 50만 원 이상 100만 원 미만 1만 원 / 100만 원 이상 2만 원",
   "■ 유의사항: 간편결제 내 충전 · 송금 · 상품권 구매 · 대학 등록금 · 아파트 관리비 · 국세 · 지방세 납부는 할인 대상에서 빠져요.",
@@ -9162,17 +9162,17 @@ const PCOL_LONG_DETAIL = [
   "■ 결제일 할인은 결제일에 청구 금액에서 빠지고, 카드를 해지하면 남은 할인은 사라져요.",
 ].join("\n");
 const PCOL_BENEFITS = [
-  { id: "pay", title: "온라인 간편결제 · 배달앱 · 해외 직구 통합 할인", summary: "네이버페이 · 카카오페이 · 토스페이 결제 시 이용금액의 10% 결제일 할인(월 최대 2만 원)", detail: PCOL_LONG_DETAIL },
+  { id: "pay", title: "온라인 간편결제 · 배달앱 · 해외 직구 통합 할인", summary: "가나페이 · 다라페이 · 마바페이 결제 시 이용금액의 10% 결제일 할인(월 최대 2만 원)", detail: PCOL_LONG_DETAIL },
   { id: "coffee", title: "커피", summary: "골목커피 · 숲속다방 · 달빛로스터리 50% 할인", detail: "■ 할인 대상: 골목커피 · 숲속다방 · 달빛로스터리 커피 매장 이용금액\n■ 월 2회 · 회당 최대 5천 원" },
   { id: "transit", title: "대중교통", summary: "버스 · 지하철 10% 청구할인", detail: null },
-  { id: "telecom", title: "통신", summary: "SKT · KT · LG U+ 자동이체 5천 원 할인", detail: "■ 통신요금을 이 카드로 자동이체할 때\n■ 전월 실적 30만 원 이상" },
-  { id: "store", title: "편의점", summary: "GS25 · CU · 세븐일레븐 5% 할인", detail: null },
-  { id: "movie", title: "영화", summary: "CGV · 롯데시네마 · 메가박스 4천 원 할인", detail: "■ 온라인 예매 포함 · 월 1회" },
-  { id: "fuel", title: "주유", summary: "GS칼텍스 · SK에너지 리터당 60원 할인", detail: "■ 주유소 이용 시 · 월 최대 6천 원\n■ 셀프 주유소 포함" },
+  { id: "telecom", title: "통신", summary: "가나텔레콤 · 다라텔레콤 · 마바텔레콤 자동이체 5천 원 할인", detail: "■ 통신요금을 이 카드로 자동이체할 때\n■ 전월 실적 30만 원 이상" },
+  { id: "store", title: "편의점", summary: "가나24 · 다라편의점 · 마바스토어 5% 할인", detail: null },
+  { id: "movie", title: "영화", summary: "가나시네마 · 다라시네마 · 마바시네마 4천 원 할인", detail: "■ 온라인 예매 포함 · 월 1회" },
+  { id: "fuel", title: "주유", summary: "가나주유소 · 다라주유소 리터당 60원 할인", detail: "■ 주유소 이용 시 · 월 최대 6천 원\n■ 셀프 주유소 포함" },
   { id: "abroad", title: "해외", summary: "해외 이용금액 1.5% 적립 · 해외 결제 수수료 면제", detail: "■ 해외 가맹점(온 · 오프라인) 이용금액\n■ 수수료 면제는 브랜드 수수료 제외" },
-  { id: "shop", title: "쇼핑", summary: "쿠팡 · 11번가 · G마켓 7% 할인", detail: "■ 건당 2만 원 이상 · 월 최대 1만 원" },
+  { id: "shop", title: "쇼핑", summary: "가나몰 · 다라몰 · 마바몰 7% 할인", detail: "■ 건당 2만 원 이상 · 월 최대 1만 원" },
   { id: "clinic", title: "병원 · 약국", summary: "병원 · 약국 5% 할인", detail: "■ 월 최대 5천 원" },
-  { id: "sub", title: "구독", summary: "넷플릭스 · 유튜브 프리미엄 · 멜론 30% 할인", detail: "■ 정기결제 이용금액 · 월 최대 5천 원" },
+  { id: "sub", title: "구독", summary: "가나영상 · 다라영상 프리미엄 · 마바뮤직 30% 할인", detail: "■ 정기결제 이용금액 · 월 최대 5천 원" },
   { id: "lounge", title: "공항 라운지", summary: "국내외 공항 라운지 연 2회 무료", detail: "■ 본인만 · 동반자 제외\n■ 전월 실적 50만 원 이상" },
 ];
 const PCOL_CAUTIONS = [
@@ -9216,14 +9216,14 @@ const PCOL_CATEGORIES = [
 // 가계부 원장 — 10월 8일부터 하루 4줄 · 열흘(첫 줄은 1억 넘는 이체)
 const PCOL_LEDGER = (() => {
   const pool = [
-    ["김밥천국 강남점", "식비 · 삼성카드 신용카드", 9500, "orange", "utensils"],
-    ["파리바게뜨", "카페 · 간식 · 토스 체크카드", 4800, "orange", "coffee"],
-    ["티머니", "교통 · 토스 체크카드", 1450, "blue", "credit-card"],
-    ["무신사", "쇼핑 · 삼성카드 신용카드", 58900, "violet", "tag"],
-    ["스타벅스 역삼점", "카페 · 간식 · 현대카드 신용카드", 6300, "orange", "coffee"],
-    ["GS25 역삼점", "식비 · 토스 체크카드", 3200, "orange", "utensils"],
-    ["쿠팡", "쇼핑 · 현대카드 신용카드", 27400, "violet", "tag"],
-    ["배달의민족", "식비 · 삼성카드 신용카드", 23900, "orange", "utensils"],
+    ["가나김밥 강남점", "식비 · 삼성카드 신용카드", 9500, "orange", "utensils"],
+    ["다라베이커리", "카페 · 간식 · 토스 체크카드", 4800, "orange", "coffee"],
+    ["다라교통", "교통 · 토스 체크카드", 1450, "blue", "credit-card"],
+    ["마바패션", "쇼핑 · 삼성카드 신용카드", 58900, "violet", "tag"],
+    ["다라커피 역삼점", "카페 · 간식 · 현대카드 신용카드", 6300, "orange", "coffee"],
+    ["가나24 역삼점", "식비 · 토스 체크카드", 3200, "orange", "utensils"],
+    ["가나몰", "쇼핑 · 현대카드 신용카드", 27400, "violet", "tag"],
+    ["가나배달", "식비 · 삼성카드 신용카드", 23900, "orange", "utensils"],
   ];
   const days = ["10월 8일 (목) · 오늘", "10월 7일 (수)", "10월 6일 (화)", "10월 5일 (월)", "10월 4일 (일)", "10월 3일 (토)", "10월 2일 (금)", "10월 1일 (목)", "9월 30일 (수)", "9월 29일 (화)"];
   return days.map((label, d) => ({
@@ -9490,7 +9490,7 @@ export function renderCollapseGallery(brand) {
     "트리거는 위아래 16 · 좌우 24(화면 가장자리 규칙 — SEED 16), 제목 16 / 22 · 500 · fg-neutral, 설명 13 / 18 · 500 · fg-neutral-subtle(제목 아래 2), 꺾쇠 20 · fg-neutral-subtle, 앞 아이콘 22 · fg-neutral — 앞 아이콘 · 본문 · 꺾쇠 사이 12 다. 제목만이면 54, 설명이 있으면 74 이고 제목이 줄을 바꾸면 늘어난다 — 28자 첫 혜택 · 84자 유의사항 제목도 말줄임 없이 단어 단위로 줄을 바꾼다(\"더 보기\" 없음). 앞 아이콘 · 꺾쇠는 트리거 가운데에 선다. 펼친 내용은 위 0 · 좌우 24 · 아래 16, 14 / 22(text-article-note) · fg-neutral-muted 이고 줄바꿈 문자를 지키며 안에서 스크롤하지 않는다 — 앞 아이콘이 있어도 24 에서 시작한다. 아래 글은 이 미리보기에서 잰 높이다.",
     `${samples([
       sample("제목만 — 54", "description none", `<div class="pcol-surface" data-pcol-measure-host>${pacc({ rows: [paccItem({ title: "커피", detail: PCOL_BENEFITS[1].detail })] })}${measure("data-pcol-h")}</div>`),
-      sample("제목 + 설명 — 74", "description shown", `<div class="pcol-surface" data-pcol-measure-host>${pacc({ rows: [paccItem({ title: "커피", description: "스타벅스 50% 할인", detail: PCOL_BENEFITS[1].detail })] })}${measure("data-pcol-h")}</div>`),
+      sample("제목 + 설명 — 74", "description shown", `<div class="pcol-surface" data-pcol-measure-host>${pacc({ rows: [paccItem({ title: "커피", description: "다라커피 50% 할인", detail: PCOL_BENEFITS[1].detail })] })}${measure("data-pcol-h")}</div>`),
     ], NEXT)}${samples([
       sample("28자 제목 — 폰 390", "줄을 바꾸면 늘어난다", `<div class="pcol-surface pcol-surface--390" data-pcol-measure-host>${pacc({ rows: [paccItem({ title: PCOL_BENEFITS[0].title, description: PCOL_BENEFITS[0].summary, detail: PCOL_BENEFITS[0].detail })] })}${measure("data-pcol-h")}</div>`),
       sample("84자 유의사항 제목 — 자르지 않는다", "설명 없음 · 폰 390", `<div class="pcol-surface pcol-surface--390" data-pcol-measure-host>${pacc({ rows: [paccItem({ title: PCOL_CAUTIONS[0].title, detail: PCOL_CAUTIONS[0].detail })] })}${measure("data-pcol-h")}</div>`),
@@ -17199,9 +17199,10 @@ export function pageCss() {
     .ptbl-name { display: inline-block; margin: calc(-1 * var(--spacing-x0_5)) calc(-1 * var(--spacing-x1)); padding: var(--spacing-x0_5) var(--spacing-x1); border-radius: var(--radius-r1); color: inherit; text-decoration: none; outline: none; }
     .ptbl-name:focus-visible,
     .ptbl-name.ptbl-name--focus { outline: 2px solid var(--pdata-ring); outline-offset: -2px; }
-    /* 줄 종류 — 썸네일 · 두 줄 칸이 하나라도 있으면 그 표의 모든 줄이 72(칸 여백 12 보다 높이가 먼저 — 그림은 세로 가운데) */
+    /* 줄 종류 — 썸네일 · 두 줄 칸이 하나라도 있으면 그 표의 모든 줄이 72(최소 — 칸 위아래 12, 내용이 넘으면 줄이 자란다). Image Frame 48 칸만 위아래 0(2026-11-10 14C) */
     .ptbl-table--rich > tbody > .ptbl-row { height: 72px; }
-    .ptbl-table--rich > tbody .ptbl-td { padding-block: 0; }
+    .ptbl-table--rich > tbody .ptbl-td { padding-block: var(--spacing-x3); }
+    .ptbl-table--rich > tbody .ptbl-td:has(.ptbl-media .pif) { padding-block: 0; }
     .ptbl-content { display: flex; align-items: center; gap: var(--spacing-x3); min-width: 0; }
     .ptbl-media { display: flex; flex-shrink: 0; }
     .ptbl-text { display: flex; flex-direction: column; gap: var(--spacing-x0_5); min-width: 0; }

@@ -98,7 +98,8 @@ const HEAD_STICKY = "sticky top-0 z-[1] bg-bg-layer-default";
 // 본문 칸 — 위아래 12 · 400. 칸 안의 인라인 블록(배지 · 이름 링크)은 줄 위에 맞춘다 — 글자 기준선에 맞추면 줄이 45 를 넘는다.
 // 썸네일 · 두 줄 칸이 있는 표는 72 — 칸 여백보다 높이가 먼저다(위아래 여백 없이 72 안 세로 가운데)
 const BODY_CELL = "py-x3 font-normal [&>*]:align-top";
-const BODY_RICH = "h-[72px] py-0";
+// 72 는 최소 — 칸 위아래 12, Image Frame 48 칸만 위아래 0(2026-11-10 14C)
+const BODY_RICH = "h-[72px] py-x3 has-[[data-slot=image-frame]]:py-0";
 const ALIGN: Record<TableAlign, string> = {
   start: "text-start",
   end: "text-end tabular-nums",
