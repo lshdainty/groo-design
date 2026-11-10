@@ -181,20 +181,20 @@ export const FT_HOME = {
     {
       title: '서비스',
       links: [
-        { label: 'HR', href: 'https://ieum.hangroo.io' },
-        { label: 'Desk', href: 'https://damda.hangroo.io' },
-        { label: 'Desk 설명서', href: 'https://damda.hangroo.io/guide/' },
+        { label: '그루 이음', href: '#' },
+        { label: '그루 담다', href: '#' },
+        { label: '그루 담다 설명서', href: '#' },
       ],
     },
     {
       title: '계정',
       links: [
-        { label: '로그인', href: 'https://sso.hangroo.io', key: 'login' },
-        { label: '회원가입', href: 'https://sso.hangroo.io', key: 'join' },
+        { label: '로그인', href: '#', key: 'login' },
+        { label: '회원가입', href: '#', key: 'join' },
       ],
     },
   ],
-  policy: [{ label: '개인정보 처리방침', href: 'https://sso.hangroo.io/privacy', external: true }],
+  policy: [{ label: '개인정보 처리방침', href: '#', external: true }],
   text: ['화면의 숫자와 이름은 소개용 예시입니다. 사진: Unsplash.'],
 };
 // 값이 없는 블록의 자리표시 — 지어낸 값이 아니라 "무엇이 들어갈 자리" 인지만 쓴다(footer.md "값이 없는 블록은 비워 둔다")

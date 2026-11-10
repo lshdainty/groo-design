@@ -1486,7 +1486,7 @@ function pageColors() {
 
   const body = `
 <h1>Colors</h1>
-<p class="lede">Groo는 neutral baseline 47색 + brand 4색(primary / primary-light / border-focus / border-focus-light)으로 구성됩니다. 한국어 본문 4.5:1 대비비, UI 3:1을 모든 색 페어에 자동 검증합니다.</p>
+<p class="lede">그루는 neutral baseline 47색 + brand 4색(primary / primary-light / border-focus / border-focus-light)으로 구성됩니다. 한국어 본문 4.5:1 대비비, UI 3:1을 모든 색 페어에 자동 검증합니다.</p>
 
 <h2>브랜드 primary</h2>
 <p>상단 토글로 Default / HR / Desk 전환하면 primary 색이 바뀌는 걸 확인할 수 있습니다. 4 토큰만 분기, 나머지는 모두 baseline 공유.</p>

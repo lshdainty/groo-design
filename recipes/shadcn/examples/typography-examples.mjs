@@ -70,14 +70,14 @@ export const typographyExamples = [
     title: "Blockquote + inline code",
     description: "인용 — 좌측 4px border + italic. 인라인 코드 — surface-input 배경.",
     jsx: `<TypographyP>
-  Groo는 두 브랜드(<TypographyInlineCode>HR</TypographyInlineCode>,
-  <TypographyInlineCode>Desk</TypographyInlineCode>)의 단일 디자인 시스템입니다.
+  그루는 두 서비스(<TypographyInlineCode>DESIGN.hr.md</TypographyInlineCode>,
+  <TypographyInlineCode>DESIGN.desk.md</TypographyInlineCode>)의 단일 디자인 시스템입니다.
 </TypographyP>
 <TypographyBlockquote>
   사람과 일상이 숲처럼 자라나는 조직.
 </TypographyBlockquote>`,
     render: () => `<div style="display:flex; flex-direction:column; gap:16px; max-width:640px;">
-  <p class="${P}" style="margin:0;">Groo는 두 브랜드(<code class="${CODE}">HR</code>, <code class="${CODE}">Desk</code>)의 단일 디자인 시스템입니다.</p>
+  <p class="${P}" style="margin:0;">그루는 두 서비스(<code class="${CODE}">DESIGN.hr.md</code>, <code class="${CODE}">DESIGN.desk.md</code>)의 단일 디자인 시스템입니다.</p>
   <blockquote class="${BLOCKQUOTE}" style="margin:0;">사람과 일상이 숲처럼 자라나는 조직.</blockquote>
 </div>`,
   },
