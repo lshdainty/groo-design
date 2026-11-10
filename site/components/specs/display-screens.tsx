@@ -1,6 +1,6 @@
 // 표시 묶음 페이지(Badge · Notification Badge · Tag Group · Avatar · Divider)와 List 가 같이 쓰는 그림 조각 — 서버(빌드 때) 그림.
 // 배지 · 알림 점 · 메타 줄 · 아바타 · 선은 display-look 이 YAML 에서 푼 값으로, 목록 줄은 list.yaml(ListView), 화면 틀은 kit 으로 그린다.
-// 화면 예시의 글(가게 · 사람 · 금액)은 비교 페이지(2026-10-03)에서 사용자가 본 것과 같다 — 가계부 스타벅스 · 넷플릭스 · 쿠팡, 현대카드 M, 캘린더 공유, 제주 여행 더치페이, 인사팀 구성원.
+// 화면 예시의 글(가게 · 사람 · 금액)은 비교 페이지(2026-10-03)에서 사용자가 본 것과 같다 — 가계부 다라커피 · 가나영상 · 가나몰, 현대카드 M, 캘린더 공유, 제주 여행 더치페이, 인사팀 구성원.
 import type { CSSProperties, ReactNode } from 'react';
 import { MARK, MARK_LINE } from '../foundations/ui';
 import { displayKit, type AvatarSize, type BadgeSize, type BadgeTone, type BadgeVariant, type DisplayIcon, type DisplayKit, type DisplayTone, type NotifSize, type Person, type TagItem, type TagSize } from './display-look';
@@ -93,9 +93,9 @@ export function txRow(tx: Tx, mode: Mode = 'auto', brand: Brand = 'desk', extra?
   };
 }
 export const TX = {
-  starbucks: { title: '스타벅스 강남역점', hue: 'brown', icon: 'coffee', cat: '카페', asset: '현대카드 M', when: '오후 2:10', amount: '−5,600원' },
-  netflix: { title: '넷플릭스', hue: 'red', icon: 'receipt', cat: '구독', asset: '현대카드 M', when: '10월 18일', amount: '−17,000원', badge: { l: '예정' }, excluded: 'scheduled' },
-  coupang: { title: '쿠팡', hue: 'violet', icon: 'shopping-bag', cat: '쇼핑', asset: '현대카드 M', when: '10월 2일', amount: '−32,000원', badge: { l: '환불됨' }, excluded: 'refunded' },
+  starbucks: { title: '다라커피 강남역점', hue: 'brown', icon: 'coffee', cat: '카페', asset: '현대카드 M', when: '오후 2:10', amount: '−5,600원' },
+  netflix: { title: '가나영상', hue: 'red', icon: 'receipt', cat: '구독', asset: '현대카드 M', when: '10월 18일', amount: '−17,000원', badge: { l: '예정' }, excluded: 'scheduled' },
+  coupang: { title: '가나몰', hue: 'violet', icon: 'shopping-bag', cat: '쇼핑', asset: '현대카드 M', when: '10월 2일', amount: '−32,000원', badge: { l: '환불됨' }, excluded: 'refunded' },
   lunch: { title: '점심 식사', hue: 'orange', icon: 'utensils', cat: '식비', asset: '신한카드', when: '오후 12:40', amount: '−12,000원' },
   bus: { title: '교통 정기권', hue: 'blue', icon: 'bus', cat: '교통', asset: '국민 체크카드', when: '3/12회', amount: '−62,000원', badge: { l: '연체 3', t: 'critical' } },
   trip: { title: '여행 자금', hue: 'green', icon: 'piggy-bank', cat: '저축', when: '목표 2,000,000원', amount: '+200,000원', badge: { l: '달성', t: 'positive' } },

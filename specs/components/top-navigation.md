@@ -249,7 +249,7 @@ HR 웹 768 미만은 하단 탭 바가 없다 — 모든 화면이 `standard` �
 - `TopNavigationIconButton` — 상자 44 · 아이콘 24. `aria-label` 필수, `notification`(벨의 알림 점 — 이름에 "새 알림 있음" 을 넣는 것은 부르는 쪽), `<button type="button">` 속성. `aria-pressed` 는 그 자리에서 켜지고 꺼지는 단추에만 준다 — 이름은 그대로 두고, 아이콘은 지금 상태를 넘긴다. 켬은 선 2.5, 끔은 선 2 이고 색은 켬 · 끔 모두 이웃 버튼과 같은 `fg-neutral` 이다 — [Toggle](toggle.md) 의 흐린 끔(`fg-neutral-muted`)은 상단 바에서 쓰지 않는다. 아이콘 줄에서 하나만 흐리면 막힌 단추처럼 보인다(사용자 결정 2026-10-09 19B). 다른 화면으로 가는 버튼에는 `aria-pressed` 를 달지 않는다 — 낭독기가 "눌림" 을 읽고 누르면 화면이 바뀐다.
 - `TopNavigationTextButton` — 글 버튼(`<button type="button">`).
 - `TopNavigationPrimaryButton` — 데스크톱 머리의 주 버튼([Button](button.md) `brandSolid` · `small` 그대로 + 오른쪽 8).
-- `ScreenTitle` — 데스크톱 본문 맨 위 제목(`<h1 tabIndex={-1} data-screen-title>` · `text-screen-title`). `description`(제목 아래 설명 — t3 `fg-neutral-subtle`) · `actions`(그 화면의 동작 버튼 — Button small)를 주면 한 줄 제목 줄(제목 덩어리 왼쪽 · 버튼 오른쪽 아래 끝 맞춤)로 그린다. `ref` 는 늘 `h1` 이다.
+- `ScreenTitle` — 데스크톱 본문 맨 위 제목(`<h1 tabIndex={-1} data-screen-title>` · `text-screen-title`). `description`(제목 아래 설명 — 16 / 22 · 400 · `fg-neutral-muted`, 위 "데스크톱 화면 제목 — 한 줄" 과 같다 — 글자 역할 D6) · `actions`(그 화면의 동작 버튼 — Button small)를 주면 한 줄 제목 줄(제목 덩어리 왼쪽 · 버튼 오른쪽 아래 끝 맞춤)로 그린다. `ref` 는 늘 `h1` 이다.
 - `TopNavigationProvider` — `product`("그루 담다" · "그루 이음"). `useScreenTitle(title)` 가 문서 제목을 "{title} - {product}" 로 쓴다.
 - `focusScreenTitle()` — 셸이 화면을 옮긴 뒤 부른다: 본문 스크롤을 맨 위로, `[data-screen-title]` 에 초점(링은 키보드로 왔을 때만). `{ resetScroll: false }` 면 초점만 옮긴다 — 하단 탭 · 가계부 묶음 탭을 오갈 때 셸이 기억한 스크롤을 돌려놓는다(목록이 그려진 뒤).
 
@@ -492,6 +492,10 @@ useEffect(() => {
 - **z-index 는 specs/z-index.md 의 L1**(`z-sticky` 50).
 
 ## Migration notes
+
+### 2026-11-10 — ScreenTitle 설명 글자
+
+코드 절의 `ScreenTitle` `description` 이 옛 값(t3 `fg-neutral-subtle`)으로 남아 있었다 — "데스크톱 화면 제목 — 한 줄" 의 16 / 22 · 400 · `fg-neutral-muted`(2026-10-16 사용자 결정 D6)로 맞췄다(2026-11-09 그루 이음 22-1). 값 변경 없음. 옛 스펙은 `top-navigation.history/v-pre-cleanup-1110.md`.
 
 ### 2026-11-07 — 뒤로 오면 누른 자리 · 앱도 초점 링 · 거르는 줄 48
 

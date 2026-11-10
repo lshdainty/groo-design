@@ -145,9 +145,9 @@ const ROW =
   "display:flex; justify-content:space-between; gap:var(--spacing-x3); padding:var(--spacing-x2_5) var(--spacing-global-gutter); font-size:var(--text-t5); line-height:var(--text-t5--line-height); color:var(--color-fg-neutral);";
 const ROW_DETAIL = "font-size:var(--text-t3); line-height:var(--text-t3--line-height); color:var(--color-fg-neutral-subtle);";
 const LEDGER = [
-  ["김밥천국", "식비 · 현대카드 M", "8,000원"],
+  ["가나김밥", "식비 · 현대카드 M", "8,000원"],
   ["버스", "교통 · 현대카드 M", "1,500원"],
-  ["다이소", "쇼핑 · 현대카드 M", "12,300원"],
+  ["가나생활", "쇼핑 · 현대카드 M", "12,300원"],
 ];
 const ledger = () =>
   `<div style="${HEAD}">가계부</div>${LEDGER.map(([title, detail, amount]) => `<div style="${ROW}"><span>${title}<br><span style="${ROW_DETAIL}">${detail}</span></span><span style="font-weight:700;">${amount}</span></div>`).join("")}`;

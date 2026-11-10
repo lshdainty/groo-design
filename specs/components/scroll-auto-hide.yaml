@@ -19,7 +19,7 @@ name: ScrollAutoHide
 
 slots:
   root: 숨는 영역 — 스크롤 상자 맨 위에 붙고(sticky) 스크롤 거리만큼 위로 옮겨 숨는다
-  scrollContainer: 스크롤 상자 — 쓰는 쪽(높이 · overflow). 숨는 영역은 이 안에 둔다
+  scrollContainer: 스크롤 상자 — 쓰는 쪽(높이 · overflow) 또는 창(문서 — document.scrollingElement, scroll · scrollend 는 document). 숨는 영역은 이 안에 둔다
 
 variants:
   motionSetting:
@@ -37,10 +37,10 @@ rules:
   - when: {}
     shown:
       scrollContainer:
-        overflowY: { value: auto, note: "숨는 영역은 이 상자 안에 둔다 — 상단 바 · 탭 아래부터가 스크롤 상자다(SEED — 스크롤 컨테이너 안에 배치)" }
+        overflowY: { value: auto, note: "숨는 영역은 이 상자 안에 둔다 — 상단 바 · 탭 아래부터가 스크롤 상자다(SEED — 스크롤 컨테이너 안에 배치). 창(문서)이 스크롤 상자면 이 상자를 두지 않는다 — 스크롤 위치는 document.scrollingElement, scroll · scrollend 는 document 에서 받는다(2026-11-09 담다 웹 폰 문서 스크롤)" }
       root:
         position: { value: sticky, note: "스크롤 상자 맨 위에 붙는다(SEED)" }
-        top: 0px
+        top: { value: 0px, note: "스크롤 상자 맨 위 — 창이 스크롤 상자면 위에 붙은 상단 바 · 탭의 높이 합" }
         transform: { value: "translate3d(0, 0, 0)", note: "옮기기만 한다 — 높이(레이아웃)를 바꾸지 않아 목록이 튀지 않는다. 루트의 transform 은 이 일에 쓰고, 다른 transform 은 자식에(SEED)" }
         follow: { value: 1:1, note: "스크롤하는 동안 거리를 그대로 따라간다 — 아래로 숨고 위로 같은 거리만큼 드러난다" }
         snapThreshold: { value: 50%, note: "스크롤이 끝나면(scrollend) 영역 높이의 절반을 넘게 숨었으면 다 숨고, 아니면 다 드러난다 — 거래 검색의 칩 줄 48 은 24, 카드 혜택의 거르는 줄 140 은 70 이상 올려야 다 드러난다" }

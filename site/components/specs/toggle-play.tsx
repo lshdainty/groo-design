@@ -1,5 +1,5 @@
 'use client';
-// Toggle 플레이그라운드 · 코드 미리보기 — 단추(관심 등록 · 메모 고정 · App Key 보기) · 켬 · 끔 · 막힘을 고르면
+// Toggle 플레이그라운드 · 코드 미리보기 — 단추(관심 등록 · App Key 보기) · 켬 · 끔 · 막힘을 고르면
 // 스펙대로 그린 단추(toggle-view — toggle.yaml)와 그 코드가 바뀐다. 실제로 누르면 아이콘과 보조 기술이 읽는 말이 함께 바뀐다.
 // 코드는 toggle.md 의 "코드" 절과 같은 API 로 쓴다. 화면 속 카드 · 순자산 카드는 card.yaml(data-card-view), 실패 알림은 snackbar.yaml.
 import { useMemo, useRef, useState, type ReactNode } from 'react';
@@ -9,8 +9,6 @@ import { dcv } from './display-shared';
 import type { SnackbarLook } from './feedback-shared';
 import { SnackbarRegion, useSnackbarHost } from './feedback-view';
 import { ScreenFrame } from './feedback-demos';
-import type { ListLook, RowSpec } from './list-shared';
-import { ListHeaderView, ListView } from './list-view';
 import { FONT, TOGGLES, toggleReadout, type ToggleKind, type ToggleLook, type ViewMode } from './input-shared';
 import { BRANDS, MODES, PlayFrame, Seg } from './select-playground';
 import { ToggleView } from './toggle-view';
@@ -47,11 +45,6 @@ function Context({ kind, pressed, toggle, card, mode }: { kind: ToggleKind; pres
         {head('삼성전자')}
         {line(`71,500원 · +1.2%${pressed ? ' · 관심 종목' : ''}`)}
       </>
-    ) : kind === 'pin' ? (
-      <>
-        {head('장보기 목록')}
-        {line('우유 · 계란 · 두부 · 대파')}
-      </>
     ) : (
       <>
         {head('가나증권 연결')}
@@ -80,7 +73,7 @@ export function TogglePlayground({ looks, cards }: { looks: Record<Brand, Toggle
     const [a, b] = k.jsx;
     const icons = [...new Set([a, ...(b ? [b] : [])])].sort();
     const [st, set] = k.state;
-    const label = k.memo ? 'aria-label={`${memo.title} 고정`}' : `aria-label="${k.label}"`;
+    const label = `aria-label="${k.label}"`;
     const attrs = [
       label,
       `pressed={${st}}`,
@@ -111,7 +104,6 @@ export function TogglePlayground({ looks, cards }: { looks: Record<Brand, Toggle
             value={kind}
             options={[
               ['watch', '관심 등록 — 모으기'],
-              ['pin', '메모 고정 — 모으기'],
               ['key', 'App Key 보기 — 기능'],
             ]}
             onChange={(v) => (setKind(v), setPressed(false))}
@@ -179,74 +171,35 @@ export function ExEyeDemo({ look, card }: { look: ToggleLook; card: CardLook }) 
   );
 }
 
-// 메모 고정 — 화면을 바로 바꾸고 요청은 뒤에서. 실패하면 되돌리고 Snackbar critical + "다시 시도"(20A)
-const MEMOS: MemoItem[] = [
-  { id: 'groceries', title: '장보기 목록', body: '우유 · 계란 · 두부 · 대파', pinned: true, dot: 'var(--p-chart-orange)' },
-  { id: 'trip', title: '제주 여행 준비', body: '숙소 예약 · 렌터카 · 우산', pinned: false, dot: 'var(--p-chart-blue)' },
-  { id: 'gift', title: '부모님 선물', body: '안마기 · 꽃바구니', pinned: false, dot: 'var(--p-chart-green)' },
-];
-// 메모 목록 — 제품(웹 MemoMobile · 앱 memo_screen, 2026-10-23 메모 1-A)과 같은 흰 화면 하나: 목록 제목 "고정 · N" · "모든 메모 · N"
-// (고정이 없으면 둘째 제목도 없다) + 줄(앞 색 점 8 · 제목 · 본문 한 줄, 위 맞춤). 띠 · 카드 · 줄 사이 선이 없다.
-// 줄 끝 고정 단추는 Toggle 스펙의 쓰임이다 — 지금 제품 줄에는 없고 고정은 밀기 · 상세 · 폼이 맡는다(판단 필요로 올렸다)
-export type MemoItem = { id: string; title: string; body: string; pinned: boolean; dot: string };
-export function MemoListView({ list, mode = 'auto', memos, toggles }: { list: ListLook; mode?: ViewMode; memos: MemoItem[]; toggles: Record<string, ReactNode> }) {
-  const pinned = memos.filter((m) => m.pinned);
-  const others = memos.filter((m) => !m.pinned);
-  const rows = (ms: MemoItem[]): RowSpec[] =>
-    ms.map((m) => ({
-      kind: 'view',
-      align: 'top',
-      title: m.title,
-      detail: m.body,
-      prefix: { node: <span aria-hidden style={{ display: 'block', width: 8, height: 8, marginTop: 7, borderRadius: 999, background: m.dot }} /> },
-      suffixNode: toggles[m.id],
-    }));
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {pinned.length > 0 && (
-        <section>
-          <ListHeaderView look={list} mode={mode} title={`고정 · ${pinned.length}`} />
-          <ListView look={list} mode={mode} rows={rows(pinned)} live={false} ariaLabel="고정" />
-        </section>
-      )}
-      {others.length > 0 && (
-        <section>
-          {pinned.length > 0 && <ListHeaderView look={list} mode={mode} title={`모든 메모 · ${others.length}`} />}
-          <ListView look={list} mode={mode} rows={rows(others)} live={false} ariaLabel="모든 메모" />
-        </section>
-      )}
-    </div>
-  );
-}
-// 메모 고정 — 흰 화면 메모 목록(MemoListView)의 줄 끝 단추. 누르면 고정 묶음으로 옮겨 가고, 실패하면 되돌리고 알린다
-export function ExPinDemo({ look, list, snack }: { look: ToggleLook; list: ListLook; snack: SnackbarLook }) {
+// 관심 등록 — 화면을 바로 바꾸고 요청은 뒤에서. 실패하면 되돌리고 Snackbar critical + "다시 시도"(20A — snackbar.md "무엇으로 알리나")
+export function ExSendDemo({ look, card, snack }: { look: ToggleLook; card: CardLook; snack: SnackbarLook }) {
   const host = useSnackbarHost(snack);
   const s = snack.screen;
-  const [memos, setMemos] = useState(MEMOS);
+  const [watched, setWatched] = useState(false);
   const [fail, setFail] = useState<'ok' | 'fail'>('ok');
   const [log, setLog] = useState<string[]>([]);
   const seq = useRef(0);
-  const send = (id: string, pinned: boolean) => {
+  const send = (next: boolean) => {
     const n = ++seq.current;
-    const memo = memos.find((m) => m.id === id)!;
-    setLog((l) => [`요청 ${n} — ${memo.title} ${pinned ? '고정' : '고정 풀기'}`, ...l].slice(0, 3));
+    setLog((l) => [`요청 ${n} — 관심 등록 ${next ? '켬' : '끔'}`, ...l].slice(0, 3));
     window.setTimeout(() => {
       // 빠르게 여러 번 누르면 마지막 요청의 결과만 반영한다
       if (n !== seq.current) return;
       if (fail === 'ok') return;
-      setMemos((ms) => ms.map((m) => (m.id === id ? { ...m, pinned: !pinned } : m)));
-      host.show({ tone: 'critical', message: '고정하지 못했어요. 다시 시도해주세요.', action: { label: '다시 시도', onClick: () => set(id, pinned) } });
+      setWatched(!next);
+      host.show({ tone: 'critical', message: next ? '관심 종목에 넣지 못했어요.' : '관심 종목에서 빼지 못했어요.', action: { label: '다시 시도', onClick: () => set(next) } });
     }, 700);
   };
-  const set = (id: string, pinned: boolean) => {
-    setMemos((ms) => ms.map((m) => (m.id === id ? { ...m, pinned } : m)));
-    send(id, pinned);
+  const set = (next: boolean) => {
+    setWatched(next);
+    send(next);
   };
-  const ordered = [...memos.filter((m) => m.pinned), ...memos.filter((m) => !m.pinned)];
   return (
     <ToggleDemoFrame w={400}>
-      <ScreenFrame screen={s} title="메모" height={430} bg="bg-layer-default">
-        <MemoListView list={list} memos={ordered} toggles={Object.fromEntries(ordered.map((m) => [m.id, <ToggleView key={m.id} look={look} ariaLabel={`${m.title} 고정`} pressed={m.pinned} onPressedChange={(p) => set(m.id, p)} icon="pin" />]))} />
+      <ScreenFrame screen={s} title="종목" height={300} bg="bg-layer-default">
+        <div style={{ padding: 16 }}>
+          <Context kind="watch" pressed={watched} card={card} mode="auto" toggle={<ToggleView look={look} ariaLabel="관심 등록" pressed={watched} onPressedChange={set} icon="star" />} />
+        </div>
         <SnackbarRegion host={host} look={snack} />
       </ScreenFrame>
       <div className="flex flex-col items-center gap-2">
@@ -260,7 +213,7 @@ export function ExPinDemo({ look, list, snack }: { look: ToggleLook; list: ListL
           onChange={setFail}
         />
         <p role="status" className="m-0 min-h-[60px] text-center text-[12px] leading-5 text-fd-muted-foreground">
-          {log.length ? log.map((l) => <span key={l} className="block">{l}</span>) : '고정을 누르면 아이콘이 바로 바뀌고 요청이 뒤에서 나가요 — 요청 중에도 단추를 막지 않아요.'}
+          {log.length ? log.map((l) => <span key={l} className="block">{l}</span>) : '관심 등록을 누르면 아이콘이 바로 바뀌고 요청이 뒤에서 나가요 — 요청 중에도 단추를 막지 않아요'}
         </p>
       </div>
     </ToggleDemoFrame>

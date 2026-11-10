@@ -215,7 +215,7 @@ export const pageBannerExamples = [
           screen(
             "가계부",
             pageBanner({ tone: "informative", title: "새 기능", interaction: "dismissible", children: "반복 거래를 자동으로 기록할 수 있어요." }),
-            [["김밥천국", "8,000원"], ["버스", "1,500원"]],
+            [["가나김밥", "8,000원"], ["버스", "1,500원"]],
           ),
           "dismissible — 한 번 보면 되는 안내",
         ),

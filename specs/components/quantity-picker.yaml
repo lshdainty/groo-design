@@ -12,7 +12,7 @@
 # 상태(올림 · 누름 · 포커스 · 로딩)는 그 버튼 하나에만 걸린다 — button 부위. 오류 · 막힘은 컨트롤 전체다.
 #
 # SEED 와 다른 자리(quantity-picker.md 의 "SEED 와 다른 점")
-#   - 웹 기본 크기는 responsive(1280 미만 large 52 · 이상 medium 40) — SEED react 의 기본은 small 이다. 표 칸 · 줄 안은 small 36.
+#   - 웹 기본 크기는 responsive(1280 미만 large 52 · 이상 medium 40) — SEED react 의 기본은 small 이다. 표 안 편집 줄은 옆 칸과 같은 medium 40(2026-11-10), 옆 칸이 36 인 줄 안은 small 36.
 #   - 36 · 40 버튼은 누르는 자리를 44 로 넓힌다(보이지 않는 여백 — DESIGN Iconography "아이콘만 있는 버튼"). SEED 는 버튼 크기 그대로다.
 #   - 누름 · 호버 바탕은 불투명한 bg-layer-default-pressed — SEED bg.transparent-pressed 의 짝(button.yaml 25-26).
 #   - 끝에 닿은 버튼은 aria-disabled 만 — SEED headless 는 disabled 속성도 건다(useQuantityPicker.ts 235 · 250).
@@ -33,8 +33,8 @@ slots:
 
 variants:
   size:
-    small: 36 — 표 칸 · 목록 줄 안(HR 업무 보고 소요시간), 같은 줄의 입력 높이에 맞춘다
-    medium: 40 — 1280 이상 데스크톱 웹(마우스) 폼
+    small: 36 — 옆 칸이 36 인 목록 줄 안, 같은 줄의 입력 높이에 맞춘다. 표 안 편집 줄은 medium(Input · Select 에 small 이 없다)
+    medium: 40 — 1280 이상 데스크톱 웹(마우스) 폼 · 표 안 편집 줄(HR 업무 보고 소요 시간 — step 0.5 "4시간 30분")
     large: 52 — 폰 · 앱 폼
     responsive: 폭에 따라 — 1280 미만 large · 이상 medium. 웹 폼의 기본(Input 과 같다), 앱은 늘 large
   layout:

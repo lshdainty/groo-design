@@ -1,6 +1,6 @@
 /*
  * shadcn Toggle 예제 — docs site components/toggle.html 에서 Preview + Code 토글로 보인다.
- * 각 예제 = { title, description, jsx, render() }. 넷(관심 등록 · App Key 보기 · 메모 고정 · 순자산 카드의 눈)은 차례 · 제목 · 코드가
+ * 각 예제 = { title, description, jsx, render() }. 넷(관심 등록 · App Key 보기 · 관심 등록 바로 보내기 · 순자산 카드의 눈)은 차례 · 제목 · 코드가
  * specs/components/toggle.md 의 "코드" 절과 같다. 켜고 끄는 아이콘 단추 하나다(2026-10-09) — 옛 글 토글(default · outline 28 · 32 · 40,
  * 굵게 · 기울임 툴바)과 Toggle Group 은 걷었다. 거르기 · 고르기는 Chip · Segmented Control, 누르는 순간 적용되는 설정은 Switch 다.
  * SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 Toggle Button 은 코드에만 있고, 켬 · 끔 아이콘은 SEED Iconography 의 규칙과
@@ -215,27 +215,27 @@ import { Toggle } from "@/components/ui/toggle"
   },
 
   {
-    title: "메모 고정 — 바로 바꾸고 보낸다",
+    title: "관심 등록 — 바로 바꾸고 보낸다",
     description:
-      "누르면 아이콘이 바로 바뀌고 요청은 뒤에서 나간다 — onPressedChange 는 요청을 기다리지 않고, 응답을 기다리며 단추를 막지 않는다(막으면 키보드 초점이 본문으로 빠진다). 실패하면 부르는 쪽이 되돌리고 Snackbar critical 로 알린다 — \"고정하지 못했어요. 다시 시도해주세요.\" + \"다시 시도\"(액션이 있어 6초). 단추는 이미 옛 모습으로 돌아가 있어 카드에 오류 줄을 붙이지 않는다. 같은 줄에 단추가 여럿이면 이름 앞에 줄 이름을 붙인다(\"장보기 목록 고정\"). 카드 제목 줄 오른쪽에 둘 때는 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다(Card 의 고정 단추).",
-    jsx: `import { Pin } from "lucide-react"
+      "누르면 아이콘이 바로 바뀌고 요청은 뒤에서 나간다 — onPressedChange 는 요청을 기다리지 않고, 응답을 기다리며 단추를 막지 않는다(막으면 키보드 초점이 본문으로 빠진다). 실패하면 부르는 쪽이 되돌리고 Snackbar critical 로 알린다 — \"관심 종목에 넣지 못했어요.\" + \"다시 시도\"(액션이 있어 6초). 단추는 이미 옛 모습으로 돌아가 있어 카드에 오류 줄을 붙이지 않는다. 카드 제목 줄 오른쪽에 둘 때는 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다(Card 의 peers).",
+    jsx: `import { Star } from "lucide-react"
 import { Toggle } from "@/components/ui/toggle"
 
 <Toggle
-  aria-label={\`\${memo.title} 고정\`}
-  pressed={memo.pinned}
-  onPressedChange={(pinned) => setPinned(memo.id, pinned)} // 화면을 바로 바꾸고 보낸다 — 실패하면 되돌리고 스낵바
-  icon={<Pin />}
+  aria-label="관심 등록"
+  pressed={watched}
+  onPressedChange={(next) => setWatched(stock.code, next)} // 화면을 바로 바꾸고 보낸다 — 실패하면 되돌리고 스낵바("관심 종목에 넣지 못했어요." + 다시 시도)
+  icon={<Star />}
 />`,
     render: () =>
       floor(
         `<div style="display:flex; flex-direction:column; gap:var(--spacing-x2);">${[
-          ["장보기 목록", "우유 · 계란 · 두부 · 대파", true],
-          ["이번 달 고정비", "월세 · 통신 · 보험", false],
+          ["가나전자", "12,300원 · +1.2%", true],
+          ["다라바이오", "48,150원 · −0.8%", false],
         ]
           .map(
             ([title, body, pinned]) =>
-              `<div data-slot="card" data-variant="default" data-body="content" data-press="none" class="${merge(`${CARD_ROOT} ${CARD_VARIANT.default} ${CARD_BODY.content}`)}"><div style="display:flex; align-items:flex-start; justify-content:space-between; gap:var(--spacing-x2);"><span style="font-size:var(--text-t5); line-height:var(--text-t5--line-height); font-weight:700;">${esc(title)}</span>${toggle({ name: `${title} 고정`, pressed: pinned, icon: "pin", className: "-mr-x2 -mt-x2 shrink-0" })}</div><p style="margin:var(--spacing-x1) 0 0; font-size:var(--text-t3); line-height:var(--text-t3--line-height); color:var(--color-fg-neutral-subtle);">${esc(body)}</p></div>`,
+              `<div data-slot="card" data-variant="default" data-body="content" data-press="none" class="${merge(`${CARD_ROOT} ${CARD_VARIANT.default} ${CARD_BODY.content}`)}"><div style="display:flex; align-items:flex-start; justify-content:space-between; gap:var(--spacing-x2);"><span style="font-size:var(--text-t5); line-height:var(--text-t5--line-height); font-weight:700;">${esc(title)}</span>${toggle({ name: "관심 등록", pressed: pinned, icon: "star", className: "-mr-x2 -mt-x2 shrink-0" })}</div><p style="margin:var(--spacing-x1) 0 0; font-size:var(--text-t3); line-height:var(--text-t3--line-height); color:var(--color-fg-neutral-subtle);">${esc(body)}</p></div>`,
           )
           .join("")}</div>`,
       ),

@@ -201,7 +201,7 @@ export function HrLeaveWindow({ mode, w = 540, s = 1 }: { mode: Mode; w?: number
   const h = centeredWindowH(c.head + body + c.foot, c.head, listBottom);
   return (
     <ScaledBox w={w} h={h} s={s}>
-    <WebWindow mode={mode} w={w} h={h} url="hr.groo.app">
+    <WebWindow mode={mode} w={w} h={h} url="그루 이음">
       <HrDialog mode={mode} title="휴가 신청" footer={hrFooter(mode, '신청')}>
         <Form>
           <F mode={mode} label="휴가 정책">

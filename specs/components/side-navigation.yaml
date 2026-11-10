@@ -79,6 +79,7 @@ rules:
         borderColor: { value: $color-stroke-neutral-subtle, note: "오른쪽 안쪽 1px(inset) — SEED stroke.neutral-muted 의 불투명 짝" }
         borderWidth: 1px
         position: { value: "화면 왼쪽 · 높이 전체(sticky)", note: "본문과 따로 스크롤 — 머리 · 바닥은 고정, 내용만 스크롤" }
+        zIndex: { value: 50, note: "z-sticky — specs/z-index.md L1. sticky 라 스스로 쌓임 맥락이다 — 안에 그리는 펼침 메뉴(L3)가 뒤따르는 본문 카드 아래로 가리지 않게 본문(L0)보다 위에 둔다(2026-11-09 그루 이음 셸)" }
         transitionProperty: width
         transitionDuration: $motion-duration-d4
         transitionEasing: $motion-ease-easing

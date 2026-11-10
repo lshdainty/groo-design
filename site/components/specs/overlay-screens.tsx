@@ -101,7 +101,7 @@ const LEDGER: [string, string, string, string][] = [
   ['월급', '수입 · 국민 주계좌', '+3,200,000원', 'green'],
   ['편의점', '식비 · 현금', '−4,300원', 'orange'],
   ['영화', '문화 · 국민 체크카드', '−15,000원', 'violet'],
-  ['스타벅스', '카페 · 현대카드 M', '−5,600원', 'orange'],
+  ['다라커피', '카페 · 현대카드 M', '−5,600원', 'orange'],
 ];
 export function LedgerRows({ mode, n = LEDGER.length }: { mode: Mode; n?: number }) {
   return (

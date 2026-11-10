@@ -131,9 +131,9 @@ const PAGE_ROW =
   "display:flex; justify-content:space-between; gap:var(--spacing-x3); padding:var(--spacing-x3) 0; font-size:var(--text-t5); line-height:var(--text-t5--line-height); color:var(--color-fg-neutral);";
 const page = () =>
   `<div aria-hidden="true" style="padding:var(--spacing-x6); font-family:var(--font-sans);"><div style="margin-bottom:var(--spacing-x2); font-size:var(--text-t7); line-height:var(--text-t7--line-height); font-weight:700; color:var(--color-fg-neutral);">가계부</div>${[
-    ["김밥천국", "8,000원"],
+    ["가나김밥", "8,000원"],
     ["버스", "1,500원"],
-    ["다이소", "12,300원"],
+    ["가나생활", "12,300원"],
     ["월급", "3,200,000원"],
   ]
     .map(([title, amount]) => `<div style="${PAGE_ROW}"><span>${title}</span><span style="font-weight:700;">${amount}</span></div>`)

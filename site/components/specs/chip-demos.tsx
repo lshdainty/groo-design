@@ -77,7 +77,7 @@ const CAT_HUE: Record<string, 'orange' | 'blue' | 'green' | 'violet'> = { food: 
 // 달 — 10 이번 달 · 9 지난 달 · 8 그 전 달(오늘 2026. 10. 1. 목)
 const TXS = [
   { title: '점심 식사', cat: 'food', pay: 'hyundai', month: 10, amount: 12000 },
-  { title: '스타벅스', cat: 'cafe', pay: 'hyundai', month: 10, amount: 5600 },
+  { title: '다라커피', cat: 'cafe', pay: 'hyundai', month: 10, amount: 5600 },
   { title: '지하철', cat: 'transport', pay: 'kb', month: 10, amount: 1450 },
   { title: '편의점', cat: 'food', pay: 'cash', month: 10, amount: 4300 },
   { title: '영화', cat: 'culture', pay: 'kb', month: 9, amount: 15000 },

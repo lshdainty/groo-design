@@ -291,9 +291,9 @@ const rows = (list) =>
   list.map(([t, d, v]) => `<div style="${ROW_TEXT}"><span>${esc(t)}${d ? `<span style="${ROW_DETAIL}">${esc(d)}</span>` : ""}</span>${v ? `<b>${esc(v)}</b>` : ""}</div>`).join("");
 const phone = (bar, list, height = 260) => `<div style="${PHONE} height:${height}px;">${bar}<div style="${BODY}">${rows(list)}</div></div>`;
 const LEDGER = [
-  ["김밥천국", "식비 · 현대카드 M", "8,000원"],
+  ["가나김밥", "식비 · 현대카드 M", "8,000원"],
   ["버스", "교통 · 현대카드 M", "1,500원"],
-  ["다이소", "쇼핑 · 현대카드 M", "12,300원"],
+  ["가나생활", "쇼핑 · 현대카드 M", "12,300원"],
   ["월급", "수입 · 국민 주계좌", "3,200,000원"],
 ];
 const ALERTS = [

@@ -323,9 +323,9 @@ const PAGE_ROW =
   "display:flex; justify-content:space-between; gap:var(--spacing-x3); padding:var(--spacing-x3) 0; font-size:var(--text-t5); line-height:var(--text-t5--line-height); color:var(--color-fg-neutral);";
 const page = () =>
   `<div aria-hidden="true" style="padding:var(--spacing-x6) var(--spacing-x8); font-family:var(--font-sans);"><div style="margin-bottom:var(--spacing-x4); font-size:var(--text-t7); line-height:var(--text-t7--line-height); font-weight:700; color:var(--color-fg-neutral);">가계부</div><div style="padding:var(--spacing-x2) var(--spacing-x6); border-radius:var(--radius-r4); background:var(--color-bg-layer-default);">${[
-    ["김밥천국", "8,000원"],
+    ["가나김밥", "8,000원"],
     ["버스", "1,500원"],
-    ["다이소", "12,300원"],
+    ["가나생활", "12,300원"],
   ]
     .map(([title, amount]) => `<div style="${PAGE_ROW}"><span>${title}</span><span style="font-weight:700;">${amount}</span></div>`)
     .join("")}</div></div>`;
@@ -399,7 +399,7 @@ const labeled = (html, caption) =>
 const GRID = "display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap:var(--spacing-x6) var(--spacing-x4); align-items:start;";
 const ROW_TEXT = "display:flex; justify-content:space-between; padding:var(--spacing-x3) var(--spacing-x6); font-family:var(--font-sans); font-size:var(--text-t5); line-height:var(--text-t5--line-height); color:var(--color-fg-neutral);";
 const rows = (n) =>
-  Array.from({ length: n }, (_, i) => `<div style="${ROW_TEXT}"><span>${["김밥천국", "버스", "다이소", "스타벅스", "GS25", "교보문고", "올리브영", "택시", "넷플릭스", "쿠팡"][i % 10]}</span><b>${["8,000원", "1,500원", "12,300원", "6,500원", "3,200원", "15,000원", "21,900원", "9,800원", "13,500원", "32,000원"][i % 10]}</b></div>`).join("");
+  Array.from({ length: n }, (_, i) => `<div style="${ROW_TEXT}"><span>${["가나김밥", "버스", "가나생활", "다라커피", "가나24", "가나문고", "다라뷰티", "택시", "가나영상", "가나몰"][i % 10]}</span><b>${["8,000원", "1,500원", "12,300원", "6,500원", "3,200원", "15,000원", "21,900원", "9,800원", "13,500원", "32,000원"][i % 10]}</b></div>`).join("");
 
 // ── 예제 ──────────────────────────────────────────────────────────────────
 

@@ -119,7 +119,7 @@ export function BadgePlayground({ kits, lists }: { kits: Kits; lists: Record<Bra
             {
               kind: 'button',
               prefix: { tile: 'red', icon: 'receipt' },
-              title: '넷플릭스',
+              title: '가나영상',
               titleBadge: badge,
               detailNode: <TagGroupView look={k.tag} mode={mode} size="t3" truncate items={[{ label: '구독', shrink: 0 }, { label: '현대카드 M' }, { label: '10월 18일', shrink: 0 }]} />,
               suffix: { amount: '−17,000원' },

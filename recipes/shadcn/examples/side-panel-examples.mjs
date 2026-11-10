@@ -398,13 +398,13 @@ const LINE_DETAIL = "display:block; font-size:var(--text-t3); line-height:var(--
 const lines = (list) =>
   list.map(([t, d, v]) => `<div style="${LINE}"><span>${esc(t)}<span style="${LINE_DETAIL}">${esc(d)}</span></span><b style="white-space:nowrap;">${esc(v)}</b></div>`).join("");
 const BENEFITS = [
-  ["커피 전문점", "스타벅스 · 투썸 · 이디야", "10% 할인"],
+  ["커피 전문점", "다라커피 · 마바커피 · 사아커피", "10% 할인"],
   ["대중교통", "버스 · 지하철", "10% 할인"],
   ["통신 요금", "자동이체 시", "5,000원 할인"],
-  ["온라인 쇼핑", "쿠팡 · 11번가", "5% 적립"],
-  ["영화", "CGV · 메가박스", "4,000원 할인"],
+  ["온라인 쇼핑", "가나몰 · 다라몰", "5% 적립"],
+  ["영화", "가나시네마 · 마바시네마", "4,000원 할인"],
   ["주유", "SK · GS", "리터당 60원"],
-  ["편의점", "GS25 · CU", "5% 할인"],
+  ["편의점", "가나24 · 다라편의점", "5% 할인"],
   ["해외 결제", "수수료", "면제"],
 ];
 const CAPTION = "display:block; margin-top:var(--spacing-x2); font-size:var(--text-t2); line-height:var(--text-t2--line-height); color:var(--color-fg-neutral-subtle);";

@@ -203,7 +203,7 @@ export const tagGroupExamples = [
     render: () =>
       stack(
         [
-          `<div style="${SCREEN}">${ledgerRow("스타벅스 강남역점", tagGroup({ size: "t3", truncate: true, items: TX }), "5,600원")}</div>`,
+          `<div style="${SCREEN}">${ledgerRow("다라커피 강남역점", tagGroup({ size: "t3", truncate: true, items: TX }), "5,600원")}</div>`,
           `<span style="${CAPTION}">읽는 글 — "${esc(reading(TX))}"</span>`,
         ],
         "var(--spacing-x2)",

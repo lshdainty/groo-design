@@ -157,11 +157,11 @@ export const badgeExamples = [
   {
     title: "목록 줄의 상태 — weak",
     description:
-      "배지는 대상의 상태 · 분류를 한두 낱말로 보이는 작은 라벨이다(\"예정\" · \"연체 3\"). 기본은 weak · neutral · medium 20 — 옅은 바탕(bg-neutral-weak) + 진한 글자(fg-neutral-muted) · 500 · 모서리 4 · 11/15 다. 목록처럼 같은 모양이 되풀이되는 자리는 weak 이고, 한 목록 안에서는 한 변형으로 맞추고 뜻은 톤으로 가른다(연체는 critical). 줄 제목 옆에 둘 때는 제목만 말줄임하고 배지는 사이 6(gap-x1_5)으로 붙인다. 배지는 <span> · 역할 없음이라 줄 이름과 이어 읽힌다(\"넷플릭스 예정\"). 누르지 않는다 — 호버 · 누름 · 포커스가 없다.",
+      "배지는 대상의 상태 · 분류를 한두 낱말로 보이는 작은 라벨이다(\"예정\" · \"연체 3\"). 기본은 weak · neutral · medium 20 — 옅은 바탕(bg-neutral-weak) + 진한 글자(fg-neutral-muted) · 500 · 모서리 4 · 11/15 다. 목록처럼 같은 모양이 되풀이되는 자리는 weak 이고, 한 목록 안에서는 한 변형으로 맞추고 뜻은 톤으로 가른다(연체는 critical). 줄 제목 옆에 둘 때는 제목만 말줄임하고 배지는 사이 6(gap-x1_5)으로 붙인다. 배지는 <span> · 역할 없음이라 줄 이름과 이어 읽힌다(\"가나영상 예정\"). 누르지 않는다 — 호버 · 누름 · 포커스가 없다.",
     jsx: `import { Badge } from "@/components/ui/badge"
 
 <span className="flex items-center gap-x1_5">
-  <span className="truncate">넷플릭스</span>
+  <span className="truncate">가나영상</span>
   <Badge className="shrink-0">예정</Badge>
 </span>
 
@@ -170,7 +170,7 @@ export const badgeExamples = [
       screen(
         stack([
           labeled(
-            `<span class="flex items-center gap-x1_5" style="${TITLE}"><span class="truncate">넷플릭스</span>${badge({ text: "예정", className: "shrink-0" })}</span>`,
+            `<span class="flex items-center gap-x1_5" style="${TITLE}"><span class="truncate">가나영상</span>${badge({ text: "예정", className: "shrink-0" })}</span>`,
             "줄 제목 + 배지 — 사이 6 · 제목만 말줄임(배지는 shrink-0)",
             CAPTION,
           ),

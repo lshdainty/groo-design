@@ -150,7 +150,7 @@ outline 의 의미 색 테두리 넷(`stroke-informative-weak` · `-positive-wea
 import { Badge } from "@/components/ui/badge"
 
 <span className="flex items-center gap-x1_5">
-  <span className="truncate">넷플릭스</span>
+  <span className="truncate">가나영상</span>
   <Badge className="shrink-0">예정</Badge>
 </span>
 
@@ -201,7 +201,7 @@ import { Badge } from "@/components/ui/badge"
 | **WCAG 1.4.4** Resize text | 글이 글자 크기 설정을 따라 커지고 상자가 함께 커진다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 해당 없음 — 누르지 않는다 |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 해당 없음 — 누르지 않는다 |
-| **ARIA** | `<span>` · 역할 없음 — 글이 앞뒤 글(줄 이름)과 이어 읽힌다("넷플릭스 예정 구독 현대카드"). 앞 아이콘은 `aria-hidden`. 말줄임해도 글 전체를 읽는다 |
+| **ARIA** | `<span>` · 역할 없음 — 글이 앞뒤 글(줄 이름)과 이어 읽힌다("가나영상 예정 구독 현대카드"). 앞 아이콘은 `aria-hidden`. 말줄임해도 글 전체를 읽는다 |
 
 ## Do / Don't
 
@@ -238,6 +238,10 @@ import { Badge } from "@/components/ui/badge"
 - **Action(정보 아이콘 버튼)은 두지 않는다** — SEED React 3(2026-10-01)의 배지 안 정보 버튼은 누르는 영역이 12 · 14 이고, 누르지 않는 배지 안에 따로 눌리는 것이 생긴다. 설명은 배지 옆 ⓘ Help Bubble 이다.
 
 ## Migration notes
+
+### 2026-11-10 — 예시 이름
+
+예시 가맹점 "넷플릭스" 를 지어낸 "가나영상" 으로 바꿨다 — 예시 데이터에 실제 회사 · 가맹점 이름을 쓰지 않는다. 값 변경 없음. 옛 스펙은 `badge.history/v-pre-cleanup-1110.md`.
 
 ### 2026-11-07 — "기본" 은 neutral
 

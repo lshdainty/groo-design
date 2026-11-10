@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
  * SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 Toggle Button 은 코드에만 있고 groo 는 두지 않는다(사용자 결정 8A).
  * 옛 글 토글(default · outline 28 · 32 · 40)과 Toggle Group 은 걷었다 — 거르기 · 고르기는 Chip · Segmented Control, 설정은 Switch.
  *
- *   Toggle   <button type="button" aria-pressed> 하나 — 관심 등록 · 메모 고정 · App Key 보기(그 자리에서 켜고 끄는 단추)
+ *   Toggle   <button type="button" aria-pressed> 하나 — 관심 등록 · App Key 보기(그 자리에서 켜고 끄는 단추)
  *            aria-label(필수 — 고정 이름) · pressed · defaultPressed · onPressedChange(pressed) · icon(끔의 아이콘 — 필수) ·
  *            pressedIcon(켬의 아이콘 — 없으면 icon 그대로: 모으기 단추) · tone("default" · "inverted" — 브랜드 채움 위) · disabled.
  *            나머지 <button> 속성(className · id · onClick …)은 단추에 간다. ref 는 단추로 — TooltipTrigger · HelpBubbleAnchor 의

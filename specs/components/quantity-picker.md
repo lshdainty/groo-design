@@ -32,11 +32,11 @@
 
 ### Size
 
-SEED 의 세 크기를 그대로 둔다(사용자 결정 1A) — `small` 36 · `medium` 40 · `large` 52, 모서리 8 · 8 · 12, 아이콘 16 · 18 · 22, 값 16 / 22 · 16 / 22 · 18 / 24(500). 크기는 **옆 입력과 같은 높이**로 고른다(SEED — "다른 입력 요소와 함께 배치할 때는 사이즈를 맞춰"). 폼의 기본은 [Input](input.md) 처럼 `responsive` 다 — 1280 미만 large 52 · 이상 medium 40. 앱은 늘 large 다. `small` 36 은 표 칸 · 목록 줄 안에만 쓴다(HR 업무 보고 소요시간). 크기마다의 높이는 최소 높이다 — 글자가 커져 값이 상자보다 높아지면 상자가 글을 따라 커지고 숫자를 자르지 않는다. [Input](input.md) · [Select](select.md) 와 같고, [Button](button.md) 의 "큰 글자에서 높이"(버튼 큰 글자 A)와 같은 규칙이다(2026-10-29 I-29).
+SEED 의 세 크기를 그대로 둔다(사용자 결정 1A) — `small` 36 · `medium` 40 · `large` 52, 모서리 8 · 8 · 12, 아이콘 16 · 18 · 22, 값 16 / 22 · 16 / 22 · 18 / 24(500). 크기는 **옆 입력과 같은 높이**로 고른다(SEED — "다른 입력 요소와 함께 배치할 때는 사이즈를 맞춰"). 폼의 기본은 [Input](input.md) 처럼 `responsive` 다 — 1280 미만 large 52 · 이상 medium 40. 앱은 늘 large 다. `small` 36 은 옆 칸이 36 인 목록 줄 안에만 쓴다 — 표 안 편집 줄은 옆 Input · Select 에 맞춰 `medium` 40 이다(아래 "옆 칸과 같은 높이"). 크기마다의 높이는 최소 높이다 — 글자가 커져 값이 상자보다 높아지면 상자가 글을 따라 커지고 숫자를 자르지 않는다. [Input](input.md) · [Select](select.md) 와 같고, [Button](button.md) 의 "큰 글자에서 높이"(버튼 큰 글자 A)와 같은 규칙이다(2026-10-29 I-29).
 
 36 · 40 버튼은 누르는 자리를 44 로 넓힌다 — 보이는 상자 둘레에 보이지 않는 여백을 4 · 2 씩 더한다(기초 Iconography — "40px 버튼은 보이지 않는 여백을 2px 씩 더한다"). 52 는 그대로 52 다. Button 의 크기(large 48)를 따르는 안(1B)과 40 하나(1C)는 고르지 않았다 — 폰 폼에서 옆 칸(52)과 4 · 12 어긋난다.
 
-[그림: 세 크기 — 폰 폼 52 · 데스크톱 폼 40 · 표 칸 36, 옆 Input · Select 와 높이가 같다 · 누르는 자리 44(분홍)](../../site/components/specs/quantity-picker.tsx#size)
+[그림: 세 크기 — 폰 폼 52 · 데스크톱 폼 40 · 줄 안 36, 옆 Input · Select 와 높이가 같다 · 누르는 자리 44(분홍)](../../site/components/specs/quantity-picker.tsx#size)
 
 [표: 크기](quantity-picker.yaml#grid.size)
 
@@ -96,7 +96,7 @@ SEED 의 세 크기를 그대로 둔다(사용자 결정 1A) — `small` 36 · `
 
 | 이런 값 | 쓰는 것 |
 |---|---|
-| 작은 정수를 한 단계씩, 흔한 값이 열 단계 안쪽(승인 필요 횟수 0 ~ 3 · 반복 간격 1 ~ 3 · 부여 시간 0 ~ 7시간 · 업무 보고 소요시간) | **Quantity Picker** |
+| 작은 정수를 한 단계씩, 흔한 값이 열 단계 안쪽(승인 필요 횟수 0 ~ 3 · 반복 간격 1 ~ 3 · 부여 시간 0 ~ 7시간). 정해진 반 단위(`step` 0.5 — 업무 보고 소요 시간 30분 단위)도 같다 | **Quantity Picker** |
 | 정수지만 흔한 값이 열 단계보다 멀다(반복 거래 "총 n회" — 기본 12 · 흔한 24 · 36) | [Input](input.md) — 숫자 키보드 · 뒤 단위 "회" |
 | 돈 · 소수 · 큰 수(금액 · 보유 수량 0.05 · 3.75g) | [Input](input.md) |
 | 날짜 부분(반복 일자 · 카드 결제일 1 ~ 31 · 월) | [Select](select.md) |
@@ -113,7 +113,7 @@ SEED 의 세 크기를 그대로 둔다(사용자 결정 1A) — `small` 36 · `
 
 ### 옆 칸과 같은 높이
 
-한 폼 안에서는 옆 Input · Select 와 같은 크기다 — 웹 폼은 `responsive`(1280 미만 52 · 이상 40), 앱은 52. 표 칸 · 목록 줄 안은 `small` 36 이다. 버튼 줄의 높이(48)에 맞추지 않는다.
+한 폼 안에서는 옆 Input · Select 와 같은 크기다 — 웹 폼은 `responsive`(1280 미만 52 · 이상 40), 앱은 52. 표 안 편집 줄도 옆 칸에 맞춰 `medium` 40 이다 — 같은 줄의 [Input](input.md) · [Select](select.md) · [Input Button](input-button.md) 에 `small` 이 없다([Table](table.md) 의 "표 안 편집 줄은 medium", 2026-11-10 디자인시스템 판단 — 그루 이음 25-4). `small` 36 은 옆 칸이 36 인 자리(목록 줄 안)에만 쓴다. 버튼 줄의 높이(48)에 맞추지 않는다.
 
 [그림: 폰 폼 — 반복 간격 Quantity Picker 52 와 반복 단위 Select 52 가 한 줄 · 48 로 어긋난 줄](../../site/components/specs/quantity-picker.tsx#size-guide)
 
@@ -123,9 +123,11 @@ SEED 의 세 크기를 그대로 둔다(사용자 결정 1A) — `small` 36 · `
 
 [그림: 승인 필요 횟수 0 ~ 3(승인자 3명) — 최대에서 늘리기 막힘 · 승인자가 2명으로 줄어 3 이 범위 밖 — 오류 테두리 + 오류 글](../../site/components/specs/quantity-picker.tsx#range-guide)
 
-### 단위는 값 칸에, 제출은 정수
+### 단위는 값 칸에, 제출은 단위 없는 수
 
-단위는 값 칸의 글로 붙인다(`getValueText` — "3회" · "8h") — 라벨에 "(회)" 를 붙이지 않는다. 화면 읽기도 바뀐 값을 단위와 함께 읽는다("4회"). 폼에 내는 값은 단위 없는 정수다(숨은 입력 `name`).
+단위는 값 칸의 글로 붙인다(`getValueText` — "3회" · "6시간") — 라벨에 "(회)" 를 붙이지 않는다. 화면 읽기도 바뀐 값을 단위와 함께 읽는다("4회"). 폼에 내는 값은 단위 없는 수다(숨은 입력 `name` — 정수, `step` 0.5 면 4.5).
+
+**반 단위(`step` 0.5)** — 업무 보고 소요 시간은 30분 단위로 고른다(`step` 0.5 · 0 ~ 24). 값 칸은 시 · 분으로 쓴다 — 정수는 "6시간", 반은 "4시간 30분"("4.5h" · "4.5시간" 이 아니다 — 다른 화면의 시간 글과 같은 꼴, 영어 "4 hours 30 minutes"). 화면 읽기도 같은 글을 읽는다. 값 칸 폭은 가장 긴 글("23시간 30분")로 잡는다(2026-11-10 사용자 결정 ③B).
 
 ### 글
 
@@ -161,18 +163,21 @@ const [approvals, setApprovals] = useState(0)
 </Field>
 ```
 
-### 표 칸 — 소요시간
+### 표 안 편집 줄 — 소요 시간(30분 단위)
 
-[그림: HR 업무 보고 표 — 줄 수정 중 소요시간 small 36](../../site/components/specs/quantity-picker.tsx#ex-table)
+[그림: HR 업무 보고 표 — 줄 수정 중 소요시간 medium 40 · 30분 단위 "4시간 30분"](../../site/components/specs/quantity-picker.tsx#ex-table)
 
 ```tsx
 import { useState } from "react"
 import { QuantityPicker } from "@/components/ui/quantity-picker"
 
-const [hours, setHours] = useState(8)
+const [hours, setHours] = useState(4.5)
 
-{/* 표 칸 안 — 옆 칸 이름이 없어 aria-label 로 이름을 준다 */}
-<QuantityPicker size="small" min={0} max={24} value={hours} onValueChange={setHours} getValueText={(v) => `${v}h`} aria-label="소요시간" />
+// 소요 시간 글 — 정수 "6시간", 반은 "4시간 30분"(step 0.5)
+const hoursText = (v: number) => (Number.isInteger(v) ? `${v}시간` : `${Math.floor(v)}시간 30분`)
+
+{/* 표 안 편집 줄 — 옆 칸(Select · Input)과 같은 medium. 옆 칸 이름이 없어 aria-label 로 이름을 준다 */}
+<QuantityPicker size="medium" min={0} max={24} step={0.5} value={hours} onValueChange={setHours} getValueText={hoursText} aria-label="소요시간" />
 ```
 
 ### 지우기 · 로딩
@@ -226,7 +231,7 @@ const change = (next: number) => {
 | 화살표 키 | 없다 — spinbutton 이 아니다(SEED) |
 | Disabled | 두 버튼 `disabled` — 누르기 · 초점 불가, `Tab` 에서 빠진다. 숨은 입력도 막혀 제출되지 않는다 |
 | ReadOnly | 두 버튼 `aria-disabled` — 초점은 받고 값은 바뀌지 않으며, 값은 제출된다 |
-| 폼 제출 | 숨은 입력(`name`)이 단위 없는 정수를 낸다 |
+| 폼 제출 | 숨은 입력(`name`)이 단위 없는 수를 낸다(정수 · `step` 0.5 면 4.5) |
 
 ## Accessibility
 
@@ -240,7 +245,7 @@ const change = (next: number) => {
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 버튼 바깥 링 2px · 띄움 2px ✓ |
 | **WCAG 4.1.3** Status messages | 값 칸 `aria-live="polite"` · `aria-atomic` — 바뀐 값을 단위와 함께 한 번 읽는다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 세 크기 모두 버튼 36 이상 ✓ |
-| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | small 36 · medium 40 은 보이지 않는 여백으로 44 ✓(4 · 2 씩 — 표 칸은 위아래 16 안이라 이웃과 겹치지 않는다) · large 52 ✓. 값 칸은 누르는 자리가 아니다 |
+| **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | small 36 · medium 40 은 보이지 않는 여백으로 44 ✓(4 · 2 씩 — 표 칸은 위아래 여백 안이라 이웃과 겹치지 않는다) · large 52 ✓. 값 칸은 누르는 자리가 아니다 |
 | **WCAG 4.1.2** Name, Role, Value | 루트 `role="group"` + 이름(Field 라벨 `aria-labelledby` · `aria-label`), 버튼 이름 "줄이기" · "늘리기"(지우기면 `removeAriaLabel`), 끝 `aria-disabled`, 로딩 `aria-busy`. 앱은 버튼을 `Semantics(button: true, enabled: …)` 로, 값은 `liveRegion` 으로 읽는다 ✓ |
 | **Reduced motion** | 누른 버튼의 축소를 뺀다 · 로딩 원은 고정된 3/4 호(Progress Circle) |
 
@@ -248,10 +253,10 @@ const change = (next: number) => {
 
 ### ✅ Do
 
-- 흔한 값이 열 단계 안쪽인 작은 정수에 쓴다.
-- 옆 칸과 같은 높이로 — 폼은 `responsive`, 표 칸은 small.
+- 흔한 값이 열 단계 안쪽인 작은 정수(또는 정해진 반 단위)에 쓴다.
+- 옆 칸과 같은 높이로 — 폼은 `responsive`, 표 안 편집 줄은 medium.
 - 최소 · 최대를 데이터로 걸고, 끝에서는 그 버튼만 막는다(초점은 남긴다).
-- 단위는 값 칸 글로, 제출은 정수로.
+- 단위는 값 칸 글로, 제출은 단위 없는 수로.
 - 지우기를 켜면 무엇을 지우는지 이름을 단다.
 
 ### ❌ Don't
@@ -270,7 +275,7 @@ const change = (next: number) => {
 
 ## SEED 와 다른 점
 
-- **웹 폼의 기본 크기는 `responsive`**(1280 미만 large 52 · 이상 medium 40) — SEED react 의 기본은 small 36 이다. 옆 Input 과 같은 규칙이다(사용자 결정 1A). 표 칸 · 줄 안은 small.
+- **웹 폼의 기본 크기는 `responsive`**(1280 미만 large 52 · 이상 medium 40) — SEED react 의 기본은 small 36 이다. 옆 Input 과 같은 규칙이다(사용자 결정 1A). 표 안 편집 줄은 medium, 옆 칸이 36 인 줄 안은 small.
 - **36 · 40 버튼의 누르는 자리 44** — 보이지 않는 여백을 4 · 2 씩 더한다(기초 Iconography). SEED 는 버튼 크기 그대로다.
 - **누름 · 호버 바탕은 불투명한 `bg-layer-default-pressed`** — SEED bg.transparent-pressed 는 투명도가 있어 검사기가 받지 않는다(v102 · button.yaml).
 - **끝에 닿은 버튼은 `aria-disabled` 만** — SEED headless 는 `disabled` 속성도 건다(`useQuantityPicker.ts` 235 · 250) — 키보드로 끝까지 누르면 초점이 빠질 수 있다. groo 는 초점을 남긴다(따라오는 것).
@@ -279,6 +284,10 @@ const change = (next: number) => {
 - 로딩 원 · 지우기 · fill 은 SEED 그대로다(사용자 결정 3A).
 
 ## Migration notes
+
+### 2026-11-10 — 반 단위 · 표 안 편집 줄은 medium
+
+그루 이음 25-4 에서 정한 것을 적었다. ① 업무 보고 소요 시간은 `step` 0.5(30분 단위) · 값 칸 "4시간 30분"(2026-11-10 사용자 결정 ③B) — 제출은 정수가 아니라 단위 없는 수다. ② 표 안 편집 줄은 옆 칸(Input · Select · Input Button 에 `small` 이 없다)과 같은 `medium` 40 — 2026-10-15 1A 의 "표 칸 36" 은 옆 칸이 36 이라는 전제였다. 예 · 그림을 맞췄다. 값 · 토큰 변경 없음. 옛 스펙은 `quantity-picker.history/v-pre-cleanup-1110.*`.
 
 ### 2026-10-30 — 높이는 최소 높이
 

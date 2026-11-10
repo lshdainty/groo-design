@@ -323,7 +323,7 @@ export function ExQpBasicDemo({ look, field }: { look: QpLook; field: TfFieldLoo
 
 // 표 칸 — HR 업무 보고, 줄 수정 중 소요시간 small 36
 export function ExQpTableDemo({ look, saveLook, mode = 'auto' }: { look: QpLook; saveLook: ButtonLook; mode?: ViewMode }) {
-  const [hours, setHours] = useState(8);
+  const [hours, setHours] = useState(4.5);
   const c = (n: string) => `var(--p-${n})`;
   const th: CSSProperties = { paddingLeft: 16, paddingRight: 16, height: 48, textAlign: 'left', fontSize: 14, fontWeight: 500, color: c('fg-neutral-subtle'), whiteSpace: 'nowrap', borderBottom: `1px solid ${c('stroke-neutral-subtle')}` };
   const td: CSSProperties = { paddingTop: 16, paddingBottom: 16, paddingLeft: 16, paddingRight: 16, verticalAlign: 'middle', whiteSpace: 'nowrap', borderBottom: `1px solid ${c('stroke-neutral-subtle')}`, fontSize: 14, lineHeight: '19px' };
@@ -349,7 +349,7 @@ export function ExQpTableDemo({ look, saveLook, mode = 'auto' }: { look: QpLook;
                 <td style={td}>11</td>
                 <td style={td}>2026-10-14</td>
                 <td style={td}>개발</td>
-                <td style={{ ...td, fontWeight: 500 }}>6h</td>
+                <td style={{ ...td, fontWeight: 500 }}>6시간</td>
                 <td style={{ ...td, whiteSpace: 'normal', color: c('fg-neutral-subtle') }}>근태 화면 표 정렬 고침</td>
                 <td style={td} />
               </tr>
@@ -358,7 +358,7 @@ export function ExQpTableDemo({ look, saveLook, mode = 'auto' }: { look: QpLook;
                 <td style={td}>2026-10-15</td>
                 <td style={td}>개발</td>
                 <td style={td}>
-                  <QpView look={look} mode={mode} size="small" min={0} max={24} value={hours} onValueChange={setHours} unit="h" ariaLabel="소요시간" />
+                  <QpView look={look} mode={mode} size="medium" min={0} max={24} step={0.5} value={hours} onValueChange={setHours} format="hours" placeholder="23시간 30분" ariaLabel="소요시간" />
                 </td>
                 <td style={{ ...td, whiteSpace: 'normal', minWidth: 180 }}>결재 화면 오류 수정 · 개발 서버 배포 확인</td>
                 <td style={td}>
@@ -508,7 +508,7 @@ export function FooterPlayground({ look, year }: { look: FtLook; year: number })
       L.push('  <FooterInfo>');
       if (on.policy) {
         used.add('FooterLinks').add('FooterLink');
-        L.push('    <FooterLinks>', '      <FooterLink href="https://sso.hangroo.io/privacy" external>개인정보 처리방침</FooterLink>', '    </FooterLinks>');
+        L.push('    <FooterLinks>', '      <FooterLink href="#" external>개인정보 처리방침</FooterLink>', '    </FooterLinks>');
       }
       if (on.text) {
         used.add('FooterText');

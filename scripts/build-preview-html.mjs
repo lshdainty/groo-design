@@ -9995,10 +9995,10 @@ function pattMenuGroups({ kind = "image", position = "middle", badge = true } = 
 const PFOOT_HOME = {
   brand: { name: "그루", description: "People + Forest. 사람(People)이 모여 숲(Forest)처럼 자라나는 조직 생태계를 설계합니다." },
   columns: [
-    { title: "서비스", links: [["HR", "https://ieum.hangroo.io"], ["Desk", "https://damda.hangroo.io"], ["Desk 설명서", "https://damda.hangroo.io/guide/"]] },
-    { title: "계정", links: [["로그인", "https://sso.hangroo.io"], ["회원가입", "https://sso.hangroo.io"]] },
+    { title: "서비스", links: [["그루 이음", "#"], ["그루 담다", "#"], ["그루 담다 설명서", "#"]] },
+    { title: "계정", links: [["로그인", "#"], ["회원가입", "#"]] },
   ],
-  policy: [["개인정보 처리방침", "https://sso.hangroo.io/privacy"]],
+  policy: [["개인정보 처리방침", "#"]],
   text: "화면의 숫자와 이름은 소개용 예시입니다. 사진: Unsplash.",
 };
 // 값이 없는 블록의 자리표시 — 지어낸 값이 아니라 무엇이 들어갈 자리인지만 쓴다(footer.md "값이 없는 블록은 비워 둔다")
@@ -10380,8 +10380,8 @@ export function renderFinishGallery(brand) {
     "링크 — large(사이트맵) · medium(정책) × 상태 · 새 탭만 ↗",
     "링크는 SEED Footer.LinkText 의 두 크기다 — large(사이트맵 16 / 22 · 500 · fg-neutral → 올리면 · 누르면 fg-neutral-subtle 로 옅게)와 medium(정책 14 / 19 · 500 · fg-neutral-muted → 올리면 · 누르면 fg-neutral 로 짙게). 밑줄은 없다 — 바닥의 링크는 따로 놓인 목록 · 줄이라 위치로 링크임을 안다(SEED). 키보드 포커스에만 링 2px · 띄움 2px · 모서리 4. ↗(lucide arrow-up-right 14 · 12 · 글과 4)는 새 탭으로 여는 링크(처리방침처럼 읽고 돌아오는 문서 · 다른 사이트)에만 둔다 — 같은 탭으로 가는 서비스 링크에는 두지 않는다.",
     matrix("pfin-matrix pfin-matrix--foot", "상태", [
-      { ko: "large — 사이트맵", en: "같은 탭", size: "large", link: ["Desk 설명서", "https://damda.hangroo.io/guide/"] },
-      { ko: "medium — 정책", en: "새 탭 + ↗", size: "medium", link: ["개인정보 처리방침", "https://sso.hangroo.io/privacy"], external: true },
+      { ko: "large — 사이트맵", en: "같은 탭", size: "large", link: ["그루 담다 설명서", "#"] },
+      { ko: "medium — 정책", en: "새 탭 + ↗", size: "medium", link: ["개인정보 처리방침", "#"], external: true },
     ], FT_STATES, (r, c) => `<div class="pfin-foot-cell">${pfootLink(c.link, { size: c.size, external: !!c.external, state: r.i })}</div>`),
   );
   const homeSkin = `<div class="pfin-home">${pfoot({ width: "narrow" })}</div>`;

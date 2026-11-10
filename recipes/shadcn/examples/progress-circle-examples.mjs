@@ -244,9 +244,9 @@ const DIM = "position:absolute; inset:0; display:grid; place-items:center; borde
 // ── 예제 ──────────────────────────────────────────────────────────────────
 
 const LEDGER = [
-  ["김밥천국", "8,000원"],
+  ["가나김밥", "8,000원"],
   ["버스", "1,500원"],
-  ["다이소", "12,300원"],
+  ["가나생활", "12,300원"],
 ];
 
 export const progressCircleExamples = [
@@ -272,7 +272,7 @@ const refreshPhase = useWaitPhase(isRefreshing)
     render: () => {
       const refresh = `<div style="${CARD}"><div style="${CARD_HEAD}"><h3 style="${CARD_TITLE}">최근 거래</h3>${progressCircle({ size: "24", label: "최근 거래 새로 고치는 중" })}</div><div aria-hidden="true" style="padding-bottom:var(--spacing-x2);">${LEDGER.map(([a, b]) => `<div style="${ROW_TEXT}"><span>${a}</span><b>${b}</b></div>`).join("")}</div></div>`;
       const region = `<div data-slot="loading-region" data-state="waiting" data-fallback="circle" aria-busy="true" class="${LR_CIRCLE_REGION}">${progressCircle({ size: "40" })}</div>`;
-      const center = `<div style="${CARD} height:300px; padding-top:var(--spacing-x4);"><div aria-hidden="true" style="${SEARCH}">스타벅스</div>${region}</div>`;
+      const center = `<div style="${CARD} height:300px; padding-top:var(--spacing-x4);"><div aria-hidden="true" style="${SEARCH}">다라커피</div>${region}</div>`;
       return `${PC_STYLE}<div style="display:flex; flex-wrap:wrap; gap:var(--spacing-x6);">${labeled(refresh, "size=\"24\" — 섹션 제목 옆 8")}${labeled(center, "fallback=\"circle\" — 영역 가운데 40")}</div>`;
     },
   },

@@ -211,9 +211,14 @@ export function tableLook(brand: Brand = 'hr'): TableLook {
   const badge = badgeLook(brand);
   if (!String(unbox(b['badge.size'])).includes('Badge medium')) throw new Error(`${F} badge.size 가 Badge medium 이 아니다`);
   const sortNote = noteOf(sortable['sortButton.width']);
-  // 72 줄은 칸 여백 없이 세로 가운데 — 썸네일 48 + 위아래 여백 + 선이 72 를 넘지 않아야 한다(Q-011-1)
+  // 72 는 최소 높이 · 칸 위아래 12(2026-11-09) — 그림이 쓰는 썸네일(Avatar · Logo Tile) + 위아래 여백 + 선이 72 안에 들어야 한다.
+  // Image Frame 48 썸네일은 73 이 되어 판단 대기(table.md "줄 종류") — 그림은 Avatar 로 그린다
   const richPadY = len(rich['cell.paddingY'], `${F} rich cell.paddingY`);
-  if (len(b['thumbnail.size'], `${F} thumbnail.size`) + richPadY * 2 + rowLineW > len(rich['row.minHeight'], `${F} rich row.minHeight`)) throw new Error(`${F} rich 줄 — 썸네일 + 칸 여백 ${richPadY} × 2 + 선이 줄 높이를 넘는다`);
+  const richMin = len(rich['row.minHeight'], `${F} rich row.minHeight`);
+  for (const [name, re] of [['Avatar', /Avatar\s*(\d+)/], ['Logo Tile', /Logo Tile\s*(\d+)/]] as const) {
+    const size = numIn(noteOf(b['thumbnail.size']), re, `${F} thumbnail 비고 ${name}`);
+    if (size + richPadY * 2 + rowLineW > richMin) throw new Error(`${F} rich 줄 — ${name} ${size} + 칸 여백 ${richPadY} × 2 + 선이 줄 높이 ${richMin} 를 넘는다`);
+  }
   const look: TableLook = {
     breakpoint,
     menuBreakpoint: menuKit(brand).menu.breakpoint,

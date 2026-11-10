@@ -361,9 +361,9 @@ import { TopNavigationIconButton } from "@/components/ui/top-navigation"
         availableWidth: "calc(100cqw - 32px)",
       })}</div>`;
       const rows = [
-        ["김밥천국", "8,000원"],
+        ["가나김밥", "8,000원"],
         ["버스", "1,500원"],
-        ["다이소", "12,300원"],
+        ["가나생활", "12,300원"],
       ]
         .map(([a, b]) => `<div style="${ROW}"><span>${a}</span><span style="font-weight:700;">${b}</span></div>`)
         .join("");

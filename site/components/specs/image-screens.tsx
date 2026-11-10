@@ -208,7 +208,7 @@ export function AssetDetailScreen({ mode = 'auto', scale, h }: { mode?: Mode; sc
       <Rows
         mode={mode}
         rows={[
-          { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '스타벅스 강남역점', detailNode: <T items={items('카페', '오후 2:10')} size="t3" truncate mode={mode} />, suffix: { amount: '−5,600원' } },
+          { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '다라커피 강남역점', detailNode: <T items={items('카페', '오후 2:10')} size="t3" truncate mode={mode} />, suffix: { amount: '−5,600원' } },
           { kind: 'button', prefix: { tile: 'green', icon: 'wallet' }, title: '급여', detailNode: <T items={items('수입', '10월 25일')} size="t3" truncate mode={mode} />, suffix: { amount: '+3,200,000원' } },
         ]}
       />

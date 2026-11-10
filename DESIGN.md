@@ -1684,7 +1684,7 @@ components:
 
 ## Overview
 
-Groo는 "사람과 일상이 숲처럼 자라나는" 가치를 담은 듀얼 브랜드 시스템입니다.
+그루는 "사람과 일상이 숲처럼 자라나는" 가치를 담은 듀얼 브랜드 시스템입니다.
 HR(조직 관리, B2B)과 Desk(개인 생산성, B2C)는 동일한 골격을 공유하되 primary 색상으로만 분기합니다.
 
 레퍼런스 — 토스의 신뢰감 있는 미니멀리즘, 전 연령 가독성.
@@ -2811,7 +2811,7 @@ Desk 폰 화면(앱 · 768 미만 웹)의 바닥은 늘 `bg-layer-basement`(회�
 | 끝까지 선 | 중간 | 1px `stroke-neutral-subtle` · 면 폭 전체 | 흰 면 안 | ✓ | ✓ | 면의 맨 위 · 맨 아래에는 긋지 않는다 |
 | 8 틈 띠 | 강함 | 흰 띠 사이 회색 8 — 선이 아니다(라이트 1.08:1 · 다크 1.13:1 로 잘 안 보여 머리 글이 함께 가른다) | 회색 바닥 위 | ✓ 화면마다 고른다 | ✗ (카드) | 첫 띠 위 · 마지막 띠 아래 · 한 줄짜리 띠를 연달아 두지 않는다 |
 | 흰 면 하나(흰 화면) | — | 화면 전체 흰 층 하나 — 구역은 제목 · 여백 · 선으로 | 바닥 대신 | ✓ 화면마다 고른다(지금은 가계부 거래) | — | 구역이 많으면 머리 글 · 여백이 충분히 갈라야 한다 |
-| 카드 | 강함 | 1px `stroke-neutral-weak` 테두리 · 모서리 16 · 그림자 없음 | 회색 바닥 위만 | ✗ (Desk 폰 — 결정 3 · HR 폰은 카드) | ✓ 기본 | 흰 면(띠 · 시트) 위에 두지 않는다 · 카드 안 카드 없음 |
+| 카드 | 강함 | 1px `stroke-neutral-weak` 테두리 · 모서리 16 · 그림자 없음 | 회색 바닥 위만 | ✗ (Desk 폰 — 결정 3 · HR 폰 — HK4 B) | ✓ 기본 | 흰 면(띠 · 시트) 위에 두지 않는다 · 카드 안 카드 없음 |
 
 **③ 예외 · 주의**
 
@@ -3025,7 +3025,7 @@ v116(2026-10-03) — 층 이름으로 다시 정했다. 값은 `specs/z-index.md
 | 토큰 | 값 | 층 · 쓰는 곳 |
 |---|---|---|
 | `z-base` | `auto` | L0 페이지 — 쌓임 맥락을 만들지 않는다 |
-| `z-sticky` | `50` | L1 페이지에 붙은 것 — 상단 바(Top Navigation) · 하단 탭 바(Bottom Navigation) · 떠 있는 버튼(Floating Action Button) · 스피드 다이얼 |
+| `z-sticky` | `50` | L1 페이지에 붙은 것 — 상단 바(Top Navigation) · 하단 탭 바(Bottom Navigation) · 떠 있는 버튼(Floating Action Button) · 스피드 다이얼 · 사이드바(Side Navigation — sticky 라 안의 펼침 메뉴가 본문 카드 아래로 가리지 않게, 2026-11-09) |
 | `z-modal` | `100` | L2 딤 — Dialog · Bottom Sheet · Menu Sheet · Side Panel(옆 패널) |
 | `z-modal-content` | `101` | L2 표면 — 자기 딤 바로 위 |
 | `z-floating` | `200` | L3 트리거에 붙어 뜨는 것 — Popover · Select 목록 · Menu. 페이지에서도 모달 안에서도 같은 값 |
@@ -3133,7 +3133,7 @@ CSS logical property 사용 시 자동 mirror — 추가 CSS 작성 불필요. J
 Tailwind v4는 `me-*`/`ms-*` (margin-end/start), `pe-*`/`ps-*`, `text-start`/`text-end`, `start-0`/`end-0` 등 logical utility 기본 제공. v4 export에서 자동 활성. 변종 `rtl:` (예: `rtl:rotate-180`) 사용 가능.
 
 #### 추가 이유
-1. **Groo는 한국어 우선**이지만 향후 글로벌 확장 시 RTL 지원 vendor 이중 작업 회피.
+1. **그루는 한국어 우선**이지만 향후 글로벌 확장 시 RTL 지원 vendor 이중 작업 회피.
 2. logical property는 **추가 비용 거의 0** — physical과 동일 syntax, 브라우저 호환(Chrome 87+, Safari 15+, Firefox 66+ 모두 지원).
 3. 컴포넌트 spec 작성 시 처음부터 logical property 사용 → 향후 RTL 추가 시 spec 자체 수정 불필요.
 4. **새 토큰 0**, 새 yaml 컴포넌트 0 — prose-only 가이드.
@@ -3212,7 +3212,7 @@ Tailwind v4는 `me-*`/`ms-*` (margin-end/start), `pe-*`/`ps-*`, `text-start`/`te
 - 옛 이름(`shadow-sm` · `md` · `lg` · `xl` 과 `-dark`)은 같은 값의 별칭이다 — 아래 v12 · v25 표(기록). 웹 내보내기(`export:tailwind`)는 옛 이름을 값 대신 `var(--shadow-s1)` ~ `var(--shadow-s4)` 로 적는다 — Tailwind 가 그림자 값을 클래스 안에 박아 넣어 다크 블록이 옛 클래스(`shadow-lg` …)에 닿지 않던 것을, 옛 클래스도 s1 ~ s4 의 다크 값을 따라가게 한다(2026-10-16 사용자 결정 — 기초 웹 01-003 A). 새 이름도 같다 — `--shadow-s1` ~ `s4` 는 `var(--groo-shadow-s1)` ~ `s4` 를 가리키고 값은 @theme 밖 `:root` 에 두며, 다크 블록이 그 값을 바꾼다 — `shadow-s3` 클래스도 다크 값이 된다(2026-10-17 사용자 결정 — 01-003 A 를 새 이름에도). xs 단계 그림자는 두지 않는다(01-006 A — 웹의 shadow-xs 는 Tailwind 기본값이라 내보내기에 없다, 쓰는 곳을 걷는다).
 - 모달 · 시트 뒤를 덮는 딤은 v43 의 `overlay-dim-light` · `overlay-dim-dark` 를 그대로 쓴다(SEED 의 overlay 0.45 · overlay-muted 0.17 은 들이지 않았다).
 
-Groo는 **Tonal Layers**(표면 휘도 차)를 1차 elevation 수단으로, **Layered Shadow**를 2차 보조 수단으로 사용합니다 — Toss 톤의 절제된 깊이감.
+그루는 **Tonal Layers**(표면 휘도 차)를 1차 elevation 수단으로, **Layered Shadow**를 2차 보조 수단으로 사용합니다 — Toss 톤의 절제된 깊이감.
 
 ### v12 추가 — 4단계 shadow 레시피 (prose-token · 기록 — 기준은 v104 그림자 표 — 옛 이름은 별칭)
 
@@ -4210,6 +4210,7 @@ v63 `motion-duration-loop` (1500ms) + `motion-ease-linear` 페어 활용. 일부
 - **trigger**: `focus-visible` pseudo만 (마우스 클릭 시 미표시, Tab/keyboard로 진입 시만)
 - **바깥 · 안쪽**(2026-11-07, 담다 마무리 B5 판단): 제 상자가 보이는 것(칩 · 버튼 · 떠 있는 버튼 · 탭)은 바깥 링 + 상자의 모서리, 화면 폭 줄 · 칸(List 줄 · 상단 바 단추 상자)은 안쪽 링(모서리 0 · 안쪽 2) — 바깥 링은 화면 끝에서 잘린다.
 - **앱도 같다**(2026-11-07, 담다 마무리 B5 판단): 앱(Flutter)도 키보드 초점을 받는 모든 것(줄 · 칩 · 상단 바 단추 · 입구 · 글 버튼)에 링을 그린다 — 컴포넌트 문서의 "웹 — 키보드 포커스에만" 은 웹 · 앱 둘이다. 터치에는 링이 없고, 입력 방식이 바뀌면(키보드 → 터치) 링도 따라 사라진다.
+- **디자인 시스템 부품 밖의 요소도 같은 링**(2026-11-10 디자인시스템 판단 — 그루 이음 25-6): 부품이 아닌 초점 받는 요소(본문 링크 · 화면이 직접 만든 `<button>` · 끌기 손잡이 · `tabindex` 를 준 스크롤 영역)도 키보드 초점에 같은 링을 받는다. 웹은 전역 규칙 하나 — `:focus-visible { outline: 2px solid var(--color-stroke-focus-ring); outline-offset: 2px; }` — 를 기본으로 두고, 부품은 제 규칙(안쪽 링 · 입력칸 테두리 · 모서리)으로 덮는다. 브라우저 기본 링을 그대로 두지 않는다 — 한 화면에 두 가지 링이 보인다.
 
 #### WCAG 검증
 - **2.4.11 Focus Appearance** (AA — 2.2): focus indicator는 (a) 인접 표면 대비 **3:1 이상**, (b) 컴포넌트 외곽선 둘레의 **최소 2 CSS pixel 두께** + **인접한 비-focus 상태 대비 3:1** 충족 — 본 시스템 모두 충족
@@ -4765,7 +4766,7 @@ Field 는 머리(라벨 · 필수 점 또는 "선택" · 보조 액션) · 입�
 | 최소 · 최대 길이 | "{N}자 이상 입력해주세요." · "{N}자 이내로 입력해주세요." |
 | 숫자 범위 | "{N} 이상으로 입력해주세요." · "{N} 이하로 입력해주세요." |
 | 형식 | "{칸 이름}을(를) {형식}으로 입력해주세요."(예: "휴대폰 번호 10~11자리로 입력해주세요.") |
-| 이메일 | "이메일 주소를 확인해주세요(예: kim@groo.app)." |
+| 이메일 | "이메일 주소를 확인해주세요(예: kim@example.com)." |
 | 다시 입력 | "비밀번호가 서로 달라요." |
 | 서버 확인 | "이미 쓰고 있는 {칸 이름}이에요." |
 

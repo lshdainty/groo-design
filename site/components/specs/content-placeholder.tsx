@@ -75,9 +75,9 @@ function CardList({ mode }: { mode: Mode }) {
 function BenefitList({ mode }: { mode: Mode }) {
   const s = 64;
   const rows: [string, string, 'none' | 'ok'][] = [
-    ['커피 30% 할인', '스타벅스 · 하루 한 번', 'none'],
-    ['영화 4,000원 할인', 'CGV · 한 달 두 번', 'ok'],
-    ['편의점 10% 할인', 'GS25 · CU', 'none'],
+    ['커피 30% 할인', '다라커피 · 하루 한 번', 'none'],
+    ['영화 4,000원 할인', '가나시네마 · 한 달 두 번', 'ok'],
+    ['편의점 10% 할인', '가나24 · 다라편의점', 'none'],
   ];
   return (
     <div style={bandStack()}>

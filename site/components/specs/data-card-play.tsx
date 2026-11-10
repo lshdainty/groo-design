@@ -69,12 +69,12 @@ export function CardPlayground({ look, sk, result, toggle }: { look: CardLook; s
     return (
       <>
         {p === 'peers' ? (
-          // 제목 줄 오른쪽 고정 버튼 — card.md 의 peers 코드(flex · items-start · justify-between · gap-x2, 버튼 -mr-x2 · -mt-x2 · shrink-0)
+          // 제목 줄 오른쪽 관심 등록 버튼 — card.md 의 peers 코드(flex · items-start · justify-between · gap-x2, 버튼 -mr-x2 · -mt-x2 · shrink-0)
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: look.header.gap, paddingBottom: look.header.padBottom }}>
-            <span style={{ fontFamily: look.title.fontFamily, fontSize: look.title.fontSize, lineHeight: look.title.lineHeight, fontWeight: look.title.fontWeight, color: dcv(look.title.fg, mode) }}>10월 식비 예산</span>
-            {/* 고정 — 켜고 끄는 아이콘 단추(Toggle — toggle.yaml). 카드의 누름과 따로 */}
+            <span style={{ fontFamily: look.title.fontFamily, fontSize: look.title.fontSize, lineHeight: look.title.lineHeight, fontWeight: look.title.fontWeight, color: dcv(look.title.fg, mode) }}>가나전자</span>
+            {/* 관심 등록 — 켜고 끄는 아이콘 단추(Toggle — toggle.yaml). 카드의 누름과 따로. 종목 · 값은 지어낸 것 */}
             <span style={{ display: 'flex', flexShrink: 0, marginTop: -look.header.gap, marginRight: -look.header.gap }} onClick={(e) => e.stopPropagation()} onPointerDown={(e) => e.stopPropagation()}>
-              <ToggleView look={toggle} mode={mode} ariaLabel="10월 식비 예산 고정" pressed={pinned} icon="pin" onPressedChange={(v) => (setPinned(v), setSaid(v ? '고정했어요.' : '고정을 풀었어요.'))} />
+              <ToggleView look={toggle} mode={mode} ariaLabel="관심 등록" pressed={pinned} icon="star" onPressedChange={(v) => (setPinned(v), setSaid(v ? '관심 종목에 넣었어요.' : '관심 종목에서 뺐어요.'))} />
             </span>
           </div>
         ) : (
@@ -84,8 +84,8 @@ export function CardPlayground({ look, sk, result, toggle }: { look: CardLook; s
           <SkeletonView look={sk} mode={mode} text="t9" width={160} />
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: look.content.gap }}>
-            <span style={{ fontFamily: FONT, fontSize: look.stat.value.sizes.large.fontSize, lineHeight: look.stat.value.sizes.large.lineHeight, fontWeight: look.stat.value.weight, color: dcv(look.stat.value.fg, mode), fontVariantNumeric: 'tabular-nums' }}>{formatWon(115600)} 남았어요</span>
-            <span style={{ fontFamily: FONT, fontSize: look.stat.label.fontSize, lineHeight: look.stat.label.lineHeight, color: dcv(look.stat.label.fg, mode) }}>{formatWon(500000)} 중 77% 썼어요</span>
+            <span style={{ fontFamily: FONT, fontSize: look.stat.value.sizes.large.fontSize, lineHeight: look.stat.value.sizes.large.lineHeight, fontWeight: look.stat.value.weight, color: dcv(look.stat.value.fg, mode), fontVariantNumeric: 'tabular-nums' }}>{p === 'peers' ? formatWon(12300) : `${formatWon(115600)} 남았어요`}</span>
+            <span style={{ fontFamily: FONT, fontSize: look.stat.label.fontSize, lineHeight: look.stat.label.lineHeight, color: dcv(look.stat.label.fg, mode) }}>{p === 'peers' ? '지난 거래일보다 +1.2%' : `${formatWon(500000)} 중 77% 썼어요`}</span>
           </div>
         )}
       </>
@@ -118,7 +118,7 @@ export function CardPlayground({ look, sk, result, toggle }: { look: CardLook; s
         </CardSurface>
       );
     return (
-      <CardSurface look={look} mode={mode} press={p} live label={content === 'stat' ? '이번 달 지출' : '10월 식비 예산'} onClick={() => setSaid(content === 'stat' ? '이번 달 지출 상세로' : '10월 식비 예산 상세로')}>
+      <CardSurface look={look} mode={mode} press={p} live label={content === 'stat' ? '이번 달 지출' : p === 'peers' ? '가나전자' : '10월 식비 예산'} onClick={() => setSaid(content === 'stat' ? '이번 달 지출 상세로' : p === 'peers' ? '가나전자 상세로' : '10월 식비 예산 상세로')}>
         {body()}
       </CardSurface>
     );
@@ -157,15 +157,15 @@ export function CardPlayground({ look, sk, result, toggle }: { look: CardLook; s
         '</Card>',
       ].join('\n');
     return [
-      ...(p === 'peers' ? ['import { Pin } from "lucide-react"', 'import { Card, CardContent, CardLink } from "@/components/ui/card"', 'import { Toggle } from "@/components/ui/toggle"'] : ['import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"']),
+      ...(p === 'peers' ? ['import { Star } from "lucide-react"', 'import { Card, CardContent, CardLink } from "@/components/ui/card"', 'import { Toggle } from "@/components/ui/toggle"'] : ['import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"']),
       '',
       `<Card${p === 'whole' ? ' href={`/desk/budget/${budget.id}`}' : p === 'peers' ? ' press="peers"' : ''}>`,
       ...(p === 'peers'
         ? [
-            '  {/* 고정 버튼은 제목 줄 오른쪽 — 켜고 끄는 아이콘 단추(Toggle). 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다 */}',
+            '  {/* 관심 등록 버튼은 제목 줄 오른쪽 — 켜고 끄는 아이콘 단추(Toggle). 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다 */}',
             '  <div className="flex items-start justify-between gap-x2">',
-            '    <CardLink href={`/desk/budget/${budget.id}`}>10월 식비 예산</CardLink>',
-            '    <Toggle className="-mr-x2 -mt-x2 shrink-0" aria-label="10월 식비 예산 고정" pressed={budget.pinned} onPressedChange={(pinned) => setPinned(budget.id, pinned)} icon={<Pin />} />',
+            '    <CardLink href={`/desk/stocks/${stock.code}`}>{stock.name}</CardLink>',
+            '    <Toggle className="-mr-x2 -mt-x2 shrink-0" aria-label="관심 등록" pressed={watched} onPressedChange={setWatched} icon={<Star />} />',
             '  </div>',
           ]
         : ['  <CardHeader>', '    <CardTitle>10월 식비 예산</CardTitle>', ...(p === 'none' ? ['    <CardAction href="/desk/budget">관리</CardAction>'] : []), '  </CardHeader>']),
@@ -241,16 +241,16 @@ export function ExPressDemo({ look, toggle }: { look: CardLook; toggle: ToggleLo
           <CardHeaderView look={look} title="10월 식비 예산" />
           <span style={{ fontFamily: FONT, fontSize: look.stat.label.fontSize, lineHeight: look.stat.label.lineHeight, color: dcv(look.stat.label.fg, 'auto') }}>{formatWon(500000)} 중 77% 썼어요</span>
         </CardSurface>
-        {/* card.md 코드 그대로 — 제목 줄(flex · items-start · justify-between · gap-x2) 오른쪽에 고정 버튼(-mr-x2 · -mt-x2 · shrink-0), 아래 본문 */}
-        <CardSurface look={look} press="peers" live label="장보기 목록" onClick={() => setSaid('장보기 목록 열기')}>
+        {/* card.md 코드 그대로 — 제목 줄(flex · items-start · justify-between · gap-x2) 오른쪽에 관심 등록 버튼(-mr-x2 · -mt-x2 · shrink-0), 아래 본문 */}
+        <CardSurface look={look} press="peers" live label="가나전자" onClick={() => setSaid('가나전자 상세로')}>
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: look.header.gap }}>
-            <span style={{ fontFamily: look.title.fontFamily, fontSize: look.title.fontSize, lineHeight: look.title.lineHeight, fontWeight: look.title.fontWeight, color: dcv(look.title.fg, 'auto') }}>장보기 목록</span>
-            {/* 고정 — Toggle(card.md 코드): 이름 "{메모 제목} 고정" 고정 · aria-pressed · pin 같은 아이콘(끔 흐린 선 2 · 켬 진한 선 2.5), 바탕은 칠하지 않는다 */}
+            <span style={{ fontFamily: look.title.fontFamily, fontSize: look.title.fontSize, lineHeight: look.title.lineHeight, fontWeight: look.title.fontWeight, color: dcv(look.title.fg, 'auto') }}>가나전자</span>
+            {/* 관심 등록 — Toggle(card.md 코드): 이름 "관심 등록" 고정 · aria-pressed · star 같은 아이콘(끔 흐린 선 2 · 켬 진한 선 2.5), 바탕은 칠하지 않는다 */}
             <span style={{ display: 'flex', flexShrink: 0, marginTop: -look.header.gap, marginRight: -look.header.gap }} onClick={(e) => e.stopPropagation()} onPointerDown={(e) => e.stopPropagation()}>
-              <ToggleView look={toggle} ariaLabel="장보기 목록 고정" pressed={pinned} icon="pin" onPressedChange={(v) => (setPinned(v), setSaid(v ? '고정했어요.' : '고정을 풀었어요.'))} />
+              <ToggleView look={toggle} ariaLabel="관심 등록" pressed={pinned} icon="star" onPressedChange={(v) => (setPinned(v), setSaid(v ? '관심 종목에 넣었어요.' : '관심 종목에서 뺐어요.'))} />
             </span>
           </div>
-          <span style={{ fontFamily: FONT, fontSize: look.stat.label.fontSize, lineHeight: look.stat.label.lineHeight, color: dcv(look.stat.label.fg, 'auto') }}>우유 · 계란 · 두부 · 대파</span>
+          <span style={{ fontFamily: FONT, fontSize: look.stat.label.fontSize, lineHeight: look.stat.label.lineHeight, color: dcv(look.stat.label.fg, 'auto'), fontVariantNumeric: 'tabular-nums' }}>12,300원 · +1.2%</span>
         </CardSurface>
       </div>
       <Said text={said} />

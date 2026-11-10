@@ -92,7 +92,7 @@ export function ModeTag({ mode }: { mode: 'light' | 'dark' }) {
 // 오늘 2026. 10. 2. (금) — 가계부의 하루 묶음
 export const LEDGER: [string, string, string, string][] = [
   ['점심 식사', '식비 · 현대카드 M', '−12,000원', 'orange'],
-  ['스타벅스', '카페 · 현대카드 M', '−5,600원', 'brown'],
+  ['다라커피', '카페 · 현대카드 M', '−5,600원', 'brown'],
   ['지하철', '교통 · 국민 체크카드', '−1,450원', 'blue'],
   ['월급', '수입 · 토스뱅크 통장', '+3,200,000원', 'green'],
 ];

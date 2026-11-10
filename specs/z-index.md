@@ -9,7 +9,7 @@ Groo 는 Bootstrap 식 **명시적 z-index 계층 분기** 정책을 채택. sha
 | Layer | 토큰 | z-index | 컴포넌트 | 의미 |
 |---|---|---|---|---|
 | **L0 — base** | `z-base` | `auto` | 일반 콘텐츠 | document 기본 flow — 쌓임 맥락을 만들지 않는다 |
-| **L1 — page sticky/fixed** | `z-sticky` | `50` | `top-navigation`(상단 바 · 데스크톱 머리), `bottom-navigation`(하단 탭 바), `floating-action-button`, 스피드 다이얼 | 페이지 위 고정 UI |
+| **L1 — page sticky/fixed** | `z-sticky` | `50` | `top-navigation`(상단 바 · 데스크톱 머리), `bottom-navigation`(하단 탭 바), `floating-action-button`, 스피드 다이얼, `side-navigation`(사이드바) | 페이지 위 고정 UI |
 | **L2 — modal** | `z-modal` · `z-modal-content` | `100` · `101` | `dialog` / `bottom-sheet` / `menu-sheet` / `side-panel` | modal layer — overlay + content 분리 |
 | **L3 — modal-aware floating** | `z-floating` | `200` | `popover` / `select` / `menu` / `color-picker` (popover 패턴) / `side-navigation` 의 펼침 메뉴 | page 와 modal 안 어디서든 사용. modal(L2) 위에 떠야 하므로 200. page 에서도 동일 값 — sticky/FAB(L1=50) 위 자연스러움 |
 | **L4 — modal-aware tooltip** | `z-tooltip` | `210` | `help-bubble` · `tooltip` | popover 위에 살짝 떠야 함 (hover 잠깐 뜨고 사라지는 참고 정보) |
@@ -21,7 +21,7 @@ Groo 는 Bootstrap 식 **명시적 z-index 계층 분기** 정책을 채택. sha
 - 웹은 토큰 변수로 부른다 — CSS `z-index: var(--z-floating)`, Tailwind v4 `z-(--z-floating)`. 숫자 클래스(`z-[200]` · `z-50`)로 층을 적지 않는다.
 - 앱(Flutter)은 숫자 없이 같은 순서를 따른다 — 라우트 · 오버레이가 연 순서로 쌓이므로 위 차례가 되게 띄운다.
 - 한 컴포넌트 안에서 겹침을 정리하는 작은 값(`z-[1]` · `z-10`)은 층이 아니다 — 이 표 밖이다.
-- `side-navigation`(사이드바)은 층이 아니다 — 화면 틀의 한 칸이라 L0 이다. 접혔을 때 뜨는 펼침 메뉴 · 이름 말풍선만 L3 · L4 다.
+- `side-navigation`(사이드바)은 L1 이다 — 화면 틀의 한 칸이지만 sticky 로 붙어 스스로 쌓임 맥락을 만들고, 접혔을 때 뜨는 펼침 메뉴(L3) · 이름 말풍선(L4)을 그 안에 그린다. 사이드바가 L0 이면 그 맥락이 뒤따르는 본문 카드 아래에 깔려 펼침 메뉴가 카드 뒤로 가린다(2026-11-09 그루 이음에서 드러남 — 옛 문장은 "L0 이다").
 
 ## 의도된 stacking 시나리오
 
