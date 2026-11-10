@@ -119,7 +119,7 @@ const Hero: Fig = ({ caption }) => (
         </Form>
       </Screen>
       </div>
-      <WebWindow mode="light" w={600} h={480} url="hr.groo.app">
+      <WebWindow mode="light" w={600} h={480} url="그루 이음">
         <WebDialog
           mode="light"
           brand="hr"
@@ -409,7 +409,7 @@ const IndicatorGuide: Fig = ({ caption }) => (
           <Form gap={16}>
             <F label="이름" value="김포레" />
             <F label="휴대폰 번호" indicator="optional" placeholder="010-0000-0000" />
-            <F label="이메일" value="groo@groo.app" />
+            <F label="이메일" value="groo@example.com" />
           </Form>
         </div>
       </Verdict>
@@ -427,7 +427,7 @@ const IndicatorGuide: Fig = ({ caption }) => (
           <Form gap={16}>
             <F label="이름" indicator="required" value="김포레" />
             <F label="휴대폰 번호" indicator="optional" placeholder="010-0000-0000" />
-            <F label="이메일" indicator="required" value="groo@groo.app" />
+            <F label="이메일" indicator="required" value="groo@example.com" />
           </Form>
         </div>
       </Verdict>

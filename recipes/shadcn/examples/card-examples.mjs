@@ -268,6 +268,7 @@ const PATHS = {
   check: '<path d="M20 6 9 17l-5-5"/>',
   minus: '<path d="M5 12h14"/>',
   pin: '<path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/>',
+  star: '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>',
   pencil: '<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/>',
   trash: '<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>',
   coffee: '<path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/>',
@@ -415,9 +416,9 @@ const cardStat = ({ label, value, size = "large", delta: d }) =>
 
 // 오늘 쓴 돈 — 카테고리 타일(차트 색 옅은 바탕 + 그 색 아이콘) · 제목 · 설명 · 금액(가계부 금액 16 · 700 — 그 화면의 자리)
 const TODAY = [
-  { title: "스타벅스 강남점", detail: "식비 · 국민카드", amount: "−6,500원", icon: "coffee", tile: "bg-chart-orange-weak text-chart-orange" },
+  { title: "다라커피 강남점", detail: "식비 · 국민카드", amount: "−6,500원", icon: "coffee", tile: "bg-chart-orange-weak text-chart-orange" },
   { title: "지하철", detail: "교통 · 국민카드", amount: "−1,450원", icon: "bus", tile: "bg-chart-blue-weak text-chart-blue" },
-  { title: "이마트 성수점", detail: "생활 · 신한카드", amount: "−42,300원", icon: "shoppingBag", tile: "bg-chart-green-weak text-chart-green" },
+  { title: "가나마트 성수점", detail: "생활 · 신한카드", amount: "−42,300원", icon: "shoppingBag", tile: "bg-chart-green-weak text-chart-green" },
 ];
 const AMOUNT = "font-bold text-fg-neutral tabular-nums";
 const todayList = () =>
@@ -485,8 +486,8 @@ import { List } from "@/components/ui/list"
   {
     title: "누르는 카드",
     description:
-      "카드 전체가 한 곳으로 가면(href · onClick — press \"whole\") 카드가 링크 · 버튼이다 — 마우스를 올리면 · 누르는 동안 면이 bg-layer-default-pressed 로 바뀌고, 누르는 동안 카드 전체가 2px 거리만큼 준다(배율 (기준 − 2) ÷ 기준, 기준 max(높이, 폭 ÷ 4, 24) 를 누르는 순간 잰다 — 모션 줄이기면 색만). 카드를 누르면 열리는데 안에 대등한 동작(고정 · ⋮)이 더 있으면 press=\"peers\" — 카드를 덮는 CardLink 가 누르는 자리이고 안의 버튼은 그 위에 놓여 따로 눌린다. 버튼을 눌러도 카드가 열리지 않고, 카드는 면 색만 바뀌고 줄지 않는다(\"전체가 줄어들면 무엇이 눌린 것인지 모호해집니다\"). 테두리 · 글자색은 그대로이고 그림자 · 위로 뜨기는 없다. 키보드 포커스에만 카드 바깥 2px 링(띄움 2)이다. 고정 단추는 제목 줄 오른쪽의 켜고 끄는 아이콘 단추(Toggle — 끔 fg-neutral-muted · 선 2, 켬 fg-neutral · 선 2.5)다 — 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다.",
-    jsx: `import { Pin } from "lucide-react"
+      "카드 전체가 한 곳으로 가면(href · onClick — press \"whole\") 카드가 링크 · 버튼이다 — 마우스를 올리면 · 누르는 동안 면이 bg-layer-default-pressed 로 바뀌고, 누르는 동안 카드 전체가 2px 거리만큼 준다(배율 (기준 − 2) ÷ 기준, 기준 max(높이, 폭 ÷ 4, 24) 를 누르는 순간 잰다 — 모션 줄이기면 색만). 카드를 누르면 열리는데 안에 대등한 동작(관심 등록 · ⋮)이 더 있으면 press=\"peers\" — 카드를 덮는 CardLink 가 누르는 자리이고 안의 버튼은 그 위에 놓여 따로 눌린다. 버튼을 눌러도 카드가 열리지 않고, 카드는 면 색만 바뀌고 줄지 않는다(\"전체가 줄어들면 무엇이 눌린 것인지 모호해집니다\"). 테두리 · 글자색은 그대로이고 그림자 · 위로 뜨기는 없다. 키보드 포커스에만 카드 바깥 2px 링(띄움 2)이다. 관심 등록 단추는 제목 줄 오른쪽의 켜고 끄는 아이콘 단추(Toggle — 끔 fg-neutral-muted · 선 2, 켬 fg-neutral · 선 2.5)다 — 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다.",
+    jsx: `import { Star } from "lucide-react"
 import { Card, CardContent, CardLink } from "@/components/ui/card"
 import { Toggle } from "@/components/ui/toggle"
 
@@ -495,12 +496,12 @@ import { Toggle } from "@/components/ui/toggle"
   <CardContent>…</CardContent>
 </Card>
 
-{/* 카드를 누르면 열리고 고정 버튼이 따로 — 색만, 축소 없음 */}
+{/* 카드를 누르면 열리고 관심 등록 버튼이 따로 — 색만, 축소 없음 */}
 <Card press="peers">
-  {/* 고정 버튼은 제목 줄 오른쪽 — 켜고 끄는 아이콘 단추(Toggle). 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다 */}
+  {/* 관심 등록 버튼은 제목 줄 오른쪽 — 켜고 끄는 아이콘 단추(Toggle). 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다 */}
   <div className="flex items-start justify-between gap-x2">
-    <CardLink href={\`/desk/memo/\${memo.id}\`}>{memo.title}</CardLink>
-    <Toggle className="-mr-x2 -mt-x2 shrink-0" aria-label={\`\${memo.title} 고정\`} pressed={memo.pinned} onPressedChange={(pinned) => setPinned(memo.id, pinned)} icon={<Pin />} />
+    <CardLink href={\`/desk/stocks/\${stock.code}\`}>{stock.name}</CardLink>
+    <Toggle className="-mr-x2 -mt-x2 shrink-0" aria-label="관심 등록" pressed={watched} onPressedChange={setWatched} icon={<Star />} />
   </div>
   <CardContent>…</CardContent>
 </Card>`,
@@ -514,10 +515,10 @@ import { Toggle } from "@/components/ui/toggle"
           floor(
             card({
               press: "peers",
-              children: `<div class="flex items-start justify-between gap-x2">${cardLink("회의록 — 10월 8일")}<button type="button" data-slot="toggle" data-tone="default" class="${merge(`${toggleVariants()} -mr-x2 -mt-x2 shrink-0`)}" aria-label="회의록 — 10월 8일 고정" aria-pressed="false"><span aria-hidden="true" data-slot="toggle-icon" class="${TOGGLE_ICON}">${svg(PATHS.pin)}</span></button></div>${cardContent(`<p class="m-0 font-sans text-t4 text-fg-neutral-muted">표 컴포넌트 정리 · 다음 주 화요일까지</p>`)}`,
+              children: `<div class="flex items-start justify-between gap-x2">${cardLink("가나전자")}<button type="button" data-slot="toggle" data-tone="default" class="${merge(`${toggleVariants()} -mr-x2 -mt-x2 shrink-0`)}" aria-label="관심 등록" aria-pressed="false"><span aria-hidden="true" data-slot="toggle-icon" class="${TOGGLE_ICON}">${svg(PATHS.star)}</span></button></div>${cardContent(`<p class="m-0 font-sans text-t4 text-fg-neutral-muted">12,300원 · +1.2%</p>`)}`,
             }),
           ),
-          "press \"peers\" — CardLink + 고정 단추 Toggle(색만)",
+          "press \"peers\" — CardLink + 관심 등록 Toggle(색만)",
         ),
       ]),
   },

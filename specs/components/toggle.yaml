@@ -1,7 +1,7 @@
 # Toggle 의 수치 원본 — 켜고 끄는 아이콘 단추(2026-10-09 사용자 결정, 입력 비교 페이지 5A · 6B · 7A · 8A · "따라오는 것").
 # 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
-# 단추 하나가 한 상태를 그 자리에서 켜고 끈다(<button aria-pressed>) — 관심 등록(별) · 메모 고정(핀) · App Key 보기(눈).
+# 단추 하나가 한 상태를 그 자리에서 켜고 끈다(<button aria-pressed>) — 관심 등록(별) · App Key 보기(눈).
 # 순자산 카드의 금액 가리기 눈은 Toggle 이 아니다 — 설정으로 가는 버튼이 이 상자 · 표면 색(inverted)만 빌린다(aria-pressed 없음, 2026-10-16 Q-017-2b A · 3c B).
 # 이름은 고정이고 켬은 aria-pressed 가 알린다. 바탕은 켬 · 끔에 따라 바뀌지 않는다 — 아이콘만 바뀐다:
 # 켬 = 진한 색(fg-neutral) + 선 2.5, 끔 = 흐린 색(fg-neutral-muted) + 선 2(기초 Iconography v106).

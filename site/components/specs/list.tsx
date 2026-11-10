@@ -68,7 +68,7 @@ const CURRENCY: RowSpec[] = [
 // 거래 줄의 설명은 Tag Group(t3 · 한 줄 말줄임 — list.md Detail). 그림의 모드를 따라 그린다
 const meta = (mode: ViewMode, ...labels: string[]) => <T items={items(...labels)} size="t3" truncate mode={mode} />;
 const ledger = (mode: ViewMode = 'auto'): RowSpec[] => [
-  { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '스타벅스 강남점', detailNode: meta(mode, '카페', '신한카드'), suffix: { amount: '−5,800원' } },
+  { kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '다라커피 강남점', detailNode: meta(mode, '카페', '신한카드'), suffix: { amount: '−5,800원' } },
   { kind: 'button', prefix: { tile: 'blue', icon: 'bus' }, title: '지하철', detailNode: meta(mode, '교통', '체크카드'), suffix: { amount: '−1,450원' } },
   { kind: 'button', prefix: { tile: 'green', icon: 'wallet' }, title: '급여', detailNode: meta(mode, '수입', '국민은행'), suffix: { amount: '+3,200,000원' } },
 ];
@@ -326,7 +326,7 @@ const Suffix: Fig = ({ caption }) => (
             { kind: 'button', title: '계정', detail: '화살표 — 화면을 옮긴다', suffix: { chevron: true } },
             { kind: 'switch', title: '결제 알림', detail: '스위치 32', checked: true },
             { kind: 'check', title: '예산', detail: '체크 24', markPosition: 'suffix', checked: true },
-            { kind: 'button', title: '스타벅스 강남점', detail: '금액 — 그 화면이 정한다', suffix: { amount: '−5,800원' } },
+            { kind: 'button', title: '다라커피 강남점', detail: '금액 — 그 화면이 정한다', suffix: { amount: '−5,800원' } },
             { kind: 'button', title: '즐겨찾는 가맹점', detail: '작은 버튼 — 따로 눌린다', suffix: { buttons: ['star'] } },
           ]}
         />
@@ -526,7 +526,7 @@ const AllRows: Fig = ({ caption }) => (
         <H title="오늘" variant="boldSolid" />
         <L rows={LEDGER} live={false} />
         <H title="어제" variant="boldSolid" />
-        <L rows={[{ kind: 'button', prefix: { tile: 'orange', icon: 'utensils' }, title: '점심 식사', detailNode: meta('auto', '식비', '현대카드'), suffix: { amount: '−12,000원' } }, { kind: 'button', prefix: { tile: 'pink', icon: 'shopping-bag' }, title: '올리브영', detailNode: meta('auto', '쇼핑', '네이버페이'), suffix: { amount: '−23,400원' } }]} live={false} />
+        <L rows={[{ kind: 'button', prefix: { tile: 'orange', icon: 'utensils' }, title: '점심 식사', detailNode: meta('auto', '식비', '현대카드'), suffix: { amount: '−12,000원' } }, { kind: 'button', prefix: { tile: 'pink', icon: 'shopping-bag' }, title: '다라뷰티', detailNode: meta('auto', '쇼핑', '가나페이'), suffix: { amount: '−23,400원' } }]} live={false} />
       </Screen>
     </div>
   </Figure>

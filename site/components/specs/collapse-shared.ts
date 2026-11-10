@@ -174,5 +174,5 @@ export const tc = (t: Tones, name: string, mode: ViewMode) => {
   return icv(c, mode);
 };
 
-// 화면 읽기 — "커피, 스타벅스 …, 머리말 3, 단추, 접힘"
+// 화면 읽기 — "커피, 다라커피 …, 머리말 3, 단추, 접힘"
 export const triggerReadout = (title: string, desc: string | undefined, level: number, open: boolean, disabled = false) => [title, desc, `머리말 ${level}`, '단추', open ? '펼쳐짐' : '접힘', disabled ? '사용 불가' : ''].filter(Boolean).join(', ');

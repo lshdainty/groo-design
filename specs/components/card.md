@@ -67,7 +67,7 @@ SEED 에는 카드 컴포넌트가 없다. 그래도 SEED 가 그린 카드는 �
 
 ### 누름
 
-카드 전체가 한 곳으로 가면(`whole` — 자산 하나 · 예산 하나) 누르는 동안 면이 `bg-layer-default-pressed` 로 바뀌고 카드 전체가 2px 거리만큼 준다 — 마우스는 올릴 때 같은 색이다(SEED Feedback). 테두리 · 글자색은 그대로이고 그림자 · 위로 뜨기는 없다. 카드를 누르면 열리는데 안에 대등한 동작(좋아요 · 고정 · ⋮)이 더 있으면(`peers`) 면 색만 바뀌고 카드는 줄지 않는다 — 안의 버튼이 각자 제 누름을 가진다(SEED — "전체가 줄어들면 무엇이 눌린 것인지 모호해집니다"). 보기만 하는 카드(`none`)는 바뀌지 않는다. 순자산 카드(`hero`)를 누르면 2px 축소만 한다 — 브랜드 채움 그라디언트에는 누름 색 짝이 없다(SEED Feedback — 색은 `-pressed` 짝이 있는 표면에서만 바뀐다).
+카드 전체가 한 곳으로 가면(`whole` — 자산 하나 · 예산 하나) 누르는 동안 면이 `bg-layer-default-pressed` 로 바뀌고 카드 전체가 2px 거리만큼 준다 — 마우스는 올릴 때 같은 색이다(SEED Feedback). 테두리 · 글자색은 그대로이고 그림자 · 위로 뜨기는 없다. 카드를 누르면 열리는데 안에 대등한 동작(관심 등록 · ⋮)이 더 있으면(`peers`) 면 색만 바뀌고 카드는 줄지 않는다 — 안의 버튼이 각자 제 누름을 가진다(SEED — "전체가 줄어들면 무엇이 눌린 것인지 모호해집니다"). 보기만 하는 카드(`none`)는 바뀌지 않는다. 순자산 카드(`hero`)를 누르면 2px 축소만 한다 — 브랜드 채움 그라디언트에는 누름 색 짝이 없다(SEED Feedback — 색은 `-pressed` 짝이 있는 표면에서만 바뀐다).
 
 [그림: 누름 — 카드 전체(색 + 2px) · 대등한 동작이 있는 카드(색만)](../../site/components/specs/card.tsx#press)
 
@@ -238,10 +238,10 @@ import { Card, CardStat } from "@/components/ui/card"
 
 ### 누르는 카드
 
-[그림: 예산 카드 — 카드 전체가 예산 상세로 · 고정 버튼이 있는 메모 카드](../../site/components/specs/card.tsx#ex-press)
+[그림: 예산 카드 — 카드 전체가 예산 상세로 · 관심 등록 버튼이 있는 종목 카드](../../site/components/specs/card.tsx#ex-press)
 
 ```tsx
-import { Pin } from "lucide-react"
+import { Star } from "lucide-react"
 import { Card, CardContent, CardLink } from "@/components/ui/card"
 import { Toggle } from "@/components/ui/toggle"
 
@@ -250,12 +250,12 @@ import { Toggle } from "@/components/ui/toggle"
   <CardContent>…</CardContent>
 </Card>
 
-{/* 카드를 누르면 열리고 고정 버튼이 따로 — 색만, 축소 없음 */}
+{/* 카드를 누르면 열리고 관심 등록 버튼이 따로 — 색만, 축소 없음 */}
 <Card press="peers">
-  {/* 고정 버튼은 제목 줄 오른쪽 — 켜고 끄는 아이콘 단추(Toggle). 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다 */}
+  {/* 관심 등록 버튼은 제목 줄 오른쪽 — 켜고 끄는 아이콘 단추(Toggle). 상자 40 이 줄 높이를 밀지 않게 위 · 오른쪽 8 을 당긴다 */}
   <div className="flex items-start justify-between gap-x2">
-    <CardLink href={`/desk/memo/${memo.id}`}>{memo.title}</CardLink>
-    <Toggle className="-mr-x2 -mt-x2 shrink-0" aria-label={`${memo.title} 고정`} pressed={memo.pinned} onPressedChange={(pinned) => setPinned(memo.id, pinned)} icon={<Pin />} />
+    <CardLink href={`/desk/stocks/${stock.code}`}>{stock.name}</CardLink>
+    <Toggle className="-mr-x2 -mt-x2 shrink-0" aria-label="관심 등록" pressed={watched} onPressedChange={setWatched} icon={<Star />} />
   </div>
   <CardContent>…</CardContent>
 </Card>
@@ -343,7 +343,7 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 
 ### 2026-11-10 — HR 폰도 카드 화면이 없다
 
-면 절의 "HR 폰 화면은 카드 그대로" 를 그루 이음 이관 결정(HK4 B — 규정 폰 = 묶음 띠 + 줄, 그 밖의 HR 폰 결정도 띠 · 흰 면)에 맞춰 고쳤다 — 카드는 데스크톱(768 이상)의 구역이다. DESIGN.md Layout 의 바탕 표 "카드" 줄도 같이. **그림은 아직 옛 모양이다** — `card.tsx` 의 surface · 쌓은 카드 · 여백 · 지표 · 카드 안 카드 그림이 "HR 폰" 카드를 그린다(2026-11-08 폰 그림 PR 이 이 결정 전 규칙으로 그렸다). 다음 그림 정리 때 폰을 띠로 다시 그린다. 값 변경 없음. 옛 스펙은 `card.history/v-pre-cleanup-1110.md`.
+면 절의 "HR 폰 화면은 카드 그대로" 를 그루 이음 이관 결정(HK4 B — 규정 폰 = 묶음 띠 + 줄, 그 밖의 HR 폰 결정도 띠 · 흰 면)에 맞춰 고쳤다 — 카드는 데스크톱(768 이상)의 구역이다. DESIGN.md Layout 의 바탕 표 "카드" 줄도 같이. **그림은 아직 옛 모양이다** — `card.tsx` 의 surface · 쌓은 카드 · 여백 · 지표 · 카드 안 카드 그림이 "HR 폰" 카드를 그린다(2026-11-08 폰 그림 PR 이 이 결정 전 규칙으로 그렸다). 다음 그림 정리 때 폰을 띠로 다시 그린다. 같은 정리에서 peers 예(그림 · 코드)를 제품에 없는 "메모 고정" 카드에서 관심 등록이 있는 종목 카드로 바꿨고, 예시 가맹점 이름을 지어낸 이름으로 바꿨다. 값 변경 없음. 옛 스펙은 `card.history/v-pre-cleanup-1110.md`.
 
 ### 2026-11-08 — 폰 그림은 HR 폰 · Desk 폰 띠
 

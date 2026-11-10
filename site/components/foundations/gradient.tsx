@@ -58,7 +58,7 @@ export function FadeMaskFigure() {
   const list = (style?: CSSProperties) => (
     <div className="flex h-[150px] w-[236px] flex-col overflow-hidden" style={style}>
       <div className="flex flex-col" style={{ marginTop: -18 }}>
-        {['점심 식사', '지하철', '스타벅스', '관리비', '영화', '편의점'].map((t) => (
+        {['점심 식사', '지하철', '다라커피', '관리비', '영화', '편의점'].map((t) => (
           <div key={t} className="flex h-9 shrink-0 items-center justify-between border-b text-[13px]" style={{ borderColor: rc('stroke-neutral-weak'), color: rc('fg-neutral') }}>
             {t}
             <span style={{ color: rc('fg-neutral-subtle') }}>⋯</span>

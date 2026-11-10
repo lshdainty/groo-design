@@ -1,16 +1,16 @@
 # Toggle
 
-> 단추 하나가 한 상태를 그 자리에서 켜고 끄는 아이콘 단추 — 관심 등록 · 메모 고정 · 비밀값 보기. 이름은 그대로 두고 켬은 `aria-pressed` 가 알린다. 금액 가리기 눈은 설정으로 가는 버튼이라 Toggle 이 아니다(아래). 여럿 가운데 고르거나 거르는 것은 [Chip](chip.md), 누르는 순간 적용되는 설정 줄은 [Switch](switch.md), 저장해야 적용되는 켜고 끄기는 [Checkbox](checkbox.md) 다.
+> 단추 하나가 한 상태를 그 자리에서 켜고 끄는 아이콘 단추 — 관심 등록 · 비밀값 보기. 이름은 그대로 두고 켬은 `aria-pressed` 가 알린다. 금액 가리기 눈은 설정으로 가는 버튼이라 Toggle 이 아니다(아래). 여럿 가운데 고르거나 거르는 것은 [Chip](chip.md), 누르는 순간 적용되는 설정 줄은 [Switch](switch.md), 저장해야 적용되는 켜고 끄기는 [Checkbox](checkbox.md) 다.
 
 SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 Toggle Button(32 · 36, `aria-pressed`)이 코드에만 있고, 아이콘 켜고 끄기는 Iconography 의 규칙("OFF, ON 개념이 있는 버튼의 상태 전환을 표현할 때는 Default(Line), On(Fill), Off(Line+Slash)을 사용합니다")과 하트 단추(Reaction Button · Image Frame Reaction Button)뿐이다(당근 SEED, Apache-2.0). groo 는 켜고 끄는 단추를 아이콘 단추 하나로 두고(2026-10-09 사용자 결정) 켬 · 끔을 아이콘의 모양 · 굵기 · 색으로만 가른다 — 바탕은 칠하지 않는다. 글 토글(옛 Toggle 의 `default` · `outline` 28 · 32 · 40)과 Toggle Group 은 걷었다. 값은 groo 토큰이고, SEED 와 다른 자리는 맨 아래 "SEED 와 다른 점" 에 적었다.
 
 수치 원본은 [`toggle.yaml`](toggle.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
-[그림: 종목 머리의 관심 등록 · 메모 목록 줄의 고정 · 증권 연결의 App Key 보기 — 라이트 · 다크](../../site/components/specs/toggle.tsx#hero)
+[그림: 종목 머리의 관심 등록 · 증권 연결의 App Key 보기 — 라이트 · 다크](../../site/components/specs/toggle.tsx#hero)
 
 ### 직접 골라 보기
 
-단추(관심 등록 · 메모 고정 · App Key 보기) · 켬 · 끔 · 막힘을 고르면 스펙대로 그린 단추와 그 코드가 바뀐다. 실제로 눌러 보면 아이콘과 보조 기술이 읽는 말("관심 등록, 눌림")이 함께 바뀐다.
+단추(관심 등록 · App Key 보기) · 켬 · 끔 · 막힘을 고르면 스펙대로 그린 단추와 그 코드가 바뀐다. 실제로 눌러 보면 아이콘과 보조 기술이 읽는 말("관심 등록, 눌림")이 함께 바뀐다.
 
 [그림: 플레이그라운드](../../site/components/specs/toggle.tsx#playground)
 
@@ -30,7 +30,7 @@ SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 To
 
 켬 · 끔은 아이콘이 말한다 — 켬은 진한 색(`fg-neutral`) + 선 2.5, 끔은 흐린 색(`fg-neutral-muted`) + 선 2 다(기초 Iconography v106 — lucide 에 채움 모양이 없어 SEED 의 "켬 = 채움" 을 굵기와 색으로 대신한다). 바탕은 켬 · 끔 모두 투명하다 — 상단 바 · 카드 위에서 조용하고, 켬이 "고른 칸" 처럼 무거워지지 않는다(사용자 결정 5A — 켜면 옅은 바탕 · 반전은 고르지 않았다). 상단 바 안에서만 끔도 진한 색이다(아래 Size).
 
-[그림: 켬 · 끔 — 관심 등록 · 메모 고정 · App Key 보기, 라이트 · 다크](../../site/components/specs/toggle.tsx#toggled)
+[그림: 켬 · 끔 — 관심 등록 · App Key 보기, 라이트 · 다크](../../site/components/specs/toggle.tsx#toggled)
 
 [표: 끔 · 켬](toggle.yaml#toggled)
 
@@ -39,15 +39,14 @@ SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 To
 아이콘은 누르면 할 일이 아니라 **지금 상태**를 그린다(사용자 결정 7A). 단추는 둘로 나뉜다.
 
 - **기능 단추** — 무언가를 보이거나 숨기고, 켜거나 끈다(눈 · 종). 아이콘은 lucide 의 짝이고 지금 상태 쪽을 보인다 — 키가 가려져 있으면 `eye-off`, 보이면 `eye`. 꺼진 기능은 사선(`-off`)이다.
-- **모으기 단추** — 항목을 모아 둔다(관심 · 고정). 끔에도 사선을 두지 않는다 — 같은 아이콘이 흐린 선 2 · 진한 선 2.5 로만 갈린다(사용자 결정 6B — SEED 하트처럼). 관심에 넣지 않은 종목마다 사선 별이 깔리지 않는다. 채우지 않는다 — 앱의 lucide 글꼴은 채울 수 없다.
+- **모으기 단추** — 항목을 모아 둔다(관심). 끔에도 사선을 두지 않는다 — 같은 아이콘이 흐린 선 2 · 진한 선 2.5 로만 갈린다(사용자 결정 6B — SEED 하트처럼). 관심에 넣지 않은 종목마다 사선 별이 깔리지 않는다. 채우지 않는다 — 앱의 lucide 글꼴은 채울 수 없다.
 
 | 단추 | 이름(고정) | 눌림의 뜻 | 끔 | 켬 |
 |---|---|---|---|---|
 | 관심 등록 | "관심 등록" | 관심에 넣었다 | `star` 흐린 선 2 | `star` 진한 선 2.5 |
-| 메모 고정 | "{메모 제목} 고정" | 고정했다 | `pin` 흐린 선 2 | `pin` 진한 선 2.5 |
 | App Key 보기 | "App Key 보기" | 키를 보였다 | `eye-off`(가림) | `eye`(보임) |
 
-[그림: 기능 단추는 -off 짝 · 모으기 단추는 사선 없이 — 종목 머리 · 메모 카드](../../site/components/specs/toggle.tsx#icon-guide)
+[그림: 기능 단추는 -off 짝 · 모으기 단추는 사선 없이 — 종목 머리 · 증권 연결](../../site/components/specs/toggle.tsx#icon-guide)
 
 ### Size
 
@@ -111,7 +110,7 @@ SEED 에는 이 단추의 디자인 문서가 없다 — 글이 있는 알약 To
 
 | 이런 자리 | 쓰는 것 |
 |---|---|
-| 단추 하나가 한 상태를 그 자리에서 켜고 끈다(관심 · 고정 · 키 보기) | **Toggle**(`aria-pressed`) |
+| 단추 하나가 한 상태를 그 자리에서 켜고 끈다(관심 · 키 보기) | **Toggle**(`aria-pressed`) |
 | 지금 상태를 그리되 누르면 다른 화면으로(순자산 카드의 금액 가리기 눈 → 설정) | Toggle 의 상자를 빌린 버튼 — `aria-pressed` 없음 |
 | 여럿 가운데 거르거나 고른다(계좌 거르기 · 알림 시각) | [Chip](chip.md) — 체크박스 · 라디오 의미 |
 | 누르는 순간 적용되는 설정 줄 | [Switch](switch.md) · List 의 스위치 줄 |
@@ -156,19 +155,19 @@ import { Toggle } from "@/components/ui/toggle"
 <Toggle aria-label="App Key 보기" pressed={shown} onPressedChange={setShown} icon={<EyeOff />} pressedIcon={<Eye />} />
 ```
 
-### 메모 고정 — 바로 바꾸고 보낸다
+### 관심 등록 — 바로 바꾸고 보낸다
 
-[그림: 메모 목록 — 위 하나만 고정, 실패하면 되돌리고 알림](../../site/components/specs/toggle.tsx#ex-pin)
+[그림: 종목 머리 — 누르면 별이 바로 바뀌고, 실패하면 되돌리고 알림](../../site/components/specs/toggle.tsx#ex-send)
 
 ```tsx
-import { Pin } from "lucide-react"
+import { Star } from "lucide-react"
 import { Toggle } from "@/components/ui/toggle"
 
 <Toggle
-  aria-label={`${memo.title} 고정`}
-  pressed={memo.pinned}
-  onPressedChange={(pinned) => setPinned(memo.id, pinned)} // 화면을 바로 바꾸고 보낸다 — 실패하면 되돌리고 스낵바
-  icon={<Pin />}
+  aria-label="관심 등록"
+  pressed={watched}
+  onPressedChange={(next) => setWatched(stock.code, next)} // 화면을 바로 바꾸고 보낸다 — 실패하면 되돌리고 스낵바("관심 종목에 넣지 못했어요." + 다시 시도)
+  icon={<Star />}
 />
 ```
 
@@ -214,18 +213,18 @@ import { toggleVariants } from "@/components/ui/toggle"
 
 ### ✅ Do
 
-- 단추 하나가 한 상태를 그 자리에서 켜고 끌 때 쓴다 — 관심 · 고정 · 키 보기.
+- 단추 하나가 한 상태를 그 자리에서 켜고 끌 때 쓴다 — 관심 · 키 보기.
 - 이름은 고정하고 켬은 `aria-pressed` 로.
 - 아이콘은 지금 상태를 그린다 — 가렸으면 `eye-off`.
 - 다른 화면으로 가는 눈(금액 가리기 설정)은 `aria-pressed` 없는 버튼으로.
-- 모으기 단추(관심 · 고정)의 끔은 사선 없이, 기능 단추(눈 · 종)의 끔은 `-off`.
+- 모으기 단추(관심)의 끔은 사선 없이, 기능 단추(눈 · 종)의 끔은 `-off`.
 - 누르면 바로 바꾸고, 실패하면 되돌려 알린다.
 
 ### ❌ Don't
 
 - 켬에 옅은 바탕 · 반전 상자를 깔기.
 - 상태마다 이름 바꾸기("관심 등록 ↔ 관심 해제") · 누르면 할 일을 아이콘으로 그리기.
-- 관심 · 고정의 끔을 사선(`star-off` · `pin-off`)으로 · 별을 채우기.
+- 관심의 끔을 사선(`star-off`)으로 · 별을 채우기.
 - 글이 있는 켜고 끄기 단추 · 거르기에 Toggle 쓰기(Chip).
 - 요청 중에 단추를 막기.
 - 설정으로 가는 버튼에 Toggle · `aria-pressed` 쓰기 — "눌림" 이라 읽히고 화면이 바뀐다.
@@ -247,6 +246,10 @@ import { toggleVariants } from "@/components/ui/toggle"
 - **막힘은 진짜 `disabled`**(Tab 에서 빠진다 — Button 과 같다). SEED 는 `aria-disabled`(포커스가 남는다)다. 불러오는 중(loading)은 두지 않는다 — 누르면 바로 바뀐다.
 
 ## Migration notes
+
+### 2026-11-10 — 메모 고정 예를 걷는다
+
+"메모 고정" 단추 쓰임이 제품에 없다 — 메모 고정은 밀기 · 상세 · 폼이 맡는다(웹 `MemoRow.tsx:13-14`, 2026-11-08 폰 띠 PR 이 판단 필요로 올림). 맨 위 · 켬 끔 · 아이콘 · 크기 · 플레이그라운드 그림과 단추 표에서 메모 고정을 걷고, "바로 바꾸고 보낸다" 예는 제품에 있는 관심 등록(종목 머리 — 실패하면 되돌리고 Snackbar "관심 종목에 넣지 못했어요." + 다시 시도, Toggle 20A)으로 바꿨다(`#ex-pin` → `#ex-send`). [Card](card.md) 의 peers 예도 종목 카드로. 값 변경 없음. 옛 스펙은 `toggle.history/v-pre-cleanup-1110.md`.
 
 ### 2026-11-08 — 메모 · 증권 연결 그림을 폰 화면 바탕대로
 

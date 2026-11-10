@@ -57,9 +57,9 @@ export const STATS: Stat[] = [
 // 오늘 쓴 돈 — List 줄(앞 타일 · 제목 · 설명 · 금액)
 export type Spend = { title: string; detail: string; amount: number; tile: string; icon: 'coffee' | 'bus' | 'shopping-bag' | 'utensils' | 'receipt' | 'star' };
 export const TODAY: Spend[] = [
-  { title: '스타벅스 강남점', detail: '식비 · 국민카드', amount: -6500, tile: 'orange', icon: 'coffee' },
+  { title: '다라커피 강남점', detail: '식비 · 국민카드', amount: -6500, tile: 'orange', icon: 'coffee' },
   { title: '지하철', detail: '교통 · 국민카드', amount: -1450, tile: 'blue', icon: 'bus' },
-  { title: '이마트 성수점', detail: '생활 · 신한카드', amount: -42300, tile: 'green', icon: 'shopping-bag' },
+  { title: '가나마트 성수점', detail: '생활 · 신한카드', amount: -42300, tile: 'green', icon: 'shopping-bag' },
 ];
 export const BUDGET = { name: '10월 식비', used: 384400, limit: 500000 };
 
@@ -167,10 +167,10 @@ export const APPROVERS: PersonItem[] = [
 // ── 줄 밀기 — 가계부 거래 · 동작 ──────────────────────────
 export type TxRow = { id: string; title: string; detail: string; amount: number; tile: string; icon: 'coffee' | 'bus' | 'shopping-bag' | 'utensils' | 'receipt' | 'star' | 'wallet' };
 export const LEDGER: TxRow[] = [
-  { id: 't1', title: '스타벅스 강남점', detail: '카페 · 오후 2:10', amount: -5600, tile: 'brown', icon: 'coffee' },
+  { id: 't1', title: '다라커피 강남점', detail: '카페 · 오후 2:10', amount: -5600, tile: 'brown', icon: 'coffee' },
   { id: 't2', title: '점심 식사', detail: '식비 · 오후 12:40', amount: -12000, tile: 'orange', icon: 'utensils' },
   { id: 't3', title: '지하철', detail: '교통 · 오전 8:52', amount: -1450, tile: 'blue', icon: 'bus' },
-  { id: 't4', title: '이마트 성수점', detail: '생활 · 오전 11:05', amount: -42300, tile: 'green', icon: 'shopping-bag' },
+  { id: 't4', title: '가나마트 성수점', detail: '생활 · 오전 11:05', amount: -42300, tile: 'green', icon: 'shopping-bag' },
   { id: 't5', title: '월급', detail: '수입 · 오전 9:00', amount: 3800000, tile: 'blue', icon: 'wallet' },
 ];
 export type SwipeActionSpec = { value: string; kind: SwipeKind; label: string; icon: 'pin' | 'pencil' | 'trash' | 'archive' | 'share' };

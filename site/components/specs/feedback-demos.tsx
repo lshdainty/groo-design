@@ -138,7 +138,7 @@ export function DemoButton({ children, onClick, disabled = false }: { children: 
 
 const LEDGER: DemoRow[] = [
   { id: 'lunch', title: '점심 식사', sub: '식비 · 현대카드 M', amount: '−12,000원', hue: 'orange' },
-  { id: 'cafe', title: '스타벅스', sub: '카페 · 현대카드 M', amount: '−5,600원', hue: 'orange' },
+  { id: 'cafe', title: '다라커피', sub: '카페 · 현대카드 M', amount: '−5,600원', hue: 'orange' },
   { id: 'subway', title: '지하철', sub: '교통 · 국민 체크카드', amount: '−1,450원', hue: 'blue' },
   { id: 'salary', title: '월급', sub: '수입 · 토스뱅크 통장', amount: '+3,200,000원', hue: 'green' },
 ];

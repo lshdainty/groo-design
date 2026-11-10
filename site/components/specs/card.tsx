@@ -266,18 +266,18 @@ const Header: Fig = ({ caption }) => {
   );
 };
 
-// 메모 카드 — 카드를 누르면 열리고 고정 버튼이 따로(peers)
-function MemoCard({ mode = 'auto', state }: { mode?: Mode; state?: 'pressed' | 'hovered' }) {
+// 종목 카드 — 카드를 누르면 종목 상세로 가고 관심 등록 버튼이 따로(peers). 종목 · 값은 지어낸 것
+function StockCard({ mode = 'auto', state }: { mode?: Mode; state?: 'pressed' | 'hovered' }) {
   const c = CL();
   return (
-    <CardSurface look={c} mode={mode} press="peers" state={state} label="장보기 목록">
-      {/* 제목 줄 오른쪽 고정 버튼(-mr-x2 · -mt-x2) — card.md 의 peers 코드와 같다 */}
+    <CardSurface look={c} mode={mode} press="peers" state={state} label="가나전자">
+      {/* 제목 줄 오른쪽 관심 등록 버튼(-mr-x2 · -mt-x2) — card.md 의 peers 코드와 같다 */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: c.header.gap }}>
-        <span style={{ fontFamily: c.title.fontFamily, fontSize: c.title.fontSize, lineHeight: c.title.lineHeight, fontWeight: c.title.fontWeight, color: rc('fg-neutral', mode), minWidth: 0 }}>장보기 목록</span>
-        {/* 고정 — 켜고 끄는 아이콘 단추(Toggle — toggle.yaml): 끔은 흐린 선 2, 바탕은 누를 때만 */}
-        <ToggleView look={toggleLook()} mode={mode} state="enabled" icon="pin" ariaLabel="장보기 목록 고정" style={{ marginTop: -c.header.gap, marginRight: -c.header.gap }} />
+        <span style={{ fontFamily: c.title.fontFamily, fontSize: c.title.fontSize, lineHeight: c.title.lineHeight, fontWeight: c.title.fontWeight, color: rc('fg-neutral', mode), minWidth: 0 }}>가나전자</span>
+        {/* 관심 등록 — 켜고 끄는 아이콘 단추(Toggle — toggle.yaml): 끔은 흐린 선 2, 바탕은 누를 때만 */}
+        <ToggleView look={toggleLook()} mode={mode} state="enabled" icon="star" ariaLabel="관심 등록" style={{ marginTop: -c.header.gap, marginRight: -c.header.gap }} />
       </div>
-      <span style={{ fontFamily: c.stat.label.fontFamily, fontSize: c.stat.label.fontSize, lineHeight: c.stat.label.lineHeight, color: rc('fg-neutral-subtle', mode) }}>우유 · 계란 · 두부 · 대파</span>
+      <span style={{ fontFamily: c.stat.label.fontFamily, fontSize: c.stat.label.fontSize, lineHeight: c.stat.label.lineHeight, color: rc('fg-neutral-subtle', mode), fontVariantNumeric: 'tabular-nums' }}>12,300원 · +1.2%</span>
     </CardSurface>
   );
 }
@@ -292,10 +292,10 @@ const Press: Fig = ({ caption }) => {
             <BudgetCard press="whole" state="pressed" />
           </Floor>
         </Col>
-        <Col strong="대등한 동작이 있는 카드(peers)" cap="위 기본 · 아래 누름 — 면 색만, 고정 버튼이 제 누름을 가진다" w={320}>
+        <Col strong="대등한 동작이 있는 카드(peers)" cap="위 기본 · 아래 누름 — 면 색만, 관심 등록 버튼이 제 누름을 가진다" w={320}>
           <Floor style={{ width: SCREEN_W }}>
-            <MemoCard />
-            <MemoCard state="pressed" />
+            <StockCard />
+            <StockCard state="pressed" />
           </Floor>
         </Col>
         <Col strong="순자산 카드(hero)" cap={`위 기본 · 아래 누름 — ${c.press.distance}px 거리 축소만. 브랜드 채움에는 누름 색 짝이 없어 면은 그대로`} w={320}>

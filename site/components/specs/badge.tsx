@@ -310,7 +310,7 @@ const PressGuide: Fig = ({ caption }) => {
               <ChipView look={ck} variant="solid" selected state="enabled" label="식비" suffixIcon="chevron-down" />
               <ChipView look={ck} variant="solid" state="enabled" label="결제 수단" suffixIcon="chevron-down" />
             </span>
-            <TitleLine title="넷플릭스" badge={<B l="예정" />} />
+            <TitleLine title="가나영상" badge={<B l="예정" />} />
             <TitleLine title="교통 정기권" badge={<B l="연체 3" t="critical" />} />
           </div>
         </Verdict>
@@ -320,7 +320,7 @@ const PressGuide: Fig = ({ caption }) => {
               {fake('식비')}
               {fake('카페')}
             </span>
-            <TitleLine title="넷플릭스" badge={<B l="예정" />} />
+            <TitleLine title="가나영상" badge={<B l="예정" />} />
             <TitleLine title="교통 정기권" badge={<B l="연체 3" t="critical" />} />
           </div>
         </Verdict>
@@ -484,7 +484,7 @@ const ExRow: Fig = ({ caption }) => (
   <Preview caption={caption} w={320}>
     <div className="flex flex-col items-start gap-4 text-[16px] leading-[22px] pk-text">
       <span className="flex items-center" style={{ gap: dk().titleGap }}>
-        <span className="truncate">넷플릭스</span>
+        <span className="truncate">가나영상</span>
         <B l="예정" />
       </span>
       <B l="연체 3" t="critical" />

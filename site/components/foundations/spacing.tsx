@@ -73,7 +73,7 @@ export function SpacingRolesFigure() {
           <span className="absolute rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ left: 16 + 56 - 2, top: 108, background: MARK_LINE }}>{chips}</span>
         </Mini>
         <Mini title="between-text" value={text}>
-          <div className="absolute text-[16px] font-bold leading-[22px]" style={{ left: 16, top: 56 }}>점심 · 김밥천국</div>
+          <div className="absolute text-[16px] font-bold leading-[22px]" style={{ left: 16, top: 56 }}>점심 · 가나김밥</div>
           <Measure style={{ left: 16, width: 180, top: 56 + 22, height: text }} label="" />
           <div className="absolute text-[13px] leading-[18px]" style={{ left: 16, top: 56 + 22 + text, color: subtle }}>식비 · 카드 · 오늘 12:40</div>
           <span className="absolute rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ left: 200, top: 56 + 22 - 5, background: MARK_LINE }}>{text}</span>

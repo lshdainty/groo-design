@@ -420,9 +420,9 @@ const PAGE_ROW =
   "display:flex; justify-content:space-between; gap:var(--spacing-x3); padding:var(--spacing-x3) 0; font-size:var(--text-t5); line-height:var(--text-t5--line-height); color:var(--color-fg-neutral);";
 const page = () =>
   `<div aria-hidden="true" style="padding:var(--spacing-x6) var(--spacing-x8); font-family:var(--font-sans);"><div style="margin-bottom:var(--spacing-x4); font-size:var(--text-t7); line-height:var(--text-t7--line-height); font-weight:700; color:var(--color-fg-neutral);">가계부</div><div style="padding:var(--spacing-x2) var(--spacing-x6); border-radius:var(--radius-r4); background:var(--color-bg-layer-default);">${[
-    ["김밥천국", "8,000원"],
+    ["가나김밥", "8,000원"],
     ["버스", "1,500원"],
-    ["다이소", "12,300원"],
+    ["가나생활", "12,300원"],
     ["월급", "3,200,000원"],
   ]
     .map(([title, amount]) => `<div style="${PAGE_ROW}"><span>${title}</span><span style="font-weight:700;">${amount}</span></div>`)
@@ -544,7 +544,7 @@ const DETAIL = [
   ["메모", "친구와 점심"],
 ];
 // 데이터에 따라 느는 상세 — 본문이 넘쳐 끝 흐림이 보인다
-const DETAIL_LONG = [...DETAIL, ["가맹점", "김밥천국 강남점"], ["할부", "일시불"], ["더치페이", "2명 · 4,000원씩"]];
+const DETAIL_LONG = [...DETAIL, ["가맹점", "가나김밥 강남점"], ["할부", "일시불"], ["더치페이", "2명 · 4,000원씩"]];
 
 // 휴가 신청 폼 — Field 사이 24(field.yaml form). more 면 칸 넷(본문이 넘친다)
 const leaveForm = (uid, more = false) =>

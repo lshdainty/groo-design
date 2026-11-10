@@ -283,9 +283,9 @@ const AMOUNT = "font-bold text-fg-neutral tabular-nums";
 const ledgerRow = (tx) =>
   listButtonItem({ prefix: listTile(tx.icon, tx.tile), title: esc(tx.title), detail: esc(tx.meta), suffix: `<span class="${AMOUNT}">${tx.amount}</span>` });
 const TX = [
-  { title: "스타벅스 강남점", meta: "식비 · 국민카드", amount: "−6,500원", icon: "coffee", tile: "bg-chart-orange-weak text-chart-orange" },
+  { title: "다라커피 강남점", meta: "식비 · 국민카드", amount: "−6,500원", icon: "coffee", tile: "bg-chart-orange-weak text-chart-orange" },
   { title: "지하철", meta: "교통 · 국민카드", amount: "−1,450원", icon: "bus", tile: "bg-chart-blue-weak text-chart-blue" },
-  { title: "이마트 성수점", meta: "생활 · 신한카드", amount: "−42,300원", icon: "shoppingBag", tile: "bg-chart-green-weak text-chart-green" },
+  { title: "가나마트 성수점", meta: "생활 · 신한카드", amount: "−42,300원", icon: "shoppingBag", tile: "bg-chart-green-weak text-chart-green" },
 ];
 // 뜻의 차례 — 그리는 쪽이 뒤집어 삭제를 가장 안쪽에 둔다
 const EDIT_DELETE = [

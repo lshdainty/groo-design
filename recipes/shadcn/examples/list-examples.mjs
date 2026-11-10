@@ -1086,7 +1086,7 @@ import { LogoTile } from "@/components/ui/logo-tile"
 
 {/* 거래 — 카테고리 타일(아이콘이 없으면 Tag), 이체는 회색 */}
 <List>
-  <ListItem prefix={<ListTile className="bg-chart-orange-weak text-chart-orange"><Utensils /></ListTile>} title="김밥천국" detail="식비 · 현대카드" />
+  <ListItem prefix={<ListTile className="bg-chart-orange-weak text-chart-orange"><Utensils /></ListTile>} title="가나김밥" detail="식비 · 현대카드" />
   <ListItem prefix={<ListTile className="bg-chart-violet-weak text-chart-violet"><Tag /></ListTile>} title="동네 서점" detail="취미 · 현대카드" />
   <ListItem prefix={<ListTile className="bg-chart-gray-weak text-chart-gray"><ArrowLeftRight /></ListTile>} title="비상금으로 이체" detail="신한 주거래 → 비상금" />
 </List>
@@ -1107,7 +1107,7 @@ import { LogoTile } from "@/components/ui/logo-tile"
   ${captioned(
     "거래 · ListTile — 카테고리 · 태그 · 이체(회색)",
     list([
-      listItem({ prefix: listTile(ICONS.utensils, "bg-chart-orange-weak text-chart-orange"), title: "김밥천국", detail: "식비 · 현대카드" }),
+      listItem({ prefix: listTile(ICONS.utensils, "bg-chart-orange-weak text-chart-orange"), title: "가나김밥", detail: "식비 · 현대카드" }),
       listItem({ prefix: listTile(ICONS.tag, "bg-chart-violet-weak text-chart-violet"), title: "동네 서점", detail: "취미 · 현대카드" }),
       listItem({ prefix: listTile(ICONS.arrowLeftRight, "bg-chart-gray-weak text-chart-gray"), title: "비상금으로 이체", detail: "신한 주거래 → 비상금" }),
     ]),

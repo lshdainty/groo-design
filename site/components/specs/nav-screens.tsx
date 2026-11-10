@@ -290,7 +290,7 @@ export function LedgerScreen({ mode = 'auto', h = 600, scale = 0.62, tabSize = '
 // ── 데스크톱 ─────────────────────────────────────────────
 // 브라우저 창 — 실제 px(w × h)로 그린 화면을 s 배로. 창 장식(위 막대)은 줄이지 않는다
 // cw · ch 를 주면 창은 그만큼만 보인다(화면은 w × h 로 짜고 왼쪽 위를 자른다)
-export function Desktop({ mode = 'auto', w, h, s, url = 'desk.groo.app', cw, ch, children }: { mode?: Mode; w: number; h: number; s: number; url?: string; cw?: number; ch?: number; children: ReactNode }) {
+export function Desktop({ mode = 'auto', w, h, s, url = '그루 담다', cw, ch, children }: { mode?: Mode; w: number; h: number; s: number; url?: string; cw?: number; ch?: number; children: ReactNode }) {
   const vw = cw ?? w;
   const vh = ch ?? h;
   return (
@@ -468,7 +468,7 @@ export function DeskDesktop({ mode = 'auto', w = 1280, h = 760, s = 0.45, collap
 // HR 데스크톱 — 머리 없음, 사이드바 지금 항목 + 본문 제목
 export function HrDesktop({ mode = 'auto', w = 1280, h = 640, s = 0.45, collapsed = false, current = 'leave-history', title = '휴가 현황', side, children }: { mode?: Mode; w?: number; h?: number; s?: number; collapsed?: boolean; current?: string; title?: string; side?: ReactNode; children?: ReactNode }) {
   return (
-    <Desktop mode={mode} w={w} h={h} s={s} url="hr.groo.app">
+    <Desktop mode={mode} w={w} h={h} s={s} url="그루 이음">
       <Shell mode={mode} brand="hr" side={side ?? <Side brand="hr" mode={mode} current={current} collapsed={collapsed} />}>
         {children ?? <HrLeaveMain mode={mode} title={title} />}
       </Shell>

@@ -141,7 +141,7 @@ const PATHS = {
 
 // 혜택 열둘 — 첫 이름이 28자(줄을 바꾼다), 대중교통 · 편의점은 상세가 없다(그냥 줄). 지어낸 혜택이다
 const LONG_DETAIL = [
-  "■ 할인 대상: 네이버페이 · 카카오페이 · 토스페이 · 페이코 · SSG페이에서 이 카드로 결제한 온라인 가맹점 이용금액",
+  "■ 할인 대상: 가나페이 · 다라페이 · 마바페이 · 사아페이 · 자차페이에서 이 카드로 결제한 온라인 가맹점 이용금액",
   "■ 할인율: 이용금액의 10% 결제일 할인(건당 이용금액 1만 원 이상)",
   "■ 월 할인 한도: 전월 이용실적 30만 원 이상 50만 원 미만 5천 원 / 50만 원 이상 100만 원 미만 1만 원 / 100만 원 이상 2만 원",
   "■ 유의사항: 간편결제 내 충전 · 송금 · 상품권 구매 · 대학 등록금 · 아파트 관리비 · 국세 · 지방세 납부는 할인 대상에서 빠져요.",
@@ -150,17 +150,17 @@ const LONG_DETAIL = [
   "■ 결제일 할인은 결제일에 청구 금액에서 빠지고, 카드를 해지하면 남은 할인은 사라져요.",
 ].join("\n");
 const BENEFITS = [
-  { id: "pay", category: "온라인 간편결제 · 배달앱 · 해외 직구 통합 할인", summary: "네이버페이 · 카카오페이 · 토스페이 결제 시 이용금액의 10% 결제일 할인(월 최대 2만 원)", detail: LONG_DETAIL },
+  { id: "pay", category: "온라인 간편결제 · 배달앱 · 해외 직구 통합 할인", summary: "가나페이 · 다라페이 · 마바페이 결제 시 이용금액의 10% 결제일 할인(월 최대 2만 원)", detail: LONG_DETAIL },
   { id: "coffee", category: "커피", summary: "골목커피 · 숲속다방 · 달빛로스터리 50% 할인", detail: "■ 할인 대상: 골목커피 · 숲속다방 · 달빛로스터리 커피 매장 이용금액\n■ 월 2회 · 회당 최대 5천 원" },
   { id: "transit", category: "대중교통", summary: "버스 · 지하철 10% 청구할인", detail: null },
-  { id: "telecom", category: "통신", summary: "SKT · KT · LG U+ 자동이체 5천 원 할인", detail: "■ 통신요금을 이 카드로 자동이체할 때\n■ 전월 실적 30만 원 이상" },
-  { id: "store", category: "편의점", summary: "GS25 · CU · 세븐일레븐 5% 할인", detail: null },
-  { id: "movie", category: "영화", summary: "CGV · 롯데시네마 · 메가박스 4천 원 할인", detail: "■ 온라인 예매 포함 · 월 1회" },
-  { id: "fuel", category: "주유", summary: "GS칼텍스 · SK에너지 리터당 60원 할인", detail: "■ 주유소 이용 시 · 월 최대 6천 원\n■ 셀프 주유소 포함" },
+  { id: "telecom", category: "통신", summary: "가나텔레콤 · 다라텔레콤 · 마바텔레콤 자동이체 5천 원 할인", detail: "■ 통신요금을 이 카드로 자동이체할 때\n■ 전월 실적 30만 원 이상" },
+  { id: "store", category: "편의점", summary: "가나24 · 다라편의점 · 마바스토어 5% 할인", detail: null },
+  { id: "movie", category: "영화", summary: "가나시네마 · 다라시네마 · 마바시네마 4천 원 할인", detail: "■ 온라인 예매 포함 · 월 1회" },
+  { id: "fuel", category: "주유", summary: "가나주유소 · 다라주유소 리터당 60원 할인", detail: "■ 주유소 이용 시 · 월 최대 6천 원\n■ 셀프 주유소 포함" },
   { id: "abroad", category: "해외", summary: "해외 이용금액 1.5% 적립 · 해외 결제 수수료 면제", detail: "■ 해외 가맹점(온 · 오프라인) 이용금액\n■ 수수료 면제는 브랜드 수수료 제외" },
-  { id: "shop", category: "쇼핑", summary: "쿠팡 · 11번가 · G마켓 7% 할인", detail: "■ 건당 2만 원 이상 · 월 최대 1만 원" },
+  { id: "shop", category: "쇼핑", summary: "가나몰 · 다라몰 · 마바몰 7% 할인", detail: "■ 건당 2만 원 이상 · 월 최대 1만 원" },
   { id: "clinic", category: "병원 · 약국", summary: "병원 · 약국 5% 할인", detail: "■ 월 최대 5천 원" },
-  { id: "sub", category: "구독", summary: "넷플릭스 · 유튜브 프리미엄 · 멜론 30% 할인", detail: "■ 정기결제 이용금액 · 월 최대 5천 원" },
+  { id: "sub", category: "구독", summary: "가나영상 · 다라영상 프리미엄 · 마바뮤직 30% 할인", detail: "■ 정기결제 이용금액 · 월 최대 5천 원" },
   { id: "lounge", category: "공항 라운지", summary: "국내외 공항 라운지 연 2회 무료", detail: "■ 본인만 · 동반자 제외\n■ 전월 실적 50만 원 이상" },
 ];
 // 유의사항 다섯 — 첫 제목이 84자, 셋째는 상세가 없다
@@ -381,7 +381,7 @@ const expandable = benefits.filter((b) => b.detail).map((b) => b.id)
     <AccordionContent>{coffeeDetail}</AccordionContent>
   </AccordionItem>
   <AccordionItem value="movie">
-    <AccordionTrigger prefixIcon={<Ticket />} title="영화" description="CGV · 롯데시네마 · 메가박스 4천 원 할인" />
+    <AccordionTrigger prefixIcon={<Ticket />} title="영화" description="가나시네마 · 다라시네마 · 마바시네마 4천 원 할인" />
     <AccordionContent>{movieDetail}</AccordionContent>
   </AccordionItem>
   {/* 이번 달 실적이 모자라 쓸 수 없는 혜택 — 전용 색으로 막는다 */}
@@ -397,7 +397,7 @@ const expandable = benefits.filter((b) => b.detail).map((b) => b.id)
           variant: "separated",
           rows: [
             item({ uid: "acc-ex-icons-coffee", variant: "separated", icon: "coffee", title: "커피", description: "골목커피 · 숲속다방 · 달빛로스터리 50% 할인", detail: BENEFITS[1].detail, open: true }),
-            item({ uid: "acc-ex-icons-movie", variant: "separated", icon: "ticket", title: "영화", description: "CGV · 롯데시네마 · 메가박스 4천 원 할인", detail: BENEFITS[5].detail }),
+            item({ uid: "acc-ex-icons-movie", variant: "separated", icon: "ticket", title: "영화", description: "가나시네마 · 다라시네마 · 마바시네마 4천 원 할인", detail: BENEFITS[5].detail }),
             item({ uid: "acc-ex-icons-annual", variant: "separated", icon: "creditCard", title: "연회비 캐시백", description: "전월 실적 50만 원 이상부터", detail: "■ 연회비의 100% 캐시백", disabled: true }),
           ],
         }),

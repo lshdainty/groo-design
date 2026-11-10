@@ -117,7 +117,7 @@ function Bar({ mode = 'auto', s, bleed = true }: { mode?: Mode; s?: ChipSize; bl
 // 이번 달 · 식비 · 카페 · 교통으로 거른 거래
 const LEDGER: [string, string, string, string][] = [
   ['점심 식사', '식비 · 현대카드 M', '−12,000원', 'orange'],
-  ['스타벅스', '카페 · 현대카드 M', '−5,600원', 'brown'],
+  ['다라커피', '카페 · 현대카드 M', '−5,600원', 'brown'],
   ['지하철', '교통 · 국민 체크카드', '−1,450원', 'blue'],
   ['편의점', '식비 · 현금', '−4,300원', 'orange'],
 ];
@@ -182,7 +182,7 @@ function HrNoticeWindow({ mode, w = 560 }: { mode: Mode; w?: number }) {
   const winH = 32 + 24 * 2 + chrome.head + body + chrome.foot;
   const s = o.dialog.footer.button.size;
   return (
-    <WebWindow mode={mode} w={w} h={winH} url="hr.groo.app">
+    <WebWindow mode={mode} w={w} h={winH} url="그루 이음">
       <CenterOn mode={mode} dim={o.dialog.dim}>
         <DialogSurface
           look={o.dialog}
@@ -587,7 +587,7 @@ function DeskWebLedger({ mode }: { mode: Mode }) {
   const o = ov();
   const s = lk.sizes.small;
   return (
-    <WebWindow mode={mode} w={520} h={340} url="desk.groo.app">
+    <WebWindow mode={mode} w={520} h={340} url="그루 담다">
       <div className="flex h-full flex-col px-8 pt-6" style={{ background: rc('bg-layer-default', mode) }}>
         <span className="pb-4 text-[20px] font-bold" style={{ color: rc('fg-neutral', mode) }}>
           가계부

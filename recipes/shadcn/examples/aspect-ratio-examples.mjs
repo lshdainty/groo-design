@@ -138,7 +138,7 @@ export const aspectRatioExamples = [
 </AspectRatio>`,
     render: () =>
       surface(
-        aspectRatio({ ratio: "1:1", child: `<img src="${MAP}" alt="김밥천국 강남점 위치">` }),
+        aspectRatio({ ratio: "1:1", child: `<img src="${MAP}" alt="가나김밥 강남점 위치">` }),
         " max-width:280px;",
       ),
   },

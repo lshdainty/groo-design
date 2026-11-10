@@ -4,7 +4,7 @@
 
 // ── 카드 혜택 · 유의사항(Desk 카드 상세) ──────────────────────
 export const LONG_DETAIL = [
-  '■ 할인 대상: 네이버페이 · 카카오페이 · 토스페이 · 페이코 · SSG페이에서 이 카드로 결제한 온라인 가맹점 이용금액',
+  '■ 할인 대상: 가나페이 · 다라페이 · 마바페이 · 사아페이 · 자차페이에서 이 카드로 결제한 온라인 가맹점 이용금액',
   '■ 할인율: 이용금액의 10% 결제일 할인(건당 이용금액 1만 원 이상)',
   '■ 월 할인 한도: 전월 이용실적 30만 원 이상 50만 원 미만 5천 원 / 50만 원 이상 100만 원 미만 1만 원 / 100만 원 이상 2만 원',
   '■ 유의사항: 간편결제 내 충전 · 송금 · 상품권 구매 · 대학 등록금 · 아파트 관리비 · 국세 · 지방세 납부는 할인 대상에서 빠져요.',
@@ -16,17 +16,17 @@ export const LONG_DETAIL = [
 export type Benefit = { id: string; title: string; summary: string; detail: string | null };
 // 열둘 — 첫 제목이 28자(줄을 바꾼다), 대중교통 · 편의점은 상세가 없다(그냥 줄)
 export const BENEFITS: Benefit[] = [
-  { id: 'pay', title: '온라인 간편결제 · 배달앱 · 해외 직구 통합 할인', summary: '네이버페이 · 카카오페이 · 토스페이 결제 시 이용금액의 10% 결제일 할인(월 최대 2만 원)', detail: LONG_DETAIL },
+  { id: 'pay', title: '온라인 간편결제 · 배달앱 · 해외 직구 통합 할인', summary: '가나페이 · 다라페이 · 마바페이 결제 시 이용금액의 10% 결제일 할인(월 최대 2만 원)', detail: LONG_DETAIL },
   { id: 'coffee', title: '커피', summary: '골목커피 · 숲속다방 · 달빛로스터리 50% 할인', detail: '■ 할인 대상: 골목커피 · 숲속다방 · 달빛로스터리 커피 매장 이용금액\n■ 월 2회 · 회당 최대 5천 원' },
   { id: 'transit', title: '대중교통', summary: '버스 · 지하철 10% 청구할인', detail: null },
-  { id: 'telecom', title: '통신', summary: 'SKT · KT · LG U+ 자동이체 5천 원 할인', detail: '■ 통신요금을 이 카드로 자동이체할 때\n■ 전월 실적 30만 원 이상' },
-  { id: 'store', title: '편의점', summary: 'GS25 · CU · 세븐일레븐 5% 할인', detail: null },
-  { id: 'movie', title: '영화', summary: 'CGV · 롯데시네마 · 메가박스 4천 원 할인', detail: '■ 온라인 예매 포함 · 월 1회' },
-  { id: 'fuel', title: '주유', summary: 'GS칼텍스 · SK에너지 리터당 60원 할인', detail: '■ 주유소 이용 시 · 월 최대 6천 원\n■ 셀프 주유소 포함' },
+  { id: 'telecom', title: '통신', summary: '가나텔레콤 · 다라텔레콤 · 마바텔레콤 자동이체 5천 원 할인', detail: '■ 통신요금을 이 카드로 자동이체할 때\n■ 전월 실적 30만 원 이상' },
+  { id: 'store', title: '편의점', summary: '가나24 · 다라편의점 · 마바스토어 5% 할인', detail: null },
+  { id: 'movie', title: '영화', summary: '가나시네마 · 다라시네마 · 마바시네마 4천 원 할인', detail: '■ 온라인 예매 포함 · 월 1회' },
+  { id: 'fuel', title: '주유', summary: '가나주유소 · 다라주유소 리터당 60원 할인', detail: '■ 주유소 이용 시 · 월 최대 6천 원\n■ 셀프 주유소 포함' },
   { id: 'abroad', title: '해외', summary: '해외 이용금액 1.5% 적립 · 해외 결제 수수료 면제', detail: '■ 해외 가맹점(온 · 오프라인) 이용금액\n■ 수수료 면제는 브랜드 수수료 제외' },
-  { id: 'shop', title: '쇼핑', summary: '쿠팡 · 11번가 · G마켓 7% 할인', detail: '■ 건당 2만 원 이상 · 월 최대 1만 원' },
+  { id: 'shop', title: '쇼핑', summary: '가나몰 · 다라몰 · 마바몰 7% 할인', detail: '■ 건당 2만 원 이상 · 월 최대 1만 원' },
   { id: 'clinic', title: '병원 · 약국', summary: '병원 · 약국 5% 할인', detail: '■ 월 최대 5천 원' },
-  { id: 'sub', title: '구독', summary: '넷플릭스 · 유튜브 프리미엄 · 멜론 30% 할인', detail: '■ 정기결제 이용금액 · 월 최대 5천 원' },
+  { id: 'sub', title: '구독', summary: '가나영상 · 다라영상 프리미엄 · 마바뮤직 30% 할인', detail: '■ 정기결제 이용금액 · 월 최대 5천 원' },
   { id: 'lounge', title: '공항 라운지', summary: '국내외 공항 라운지 연 2회 무료', detail: '■ 본인만 · 동반자 제외\n■ 전월 실적 50만 원 이상' },
 ];
 export const hasDetail = (b: { detail: string | null }) => !!b.detail;
@@ -117,18 +117,18 @@ export const FILTER_FIELDS: [string, string][] = [
 export type LedgerTx = { title: string; sub: string; amount: number; hue: string };
 export type LedgerDay = { label: string; rows: LedgerTx[] };
 const POOL: [string, string, number, string][] = [
-  ['김밥천국 강남점', '식비 · 삼성카드 taptap O', 9500, 'orange'],
-  ['파리바게뜨', '카페 · 간식 · 토스 체크카드', 4800, 'brown'],
-  ['티머니', '교통 · 토스 체크카드', 1450, 'blue'],
-  ['무신사', '쇼핑 · 삼성카드 taptap O', 58900, 'pink'],
+  ['가나김밥 강남점', '식비 · 삼성카드 taptap O', 9500, 'orange'],
+  ['다라베이커리', '카페 · 간식 · 토스 체크카드', 4800, 'brown'],
+  ['다라교통', '교통 · 토스 체크카드', 1450, 'blue'],
+  ['마바패션', '쇼핑 · 삼성카드 taptap O', 58900, 'pink'],
   ['골목커피 역삼점', '카페 · 간식 · 현대카드 M', 6300, 'brown'],
-  ['GS25 역삼점', '식비 · 토스 체크카드', 3200, 'orange'],
-  ['쿠팡', '쇼핑 · 현대카드 M', 27400, 'pink'],
-  ['배달의민족', '식비 · 삼성카드 taptap O', 23900, 'orange'],
-  ['카카오T 택시', '교통 · 현대카드 M', 12800, 'blue'],
-  ['올리브영 강남역점', '쇼핑 · 토스 체크카드', 18700, 'pink'],
-  ['이마트 역삼점', '식비 · 현대카드 M', 64200, 'orange'],
-  ['넷플릭스', '문화생활 · 삼성카드 taptap O', 17000, 'violet'],
+  ['가나24 역삼점', '식비 · 토스 체크카드', 3200, 'orange'],
+  ['가나몰', '쇼핑 · 현대카드 M', 27400, 'pink'],
+  ['가나배달', '식비 · 삼성카드 taptap O', 23900, 'orange'],
+  ['가나택시', '교통 · 현대카드 M', 12800, 'blue'],
+  ['다라뷰티 강남역점', '쇼핑 · 토스 체크카드', 18700, 'pink'],
+  ['가나마트 역삼점', '식비 · 현대카드 M', 64200, 'orange'],
+  ['가나영상', '문화생활 · 삼성카드 taptap O', 17000, 'violet'],
 ];
 const DOW = ['월', '화', '수', '목', '금', '토', '일'];
 export const LEDGER40: LedgerDay[] = (() => {
