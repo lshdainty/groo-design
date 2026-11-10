@@ -243,10 +243,10 @@ const Overflow: Fig = ({ caption }) => {
         <div className="flex min-w-0 flex-col gap-2">
           <Board className="flex min-h-[120px] items-center justify-center">
             <Narrow>
-              <TagGroupView look={lk} size="t3" truncate items={items({ label: '교통', shrink: 0 }, { label: '신한카드 체크카드(1234)', shrink: 2 }, { label: '오후 2:10', shrink: 0 })} />
+              <TagGroupView look={lk} size="t3" truncate items={items({ label: '대중교통', shrink: 1 }, { label: '신한카드 체크카드(1234)', shrink: 2 }, { label: '오후 2:10', shrink: 0 })} />
             </Narrow>
           </Board>
-          <Cap strong="shrink — 줄어드는 정도">0 은 줄지 않고 1 이상은 글 폭 × shrink 비율로 함께 준다 — 긴 자산 이름만 줄었다</Cap>
+          <Cap strong="shrink — 줄어드는 정도">카테고리 1 · 자산 2 · 시각 0 — 이름 항목은 글 폭 × shrink 비율로 함께 준다(긴 자산 이름이 가장 많이). 잘리면 뜻이 없는 시각은 0 이라 그대로다</Cap>
         </div>
         <div className="flex min-w-0 flex-col gap-2">
           <Board className="flex min-h-[120px] items-center justify-center">

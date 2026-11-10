@@ -9,7 +9,8 @@ import { TfInputView } from './text-field-view';
 import { Bar, NPhone, SearchBox } from './nav-screens';
 import { Row, rc, type Mode } from './kit';
 
-export const SEARCH_ROW_H = 40;
+// 거래 검색의 거르는 줄 48 — 칩 medium 36 + 위아래 6(scroll-auto-hide.md, 2026-11-06 담다 마무리 B1 α — 웹 · 앱 구현 값)
+export const SEARCH_ROW_H = 48;
 export const CARD_ROW_H = 140;
 // 거래 검색 결과 — 가장 긴 가맹점 이름은 줄을 넘긴다(말줄임)
 const RESULTS: [string, string, string, string][] = [
@@ -35,11 +36,11 @@ function Chips({ mode, items, on, size = 'small' }: { mode: Mode; items: string[
     </span>
   );
 }
-// 거래 검색의 거르는 줄 — 전체 · 지출 · 수입(칩 small 32) · 줄 40 · 좌우 화면 여백 24
+// 거래 검색의 거르는 줄 — 전체 · 지출 · 수입(칩 medium 36) · 줄 48(위아래 6) · 좌우 화면 여백 24
 export function SearchFilterRow({ mode = 'auto' }: { mode?: Mode }) {
   return (
     <div className="flex items-center" style={{ height: SEARCH_ROW_H, paddingLeft: 24, paddingRight: 24, background: rc('bg-layer-default', mode) }}>
-      <Chips mode={mode} items={['전체', '지출', '수입']} on="전체" />
+      <Chips mode={mode} items={['전체', '지출', '수입']} on="전체" size="medium" />
     </div>
   );
 }
