@@ -157,7 +157,7 @@ const GROUP_RING = "focus-visible:outline-2 focus-visible:outline-offset-2 focus
 // ── field.tsx 의 클래스 — 묶음을 감싸는 둘레 ───────────────────────────
 
 const FIELD_ROOT = "flex w-full min-w-0 flex-col gap-x2";
-const FIELD_HEADER = "flex items-center justify-between gap-x2_5 px-x0_5";
+const FIELD_HEADER = "flex flex-wrap items-center justify-between gap-x2_5 px-x0_5 [&>:first-child:not(:last-child)]:min-w-[50%] [&>:first-child:not(:last-child)]:flex-1";
 // 라벨 — cn("min-w-0 font-sans text-t5 text-fg-neutral", 굵기)
 const FIELD_LABEL = "min-w-0 font-sans text-t5 text-fg-neutral";
 const FIELD_LABEL_WEIGHT = { medium: "font-medium", bold: "font-bold" };

@@ -261,7 +261,7 @@ const LIST_SUFFIX_DEFAULTS = { value: "node", disabled: false, highlighted: fals
 // ── field.tsx 의 클래스 — 칸을 감싸는 둘레(라벨만) ──────────────────────────
 
 const FIELD_ROOT = "flex w-full min-w-0 flex-col gap-x2";
-const FIELD_HEADER = "flex items-center justify-between gap-x2_5 px-x0_5";
+const FIELD_HEADER = "flex flex-wrap items-center justify-between gap-x2_5 px-x0_5 [&>:first-child:not(:last-child)]:min-w-[50%] [&>:first-child:not(:last-child)]:flex-1";
 const FIELD_LABEL = "min-w-0 font-sans text-t5 text-fg-neutral";
 const FIELD_LABEL_WEIGHT = { medium: "font-medium", bold: "font-bold" };
 

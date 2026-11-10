@@ -30,7 +30,7 @@ Groo 는 Bootstrap 식 **명시적 z-index 계층 분기** 정책을 채택. sha
 | page sticky(L1=50) 위 dropdown 열림 | dropdown(L3=200) 가 sticky 위 ✓ |
 | page 에서 dialog 열림 | dialog(L2=100) 가 page 위 ✓ |
 | dialog 안 select / popover 열림 | floating(L3=200) 가 dialog content(L2=101) 위 ✓ |
-| 폼 시트 안에서 고르기 시트 열림(겹친 시트 — bottom-sheet.md 가 허용하는 자리) | 위 시트의 딤 · 표면이 아래 시트 표면(L2=101) 바로 위 · Popover(L3=200) 아래 — 웹은 `calc(var(--z-modal-content) + 1)` · `+ 2` 로 세운다(층 표에 새 층 · 이름 토큰은 두지 않았다 — 둘지는 정하지 않았다). 같은 100 · 101 이면 위 시트의 딤이 아래 시트 뒤에 가려진다(2026-10-25 I-19-1 — desk-front 9463b038). 앱은 라우트를 연 순서로 쌓아 저절로 맞다 ✓ |
+| 폼 시트 안에서 고르기 시트 열림(겹친 시트 — bottom-sheet.md 가 허용하는 자리) | 위 시트의 딤 · 표면이 아래 시트 표면(L2=101) 바로 위 · Popover(L3=200) 아래 — 웹은 `calc(var(--z-modal-content) + 1)` · `+ 2` 로 세운다. 겹친 시트는 새 층이 아니라 L2 안의 차례라 층 표 · 이름 토큰을 두지 않는다 — 값은 늘 아래 시트 표면에서 센 상대값이고, 토큰은 사용자가 요청한 것만 둔다(루트 CLAUDE.md 금지 사항). 겹침은 한 겹이다 — 폼 시트 위에는 고르기 시트 · 머리 ⋮ 의 Menu Sheet · 확인창만 뜨고 그 위에 또 시트를 쌓지 않는다(bottom-sheet.md Don't). 2026-11-11 디자인시스템 판단. 같은 100 · 101 이면 위 시트의 딤이 아래 시트 뒤에 가려진다(2026-10-25 I-19-1 — desk-front 9463b038). 앱은 라우트를 연 순서로 쌓아 저절로 맞다 ✓ |
 | dialog 안 tooltip hover | tooltip(L4=210) 가 popover(L3=200) 위 ✓ |
 | dialog 안 alert-dialog 열림 (삭제 확인 등) | alert(L5=300) 가 dialog(L2=101) 위 ✓ |
 | 모든 layer 위 snackbar | snackbar(L6=400) 가 alert(L5=301) 위 ✓ |
@@ -85,3 +85,4 @@ zIndex: { value: 200, note: "z-floating — specs/z-index.md L3" }
 - **v1: 최초 명시 (2026-05-15)** — 그동안 각 컴포넌트 spec 에 z-index 가 분산 명시되거나 누락된 상태였음. desk-front 가 모두 다른 값으로 분기(50/100/101/200/9999) 두고 있었는데 정합 기준이 없었음. Bootstrap 식 명시 계층 채택. shadcn 표준(모두 z-50 + portal order) 은 디버깅 어렵다고 판단 — 우리는 명시 분기.
 - **v2: 토큰이 원본 (2026-10-03, DESIGN.md v116)** — 층마다 토큰을 두고 이름을 층으로 붙였다(`z-sticky` · `z-modal` · `z-modal-content` · `z-floating` · `z-tooltip` · `z-alert` · `z-alert-content` · `z-snackbar` · `z-dev`, L0 은 `z-base` `auto`). 값은 이 표 그대로다. 그동안 DESIGN.md 의 v65 토큰(z-dropdown 1000 · z-drawer 1200 · z-toast 1400 …)은 이 표와 값이 달랐다(레시피는 이 표의 숫자를 따로 적었다) — 걷었다. 레시피의 `z-[100]` 같은 숫자 클래스는 `z-(--z-modal)` 로 바꿨다. 사용자 결정(2026-10-03 — 이 층 표를 정본으로, 새 토큰은 층 이름으로).
 - **v3: 화면 틀 · 이동 (2026-10-04)** — 옛 `sheet` 자리를 `side-panel`(Side Panel — 왼쪽 주 메뉴 · 오른쪽 패널)이 잇는다. L1 의 고정 UI 를 컴포넌트 이름으로 적었다 — `top-navigation` · `bottom-navigation` · `floating-action-button`(지금 제품의 웹 탭 바 40 · Fab 20 · 하위 머리 10 · 설정 하위 100 · HR SpeedDial 50 은 앱 적용 때 `z-sticky` 로). 값 · 토큰은 그대로다.
+- **2026-11-11 — 겹친 시트는 이름 토큰 없이** — 폼 시트 위 고르기 시트의 `+ 1` · `+ 2` 는 L2 안의 차례다. 층 표에 줄 · 이름 토큰을 두지 않기로 정했다(디자인시스템 판단 — 새 층이 아니고, 요청 없는 토큰은 두지 않는다). 값 변경 없음.
