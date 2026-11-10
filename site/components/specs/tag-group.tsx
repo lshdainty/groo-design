@@ -220,7 +220,7 @@ function Narrow({ children, w = 200 }: { children: ReactNode; w?: number }) {
 }
 const Overflow: Fig = ({ caption }) => {
   const lk = tl();
-  const long = items('교통', '신한카드 Deep Dream 체크(1234)', '오후 2:10');
+  const long = items('교통', '신한카드 체크카드(1234)', '오후 2:10');
   return (
     <Panel caption={caption}>
       <div className="mx-auto grid max-w-[560px] gap-4">
@@ -243,7 +243,7 @@ const Overflow: Fig = ({ caption }) => {
         <div className="flex min-w-0 flex-col gap-2">
           <Board className="flex min-h-[120px] items-center justify-center">
             <Narrow>
-              <TagGroupView look={lk} size="t3" truncate items={items({ label: '교통', shrink: 0 }, { label: '신한카드 Deep Dream 체크(1234)', shrink: 2 }, { label: '오후 2:10', shrink: 0 })} />
+              <TagGroupView look={lk} size="t3" truncate items={items({ label: '교통', shrink: 0 }, { label: '신한카드 체크카드(1234)', shrink: 2 }, { label: '오후 2:10', shrink: 0 })} />
             </Narrow>
           </Board>
           <Cap strong="shrink — 줄어드는 정도">0 은 줄지 않고 1 이상은 글 폭 × shrink 비율로 함께 준다 — 긴 자산 이름만 줄었다</Cap>
@@ -280,12 +280,12 @@ const RoleGuide: Fig = ({ caption }) => (
                 detailNode: (
                   <span className="flex gap-1">
                     <B l="구독" />
-                    <B l="현대카드 M" />
+                    <B l="현대카드 신용카드" />
                     <B l="10월 18일" />
                   </span>
                 ),
               },
-              { ...txRow(TX.starbucks), detailNode: <T items={items('카페', '현대카드 M', '결제 완료')} size="t3" truncate /> },
+              { ...txRow(TX.starbucks), detailNode: <T items={items('카페', '현대카드 신용카드', '결제 완료')} size="t3" truncate /> },
             ]}
           />
         </PhoneBoard>
@@ -413,7 +413,7 @@ const ExTruncate: Fig = ({ caption }) => (
   <Preview caption={caption} w={312}>
     <div className="flex flex-col items-start gap-2">
       <div style={{ width: 220, maxWidth: '100%', outline: `1px dashed ${MARK_LINE}`, outlineOffset: 3, background: MARK }}>
-        <T items={items({ label: '교통', shrink: 1 }, { label: '신한카드 Deep Dream 체크(1234)', shrink: 2 }, { label: '오후 2:10', shrink: 0 })} size="t3" truncate />
+        <T items={items({ label: '교통', shrink: 1 }, { label: '신한카드 체크카드(1234)', shrink: 2 }, { label: '오후 2:10', shrink: 0 })} size="t3" truncate />
       </div>
       <span className="text-[12px] leading-4 pk-muted">분홍 칸 — 폭 220</span>
     </div>

@@ -54,7 +54,7 @@ export function LeaveRuleDemo({ kit, info, mode = 'auto' }: { kit: MenuKit; info
 // ── Help Bubble 코드 — 처음부터 열어 두는 안내(닫기 버튼) ───────
 const AMOUNTS: [string, string][] = [
   ['국민 주계좌', '1,250,000원'],
-  ['현대카드 M', '−352,400원'],
+  ['현대카드 신용카드', '−352,400원'],
   ['토스뱅크 통장', '820,000원'],
 ];
 export function HideTipDemo({ kit, top, mode = 'auto' }: { kit: MenuKit; top: TopNavLook; mode?: ViewMode }) {

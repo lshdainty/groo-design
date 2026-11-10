@@ -1,6 +1,6 @@
 // Badge 페이지의 그림 — specs/components/badge.md 의 `[그림: …](../../site/components/specs/badge.tsx#<id>)` 자리.
 // 배지는 badge.yaml 을 푼 값(display-look 의 badgeLook)으로, 메타 줄은 tag-group.yaml, 아바타는 avatar.yaml, 칩은 chip.yaml(chipLook),
-// 목록 줄은 list.yaml(ListView)로 그린다. 화면의 글은 비교 페이지(2026-10-03)와 같다 — 현대카드 M · 가계부 · 캘린더 공유.
+// 목록 줄은 list.yaml(ListView)로 그린다. 화면의 글은 비교 페이지(2026-10-03)와 같다 — 현대카드 신용카드 · 가계부 · 캘린더 공유.
 import { Fragment, type CSSProperties, type ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { chipLook } from './chip-look';
@@ -48,7 +48,7 @@ const TONE_EX: Record<BadgeTone, string> = { neutral: '예정', brand: 'Pro', in
 const STRENGTH: BadgeVariant[] = ['weak', 'outline', 'solid'];
 
 // ── Overview ──────────────────────────────────────────────
-// 라이트 · 다크 — 현대카드 M 상세(머리 large 둘 · 이번 달 거래의 예정 · 환불) · 캘린더 공유(권한 outline + 앞 아이콘)
+// 라이트 · 다크 — 현대카드 신용카드 상세(머리 large 둘 · 이번 달 거래의 예정 · 환불) · 캘린더 공유(권한 outline + 앞 아이콘)
 const Hero: Fig = ({ caption }) => (
   <Figure caption={caption}>
     <div className="flex flex-col gap-4">
@@ -393,7 +393,7 @@ const SurfaceGuide: Fig = ({ caption }) => {
 };
 
 // 한 대상에 둘까지 — 카드 줄(타일 · 제목 옆 배지 · 메타)
-const cardRow = (badges: ReactNode) => [{ kind: 'view' as const, prefix: { tile: 'blue', icon: 'credit-card' as const }, title: '현대카드 M', titleBadge: badges, detailNode: <T items={items('결제일 14일', '포인트형')} size="t3" truncate /> }];
+const cardRow = (badges: ReactNode) => [{ kind: 'view' as const, prefix: { tile: 'blue', icon: 'credit-card' as const }, title: '현대카드 신용카드', titleBadge: badges, detailNode: <T items={items('결제일 14일', '포인트형')} size="t3" truncate /> }];
 function CardLine({ badges }: { badges: ReactNode }) {
   return (
     <PhoneBoard>

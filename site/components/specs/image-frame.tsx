@@ -432,7 +432,7 @@ const CardRotate: Fig = ({ caption }) => {
 };
 
 // 그림 없는 카드 — 아는 카드사의 면(작게 · 가운데 · 크게) · 모르는 카드사의 대체 그림. 카드 이름은 medium 한 줄 · large 두 줄까지(넘치면 말줄임)
-const LONG_NAME = '트래블로그 체크 플러스 에디션';
+const LONG_NAME = '체크카드 해외 결제 플러스 에디션';
 const CardFace: Fig = ({ caption }) => {
   const ca = CAL();
   const clampKo = (n: number) => (n === 1 ? '한 줄' : `${n}줄까지`);
@@ -441,13 +441,13 @@ const CardFace: Fig = ({ caption }) => {
       <div className="flex flex-col items-center gap-4">
         <div className="flex flex-wrap items-end justify-center gap-x-5 gap-y-4">
           <span className="flex flex-col items-center gap-1.5">
-            <Card width={56} issuer="KB국민카드" name="톡톡 With" pic={null} mode={mode} />
+            <Card width={56} issuer="KB국민카드" name="신용카드" pic={null} mode={mode} />
             <Sub mode={mode} strong="small 56">
               첫 글자만 · {Math.round((56 / ca.ratio) * 10) / 10} 의 {Math.round(ca.initial.ratio * 100)}%
             </Sub>
           </span>
           <span className="flex flex-col items-center gap-1.5">
-            <Card width={150} issuer="NH농협카드" name="NH올원 Pay" pic={null} mode={mode} />
+            <Card width={150} issuer="NH농협카드" name="체크카드" pic={null} mode={mode} />
             <Sub mode={mode} strong="medium 150">
               짙은 글자 — 흰 글자가 4.5 아래
             </Sub>
@@ -459,14 +459,14 @@ const CardFace: Fig = ({ caption }) => {
             </Sub>
           </span>
           <span className="flex flex-col items-center gap-1.5">
-            <Card width={150} issuer="BC카드" name="바로 카드" pic={null} mode={mode} />
+            <Card width={150} issuer="BC카드" name="신용카드" pic={null} mode={mode} />
             <Sub mode={mode} strong="모르는 카드사">
               대체 그림(credit-card)
             </Sub>
           </span>
         </div>
         <span className="flex max-w-full flex-col items-center gap-1.5 overflow-x-auto">
-          <Card width={312} issuer="신한카드" name={`데일리 플러스 ${LONG_NAME}`} pic={null} mode={mode} />
+          <Card width={312} issuer="신한카드" name={`신용카드 ${LONG_NAME}`} pic={null} mode={mode} />
           <Sub mode={mode} strong={`large 312 — 폭 ${ca.bands.large} 이상`}>
             회사 · 카드 이름 한 단계 크게 · 카드 이름 {clampKo(ca.sizes.large.nameClamp)}
           </Sub>
@@ -553,7 +553,7 @@ const WhichGuide: Fig = ({ caption }) => {
         </Cell>
         <Cell strong="그림 → Image Frame" cap="사진 · 카드 그림 · 규정 그림">
           <span className="flex items-center gap-3">
-            <Card width={56} issuer="신한카드" name="데일리 플러스" pic="card-h" />
+            <Card width={56} issuer="신한카드" name="신용카드" pic="card-h" />
             <Frame width={48} ratio="1:1" pic="rule-vacation" />
             <Frame width={64} ratio="4:3" pic="meadow" />
           </span>
@@ -620,7 +620,7 @@ const RadiusGuide: Fig = ({ caption }) => {
     <div className="flex items-center gap-4 py-2">
       <Card width={w} issuer={c.issuer} name={c.name} pic={c.pic} state={st} radius={st === 'loading' ? r : undefined} />
       <span className="flex flex-col gap-0.5">
-        <span className="text-[15px] font-medium leading-5 pk-text">{c.name}</span>
+        <span className="text-[15px] font-medium leading-5 pk-text">{`${c.issuer} ${c.name}`}</span>
         <span className="text-[12px] leading-4 pk-muted">{st === 'loading' ? `불러오는 중 — 모서리 ${r ?? l.radius[imageFrameRadius(w, l.bands)].px}` : `다 받음 — 모서리 ${l.radius[imageFrameRadius(w, l.bands)].px}`}</span>
       </span>
     </div>
@@ -682,7 +682,7 @@ const FaceGuide: Fig = ({ caption }) => {
   const cells = (bad: boolean) => (
     <div className="grid grid-cols-2 gap-x-3 gap-y-3" style={{ width: 2 * 128 + 12 }}>
       {[CARDS[2], CARDS[3], { ...CARDS[0], pic: null }, CARDS[4]].map((c) => (
-        <span key={c.name} className="flex flex-col gap-1">
+        <span key={`${c.issuer}-${c.name}`} className="flex flex-col gap-1">
           {bad && c.issuer === 'BC카드' ? (
             <Frame
               width={128}
@@ -698,7 +698,7 @@ const FaceGuide: Fig = ({ caption }) => {
           ) : (
             <Card width={128} issuer={c.issuer} name={c.name} pic={null} />
           )}
-          <span className="truncate text-[12px] font-bold leading-4 pk-text">{c.name}</span>
+          <span className="truncate text-[12px] font-bold leading-4 pk-text">{`${c.issuer} ${c.name}`}</span>
         </span>
       ))}
     </div>
@@ -727,7 +727,7 @@ const NameGuide: Fig = ({ caption }) => {
         {named && (
           <span className="flex w-full flex-col" style={{ gap: 2 }}>
             <span className="text-[20px] font-bold leading-[27px]" style={{ color: tone('fg-neutral') }}>
-              {c.name}
+              {`${c.issuer} ${c.name}`}
             </span>
             <span className="text-[14px] leading-[19px]" style={{ color: tone('fg-neutral-subtle') }}>
               {c.issuer}
@@ -761,7 +761,7 @@ const OverlayGuide: Fig = ({ caption }) => {
       <Pair stack>
         <Verdict ok note="상태는 배지(위 시작), 장수는 Indicator(아래 끝) — 둘까지" bg={BASEMENT}>
           <div className="flex flex-wrap items-start justify-center gap-3 rounded-2xl p-4 pk-surface">
-            <Card width={W} issuer="현대카드" name="M 에디션" pic="card-h2" floaters={[at('top-start', <Discontinued />)]} />
+            <Card width={W} issuer="현대카드" name="신용카드" pic="card-h2" floaters={[at('top-start', <Discontinued />)]} />
             <Frame width={W} ratio="1:1" pic="forest" floaters={[at('bottom-end', <Ind label="사진 9장 더 있음">+9</Ind>)]} />
           </div>
         </Verdict>
@@ -881,12 +881,12 @@ const DimGuide: Fig = ({ caption }) => {
             <span className="flex flex-col gap-1.5" style={{ width: 112 }}>
               <Card width={112} issuer={c.issuer} name={c.name} pic={c.pic} dim={0.6} />
               <span className="truncate text-[13px] font-bold leading-[18px] pk-text" style={{ opacity: 0.6 }}>
-                {c.name}
+                {`${c.issuer} ${c.name}`}
               </span>
             </span>
             <span className="relative flex flex-col gap-1.5" style={{ width: 112 }}>
-              <Card width={112} issuer="신한카드" name="데일리 플러스" pic="card-h" scale={1.05} />
-              <span className="truncate text-[13px] font-bold leading-[18px] pk-text">데일리 플러스</span>
+              <Card width={112} issuer="신한카드" name="신용카드" pic="card-h" scale={1.05} />
+              <span className="truncate text-[13px] font-bold leading-[18px] pk-text">신한카드 신용카드</span>
               <MousePointer2 aria-hidden size={20} strokeWidth={2} className="absolute pk-text" style={{ left: 70, top: 44 }} fill="currentColor" />
             </span>
           </div>
@@ -945,9 +945,9 @@ const ExGrid: Fig = ({ caption }) => (
   <Preview caption={caption} w={312}>
     <div className="grid" style={{ gridTemplateColumns: `repeat(2, ${GRID.cell}px)`, columnGap: GRID.gap, rowGap: 16 }}>
       {[CARDS[5], CARDS[0], CARDS[2], CARDS[1]].map((c) => (
-        <div key={c.name} className="min-w-0">
+        <div key={`${c.issuer}-${c.name}`} className="min-w-0">
           <Card width={GRID.cell} fill issuer={c.issuer} name={c.name} pic={c.pic} floaters={c.discontinued ? [at('top-start', <Discontinued />)] : undefined} />
-          <p className="m-0 truncate text-[14px] font-bold leading-[19px] pk-text">{c.name}</p>
+          <p className="m-0 truncate text-[14px] font-bold leading-[19px] pk-text">{`${c.issuer} ${c.name}`}</p>
         </div>
       ))}
     </div>
@@ -960,7 +960,7 @@ const ExDetail: Fig = ({ caption }) => {
       <div className="flex flex-col" style={{ gap: 12 }}>
         <Card width={312} issuer={c.issuer} name={c.name} pic={c.pic} />
         <div>
-          <h2 className="m-0 text-[20px] font-bold leading-[27px] pk-text">{c.name}</h2>
+          <h2 className="m-0 text-[20px] font-bold leading-[27px] pk-text">{`${c.issuer} ${c.name}`}</h2>
           <p className="m-0 text-[14px] leading-[19px] pk-muted">{c.issuer}</p>
         </div>
       </div>

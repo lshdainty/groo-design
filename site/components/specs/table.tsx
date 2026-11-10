@@ -528,7 +528,7 @@ const GridGuide: Fig = ({ caption }) => {
         <Verdict ok note="&lt;table&gt; — 칸마다 열 이름 · 줄 이름이 읽힌다">
           <div className="flex flex-col items-center gap-2">
             <TableCard width={320}>
-              <TableView look={TL('desk')} caption="삼성전자 일별 시세" columns={qCols} rows={qRows.slice(0, 3)} minWidth={300} />
+              <TableView look={TL('desk')} caption="가람전자 일별 시세" columns={qCols} rows={qRows.slice(0, 3)} minWidth={300} />
             </TableCard>
             <Reading tone="ok">10. 8., 등락률, 1.28% 올랐어요</Reading>
           </div>

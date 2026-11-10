@@ -103,7 +103,7 @@
 
 ### 두 단계 흐름의 머리 ←
 
-한 부품 안에서 1단계(종류 고르기) → 2단계(폼)로 가는 흐름은 1280 이상의 대화상자에서도 2단계 머리 왼쪽에 ← 를 단다 — 시트와 같은 부품(`onBack`) · 같은 값(보이는 원 40 · 아이콘 24 · 누르는 영역 44 · 아이콘이 왼쪽 24 · 제목은 원 오른쪽 4 에서 · 제목 첫 줄 가운데)이다. 수치 원본은 [`bottom-sheet.yaml`](bottom-sheet.yaml) 의 축 `back` 하나다. ← 는 1단계로 한 단계 되돌리고, 쓴 값이 있으면 "작성한 내용이 사라져요" 를 묻고 돌아가며 그 값을 버린다. 입력 폼 대화상자라 머리 닫기 버튼은 없고 바닥 [취소] 가 닫는다 — ← 는 닫지 않는다. 규칙 전문은 [Bottom Sheet](bottom-sheet.md) 의 "두 단계 시트의 머리 ←"(2026-10-29 사용자 결정 17-1 Q3).
+한 부품 안에서 1단계(종류 고르기) → 2단계(폼)로 가는 흐름은 1280 이상의 대화상자에서도 2단계 머리 왼쪽에 ← 를 단다 — 시트와 같은 부품(`onBack`) · 같은 값(보이는 원 40 · 아이콘 24 꺾쇠 `chevron-left` — 페이지 머리 ← 와 같은 모양, 2026-11-10 사용자 결정 8A · 누르는 영역 44 · 아이콘이 왼쪽 24 · 제목은 원 오른쪽 4 에서 · 제목 첫 줄 가운데)이다. 수치 원본은 [`bottom-sheet.yaml`](bottom-sheet.yaml) 의 축 `back` 하나다. ← 는 1단계로 한 단계 되돌리고, 쓴 값이 있으면 "작성한 내용이 사라져요" 를 묻고 돌아가며 그 값을 버린다. 입력 폼 대화상자라 머리 닫기 버튼은 없고 바닥 [취소] 가 닫는다 — ← 는 닫지 않는다. 규칙 전문은 [Bottom Sheet](bottom-sheet.md) 의 "두 단계 시트의 머리 ←"(2026-10-29 사용자 결정 17-1 Q3).
 
 ### 머리 오른쪽 동작 — ⋮ 하나
 
@@ -239,6 +239,10 @@ import { ResponsiveDialog, ResponsiveDialogBody, ResponsiveDialogCancel, Respons
 - **z-index 는 specs/z-index.md 의 L2**(딤 `z-modal` 100 · 대화상자 `z-modal-content` 101) — 그 안에서 연 Popover(L3) · Alert Dialog(L5)가 위에 뜬다(SEED 는 모두 2 + layerIndex).
 
 ## Migration notes
+
+### 2026-11-10 — 머리 ← 는 꺾쇠
+
+두 단계 흐름의 머리 ← 아이콘을 `chevron-left` 로 — 페이지 머리 · 시트와 같은 한 모양(2026-11-10 사용자 결정 8A). 수치 원본 `bottom-sheet.yaml` 축 `back` · 레시피 `DialogContent` 의 아이콘을 같이 고쳤다. 옛 스펙은 `dialog.history/v-pre-decisions-1110.md`.
 
 ### 2026-11-10 — 머리 없는 조회(공지 팝업)
 

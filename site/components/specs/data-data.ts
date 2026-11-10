@@ -46,13 +46,13 @@ export const QUOTES: Quote[] = [
 ];
 
 // ── 카드 — Desk 홈 ──────────────────────────────────────
-export const NET_WORTH = { label: '순자산', amount: 42898100, delta: { direction: 'up' as DeltaDir, value: '1.8%', text: '지난달보다' } };
+export const NET_WORTH = { label: '순자산', amount: 42898100, delta: { direction: 'up' as DeltaDir, value: '1.80%', text: '지난달보다' } };
 export type Stat = { label: string; amount: number; delta: { direction: DeltaDir; value: string; text: string; srText?: string } };
 export const STATS: Stat[] = [
-  { label: '이번 달 지출', amount: 1240000, delta: { direction: 'up', value: '12%', text: '지난달보다', srText: '지난달보다 12% 더 썼어요' } },
+  { label: '이번 달 지출', amount: 1240000, delta: { direction: 'up', value: '12.00%', text: '지난달보다', srText: '지난달보다 12.00% 더 썼어요' } },
   { label: '이번 달 수입', amount: 4200000, delta: { direction: 'down', value: '3%', text: '지난달보다', srText: '지난달보다 3% 줄었어요' } },
   { label: '남은 예산', amount: 260000, delta: { direction: 'flat', value: '', text: '지난달보다' } },
-  { label: '순자산', amount: 42898100, delta: { direction: 'up', value: '1.8%', text: '지난달보다', srText: '지난달보다 1.8% 늘었어요' } },
+  { label: '순자산', amount: 42898100, delta: { direction: 'up', value: '1.80%', text: '지난달보다', srText: '지난달보다 1.80% 늘었어요' } },
 ];
 // 오늘 쓴 돈 — List 줄(앞 타일 · 제목 · 설명 · 금액)
 export type Spend = { title: string; detail: string; amount: number; tile: string; icon: 'coffee' | 'bus' | 'shopping-bag' | 'utensils' | 'receipt' | 'star' };
@@ -142,14 +142,14 @@ export const BROKER_GROUPS: { label: string; items: string[] }[] = [
 // 카드 상품 — 서버 검색(300ms)
 export type CardProduct = { id: string; name: string; issuer: string; kind: string; pic: 'card-h' | 'card-v' | 'card-h2' | null; discontinued?: boolean };
 export const CARD_PRODUCTS: CardProduct[] = [
-  { id: 'c1', name: '데일리 플러스', issuer: '신한카드', kind: '신용', pic: 'card-h' },
-  { id: 'c2', name: '트래블로그', issuer: '하나카드', kind: '체크', pic: 'card-v' },
-  { id: 'c3', name: '톡톡 With', issuer: 'KB국민카드', kind: '신용', pic: null },
-  { id: 'c4', name: 'NH올원 Pay', issuer: 'NH농협카드', kind: '체크', pic: null },
-  { id: 'c5', name: 'M 에디션', issuer: '현대카드', kind: '신용', pic: 'card-h2', discontinued: true },
-  { id: 'c6', name: '탭탭 오', issuer: '삼성카드', kind: '신용', pic: null },
-  { id: 'c7', name: '카드의정석', issuer: '우리카드', kind: '신용', pic: null },
-  { id: 'c8', name: 'LOCA 365', issuer: '롯데카드', kind: '신용', pic: null },
+  { id: 'c1', name: '신용카드', issuer: '신한카드', kind: '신용', pic: 'card-h' },
+  { id: 'c2', name: '체크카드', issuer: '하나카드', kind: '체크', pic: 'card-v' },
+  { id: 'c3', name: '신용카드', issuer: 'KB국민카드', kind: '신용', pic: null },
+  { id: 'c4', name: '체크카드', issuer: 'NH농협카드', kind: '체크', pic: null },
+  { id: 'c5', name: '신용카드', issuer: '현대카드', kind: '신용', pic: 'card-h2', discontinued: true },
+  { id: 'c6', name: '신용카드', issuer: '삼성카드', kind: '신용', pic: null },
+  { id: 'c7', name: '신용카드', issuer: '우리카드', kind: '신용', pic: null },
+  { id: 'c8', name: '신용카드', issuer: '롯데카드', kind: '신용', pic: null },
 ];
 // 사람 — HR 결재자 · 참조자(Avatar 줄)
 export type PersonItem = { value: string; name: string; team: string };

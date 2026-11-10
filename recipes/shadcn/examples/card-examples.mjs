@@ -427,7 +427,7 @@ const todayList = () =>
     { ariaLabel: "오늘 쓴 돈" },
   );
 
-const SPEND = { label: "이번 달 지출", value: "1,240,000원", delta: { direction: "up", value: "12%", text: "지난달보다", srText: "지난달보다 12% 더 썼어요" } };
+const SPEND = { label: "이번 달 지출", value: "1,240,000원", delta: { direction: "up", value: "12.00%", text: "지난달보다", srText: "지난달보다 12.00% 더 썼어요" } };
 const INCOME = { label: "이번 달 수입", value: "4,200,000원", delta: { direction: "down", value: "3%", text: "지난달보다" } };
 
 // 바닥 — 카드는 회색 바닥(bg-layer-basement) 위에만 둔다. 미리보기 상자의 여백 24 는 화면 끝 여백과 같다
@@ -466,14 +466,14 @@ import { List } from "@/components/ui/list"
   {
     title: "지표 카드 — 폰은 한 줄에 하나",
     description:
-      "숫자 하나를 보이는 카드다 — 라벨 13 · 500 · fg-neutral-subtle, 아래 4 에 큰 숫자 700 · 고정폭 숫자, 아래 4 에 증감 줄. 카드 하나에 숫자 하나면 24 / 32(large)다. 폰에서는 지표 카드를 한 줄에 하나 둔다(쌓은 사이 8) — 둘씩이면 360 폭에서 칸 안쪽이 101 인데 \"1,240,000원\" 24 / 700 은 들어가지 않는다. 돈은 줄이지 않고 원까지, 숫자가 굴러가는 애니메이션은 없다. 증감은 방향으로 칠한다 — 오르면 ▲ fg-critical, 내리면 ▼ fg-informative(증권과 같은 관례), 늘 화살표와 값을 함께 쓰고 뒤에 기준을 옅은 글(13 · 400 · fg-neutral-subtle · 사이 4)로 둔다. 좋은지 나쁜지는 색이 아니라 글이 말한다 — 보조 기술에는 \"지난달보다 12% 더 썼어요\" 로 읽힌다(화살표는 숨긴다). 미리보기는 폰 폭(360)이다.",
+      "숫자 하나를 보이는 카드다 — 라벨 13 · 500 · fg-neutral-subtle, 아래 4 에 큰 숫자 700 · 고정폭 숫자, 아래 4 에 증감 줄. 카드 하나에 숫자 하나면 24 / 32(large)다. 폰에서는 지표 카드를 한 줄에 하나 둔다(쌓은 사이 8) — 둘씩이면 360 폭에서 칸 안쪽이 101 인데 \"1,240,000원\" 24 / 700 은 들어가지 않는다. 돈은 줄이지 않고 원까지, 숫자가 굴러가는 애니메이션은 없다. 증감은 방향으로 칠한다 — 오르면 ▲ fg-critical, 내리면 ▼ fg-informative(증권과 같은 관례), 늘 화살표와 값을 함께 쓰고 뒤에 기준을 옅은 글(13 · 400 · fg-neutral-subtle · 사이 4)로 둔다. 좋은지 나쁜지는 색이 아니라 글이 말한다 — 보조 기술에는 \"지난달보다 12.00% 더 썼어요\" 로 읽힌다(화살표는 숨긴다). 미리보기는 폰 폭(360)이다.",
     jsx: `import { Card, CardStat } from "@/components/ui/card"
 
 {/* 폰은 한 줄에 하나(쌓은 카드 사이 8), 768 이상은 둘씩(격자 24) — 숫자 24. 1280 이상에서 넷씩 두면 size="small"(20) */}
 <div className="grid gap-2 md:grid-cols-2 md:gap-6">
   <Card>
     <CardStat label="이번 달 지출" value="1,240,000원"
-      delta={{ direction: "up", value: "12%", text: "지난달보다", srText: "지난달보다 12% 더 썼어요" }} />
+      delta={{ direction: "up", value: "12.00%", text: "지난달보다", srText: "지난달보다 12.00% 더 썼어요" }} />
   </Card>
   <Card>
     <CardStat label="이번 달 수입" value="4,200,000원"
@@ -533,13 +533,13 @@ import { Toggle } from "@/components/ui/toggle"
   <CardHeroLabel>순자산</CardHeroLabel>
   <CardHeroAmount>42,898,100원</CardHeroAmount>
   {/* 히어로 위 증감은 흰 글자 — Delta 가 hero 안에서 색을 흰색으로 바꾼다 */}
-  <CardHeroDetail><Delta direction="up" value="1.8%" text="지난달보다" /></CardHeroDetail>
+  <CardHeroDetail><Delta direction="up" value="1.80%" text="지난달보다" /></CardHeroDetail>
 </Card>`,
     render: () =>
       floor(
         card({
           variant: "hero",
-          children: `<div data-slot="card-hero-label" class="${HERO_LABEL}">순자산</div><div data-slot="card-hero-amount" class="${HERO_AMOUNT}">42,898,100원</div><div data-slot="card-hero-detail" class="${HERO_DETAIL}">${delta({ direction: "up", value: "1.8%", text: "지난달보다", hero: true })}</div>`,
+          children: `<div data-slot="card-hero-label" class="${HERO_LABEL}">순자산</div><div data-slot="card-hero-amount" class="${HERO_AMOUNT}">42,898,100원</div><div data-slot="card-hero-detail" class="${HERO_DETAIL}">${delta({ direction: "up", value: "1.80%", text: "지난달보다", hero: true })}</div>`,
         }),
         "408px",
       ),
@@ -548,8 +548,8 @@ import { Toggle } from "@/components/ui/toggle"
   {
     title: "증감 — ▲ · ▼ · 변화 없음",
     description:
-      "어디서나(지출 · 수입 · 순자산 · 주식 · 표 · 차트) 오르면 ▲ fg-critical, 내리면 ▼ fg-informative 다 — 좋고 나쁨이 아니라 방향이다. 부호는 화살표가 말한다 — \"+12%\" · \"−12%\" 를 화살표와 같이 쓰지 않는다(value 앞의 + · − 는 떼어 낸다). 변화가 없으면 화살표 없이 \"변화 없음\"(fg-neutral-subtle)이다. 보조 기술에는 문장으로 읽힌다 — 기본은 \"{기준} {값} 늘었어요 · 줄었어요\" · 없음은 \"{기준} 변화가 없어요\", 좋고 나쁨을 말하려면 srText 를 준다(\"지난달보다 12% 더 썼어요\").",
-    jsx: `<Delta direction="up" value="12%" text="지난달보다" srText="지난달보다 12% 더 썼어요" />
+      "어디서나(지출 · 수입 · 순자산 · 주식 · 표 · 차트) 오르면 ▲ fg-critical, 내리면 ▼ fg-informative 다 — 좋고 나쁨이 아니라 방향이다. 부호는 화살표가 말한다 — \"+12.00%\" · \"−12.00%\" 를 화살표와 같이 쓰지 않는다(value 앞의 + · − 는 떼어 낸다). 변화가 없으면 화살표 없이 \"변화 없음\"(fg-neutral-subtle)이다. 보조 기술에는 문장으로 읽힌다 — 기본은 \"{기준} {값} 늘었어요 · 줄었어요\" · 없음은 \"{기준} 변화가 없어요\", 좋고 나쁨을 말하려면 srText 를 준다(\"지난달보다 12.00% 더 썼어요\").",
+    jsx: `<Delta direction="up" value="12.00%" text="지난달보다" srText="지난달보다 12.00% 더 썼어요" />
 <Delta direction="down" value="3%" text="지난달보다" />
 <Delta direction="flat" srText="지난달과 같아요" />`,
     render: () =>
@@ -557,7 +557,7 @@ import { Toggle } from "@/components/ui/toggle"
         card({
           children: cardContent(
             [
-              delta({ direction: "up", value: "12%", text: "지난달보다", srText: "지난달보다 12% 더 썼어요" }),
+              delta({ direction: "up", value: "12.00%", text: "지난달보다", srText: "지난달보다 12.00% 더 썼어요" }),
               delta({ direction: "down", value: "3%", text: "지난달보다" }),
               delta({ direction: "flat", srText: "지난달과 같아요" }),
             ].join(""),
@@ -572,7 +572,7 @@ import { Toggle } from "@/components/ui/toggle"
     description:
       "데스크톱 격자에 셋 · 넷씩 나란히 놓을 때만 숫자를 20 / 27(size=\"small\")로 줄인다 — 여백은 그대로 24 다. 칸 사이는 layout-gutter 24 이고 격자는 감싸는 쪽이 정한다(카드는 폭을 정하지 않는다). 폰에서는 한 줄에 하나로 돌아간다 — 둘씩 두지 않는다. 미리보기가 좁으면 격자를 가로로 민다.",
     jsx: `<div className="grid grid-cols-4 gap-6">
-  <Card><CardStat size="small" label="이번 달 지출" value="1,240,000원" delta={{ direction: "up", value: "12%", text: "지난달보다" }} /></Card>
+  <Card><CardStat size="small" label="이번 달 지출" value="1,240,000원" delta={{ direction: "up", value: "12.00%", text: "지난달보다" }} /></Card>
   <Card><CardStat size="small" label="이번 달 수입" value="4,200,000원" delta={{ direction: "down", value: "3%", text: "지난달보다" }} /></Card>
   <Card><CardStat size="small" label="남은 예산" value="360,000원" delta={{ direction: "flat", srText: "지난달과 같아요" }} /></Card>
   <Card><CardStat size="small" label="카드 결제 예정" value="184,000원" delta={{ direction: "down", value: "8%", text: "지난달보다" }} /></Card>
@@ -581,7 +581,7 @@ import { Toggle } from "@/components/ui/toggle"
       floor(
         grid(
           [
-            { label: "이번 달 지출", value: "1,240,000원", delta: { direction: "up", value: "12%", text: "지난달보다" } },
+            { label: "이번 달 지출", value: "1,240,000원", delta: { direction: "up", value: "12.00%", text: "지난달보다" } },
             { label: "이번 달 수입", value: "4,200,000원", delta: { direction: "down", value: "3%", text: "지난달보다" } },
             { label: "남은 예산", value: "360,000원", delta: { direction: "flat", srText: "지난달과 같아요" } },
             { label: "카드 결제 예정", value: "184,000원", delta: { direction: "down", value: "8%", text: "지난달보다" } },

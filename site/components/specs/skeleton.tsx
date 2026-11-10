@@ -445,7 +445,7 @@ function RecentCard({ mode = 'auto', phase }: { mode?: Mode; phase: 'quiet' | 'w
       {phase === 'failed' ? (
         // 카드 안 결과 — 좌우는 목록 카드의 24 만(결과 자리의 좌우 0)
         <div style={{ paddingTop: 24, paddingRight: sk().slowText.padXList, paddingBottom: 16, paddingLeft: sk().slowText.padXList }}>
-          <ResultSectionView look={r} mode={mode} kind="failure" size="medium" inCard title="거래를 불러오지 못했어요" description="잠시 후 다시 시도해주세요." primary={{ label: '다시 시도' }} />
+          <ResultSectionView look={r} mode={mode} kind="failure" size="medium" inCard title="거래를 불러오지 못했어요" description="잠시 뒤 다시 시도해주세요." primary={{ label: '다시 시도' }} />
         </div>
       ) : (
         <>

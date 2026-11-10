@@ -242,7 +242,7 @@ function SnapPhone({ mode = 'auto' }: { mode?: Mode }) {
               가득 {Math.round(s.maxHeight * 100)}%
             </span>
           </span>
-          <SheetSurface look={s} mode={mode} title="현대카드 M" description="10월 결제 예정 352,400원" handle safe={PHONE_SAFE} style={{ height: `${snap * 100}%` }} decor={{ root: <span className="absolute right-3 rounded px-1.5 text-[12px] font-bold leading-5 text-white" style={{ top: -26, background: MARK_LINE, zIndex: 3 }}>절반 {snap * 100}%</span> }}>
+          <SheetSurface look={s} mode={mode} title="현대카드 신용카드" description="10월 결제 예정 352,400원" handle safe={PHONE_SAFE} style={{ height: `${snap * 100}%` }} decor={{ root: <span className="absolute right-3 rounded px-1.5 text-[12px] font-bold leading-5 text-white" style={{ top: -26, background: MARK_LINE, zIndex: 3 }}>절반 {snap * 100}%</span> }}>
             <div className="-mt-1">
               {MONTH_TX.map(([t, sub, a, hue]) => (
                 <Row key={t} mode={mode} title={t} sub={sub} amount={a} hue={hue} />
@@ -383,7 +383,7 @@ const CARD_TX: [string, string, string, string][] = [
 ];
 function CardPage({ mode = 'auto' }: { mode?: Mode }) {
   return (
-    <Phone title="현대카드 M" mode={mode} scale={0.42} h={640} bg="bg-layer-default">
+    <Phone title="현대카드 신용카드" mode={mode} scale={0.42} h={640} bg="bg-layer-default">
       <div className="flex flex-col px-6 pt-2">
         <span className="text-[13px]" style={{ color: rc('fg-neutral-subtle', mode) }}>
           10월 결제 예정
@@ -407,7 +407,7 @@ function TallSheet({ mode = 'auto' }: { mode?: Mode }) {
           {Math.round(s.maxHeight * 100)}%
         </span>
       </span>
-      <SheetSurface look={s} mode={mode} title="현대카드 M" description="10월 결제 예정 352,400원" safe={PHONE_SAFE} maxHeight={`${s.maxHeight * 100}%`}>
+      <SheetSurface look={s} mode={mode} title="현대카드 신용카드" description="10월 결제 예정 352,400원" safe={PHONE_SAFE} maxHeight={`${s.maxHeight * 100}%`}>
         <div className="relative">
           {CARD_TX.map(([t, sub, a, hue]) => (
             <Row key={t} mode={mode} title={t} sub={sub} amount={a} hue={hue} />

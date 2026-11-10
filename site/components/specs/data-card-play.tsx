@@ -34,7 +34,7 @@ function Said({ text }: { text: string }) {
 type Content = 'content' | 'list' | 'stat' | 'hero';
 type Data = 'shown' | 'loading' | 'failure';
 const DELTA: Record<DeltaDir, DeltaSpec> = {
-  up: { direction: 'up', value: '12%', text: '지난달보다', srText: '지난달보다 12% 더 썼어요' },
+  up: { direction: 'up', value: '12.00%', text: '지난달보다', srText: '지난달보다 12.00% 더 썼어요' },
   down: { direction: 'down', value: '3%', text: '지난달보다', srText: '지난달보다 3% 덜 썼어요' },
   flat: { direction: 'flat', value: '', text: '지난달보다' },
 };
@@ -94,7 +94,7 @@ export function CardPlayground({ look, sk, result, toggle }: { look: CardLook; s
   const card = (): ReactNode => {
     if (content === 'hero')
       return data === 'shown' ? (
-        <HeroCardView look={look} mode={mode} label="순자산" amount={formatWon(42898100)} delta={{ ...DELTA[dir], value: dir === 'flat' ? '' : '1.8%', srText: undefined }} press={p === 'whole' ? 'whole' : 'none'} live onClick={() => setSaid('자산으로')} />
+        <HeroCardView look={look} mode={mode} label="순자산" amount={formatWon(42898100)} delta={{ ...DELTA[dir], value: dir === 'flat' ? '' : '1.80%', srText: undefined }} press={p === 'whole' ? 'whole' : 'none'} live onClick={() => setSaid('자산으로')} />
       ) : (
         <CardSurface look={look} mode={mode}>
           {data === 'loading' ? <SkeletonView look={sk} mode={mode} text="t12" width={200} /> : body()}
@@ -131,7 +131,7 @@ export function CardPlayground({ look, sk, result, toggle }: { look: CardLook; s
         `<Card variant="hero"${p === 'whole' ? ' href="/desk/assets"' : ''}>`,
         '  <CardHeroLabel>순자산</CardHeroLabel>',
         '  <CardHeroAmount>42,898,100원</CardHeroAmount>',
-        `  <CardHeroDetail><Delta direction="${dir}" value="${dir === 'flat' ? '' : '1.8%'}" text="지난달보다" /></CardHeroDetail>`,
+        `  <CardHeroDetail><Delta direction="${dir}" value="${dir === 'flat' ? '' : '1.80%'}" text="지난달보다" /></CardHeroDetail>`,
         '</Card>',
       ].join('\n');
     if (content === 'list')
@@ -258,5 +258,5 @@ export function ExPressDemo({ look, toggle }: { look: CardLook; toggle: ToggleLo
   );
 }
 export function ExHeroDemo({ look, amount }: { look: CardLook; amount: string }) {
-  return <HeroCardView look={look} label="순자산" amount={amount} delta={{ direction: 'up', value: '1.8%', text: '지난달보다' }} />;
+  return <HeroCardView look={look} label="순자산" amount={amount} delta={{ direction: 'up', value: '1.80%', text: '지난달보다' }} />;
 }

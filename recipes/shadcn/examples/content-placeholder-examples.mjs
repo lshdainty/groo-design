@@ -118,7 +118,7 @@ const ICONS = {
 
 // 불러온 카드 그림 — 손으로 칠한 대역(856 × 540 SVG)
 const CARD_ART = `data:image/svg+xml,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="856" height="540" viewBox="0 0 856 540"><defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1c1c1c"/><stop offset="1" stop-color="#5a5a5a"/></linearGradient></defs><rect width="856" height="540" fill="url(#c)"/><rect x="72" y="150" width="120" height="92" rx="14" fill="#d9b44a"/><text x="790" y="470" text-anchor="end" font-family="sans-serif" font-size="64" font-weight="800" letter-spacing="3" fill="#ffffff">M EDITION</text></svg>',
+  '<svg xmlns="http://www.w3.org/2000/svg" width="856" height="540" viewBox="0 0 856 540"><defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1c1c1c"/><stop offset="1" stop-color="#5a5a5a"/></linearGradient></defs><rect width="856" height="540" fill="url(#c)"/><rect x="72" y="150" width="120" height="92" rx="14" fill="#d9b44a"/><text x="790" y="470" text-anchor="end" font-family="sans-serif" font-size="64" font-weight="800" letter-spacing="3" fill="#ffffff">BLACK</text></svg>',
 )}`;
 
 // <ContentPlaceholder> — icon(기본 image) · label(대체 글 — 주면 role="img" + 이름, 안 주면 보조 기술에 숨긴다)
@@ -170,10 +170,10 @@ import { ImageFrame } from "@/components/ui/image-frame"
 {/* 틀 — 비율 · 모서리(폭 112 → 8)는 Image Frame 이 정하고, 없거나 못 불러오면 이 그림을 그린다. 대체 글은 alt 를 이어받는다 */}
 <ImageFrame ratio="card" width={112} src={card.imageUrl} alt={\`\${card.name} 카드 그림\`} fallbackIcon={<CreditCard />} />`,
     render: () =>
-      `<div style="${ROW}">${labeled(cardFrame({ src: CARD_ART, alt: "현대카드 M 카드 그림", state: "error" }), "실패 — 대체 그림 · 그림 35")}${labeled(
-        cardFrame({ src: null, alt: "현대카드 M 카드 그림" }),
+      `<div style="${ROW}">${labeled(cardFrame({ src: CARD_ART, alt: "현대카드 신용카드 그림", state: "error" }), "실패 — 대체 그림 · 그림 35")}${labeled(
+        cardFrame({ src: null, alt: "현대카드 신용카드 그림" }),
         "src 없음 — 처음부터 대체 그림",
-      )}${labeled(cardFrame({ src: CARD_ART, alt: "현대카드 M 카드 그림" }), "불러옴")}</div>`,
+      )}${labeled(cardFrame({ src: CARD_ART, alt: "현대카드 신용카드 그림" }), "불러옴")}</div>`,
   },
 
   {
@@ -220,14 +220,14 @@ import { ImageFrame } from "@/components/ui/image-frame"
     description:
       "이미지를 불러오는 동안은 이 그림이 아니라 같은 모서리 · 같은 크기의 Skeleton 이다 — 불러오는 중과 없음이 같은 그림이면 기다려야 하는지 알 수 없다(SEED React Image Frame 은 불러오는 동안에도 이 그림을 보인다 — 따르지 않는다). Image Frame 이 둘을 가른다 — 받는 동안 스켈레톤(모서리는 틀이 자른다), 다 받았는데 없거나 · 못 불러오거나 · 10초가 지나도 안 오면 이 그림이다. 틀 밖에서 그림 자리를 그릴 때(줄이 통째로 기다릴 때)는 Skeleton 의 radius 를 그 폭의 모서리(imageFrameRadius(폭))로 준다.",
     jsx: `{/* 받는 동안 스켈레톤 · 실패하면 대체 그림 — Image Frame 이 가른다 */}
-<ImageFrame ratio="card" width={112} src={card.imageUrl} alt="현대카드 M 카드 그림" fallbackIcon={<CreditCard />} />
+<ImageFrame ratio="card" width={112} src={card.imageUrl} alt="현대카드 신용카드 그림" fallbackIcon={<CreditCard />} />
 
 {/* 틀 밖의 그림 자리 — 다 받은 그림과 같은 모서리(40 → "6") */}
 <Skeleton radius={imageFrameRadius(40)} className="size-10" />`,
     render: () =>
-      `<div style="${ROW}">${labeled(cardFrame({ src: CARD_ART, alt: "현대카드 M 카드 그림", state: "loading" }), "loading — Skeleton")}${labeled(
-        cardFrame({ src: CARD_ART, alt: "현대카드 M 카드 그림", state: "error" }),
+      `<div style="${ROW}">${labeled(cardFrame({ src: CARD_ART, alt: "현대카드 신용카드 그림", state: "loading" }), "loading — Skeleton")}${labeled(
+        cardFrame({ src: CARD_ART, alt: "현대카드 신용카드 그림", state: "error" }),
         "failed — 대체 그림",
-      )}${labeled(cardFrame({ src: CARD_ART, alt: "현대카드 M 카드 그림" }), "loaded")}${labeled(skeleton({ radius: imageFrameRadius(40), className: "size-10" }), `Skeleton "${imageFrameRadius(40)}" — 40`)}</div>`,
+      )}${labeled(cardFrame({ src: CARD_ART, alt: "현대카드 신용카드 그림" }), "loaded")}${labeled(skeleton({ radius: imageFrameRadius(40), className: "size-10" }), `Skeleton "${imageFrameRadius(40)}" — 40`)}</div>`,
   },
 ];

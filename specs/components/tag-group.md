@@ -156,7 +156,7 @@ import { Eye } from "lucide-react"
 ```tsx
 <TagGroup size="t3" truncate>
   <TagGroupItem shrink={1}>교통</TagGroupItem>
-  <TagGroupItem shrink={2}>신한카드 Deep Dream 체크(1234)</TagGroupItem>
+  <TagGroupItem shrink={2}>신한카드 체크카드(1234)</TagGroupItem>
   <TagGroupItem shrink={0}>오후 2:10</TagGroupItem>
 </TagGroup>
 ```
@@ -214,6 +214,10 @@ import { Eye } from "lucide-react"
 - **줄어드는 항목의 최소 폭** — 한 줄 말줄임에서 항목은 첫 글자 + "…"(2.1em) 까지만 준다. SEED 는 최소 폭이 없어 좁은 줄에서 글자 조각만 남는다(2026-10-17 사용자 결정 — 03-E 결정 5 B).
 
 ## Migration notes
+
+### 2026-11-10 — 예시 이름
+
+예시 카드 이름 "신한카드 Deep Dream 체크(1234)" 를 "신한카드 체크카드(1234)" 로 바꿨다(2026-11-10 사용자 결정 15B — 카드사 + 종류). 줄이는 글이 짧아졌지만 그림의 줄임 폭은 그대로 넘친다. 값 변경 없음. 옛 스펙은 `tag-group.history/v-pre-decisions-1110.md`.
 
 ### 2026-11-07 — 코드 예의 카테고리 shrink
 

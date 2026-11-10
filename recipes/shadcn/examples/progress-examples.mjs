@@ -113,14 +113,14 @@ export const progressExamples = [
     description:
       "모을수록 차는 막대(meaning=\"goal\")다. 목표에 닿으면 채움은 끝까지 차고 색은 브랜드 그대로, 오른쪽 글만 \"달성\"(fg-neutral · 700)으로 바뀐다 — 성공 색 · 축하 모양을 더하지 않는다. 넘어도(130%) 막대는 끝까지만 차고 금액 줄이 실제 값을 보인다. 돈이 아닌 값은 formatValue 로 단위를 바꾼다(\"6시간 / 8시간\").",
     jsx: `<Progress meaning="goal" label="여행 자금" value={1200000} max={2000000} />
-<Progress meaning="goal" label="현대카드 M 전월 실적" value={390000} max={300000} />  {/* "달성" — 막대는 끝까지 */}
+<Progress meaning="goal" label="현대카드 신용카드 전월 실적" value={390000} max={300000} />  {/* "달성" — 막대는 끝까지 */}
 
 {/* 돈이 아닌 값 — 단위를 바꾼다 */}
 <Progress meaning="goal" label="오늘 근무" value={6} max={8} formatValue={(h) => \`\${h}시간\`} />`,
     render: () =>
       card([
         progress({ meaning: "goal", label: "여행 자금", value: 1200000, max: 2000000 }),
-        progress({ meaning: "goal", label: "현대카드 M 전월 실적", value: 390000, max: 300000 }),
+        progress({ meaning: "goal", label: "현대카드 신용카드 전월 실적", value: 390000, max: 300000 }),
         progress({ meaning: "goal", label: "오늘 근무", value: 6, max: 8, formatValue: (h) => `${h}시간` }),
       ]),
   },

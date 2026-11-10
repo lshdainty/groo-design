@@ -39,7 +39,7 @@ const Hero: Fig = ({ caption }) => {
     <div className="flex items-start gap-4">
       <Phone title="가계부" back={false} mode={mode} scale={0.65} h={600} bg="bg-layer-default" tabs overlay={<TxSheet mode={mode} />}>
         <div className="px-6">
-          <Row mode={mode} title="점심 식사" sub="식비 · 현대카드 M" amount="−12,000원" hue="orange" />
+          <Row mode={mode} title="점심 식사" sub="식비 · 현대카드 신용카드" amount="−12,000원" hue="orange" />
         </div>
       </Phone>
       <div className="flex w-[344px] flex-col gap-3 rounded-xl p-4" style={{ background: rc('bg-layer-default', mode) }}>

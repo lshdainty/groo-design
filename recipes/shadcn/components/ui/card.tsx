@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
  *   CardLink        peers 카드의 누르는 자리 — 카드 전체를 덮는 링크(href) · 버튼(onClick), 글은 제목 모양(이름은 카드 제목)
  *   CardStat        지표 — label(13 · 500 · fg-neutral-subtle) · value(700 · 고정폭 숫자 — large 24 / 32 · small 20 / 27) · delta
  *   Delta           증감 줄 — direction "up"(▲ fg-critical) · "down"(▼ fg-informative) · "flat"(화살표 없이 "변화 없음" · fg-neutral-subtle) ·
- *                   value("12%") · text("지난달보다" · fg-neutral-subtle) · srText(보조 기술 문장 — 기본 "{text} {value} 늘었어요 · 줄었어요").
+ *                   value("12.00%") · text("지난달보다" · fg-neutral-subtle) · srText(보조 기술 문장 — 기본 "{text} {value} 늘었어요 · 줄었어요").
  *                   표 · 차트의 증감 칸도 이것을 쓴다. 순자산 카드 안에서는 모두 흰 글자(채움 위 빨강 · 파랑은 1.66 · 1.65 — 하나뿐인 예외)
  *   CardHeroLabel · CardHeroAmount · CardHeroDetail   순자산 카드의 흰 글자 셋 — 라벨 13 · 500, 금액 32 / 42 · 700(아래 6), 아래 글 13(아래 4)
  *
@@ -351,7 +351,7 @@ export interface DeltaProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 
   value?: React.ReactNode;
   /** 기준 — "지난달보다"(fg-neutral-subtle) */
   text?: React.ReactNode;
-  /** 보조 기술이 읽는 문장 — 기본 "{text} {value} 늘었어요 · 줄었어요"(flat 은 "{text} 변화가 없어요"). 좋고 나쁨을 말하려면 준다("지난달보다 12% 더 썼어요") */
+  /** 보조 기술이 읽는 문장 — 기본 "{text} {value} 늘었어요 · 줄었어요"(flat 은 "{text} 변화가 없어요"). 좋고 나쁨을 말하려면 준다("지난달보다 12.00% 더 썼어요") */
   srText?: string;
 }
 
@@ -363,7 +363,7 @@ const DELTA_TONE: Record<DeltaDirection, string> = {
 const ARROW: Record<DeltaDirection, string | null> = { up: "▲", down: "▼", flat: null };
 
 const plain = (node: React.ReactNode) => (typeof node === "string" || typeof node === "number" ? String(node).trim() : "");
-// 앞의 부호를 떼어 낸다 — "+12%" · "−12%" · "+-12.5%" 를 화살표와 겹쳐 쓰지 않는다
+// 앞의 부호를 떼어 낸다 — "+12.00%" · "−12.00%" · "+-12.5%" 를 화살표와 겹쳐 쓰지 않는다
 const unsigned = (node: React.ReactNode) => (typeof node === "string" ? node.replace(/^[\s+\-\u2212]+/, "") : node);
 
 function deltaSentence(direction: DeltaDirection, value: React.ReactNode, text: React.ReactNode) {

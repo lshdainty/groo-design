@@ -250,8 +250,8 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 // 그림 재료 — 손으로 칠한 대역(SVG). 세로 카드 그림(540 × 856) · 가로 카드 그림(856 × 540) · 가상의 회사 로고(흰 바탕에 맞춘 검은 마크)
 const uri = (w, h, body) => `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${body}</svg>`)}`;
 const ART = {
-  cardSelect: uri(540, 856, `<defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e52d27"/><stop offset="1" stop-color="#7b1fa2"/></linearGradient></defs><rect width="540" height="856" fill="url(#c)"/><rect x="76" y="72" width="150" height="104" rx="14" fill="#d9b44a"/><text transform="translate(300 470) rotate(-90)" text-anchor="middle" font-family="sans-serif" font-size="76" font-weight="800" letter-spacing="5" fill="#ffffff">SELECT ALL</text>`),
-  cardEdition: uri(856, 540, `<defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1c1c1c"/><stop offset="1" stop-color="#5a5a5a"/></linearGradient></defs><rect width="856" height="540" fill="url(#c)"/><rect x="72" y="150" width="120" height="92" rx="14" fill="#d9b44a"/><text x="790" y="470" text-anchor="end" font-family="sans-serif" font-size="64" font-weight="800" letter-spacing="3" fill="#ffffff">M EDITION</text>`),
+  cardSelect: uri(540, 856, `<defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e52d27"/><stop offset="1" stop-color="#7b1fa2"/></linearGradient></defs><rect width="540" height="856" fill="url(#c)"/><rect x="76" y="72" width="150" height="104" rx="14" fill="#d9b44a"/><text transform="translate(300 470) rotate(-90)" text-anchor="middle" font-family="sans-serif" font-size="76" font-weight="800" letter-spacing="5" fill="#ffffff">CREDIT</text>`),
+  cardEdition: uri(856, 540, `<defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1c1c1c"/><stop offset="1" stop-color="#5a5a5a"/></linearGradient></defs><rect width="856" height="540" fill="url(#c)"/><rect x="72" y="150" width="120" height="92" rx="14" fill="#d9b44a"/><text x="790" y="470" text-anchor="end" font-family="sans-serif" font-size="64" font-weight="800" letter-spacing="3" fill="#ffffff">BLACK</text>`),
   logoHanbit: uri(360, 120, `<circle cx="60" cy="60" r="38" fill="none" stroke="#111111" stroke-width="10"/><path d="M60 36c14 8 18 28 0 46-18-18-14-38 0-46Z" fill="#1e7d4c"/><text x="118" y="78" font-family="sans-serif" font-size="46" font-weight="800" letter-spacing="2" fill="#111111">HANBIT</text>`),
   logoDaon: uri(360, 120, `<path d="M60 20 95 40v40L60 100 25 80V40Z" fill="none" stroke="#111111" stroke-width="10"/><circle cx="60" cy="60" r="12" fill="#111111"/><text x="118" y="78" font-family="sans-serif" font-size="46" font-weight="800" letter-spacing="2" fill="#111111">DAON</text>`),
 };
@@ -328,7 +328,7 @@ const ASSETS = [
 // 찾기 — logo-tile.md 의 예시 이름(같은 답을 앱도 시험한다)
 const LOOKUPS = [
   { name: "신한" },
-  { name: "NH농협카드 올원" },
+  { name: "NH농협카드 체크" },
   { name: "IBK기업은행" },
   { name: "비상금", face: "name" },
   { name: "우리 아이 적금", face: "name" },
@@ -436,9 +436,9 @@ import { LogoTile } from "@/components/ui/logo-tile"
   {
     title: "면과 찾기 — 기관 색 · 이름 색",
     description:
-      "face=\"institution\"(기본)은 기관 색 표에서 찾는다 — 공백을 빼고 같은 이름 · 별칭이면 그 기관(\"신한\"), 아니면 이름에 든 가장 긴 이름(\"NH농협카드 올원\" → NH농협카드 · \"IBK기업은행\" → IBK기업), 없으면 이름 색이다. 글자는 표의 text — 흰 글자가 4.5:1 에 못 미치면 짙은 글자(라이트 fg-neutral · 다크 fg-neutral-inverted)라 78곳 모두 4.52 이상이다. 기관 색은 모드를 따르지 않는다. 사용자가 지은 자산 이름 · HR 회사 이름은 face=\"name\" 이다 — 표를 보지 않아 \"우리 아이 적금\" 이 우리은행 색이 되지 않는다. 혼자인 타일(decorative={false})은 role=\"img\" + 이름 하나다.",
+      "face=\"institution\"(기본)은 기관 색 표에서 찾는다 — 공백을 빼고 같은 이름 · 별칭이면 그 기관(\"신한\"), 아니면 이름에 든 가장 긴 이름(\"NH농협카드 체크\" → NH농협카드 · \"IBK기업은행\" → IBK기업), 없으면 이름 색이다. 글자는 표의 text — 흰 글자가 4.5:1 에 못 미치면 짙은 글자(라이트 fg-neutral · 다크 fg-neutral-inverted)라 78곳 모두 4.52 이상이다. 기관 색은 모드를 따르지 않는다. 사용자가 지은 자산 이름 · HR 회사 이름은 face=\"name\" 이다 — 표를 보지 않아 \"우리 아이 적금\" 이 우리은행 색이 되지 않는다. 혼자인 타일(decorative={false})은 role=\"img\" + 이름 하나다.",
     jsx: `<LogoTile name="신한" />                              {/* 신한 #0046FF · 흰 글자 */}
-<LogoTile name="NH농협카드 올원" />                   {/* 든 가장 긴 이름 — NH농협카드 · 짙은 글자 */}
+<LogoTile name="NH농협카드 체크" />                   {/* 든 가장 긴 이름 — NH농협카드 · 짙은 글자 */}
 <LogoTile name="IBK기업은행" />                       {/* IBK기업 */}
 <LogoTile name="비상금" face="name" />               {/* 이름 색 indigo */}
 <LogoTile name="우리 아이 적금" face="name" decorative={false} />`,

@@ -123,12 +123,12 @@ const ROW_TEXT =
   "display:flex; justify-content:space-between; gap:var(--spacing-x3); padding:var(--spacing-x3) var(--spacing-global-gutter); font-size:var(--text-t5); line-height:var(--text-t5--line-height); color:var(--color-fg-neutral);";
 const ROW_DETAIL = "display:block; font-size:var(--text-t3); line-height:var(--text-t3--line-height); color:var(--color-fg-neutral-subtle);";
 const LEDGER = [
-  ["가나김밥", "식비 · 현대카드 M", "8,000원"],
-  ["버스", "교통 · 현대카드 M", "1,500원"],
-  ["가나생활", "쇼핑 · 현대카드 M", "12,300원"],
+  ["가나김밥", "식비 · 현대카드 신용카드", "8,000원"],
+  ["버스", "교통 · 현대카드 신용카드", "1,500원"],
+  ["가나생활", "쇼핑 · 현대카드 신용카드", "12,300원"],
   ["월급", "수입 · 국민 주계좌", "3,200,000원"],
   ["다라커피", "식비 · 국민 주계좌", "6,800원"],
-  ["가나24", "식비 · 현대카드 M", "3,200원"],
+  ["가나24", "식비 · 현대카드 신용카드", "3,200원"],
 ];
 const EVENTS = [
   ["팀 회의", "10월 8일 (목) 10:00", ""],

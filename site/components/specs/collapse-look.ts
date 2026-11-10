@@ -3,11 +3,11 @@
 // 이 값만 받아 그린다 — 치수 · 색 · 글은 그림에 따로 적지 않는다. 수치는 YAML 의 속성 값에서만 읽는다(비고 note 는 읽지 않는다).
 // 값끼리 맞물리는 자리(트리거 54 = 위아래 + 제목 줄 …)는 여기서 견주고, 어긋나면 빌드를 멈춘다.
 import { axisValues, loadComponentSpec, num, resolveState, stateNames, tokenValue, type TypeValue } from '@/lib/component-spec';
-import { pressScale, proseValue, reducedMotion, type Brand } from '@/lib/design-tokens';
+import { pressScale, reducedMotion, type Brand } from '@/lib/design-tokens';
 import { BODY_W } from './collapse-data';
 import { named } from './input-look';
 import { listLook } from './list-look';
-import type { AccLook, AutoHideLook, ColLook, IColor, IMotion, IPress, IType, NestLook, ScrollAreaLook, SplitLook, Tones, TreeLook, TriggerLook, WidgetLook } from './collapse-shared';
+import type { AccLook, AutoHideLook, ColLook, IColor, IMotion, IPress, IType, NestLook, ScrollAreaLook, SplitLook, Tones, TreeLook, TriggerLook } from './collapse-shared';
 export * from './collapse-shared';
 
 type Raw = Record<string, unknown>;
@@ -405,7 +405,7 @@ export function splitLook(): SplitLook {
   const k = kit(F);
   const spec = loadComponentSpec('resizable');
   k.sameSet(stateNames(spec), ['enabled', 'hovered', 'focused', 'pressed'], 'states');
-  k.sameSet(axisValues(spec, 'kind'), ['split', 'widget'], 'kind');
+  k.sameSet(axisValues(spec, 'kind'), ['split'], 'kind');
   const b = resolveState(spec, { kind: 'split' }, 'enabled');
   const hov = resolveState(spec, { kind: 'split' }, 'hovered');
   const fo = resolveState(spec, { kind: 'split' }, 'focused');
@@ -428,58 +428,6 @@ export function splitLook(): SplitLook {
   // 손잡이 표시는 선 색이 짙어졌을 때와 같은 색(stroke-neutral-solid)
   k.same(look.grip.color.light, look.line.activeColor.light, '손잡이 표시 색 · 짙어진 선 색');
   splitCache = look;
-  return look;
-}
-
-let widgetCache: WidgetLook | undefined;
-export function widgetLook(): WidgetLook {
-  if (widgetCache) return widgetCache;
-  const brand: Brand = 'hr';
-  const F = 'resizable.yaml';
-  const k = kit(F);
-  const spec = loadComponentSpec('resizable');
-  const b = resolveState(spec, { kind: 'widget' }, 'enabled');
-  const pr = resolveState(spec, { kind: 'widget' }, 'pressed');
-  const fo = resolveState(spec, { kind: 'widget' }, 'focused');
-  k.same(k.str(b['placeholder.display'], 'widget placeholder.display'), '숨김', '자리표시(끄지 않을 때)');
-  k.same(k.str(pr['placeholder.display'], 'widget pressed placeholder.display'), '보임', '자리표시(끄는 동안)');
-  const sh = /^\$shadow-(s\d)$/.exec(k.str(b['ghost.shadow'], 'widget ghost.shadow'));
-  if (!sh) throw new Error(`${F} 의 widget ghost.shadow 가 그림자 토큰이 아니다`);
-  const items = k
-    .str(b['sizeMenu.items'], 'widget sizeMenu.items')
-    .split(' · ')
-    .map((t) => {
-      const m = /^(.+ — (\d+)칸)$/.exec(t.trim());
-      if (!m) throw new Error(`${F} 의 sizeMenu.items 줄(${t})이 "글 — N칸" 이 아니다`);
-      return { label: m[1], columns: Number(m[2]) };
-    });
-  const look: WidgetLook = {
-    columns: k.n(b['group.columns'], 'widget group.columns'),
-    rowHeight: k.len(b['group.rowHeight'], 'widget group.rowHeight'),
-    gap: k.len(b['group.gap'], 'widget group.gap'),
-    handle: { size: k.len(b['widgetHandle.size'], 'widgetHandle.size'), cursor: k.str(b['widgetHandle.cursor'], 'widgetHandle.cursor') },
-    mark: {
-      size: k.len(b['widgetMark.size'], 'widgetMark.size'),
-      borderW: k.len(b['widgetMark.borderWidth'], 'widgetMark.borderWidth'),
-      color: k.tok(b['widgetMark.borderColor'], brand, 'widgetMark.borderColor'),
-      right: k.len(b['widgetMark.right'], 'widgetMark.right'),
-      bottom: k.len(b['widgetMark.bottom'], 'widgetMark.bottom'),
-    },
-    placeholder: {
-      bg: k.tok(b['placeholder.background'], brand, 'placeholder.background'),
-      borderW: k.len(b['placeholder.borderWidth'], 'placeholder.borderWidth'),
-      borderStyle: k.str(b['placeholder.borderStyle'], 'placeholder.borderStyle'),
-      border: k.tok(b['placeholder.borderColor'], brand, 'placeholder.borderColor'),
-      radius: k.len(b['placeholder.radius'], 'placeholder.radius'),
-    },
-    ghost: { shadow: { name: `shadow-${sh[1]}`, light: proseValue(`shadow-${sh[1]}`), dark: proseValue(`shadow-${sh[1]}-dark`) }, radius: k.len(b['ghost.radius'], 'ghost.radius') },
-    more: { size: k.len(b['moreButton.size'], 'moreButton.size'), icon: k.len(b['moreButton.iconSize'], 'moreButton.iconSize'), touch: k.box(b['moreButton.touchTarget'], 'moreButton.touchTarget').w },
-    sizeMenu: { label: k.str(b['sizeMenu.label'], 'sizeMenu.label'), items },
-    ring: { width: k.len(fo['focusRing.width'], 'widget focusRing.width'), offset: k.len(fo['focusRing.offset'], 'widget focusRing.offset'), color: k.tok(fo['focusRing.color'], brand, 'widget focusRing.color') },
-  };
-  k.same(k.box(b['widgetHandle.touchTarget'], 'widgetHandle.touchTarget').w, look.handle.size, '모서리 손잡이 누르는 자리 · 크기');
-  if (!look.sizeMenu.items.some((i) => i.columns === look.columns)) throw new Error(`${F} 의 크기 메뉴에 가득(${look.columns}칸)이 없다`);
-  widgetCache = look;
   return look;
 }
 

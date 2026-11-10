@@ -121,7 +121,7 @@ export function BadgePlayground({ kits, lists }: { kits: Kits; lists: Record<Bra
               prefix: { tile: 'red', icon: 'receipt' },
               title: '가나영상',
               titleBadge: badge,
-              detailNode: <TagGroupView look={k.tag} mode={mode} size="t3" truncate items={[{ label: '구독', shrink: 0 }, { label: '현대카드 M' }, { label: '10월 18일', shrink: 0 }]} />,
+              detailNode: <TagGroupView look={k.tag} mode={mode} size="t3" truncate items={[{ label: '구독', shrink: 0 }, { label: '현대카드 신용카드' }, { label: '10월 18일', shrink: 0 }]} />,
               suffix: { amount: '−17,000원' },
             },
           ]}
@@ -131,7 +131,7 @@ export function BadgePlayground({ kits, lists }: { kits: Kits; lists: Record<Bra
         상세 머리 — 이름 아래
       </span>
       <div className="flex flex-col rounded-2xl px-6 py-5" style={{ background: card, gap: 8 }}>
-        <span style={{ fontSize: 20, lineHeight: '28px', fontWeight: 700, color: dcv(k.tone['fg-neutral'], mode) }}>현대카드 M</span>
+        <span style={{ fontSize: 20, lineHeight: '28px', fontWeight: 700, color: dcv(k.tone['fg-neutral'], mode) }}>현대카드 신용카드</span>
         <span className="flex min-w-0">{badge}</span>
       </div>
     </div>
@@ -230,7 +230,7 @@ export function NotificationPlayground({ kits, buttons }: { kits: Kits; buttons:
 }
 
 // ── Tag Group ─────────────────────────────────────────────
-const TAG_ALL: TagItem[] = [{ label: '식비' }, { label: '신한카드 Deep Dream 체크(1234)' }, { label: '오후 2:10' }, { label: '조회 12' }];
+const TAG_ALL: TagItem[] = [{ label: '식비' }, { label: '신한카드 체크카드(1234)' }, { label: '오후 2:10' }, { label: '조회 12' }];
 const WIDTHS = [
   ['180', '180'],
   ['240', '240'],

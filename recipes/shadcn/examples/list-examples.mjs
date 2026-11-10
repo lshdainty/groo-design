@@ -838,7 +838,7 @@ function cardArt56({ issuer, name, src, portrait = false }) {
 
 // 세로 카드 그림(540 × 856) — 손으로 칠한 대역(SVG). 실제 카드 그림이 아니다
 const CARD_PORTRAIT = `data:image/svg+xml,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="540" height="856" viewBox="0 0 540 856"><defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e52d27"/><stop offset="1" stop-color="#7b1fa2"/></linearGradient></defs><rect width="540" height="856" fill="url(#c)"/><rect x="76" y="72" width="150" height="104" rx="14" fill="#d9b44a"/><text transform="translate(300 470) rotate(-90)" text-anchor="middle" font-family="sans-serif" font-size="76" font-weight="800" letter-spacing="5" fill="#ffffff">SELECT ALL</text></svg>',
+  '<svg xmlns="http://www.w3.org/2000/svg" width="540" height="856" viewBox="0 0 540 856"><defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e52d27"/><stop offset="1" stop-color="#7b1fa2"/></linearGradient></defs><rect width="540" height="856" fill="url(#c)"/><rect x="76" y="72" width="150" height="104" rx="14" fill="#d9b44a"/><text transform="translate(300 470) rotate(-90)" text-anchor="middle" font-family="sans-serif" font-size="76" font-weight="800" letter-spacing="5" fill="#ffffff">CREDIT</text></svg>',
 )}`;
 
 // 줄은 화면의 기본 면(bg-layer-default) 위에 놓인다 — 폭 360 의 휴대폰 화면처럼 그린다. 사이트 미리보기 칸의 바탕(bg-page)은
@@ -1099,8 +1099,8 @@ import { LogoTile } from "@/components/ui/logo-tile"
 
 {/* 카드 혜택 — 카드 그림 56 */}
 <List>
-  <ListButtonItem prefix={<CardArt width={56} src={card.imgUrl} issuer="삼성카드" name="iD SELECT ALL" />} title="iD SELECT ALL" detail="신용 · 삼성카드" />
-  <ListButtonItem prefix={<CardArt width={56} src={null} issuer="NH농협카드" name="올원 Pay" />} title="올원 Pay" detail="체크 · NH농협카드" />
+  <ListButtonItem prefix={<CardArt width={56} src={card.imgUrl} issuer="삼성카드" name="신용카드" />} title="삼성카드 신용카드" detail="신용 · 삼성카드" />
+  <ListButtonItem prefix={<CardArt width={56} src={null} issuer="NH농협카드" name="체크카드" />} title="체크카드" detail="체크 · NH농협카드" />
 </List>`,
     render: () =>
       `<div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:var(--spacing-x5) var(--spacing-x6);">
@@ -1122,8 +1122,8 @@ import { LogoTile } from "@/components/ui/logo-tile"
   ${captioned(
     "카드 혜택 · CardArt 56",
     list([
-      listButtonItem({ prefix: cardArt56({ issuer: "삼성카드", name: "iD SELECT ALL", src: CARD_PORTRAIT, portrait: true }), title: "iD SELECT ALL", detail: "신용 · 삼성카드" }),
-      listButtonItem({ prefix: cardArt56({ issuer: "NH농협카드", name: "올원 Pay" }), title: "올원 Pay", detail: "체크 · NH농협카드" }),
+      listButtonItem({ prefix: cardArt56({ issuer: "삼성카드", name: "신용카드", src: CARD_PORTRAIT, portrait: true }), title: "삼성카드 신용카드", detail: "신용 · 삼성카드" }),
+      listButtonItem({ prefix: cardArt56({ issuer: "NH농협카드", name: "체크카드" }), title: "체크카드", detail: "체크 · NH농협카드" }),
     ]),
   )}
 </div>`,

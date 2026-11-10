@@ -346,8 +346,8 @@ const PlacementGuide: Fig = ({ caption }) => (
 
 // 글 — 짧게 · 길어서 두 줄(설정 > 프리셋 정렬)
 const PRESETS: [string, string, string, string][] = [
-  ['점심 식사', '식비 · 현대카드 M', '12,000원', 'orange'],
-  ['아침 커피', '카페 · 현대카드 M', '4,500원', 'brown'],
+  ['점심 식사', '식비 · 현대카드 신용카드', '12,000원', 'orange'],
+  ['아침 커피', '카페 · 현대카드 신용카드', '4,500원', 'brown'],
   ['출퇴근', '교통 · 국민 체크카드', '1,450원', 'blue'],
 ];
 function PresetScreen({ items, mode = 'auto' }: { items: SegItem[]; mode?: Mode }) {

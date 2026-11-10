@@ -354,7 +354,7 @@ const P_FIX = "margin:var(--spacing-x2) 0 0; color:var(--color-fg-neutral-muted)
 // <ResultSection kind="failure" size="medium" … primaryAction> — 보인 뒤의 모습
 function failure(title) {
   const s = RESULT_SIZES.medium;
-  return `<div role="status" data-slot="result-section" data-kind="failure" data-size="medium" class="${resultSectionVariants()}"><span aria-hidden="true" data-slot="result-section-asset" class="${RESULT_ASSET} ${RESULT_KIND_COLOR.failure}">${CIRCLE_ALERT}</span><h2 data-slot="result-section-title" class="${RESULT_TITLE} ${s.title}">${esc(title)}</h2><p data-slot="result-section-description" class="${RESULT_DESCRIPTION} ${s.description}" style="${P_FIX}">잠시 후 다시 시도해주세요.</p><div data-slot="result-section-actions" class="${RESULT_ACTIONS} ${s.actions}"><button type="button" class="${buttonVariants({ variant: "neutralWeak", size: "medium" })}">다시 시도</button></div></div>`;
+  return `<div role="status" data-slot="result-section" data-kind="failure" data-size="medium" class="${resultSectionVariants()}"><span aria-hidden="true" data-slot="result-section-asset" class="${RESULT_ASSET} ${RESULT_KIND_COLOR.failure}">${CIRCLE_ALERT}</span><h2 data-slot="result-section-title" class="${RESULT_TITLE} ${s.title}">${esc(title)}</h2><p data-slot="result-section-description" class="${RESULT_DESCRIPTION} ${s.description}" style="${P_FIX}">잠시 뒤 다시 시도해주세요.</p><div data-slot="result-section-actions" class="${RESULT_ACTIONS} ${s.actions}"><button type="button" class="${buttonVariants({ variant: "neutralWeak", size: "medium" })}">다시 시도</button></div></div>`;
 }
 
 // <LoadingRegion> — state: quiet(0 ~ 1초) · waiting(1초 ~) · slow(5초 ~) · failed · ready. circle 이면 fallback="circle"(원 40)
@@ -436,7 +436,7 @@ function TransactionRowsSkeleton({ rows }: { rows: number }) {
         kind="failure"
         size="medium"
         title="거래를 불러오지 못했어요"
-        description="잠시 후 다시 시도해주세요."
+        description="잠시 뒤 다시 시도해주세요."
         primaryAction={{ label: "다시 시도", onClick: () => query.refetch() }}
       />
     }

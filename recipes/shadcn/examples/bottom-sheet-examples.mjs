@@ -451,7 +451,7 @@ const svg = (paths) =>
   `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
 const ICONS = {
   x: svg('<path d="M18 6 6 18"/><path d="m6 6 12 12"/>'),
-  arrowLeft: svg('<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>'),
+  chevronLeft: svg('<path d="m15 18-6-6 6-6"/>'),
   calendarDays: svg(
     '<path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M16 13h.01"/><path d="M8 17h.01"/><path d="M12 17h.01"/><path d="M16 17h.01"/>',
   ),
@@ -514,7 +514,7 @@ function bottomSheet({ uid, title, description, body, footer = [], snap, form = 
     `style="${SHEET_FIT(height)}${snaps ? ` height:${Math.round(height * 0.9)}px; transform:translate3d(0, ${translate}px, 0);` : ""}"`,
   ]);
   const handle = snaps ? `<div aria-hidden="true" data-slot="bottom-sheet-handle" class="${HANDLE}"></div>` : "";
-  const backHtml = back ? `<button type="button" aria-label="뒤로" data-slot="bottom-sheet-back" class="${BACK}">${ICONS.arrowLeft}</button>` : "";
+  const backHtml = back ? `<button type="button" aria-label="뒤로" data-slot="bottom-sheet-back" class="${BACK}">${ICONS.chevronLeft}</button>` : "";
   const titleClass = [TITLE, close && TITLE_WITH_CLOSE, back && TITLE_WITH_BACK].filter(Boolean).join(" ");
   const header = `${backHtml}<div data-slot="bottom-sheet-header" class="${HEADER}"><h2 id="${titleId}" data-slot="bottom-sheet-title" class="${titleClass}">${esc(title)}</h2>${
     description != null ? `<p id="${descriptionId}" data-slot="bottom-sheet-description" class="${DESCRIPTION}" style="${P_FIX.description}">${esc(description)}</p>` : ""
@@ -697,7 +697,7 @@ export const bottomSheetExamples = [
       <List>
         <ListItem title="금액" suffix="8,000원" />
         <ListItem title="카테고리" suffix="식비" />
-        <ListItem title="결제 수단" suffix="현대카드 M" />
+        <ListItem title="결제 수단" suffix="현대카드 신용카드" />
         <ListItem title="날짜" suffix="10월 1일 (목)" />
         <ListItem title="메모" suffix="친구와 점심" />
       </List>
@@ -714,7 +714,7 @@ export const bottomSheetExamples = [
           html: valueList([
             ["금액", "8,000원"],
             ["카테고리", "식비"],
-            ["결제 수단", "현대카드 M"],
+            ["결제 수단", "현대카드 신용카드"],
             ["날짜", "10월 1일 (목)"],
             ["메모", "친구와 점심"],
           ]),
@@ -747,7 +747,7 @@ export const bottomSheetExamples = [
   {
     title: "두 단계 시트 — 2단계 머리 ←",
     description:
-      "한 시트 안에서 1단계(종류 고르기) → 2단계(폼)로 가는 흐름은 2단계 머리 왼쪽에 ← 를 단다(onBack — 이름 \"뒤로\"). 보이는 원 40 · 아이콘 lucide arrow-left 24 fg-neutral · 누르는 영역 44 이고, 아이콘이 화면 여백 24 에 오도록 원을 8 바깥에 두며 세로는 제목 첫 줄 가운데다. 제목은 원 오른쪽 4 에서 시작한다. 누르면 원 바탕 bg-neutral-weak-pressed(축소 없음). ← 는 시트를 닫지 않고 1단계로 한 단계 되돌린다 — 쓴 값이 있으면 \"작성한 내용이 사라져요\" 를 먼저 묻고 돌아가며 그 값을 버린다(종류가 바뀌면 칸이 달라진다). 오른쪽 위 닫기 버튼은 그대로다. 1280 이상의 대화상자(ResponsiveDialogContent onBack)도 같은 값이다. 단계가 셋을 넘으면 시트가 아니라 페이지다.",
+      "한 시트 안에서 1단계(종류 고르기) → 2단계(폼)로 가는 흐름은 2단계 머리 왼쪽에 ← 를 단다(onBack — 이름 \"뒤로\"). 보이는 원 40 · 아이콘 lucide chevron-left 24 fg-neutral(페이지 머리 ← 와 같은 꺾쇠) · 누르는 영역 44 이고, 아이콘이 화면 여백 24 에 오도록 원을 8 바깥에 두며 세로는 제목 첫 줄 가운데다. 제목은 원 오른쪽 4 에서 시작한다. 누르면 원 바탕 bg-neutral-weak-pressed(축소 없음). ← 는 시트를 닫지 않고 1단계로 한 단계 되돌린다 — 쓴 값이 있으면 \"작성한 내용이 사라져요\" 를 먼저 묻고 돌아가며 그 값을 버린다(종류가 바뀌면 칸이 달라진다). 오른쪽 위 닫기 버튼은 그대로다. 1280 이상의 대화상자(ResponsiveDialogContent onBack)도 같은 값이다. 단계가 셋을 넘으면 시트가 아니라 페이지다.",
     jsx: `<ResponsiveDialog open={open} onOpenChange={setOpen} form dirty={step === "form" && isDirty}>
   <ResponsiveDialogContent
     title={step === "kind" ? "무엇을 추가할까요?" : "입출금 추가"}

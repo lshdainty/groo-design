@@ -410,7 +410,7 @@ export function brandProfile(brandName, tokens) {
           // 고른 값이 곧 폼의 갈래라 Outline Strong(chip.md Variant). renderForm 이 chipField 로 그린다(03i)
           { type: "chips", label: "거래 종류", value: "지출", options: ["지출", "수입", "이체"], variant: "outlineStrong", required: true },
           { type: "input", label: "금액", value: "28,500", suffix: "원", inputmode: "numeric", format: "amount", helper: "최근 카페 평균 6,800원", required: true, pair: true },
-          { type: "select", label: "결제 수단", value: "현대카드 M", prefixIcon: "creditCard", options: ["결제 수단 없음", "현대카드 M", "신한카드 Deep", "국민 주계좌", "현금"], required: true },
+          { type: "select", label: "결제 수단", value: "현대카드 신용카드", prefixIcon: "creditCard", options: ["결제 수단 없음", "현대카드 신용카드", "신한카드 체크카드", "국민 주계좌", "현금"], required: true },
           { type: "inputButton", label: "카테고리", value: "식비 · 카페", prefixIcon: "coffee", suffixIcon: "chevronDown", options: ["식비 · 카페", "식비 · 외식", "교통", "취미", "고정비"], required: true, pair: true },
           { type: "inputButton", label: "날짜", value: "5월 10일 (일)", suffixIcon: "calendarDays", helper: "오늘", required: true },
           { type: "textarea", label: "메모", value: "친구와 디자인 토픽 미팅 — 2시간 작업 후 마무리.", max: 200 },
@@ -1527,8 +1527,8 @@ export function renderListGallery(brand) {
         listRow({ kind: "button", prefix: logoTile({ name: "비상금", face: "name" }), title: "비상금", detail: "현금", suffix: amount("300,000원") }),
       ])),
       listFrame("카드 그림 56 · 카드 혜택", "CardArt width={56} — 세로 그림은 돌린다", listOf([
-        listRow({ kind: "button", prefix: cardArt({ issuer: "삼성카드", name: "iD SELECT ALL", src: PIMG.cardV, width: 56, rotated: true }), title: "iD SELECT ALL", detail: "신용 · 삼성카드" }),
-        listRow({ kind: "button", prefix: cardArt({ issuer: "NH농협카드", name: "올원 Pay", width: 56 }), title: "올원 Pay", detail: "체크 · NH농협카드" }),
+        listRow({ kind: "button", prefix: cardArt({ issuer: "삼성카드", name: "신용카드", src: PIMG.cardV, width: 56, rotated: true }), title: "삼성카드 신용카드", detail: "신용 · 삼성카드" }),
+        listRow({ kind: "button", prefix: cardArt({ issuer: "NH농협카드", name: "체크카드", width: 56 }), title: "체크카드", detail: "체크 · NH농협카드" }),
       ])),
       listFrame("체크 24 · 여럿 고르기", "ListCheckGroup(fieldset) · ListCheckItem — 앞(기본)", checkGroup([
         listRow({ kind: "control", as: "div", prefix: check24({ state: "checked" }), title: "거래 내역" }),
@@ -2586,7 +2586,7 @@ export function renderTextFieldGallery(brand) {
     { label: "금액", required: true, requiredMessage: "금액을 입력해주세요.", control: { kind: "input", size: "large", value: "12,000", suffix: "원", inputmode: "numeric", format: "amount" } },
     { label: "카테고리", required: true, control: { kind: "inputButton", size: "large", value: "식비 · 카페", prefixIcon: "coffee", suffixIcon: "chevronDown" } },
     { label: "날짜", required: true, control: { kind: "inputButton", size: "large", value: "10월 1일 (목)", suffixIcon: "calendarDays" } },
-    { label: "결제 수단", required: true, control: { kind: "select", size: "large", value: "현대카드 M", prefixIcon: "creditCard" } },
+    { label: "결제 수단", required: true, control: { kind: "select", size: "large", value: "현대카드 신용카드", prefixIcon: "creditCard" } },
     { label: "메모", max: 100, control: { kind: "textarea", size: "large", placeholder: "예: 친구와 점심" } },
   ];
   const hrPolicy = { label: "휴가 정책", required: true, control: { kind: "select", size: "medium", value: "연차" } };
@@ -2689,7 +2689,7 @@ export function renderPickGallery(brand) {
     "트리거 — 같은 상자 · 셰브론 · 뒤 아이콘",
     "Select 와 Input Button 은 같은 상자다 — Text Input 의 상자형과 높이 · 모서리 · 여백 · 글자가 같아 한 폼에 섞여도 줄이 맞는다. 값은 16 · 400 · fg-neutral, 고르기 전의 글은 \"{값의 종류} 선택\" 꼴의 fg-placeholder 다 — 라벨만 그대로 두지 않는다. Select 는 오른쪽 셰브론(chevron-down 20 · fg-neutral-muted)이 칸 아래 목록이 열리는 것을 알리고, 열리면 180° 돈다. Input Button 은 뒤 아이콘이 무엇이 열리는지 알린다 — 달력 · 시계 · 목록이나 격자는 아래 화살표. 앞 아이콘(20 · fg-neutral-muted)은 값의 종류를 함께 알릴 때 두고, Select 는 하나를 고르면 그 선택지의 아이콘이 트리거로 온다. 칸은 늘 Field 의 라벨과 함께 쓰고, 오류는 칸 안쪽 2px stroke-critical-solid 와 칸 아래 Field 의 오류 글이 알린다.",
     samples([
-      sample("Select — 고른 값 · 앞 아이콘", "Select · 고른 선택지의 prefixIcon", select("결제 수단", { value: "현대카드 M", prefixIcon: "creditCard" })),
+      sample("Select — 고른 값 · 앞 아이콘", "Select · 고른 선택지의 prefixIcon", select("결제 수단", { value: "현대카드 신용카드", prefixIcon: "creditCard" })),
       sample("Select — 고르기 전", "placeholder=\"휴가 정책 선택\"", select("휴가 정책", { placeholder: "휴가 정책 선택" })),
       sample("Input Button — 달력을 연다", "suffixIcon={<CalendarDays />}", pickButton("날짜", date)),
       sample("Input Button — 고르기 전", "placeholder=\"날짜 선택\"", pickButton("날짜", { placeholder: "날짜 선택", suffixIcon: "calendarDays" })),
@@ -2701,25 +2701,25 @@ export function renderPickGallery(brand) {
   // 2. 크기 — large · medium · 반응형. 목록은 크기마다 바뀌는 값(묶음 제목 · 앞 아이콘 · 한 줄 · 설명 · 체크)을 다 담게 짧게 짰다.
   // 반응형은 지금 폭을 아래 글로 알린다(CSS 가 1280 에서 바꾼다)
   const payShort = [
-    { label: "카드", items: [{ label: "현대카드 M", icon: "creditCard", selected: true }, { label: "신한카드 Deep", icon: "creditCard" }] },
+    { label: "카드", items: [{ label: "현대카드 신용카드", icon: "creditCard", selected: true }, { label: "신한카드 체크카드", icon: "creditCard" }] },
     { label: "계좌", items: [{ label: "국민 주계좌", description: "123-45-6789", icon: "landmark" }] },
   ];
   const sizePanel = panel(
     "크기 — large · medium · 반응형",
     "large 는 폰 · 앱에서 쓴다 — 트리거 52 · 모서리 12 · 좌우 16 · 사이 10 · 글자 16/22 · 아이콘 20, 선택지 46(위아래 12 · 사이 12 · 앞 아이콘 22 · 체크 14) · 묶음 제목 14 · 500. medium 은 1280 이상 데스크톱 웹(마우스)에서만 쓴다 — 트리거 40 · 8 · 14 · 8 · 14/19 · 16, 선택지 39(10 · 8 · 18 · 12) · 묶음 제목 13 · 400. 한 줄 설명이 붙은 선택지는 66 · 57 이다(설명 13 · 12). 웹의 기본 responsive 는 1280 미만 large · 이상 medium 이고 앱은 늘 large 다. 트리거와 목록은 같은 크기를 쓰고, 한 폼 안에서 크기를 섞지 않는다.",
     samples([
-      sample("Select · large — 트리거 52 · 선택지 46 · 설명 66", "size=\"large\" — 폰 · 앱", select("결제 수단", { value: "현대카드 M", prefixIcon: "creditCard", groups: payShort })),
-      sample("Select · medium — 트리거 40 · 선택지 39 · 설명 57", "size=\"medium\" — 1280 이상 데스크톱 웹만", select("결제 수단", { size: "medium", value: "현대카드 M", prefixIcon: "creditCard", groups: payShort })),
+      sample("Select · large — 트리거 52 · 선택지 46 · 설명 66", "size=\"large\" — 폰 · 앱", select("결제 수단", { value: "현대카드 신용카드", prefixIcon: "creditCard", groups: payShort })),
+      sample("Select · medium — 트리거 40 · 선택지 39 · 설명 57", "size=\"medium\" — 1280 이상 데스크톱 웹만", select("결제 수단", { size: "medium", value: "현대카드 신용카드", prefixIcon: "creditCard", groups: payShort })),
       sample("Input Button · large — 52", "size=\"large\" — 아이콘 20", pickButton("날짜", date)),
       sample("Input Button · medium — 40", "size=\"medium\" — 아이콘 16", pickButton("날짜", { ...date, size: "medium" })),
-      sample("반응형 — 웹 기본", "size=\"responsive\" — 1280(--breakpoint-lg)에서 바뀐다", `<div class="ptf-form">${select("결제 수단", { size: "responsive", value: "현대카드 M", prefixIcon: "creditCard" })}${pickButton("날짜", { ...date, size: "responsive" })}</div>
+      sample("반응형 — 웹 기본", "size=\"responsive\" — 1280(--breakpoint-lg)에서 바뀐다", `<div class="ptf-form">${select("결제 수단", { size: "responsive", value: "현대카드 신용카드", prefixIcon: "creditCard" })}${pickButton("날짜", { ...date, size: "responsive" })}</div>
           <p class="ptf-now" aria-hidden="true"></p>`),
     ]),
   );
 
   // 3. 상태 — 누름 · 포커스 · 열림은 그 순간을 멈춰 그렸다(--pressed · --focus · aria-expanded)
   const stateCols = [
-    { ko: "Select · 값", en: "Select — value · prefixIcon", kind: "select", args: { value: "현대카드 M", prefixIcon: "creditCard" } },
+    { ko: "Select · 값", en: "Select — value · prefixIcon", kind: "select", args: { value: "현대카드 신용카드", prefixIcon: "creditCard" } },
     { ko: "Select · 빈 칸", en: "Select — placeholder", kind: "select", args: { placeholder: "결제 수단 선택" } },
     { ko: "Input Button · 값", en: "InputButton — value · suffixIcon", kind: "inputButton", args: date },
     { ko: "Input Button · 빈 칸", en: "InputButton — placeholder", kind: "inputButton", args: { placeholder: "날짜 선택", suffixIcon: "calendarDays" } },
@@ -2757,7 +2757,7 @@ export function renderPickGallery(brand) {
   // 4. 목록 — 묶음 · 선 · 설명 · 고름 · 알약 · 비활성. "없음" 은 맨 앞 따로 묶음(select.md "없음" 을 답으로 받기)
   const payGroups = (picked, active = "") => [
     { items: [{ label: "결제 수단 없음", icon: "circleSlash" }] },
-    { label: "카드", items: [{ label: "현대카드 M", icon: "creditCard" }, { label: "신한카드 Deep", icon: "creditCard" }] },
+    { label: "카드", items: [{ label: "현대카드 신용카드", icon: "creditCard" }, { label: "신한카드 체크카드", icon: "creditCard" }] },
     { label: "계좌 · 현금", items: [
       { label: "국민 주계좌", description: "123-45-6789", icon: "landmark" },
       { label: "현금", icon: "banknote" },
@@ -2776,7 +2776,7 @@ export function renderPickGallery(brand) {
     "목록 — 묶음 · 선 · 설명 · 고른 표시 · 알약",
     "목록은 트리거 폭 그대로 아래 8 에 붙어 열린다(아래가 모자라면 위로) — 폰에서도 시트로 바꾸지 않는다. 모서리 20 · bg-layer-floating · shadow-s3 · 위아래 8 이고, 높이는 480 까지다(넘치면 목록 안에서 스크롤). 묶음이 둘 이상이면 사이에 1px stroke-neutral-subtle 선을 좌우 16 들여 저절로 긋는다 — 묶음 사이는 8 + 1 + 8 이고 선택지 사이에는 선이 없다. 묶음 제목은 14 · 500 · fg-neutral-subtle 이다. 선택지 글은 16 · 400 · fg-neutral 이고 목록 안에서는 줄바꿈된다 — 한 줄 설명은 13 · fg-neutral-subtle. 고른 선택지는 오른쪽 체크(lucide check 14 · 선 2.5 · fg-neutral)만이다 — 바탕 · 굵기는 바꾸지 않는다. 누르면 좌우 8 들어온 알약(모서리 12 · bg-layer-floating-pressed)에 콘텐츠가 2px 거리로 주고, 마우스를 올리거나 키보드로 짚은 선택지는 같은 알약이다(축소 없음 — 링은 더하지 않는다, SEED 그대로). 막힌 선택지는 글 · 설명 · 아이콘 · 체크가 fg-disabled 이고 알약이 생기지 않는다. \"없음\" 이 답이 될 수 있는 칸은 \"결제 수단 없음\" 처럼 \"{칸 이름} 없음\" 을 맨 앞 따로 묶음에 둔다.",
     samples([
-      sample("열린 목록 — 묶음 · 선 · 설명 · 고름 · 키보드 위치 · 비활성", "SelectGroup label · SelectItem description · aria-activedescendant", select("결제 수단", { value: "현대카드 M", prefixIcon: "creditCard", groups: payGroups("현대카드 M", "신한카드 Deep") })),
+      sample("열린 목록 — 묶음 · 선 · 설명 · 고름 · 키보드 위치 · 비활성", "SelectGroup label · SelectItem description · aria-activedescendant", select("결제 수단", { value: "현대카드 신용카드", prefixIcon: "creditCard", groups: payGroups("현대카드 신용카드", "신한카드 체크카드") })),
       sample("선택지 상태 — 그 순간을 멈춰 그렸다", "SelectItem — pressed · hover · focus · selected · disabled", selectList({ size: "large", label: "선택지 상태", groups: itemStates })),
     ]),
   );
@@ -3043,7 +3043,7 @@ export function renderChipGallery(brand) {
   const filterConds = (on) => [
     { label: "기간", value: "9월" },
     { label: "카테고리", value: "식비 외 2개", on },
-    { label: "결제 수단", value: "현대카드 M", on },
+    { label: "결제 수단", value: "현대카드 신용카드", on },
     { label: "금액", value: "1만원 이상" },
   ];
   const filterRow = (on) => frame(chipGroup({ layout: "scroll", gutter: true, label: "거래 거르기", live: true, items: chipFilterBar(filterConds(on)) }));
@@ -3085,10 +3085,10 @@ export function renderChipGallery(brand) {
             <div class="pchip-phone-head"><div class="ptf-screen-title">가계부</div></div>
             <div class="pchip-phone-bar">${chipGroup({ layout: "scroll", gutter: true, label: "거래 거르기", live: true, items: chipFilterBar(filterConds(true)) })}</div>
             <div class="pchip-phone-list">${day("10월 1일 (목)", [
-              { color: "orange", icon: LIST_ICON.utensils, title: "김밥천국", detail: "식비 · 현대카드 M", amount: "8,000원" },
-              { color: "blue", icon: LIST_ICON.bus, title: "버스", detail: "교통 · 현대카드 M", amount: "1,500원" },
+              { color: "orange", icon: LIST_ICON.utensils, title: "김밥천국", detail: "식비 · 현대카드 신용카드", amount: "8,000원" },
+              { color: "blue", icon: LIST_ICON.bus, title: "버스", detail: "교통 · 현대카드 신용카드", amount: "1,500원" },
             ])}${day("9월 30일 (수)", [
-              { color: "violet", icon: LIST_ICON.bag, title: "다이소", detail: "쇼핑 · 현대카드 M", amount: "12,300원" },
+              { color: "violet", icon: LIST_ICON.bag, title: "다이소", detail: "쇼핑 · 현대카드 신용카드", amount: "12,300원" },
             ])}</div>
           </div>`;
   // 거래 추가 — 칸이 모두 필수라 2/3 규칙으로 점 · "선택" 이 붙지 않는다(textFieldMarks). 저장을 누르면 비운 필수 입력칸에 오류가 보인다
@@ -3097,7 +3097,7 @@ export function renderChipGallery(brand) {
     { required: true, html: mark => textField({ label: "금액", mark, required: true, requiredMessage: "금액을 입력해주세요.", control: { kind: "input", size: "large", value: "8,000", suffix: "원", inputmode: "numeric", format: "amount" } }) },
     { required: true, html: mark => textField({ label: "카테고리", mark, required: true, control: { kind: "inputButton", size: "large", value: "식비", prefixIcon: "utensils", suffixIcon: "chevronDown" } }) },
     { required: true, html: mark => textField({ label: "날짜", mark, required: true, control: { kind: "inputButton", size: "large", value: "10월 1일 (목)", suffixIcon: "calendarDays" } }) },
-    { required: true, html: mark => textField({ label: "결제 수단", mark, required: true, control: { kind: "select", size: "large", value: "현대카드 M", prefixIcon: "creditCard" } }) },
+    { required: true, html: mark => textField({ label: "결제 수단", mark, required: true, control: { kind: "select", size: "large", value: "현대카드 신용카드", prefixIcon: "creditCard" } }) },
   ];
   const addMarks = textFieldMarks(addFields);
   const addForm = `<div class="ptf-screen ptf-screen--phone">
@@ -3374,13 +3374,13 @@ export function renderTabsGallery(brand) {
     label: "증권사",
     items: [
       { label: "나무증권", body: brokerTabs("나무증권", {
-        hold: [stock("삼성전자", "12주 · 평균 71,200원", "+4.2%"), stock("카카오", "5주 · 평균 48,900원", "−1.8%")],
-        watch: [stock("SK하이닉스", "반도체", "212,500원"), stock("NAVER", "인터넷", "181,300원")],
+        hold: [stock("가람전자", "12주 · 평균 71,200원", "+4.2%"), stock("라온톡", "5주 · 평균 48,900원", "−1.8%")],
+        watch: [stock("나래반도체", "반도체", "212,500원"), stock("다온포털", "인터넷", "181,300원")],
         find: [stock("오늘 많이 산 종목", "나무증권 이용자 기준", "10개")],
       }, true) },
       { label: "토스증권", body: brokerTabs("토스증권", {
-        hold: [stock("애플", "3주 · 평균 $189.40", "+12.4%")],
-        watch: [stock("엔비디아", "반도체", "$118.20")],
+        hold: [stock("파인테크", "3주 · 평균 $189.40", "+12.4%")],
+        watch: [stock("칩스원", "반도체", "$118.20")],
         find: [stock("급상승 종목", "토스증권 이용자 기준", "10개")],
       }, false) },
     ],
@@ -3652,9 +3652,9 @@ const overlayAnchor = (trigger, popover) => `<div class="pov-anchor">${trigger}$
 // 뒤 화면 — 제목 + 내용. rows 는 목록 줄(List — 보기만 하는 줄), body 는 화면 여백 안의 조각(폼 · 칸), lead 는 제목과 내용 사이 한 줄이다.
 // 데스크톱은 회색 바탕(bg-layer-basement) 위 흰 카드에 내용을 둔다. 2026년 10월 1일은 목요일이다
 const OVERLAY_LEDGER = [
-  { color: "orange", icon: "utensils", title: "김밥천국", detail: "식비 · 현대카드 M", amount: "8,000원" },
-  { color: "blue", icon: "bus", title: "버스", detail: "교통 · 현대카드 M", amount: "1,500원" },
-  { color: "violet", icon: "bag", title: "다이소", detail: "쇼핑 · 현대카드 M", amount: "12,300원" },
+  { color: "orange", icon: "utensils", title: "김밥천국", detail: "식비 · 현대카드 신용카드", amount: "8,000원" },
+  { color: "blue", icon: "bus", title: "버스", detail: "교통 · 현대카드 신용카드", amount: "1,500원" },
+  { color: "violet", icon: "bag", title: "다이소", detail: "쇼핑 · 현대카드 신용카드", amount: "12,300원" },
   { color: "indigo", icon: "wallet", title: "월급", detail: "수입 · 국민 주계좌", amount: "3,200,000원" },
 ];
 const OVERLAY_LEAVE = [
@@ -3705,7 +3705,7 @@ export function renderOverlayGallery(brand) {
           ${body}
         </div>`;
   const DESKTOP = "ptf-samples pov-samples--desktop";
-  const detail = [["금액", "8,000원"], ["카테고리", "식비"], ["결제 수단", "현대카드 M"], ["날짜", "10월 1일 (목)"], ["메모", "친구와 점심"]];
+  const detail = [["금액", "8,000원"], ["카테고리", "식비"], ["결제 수단", "현대카드 신용카드"], ["날짜", "10월 1일 (목)"], ["메모", "친구와 점심"]];
 
   // 1. 나누기 — 같은 폼(ResponsiveDialog)이 1280 미만 시트 · 이상 대화상자. 닫는 자리만 표면에 맞춰 바뀐다
   const formSheet = overlayFrame({
@@ -4017,9 +4017,9 @@ export function renderFeedbackGallery(brand) {
   const tile = (color, icon) => `<span class="plst-tile plst-tile--${color}">${LIST_ICON[icon]}</span>`;
   const won = (v) => `<span class="plst-amount">${escape(v)}</span>`;
   const ledgerRows = () => listOf([
-    listRow({ prefix: tile("orange", "utensils"), title: "김밥천국", detail: "식비 · 현대카드 M", suffix: won("8,000원") }),
-    listRow({ prefix: tile("blue", "bus"), title: "버스", detail: "교통 · 현대카드 M", suffix: won("1,500원") }),
-    listRow({ prefix: tile("violet", "bag"), title: "다이소", detail: "쇼핑 · 현대카드 M", suffix: won("12,300원") }),
+    listRow({ prefix: tile("orange", "utensils"), title: "김밥천국", detail: "식비 · 현대카드 신용카드", suffix: won("8,000원") }),
+    listRow({ prefix: tile("blue", "bus"), title: "버스", detail: "교통 · 현대카드 신용카드", suffix: won("1,500원") }),
+    listRow({ prefix: tile("violet", "bag"), title: "다이소", detail: "쇼핑 · 현대카드 신용카드", suffix: won("12,300원") }),
     listRow({ prefix: tile("orange", "utensils"), title: "스타벅스", detail: "식비 · 국민 주계좌", suffix: won("6,800원") }),
   ], ' aria-label="10월 거래"');
 
@@ -4186,12 +4186,12 @@ export function renderFeedbackGallery(brand) {
   // 7. Page Banner — 자리 · 버튼 줄바꿈 · 상호작용 · 상태
   const lost = { tone: "critical", ...bannerText.critical };
   const phoneBanner = `<div class="pfb-phone">${head("증권")}${pageBanner(lost)}<div class="pfb-phone-body">${listOf([
-    listRow({ title: "삼성전자", detail: "12주 · 평균 71,200원", suffix: won("마지막 값 75,400원") }),
-    listRow({ title: "카카오", detail: "5주 · 평균 48,900원", suffix: won("마지막 값 47,100원") }),
+    listRow({ title: "가람전자", detail: "12주 · 평균 71,200원", suffix: won("마지막 값 75,400원") }),
+    listRow({ title: "라온톡", detail: "5주 · 평균 48,900원", suffix: won("마지막 값 47,100원") }),
   ], ' aria-label="보유 종목"')}</div></div>`;
   const deskBanner = `<div class="pfb-desk">${head("증권", "pfb-desk-head")}${pageBanner(lost)}<div class="pfb-desk-body">${listOf([
-    listRow({ title: "삼성전자", detail: "12주 · 평균 71,200원", suffix: won("마지막 값 75,400원") }),
-    listRow({ title: "카카오", detail: "5주 · 평균 48,900원", suffix: won("마지막 값 47,100원") }),
+    listRow({ title: "가람전자", detail: "12주 · 평균 71,200원", suffix: won("마지막 값 75,400원") }),
+    listRow({ title: "라온톡", detail: "5주 · 평균 48,900원", suffix: won("마지막 값 47,100원") }),
   ], ' aria-label="보유 종목"')}</div></div>`;
   const bannerStateCols = [
     { ko: "기본", en: "enabled" },
@@ -5433,7 +5433,7 @@ export function renderDisplayGallery(brand) {
   );
 
   // 3. Badge — 쓰이는 자리: 카드 상세 머리(large 둘) · 캘린더 공유 권한(outline + 앞 아이콘) · HR 휴가 결재 표(weak — 한 목록은 한 변형)
-  const cardPhone = phone("현대카드 M", `<div class="pdsp-pad">${badgeGroup([badge({ text: "신용", size: "large" }), badge({ text: "단종", variant: "solid", size: "large" })])}</div>${listOf([
+  const cardPhone = phone("현대카드 신용카드", `<div class="pdsp-pad">${badgeGroup([badge({ text: "신용", size: "large" }), badge({ text: "단종", variant: "solid", size: "large" })])}</div>${listOf([
     listRow({ title: "결제일", suffix: escape("매월 15일") }),
     listRow({ title: "이번 달 사용", suffix: escape("452,300원") }),
     listRow({ title: "혜택", suffix: escape("포인트형") }),
@@ -5548,7 +5548,7 @@ export function renderDisplayGallery(brand) {
 
   // 8. Tag Group — 줄바꿈 · 한 줄 말줄임 · 줄어드는 차례
   const wrapTags = [{ text: "서울 서초구 서초4동" }, { text: "500m" }, { text: "어제" }, { text: "조회수 128" }];
-  const longTags = (shrink) => [{ text: "교통", shrink: shrink ? 0 : 1 }, { text: "신한카드 Deep Dream 체크(1234)", shrink: shrink ? 2 : 1 }, { text: "오후 2:10", shrink: shrink ? 0 : 1 }];
+  const longTags = (shrink) => [{ text: "교통", shrink: shrink ? 0 : 1 }, { text: "신한카드 체크카드(1234)", shrink: shrink ? 2 : 1 }, { text: "오후 2:10", shrink: shrink ? 0 : 1 }];
   const tagOverflowPanel = panel(
     "Tag Group — 줄바꿈 · 한 줄 말줄임 · 줄어드는 차례",
     "넘치면 기본(wrap)은 낱말 단위로 줄을 바꾼다(v114 — keep-all · break-word) — 구분은 앞 공백이 줄이 안 바뀌는 공백(U+00A0)이라 앞 항목에 붙어 줄 끝에 남고, 다음 줄은 항목으로 시작한다(SEED 웹은 \"3시 / 간 전\" 처럼 음절에서 끊고 구분이 줄 첫머리에 남는다). 가게 이름 · 주소처럼 말줄임하면 읽기 어려운 자리는 줄바꿈이 낫다. 목록 줄처럼 높이가 늘면 안 되는 자리만 truncate 로 한 줄에 두고 항목 글이 각자 말줄임(…)한다 — 줄어드는 차례는 항목마다 shrink(0 은 줄지 않고, 수가 클수록 먼저 · 많이 준다)이고 구분은 줄지 않는다. 시각 · 금액처럼 꼭 보일 항목은 shrink={0} 이다. 말줄임해도 보조 기술은 글 전체를 읽는다.",
@@ -5857,7 +5857,7 @@ export function renderLoadingGallery(brand) {
   const desktop = (height, page, layers = []) => overlayFrame({ device: "desktop", height, page, layers });
   const title = (t) => `<div class="pov-page-title">${escape(t)}</div>`;
   const ledgerRows = (rows = OVERLAY_LEDGER) => listOf(rows.map(overlayRow));
-  const failCard = (what = "거래") => resultSection({ kind: "failure", size: "medium", title: `${what}를 불러오지 못했어요`, description: "잠시 후 다시 시도해주세요.", primary: "다시 시도" });
+  const failCard = (what = "거래") => resultSection({ kind: "failure", size: "medium", title: `${what}를 불러오지 못했어요`, description: "잠시 뒤 다시 시도해주세요.", primary: "다시 시도" });
   const controls = (buttons) => `<div class="pld-controls">${buttons.map(([label, attrs]) => `<button class="btn btn-neutral-weak btn-size-small" type="button" ${attrs}><span>${escape(label)}</span></button>`).join("")}</div>`;
   const status = '<p class="pld-status" role="status" aria-live="polite" data-pld-status=""></p>';
 
@@ -6045,7 +6045,7 @@ export function renderLoadingGallery(brand) {
     { label: "식비 예산", value: 350000, max: 400000 },
     { label: "교통 예산", value: 120000, max: 100000 },
     { meaning: "goal", label: "여행 자금", value: 1200000, max: 2000000 },
-    { meaning: "goal", label: "현대카드 M 전월 실적", value: 390000, max: 300000 },
+    { meaning: "goal", label: "현대카드 신용카드 전월 실적", value: 390000, max: 300000 },
   ])}`);
   const hours = (h) => `${h}시간`;
   const meterDesktop = desktop(300, `${title("이번 달")}<div class="pov-page-card pld-page-card">${meters([
@@ -6070,9 +6070,9 @@ export function renderLoadingGallery(brand) {
   const rowFrame = (cls, label, scroll = "") => `<div class="pld-fog-row ${cls}"${scroll ? ` data-pfog-scroll="${scroll}"` : ""}>${chipRow(label)}</div>`;
   const CATS = ["식비", "교통", "쇼핑", "카페", "구독", "의료", "여행", "주거", "통신", "교육"];
   const sheet = (scroll) => `<div${scroll ? ` data-pfog-scroll="${scroll}"` : ""}>${phone(560, overlayPage(), [overlayScrim(), overlayLayer("sheet", bottomSheet({ title: "카테고리 고르기", body: overlayRadioList("카테고리", CATS, "식비"), footer: [overlayButton("완료", { size: "large" })], scrollFog: true }))])}</div>`;
-  const longDetail = [["금액", "8,000원"], ["카테고리", "식비"], ["결제 수단", "현대카드 M"], ["날짜", "10월 1일 (목)"], ["시간", "오후 12:30"], ["가맹점", "김밥천국 강남점"], ["할부", "일시불"], ["메모", "친구와 점심"], ["태그", "회사 근처"], ["더치페이", "2명 · 4,000원씩"]];
+  const longDetail = [["금액", "8,000원"], ["카테고리", "식비"], ["결제 수단", "현대카드 신용카드"], ["날짜", "10월 1일 (목)"], ["시간", "오후 12:30"], ["가맹점", "김밥천국 강남점"], ["할부", "일시불"], ["메모", "친구와 점심"], ["태그", "회사 근처"], ["더치페이", "2명 · 4,000원씩"]];
   const fogDialog = desktop(520, overlayPage({ desktop: true }), [overlayScrim(), overlayLayer("dialog", overlayDialog({ title: "거래 상세", close: true, body: overlayValueList(longDetail), scrollFog: true }))]);
-  const IMPORTED = ["김밥천국", "버스", "다이소", "스타벅스", "GS25", "교보문고", "올리브영", "택시", "넷플릭스", "쿠팡"].map((t, i) => ({ title: t, detail: `10월 ${i + 1}일 · 현대카드 M`, value: "가져옴" }));
+  const IMPORTED = ["김밥천국", "버스", "다이소", "스타벅스", "GS25", "교보문고", "올리브영", "택시", "넷플릭스", "쿠팡"].map((t, i) => ({ title: t, detail: `10월 ${i + 1}일 · 현대카드 신용카드`, value: "가져옴" }));
   const fogPage = phone(560, `${title("가져오기 결과")}<div class="pld-page-fog"><div class="pfog pfog--page" tabindex="0" role="region" aria-label="가져온 거래">${listOf(IMPORTED.map((r) => listRow({ title: r.title, detail: r.detail, suffix: escape(r.value) })))}</div><div class="pld-page-cta">${overlayButton("가계부에 넣기", { size: "large" })}</div></div>`);
   const TERMS = "제1조(목적) 이 약관은 그루 담다 가 제공하는 가계부 · 메모 · 할 일 서비스의 이용 조건과 절차를 정한다. 제2조(계정) 이용자는 하나의 계정만 만들 수 있고, 계정 정보는 본인만 쓴다. 제3조(데이터) 이용자가 넣은 거래 · 메모는 이용자의 것이며, 서비스는 보관과 백업에만 쓴다. 제4조(해지) 이용자는 언제든 설정에서 이용을 해지할 수 있고, 해지하면 아이디와 이메일은 다시 쓸 수 없다. 제5조(변경) 약관이 바뀌면 시행 7일 전에 앱 안에서 알린다.";
   const box = (scroll) => `<div class="pld-box"${scroll ? ` data-pfog-scroll="${scroll}"` : ""}><div class="pfog pfog--box" tabindex="0" role="region" aria-label="이용 약관"><p class="pld-terms">${escape(TERMS)}</p></div></div>`;
@@ -6107,7 +6107,7 @@ export function renderLoadingGallery(brand) {
   const cphBig = `<div class="pld-cph-item">${frame("100%", 360, "var(--radius-r2)", contentPlaceholder({ label: "가게 사진" }))}<span class="pld-row-cap">높이 360 → 160(최대)</span></div>`;
   const glyphs = `<div class="pld-cph-sizes">${[["image", "사진 — 기본"], ["creditCard", "카드 그림"], ["receipt", "영수증 사진"], ["fileText", "문서"]].map(([g, cap]) => `<div class="pld-cph-item">${frame(72, 72, "var(--radius-r2)", contentPlaceholder({ glyph: g }))}<span class="pld-row-cap">${escape(cap)}</span></div>`).join("")}</div>`;
   // 카드 그림 — 틀은 Image Frame(03q — 비율 card · 폭 112 → 모서리 8 · 투명 윤곽)이고, 없거나 못 불러오면 이 그림을 제 대체 그림으로 그린다(대체 글은 alt 를 이어받는다)
-  const card = (state) => imageFrame({ ratio: "card", width: 112, src: PIMG.cardH2, alt: "현대카드 M 카드 그림", state, glyph: "creditCard" });
+  const card = (state) => imageFrame({ ratio: "card", width: 112, src: PIMG.cardH2, alt: "현대카드 신용카드 그림", state, glyph: "creditCard" });
   const cphStates = `<div class="pld-cph-sizes pld-cph-sizes--top">${[
     ["불러오는 중 — 같은 모서리의 스켈레톤", card("loading")],
     ["불러오지 못함 — 대체 그림", card("fallback")],
@@ -6255,9 +6255,9 @@ const PIMG = {
   snow: pimgScene(800, 600, ["#dfe6ee", "#f6f8fb", "#ffffff", "#c9d3de", "#aab6c4"]),
   white: PIMG_WHITE,
   cardH: pimgCardH("#283c86", "#45a247", "SHOPPING+"),
-  cardH2: pimgCardH("#1c1c1c", "#5a5a5a", "M EDITION"),
+  cardH2: pimgCardH("#1c1c1c", "#5a5a5a", "BLACK"),
   cardWhite: PIMG_CARD_WHITE,
-  cardV: pimgCardV("#e52d27", "#7b1fa2", "SELECT ALL"),
+  cardV: pimgCardV("#e52d27", "#7b1fa2", "CREDIT"),
   cardV2: pimgCardV("#0f2f5c", "#2f7fb8", "TRAVEL"),
   // 로고 그림 — 흰 바탕에 맞춰 만든 검은 마크 + 글(가상의 회사). 판 없이 다크에 두면 검은 부분이 사라진다
   logoA: pimgUri(360, 120, `<circle cx="60" cy="60" r="38" fill="none" stroke="#111111" stroke-width="10"/><path d="M60 36c14 8 18 28 0 46-18-18-14-38 0-46Z" fill="#1e7d4c"/><text x="118" y="78" font-family="sans-serif" font-size="46" font-weight="800" letter-spacing="2" fill="#111111">HANBIT</text>`),
@@ -6433,7 +6433,7 @@ export function renderImageGallery(brand, tokens) {
   const pifLive = (kind, frame, fallback, buttons, note) => `<div class="pld-live" data-pif-live="${kind}">${surface(frame, "pimg-surface--live")}<template data-pif-fallback="">${fallback}</template><div class="pld-controls">${buttons.map(([label, run]) => `<button class="btn btn-neutral-weak btn-size-small" type="button" data-pif-run="${run}"><span>${escape(label)}</span></button>`).join("")}</div><p class="pld-clock" data-pif-clock="" aria-hidden="true">${escape(note)}</p></div>`;
   const RUNS = [["1.2초에 옴", "1200"], ["1.2초에 실패", "fail"], ["10초까지 — 오지 않음", "never"]];
   const livePhoto = pifLive("photo", imageFrame({ ratio: "4:3", width: 240, src: PIMG.dusk, alt: "저녁 하늘 사진", attrs: `data-pif-src="${PIMG.dusk}"` }), contentPlaceholder({ label: "저녁 하늘 사진" }), RUNS, "버튼을 누르면 처음부터 다시 받는다");
-  const liveCard = pifLive("card", cardArt({ issuer: "삼성카드", name: "iD SELECT ALL", src: PIMG.cardV, width: 240, rotated: true, decorative: false, attrs: `data-pif-src="${PIMG.cardV}"` }), cardFace({ issuer: "삼성카드", name: "iD SELECT ALL", label: "삼성카드 iD SELECT ALL" }), RUNS, "세로 카드 — 다 받은 뒤 원래 크기(540 × 856)로 방향을 정한다");
+  const liveCard = pifLive("card", cardArt({ issuer: "삼성카드", name: "신용카드", src: PIMG.cardV, width: 240, rotated: true, decorative: false, attrs: `data-pif-src="${PIMG.cardV}"` }), cardFace({ issuer: "삼성카드", name: "신용카드", label: "삼성카드 신용카드" }), RUNS, "세로 카드 — 다 받은 뒤 원래 크기(540 × 856)로 방향을 정한다");
   const statePanel = panel(
     "Image Frame — 불러오는 중 · 다 받음 · 없음 · 실패",
     "불러오는 동안은 같은 모서리의 Skeleton(면 bg-neutral-weak + 반짝임 — 화면의 스켈레톤과 한 박자, 모션 줄이기면 멈춘다)이고 면을 처음부터 깐다 — 빈 칸이 없다. 그림은 받는 동안 보이지 않게(투명도 0) 두고 다 받으면 스켈레톤을 걷고 150ms(motion-duration-d3 · ease-enter)로 나타난다. 그림이 없거나 · 못 불러오거나 · 10초가 지나도 안 오면 Content Placeholder(틀 높이의 50% 아이콘 · stroke-neutral-weak)다 — 깨진 그림 아이콘 · alt 글 · 빈 칸이 보이지 않고, 10초에 바꾼 뒤에 그림이 와도 다시 바꾸지 않는다(다음에 열 때 다시 받는다). 실패해도 이름이 남는다 — 대체 그림이 alt 를 이름으로 이어받는다(role=img). 실패 · 없음으로 바뀔 때는 움직임이 없다. 카드 그림은 아는 카드사면 대체 그림 대신 카드 면이다(아래 \"직접\" 의 삼성카드). 아래 둘은 실제로 시간이 흐른다.",
@@ -6445,17 +6445,17 @@ export function renderImageGallery(brand, tokens) {
 
   // 5. 세로 카드 그림 — 원래 폭 < 높이면 시계 방향 90° 돌려 가로 틀을 채운다(목록 56 · 격자 · 상세 312)
   // 카드 혜택 줄 — ListButtonItem 의 짜임(list.tsx · 03e)에 제목 옆 배지(weak — 그림 위에 얹기에는 작다)를 둔다(03o 의 .pdsp-title-line)
-  const benefitRow = ({ issuer, name, src = "", rotated = false, type = "신용", badges = [] }) => `<li class="plst-row"><div class="plst-content"><span class="plst-prefix">${cardArt({ issuer, name, src, width: 56, rotated })}</span><button type="button" class="plst-body plst-action" data-list-action=""><span class="pdsp-title-line"><span class="plst-title pdsp-title">${escape(name)}</span>${badges.join("")}</span><span class="plst-detail">${escape(`${type} · ${issuer}`)}</span></button></div></li>`;
+  const benefitRow = ({ issuer, name, src = "", rotated = false, type = "신용", badges = [] }) => `<li class="plst-row"><div class="plst-content"><span class="plst-prefix">${cardArt({ issuer, name, src, width: 56, rotated })}</span><button type="button" class="plst-body plst-action" data-list-action=""><span class="pdsp-title-line"><span class="plst-title pdsp-title">${escape(`${issuer} ${name}`)}</span>${badges.join("")}</span><span class="plst-detail">${escape(`${type} · ${issuer}`)}</span></button></div></li>`;
   const rotatePhone = phone(300, `${title("카드 혜택")}${listOf([
-    benefitRow({ issuer: "삼성카드", name: "iD SELECT ALL", src: PIMG.cardV, rotated: true }),
-    benefitRow({ issuer: "현대카드", name: "M EDITION", src: PIMG.cardH2 }),
-    benefitRow({ issuer: "신한카드", name: "트래블", src: PIMG.cardV2, rotated: true, type: "체크" }),
+    benefitRow({ issuer: "삼성카드", name: "신용카드", src: PIMG.cardV, rotated: true }),
+    benefitRow({ issuer: "현대카드", name: "신용카드", src: PIMG.cardH2 }),
+    benefitRow({ issuer: "신한카드", name: "체크카드", src: PIMG.cardV2, rotated: true, type: "체크" }),
   ])}`);
   const rotateGrid = surface(`${row([
-    item(cardArt({ issuer: "삼성카드", name: "iD SELECT ALL", src: PIMG.cardV, width: 150, rotated: true }), "격자 150 — 돌림", "540 × 856 → 시계 방향 90°"),
-    item(cardArt({ issuer: "현대카드", name: "M EDITION", src: PIMG.cardH2, width: 150 }), "가로 그림 — 그대로", "856 × 540"),
-    item(cardArt({ issuer: "삼성카드", name: "iD SELECT ALL", src: PIMG.cardV, width: 150 }), "가운데만 잘린 지금 — 쓰지 않는다", "세로를 가로 틀에 cover — 높이의 29 ~ 41%"),
-  ], "pimg-row--stroke")}<div class="pimg-gap"></div>${item(`<div class="pimg-detail">${cardArt({ issuer: "삼성카드", name: "iD SELECT ALL", src: PIMG.cardV, width: 312, rotated: true })}<h3 class="pimg-detail-name">iD SELECT ALL</h3><p class="pimg-detail-sub">삼성카드</p></div>`, "상세 312 — 돌림 · 카드 이름은 글로", "eager — 첫 화면의 큰 그림만 바로 받는다")}`);
+    item(cardArt({ issuer: "삼성카드", name: "신용카드", src: PIMG.cardV, width: 150, rotated: true }), "격자 150 — 돌림", "540 × 856 → 시계 방향 90°"),
+    item(cardArt({ issuer: "현대카드", name: "신용카드", src: PIMG.cardH2, width: 150 }), "가로 그림 — 그대로", "856 × 540"),
+    item(cardArt({ issuer: "삼성카드", name: "신용카드", src: PIMG.cardV, width: 150 }), "가운데만 잘린 지금 — 쓰지 않는다", "세로를 가로 틀에 cover — 높이의 29 ~ 41%"),
+  ], "pimg-row--stroke")}<div class="pimg-gap"></div>${item(`<div class="pimg-detail">${cardArt({ issuer: "삼성카드", name: "신용카드", src: PIMG.cardV, width: 312, rotated: true })}<h3 class="pimg-detail-name">삼성카드 신용카드</h3><p class="pimg-detail-sub">삼성카드</p></div>`, "상세 312 — 돌림 · 카드 이름은 글로", "eager — 첫 화면의 큰 그림만 바로 받는다")}`);
   const rotatePanel = panel(
     "카드 그림 — 세로 그림은 시계 방향 90°",
     "카드 그림은 비율 card(1.586)의 Image Frame 이다 — 목록 56 · 혜택 격자 · 상세가 모두 같은 비율이다. 그림의 반이 세로 카드다(dev 표본 150장 중 80장, 0.62 ~ 0.64). 그림의 원래 폭이 높이보다 작으면 시계 방향으로 90° 돌려 가로 틀을 채운다 — 그림 상자를 틀의 높이 × 폭으로 잡아 돌리고 cover 로 채워 카드 전체가 거의 그대로 들어간다. 방향은 다 받은 뒤 원래 크기로 정하고, 그때까지는 스켈레톤이다(돌기 전 모습이 보이지 않는다). 가로 · 정사각 그림은 그대로다. 세로 그림을 가로 틀에 그대로 채우면 높이의 29 ~ 41% 만 보이고(가운데 띠), 잘리지 않게 넣으면 작아지며, 세로 틀을 따로 두면 목록 · 격자의 크기가 카드마다 달라진다. 상세에는 그림이 떠도 카드 이름을 그림 아래에 글로 둔다. 목록 · 격자의 그림은 옆 · 아래에 이름이 있어 장식이다(decorative 기본).",
@@ -6466,14 +6466,14 @@ export function renderImageGallery(brand, tokens) {
   );
 
   // 6. 그림 없는 카드 — 아는 카드사(기관 색 표)는 카드 면, 모르는 카드사는 대체 그림(credit-card). 크기는 폭으로(96 미만 첫 글자 · 240 이상 크게)
-  const FACES = [["NH농협카드", "올원 Pay"], ["하나카드", "트래블로그"], ["롯데카드", "LOCA 365"], ["KB국민카드", "톡톡 With"], ["SC제일은행", "글로벌 체크"], ["BC카드", "바로 카드"]];
+  const FACES = [["NH농협카드", "체크카드"], ["하나카드", "체크카드"], ["롯데카드", "신용카드"], ["KB국민카드", "신용카드"], ["SC제일은행", "체크카드"], ["BC카드", "신용카드"]];
   const faceCap = (issuer) => {
     const e = inst(issuer);
     return e ? `${contrastOf(e)}${e.ci ? ` · 고친 색 ${e.color}(ci ${e.ci})` : ""}` : "표에 없음 — 대체 그림";
   };
   const faceBody = surface(`${row(FACES.map(([issuer, name]) => item(cardArt({ issuer, name, width: 150 }), issuer, faceCap(issuer))), "pimg-row--faces")}<div class="pimg-gap"></div>${row([
     ...[["KB국민카드", 44, "카탈로그 44"], ["NH농협카드", 56, "목록 56"], ["롯데카드", 68, "추가 미리보기 68"], ["BC카드", 56, "모르는 카드사"]].map(([issuer, w, cap]) => item(cardArt({ issuer, name: "", width: w }), `${cap} → ${inst(issuer) ? `"${AVATAR.initial(issuer)}" ${Math.max(10, Math.round((w / 1.586) * 0.4))}` : "credit-card"}`, inst(issuer) ? "small — 회사 첫 글자만 · 면 높이의 40%(정수 · 가장 작아도 10)" : "대체 그림")),
-  ], "pimg-row--small")}<div class="pimg-gap"></div>${item(cardArt({ issuer: "하나카드", name: "트래블로그 체크카드 해외 결제 수수료 면제", width: 282 }), "large 282 — 데스크톱 혜택 격자", "회사 t3 · 카드 이름 t5 · 두 줄까지 · 좌우 16 · 아래 14")}`);
+  ], "pimg-row--small")}<div class="pimg-gap"></div>${item(cardArt({ issuer: "하나카드", name: "체크카드 해외 결제 수수료 면제 플러스", width: 282 }), "large 282 — 데스크톱 혜택 격자", "회사 t3 · 카드 이름 t5 · 두 줄까지 · 좌우 16 · 아래 14")}`);
   const facePanel = panel(
     "카드 그림 — 그림이 없으면 카드사 색 면 · 모르는 카드사는 대체 그림",
     "그림이 없거나 못 불러오면 카드사로 가른다(dev 활성 카드의 82% 가 그림이 없다). 기관 색 표(institution-colors.yaml)에 있는 카드사는 카드 면 — 기관 색 한 색 위 왼쪽 아래에 회사 이름(500 · 한 줄 말줄임)과 카드 이름(700 · medium 한 줄 · large 두 줄까지 — 넘치면 말줄임)이다. 크기는 폭으로 — 96 미만(목록 56 · 미리보기 68 · 카탈로그 44)은 회사 첫 글자만 가운데(면 높이의 40% · 가장 작아도 10), 96 ~ 239 는 회사 t2 · 이름 t4 한 줄 · 좌우 10 · 아래 8, 240 이상은 회사 t3 · 이름 t5 두 줄까지 · 좌우 16 · 아래 14. 글자색은 표의 text — 흰 글자가 4.5:1 에 못 미치는 색은 짙은 글자(라이트 fg-neutral · 다크 fg-neutral-inverted)라 78곳 모두 4.52 이상이다. 기관 색은 모드를 따르지 않는다. 광택 띠 · 그라디언트를 두지 않는다. 표에 없는 카드사(BC카드)는 대체 그림(credit-card)이다 — 브랜드 파랑 · 회색 면으로 회사 색인 척하지 않는다. 투명 윤곽은 면 위에도 늘이다. 롯데카드 · SC제일은 흰 · 짙은 글자 모두 모자라 표가 명도만 고친 색이다.",
@@ -6482,11 +6482,11 @@ export function renderImageGallery(brand, tokens) {
 
   // 7. 그림 위 요소 — 배지(solid · 상태) · Indicator(장수 · 길이), 네 모서리 · 모서리에서 6 · 틀 하나에 둘까지 · 짧은 변 80 이상
   const overlayBody = surface(`${row([
-    item(cardArt({ issuer: "삼성카드", name: "iD SELECT ALL", src: PIMG.cardV, width: 150, rotated: true, floaters: [{ placement: "top-start", html: solid("단종") }] }), "배지 — 위 시작", "Badge solid · medium 20 — 단종은 흐리지 않고 배지로"),
+    item(cardArt({ issuer: "삼성카드", name: "신용카드", src: PIMG.cardV, width: 150, rotated: true, floaters: [{ placement: "top-start", html: solid("단종") }] }), "배지 — 위 시작", "Badge solid · medium 20 — 단종은 흐리지 않고 배지로"),
     item(imageFrame({ ratio: "4:3", width: 150, src: PIMG.white, alt: "", floaters: [{ placement: "bottom-end", html: imageFrameIndicator("1 / 12", "사진 12장 중 1번째") }] }), "Indicator — 아래 끝", "\"1 / 12\" — 흰 그림 위 흰 글자 7.00"),
     item(imageFrame({ ratio: "1:1", width: 120, src: PIMG.night, alt: "", floaters: [{ placement: "bottom-end", html: imageFrameIndicator("+9", "사진 9장 더 있음") }] }), "Indicator — 나머지 장수", "\"+9\" — 읽는 글 \"사진 9장 더 있음\""),
     item(imageFrame({ ratio: "4:3", width: 150, src: PIMG.forest, alt: "", floaters: [{ placement: "top-start", html: solid("대표") }, { placement: "bottom-end", html: imageFrameIndicator("3:24", "동영상 3분 24초") }] }), "둘까지 — 배지 + Indicator", "한 자리에 하나 · 셋 이상 얹지 않는다"),
-  ], "pimg-row--stroke")}<div class="pimg-gap"></div>${listOf([benefitRow({ issuer: "롯데카드", name: "LOCA 365", badges: [badge({ text: "단종" })] })])}<div class="pimg-cap pimg-cap--note">작은 틀(짧은 변 80 미만 — 목록 56)에는 얹지 않는다 — 배지는 줄의 글 옆(weak)이다</div>`);
+  ], "pimg-row--stroke")}<div class="pimg-gap"></div>${listOf([benefitRow({ issuer: "롯데카드", name: "신용카드", badges: [badge({ text: "단종" })] })])}<div class="pimg-cap pimg-cap--note">작은 틀(짧은 변 80 미만 — 목록 56)에는 얹지 않는다 — 배지는 줄의 글 옆(weak)이다</div>`);
   const overlayPanel = panel(
     "Image Frame — 그림 위 요소: 배지 · Indicator",
     "그림 위에는 네 모서리(위 시작 · 위 끝 · 아래 시작 · 아래 끝)에 하나씩, 틀 하나에 둘까지 얹는다 — 틀 가장자리에서 6(spacing-x1_5). 상태 · 분류는 배지 — Badge solid medium 20(그림 위는 늘 solid — SEED Badge), 보기 전에 알면 좋은 장수 · 길이는 Indicator — 알약 · 검정 65%(overlay-dim-dark) 바탕 · 흰 11/15 500 · 좌우 6 · 위아래 2 · 높이 19 다. Indicator 바탕은 두 모드 모두 검정 65% 다 — 그림은 모드를 따르지 않는다(흰 그림 위에서도 흰 글자 7.00:1). 보이는 글(\"1 / 12\")은 숨기고 무엇의 수인지(\"사진 12장 중 1번째\")를 읽는다. 틀의 짧은 변이 80 이상일 때만 얹는다 — 그보다 작은 틀은 배지 · 장수를 줄의 글로 둔다. 관심(하트) 버튼 · 콘텐츠 종류 아이콘 · 점 지시자는 두지 않는다. 그림 위 요소는 누르지 않는다.",
@@ -6529,7 +6529,7 @@ export function renderImageGallery(brand, tokens) {
     item(logoTile({ name: "다온테크", face: "name", size: 32, src: PIMG.logoB, imageType: "logo" }), "로고 — 흰 판", "회사는 기관이 아니다 — face=\"name\""),
     item(logoTile({ name: "새회사", face: "name", size: 32 }), "로고가 없는 회사", `첫 글자 · 이름 색 ${AVATAR.hue("새회사")}`),
   ], "pimg-row--tiles"));
-  const tileLive = `<div class="pld-live" data-plt-live="">${surface(`<div class="pimg-live-tile">${logoTile({ name: "삼성카드", size: 48, src: PIMG.cardV, imageType: "card", rotated: true, state: "initial" })}<span class="pimg-live-name">삼성카드 iD SELECT ALL</span></div>`, "pimg-surface--live")}<template data-plt-plate="">${logoTilePlate({ size: 48, src: PIMG.cardV, imageType: "card", rotated: true })}</template><div class="pld-controls"><button class="btn btn-neutral-weak btn-size-small" type="button" data-plt-run="load"><span>그림이 옴 — 0.8초</span></button><button class="btn btn-neutral-weak btn-size-small" type="button" data-plt-run="fail"><span>실패</span></button></div><p class="pld-clock" data-plt-clock="" aria-hidden="true">처음에는 첫 글자 — 그림이 오면 전환 없이 바로 덮는다</p></div>`;
+  const tileLive = `<div class="pld-live" data-plt-live="">${surface(`<div class="pimg-live-tile">${logoTile({ name: "삼성카드", size: 48, src: PIMG.cardV, imageType: "card", rotated: true, state: "initial" })}<span class="pimg-live-name">삼성카드 신용카드</span></div>`, "pimg-surface--live")}<template data-plt-plate="">${logoTilePlate({ size: 48, src: PIMG.cardV, imageType: "card", rotated: true })}</template><div class="pld-controls"><button class="btn btn-neutral-weak btn-size-small" type="button" data-plt-run="load"><span>그림이 옴 — 0.8초</span></button><button class="btn btn-neutral-weak btn-size-small" type="button" data-plt-run="fail"><span>실패</span></button></div><p class="pld-clock" data-plt-clock="" aria-hidden="true">처음에는 첫 글자 — 그림이 오면 전환 없이 바로 덮는다</p></div>`;
   const tileImagePanel = panel(
     "Logo Tile — 투명 윤곽 · 그림(카드 · 로고) · 첫 글자 먼저",
     "안쪽 1px 투명 윤곽(stroke-neutral-overlay)을 늘 그린다 — 다크 표면과 1.02 ~ 1.12 인 짙은 남색 타일(케이뱅크 · BoA · 현대차증권 …), 흰 표면과 1.28 인 노랑 타일(카카오뱅크 · 카카오페이증권)이 표면에 묻히지 않게 둘레를 잡는다(장식 — 이름 글이 물건을 알린다). 타일 색을 바꾸지 않는다. 그림이 있으면 첫 글자를 먼저 그리고 그림이 오면 판 · 그림이 덮는다(전환 없이 바로 — Avatar 와 같다), 못 불러오면 첫 글자 그대로다 — 줄의 이름 · 금액은 이미 와 있으니 스켈레톤을 따로 두지 않는다. 판 안쪽은 4 다. 카드 그림은 옅은 판(bg-neutral-weak) 위에 카드 비율의 Image Frame(32 → 24 × 15 · 40 → 32 × 20 · 48 → 40 × 25, 모서리는 그 폭으로 4 · 6 · 6)으로 카드 전체를 보이고 세로 그림은 돌린다 — 정사각에 잘라 넣으면 카드의 63% 만 보인다. 로고 그림은 흰 판(static-white — 두 모드 같다) 위에 잘리지 않게(contain) 둔다. 옆에 이름이 있으면 타일은 장식이다(첫 글자 · 그림을 읽지 않는다).",
@@ -6551,13 +6551,13 @@ export function renderImageGallery(brand, tokens) {
     assetRow("비상금", "비상금", "name", "현금", "300,000원"),
   ])}`);
   const benefitPhone = phone(430, `${title("카드 혜택")}${listOf([
-    benefitRow({ issuer: "삼성카드", name: "iD SELECT ALL", src: PIMG.cardV, rotated: true }),
-    benefitRow({ issuer: "현대카드", name: "M EDITION", src: PIMG.cardH2 }),
-    benefitRow({ issuer: "NH농협카드", name: "올원 Pay", type: "체크" }),
-    benefitRow({ issuer: "BC카드", name: "바로 카드" }),
-    benefitRow({ issuer: "롯데카드", name: "LOCA 365", badges: [badge({ text: "단종" })] }),
+    benefitRow({ issuer: "삼성카드", name: "신용카드", src: PIMG.cardV, rotated: true }),
+    benefitRow({ issuer: "현대카드", name: "신용카드", src: PIMG.cardH2 }),
+    benefitRow({ issuer: "NH농협카드", name: "체크카드", type: "체크" }),
+    benefitRow({ issuer: "BC카드", name: "신용카드" }),
+    benefitRow({ issuer: "롯데카드", name: "신용카드", badges: [badge({ text: "단종" })] }),
   ])}`);
-  const detailPhone = phone(430, `${title("카드 상세")}<div class="pimg-page-pad">${cardArt({ issuer: "삼성카드", name: "iD SELECT ALL", src: PIMG.cardV, width: 312, rotated: true })}<h3 class="pimg-detail-name">iD SELECT ALL</h3><p class="pimg-detail-sub">신용 · 삼성카드</p></div>${listOf([listRow({ title: "전월 실적", suffix: escape("30만원 이상") }), listRow({ title: "연회비", suffix: escape("2만원") })])}`);
+  const detailPhone = phone(430, `${title("카드 상세")}<div class="pimg-page-pad">${cardArt({ issuer: "삼성카드", name: "신용카드", src: PIMG.cardV, width: 312, rotated: true })}<h3 class="pimg-detail-name">삼성카드 신용카드</h3><p class="pimg-detail-sub">신용 · 삼성카드</p></div>${listOf([listRow({ title: "전월 실적", suffix: escape("30만원 이상") }), listRow({ title: "연회비", suffix: escape("2만원") })])}`);
   const screensPanel = panel(
     "화면 — 폰: 자산 · 카드 혜택 · 카드 상세",
     "자산 줄의 앞은 Logo Tile 40 이다 — 이름은 기관 이름(신한 · KB국민 · 키움증권 · 업비트), 기관이 없는 자산(비상금)은 자산 이름이고 표를 보지 않아 이름 색이다. 옆에 이름이 있어 타일은 장식이다. 카드 혜택 목록의 앞은 카드 그림 56(높이 35.3 · 모서리 8) — 세로 카드는 돌리고, 그림이 없는 아는 카드사(NH농협카드)는 카드 면의 첫 글자, 모르는 카드사(BC카드)는 대체 그림이다. 단종은 흐리지 않고 이름 옆 배지다(그림 위에 얹기에는 작다). 카드 상세는 그림 312(폰 폭 − 좌우 24) 아래에 카드 이름 · 카드사를 글로 둔다.",
@@ -6569,11 +6569,11 @@ export function renderImageGallery(brand, tokens) {
   );
 
   // 11. 화면 — 데스크톱 웹: 카드 혜택 격자(282 · 단종 배지) · HR 규정 그림(1:1 · 장식) · HR 회사 로고(32)
-  const gridCard = ({ issuer, name, src = "", rotated = false, discontinued = false }) => `<div class="pimg-grid-card">${cardArt({ issuer, name, src, rotated, floaters: discontinued ? [{ placement: "top-start", html: solid("단종") }] : [] })}<p class="pimg-grid-name">${escape(name)}</p><p class="pimg-grid-sub">${escape(issuer)}</p></div>`;
+  const gridCard = ({ issuer, name, src = "", rotated = false, discontinued = false }) => `<div class="pimg-grid-card">${cardArt({ issuer, name, src, rotated, floaters: discontinued ? [{ placement: "top-start", html: solid("단종") }] : [] })}<p class="pimg-grid-name">${escape(`${issuer} ${name}`)}</p><p class="pimg-grid-sub">${escape(issuer)}</p></div>`;
   const benefitDesk = desktop(440, `${title("카드 혜택")}<div class="pov-page-card pimg-page-card"><div class="pimg-grid">${[
-    gridCard({ issuer: "삼성카드", name: "iD SELECT ALL", src: PIMG.cardV, rotated: true }),
-    gridCard({ issuer: "현대카드", name: "M EDITION", src: PIMG.cardH2, discontinued: true }),
-    gridCard({ issuer: "하나카드", name: "트래블로그 체크" }),
+    gridCard({ issuer: "삼성카드", name: "신용카드", src: PIMG.cardV, rotated: true }),
+    gridCard({ issuer: "현대카드", name: "신용카드", src: PIMG.cardH2, discontinued: true }),
+    gridCard({ issuer: "하나카드", name: "체크카드" }),
   ].join("")}</div></div>`);
   const RULES = [["ruleLeave", "연차 · 휴가", "입사 1년 뒤 15일, 2년마다 1일 더한다"], ["ruleAttire", "복장", "평일은 자유, 외부 미팅은 단정하게"], ["ruleEducation", "교육", "직무 교육비는 연 100만원까지"], ["ruleCulture", "문화", "매달 마지막 금요일은 일찍 퇴근"]];
   const ruleDesk = desktop(400, `${title("문화 · 규정")}<div class="pimg-rules">${RULES.map(([img, t, d]) => `<div class="pimg-rule">${imageFrame({ ratio: "1:1", src: PIMG[img], alt: "" })}<h3 class="pimg-grid-name">${escape(t)}</h3><p class="pimg-grid-sub">${escape(d)}</p></div>`).join("")}</div>`);
@@ -6962,9 +6962,9 @@ const pnavTitleRow = (t, desc, buttons) =>
 const pnavCard = (body, cls = "") => `<div class="pnav-card${cls ? ` ${cls}` : ""}">${body}</div>`;
 const pnavRow = ([title, detail, value]) => `<div class="pnav-row"><span class="pnav-row-body"><span class="pnav-row-title">${escape(title)}</span>${detail ? `<span class="pnav-row-detail">${escape(detail)}</span>` : ""}</span>${value ? `<span class="pnav-row-value">${escape(value)}</span>` : ""}</div>`;
 const PNAV_LEDGER = [
-  ["김밥천국", "식비 · 현대카드 M", "8,000원"], ["버스", "교통 · 현대카드 M", "1,500원"], ["다이소", "쇼핑 · 현대카드 M", "12,300원"], ["월급", "수입 · 국민 주계좌", "3,200,000원"],
-  ["스타벅스", "식비 · 국민 주계좌", "6,800원"], ["GS25", "식비 · 현대카드 M", "3,200원"], ["교보문고", "문화 · 현대카드 M", "15,000원"], ["올리브영", "쇼핑 · 국민 주계좌", "21,900원"],
-  ["택시", "교통 · 현대카드 M", "9,800원"], ["넷플릭스", "구독 · 현대카드 M", "13,500원"], ["쿠팡", "쇼핑 · 국민 주계좌", "32,000원"], ["관리비", "주거 · 국민 주계좌", "184,000원"],
+  ["김밥천국", "식비 · 현대카드 신용카드", "8,000원"], ["버스", "교통 · 현대카드 신용카드", "1,500원"], ["다이소", "쇼핑 · 현대카드 신용카드", "12,300원"], ["월급", "수입 · 국민 주계좌", "3,200,000원"],
+  ["스타벅스", "식비 · 국민 주계좌", "6,800원"], ["GS25", "식비 · 현대카드 신용카드", "3,200원"], ["교보문고", "문화 · 현대카드 신용카드", "15,000원"], ["올리브영", "쇼핑 · 국민 주계좌", "21,900원"],
+  ["택시", "교통 · 현대카드 신용카드", "9,800원"], ["넷플릭스", "구독 · 현대카드 신용카드", "13,500원"], ["쿠팡", "쇼핑 · 국민 주계좌", "32,000원"], ["관리비", "주거 · 국민 주계좌", "184,000원"],
 ];
 const PNAV_LEAVE = [["연차", "10월 12일 (월) ~ 14일 (수)", "승인 대기"], ["반차(오전)", "9월 30일 (수)", "승인"], ["병가", "9월 8일 (화)", "승인"], ["연차", "8월 18일 (화)", "승인"], ["경조 휴가", "7월 3일 (금)", "승인"]];
 const pnavRows = (rows, n = rows.length) => Array.from({ length: n }, (_, i) => pnavRow(rows[i % rows.length])).join("");
@@ -7047,7 +7047,7 @@ export function renderNavGallery(brand) {
     ? topNavIcon({ icon: "search", name: "검색", interaction: c.i, disabled: c.i === "disabled" })
     : topNavText({ label: "모두 읽음", interaction: c.i, disabled: c.i === "disabled" })}</span>`);
   const dotZoom = `<span class="pnav-zoom" aria-hidden="true"><span class="pnav-zoom-in">${topNavIcon({ icon: "bell", name: "알림, 새 알림 있음", dot: true })}</span></span>`;
-  const longTitle = pnavPhone({ height: 56, home: false, cls: "pnav-phone--bar", inner: topNav({ title: "현대카드 M Edition3 카드 혜택 자세히 보기", actions: [{ icon: "share", name: "공유" }, { icon: "ellipsis", name: "카드 혜택 더보기" }] }) });
+  const longTitle = pnavPhone({ height: 56, home: false, cls: "pnav-phone--bar", inner: topNav({ title: "현대카드 신용카드 해외 결제 혜택 자세히 보기", actions: [{ icon: "share", name: "공유" }, { icon: "ellipsis", name: "카드 혜택 더보기" }] }) });
   const threeIcons = pnavPhone({ height: 56, home: false, cls: "pnav-phone--bar", inner: topNav({ title: "카드 혜택", actions: [{ icon: "search", name: "검색" }, { icon: "share", name: "공유" }, { icon: "ellipsis", name: "카드 혜택 더보기" }] }) });
   const buttonPanel = panel(
     "Top Navigation — 버튼 상태 · 알림 점 · 긴 제목 · 넘치면 ⋯",
@@ -7061,7 +7061,7 @@ export function renderNavGallery(brand) {
 
   // 3. Top Navigation — 위 안전 영역 · 스크롤해도 선 없음. 오른쪽 폰은 실제로 스크롤된다
   const notch = pnavPhone({ height: 420, status: 47, inner: `${topNav({ type: "root", title: "홈", safeTop: 47, actions: [{ icon: "search", name: "검색" }, { icon: "bell", name: "알림, 새 알림 있음", dot: true }] })}${phoneBody(`${ledgerTitle("이번 달 거래")}${pnavRows(PNAV_LEDGER, 8)}`)}` });
-  const scrolled = pnavPhone({ height: 420, inner: `${topNav({ title: "알림", text: { label: "모두 읽음" } })}${phoneBody(pnavRows([["카드 결제 예정", "현대카드 M · 10월 15일", "184,000원"], ["예산 80% 사용", "식비 · 10월", ""], ["자동 이체 완료", "관리비 · 국민 주계좌", "184,000원"], ["카드 실적 달성", "현대카드 M · 30만원", ""], ["더치페이 요청", "김민수 · 저녁", "21,000원"]], 12), { attrs: 'data-pnav-scrolltop="180" tabindex="0" role="region" aria-label="알림 목록"' })}` });
+  const scrolled = pnavPhone({ height: 420, inner: `${topNav({ title: "알림", text: { label: "모두 읽음" } })}${phoneBody(pnavRows([["카드 결제 예정", "현대카드 신용카드 · 10월 15일", "184,000원"], ["예산 80% 사용", "식비 · 10월", ""], ["자동 이체 완료", "관리비 · 국민 주계좌", "184,000원"], ["카드 실적 달성", "현대카드 신용카드 · 30만원", ""], ["더치페이 요청", "김민수 · 저녁", "21,000원"]], 12), { attrs: 'data-pnav-scrolltop="180" tabindex="0" role="region" aria-label="알림 목록"' })}` });
   const photoBar = (tone) => topNav({ title: "지어낸카드 플러스", tone, actions: [{ icon: "share", name: "공유" }] });
   const photoTop = pnavPhone({ height: 420, inner: `<div class="pnav-over">${photoBar("transparent")}</div>${phoneBody(`<div class="pnav-photo" aria-hidden="true"></div>${pnavRows(PNAV_LEDGER, 4)}`)}` });
   const photoFilled = pnavPhone({ height: 420, inner: `${photoBar("layer")}${phoneBody(pnavRows(PNAV_LEDGER, 8))}` });
@@ -7205,7 +7205,7 @@ export function renderNavGallery(brand) {
   // 항목 자리 — 머리 64 + 내용 위 8 + 항목 44 × 차례. 둘째 묶음부터는 묶음 사이 선(8 + 1 + 8)이 더해진다
   const itemTop = (index) => 64 + 8 + 44 * index;
   const tipCrop = pnavDesk({ width: 420, height: 330, side: sideNav({ groups: PNAV_DESK_NAV, current: "가계부", collapsed: true, hover: "자산" }), main: `${pnavScreenTitle("가계부")}${pnavCard(pnavRows(PNAV_LEDGER, 3), "pnav-card--list")}`, overlay: sideNavTip({ text: "자산", top: itemTop(1) + 22 }) });
-  const flyCrop = pnavDesk({ width: 420, height: 330, side: sideNav({ groups: PNAV_DESK_NAV, current: "나무증권", collapsed: true }), main: `${pnavScreenTitle("나무증권")}${pnavCard(pnavRows([["삼성전자", "보통주 · 12주", "852,000원"], ["카카오", "보통주 · 30주", "1,236,000원"], ["KODEX 200", "ETF · 8주", "296,400원"]]), "pnav-card--list")}`, overlay: sideNavFlyout({ parent: "증권", items: ["나무증권", "토스증권"], current: "나무증권", hover: "토스증권", top: itemTop(2) }) });
+  const flyCrop = pnavDesk({ width: 420, height: 330, side: sideNav({ groups: PNAV_DESK_NAV, current: "나무증권", collapsed: true }), main: `${pnavScreenTitle("나무증권")}${pnavCard(pnavRows([["가람전자", "보통주 · 12주", "852,000원"], ["라온톡", "보통주 · 30주", "1,236,000원"], ["누리 200", "ETF · 8주", "296,400원"]]), "pnav-card--list")}`, overlay: sideNavFlyout({ parent: "증권", items: ["나무증권", "토스증권"], current: "나무증권", hover: "토스증권", top: itemTop(2) }) });
   const liveDesk = pnavDesk({ height: 520, side: sideNav({ groups: PNAV_HR_NAV, current: "휴가 현황", collapsed: true, logo: "그루 이음", live: true }), main: hrMain, attrs: "data-psnav-frame" });
   const flyPanel = panel(
     "Side Navigation — 접혔을 때: 이름 말풍선 · 옆 펼침 메뉴 · 직접",
@@ -7318,8 +7318,8 @@ export function renderNavGallery(brand) {
   );
 
   // 15. 끝없이 불러오기 — 폰의 긴 목록은 쪽을 나누지 않는다. 목록 끝 자리: 받는 중 · 못 불러옴 · 끝
-  const endPhone = (status, n = 5) => pnavPhone({ height: 330, inner: `${topNav({ title: "카드 혜택" })}${phoneBody(`${pnavRows([["현대카드 M", "신용 · 현대카드", "포인트 3%"], ["신한 SOL트래블", "체크 · 신한카드", "해외 수수료 면제"], ["KB국민 노리2", "체크 · KB국민카드", "교통 10%"], ["삼성 taptap O", "신용 · 삼성카드", "카페 50%"], ["롯데 LOCA 365", "신용 · 롯데카드", "생활 5%"], ["NH 올원 Pay", "체크 · NH농협카드", "간편결제 5%"]], n)}${infiniteEnd({ status, endText: "카드를 모두 봤어요." })}`, { attrs: `data-pnav-scrolltop="999" tabindex="0" role="region" aria-label="카드 혜택 목록"${status === "loading" ? ' aria-busy="true"' : ""}` })}` });
-  const liveInfinite = pnavPhone({ height: 460, attrs: "data-pinf-phone", inner: `${topNav({ title: "카드 혜택" })}${phoneBody(`<div data-pinf-list="">${pnavRows([["현대카드 M", "신용 · 현대카드", "포인트 3%"], ["신한 SOL트래블", "체크 · 신한카드", "해외 수수료 면제"], ["KB국민 노리2", "체크 · KB국민카드", "교통 10%"], ["삼성 taptap O", "신용 · 삼성카드", "카페 50%"], ["롯데 LOCA 365", "신용 · 롯데카드", "생활 5%"], ["NH 올원 Pay", "체크 · NH농협카드", "간편결제 5%"]], 10)}</div>${infiniteEnd({ status: "loading", endText: "카드를 모두 봤어요.", live: true })}`, { attrs: 'tabindex="0" role="region" aria-label="카드 혜택 목록" data-pinf-scroll=""' })}` });
+  const endPhone = (status, n = 5) => pnavPhone({ height: 330, inner: `${topNav({ title: "카드 혜택" })}${phoneBody(`${pnavRows([["현대카드 신용카드", "신용 · 현대카드", "포인트 3%"], ["신한카드 체크카드", "체크 · 신한카드", "해외 수수료 면제"], ["KB국민카드 체크카드", "체크 · KB국민카드", "교통 10%"], ["삼성카드 신용카드", "신용 · 삼성카드", "카페 50%"], ["롯데카드 신용카드", "신용 · 롯데카드", "생활 5%"], ["NH농협카드 체크카드", "체크 · NH농협카드", "간편결제 5%"]], n)}${infiniteEnd({ status, endText: "카드를 모두 봤어요." })}`, { attrs: `data-pnav-scrolltop="999" tabindex="0" role="region" aria-label="카드 혜택 목록"${status === "loading" ? ' aria-busy="true"' : ""}` })}` });
+  const liveInfinite = pnavPhone({ height: 460, attrs: "data-pinf-phone", inner: `${topNav({ title: "카드 혜택" })}${phoneBody(`<div data-pinf-list="">${pnavRows([["현대카드 신용카드", "신용 · 현대카드", "포인트 3%"], ["신한카드 체크카드", "체크 · 신한카드", "해외 수수료 면제"], ["KB국민카드 체크카드", "체크 · KB국민카드", "교통 10%"], ["삼성카드 신용카드", "신용 · 삼성카드", "카페 50%"], ["롯데카드 신용카드", "신용 · 롯데카드", "생활 5%"], ["NH농협카드 체크카드", "체크 · NH농협카드", "간편결제 5%"]], 10)}</div>${infiniteEnd({ status: "loading", endText: "카드를 모두 봤어요.", live: true })}`, { attrs: 'tabindex="0" role="region" aria-label="카드 혜택 목록" data-pinf-scroll=""' })}` });
   const infinitePanel = panel(
     "끝없이 불러오기 — 폰 목록의 끝 자리: 받는 중 · 못 불러옴 · 끝",
     "768 미만의 긴 목록은 쪽을 나누지 않는다 — 목록 끝이 화면 아래에서 300 안으로 오면 다음 쪽을 받아 아래에 잇는다. 목록 맨 아래 한 자리(위아래 24 · 가운데)가 지금 상태를 보인다. 받는 중은 Progress Circle 24(neutral)이고 1초가 지나야 보인다(그 전에 오면 깜빡이지 않는다) — 받는 동안 목록에 aria-busy. 못 불러오면 \"더 불러오지 못했어요.\"(14/19 · fg-neutral-muted) + Button neutralWeak small \"다시 시도\"(위 12)이고 이미 받은 줄은 그대로다. 끝은 \"모두 봤어요.\"(14/19 · fg-neutral-subtle — 목록마다 \"카드를 모두 봤어요.\" 처럼)이고 한 쪽으로 끝나는 짧은 목록에는 두지 않는다. \"더 보기\" 버튼은 두지 않는다 — 폰은 끝없이, 데스크톱은 Pagination 이다. 첫 쪽을 못 불러오면 목록 자리가 Result Section 의 실패다. 기다리는 시간표(1 · 5 · 10초)는 Skeleton 의 \"기다리는 동안\" 이다. 오른쪽 폰은 직접 내려 볼 수 있다 — 두 번 받고 셋째는 한 번 실패한다(다시 시도), 다 받으면 끝 글이다.",
@@ -7541,7 +7541,7 @@ const pcardLink = (title) => `<a class="pcard-link" href="#" data-pdata-link>${e
 const pcardStat = ({ label, value, size = "large", delta = null }) =>
   `<div class="pcard-stat"><div class="pcard-stat-label">${escape(label)}</div><div class="pcard-stat-value pcard-stat-value--${size}">${escape(value)}</div>${delta ? `<div class="pcard-stat-delta">${pdelta(delta)}</div>` : ""}</div>`;
 // 순자산 — 라벨 13 · 500 · 금액 32 / 42 · 700 · 아래 글 13, 모두 흰 글자(불투명도로 흐리지 않는다). 장식 빛은 카드가 그린다(.pcard-glow)
-const pcardHero = ({ label = "순자산", amount = "42,898,100원", delta = { direction: "up", value: "1.8%", text: "지난달보다" }, interaction = "", attrs = "" } = {}) =>
+const pcardHero = ({ label = "순자산", amount = "42,898,100원", delta = { direction: "up", value: "1.80%", text: "지난달보다" }, interaction = "", attrs = "" } = {}) =>
   pcard({ variant: "hero", interaction, attrs, content: `<div class="pcard-hero-label">${escape(label)}</div><div class="pcard-hero-amount">${escape(amount)}</div><div class="pcard-hero-detail">${pdelta(delta)}</div>` });
 // 오늘 쓴 돈 — card.md 의 목록 카드 줄(카테고리 타일 40 · 제목 · 설명 · 금액). 금액은 가계부 화면의 자리(16 · 700)
 const PCARD_SPEND = [
@@ -7981,7 +7981,7 @@ export function renderDataGallery(brand) {
   const spendCard = (opts = {}) => pcard({ body: "list", head: pcardHead({ title: "오늘 쓴 돈", action: "전체 보기" }), list: pcardSpendRows(PCARD_SPEND, opts), ...opts.card });
   const budgetCard = (guide = false) => pcard({ guide, head: pcardHead({ title: "이번 달 예산", action: "관리" }), content: `<div class="pcard-stat"><div class="pcard-stat-label">남은 예산</div><div class="pcard-stat-value pcard-stat-value--large">360,000원</div><div class="pcard-stat-delta"><span class="pdata-note">예산 1,600,000원 중 1,240,000원 썼어요.</span></div></div>` });
   const statCard = ({ label, value, size = "large", delta, guide = false }) => pcard({ guide, content: pcardStat({ label, value, size, delta }) });
-  const STAT_SPEND = { label: "이번 달 지출", value: "1,240,000원", delta: { direction: "up", value: "12%", text: "지난달보다", srText: "지난달보다 12% 더 썼어요" } };
+  const STAT_SPEND = { label: "이번 달 지출", value: "1,240,000원", delta: { direction: "up", value: "12.00%", text: "지난달보다", srText: "지난달보다 12.00% 더 썼어요" } };
   const STAT_INCOME = { label: "이번 달 수입", value: "4,200,000원", delta: { direction: "down", value: "3%", text: "지난달보다" } };
   const phoneCards = (t, { height = 740 } = {}) => pnavPhone({ height, bg: "basement", inner: `${topNav({ type: "root", title: "홈", actions: [{ icon: "search", name: "검색" }, { icon: "bell", name: "알림" }] })}<div class="pnav-body pdata-phone-body" data-pnav-scroll><div class="pdata-stack">${statCard(STAT_SPEND)}${spendCard()}${budgetCard()}</div></div>` });
 
@@ -8016,13 +8016,13 @@ export function renderDataGallery(brand) {
   ];
   const statDesk = floor(`<div class="pdata-grid pdata-grid--4">${STAT4.map((s) => statCard({ ...s, size: "small" })).join("")}</div>`, "pdata-floor--desk pdata-floor--stat4");
   const deltaRow = (t) => `<div class="pdata-deltas">${[
-    ["up", "▲ fg-critical — 오르면 빨강", { direction: "up", value: "12%", text: "지난달보다", srText: "지난달보다 12% 더 썼어요" }],
+    ["up", "▲ fg-critical — 오르면 빨강", { direction: "up", value: "12.00%", text: "지난달보다", srText: "지난달보다 12.00% 더 썼어요" }],
     ["down", "▼ fg-informative — 내리면 파랑", { direction: "down", value: "3%", text: "지난달보다" }],
     ["flat", "변화 없음 — fg-neutral-subtle", { direction: "flat", srText: "지난달보다 변화가 없어요" }],
   ].map(([k, a, d]) => `<div class="pdata-delta-item">${pdelta(d)}${cap(a)}</div>`).join("")}</div>`;
   const statPanel = panel(
     "Card — 지표: 폰은 한 줄에 하나(24) · 데스크톱 넷(20) · 증감",
-    "숫자 하나를 보이는 카드다 — 라벨 13 · 500 · fg-neutral-subtle, 아래 4 에 큰 숫자 700 · 고정폭 숫자, 아래 4 에 증감 줄. 카드 하나에 숫자 하나면 24 / 32(large)다. 폰에서는 지표 카드를 한 줄에 하나 둔다 — 둘씩이면 360 폭에서 칸 안쪽이 101 인데 \"1,240,000원\" 20 / 700 은 120 이라 들어가지 않는다. 데스크톱 격자에 셋 · 넷씩 나란히 놓을 때만 20 / 27(small)이고 여백은 그대로 24 다. 돈은 줄이지 않고 원까지, 숫자가 굴러가는 애니메이션은 없다. 증감은 방향으로 칠한다 — 어디서나 오르면 ▲ fg-critical, 내리면 ▼ fg-informative(증권과 같은 관례), 늘 화살표와 값을 함께 쓰고 뒤에 기준을 옅은 글(13 · 400 · fg-neutral-subtle · 사이 4)로 둔다 — \"▲ 12% 지난달보다\". 부호(+ · −)를 화살표와 같이 쓰지 않는다. 변화가 없으면 화살표 없이 \"변화 없음\". 좋고 나쁨은 색이 아니라 글이 말한다 — 보조 기술에는 문장으로 읽힌다(\"지난달보다 12% 더 썼어요\" — 화살표는 숨긴다).",
+    "숫자 하나를 보이는 카드다 — 라벨 13 · 500 · fg-neutral-subtle, 아래 4 에 큰 숫자 700 · 고정폭 숫자, 아래 4 에 증감 줄. 카드 하나에 숫자 하나면 24 / 32(large)다. 폰에서는 지표 카드를 한 줄에 하나 둔다 — 둘씩이면 360 폭에서 칸 안쪽이 101 인데 \"1,240,000원\" 20 / 700 은 120 이라 들어가지 않는다. 데스크톱 격자에 셋 · 넷씩 나란히 놓을 때만 20 / 27(small)이고 여백은 그대로 24 다. 돈은 줄이지 않고 원까지, 숫자가 굴러가는 애니메이션은 없다. 증감은 방향으로 칠한다 — 어디서나 오르면 ▲ fg-critical, 내리면 ▼ fg-informative(증권과 같은 관례), 늘 화살표와 값을 함께 쓰고 뒤에 기준을 옅은 글(13 · 400 · fg-neutral-subtle · 사이 4)로 둔다 — \"▲ 12.00% 지난달보다\". 부호(+ · −)를 화살표와 같이 쓰지 않는다. 변화가 없으면 화살표 없이 \"변화 없음\". 좋고 나쁨은 색이 아니라 글이 말한다 — 보조 기술에는 문장으로 읽힌다(\"지난달보다 12.00% 더 썼어요\" — 화살표는 숨긴다).",
     `${samples([sample("폰 — 한 줄에 하나 · large 24", "쌓은 사이 8 · 여백 24", statPhone), sample("증감 — ▲ · ▼ · 변화 없음(라이트 · 다크)", "Delta direction · value · text · srText", pair(deltaRow))])}${samples([sample("데스크톱 — 넷씩 · small 20", "격자 칸 사이 24 · 여백은 그대로 24", wide(statDesk))], `${WIDE} pov-samples--next`)}`,
   );
 
@@ -8138,13 +8138,13 @@ export function renderDataGallery(brand) {
   const errorBox = stateBox(psl({ query: "토스", status: "error" }));
   const loadBox = stateBox(psl({ query: "", status: "loading" }));
   const CARDS = [
-    { issuer: "삼성카드", name: "iD SELECT ALL", src: PIMG.cardV, rotated: true, kind: "신용" },
-    { issuer: "현대카드", name: "M EDITION3", src: PIMG.cardH2, kind: "신용" },
-    { issuer: "신한카드", name: "SOL트래블 체크", kind: "체크" },
-    { issuer: "롯데카드", name: "LOCA 365", kind: "신용", discontinued: true },
+    { issuer: "삼성카드", name: "신용카드", src: PIMG.cardV, rotated: true, kind: "신용" },
+    { issuer: "현대카드", name: "신용카드", src: PIMG.cardH2, kind: "신용" },
+    { issuer: "신한카드", name: "체크카드", kind: "체크" },
+    { issuer: "롯데카드", name: "신용카드", kind: "신용", discontinued: true },
   ];
-  const cardItems = CARDS.map((c) => ({ value: c.name, title: c.name, detail: `${escape(c.issuer)} · ${escape(c.kind)}${c.discontinued ? badge({ text: "단종" }) : ""}`, prefix: cardArt({ issuer: c.issuer, name: c.name, src: c.src || "", rotated: !!c.rotated, width: 56 }) }));
-  const inlineStep = `<div class="pdata-step">${psl({ placeholder: "카드 이름 검색", label: "카드 상품", groups: [{ label: "", items: cardItems }], value: "M EDITION3", placement: "inline" })}<div class="pdata-step-foot"><button class="btn btn-neutral-solid btn-size-large pdata-step-next" type="button">다음</button></div></div>`;
+  const cardItems = CARDS.map((c) => ({ value: `${c.issuer} ${c.name}`, title: `${c.issuer} ${c.name}`, detail: `${escape(c.issuer)} · ${escape(c.kind)}${c.discontinued ? badge({ text: "단종" }) : ""}`, prefix: cardArt({ issuer: c.issuer, name: c.name, src: c.src || "", rotated: !!c.rotated, width: 56 }) }));
+  const inlineStep = `<div class="pdata-step">${psl({ placeholder: "카드 이름 검색", label: "카드 상품", groups: [{ label: "", items: cardItems }], value: "현대카드 신용카드", placement: "inline" })}<div class="pdata-step-foot"><button class="btn btn-neutral-solid btn-size-large pdata-step-next" type="button">다음</button></div></div>`;
   const popover = overlayFrame({ device: "desktop", height: 640, page: overlayPage({ title: "투자 추가", desktop: true, body: overlayAnchor(textField({ label: "증권사", control: { kind: "inputButton", size: "medium", value: "키움증권", suffixIcon: "chevronDown", expanded: true } }), overlayPopover({ label: "증권사 선택", body: `<div class="pov-bleed">${psl({ size: "medium", placeholder: "증권사 이름 검색", label: "증권사", groups: [{ label: "증권사", items: pslBankItems(["삼성증권", "미래에셋", "NH투자", "한국투자", "키움증권", "토스증권"]) }], value: "키움증권", highlight: "NH투자", placement: "popover" })}</div>` })) }) });
   const slStatesPanel = panel(
     "Searchable List — 강조 · 누름 · 0건 · 실패 · 불러오는 동안 · 팝오버 · 단계 안",
@@ -8834,7 +8834,7 @@ export function renderInputGallery(brand) {
   );
 
   // 2. 크기 · 자리 — 40 · 44 · 20, 상단 바 44 · 24(끔도 fg-neutral — 19B), 증권 머리 · 메모 카드 · App Key
-  const stockHead = (on, opts = {}) => `<div class="pinp-stock">${logoTile({ name: "삼성전자", size: 40 })}<div class="pinp-stock-body"><span class="pinp-stock-name">삼성전자</span><span class="pinp-stock-meta">005930 · 71,200원</span></div>${ptoggleOf("watch", { pressed: on, ...opts })}</div>`;
+  const stockHead = (on, opts = {}) => `<div class="pinp-stock">${logoTile({ name: "가람전자", size: 40 })}<div class="pinp-stock-body"><span class="pinp-stock-name">가람전자</span><span class="pinp-stock-meta">123450 · 71,200원</span></div>${ptoggleOf("watch", { pressed: on, ...opts })}</div>`;
   const memoCard = (title, body, on, opts = {}) => pcard({ press: "peers", link: `<div class="pdata-memo">${pcardLink(title)}${ptoggle({ name: `${title} 고정`, icon: "pin", pressed: on, ...opts })}</div>`, content: `<div class="pdata-note">${escape(body)}</div>` });
   // App Key 칸 — 03g 의 입력칸(상자형 large)에 끝 단추로 Toggle 을 둔다. 가려져 있으면 password(끔 · eye-off), 보이면 text(켬 · eye)
   const secret = (on) => textField({ label: "App Key", control: { kind: "input", size: "large", type: on ? "text" : "password", value: "PSmd8b3x7K2qL9vR", rootClass: "pinp-secret" } }).replace(/(<input [^>]*>)/, `$1${ptoggleOf("key", { pressed: on })}`);
@@ -8849,7 +8849,7 @@ export function renderInputGallery(brand) {
   // 3. 순자산 카드 위(Desk) — 흰 아이콘만
   const heroCard = (hidden, interaction = "") => pcard({
     variant: "hero",
-    content: `<div class="pinp-hero-head"><div class="pcard-hero-label">순자산</div>${peyeButton({ hidden, interaction })}</div><div class="pcard-hero-amount">${hidden ? "••••••원" : "42,898,100원"}</div><div class="pcard-hero-detail">${pdelta({ direction: "up", value: "1.8%", text: "지난달보다" })}</div>`,
+    content: `<div class="pinp-hero-head"><div class="pcard-hero-label">순자산</div>${peyeButton({ hidden, interaction })}</div><div class="pcard-hero-amount">${hidden ? "••••••원" : "42,898,100원"}</div><div class="pcard-hero-detail">${pdelta({ direction: "up", value: "1.80%", text: "지난달보다" })}</div>`,
   });
   const toggleTone = desk ? panel(
     "Tone — 순자산 카드 위: 흰 아이콘만 · 금액 가리기 눈은 Toggle 이 아니다(Desk)",
@@ -9120,7 +9120,7 @@ export function renderInputGallery(brand) {
 // 나무 .ptree(role=tree) > 항목 .ptree-item(role=treeitem) > 줄 .ptree-row(단계 들임은 style) > 콘텐츠 층 .ptree-content(꺾쇠 칸 .ptree-chevron · 아이콘 .ptree-icon ·
 //   이름 .ptree-label) + 하위 묶음 .ptree-group(role=group). 부서 패널 .ptree-panel > 머리 .ptree-head(제목 .ptree-title + ⋮ — 03m 의 menuTrigger).
 // 나누기 .prsz > 목록 패널 .prsz-panel--list(flex-basis %) · 손잡이 .prsz-handle(선 1px) > .prsz-sep(role=separator · 누르는 폭 16) > .prsz-grip(4 × 24) ·
-//   남는 폭 .prsz-panel--fill. 위젯 격자 .prsz-grid > 위젯 .prsz-widget(머리 .prsz-widget-head + ⋮) > 모서리 손잡이 .prsz-corner > 표식 .prsz-mark · 자리표시 .prsz-ph.
+//   남는 폭 .prsz-panel--fill.
 // 스크롤 상자 .pscr(이름이 있으면 role=region · tabindex 0) — 스크롤바는 페이지의 전역 한 벌(pageCss)이다. 숨는 머리 .psah(sticky · top 0 · 옮기기만) — 폰 .psah-phone 의
 //   스크롤 상자 .psah-scroll 맨 위.
 // 화면 틀(.pcol-phone · .pcol-sheet · .pcol-desk · .pcol-floor)과 라이트 · 다크 나란히 틀(.pdsp-pair · .pdsp-theme — 03o)은 갤러리 것이다.
@@ -9216,14 +9216,14 @@ const PCOL_CATEGORIES = [
 // 가계부 원장 — 10월 8일부터 하루 4줄 · 열흘(첫 줄은 1억 넘는 이체)
 const PCOL_LEDGER = (() => {
   const pool = [
-    ["김밥천국 강남점", "식비 · 삼성카드 taptap O", 9500, "orange", "utensils"],
+    ["김밥천국 강남점", "식비 · 삼성카드 신용카드", 9500, "orange", "utensils"],
     ["파리바게뜨", "카페 · 간식 · 토스 체크카드", 4800, "orange", "coffee"],
     ["티머니", "교통 · 토스 체크카드", 1450, "blue", "credit-card"],
-    ["무신사", "쇼핑 · 삼성카드 taptap O", 58900, "violet", "tag"],
-    ["스타벅스 역삼점", "카페 · 간식 · 현대카드 M", 6300, "orange", "coffee"],
+    ["무신사", "쇼핑 · 삼성카드 신용카드", 58900, "violet", "tag"],
+    ["스타벅스 역삼점", "카페 · 간식 · 현대카드 신용카드", 6300, "orange", "coffee"],
     ["GS25 역삼점", "식비 · 토스 체크카드", 3200, "orange", "utensils"],
-    ["쿠팡", "쇼핑 · 현대카드 M", 27400, "violet", "tag"],
-    ["배달의민족", "식비 · 삼성카드 taptap O", 23900, "orange", "utensils"],
+    ["쿠팡", "쇼핑 · 현대카드 신용카드", 27400, "violet", "tag"],
+    ["배달의민족", "식비 · 삼성카드 신용카드", 23900, "orange", "utensils"],
   ];
   const days = ["10월 8일 (목) · 오늘", "10월 7일 (수)", "10월 6일 (화)", "10월 5일 (월)", "10월 4일 (일)", "10월 3일 (토)", "10월 2일 (금)", "10월 1일 (목)", "9월 30일 (수)", "9월 29일 (화)"];
   return days.map((label, d) => ({
@@ -9391,24 +9391,6 @@ function prsz({ listId = nextPcolId("prsz-list"), size = 25, min = 20, max = 40,
 // 화면의 내용 — 부서 나무(이름만) · 조직도
 const prszTreePane = () => `<div class="prsz-pane"><div class="prsz-pane-title">부서</div>${["가람누리 디지털혁신본부 클라우드 플랫폼 운영 그룹", "클라우드 인프라팀", "데이터 플랫폼팀", "경영지원팀", "프로젝트 1팀", "프로젝트 2팀"].map((d, i) => `<div class="prsz-pane-row${d === "경영지원팀" ? " prsz-pane-row--on" : ""}" style="--ptree-level: ${i === 0 ? 0 : 1};">${escape(d)}</div>`).join("")}</div>`;
 const prszChartPane = () => `<div class="prsz-pane prsz-pane--chart"><div class="prsz-pane-title">경영지원팀 · 조직도</div><div class="prsz-people">${["팀장 김하늘", "이도윤", "박서연", "최민준", "정우진"].map((p) => `<span class="prsz-person">${escape(p)}</span>`).join("")}</div></div>`;
-// 위젯 — 대시보드 편집 모드의 위젯 하나(Card 면 · 머리 ⋮ · 오른쪽 아래 모서리 손잡이 24 · 표식 9). cols 는 12칸 가운데 몇 칸
-const PRSZ_SIZES = [
-  { label: "작게 — 4칸", cols: 4 },
-  { label: "보통 — 6칸", cols: 6 },
-  { label: "넓게 — 8칸", cols: 8 },
-  { label: "가득 — 12칸", cols: 12 },
-];
-//   menu  none(⋮ 만) · open(크기 메뉴를 연 순간) · live(페이지 끝 스크립트 — 03m 의 메뉴가 열고, 고르면 이 블록의 스크립트가 폭을 바꾼다)
-//   ghost 끄는 동안 따라오는 위젯(그림자 s3)
-function prszWidget({ title, cols = 6, rows = 2, body = "", menu = "none", ghost = false, area = "" }) {
-  const groups = [{ label: "크기", items: PRSZ_SIZES.map((s) => ({ label: s.label, description: s.cols === cols ? "지금 크기" : "" })) }];
-  const more = menuTrigger({ name: `${title} 더보기`, live: menu === "live", menu: menu === "none" ? null : groups });
-  const place = area ? `grid-area: ${area};` : `--prsz-cols: ${cols}; --prsz-rows: ${rows};`;
-  return `<div ${attrsOf([`class="prsz-widget${ghost ? " prsz-widget--ghost" : ""}${menu === "open" ? " prsz-widget--menu" : ""}"`, `style="${place}"`, `data-prsz-cols="${cols}"`])}><div class="prsz-widget-head"><span class="prsz-widget-title">${escape(title)}</span>${more}</div>${body ? `<div class="prsz-widget-body">${escape(body)}</div>` : ""}<span class="prsz-corner" aria-hidden="true"><span class="prsz-mark"></span></span></div>`;
-}
-
-// 끄는 동안 놓일 칸 — 옅은 브랜드 바탕 + 1px 브랜드 점선 · 모서리 16(bridge CSS 의 .react-grid-placeholder 와 같은 값)
-const prszPlaceholder = (area) => `<div class="prsz-ph" style="grid-area: ${area};" aria-hidden="true"></div>`;
 
 // ── Scroll Area · Scroll Auto Hide ───────────────────────────────────────
 // 스크롤 상자 — 이름(label)을 주면 role=region · tabindex 0 · aria-label(안에 초점 가는 것이 없는 상자), contain 은 시트 · 대화상자 안
@@ -9426,7 +9408,7 @@ function psahLedgerHeader({ id = nextPcolId("psah-head"), chips = false } = {}) 
   const calId = `${id}-calendar`;
   const week = [["일", 4], ["월", 5], ["화", 6], ["수", 7], ["목", 8], ["금", 9], ["토", 10]];
   return `<div class="psah-ledger"><div class="psah-month"><button class="psah-icon" type="button" aria-label="이전 달">${colSvg("chevron-left")}</button><span class="psah-month-title">2026년 10월</span><button class="psah-icon" type="button" aria-label="다음 달">${colSvg("chevron-right")}</button></div><div class="psah-total"><span class="psah-total-label">10월 지출</span><span class="psah-total-value">${pcolWon(-125870220)}</span></div><div class="psah-toggles"><button class="psah-toggle" type="button" aria-expanded="false" aria-controls="${sumId}" data-psah-toggle>소비 요약${colSvg("chevron-down")}</button><button class="psah-toggle" type="button" aria-expanded="false" aria-controls="${calId}" data-psah-toggle>월 달력${colSvg("chevron-down")}</button></div><div class="psah-drop" id="${sumId}" hidden><div class="psah-summary">${[["식비", 412300], ["쇼핑", 186300], ["교통", 54800]].map(([k, v]) => `<span><b>${escape(k)}</b>${pcolWon(-v)}</span>`).join("")}</div></div><div class="psah-drop" id="${calId}" hidden><div class="psah-month-grid">${Array.from({ length: 35 }, (_, i) => `<span>${i - 3 > 0 && i - 3 <= 31 ? i - 3 : ""}</span>`).join("")}</div></div>${
-    chips ? `<div class="psah-chips" role="group" aria-label="필터">${["식비", "현대카드 M", "1만 원 이상"].map((c) => `<span class="psah-chip">${escape(c)}</span>`).join("")}</div>` : ""
+    chips ? `<div class="psah-chips" role="group" aria-label="필터">${["식비", "현대카드 신용카드", "1만 원 이상"].map((c) => `<span class="psah-chip">${escape(c)}</span>`).join("")}</div>` : ""
   }<div class="psah-week">${week.map(([d, n]) => `<span class="psah-day${n === 8 ? " psah-day--today" : ""}">${d}<b>${n}</b></span>`).join("")}</div></div>`;
 }
 const psahList = () => PCOL_LEDGER.map((d) => `<div class="psah-group"><div class="psah-group-label">${escape(d.label)}</div>${d.rows.map((r) => `<div class="psah-row"><span class="plst-tile plst-tile--${r.hue === "violet" ? "violet" : r.hue}">${colSvg(r.icon)}</span><span class="psah-row-body"><span class="psah-row-title">${escape(r.title)}</span><span class="psah-row-sub">${escape(r.sub)}</span></span><span class="psah-row-amount">${pcolWon(r.amount)}</span></div>`).join("")}</div>`).join("");
@@ -9492,7 +9474,7 @@ export function renderCollapseGallery(brand) {
     return sheet("카드 혜택", `${paccHeader(BENEFIT_TITLE, paccAll({ controls: id, live }))}${pacc({ id, variant: "separated", live, rows: paccBenefitRows({ variant: "separated", open }) })}`, height);
   };
   const cardDetail = ({ live = false, height = 640 } = {}) =>
-    phone(`<div class="pcol-screen-title">카드 상세</div><div class="pcol-floor pcol-floor--screen">${`<div class="pcard pcol-card-summary"><div class="pcol-card-art" aria-hidden="true"></div><div><div class="pcard-title">신한카드 데일리 플러스</div><div class="pcol-card-meta">연회비 15,000원 · 전월 실적 300,000원 이상</div></div></div>`}${benefitCard({ live })}${benefitCard({ live, list: PCOL_CAUTIONS, title: `유의사항 · ${PCOL_CAUTIONS.length}건`, describe: false })}</div>`, "pcol-phone--scroll", height);
+    phone(`<div class="pcol-screen-title">카드 상세</div><div class="pcol-floor pcol-floor--screen">${`<div class="pcard pcol-card-summary"><div class="pcol-card-art" aria-hidden="true"></div><div><div class="pcard-title">신한카드 신용카드</div><div class="pcol-card-meta">연회비 15,000원 · 전월 실적 300,000원 이상</div></div></div>`}${benefitCard({ live })}${benefitCard({ live, list: PCOL_CAUTIONS, title: `유의사항 · ${PCOL_CAUTIONS.length}건`, describe: false })}</div>`, "pcol-phone--scroll", height);
 
   const accLook = panel(
     "Accordion — SEED 두 변형: inline · separated",
@@ -9641,15 +9623,6 @@ export function renderCollapseGallery(brand) {
     "손잡이를 누른 채 3px 넘게 움직이면 끈다 — 폭이 포인터를 1:1 로 따라 20 ~ 40% 사이에서 바뀌고(끄는 동안 화면 전체 col-resize · 글을 고르지 않는다), 놓으면 그 폭을 기억한다. 끌지 않고 한 번 누르면(3px 안) 기본 25 ↔ 넓게 40 — 끌기를 못 하는 사람의 대안(WCAG 2.5.7)이다. 키보드는 ← → 5%(끝에서 멈춘다) · Home 20 · End 40 · Enter 25 ↔ 40. 폭이 바뀌는 모션은 없다. 끌거나 바꾼 폭은 화면마다 브라우저에 남긴다 — \"화면 다시 열기\" 는 기억한 폭으로 다시 그린다(저장소를 쓰지 못하면 기억 없이 쓴다). 아래 글이 목록 · 상세 폭과 읽기를 따라간다.",
     samples([sample("HR 관리 > 회사 — storageKey hr-admin-company", "ResizablePanelGroup · ResizableHandle label=\"목록 너비\"", `<div class="pcol-live" id="${rszLiveId}">${splitFrame({ size: 25, live: "hr-admin-company" }, 320)}${controls([["화면 다시 열기", "data-prsz-reopen"], ["기억 지우기", "data-prsz-forget"]])}${status("data-prsz-status", "손잡이를 끌거나 한 번 누르거나, Tab 으로 초점을 두고 ← → Home End Enter 를 눌러 보세요.")}</div>`)], WIDE),
   );
-  const grid = (items, live = false, cls = "") => `<div class="prsz-grid${cls ? ` ${cls}` : ""}"${live ? " data-prsz-grid-live" : ""}>${items.join("")}</div>`;
-  const rszWidget = panel(
-    "위젯 크기 — 모서리 손잡이 24 · 표식 9 · 끄는 동안 자리표시 · ⋮ 크기",
-    "HR 대시보드 편집 모드에서 위젯의 크기를 바꾼다(12칸 격자 · 줄 72 · 사이 16). 오른쪽 아래 모서리 손잡이는 누르는 자리 24 × 24 · 표식 9 × 9 꺾쇠 2px stroke-neutral-solid(4.18 · 끝에서 6)이고 보조 기술에 숨긴다. 끄는 동안 놓일 칸에 자리표시(옅은 브랜드 바탕 bg-brand-weak + 1px 브랜드 점선 stroke-brand-solid · 모서리 16 — 라이브러리 기본 빨강 20% 를 덮는다)를 보이고, 위젯은 그림자 shadow-s3 로 포인터를 따라온다. 끌지 못하는 사람은 위젯 ⋮(Button ghost · iconOnly · medium — \"{위젯} 더보기\") → \"크기\" 에서 고른다 — 작게 4 · 보통 6 · 넓게 8 · 가득 12칸, 지금 크기 줄에 설명 \"지금 크기\"(메뉴는 실행만이라 체크가 없다). 아래 직접 견본은 모서리를 끌면 칸 단위로 맞추고 ⋮ → 크기도 실제로 바꾼다. 크기 · 위치는 편집 모드에서만 바꾸고 저장 단추로 서버에 저장한다.",
-    `${samples([
-      sample("끄는 동안 — 자리표시 8칸 · 따라오는 위젯", "react-grid-placeholder · resizing(그림자 s3)", `<div class="pcol-wide">${grid([prszPlaceholder("1 / 1 / span 2 / span 8"), prszWidget({ title: "내 휴가", cols: 6, area: "1 / 1 / span 2 / span 7", body: "남은 연차 8.5일 · 다음 휴가 10월 12일", ghost: true }), prszWidget({ title: "팀 일정", cols: 4, area: "1 / 9 / span 2 / span 4", body: "오늘 휴가 2명" })])}</div>`),
-      sample("⋮ → 크기 — \"지금 크기\"", "Menu — 묶음 이름 \"크기\" · 줄 넷", `<div class="pcol-wide">${grid([prszWidget({ title: "내 휴가", cols: 6, body: "남은 연차 8.5일 · 다음 휴가 10월 12일", menu: "open" }), prszWidget({ title: "팀 일정", cols: 6, body: "오늘 휴가 2명 · 외근 1명" })], false, "prsz-grid--menu")}</div>`),
-    ], WIDE)}${samples([sample("직접 — 편집 모드", "모서리 끌기 · ⋮ → 크기", `<div class="pcol-live"><div class="pcol-wide">${grid([prszWidget({ title: "공지 — 10월 정기 점검은 18일(토) 밤 11시예요", cols: 12, rows: 1, menu: "live" }), prszWidget({ title: "내 휴가", cols: 6, body: "남은 연차 8.5일 · 다음 휴가 10월 12일", menu: "live" }), prszWidget({ title: "팀 일정", cols: 6, body: "오늘 휴가 2명 · 외근 1명", menu: "live" })], true, "prsz-grid--menu")}</div>${status("data-prsz-grid-status", "모서리를 끌거나 ⋮ → 크기를 골라 보세요.")}</div>`)], WIDE)}`,
-  );
 
   // ── Scroll Area ────────────────────────────────────────────────────────
   const scrollLines = (n) => Array.from({ length: n }, (_, i) => `<div class="pscr-line">${escape(["식비", "교통", "쇼핑", "카페", "구독", "의료", "여행", "주거", "통신", "교육", "경조사", "반려동물"][i % 12])}</div>`).join("");
@@ -9684,7 +9657,7 @@ export function renderCollapseGallery(brand) {
     `${pair(() => psahPhone({ live: "pair" }))}${samples([sample("직접 — 내렸다 조금 올리기 · 모션 줄이기 · 숨은 머리로 초점", "ScrollAutoHide scrollContainerRef", `<div class="pcol-live" id="${sahLiveId}">${psahPhone({ live: "main" })}${controls([["900 내리기", "data-psah-run=\"down\""], ["160 올리기", "data-psah-run=\"up\""], ["숨은 머리로 초점(Tab)", "data-psah-run=\"focus\""], ["맨 위로", "data-psah-run=\"top\""]])}${reduceSwitch(sahLiveId)}${status("data-psah-status", "폰 안을 스크롤하거나 단추를 눌러 보세요.")}</div>`)], "ptf-samples pcol-samples--sheet")}`,
   );
 
-  const lede = "SEED Accordion 과 SEED Breeze Scroll Auto Hide 위에 둔 펼치고 접기 · 나누기 여섯이다(2026-10-10 사용자 결정 1 ~ 17). SEED 가 컴포넌트로 가진 것은 이 둘뿐이라 Collapsible(Accordion 가이드의 한 줄 — 항목 하나의 모양) · Tree View(APG Treeview) · Resizable(APG Window Splitter) · Scroll Area(전역 스크롤바)는 groo 가 정했다. 아코디언은 inline · separated 두 변형 · 크기 medium 하나(제목 16 · 설명 13 · 54 · 74) · 꺾쇠 · 높이 300ms · 여럿 열기 + 모두 펼치기 · 상세가 없는 항목은 그냥 줄이고, 접기는 그 항목 하나의 트리거를 흰 면 · 경고 상자 · 카드에 놓는다. 카테고리는 List 의 하위 줄(줄 앞 꺾쇠 단추 44 · 하위 104 · 두 세로줄), 부서 나무는 줄 전체가 누르는 자리(부모는 고르면서 펴고 접는다) · Tab 하나 + 화살표 · ⋮ 하나다. 나누기는 선 1px + 손잡이 표시 · 누르는 폭 16 · 20 ~ 40% · ← → 5% · 한 번 누르면 25 ↔ 40 · 화면마다 기억, 위젯은 모서리 손잡이 · 토큰 색 자리표시 · ⋮ 크기다. 스크롤은 브라우저 기본 + 전역 6px 알약(Firefox 두 줄은 @supports 안), 원장 머리는 스크롤 거리를 따라 숨는다. 옛 Accordion · Collapsible · Scroll Area · Resizable · Treeview 칸(17 · 18 · 20)과 그 CSS 는 걷었다 — 18 Data 는 통째로 걷었다."
+  const lede = "SEED Accordion 과 SEED Breeze Scroll Auto Hide 위에 둔 펼치고 접기 · 나누기 여섯이다(2026-10-10 사용자 결정 1 ~ 17). SEED 가 컴포넌트로 가진 것은 이 둘뿐이라 Collapsible(Accordion 가이드의 한 줄 — 항목 하나의 모양) · Tree View(APG Treeview) · Resizable(APG Window Splitter) · Scroll Area(전역 스크롤바)는 groo 가 정했다. 아코디언은 inline · separated 두 변형 · 크기 medium 하나(제목 16 · 설명 13 · 54 · 74) · 꺾쇠 · 높이 300ms · 여럿 열기 + 모두 펼치기 · 상세가 없는 항목은 그냥 줄이고, 접기는 그 항목 하나의 트리거를 흰 면 · 경고 상자 · 카드에 놓는다. 카테고리는 List 의 하위 줄(줄 앞 꺾쇠 단추 44 · 하위 104 · 두 세로줄), 부서 나무는 줄 전체가 누르는 자리(부모는 고르면서 펴고 접는다) · Tab 하나 + 화살표 · ⋮ 하나다. 나누기는 선 1px + 손잡이 표시 · 누르는 폭 16 · 20 ~ 40% · ← → 5% · 한 번 누르면 25 ↔ 40 · 화면마다 기억이다(대시보드 위젯 크기는 걷었다 — 2026-11-10 사용자 결정 11A). 스크롤은 브라우저 기본 + 전역 6px 알약(Firefox 두 줄은 @supports 안), 원장 머리는 스크롤 거리를 따라 숨는다. 옛 Accordion · Collapsible · Scroll Area · Resizable · Treeview 칸(17 · 18 · 20)과 그 CSS 는 걷었다 — 18 Data 는 통째로 걷었다."
     + (desk ? "" : brand.key === "hr" ? "" : " 공유 토큰에는 브랜드 역할 색이 없어 포커스 링 · 자리표시가 여기서는 중립으로 보인다.");
 
   return `
@@ -9707,7 +9680,6 @@ export function renderCollapseGallery(brand) {
     ${treeLive}
     ${rszLook}
     ${rszLive}
-    ${rszWidget}
     ${scrLook}
     ${scrFocus}
     ${sahLook}
@@ -18249,7 +18221,7 @@ export function pageCss() {
        펼침 · 접힘(높이 300ms d6 · 모션 줄이기면 투명도 150ms d3)은 페이지 끝 스크립트가 맡고, 꺾쇠의 회전만 CSS 다. 모션 줄이기는 기기 설정이거나
        견본의 스위치(data-pcol-reduce — 이 견본만)다. --hover · --pressed · --focus 는 갤러리에서 그 순간을 고정해 보여 주는 클래스다.
        다크 짝은 이 블록 끝에서 바꾼다 — 03o 의 라이트 · 다크 나란히 틀(.pdsp-theme--dark)은 페이지가 라이트여도 바꾼다. */
-    :is(.pcol-section, .pacc, .pcls, .pnest, .ptree, .ptree-panel, .prsz, .prsz-grid, .pscr, .psah-phone) {
+    :is(.pcol-section, .pacc, .pcls, .pnest, .ptree, .ptree-panel, .prsz, .pscr, .psah-phone) {
       --pcol-ring: var(--color-stroke-focus-ring, var(--color-border-focus, var(--color-fg-neutral)));
     }
     .pcol-section [hidden] { display: none !important; }
@@ -18497,22 +18469,6 @@ export function pageCss() {
     .prsz-pane-row--on { background: var(--color-bg-neutral-weak-pressed); }
     .prsz-people { display: flex; flex-wrap: wrap; gap: var(--spacing-x3); }
     .prsz-person { padding: var(--spacing-x2) var(--spacing-x3); border-radius: var(--radius-r2); background: var(--color-bg-layer-basement); font-size: var(--text-t4); line-height: var(--text-t4--line-height); }
-    /* 위젯 격자 — 12칸 · 줄 72 · 사이 16. 위젯은 Card 면, 오른쪽 아래 모서리 손잡이 24 × 24 · 표식 9 × 9(오른쪽 · 아래 2px stroke-neutral-solid · 끝에서 6).
-       끄는 동안 놓일 칸은 자리표시(bg-brand-weak + 1px 브랜드 점선 · 모서리 16 — bridge CSS 의 .react-grid-placeholder), 따라오는 위젯은 그림자 s3 */
-    .prsz-grid { position: relative; display: grid; box-sizing: border-box; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: 72px; gap: var(--spacing-x4); width: 760px; padding: var(--spacing-x4); border-radius: var(--radius-r4); background: var(--color-bg-layer-basement); font-family: var(--font-sans); }
-    .prsz-widget { position: relative; display: flex; box-sizing: border-box; flex-direction: column; min-width: 0; grid-column: span var(--prsz-cols, 6); grid-row: span var(--prsz-rows, 2); padding: var(--spacing-x2) var(--spacing-x2) var(--spacing-x4) var(--spacing-x5); border: 1px solid var(--color-stroke-neutral-weak); border-radius: var(--radius-r4); background: var(--color-bg-layer-default); color: var(--color-fg-neutral); }
-    .prsz-widget--ghost { z-index: 2; box-shadow: var(--shadow-s3); }
-    .prsz-widget--menu { z-index: 3; }
-    .prsz-widget-head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-x2); }
-    .prsz-widget-title { font-size: var(--text-t5); line-height: var(--text-t5--line-height); font-weight: 700; }
-    .prsz-widget-body { margin-top: var(--spacing-x1); font-size: var(--text-t4); line-height: var(--text-t4--line-height); color: var(--color-fg-neutral-subtle); }
-    .prsz-corner { position: absolute; right: 0; bottom: 0; z-index: 1; width: 24px; height: 24px; cursor: se-resize; touch-action: none; }
-    .prsz-mark { position: absolute; right: 6px; bottom: 6px; box-sizing: border-box; width: 9px; height: 9px; border-right: 2px solid var(--color-stroke-neutral-solid); border-bottom: 2px solid var(--color-stroke-neutral-solid); pointer-events: none; }
-    .prsz-ph { box-sizing: border-box; border: 1px dashed var(--color-stroke-brand-solid, var(--color-stroke-neutral-solid)); border-radius: var(--radius-r4); background: var(--color-bg-brand-weak, var(--color-bg-neutral-weak)); }
-    .prsz-grid[data-prsz-dragging] { cursor: se-resize; user-select: none; }
-    /* ⋮ 메뉴를 연 그림 · 직접 견본 — 메뉴(줄 넷 · 설명 한 줄)가 격자 안에 들어오게 바닥을 늘린다(가로 스크롤 틀이 세로도 자른다) */
-    .prsz-grid--menu { min-height: 420px; align-content: start; }
-
     /* 스크롤 상자 — 기본 스크롤(스크롤바는 pageCss 의 전역 한 벌). 이름이 있으면 키보드 포커스에만 안쪽 2px 링, 시트 · 대화상자 안은 contain */
     .pscr { position: relative; min-width: 0; min-height: 0; overflow-x: hidden; overflow-y: auto; }
     .pscr--contain { overscroll-behavior: contain; }
@@ -18589,7 +18545,7 @@ export function pageCss() {
 
     /* 다크 — 역할 색을 이 블록의 부품 · 갤러리 틀 안에서만 다크 짝으로 바꾼다(.pinp-* 와 같다). 라이트 틀(.pdsp-theme--light)과 그 안은 빼고,
        다크 틀(.pdsp-theme--dark)은 페이지가 라이트여도 바꾼다 — 끼운 03e 의 목록 줄 · 03s 의 카드 면도 이 짝을 이어받는다 */
-    [data-theme="dark"] :is(.pcol-phone, .pcol-sheet, .pcol-dialog, .pcol-desk, .pcol-surface, .pcol-floor, .pacc, .pcls, .pcls-box, .pnest, .ptree, .ptree-panel, .prsz, .prsz-grid, .pscr-demo, .pscr-card, .pscr-surface, .psah-phone, .pacc-card, .pcol-live-status, .pcol-measure, .pcol-reduce):not(.pdsp-theme--light, .pdsp-theme--light *),
+    [data-theme="dark"] :is(.pcol-phone, .pcol-sheet, .pcol-dialog, .pcol-desk, .pcol-surface, .pcol-floor, .pacc, .pcls, .pcls-box, .pnest, .ptree, .ptree-panel, .prsz, .pscr-demo, .pscr-card, .pscr-surface, .psah-phone, .pacc-card, .pcol-live-status, .pcol-measure, .pcol-reduce):not(.pdsp-theme--light, .pdsp-theme--light *),
     .pdsp-theme--dark {
       --color-bg-layer-default: var(--color-bg-layer-default-dark);
       --color-bg-layer-default-pressed: var(--color-bg-layer-default-pressed-dark);
@@ -21960,7 +21916,7 @@ function renderHtml(brandName, css, tokens, sourceFile) {
         if (!box || !list || !end) return;
         var spinner = end.innerHTML;
         var loaded = 1, busy = false, failed = false, timers = [];
-        var CARDS = [["우리 카드의정석", "신용 · 우리카드", "생활 7%"], ["하나 트래블로그", "체크 · 하나카드", "환전 수수료 면제"], ["IBK 일상의기쁨", "체크 · IBK기업은행", "커피 20%"], ["BC 바로", "신용 · BC카드", "주유 60원"], ["카카오뱅크 체크", "체크 · 카카오뱅크", "캐시백 0.2%"]];
+        var CARDS = [["우리카드 신용카드", "신용 · 우리카드", "생활 7%"], ["하나카드 체크카드", "체크 · 하나카드", "환전 수수료 면제"], ["IBK기업은행 체크카드", "체크 · IBK기업은행", "커피 20%"], ["BC카드 신용카드", "신용 · BC카드", "주유 60원"], ["카카오뱅크 체크카드", "체크 · 카카오뱅크", "캐시백 0.2%"]];
         function say(t) { if (status) status.textContent = t; }
         function setEnd(kind) {
           end.className = "pinf pinf--" + kind;
@@ -23035,15 +22991,13 @@ function renderHtml(brandName, css, tokens, sourceFile) {
     //   나무 안에 초점이 있으면 그 항목, 나가면 고른 항목(숨었으면 보이는 가장 가까운 조상 · 없으면 첫 항목). 패널 머리 ⋮ 의 이름이 고른 부서를 따라간다.
     // 나누기 [data-prsz-live] — 손잡이를 누른 채 3px 넘게 움직이면 끈다(1:1 · 20 ~ 40% · 화면 전체 col-resize · 글 고르기 없음), 3px 안에서 놓으면 기본 25 ↔ 넓게 40.
     //   ← → 5%(끝에서 멈춘다) · Home 20 · End 40 · Enter 25 ↔ 40. 바꾼 폭은 localStorage "porest:resizable:{storageKey}" 에 남기고(쓰지 못하면 기억 없이), "화면 다시 열기" 는
-    //   기억한 폭으로 다시 그린다. 위젯 격자 [data-prsz-grid-live] — 모서리 손잡이를 끄는 동안 위젯은 포인터를 따라오고(그림자 s3) 놓일 칸에 자리표시를 보이며,
-    //   놓으면 칸 단위로 맞춘다. ⋮ → 크기(03m 의 메뉴가 열고 닫는다)는 고른 칸 수로 바꾸고 "지금 크기" 설명을 옮긴다.
+    //   기억한 폭으로 다시 그린다.
     // 숨는 머리 [data-psah-live] — 스크롤 거리를 1:1 로 따라 위로 옮기고(맨 위 근처에서는 스크롤한 거리보다 더 숨지 않는다), 스크롤이 끝나면(scrollend — 없으면 120ms 뒤)
     //   높이의 50% 를 기준으로 200ms motion-ease-enter 로 다 숨거나 다 드러난다. 키보드로 스크롤한 뒤에는 움직임 없이 바로. 모션 줄이기면 늘 보이고, 숨은 머리 안으로 초점이
     //   오면 바로 다 드러낸다. ScrollTimeline 은 쓰지 않고 scroll 이벤트로 같은 일을 한다(레시피의 대체 길). 소비 요약 · 월 달력은 하나만 펼친다.
     // 아래 글(.pcol-measure)은 이 미리보기에서 잰 값이다 — 트리거 높이 · 스크롤바 막대 폭.
     (function () {
       if (!document.querySelector(".pcol-section")) return;
-      var SIZES = ${JSON.stringify(PRSZ_SIZES)};
       var mq = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
       function closest(e, sel) { return e.target && e.target.closest ? e.target.closest(sel) : null; }
       function reducedAt(el) { return !!((mq && mq.matches) || (el && el.closest && el.closest("[data-pcol-reduce]"))); }
@@ -23358,90 +23312,6 @@ function renderHtml(brandName, css, tokens, sourceFile) {
             }
           });
         }
-      });
-
-      // ── 위젯 격자 — 모서리 끌기 · ⋮ → 크기 ──
-      document.querySelectorAll(".prsz-grid[data-prsz-grid-live]").forEach(function (grid) {
-        var live = grid.closest(".pcol-live") || grid;
-        var GAP = 16, ROW = 72;
-        function colW() { var cs = getComputedStyle(grid); var inner = grid.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight); return (inner - GAP * 11) / 12; }
-        function sizeOf(w) { return { cols: Number(w.getAttribute("data-prsz-cols")) || 6, rows: Number(getComputedStyle(w).getPropertyValue("--prsz-rows")) || 2 }; }
-        function titleOf(w) { return textOf(w, ".prsz-widget-title"); }
-        function report(w, how) { var s = sizeOf(w); say(live, "data-prsz-grid-status", "“" + titleOf(w) + "” " + s.cols + "칸 × " + s.rows + "줄 (" + Math.round(w.getBoundingClientRect().width) + "px) — " + how); }
-        function apply(w, cols, rows) {
-          w.style.setProperty("--prsz-cols", String(cols));
-          w.style.setProperty("--prsz-rows", String(rows));
-          w.setAttribute("data-prsz-cols", String(cols));
-          // 메뉴의 "지금 크기" 설명을 옮긴다
-          w.querySelectorAll(".pmenu-item").forEach(function (it, i) {
-            var body = it.querySelector(".pmenu-item-body");
-            var desc = it.querySelector(".pmenu-item-desc");
-            var now = SIZES[i] && SIZES[i].cols === cols;
-            if (now && !desc) { desc = document.createElement("span"); desc.className = "pmenu-item-desc"; desc.textContent = "지금 크기"; body.appendChild(desc); }
-            else if (!now && desc) desc.remove();
-          });
-        }
-        var drag = null;
-        grid.addEventListener("pointerdown", function (e) {
-          var corner = closest(e, ".prsz-corner");
-          if (!corner || e.button !== 0) return;
-          e.preventDefault();
-          var w = corner.closest(".prsz-widget");
-          var g = grid.getBoundingClientRect(), r = w.getBoundingClientRect();
-          var s = sizeOf(w);
-          var ph = document.createElement("div");
-          ph.className = "prsz-ph";
-          ph.setAttribute("aria-hidden", "true");
-          ph.style.gridColumn = "span " + s.cols;
-          ph.style.gridRow = "span " + s.rows;
-          grid.insertBefore(ph, w);
-          w.classList.add("prsz-widget--ghost");
-          w.style.position = "absolute";
-          w.style.left = (r.left - g.left) + "px";
-          w.style.top = (r.top - g.top) + "px";
-          w.style.width = r.width + "px";
-          w.style.height = r.height + "px";
-          corner.setPointerCapture(e.pointerId);
-          grid.setAttribute("data-prsz-dragging", "");
-          drag = { w: w, ph: ph, corner: corner, x: e.clientX, y: e.clientY, width: r.width, height: r.height, cols: s.cols, rows: s.rows };
-        });
-        grid.addEventListener("pointermove", function (e) {
-          if (!drag) return;
-          var cw = colW();
-          var width = Math.max(cw, drag.width + e.clientX - drag.x);
-          var height = Math.max(ROW, drag.height + e.clientY - drag.y);
-          drag.w.style.width = width + "px";
-          drag.w.style.height = height + "px";
-          drag.cols = Math.min(12, Math.max(2, Math.round((width + GAP) / (cw + GAP))));
-          drag.rows = Math.min(4, Math.max(1, Math.round((height + GAP) / (ROW + GAP))));
-          drag.ph.style.gridColumn = "span " + drag.cols;
-          drag.ph.style.gridRow = "span " + drag.rows;
-          say(live, "data-prsz-grid-status", "끄는 중 — 자리표시 " + drag.cols + "칸 × " + drag.rows + "줄");
-        });
-        function end() {
-          if (!drag) return;
-          var d = drag;
-          drag = null;
-          d.ph.remove();
-          d.w.classList.remove("prsz-widget--ghost");
-          ["position", "left", "top", "width", "height"].forEach(function (p) { d.w.style.removeProperty(p); });
-          grid.removeAttribute("data-prsz-dragging");
-          apply(d.w, d.cols, d.rows);
-          report(d.w, "모서리를 놓았다 · 칸 단위로 맞춤");
-        }
-        grid.addEventListener("pointerup", end);
-        grid.addEventListener("pointercancel", end);
-        // ⋮ → 크기 — 03m 의 메뉴 스크립트가 먼저 닫고 초점을 ⋮ 로 돌려준 뒤 여기서 폭을 바꾼다
-        function pick(it) {
-          var w = it.closest(".prsz-widget");
-          if (!w || !grid.contains(w) || it.getAttribute("aria-disabled") === "true") return;
-          var i = Array.prototype.indexOf.call(w.querySelectorAll(".pmenu-item"), it);
-          if (!SIZES[i]) return;
-          apply(w, SIZES[i].cols, sizeOf(w).rows);
-          report(w, "⋮ → 크기 “" + SIZES[i].label + "”");
-        }
-        document.addEventListener("click", function (e) { var it = closest(e, ".pmenu-item"); if (it) pick(it); });
-        document.addEventListener("keydown", function (e) { if (e.key !== "Enter" && e.key !== " ") return; var it = closest(e, ".pmenu-item"); if (it) pick(it); });
       });
 
       // ── 숨는 머리 ──

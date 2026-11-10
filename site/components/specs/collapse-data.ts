@@ -46,7 +46,7 @@ export const CAUTIONS: Caution[] = [
 ];
 
 // 카드 요약 — 발급사는 실제, 상품 이름은 지어낸 것(데이터 표시 그림과 같은 방식)
-export const CARD = { issuer: '신한카드', name: '데일리 플러스 Platinum+ 온라인 간편결제 특화형', fee: '15,000원', performance: '300,000원 이상' };
+export const CARD = { issuer: '신한카드', name: '신용카드 플래티넘 플러스 온라인 간편결제 특화형', fee: '15,000원', performance: '300,000원 이상' };
 
 // ── HR 부서 나무(HR 관리 > 회사) — 20개(부모 3 · 잎 17) ─────────
 export type DeptNode = { id: string; label: string; children?: DeptNode[] };
@@ -117,18 +117,18 @@ export const FILTER_FIELDS: [string, string][] = [
 export type LedgerTx = { title: string; sub: string; amount: number; hue: string };
 export type LedgerDay = { label: string; rows: LedgerTx[] };
 const POOL: [string, string, number, string][] = [
-  ['가나김밥 강남점', '식비 · 삼성카드 taptap O', 9500, 'orange'],
+  ['가나김밥 강남점', '식비 · 삼성카드 신용카드', 9500, 'orange'],
   ['다라베이커리', '카페 · 간식 · 토스 체크카드', 4800, 'brown'],
   ['다라교통', '교통 · 토스 체크카드', 1450, 'blue'],
-  ['마바패션', '쇼핑 · 삼성카드 taptap O', 58900, 'pink'],
-  ['골목커피 역삼점', '카페 · 간식 · 현대카드 M', 6300, 'brown'],
+  ['마바패션', '쇼핑 · 삼성카드 신용카드', 58900, 'pink'],
+  ['골목커피 역삼점', '카페 · 간식 · 현대카드 신용카드', 6300, 'brown'],
   ['가나24 역삼점', '식비 · 토스 체크카드', 3200, 'orange'],
-  ['가나몰', '쇼핑 · 현대카드 M', 27400, 'pink'],
-  ['가나배달', '식비 · 삼성카드 taptap O', 23900, 'orange'],
-  ['가나택시', '교통 · 현대카드 M', 12800, 'blue'],
+  ['가나몰', '쇼핑 · 현대카드 신용카드', 27400, 'pink'],
+  ['가나배달', '식비 · 삼성카드 신용카드', 23900, 'orange'],
+  ['가나택시', '교통 · 현대카드 신용카드', 12800, 'blue'],
   ['다라뷰티 강남역점', '쇼핑 · 토스 체크카드', 18700, 'pink'],
-  ['가나마트 역삼점', '식비 · 현대카드 M', 64200, 'orange'],
-  ['가나영상', '문화생활 · 삼성카드 taptap O', 17000, 'violet'],
+  ['가나마트 역삼점', '식비 · 현대카드 신용카드', 64200, 'orange'],
+  ['가나영상', '문화생활 · 삼성카드 신용카드', 17000, 'violet'],
 ];
 const DOW = ['월', '화', '수', '목', '금', '토', '일'];
 export const LEDGER40: LedgerDay[] = (() => {
@@ -215,15 +215,9 @@ export const RULES: Record<'ko' | 'en', { section: string; cards: RuleCard[] }[]
   ],
 };
 
-// ── HR 대시보드 위젯(편집 모드) · 나눈 자리의 본문 폭 ───────────
+// ── 나눈 자리의 본문 폭 ───────────────────────────────────
 // 1280 화면의 본문 — 사이드바 240 · 여백 24 × 2 를 뺀 992(resizable.md)
 export const BODY_W = 992;
-export type Widget = { id: string; title: string; cols: number; rows: number; body?: string };
-export const WIDGETS: Widget[] = [
-  { id: 'leave', title: '내 휴가', cols: 6, rows: 3, body: '남은 연차 11.5일 · 이번 달 사용 2일' },
-  { id: 'team', title: '팀 일정', cols: 6, rows: 3, body: '10월 12일 (월) 클라우드 인프라 점검 외 3건' },
-  { id: 'notice', title: '공지사항', cols: 12, rows: 2, body: '10월 연말정산 서류 제출 안내' },
-];
 
 // HR 달력 일 보기 — 한 시간 한 줄의 높이(그림 속 화면의 값)
 export const HOUR_H = 48;

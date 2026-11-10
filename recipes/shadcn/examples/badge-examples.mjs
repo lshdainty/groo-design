@@ -193,7 +193,7 @@ export const badgeExamples = [
       screen(
         stack(
           [
-            `<span style="font-size:var(--text-t7); line-height:var(--text-t7--line-height); font-weight:700; color:var(--color-fg-neutral);">현대카드 M</span>`,
+            `<span style="font-size:var(--text-t7); line-height:var(--text-t7--line-height); font-weight:700; color:var(--color-fg-neutral);">현대카드 신용카드</span>`,
             badgeGroup([badge({ text: "신용", size: "large" }), badge({ text: "단종", size: "large", variant: "solid" })]),
           ],
           "var(--spacing-x2)",

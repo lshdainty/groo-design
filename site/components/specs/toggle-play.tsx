@@ -42,7 +42,7 @@ function Context({ kind, pressed, toggle, card, mode }: { kind: ToggleKind; pres
   const body =
     kind === 'watch' ? (
       <>
-        {head('삼성전자')}
+        {head('가람전자')}
         {line(`71,500원 · +1.2%${pressed ? ' · 관심 종목' : ''}`)}
       </>
     ) : (

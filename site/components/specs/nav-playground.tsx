@@ -102,7 +102,7 @@ const TOP_ICONS: { icon: 'search' | 'bell' | 'settings' | 'share'; label: string
 const DESK_ICONS = TOP_ICONS.slice(1, 3);
 const TITLES: Record<'root' | 'standard', [string, string]> = {
   root: ['홈', '이번 달 카드 결제 예정 금액 모아 보기'],
-  standard: ['알림', '현대카드 M 결제 예정 금액과 받을 혜택 자세히 보기'],
+  standard: ['알림', '현대카드 신용카드 결제 예정 금액과 받을 혜택 자세히 보기'],
 };
 type Right = 'none' | '1' | '2' | '3' | '4' | 'text';
 

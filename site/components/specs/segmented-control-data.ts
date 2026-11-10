@@ -69,9 +69,9 @@ export const todoFilter = (view: string) => (t: Todo) => (view === 'done' ? t.do
 // 가계부 — 10월 1일 (목)
 export type Tx = { title: string; sub: string; amount: string; hue: 'orange' | 'brown' | 'blue' | 'green' | 'violet'; type: 'expense' | 'income' };
 export const TXS: Tx[] = [
-  { title: '점심 식사', sub: '식비 · 현대카드 M', amount: '−12,000원', hue: 'orange', type: 'expense' },
+  { title: '점심 식사', sub: '식비 · 현대카드 신용카드', amount: '−12,000원', hue: 'orange', type: 'expense' },
   { title: '급여', sub: '수입 · 국민은행', amount: '+3,200,000원', hue: 'green', type: 'income' },
-  { title: '다라커피', sub: '카페 · 현대카드 M', amount: '−5,600원', hue: 'brown', type: 'expense' },
+  { title: '다라커피', sub: '카페 · 현대카드 신용카드', amount: '−5,600원', hue: 'brown', type: 'expense' },
   { title: '지하철', sub: '교통 · 국민 체크카드', amount: '−1,450원', hue: 'blue', type: 'expense' },
   { title: '중고 거래', sub: '수입 · 토스뱅크 통장', amount: '+25,000원', hue: 'green', type: 'income' },
 ];
@@ -79,8 +79,8 @@ export const TXS: Tx[] = [
 // 증권 보유 — 시장
 export type Holding = { name: string; sub: string; amount: string; market: 'domestic' | 'us' };
 export const HOLDINGS: Holding[] = [
-  { name: '삼성전자', sub: '10주', amount: '712,000원', market: 'domestic' },
-  { name: 'SK하이닉스', sub: '3주', amount: '621,000원', market: 'domestic' },
-  { name: '애플', sub: '5주', amount: '1,234,000원', market: 'us' },
-  { name: '테슬라', sub: '2주', amount: '1,102,000원', market: 'us' },
+  { name: '가람전자', sub: '10주', amount: '712,000원', market: 'domestic' },
+  { name: '나래반도체', sub: '3주', amount: '621,000원', market: 'domestic' },
+  { name: '파인테크', sub: '5주', amount: '1,234,000원', market: 'us' },
+  { name: '볼트모터스', sub: '2주', amount: '1,102,000원', market: 'us' },
 ];

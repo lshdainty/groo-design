@@ -72,7 +72,7 @@ function StockHead({ watched, mode = 'auto', state, icon }: { watched: boolean; 
   return (
     <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8, padding: `16px ${gutter()}px 12px` }}>
       <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-        <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 700, color: rc('fg-neutral-subtle', mode) }}>삼성전자 · 005930</span>
+        <span style={{ fontSize: 15, lineHeight: '20px', fontWeight: 700, color: rc('fg-neutral-subtle', mode) }}>가람전자 · 123450</span>
         <span style={{ fontSize: 26, lineHeight: '35px', fontWeight: 700, color: rc('fg-neutral', mode), fontVariantNumeric: 'tabular-nums' }}>71,500원</span>
         <span style={{ fontSize: 14, lineHeight: '19px', fontWeight: 500, color: rc('fg-critical', mode), fontVariantNumeric: 'tabular-nums' }}>+850원(1.2%)</span>
       </div>
@@ -85,7 +85,7 @@ function StockHead({ watched, mode = 'auto', state, icon }: { watched: boolean; 
 function StockPhone({ mode, scale = 0.5, h = 500, watched = true }: { mode: Mode; scale?: number; h?: number; watched?: boolean }) {
   const bars = [38, 52, 44, 61, 57, 70, 66, 78];
   return (
-    <Phone title="삼성전자" mode={mode} scale={scale} h={h} bg="bg-layer-default" screenW={360}>
+    <Phone title="가람전자" mode={mode} scale={scale} h={h} bg="bg-layer-default" screenW={360}>
       <StockHead watched={watched} mode={mode} />
       <div className="flex items-end gap-1.5" style={{ height: 120, padding: `0 ${gutter()}px` }}>
         {bars.map((v, i) => (
@@ -435,7 +435,7 @@ const RoleGuide: Fig = ({ caption }) => {
         <Verdict ok note="여럿 가운데 거르거나 고른다 — 계좌 거르기는 Chip(체크박스 · 라디오 의미)">
           <Surface className="w-full max-w-[300px]">
             <ChipGroupView look={chip}>
-              {['국민 주계좌', '토스뱅크', '현대카드 M'].map((t, i) => (
+              {['국민 주계좌', '토스뱅크', '현대카드 신용카드'].map((t, i) => (
                 <ChipView key={t} look={chip} state="enabled" selected={i !== 1} label={t} />
               ))}
             </ChipGroupView>

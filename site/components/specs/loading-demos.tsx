@@ -172,7 +172,7 @@ export function SkeletonListDemo({ kit, screen, result, list, mode = 'auto' }: {
                   size="medium"
                   live
                   title="거래를 불러오지 못했어요"
-                  description="잠시 후 다시 시도해주세요."
+                  description="잠시 뒤 다시 시도해주세요."
                   primary={{
                     label: '다시 시도',
                     loading: retrying && pending,

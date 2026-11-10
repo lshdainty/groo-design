@@ -368,8 +368,8 @@ const ART = {
   sea: scene(["#9fc7ec", "#dcecf8", "#ffffff", "#4f86b8", "#245b8a"]),
   dusk: scene(["#5b4a8a", "#e7a3a1", "#ffe0b0", "#6a4f74", "#3a2d4a"]),
   night: scene(["#1b2036", "#3a3550", "#f5e6a8", "#262a43", "#12162a"]),
-  cardEdition: cardH("#1c1c1c", "#5a5a5a", "M EDITION"),
-  cardSelect: cardV("#e52d27", "#7b1fa2", "SELECT ALL"),
+  cardEdition: cardH("#1c1c1c", "#5a5a5a", "BLACK"),
+  cardSelect: cardV("#e52d27", "#7b1fa2", "CREDIT"),
   cardTravel: cardV("#0f2f5c", "#2f7fb8", "TRAVEL"),
   rule: uri(800, 800, `<rect width="800" height="800" fill="#e7f3ec"/><rect x="200" y="230" width="400" height="360" rx="36" fill="#ffffff"/><rect x="200" y="230" width="400" height="96" rx="36" fill="#2f8a5d"/><rect x="200" y="290" width="400" height="36" fill="#2f8a5d"/><rect x="410" y="430" width="60" height="44" rx="10" fill="#2f8a5d"/>`),
   ruleAttire: uri(800, 800, `<rect width="800" height="800" fill="#eef1f8"/><path d="M300 220h200l120 90-50 90-50-30v240H280V370l-50 30-50-90Z" fill="#ffffff" stroke="#5b6b8c" stroke-width="14" stroke-linejoin="round"/>`),
@@ -474,10 +474,10 @@ const SCREEN_TITLE = `<div style="${TITLE} padding:0 var(--spacing-global-gutter
 
 // 카드 혜택 — 그림(세로 · 가로) · 그림 없음(아는 카드사 · 모르는 카드사)
 const CARDS = [
-  { issuer: "삼성카드", name: "iD SELECT ALL", typeLabel: "신용", src: ART.cardSelect, portrait: true },
-  { issuer: "현대카드", name: "M EDITION", typeLabel: "신용", src: ART.cardEdition, portrait: false, discontinued: true },
-  { issuer: "NH농협카드", name: "올원 Pay", typeLabel: "체크" },
-  { issuer: "BC카드", name: "바로 카드", typeLabel: "신용" },
+  { issuer: "삼성카드", name: "신용카드", typeLabel: "신용", src: ART.cardSelect, portrait: true },
+  { issuer: "현대카드", name: "신용카드", typeLabel: "신용", src: ART.cardEdition, portrait: false, discontinued: true },
+  { issuer: "NH농협카드", name: "체크카드", typeLabel: "체크" },
+  { issuer: "BC카드", name: "신용카드", typeLabel: "신용" },
 ];
 const RATIOS = [
   ["1:1", "정사각"],
@@ -547,7 +547,7 @@ import { CardArt, ImageFrameFloater } from "@/components/ui/image-frame"
                 name: card.name,
                 portrait: card.portrait,
                 children: card.discontinued ? floater("top-start", badge("단종")) : "",
-              })}<p class="text-t4 font-bold" style="${TITLE}">${esc(card.name)}</p></div>`,
+              })}<p class="text-t4 font-bold" style="${TITLE}">${esc(`${card.issuer} ${card.name}`)}</p></div>`,
           )
           .join("")}</div>`,
       ),
@@ -566,7 +566,7 @@ import { CardArt, ImageFrameFloater } from "@/components/ui/image-frame"
 </div>`,
     render: () =>
       surface(
-        `${cardArt({ width: 312, src: ART.cardSelect, issuer: "삼성카드", name: "iD SELECT ALL", portrait: true, loading: "eager" })}<h2 class="text-t7 font-bold" style="${TITLE} margin-top:var(--spacing-x4);">iD SELECT ALL</h2><p class="text-t4 text-fg-neutral-subtle" style="margin:var(--spacing-x1) 0 0; font-family:var(--font-sans);">삼성카드</p>`,
+        `${cardArt({ width: 312, src: ART.cardSelect, issuer: "삼성카드", name: "신용카드", portrait: true, loading: "eager" })}<h2 class="text-t7 font-bold" style="${TITLE} margin-top:var(--spacing-x4);">삼성카드 신용카드</h2><p class="text-t4 text-fg-neutral-subtle" style="margin:var(--spacing-x1) 0 0; font-family:var(--font-sans);">삼성카드</p>`,
         " max-width:360px;",
       ),
   },
@@ -659,7 +659,7 @@ import { CardArt, imageFrameRadius } from "@/components/ui/image-frame"
       surface(
         row(
           [
-            ...[24, 40, 48, 56, 150].map((w) => labeled(cardArt({ width: w, src: ART.cardEdition, issuer: "현대카드", name: "M EDITION" }), `${w} → ${imageFrameRadius(w)}`, Math.max(w, 64))),
+            ...[24, 40, 48, 56, 150].map((w) => labeled(cardArt({ width: w, src: ART.cardEdition, issuer: "현대카드", name: "신용카드" }), `${w} → ${imageFrameRadius(w)}`, Math.max(w, 64))),
             labeled(
               `<span data-slot="skeleton" data-radius="${imageFrameRadius(40)}" class="${SK_ROOT} ${SK_RADIUS[imageFrameRadius(40)]} aspect-[1.586] w-10" aria-hidden="true"><span data-slot="skeleton-shimmer" class="${SK_SHIMMER}"></span></span>`,
               `Skeleton "${imageFrameRadius(40)}"`,
@@ -699,19 +699,19 @@ import { CardArt, imageFrameRadius } from "@/components/ui/image-frame"
     title: "카드 면 — 아는 카드사 · 모르는 카드사",
     description:
       "그림이 없거나 못 불러온 카드는 카드사로 가른다. 기관 색 표(institution-colors.yaml — 78곳)에 있는 카드사는 카드 면 — 기관 색 한 색(광택 띠 · 그라디언트 없음, 모드를 따르지 않는다) 위에 표의 글자색이다: 흰 글자가 4.5:1 에 못 미치는 색은 짙은 글자(라이트 fg-neutral · 다크 fg-neutral-inverted — NH농협카드 5.14 · 4.54, KB국민카드)이고 롯데카드는 표가 명도를 고친 #EA1721(흰 글자 4.52)이다. 폭 96 미만은 회사 첫 글자만(로마자 대문자 — \"KB국민카드\" → \"K\"), 그 위는 왼쪽 아래 회사(한 줄 말줄임) · 카드 이름(medium 한 줄 · large 두 줄까지 — 넘치면 말줄임). 표에 없는 카드사(BC카드)는 대체 그림(credit-card)이다 — 브랜드 파랑 · 회색 면으로 회사 색인 척하지 않는다. decorative={false} 면 \"카드사 카드 이름\" 을 읽는다.",
-    jsx: `<CardArt width={56} src={null} issuer="KB국민카드" name="톡톡 With" />          {/* "K" — 짙은 글자 */}
-<CardArt width={150} src={null} issuer="NH농협카드" name="올원 Pay" />          {/* 회사 · 카드 이름 */}
-<CardArt width={150} src={null} issuer="롯데카드" name="LOCA 365" decorative={false} />
-<CardArt width={150} src={null} issuer="BC카드" name="바로 카드" />             {/* 표에 없다 — 대체 그림 */}
-<CardArt width={282} src={null} issuer="하나카드" name="트래블로그 체크" />      {/* large */}`,
+    jsx: `<CardArt width={56} src={null} issuer="KB국민카드" name="신용카드" />          {/* "K" — 짙은 글자 */}
+<CardArt width={150} src={null} issuer="NH농협카드" name="체크카드" />          {/* 회사 · 카드 이름 */}
+<CardArt width={150} src={null} issuer="롯데카드" name="신용카드" decorative={false} />
+<CardArt width={150} src={null} issuer="BC카드" name="신용카드" />             {/* 표에 없다 — 대체 그림 */}
+<CardArt width={282} src={null} issuer="하나카드" name="체크카드" />      {/* large */}`,
     render: () =>
       surface(
         `${row([
-          labeled(cardArt({ width: 56, src: null, issuer: "KB국민카드", name: "톡톡 With" }), "56 — small", 64),
-          labeled(cardArt({ width: 150, src: null, issuer: "NH농협카드", name: "올원 Pay" }), "150 — medium · 짙은 글자", 150),
-          labeled(cardArt({ width: 150, src: null, issuer: "롯데카드", name: "LOCA 365", decorative: false }), "decorative={false}", 150),
-          labeled(cardArt({ width: 150, src: null, issuer: "BC카드", name: "바로 카드" }), "표에 없음 — credit-card", 150),
-        ])}<div style="height:var(--spacing-x5);"></div>${labeled(cardArt({ width: 282, src: null, issuer: "하나카드", name: "트래블로그 체크" }), "282 — large", 282)}`,
+          labeled(cardArt({ width: 56, src: null, issuer: "KB국민카드", name: "신용카드" }), "56 — small", 64),
+          labeled(cardArt({ width: 150, src: null, issuer: "NH농협카드", name: "체크카드" }), "150 — medium · 짙은 글자", 150),
+          labeled(cardArt({ width: 150, src: null, issuer: "롯데카드", name: "신용카드", decorative: false }), "decorative={false}", 150),
+          labeled(cardArt({ width: 150, src: null, issuer: "BC카드", name: "신용카드" }), "표에 없음 — credit-card", 150),
+        ])}<div style="height:var(--spacing-x5);"></div>${labeled(cardArt({ width: 282, src: null, issuer: "하나카드", name: "체크카드" }), "282 — large", 282)}`,
       ),
   },
 
@@ -731,8 +731,8 @@ import { CardArt, imageFrameRadius } from "@/components/ui/image-frame"
       surface(
         row([
           labeled(imageFrame({ width: 160, src: ART.forest, alt: "", children: `${floater("top-start", badge("대표"))}${floater("bottom-end", indicator("+9", "사진 9장 더 있음"))}` }), "배지 · Indicator", 160),
-          labeled(cardArt({ width: 160, src: ART.cardSelect, issuer: "삼성카드", name: "iD SELECT ALL", portrait: true, children: floater("top-start", badge("단종")) }), "카드 그림 · 단종", 160),
-          labeled(cardArt({ width: 56, src: ART.cardEdition, issuer: "현대카드", name: "M EDITION", children: floater("top-start", badge("단종")) }), "56 — 그리지 않는다", 64),
+          labeled(cardArt({ width: 160, src: ART.cardSelect, issuer: "삼성카드", name: "신용카드", portrait: true, children: floater("top-start", badge("단종")) }), "카드 그림 · 단종", 160),
+          labeled(cardArt({ width: 56, src: ART.cardEdition, issuer: "현대카드", name: "신용카드", children: floater("top-start", badge("단종")) }), "56 — 그리지 않는다", 64),
         ]),
       ),
   },

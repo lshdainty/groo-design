@@ -229,7 +229,7 @@ const ROLES = '글자 역할 (2026-10-16)';
 const ROLE_SAMPLE: Record<string, string> = {
   R1: '가계부', R2: '이번 달 모든 거래 내역이에요', R3: '카테고리 고르기', R4: '최근 거래', R5: '자주 쓰는 계좌', R6: '점심 식사',
   R7: '고른 거래 12건을 옮겨요', R8: '지운 거래는 되돌릴 수 없어요', R9: '식비 · 다온은행 · 12:30', R10: '1,200만', R11: '전월 실적 30만 원 이상이면 혜택을 받아요',
-  R12: '1,234,567원', R13: '1,482,300원', R14: '▲ 12%', R15: '저장', R16: '전체 보기', R17: '자세히 보기', R18: '금액', R19: '금액을 입력해 주세요',
+  R12: '1,234,567원', R13: '1,482,300원', R14: '▲ 12.00%', R15: '저장', R16: '전체 보기', R17: '자세히 보기', R18: '금액', R19: '금액을 입력해 주세요',
 };
 type RoleSpec = { label: string; size: string; weight: number; color: string };
 function roleSpecs(cell: string): RoleSpec[] {
@@ -282,7 +282,7 @@ function RoleSpecimens({ no, cell }: { no: string; cell: string }) {
                     className={no === 'R11' || no === 'R2' ? 'max-w-[240px]' : 'whitespace-nowrap'}
                     style={{ fontSize: t.fontSize, lineHeight: t.lineHeight, fontWeight: s.weight, color: fg, fontVariantNumeric: no === 'R12' || no === 'R13' || no === 'R14' ? 'tabular-nums' : undefined, textDecoration: no === 'R17' && i === 0 ? 'underline' : undefined, ...(onFill ? { background: color('bg-brand-solid', 'desk'), borderRadius: 8, padding: '0 6px', alignSelf: 'flex-start' } : {}) }}
                   >
-                    {no === 'R14' ? (s.label.includes('▼') ? '▼ 3%' : s.label.includes('그대로') ? '변화 없음' : '▲ 12%') : (ROLE_SAMPLE[no] ?? '가나다')}
+                    {no === 'R14' ? (s.label.includes('▼') ? '▼ 3%' : s.label.includes('그대로') ? '변화 없음' : '▲ 12.00%') : (ROLE_SAMPLE[no] ?? '가나다')}
                   </span>
                 </div>
               );

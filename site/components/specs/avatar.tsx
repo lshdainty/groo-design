@@ -277,7 +277,7 @@ const ThingGuide: Fig = ({ caption }) => (
             rows={[
               { kind: 'view', prefix: { person: '김민수' }, title: '김민수' },
               { kind: 'view', prefix: { person: '이서연' }, title: '이서연' },
-              { kind: 'button', prefix: { node: <Logo name="현대카드" /> }, title: '현대카드 M', detailNode: <T items={items('신용', '결제일 14일')} size="t3" truncate />, suffix: { chevron: true } },
+              { kind: 'button', prefix: { node: <Logo name="현대카드" /> }, title: '현대카드 신용카드', detailNode: <T items={items('신용', '결제일 14일')} size="t3" truncate />, suffix: { chevron: true } },
               { kind: 'button', prefix: { tile: 'orange', icon: 'utensils' }, title: '식비', detailNode: <T items={items('이번 달', '12건')} size="t3" truncate />, suffix: { chevron: true } },
             ]}
           />
@@ -289,7 +289,7 @@ const ThingGuide: Fig = ({ caption }) => (
             rows={[
               { kind: 'view', prefix: { person: '김민수' }, title: '김민수' },
               { kind: 'view', prefix: { person: '이서연' }, title: '이서연' },
-              { kind: 'button', prefix: { person: '현대카드 M' }, title: '현대카드 M', detailNode: <T items={items('신용', '결제일 14일')} size="t3" truncate />, suffix: { chevron: true } },
+              { kind: 'button', prefix: { person: '현대카드 신용카드' }, title: '현대카드 신용카드', detailNode: <T items={items('신용', '결제일 14일')} size="t3" truncate />, suffix: { chevron: true } },
               { kind: 'button', prefix: { person: '식비' }, title: '식비', detailNode: <T items={items('이번 달', '12건')} size="t3" truncate />, suffix: { chevron: true } },
             ]}
           />

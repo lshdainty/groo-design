@@ -67,7 +67,7 @@ export const CONDS: Cond[] = [
     icon: 'credit-card',
     kind: 'multi',
     items: [
-      { value: 'hyundai', label: '현대카드 M' },
+      { value: 'hyundai', label: '현대카드 신용카드' },
       { value: 'kb', label: '국민 체크카드' },
       { value: 'cash', label: '현금' },
     ],

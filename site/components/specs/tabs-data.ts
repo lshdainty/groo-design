@@ -65,32 +65,32 @@ type Stock = { name: string; sub: string; amount: string };
 export const STOCKS: Record<string, Record<string, Stock[]>> = {
   namu: {
     holding: [
-      { name: '삼성전자', sub: '10주', amount: '712,000원' },
-      { name: 'SK하이닉스', sub: '3주', amount: '621,000원' },
-      { name: 'NAVER', sub: '2주', amount: '412,000원' },
+      { name: '가람전자', sub: '10주', amount: '712,000원' },
+      { name: '나래반도체', sub: '3주', amount: '621,000원' },
+      { name: '다온포털', sub: '2주', amount: '412,000원' },
     ],
     watch: [
-      { name: '카카오', sub: '관심', amount: '52,300원' },
-      { name: '현대차', sub: '관심', amount: '231,500원' },
-      { name: '기아', sub: '관심', amount: '98,700원' },
+      { name: '라온톡', sub: '관심', amount: '52,300원' },
+      { name: '마루자동차', sub: '관심', amount: '231,500원' },
+      { name: '한빛모터스', sub: '관심', amount: '98,700원' },
     ],
     discover: [
-      { name: '셀트리온', sub: '많이 찾는 종목', amount: '182,400원' },
-      { name: 'LG에너지솔루션', sub: '많이 찾는 종목', amount: '368,000원' },
+      { name: '소망바이오', sub: '많이 찾는 종목', amount: '182,400원' },
+      { name: '아라에너지솔루션', sub: '많이 찾는 종목', amount: '368,000원' },
     ],
   },
   toss: {
     holding: [
-      { name: '애플', sub: '5주', amount: '1,234,000원' },
-      { name: '테슬라', sub: '2주', amount: '1,102,000원' },
+      { name: '파인테크', sub: '5주', amount: '1,234,000원' },
+      { name: '볼트모터스', sub: '2주', amount: '1,102,000원' },
     ],
     watch: [
-      { name: '엔비디아', sub: '관심', amount: '268,400원' },
-      { name: '마이크로소프트', sub: '관심', amount: '712,900원' },
+      { name: '칩스원', sub: '관심', amount: '268,400원' },
+      { name: '소프트웍스', sub: '관심', amount: '712,900원' },
     ],
     discover: [
-      { name: '아마존', sub: '많이 찾는 종목', amount: '301,200원' },
-      { name: '알파벳', sub: '많이 찾는 종목', amount: '244,600원' },
+      { name: '리버마켓', sub: '많이 찾는 종목', amount: '301,200원' },
+      { name: '서치랩스', sub: '많이 찾는 종목', amount: '244,600원' },
     ],
   },
 };

@@ -72,14 +72,14 @@ export const PAY_FLAT: SelGroup = {
   items: [
     { value: 'cash', label: '현금', icon: 'banknote' },
     { value: 'kb-check', label: '국민 체크카드', icon: 'credit-card' },
-    { value: 'hyundai-m', label: '현대카드 M', icon: 'credit-card' },
+    { value: 'hyundai-m', label: '현대카드 신용카드', icon: 'credit-card' },
     { value: 'toss', label: '토스뱅크 통장', icon: 'landmark' },
     { value: 'kakao', label: '카카오뱅크 통장', icon: 'landmark' },
   ],
 };
 export const PAY_GROUPS: SelGroup[] = [
   PAY_NONE,
-  { label: '카드', items: [{ value: 'kb-check', label: '국민 체크카드', icon: 'credit-card' }, { value: 'hyundai-m', label: '현대카드 M', icon: 'credit-card' }] },
+  { label: '카드', items: [{ value: 'kb-check', label: '국민 체크카드', icon: 'credit-card' }, { value: 'hyundai-m', label: '현대카드 신용카드', icon: 'credit-card' }] },
   { label: '계좌 · 현금', items: [{ value: 'toss', label: '토스뱅크 통장', description: '1000-1234-5678', icon: 'landmark' }, { value: 'cash', label: '현금', icon: 'banknote' }] },
 ];
 export const plain = (groups: SelGroup[]): SelGroup[] => groups.map((g) => ({ ...g, items: g.items.map(({ icon, ...i }) => (void icon, i)) }));
@@ -144,7 +144,7 @@ export function DeskTxPhone({ mode, scale = 0.58, h = 640, payment, overlay, scr
           <InputButtonView look={lk} mode={mode} size="large" state="enabled" value="식비 · 점심" prefixIcon="utensils" suffixIcon="chevron-down" />
         </F>
         <F mode={mode} label="결제 수단">
-          {payment ?? <SelectTriggerView look={lk} mode={mode} size="large" state="enabled" labels={['현대카드 M']} />}
+          {payment ?? <SelectTriggerView look={lk} mode={mode} size="large" state="enabled" labels={['현대카드 신용카드']} />}
         </F>
         <DateTimeFields mode={mode} label="날짜" date="10월 1일 (목)" time="오후 3:00" />
       </div>

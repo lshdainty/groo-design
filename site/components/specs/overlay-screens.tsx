@@ -96,12 +96,12 @@ export const pinStyle = (n: string, style: CSSProperties) => (
 
 // ── 뒤 화면 ───────────────────────────────────────────────
 const LEDGER: [string, string, string, string][] = [
-  ['점심 식사', '식비 · 현대카드 M', '−12,000원', 'orange'],
+  ['점심 식사', '식비 · 현대카드 신용카드', '−12,000원', 'orange'],
   ['지하철', '교통 · 국민 체크카드', '−1,450원', 'blue'],
   ['월급', '수입 · 국민 주계좌', '+3,200,000원', 'green'],
   ['편의점', '식비 · 현금', '−4,300원', 'orange'],
   ['영화', '문화 · 국민 체크카드', '−15,000원', 'violet'],
-  ['다라커피', '카페 · 현대카드 M', '−5,600원', 'orange'],
+  ['다라커피', '카페 · 현대카드 신용카드', '−5,600원', 'orange'],
 ];
 export function LedgerRows({ mode, n = LEDGER.length }: { mode: Mode; n?: number }) {
   return (
@@ -222,7 +222,7 @@ export const DETAIL: RowSpec[] = [
   { kind: 'view', title: '금액', suffix: { text: '−12,000원' } },
   { kind: 'view', title: '내용', suffix: { text: '점심 식사' } },
   { kind: 'view', title: '카테고리', suffix: { text: '식비' } },
-  { kind: 'view', title: '결제 수단', suffix: { text: '현대카드 M' } },
+  { kind: 'view', title: '결제 수단', suffix: { text: '현대카드 신용카드' } },
   { kind: 'view', title: '날짜', suffix: { text: '10월 1일 (목) 오후 12:30' } },
 ];
 export function DetailList({ mode, rows = DETAIL, brand = 'desk' }: { mode: Mode; rows?: RowSpec[]; brand?: Brand }) {

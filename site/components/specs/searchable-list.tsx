@@ -46,7 +46,7 @@ const cardGroups = (mode: Mode = 'auto'): SGroup[] => [
   {
     items: CARD_PRODUCTS.map((c) => ({
       value: c.id,
-      title: c.name,
+      title: `${c.issuer} ${c.name}`,
       detailText: `${c.issuer} ${c.kind}`,
       keywords: [c.issuer],
       detail: (
@@ -332,7 +332,7 @@ const Keyboard: Fig = ({ caption }) => (
   </Panel>
 );
 
-// "taptap" 여섯 글자 — 마지막 입력 뒤 300ms 에 한 번(서버 검색)
+// "신한체크카드" 여섯 글자 — 마지막 입력 뒤 300ms 에 한 번(서버 검색)
 const DebounceGuide: Fig = ({ caption }) => {
   const s = SL();
   const keys = [0, 140, 260, 420, 560, 700];
@@ -344,7 +344,7 @@ const DebounceGuide: Fig = ({ caption }) => {
       <span style={{ position: 'absolute', left: 16, right: 16, top: 40, height: 2, background: rc('stroke-neutral-weak') }} />
       {keys.map((k, i) => (
         <span key={k} style={{ position: 'absolute', left: x(k) - 9, top: 14, width: 18, height: 18, borderRadius: 4, background: rc('bg-neutral-weak'), color: rc('fg-neutral'), fontSize: 12, lineHeight: '18px', fontWeight: 700, textAlign: 'center' }}>
-          {'taptap'[i]}
+          {'신한체크카드'[i]}
         </span>
       ))}
       {reqs.map((r, i) => (
@@ -378,12 +378,12 @@ const StatusGuide: Fig = ({ caption }) => (
       </Col>
       <Col strong="실패" cap="0건과 다르게 — &quot;검색 결과를 불러오지 못했어요&quot; + 다시 시도" w={300}>
         <WhiteBox>
-          <Cards query="트래블" status="failure" />
+          <Cards query="체크카드" status="failure" />
         </WhiteBox>
       </Col>
       <Col strong="불러오는 동안" cap={`줄 모양 Skeleton ${SL().skeletonRows} — 앞 자리 · 제목 · 설명, 줄 높이 그대로`} w={300}>
         <WhiteBox>
-          <Cards query="데일리" status="loading" />
+          <Cards query="체크" status="loading" />
         </WhiteBox>
       </Col>
     </Wrap>

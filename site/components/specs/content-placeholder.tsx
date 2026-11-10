@@ -48,9 +48,9 @@ function CardList({ mode }: { mode: Mode }) {
   const w = 96;
   const h = Math.round(w / CARD_RATIO);
   const rows: [string, string, 'none' | 'ok'][] = [
-    ['BC 바로 카드', '10월 352,400원', 'none'],
-    ['신한카드 Deep', '10월 128,000원', 'ok'],
-    ['BC 그린 카드', '10월 64,500원', 'none'],
+    ['BC카드 체크카드', '10월 352,400원', 'none'],
+    ['신한카드 체크카드', '10월 128,000원', 'ok'],
+    ['BC카드 신용카드', '10월 64,500원', 'none'],
   ];
   return (
     <div style={bandStack()}>
@@ -105,7 +105,7 @@ function Attachment({ mode }: { mode: Mode }) {
   const keys: [string, string][] = [
     ['금액', '−12,000원'],
     ['카테고리', '식비'],
-    ['결제 수단', '현대카드 M'],
+    ['결제 수단', '현대카드 신용카드'],
   ];
   return (
     <div className="flex flex-col" style={{ background: rc('bg-layer-default', mode) }}>
@@ -291,14 +291,14 @@ const LoadingGuide: Fig = ({ caption }) => {
       <Pair>
         <Verdict ok note="불러오는 동안은 같은 모서리 · 같은 크기의 스켈레톤, 다 불러왔는데 없거나 실패하면 대체 그림" bg={BASEMENT}>
           <div className="w-[290px] rounded-2xl px-6 py-3 pk-surface">
-            {row('BC 바로 카드', '불러오는 중', <Bone radius={imageFrameRadius(w, imageFrameLook().bands)} width="100%" height="100%" />)}
-            {row('BC 그린 카드', '불러오지 못함', <Placeholder icon="credit-card" label="BC 그린 카드 카드 그림" w={w} h={h} />)}
+            {row('BC카드 체크카드', '불러오는 중', <Bone radius={imageFrameRadius(w, imageFrameLook().bands)} width="100%" height="100%" />)}
+            {row('BC카드 신용카드', '불러오지 못함', <Placeholder icon="credit-card" label="BC카드 신용카드 카드 그림" w={w} h={h} />)}
           </div>
         </Verdict>
         <Verdict ok={false} note="불러오는 중과 실패가 같은 그림 — 기다려야 하는지 알 수 없다" bg={BASEMENT}>
           <div className="w-[290px] rounded-2xl px-6 py-3 pk-surface">
-            {row('BC 바로 카드', '불러오는 중', <Placeholder icon="credit-card" w={w} h={h} />)}
-            {row('BC 그린 카드', '불러오지 못함', <Placeholder icon="credit-card" w={w} h={h} />)}
+            {row('BC카드 체크카드', '불러오는 중', <Placeholder icon="credit-card" w={w} h={h} />)}
+            {row('BC카드 신용카드', '불러오지 못함', <Placeholder icon="credit-card" w={w} h={h} />)}
           </div>
         </Verdict>
       </Pair>
@@ -323,7 +323,7 @@ const BrokenGuide: Fig = ({ caption }) => {
           <div className="rounded-2xl px-6 py-5 pk-surface">
             {cell(
               <Frame w={w} h={h}>
-                <Placeholder icon="credit-card" label="BC 바로 카드 카드 그림" w={w} h={h} />
+                <Placeholder icon="credit-card" label="BC카드 체크카드 카드 그림" w={w} h={h} />
               </Frame>,
               '대체 그림',
             )}
@@ -335,7 +335,7 @@ const BrokenGuide: Fig = ({ caption }) => {
               <Frame w={w} h={h} r={0} stroke={false}>
                 <span className="flex items-start gap-1 p-1 text-[11px] leading-4" style={{ color: rc('fg-neutral-muted') }}>
                   <ImageOff aria-hidden size={14} strokeWidth={1.5} className="shrink-0" />
-                  BC 바로 카드 카드 그림
+                  BC카드 체크카드 카드 그림
                 </span>
               </Frame>,
               '깨진 이미지 + 대체 글',
@@ -352,9 +352,9 @@ const BrokenGuide: Fig = ({ caption }) => {
 // 코드 그대로 — <ImageFrame ratio="card" width={112} … fallbackIcon={<CreditCard />} />. 카드사는 기관 색 표에 없는 BC 로 둔다
 // (아는 카드사의 그림 없는 카드는 CardArt 의 카드 면이라 이 그림이 아니다 — image-frame.md 카드 그림)
 const EX_CARDS: CardRow[] = [
-  { name: 'BC 바로 카드', image: 'none' },
-  { name: 'BC 그린 카드', image: 'broken', pic: 'card-h2' },
-  { name: 'BC 데일리 카드', image: 'ok', pic: 'card-h' },
+  { name: 'BC카드 체크카드', image: 'none' },
+  { name: 'BC카드 신용카드', image: 'broken', pic: 'card-h2' },
+  { name: 'BC카드 가족카드', image: 'ok', pic: 'card-h' },
 ];
 const ExBasic: Fig = () => {
   for (const c of EX_CARDS) if (findInstitution(c.name, institutions())) throw new Error(`content-placeholder ex-basic 의 ${c.name} 이 기관 색 표에 있다 — 표에 없는 카드사로 둔다`);

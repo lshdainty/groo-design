@@ -525,12 +525,12 @@ const bankList = ({ id, value = "신한", highlight = "", filter = null }) =>
       .join(""),
   );
 
-// 카드 상품 — 카드 그림 56 · 카드사 · 종류 · 단종은 흐리지 않고 Badge. 지금 값 M EDITION3
+// 카드 상품 — 카드 그림 56 · 카드사 · 종류 · 단종은 흐리지 않고 Badge. 지금 값 현대카드 신용카드
 const CARDS = [
-  { id: "id-select-all", name: "iD SELECT ALL", issuer: "삼성카드", kind: "신용" },
-  { id: "m-edition3", name: "M EDITION3", issuer: "현대카드", kind: "신용" },
-  { id: "sol-travel", name: "SOL트래블 체크", issuer: "신한카드", kind: "체크" },
-  { id: "loca-365", name: "LOCA 365", issuer: "롯데카드", kind: "신용", discontinued: true },
+  { id: "id-select-all", name: "신용카드", issuer: "삼성카드", kind: "신용" },
+  { id: "m-edition3", name: "신용카드", issuer: "현대카드", kind: "신용" },
+  { id: "sol-travel", name: "체크카드", issuer: "신한카드", kind: "체크" },
+  { id: "loca-365", name: "신용카드", issuer: "롯데카드", kind: "신용", discontinued: true },
 ];
 // 설명 — 카드사 · 종류 + 단종 배지(사이 6 · 가운데 맞춤 — searchable-list.md 의 코드)
 const cardDetail = (c) => `<span class="flex items-center gap-x1_5">${esc(c.issuer)} · ${esc(c.kind)}${c.discontinued ? badge("단종", "shrink-0") : ""}</span>`;
@@ -627,7 +627,7 @@ import {
           `${searchInput({ id: "sl-ex-card", placeholder: "카드 이름 검색", placement: "inline" })}${results(
             "sl-ex-card",
             "카드 상품",
-            CARDS.map((c, i) => option({ id: `sl-ex-card-o${i}`, value: c.id, title: c.name, detail: cardDetail(c), prefix: cardArt56(c), selected: c.id === "m-edition3" })).join(""),
+            CARDS.map((c, i) => option({ id: `sl-ex-card-o${i}`, value: c.id, title: `${c.issuer} ${c.name}`, detail: cardDetail(c), prefix: cardArt56(c), selected: c.id === "m-edition3" })).join(""),
           )}`,
         )}<div style="padding:var(--spacing-x4) var(--spacing-x6) 0;">${button({ text: "다음", variant: "neutralSolid", size: "large", className: "w-full" })}</div>`,
       ),
