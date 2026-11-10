@@ -93,6 +93,8 @@ SEED 에는 이 컴포넌트가 없다 — Select 문서가 "옵션이 매우 �
 
 시트는 1280 미만, 팝오버는 1280 이상이다(Input Button). 여럿을 고르는 검색 목록은 이 컴포넌트가 아니다 — 다음 차례에 정한다.
 
+**끝 흐림은 결과에만** — 시트 · 팝오버처럼 높이가 정해진 자리에서는 결과 목록만 스크롤하고 그 위 · 아래에 [Scroll Fog](scroll-fog.md) `overlayBody`(시트 본문과 같은 끝 흐림)를 건다. 검색칸과 검색칸 바로 아래 고정 줄(카드 상품의 "단종 카드 포함" 스위치)은 흐림 밖에 붙어 있다. 걸지 말지는 내용의 종류로 정한다 — 긴 결과 목록이라 늘 건다(Bottom Sheet 의 "본문 끝 흐림"). 화면 · 단계 안(`inline`)처럼 높이가 정해지지 않은 자리는 화면이 스크롤하므로 걸지 않는다. 웹 · 레시피는 결과를 `ScrollFog use="overlayBody"` 로 감싸고(담다 `PickResults`), 앱은 `PSearchableListResults(scrollFog: true)` 다 — 거는 쪽은 부르는 자리다(2026-11-11 디자인시스템 판단 — 두 제품의 기관 · 카드 상품 · 종목 고르기가 이미 이렇다).
+
 [그림: 시트 — 누르면 닫히고 칸에 들어간다 · 단계 안 — 라디오가 바뀌고 "다음"](../../site/components/specs/searchable-list.tsx#placement)
 
 [표: 놓인 자리](searchable-list.yaml#placement)
@@ -370,6 +372,10 @@ import {
 - **결과 개수를 알리지 않는다** — SEED 문서 검색과 같다(0건만 알린다).
 
 ## Migration notes
+
+### 2026-11-11 — 끝 흐림은 결과에만
+
+앱에만 있던 `PSearchableListResults.scrollFog` 를 규칙으로 적었다 — 높이가 정해진 시트 · 팝오버에서 결과 목록만 끝 흐림, 검색칸 · 고정 줄은 밖. 웹은 같은 일을 `ScrollFog` 로 감싸 한다 — 레시피 `SearchableListResults` 에 속성을 더하지 않는다(디자인시스템 판단). 값 · 토큰 변경 없음. 옛 스펙은 `searchable-list.history/v-pre-cleanup-1111.md`.
 
 ### 2026-11-10 — 예시 이름
 

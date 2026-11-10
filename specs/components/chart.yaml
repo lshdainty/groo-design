@@ -89,7 +89,7 @@ rules:
         background: { value: transparent, note: "카드 면이 바탕 — 차트는 카드(card.md) 본문 안에 둔다" }
         height: { value: 쓰는 자리가 정한다, note: "고정 비율(16:9)을 두지 않는다 — 폰은 낮게, 데스크톱은 높게. 오늘 뒤 날짜는 그리지 않는다(가로축이 오늘에서 끝난다)" }
       tickLabel:
-        typography: { value: $text-t1, note: "11 / 15 — 돈 축은 \"만\" 단위로 줄인다(400만 · 1.2만, 빼기 U+2212). 축의 폭은 가장 긴 글자(\"−3,000만\")가 잘리지 않게" }
+        typography: { value: $text-t1, note: "11 / 15 — 돈 축은 \"만\" 단위로 줄인다(400만 · 1.2만, 빼기 U+2212). 축의 폭은 가장 긴 글자(\"−3,000만\")가 잘리지 않게. 글자 크기 설정을 따른다(-static 아님 — 웹 rem · 앱 OS 배율). 커지면 축 폭을 다시 재고 가로 눈금은 겹치지 않게 건너뛴다(2026-11-11 디자인시스템 판단)" }
         foreground: $color-fg-neutral-subtle
         numerals: tabular-nums
       gridLine:

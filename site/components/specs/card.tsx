@@ -1,7 +1,7 @@
 // Card 페이지의 그림 — specs/components/card.md 의 `[그림: …](../../site/components/specs/card.tsx#<id>)` 자리.
 // 카드 면 · 머리 · 지표 · 증감 · 순자산 카드는 card.yaml 을 푼 값(cardLook — data-card-view)으로, 카드 안 목록은 list.yaml(ListView)로,
 // 화면 틀은 kit · nav-screens 로 그린다. 화면 예시는 Desk 홈(순자산 · 지표 · 오늘 쓴 돈)과 HR 휴가 현황이고 내용은 지어낸 것이다.
-// Desk 폰은 카드가 아니라 띠 화면이다(DESIGN.md Layout "화면 바탕") — 폰에서 카드 면을 보이는 그림은 HR 폰(HR 은 폰도 카드)으로 그린다.
+// 폰은 카드가 아니라 띠 화면이다 — Desk(DESIGN.md Layout "화면 바탕") · HR(그루 이음 이관 결정 HK4 B) 모두. 카드 면은 데스크톱 그림으로, 폰은 띠로 그린다.
 // 치수 표시(분홍)는 카드 밖 감싼 상자 기준으로 둔다 — 카드는 모서리 밖을 자른다(overflow hidden).
 import type { CSSProperties, ReactNode } from 'react';
 import { Panel } from '../foundations/ui';
@@ -12,7 +12,7 @@ import { ToggleView } from './toggle-view';
 import { contrastPair } from './data-contrast';
 import { AccordionCard } from './card-accordion';
 import { NET_WORTH, STATS, TODAY } from './data-data';
-import { BudgetCard, CL, DimH, DimV, EDGE, Floor, GuideV, HR_LEAVES, HomeDesktop, HomePhone, HrHomePhone, HrLeaveCard, HrStatCard, ListCard, MODES, ModeLabel, NetWorth, PINK, SCREEN_W, StatBand, StatCard, pinkFill, spendRow, won, type Fig } from './data-screens';
+import { BudgetCard, CL, DimH, DimV, EDGE, Floor, GuideV, HR_LEAVES, HomeDesktop, HomePhone, HrHomePhone, HrLeaveCard, HrRecordsBand, HrStatCard, HrSummaryBand, ListCard, MODES, ModeLabel, NetWorth, PINK, SCREEN_W, StatBand, StatCard, pinkFill, spendRow, won, type Fig } from './data-screens';
 import { resultSectionLook } from './feedback-look';
 import { ResultSectionView } from './feedback-view';
 import { Phone, ScreenBand, Sheet, Verdict, rc, type Mode } from './kit';
@@ -130,12 +130,15 @@ const Surface: Fig = ({ caption }) => {
         <Col strong="데스크톱" cap={`바닥 bg-layer-basement 위 흰 면 + ${c.surface.borderW}px stroke-neutral-weak, 그림자 없음 — 면 ↔ 바닥 ${contrastPair('bg-layer-default', 'bg-layer-basement')}`} w={560}>
           <HomeDesktop mode="light" s={0.45} h={600} />
         </Col>
+        <Col strong="데스크톱 · 다크" cap={`같은 규칙 — 면 ↔ 바닥 ${contrastPair('bg-layer-default', 'bg-layer-basement', 'dark')}, 선이 경계를 맡는다`} w={560}>
+          <HomeDesktop mode="dark" s={0.45} h={600} />
+        </Col>
         <Wrap gap="gap-5">
-          <Col strong="HR 폰" cap="HR 폰도 바닥이 회색 — 흰 바탕 평면 묶음 · raised 를 두지 않는다(Desk 폰은 카드 없이 띠 · 흰 화면)" w={240}>
-            <HrHomePhone mode="light" scale={0.5} h={900} />
+          <Col strong="폰 — 카드 없이 띠" cap="폰(HR · Desk)은 카드를 두지 않는다 — 회색 바닥 위 화면 폭 흰 띠, 모서리 · 테두리 없음, 띠 안 여백은 카드 안과 같다(그루 이음 휴가 현황)" w={240}>
+            <HrHomePhone mode="light" scale={0.5} h={760} />
           </Col>
-          <Col strong="HR 폰 · 다크" cap={`같은 규칙 — 면 ↔ 바닥 ${contrastPair('bg-layer-default', 'bg-layer-basement', 'dark')}, 선이 경계를 맡는다`} w={240}>
-            <HrHomePhone mode="dark" scale={0.5} h={900} />
+          <Col strong="폰 · 다크" cap="같은 띠 — 띠 사이로 회색 바닥이 비친다" w={240}>
+            <HrHomePhone mode="dark" scale={0.5} h={760} />
           </Col>
         </Wrap>
       </div>
@@ -150,7 +153,7 @@ const RadiusGap: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Wrap>
-        <Col strong="쌓은 카드 — HR 폰" cap={`모서리 ${r} · 카드 사이 ${c.surface.gap}(SEED "8px Gap") · 화면 끝 ${EDGE}`} w={300}>
+        <Col strong="세로로 쌓은 카드 — 데스크톱 한 칸" cap={`모서리 ${r} · 카드 사이 ${c.surface.gap}(SEED "8px Gap"). 폰은 카드 없이 띠(띠 사이도 ${c.surface.gap})`} w={300}>
           <Floor style={{ width: SCREEN_W, position: 'relative' }}>
             <HrStatCard i={0} />
             <HrStatCard i={1} />
@@ -183,23 +186,34 @@ const Padding: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Wrap>
-        <Col strong="카드 — HR 폰" cap={`글 · 지표 · 목록 카드 모두 안쪽 ${p} — 화면 끝 ${EDGE} + ${p} = ${EDGE + p} 에 글자가 선다(분홍 점선). Desk 폰은 띠 — 띠 안 값이 같다`} w={340}>
-          <HrHomePhone mode="light" scale={1} h={760} overlay={<><GuideV x={EDGE + p} top={96} bottom={0} /><GuideV x={SCREEN_W - EDGE - p} top={96} bottom={0} /></>}>
+        <Col strong="카드 — 데스크톱 칸" cap={`글 · 지표 · 목록 카드 모두 안쪽 ${p}(분홍 점선이 글자 줄). 목록 카드는 줄이 제 좌우 ${row.x} — 아래는 줄 ${row.y} + 카드 ${c.list.padBottom}`} w={340}>
+          <Floor style={{ width: SCREEN_W, position: 'relative' }}>
             <div style={{ position: 'relative' }}>
               <HrStatCard mode="light" i={0} />
               <DimV at={{ left: '62%', top: 0 }} h={p} label={`위 ${p}`} />
               <DimH at={{ left: 0, top: '50%' }} w={p} label={`${p}`} />
             </div>
             <div style={{ position: 'relative' }}>
-              <HrStatCard mode="light" i={1} />
-              <DimH at={{ right: 0, top: '42%' }} w={p} label={`${p}`} />
-              <DimV at={{ left: '62%', bottom: 0 }} h={p} label={`아래 ${p}`} />
-            </div>
-            <div style={{ position: 'relative' }}>
               <HrLeaveCard mode="light" rows={HR_LEAVES.slice(0, 2)} />
               <DimV at={{ left: '62%', top: 0 }} h={lh.top} label={`위 ${lh.top}`} />
               <DimH at={{ left: 0, bottom: row.y + 20 }} w={row.x} label={`줄 ${row.x}`} />
               <DimV at={{ left: '62%', bottom: 0 }} h={row.y + c.list.padBottom} label={`줄 ${row.y} + 카드 ${c.list.padBottom} = ${row.y + c.list.padBottom}`} />
+            </div>
+            <GuideV x={EDGE + p} top={0} bottom={0} />
+            <GuideV x={SCREEN_W - EDGE - p} top={0} bottom={0} />
+          </Floor>
+        </Col>
+        <Col strong="띠 — 폰" cap={`폰은 카드 대신 화면 폭 띠 — 띠 안 여백이 카드 안과 같은 ${p}이라 글자가 화면 끝 ${EDGE} 에 선다(분홍 점선). 데스크톱 카드도 안쪽 ${p}`} w={340}>
+          <HrHomePhone mode="light" scale={1} h={560} overlay={<><GuideV x={EDGE} top={96} bottom={0} /><GuideV x={SCREEN_W - EDGE} top={96} bottom={0} /></>}>
+            <div style={{ position: 'relative' }}>
+              <HrSummaryBand mode="light" />
+              <DimV at={{ left: '62%', top: 0 }} h={p} label={`위 ${p}`} />
+              <DimH at={{ left: 0, top: p + 10 }} w={p} label={`${p}`} />
+            </div>
+            <div style={{ position: 'relative' }}>
+              <HrRecordsBand mode="light" rows={HR_LEAVES.slice(0, 2)} />
+              <DimV at={{ left: '62%', top: 0 }} h={lh.top} label={`위 ${lh.top}`} />
+              <DimH at={{ left: 0, bottom: row.y + 20 }} w={row.x} label={`줄 ${row.x}`} />
             </div>
           </HrHomePhone>
         </Col>
@@ -333,13 +347,7 @@ const Stat: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex flex-col items-center gap-6">
-        <Col strong="HR 폰 — 한 줄에 하나" cap={`large — 숫자 ${parseFloat(L.fontSize)} / ${parseFloat(L.lineHeight)} · ${c.stat.value.weight}, 여백 ${c.surface.pad}`} w={320}>
-          <Floor style={{ width: SCREEN_W }}>
-            <HrStatCard i={0} />
-            <HrStatCard i={1} />
-          </Floor>
-        </Col>
-        <Col strong="Desk 폰 — 띠 하나에 쌓는다" cap={`띠 화면에서는 지표 카드 없이 한 묶음의 지표를 한 띠 안에 — 사이 ${c.surface.pad}(DESIGN.md Layout "화면 바탕")`} w={320}>
+        <Col strong="폰 — 띠 하나에 쌓는다" cap={`폰(HR · Desk)은 지표 카드 없이 한 묶음의 지표를 한 띠 안에 — large 숫자 ${parseFloat(L.fontSize)} / ${parseFloat(L.lineHeight)} · ${c.stat.value.weight}, 사이 · 여백 ${c.surface.pad}(DESIGN.md Layout "화면 바탕")`} w={320}>
           <div style={{ width: SCREEN_W, background: rc('bg-layer-basement'), borderRadius: 12, overflow: 'hidden', paddingTop: EDGE, paddingBottom: EDGE }}>
             <StatBand stats={[0, 1]} />
           </div>
@@ -530,7 +538,7 @@ const NestGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="지표 카드를 따로 — 좁은 폭(HR 폰)은 한 줄에 하나. Desk 폰 띠 화면은 카드 없이 한 띠 안에">
+        <Verdict ok note="지표 카드를 따로 — 데스크톱은 칸마다 카드 하나(위아래로 이으면 사이 8). 폰은 카드 없이 한 띠 안에 쌓는다">
           <Floor style={{ width: 296 }}>
             <StatCard i={0} />
             <StatCard i={1} />

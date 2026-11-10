@@ -44,6 +44,7 @@ slots:
   expandButton: 줄 앞 꺾쇠 단추 — 부모 줄의 하위 줄을 펼치고 접는다(누르는 44). 줄을 누르면 하는 일(편집)과 따로 눌린다
   subList: 하위 줄 묶음 — 부모 줄 바로 아래에서 펼치고 접힌다
   focusRing: 키보드 포커스 링(웹) — 줄 안쪽
+  indent: 들인 줄의 앞 빈 자리 — 위 스위치 줄의 앞 아이콘 자리만큼 비워 제목이 위 줄 제목 세로줄에 선다(알림 설정의 시작 · 종료)
 
 variants:
   align:
@@ -125,7 +126,7 @@ rules:
         typography: $text-t5
         fontWeight: { value: 400, note: "SEED 와 같다 — 굵기는 목록 제목 · 금액 같은 자리에 남긴다(사용자 결정)" }
         foreground: $color-fg-neutral
-        overflowWrap: { value: break-word, note: "낱말 단위(v114 — keep-all + break-word). 본문이 가장 긴 낱말보다 좁아지지 않으니 글자 사이에서 끊지 않는다(2026-10-30 결정 B — 옛 anywhere)" }
+        overflowWrap: { value: break-word, note: "낱말 단위(v114 — keep-all + break-word). 본문이 가장 긴 낱말보다 좁아지지 않으니 글자 사이에서 끊지 않는다(2026-10-30 결정 B — 옛 anywhere). 구현(보이는 결과는 같다) — 웹은 제목의 계산값을 anywhere 로 두고 같은 글을 담은 높이 0 의 ::before(data-ruler · overflow-wrap normal · 최대 폭 = 상한)가 min-content 를 정한다. break-word 그대로면 제목 자신의 min-content 가 낱말 전체라 상한이 먹지 않는다. 앱은 TextPainter 로 낱말마다 폭을 재 가장 긴 것과 상한 가운데 작은 값을 본문 최소 폭으로 준다(listTitleMinWidth)" }
         wordBreak: keep-all
       detail:
         typography: $text-t3
@@ -140,6 +141,8 @@ rules:
         shrink: { value: 1, note: "글 값(이메일 · 계좌번호 · 긴 이름 — suffix 에 글을 그대로 넘긴 것)만 — 본문이 제목 낱말 폭이 된 뒤에야 준다(최소 폭 0)" }
         overflowWrap: { value: anywhere, note: "남는 폭보다 길면 줄 끝에서 끊는다 — 본문 위로 넘쳐 덮지 않는다(Q-001 A). 말줄임으로 자르지 않는다(10A)" }
         textAlign: { value: end, note: "줄 수와 상관없이 줄 끝 오른쪽 맞춤 — 모든 줄의 끝이 한 줄 값과 같은 세로선(2026-10-30 사용자 지적). 좁은 줄에서 본문 아래로 내려가면 narrow 의 start" }
+      indent:
+        width: { value: 22px, note: "앞 아이콘(icon) 크기와 같다 — 뒤 prefix.paddingRight 12 와 함께 제목이 왼쪽 58(24 + 22 + 12)에서 시작한다. 하위 줄(nest child 104)과 다르다 — 접지 않고 위 줄에 딸린 값이다. 위 줄에 앞 아이콘이 없으면 들이지 않는다" }
       suffixIcon:
         size: 18px
         color: $color-fg-neutral-subtle

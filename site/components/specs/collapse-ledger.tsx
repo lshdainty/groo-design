@@ -12,6 +12,8 @@ const DOW = ['일', '월', '화', '수', '목', '금', '토'];
 const MONTH: (number | null)[] = [null, null, null, null, 1, 2, 3, ...Array.from({ length: 28 }, (_, i) => i + 4), null, null, null, null];
 const WEEK = [4, 5, 6, 7, 8, 9, 10];
 const TODAY = 8;
+// 달 이동 줄 높이 — Scroll Auto Hide 그림에서 숨는 머리가 이만큼 아래에 붙는다
+export const LEDGER_MONTH_H = 44;
 // 날짜별 쓴 돈(원장 40줄에서) — 10월 1일 ~ 8일
 const SPENT: Record<number, number> = Object.fromEntries(
   LEDGER40.map((d) => [Number(/10월 (\d+)일/.exec(d.label)?.[1] ?? 0), dayTotal(d)]).filter(([day]) => day > 0),
@@ -35,9 +37,16 @@ export type LedgerHeadProps = {
   onCalendar?: () => void;
   // 그림 표시 — 부위마다
   marks?: Partial<Record<'summary' | 'calendar', CSSProperties>>;
+  // 그릴 부분 — all(기본) · month(달 이동 줄만 — Scroll Auto Hide 의 위에 붙은 줄) · rest(달 줄 아래 — 숨는 부분 + 남는 부분)
+  part?: 'all' | 'month' | 'rest';
+  // 거르기 중 — 달 이름을 빼고(달 줄엔 필터 · 추가 단추만), 숨는 부분 · 주 달력 대신 keep(칩 줄)을 남는 부분에 그린다
+  filtered?: boolean;
+  keep?: ReactNode;
+  // 숨는 부분의 높이를 잴 자리(MeasuredText)
+  measureId?: string;
 };
 
-export function LedgerHeadView({ tones, mode = 'auto', summaryOpen = false, calendarOpen = false, live = false, onSummary, onCalendar, marks }: LedgerHeadProps) {
+export function LedgerHeadView({ tones, mode = 'auto', summaryOpen = false, calendarOpen = false, live = false, onSummary, onCalendar, marks, part = 'all', filtered = false, keep, measureId }: LedgerHeadProps) {
   const c = (n: string) => tc(tones, n, mode);
   const cell = (n: number | null, i: number) => {
     const today = n === TODAY;
@@ -50,14 +59,17 @@ export function LedgerHeadView({ tones, mode = 'auto', summaryOpen = false, cale
       </span>
     );
   };
-  return (
-    <div style={{ background: c('bg-layer-default') }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 44, paddingLeft: 16, paddingRight: 12, boxSizing: 'border-box' }}>
-        <span style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 19, fontWeight: 700, color: c('fg-neutral') }}>
-          <ChevronLeft aria-hidden size={18} />
-          10월
-          <ChevronRight aria-hidden size={18} />
-        </span>
+  const monthRow = (
+      <div data-ledger="month" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: LEDGER_MONTH_H, paddingLeft: 16, paddingRight: 12, boxSizing: 'border-box', background: c('bg-layer-default') }}>
+        {filtered ? (
+          <span />
+        ) : (
+          <span style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 19, fontWeight: 700, color: c('fg-neutral') }}>
+            <ChevronLeft aria-hidden size={18} />
+            10월
+            <ChevronRight aria-hidden size={18} />
+          </span>
+        )}
         <span style={{ display: 'flex', gap: 4 }}>
           <IconBtn label="필터" tones={tones} mode={mode} live={live}>
             <SlidersHorizontal aria-hidden size={20} />
@@ -67,6 +79,10 @@ export function LedgerHeadView({ tones, mode = 'auto', summaryOpen = false, cale
           </IconBtn>
         </span>
       </div>
+  );
+  if (part === 'month') return monthRow;
+  const hide = filtered ? null : (
+    <div data-ledger-hide="" data-measure={measureId}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, paddingTop: 6, paddingRight: 24, paddingBottom: 16, paddingLeft: 24 }}>
         <span style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
           <span style={{ fontSize: 24, lineHeight: '32px', fontWeight: 700, color: c('fg-neutral'), fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{won(LEDGER_TOTAL)}</span>
@@ -103,6 +119,9 @@ export function LedgerHeadView({ tones, mode = 'auto', summaryOpen = false, cale
           ))}
         </div>
       )}
+    </div>
+  );
+  const calendar = (
       <div style={{ paddingLeft: 16, paddingRight: 16, ...marks?.calendar }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, minmax(0, 1fr))', paddingTop: 4, paddingBottom: 2 }}>
           {DOW.map((d) => (
@@ -124,7 +143,19 @@ export function LedgerHeadView({ tones, mode = 'auto', summaryOpen = false, cale
           <ChevronDown aria-hidden size={20} style={{ transform: calendarOpen ? 'rotate(180deg)' : 'none' }} />
         </button>
       </div>
+  );
+  // 남는 부분 — 주 달력(거르기 중엔 칩 줄) + 아래 8 틈. Scroll Auto Hide 에서 숨는 부분과 함께 올라가 달 줄 바로 아래에 멈춘다(keepRef)
+  const keepPart = (
+    <div data-ledger-keep="">
+      {filtered ? keep : calendar}
       <div style={{ height: 8, background: c('bg-layer-basement') }} />
+    </div>
+  );
+  return (
+    <div style={{ background: c('bg-layer-default') }}>
+      {part === 'all' && monthRow}
+      {hide}
+      {keepPart}
     </div>
   );
 }

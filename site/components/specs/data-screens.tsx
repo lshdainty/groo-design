@@ -160,15 +160,23 @@ export function StatBand({ mode = 'auto', stats, children }: { mode?: Mode; stat
   );
 }
 
-// ── HR 폰 — HR 은 폰도 회색 바닥 위 카드다(card.md 면 — 띠는 Desk 폰만). 휴가 현황 ────────
+// ── HR — 휴가 현황 ────────────────────────────────────────
+// 데스크톱(768 이상)은 회색 바닥 위 카드(HrStatCard · HrLeaveCard), 폰은 Desk 와 같이 카드 없이 띠다(card.md 면 — 그루 이음 이관 결정 HK4 B
+// "데스크톱 카드 · 폰 묶음 띠 + 줄"). 폰 휴가 현황은 그루 이음 화면(VacationSections · VacationMetrics band)처럼 머리 없는 요약 띠(큰 숫자 + 키-값 줄) ·
+// "휴가 기록" 목록 띠다. 숫자 · 날짜는 지어낸 것이다
 export const HR_STATS = [
   { label: '남은 연차', value: '11.5일' },
   { label: '올해 쓴 연차', value: '4일' },
 ];
 export const HR_LEAVES: RowSpec[] = [
-  { kind: 'button', title: '연차', detail: '2026-09-21 · 1일', suffix: { text: '승인' } },
-  { kind: 'button', title: '반차(오후)', detail: '2026-09-04 · 0.5일', suffix: { text: '승인' } },
-  { kind: 'button', title: '연차', detail: '2026-08-18 · 2일', suffix: { text: '승인' } },
+  { kind: 'button', title: '연차', detail: '2026. 9. 21. · 1일', suffix: { text: '승인' } },
+  { kind: 'button', title: '반차(오후)', detail: '2026. 9. 4. · 0.5일', suffix: { text: '승인' } },
+  { kind: 'button', title: '연차', detail: '2026. 8. 18. · 2일', suffix: { text: '승인' } },
+];
+// 요약 띠의 키-값 줄(보기만 하는 줄 — 값은 굵게)
+export const HR_SUMMARY_ROWS: RowSpec[] = [
+  { kind: 'view', title: '쓴 휴가', suffixNode: <b style={{ fontVariantNumeric: 'tabular-nums' }}>4일</b> },
+  { kind: 'view', title: '쓸 예정', suffixNode: <b style={{ fontVariantNumeric: 'tabular-nums' }}>1일</b> },
 ];
 export function HrStatCard({ mode = 'auto', i = 0, width = '100%' }: { mode?: Mode; i?: number; width?: number | string }) {
   const s = HR_STATS[i];
@@ -181,17 +189,35 @@ export function HrStatCard({ mode = 'auto', i = 0, width = '100%' }: { mode?: Mo
 export function HrLeaveCard({ mode = 'auto', rows = HR_LEAVES, width = '100%' }: { mode?: Mode; rows?: RowSpec[]; width?: number | string }) {
   return <ListCard mode={mode} title="휴가 내역" rows={rows} width={width} />;
 }
-// HR 폰 화면 — ☰ + 휴가 현황(HR 은 모든 화면이 standard, 왼쪽 ☰). 회색 바닥 위 카드 — 화면 끝 24 · 카드 사이 8 · 상단 바 아래 8
+// 폰 요약 띠 — 머리 없이 큰 숫자(남은 휴가) + 키-값 줄. 띠 안 여백은 카드 안과 같은 24
+export function HrSummaryBand({ mode = 'auto', children }: { mode?: Mode; children?: ReactNode }) {
+  return (
+    <ScreenBand mode={mode} body="list">
+      <div style={{ position: 'relative', paddingLeft: EDGE, paddingRight: EDGE, paddingTop: CL().surface.pad - CL().list.padBottom, paddingBottom: parseFloat(String(tokenValue('$spacing-x2'))) }}>
+        <StatView look={CL()} mode={mode} label="남은 휴가" value="11.5일" />
+        {children}
+      </div>
+      <ListView look={listLook('hr')} rows={HR_SUMMARY_ROWS} mode={mode} live={false} ariaLabel="휴가 요약" />
+    </ScreenBand>
+  );
+}
+// 폰 목록 띠 — "휴가 기록"
+export function HrRecordsBand({ mode = 'auto', rows = HR_LEAVES }: { mode?: Mode; rows?: RowSpec[] }) {
+  return (
+    <ScreenBand mode={mode} title="휴가 기록" body="list">
+      <ListView look={listLook('hr')} rows={rows} mode={mode} live={false} ariaLabel="휴가 기록" />
+    </ScreenBand>
+  );
+}
+// HR 폰 화면 — ☰ + 휴가 현황(HR 은 모든 화면이 standard, 왼쪽 ☰). 회색 바닥 위 화면 폭 띠 — 띠 사이 8 · 첫 띠는 상단 바 바로 아래(틈 없음)
 export function HrHomePhone({ mode = 'auto', scale = 0.62, h = 760, overlay, children }: { mode?: Mode; scale?: number; h?: number; overlay?: ReactNode; children?: ReactNode }) {
-  const c = CL();
   return (
     <NPhone mode={mode} brand="hr" h={h} scale={scale} overlay={overlay} bg="bg-layer-basement" bar={<Bar brand="hr" mode={mode} leading="menu" title="휴가 현황" />}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: c.surface.gap, paddingTop: c.surface.gap, paddingLeft: EDGE, paddingRight: EDGE }}>
+      <div style={bandStack()}>
         {children ?? (
           <>
-            <HrStatCard mode={mode} i={0} />
-            <HrStatCard mode={mode} i={1} />
-            <HrLeaveCard mode={mode} />
+            <HrSummaryBand mode={mode} />
+            <HrRecordsBand mode={mode} />
           </>
         )}
       </div>

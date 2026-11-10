@@ -298,10 +298,11 @@ const Field = React.forwardRef<HTMLDivElement, FieldProps>(
           className={cn("flex w-full min-w-0 flex-col gap-x2", className)}
           {...props}
         >
+          {/* 큰 글자 — 라벨이 머리 폭의 절반을 지키고도 액션이 안 들면 액션이 라벨 아래 줄 오른쪽 끝으로(라벨 최소 50% · 줄바꿈, 03-G 4A 와 같은 반 폭 판정 — field.yaml label.minWidth) */}
           {(label != null || headerAction != null) && (
             <div
               data-slot="field-header"
-              className={labelHidden && headerAction == null ? "sr-only" : "flex items-center justify-between gap-x2_5 px-x0_5"}
+              className={labelHidden && headerAction == null ? "sr-only" : "flex flex-wrap items-center justify-between gap-x2_5 px-x0_5 [&>:first-child:not(:last-child)]:min-w-[50%] [&>:first-child:not(:last-child)]:flex-1"}
             >
               {label != null &&
                 (group ? (

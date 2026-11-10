@@ -6,7 +6,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { icv, type AutoHideLook, type ScrollAreaLook, type Tones, type ViewMode } from './collapse-shared';
 import { useReducedMotion } from './data-card-view';
-import { LedgerHeadView, LedgerListView } from './collapse-ledger';
+import { LEDGER_MONTH_H, LedgerHeadView, LedgerListView } from './collapse-ledger';
 import { HOUR_H } from './collapse-data';
 
 // ── 스크롤 상자 ───────────────────────────────────────────
@@ -203,10 +203,12 @@ type AHApi = { downUp: () => void; focusHidden: () => void; top: () => void };
 type AHInfo = { hidden: number; head: number; list: number; box: number; snapped: string };
 const AHContext = createContext<{ reduce: boolean; setApi: (a: AHApi) => void; setInfo: (i: AHInfo) => void } | null>(null);
 
-// 숨는 머리 + 원장 목록. frozen 이면 멈춘 그림(그 스크롤 · 숨은 높이로)
-// frozen.hidden — 숫자(px) · 'all'(머리 높이만큼 다 숨음) · { fromAll: n }(다 숨은 뒤 n 만큼 올림 — 머리 높이 − n)
+// 원장 — 달 이동 줄(위에 붙은 줄 · 숨지 않는다) + 숨는 머리(총액 · 비교 줄 · 소비 요약이 숨고, 주 달력은 남아 달 줄 바로 아래에 멈춘다 —
+// scroll-auto-hide.md "남는 부분 · 위에 붙은 줄", 2026-11-06 사용자 지시) + 원장 목록. filtered 면 달 줄 아래 칩 줄(filterKeep)만 남고 숨는 부분이 없다.
+// frozen 이면 멈춘 그림(그 스크롤 · 숨은 높이로). 숨는 거리 H = 숨는 부분의 높이(남는 부분은 빼고 잰다)
+// frozen.hidden — 숫자(px) · 'all'(숨는 부분 높이만큼 다 숨음) · { fromAll: n }(다 숨은 뒤 n 만큼 올림 — H − n)
 export type AHFrozen = { scroll: number; hidden: number | 'all' | { fromAll: number }; focusSummary?: boolean };
-export function AutoHideLedger({ look, tones, mode = 'auto', reduce: reduceProp, frozen, header, listLimit, measureId, marks }: { look: AutoHideLook; tones: Tones; mode?: ViewMode; reduce?: boolean; frozen?: AHFrozen; header?: ReactNode; listLimit?: number; measureId?: string; marks?: { box?: CSSProperties; head?: CSSProperties } }) {
+export function AutoHideLedger({ look, tones, mode = 'auto', reduce: reduceProp, frozen, filterKeep, listLimit, measureId, marks }: { look: AutoHideLook; tones: Tones; mode?: ViewMode; reduce?: boolean; frozen?: AHFrozen; filterKeep?: ReactNode; listLimit?: number; measureId?: string; marks?: { box?: CSSProperties; head?: CSSProperties; month?: CSSProperties } }) {
   const ctx = useContext(AHContext);
   const sysReduce = useReducedMotion();
   const reduce = reduceProp ?? ctx?.reduce ?? sysReduce;
@@ -218,7 +220,8 @@ export function AutoHideLedger({ look, tones, mode = 'auto', reduce: reduceProp,
   const last = useRef(0);
   const timer = useRef<number | undefined>(undefined);
   const [snapped, setSnapped] = useState('—');
-  const H = () => head.current?.offsetHeight ?? 0;
+  // 숨는 거리 — 숨는 부분(총액 · 비교 줄 · 소비 요약)의 높이. 남는 부분(주 달력 · 칩 줄)은 숨지 않는다
+  const H = () => head.current?.querySelector<HTMLElement>('[data-ledger-hide]')?.offsetHeight ?? 0;
   const apply = (v: number, snap = false) => {
     hiddenRef.current = v;
     setSnapping(snap);
@@ -240,7 +243,7 @@ export function AutoHideLedger({ look, tones, mode = 'auto', reduce: reduceProp,
     last.current = fScroll;
     const fh = JSON.parse(fHidden) as AHFrozen['hidden'];
     const h = H();
-    apply(fh === 'all' ? h : typeof fh === 'number' ? fh : Math.max(0, h - fh.fromAll));
+    apply(fh === 'all' ? h : typeof fh === 'number' ? Math.min(h, fh) : Math.max(0, h - fh.fromAll));
   }, [fScroll, fHidden]);
   // 모션 줄이기면 끈다 — 머리는 늘 보인다
   useEffect(() => {
@@ -287,15 +290,19 @@ export function AutoHideLedger({ look, tones, mode = 'auto', reduce: reduceProp,
   const live = !frozen;
   return (
     <div ref={box} className="psa" onScroll={onScroll} data-autohide-box="" style={{ flex: 1, minHeight: 0, overflowY: 'auto', background: icv(tones['bg-layer-default'], mode), ['--psa-thumb' as string]: mode === 'auto' ? undefined : icv(tones['fg-neutral-subtle'], mode), ...marks?.box } as CSSProperties}>
+      {/* 위에 붙은 줄 — 달 이동 줄은 숨지 않고 상자 맨 위에 붙는다(숨는 머리보다 위 층) */}
+      <div style={{ position: look.position as CSSProperties['position'], top: look.top, zIndex: look.z + 1, ...marks?.month }}>
+        <LedgerHeadView tones={tones} mode={mode} live={live} part="month" filtered={filterKeep !== undefined} />
+      </div>
       <div
         ref={head}
         data-autohide-head=""
-        data-measure={measureId}
         // 숨은 머리 안으로 초점이 오면 바로 다 드러낸다
         onFocus={live ? reveal : undefined}
         style={{
           position: look.position as CSSProperties['position'],
-          top: look.top,
+          // 달 줄 바로 아래에 붙는다 — 위에 붙은 줄 높이만큼 top 을 보정(scroll-auto-hide.md "위에 붙은 줄")
+          top: look.top + LEDGER_MONTH_H,
           zIndex: look.z,
           background: icv(look.bg, mode),
           transform: `translate3d(0, ${-hidden}px, 0)`,
@@ -306,7 +313,7 @@ export function AutoHideLedger({ look, tones, mode = 'auto', reduce: reduceProp,
           ...marks?.head,
         }}
       >
-        {header ?? <LedgerHeadView tones={tones} mode={mode} live={live} marks={frozen?.focusSummary ? { summary: { outline: `2px solid ${icv(tones['stroke-focus-ring'], mode)}`, outlineOffset: 2 } } : undefined} />}
+        <LedgerHeadView tones={tones} mode={mode} live={live} part="rest" filtered={filterKeep !== undefined} keep={filterKeep} measureId={measureId} marks={frozen?.focusSummary ? { summary: { outline: `2px solid ${icv(tones['stroke-focus-ring'], mode)}`, outlineOffset: 2 } } : undefined} />
       </div>
       <LedgerListView tones={tones} mode={mode} limit={listLimit} />
     </div>

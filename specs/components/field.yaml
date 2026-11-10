@@ -55,10 +55,11 @@ rules:
         paddingX: $spacing-x0_5
         gap: { value: $spacing-x2_5, note: "라벨 ↔ 보조 액션" }
         alignItems: center
-        flexWrap: { value: wrap, note: "머리는 줄을 바꿀 수 있다 — 라벨 옆에 보조 액션이 들 자리가 모자라면(큰 글자 · 좁은 칸) 액션이 라벨 아래 줄 오른쪽 끝으로 내려간다. 라벨을 한 글자 폭으로 눌러 세우지 않는다(2026-10-29 17-1 앱 — 200% 에서 라벨이 한 글자씩 깨졌다)" }
+        flexWrap: { value: wrap, note: "머리는 줄을 바꿀 수 있다 — 라벨 옆에 보조 액션이 들 자리가 모자라면(큰 글자 · 좁은 칸) 액션이 라벨 아래 줄 오른쪽 끝으로 내려간다. 모자람은 반 폭 판정(03-G 4A — 카드 머리 · List Header 와 같다) — 라벨이 label.minWidth 를 지키고도 액션 + gap 이 남은 폭에 안 들 때다. 라벨을 한 글자 폭으로 눌러 세우지 않는다(2026-10-29 17-1 앱 — 200% 에서 라벨이 한 글자씩 깨졌다)" }
       label:
         typography: $text-t5
         foreground: $color-fg-neutral
+        minWidth: { value: 50%, note: "머리 오른쪽 자리(headerAction)가 있을 때만 — 머리 안쪽 폭의 절반을 라벨이 지키고(flex 1), 남은 폭에 액션이 안 들면 액션이 아래 줄로 간다(2026-11-11 디자인시스템 판단, 03-G 4A 와 같은 셈). 웹 [&>:first-child:not(:last-child)]:min-w-[50%] · flex-1, 앱 PField 레이아웃" }
         wordBreak: { value: keep-all, note: "낱말 단위(Typography v114 — keep-all + break-word). 앱은 공용 글자 위젯의 이음 문자(U+2060)" }
       requiredIndicator:
         size: { value: 0.375rem, note: "6px — 동그란 점. 글자 크기를 따라 커진다. 점은 화면 읽기 프로그램에 숨기고 필수는 칸의 aria-required 가 알린다" }

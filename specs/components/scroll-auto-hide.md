@@ -6,7 +6,7 @@
 
 수치 원본은 [`scroll-auto-hide.yaml`](scroll-auto-hide.yaml)이다. 수치 표 자리(`[표: …]`)와 그림 자리(`[그림: …]`)는 사이트가 그 파일로 그린다 — GitHub 에서는 그 파일 · 그림 코드로 가는 링크로 보인다.
 
-[그림: 폰 가계부 10월 — 내리면 월 · 총액 · 주 달력이 숨고 목록이 화면을 다 쓴다, 조금 올리면 드러난다 — 라이트 · 다크](../../site/components/specs/scroll-auto-hide.tsx#hero)
+[그림: 폰 가계부 10월 — 내리면 총액 · 소비 요약이 숨고 달 줄 · 주 달력 아래로 목록이 넓어진다, 조금 올리면 드러난다 — 라이트 · 다크](../../site/components/specs/scroll-auto-hide.tsx#hero)
 
 ### 직접 골라 보기
 
@@ -30,7 +30,7 @@
 
 스크롤하는 동안 영역은 스크롤 거리를 그대로 따라간다 — 아래로 내린 만큼 숨고, 위로 올린 만큼 드러난다(목록 쪽에서 보면 머리가 목록과 함께 밀려 올라가고, 거꾸로 올리면 바로 내려온다). 스크롤이 끝나면 영역 높이의 50% 를 기준으로 다 숨거나 다 드러난다 — 200ms `motion-ease-enter`(SEED 의 200ms · `cubic-bezier(0, 0, 0.15, 1)` 과 같은 값). 영역은 `translate3d()` 로 옮기기만 하고 높이를 바꾸지 않는다 — 목록이 접히는 만큼 당겨지지 않아 튀지 않는다. ScrollTimeline 이 있는 브라우저는 스크롤과 이동을 브라우저가 직접 잇고, 없으면 scroll 이벤트로 같은 동작을 한다(SEED).
 
-[그림: 900 내림 → 머리 227 다 숨음 · 160 올림 → 67 남아 50% 아래라 다 드러남](../../site/components/specs/scroll-auto-hide.tsx#follow)
+[그림: 900 내림 → 숨는 부분 72 다 숨음 · 40 올림 → 32 남아 50% 아래라 다 드러남](../../site/components/specs/scroll-auto-hide.tsx#follow)
 
 [표: 숨는 영역](scroll-auto-hide.yaml#base.shown)
 
@@ -70,7 +70,7 @@
 
 [그림: 거래 검색 · 카드 혜택 — 거르는 줄 48 · 140, 내림 · 조금 올림 · 반 넘게 올림](../../site/components/specs/scroll-auto-hide.tsx#filter-guide)
 
-[그림: 원장 머리 — 월 · 총액 · 소비 요약 · 주 달력이 한 덩어리로 숨는다 · 필터를 걸면 필터 칩 줄](../../site/components/specs/scroll-auto-hide.tsx#place-guide)
+[그림: 원장 머리 — 총액 · 비교 줄 · 소비 요약만 숨고 달 줄 · 주 달력은 남는다 · 필터를 걸면 달 줄 아래 칩 줄이 남는다](../../site/components/specs/scroll-auto-hide.tsx#place-guide)
 
 ### 숨지 않는 것
 
@@ -161,6 +161,10 @@ const scrollRef = useRef<HTMLDivElement>(null)
 - **남는 부분 · 위에 붙은 줄 보정**(groo 확장, 2026-11-06) — SEED 는 영역 전체가 숨는다. 위 "남는 부분 · 위에 붙은 줄".
 
 ## Migration notes
+
+### 2026-11-11 — 원장 그림을 지금 규칙으로
+
+11-07 노트가 남긴 그림을 다시 그렸다 — 원장 그림(hero · anatomy · follow · reduced · place-guide · keep-guide · ex-ledger · 플레이그라운드)이 달 이동 줄을 위에 붙은 줄(숨지 않음)로, 총액 · 비교 줄 · 소비 요약만 숨는 부분으로, 주 달력을 남는 부분(달 줄 바로 아래에서 멈춤)으로 그린다. 필터 중은 달 줄(필터 · 추가 단추) 아래 칩 줄이 남고 숨는 부분이 없다(담다 웹 `ExpenseMobile` 과 같은 짜임). 거르는 줄 그림(filter-guide)의 거래 검색 줄은 48 이다. 레시피 `scroll-auto-hide.tsx` 에는 아직 `keepRef` 가 없다 — 코드 예는 SEED 그대로 두었다(담다 웹 ds 가 먼저 가진 확장, 레시피에 옮길 몫). 값 변경 없음. 옛 스펙은 `scroll-auto-hide.history/v-pre-cleanup-1111.md`.
 
 ### 2026-11-10 — 스크롤 상자는 창일 수 있다
 

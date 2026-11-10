@@ -12804,11 +12804,14 @@ export function pageCss() {
     /* 머리 — 라벨 + 필수 · 선택 표시(왼쪽) · 보조 액션(오른쪽, 사이 10). 좌우 2 들어와 칸의 모서리와 글자 줄이 맞는다 */
     .ptf-field-header {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: var(--spacing-x2_5);
       padding: 0 var(--spacing-x0_5);
     }
+    /* 큰 글자 — 라벨이 머리 폭의 절반을 지키고도 오른쪽 자리가 안 들면 그 자리가 라벨 아래 줄 오른쪽 끝으로(반 폭 판정, field.yaml label.minWidth) */
+    .ptf-field-header > :first-child:not(:last-child) { min-width: 50%; flex: 1; }
     /* 라벨 — t5 16/22 · 500 · fg-neutral(bold 700 — 칸 하나를 크게 받는 단계 화면). 한 폼 안에서 굵기를 섞지 않는다 */
     .ptf-label {
       min-width: 0;
