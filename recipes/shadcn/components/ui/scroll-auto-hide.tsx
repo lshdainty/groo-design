@@ -13,6 +13,8 @@ import { cn } from "@/lib/utils";
  *   ScrollAutoHide   숨는 영역 — scrollContainerRef(스크롤 상자의 ref — 필수) · asChild(자식 하나를 루트로), 나머지는 div 속성.
  *                    바탕 · z-index 는 className 으로 쓰는 쪽이 정한다(원장 머리는 bg-bg-layer-default · z-[2] — 스크롤 상자 안의 겹침 값,
  *                    층 토큰이 아니다). 스크롤 상자 맨 위에 둔다(sticky · top 0 은 부품이 건다)
+ *                    keepRef(groo 확장) — 영역 안에서 숨지 않고 남는 아래 부분(원장 머리의 주 달력). 위에 고정 줄이 따로 있으면 style.top 으로
+ *                    그 높이를 준다 — 남는 부분이 그 줄 바로 아래에 선다
  *
  * 스크롤 상자 맨 위에 붙은 영역이 아래로 스크롤하면 그 거리만큼 위로 숨고, 위로 스크롤하면 같은 거리만큼 드러난다(1:1). 맨 위 근처에서는
  * 스크롤한 거리보다 더 숨지 않는다. 스크롤이 끝나면(scrollend — 없는 브라우저는 마지막 스크롤 120ms 뒤) 영역 높이의 50% 를 기준으로
@@ -21,6 +23,12 @@ import { cn } from "@/lib/utils";
  * transform 은 자식에 건다. ScrollTimeline 이 있는 브라우저는 스크롤과 이동을 브라우저가 잇고, 없으면 scroll 이벤트로 같은 일을 한다.
  * 모션 줄이기면 자동 숨김을 끈다(늘 보인다). 숨은 영역 안으로 키보드 초점이 오면 바로 다 드러낸다 — 보이지 않는 단추에 초점이 머물지 않는다.
  * 숨겨도 aria-hidden · inert 를 걸지 않는다(초점이 오면 드러나므로). 상단 바 · Line Tabs · 시트 머리는 숨기지 않는다.
+ *
+ * groo 확장(SEED 에 없다 — 스펙 "남는 부분 · 위에 붙은 줄", 2026-11-06) 두 가지. 둘 다 쓰지 않으면 SEED 동작 그대로다.
+ * - keepRef: 영역 안의 이 요소부터 아래는 숨지 않는다. 숨는 거리는 영역 맨 위에서 이 요소 윗변까지다(원장 머리 — 총액 · 요약은 숨고
+ *   주 달력은 남는다). 남는 부분 안으로 오는 초점은 영역을 드러내지 않는다 — 드러내면 누르는 사이 남는 부분이 내려가 누름이 빗나간다.
+ * - sticky top 이 0 이 아니면(위에 고정 줄이 따로 있다) 그 값만큼 일찍 붙으므로, 스크롤한 거리는 붙는 순간부터 센다.
+ * 담다 웹 ds(src/shared/ds/scroll-auto-hide/use-scroll-auto-hide.ts)의 확장을 옮겼다(2026-11-11).
  */
 
 const SNAP_THRESHOLD_RATIO = 0.5;
@@ -34,6 +42,8 @@ type ScrollTimelineConstructor = new (options: { source: Element; axis: "block" 
 type ScrollAutoHideOwnProps = {
   /** 스크롤을 감지할 상자의 ref — 숨는 영역은 이 상자 안 맨 위에 둔다 */
   scrollContainerRef: React.RefObject<HTMLElement | null>;
+  /** groo 확장 — 영역 안의 이 요소부터 아래는 숨지 않는다(숨는 거리 = 영역 맨 위 ~ 이 요소 윗변). 없으면 영역 전체가 숨는다(SEED) */
+  keepRef?: React.RefObject<HTMLElement | null>;
 };
 
 type ScrollAutoHideAsChildProps = ScrollAutoHideOwnProps &
@@ -73,7 +83,7 @@ function hasTransitionDuration(value: string) {
   return value.split(",").some((duration) => Number.parseFloat(duration) > 0);
 }
 
-const ScrollAutoHide = React.forwardRef<HTMLElement, ScrollAutoHideProps>(function ScrollAutoHide({ asChild, scrollContainerRef, className, ...props }, forwardedRef) {
+const ScrollAutoHide = React.forwardRef<HTMLElement, ScrollAutoHideProps>(function ScrollAutoHide({ asChild, scrollContainerRef, keepRef, className, ...props }, forwardedRef) {
   const rootRef = React.useRef<HTMLElement>(null);
   const composedRefs = React.useMemo(() => mergeRefs<HTMLElement>(forwardedRef, rootRef), [forwardedRef]);
 
@@ -288,8 +298,11 @@ const ScrollAutoHide = React.forwardRef<HTMLElement, ScrollAutoHideProps>(functi
       const rootRect = root.getBoundingClientRect();
       const scrollRect = scrollContainer.getBoundingClientRect();
       const scrollTop = getScrollTop();
-      height = rootRect.height;
-      naturalOffset = scrollTop + rootRect.top - scrollRect.top - scrollContainer.clientTop;
+      // sticky top — relative 로 잴 때 그만큼 밀려 있고, 그만큼 일찍 붙는다(auto · 0 이면 SEED 그대로)
+      const stickyTop = Number.parseFloat(getComputedStyle(root).top) || 0;
+      const keep = keepRef?.current;
+      height = keep && root.contains(keep) ? Math.max(0, keep.getBoundingClientRect().top - rootRect.top) : rootRect.height;
+      naturalOffset = scrollTop + rootRect.top - stickyTop - scrollRect.top - scrollContainer.clientTop - stickyTop;
 
       root.style.position = previousPosition;
       root.style.transition = previousTransition;
@@ -344,8 +357,9 @@ const ScrollAutoHide = React.forwardRef<HTMLElement, ScrollAutoHideProps>(functi
       if (!supportsScrollEnd) scheduleSettle();
     };
 
-    // 숨은 영역 안으로 초점이 오면 바로 다 드러낸다
-    const handleFocusIn = () => {
+    // 숨은 영역 안으로 초점이 오면 바로 다 드러낸다. 남는 부분(keepRef)은 늘 보이므로 그 안의 초점은 드러낼 일이 아니다
+    const handleFocusIn = (event: FocusEvent) => {
+      if (event.target instanceof Node && keepRef?.current?.contains(event.target)) return;
       clearSettleTimer();
       cancelSettling();
       stopTracking();
@@ -391,6 +405,7 @@ const ScrollAutoHide = React.forwardRef<HTMLElement, ScrollAutoHideProps>(functi
     const resizeObserver = new ResizeObserver(measure);
     resizeObserver.observe(root);
     resizeObserver.observe(scrollContainer);
+    if (keepRef?.current) resizeObserver.observe(keepRef.current);
 
     scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
     scrollContainer.addEventListener("scrollend", settle);
@@ -421,7 +436,7 @@ const ScrollAutoHide = React.forwardRef<HTMLElement, ScrollAutoHideProps>(functi
       root.style.transition = initialTransition;
       root.style.willChange = initialWillChange;
     };
-  }, [scrollContainerRef]);
+  }, [scrollContainerRef, keepRef]);
 
   const Component = asChild ? Slot : "div";
 

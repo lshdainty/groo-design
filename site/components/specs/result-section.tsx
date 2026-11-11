@@ -9,7 +9,7 @@ import { ResultDoneDemo, ResultEmptyDemo, ResultFailureDemo } from './feedback-d
 import { ResultSectionPlayground } from './feedback-playground';
 import { Band, FilterStrip, Legend, Muted, Pair, Pin, markBox, type Fig } from './feedback-screens';
 import { ResultSectionView, type ResultSectionViewProps } from './feedback-view';
-import { Card, Phone, ScreenBand, Stat, Verdict, bandStack, cardStack, rc, type Mode } from './kit';
+import { Card, Phone, ScreenBand, Stat, Verdict, bandStack, rc, type Mode } from './kit';
 import { Cap, cta, tf } from './select-screens';
 import { SheetOverlay, SheetPanel } from './input-button-pickers';
 import { PHONE_SAFE, ov } from './overlay-screens';
@@ -155,12 +155,13 @@ const Sizes: Fig = ({ caption }) => {
           <Cap strong="medium — 섹션 · 시트 안">{line('medium')}</Cap>
         </div>
         <div className="flex w-[344px] max-w-full flex-col gap-2">
-          <div className="rounded-2xl pk-basement" style={{ ...cardStack(), paddingTop: 24, paddingBottom: 24 }}>
-            <Card title="최근 거래">
+          {/* 폰 폭이라 카드 없이 띠(card.md) — 띠 안 여백은 카드 안과 같아 셈이 같다 */}
+          <div className="overflow-hidden rounded-2xl pk-basement" style={{ ...bandStack(), paddingTop: 24, paddingBottom: 24 }}>
+            <ScreenBand title="최근 거래">
               <R size="medium" inCard grow={false} {...FAILURE} />
-            </Card>
+            </ScreenBand>
           </div>
-          <Cap strong="medium — 카드 안">결과 자리의 좌우 {l.root.padXInCard} — 카드 안 여백 {cardFace().pad} 이 가장자리를 맡는다(둘 다 두면 {cardFace().pad + l.root.padX})</Cap>
+          <Cap strong="medium — 카드 · 띠 안">결과 자리의 좌우 {l.root.padXInCard} — 카드 · 띠 안 여백 {cardFace().pad} 이 가장자리를 맡는다(둘 다 두면 {cardFace().pad + l.root.padX})</Cap>
         </div>
       </div>
       <p className="mt-4 text-center text-[12px] leading-5 text-fd-muted-foreground">

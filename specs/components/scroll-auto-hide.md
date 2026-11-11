@@ -88,7 +88,7 @@
 
 레시피 `recipes/shadcn/components/ui/scroll-auto-hide.tsx` 를 쓴다(SEED Breeze 의 `ScrollAutoHide` 를 옮긴 새 부품 — `npx @seed-design/cli add breeze:scroll-auto-hide` 의 코드를 groo 토큰으로). 아래 미리보기는 스펙 값으로 그린 모습이다.
 
-- `ScrollAutoHide` — 숨는 영역. `scrollContainerRef`(스크롤 상자의 ref — 필수. 창이 스크롤 상자면 `document.scrollingElement` 를 가리킨다) · `asChild`(자식 하나를 루트로), 나머지는 `div` 속성. `sticky` · `top: 0` · 1:1 따라가기 · 50% 스냅(200ms `motion-ease-enter`) · 모션 줄이기면 끔 · 초점이 들어오면 드러냄은 부품이 맡는다. 바탕 · z-index 는 `className` 으로 쓰는 쪽이.
+- `ScrollAutoHide` — 숨는 영역. `scrollContainerRef`(스크롤 상자의 ref — 필수. 창이 스크롤 상자면 `document.scrollingElement` 를 가리킨다) · `asChild`(자식 하나를 루트로) · `keepRef`(groo 확장 — 영역 안에서 숨지 않고 남는 아래 부분, 위 "남는 부분 · 위에 붙은 줄"), 나머지는 `div` 속성. 위에 고정 줄이 따로 있으면 `style.top` 에 그 높이를 준다 — 남는 부분이 그 줄 바로 아래에 서고, 스크롤한 거리는 붙는 순간부터 센다. `sticky` · `top: 0` · 1:1 따라가기 · 50% 스냅(200ms `motion-ease-enter`) · 모션 줄이기면 끔 · 초점이 들어오면 드러냄은 부품이 맡는다. 바탕 · z-index 는 `className` 으로 쓰는 쪽이.
 
 ### 가계부 원장 머리
 
@@ -99,11 +99,21 @@ import { useRef } from "react"
 import { ScrollAutoHide } from "@/components/ui/scroll-auto-hide"
 
 const scrollRef = useRef<HTMLDivElement>(null)
+const keepRef = useRef<HTMLDivElement>(null)
 
 {/* 상단 바 · 탭 아래부터가 스크롤 상자 — 숨는 머리는 그 안 맨 위 */}
 <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
-  <ScrollAutoHide scrollContainerRef={scrollRef} className="z-[2] bg-bg-layer-default">
-    {ledgerHeader}
+  {/* 달 이동 줄 — 숨지 않고 위에 붙는다 */}
+  <div className="sticky top-0 z-[3] bg-bg-layer-default">{monthBar}</div>
+  {/* 총액 · 비교 줄 · 소비 요약은 숨고, 주 달력(keepRef)은 달 줄 바로 아래에 남는다 */}
+  <ScrollAutoHide
+    scrollContainerRef={scrollRef}
+    keepRef={keepRef}
+    style={{ top: monthBarHeight }}
+    className="z-[2] bg-bg-layer-default"
+  >
+    {summary}
+    <div ref={keepRef}>{weekCalendar}</div>
   </ScrollAutoHide>
   {transactionList}
 </div>
@@ -162,9 +172,13 @@ const scrollRef = useRef<HTMLDivElement>(null)
 
 ## Migration notes
 
+### 2026-11-11 (2) — 레시피에 남는 부분 · 위에 붙은 줄
+
+레시피 `scroll-auto-hide.tsx` 에 담다 웹 ds 의 groo 확장 둘을 옮겼다 — `keepRef`(숨는 거리 = 영역 맨 위 ~ 남는 부분 윗변, 남는 부분 안의 초점은 드러내지 않음, 남는 부분 크기도 다시 잼)와 sticky `top` 이 0 이 아닐 때 붙는 순간부터 거리 세기. 둘 다 쓰지 않으면 SEED 동작 그대로다. 코드 예(가계부 원장 머리)를 달 줄 · 주 달력이 남는 짜임으로 바꿨다. 창(문서) 스크롤 상자(2026-11-10)는 레시피에 아직 없다 — 담다 웹 ds 의 `scrollHostOf`. 값 변경 없음. 옛 스펙은 `scroll-auto-hide.history/v-pre-followups-1111.md`.
+
 ### 2026-11-11 — 원장 그림을 지금 규칙으로
 
-11-07 노트가 남긴 그림을 다시 그렸다 — 원장 그림(hero · anatomy · follow · reduced · place-guide · keep-guide · ex-ledger · 플레이그라운드)이 달 이동 줄을 위에 붙은 줄(숨지 않음)로, 총액 · 비교 줄 · 소비 요약만 숨는 부분으로, 주 달력을 남는 부분(달 줄 바로 아래에서 멈춤)으로 그린다. 필터 중은 달 줄(필터 · 추가 단추) 아래 칩 줄이 남고 숨는 부분이 없다(담다 웹 `ExpenseMobile` 과 같은 짜임). 거르는 줄 그림(filter-guide)의 거래 검색 줄은 48 이다. 레시피 `scroll-auto-hide.tsx` 에는 아직 `keepRef` 가 없다 — 코드 예는 SEED 그대로 두었다(담다 웹 ds 가 먼저 가진 확장, 레시피에 옮길 몫). 값 변경 없음. 옛 스펙은 `scroll-auto-hide.history/v-pre-cleanup-1111.md`.
+11-07 노트가 남긴 그림을 다시 그렸다 — 원장 그림(hero · anatomy · follow · reduced · place-guide · keep-guide · ex-ledger · 플레이그라운드)이 달 이동 줄을 위에 붙은 줄(숨지 않음)로, 총액 · 비교 줄 · 소비 요약만 숨는 부분으로, 주 달력을 남는 부분(달 줄 바로 아래에서 멈춤)으로 그린다. 필터 중은 달 줄(필터 · 추가 단추) 아래 칩 줄이 남고 숨는 부분이 없다(담다 웹 `ExpenseMobile` 과 같은 짜임). 거르는 줄 그림(filter-guide)의 거래 검색 줄은 48 이다. 레시피 `scroll-auto-hide.tsx` 에는 아직 `keepRef` 가 없다 — 코드 예는 SEED 그대로 두었다(담다 웹 ds 가 먼저 가진 확장, 레시피에 옮길 몫 — 2026-11-11 (2) 에서 옮겼다). 값 변경 없음. 옛 스펙은 `scroll-auto-hide.history/v-pre-cleanup-1111.md`.
 
 ### 2026-11-10 — 스크롤 상자는 창일 수 있다
 

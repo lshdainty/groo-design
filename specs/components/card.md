@@ -343,6 +343,10 @@ import { Card, CardHeroAmount, CardHeroDetail, CardHeroLabel, Delta } from "@/co
 
 ## Migration notes
 
+### 2026-11-11 (2) — 남은 HR 폰 그림 셋도 띠로
+
+다른 페이지에 남아 있던 옛 HR 폰 카드 그림 셋을 띠로 바꿨다 — Side Panel · 내비 그림이 쓰는 그루 이음 휴가 현황 폰(`nav-screens.tsx` `HrLeavePhone` — 요약 띠 + "휴가 기록" 띠, 날짜 점 표기), Button 의 brandSolid 쓰임 그림(`button-guides.tsx` — 휴가 폰), Result Section 의 "카드 안" 크기 그림(`result-section.tsx` — 폰 폭이라 띠 안으로, 띠 안 여백은 카드 안과 같아 셈이 같다). 그림 도구 `kit.tsx` 의 "HR 폰은 카드" 주석도 고쳤다. 값 변경 없음. 옛 스펙은 `card.history/v-pre-followups-1111.md`.
+
 ### 2026-11-11 — HR 폰 그림을 띠로
 
 2026-11-10 노트가 남긴 그림을 다시 그렸다 — surface(다크도 데스크톱 카드로, 폰은 그루 이음 휴가 현황 띠 화면 — 머리 없는 요약 띠 + "휴가 기록" 목록 띠) · radius-gap(쌓은 카드는 데스크톱 한 칸) · padding(데스크톱 카드 칸 + 폰 띠 — 띠 안도 24 라 글자가 화면 끝 24) · stat(폰은 HR · Desk 모두 띠 하나에 쌓는다) · nest-guide(데스크톱 칸마다 카드 하나). 지표 절 · 카드 안 카드 절의 "HR 폰은 한 줄에 하나" 를 걷었다. 값 변경 없음. 옛 스펙은 `card.history/v-pre-cleanup-1111.md`.
