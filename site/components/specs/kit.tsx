@@ -140,15 +140,15 @@ export function Card({ children, mode = 'auto', style, body = 'content', title, 
     </CardSurface>
   );
 }
-// HR 폰 화면의 카드 묶음 — 화면 끝 spacing-global-gutter(24) 안에 카드를 8(card.yaml root.gap) 띄워 쌓는다. 상단 바 아래도 8.
-// Desk 폰은 카드 화면이 없다 — bandStack · ScreenBand(띠)
+// 좁은 폭 카드 묶음 — 화면 끝 spacing-global-gutter(24) 안에 카드를 8(card.yaml root.gap) 띄워 쌓는다. 위도 8.
+// 폰은 HR · Desk 모두 카드 화면이 없다(card.md — 그루 이음 HK4 B) — 폰 그림은 bandStack · ScreenBand(띠)로 그린다
 export function cardStack(): CSSProperties {
   const gap = cardLook().surface.gap;
   const x = parseFloat(String(tokenValue('$spacing-global-gutter')));
   return { display: 'flex', flexDirection: 'column', gap, paddingTop: gap, paddingLeft: x, paddingRight: x };
 }
 // Desk 폰 띠 화면(앱 · 768 미만 웹) — 회색 바닥 위 화면 폭 흰 띠(bg-layer-default). 띠 사이 8 · 띠 안 위 4 · 아래 8, 첫 띠 위 · 마지막 띠 아래 틈 없음(BAND.top 0 — 2026-10-23),
-// 모서리 · 테두리 없음(DESIGN.md Layout 의 "화면 바탕" — 2026-10-21 I-01 결정 3: 폰의 카드 화면은 띠, 데스크톱은 카드). HR 폰은 카드 그대로 — cardStack
+// 모서리 · 테두리 없음(DESIGN.md Layout 의 "화면 바탕" — 2026-10-21 I-01 결정 3: 폰의 카드 화면은 띠, 데스크톱은 카드). HR 폰도 띠다(2026-11-11)
 export { BAND };
 export function bandStack(): CSSProperties {
   return { display: 'flex', flexDirection: 'column', gap: BAND.gap, paddingTop: BAND.top };

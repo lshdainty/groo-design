@@ -6,7 +6,7 @@ import { menuKit } from './menu-look';
 import { loadingKit } from './loading-look';
 import { tabsLook } from './tabs-look';
 import { LineTabsView } from './tabs-view';
-import { BAND, Phone, Row, WebWindow, bandStack, cardStack, rc, type Mode } from './kit';
+import { BAND, Phone, Row, ScreenBand, WebWindow, bandStack, rc, type Mode } from './kit';
 import { cardLook, tableLook } from './data-look';
 import { CardHeaderView, CardSurface, StatView } from './data-card-view';
 import { TableView, type TBadge, type TCol, type TRow } from './data-table-view';
@@ -476,28 +476,26 @@ export function HrDesktop({ mode = 'auto', w = 1280, h = 640, s = 0.45, collapse
   );
 }
 
-// HR 폰 — ☰ + 휴가 현황(모든 화면이 standard, 왼쪽 ☰)
+// HR 폰 — ☰ + 휴가 현황(모든 화면이 standard, 왼쪽 ☰). 폰은 카드 없이 띠(card.md — HR · Desk 모두): 머리 없는 요약 띠 + "휴가 기록" 띠, 날짜는 점 표기
 export function HrLeavePhone({ mode = 'auto', h = 600, scale = 0.62, overlay, title = '휴가 현황', expanded = false }: { mode?: Mode; h?: number; scale?: number; overlay?: ReactNode; title?: string; expanded?: boolean }) {
   const rows: [string, string, string][] = [
-    ['연차', '2026-09-21 · 1일', '승인'],
-    ['반차(오후)', '2026-09-04 · 0.5일', '승인'],
-    ['연차', '2026-08-18 · 2일', '승인'],
-    ['병가', '2026-07-31 · 1일', '승인'],
-    ['연차', '2026-07-10 · 1일', '반려'],
+    ['연차', '2026. 9. 21. · 1일', '승인'],
+    ['반차(오후)', '2026. 9. 4. · 0.5일', '승인'],
+    ['연차', '2026. 8. 18. · 2일', '승인'],
+    ['병가', '2026. 7. 31. · 1일', '승인'],
+    ['연차', '2026. 7. 10. · 1일', '반려'],
   ];
   return (
     <NPhone mode={mode} brand="hr" h={h} scale={scale} overlay={overlay} bg="bg-layer-basement" bar={<Bar brand="hr" mode={mode} leading="menu" leadingExpanded={expanded} title={title} />}>
-      <div style={cardStack()}>
-        <CardSurface look={cardLook()} mode={mode}>
+      <div style={bandStack()}>
+        <ScreenBand mode={mode}>
           <StatView look={cardLook()} mode={mode} label="남은 연차" value="11.5일" />
-        </CardSurface>
-        <TxCard mode={mode} title="휴가 내역" action="">
-          <div className="flex flex-col" style={{ paddingLeft: 24, paddingRight: 24 }}>
-            {rows.map(([t, sub, st]) => (
-              <Row key={sub} mode={mode} title={t} sub={sub} hue={st === '반려' ? 'red' : 'green'} trailing={<span className="text-[13px]" style={{ color: rc(st === '반려' ? 'fg-neutral-subtle' : 'fg-neutral-muted', mode, 'hr') }}>{st}</span>} />
-            ))}
-          </div>
-        </TxCard>
+        </ScreenBand>
+        <ScreenBand mode={mode} title="휴가 기록">
+          {rows.map(([t, sub, st]) => (
+            <Row key={sub} mode={mode} title={t} sub={sub} hue={st === '반려' ? 'red' : 'green'} trailing={<span className="text-[13px]" style={{ color: rc(st === '반려' ? 'fg-neutral-subtle' : 'fg-neutral-muted', mode, 'hr') }}>{st}</span>} />
+          ))}
+        </ScreenBand>
       </div>
     </NPhone>
   );

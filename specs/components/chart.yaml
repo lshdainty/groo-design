@@ -27,7 +27,7 @@ slots:
   bar: 막대
   barValue: 막대 위 값 — 막대가 적어 글이 들어갈 때만(예산 이행률 "88%")
   compareBar: 비교 막대 줄의 막대 — "이름 | 막대 | 금액" 으로 두 기간을 견준다(통계 비교). 트랙 없음
-  compareBarPrevious: 비교 막대 줄의 지난 기간 막대 — 같은 계열 색의 옅은 단계
+  compareBarPrevious: 비교 막대 줄의 지난 기간 막대 — 회색(위 "색" 의 비교 계열)
   compareLabel: 비교 막대 줄의 이름 — 기간("11월" · "10월")
   compareAmount: 비교 막대 줄의 금액 — 오른쪽 끝, 자르지 않는다
   stockLegend: 주가(캔들) 차트 범례 — 그림 위 자기 줄의 시가 · 고가 · 저가 · 종가 · 거래량
@@ -89,7 +89,7 @@ rules:
         background: { value: transparent, note: "카드 면이 바탕 — 차트는 카드(card.md) 본문 안에 둔다" }
         height: { value: 쓰는 자리가 정한다, note: "고정 비율(16:9)을 두지 않는다 — 폰은 낮게, 데스크톱은 높게. 오늘 뒤 날짜는 그리지 않는다(가로축이 오늘에서 끝난다)" }
       tickLabel:
-        typography: { value: $text-t1, note: "11 / 15 — 돈 축은 \"만\" 단위로 줄인다(400만 · 1.2만, 빼기 U+2212). 축의 폭은 가장 긴 글자(\"−3,000만\")가 잘리지 않게. 글자 크기 설정을 따른다(-static 아님 — 웹 rem · 앱 OS 배율). 커지면 축 폭을 다시 재고 가로 눈금은 겹치지 않게 건너뛴다(2026-11-11 디자인시스템 판단)" }
+        typography: { value: $text-t1, note: "11 / 15 — 돈 축은 \"만\" 단위로 줄인다(400만 · 1.2만, 빼기 U+2212). 축의 폭은 가장 긴 글자(\"−3,000만\")가 잘리지 않게. 글자 크기 설정을 따른다(-static 아님 — 웹 rem · 앱 OS 배율). 커지면 축 폭을 다시 재고 가로 눈금은 겹치지 않게 건너뛴다 — 겹치면 끝(가장 최근) 글을 지키고 앞에서부터 건너뛴다(웹 recharts interval preserveEnd · 앱 같은 셈). 눈금이 통째로 사라지지 않는다(2026-11-11 디자인시스템 판단)" }
         foreground: $color-fg-neutral-subtle
         numerals: tabular-nums
       gridLine:
@@ -147,10 +147,10 @@ rules:
       compareBar:
         height: { value: 8px, note: "막대 줄의 막대 — Progress 막대와 같은 높이지만 트랙(바탕)이 없다. 길이는 두 값 가운데 큰 값을 100% 로 잰다. 한 줄에 들어가면 이름 · 막대(최소 64) · 금액이 한 줄, 아니면 위 줄(이름 · 금액) + 막대 줄 — 이름이 먼저 줄을 바꾸고 금액은 자르지 않는다(progress.md 의 이름 ↔ 오른쪽 글 규칙과 같다)" }
         radius: $radius-full
-        background: { value: $color-chart-blue, note: "이번 기간 — 강조 계열. 지난 기간은 compareBarPrevious(같은 파랑의 옅은 단계 — 위 \"색\" 의 비교 계열). 2026-11-10 사용자 결정 10B — 전엔 이번 달 fg-brand · 지난 달 bg-neutral-weak + 테두리였다" }
+        background: { value: $color-chart-blue, note: "이번 기간 — 강조 계열. 지난 기간은 compareBarPrevious(회색 — 위 \"색\" 의 비교 계열, 2026-11-11). 2026-11-10 사용자 결정 10B — 전엔 이번 달 fg-brand · 지난 달 bg-neutral-weak + 테두리였다" }
         gap: { value: $spacing-x2_5, note: "이름 ↔ 막대 ↔ 금액 · 두 줄 사이 10" }
       compareBarPrevious:
-        background: { value: $color-chart-blue-weak, note: "지난 기간 — 테두리 없음. 금액 글은 fg-neutral-muted" }
+        background: { value: $color-gray-500, dark: $color-gray-600-dark, note: "지난 기간 — 회색, 테두리 없음. 바탕 대비 라이트 3.16 · 다크 4.13(그림 3:1). 2026-11-11 사용자 결정 B 회색(https://claude.ai/artifact/9r4qaXm4xyjn27bUuu8o6z) — 옛 chart-blue-weak 는 바탕과 1.25 · 1.38:1 로 묻혔다(DA-10). 역할 토큰 없이 팔레트를 가리킨다. 금액 글은 fg-neutral-muted" }
       compareLabel:
         typography: $text-t2
         fontWeight: 700

@@ -7,7 +7,7 @@ import { ButtonView, LoadingDemo, type IconName } from './button-view';
 import { chipLook } from './chip-look';
 import { cardLook } from './data-look';
 import { ChipGroupView, ChipView } from './chip-view';
-import { AlertBox, Card, Field, Heading, KV, Line, Phone, Row, ScreenBand, Sheet, Stat, Verdict, WebDialog, WebWindow, bandStack, cardStack, rc, type Mode } from './kit';
+import { AlertBox, Card, Field, Heading, KV, Line, Phone, Row, ScreenBand, Sheet, Stat, Verdict, WebDialog, WebWindow, bandStack, rc, type Mode } from './kit';
 
 type Fig = (p: { caption?: string }) => ReactNode;
 type Brand = 'desk' | 'hr';
@@ -104,17 +104,18 @@ const Usage: Fig = ({ caption }) => {
       <div className="grid grid-cols-2 justify-items-center gap-x-4 gap-y-6">
         {cell(
           <Phone title="휴가" back={false} h={560} scale={s} bottom={<B variant="brandSolid" size="large" fill label="휴가 신청" brand="hr" />}>
-            <div style={cardStack()}>
-              <Card>
+            {/* 폰은 카드 없이 띠(card.md — HR · Desk 모두) */}
+            <div style={bandStack()}>
+              <ScreenBand>
                 <Stat label="남은 연차" value="12.5일" />
                 <span className="mt-1 text-[12px]" style={{ color: rc('fg-neutral-subtle') }}>
                   올해 15일 중 2.5일 사용
                 </span>
-              </Card>
-              <Card title="신청 내역">
+              </ScreenBand>
+              <ScreenBand title="신청 내역">
                 <Row title="연차" sub="10월 2일 · 승인 대기" hue="green" />
                 <Row title="반차" sub="9월 12일 · 승인" hue="indigo" />
-              </Card>
+              </ScreenBand>
             </div>
           </Phone>,
           'brandSolid',
