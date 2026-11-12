@@ -10,7 +10,9 @@ COPY . .
 RUN cd site && npm run build
 
 # 실행 단계 — 비루트(uid 101) nginx. 엣지 nginx 의 프록시 대상은 :8080 이다.
-FROM nginxinc/nginx-unprivileged:1.29.4-alpine AS runtime
+# nginx 는 안정판(짝수) 최신 패치로 고정한다. 올릴 때는 nginx.org 보안 권고(security_advisories)와
+# 대조한다 — 1.30.6 은 2026-11 기준 공개 권고 전부에서 '취약하지 않음'(보안 점검 INF-3).
+FROM nginxinc/nginx-unprivileged:1.30.6-alpine AS runtime
 
 COPY site/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /repo/site/out /usr/share/nginx/html
