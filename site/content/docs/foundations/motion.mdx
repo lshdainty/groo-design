@@ -1,6 +1,6 @@
 ---
 title: Motion
-description: 매크로 · 마이크로 모션, 이징 · 지속 시간, 반복, 키프레임, 모션 줄이기
+description: 매크로 · 마이크로 모션, 이징 · 지속 시간, 장면, 반복, 키프레임, 모션 줄이기
 source: DESIGN.md
 ---
 
@@ -59,6 +59,19 @@ enter · exit 가운데 특히 강조할 움직임에 쓴다.
 
 - 색 전환(`motion-duration-color-transition`)과 눌림 축소(`motion-duration-pressed-scale`)는 같은 시간을 쓴다 — 시작과 속도가 같아야 하나의 반응으로 읽힌다.
 - 옛 이름은 같은 값의 별칭이다 — `motion-duration-fast` → `d3`, `base` → `d4`, `slow` → `d6`. `slower` 는 걷는 중이다 — 큰 전환도 `d6` 안에서 끝낸다.
+
+## 장면
+
+여러 요소가 차례로 나와 한 장면을 이루는 모션이다 — 홈페이지 서비스 소개처럼 점이 이어져 캘린더가 되거나, 흩어진 조각이 목록으로 정리되는 움직임. 장면은 시간 값을 직접 갖지 않고 무리 번호와 순번만 갖는다. 시간은 아래 두 토큰과 `motion-duration-d6` 로 계산한다.
+
+<SourceTable heading="장면 시간표" />
+
+<SourceTable heading="장면 시간표" n={1} />
+
+- 같은 무리의 형제는 `motion-duration-stagger` 간격으로 차례로 나온다. 자리마다 간격을 다르게 두지 않는다.
+- 다음 무리는 앞 무리의 마지막 형제가 끝나면 바로 이어지고, 보고 이해할 틈이 필요하면 `motion-duration-pause` 만큼 쉰다.
+- 움직임 하나하나는 위 이징 · 지속 시간을 쓴다 — 나타날 때 `motion-duration-d6` · `motion-ease-enter-expressive`, 사라질 때 `motion-duration-d3` · `motion-ease-exit`.
+- 모션 줄이기 모드에서는 지연 없이 끝 장면만 보인다.
 
 ## 반복
 

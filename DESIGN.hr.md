@@ -3326,6 +3326,30 @@ modal/sheet/drawer dim overlay (alpha 채널 prose-token).
 - 반복의 곡선은 컴포넌트가 정한다 — 스켈레톤 반짝임은 `motion-ease-easing`(SEED), Progress Circle 은 스펙의 숫자 곡선이다(2026-10-03). `motion-ease-linear` 는 일정한 속도가 필요한 반복에 남긴다.
 - 옛 `motion-ease-out`(0.16, 1, 0.3, 1)은 걷는 중이다 — 나타나는 모션은 `motion-ease-enter` 로 옮긴다. 앱의 `spring` 은 `motion-ease-enter-expressive`, `decel` 은 `motion-ease-enter` 로.
 
+#### 장면 시간표 (v122 — 2026-11-12)
+
+여러 요소가 차례로 나와 한 장면을 이루는 모션(홈페이지 서비스 소개 같은)의 시간을 정한다. SEED 에는 없는 자리라 groo 가 정했다. 사용자 결정(2026-11-12 — 비교 페이지 https://claude.ai/artifact/AcFjzAfASasED2uAEHRB2d).
+
+| 토큰 | 값 | 쓰는 곳 |
+|---|---|---|
+| `motion-duration-stagger` | `150ms` | 역할 — 같은 무리(점 · 선 · 줄)가 차례로 나올 때 형제 사이 간격(= d3) |
+| `motion-duration-pause` | `500ms` | 역할 — 한 무리가 다 나온 뒤 보고 이해할 틈 |
+
+| 규칙 | 값 | 뜻 |
+|---|---|---|
+| 장면 상한 | 5000ms | 화면에 들어올 때 한 번 재생하고 끝 장면에서 멈춘다 — 반복하지 않는다(WCAG 2.2.2) |
+
+```
+무리 안 i 번째 시작 = 무리 시작 + i × stagger
+무리 끝            = 무리 시작 + (n − 1) × stagger + d6
+다음 무리 시작     = 앞 무리 끝            (바로 이어질 때)
+                   = 앞 무리 끝 + pause    (보고 이해할 틈을 둘 때)
+```
+
+- 장면은 시간 값을 직접 갖지 않는다 — 무리 번호와 순번만 갖고, 시간은 위 두 토큰과 d6 로 계산한다. 형제 간격을 자리마다 다르게 두지 않는다.
+- 움직임 하나하나는 위 표의 토큰을 쓴다 — 나타날 때 `motion-duration-d6` · `motion-ease-enter-expressive`, 사라질 때 `motion-duration-d3` · `motion-ease-exit`.
+- 모션 줄이기 모드에서는 지연 없이 끝 장면만 보인다(아래 표).
+
 #### 눌림 피드백
 
 누르면 인터페이스가 입력이 닿았음을 바로 알린다. 색 · 크기 · 햅틱 셋으로 알리고, 셋은 하나의 반응으로 읽히게 같은 시간(150ms)을 쓴다. 햅틱은 기준이 생기면 더한다.
@@ -3367,6 +3391,7 @@ modal/sheet/drawer dim overlay (alpha 채널 prose-token).
 | 색 전환 | 150ms | 그대로 |
 | 매크로 모션(200ms 초과) | 이동 · 확대 · 미끄러짐 | 150ms 서서히 나타남 · 사라짐 |
 | 반복(스켈레톤 · 로딩 원 · 펄스) | 계속 | 멈춘다 — 스켈레톤은 띠 없이 면만, Progress Circle 은 돌지 않는 3/4 호(2026-10-03) |
+| 장면(차례로 나오는 무리 — v122) | `motion-duration-stagger` · `motion-duration-pause` 시간표대로 한 번, 끝 장면에서 멈춤 | 지연 없이 끝 장면만 |
 
 지금 이 모드를 따르는 곳은 웹 2곳 · 앱 스켈레톤 1곳이다(2026-09-29) — 앱 PR 에서 모든 모션이 따르게 한다.
 
