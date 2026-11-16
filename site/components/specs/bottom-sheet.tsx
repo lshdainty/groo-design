@@ -48,6 +48,13 @@ const Shots = ({ children }: { children: ReactNode }) => <div className="flex fl
 const sheetBtn = (variant: string) => btn(variant, sh().footer.button.size);
 
 // ── Overview ──────────────────────────────────────────────
+// 개요 카드 — 라이트 기간 시트 하나(머리 · 고르기 목록 · 바닥 초기화 · 적용), 폰 틀 · 딤 없이
+const Thumb: Fig = () => (
+  <div style={{ width: 360, zoom: 0.55 }}>
+    <PeriodSheet mode="light" safe={0} maxHeight={360} />
+  </div>
+);
+
 // 거래 추가(입력 폼) · 기간(고르기) · 거래 상세(조회) — 라이트 줄 · 다크 줄
 const Hero: Fig = ({ caption }) => (
   <Figure caption={caption}>
@@ -260,15 +267,15 @@ const Handle: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="절반 · 가득 같은 스냅 높이가 있으면 손잡이를 단다 — 누르면 다음(더 높은) 스냅 높이로, 가장 높은 높이에서 누르면 닫힌다">
+        <Verdict ok note="절반 · 가득 같은 스냅 높이가 있으면 손잡이를 답니다 — 누르면 다음(더 높은) 스냅 높이로, 가장 높은 높이에서 누르면 닫힙니다">
           <SnapPhone />
         </Verdict>
-        <Verdict ok={false} note="스냅 높이가 없는데 손잡이를 장식으로 — 조회 · 고르기 시트는 손잡이 없이도 끌어 닫힌다">
+        <Verdict ok={false} note="스냅 높이가 없는데 손잡이를 장식으로 — 조회 · 고르기 시트는 손잡이 없이도 끌어 닫힙니다">
           <LedgerPhone mode="auto" scale={0.6} overlay={<SheetOn mode="auto"><PeriodSheet mode="auto" handle /></SheetOn>} />
         </Verdict>
       </Pair>
       <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">
-        손잡이 {h.width} × {h.height} · 시트 위에서 {h.top} · 가로 가운데 · 누르는 영역 {h.target} × {h.target} · 보조 기술에는 숨긴다(SEED — 누르면 더 높은 스냅, 가장 높은 데서 닫힘)
+        손잡이 {h.width} × {h.height} · 시트 위에서 {h.top} · 가로 가운데 · 누르는 영역 {h.target} × {h.target} · 보조 기술에는 숨깁니다(누르면 더 높은 스냅, 가장 높은 데서 닫힘)
       </p>
     </Panel>
   );
@@ -309,12 +316,12 @@ const ScrollFogFigure: Fig = ({ caption }) => {
     <Figure caption={caption}>
       <div className="flex items-start justify-center gap-6">
         <div className="w-[240px]">
-          <Shot strong="맨 위" cap={`위 ${f.top} 흐림은 빈 여백(${f.padTop}) 위 — 아래 ${f.bottom} 이 흐려 더 있음을 알린다`}>
+          <Shot strong="맨 위" cap={`위 ${f.top} 흐림은 빈 여백(${f.padTop}) 위 — 아래 ${f.bottom} 이 흐려 더 있음을 알립니다`}>
             {phone(0)}
           </Shot>
         </div>
         <div className="w-[240px]">
-          <Shot strong="끝까지 내렸을 때" cap={`아래 ${f.bottom} 흐림은 빈 여백(${f.padBottom}) 위 — 마지막 줄은 흐림 밖에 다 보인다`}>
+          <Shot strong="끝까지 내렸을 때" cap={`아래 ${f.bottom} 흐림은 빈 여백(${f.padBottom}) 위 — 마지막 줄은 흐림 밖에 다 보입니다`}>
             {phone(end)}
           </Shot>
         </div>
@@ -348,7 +355,7 @@ const RoleGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex w-full flex-col gap-4 lg:flex-row">
       <div className="flex min-w-0 flex-[2] flex-col">
-        <Verdict ok note="폼 · 고르기 · 조회는 시트 — 되돌릴 수 없는 확인은 가운데 Alert Dialog(바깥을 눌러도 닫히지 않는다)">
+        <Verdict ok note="폼 · 고르기 · 조회는 시트 — 되돌릴 수 없는 확인은 가운데 Alert Dialog(바깥을 눌러도 닫히지 않습니다)">
           <div className="flex flex-wrap justify-center gap-4">
             <Shot strong="고르기 — 시트">
               <LedgerPhone mode="auto" scale={0.42} overlay={<SheetOn mode="auto"><PeriodSheet mode="auto" /></SheetOn>} />
@@ -360,7 +367,7 @@ const RoleGuide: Fig = ({ caption }) => (
         </Verdict>
       </div>
       <div className="flex min-w-0 flex-1 flex-col">
-        <Verdict ok={false} note="되돌릴 수 없는 확인을 시트로 — 끌어내리기 · 바깥 누르기로 지나칠 수 있다">
+        <Verdict ok={false} note="되돌릴 수 없는 확인을 시트로 — 끌어내리기 · 바깥 누르기로 지나칠 수 있습니다">
           <LedgerPhone mode="auto" scale={0.42} overlay={<SheetOn mode="auto"><ConfirmSheet /></SheetOn>} />
         </Verdict>
       </div>
@@ -423,7 +430,7 @@ const HeightGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex w-full flex-col gap-4 lg:flex-row">
       <div className="flex min-w-0 flex-[2] flex-col">
-        <Verdict ok note={`시트는 내용만큼 — 화면 높이의 ${Math.round(sh().maxHeight * 100)}% 를 넘을 내용(카드 상세 · 종목 검색)은 페이지로 옮긴다`}>
+        <Verdict ok note={`시트는 내용만큼 — 화면 높이의 ${Math.round(sh().maxHeight * 100)}% 를 넘을 내용(카드 상세 · 종목 검색)은 페이지로 옮깁니다`}>
           <div className="flex flex-wrap justify-center gap-4">
             <Shot strong="내용만큼">
               <LedgerPhone mode="auto" scale={0.42} overlay={<SheetOn mode="auto"><PeriodSheet mode="auto" /></SheetOn>} />
@@ -435,7 +442,7 @@ const HeightGuide: Fig = ({ caption }) => (
         </Verdict>
       </div>
       <div className="flex min-w-0 flex-1 flex-col">
-        <Verdict ok={false} note="넘치는 내용을 시트 안 스크롤로 버틴다 — 뒤로 가기 · 주소가 없고, 끌어 닫기와 스크롤이 겹친다">
+        <Verdict ok={false} note="넘치는 내용을 시트 안 스크롤로 버팁니다 — 뒤로 가기 · 주소가 없고, 끌어 닫기와 스크롤이 겹칩니다">
           <LedgerPhone mode="auto" scale={0.42} overlay={<TallSheet />} />
         </Verdict>
       </div>
@@ -447,8 +454,8 @@ const HeightGuide: Fig = ({ caption }) => (
 // 손가락 — 딤 위를 누르고, 시트 머리를 아래로 끈다. 짧은 말이 결과
 function DismissPhone({ form }: { form: boolean }) {
   const s = sh();
-  const tap = <GestureMark kind="tap" x="50%" y={64} note={form ? '눌러도 그대로' : '누르면 닫힌다'} ok={!form} />;
-  const drag = <GestureMark kind="drag" x="62%" y={0} drag={34} note={form ? '끌어도 그대로' : '끌면 닫힌다'} ok={!form} />;
+  const tap = <GestureMark kind="tap" x="50%" y={64} note={form ? '눌러도 그대로' : '누르면 닫힘'} ok={!form} />;
+  const drag = <GestureMark kind="drag" x="62%" y={0} drag={34} note={form ? '끌어도 그대로' : '끌면 닫힘'} ok={!form} />;
   return (
     <LedgerPhone
       mode="auto"
@@ -465,10 +472,10 @@ function DismissPhone({ form }: { form: boolean }) {
 const DismissGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Shots>
-      <Shot strong="입력 폼 — 거래 추가" cap="위 닫기 · 뒤로 가기 · Esc 로 닫는다. 바뀐 값이 있으면 먼저 묻는다">
+      <Shot strong="입력 폼 — 거래 추가" cap="위 닫기 · 뒤로 가기 · Esc 로 닫습니다. 바뀐 값이 있으면 먼저 묻습니다">
         <DismissPhone form />
       </Shot>
-      <Shot strong="조회 · 고르기 — 거래 상세" cap="바깥 누르기 · 끌어내리기 · 위 닫기 · Esc 로 닫힌다">
+      <Shot strong="조회 · 고르기 — 거래 상세" cap="바깥 누르기 · 끌어내리기 · 위 닫기 · Esc 로 닫힙니다">
         <DismissPhone form={false} />
       </Shot>
     </Shots>
@@ -492,7 +499,7 @@ const ButtonsGuide: Fig = ({ caption }) => (
         </Verdict>
       </div>
       <div className="flex min-w-0 flex-1 flex-col">
-        <Verdict ok={false} note="위 닫기와 바닥 취소를 함께 — 닫는 길이 둘이라 어느 쪽인지 망설인다">
+        <Verdict ok={false} note="위 닫기와 바닥 취소를 함께 — 닫는 길이 둘이라 어느 쪽인지 망설입니다">
           <LedgerPhone
             mode="auto"
             scale={0.42}
@@ -518,7 +525,7 @@ const ButtonsGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 바닥 왼쪽 [삭제] — 목록 줄을 눌러 들어간 시트에서 동작이 삭제 하나뿐일 때(2026-10-25 — menu.md "줄의 동작")
+// 바닥 왼쪽 [삭제] — 목록 줄을 눌러 들어간 시트에서 동작이 삭제 하나뿐일 때(menu.md "줄의 동작")
 const DeleteGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex flex-wrap items-start justify-center gap-4">
@@ -537,6 +544,7 @@ const ExPick: Fig = () => <PeriodPickDemo kit={overlayKit()} chip={chipLook()} l
 const ExForm: Fig = () => <TxFormSheetDemo kit={overlayKit()} date={dateKit()} sel={desk()} field={tf().field} input={tf().input} cta={btn('neutralSolid', 'small')} />;
 
 export const bottomSheetFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

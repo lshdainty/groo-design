@@ -21,7 +21,7 @@ function C(p: Omit<CalloutViewProps, 'look' | 'state'> & { state?: CalloutViewPr
   return <CalloutView look={look ?? cl()} state={state} {...rest} />;
 }
 
-// 비교 페이지에서 고른 그대로의 글(2026-10-02)
+// 그림에 쓰는 예시 글
 const IMPORT = { title: '안내', description: '가져온 데이터는 기존 거래에 더해지고 덮어쓰지 않아요.', link: { label: '자세히' } };
 const SPLIT = '총액이 바뀌어 분할 합계와 1,200원 달라요.';
 const TONE_TEXT: Record<FbTone, { title?: string; description: string; link?: boolean }> = {
@@ -112,7 +112,7 @@ const Anatomy: Fig = ({ caption }) => {
             ['ⓕ', 'Chevron · Close'],
           ]}
         />
-        <span className="max-w-[480px] text-center text-[12px] leading-5 pk-muted">위는 1.5배 — 제목 · 본문 · 링크가 한 문단으로 흐른다. 아래는 실제 크기 — 전체를 누르는 상자의 뒤 화살표, 닫을 수 있는 상자의 닫기</span>
+        <span className="max-w-[480px] text-center text-[12px] leading-5 pk-muted">위는 1.5배입니다 — 제목 · 본문 · 링크가 한 문단으로 흐릅니다. 아래는 실제 크기입니다 — 전체를 누르는 상자의 뒤 화살표, 닫을 수 있는 상자의 닫기</span>
       </div>
     </Figure>
   );
@@ -218,7 +218,7 @@ const Interactions: Fig = ({ caption }) => {
       <div className="flex flex-col gap-4">
         {block(
           'display',
-          '보이기만 — 링크를 둘 수 있다(보조 내용으로 갈 때만)',
+          '보이기만 — 링크를 둘 수 있습니다(보조 내용으로 갈 때만)',
           <>
             {cell(STATE_KO.enabled, <C tone="informative" title="안내" description="국내 주식은 15분 늦은 시세예요." link={{ label: '자세히' }} />)}
             {cell(`${STATE_KO.focused} — 링크 둘레(모서리 ${cl().link.ringRadius})`, <C tone="informative" title="안내" description="국내 주식은 15분 늦은 시세예요." link={{ label: '자세히' }} state="focused" part="link" />)}
@@ -308,7 +308,7 @@ const DismissGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="새 기능처럼 한 번 읽으면 되는 안내만 닫는다 — 닫은 것을 기억해 다시 띄우지 않는다">
+        <Verdict ok note="새 기능처럼 한 번 읽으면 되는 안내만 닫습니다 — 닫은 것을 기억해 다시 띄우지 않습니다">
           <W>
             <div className="flex flex-col gap-4">
               <C tone="informative" interaction="dismissible" title="새 기능" description="반복 거래를 자동으로 기록할 수 있어요." />
@@ -319,7 +319,7 @@ const DismissGuide: Fig = ({ caption }) => {
             </div>
           </W>
         </Verdict>
-        <Verdict ok={false} note="경고를 닫을 수 있게 — 한도는 여전히 넘었는데 안내만 사라진다">
+        <Verdict ok={false} note="경고를 닫을 수 있게 — 한도는 여전히 넘었는데 안내만 사라집니다">
           <W>
             <Form gap={t.field.form.gapY}>
               <C tone="warning" interaction="dismissible" description="카테고리 한도 합이 전체 상한을 12,000원 넘었어요." />
@@ -339,7 +339,17 @@ const ExDisplay: Fig = () => <CalloutDisplayDemo look={cl()} button={buttonLook(
 const ExError: Fig = () => <CalloutErrorDemo look={cl()} snack={snackbarLook()} field={tf().field} input={tf().input} cta={buttonLook({ variant: 'neutralSolid', size: 'large' })} />;
 const ExInteractive: Fig = () => <CalloutInteractiveDemo look={cl()} />;
 
+// ── 개요 카드 — 라이트 상자 셋(안내 · 주의 · 저장 실패) ─────
+const Thumb: Fig = () => (
+  <div className="flex flex-col gap-2.5" style={{ width: 340, zoom: 0.75 }}>
+    <C mode="light" tone="informative" title={IMPORT.title} description={IMPORT.description} link={IMPORT.link} />
+    <C mode="light" tone="warning" description={SPLIT} />
+    <C mode="light" tone="critical" description={SAVE_FAIL} />
+  </div>
+);
+
 export const calloutFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

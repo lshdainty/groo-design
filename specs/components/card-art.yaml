@@ -1,22 +1,21 @@
-# 카드 그림(CardArt)의 수치 원본 — 카드 한 장을 보이는 Image Frame(ratio card · 1.586)과 그림이 없을 때의 카드 면
-# (2026-10-04 사용자 결정, 이미지 비교 페이지 3A · 4B · "따라오는 것"). 틀 · 윤곽 · 모서리 · 불러오는 동안은 image-frame.yaml 이다.
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# 카드 그림(CardArt)의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 그림이 있으면 그림 — 세로 그림(원래 폭 < 높이)은 시계 방향으로 90° 돌려 가로 틀을 채운다(image-frame.yaml 의 ratio card).
-# 그림이 없거나 못 불러오면 카드사로 가른다(dev 활성 카드 6,790장 중 82% 가 그림이 없다)
+# 카드 한 장을 보이는 Image Frame(ratio card · 1.586)과 그림이 없을 때의 카드 면입니다. 틀 · 윤곽 · 모서리 · 불러오는 동안은
+# image-frame.yaml 을 따릅니다.
+#
+# 그림이 있으면 그림입니다 — 세로 그림(원래 폭 < 높이)은 시계 방향으로 90° 돌려 가로 틀을 채웁니다(image-frame.yaml 의 ratio card).
+# 그림이 없거나 못 불러오면 카드사로 가릅니다.
 #   아는 카드사(institution-colors.yaml 에 있다) — 카드 면: 기관 색 한 색 + 회사 · 카드 이름(작은 면은 회사 첫 글자). 글자색은 표의 text.
-#   모르는 카드사 — Content Placeholder(credit-card). 브랜드 파랑 · 회색 면으로 회사 색인 척하지 않는다.
-# 광택 띠 · 그라디언트를 두지 않는다 — 글자 아래 대비가 떨어진다(지금 웹 NH농협카드 광택 위 2.73).
-# 상세에서는 그림이 떠도 카드 이름을 화면에 글로 둔다(면의 글 · alt 에만 두지 않는다 — image-frame.md).
-#
-# groo 에만 있는 부품이다 — SEED 는 사진을 늘 cover 로 채우고 "실물 그림"(카드) 규칙이 없다.
+#   모르는 카드사 — Content Placeholder(credit-card). 브랜드 파랑 · 회색 면으로 회사 색인 척하지 않습니다.
+# 광택 띠 · 그라디언트를 두지 않습니다 — 글자 아래 대비가 떨어지기 때문입니다.
+# 상세에서는 그림이 떠도 카드 이름을 화면에 글로 둡니다(면의 글 · alt 에만 두지 않습니다 — image-frame.md).
 
 name: CardArt
 
 slots:
   root: 카드 그림 — Image Frame ratio card(1.586). 그림이 있으면 그림, 없으면 카드 면 또는 대체 그림
   face: 카드 면 — 그림이 없는 아는 카드사의 카드. 기관 색 한 색
-  label: 글 묶음 — 회사 · 카드 이름. 면 왼쪽 아래에 붙는다(레시피 data-slot="card-art-label" — 2026-10-15 구현 세션 질문 Q-013 정리)
+  label: 글 묶음 — 회사 · 카드 이름. 면 왼쪽 아래에 붙는다(레시피 data-slot="card-art-label")
   issuer: 회사 이름 — 카드 이름 위 한 줄
   name: 카드 이름 — 회사 이름 아래, medium 한 줄 · large 두 줄까지
   initial: 회사 첫 글자 — 작은 면(폭 96 미만) · 글이 안 드는 면(큰 글자) 가운데. 회사 · 카드 이름 대신
@@ -43,7 +42,7 @@ rules:
         background: { value: 기관 색, note: "institution-colors.yaml 의 color — 모드를 따르지 않는다(라이트 · 다크 같다). 광택 띠 · 그라디언트 없이 한 색" }
         foreground: { value: 기관 글자색, note: "표의 text — white 면 static-white, dark 면 라이트 fg-neutral · 다크 fg-neutral-inverted. 78곳 모두 4.52:1 이상" }
       label:
-        fit: { value: 안 들면 첫 글자 면, note: "면 높이 < 회사 줄 높이 + 카드 이름 한 줄 높이 + 아래 여백(지금 글자 배율로 — 여백은 그대로)이면 회사 · 카드 이름 대신 회사 첫 글자 면(small 과 같은 모양 · 면 높이의 40%). 폭 96 ~ 123 면(높이 60.5 ~ 77.6)에서 글자 200% 면 16 × 2 + 19 × 2 + 8 = 78 이 넘친다. large(폭 240 이상 · 높이 151 이상)는 200% 에서도 든다(두 줄이어도 36 + 88 + 14 = 138). 웹 · 앱 같은 식 — 같은 격자에서도 글자 배율에 따라 면 모양이 바뀐다(2026-10-17 사용자 결정 03-D 결정 3 A — 배율을 무시(B) · 회사 이름만(C)은 고르지 않았다)" }
+        fit: { value: 안 들면 첫 글자 면, note: "면 높이 < 회사 줄 높이 + 카드 이름 한 줄 높이 + 아래 여백(지금 글자 배율로 — 여백은 그대로)이면 회사 · 카드 이름 대신 회사 첫 글자 면(small 과 같은 모양 · 면 높이의 40%). 폭 96 ~ 123 면(높이 60.5 ~ 77.6)에서 글자 200% 면 16 × 2 + 19 × 2 + 8 = 78 이 넘친다. large(폭 240 이상 · 높이 151 이상)는 200% 에서도 든다(두 줄이어도 36 + 88 + 14 = 138). 웹 · 앱 같은 식 — 같은 격자에서도 글자 배율에 따라 면 모양이 바뀐다" }
       issuer:
         fontWeight: 500
         overflowX: { value: 말줄임, note: "한 줄 — 넘치면 말줄임(…)" }
@@ -68,4 +67,4 @@ rules:
     enabled:
       label: { paddingX: $spacing-x4, paddingBottom: $spacing-x3_5 }
       issuer: { typography: $text-t3 }
-      name: { typography: $text-t5, lineClamp: { value: 2, note: "두 줄까지 — 단어 단위로 바꾸고(v114) 넘치면 말줄임" } }
+      name: { typography: $text-t5, lineClamp: { value: 2, note: "두 줄까지 — 단어 단위로 바꾸고 넘치면 말줄임" } }
