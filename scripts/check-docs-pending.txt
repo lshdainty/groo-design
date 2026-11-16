@@ -1,4 +1,0 @@
-# 아직 공식 문서 문체로 다시 쓰지 않은 파일 — scripts/check-docs.mjs 가 건너뜁니다.
-# 다시 쓴 파일은 이 목록에서 지웁니다. 목록이 비면 이 파일을 지웁니다.
-DESIGN.desk.md
-DESIGN.hr.md
