@@ -252,7 +252,7 @@ const Selection: Fig = ({ caption }) => {
               <SelectOpenView look={lk} size="large" groups={plain([PAY_FLAT])} selected={['hyundai-m']} />
             </F>
           </Surface>
-          <Cap strong="하나 고르기">고르면 닫히고 값이 칸에 · 다시 눌러도 풀리지 않는다</Cap>
+          <Cap strong="하나 고르기">고르면 닫히고 값이 칸에 들어갑니다 · 다시 눌러도 풀리지 않습니다</Cap>
         </div>
         <div className="flex min-w-0 flex-col gap-2">
           <Surface>
@@ -260,7 +260,7 @@ const Selection: Fig = ({ caption }) => {
               <SelectOpenView look={lk} size="large" multiple groups={plain(CATS)} selected={['food', 'transport']} />
             </F>
           </Surface>
-          <Cap strong="여럿 고르기 multiple">열린 채로 이어서 고른다 · 다시 누르면 풀린다 · 고른 순서대로 쉼표</Cap>
+          <Cap strong="여럿 고르기 multiple">열린 채로 이어서 고릅니다 · 다시 누르면 풀립니다 · 고른 순서대로 쉼표로 잇습니다</Cap>
         </div>
       </div>
     </Panel>
@@ -284,11 +284,11 @@ const PrefixIcon: Fig = ({ caption }) => {
               <SelectOpenView look={lk} size="large" groups={[PAY_FLAT]} selected={['hyundai-m']} icon="wallet" />
             </F>
           </Surface>
-          <Cap strong="선택지 아이콘">묶음 안에서 모두 두거나 모두 뺀다 — 고르면 그 아이콘이 트리거로</Cap>
+          <Cap strong="선택지 아이콘">묶음 안에서 모두 두거나 모두 뺍니다 — 고르면 그 아이콘이 트리거로 갑니다</Cap>
         </div>
         <Surface className="flex flex-col justify-center gap-5">
           {row('고르기 전', '트리거에 준 아이콘(wallet)', <SelectTriggerView look={lk} size="large" state="enabled" icon="wallet" placeholder="결제 수단 선택" />)}
-          {row('하나를 골랐다', '그 선택지의 아이콘이 덮는다', <SelectTriggerView look={lk} size="large" state="enabled" icon="credit-card" labels={['현대카드 신용카드']} />)}
+          {row('하나를 골랐다', '그 선택지의 아이콘이 덮습니다', <SelectTriggerView look={lk} size="large" state="enabled" icon="credit-card" labels={['현대카드 신용카드']} />)}
           {row('둘 이상 골랐다', '트리거의 아이콘(tag)', <SelectTriggerView look={lk} size="large" state="enabled" icon="tag" multiple labels={['식비', '교통']} />)}
         </Surface>
       </div>
@@ -380,7 +380,7 @@ const Content: Fig = ({ caption }) => {
           </>,
         )}
         {phone(
-          ['길면 안에서 스크롤', `높이 min(${lk.content.maxHeight}, 남은 화면) · 하한 ${lk.content.minHeight} — 고른 선택지가 보이게 연다`],
+          ['길면 안에서 스크롤', `높이 min(${lk.content.maxHeight}, 남은 화면) · 하한 ${lk.content.minHeight} — 고른 선택지가 보이게 엽니다`],
           <F mode="light" label="통화">
             <SelectOpenView look={lk} mode="light" size="large" groups={[CURRENCY]} selected={['EUR']} placement="overlay" maxHeight={maxH} scrollTop={scrollTop} />
           </F>,
@@ -419,8 +419,8 @@ const Group: Fig = ({ caption }) => {
           <span aria-hidden className="pointer-events-none absolute" style={{ right: 0, width: d.marginX, top: div.y - 3, height: d.height + 6, background: MARK, outline: `1px dashed ${MARK_LINE}` }} />
           <span aria-hidden className="pointer-events-none absolute" style={{ left: 0, width: W, top: label.y, height: label.h, outline: `1px dashed ${MARK_LINE}` }} />
           {note(div.y, <b className="pk-text">묶음 사이 {gap} + {d.height} + {d.marginBottom} = {total}</b>)}
-          {note(div.y + 16, `선은 좌우 ${d.marginX} 들인 ${d.height}px — 선택지 사이에는 없다`)}
-          {note(label.y + label.h / 2, `묶음 제목 — ${lk.groupLabel.sizes.large.height}(없어도 된다)`)}
+          {note(div.y + 16, `선은 좌우 ${d.marginX} 들인 ${d.height}px — 선택지 사이에는 없습니다`)}
+          {note(label.y + label.h / 2, `묶음 제목 — ${lk.groupLabel.sizes.large.height}(없어도 됩니다)`)}
         </div>
       </div>
     </Figure>
@@ -441,7 +441,7 @@ const LabelGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="Field 의 라벨 — 고른 뒤에도 무엇을 고른 칸인지 보인다">
+        <Verdict ok note="Field 의 라벨 — 고른 뒤에도 무엇을 고른 칸인지 보입니다">
           <W280>
             <Form gap={16}>
               <F label="결제 수단">
@@ -453,7 +453,7 @@ const LabelGuide: Fig = ({ caption }) => {
             </Form>
           </W280>
         </Verdict>
-        <Verdict ok={false} note="라벨 없이 값만 — placeholder 는 고르면 사라져 칸의 뜻이 남지 않는다">
+        <Verdict ok={false} note="라벨 없이 값만 — placeholder 는 고르면 사라져 칸의 뜻이 남지 않습니다">
           <W280>
             <div className="flex flex-col gap-4">
               <SelectTriggerView look={lk} size="large" state="enabled" labels={['현대카드 신용카드']} />
@@ -472,14 +472,14 @@ const NoneGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note='"{칸 이름} 없음" 을 맨 앞 따로 묶음에 — 고르면 칸에 그 글이 들어간다'>
+        <Verdict ok note='"{칸 이름} 없음" 을 맨 앞 따로 묶음에 — 고르면 칸에 그 글이 들어갑니다'>
           <W280>
             <F label="결제 수단">
               <SelectOpenView look={lk} size="large" groups={plain([PAY_NONE, PAY_FLAT])} selected={['none']} />
             </F>
           </W280>
         </Verdict>
-        <Verdict ok={false} note='맨 뒤 "해당 없음" — 칸마다 글이 달라지고 다른 선택지와 섞인다'>
+        <Verdict ok={false} note='맨 뒤 "해당 없음" — 칸마다 글이 달라지고 다른 선택지와 섞입니다'>
           <W280>
             <F label="결제 수단">
               <SelectOpenView look={lk} size="large" groups={bad} selected={['na']} />
@@ -497,14 +497,14 @@ const MultiGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="몇 개까지 고를 수 있는지 Field 설명에 적는다">
+        <Verdict ok note="몇 개까지 고를 수 있는지 Field 설명에 적습니다">
           <W280>
             <F label="카테고리" description="최대 3개까지 고를 수 있어요.">
               <SelectTriggerView look={lk} size="large" state="enabled" multiple labels={['식비', '교통']} />
             </F>
           </W280>
         </Verdict>
-        <Verdict ok={false} note='"전체 선택" — 다른 선택지를 바꿔 결과를 짐작하기 어렵다'>
+        <Verdict ok={false} note='"전체 선택" — 다른 선택지를 바꿔 결과를 짐작하기 어렵습니다'>
           <W280>
             <F label="카테고리">
               <SelectOpenView look={lk} size="large" multiple groups={all} selected={['all', 'food', 'transport', 'shopping', 'culture', 'health']} />
@@ -530,13 +530,13 @@ const SummaryGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair three>
-        <Verdict ok note="다 보이면 고른 순서대로 쉼표">
+        <Verdict ok note="다 보이면 고른 순서대로 쉼표로 잇습니다">
           {one(['식비', '교통'])}
         </Verdict>
-        <Verdict ok note='넘치면 첫 값 외 나머지 개수(셋을 골랐다) — 값이 동등하면 "3개 고름"'>
+        <Verdict ok note='넘치면 첫 값 외 나머지 개수를 붙입니다(셋을 고름) — 값이 동등하면 "3개 고름"'>
           {one(['식비', '교통', '쇼핑'])}
         </Verdict>
-        <Verdict ok={false} note='"등 2개" — 모두 두 개라는 뜻이 되어 틀린다'>
+        <Verdict ok={false} note='"등 2개" — 모두 두 개라는 뜻이 되어 틀립니다'>
           {one(['식비', '교통', '쇼핑'], '식비 등 2개')}
         </Verdict>
       </Pair>
@@ -551,14 +551,14 @@ const ItemLabelGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="명사형으로 짧게 · 낱말과 길이를 맞추고, 부연은 한 줄 설명에">
+        <Verdict ok note="명사형으로 짧게 · 낱말과 길이를 맞추고, 부연은 한 줄 설명에 씁니다">
           <W280 w={248}>
             <F label="반복 단위">
               <SelectOpenView look={lk} size="large" groups={good} selected={['m']} />
             </F>
           </W280>
         </Verdict>
-        <Verdict ok={false} note="동작을 붙이고 말투가 섞였다 — 목록에서는 다 보여도 트리거에서는 잘린다">
+        <Verdict ok={false} note="동작을 붙이고 말투가 섞였습니다 — 목록에서는 다 보여도 트리거에서는 잘립니다">
           <W280 w={248}>
             <F label="반복 단위">
               <SelectOpenView look={lk} size="large" groups={bad} selected={['m']} />
@@ -575,14 +575,14 @@ const PlaceholderGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note='"{값의 종류} 선택" — 무엇을 고르는 칸인지 알린다'>
+        <Verdict ok note='"{값의 종류} 선택" — 무엇을 고르는 칸인지 알립니다'>
           <W280>
             <F label="결제 수단">
               <SelectTriggerView look={lk} size="large" state="enabled" placeholder="결제 수단 선택" />
             </F>
           </W280>
         </Verdict>
-        <Verdict ok={false} note="막연한 글 — 칸이 무엇을 받는지 알 수 없다">
+        <Verdict ok={false} note="막연한 글 — 칸이 무엇을 받는지 알 수 없습니다">
           <W280>
             <F label="결제 수단">
               <SelectTriggerView look={lk} size="large" state="enabled" placeholder="여기를 눌러 펼쳐 보기" />
@@ -618,10 +618,10 @@ const MobileGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="칸 아래 목록 — 폼이 보이고 한 번에 고른다(아래가 모자라면 위로)">
+        <Verdict ok note="칸 아래 목록 — 폼이 보이고 한 번에 고릅니다(아래가 모자라면 위로)">
           <PayPhone payment={<SelectOpenView look={lk} mode="light" size="large" groups={groups} selected={['hyundai-m']} placement="overlay" />} />
         </Verdict>
-        <Verdict ok={false} note="짧은 선택지를 시트로 — 손이 더 가고 폼이 가려진다(시트는 Input Button 의 몫)">
+        <Verdict ok={false} note="짧은 선택지를 시트로 — 손이 더 가고 폼이 가려집니다(시트는 Input Button 의 몫)">
           <PayPhone
             payment={<SelectTriggerView look={lk} mode="light" size="large" state="open" labels={['현대카드 신용카드']} />}
             overlay={
@@ -654,7 +654,7 @@ const PickGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Cell label={<><b className="pk-text">1 · Select Box</b> 그림 · 여러 줄 설명 · 딸린 입력이 필요하다</>}>
+        <Cell label={<><b className="pk-text">1 · Select Box</b> 그림 · 여러 줄 설명 · 딸린 입력이 필요합니다</>}>
           <F label="종료">
             <SelectBoxGroupView
               look={selectBoxLook('desk')}
@@ -669,12 +669,12 @@ const PickGuide: Fig = ({ caption }) => {
             />
           </F>
         </Cell>
-        <Cell label={<><b className="pk-text">2 · Select</b> 5개 이상이거나 한 줄 설명이면 충분하다</>}>
+        <Cell label={<><b className="pk-text">2 · Select</b> 5개 이상이거나 한 줄 설명이면 충분합니다</>}>
           <F label="결제 수단">
             <SelectTriggerView look={lk} size="large" state="enabled" labels={['현대카드 신용카드']} />
           </F>
         </Cell>
-        <Cell label={<><b className="pk-text">3 · Chip</b> 2 ~ 4개, 설명 없이 글이 짧다(모양만 — Chip 차례에 정한다)</>}>
+        <Cell label={<><b className="pk-text">3 · Chip</b> 2 ~ 4개, 설명 없이 글이 짧습니다(모양만)</>}>
           <F label="거래 종류">
             <div className="flex flex-wrap gap-2">
               <ChipShape label="지출" on />
@@ -683,7 +683,7 @@ const PickGuide: Fig = ({ caption }) => {
             </div>
           </F>
         </Cell>
-        <Cell label={<><b className="pk-text">3 · Radio · Checkbox</b> 2 ~ 4개, 설명 없이 글이 길다</>}>
+        <Cell label={<><b className="pk-text">3 · Radio · Checkbox</b> 2 ~ 4개, 설명 없이 글이 깁니다</>}>
           <F label="공개 범위">
             <div className="flex flex-col gap-3">
               <RadioView look={radio} checked="checked" state="enabled" label="나만 볼 수 있게" />
@@ -696,7 +696,7 @@ const PickGuide: Fig = ({ caption }) => {
   );
 };
 
-// 첫 갈래 — 이 자리는 무슨 일을 하나(2026-10-22 고르는 법 1B). 폼 값만 아래 판단 순서(pick-guide)로 간다
+// 첫 갈래 — 이 자리는 무슨 일을 하나. 폼 값만 아래 판단 순서(pick-guide)로 간다
 const FirstGuide: Fig = ({ caption }) => {
   const lk = desk();
   const menu: SelGroup[] = [{ items: [{ value: 'edit', label: '수정' }, { value: 'copy', label: '복사' }, { value: 'delete', label: '삭제' }] }];
@@ -709,16 +709,16 @@ const FirstGuide: Fig = ({ caption }) => {
             <SelectTriggerView look={lk} size="large" state="enabled" labels={['생활비 카드']} />
           </F>
         </Cell>
-        <Cell label={<><b className="pk-text">보이는 내용을 거르거나 다르게 본다</b> 2 ~ 4가지 고정 보기 → Segmented Control(조건을 여럿 걸면 Chip 필터 바)</>}>
+        <Cell label={<><b className="pk-text">보이는 내용을 거르거나 다르게 봅니다</b> 2 ~ 4가지 고정 보기 → Segmented Control(조건을 여럿 걸면 Chip 필터 바)</>}>
           <SegmentedView look={segmentedLook('desk')} live={false} value="week" ariaLabel="기간" items={[{ value: 'today', label: '오늘' }, { value: 'week', label: '이번 주' }, { value: 'all', label: '전체' }, { value: 'done', label: '완료' }]} />
         </Cell>
-        <Cell label={<><b className="pk-text">다른 구역으로 옮긴다</b> Tabs — 1차 Line · 2차 Chip Tabs</>}>
+        <Cell label={<><b className="pk-text">다른 구역으로 옮깁니다</b> Tabs — 1차 Line · 2차 Chip Tabs</>}>
           <LineTabsView look={tabsLook('desk')} live={false} value="asset" ariaLabel="가계부" items={[{ value: 'ledger', label: '가계부' }, { value: 'asset', label: '자산' }, { value: 'stats', label: '통계' }, { value: 'budget', label: '예산' }]} />
         </Cell>
-        <Cell label={<><b className="pk-text">기능 하나를 켜고 끈다</b> 누르는 순간 바뀐다 → Switch(설정 줄은 List 스위치 줄) · 저장해야 반영 → Checkbox</>}>
+        <Cell label={<><b className="pk-text">기능 하나를 켜고 끕니다</b> 누르는 순간 바뀜 → Switch(설정 줄은 List 스위치 줄) · 저장해야 반영 → Checkbox</>}>
           <ListView look={ll} live={false} rows={[{ kind: 'switch', title: '결제 알림', detail: '결제 예정일 하루 전 · 당일', checked: true }]} />
         </Cell>
-        <Cell label={<><b className="pk-text">화면 폭 목록에서 하나를 고르고 바로 바뀐다</b> List 라디오 줄</>}>
+        <Cell label={<><b className="pk-text">화면 폭 목록에서 하나를 고르고 바로 바뀝니다</b> List 라디오 줄</>}>
           <ListView
             look={ll}
             live={false}
@@ -729,7 +729,7 @@ const FirstGuide: Fig = ({ caption }) => {
             ]}
           />
         </Cell>
-        <Cell label={<><b className="pk-text">누르면 동작을 실행한다</b> Menu(1280 이상) · Menu Sheet(1280 미만) — 값을 고르는 데 쓰지 않는다</>}>
+        <Cell label={<><b className="pk-text">누르면 동작을 실행합니다</b> Menu(1280 이상) · Menu Sheet(1280 미만) — 값을 고르는 데 쓰지 않습니다</>}>
           <div className="w-[200px]">
             <SelectListView look={lk} size="large" groups={menu} />
           </div>
@@ -751,7 +751,7 @@ const MenuGuide: Fig = ({ caption }) => {
             <SelectOpenView look={lk} size="large" groups={currency} selected={['KRW']} />
           </F>
         </Cell>
-        <Cell label={<><b className="pk-text">Menu(그 차례에)</b> 더 보기 버튼에서 · 체크 없음 · 누르면 바로 실행</>}>
+        <Cell label={<><b className="pk-text">Menu</b> 더 보기 버튼에서 · 체크 없음 · 누르면 바로 실행</>}>
           <div className="flex flex-col items-end gap-2">
             <div className="flex w-full items-center justify-between">
               <span className="text-[17px] font-bold pk-text">거래 내역</span>
@@ -808,7 +808,15 @@ const ExStates: Fig = () => (
   </Live>
 );
 
+// 개요 카드 — 고른 값이 든 칸 아래로 목록이 열린 모습(라이트)
+const Thumb: Fig = () => (
+  <div style={{ width: 360, zoom: 0.62 }}>
+    <SelectOpenView look={desk()} mode="light" size="large" groups={[PAY_FLAT]} selected={['kb-check']} />
+  </div>
+);
+
 export const selectFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

@@ -148,7 +148,7 @@ const Anatomy: Fig = ({ caption }) => {
           ]}
         />
         <Note>
-          면 {sk().bg.name ?? ''} · 띠는 면과 같은 크기로 왼쪽 밖({s.motion.shimmer.from}%)에서 오른쪽 밖({s.motion.shimmer.to}%)으로 지나간다 — 그림은 지나가는 한 순간이다. 스켈레톤은 보조 기술에 숨기고(aria-hidden), 영역은 aria-busy · 화면의 상태 글 하나가 알린다
+          면 {sk().bg.name ?? ''} · 띠는 면과 같은 크기로 왼쪽 밖({s.motion.shimmer.from}%)에서 오른쪽 밖({s.motion.shimmer.to}%)으로 지나갑니다 — 그림은 지나가는 한 순간입니다. 스켈레톤은 보조 기술에 숨기고(aria-hidden), 영역은 aria-busy · 화면의 상태 글 하나가 알립니다
         </Note>
       </div>
     </Figure>
@@ -262,8 +262,8 @@ const Shimmer: Fig = ({ caption }) => {
     <Panel caption={caption}>
       <div className="flex flex-col items-center gap-6">
         <div className="flex flex-wrap justify-center gap-3">
-          {card('light', false, '라이트 — 띠가 지나간다')}
-          {card('dark', false, '다크 — 흰 띠가 훨씬 옅다')}
+          {card('light', false, '라이트 — 띠가 지나갑니다')}
+          {card('dark', false, '다크 — 흰 띠가 훨씬 옅습니다')}
           {card('light', true, '모션 줄이기 — 띠가 멈추고 면만')}
         </div>
         <div className="flex flex-col items-center gap-2">
@@ -278,7 +278,7 @@ const Shimmer: Fig = ({ caption }) => {
             ))}
           </div>
           <Note>
-            띠는 면과 같은 폭으로 translateX {String(m.from).replace('-', '−')}% → {m.to}% — {m.ms / 1000}초 · {m.easing}, 쉬는 틈 없이 되풀이한다. 같은 화면의 스켈레톤은 한 박자로 지난다
+            띠는 면과 같은 폭으로 translateX {String(m.from).replace('-', '−')}% → {m.to}% — {m.ms / 1000}초 · {m.easing}, 쉬는 틈 없이 되풀이합니다. 같은 화면의 스켈레톤은 한 박자로 지납니다
           </Note>
         </div>
       </div>
@@ -312,7 +312,7 @@ const FrameGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="화면 제목 · 필터 · 섹션 제목 · 버튼 · 탭 바는 처음부터 그리고, 서버에서 올 거래 자리만 스켈레톤" bg={BASEMENT}>
+        <Verdict ok note="화면 제목 · 필터 · 섹션 제목 · 버튼 · 탭 바는 처음부터 그리고, 서버에서 올 거래 자리만 스켈레톤으로 둡니다" bg={BASEMENT}>
           <LdPhone title="가계부" scale={0.6} bg="bg-layer-default" right={<ButtonView look={add} label="추가" state="enabled" />}>
             <div className="flex flex-col pt-1">
               <FilterChips />
@@ -321,7 +321,7 @@ const FrameGuide: Fig = ({ caption }) => {
             </div>
           </LdPhone>
         </Verdict>
-        <Verdict ok={false} note="제목 · 필터 · 버튼까지 회색으로 — 바로 보일 틀을 가리고, 데이터가 오는 순간 틀이 바뀌며 화면이 튄다" bg={BASEMENT}>
+        <Verdict ok={false} note="제목 · 필터 · 버튼까지 회색으로 — 바로 보일 틀을 가리고, 데이터가 오는 순간 틀이 바뀌며 화면이 튑니다" bg={BASEMENT}>
           <LdPhone scale={0.6} bg="bg-layer-default">
             <div className="flex h-12 shrink-0 items-center justify-between px-4">
               <Bone text="t6" width={64} />
@@ -346,16 +346,16 @@ const SurfaceGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note={`흰 면(카드 · 시트 · 대화상자) 위 — 면과 ${on('default', 'light')}:1(다크 ${on('default', 'dark')}:1), 띠가 지나가며 모양이 드러난다`} bg={BASEMENT}>
+        <Verdict ok note={`흰 면(카드 · 시트 · 대화상자) 위 — 면과 ${on('default', 'light')}:1(다크 ${on('default', 'dark')}:1), 띠가 지나가며 모양이 드러납니다`} bg={BASEMENT}>
           <CardBox body="list" style={{ width: 300 }}>
             <TxSkeletonRows n={3} widths={{ ...SK_ROW, title: 110, detail: 70 }} />
           </CardBox>
         </Verdict>
-        <Verdict ok={false} note={`회색 페이지 바탕 위에 바로 — 바탕과 ${on('basement', 'light')}:1, 같은 색이라 사라진다. 카드 면을 먼저 그린다`} bg={BASEMENT}>
+        <Verdict ok={false} note={`회색 페이지 바탕 위에 바로 — 바탕과 ${on('basement', 'light')}:1, 같은 색이라 사라집니다. 카드 면을 먼저 그립니다`} bg={BASEMENT}>
           <div className="relative w-[300px]" style={{ paddingBottom: 4, outline: `1px dashed ${MARK_LINE}`, outlineOffset: -1 }}>
             <TxSkeletonRows n={3} widths={{ ...SK_ROW, title: 110, detail: 70 }} />
             <span className="absolute right-2 top-2 rounded px-1 text-[10px] font-bold leading-4 text-white" style={{ background: MARK_LINE }}>
-              스켈레톤 세 줄이 여기 있다
+              스켈레톤 세 줄이 여기 있습니다
             </span>
           </div>
         </Verdict>
@@ -364,7 +364,7 @@ const SurfaceGuide: Fig = ({ caption }) => {
   );
 };
 
-// 모양은 내용대로 — 실제 줄과 같은 높이 · 글자보다 낮은 막대(옛 스켈레톤 — 모서리 4 · 막대 14 · 12)
+// 모양은 내용대로 — 실제 줄과 같은 높이 · 글자보다 낮은 막대(나쁜 예 — 모서리 4 · 막대 14 · 12)
 const OLD = { r: 4, avatar: 36, title: 14, detail: 12, gap: 8 };
 const ShapeGuide: Fig = ({ caption }) => {
   const d = rowDims();
@@ -398,10 +398,10 @@ const ShapeGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note={`줄 높이 ${d.height} 그대로 — 글 자리는 그 글자의 줄 높이(제목 ${d.titleLh} · 메타 ${d.detailLh}), 앞 원은 full. 데이터가 와도 아무것도 밀리지 않는다`} bg={BASEMENT}>
+        <Verdict ok note={`줄 높이 ${d.height} 그대로 — 글 자리는 그 글자의 줄 높이(제목 ${d.titleLh} · 메타 ${d.detailLh}), 앞 원은 full. 데이터가 와도 아무것도 밀리지 않습니다`} bg={BASEMENT}>
           {pair(<TxSkeletonRows n={1} widths={{ ...SK_ROW, title: 110, detail: 70 }} />, d.height)}
         </Verdict>
-        <Verdict ok={false} note={`글자보다 낮은 막대 — 줄이 ${oldRow} 라 데이터가 오면 줄마다 ${shift} 씩, 네 줄이면 ${shift * 4} 밀린다`} bg={BASEMENT}>
+        <Verdict ok={false} note={`글자보다 낮은 막대 — 줄이 ${oldRow} 라 데이터가 오면 줄마다 ${shift} 씩, 네 줄이면 ${shift * 4} 밀립니다`} bg={BASEMENT}>
           {pair(low, oldRow)}
         </Verdict>
       </Pair>
@@ -420,7 +420,7 @@ const MixGuide: Fig = ({ caption }) => (
           </CardBox>
         </div>
       </Verdict>
-      <Verdict ok={false} note="스켈레톤 위에 원을 얹는다 — 두 가지가 같은 기다림을 겹쳐 말한다" bg={BASEMENT}>
+      <Verdict ok={false} note="스켈레톤 위에 원을 얹습니다 — 두 가지가 같은 기다림을 겹쳐 말합니다" bg={BASEMENT}>
         <div className="relative w-[300px]">
           <CardBox title="최근 거래">
             <TxSkeletonRows n={3} widths={{ ...SK_ROW, title: 110, detail: 70 }} />
@@ -470,13 +470,13 @@ const Timeline: Fig = ({ caption }) => {
       <div className="flex flex-col items-center gap-5">
         <TimelineBar width={560} labels={['틀만', '스켈레톤 · 원', '+ 오래 걸림 글', '실패 + 다시 시도']} />
         <div className="grid grid-cols-1 gap-5 rounded-2xl p-4 sm:grid-cols-[270px_270px]" style={{ background: rc('bg-layer-basement') }}>
-          <Shot strong={`0 ~ ${s(r.showAfter)}`} cap="틀만 — 데이터 자리는 보이지 않게 그려 높이를 지킨다(점선)">
+          <Shot strong={`0 ~ ${s(r.showAfter)}`} cap="틀만 — 데이터 자리는 보이지 않게 그려 높이를 지킵니다(점선)">
             <RecentCard phase="quiet" />
           </Shot>
           <Shot strong={`${s(r.showAfter)} ~`} cap='스켈레톤 — 숨은 상태 글 "불러오는 중…"'>
             <RecentCard phase="waiting" />
           </Shot>
-          <Shot strong={`${s(r.slowAfter)} ~`} cap="안내 글 한 줄 — 한 번 읽힌다">
+          <Shot strong={`${s(r.slowAfter)} ~`} cap="안내 글 한 줄 — 한 번 읽힙니다">
             <RecentCard phase="slow" />
           </Shot>
           <Shot strong={s(r.timeout)} cap="요청 제한 — 실패 + 다시 시도(Result Section)">
@@ -573,7 +573,7 @@ const WhichGuide: Fig = ({ caption }) => {
 const PeriodGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="고른 달 이름은 바로 9월 — 바뀔 숫자 자리만 스켈레톤, 10월 숫자는 지운다" bg={BASEMENT}>
+      <Verdict ok note="고른 달 이름은 바로 9월 — 바뀔 숫자 자리만 스켈레톤, 10월 숫자는 지웁니다" bg={BASEMENT}>
         <LdPhone title="통계" scale={0.6} h={520} tabs={false}>
           <div style={bandStack()}>
             <ScreenBand body="list">
@@ -586,7 +586,7 @@ const PeriodGuide: Fig = ({ caption }) => (
           </div>
         </LdPhone>
       </Verdict>
-      <Verdict ok={false} note="9월 머리 아래 10월 숫자 — 새 값이 올 때까지 돈 숫자가 잘못 읽힌다" bg={BASEMENT}>
+      <Verdict ok={false} note="9월 머리 아래 10월 숫자 — 새 값이 올 때까지 돈 숫자가 잘못 읽힙니다" bg={BASEMENT}>
         <LdPhone title="통계" scale={0.6} h={520} tabs={false}>
           <div style={bandStack()}>
             <ScreenBand body="list">
@@ -610,7 +610,7 @@ const RefreshGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair wide>
-        <Verdict ok note={`당겨서 새로 고침 — 원이 돌고 보던 내용은 그대로(${pull.threshold} 아래로 내려와 머문다)`} bg={BASEMENT}>
+        <Verdict ok note={`당겨서 새로 고침 — 원이 돌고 보던 내용은 그대로입니다(${pull.threshold} 아래로 내려와 머뭅니다)`} bg={BASEMENT}>
           <LdPhone title="홈" scale={0.56} h={560}>
             <div className="relative h-full">
               <div className="absolute inset-x-0 top-0 flex items-center justify-center" style={{ height: pull.indicator }}>
@@ -624,7 +624,7 @@ const RefreshGuide: Fig = ({ caption }) => {
             </div>
           </LdPhone>
         </Verdict>
-        <Verdict ok note="실패해도 내용을 둔 채 스낵바로 가볍게 알린다" bg={BASEMENT}>
+        <Verdict ok note="실패해도 내용을 둔 채 스낵바로 가볍게 알립니다" bg={BASEMENT}>
           <LdPhone title="홈" scale={0.56} h={560}>
             <div className="relative h-full">
               <div style={bandStack()}>
@@ -638,7 +638,7 @@ const RefreshGuide: Fig = ({ caption }) => {
             </div>
           </LdPhone>
         </Verdict>
-        <Verdict ok={false} note="다시 받는다고 스켈레톤으로 돌아간다 — 보던 내용이 사라지고 화면이 깜빡인다" bg={BASEMENT}>
+        <Verdict ok={false} note="다시 받는다고 스켈레톤으로 돌아갑니다 — 보던 내용이 사라지고 화면이 깜빡입니다" bg={BASEMENT}>
           <LdPhone title="홈" scale={0.56} h={560}>
             <div style={bandStack()}>
               <ScreenBand title="최근 거래" body="list">
@@ -671,7 +671,17 @@ const ExShapes: Fig = () => {
 };
 const ExPeriod: Fig = () => <SkeletonPeriodDemo kit={L()} screen={SCREEN()} />;
 
+// 개요 카드 — 라이트 최근 거래 카드 하나(제목은 그리고 거래 줄만 스켈레톤, 띠는 지나가는 한 순간)
+const Thumb: Fig = () => (
+  <div style={{ width: 320, zoom: 0.7 }}>
+    <CardBox mode="light" title="최근 거래">
+      <TxSkeletonRows n={3} mode="light" band={ANATOMY_BAND} />
+    </CardBox>
+  </div>
+);
+
 export const skeletonFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

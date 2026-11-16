@@ -1,20 +1,17 @@
-# Side Panel 의 수치 원본 — 구조는 SEED Side Panel(2026-10-04 사용자 결정, 화면 틀 · 이동 비교 페이지 "따라오는 것" — Sheet → Side Panel).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Side Panel 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 화면 옆(왼쪽 · 오른쪽)에서 미끄러져 나오는 모달 패널. 높이는 화면 전체, 모서리 · 그림자 · 선 없이 딤과 면 색으로 뜬다.
-#   left   768 미만의 주 메뉴 서랍 — Side Navigation 의 항목을 담는다. 지금 쓰는 곳은 HR 폰 하나
-#   right  1280 이상의 보조 작업 패널 — 지금 쓰는 곳이 없다. 쓰게 되면 1280 미만에서는 같은 내용을 Bottom Sheet 로 띄운다
-#          (Responsive Dialog 와 같은 경계 — 새 경계를 두지 않는다)
-# 아래에서 올라오는 것은 Bottom Sheet(bottom-sheet.yaml), 가운데 대화상자는 Dialog(dialog.yaml)다. 위에서 내려오는 패널은 두지 않는다.
-# 열고 닫는 동작(입력 폼은 바깥 누르기 · 끌기로 닫지 않는다 · 닫기와 취소는 하나만)은 Dialog · Bottom Sheet 와 같다 — side-panel.md 의 Behavior.
+# 화면 옆(왼쪽 · 오른쪽)에서 미끄러져 나오는 모달 패널입니다. 높이는 화면 전체, 모서리 · 그림자 · 선 없이 딤과 면 색으로 뜹니다.
+#   left   768 미만의 주 메뉴 서랍 — Side Navigation 의 항목을 담습니다(HR 폰).
+#   right  1280 이상의 보조 작업 패널 — 1280 미만에서는 같은 내용을 Bottom Sheet 로 띄웁니다
+#          (Responsive Dialog 와 같은 경계 — 새 경계를 두지 않습니다)
+# 아래에서 올라오는 것은 Bottom Sheet(bottom-sheet.yaml), 가운데 대화상자는 Dialog(dialog.yaml)입니다. 위에서 내려오는 패널은 두지 않습니다.
+# 열고 닫는 동작(입력 폼은 바깥 누르기 · 끌기로 닫지 않습니다 · 닫기와 취소는 하나만)은 Dialog · Bottom Sheet 와 같습니다 — side-panel.md 의 Behavior.
 #
-# SEED 와 다른 자리(side-panel.md 의 "SEED 와 다른 점")
-#   - 딤: SEED bg.overlay 0.455 → groo overlay-dim 0.50 · 다크 0.65(v102).
-#   - 본문 끝 흐림: SEED 의 늘 켜진 아래 48 → groo Scroll Fog overlayBody(위 20 · 아래 80, 넘칠 수 있는 본문에만 — 2026-10-03).
-#   - 반투명 색을 불투명 짝으로(v102): 머리 아래 선 stroke-neutral-subtle, 닫기 버튼 누름 bg-layer-floating-pressed.
-#   - 모션 줄이기면 150ms 서서히 나타남(v104) — SEED 는 300ms 미끄러짐 그대로.
-#   - 1280 미만의 오른쪽 패널은 Bottom Sheet — SEED Responsive Side Panel 의 경계는 md(768).
-#   - 가로 화면에서 노치가 패널 쪽이면 폭에 안전 영역을 더한다(SEED 문서) — SEED 코드는 폭 안에서 뺀다.
+#   - 딤: overlay-dim 0.50 · 다크 0.65.
+#   - 본문 끝 흐림: Scroll Fog overlayBody(위 20 · 아래 80, 넘칠 수 있는 본문에만).
+#   - 머리 아래 선 stroke-neutral-subtle, 닫기 버튼 누름 bg-layer-floating-pressed — 불투명 색입니다.
+#   - 모션 줄이기면 150ms 서서히 나타납니다.
+#   - 가로 화면에서 노치가 패널 쪽이면 폭에 안전 영역을 더합니다(내용 폭이 줄지 않게).
 #   - z-index: specs/z-index.md 의 L2(딤 z-modal 100 · 패널 z-modal-content 101).
 
 name: SidePanel
@@ -34,8 +31,8 @@ slots:
 
 variants:
   side:
-    left: 왼쪽 — 768 미만의 주 메뉴 서랍(지금 HR 폰)
-    right: 오른쪽 — 1280 이상의 보조 작업(쓰는 곳 없음)
+    left: 왼쪽 — 768 미만의 주 메뉴 서랍(HR 폰)
+    right: 오른쪽 — 1280 이상의 보조 작업
   size:
     small: 480 — 단순한 상세 조회
     medium: 720 — 기본. 두 줄 폼 · 목록과 상세 나란히
@@ -59,15 +56,15 @@ rules:
   - when: {}
     enabled:
       overlay:
-        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "groo 딤(v102) — SEED 0.455 는 들이지 않았다" }
+        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "groo 딤" }
         zIndex: { value: 100, note: "z-modal — specs/z-index.md L2" }
       root:
-        height: { value: 화면 높이 전체, note: "dvh — 방향과 상관없이(SEED)" }
-        maxWidth: { value: 80%, note: "딤이 늘 20% 남는다(SEED 코드). 768 미만이면 크기와 상관없이 화면 폭의 80%" }
-        radius: { value: 0px, note: "평평 — 모서리 · 그림자 · 선 없이 딤과 면 색으로 뜬다(SEED)" }
+        height: { value: 화면 높이 전체, note: "dvh — 방향과 상관없이" }
+        maxWidth: { value: 80%, note: "딤이 늘 20% 남는다. 768 미만이면 크기와 상관없이 화면 폭의 80%" }
+        radius: { value: 0px, note: "평평 — 모서리 · 그림자 · 선 없이 딤과 면 색으로 뜬다" }
         background: $color-bg-layer-floating
         shadow: none
-        paddingBottom: { value: 아래 안전 영역, note: "패널 내용의 맨 아래 — 바닥이 없어도(SEED). 붙은 쪽 안전 영역(가로 노치)은 폭에 더한다" }
+        paddingBottom: { value: 아래 안전 영역, note: "패널 내용의 맨 아래 — 바닥이 없어도. 붙은 쪽 안전 영역(가로 노치)은 폭에 더한다" }
         zIndex: { value: 101, note: "z-modal-content — specs/z-index.md L2" }
       header:
         paddingTop: { value: $spacing-x6, note: "위 안전 영역을 더한다" }
@@ -96,7 +93,7 @@ rules:
         transitionEasing: $motion-ease-easing
       divider:
         height: 1px
-        background: { value: $color-stroke-neutral-subtle, note: "머리 아래 — 본문이 위 끝에서 떨어지면 나타난다(SEED). SEED stroke.neutral-muted 의 불투명 짝" }
+        background: { value: $color-stroke-neutral-subtle, note: "머리 아래 — 본문이 위 끝에서 떨어지면 나타난다. 불투명 색" }
         transitionDuration: $motion-duration-color-transition
         transitionEasing: $motion-ease-easing
       body:
@@ -115,7 +112,7 @@ rules:
         opacity: { value: 1, note: "본문을 위로 스크롤하면 나타난다" }
     pressed:
       closeButton:
-        background: { value: $color-bg-layer-floating-pressed, note: "SEED bg.transparent-pressed 의 떠 있는 표면 짝(v102)" }
+        background: { value: $color-bg-layer-floating-pressed, note: "떠 있는 표면의 누름 색(불투명)" }
         scale: { value: 2px 거리 축소, note: "기준 52 → 0.962 — 모션 줄이기면 하지 않는다" }
     focused:
       focusRing:
@@ -155,7 +152,7 @@ rules:
   - when: { scrollFog: "on" }
     enabled:
       fog:
-        mask: { value: $gradient-fade-mask, note: "Scroll Fog overlayBody(scroll-fog.yaml) — 늘 켜져 있다. SEED Side Panel 의 아래 48 대신" }
+        mask: { value: $gradient-fade-mask, note: "Scroll Fog overlayBody(scroll-fog.yaml) — 늘 켜져 있다" }
         size: { value: 위 20px · 아래 80px, note: "본문 상자의 위 · 아래 끝" }
       body:
         paddingTop: { value: 20px, note: "머리 아래 16 은 그대로 두고 본문 안에 더한다" }
@@ -167,7 +164,7 @@ motion:
     duration: $motion-duration-d6
     easing: $motion-ease-enter-expressive
     properties: [translateX ∓100% → 0]
-    note: "붙은 쪽에서 미끄러져 들어온다(SEED). 모션 줄이기면 150ms 서서히 나타남(v104)"
+    note: "붙은 쪽에서 미끄러져 들어온다. 모션 줄이기면 150ms 서서히 나타남"
   "열림 — 딤":
     duration: $motion-duration-d6
     easing: $motion-ease-enter

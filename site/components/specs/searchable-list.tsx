@@ -250,7 +250,7 @@ const Selected: Fig = ({ caption }) => (
       <WhiteBox>
         <Banks groups={firstGroups(1, 5)} value="신한" />
       </WhiteBox>
-      <Cap w={480}>오른쪽 라디오({SL().radioSize}) — 고른 것과 안 고른 것이 모두 보인다. 고른 줄의 바탕을 칠하지 않는다, 고름은 줄의 aria-selected 가 알린다</Cap>
+      <Cap w={480}>오른쪽 라디오({SL().radioSize}) — 고른 것과 안 고른 것이 모두 보입니다. 고른 줄의 바탕을 칠하지 않고, 고름은 줄의 aria-selected 가 알립니다</Cap>
     </div>
   </Panel>
 );
@@ -263,7 +263,7 @@ const Groups: Fig = ({ caption }) => (
           <Banks value="신한" groups={firstGroups(2, 4)} />
         </SheetPhone>
       </Col>
-      <Cap w={480}>분류는 List Header mediumWeak(14 · 500 · fg-neutral-subtle) — 은행은 시중은행 · 인터넷은행 · 지방은행 · 특수은행 · 저축기관 · 외국계 · 기타 차례. 거르면 줄이 남지 않은 분류는 머리째 숨긴다</Cap>
+      <Cap w={480}>분류는 List Header mediumWeak(14 · 500 · fg-neutral-subtle) — 은행은 시중은행 · 인터넷은행 · 지방은행 · 특수은행 · 저축기관 · 외국계 · 기타 차례입니다. 거르면 줄이 남지 않은 분류는 머리째 숨깁니다</Cap>
     </div>
   </Panel>
 );
@@ -275,13 +275,13 @@ const Placement: Fig = ({ caption }) => {
     <Panel caption={caption}>
       <div className="flex flex-col items-center gap-6">
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <Col strong="검색 시트(sheet)" cap="줄을 누르면 고르고 닫힌다 — &quot;완료&quot; 없음" w={220}>
+          <Col strong="검색 시트(sheet)" cap="줄을 누르면 고르고 닫힙니다 — &quot;완료&quot; 없음" w={220}>
             <SheetPhone scale={0.55} h={720}>
               <Banks value="신한" groups={firstGroups(1, 4)} pressed="우리" />
             </SheetPhone>
           </Col>
           <Arrow label="닫힘" />
-          <Col strong="칸에 들어간다" w={220}>
+          <Col strong="칸에 들어갑니다" w={220}>
             <Phone title="계좌 추가" scale={0.55} h={720} screenW={SCREEN_W}>
               <div style={{ paddingTop: 8, paddingLeft: EDGE, paddingRight: EDGE }}>
                 <TfFieldView look={tf().field} label="은행">
@@ -291,7 +291,7 @@ const Placement: Fig = ({ caption }) => {
             </Phone>
           </Col>
         </div>
-        <Col strong="단계 안(inline)" cap="라디오만 바뀌고 닫거나 넘기지 않는다 — 단계의 버튼(&quot;다음&quot;)이 반영한다" w={320}>
+        <Col strong="단계 안(inline)" cap="라디오만 바뀌고 닫거나 넘기지 않습니다 — 단계의 버튼(&quot;다음&quot;)이 반영합니다" w={320}>
           <Phone title="기관 고르기" scale={0.6} h={760} screenW={SCREEN_W} bottom={<ButtonView look={next} label="다음" fill state="enabled" />}>
             <Banks value="토스뱅크" groups={[firstGroups(2, 3)[1], firstGroups(2, 3)[0]]} />
           </Phone>
@@ -327,7 +327,7 @@ const Keyboard: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex flex-col items-center gap-3">
       <KeyboardDemo look={SL()} set={SETS()[0]} />
-      <Cap w={520}>검색칸에서 ↓ 는 첫 줄 · 다음 줄, ↑ 는 마지막 줄 · 앞 줄(끝에서 멈춘다 · 분류 머리는 건너뛴다). Enter 는 강조한 줄을 고르고, 강조가 없으면 아무것도 하지 않는다. Esc 는 검색어를 지운다. 줄은 Tab 으로 들어가지 않는다</Cap>
+      <Cap w={520}>검색칸에서 ↓ 는 첫 줄 · 다음 줄, ↑ 는 마지막 줄 · 앞 줄(끝에서 멈추고 분류 머리는 건너뜁니다). Enter 는 강조한 줄을 고르고, 강조가 없으면 아무것도 하지 않습니다. Esc 는 검색어를 지웁니다. 줄은 Tab 으로 들어가지 않습니다</Cap>
     </div>
   </Panel>
 );
@@ -361,8 +361,8 @@ const DebounceGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note={`마지막 입력 뒤 ${s.debounce}ms 에 한 번 — 받는 동안 옛 결과를 남긴다`}>{line([end], true)}</Verdict>
-        <Verdict ok={false} note="글자마다 서버 요청 — 6자에 6번(지금 카드 상품 검색)">{line(keys, false)}</Verdict>
+        <Verdict ok note={`마지막 입력 뒤 ${s.debounce}ms 에 한 번 보냅니다 — 받는 동안 이전 결과를 남깁니다`}>{line([end], true)}</Verdict>
+        <Verdict ok={false} note="글자마다 서버 요청 — 6자에 6번">{line(keys, false)}</Verdict>
       </Pair>
     </Panel>
   );
@@ -371,7 +371,7 @@ const DebounceGuide: Fig = ({ caption }) => {
 const StatusGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Wrap gap="gap-4">
-      <Col strong="0건" cap="&quot;'{검색어}'에 대한 검색 결과가 없어요&quot; — role=&quot;status&quot; 로 한 번 알린다" w={300}>
+      <Col strong="0건" cap="&quot;'{검색어}'에 대한 검색 결과가 없어요&quot; — role=&quot;status&quot; 로 한 번 알립니다" w={300}>
         <WhiteBox>
           <Banks query="하나로" groups={bankGroups()} status="empty" />
         </WhiteBox>
@@ -390,7 +390,7 @@ const StatusGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 기관 칩 묶음(나쁜 예 — 지금 Desk 웹 자산 추가) — 32 알약 · 고르면 기관 색 채움
+// 기관 칩 묶음(나쁜 예) — 32 알약 · 고르면 기관 색 채움
 function ChipGroups() {
   const lt = logoTileLook();
   const groups = BANK_GROUPS.slice(0, 2).map((g) => ({ ...g, items: g.items.slice(0, 6) }));
@@ -415,16 +415,16 @@ function ChipGroups() {
     </div>
   );
 }
-// 누르면 바로 더하는 목록 — 라디오 없음(selectionMark off) · 칸에 넣는 고르기 — 라디오(2026-10-29 17-1 Q4 = B)
+// 누르면 바로 더하는 목록 — 라디오 없음(selectionMark off) · 칸에 넣는 고르기 — 라디오
 const ActionGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Wrap>
-      <Col strong="종목 추가 — 라디오 없음" cap={`누르면 그 종목을 더하고 닫는다 — 지금 값이 없어 동그라미가 채워질 일이 없다. 줄은 최소 ${SL().option.minHeight} · 좌우 ${SL().option.padX} 그대로`} w={SCREEN_W}>
+      <Col strong="종목 추가 — 라디오 없음" cap={`누르면 그 종목을 더하고 닫습니다 — 지금 값이 없어 동그라미가 채워질 일이 없습니다. 줄은 최소 ${SL().option.minHeight} · 좌우 ${SL().option.padX} 그대로입니다`} w={SCREEN_W}>
         <SheetBox title="종목 추가">
           <Stocks query="하늘" pressed="하늘바이오" />
         </SheetBox>
       </Col>
-      <Col strong="은행 고르기 — 라디오" cap="고른 값이 칸에 들어간다 — 지금 값이 보여야 해서 오른쪽 라디오" w={SCREEN_W}>
+      <Col strong="은행 고르기 — 라디오" cap="고른 값이 칸에 들어갑니다 — 지금 값이 보여야 해서 오른쪽 라디오를 둡니다" w={SCREEN_W}>
         <SheetBox title="은행 선택">
           <Banks value="신한" groups={firstGroups(1, 4)} />
         </SheetBox>
@@ -468,7 +468,17 @@ const ExCard: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 개요 카드 — 라이트 은행 고르기 하나(검색칸 · 분류 머리 · 로고 타일 줄 · 지금 값 라디오 · 강조)
+const Thumb: Fig = () => (
+  <div style={{ width: SCREEN_W, zoom: 0.64 }}>
+    <WhiteBox mode="light">
+      <Banks mode="light" value="신한" groups={firstGroups(1, 3)} highlight="KB국민" />
+    </WhiteBox>
+  </div>
+);
+
 export const searchableListFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

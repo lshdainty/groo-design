@@ -1,17 +1,14 @@
-# Scroll Area 의 수치 원본 — 기본 스크롤 + 전역 스크롤바 한 벌 · 스크롤 상자 규칙(2026-10-10 사용자 결정, 펼치고 접기 · 나누기
-# 비교 페이지 14A · "따라오는 것"). 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Scroll Area 의 수치 원본 — 기본 스크롤 + 전역 스크롤바 한 벌 · 스크롤 상자 규칙.
+# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
 # 스크롤은 브라우저 기본(overflow)이고 스크롤바 모양만 전역 한 벌이다 — 6px 알약 · thumb stroke-neutral-solid · track 투명.
 # Firefox 는 scrollbar-width: thin + scrollbar-color 를 @supports not selector(::-webkit-scrollbar) 안에 둔다 —
-# 크로미움은 scrollbar-width · scrollbar-color 가 걸리면 ::-webkit-scrollbar 를 쓰지 않는다(크로미움 140 에서 잼 — 6px 이
-# thin 과 함께 10px, color 만이면 15px 이 된다). Radix ScrollArea(겹쳐 뜨는 막대)는 걷는다.
+# 크로미움은 scrollbar-width · scrollbar-color 가 걸리면 ::-webkit-scrollbar 를 쓰지 않는다(6px 이
+# thin 과 함께 10px, color 만이면 15px 이 된다). Radix ScrollArea(겹쳐 뜨는 막대)는 쓰지 않는다.
 # 세로 스크롤바는 숨기지 않는다 — 가로 줄만 숨긴다(Scroll Fog row). 안에 초점 가는 것이 없는 스크롤 상자는 tabindex="0" +
 # role="region" + 이름, 시트 · 대화상자 · 팝오버 안 상자는 overscroll-behavior: contain.
 #
 # 축 — context(놓인 자리: 화면 · 시트 같은 떠 있는 표면 · 가로 줄) · focusable(안에 초점 가는 것이 있나).
-#
-# SEED 와 다른 자리(scroll-area.md 의 "SEED 와 다른 점")
-#   - SEED 에는 Scroll Area · 스크롤바 규칙이 없다(끝 흐림 Scroll Fog 만) — 값은 모두 groo 가 정했다.
 
 name: ScrollArea
 
@@ -47,14 +44,14 @@ rules:
       box:
         overflow: { value: auto, note: "넘치는 방향만(overflow-y · overflow-x) — 스크롤은 브라우저 그대로(휠 · 키보드 · 끌기 · 관성). 가로채지 않는다" }
       scrollbar:
-        width: { value: 6px, note: "세로 스크롤바 — ::-webkit-scrollbar 전역 한 벌(지금 Desk 웹과 같다)" }
+        width: { value: 6px, note: "세로 스크롤바 — ::-webkit-scrollbar 전역 한 벌" }
         height: { value: 6px, note: "가로 스크롤바" }
         display: { value: 늘 보임, note: "넘치면 보인다 — 맥 · 폰의 겹침 스크롤바는 OS 설정대로. 세로 스크롤바는 숨기지 않는다 — 부품이 스크롤을 제 모양으로 쓰는 자리(Wheel Picker 의 휠 · Date Picker 의 이어지는 달)만 그 스펙대로 숨긴다" }
       thumb:
-        background: { value: $color-stroke-neutral-solid, note: "흰 면 4.18 · 바닥 3.87 · 떠 있는 표면 4.18 / 다크 4.13 · 4.68 · 3.58(≥ 3) — 지금 Desk 웹 #767C8B 와 같다" }
+        background: { value: $color-stroke-neutral-solid, note: "흰 면 4.18 · 바닥 3.87 · 떠 있는 표면 4.18 / 다크 4.13 · 4.68 · 3.58(≥ 3)" }
         radius: { value: $radius-full, note: "알약" }
       track:
-        background: { value: transparent, note: "바탕을 칠하지 않는다 — 지금 HR 의 회색 track 을 걷는다" }
+        background: { value: transparent, note: "바탕을 칠하지 않는다 — 회색 track 을 두지 않는다" }
       firefox:
         scrollbarWidth: { value: thin, note: "@supports not selector(::-webkit-scrollbar) 안에서만 — 밖에 두면 크로미움이 webkit 6px 을 버리고 10 · 15px 로 그린다" }
         thumbColor: { value: $color-stroke-neutral-solid, note: "scrollbar-color 의 첫 값" }
@@ -64,7 +61,7 @@ rules:
   - when: { context: overlay }
     enabled:
       box:
-        overscrollBehavior: { value: contain, note: "끝에 닿아도 뒤 화면이 따라 스크롤되지 않게 — 시트 · 대화상자 · 팝오버의 본문과 그 안 상자(지금 웹 1곳 · HR 0)" }
+        overscrollBehavior: { value: contain, note: "끝에 닿아도 뒤 화면이 따라 스크롤되지 않게 — 시트 · 대화상자 · 팝오버의 본문과 그 안 상자" }
   - when: { context: row }
     enabled:
       scrollbar:
