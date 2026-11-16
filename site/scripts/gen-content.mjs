@@ -146,13 +146,13 @@ function siteLinks(body) {
     .replace(/\]\((?:\.\/)?(?:specs\/components\/|components\/)?([a-z0-9-]+)\.md(#[^)\s]*)?\)/g, (_, name, frag) => component(name, frag));
 }
 
-function write(relPath, { title, description, source }, body) {
+function write(relPath, { title, description, source, full }, body) {
   body = siteLinks(body);
   const out = join(DOCS, relPath);
   const handMdx = out.replace(/\.mdx?$/, '.mdx');
   if (existsSync(handMdx) && !isGeneratedMdx(handMdx)) return; // 손으로 쓴 페이지가 이긴다
   mkdirSync(dirname(out), { recursive: true });
-  const fm = stringifyYaml({ title, description, source }, { lineWidth: 0 }).trim();
+  const fm = stringifyYaml({ title, description, source, ...(full ? { full } : {}) }, { lineWidth: 0 }).trim();
   const note = relPath.endsWith('.mdx')
     ? `${GEN_MARK} — ${source} 에서 생성. 이 파일을 고치지 말고 원본을 고친다 */}`
     : `<!-- ${source} 에서 생성 — 이 파일을 고치지 말고 원본을 고친다 -->`;
@@ -456,6 +456,20 @@ for (const name of readdirSync(specDir).filter((n) => n.endsWith('.md')).sort())
   // 그림 자리가 있으면 .mdx — 그림은 site/components/specs/<이름>.tsx 가 그린다
   if (body.split('\n').some((l) => FIGURE.test(l))) write(`components/${name.replace(/\.md$/, '.mdx')}`, { ...spec, source }, toMdx(body, source));
   else write(`components/${name}`, { ...spec, source }, body);
+}
+
+// 컴포넌트 개요 — 모든 컴포넌트를 대표 그림 카드로 한 페이지에 모은다(SEED Components 개요 모양)
+{
+  const items = readdirSync(specDir)
+    .filter((n) => n.endsWith('.md'))
+    .sort()
+    .map((n) => ({ name: n.replace(/\.md$/, ''), title: splitSpec(read(`specs/components/${n}`)).title }))
+    .sort((a, b) => a.title.localeCompare(b.title, 'en'));
+  write(
+    'components/overview.mdx',
+    { title: 'Overview', description: '모든 컴포넌트를 한눈에 봅니다.', source: 'specs/components', full: true },
+    `<ComponentGallery items={${JSON.stringify(items)}} />`,
+  );
 }
 
 console.log(`gen-content: ${generated.length} pages`);

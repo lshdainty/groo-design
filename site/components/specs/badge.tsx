@@ -49,6 +49,17 @@ const STRENGTH: BadgeVariant[] = ['weak', 'outline', 'solid'];
 
 // ── Overview ──────────────────────────────────────────────
 // 라이트 · 다크 — 현대카드 신용카드 상세(머리 large 둘 · 이번 달 거래의 예정 · 환불) · 캘린더 공유(권한 outline + 앞 아이콘)
+// 개요 카드 — 세 굵기(옅음 · 테두리 · 채움)
+const Thumb: Fig = () => (
+  <div className="flex flex-col items-center gap-3">
+    {STRENGTH.map((v, i) => (
+      <BadgeView key={v} look={bl()} mode="light" variant={v} tone={(['neutral', 'brand', 'positive'] as BadgeTone[])[i]} size="large">
+        배지 라벨
+      </BadgeView>
+    ))}
+  </div>
+);
+
 const Hero: Fig = ({ caption }) => (
   <Figure caption={caption}>
     <div className="flex flex-col gap-4">
@@ -511,6 +522,7 @@ const ExOutline: Fig = ({ caption }) => (
 );
 
 export const badgeFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,
