@@ -1,20 +1,16 @@
-# Menu Sheet 의 수치 원본 — 구조는 SEED Swipeable Menu Sheet(2026-10-02 사용자 결정, 비교 페이지 1 · 3).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Menu Sheet 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 화면 아래에서 올라오는 동작 목록 — 1280 미만에서 Menu(menu.yaml) 대신 뜬다(같은 동작 · 같은 순서). 들어간 화면
-# 머리의 ⋮ 가 연다 — 목록 줄에는 ⋮ 를 두지 않고, 줄 스와이프의 대신 길은 줄 누르기 → 들어간 화면이다(2026-10-25). 딤 · 끌어내리기 · 안전 영역 · 모션은
-# Bottom Sheet(bottom-sheet.yaml)와 같다 — 다른 것은 손잡이가 늘 있고 위 닫기 버튼이 없다는 것.
+# 화면 아래에서 올라오는 동작 목록입니다 — 1280 미만에서 Menu(menu.yaml) 대신 뜹니다(같은 동작 · 같은 순서). 들어간 화면
+# 머리의 ⋮ 가 엽니다 — 목록 줄에는 ⋮ 를 두지 않고, 줄 스와이프의 대신 길은 줄 누르기 → 들어간 화면입니다. 딤 · 끌어내리기 · 안전 영역 · 모션은
+# Bottom Sheet(bottom-sheet.yaml)와 같고, 다른 것은 손잡이가 늘 있고 위 닫기 버튼이 없다는 것입니다.
 #
-# SEED 와 다른 자리(menu-sheet.md 의 "SEED 와 다른 점")
-#   - 좌우 여백: SEED 16 → groo 화면 여백 spacing-global-gutter 24(Bottom Sheet 와 같다).
-#   - 딤: groo overlay-dim 0.50 · 다크 0.65(v102 — SEED 0.455).
-#   - 줄 사이 선: 묶음 바탕(bg-neutral-weak) 위에서 보이는 불투명한 stroke-neutral-weak(SEED stroke.neutral-muted 는
-#     투명도가 있다 — 다크에서 stroke-neutral-subtle 은 묶음 바탕과 같은 색이라 선이 사라진다).
-#   - 줄 누름 · 호버는 불투명한 bg-neutral-weak-pressed(SEED 와 같은 역할).
-#   - 막힌 줄: SEED 는 Figma 에만 있고 코드에 없다 — Menu 와 같은 규칙(전용 색 · 누르지 못함)으로 채운다.
-#     1280 에서 Menu ↔ Menu Sheet 가 바뀌어도 같은 줄이 막혀 있어야 해서다.
-#   - 보조 기술용 닫기: SEED 는 안 보이는 채로 Tab 이 선다 — groo 는 키보드 초점이 오면 보인다(기초의 "초점은 늘 보인다").
-#   - z-index: specs/z-index.md 의 L2(딤 z-modal 100 · 시트 z-modal-content 101).
+#   - 좌우 여백은 화면 여백 spacing-global-gutter 24 입니다(Bottom Sheet 와 같습니다).
+#   - 줄 사이 선은 묶음 바탕(bg-neutral-weak) 위에서 보이는 불투명한 stroke-neutral-weak 입니다 — 다크에서 stroke-neutral-subtle 은
+#     묶음 바탕과 같은 색이라 선이 사라집니다.
+#   - 줄 누름 · 호버는 불투명한 bg-neutral-weak-pressed 입니다.
+#   - 막힌 줄은 Menu 와 같은 규칙(전용 색 · 누르지 못함)입니다 — 1280 에서 Menu ↔ Menu Sheet 가 바뀌어도 같은 줄이 막혀 있어야 하기 때문입니다.
+#   - 보조 기술용 닫기는 키보드 초점이 오면 보입니다(기초의 "초점은 늘 보인다").
+#   - z-index 는 specs/z-index.md 의 L2(딤 z-modal 100 · 시트 z-modal-content 101)입니다.
 
 name: MenuSheet
 
@@ -58,7 +54,7 @@ rules:
   - when: {}
     enabled:
       overlay:
-        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "Bottom Sheet 와 같은 groo 딤(v102)" }
+        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "Bottom Sheet 와 같은 딤" }
         zIndex: { value: 100, note: "z-modal — specs/z-index.md L2. 시트는 z-modal-content 101" }
       root:
         maxWidth: { value: 480px, note: "그보다 좁은 화면은 화면 폭 전체, 넓으면 가운데" }
@@ -66,9 +62,9 @@ rules:
         background: $color-bg-layer-floating
         shadow: { value: none, note: "그림자 없이 딤과 표면 색으로 뜬다" }
         paddingTop: { value: $spacing-x6, note: "손잡이 자리" }
-        paddingX: { value: $spacing-global-gutter, note: "SEED 16 → 화면 여백 24" }
+        paddingX: { value: $spacing-global-gutter, note: "화면 여백 24" }
         paddingBottom: { value: $spacing-x4, note: "그 아래 안전 영역(safe-area-inset-bottom)" }
-        maxHeight: { value: 화면 높이의 90%, note: "스크롤이 생기지 않게 묶음 · 줄 수를 줄인다(SEED) — 넘치면 목록만 스크롤" }
+        maxHeight: { value: 화면 높이의 90%, note: "스크롤이 생기지 않게 묶음 · 줄 수를 줄인다 — 넘치면 목록만 스크롤" }
         zIndex: { value: 101, note: "z-modal-content — specs/z-index.md L2" }
       handle:
         width: 36px
@@ -105,7 +101,7 @@ rules:
         size: { value: 22px, note: "lucide" }
         color: $color-fg-neutral
       itemLabel:
-        typography: { value: $text-t5, note: "단어 단위 줄바꿈(v114)" }
+        typography: { value: $text-t5, note: "단어 단위 줄바꿈" }
         fontWeight: 400
         foreground: $color-fg-neutral
       itemDescription:
@@ -137,7 +133,7 @@ rules:
         background: $color-bg-neutral-weak-pressed
       item:
         background: $color-bg-neutral-weak-pressed
-        scale: { value: 콘텐츠 2px 거리 축소, note: "아이콘 · 글만 준다(SEED scaleScope: content) — 바탕은 그대로. 모션 줄이기면 하지 않는다" }
+        scale: { value: 콘텐츠 2px 거리 축소, note: "아이콘 · 글만 준다 — 바탕은 그대로. 모션 줄이기면 하지 않는다" }
         scaleDuration: $motion-duration-pressed-scale
         scaleEasing: $motion-ease-pressed-scale
       itemDescription:
@@ -189,7 +185,7 @@ motion:
     duration: $motion-duration-d6
     easing: $motion-ease-enter-expressive
     properties: [translateY 100% → 0]
-    note: "Bottom Sheet 와 같다 — 모션 줄이기면 150ms 서서히 나타남(v104)"
+    note: "Bottom Sheet 와 같다 — 모션 줄이기면 150ms 서서히 나타남"
   "열림 — 딤":
     duration: $motion-duration-d6
     easing: $motion-ease-enter

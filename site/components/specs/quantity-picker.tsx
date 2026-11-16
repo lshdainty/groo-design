@@ -143,7 +143,7 @@ const Hero: Fig = ({ caption }) => (
             <Fit w={PHONE + 16}>
               <PolicyPhone mode={mode} />
             </Fit>
-            <Cap strong={`${modeKo(mode)} · 390`}>시트 — large {QL().sizes.large.h}, 칸 폭을 채운다(fill)</Cap>
+            <Cap strong={`${modeKo(mode)} · 390`}>시트 — large {QL().sizes.large.h}, 칸 폭을 채웁니다(fill)</Cap>
           </div>
         </div>
       ))}
@@ -213,7 +213,7 @@ const Anatomy: Fig = ({ caption }) => {
             ['ⓔ', 'Increment'],
           ]}
         />
-        <span className="text-center text-[12px] pk-muted">{k}배로 그렸다 — medium · "3회". 값 칸(분홍)은 누르지 않는 자리, 누르는 자리는 두 버튼뿐</span>
+        <span className="text-center text-[12px] pk-muted">{k}배로 그렸습니다 — medium · "3회". 값 칸(분홍)은 누르지 않는 자리이고, 누르는 자리는 두 버튼뿐입니다.</span>
       </div>
     </Panel>
   );
@@ -294,13 +294,13 @@ const Layout: Fig = ({ caption }) => {
               <QpView look={l} size="large" value={99} min={1} max={99} unit="회" frozen ariaLabel="최대 부여 횟수" />
             </div>
           </Board>
-          <Cap strong="hug(기본)">값 칸은 가장 긴 값 "99회" 의 폭 — 3 이어도 99 여도 상자 폭이 같다</Cap>
+          <Cap strong="hug(기본)">값 칸은 가장 긴 값 "99회" 의 폭 — 3 이어도 99 여도 상자 폭이 같습니다</Cap>
         </div>
         <div className="flex flex-col items-center gap-2" style={{ width: '100%', maxWidth: w + 40 }}>
           <Board style={{ width: '100%' }}>
             <QpField look={l} field={tf.field} preset={QP_PRESETS.interval} size="large" layout="fill" frozen />
           </Board>
-          <Cap strong="fill">폰 폼의 칸 폭을 채운다 — 늘어나는 것은 값 칸뿐, 두 버튼은 정사각</Cap>
+          <Cap strong="fill">폰 폼의 칸 폭을 채웁니다 — 늘어나는 것은 값 칸뿐, 두 버튼은 정사각</Cap>
         </div>
       </Row>
     </Panel>
@@ -314,9 +314,9 @@ const Edge: Fig = ({ caption }) => {
     <Panel caption={caption}>
       <div className="grid gap-4 sm:grid-cols-3">
         {[
-          { v: 0, st: { decrement: 'focused' as const }, strong: '최소 0', cap: '줄이기 막힘 — aria-disabled 라 초점(링)이 남는다' },
-          { v: 2, st: {}, strong: '범위 안', cap: '두 버튼 모두 누를 수 있다' },
-          { v: 3, st: {}, strong: '최대 3', cap: '늘리기 막힘 — 올려도 바탕이 생기지 않는다' },
+          { v: 0, st: { decrement: 'focused' as const }, strong: '최소 0', cap: '줄이기 막힘 — aria-disabled 라 초점(링)이 남습니다' },
+          { v: 2, st: {}, strong: '범위 안', cap: '두 버튼 모두 누를 수 있습니다' },
+          { v: 3, st: {}, strong: '최대 3', cap: '늘리기 막힘 — 올려도 바탕이 생기지 않습니다' },
         ].map((x) => (
           <div key={x.v} className="flex flex-col items-center gap-2">
             <Board style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
@@ -337,7 +337,7 @@ const Removable: Fig = ({ caption }) => {
     <Panel caption={caption}>
       <div className="grid gap-4 sm:grid-cols-2">
         {[
-          { v: 2, strong: '수량 2개', cap: '줄이기 "줄이기" — 한 단계 줄인다' },
+          { v: 2, strong: '수량 2개', cap: '줄이기 "줄이기" — 한 단계 줄입니다' },
           { v: 1, strong: '수량 1개(최소)', cap: '줄이기 자리가 휴지통 — 이름 "점심 도시락 지우기", 누르면 onRemove(값은 그대로)' },
         ].map((x) => (
           <div key={x.v} className="flex flex-col items-center gap-2">
@@ -388,7 +388,7 @@ const States: Fig = ({ caption }) => {
           ))}
         </div>
       </div>
-      <Cap strong={modeKo(mode)}>상태는 누른 그 버튼에만 — 오류는 상자 테두리 안쪽 {l.root.invalidW}px, 막힘은 전용 색(흐리게 하지 않는다)</Cap>
+      <Cap strong={modeKo(mode)}>상태는 누른 그 버튼에만 — 오류는 상자 테두리 안쪽 {l.root.invalidW}px, 막힘은 전용 색(흐리게 하지 않습니다)</Cap>
     </div>
   );
   return (
@@ -421,7 +421,7 @@ const WhenGuide: Fig = ({ caption }) => {
               <TfInputView look={tf.input} size="large" state="enabled" prefix="총" value="12" suffix="회" />
             </TfFieldView>
           </Board>
-          <Cap strong="Input 숫자 칸">반복 거래 "총 12회" — 흔한 값 12 · 24 · 36 이 멀다</Cap>
+          <Cap strong="Input 숫자 칸">반복 거래 "총 12회" — 흔한 값 12 · 24 · 36 이 멉니다</Cap>
         </div>
         <div className="flex flex-col items-center gap-2">
           <Board style={{ width: '100%' }}>
@@ -454,7 +454,7 @@ const StepsGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full flex-col gap-4 md:flex-row">
-        <Verdict ok note="흔한 값이 열 단계보다 먼 자리는 숫자 칸 — 12 를 지우고 3 · 6 두 글자">
+        <Verdict ok note="흔한 값이 열 단계보다 먼 자리는 숫자 칸을 둡니다 — 12 를 지우고 3 · 6 두 글자면 됩니다">
           <div className="flex w-full max-w-[300px] flex-col items-center gap-3">
             <TfFieldView look={tf.field} label="반복 횟수">
               <TfInputView look={tf.input} size="large" state="focused" prefix="총" value="36" suffix="회" />
@@ -464,7 +464,7 @@ const StepsGuide: Fig = ({ caption }) => {
             </span>
           </div>
         </Verdict>
-        <Verdict ok={false} note="Quantity Picker 로 12 → 36 — + 를 스물네 번. 값 칸은 치지 못하고 누르고 있어도 오르지 않는다">
+        <Verdict ok={false} note="Quantity Picker 로 12 → 36 — + 를 스물네 번 눌러야 합니다. 값 칸은 치지 못하고 누르고 있어도 오르지 않습니다">
           <div className="flex w-full max-w-[300px] flex-col items-center gap-3">
             <QpView look={l} size="large" value={36} min={1} max={999} unit="회" placeholder="999회" frozen states={{ increment: 'pressed' }} ariaLabel="반복 횟수" />
             <Presses n={24} />
@@ -502,10 +502,10 @@ const SizeGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full flex-col gap-4 md:flex-row">
-        <Verdict ok note={`옆 칸과 같은 large ${l.sizes.large.h} — 한 줄의 아래 끝이 맞는다`}>
+        <Verdict ok note={`옆 칸과 같은 large ${l.sizes.large.h} — 한 줄의 아래 끝이 맞습니다`}>
           <Fit w={w}>{row(l, false)}</Fit>
         </Verdict>
-        <Verdict ok={false} note={`버튼 줄 높이(${bh})에 맞춘 컨트롤 — 옆 칸과 ${l.sizes.large.h - bh} 어긋난다(분홍 점선)`}>
+        <Verdict ok={false} note={`버튼 줄 높이(${bh})에 맞춘 컨트롤 — 옆 칸과 ${l.sizes.large.h - bh} 어긋납니다(분홍 점선)`}>
           <Fit w={w}>{row(wrong, true)}</Fit>
         </Verdict>
       </div>
@@ -524,7 +524,7 @@ const RangeGuide: Fig = ({ caption }) => {
           <Board style={{ width: '100%' }}>
             <QpField look={l} field={tf.field} preset={{ ...base, description: '고를 수 있는 승인자는 3명이에요.' }} size="large" frozen states={{ increment: 'focused' }} />
           </Board>
-          <Cap strong="승인자 3명 — 0 ~ 3">최대에서 늘리기 막힘 — 위 끝을 데이터로 걸어 범위 밖 값이 들어오지 않는다</Cap>
+          <Cap strong="승인자 3명 — 0 ~ 3">최대에서 늘리기 막힘 — 위 끝을 데이터로 걸어 범위 밖 값이 들어오지 않습니다</Cap>
         </div>
         <div className="flex flex-col items-center gap-2">
           <Board style={{ width: '100%' }}>
@@ -542,7 +542,17 @@ const ExBasic: Fig = () => <ExQpBasicDemo look={QL()} field={TF().field} />;
 const ExTable: Fig = () => <ExQpTableDemo look={QL()} saveLook={buttonLook({ variant: 'neutralSolid', size: 'small' }, 'hr')} />;
 const ExServer: Fig = () => <ExQpServerDemo look={QL('desk')} />;
 
+// 개요 카드 — 흰 판 위 칸 하나(승인 필요 횟수 · large 52 · 설명). 그린 크기 약 240 × 150(판 안쪽 20) × 1.1 = 약 264 × 165
+const Thumb: Fig = () => (
+  <div style={{ width: 240, zoom: 1.1 }}>
+    <Board mode="light">
+      <QpField look={QL()} field={TF().field} mode="light" preset={QP_PRESETS.approvals} size="large" frozen />
+    </Board>
+  </div>
+);
+
 export const quantityPickerFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

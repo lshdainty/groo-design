@@ -191,12 +191,12 @@ const Ends: Fig = ({ caption }) => {
             <Band style={{ left: 0, top: c + 4, width: c, height: 4 }} label={`빈 칸 ${c}`} tag="below" />
           </div>
           <span className="pt-4">
-            <Cap>첫 쪽 — 이전 자리를 비운다(막힌 화살표를 그리지 않는다)</Cap>
+            <Cap>첫 쪽 — 이전 자리를 비웁니다(막힌 화살표를 그리지 않습니다)</Cap>
           </span>
         </div>
         <div className="flex flex-col items-center gap-2">
           <Row page={12} total={12} states={{ '12': 'focused' }} zone={{ empty: markLine }} />
-          <Cap>마지막 쪽 — 키보드로 &ldquo;다음&rdquo; 을 눌러 닿으면 그 자리가 빈 칸이 되어 초점을 지금 쪽(12)으로</Cap>
+          <Cap>마지막 쪽 — 키보드로 &ldquo;다음&rdquo; 을 눌러 닿으면 그 자리가 빈 칸이 되어 초점을 지금 쪽(12)으로 옮깁니다</Cap>
         </div>
       </div>
     </Figure>
@@ -212,7 +212,7 @@ const HitArea: Fig = ({ caption }) => {
           <Row page={5} total={12} showHit />
         </div>
         <Cap w={460}>
-          칸 {C.size} × {C.size} — 누르는 영역은 위아래만 {C.touchH}(보이지 않는 여백 {(C.touchH - C.size) / 2} 씩), 옆은 칸 폭 {C.size} 그대로. v106 &ldquo;누르는 영역 44&rdquo; 의 예외(AA ✓ · AAA ⚠)
+          칸 {C.size} × {C.size} — 누르는 영역은 위아래만 {C.touchH}(보이지 않는 여백 {(C.touchH - C.size) / 2} 씩), 옆은 칸 폭 {C.size} 그대로입니다. &ldquo;누르는 영역 44&rdquo; 의 예외입니다(AA ✓ · AAA ⚠)
         </Cap>
       </div>
     </Figure>
@@ -282,7 +282,7 @@ const RoleGuide: Fig = ({ caption }) => {
           </Verdict>
         </Pair>
         <Pair>
-          <Verdict ok note="폰의 긴 목록 — 쪽을 나누지 않고 끝없이 불러온다">
+          <Verdict ok note="폰의 긴 목록 — 쪽을 나누지 않고 끝없이 불러옵니다">
             <NPhone scale={0.42} h={600} bar={<Bar title="카드 혜택" />}>
               <div style={{ marginTop: -140 }}>
                 <BenefitRows n={8} />
@@ -350,7 +350,7 @@ const ChangeGuide: Fig = ({ caption }) => (
               </div>
             </Shell>
           </Desktop>
-          <Cap>2쪽 — 목록의 위 끝이 화면 위에, 초점은 누른 칸(›)에 남는다</Cap>
+          <Cap>2쪽 — 목록의 위 끝이 화면 위에 오고, 초점은 누른 칸(›)에 남습니다</Cap>
         </div>
       </div>
       <Reading tone="ok">2페이지, 전체 12페이지</Reading>
@@ -374,7 +374,7 @@ const InfiniteGuide: Fig = ({ caption }) => {
   return (
     <Figure caption={caption}>
       <div className="flex items-start gap-4">
-        {end('loading', `받는 중 — 원 ${list.circle}, ${list.showAfter / 1000}초가 지나야 보인다`)}
+        {end('loading', `받는 중 — 원 ${list.circle}, ${list.showAfter / 1000}초가 지나야 보입니다`)}
         {end('error', `못 불러옴 — 받은 줄은 그대로 + ${list.texts.retry}`)}
         {end('end', '끝 — 목록마다 맞춘 끝 글')}
       </div>
@@ -403,7 +403,15 @@ const ExInfinite: Fig = ({ caption }) => {
   );
 };
 
+// 개요 카드 — 라이트 넘김 줄 한 줄(5 / 12쪽, 9칸). 그린 크기 360 × 40 → zoom 0.75 로 270 × 30
+const Thumb: Fig = () => (
+  <div style={{ width: G().slots.regular * G().cell.size, zoom: 0.75 }}>
+    <Row mode="light" page={5} total={12} />
+  </div>
+);
+
 export const paginationFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,
