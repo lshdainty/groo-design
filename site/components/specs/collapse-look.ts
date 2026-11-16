@@ -98,7 +98,7 @@ function triggerOf(F: string, name: 'accordion' | 'collapsible', brand: Brand, k
   same(k.str(b['title.lineClamp'], 'title.lineClamp'), 'none', 'title.lineClamp — 그림은 제목을 자르지 않는다');
   same(k.str(b['description.lineClamp'], 'description.lineClamp'), 'none', 'description.lineClamp');
   same(k.str(b['background.background'], 'background.background'), 'transparent', 'background.background(기본)');
-  same(k.str(hov['background.background'], 'hovered background.background'), k.str(pr['background.background'], 'pressed background.background'), '호버 · 누름 바탕(같은 색 — v106)');
+  same(k.str(hov['background.background'], 'hovered background.background'), k.str(pr['background.background'], 'pressed background.background'), '호버 · 누름 바탕(같은 색)');
   same(k.len(hov['background.insetX'], 'hovered background.insetX'), k.len(pr['background.insetX'], 'pressed background.insetX'), '호버 · 누름 바탕 들임');
   same(k.str(b['chevron.rotate'], 'chevron.rotate'), '0deg', 'chevron.rotate(접힘)');
   const heading = /^h([2-6])$/.exec(k.str(b['heading.level'], 'heading.level'));
@@ -138,7 +138,7 @@ function triggerOf(F: string, name: 'accordion' | 'collapsible', brand: Brand, k
   // 트리거 높이 = 위아래 + 제목 줄(+ 사이 + 설명 줄)
   same(look.minH, look.padY * 2 + parseFloat(look.title.lineHeight), 'trigger.minHeight = 위아래 + 제목 줄');
   same(look.minHDesc, look.padY * 2 + parseFloat(look.title.lineHeight) + look.body.gap + parseFloat(look.description.lineHeight), 'shown trigger.minHeight = 위아래 + 제목 + 사이 + 설명');
-  // 꺾쇠 회전 · 높이는 같은 시간(사용자 결정 3A)
+  // 꺾쇠 회전 · 높이는 같은 시간
   const ch = k.blockMotion(name, '꺾쇠 — 회전');
   same(ch.duration, look.motion.height.duration, '꺾쇠 회전 · 높이 펼침 시간');
   same(look.chevron.motion.duration, ch.duration, 'chevron.transitionDuration · motion "꺾쇠 — 회전"');
@@ -332,7 +332,7 @@ export function treeLook(brand: Brand = 'hr'): TreeLook {
   const chW = k.len(b['chevron.width'], 'chevron.width');
   const gap = k.len(b['content.gap'], 'content.gap');
   const rowH = k.len(b['row.minHeight'], 'row.minHeight');
-  // 누르는 자리는 줄 전체다 — 꺾쇠는 표시만(사용자 결정 16D)
+  // 누르는 자리는 줄 전체다 — 꺾쇠는 표시만
   k.same(k.str(b['chevron.touchTarget'], 'chevron.touchTarget'), '없음', 'chevron.touchTarget(꺾쇠는 표시만)');
   const collapsed = resolveState(spec, { expand: 'collapsed' }, 'enabled');
   const look: TreeLook = {
@@ -516,7 +516,7 @@ export function listNestLook(brand: Brand = 'desk'): NestLook {
   k.same(k.str(p['subList.display'], 'parent subList.display'), '숨김', '하위 줄(접힘)');
   k.same(k.str(open['subList.display'], 'expanded subList.display'), '보임', '하위 줄(펼침)');
   k.same(k.str(p['expandButton.rotate'], 'parent expandButton.rotate'), '0deg', '꺾쇠 단추 회전(접힘)');
-  // 늘 펼친 편집 화면(mode fixed — 레시피 collapsible={false}, 2026-10-15 Q-002) — 그림(NestedListView fixed)은 꺾쇠 자리를 같은 폭으로 비우고 하위 줄을 늘 보인다
+  // 늘 펼친 편집 화면(mode fixed — 레시피 collapsible={false}) — 그림(NestedListView fixed)은 꺾쇠 자리를 같은 폭으로 비우고 하위 줄을 늘 보인다
   k.sameSet(axisValues(spec, 'mode'), ['foldable', 'fixed'], 'mode');
   const fixed = resolveState(spec, { nest: 'parent', mode: 'fixed' }, 'enabled');
   k.same(k.str(fixed['subList.display'], 'fixed subList.display'), '보임', '하위 줄(늘 펼친 편집 화면)');

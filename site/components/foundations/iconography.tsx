@@ -46,7 +46,7 @@ export function IconGridFigure() {
   const k = 4, S = base * k;
   const line = color('stroke-neutral-weak');
   return (
-    <Figure caption={`아이콘은 ${base}px 격자에 선 ${baseStroke()} 로 그린다 — 네 배로 키워 본 모습. 없는 아이콘도 이 틀로 그려 더한다`}>
+    <Figure caption={`아이콘은 ${base}px 격자에 선 ${baseStroke()} 로 그립니다 — 네 배로 키워 본 모습. 없는 아이콘도 이 틀로 그려 더합니다`}>
       <div className="flex items-center gap-10 rounded-xl bg-white px-10 py-6">
         <div className="relative" style={{ width: S, height: S, backgroundImage: `linear-gradient(${line} 1px, transparent 1px), linear-gradient(90deg, ${line} 1px, transparent 1px)`, backgroundSize: `${k}px ${k}px`, outline: `1px solid ${line}` }}>
           <span className="absolute" style={{ inset: 2 * k, background: MARK, opacity: 0.5 }} aria-hidden />
@@ -55,7 +55,7 @@ export function IconGridFigure() {
         <ul className="flex flex-col gap-2 text-[13px] text-[#1A1F2E]">
           <li>격자 {base} × {base}</li>
           <li>선 {baseStroke()} · 둥근 끝 · 둥근 이음</li>
-          <li className="flex items-center gap-2"><span className="inline-block h-3 w-3 rounded-sm" style={{ background: MARK }} />그리는 자리 — 가장자리 2px 는 비운다</li>
+          <li className="flex items-center gap-2"><span className="inline-block h-3 w-3 rounded-sm" style={{ background: MARK }} />그리는 자리 — 가장자리 2px 는 비웁니다</li>
         </ul>
       </div>
     </Figure>
@@ -66,7 +66,7 @@ export function IconSizeFigure() {
   const list = sizes();
   const min = floor();
   return (
-    <Figure caption={`UI 아이콘은 ${list.join(' · ')} 셋만 쓴다. ${min}px 은 넘지 말아야 할 바닥이라 UI 아이콘으로 쓰지 않는다`}>
+    <Figure caption={`UI 아이콘은 ${list.join(' · ')} 셋만 씁니다. ${min}px 은 넘지 말아야 할 바닥이라 UI 아이콘으로 쓰지 않습니다`}>
       <div className="flex items-end gap-8 rounded-xl bg-white px-10 py-6">
         <div className="flex flex-col items-center gap-2 opacity-60">
           <span className="flex h-12 items-end">
@@ -113,7 +113,7 @@ export function IconStateFigure() {
     </div>
   );
   return (
-    <Figure caption="lucide 에는 채움이 없어, 켜짐 · 선택은 진한 색 + 굵은 선이다. 꺼짐의 사선(-off)은 기능이 꺼지는 단추만 — 모으기 단추(관심 · 고정)는 같은 아이콘이 흐린 선 · 진한 굵은 선으로 갈린다">
+    <Figure caption="lucide 에는 채움이 없어, 켜짐 · 선택은 진한 색 + 굵은 선입니다. 꺼짐의 사선(-off)은 기능이 꺼지는 단추만 — 모으기 단추(관심 · 고정)는 같은 아이콘이 흐린 선 · 진한 굵은 선으로 갈립니다">
       <div className="flex w-[520px] flex-col gap-6 rounded-xl bg-white px-6 py-6">
         {row(
           '기능이 꺼지는 단추 — 알림 · 금액 가리기',
@@ -159,7 +159,7 @@ export function IconButtonFigure() {
     );
   };
   return (
-    <Figure caption={`아이콘 버튼은 보이는 크기 ${visible}px(${s24}px 아이콘이면 ${big}px), 누르는 영역은 늘 ${touch}px 이상 — 분홍이 보이지 않는 여백이다. 이름은 반드시 단다`}>
+    <Figure caption={`아이콘 버튼은 보이는 크기 ${visible}px(${s24}px 아이콘이면 ${big}px), 누르는 영역은 늘 ${touch}px 이상 — 분홍이 보이지 않는 여백입니다. 이름은 반드시 답니다`}>
       <div className="flex items-end gap-12 rounded-xl bg-white px-10 py-6">
         {btn(visible, s20, '설정')}
         {btn(big, s24, '설정')}
@@ -172,7 +172,7 @@ export function IconTextFigure() {
   const gap = px(design().front.spacing.x2);
   const [s16] = sizes();
   return (
-    <Figure caption="글자와 한 줄에 둘 때는 높이 가운데로 맞추고, 사이는 간격 토큰으로 둔다">
+    <Figure caption="글자와 한 줄에 둘 때는 높이 가운데로 맞추고, 사이는 간격 토큰으로 둡니다">
       <div className="flex gap-10 rounded-xl bg-white px-10 py-8">
         <span className="relative inline-flex items-center text-[14px] text-[#1A1F2E]" style={{ gap }}>
           <Calendar size={s16} strokeWidth={baseStroke()} color={INK()} aria-hidden />

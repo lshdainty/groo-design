@@ -70,7 +70,7 @@ function Pressable({
         {content ? <span className="flex w-full items-center gap-3" style={move}>{children}</span> : children}
       </button>
       <span className="h-4 text-[11px] tabular-nums text-[#62697A]">
-        {m ? `${m.w} × ${m.h} · 기준 ${m.by} ${Math.round(m.basis * 10) / 10} · 배율 ${reduced ? '1' : m.ratio.toFixed(3)}` : '눌러 보면 배율이 나온다'}
+        {m ? `${m.w} × ${m.h} · 기준 ${m.by} ${Math.round(m.basis * 10) / 10} · 배율 ${reduced ? '1' : m.ratio.toFixed(3)}` : '눌러 보면 배율이 나옵니다'}
       </span>
     </div>
   );
@@ -84,7 +84,7 @@ export function PressDemo({ c, t, colors: k, heights }: { c: PressConst; t: Pres
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <span className="text-[12px] text-fd-muted-foreground">누르고 있는 동안 준다. 배율은 요소마다 다르지만 움직이는 거리는 비슷하다.</span>
+        <span className="text-[12px] text-fd-muted-foreground">누르고 있는 동안 줍니다. 배율은 요소마다 다르지만 움직이는 거리는 비슷합니다.</span>
         <button
           type="button"
           aria-pressed={reduced}

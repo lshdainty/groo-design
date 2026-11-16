@@ -21,15 +21,13 @@ export function RadiusScaleFigure() {
 }
 
 export function RadiusTokenTable() {
-  const { scale, alias } = radiusScale();
-  const aliasOf = (v: string) => alias.filter((a) => a.value === v).map((a) => a.name);
+  const { scale } = radiusScale();
   return (
-    <Table head={['토큰', '값', '옛 이름(별칭)']}>
+    <Table head={['토큰', '값']}>
       {scale.map((r) => (
         <tr key={r.name}>
           <td><Token>radius-{r.name}</Token></td>
           <td className="tabular-nums">{r.value}</td>
-          <td>{aliasOf(r.value).length ? aliasOf(r.value).map((a) => <Token key={a}>radius-{a}</Token>) : <span className="text-fd-muted-foreground">—</span>}</td>
         </tr>
       ))}
     </Table>

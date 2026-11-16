@@ -75,12 +75,12 @@ export function FeedbackElementsFigure() {
             <Plain w={60} h={lg.height} style={{ ...pressed, fontSize: 13, fontWeight: 700 }}>눌림</Plain>
           </div>
           <b className="text-[14px] text-[#1A1F2E]">색</b>
-          <Cap>누르는 동안 표면 색이 바뀐다</Cap>
+          <Cap>누르는 동안 표면 색이 바뀝니다</Cap>
         </div>
         <div className={card}>
           <Shrunk w={128} h={lg.height} style={{ ...pressed, fontSize: 13, fontWeight: 700 }}>눌림</Shrunk>
           <b className="text-[14px] text-[#1A1F2E]">크기</b>
-          <Cap>누르는 동안 정해진 거리만큼 작아진다</Cap>
+          <Cap>누르는 동안 정해진 거리만큼 작아집니다</Cap>
         </div>
         <div className={card}>
           <span className="relative flex h-12 w-7 items-center justify-center rounded-md border-2" style={{ borderColor: rc('fg-neutral-muted') }}>
@@ -88,7 +88,7 @@ export function FeedbackElementsFigure() {
             <span className="absolute -right-3 text-[13px]" style={{ color: rc('fg-neutral-subtle') }}>))</span>
           </span>
           <b className="text-[14px] text-[#1A1F2E]">햅틱</b>
-          <Cap>누른 순간 손끝에 진동이 온다 — 기준이 생기면 적는다</Cap>
+          <Cap>누른 순간 손끝에 진동이 옵니다 — 기준이 생기면 적습니다</Cap>
         </div>
       </div>
     </Figure>
@@ -118,7 +118,7 @@ export function PressColorFigure() {
   const lg = specSize('button', 'large');
   const label = { color: rc('static-white'), fontSize: 15, fontWeight: 700 };
   return (
-    <Figure caption="기본과 눌림 — 표면 색만 bg-brand-solid 에서 bg-brand-solid-pressed 로 바뀌고 글자 색은 그대로다">
+    <Figure caption="기본과 눌림 — 표면 색만 bg-brand-solid 에서 bg-brand-solid-pressed 로 바뀌고 글자 색은 그대로입니다">
       <div className="flex gap-10 rounded-xl bg-white px-10 py-8">
         {[
           ['기본', 'bg-brand-solid'],
@@ -152,10 +152,10 @@ export function SurfaceOnlyFigure() {
   return (
     <Figure>
       <div className="flex w-[540px] gap-4">
-        <Verdict ok note="표면 색만 바뀌고 글자 · 아이콘 색은 그대로다">
+        <Verdict ok note="표면 색만 바뀌고 글자 · 아이콘 색은 그대로입니다">
           <Menu pressedText={false} />
         </Verdict>
-        <Verdict ok={false} note="글자 · 아이콘까지 흐려지면 다른 요소로 바뀐 것처럼 읽힌다">
+        <Verdict ok={false} note="글자 · 아이콘까지 흐려지면 다른 요소로 바뀐 것처럼 읽힙니다">
           <Menu pressedText />
         </Verdict>
       </div>
@@ -175,7 +175,7 @@ export function GhostFigure() {
     </div>
   );
   return (
-    <Figure caption="평소 배경이 없는 ghost 버튼 — 누르는 동안 표면이 생긴다. 다크에서는 놓인 층에 따라 눌림 색이 다르다">
+    <Figure caption="평소 배경이 없는 ghost 버튼 — 누르는 동안 표면이 생깁니다. 다크에서는 놓인 층에 따라 눌림 색이 다릅니다">
       <div className="flex gap-4">
         {(['light', 'dark'] as Mode[]).map((m) => (
           <div key={m} className="flex w-[250px] flex-col gap-4 rounded-2xl p-4" style={{ background: rc('bg-layer-basement', m) }}>
@@ -217,7 +217,7 @@ export function NoColorFigure() {
     </div>
   );
   return (
-    <Figure caption="색이 이미 상태를 뜻하는 요소 — 누르는 동안 색은 그대로 두고 크기만 준다. 선택은 손을 뗀 뒤에 바뀐다">
+    <Figure caption="색이 이미 상태를 뜻하는 요소 — 누르는 동안 색은 그대로 두고 크기만 줍니다. 선택은 손을 뗀 뒤에 바뀝니다">
       <div className="flex gap-4">
         {col('Switch — 켜짐 색 그대로', sw(false), sw(true), 170)}
         {col('Tabs — 선택 표시 그대로', tabs(false), tabs(true), 390)}
@@ -271,7 +271,7 @@ export function ScaleHeroFigure() {
   const w = lg.height * widthDivisor - 12; // 폭 ÷ 4 가 높이보다 작게 — 기준 길이가 높이라 세로로 축소량만큼 준다
   const style = { background: rc('bg-brand-solid-pressed'), color: rc('static-white'), fontSize: 15, fontWeight: 700 };
   return (
-    <Figure caption={`눌린 쪽은 점선의 원래 크기보다 작다 — 세로로 ${distance}px, 이 버튼에서 배율 ${r3(ratio(w, lg.height))}`}>
+    <Figure caption={`눌린 쪽은 점선의 원래 크기보다 작습니다 — 세로로 ${distance}px, 이 버튼에서 배율 ${r3(ratio(w, lg.height))}`}>
       <div className="flex gap-10 rounded-xl bg-white px-10 py-8">
         <div className="flex flex-col items-center gap-3">
           <Plain w={w} h={lg.height} style={{ ...style, background: rc('bg-brand-solid') }}>저장</Plain>
@@ -312,7 +312,7 @@ export function FixedRatioTable() {
         ))}
       </Table>
       <p className="-mt-2 text-sm text-fd-muted-foreground">
-        고정 배율 {fixed} 은 높이 {h} 버튼이 세로로 {distance}px 줄도록 맞춘 값이다. 이 배율을 모든 요소에 똑같이 주면 세로로는 모두 같게 줄지만 가로로 줄어드는 양은 {Math.round(tablet / 80)}배까지 벌어지고, 화면이 넓을수록 커진다.
+        고정 배율 {fixed} 은 높이 {h} 버튼이 세로로 {distance}px 줄도록 맞춘 값입니다. 이 배율을 모든 요소에 똑같이 주면 세로로는 모두 같게 줄지만 가로로 줄어드는 양은 {Math.round(tablet / 80)}배까지 벌어지고, 화면이 넓을수록 커집니다.
       </p>
     </>
   );
@@ -332,7 +332,7 @@ export function BasisFigure() {
   const tall = 100; // 예 — 높이 100 의 카드형 버튼
   const style = { background: rc('bg-brand-weak-pressed'), color: rc('fg-brand-contrast'), fontSize: 14, fontWeight: 700 };
   return (
-    <Figure caption={`같은 ${distance}px 이라도 요소가 클수록 배율은 1 에 가깝다`}>
+    <Figure caption={`같은 ${distance}px 이라도 요소가 클수록 배율은 1 에 가깝습니다`}>
       <div className="flex items-end gap-10 rounded-xl bg-white px-10 py-8">
         {[
           [140, md.height, `높이 ${md.height} 버튼`],
@@ -386,7 +386,7 @@ export function CenterFigure() {
   const w = 180;
   const line = rc('fg-critical');
   return (
-    <Figure caption="축소는 늘 요소의 정가운데를 기준으로 일어난다">
+    <Figure caption="축소는 늘 요소의 정가운데를 기준으로 일어납니다">
       <div className="rounded-xl bg-white px-12 py-8">
         <span className="relative inline-flex">
           <Shrunk w={w} h={lg.height} style={{ background: rc('bg-brand-solid-pressed'), color: rc('static-white'), fontSize: 15, fontWeight: 700 }}>
@@ -420,7 +420,7 @@ function Row({ pressed, label, amount, mode = 'light' }: { pressed?: boolean; la
 export function NoShiftFigure() {
   const guide = rc('fg-critical');
   return (
-    <Figure caption="가운데 줄을 눌러도 위아래 줄의 자리는 그대로다 — 줄어든 만큼 주변이 당겨지지 않는다">
+    <Figure caption="가운데 줄을 눌러도 위아래 줄의 자리는 그대로입니다 — 줄어든 만큼 주변이 당겨지지 않습니다">
       <div className="relative w-[340px] overflow-hidden rounded-xl bg-white">
         <Row label="점심 식비" amount="12,000원" />
         <Row pressed label="버스" amount="1,500원" />
@@ -439,10 +439,10 @@ export function SurfaceTargetFigure() {
   return (
     <Figure>
       <div className="flex w-[540px] gap-4">
-        <Verdict ok note="면으로 잡히는 요소 — 원래 크기보다 작아진다">
+        <Verdict ok note="면으로 잡히는 요소 — 원래 크기보다 작아집니다">
           <Shrunk w={170} h={lg.height} style={{ background: rc('bg-brand-solid-pressed'), color: rc('static-white'), fontSize: 15, fontWeight: 700 }}>다음</Shrunk>
         </Verdict>
-        <Verdict ok={false} note="줄바꿈되는 글 속 링크를 줄이면 글자 크기가 바뀐 것처럼 보인다">
+        <Verdict ok={false} note="줄바꿈되는 글 속 링크를 줄이면 글자 크기가 바뀐 것처럼 보입니다">
           <p className="w-[200px] text-[14px] leading-6 text-[#1A1F2E]">
             카드 결제일은{' '}
             <span className="inline-block underline" style={{ color: link, transform: 'scale(0.9)' }}>설정에서</span> 바꿀 수 있어요. 바꾸면 다음 달부터 적용돼요.
@@ -480,7 +480,7 @@ export function SubActionsFigure() {
     </div>
   );
   return (
-    <Figure caption="왼쪽 — 스위치가 그 줄의 설정을 바꾸므로 어디를 눌러도 줄 전체가 반응한다 / 오른쪽 — 닫기 · 저장 · 공유는 대등하므로 누른 버튼만 반응한다">
+    <Figure caption="왼쪽 — 스위치가 그 줄의 설정을 바꾸므로 어디를 눌러도 줄 전체가 반응합니다 / 오른쪽 — 닫기 · 저장 · 공유는 대등하므로 누른 버튼만 반응합니다">
       <div className="flex gap-4">
         <div className="flex flex-col items-center gap-3 rounded-xl bg-white p-5">{row}<Cap>딸린 동작 — 줄 전체</Cap></div>
         <div className="flex flex-col items-center gap-3 rounded-xl p-5" style={{ background: rc('bg-layer-basement') }}>{card}<Cap>대등한 동작 — 누른 것만</Cap></div>
@@ -492,7 +492,7 @@ export function SubActionsFigure() {
 export function RootContentFigure() {
   const { tw, th, body: knob } = switchOn();
   return (
-    <Figure caption="Root Scale — 요소 전체가 준다 / Content Scale — 배경은 그대로 두고 안쪽만 준다">
+    <Figure caption="Root Scale — 요소 전체가 줍니다 / Content Scale — 배경은 그대로 두고 안쪽만 줍니다">
       <div className="flex gap-4">
         <div className="flex w-[200px] flex-col items-center gap-4 rounded-xl bg-white px-4 pb-4 pt-8">
           <div className="flex items-center gap-6">
@@ -508,7 +508,7 @@ export function RootContentFigure() {
             <Row pressed label="버스" amount="1,500원" />
           </div>
           <b className="text-[13px] text-[#1A1F2E]">Content Scale</b>
-          <Cap>목록 줄 · 아코디언처럼 배경이 폭을 채우는 요소 — 통째로 줄이면 정렬 · 여백 · 모서리가 어긋난다</Cap>
+          <Cap>목록 줄 · 아코디언처럼 배경이 폭을 채우는 요소 — 통째로 줄이면 정렬 · 여백 · 모서리가 어긋납니다</Cap>
         </div>
       </div>
     </Figure>
@@ -526,17 +526,17 @@ export function StatesFigure() {
     </div>
   );
   return (
-    <Figure caption="다른 상태에서 눌렀을 때 — 선택된 요소는 준다, 불러오는 중 · 비활성은 줄지 않는다">
+    <Figure caption="다른 상태에서 눌렀을 때 — 선택된 요소는 줄고, 불러오는 중 · 비활성은 줄지 않습니다">
       <div className="flex gap-3">
         {col('선택됨', '줄고, 선택 색은 그대로', (
           <Shrunk w={w} h={btn.height} radius={btn.height} style={{ background: rc('bg-brand-weak-pressed'), color: rc('fg-brand-contrast'), fontSize: 13, fontWeight: 700 }}>✓ 식비</Shrunk>
         ))}
-        {col('불러오는 중', '줄지 않는다 — 입력을 받지 않는다', (
+        {col('불러오는 중', '줄지 않습니다 — 입력을 받지 않습니다', (
           <Plain w={w} h={btn.height} style={{ background: rc('bg-brand-solid'), color: rc('static-white'), fontSize: 13 }}>
             <span className="block h-4 w-4 rounded-full border-2" style={{ borderColor: 'rgba(255,255,255,0.35)', borderTopColor: rc('static-white') }} />
           </Plain>
         ))}
-        {col('비활성', '줄지 않는다 — 누름에 반응하지 않는다', (
+        {col('비활성', '줄지 않습니다 — 누름에 반응하지 않습니다', (
           <Plain w={w} h={btn.height} style={{ background: rc('bg-disabled'), color: rc('fg-disabled'), fontSize: 13, fontWeight: 700 }}>저장</Plain>
         ))}
       </div>
@@ -566,7 +566,7 @@ export function PressPlayground() {
   };
   const heights = { icon: specSize('button', 'medium', 'enabled', 'iconOnly').height, button: specSize('button', 'small').height, wide: specSize('button', 'large').height, row: 56 };
   return (
-    <Panel caption="눌러 보는 판 — 누르는 동안의 배율은 요소의 실제 크기에서 계산한다">
+    <Panel caption="눌러 보는 판 — 누르는 동안의 배율은 요소의 실제 크기에서 계산합니다">
       <PressDemo c={{ distance, widthDivisor, minBasis }} t={t} colors={colors} heights={heights} />
     </Panel>
   );

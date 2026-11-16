@@ -1,48 +1,41 @@
 ---
 title: Design Token
-description: 디자인 결정을 사람과 기계가 함께 읽는 데이터로 — 층 · 모드 · 원본과 내보내기
+description: 디자인 결정을 사람과 기계가 함께 읽는 데이터로 적습니다 — 층 · 모드 · 원본과 내보내기.
 source: DESIGN.md
 ---
 
 import { TokenModesTable, TokenTierFigure } from '@/components/foundations/token';
-import { Note } from '@/components/foundations/ui';
 
-디자인 토큰은 디자인 결정을 사람과 기계가 함께 이해하는 방식으로 적은 것이다.
+디자인 토큰은 디자인 결정을 사람과 기계가 함께 이해하는 방식으로 적은 것입니다.
 
 ## 디자인 토큰이란
 
-디자인 토큰은 디자인 결정을 데이터로 옮긴 것이다. 디자인과 개발 사이에서 UI 의 세부를 주고받는 공용 언어다.
+디자인 토큰은 디자인 결정을 데이터로 옮긴 것입니다. 디자인과 개발 사이에서 UI 의 세부를 주고받는 공용 언어입니다.
 
-색 · 글자 · 간격 · 모서리 · 모션처럼 디자인을 이루는 값에 이름을 붙여 둔다. hex 로 적은 색, 숫자와 단위로 적은 간격, cubic-bezier 로 적은 모션 곡선처럼 디자인에 쓰는 모든 값이 토큰이 될 수 있다.
+색 · 글자 · 간격 · 모서리 · 모션처럼 디자인을 이루는 값에 이름을 붙여 둡니다. hex 로 적은 색, 숫자와 단위로 적은 간격, cubic-bezier 로 적은 모션 곡선처럼 디자인에 쓰는 모든 값이 토큰이 될 수 있습니다.
 
 ## groo 토큰의 층
 
 <TokenTierFigure />
 
-- **Raw 값** — 화면에 그릴 수 있는 실제 값. 크기 · hex 색 · 밀리초 · cubic-bezier 곡선 같은 것이다. 쓸 수 있는 값은 사실상 끝이 없어, 그대로 쓰면 화면마다 값이 갈린다.
-- **Scale** — 값 하나에 이름을 붙여 쓸 값을 유한하게 묶는다. 색 팔레트 `gray-00` ~ `gray-1000` · `brand-100` ~ `brand-1000`, 간격 `x0_5` ~ `x16`, 모서리 `r0_5` ~ `r6`, 글자 `t1` ~ `t14`, 지속 시간 `d1` ~ `d6`, 그림자 `s1` ~ `s4`. 이름이 기기 단위(px · dp · rem)를 숨긴다.
-- **Semantic** — Scale 에 뜻을 붙인 것. 설계와 개발이 실제로 부르는 이름이다 — 역할 색(`fg-brand` · `bg-layer-default`), 간격 역할(`global-gutter`), 모션 역할(`motion-duration-color-transition`), 글자 역할(`text-screen-title`).
-- **컴포넌트** — 컴포넌트 스펙(YAML)이 Semantic 을 부위 · 상태별로 쓴다.
+- **Raw 값** — 화면에 그릴 수 있는 실제 값입니다. 크기 · hex 색 · 밀리초 · cubic-bezier 곡선 같은 것입니다. 쓸 수 있는 값은 사실상 끝이 없어, 그대로 쓰면 화면마다 값이 갈립니다.
+- **Scale** — 값 하나에 이름을 붙여 쓸 값을 유한하게 묶습니다. 색 팔레트 `gray-00` ~ `gray-1000` · `brand-100` ~ `brand-1000`, 간격 `x0_5` ~ `x16`, 모서리 `r0_5` ~ `r6`, 글자 `t1` ~ `t14`, 지속 시간 `d1` ~ `d6`, 그림자 `s1` ~ `s4` 입니다. 이름이 기기 단위(px · dp · rem)를 숨깁니다.
+- **Semantic** — Scale 에 뜻을 붙인 것입니다. 설계와 개발이 실제로 부르는 이름입니다 — 역할 색(`fg-brand` · `bg-layer-default`), 간격 역할(`global-gutter`), 모션 역할(`motion-duration-color-transition`), 글자 역할(`text-screen-title`).
+- **컴포넌트** — 컴포넌트 스펙(YAML)이 Semantic 을 부위 · 상태별로 씁니다.
 
-<Note>
-  색의 Scale 층(팔레트)은 v108 에 들였다 — 역할 색은 hex 대신 팔레트 단계를 가리킨다. 역할 색 이전의 옛 이름(`text-primary` · `surface-default` …)은 역할 색을 가리키는 별칭으로 남았다가, 컴포넌트 스펙을 옮기고 나면 지운다.
-</Note>
+역할 색은 hex 대신 팔레트 단계를 가리킵니다 — hex 는 팔레트에만 있습니다.
 
 ## 모드
 
-같은 이름에 모드마다 다른 값을 넣으면, 이름을 바꾸지 않고 화면 전체의 값을 바꿀 수 있다.
+같은 이름에 모드마다 다른 값을 넣으면, 이름을 바꾸지 않고 화면 전체의 값을 바꿀 수 있습니다.
 
 <TokenModesTable />
 
 ## 원본과 내보내기
 
-- **원본** — `DESIGN.md`(공유)와 `DESIGN.hr.md` · `DESIGN.desk.md`(브랜드). 색 · 글자 · 모서리 · 간격은 YAML 머리말에, 그림자 · 모션 · 레이아웃 같은 나머지는 본문의 표에 있다. 컴포넌트 수치의 원본은 `specs/components/<이름>.yaml`.
-- **웹** — Tailwind v4 `@theme` CSS 세 벌(공유 · HR · Desk)과 DTCG JSON 으로 내보낸다.
-- **앱** — 아직 손으로 옮긴 `tokens.dart` 다. 앱 적용 단계에서 원본에서 만들게 바꾼다.
-- 토큰은 원본 밖에서 새로 만들지 않는다 — CSS · 코드에 값을 바로 적으면 원본과 갈린다.
+- **원본** — `DESIGN.md`(공유)와 `DESIGN.hr.md` · `DESIGN.desk.md`(브랜드)입니다. 색 · 글자 · 모서리 · 간격은 YAML 머리말에, 그림자 · 모션 · 레이아웃 같은 나머지는 본문의 표에 있습니다. 컴포넌트 수치의 원본은 `specs/components/<이름>.yaml` 입니다.
+- **웹** — Tailwind v4 `@theme` CSS 세 벌(공유 · 이음 · 담다)과 DTCG JSON 으로 내보냅니다.
+- **앱** — Flutter 토큰(Dart)으로 내보냅니다.
+- 토큰은 원본 밖에서 새로 만들지 않습니다 — CSS · 코드에 값을 바로 적으면 원본과 갈리기 때문입니다.
 
-전체 목록은 [Reference](/docs/foundations/design-token/reference) 에 있다.
-
----
-
-<p className="text-sm text-fd-muted-foreground">구성과 일부 설명은 당근 [SEED Design](https://seed-design.io) 의 Foundations 문서(Apache-2.0)를 바탕으로 했다. 값과 그림은 groo 것이다.</p>
+전체 목록은 [Reference](/docs/foundations/design-token/reference) 에 있습니다.

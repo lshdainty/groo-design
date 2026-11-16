@@ -1,11 +1,11 @@
 // Typography 페이지 — 값은 DESIGN.md typography 블록에서만 온다
 import type { CSSProperties } from 'react';
-import { color, design, sectionCode, sectionTable, sectionText, typeScale } from '@/lib/design-tokens';
+import { color, sectionCode, sectionTable, sectionText, typeScale } from '@/lib/design-tokens';
 import { Figure, Inline, MARK, MARK_LINE, Table, Token } from './ui';
 
-// "쓰는 곳" · "배수" 는 DESIGN.md v100 표에서 읽는다
-function v100Rows() {
-  const { rows } = sectionTable('v100 — SEED 타입 스케일');
+// "쓰는 곳" · "배수" 는 DESIGN.md "타입 스케일" 표에서 읽는다
+function scaleRows() {
+  const { rows } = sectionTable('타입 스케일');
   return new Map(rows.map((r) => [r[0].replace(/`/g, '').replace(/^text-/, ''), { ratio: r[3], use: r[4] }]));
 }
 
@@ -31,7 +31,7 @@ export function TypePreviewFigure() {
 
 export function TypeScaleTable() {
   const { scale } = typeScale();
-  const info = v100Rows();
+  const info = scaleRows();
   return (
     <Table head={['토큰', '크기', '줄 높이', '배수', '견본', '쓰는 곳']} minWidth={760}>
       {scale.map((t) => (
@@ -53,7 +53,7 @@ export function TypeScaleTable() {
 export function WeightFigure() {
   const t5 = typeScale().scale.find((t) => t.name === 't5')!;
   return (
-    <Figure caption="굵기 셋 — 토큰은 400 이고, 강조는 font-medium · font-bold 로 준다">
+    <Figure caption="굵기 셋 — 토큰은 400 이고, 강조는 font-medium · font-bold 로 줍니다">
       <div className="flex flex-wrap items-end gap-10 text-fd-foreground">
         {[
           [400, 'Regular'],
@@ -88,36 +88,6 @@ export function SemanticStyleTable() {
   );
 }
 
-// DESIGN.md v100 "옛 이름 → 가까운 새 이름" 줄을 그대로 표로
-export function LegacyTypeTable() {
-  const line = design().body.split('\n').find((l) => l.includes('**옛 이름 → 가까운 새 이름**'));
-  if (!line) throw new Error('DESIGN.md v100 에 "옛 이름 → 가까운 새 이름" 줄이 없다');
-  const rest = line.replace(/^.*?\*\*옛 이름 → 가까운 새 이름\*\*(\([^)]*\))?:?\s*/, '');
-  const [body, ...tail] = rest.split(/\.\s/);
-  // 새 이름 칸에도 ' · ' 가 들어가므로(자리마다 t4 · t5 …) 다음 '옛 이름 →' 앞에서만 끊는다
-  const pairs = [...body.matchAll(/([a-z]+(?:-[a-z]+)?) → (.+?)(?= · [a-z]+(?:-[a-z]+)? → |$)/g)].map((m) => [m[1], m[2]]);
-  const remark = tail.join('. ').replace(/\.\s*$/, '');
-  const { legacy } = typeScale();
-  const legacyOf = (n: string) => legacy.find((l) => l.name === n);
-  return (
-    <>
-    <Table head={['옛 이름', '크기 / 굵기 / 줄 높이', '옮길 새 이름']} minWidth={560}>
-      {pairs.map(([o, n]) => {
-        const l = legacyOf(o);
-        return (
-          <tr key={o}>
-            <td><Token>text-{o}</Token></td>
-            <td className="whitespace-nowrap tabular-nums text-fd-muted-foreground">{l ? `${l.fontSize} / ${l.fontWeight} / ${l.lineHeight}` : '—'}</td>
-            <td>{n}</td>
-          </tr>
-        );
-      })}
-    </Table>
-    {remark && <p className="text-sm text-fd-muted-foreground">{remark}.</p>}
-    </>
-  );
-}
-
 // 단위 — 웹은 rem(÷16)과 -static(px) 두 벌. 내보내기(build-tailwind-v4)와 같은 계산
 const REM_BASE = 16; // 브라우저 기본 글자 크기
 const rem = (v: string) => `${Number((parseFloat(v) / REM_BASE).toFixed(4))}rem`;
@@ -137,15 +107,15 @@ export function UnitTable() {
   );
 }
 
-// ── 줄바꿈(v114) ─────────────────────────────────────────
-// DESIGN.md "v114 — 줄바꿈" 의 CSS 를 그대로 걸어, 지금의 글자 단위(브라우저 기본값)와 나란히 그린다
-const LINE_BREAK = 'v114 — 줄바꿈';
+// ── 줄바꿈 ─────────────────────────────────────────
+// DESIGN.md "줄바꿈" 의 CSS 를 그대로 걸어, 글자 단위(브라우저 기본값)와 나란히 그린다
+const LINE_BREAK = '줄바꿈';
 function lineBreakCss(): CSSProperties {
   const decl = Object.fromEntries([...sectionCode(LINE_BREAK).matchAll(/([a-z-]+):\s*([a-z-]+);/g)].map((m) => [m[1], m[2]]));
   if (!decl['word-break'] || !decl['overflow-wrap']) throw new Error(`DESIGN.md "${LINE_BREAK}" 의 CSS 에서 word-break · overflow-wrap 을 읽지 못했다`);
   return { wordBreak: decl['word-break'] as CSSProperties['wordBreak'], overflowWrap: decl['overflow-wrap'] as CSSProperties['overflowWrap'] };
 }
-// 사이트는 v114 규칙을 전체에 건다 — 지금 모습은 기본값으로 되돌려 그린다
+// 사이트는 줄바꿈 규칙을 전체에 건다 — 글자 단위 모습은 기본값으로 되돌려 그린다
 const BROWSER_DEFAULT: CSSProperties = { wordBreak: 'normal', overflowWrap: 'normal' };
 
 // 컴포넌트 자리의 실제 글 · 폭(폰 360 기준) — mark 는 글자 단위에서 갈리는 낱말
@@ -185,7 +155,7 @@ export function LineBreakFigure() {
             <div className="flex flex-wrap items-start gap-3">
               {(
                 [
-                  ['지금 — 글자 단위', BROWSER_DEFAULT],
+                  ['브라우저 기본 — 글자 단위', BROWSER_DEFAULT],
                   ['단어 단위', rule],
                 ] as const
               ).map(([label, css]) => (
@@ -198,12 +168,12 @@ export function LineBreakFigure() {
           </div>
         ))}
       </div>
-      <figcaption className="mt-3 text-center text-sm text-fd-muted-foreground">지금(글자 단위)과 v114(단어 단위) — 점선이 글이 쓸 수 있는 폭, 분홍이 글자 단위에서 갈리는 낱말</figcaption>
+      <figcaption className="mt-3 text-center text-sm text-fd-muted-foreground">글자 단위(브라우저 기본값)와 단어 단위 — 점선이 글이 쓸 수 있는 폭, 분홍이 글자 단위에서 갈리는 낱말</figcaption>
     </figure>
   );
 }
 
-// DESIGN.md v114 의 플랫폼 표를 그대로
+// DESIGN.md "줄바꿈" 의 플랫폼 표를 그대로
 export function LineBreakTable() {
   const { head, rows } = sectionTable(LINE_BREAK);
   return (
@@ -221,10 +191,10 @@ export function LineBreakTable() {
   );
 }
 
-// ── 글자 역할(2026-10-16) ─────────────────────────────────
+// ── 글자 역할 ─────────────────────────────────
 // DESIGN.desk.md "글자 역할" 표를 그대로 — 값 칸의 " / " 로 나뉜 자리마다 견본을 그 크기 · 굵기 · 색으로 그린다(라이트 · 다크).
 // Desk 표를 읽는다 — 공유 DESIGN.md 는 수입 금액 색(fg-brand)을 브랜드 파일로 미룬다
-const ROLES = '글자 역할 (2026-10-16)';
+const ROLES = '글자 역할';
 // 역할마다 견본 글 — 값이 아니라 그림의 글이다(실제 자리의 말투)
 const ROLE_SAMPLE: Record<string, string> = {
   R1: '가계부', R2: '이번 달 모든 거래 내역이에요', R3: '카테고리 고르기', R4: '최근 거래', R5: '자주 쓰는 계좌', R6: '점심 식사',
@@ -290,12 +260,12 @@ function RoleSpecimens({ no, cell }: { no: string; cell: string }) {
           </div>
         ))}
       </div>
-      {brandFill && <span className="mt-1 block text-[12px] text-fd-muted-foreground">흰 글자는 브랜드 채움 위에 그렸다</span>}
+      {brandFill && <span className="mt-1 block text-[12px] text-fd-muted-foreground">흰 글자는 브랜드 채움 위에 그렸습니다</span>}
     </>
   );
 }
 
-// 역할마다 한 덩어리 — 값 · 견본(라이트 · 다크, 폰에서는 위아래) · 쓰는 자리 · 출처. 표로 두면 본문 폭(약 700)에서 견본이 가로 스크롤 뒤에 숨는다
+// 역할마다 한 덩어리 — 값 · 견본(라이트 · 다크, 폰에서는 위아래) · 쓰는 자리. 표로 두면 본문 폭(약 700)에서 견본이 가로 스크롤 뒤에 숨는다
 export function RoleTable() {
   const { head, rows } = sectionTable(ROLES, 0, 'desk');
   return (
@@ -308,7 +278,6 @@ export function RoleTable() {
             <div><Inline text={r[1]} /></div>
             <RoleSpecimens no={no} cell={r[1]} />
             <div><span className="text-fd-muted-foreground">{head[2]} — </span><Inline text={r[2]} /></div>
-            <div className="text-fd-muted-foreground">{head[3]} — <Inline text={r[3]} /></div>
           </section>
         );
       })}

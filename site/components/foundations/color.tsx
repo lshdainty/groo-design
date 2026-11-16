@@ -1,6 +1,6 @@
 // Color 페이지 — 색 값은 DESIGN*.md colors 블록에서만 온다
 import type { CSSProperties, ReactNode } from 'react';
-import { BRAND_ROLES, CHART_ORDER, color, colorStep, contrast, design, palette, roleAliases, roleColors, typeScale, type Brand } from '@/lib/design-tokens';
+import { BRAND_ROLES, CHART_ORDER, color, colorStep, contrast, design, palette, roleColors, typeScale, type Brand } from '@/lib/design-tokens';
 import { Chip, Figure, Swatch, Table, Token } from './ui';
 import { cardFace } from '../specs/card-face';
 
@@ -10,7 +10,7 @@ function rc(name: string, mode: Mode, brand: Brand = 'desk') {
   if (name === 'static-white') return color('static-white', brand);
   return color(mode === 'dark' ? `${name}-dark` : name, brand);
 }
-// 글자 크기 · 줄 높이 — v100 스케일 토큰 그대로(그림의 글자도 Typography "글자 역할" 값으로 그린다)
+// 글자 크기 · 줄 높이 — 타입 스케일 토큰 그대로(그림의 글자도 Typography "글자 역할" 값으로 그린다)
 function ts(name: string): CSSProperties {
   const t = typeScale().scale.find((x) => x.name === name);
   if (!t) throw new Error(`글자 토큰 ${name} 이 없다`);
@@ -27,7 +27,7 @@ const NAMING: [string, string[]][] = [
 export function RoleNamingFigure() {
   const parts: [string, string][] = [['bg', 'Property'], ['critical', 'Role'], ['weak', 'Variant'], ['pressed', 'State']];
   return (
-    <Figure caption="역할 색 이름 규칙 — 속성 · 역할 · 변형 · 상태 순으로 붙인다">
+    <Figure caption="역할 색 이름 규칙 — 속성 · 역할 · 변형 · 상태 순으로 붙입니다">
       <div className="flex w-[548px] flex-col gap-8">
         <div className="grid grid-cols-4 gap-3">
           {NAMING.map(([h, items]) => (
@@ -92,7 +92,7 @@ export function BrandExample({ brand = 'desk' }: { brand?: 'desk' | 'hr' }) {
   const b = (n: string, m: Mode) => rc(n, m, brand);
   return (
     <Pair
-      caption={`브랜드 역할 — ${brand === 'desk' ? 'Desk' : 'HR'}. 화면에서 가장 중요한 동작과 브랜드 요소에 쓴다`}
+      caption={`브랜드 역할 — ${brand === 'desk' ? 'Desk' : 'HR'}. 화면에서 가장 중요한 동작과 브랜드 요소에 씁니다`}
       tokens={['fg-brand', 'fg-brand-contrast', 'bg-brand-solid', 'bg-brand-solid-pressed', 'bg-brand-weak', 'stroke-brand-solid', 'stroke-focus-ring']}
       render={(m) => (
         <div className="flex flex-col gap-3" style={card(m)}>
@@ -116,11 +116,11 @@ export function BrandExample({ brand = 'desk' }: { brand?: 'desk' | 'hr' }) {
 export function NeutralExample() {
   return (
     <Pair
-      caption="중립 역할 — 일반 콘텐츠. 글자는 neutral · muted · subtle 세 단계로 위계를 준다"
+      caption="중립 역할 — 일반 콘텐츠. 글자는 neutral · muted · subtle 세 단계로 위계를 줍니다"
       tokens={['fg-neutral', 'fg-neutral-muted', 'fg-neutral-subtle', 'fg-placeholder', 'fg-disabled', 'bg-neutral-weak', 'bg-neutral-weak-alpha', 'bg-disabled', 'bg-neutral-inverted', 'fg-neutral-inverted']}
       render={(m) => (
         <div className="flex flex-col gap-3">
-          {/* 회색 바닥 위 칩 — 투명한 bg-neutral-weak-alpha(v120). 불투명 약한 배경 · 비활성은 흰 표면(카드) 안에만(Elevation "바닥 위의 채움") */}
+          {/* 회색 바닥 위 칩 — 투명한 bg-neutral-weak-alpha. 불투명 약한 배경 · 비활성은 흰 표면(카드) 안에만(Elevation "바닥 위의 채움") */}
           <div className="flex gap-2">
             {['전체', '식비', '카페'].map((t) => (
               <span key={t} className="rounded-full px-3 py-1.5" style={{ ...ts('t4'), fontWeight: 500, background: rc('bg-neutral-weak-alpha', m), color: rc('fg-neutral', m) }}>{t}</span>
@@ -230,7 +230,7 @@ export function StateExample() {
 }
 
 // ── 토큰 표 ────────────────────────────────────────────────
-// 값 옆에 역할이 가리키는 팔레트 단계를 붙인다(v108)
+// 값 옆에 역할이 가리키는 팔레트 단계를 붙인다
 function StepSwatch({ hex, step }: { hex?: string; step?: string }) {
   if (!hex || !step) return <Swatch hex={hex} />;
   return (
@@ -245,16 +245,14 @@ function StepSwatch({ hex, step }: { hex?: string; step?: string }) {
 }
 
 export function RoleTokenTable({ property }: { property: 'fg' | 'bg' | 'stroke' }) {
-  const alias = roleAliases();
   const rows = roleColors('desk').filter((r) => (property === 'fg' ? /^(fg|static)-/ : new RegExp(`^${property}-`)).test(r.name) && !BRAND_ROLES.includes(r.name));
   return (
-    <Table head={['토큰', '라이트', '다크', '옛 이름']} minWidth={620}>
+    <Table head={['토큰', '라이트', '다크']} minWidth={520}>
       {rows.map((r) => (
         <tr key={r.name}>
           <td><Token>{r.name}</Token></td>
           <td><StepSwatch hex={r.light} step={colorStep(r.name)} /></td>
           <td><StepSwatch hex={r.dark ?? (r.name === 'static-white' ? r.light : undefined)} step={colorStep(`${r.name}-dark`)} /></td>
-          <td className="text-fd-muted-foreground">{alias.get(r.name)?.old ?? '—'}</td>
         </tr>
       ))}
     </Table>
@@ -304,7 +302,7 @@ export function PaletteRamp({ family, brand = 'shared' }: { family: string; bran
   );
 }
 
-// SEED Palette 의 토큰 표처럼 라이트 · 다크를 한 줄에
+// 라이트 · 다크를 한 줄에
 export function PaletteTokenTable({ families }: { families: string[] }) {
   const rows = families.flatMap((f) => palette(f).map((s) => ({ name: `${f}-${s.step}`, ...s })));
   return (
@@ -338,7 +336,7 @@ export function BrandPaletteTable() {
 }
 
 // ── 차트 ───────────────────────────────────────────────────
-// v110 — 팔레트 단계(라이트 700 · 다크 800-dark). 색을 고르지 않은 항목이 받는 순서대로 그린다
+// 차트 10색 — 팔레트 단계(라이트 700 · 다크 800-dark). 색을 고르지 않은 항목이 받는 순서대로 그린다
 export function ChartRamp() {
   const c = design('shared').front.colors;
   const modes: [Mode, string][] = [['light', '라이트'], ['dark', '다크']];
@@ -389,7 +387,7 @@ export function ChartTable() {
   );
 }
 
-// v111 — 카테고리 옅은 바탕: 작은 면(weak) 위 아이콘 · 글자, 넓은 면(subtle) 메모 카드
+// 카테고리 옅은 바탕: 작은 면(weak) 위 아이콘 · 글자, 넓은 면(subtle) 메모 카드
 const TINT_TILES: [string, string][] = [['식', 'red'], ['주', 'green'], ['카', 'orange'], ['생', 'blue'], ['교', 'yellow'], ['쇼', 'indigo'], ['건', 'pink'], ['문', 'violet'], ['부', 'brown'], ['기', 'gray']];
 export function ChartTintExample() {
   const c = design('shared').front.colors;

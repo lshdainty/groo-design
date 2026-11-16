@@ -211,8 +211,8 @@ export function tableLook(brand: Brand = 'hr'): TableLook {
   const badge = badgeLook(brand);
   if (!String(unbox(b['badge.size'])).includes('Badge medium')) throw new Error(`${F} badge.size 가 Badge medium 이 아니다`);
   const sortNote = noteOf(sortable['sortButton.width']);
-  // 72 는 최소 높이 · 칸 위아래 12(2026-11-09) — 그림이 쓰는 썸네일(Avatar · Logo Tile) + 위아래 여백 + 선이 72 안에 들어야 한다.
-  // Image Frame 48 썸네일 칸만 위아래 thumbnail.cellPaddingY(0 — 2026-11-10 사용자 결정 14C) — 48 + 여백 + 선도 72 안에 들어야 한다
+  // 72 는 최소 높이 · 칸 위아래 12 — 그림이 쓰는 썸네일(Avatar · Logo Tile) + 위아래 여백 + 선이 72 안에 들어야 한다.
+  // Image Frame 48 썸네일 칸만 위아래 thumbnail.cellPaddingY(0) — 48 + 여백 + 선도 72 안에 들어야 한다
   const richPadY = len(rich['cell.paddingY'], `${F} rich cell.paddingY`);
   const richMin = len(rich['row.minHeight'], `${F} rich row.minHeight`);
   for (const [name, re] of [['Avatar', /Avatar\s*(\d+)/], ['Logo Tile', /Logo Tile\s*(\d+)/]] as const) {
@@ -262,7 +262,7 @@ export function tableLook(brand: Brand = 'hr'): TableLook {
       // 고른 수 글 — 비고의 "t4 14 · 500", 색은 table.md 접근성 표의 "일괄 작업 바 글 fg-neutral"
       text: textToken(`t${numIn(bulkNote, /t(\d+)\s/, `${F} bulkBar 비고 글자`)}`, `${F} bulkBar 글자`, numIn(bulkNote, /·\s*(\d{3})/, `${F} bulkBar 비고 굵기`)),
       fg: named('fg-neutral', brand),
-      // 바 안 동작 — 모두 ghost neutral(table.yaml bulkBar.actions — 빨강은 확인창에서, 2026-10-17 01T-033 A)
+      // 바 안 동작 — 모두 ghost neutral(table.yaml bulkBar.actions — 빨강은 확인창에서)
       action: bulkActionLook(b['bulkBar.actions'], brand),
       clear: buttonLook({ variant: 'ghost', size: 'small', layout: 'iconOnly' }, brand),
     },
@@ -301,7 +301,7 @@ export function cardLook(): CardLook {
   const pr = resolveState(spec, {}, 'pressed');
   const fo = resolveState(spec, {}, 'focused');
   const L = resolveState(spec, { body: 'list' }, 'enabled');
-  // 카드 안 아코디언(2026-10-10 — 카드 상세의 혜택 · 유의사항) — 좌우 0 · 아래 8 · 머리는 목록 카드와 같은 자리
+  // 카드 안 아코디언(카드 상세의 혜택 · 유의사항) — 좌우 0 · 아래 8 · 머리는 목록 카드와 같은 자리
   const A = resolveState(spec, { body: 'accordion' }, 'enabled');
   const W = resolveState(spec, { press: 'whole' }, 'enabled');
   const Wh = resolveState(spec, { press: 'whole' }, 'hovered');
@@ -437,13 +437,13 @@ export function chartLook(brand: Brand = 'desk'): ChartLook {
   sameSet(axisValues(spec, 'axis'), ['single', 'dual'], `${F} axis`);
   sameSet(axisValues(spec, 'legend'), ['shown', 'hidden'], `${F} legend`);
   sameSet(axisValues(spec, 'palette'), CHART_HUES, `${F} palette`);
-  sameSet(CHART_ORDER, CHART_HUES, 'DESIGN.md v110 배정 순서(CHART_ORDER)');
+  sameSet(CHART_ORDER, CHART_HUES, 'DESIGN.md 차트 배정 순서(CHART_ORDER)');
   sameSet(stateNames(spec), ['enabled', 'hovered', 'pressed', 'focused', 'disabled'], `${F} states`);
   const b = resolveState(spec, {}, 'enabled');
   const hov = resolveState(spec, {}, 'hovered');
   const pr = resolveState(spec, {}, 'pressed');
   const fo = resolveState(spec, {}, 'focused');
-  // 끈 타일만 호버 바탕(Q-012-2) · 끌 수 없는 마지막 타일은 커서 not-allowed(Q-012-3)
+  // 끈 타일만 호버 바탕 · 끌 수 없는 마지막 타일은 커서 not-allowed
   const hiddenHov = resolveState(spec, { legend: 'hidden' }, 'hovered');
   if (hov['legendTile.background'] !== undefined && unbox(hov['legendTile.background']) !== unbox(b['legendTile.background'])) throw new Error(`${F} 켠 타일에 호버 바탕이 있다 — 호버 바탕은 끈 타일(legend hidden)만`);
   if (pr['legendTile.background'] !== undefined && unbox(pr['legendTile.background']) !== unbox(b['legendTile.background'])) throw new Error(`${F} 타일 누름에 바탕이 있다 — 누름은 색 없이 축소만`);
@@ -652,7 +652,7 @@ export function searchLook(): SearchLook {
   const optMinH = len(b['option.minHeight'], `${F} option.minHeight`);
   same(optMinH, optPadY * 2 + radioSize, `${F} 결과 줄 최소 높이 — 위아래 + 라디오`);
   if (String(unbox(resolveState(spec, { selectionMark: 'off' }, 'enabled')['radio.display'])) !== '없음') throw new Error(`${F} selectionMark off 의 radio.display 가 "없음" 이 아니다 — 그림은 라디오를 빼고 그린다`);
-  // 강조 바탕은 줄 폭 전체(0 · 모서리 0)에서 짚으면 들어온다(Menu · List — Q-009-3 B)
+  // 강조 바탕은 줄 폭 전체(0 · 모서리 0)에서 짚으면 들어온다(Menu · List)
   same(len(b['highlight.insetX'], `${F} highlight.insetX`), 0, `${F} 강조 없는 바탕 들임 0`);
   same(len(b['highlight.radius'], `${F} highlight.radius`), 0, `${F} 강조 없는 바탕 모서리 0`);
   const insetX = len(hl['highlight.insetX'], `${F} highlighted highlight.insetX`);

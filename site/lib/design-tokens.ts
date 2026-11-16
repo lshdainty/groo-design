@@ -11,7 +11,7 @@ const FILE: Record<Brand, string> = { shared: 'DESIGN.md', hr: 'DESIGN.hr.md', d
 type TypeStyle = { fontFamily?: string; fontSize: string; fontWeight?: number | string; lineHeight?: string; letterSpacing?: string };
 type Front = {
   colors: Record<string, string>;
-  // v108 — 참조("{colors.gray-00}")로 적힌 색의 가리키는 이름. colors 에는 풀어 둔 hex 가 들어 있다
+  // 참조("{colors.gray-00}")로 적힌 색이 가리키는 이름. colors 에는 풀어 둔 hex 가 들어 있다
   colorRefs: Record<string, string>;
   typography: Record<string, TypeStyle>;
   rounded: Record<string, string>;
@@ -20,6 +20,13 @@ type Front = {
 
 const cache = new Map<Brand, { front: Front; body: string; text: string }>();
 
+// 본문 맨 끝의 숨김 절 — 제품이 아직 쓰는 옛 이름의 별칭이다. 내보내기는 읽지만 사이트는 읽지 않는다
+export const DEPRECATED_HEADING = '## Deprecated aliases';
+const withoutDeprecated = (s: string) => {
+  const at = s.search(/^## Deprecated aliases\s*$/m);
+  return at === -1 ? s : s.slice(0, at);
+};
+
 export function design(brand: Brand = 'shared') {
   const hit = cache.get(brand);
   if (hit) return hit;
@@ -27,7 +34,7 @@ export function design(brand: Brand = 'shared') {
   const m = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   if (!m) throw new Error(`${FILE[brand]} 에 front matter 가 없다`);
   const front = parseYaml(m[1]) as Front;
-  // 역할 → 팔레트, 옛 이름 → 역할 사슬을 hex 로 푼다(v108). 가리키는 이름은 colorRefs 에 남긴다
+  // 역할 → 팔레트 사슬을 hex 로 푼다. 가리키는 이름은 colorRefs 에 남긴다
   const raw = front.colors;
   const refOf = (v: unknown) => /^\{colors\.([a-z0-9-]+)\}$/.exec(String(v))?.[1];
   const resolve = (n: string, depth = 0): string => {
@@ -39,7 +46,7 @@ export function design(brand: Brand = 'shared') {
   };
   front.colorRefs = Object.fromEntries(Object.entries(raw).flatMap(([k, v]) => (refOf(v) ? [[k, refOf(v)!]] : [])));
   front.colors = Object.fromEntries(Object.keys(raw).map((k) => [k, resolve(k)]));
-  const out = { front, body: m[2], text };
+  const out = { front, body: withoutDeprecated(m[2]), text: withoutDeprecated(text) };
   cache.set(brand, out);
   return out;
 }
@@ -54,28 +61,28 @@ export function proseTokens(prefix: string, brand: Brand = 'shared') {
 
 export const px = (v: string) => Number(String(v).replace('px', ''));
 
+// 옛 이름 별칭(spacing xs ~ 3xl · rounded xs ~ 2xl · 옛 15단계 글자)은 머리말에 남아 있지만 사이트에 싣지 않는다
+export const LEGACY_SPACING = /^(xs|sm|md|lg|xl|2xl|3xl)$/;
 export function spacingScale() {
   const all = design().front.spacing;
   const scale = Object.entries(all).filter(([k]) => /^x\d/.test(k)).map(([k, v]) => ({ name: k, value: v }));
-  const alias = Object.entries(all).filter(([k]) => /^(xs|sm|md|lg|xl|2xl|3xl)$/.test(k)).map(([k, v]) => ({ name: k, value: v }));
-  const roles = Object.entries(all).filter(([k]) => !/^x\d/.test(k) && !/^(xs|sm|md|lg|xl|2xl|3xl)$/.test(k)).map(([k, v]) => ({ name: k, value: v }));
+  const roles = Object.entries(all).filter(([k]) => !/^x\d/.test(k) && !LEGACY_SPACING.test(k)).map(([k, v]) => ({ name: k, value: v }));
   const byValue = (v: string) => scale.find((s) => s.value === v)?.name;
-  return { scale, alias, roles, byValue };
+  return { scale, roles, byValue };
 }
 
 export function radiusScale() {
   const all = design().front.rounded;
   const scale = Object.entries(all).filter(([k]) => /^r\d|^full$/.test(k)).map(([k, v]) => ({ name: k, value: v }));
-  const alias = Object.entries(all).filter(([k]) => !/^r\d|^full$/.test(k)).map(([k, v]) => ({ name: k, value: v }));
-  return { scale, alias };
+  return { scale };
 }
 
+export const TYPE_ROLE_STYLES = ['screen-title', 'article-body', 'article-note'];
 export function typeScale() {
   const all = design().front.typography;
   const scale = Object.entries(all).filter(([k]) => /^t\d+$/.test(k)).map(([k, v]) => ({ name: k, ...v }));
-  const semantic = Object.entries(all).filter(([k]) => ['screen-title', 'article-body', 'article-note'].includes(k)).map(([k, v]) => ({ name: k, ...v }));
-  const legacy = Object.entries(all).filter(([k]) => !/^t\d+$/.test(k) && !['screen-title', 'article-body', 'article-note'].includes(k)).map(([k, v]) => ({ name: k, ...v }));
-  return { scale, semantic, legacy };
+  const semantic = Object.entries(all).filter(([k]) => TYPE_ROLE_STYLES.includes(k)).map(([k, v]) => ({ name: k, ...v }));
+  return { scale, semantic };
 }
 
 // 역할 색 — 라이트 값과 `-dark` 짝을 한 줄로
@@ -86,17 +93,17 @@ export function roleColors(brand: Brand = 'shared') {
   const rows: RoleColor[] = [];
   for (const [name, light] of Object.entries(c)) {
     if (!/^(fg|bg|stroke|static)-/.test(name) || name.endsWith('-dark')) continue;
-    // bg-page 처럼 역할을 가리키는 옛 이름은 역할이 아니다
+    // bg-page 처럼 역할을 가리키는 별칭은 역할이 아니다
     if (colorRefs[name] && !PALETTE_STEP.test(colorRefs[name])) continue;
     rows.push({ name, light, dark: c[`${name}-dark`] });
   }
   return rows;
 }
-// v110 — 색을 고르지 않은 항목이 받는 차트 색 순서(제품 순서)
+// 색을 고르지 않은 항목이 받는 차트 색 순서
 export const CHART_ORDER = ['blue', 'green', 'orange', 'violet', 'pink', 'indigo', 'red', 'yellow', 'brown', 'gray'];
 export const BRAND_ROLES = ['fg-brand', 'fg-brand-contrast', 'fg-brand-inverted', 'bg-brand-solid', 'bg-brand-solid-pressed', 'bg-brand-weak', 'bg-brand-weak-pressed', 'stroke-focus-ring', 'stroke-brand-solid', 'stroke-brand-weak'];
 
-// 역할이 가리키는 팔레트 단계("gray-200") — 옛 이름이면 역할을 거쳐 끝까지
+// 역할이 가리키는 팔레트 단계("gray-200") — 별칭이면 역할을 거쳐 끝까지
 export function colorStep(name: string, brand: Brand = 'desk') {
   const refs = { ...design('shared').front.colorRefs, ...design(brand).front.colorRefs };
   let n = name, k = 0;
@@ -118,14 +125,6 @@ export function color(name: string, brand: Brand = 'desk') {
   const v = design(brand).front.colors[name] ?? design('shared').front.colors[name];
   if (!v) throw new Error(`색 토큰 ${name} 이 ${FILE[brand]} 에 없다`);
   return v;
-}
-
-// DESIGN.md v102 표의 "옛 이름 · Desk 웹 이름" 칸
-export function roleAliases() {
-  const out = new Map<string, { old: string; desk: string }>();
-  const re = /^\|\s*`((?:fg|bg|stroke|static)-[a-z0-9-]+)`\s*\|\s*`#[0-9A-Fa-f]{6}`\s*\|[^|]*\|\s*([^|]*)\|\s*([^|]*)\|/gm;
-  for (const m of design('desk').text.matchAll(re)) out.set(m[1], { old: m[2].trim(), desk: m[3].trim() });
-  return out;
 }
 
 // DESIGN.md 의 제목(## ~ #####) 절 안의 표들 — 그대로 그려 보여 줄 때(숫자를 옮겨 적지 않으려고).
@@ -196,7 +195,7 @@ export function sectionNumber(headingStartsWith: string, re: RegExp) {
   return Number(m[1]);
 }
 
-// prose 토큰 하나 — 내보내기(build-tailwind-v4)처럼 뒤에 나온 정의가 이긴다
+// 표 토큰 하나 — 내보내기(build-tailwind-v4)처럼 뒤에 나온 정의가 이긴다
 export function proseValue(name: string, brand: Brand = 'shared') {
   const esc = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const all = [...design(brand).text.matchAll(new RegExp('^\\|\\s*`' + esc + '`\\s*\\|\\s*`([^`]+)`', 'gm'))];
@@ -205,7 +204,7 @@ export function proseValue(name: string, brand: Brand = 'shared') {
 }
 export const ms = (v: string) => parseFloat(v);
 
-// 이름이 같은 정의가 여러 번 나오면(옛 표 · 새 표) 뒤의 것 하나만
+// 이름이 같은 정의가 여러 번 나오면 뒤의 것 하나만
 export function proseTokenSet(prefix: string, keep: RegExp) {
   const out = new Map<string, { name: string; value: string; note: string }>();
   for (const t of proseTokens(prefix)) if (keep.test(t.name)) out.set(t.name, { ...t, value: proseValue(t.name) });

@@ -1,4 +1,4 @@
-// 기초 페이지 공용 조각 — SEED 문서처럼 회색 판 위에 그림을 두고 아래에 설명을 단다.
+// 기초 페이지 공용 조각 — 회색 판 위에 그림을 두고 아래에 설명을 단다.
 import type { CSSProperties, ReactNode } from 'react';
 import Link from 'next/link';
 import { color, sectionTable, sectionText } from '@/lib/design-tokens';
@@ -57,7 +57,7 @@ export function Table({ head, children, minWidth }: { head: ReactNode[]; childre
   );
 }
 
-// 탭 — SEED Color 의 Overview · Roles · Palette 처럼 한 묶음의 페이지를 오간다
+// 탭 — 한 묶음의 페이지(Overview · Roles · Palette 등)를 오간다
 export function SectionTabs({ items, active }: { items: { label: string; href: string }[]; active: string }) {
   return (
     <nav className="not-prose mb-8 flex gap-6 border-b border-fd-border" aria-label="이 묶음의 페이지">
@@ -99,7 +99,7 @@ export function Panel({ caption, children }: { caption?: ReactNode; children: Re
   );
 }
 
-// 이렇게 · 이렇게 하지 않는다 — SEED 의 Do · Don't 처럼 그림 아래 색 띠와 한 줄
+// 이렇게 · 이렇게 하지 않는다 — 그림 아래 색 띠와 한 줄
 export function Verdict({ ok, children, note }: { ok: boolean; children: ReactNode; note: string }) {
   const tone = color(ok ? 'fg-positive' : 'fg-critical');
   return (
@@ -107,7 +107,7 @@ export function Verdict({ ok, children, note }: { ok: boolean; children: ReactNo
       <div className="flex flex-1 items-center justify-center rounded-t-xl bg-white p-5">{children}</div>
       <div className="h-1" style={{ background: tone }} />
       <div className="pt-2 text-[13px] leading-5">
-        <b style={{ color: tone }}>{ok ? '이렇게' : '이렇게 하지 않는다'}</b>
+        <b style={{ color: tone }}>{ok ? '이렇게' : '이렇게 하지 않습니다'}</b>
         <span className="text-fd-muted-foreground"> — {note}</span>
       </div>
     </div>

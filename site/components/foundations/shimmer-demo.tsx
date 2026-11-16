@@ -18,7 +18,7 @@ export function ShimmerDemo({ scenes, loop, bone }: { scenes: Scene[]; loop: { m
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <span className="text-[12px] text-fd-muted-foreground">{reduced ? '기기에서 동작 줄이기가 켜져 있어 멈춰 둔다 — 줄이기 모드에서 반복은 멈춘다.' : '켜 두면 반짝임 띠가 되풀이해 지나간다.'}</span>
+        <span className="text-[12px] text-fd-muted-foreground">{reduced ? '기기에서 동작 줄이기가 켜져 있어 멈춰 둡니다 — 줄이기 모드에서 반복은 멈춥니다.' : '켜 두면 반짝임 띠가 되풀이해 지나갑니다.'}</span>
         <button
           type="button"
           aria-pressed={on}

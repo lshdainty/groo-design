@@ -20,10 +20,10 @@ export function ColorOnlyFigure() {
   return (
     <Figure>
       <div className="flex w-[540px] gap-4">
-        <Verdict ok note="색과 함께 아이콘 · 글자로도 알린다">
+        <Verdict ok note="색과 함께 아이콘 · 글자로도 알립니다">
           <div>{row('식비', '12%', true, true)}{row('교통', '4%', false, true)}</div>
         </Verdict>
-        <Verdict ok={false} note="빨강 · 초록만으로는 색을 구분하기 어려운 사람에게 뜻이 전해지지 않는다">
+        <Verdict ok={false} note="빨강 · 초록만으로는 색을 구분하기 어려운 사람에게 뜻이 전해지지 않습니다">
           <div>{row('식비', '12%', true, false)}{row('교통', '4%', false, false)}</div>
         </Verdict>
       </div>
@@ -82,7 +82,7 @@ export function TouchTargetFigure() {
     );
   };
   return (
-    <Figure caption={`작은 요소도 누르는 영역은 ${touch} × ${touch} 이상 — 분홍이 보이지 않는 여백이다`}>
+    <Figure caption={`작은 요소도 누르는 영역은 ${touch} × ${touch} 이상 — 분홍이 보이지 않는 여백입니다`}>
       <div className="flex items-end gap-10 rounded-xl bg-white px-10 py-6">
         {small(16, `닫기 아이콘 16 → 누르는 영역 ${touch}`)}
         <div className="flex flex-col items-center gap-3">
@@ -100,7 +100,7 @@ export function TouchTargetFigure() {
 export function ErrorAnnounceFigure() {
   const h = specSize('button', 'medium').height;
   return (
-    <Figure caption="오류는 테두리 색과 함께 글자로, 입력칸 바로 아래에, 고칠 방법까지 — 보조 기술에도 바로 알린다">
+    <Figure caption="오류는 테두리 색과 함께 글자로, 입력칸 바로 아래에, 고칠 방법까지 — 보조 기술에도 바로 알립니다">
       <div className="flex items-start gap-8 rounded-xl bg-white px-8 py-6">
         <div className="flex w-[220px] flex-col gap-1.5">
           <label className="text-[13px] font-bold" style={{ color: rc('fg-neutral') }}>카드 이름</label>

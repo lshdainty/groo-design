@@ -44,7 +44,7 @@ export type ChipLook = {
   defaults: { variant: ChipVariant; size: ChipSize };
   sizes: Record<ChipSize, ChipSizeLook>;
   radius: number;
-  // 칩의 최대 폭 — 놓인 줄의 폭('100%'). 넘으면 글 끝을 말줄임(…)하고 아이콘 · 지우기는 남는다(2026-10-17 사용자 결정 — 03-E 결정 2 A)
+  // 칩의 최대 폭 — 놓인 줄의 폭('100%'). 넘으면 글 끝을 말줄임(…)하고 아이콘 · 지우기는 남는다
   maxWidth: string;
   // 아이콘 ↔ 글
   gap: number;
@@ -97,7 +97,7 @@ export const CHIP_TONES = [
 ] as const;
 export type ChipTone = (typeof CHIP_TONES)[number];
 
-// 그림의 아이콘 — 이름으로 넘긴다(서버 그림 → 브라우저 그림). lucide 선 아이콘(v106)
+// 그림의 아이콘 — 이름으로 넘긴다(서버 그림 → 브라우저 그림). lucide 선 아이콘
 export const CHIP_ICONS = [
   'chevron-down',
   'x',
@@ -127,7 +127,7 @@ export type ChipPart = 'root' | 'prefix' | 'label' | 'suffix' | 'remove' | 'icon
 // 여럿 고른 값을 한 칩에 — "첫 값 외 N개"(외 = 앞의 값을 뺀 개수)
 export const summarize = (labels: string[]) => (labels.length <= 1 ? (labels[0] ?? '') : `${labels[0]} 외 ${labels.length - 1}개`);
 
-// 눌림 축소 배율 — 기준 길이 max(높이, 폭 ÷ n, 최소) 에서 축소량만큼(칩 전체 — SEED scaleScope self)
+// 눌림 축소 배율 — 기준 길이 max(높이, 폭 ÷ n, 최소) 에서 축소량만큼(칩 전체)
 export function pressRatio(press: ChipLook['press'], w: number, h: number) {
   const basis = Math.max(h, w / press.widthDivisor, press.minBasis);
   return (basis - press.distance) / basis;

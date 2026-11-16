@@ -44,7 +44,7 @@ export type SnackState = (typeof SNACK_STATES)[number];
 export const FB_STATES = ['enabled', 'hovered', 'pressed', 'focused'] as const;
 export type FbState = (typeof FB_STATES)[number];
 
-// ── 아이콘 — 이름으로 넘긴다(서버 그림 → 브라우저 그림). lucide 선 아이콘(Iconography v106 — 채운 원 없음) ──
+// ── 아이콘 — 이름으로 넘긴다(서버 그림 → 브라우저 그림). lucide 선 아이콘(Iconography — 채운 원 없음) ──
 export const FB_ICONS = [
   'circle-check',
   'circle-alert',
@@ -168,7 +168,7 @@ export type ResultSizeLook = { title: FbType; description: FbType; descGap: numb
 // 첫 · 둘째 버튼 — button.yaml 의 그 변형 · 크기(look 은 Button 그림이 그대로 쓴다)
 export type ResultButton = { variant: string; size: string; height: number; look: ButtonLook };
 export type ResultSectionLook = {
-  // padXInCard — 카드 안에서의 좌우(0 — 카드 안 여백 24 가 가장자리를 맡는다, 2026-10-09 사용자 결정 23B)
+  // padXInCard — 카드 안에서의 좌우(0 — 카드 안 여백 24 가 가장자리를 맡는다)
   root: { padX: number; padY: number; padXInCard: number };
   asset: { size: number; strokeWidth: number; marginBottom: number; color: Record<ResultKind, FbColor>; glyph: Record<'failure' | 'done', FbIcon> };
   title: { color: FbColor; fontWeight: number | string };
@@ -176,7 +176,7 @@ export type ResultSectionLook = {
   sizes: Record<ResultSize, ResultSizeLook>;
   actions: { gap: number };
   primary: ResultButton;
-  // 둘째 버튼(글 버튼)은 위아래로 블리드해 글 자리만 차지한다 — 블리드는 그 버튼의 위아래 여백(SEED bleedY asPadding)
+  // 둘째 버튼(글 버튼)은 위아래로 블리드해 글 자리만 차지한다 — 블리드는 그 버튼의 위아래 여백
   secondary: ResultButton & { lineHeight: number; padY: number };
   motion: { enter: FbMotion };
   screen: FbScreen;

@@ -1,7 +1,7 @@
 // Elevation 페이지 — 층 색은 역할 색(bg-layer-*), 그림자 · 딤은 DESIGN.md 의 prose 토큰, 층 이름은 "쌓임 맥락" 표에서 온다
 import type { CSSProperties, ReactNode } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
-import { color, contrast, proseValue, roleAliases, roleColors, sectionTable, type Brand } from '@/lib/design-tokens';
+import { color, contrast, proseValue, roleColors, sectionTable, type Brand } from '@/lib/design-tokens';
 import { Figure, Swatch, Table, Token } from './ui';
 
 type Mode = 'light' | 'dark';
@@ -78,7 +78,7 @@ export function ElevationHeroFigure() {
   const g = levels(0);
   const surf = ['bg-layer-basement', 'bg-layer-default', 'bg-layer-floating', 'bg-layer-floating'];
   return (
-    <Figure caption="층이 높을수록 사용자 쪽으로 가깝다 — 위의 층이 아래 층을 덮는다">
+    <Figure caption="층이 높을수록 사용자 쪽으로 가깝습니다 — 위의 층이 아래 층을 덮습니다">
       <div className="relative h-[250px] w-[520px] rounded-xl bg-white">
         {g.map((l, i) => (
           <div
@@ -105,7 +105,7 @@ export function GlobalLevelsFigure() {
     <Phone key="3"><Nav /><Cards /><Dim /><Sheet /><Dim /><Dialog style={HL} /></Phone>,
   ];
   return (
-    <Figure caption="Global 층 — 화면 전체의 구조. 파란 테두리가 그 층이다">
+    <Figure caption="Global 층 — 화면 전체의 구조. 파란 테두리가 그 층입니다">
       <div className="flex gap-4">
         {g.map((l, i) => (
           <div key={l.level} className="flex w-[124px] flex-col items-center gap-2">
@@ -132,7 +132,7 @@ export function PageOverPageFigure() {
     </div>
   );
   return (
-    <Figure caption="시트가 덮이면 시트가 새 바닥이 된다 — 그 안에서 연 목록(Select)은 시트 위에 쌓인다">
+    <Figure caption="시트가 덮이면 시트가 새 바닥이 됩니다 — 그 안에서 연 목록(Select)은 시트 위에 쌓입니다">
       <div className="flex items-center gap-6">
         <Phone w={150} h={270}>
           <Nav />
@@ -199,7 +199,7 @@ export function LocalLevelsFigure() {
   );
 }
 
-// 같은 층 안 — 상단 바는 표시 없음(SEED Top Navigation), 한 표면 안에서 머리 · 본문이 따로 스크롤되는 옆 패널 · 대화상자 · 사이드바는 머리 아래 1px
+// 같은 층 안 — 상단 바는 표시 없음(Top Navigation), 한 표면 안에서 머리 · 본문이 따로 스크롤되는 옆 패널 · 대화상자 · 사이드바는 머리 아래 1px
 export function SameLevelFigure() {
   const scrolledBar = (
     <Phone>
@@ -226,7 +226,7 @@ export function SameLevelFigure() {
     </Phone>
   );
   return (
-    <Figure caption="목록이 상단 내비게이션 아래로 스크롤될 때 — 층을 올리지 않고 선 · 그림자도 긋지 않는다. 한 표면 안에서 머리와 본문이 따로 스크롤되는 옆 패널 · 대화상자 · 사이드바는 머리 아래에 선">
+    <Figure caption="목록이 상단 내비게이션 아래로 스크롤될 때 — 층을 올리지 않고 선 · 그림자도 긋지 않습니다. 한 표면 안에서 머리와 본문이 따로 스크롤되는 옆 패널 · 대화상자 · 사이드바는 머리 아래에 선">
       <div className="flex gap-8">
         <div className="flex flex-col items-center gap-2">{scrolledBar}<Cap>상단 바 — 표시 없음</Cap></div>
         <div className="flex flex-col items-center gap-2">{drawer}<Cap>옆 패널 머리 — 선 <code>stroke-neutral-subtle</code></Cap></div>
@@ -240,7 +240,7 @@ export function ThreeWaysFigure() {
   const card = 'flex w-[168px] flex-col items-center gap-3 rounded-xl bg-white px-3 pb-4 pt-5';
   const stage = 'relative h-[96px] w-[140px] overflow-hidden rounded-lg';
   return (
-    <Figure caption="표면 색 · 그림자 · 선 — 가운데 것은 다크에서 잘 안 보여 꼭 필요한 곳에만 쓴다">
+    <Figure caption="표면 색 · 그림자 · 선 — 가운데 것은 다크에서 잘 안 보여 꼭 필요한 곳에만 씁니다">
       <div className="flex gap-3">
         <div className={card}>
           <div className={stage} style={{ background: rc('bg-layer-basement') }}>
@@ -249,7 +249,7 @@ export function ThreeWaysFigure() {
             </div>
           </div>
           <b className="text-[13px] text-[#1A1F2E]">표면 색</b>
-          <Cap>배경의 밝기 · 색을 바꾼다 — 스낵바</Cap>
+          <Cap>배경의 밝기 · 색을 바꿉니다 — 스낵바</Cap>
         </div>
         <div className={card}>
           <div className={stage} style={{ background: rc('bg-layer-basement') }}>
@@ -269,7 +269,7 @@ export function ThreeWaysFigure() {
             </div>
           </div>
           <b className="text-[13px] text-[#1A1F2E]">선</b>
-          <Cap>가장자리에 테두리를 둔다 — 사이드바의 오른쪽 선 · 떠 있는 탭 바의 안쪽 테두리 · 카드의 1px 테두리</Cap>
+          <Cap>가장자리에 테두리를 둡니다 — 사이드바의 오른쪽 선 · 떠 있는 탭 바의 안쪽 테두리 · 카드의 1px 테두리</Cap>
         </div>
       </div>
     </Figure>
@@ -278,7 +278,7 @@ export function ThreeWaysFigure() {
 
 export function ShadowFigure() {
   return (
-    <Figure caption="그림자 4단계 — 다크는 더 짙은 검정과 위쪽 1px 빛으로 같은 높이를 낸다">
+    <Figure caption="그림자 4단계 — 다크는 더 짙은 검정과 위쪽 1px 빛으로 같은 높이를 냅니다">
       <div className="flex gap-4">
         {(['light', 'dark'] as Mode[]).map((m) => (
           <div key={m} className="flex w-[264px] flex-col gap-3 rounded-2xl p-5" style={{ background: rc('bg-layer-basement', m) }}>
@@ -298,16 +298,14 @@ export function ShadowFigure() {
 }
 
 export function LayerTokenTable() {
-  const alias = roleAliases();
   const rows = roleColors('desk').filter((r) => r.name.startsWith('bg-layer-'));
   return (
-    <Table head={['토큰', '라이트', '다크', '옛 이름']} minWidth={560}>
+    <Table head={['토큰', '라이트', '다크']} minWidth={440}>
       {rows.map((r) => (
         <tr key={r.name}>
           <td><Token>{r.name}</Token></td>
           <td><Swatch hex={r.light} /></td>
           <td><Swatch hex={r.dark} /></td>
-          <td className="text-fd-muted-foreground">{alias.get(r.name)?.old ?? '—'}</td>
         </tr>
       ))}
     </Table>
@@ -332,7 +330,7 @@ export function BasementVsWeakFigure() {
     </div>
   );
   return (
-    <Figure caption="라이트에서는 둘이 비슷하다. 다크에서 basement 는 가장 어두운 바닥이고, neutral-weak 는 카드보다 밝다">
+    <Figure caption="라이트에서는 둘이 비슷합니다. 다크에서 basement 는 가장 어두운 바닥이고, neutral-weak 는 카드보다 밝습니다">
       <div className="flex gap-4">
         {(['light', 'dark'] as Mode[]).map((m) => (
           <div key={m} className="flex flex-col gap-3 rounded-2xl p-4" style={{ background: m === 'dark' ? rc('bg-layer-default', 'dark') : '#FFFFFF' }}>
@@ -346,7 +344,7 @@ export function BasementVsWeakFigure() {
   );
 }
 
-// ── 화면 바탕 — 띠 화면(구역 · 묶음) · 흰 화면(DESIGN.md Layout "화면 바탕", 2026-10-16 Q-019-3 C · 폰 구역 화면은 2026-10-21 I-01 결정 3) ─────
+// ── 화면 바탕 — 띠 화면(구역 · 묶음) · 흰 화면(DESIGN.md Layout "화면 바탕") ─────
 // 투명한 색(#RRGGBBAA)을 바탕에 섞은 불투명 hex — 대비를 잴 때
 function over(fg: string, bg: string) {
   const h = fg.replace('#', '');
@@ -437,7 +435,7 @@ export function ScreenFloorFigure() {
     },
   ];
   return (
-    <Figure caption={`폰 화면의 바닥은 늘 회색이고, 그 위에 흰 띠를 구역 · 묶음마다 놓는다(거래 목록만 흰 화면). 띠 사이 틈은 라이트 ${gapL.toFixed(2)}:1 · 다크 ${gapD.toFixed(2)}:1 로 옅다 — 구역은 머리 글이, 묶음은 목록 제목이 가른다. 데스크톱은 같은 구역을 카드로 쌓는다`}>
+    <Figure caption={`폰 화면의 바닥은 늘 회색이고, 그 위에 흰 띠를 구역 · 묶음마다 놓습니다(거래 목록만 흰 화면). 띠 사이 틈은 라이트 ${gapL.toFixed(2)}:1 · 다크 ${gapD.toFixed(2)}:1 로 옅습니다 — 구역은 머리 글이, 묶음은 목록 제목이 가릅니다. 데스크톱은 같은 구역을 카드로 쌓습니다`}>
       <div className="flex flex-col gap-4">
         {(['light', 'dark'] as Mode[]).map((m) => (
           <div key={m} className="flex gap-4">
@@ -495,7 +493,7 @@ export function FloorFillFigure() {
     );
   };
   return (
-    <Figure caption="회색 바닥 위 — 약한 배경은 라이트에서 바닥과 같은 색이다. 버튼은 테두리로, 칩 · 세그먼트 트랙은 투명 짝으로 칠한다">
+    <Figure caption="회색 바닥 위 — 약한 배경은 라이트에서 바닥과 같은 색입니다. 버튼은 테두리로, 칩 · 세그먼트 트랙은 투명 짝으로 칠합니다">
       <div className="flex flex-col gap-4 sm:flex-row">
         {cell('light')}
         {cell('dark')}

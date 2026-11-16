@@ -1,4 +1,4 @@
-// Desk 데스크톱 벨의 알림 목록 그림(서버) — 1280 이상 벨 아래 Popover · 768 ~ 1279 Bottom Sheet(2026-10-16 사용자 결정 Q-017-3b B).
+// Desk 데스크톱 벨의 알림 목록 그림(서버) — 1280 이상 벨 아래 Popover · 768 ~ 1279 Bottom Sheet.
 // 표면은 popover.yaml · bottom-sheet.yaml 을 푼 값(overlayLook — PopoverSurface · SheetSurface), 폭 · 높이는 popover.yaml 의 notificationList,
 // 머리 · 버튼 자리는 top-navigation.yaml(navKit().top)이다. 알림 글은 지어낸 것 — 가장 긴 줄은 두 줄을 넘긴다.
 import type { ReactNode } from 'react';
@@ -30,7 +30,7 @@ export function notifyLook() {
   const width = n('width');
   const maxHeight = n('maxHeight');
   if (!width || !maxHeight) throw new Error('popover.yaml notificationList 의 width · maxHeight 를 읽지 못했다');
-  // 줄 끝 ⋮ — "Button ghost neutralSubtle iconOnly xsmall 32"(2026-10-22 알림 지우기 B)
+  // 줄 끝 ⋮ — "Button ghost neutralSubtle iconOnly xsmall 32"
   const moreRaw = String(unbox(v['notificationList.rowMore']));
   const mm = /^Button\s+(ghost)\s+(\w+)\s+(iconOnly)\s+(\w+)\s+(\d+)$/.exec(moreRaw);
   if (!mm) throw new Error(`popover.yaml notificationList.rowMore(${moreRaw})가 "Button ghost <색> iconOnly <크기> <높이>" 꼴이 아니다`);

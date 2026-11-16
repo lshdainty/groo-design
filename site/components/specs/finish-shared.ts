@@ -103,7 +103,7 @@ export type AtLook = {
   mask: { size: number; offset: number };
   dropzone: { h: number; gap: number; padX: number; radius: number; borderW: number; border: IColor; dragBorder: IColor; dragBg: IColor; disabledBorder: IColor; label: IType; labelColor: IColor; text: string };
   pick: { wide: ButtonLook; narrow: ButtonLook; label: string };
-  // 사진의 읽기 전용 · 끄는 중 불투명도(13B — SEED 그대로) · 그 전환
+  // 사진의 읽기 전용 · 끄는 중 불투명도 · 그 전환
   imageFade: { readonly: number; dragging: number; motion: IMotion };
   // 항목 누르기 — 메뉴(14A) · 끌기 문턱 · 키
   itemPress: { mouse: number; touch: number; keys: string };
@@ -204,7 +204,7 @@ export const FT_PLACEHOLDER = {
 };
 // groo-home 의 색 · 글꼴 — 홈은 groo-design 을 따르지 않는다(홈 CLAUDE.md). 짝: fg-neutral → --ink · fg-neutral-muted → --ink2 ·
 // fg-neutral-subtle → --ink3 · stroke-neutral-subtle → --line, 브랜드 글자는 --blue. 값은 groo-home origin/main index.html:10(1f78e02 — #10 에서 브랜드 사이 8 · 사이트맵 링크 올림 --ink3 으로 스펙에 맞췄다) —
-// --ink3 은 #8B95A1(흰 바탕 3.04)에서 짙게 고친 값이다(사용자 결정 8A — 4.5 이상)
+// --ink3 은 #8B95A1(흰 바탕 3.04)에서 짙게 고친 값이다(4.5 이상)
 export const HOME_SKIN = { font: "'Noto Sans KR', -apple-system, 'Apple SD Gothic Neo', sans-serif", ink: '#191F28', ink2: '#4E5968', ink3: '#6B7684', line: '#E5E8EB', brand: '#1B64DA', bg: '#FFFFFF' };
 export const HOME_INK3_BEFORE = '#8B95A1';
 

@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { Figure, MARK_LINE, Measure, Table, Token } from './ui';
 
 const ROLE_TEXT: Record<string, { axis: string; use: string }> = {
-  'global-gutter': { axis: '수평', use: '화면 가장자리와 콘텐츠 사이. 모든 화면에서 같게 둔다' },
+  'global-gutter': { axis: '수평', use: '화면 가장자리와 콘텐츠 사이. 모든 화면에서 같게 둡니다' },
   'between-chips': { axis: '수평', use: '나란히 놓인 칩 사이' },
   'component-default': { axis: '수직', use: '따로 정한 간격이 없는 컴포넌트 사이' },
   'between-text': { axis: '수직', use: '제목과 설명처럼 붙어 있는 글 요소 사이' },
@@ -18,7 +18,7 @@ function role(name: string) {
   return px(r.value);
 }
 
-// 역할 간격 — SEED 처럼 역할 하나씩 작은 화면에 그린다(분홍 띠가 그 간격)
+// 역할 간격 — 역할 하나씩 작은 화면에 그린다(분홍 띠가 그 간격)
 function Mini({ title, value, children }: { title: string; value: number; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-2">
@@ -127,15 +127,13 @@ export function SpacingScaleFigure() {
 }
 
 export function SpacingTokenTable() {
-  const { scale, alias } = spacingScale();
-  const aliasOf = (v: string) => alias.filter((a) => a.value === v).map((a) => a.name);
+  const { scale } = spacingScale();
   return (
-    <Table head={['토큰', '값', '옛 이름(별칭)']}>
+    <Table head={['토큰', '값']}>
       {scale.map((s) => (
         <tr key={s.name}>
           <td><Token>spacing-{s.name}</Token></td>
           <td className="tabular-nums">{s.value}</td>
-          <td>{aliasOf(s.value).length ? aliasOf(s.value).map((a) => <Token key={a}>spacing-{a}</Token>) : <span className="text-fd-muted-foreground">—</span>}</td>
         </tr>
       ))}
     </Table>
