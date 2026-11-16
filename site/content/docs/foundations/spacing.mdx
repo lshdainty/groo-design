@@ -1,39 +1,33 @@
 ---
 title: Spacing
-description: 컴포넌트와 콘텐츠 사이의 간격
+description: 컴포넌트와 콘텐츠 사이의 간격입니다.
 source: DESIGN.md
 ---
 
 import { SpacingRolesFigure, SpacingRoleTable, SpacingScaleFigure, SpacingTokenTable } from '@/components/foundations/spacing';
 
-간격은 요소 사이의 공간으로 묶음과 흐름을 만든다. groo 는 당근 SEED 의 dimension 스케일(2px 단위 19단계)과, 자리마다 이름을 붙인 역할 간격을 쓴다.
+간격은 요소 사이의 공간으로 묶음과 흐름을 만듭니다. groo 는 2px 단위 눈금과, 자리마다 이름을 붙인 역할 간격을 씁니다.
 
 ## 목적
 
-- **일관성** — 모든 화면과 컴포넌트가 같은 눈금을 쓴다.
-- **모듈성** — 값 대신 이름(`spacing-x4`)으로 간격을 고른다. 값이 바뀌어도 부르는 자리는 그대로다.
-- **가독성** — 여백으로 콘텐츠의 묶음과 흐름을 나눈다.
+- **일관성** — 모든 화면과 컴포넌트가 같은 눈금을 씁니다.
+- **모듈성** — 값 대신 이름(`spacing-x4`)으로 간격을 고릅니다. 값이 바뀌어도 부르는 자리는 그대로입니다.
+- **가독성** — 여백으로 콘텐츠의 묶음과 흐름을 나눕니다.
 
 ## 역할 간격
 
-자리에 이름을 붙인 간격이다. 값은 아래 눈금 위에 있다.
+자리에 이름을 붙인 간격입니다. 값은 아래 눈금 위에 있습니다.
 
 <SpacingRolesFigure />
 
 <SpacingRoleTable />
 
-- `spacing-global-gutter` 는 SEED(16px)와 달리 24px 이다. groo 앱의 화면 좌우 여백 규칙(2026-09-14, 본문 24)을 따른다 — 주간 띠 · 캘린더 격자 안 칸의 인셋 · 카테고리 탭 바의 전폭은 의도한 예외다.
-- 웹에서 768px 이상의 페이지 좌우 여백은 [Layout](/docs/foundations/layout) 의 `layout-margin`(32px)이다. 768 미만은 `spacing-global-gutter` 를 쓴다.
-- 노치 · 홈 표시줄처럼 안전 영역이 있는 화면에서는 화면 끝이 아니라 **안전 영역 경계부터** 잰다. Desk 앱은 SafeArea, 웹은 `env(safe-area-inset-*)` 로 이미 그렇게 한다.
+- `spacing-global-gutter` 는 앱 · 768 미만 웹의 화면 좌우 여백입니다. 주간 띠 · 캘린더 격자 안 칸의 인셋 · 카테고리 탭 바의 전폭은 의도한 예외입니다.
+- 웹에서 768 이상의 페이지 좌우 여백은 [Layout](/docs/foundations/layout) 의 `layout-margin` 입니다. 768 미만은 `spacing-global-gutter` 를 씁니다.
+- 노치 · 홈 표시줄처럼 안전 영역이 있는 화면에서는 화면 끝이 아니라 **안전 영역 경계부터** 잽니다 — [Safe Area](/docs/foundations/safe-area).
 
 ## 간격 눈금
 
 <SpacingScaleFigure />
 
 <SpacingTokenTable />
-
-옛 이름(`spacing-xs` … `spacing-3xl`)은 같은 값의 별칭이다. 컴포넌트를 옮길 때 새 이름으로 바꾼다.
-
----
-
-<p className="text-sm text-fd-muted-foreground">구성과 일부 설명은 당근 [SEED Design](https://seed-design.io) 의 Foundations 문서(Apache-2.0)를 바탕으로 했다. 값과 그림은 groo 것이다.</p>

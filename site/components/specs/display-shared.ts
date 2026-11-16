@@ -87,7 +87,7 @@ export type AvatarSize = (typeof AVATAR_SIZES)[number];
 export type AvatarLook = {
   defaultSize: AvatarSize;
   sizes: Record<AvatarSize, { d: number; font: number }>;
-  // 이름 색 — 차트 10색(v110 순서)
+  // 이름 색 — 차트 10색(배정 순서)
   order: string[];
   hues: Record<string, DColor>;
   initial: { fg: DColor; weight: number; lineHeight: number };
@@ -130,7 +130,7 @@ export function stackSlots<T>(people: T[], max: number) {
   if (people.length <= max) return { shown: people, more: 0 };
   return { shown: people.slice(0, max), more: Math.min(people.length - max, 99) };
 }
-// 폭에 맞춘 묶음(avatar-stack.yaml root.overflow — 2026-10-17 사용자 결정 03-E 결정 4 B) — 원 c 개의 폭 = 지름 + (c − 1) × (지름 − 겹침).
+// 폭에 맞춘 묶음(avatar-stack.yaml root.overflow) — 원 c 개의 폭 = 지름 + (c − 1) × (지름 − 겹침).
 // 모두(전체 ≤ max)가 폭에 들면 모두, 아니면 "+N" 원까지 폭에 드는 원 수에서 하나를 뺀 사람(가장 적어도 1명 · max 까지)
 export function stackWidth(circles: number, d: number, overlap: number) {
   return circles <= 0 ? 0 : d + (circles - 1) * (d - overlap);
@@ -180,7 +180,7 @@ export const DISPLAY_TONES = [
 ] as const;
 export type DisplayTone = (typeof DISPLAY_TONES)[number];
 
-// 그림의 아이콘 — 이름으로 넘긴다(서버 그림 → 브라우저 그림). lucide 선 아이콘(v106)
+// 그림의 아이콘 — 이름으로 넘긴다(서버 그림 → 브라우저 그림). lucide 선 아이콘
 export const DISPLAY_ICONS = [
   'pencil',
   'eye',

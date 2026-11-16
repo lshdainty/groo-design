@@ -60,7 +60,7 @@ export function DensityFigure() {
   );
 }
 
-// 그리드 구조 — SEED 처럼 칸 · 칸 사이 · 여백을 화살표로 가리킨다
+// 그리드 구조 — 칸 · 칸 사이 · 여백을 화살표로 가리킨다
 const COL = '#D5E3F7', GUT = '#EDF3FB', ARROW = '#1D6FCB';
 function Arrow({ x, label, sub }: { x: number; label: string; sub: string }) {
   return (
@@ -196,7 +196,7 @@ export function BreakpointFigure() {
   const segs = [{ short: 'base', from: 0 }, ...list.map((b) => ({ short: b.short, from: b.px }))];
   const tone = ['#E3EEFB', '#CFE1F7', '#B8D2F2', '#9FC2EC', '#84B0E5'];
   return (
-    <Figure caption="중단점 — 모바일 우선, 사이드 내비게이션은 md 부터 보인다">
+    <Figure caption="중단점 — 모바일 우선, 사이드 내비게이션은 md 부터 보입니다">
       <div className="flex flex-col gap-2" style={{ width: W }}>
         <div className="relative h-12 overflow-hidden rounded-md">
           {segs.map((sg, i) => {
@@ -226,7 +226,7 @@ export function ResponsiveFigure() {
     </div>
   );
   return (
-    <Figure caption="Fluid 는 화면을 따라 늘고, Fixed & Centered 는 최대 폭에서 멈춰 가운데에 선다">
+    <Figure caption="Fluid 는 화면을 따라 늘고, Fixed & Centered 는 최대 폭에서 멈춰 가운데에 섭니다">
       <div className="grid grid-cols-2 gap-x-10 gap-y-3 text-center text-[13px] text-fd-muted-foreground">
         <b className="text-fd-foreground">Fluid</b>
         <b className="text-fd-foreground">Fixed &amp; Centered</b>
@@ -244,7 +244,7 @@ export function RegionsFigure() {
   const fg = color('fg-neutral-muted');
   const cell = 'absolute flex items-center justify-center px-1 text-center text-[12px] font-bold leading-tight';
   return (
-    <Figure caption={`영역 넷 — 사이드 내비게이션 ${side}px(접으면 ${collapsed}px) 오른쪽에 머리 ${head}px · 본문 · 보조 영역. 머리 아래 선은 없다`}>
+    <Figure caption={`영역 넷 — 사이드 내비게이션 ${side}px(접으면 ${collapsed}px) 오른쪽에 머리 ${head}px · 본문 · 보조 영역. 머리 아래 선은 없습니다`}>
       <div className="relative overflow-hidden rounded-lg border border-black/10" style={{ width: W, height: H * s + 60, color: fg, background: color('bg-layer-basement') }}>
         <div className={cell} style={{ left: 0, top: 0, bottom: 0, width: side * s, background: color('bg-layer-default'), boxShadow: `inset -1px 0 0 ${color('stroke-neutral-subtle')}` }}>Side Navigation</div>
         <div className={cell} style={{ left: side * s, right: 0, top: 0, height: head * s + 8, background: color('bg-layer-default') }}>Header (GNB)</div>

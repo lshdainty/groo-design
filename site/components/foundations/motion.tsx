@@ -63,7 +63,7 @@ export function MacroMicroFigure() {
             <span className="absolute bottom-[80px] right-2 text-[16px] leading-none" style={{ color: color('fg-brand') }} aria-hidden>↑</span>
           </div>
           <b className="text-[14px] text-[#1A1F2E]">매크로</b>
-          <span className="text-center text-[12px] leading-4 text-[#62697A]">시트가 올라온다 {sheet} · 모달 · 페이지 전환</span>
+          <span className="text-center text-[12px] leading-4 text-[#62697A]">시트가 올라옵니다 {sheet} · 모달 · 페이지 전환</span>
         </div>
       </div>
     </Figure>
@@ -125,10 +125,10 @@ export function KeyframeLibrary() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: css }} />
-      <Panel caption="단발 키프레임은 누를 때 한 번, 반복 키프레임은 켜 두는 동안 돈다">
+      <Panel caption="단발 키프레임은 누를 때 한 번, 반복 키프레임은 켜 두는 동안 돕니다">
         <KeyframePlayer
-          single={keyframeRows('Single-shot keyframes')}
-          loop={keyframeRows('Loop keyframes')}
+          single={keyframeRows('단발 키프레임')}
+          loop={keyframeRows('반복 키프레임')}
           reduced={reducedMotion()}
           shimmer={proseValue('gradient-shimmer-neutral')}
           palette={palette()}

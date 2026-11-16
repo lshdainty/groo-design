@@ -1,30 +1,26 @@
 ---
 title: Layout
-description: 레이아웃 유형 · 밀도 · 그리드 · 중단점 · 화면 영역
+description: 레이아웃 유형 · 밀도 · 그리드 · 중단점 · 화면 영역입니다.
 source: DESIGN.md
 ---
 
 import { BreakpointFigure, ColumnSpanFigure, ContentLayoutFigure, DensityFigure, FrameFigure, GridAnatomyFigure, LayoutTypesFigure, RegionsFigure, ResponsiveFigure } from '@/components/foundations/layout';
-import { Note, SourceList, SourceTable } from '@/components/foundations/ui';
+import { SourceList, SourceTable } from '@/components/foundations/ui';
 
-레이아웃은 제품의 콘텐츠를 구조화하고 화면마다 같은 경험을 주는 뼈대다. 화면 밀도와 기기 폭에 맞춰 늘고 줄 수 있게 그리드와 중단점을 둔다 — 당근 SEED 의 레이아웃을 따른다.
-
-<Note>
-  이 값들은 아직 두 웹 · 앱과 groo-home 에 들어가지 않았다. 앱마다 PR 을 따로 내며, 그 전까지 제품 코드의 값(Desk 웹 중단점 736 · 좌우 여백 28 · 사이드바 256, HR 웹 Tailwind 기본 중단점 · 사이드바 288 등)이 이 페이지와 다른 게 정상이다.
-</Note>
+레이아웃은 제품의 콘텐츠를 구조화하고 화면마다 같은 경험을 주는 뼈대입니다. 화면 밀도와 기기 폭에 맞춰 늘고 줄 수 있게 그리드와 중단점을 둡니다.
 
 ## Layout Types
 
-사용자의 목적과 콘텐츠의 복잡도에 따라 두 유형을 쓴다.
+사용자의 목적과 콘텐츠의 복잡도에 따라 두 유형을 씁니다.
 
-- **Dashboard Layout** — 데이터를 많이 다루고 관리 기능이 중심인 화면. groo 의 두 웹(Desk 가계부 · HR 관리)이 여기에 든다.
-- **Contents Layout** — 정보를 전하는 것이 목적인 서비스 페이지. groo-home 같은 소개 · 안내 페이지가 여기에 든다.
+- **Dashboard Layout** — 데이터를 많이 다루고 관리 기능이 중심인 화면입니다. groo 의 두 웹(담다 가계부 · 이음 관리)이 여기에 듭니다.
+- **Contents Layout** — 정보를 전하는 것이 목적인 서비스 페이지입니다. 서비스 소개 · 안내 페이지가 여기에 듭니다.
 
 <LayoutTypesFigure />
 
 ## Dashboard Layout — 밀도
 
-화면이 담는 정보량으로 밀도를 하나 고르고, 밀도가 콘텐츠의 최대 폭을 정한다. 폭을 제한하면 가운데 정렬한다.
+화면이 담는 정보량으로 밀도를 하나 고르고, 밀도가 콘텐츠의 최대 폭을 정합니다. 폭을 제한하면 가운데 정렬합니다.
 
 - **low** — 간단한 설정 창이나 대시보드 요약
 - **medium (기본)** — 일반적인 관리 도구와 데이터 목록
@@ -36,14 +32,14 @@ import { Note, SourceList, SourceTable } from '@/components/foundations/ui';
 
 <SourceTable heading="콘텐츠 폭 — 밀도" />
 
-768 미만은 밀도와 상관없이 칸 없이 화면 폭 전체를 쓴다. high 는 최소 폭도 두지 않는다 — 태블릿 세로(768)에서 가로 스크롤이 생기지 않게. 어느 화면이 어느 밀도인지는 앱에 적용할 때 화면 목록을 만들어 정한다.
+768 미만은 밀도와 상관없이 칸 없이 화면 폭 전체를 씁니다. high 는 최소 폭도 두지 않습니다 — 태블릿 세로(768)에서 가로 스크롤이 생기지 않게 하기 위해서입니다.
 
 ## Contents Layout
 
-12칸으로 시스템의 짜임을 맞춘다.
+12칸으로 시스템의 짜임을 맞춥니다.
 
-- **가운데 정렬** — 읽기 좋게 `breakpoint-lg`(1280) 이상에서 가운데에 고정한다.
-- **최대 폭** — 콘텐츠에 몰입하도록 기본 1040px 을 쓰고, 검색 결과처럼 넓게 훑어야 하는 페이지는 1280px 까지 넓힌다.
+- **가운데 정렬** — 읽기 좋게 `breakpoint-lg` 이상에서 가운데에 고정합니다.
+- **최대 폭** — 콘텐츠에 몰입하도록 기본 `layout-max-content` 를 쓰고, 검색 결과처럼 넓게 훑어야 하는 페이지는 `layout-max-content-wide` 까지 넓힙니다.
 
 <ContentLayoutFigure />
 
@@ -51,11 +47,11 @@ import { Note, SourceList, SourceTable } from '@/components/foundations/ui';
 
 ## Grid anatomy
 
-그리드를 이루는 요소다.
+그리드를 이루는 요소입니다.
 
-- **Columns** — 콘텐츠가 놓이는 칸. 밀도 · 화면 폭에 따라 수가 정해진다.
-- **Gutters** — 칸과 칸 사이. 768 이상은 24px, 768 미만은 16px. 카드 사이도 같은 값을 쓴다.
-- **Margins** — 콘텐츠와 화면 끝 사이. 768 이상은 32px, 768 미만은 [`spacing-global-gutter`](/docs/foundations/spacing)(24px).
+- **Columns** — 콘텐츠가 놓이는 칸입니다. 밀도 · 화면 폭에 따라 수가 정해집니다.
+- **Gutters** — 칸과 칸 사이입니다. 768 이상은 `layout-gutter`, 768 미만은 `layout-gutter-narrow` 입니다.
+- **Margins** — 콘텐츠와 화면 끝 사이입니다. 768 이상은 `layout-margin`, 768 미만은 [`spacing-global-gutter`](/docs/foundations/spacing) 입니다.
 
 <GridAnatomyFigure />
 
@@ -63,18 +59,18 @@ import { Note, SourceList, SourceTable } from '@/components/foundations/ui';
 
 ## Responsive Behavior
 
-화면 크기가 바뀔 때 두 가지 방식으로 대응한다.
+화면 크기가 바뀔 때 두 가지 방식으로 대응합니다.
 
-- **Fluid (가변형)** — 중단점 사이에서 칸 폭이 브라우저 폭에 비례해 늘고 준다.
-- **Fixed & Centered (고정 · 가운데 정렬)** — 최대 폭(예: 1040px)에 이르면 더 늘지 않고 화면 가운데에 고정된다.
+- **Fluid (가변형)** — 중단점 사이에서 칸 폭이 브라우저 폭에 비례해 늘고 줍니다.
+- **Fixed & Centered (고정 · 가운데 정렬)** — 최대 폭에 이르면 더 늘지 않고 화면 가운데에 고정됩니다.
 
 <ResponsiveFigure />
 
-한 화면에서 두 방식을 섞어 쓸 수 있다 — 예를 들어 표는 Fluid, 그 위 요약 카드 줄은 Fixed & Centered.
+한 화면에서 두 방식을 섞어 쓸 수 있습니다 — 예를 들어 표는 Fluid, 그 위 요약 카드 줄은 Fixed & Centered 로 둡니다.
 
 ## Breakpoint
 
-모바일 우선이다. 작은 화면에서 시작해 화면이 커지면 레이아웃이 넓어진다.
+모바일 우선입니다. 작은 화면에서 시작해 화면이 커지면 레이아웃이 넓어집니다.
 
 <BreakpointFigure />
 
@@ -82,26 +78,26 @@ import { Note, SourceList, SourceTable } from '@/components/foundations/ui';
 
 <SourceTable heading="중단점" />
 
-- 사이드 내비게이션은 `breakpoint-md` 이상에서 보인다. 그 아래에서는 Desk 웹은 앱과 같은 하단 탭 바([Bottom Navigation](/docs/components/bottom-navigation)), HR 은 상단 바의 ☰ 로 여는 왼쪽 주 메뉴([Side Panel](/docs/components/side-panel))다 — 아래 [화면 틀](#화면-틀).
-- 화면 틀을 JS 로 바꾸는 기준도 같은 값이다. 스타일(`md:`)과 화면 틀이 다른 폭에서 바뀌면 그 사이에서 모바일 틀 안에 태블릿 스타일이 켜진다.
+- 사이드 내비게이션은 `breakpoint-md` 이상에서 보입니다. 그 아래에서는 담다는 앱과 같은 하단 탭 바([Bottom Navigation](/docs/components/bottom-navigation)), 이음은 상단 바의 ☰ 로 여는 왼쪽 주 메뉴([Side Panel](/docs/components/side-panel))입니다 — 아래 [화면 틀](#화면-틀).
+- 화면 틀을 JS 로 바꾸는 기준도 같은 값입니다. 스타일(`md:`)과 화면 틀이 다른 폭에서 바뀌면 그 사이에서 모바일 틀 안에 태블릿 스타일이 켜지기 때문입니다.
 
 ## Column span and offset
 
-콘텐츠가 몇 칸을 차지하고 어디서 시작하는지를 칸 수로 정한다.
+콘텐츠가 몇 칸을 차지하고 어디서 시작하는지를 칸 수로 정합니다.
 
-- **Column span** — 콘텐츠가 차지하는 칸 수. 중요한 콘텐츠에 칸을 더 줘서 위계를 만든다.
-- **Column offset** — 콘텐츠 앞에 비워 두는 칸 수. 콘텐츠를 가운데에 두거나 좌우 균형을 맞출 때 쓴다.
+- **Column span** — 콘텐츠가 차지하는 칸 수입니다. 중요한 콘텐츠에 칸을 더 줘서 위계를 만듭니다.
+- **Column offset** — 콘텐츠 앞에 비워 두는 칸 수입니다. 콘텐츠를 가운데에 두거나 좌우 균형을 맞출 때 씁니다.
 
 <ColumnSpanFigure />
 
 ## Layout Regions
 
-화면의 역할을 나누는 영역이다.
+화면의 역할을 나누는 영역입니다.
 
-- **Header (GNB)** — 사이드바 오른쪽 · 본문 위의 머리([Top Navigation](/docs/components/top-navigation) 의 데스크톱 머리 — Desk). 화면의 주 동작과 아이콘 버튼을 두고, 화면 제목은 본문 맨 위 제목이 맡는다. 아래에 선을 긋지 않는다. HR 은 머리를 두지 않는다.
-- **Side Navigation** — 서비스의 주 메뉴([Side Navigation](/docs/components/side-navigation)). `breakpoint-lg` 이상은 펼치고 그 아래는 아이콘만으로 접힌다. `breakpoint-md` 미만에서는 Desk 하단 탭 바 · HR ☰ 주 메뉴가 맡는다.
-- **Main Content** — 사용자가 실제로 다루는 콘텐츠. 레이아웃 유형에 따라 그리드가 적용된다.
-- **Aside** — 오른쪽에 나타나는 보조 영역. 고른 항목의 상세 · 설정처럼 부가 작업에 쓴다.
+- **Header (GNB)** — 사이드바 오른쪽 · 본문 위의 머리입니다([Top Navigation](/docs/components/top-navigation) 의 데스크톱 머리 — 담다). 화면의 주 동작과 아이콘 버튼을 두고, 화면 제목은 본문 맨 위 제목이 맡습니다. 아래에 선을 긋지 않습니다. 이음은 머리를 두지 않습니다.
+- **Side Navigation** — 서비스의 주 메뉴입니다([Side Navigation](/docs/components/side-navigation)). `breakpoint-lg` 이상은 펼치고 그 아래는 아이콘만으로 접힙니다. `breakpoint-md` 미만에서는 담다 하단 탭 바 · 이음 ☰ 주 메뉴가 맡습니다.
+- **Main Content** — 사용자가 실제로 다루는 콘텐츠입니다. 레이아웃 유형에 따라 그리드가 적용됩니다.
+- **Aside** — 오른쪽에 나타나는 보조 영역입니다. 고른 항목의 상세 · 설정처럼 부가 작업에 씁니다.
 
 <RegionsFigure />
 
@@ -109,7 +105,7 @@ import { Note, SourceList, SourceTable } from '@/components/foundations/ui';
 
 ## 화면 틀
 
-화면을 감싸는 틀 — 머리(상단 바) · 주 메뉴(하단 탭 바 · 사이드바) · 본문 — 은 두 문턱에서 바뀐다. 부품의 값은 [Top Navigation](/docs/components/top-navigation) · [Bottom Navigation](/docs/components/bottom-navigation) · [Side Navigation](/docs/components/side-navigation) · [Side Panel](/docs/components/side-panel) 에 있다. 가려질 수 있는 화면 가장자리는 [Safe Area](/docs/foundations/safe-area) 를 따른다.
+화면을 감싸는 틀 — 머리(상단 바) · 주 메뉴(하단 탭 바 · 사이드바) · 본문 — 은 두 문턱에서 바뀝니다. 부품의 값은 [Top Navigation](/docs/components/top-navigation) · [Bottom Navigation](/docs/components/bottom-navigation) · [Side Navigation](/docs/components/side-navigation) · [Side Panel](/docs/components/side-panel) 에 있습니다. 가려질 수 있는 화면 가장자리는 [Safe Area](/docs/foundations/safe-area) 를 따릅니다.
 
 <FrameFigure />
 
@@ -132,7 +128,3 @@ import { Note, SourceList, SourceTable } from '@/components/foundations/ui';
 ### 랜드마크
 
 <SourceList heading="랜드마크" />
-
----
-
-<p className="text-sm text-fd-muted-foreground">구성과 일부 설명은 당근 [SEED Design](https://seed-design.io) 의 Foundations 문서(Apache-2.0)를 바탕으로 했다. 값과 그림은 groo 것이다.</p>

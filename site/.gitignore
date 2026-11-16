@@ -28,3 +28,5 @@ next-env.d.ts
 /content/docs/**/*.md
 # 그림 자리([그림: …])가 있는 컴포넌트 스펙은 .mdx 로 만든다 — 컴포넌트 페이지는 손으로 쓰지 않는다
 /content/docs/components/*.mdx
+# 기초 개요도 gen-content 가 만든다(손으로 쓴 기초 페이지 .mdx 와 구분)
+/content/docs/foundations/overview.mdx

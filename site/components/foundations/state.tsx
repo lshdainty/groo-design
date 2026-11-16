@@ -35,7 +35,7 @@ export function InteractionStatesFigure() {
   const w = 112;
   const brand = rc('bg-brand-solid'), pressed = rc('bg-brand-solid-pressed'), white = rc('static-white'), ring = rc('stroke-focus-ring');
   return (
-    <Figure caption="상호작용 상태 — 사용자의 동작에 따라 바뀐다. 호버와 누름은 같은 색이고, 누르면 축소가 더해진다">
+    <Figure caption="상호작용 상태 — 사용자의 동작에 따라 바뀝니다. 호버와 누름은 같은 색이고, 누르면 축소가 더해집니다">
       <div className="grid grid-cols-4 gap-4 rounded-xl bg-white px-6 pb-5 pt-6">
         <Cell label="enabled" sub="기본">
           <Button bg={brand} fg={white}>저장</Button>
@@ -110,7 +110,7 @@ export function FieldStatesFigure() {
     enabled: '기본',
     focused: '입력 중 — 안쪽 2px 짙은 테두리',
     invalid: '오류 — 안쪽 2px 오류 색, 아래 오류 글',
-    readonly: '읽기 전용 — 값은 읽힌다',
+    readonly: '읽기 전용 — 값은 읽힙니다',
     disabled: '비활성 — 전용 색',
   };
   return (
@@ -144,10 +144,10 @@ export function OverlapFigure() {
   return (
     <Figure>
       <div className="grid w-[540px] grid-cols-2 gap-4">
-        <Verdict ok note="선택된 칩을 누르면 선택 색은 그대로, 줄어들기만 한다">{chip(rc('bg-neutral-inverted'), rc('fg-neutral-inverted'), true)}</Verdict>
-        <Verdict ok={false} note="누르는 동안 선택 색이 바뀌면 손을 떼기 전에 선택이 풀린 것처럼 보인다">{chip(rc('bg-neutral-weak'), rc('fg-neutral'), true)}</Verdict>
-        <Verdict ok note="비활성은 마우스를 올려도 그대로다">{disabledBtn(false)}</Verdict>
-        <Verdict ok={false} note="비활성에 호버 색이 생기면 누를 수 있는 것처럼 보인다">{disabledBtn(true)}</Verdict>
+        <Verdict ok note="선택된 칩을 누르면 선택 색은 그대로, 줄어들기만 합니다">{chip(rc('bg-neutral-inverted'), rc('fg-neutral-inverted'), true)}</Verdict>
+        <Verdict ok={false} note="누르는 동안 선택 색이 바뀌면 손을 떼기 전에 선택이 풀린 것처럼 보입니다">{chip(rc('bg-neutral-weak'), rc('fg-neutral'), true)}</Verdict>
+        <Verdict ok note="비활성은 마우스를 올려도 그대로입니다">{disabledBtn(false)}</Verdict>
+        <Verdict ok={false} note="비활성에 호버 색이 생기면 누를 수 있는 것처럼 보입니다">{disabledBtn(true)}</Verdict>
       </div>
     </Figure>
   );

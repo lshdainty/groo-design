@@ -1,7 +1,7 @@
 'use client';
 // 스펙대로 그린 Tree View — TreeLook(tree-view.yaml 을 푼 값)만 받아 그린다. WAI-ARIA APG Treeview 를 따른다:
 // 나무 전체가 Tab 정지점 하나(roving tabindex) · ↑ ↓ 보이는 항목 사이 · → ← 펴고 접으며 하위 · 부모로(고르지 않는다) · Home · End.
-// 누르는 자리는 줄 전체다(사용자 결정 16D) — 잎은 고르고, 부모 줄은 고르면서 펴고 접는다(펼친 부모를 고르면 하위가 접힌다).
+// 누르는 자리는 줄 전체다 — 잎은 고르고, 부모 줄은 고르면서 펴고 접는다(펼친 부모를 고르면 하위가 접힌다).
 // Enter · Space 는 누르기와 같다. 꺾쇠는 표시만이다(누르면 줄을 누른 것과 같다). 늘 펼친 나무(fixed)는 누르면 고르기만 한다.
 // live 가 아니면 멈춘 그림이다(초점을 받지 않는다) — 줄마다 states 로 호버 · 누름 · 포커스를 그린다.
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
@@ -86,7 +86,7 @@ export type TreeViewProps = {
   states?: Record<string, TreeState>;
   // 초점이 간 항목(화면 읽기)
   onFocusItem?: (id: string | null) => void;
-  // 그림 표시 — 누르는 자리: row 는 줄 전체(스펙), chevron 은 꺾쇠만 누르는 자리(고르지 않은 16A — 나쁜 예에만)
+  // 그림 표시 — 누르는 자리: row 는 줄 전체(스펙), chevron 은 꺾쇠만 누르는 자리(나쁜 예에만)
   hit?: 'row' | 'chevron';
   marks?: { row?: CSSProperties; chevron?: CSSProperties; icon?: CSSProperties; label?: CSSProperties };
   decor?: Record<string, ReactNode>;

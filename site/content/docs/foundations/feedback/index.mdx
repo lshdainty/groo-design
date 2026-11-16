@@ -1,21 +1,17 @@
 ---
 title: Feedback
-description: 누름에 대한 즉각적인 반응 — 색 · 크기 · 햅틱
+description: 누름에 대한 즉각적인 반응입니다 — 색 · 크기 · 햅틱.
 source: DESIGN.md
 ---
 
 import { FeedbackElementsFigure, FeedbackTimingTable } from '@/components/foundations/feedback';
-import { FEEDBACK_TABS, Note, SectionTabs } from '@/components/foundations/ui';
+import { FEEDBACK_TABS, SectionTabs } from '@/components/foundations/ui';
 
 <SectionTabs items={FEEDBACK_TABS} active="Overview" />
 
-피드백은 사용자의 입력에 대한 즉각적인 반응이다. 요소를 누를 수 있다는 것과, 누른 입력이 요소에 닿았다는 것을 알린다.
+피드백은 사용자의 입력에 대한 즉각적인 반응입니다. 요소를 누를 수 있다는 것과, 누른 입력이 요소에 닿았다는 것을 알립니다.
 
-사용자가 요소를 누르면 인터페이스는 입력이 닿았음을 바로 알려야 한다. 이 즉각적인 반응이 피드백이다 — 눌린(pressed) 상태를 눈과 손으로 알아챌 수 있게 드러낸다.
-
-<Note>
-  아직 제품에 들어가지 않았다. 지금 groo 버튼은 누르면 밝기를 낮추고 고정 배율로 준다(button.yaml) — 컴포넌트 단계에서 아래 규칙으로 옮긴다.
-</Note>
+사용자가 요소를 누르면 인터페이스는 입력이 닿았음을 바로 알려야 합니다. 이 즉각적인 반응이 피드백입니다 — 눌린(pressed) 상태를 눈과 손으로 알아챌 수 있게 드러냅니다.
 
 ## 피드백 요소
 
@@ -23,26 +19,23 @@ import { FEEDBACK_TABS, Note, SectionTabs } from '@/components/foundations/ui';
 
 | 요소 | 알리는 방식 |
 |---|---|
-| [색](/docs/foundations/feedback/color) | 누르는 동안 표면 색이 바뀐다 |
-| [크기](/docs/foundations/feedback/scale) | 누르는 동안 요소가 정해진 거리만큼 작아진다 |
-| 햅틱 | 누른 순간 손끝에 진동이 온다 |
+| [색](/docs/foundations/feedback/color) | 누르는 동안 표면 색이 바뀝니다 |
+| [크기](/docs/foundations/feedback/scale) | 누르는 동안 요소가 정해진 거리만큼 작아집니다 |
+| 햅틱 | 누른 순간 손끝에 진동이 옵니다 |
 
-groo 는 셋을 함께 써서 누름을 알린다. 색은 누를 수 있는 모든 요소의 기본이고, 크기는 요소의 짜임이 허락할 때 더한다. 어떤 요소에 어떻게 적용하는지는 [Color](/docs/foundations/feedback/color) · [Scale](/docs/foundations/feedback/scale) 에 있다. 햅틱은 기준이 생기면 이 문서에 적는다.
+groo 는 셋을 함께 써서 누름을 알립니다. 색은 누를 수 있는 모든 요소의 기본이고, 크기는 요소의 짜임이 허락할 때 더합니다. 어떤 요소에 어떻게 적용하는지는 [Color](/docs/foundations/feedback/color) · [Scale](/docs/foundations/feedback/scale) 에 있습니다. 햅틱은 기준이 생기면 이 문서에 적습니다.
 
 ## 원칙
 
 ### 함께 쓰기 — 하나의 반응으로
 
-한 번의 입력에 여러 요소가 반응할 때, 사용자는 그것을 하나의 반응으로 느껴야 한다. 시작이나 속도가 다르면 반응이 둘로 나뉘어 읽히고, 요소가 잘못 움직이는 것처럼 보인다. 그래서 색 전환과 축소는 같은 시간을 쓴다.
+한 번의 입력에 여러 요소가 반응할 때, 사용자는 그것을 하나의 반응으로 느껴야 합니다. 시작이나 속도가 다르면 반응이 둘로 나뉘어 읽히고, 요소가 잘못 움직이는 것처럼 보입니다. 그래서 색 전환과 축소는 같은 시간을 씁니다.
 
 <FeedbackTimingTable />
 
 ### 어떤 환경에서도 반응 남기기
 
-사용자의 환경에 따라 일어나지 않는 요소가 있다. 크기는 기기의 동작 줄이기가 켜져 있으면 [일어나지 않고](/docs/foundations/feedback/scale#접근성), 햅틱은 기기나 설정에 따라 전해지지 않는다.
+사용자의 환경에 따라 일어나지 않는 요소가 있습니다. 크기는 기기의 동작 줄이기가 켜져 있으면 [일어나지 않고](/docs/foundations/feedback/scale#접근성), 햅틱은 기기나 설정에 따라 전해지지 않습니다.
 
-어떤 요소가 빠지더라도 눌렸다는 사실은 남아야 한다. 그래서 설정의 영향을 받지 않는 [색 전환](/docs/foundations/feedback/color)을 기본 요소로 두고, 나머지를 그 위에 더한다.
+어떤 요소가 빠지더라도 눌렸다는 사실은 남아야 합니다. 그래서 설정의 영향을 받지 않는 [색 전환](/docs/foundations/feedback/color)을 기본 요소로 두고, 나머지를 그 위에 더합니다.
 
----
-
-<p className="text-sm text-fd-muted-foreground">구성과 일부 설명은 당근 [SEED Design](https://seed-design.io) 의 Foundations 문서(Apache-2.0)를 바탕으로 했다. 값과 그림은 groo 것이다.</p>

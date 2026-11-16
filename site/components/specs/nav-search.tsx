@@ -1,5 +1,5 @@
 // 거래 검색 · 카드 혜택 화면의 그림(서버) — 상단 바는 top-navigation.yaml(검색칸 searchField — Text Field outline medium),
-// 거르는 줄은 Scroll Auto Hide(scroll-auto-hide.yaml — 1:1 · 50% 스냅)다(2026-10-16 사용자 결정 Q-017-3a C · Q-017-5 C).
+// 거르는 줄은 Scroll Auto Hide(scroll-auto-hide.yaml — 1:1 · 50% 스냅)다.
 // 칩은 chip.yaml(chipLook), 검색칸은 input.yaml(textFieldLook). 글 · 이름은 지어낸 것이다.
 import type { ReactNode } from 'react';
 import { chipLook } from './chip-look';
@@ -9,7 +9,7 @@ import { TfInputView } from './text-field-view';
 import { Bar, NPhone, SearchBox } from './nav-screens';
 import { Row, rc, type Mode } from './kit';
 
-// 거래 검색의 거르는 줄 48 — 칩 medium 36 + 위아래 6(scroll-auto-hide.md, 2026-11-06 담다 마무리 B1 α — 웹 · 앱 구현 값)
+// 거래 검색의 거르는 줄 48 — 칩 medium 36 + 위아래 6(scroll-auto-hide.md)
 export const SEARCH_ROW_H = 48;
 export const CARD_ROW_H = 140;
 // 거래 검색 결과 — 가장 긴 가맹점 이름은 줄을 넘긴다(말줄임)

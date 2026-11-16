@@ -70,7 +70,7 @@ export function IntlNowDemo() {
     <div className="flex flex-col gap-4">
       <Table head={['형식', '한국어', '영어']} rows={dateRows(now)} />
       <Table head={['지금으로부터', '한국어', '영어']} rows={AGO.map(([label, ms]) => [label, ...relative(new Date(now.getTime() - ms), now)])} />
-      <p className="text-[12px] text-fd-muted-foreground">표준 줄은 다른 해의 예로 1년 전 오늘을 넣었다. 브라우저의 <code>Intl.DateTimeFormat</code>(ko-KR · en-US)으로 계산했다.</p>
+      <p className="text-[12px] text-fd-muted-foreground">표준 줄은 다른 해의 예로 1년 전 오늘을 넣었습니다. 브라우저의 <code>Intl.DateTimeFormat</code>(ko-KR · en-US)으로 계산했습니다.</p>
     </div>
   );
 }

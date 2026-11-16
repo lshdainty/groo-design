@@ -1,6 +1,6 @@
 ---
 title: Roles
-description: 속성 · 역할 · 변형 · 상태로 짓는 역할 색
+description: 속성 · 역할 · 변형 · 상태로 짓는 역할 색입니다.
 source: DESIGN.md
 ---
 
@@ -9,7 +9,7 @@ import { BrandExample, BrandRoleTable, LayerExample, NeutralExample, RoleNamingF
 
 <SectionTabs items={COLOR_TABS} active="Roles" />
 
-역할 색은 색에 기능적 역할(주요 동작 · 오류 · 정보 …)을 줘서 화면 전체의 일관성 · 명확성 · 접근성을 지킨다. 이름은 속성(Property) · 역할(Role) · 변형(Variant) · 상태(State) 순으로 짓는다.
+역할 색은 색에 기능적 역할(주요 동작 · 오류 · 정보 …)을 줘서 화면 전체의 일관성 · 명확성 · 접근성을 지킵니다. 이름은 속성(Property) · 역할(Role) · 변형(Variant) · 상태(State) 순으로 짓습니다.
 
 <RoleNamingFigure />
 
@@ -17,21 +17,21 @@ import { BrandExample, BrandRoleTable, LayerExample, NeutralExample, RoleNamingF
 
 ### Background
 
-화면 전체나 UI 요소의 배경에 쓴다 — `bg-`.
+화면 전체나 UI 요소의 배경에 씁니다 — `bg-`.
 
 ### Foreground
 
-글자 · 아이콘처럼 앞에 놓이는 요소에 쓴다 — `fg-`. 채움(solid) 위의 흰 글자는 `static-white` 다.
+글자 · 아이콘처럼 앞에 놓이는 요소에 씁니다 — `fg-`. 채움(solid) 위의 흰 글자는 `static-white` 입니다.
 
 ### Stroke
 
-경계를 나누는 선이나 요소의 윤곽선에 쓴다 — `stroke-`.
+경계를 나누는 선이나 요소의 윤곽선에 씁니다 — `stroke-`.
 
 ## Role (역할)
 
 ### Brand
 
-브랜드 요소를 바로 알아보게 하고, 화면에서 가장 중요한 동작을 강조한다. 값은 브랜드마다 다르다.
+브랜드 요소를 바로 알아보게 하고, 화면에서 가장 중요한 동작을 강조합니다. 값은 브랜드마다 다릅니다.
 
 <BrandExample brand="desk" />
 
@@ -39,55 +39,55 @@ import { BrandExample, BrandRoleTable, LayerExample, NeutralExample, RoleNamingF
 
 ### Neutral
 
-일반 콘텐츠에 쓰는 기본 색이다. 가장 눈에 띄지는 않지만 읽혀야 하는 요소에 쓴다.
+일반 콘텐츠에 쓰는 기본 색입니다. 가장 눈에 띄지는 않지만 읽혀야 하는 요소에 씁니다.
 
-약한 배경(`bg-neutral-weak`)과 비활성(`bg-disabled`)은 라이트에서 회색 바닥과 같은 색이라 흰 표면 위에만 둔다. 회색 바닥 위에 바로 놓이는 칩 · 세그먼트 트랙은 투명한 `bg-neutral-weak-alpha` 로 칠한다 — [Elevation](/docs/foundations/elevation) 의 "바닥 위의 채움".
+약한 배경(`bg-neutral-weak`)과 비활성(`bg-disabled`)은 라이트에서 회색 바닥과 같은 색이라 흰 표면 위에만 둡니다. 회색 바닥 위에 바로 놓이는 칩 · 세그먼트 트랙은 투명한 `bg-neutral-weak-alpha` 로 칠합니다 — [Elevation](/docs/foundations/elevation) 의 "바닥 위의 채움" 을 봅니다.
 
 <NeutralExample />
 
 ### Positive
 
-작업 성공 · 확인 · 긍정적인 상태를 나타낸다.
+작업 성공 · 확인 · 긍정적인 상태를 나타냅니다.
 
 <StatusExample role="positive" />
 
 ### Warning
 
-주의가 필요한 경고나 안내를 전한다.
+주의가 필요한 경고나 안내를 전합니다.
 
 <StatusExample role="warning" />
 
 ### Critical
 
-오류 · 문제 · 되돌릴 수 없는 동작을 알린다. 사용자의 주의를 바로 끈다.
+오류 · 문제 · 되돌릴 수 없는 동작을 알립니다. 사용자의 주의를 바로 끕니다.
 
 <StatusExample role="critical" />
 
 ### Informative
 
-유용한 정보를 주거나 상태를 설명한다.
+유용한 정보를 주거나 상태를 설명합니다.
 
 <StatusExample role="informative" />
 
 ## Layer
 
-레이어 색은 화면의 깊이와 층을 나타낸다. 바닥(basement) 위에 기본 표면(default)이, 그 위에 메뉴 · 팝오버 같은 뜨는 표면(floating)이 놓인다.
+레이어 색은 화면의 깊이와 층을 나타냅니다. 바닥(basement) 위에 기본 표면(default)이, 그 위에 메뉴 · 팝오버 같은 뜨는 표면(floating)이 놓입니다.
 
 <LayerExample />
 
 ## Variant
 
-같은 역할이라도 강조 정도에 따라 변형을 고른다 — 채움(`solid`)은 강하게, 약한 배경(`weak`)은 부드럽게. 약한 배경 위 글자는 `contrast` 를 써서 4.5:1 을 지킨다. 글자의 위계는 `muted` · `subtle`, 반전 배경 위 글자는 `inverted` 다.
+같은 역할이라도 강조 정도에 따라 변형을 고릅니다 — 채움(`solid`)은 강하게, 약한 배경(`weak`)은 부드럽게 보입니다. 약한 배경 위 글자는 `contrast` 를 써서 4.5:1 을 지킵니다. 글자의 위계는 `muted` · `subtle`, 반전 배경 위 글자는 `inverted` 입니다.
 
 ## State
 
-누를 수 있는 요소는 누르는 동안 `pressed` 값으로 바뀐다. 웹의 hover 도 같은 값을 쓴다.
+누를 수 있는 요소는 누르는 동안 `pressed` 값으로 바뀝니다. 웹의 hover 도 같은 값을 씁니다.
 
 <StateExample />
 
 ## Tokens
 
-값 옆의 이름은 역할이 가리키는 [팔레트](/docs/foundations/color/palette) 단계다. 모드마다 다른 단계를 가리킬 수 있다 — `bg-layer-default` 는 라이트 `gray-00`, 다크 `gray-100` 이다.
+값 옆의 이름은 역할이 가리키는 [팔레트](/docs/foundations/color/palette) 단계입니다. 모드마다 다른 단계를 가리킬 수 있습니다 — `bg-layer-default` 는 라이트 `gray-00`, 다크 `gray-100` 입니다.
 
 ### Foreground
 
@@ -103,12 +103,7 @@ import { BrandExample, BrandRoleTable, LayerExample, NeutralExample, RoleNamingF
 
 ### Brand
 
-브랜드 파일(DESIGN.desk.md · DESIGN.hr.md)에 같은 이름으로 다른 값이 있다.
+브랜드 파일(`DESIGN.desk.md` · `DESIGN.hr.md`)에 같은 이름으로 다른 값이 있습니다.
 
 <BrandRoleTable />
 
-옛 이름(`text-primary` · `surface-default` · `border-default` · `success` …)은 역할 색을 가리키는 별칭으로 남아 있다 — 값을 따로 갖지 않는다. 컴포넌트 스펙을 새 이름으로 옮기고 나면 지운다. SEED 의 `bg.neutral-solid` · `bg.transparent-*` · `stroke.neutral-muted` 같은 역할은 groo 화면에 아직 쓰는 자리가 없어 두지 않았다.
-
----
-
-<p className="text-sm text-fd-muted-foreground">구성과 일부 설명은 당근 [SEED Design](https://seed-design.io) 의 Foundations 문서(Apache-2.0)를 바탕으로 했다. 값과 그림은 groo 것이다.</p>

@@ -1,76 +1,73 @@
 # Z-Index Layers
 
-> Groo 의 floating layer stacking 정책. 시스템 wide 가이드. 각 컴포넌트의 z-index 는 이 표의 층을 따르고, 층마다 값은 DESIGN.md 의 z-index 토큰(v116)이 원본이다.
+> 떠 있는 표면이 쌓이는 차례를 층으로 정합니다. 각 컴포넌트의 z-index 는 이 표의 층을 따르고, 층마다 값은 DESIGN.md 의 z-index 토큰이 원본입니다.
 
-Groo 는 Bootstrap 식 **명시적 z-index 계층 분기** 정책을 채택. shadcn 공식은 모든 layer 가 `z-50` + portal order 로 stacking 하지만, 디버깅 / 의도 명시 / 예측 가능성을 위해 layer 별로 z-index 를 분기한다. Portal 순서에 의존하면 깨질 때 추적이 어렵다.
+층마다 z-index 를 따로 둡니다. 모든 표면을 같은 값에 두고 열린 차례에만 맡기면, 겹침이 깨졌을 때 원인을 찾기 어렵고 의도가 코드에 남지 않기 때문입니다.
 
 ## Layer matrix
 
 | Layer | 토큰 | z-index | 컴포넌트 | 의미 |
 |---|---|---|---|---|
-| **L0 — base** | `z-base` | `auto` | 일반 콘텐츠 | document 기본 flow — 쌓임 맥락을 만들지 않는다 |
-| **L1 — page sticky/fixed** | `z-sticky` | `50` | `top-navigation`(상단 바 · 데스크톱 머리), `bottom-navigation`(하단 탭 바), `floating-action-button`, 스피드 다이얼, `side-navigation`(사이드바) | 페이지 위 고정 UI |
-| **L2 — modal** | `z-modal` · `z-modal-content` | `100` · `101` | `dialog` / `bottom-sheet` / `menu-sheet` / `side-panel` | modal layer — overlay + content 분리 |
-| **L3 — modal-aware floating** | `z-floating` | `200` | `popover` / `select` / `menu` / `color-picker` (popover 패턴) / `side-navigation` 의 펼침 메뉴 | page 와 modal 안 어디서든 사용. modal(L2) 위에 떠야 하므로 200. page 에서도 동일 값 — sticky/FAB(L1=50) 위 자연스러움 |
-| **L4 — modal-aware tooltip** | `z-tooltip` | `210` | `help-bubble` · `tooltip` | popover 위에 살짝 떠야 함 (hover 잠깐 뜨고 사라지는 참고 정보) |
-| **L5 — alert-dialog** | `z-alert` · `z-alert-content` | `300` · `301` | `alert-dialog` | overlay + content 분리. 비가역 결정 강제. dialog(L2) 위로 명시 — dialog 안에서 삭제 확인 같은 alert 띄우는 케이스 보존 |
-| **L6 — snackbar** | `z-snackbar` | `400` | `snackbar` | 모든 시트 · 대화상자 · 확인창 위의 잠깐 알림(2026-10-02 — 옛 sonner 라이브러리 기본 99999+ 를 명시 값으로) |
-| **L9 — dev** | `z-dev` | `9999` | `env-watermark` | dev only 시각 표시 (production 비활성) |
+| **L0 — base** | `z-base` | `auto` | 일반 콘텐츠 | 문서의 기본 흐름 — 쌓임 맥락을 만들지 않습니다 |
+| **L1 — page sticky/fixed** | `z-sticky` | `50` | `top-navigation`(상단 바 · 데스크톱 머리), `bottom-navigation`(하단 탭 바), `floating-action-button`, 스피드 다이얼, `side-navigation`(사이드바) | 페이지 위에 붙은 고정 UI |
+| **L2 — modal** | `z-modal` · `z-modal-content` | `100` · `101` | `dialog` / `bottom-sheet` / `menu-sheet` / `side-panel` | 모달 — 딤과 표면을 나눕니다 |
+| **L3 — modal-aware floating** | `z-floating` | `200` | `popover` / `select` / `menu` / `color-picker`(popover 꼴) / `side-navigation` 의 펼침 메뉴 | 페이지와 모달 안 어디서나 씁니다. 모달(L2) 위에 떠야 하므로 200 이고, 페이지에서도 같은 값이라 고정 UI(L1) 위에 뜹니다 |
+| **L4 — modal-aware tooltip** | `z-tooltip` | `210` | `help-bubble` · `tooltip` | 팝오버 위에 살짝 뜨는 참고 정보 |
+| **L5 — alert-dialog** | `z-alert` · `z-alert-content` | `300` · `301` | `alert-dialog` | 딤과 표면을 나눕니다. 되돌릴 수 없는 결정을 받으므로 대화상자(L2) 위에 둡니다 — 대화상자 안에서 삭제 확인을 띄울 수 있습니다 |
+| **L6 — snackbar** | `z-snackbar` | `400` | `snackbar` | 모든 시트 · 대화상자 · 확인창 위의 잠깐 알림 |
+| **L9 — dev** | `z-dev` | `9999` | `env-watermark` | 개발 환경 표시 — 운영에서는 그리지 않습니다 |
 
-- z-index 칸의 숫자는 토큰 칸의 값을 옮겨 적은 것이다 — 사이트 빌드(`site/scripts/gen-content.mjs`)가 DESIGN.md 의 토큰 값과 같은지, 토큰이 빠짐없이 있는지 확인한다.
-- 웹은 토큰 변수로 부른다 — CSS `z-index: var(--z-floating)`, Tailwind v4 `z-(--z-floating)`. 숫자 클래스(`z-[200]` · `z-50`)로 층을 적지 않는다.
-- 앱(Flutter)은 숫자 없이 같은 순서를 따른다 — 라우트 · 오버레이가 연 순서로 쌓이므로 위 차례가 되게 띄운다.
-- 한 컴포넌트 안에서 겹침을 정리하는 작은 값(`z-[1]` · `z-10`)은 층이 아니다 — 이 표 밖이다.
-- `side-navigation`(사이드바)은 L1 이다 — 화면 틀의 한 칸이지만 sticky 로 붙어 스스로 쌓임 맥락을 만들고, 접혔을 때 뜨는 펼침 메뉴(L3) · 이름 말풍선(L4)을 그 안에 그린다. 사이드바가 L0 이면 그 맥락이 뒤따르는 본문 카드 아래에 깔려 펼침 메뉴가 카드 뒤로 가린다(2026-11-09 그루 이음에서 드러남 — 옛 문장은 "L0 이다").
+- z-index 칸의 숫자는 토큰 칸의 값을 옮겨 적은 것입니다 — 사이트 빌드(`site/scripts/gen-content.mjs`)가 DESIGN.md 의 토큰 값과 같은지, 토큰이 빠짐없이 있는지 확인합니다.
+- 웹은 토큰 변수로 부릅니다 — CSS `z-index: var(--z-floating)`, Tailwind v4 `z-(--z-floating)`. 숫자 클래스(`z-[200]` · `z-50`)로 층을 적지 않습니다.
+- 앱(Flutter)은 숫자 없이 같은 순서를 따릅니다 — 라우트 · 오버레이가 연 순서로 쌓이므로 위 차례가 되게 띄웁니다.
+- 한 컴포넌트 안에서 겹침을 정리하는 작은 값(`z-[1]` · `z-10`)은 층이 아닙니다 — 이 표 밖입니다.
+- `side-navigation`(사이드바)은 L1 입니다 — 화면 틀의 한 칸이지만 sticky 로 붙어 스스로 쌓임 맥락을 만들고, 접혔을 때 뜨는 펼침 메뉴(L3) · 이름 말풍선(L4)을 그 안에 그립니다. 사이드바가 L0 이면 그 맥락이 뒤따르는 본문 카드 아래에 깔려 펼침 메뉴가 카드 뒤로 가리기 때문입니다.
 
-## 의도된 stacking 시나리오
+## 의도한 쌓임
 
-| 시나리오 | 결과 |
+| 상황 | 결과 |
 |---|---|
-| page sticky(L1=50) 위 dropdown 열림 | dropdown(L3=200) 가 sticky 위 ✓ |
-| page 에서 dialog 열림 | dialog(L2=100) 가 page 위 ✓ |
-| dialog 안 select / popover 열림 | floating(L3=200) 가 dialog content(L2=101) 위 ✓ |
-| 폼 시트 안에서 고르기 시트 열림(겹친 시트 — bottom-sheet.md 가 허용하는 자리) | 위 시트의 딤 · 표면이 아래 시트 표면(L2=101) 바로 위 · Popover(L3=200) 아래 — 웹은 `calc(var(--z-modal-content) + 1)` · `+ 2` 로 세운다. 겹친 시트는 새 층이 아니라 L2 안의 차례라 층 표 · 이름 토큰을 두지 않는다 — 값은 늘 아래 시트 표면에서 센 상대값이고, 토큰은 사용자가 요청한 것만 둔다(루트 CLAUDE.md 금지 사항). 겹침은 한 겹이다 — 폼 시트 위에는 고르기 시트 · 머리 ⋮ 의 Menu Sheet · 확인창만 뜨고 그 위에 또 시트를 쌓지 않는다(bottom-sheet.md Don't). 2026-11-11 디자인시스템 판단. 같은 100 · 101 이면 위 시트의 딤이 아래 시트 뒤에 가려진다(2026-10-25 I-19-1 — desk-front 9463b038). 앱은 라우트를 연 순서로 쌓아 저절로 맞다 ✓ |
-| dialog 안 tooltip hover | tooltip(L4=210) 가 popover(L3=200) 위 ✓ |
-| dialog 안 alert-dialog 열림 (삭제 확인 등) | alert(L5=300) 가 dialog(L2=101) 위 ✓ |
-| 모든 layer 위 snackbar | snackbar(L6=400) 가 alert(L5=301) 위 ✓ |
-| dev watermark | L9 가 모든 것 위 (배경처럼 보임은 opacity 처리) |
+| 페이지 고정 UI(L1=50) 위에서 드롭다운을 엶 | 드롭다운(L3=200)이 고정 UI 위 ✓ |
+| 페이지에서 대화상자를 엶 | 대화상자(L2=100)가 페이지 위 ✓ |
+| 대화상자 안에서 select · popover 를 엶 | floating(L3=200)이 대화상자 표면(L2=101) 위 ✓ |
+| 폼 시트 안에서 고르기 시트를 엶(겹친 시트 — bottom-sheet.md 가 허용하는 자리) | 위 시트의 딤 · 표면이 아래 시트 표면(L2=101) 바로 위, Popover(L3=200) 아래 — 웹은 `calc(var(--z-modal-content) + 1)` · `+ 2` 로 세웁니다. 겹친 시트는 새 층이 아니라 L2 안의 차례라 층 표 · 이름 토큰을 두지 않고, 값은 늘 아래 시트 표면에서 센 상대값입니다. 같은 100 · 101 이면 위 시트의 딤이 아래 시트 뒤에 가려지기 때문입니다. 겹침은 한 겹입니다 — 폼 시트 위에는 고르기 시트 · 머리 ⋮ 의 Menu Sheet · 확인창만 뜨고 그 위에 또 시트를 쌓지 않습니다(bottom-sheet.md Don't). 앱은 라우트를 연 순서로 쌓아 저절로 맞습니다 ✓ |
+| 대화상자 안에서 tooltip 을 띄움 | tooltip(L4=210)이 popover(L3=200) 위 ✓ |
+| 대화상자 안에서 확인창을 엶(삭제 확인 등) | 확인창(L5=300)이 대화상자(L2=101) 위 ✓ |
+| 모든 층 위의 스낵바 | 스낵바(L6=400)가 확인창(L5=301) 위 ✓ |
+| 개발 환경 표시 | L9 가 모든 것 위(배경처럼 보이게 불투명도를 낮춥니다) |
 
-## L3 의 "modal-aware" 의미
+## L3 의 "modal-aware"
 
-L3 컴포넌트(popover/select/menu) 는 **page 와 modal 안 두 컨텍스트에서 같은 값(`z-floating` 200) 사용**. 호출처별 변경 없이 한 컴포넌트 = 한 z-index — `inModal` prop 같은 분기 불필요. 호출처는 modal 안 사용 시 추가 className override 안 해도 정상.
+L3 컴포넌트(popover · select · menu)는 **페이지와 모달 안 두 자리에서 같은 값(`z-floating` 200)을 씁니다**. 한 컴포넌트에 z-index 가 하나라, 호출처마다 값을 바꾸거나 `inModal` 같은 분기를 두지 않습니다. 모달 안에서 쓸 때도 className 을 덧붙이지 않습니다.
 
-근거 — page 에는 L2(modal=100) layer 자체가 페이지 표면엔 없으므로 L3(200) 가 page sticky(L1=50) 위로 자연스럽게 떠도 어색하지 않다.
+페이지에는 L2(모달) 표면이 없으므로, L3(200)가 페이지 고정 UI(L1=50) 위로 떠도 어색하지 않습니다.
 
-## L5 안 floating 의 edge case
+## 확인창 안의 floating
 
-alert-dialog(L5=300/301) 안에서 popover/select 띄우는 케이스는 매우 드물지만 만약 필요하면 호출처에서 `className="z-[310]"` 처럼 확인창 표면(`z-alert-content` 301) 바로 위로 override 한다 — 스낵바(`z-snackbar` 400)보다는 아래. 시스템 분기 · 토큰 추가 보류 — drift 우려.
+확인창(L5=300/301) 안에서 popover · select 를 띄우는 드문 자리는 호출처에서 `className="z-[310]"` 처럼 확인창 표면(`z-alert-content` 301) 바로 위로 올립니다 — 스낵바(`z-snackbar` 400)보다는 아래입니다. 이 자리를 위한 층 · 토큰은 두지 않습니다.
 
-## Known issues (Radix portal + 다중 modal)
+## 구현할 때 주의할 점(Radix portal + 겹친 모달)
 
-### Issue 1 — `pointer-events: none` 잠금 풀림 안 됨
+아래 셋은 z-index 와 무관한 Radix 동작의 한계입니다. 컴포넌트 스펙(menu.md · dialog.md · alert-dialog.md)의 Behavior 절에도 같은 가이드가 있습니다.
 
-> 2026-10-02 — Menu 는 비모달(`modal={false}`)이라 이 잠금을 걸지 않는다. 메뉴 줄이 확인창 · 대화상자를 열 때는 메뉴가 닫힌 뒤 연다(menu.md Behavior). 아래는 모달 메뉴 시절의 기록이다.
+### `pointer-events: none` 잠금이 풀리지 않음
 
-Radix DropdownMenu / Dialog 가 열릴 때 `body { pointer-events: none }` 박는다. **dropdown-menu 안 item 클릭 → 그 onSelect 콜백에서 dialog open** 같은 빠른 연쇄 transition 시 풀림 순서가 꼬여 dialog 내부 클릭이 안 먹는 버그가 Radix 의 잘 알려진 이슈.
+Radix DropdownMenu · Dialog 는 열릴 때 `body { pointer-events: none }` 을 겁니다. 드롭다운 항목의 onSelect 에서 바로 대화상자를 열면 풀림 순서가 꼬여 대화상자 안 클릭이 먹지 않을 수 있습니다. Menu 는 비모달(`modal={false}`)이라 이 잠금을 걸지 않고, 메뉴 줄이 확인창 · 대화상자를 열 때는 메뉴가 닫힌 뒤 엽니다(menu.md Behavior).
 
-**해결**:
-- `<DropdownMenuItem onSelect={(e) => e.preventDefault()}>` 로 자동 close 막고 별도 시점(setTimeout(fn, 0) 등 한 프레임 후)에 dialog open
-- 또는 dropdown 외부 trigger 로 dialog 열고 dropdown 은 단순 navigation 만 담당
+- `<DropdownMenuItem onSelect={(e) => e.preventDefault()}>` 로 자동 닫힘을 막고, 한 프레임 뒤(`setTimeout(fn, 0)` 등)에 대화상자를 엽니다.
+- 또는 드롭다운 밖의 트리거로 대화상자를 열고, 드롭다운은 이동만 맡깁니다.
 
-### Issue 2 — focus trap 충돌
+### focus trap 충돌
 
-dropdown(modal pattern) 과 dialog 가 동시에 focus trap active 면 Tab 흐름 깨짐. dropdown close 가 먼저 완료된 후 dialog trap 활성화되어야 정상. Issue 1 의 해결책 따라가면 자연 해결.
+모달 꼴 드롭다운과 대화상자의 focus trap 이 함께 켜지면 Tab 흐름이 깨집니다. 드롭다운이 다 닫힌 뒤 대화상자 trap 이 켜져야 합니다 — 위의 해결법을 따르면 함께 풀립니다.
 
-### Issue 3 — aria-hidden 누수
+### aria-hidden 누수
 
-dropdown 닫힐 때 `aria-hidden="true"` 가 body 에 남아 screen reader 가 dialog 인식 못 함. Radix 최신 버전에서 대부분 해결됐으나 발생 시 dropdown close → 한 프레임 후 dialog open 패턴이 안전.
+드롭다운이 닫힐 때 `aria-hidden="true"` 가 body 에 남으면 화면 읽기 프로그램이 대화상자를 읽지 못합니다. 드롭다운을 닫고 한 프레임 뒤 대화상자를 여는 꼴이 안전합니다.
 
-→ **위 3 이슈는 z-index 정책과 무관 — Radix 동작 자체의 한계**. 컴포넌트 spec (menu.md / dialog.md / alert-dialog.md) 의 Behavior 섹션에 해당 가이드 표시.
+## 컴포넌트 스펙의 z-index 적는 법
 
-## 컴포넌트 spec 의 z-index 명시 규칙
-
-각 컴포넌트 spec 의 Sizes 또는 States 표에 z-index 행 필수 — 이 가이드의 layer 명 · 토큰 · 값 동시 표기. YAML(`specs/components/<이름>.yaml`)이 있으면 값은 숫자로 두고 토큰 이름은 비고에 쓴다 — 사이트 그림이 YAML 의 수를 그대로 쓰기 때문이다. 예:
+각 컴포넌트 스펙의 Sizes 또는 States 표에 z-index 행을 둡니다 — 이 가이드의 층 이름 · 토큰 · 값을 함께 적습니다. YAML(`specs/components/<이름>.yaml`)이 있으면 값은 숫자로 두고 토큰 이름은 비고에 씁니다 — 사이트 그림이 YAML 의 수를 그대로 쓰기 때문입니다. 예:
 
 ```
 | z-index | `z-floating` 200 (L3 modal-aware floating) | — |
@@ -79,10 +76,3 @@ dropdown 닫힐 때 `aria-hidden="true"` 가 body 에 남아 screen reader 가 d
 ```yaml
 zIndex: { value: 200, note: "z-floating — specs/z-index.md L3" }
 ```
-
-## Migration notes
-
-- **v1: 최초 명시 (2026-05-15)** — 그동안 각 컴포넌트 spec 에 z-index 가 분산 명시되거나 누락된 상태였음. desk-front 가 모두 다른 값으로 분기(50/100/101/200/9999) 두고 있었는데 정합 기준이 없었음. Bootstrap 식 명시 계층 채택. shadcn 표준(모두 z-50 + portal order) 은 디버깅 어렵다고 판단 — 우리는 명시 분기.
-- **v2: 토큰이 원본 (2026-10-03, DESIGN.md v116)** — 층마다 토큰을 두고 이름을 층으로 붙였다(`z-sticky` · `z-modal` · `z-modal-content` · `z-floating` · `z-tooltip` · `z-alert` · `z-alert-content` · `z-snackbar` · `z-dev`, L0 은 `z-base` `auto`). 값은 이 표 그대로다. 그동안 DESIGN.md 의 v65 토큰(z-dropdown 1000 · z-drawer 1200 · z-toast 1400 …)은 이 표와 값이 달랐다(레시피는 이 표의 숫자를 따로 적었다) — 걷었다. 레시피의 `z-[100]` 같은 숫자 클래스는 `z-(--z-modal)` 로 바꿨다. 사용자 결정(2026-10-03 — 이 층 표를 정본으로, 새 토큰은 층 이름으로).
-- **v3: 화면 틀 · 이동 (2026-10-04)** — 옛 `sheet` 자리를 `side-panel`(Side Panel — 왼쪽 주 메뉴 · 오른쪽 패널)이 잇는다. L1 의 고정 UI 를 컴포넌트 이름으로 적었다 — `top-navigation` · `bottom-navigation` · `floating-action-button`(지금 제품의 웹 탭 바 40 · Fab 20 · 하위 머리 10 · 설정 하위 100 · HR SpeedDial 50 은 앱 적용 때 `z-sticky` 로). 값 · 토큰은 그대로다.
-- **2026-11-11 — 겹친 시트는 이름 토큰 없이** — 폼 시트 위 고르기 시트의 `+ 1` · `+ 2` 는 L2 안의 차례다. 층 표에 줄 · 이름 토큰을 두지 않기로 정했다(디자인시스템 판단 — 새 층이 아니고, 요청 없는 토큰은 두지 않는다). 값 변경 없음.

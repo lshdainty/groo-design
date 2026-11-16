@@ -33,7 +33,7 @@ export function TokenTierFigure() {
   ];
   const tones = [color('fg-neutral-subtle'), color('fg-informative'), color('fg-brand'), color('fg-positive')];
   return (
-    <Figure caption="값에 이름을 붙이고(Scale), 그 이름에 뜻을 붙이고(Semantic), 컴포넌트는 뜻으로 부른다">
+    <Figure caption="값에 이름을 붙이고(Scale), 그 이름에 뜻을 붙이고(Semantic), 컴포넌트는 뜻으로 부릅니다">
       <div className="grid w-[600px] grid-cols-[48px_repeat(4,1fr)] items-center gap-2 rounded-xl p-1">
         <span />
         {cols.map((c, i) => <b key={c} className="text-center text-[12px]" style={{ color: tones[i] }}>{c}</b>)}

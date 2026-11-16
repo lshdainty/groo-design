@@ -67,7 +67,7 @@ export function EasingPlayer({ items, demoMs, palette: p }: { items: EaseItem[];
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between gap-3">
-        <span className="text-[12px] text-fd-muted-foreground">곡선 모양이 보이게 {demoMs / 1000}초로 늘려 움직인다. 판을 누르면 그 곡선만.</span>
+        <span className="text-[12px] text-fd-muted-foreground">곡선 모양이 보이게 {demoMs / 1000}초로 늘려 움직입니다. 판을 누르면 그 곡선만 움직입니다.</span>
         <Button onClick={() => toggle(items.map((i) => i.name))}>모두 재생</Button>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -122,7 +122,7 @@ export function KeyframePlayer({ single, loop, reduced, shimmer, palette: p }: {
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <span className="text-[12px] text-fd-muted-foreground">
-          {prefers ? '기기에서 동작 줄이기가 켜져 있어 줄이기 모드로 보여 준다.' : '판을 누르면 권장 지속 시간 · 이징으로 재생한다.'}
+          {prefers ? '기기에서 동작 줄이기가 켜져 있어 줄이기 모드로 보여 줍니다.' : '판을 누르면 권장 지속 시간 · 이징으로 재생합니다.'}
         </span>
         <div className="flex gap-2">
           <Button onClick={() => setChoice(!isReduced)} pressed={isReduced}>모션 줄이기 모드로 보기</Button>
@@ -148,13 +148,13 @@ export function KeyframePlayer({ single, loop, reduced, shimmer, palette: p }: {
                 />
               </div>
               <code className="text-[12px] font-bold">{k.name}</code>
-              <span className="text-center text-[11px] leading-4 text-[#62697A]">{pl ? pl.label : '표에 없는 움직임 — 컴포넌트 스펙에서 정한다'}</span>
+              <span className="text-center text-[11px] leading-4 text-[#62697A]">{pl ? pl.label : '표에 없는 움직임 — 컴포넌트 스펙에서 정합니다'}</span>
             </button>
           );
         })}
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-        <span className="text-[12px] text-fd-muted-foreground">반복 — {isReduced ? '줄이기 모드에서는 멈춘다.' : '켜 두면 계속 돈다.'}</span>
+        <span className="text-[12px] text-fd-muted-foreground">반복 — {isReduced ? '줄이기 모드에서는 멈춥니다.' : '켜 두면 계속 돕니다.'}</span>
         <Button onClick={() => setLoopOn(!loopOn)} pressed={loopOn}>반복 보기</Button>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">

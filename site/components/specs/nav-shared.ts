@@ -10,8 +10,8 @@ export type ViewMode = 'light' | 'dark' | 'auto';
 export type Brand = 'desk' | 'hr';
 
 // Desk 폰 띠 화면(앱 · 768 미만 웹) — 회색 바닥 위 화면 폭 흰 띠. 띠 사이 8 · 띠 안 위 4 · 아래 8, 모서리 · 테두리 없음.
-// 첫 띠는 머리 바로 아래에 붙고 마지막 띠 아래에도 틈이 없다(맨 위 0 — 2026-10-23 사용자 결정, 옛 맨 위 8 을 걷었다)
-// (DESIGN.md Layout 의 "화면 바탕" — 2026-10-16 Q-019-3 C, 폰의 카드 화면은 2026-10-21 I-01 결정 3 으로 띠). 띠 안 값은 카드 안과 같다(card.yaml)
+// 첫 띠는 머리 바로 아래에 붙고 마지막 띠 아래에도 틈이 없다(맨 위 0)
+// (DESIGN.md Layout 의 "화면 바탕"). 띠 안 값은 카드 안과 같다(card.yaml)
 export const BAND = { top: 0, gap: 8, padTop: 4, padBottom: 8 } as const;
 
 // 색 — name 은 사이트 모드를 따를 때 쓰는 CSS 변수(--p-<name>, HR 에서 값이 다른 브랜드 토큰은 hr-<토큰>), light · dark 는 풀어 둔 값
@@ -19,7 +19,7 @@ export type NColor = { name?: string; light: string; dark: string };
 export type NType = { fontSize: string; lineHeight: string; fontWeight: number | string; fontFamily: string };
 export type NMotion = { duration: string; easing: string };
 export type NRing = { width: number; offset: number; color: NColor };
-// 누름 축소 — 기준 길이 max(높이, 폭 ÷ n, 최소)에서 2px 거리(v104)
+// 누름 축소 — 기준 길이 max(높이, 폭 ÷ n, 최소)에서 2px 거리
 export type NPress = { distance: number; widthDivisor: number; minBasis: number; motion: NMotion };
 // 그림자 — 라이트 · 다크 값(사이트 모드를 따르면 --p-shadow-s<n>)
 export type NShadow = { name: string; light: string; dark: string };
@@ -59,11 +59,11 @@ export type TopNavLook = {
   title: { fg: NColor; weight: number; gap: number };
   types: Record<'root' | 'standard', { text: NType; left: number }>;
   desktop: { padLeft: number; padRight: number; primarySize: string; primaryGap: number; screenTitle: NType; navToTitle: number };
-  // 검색칸(searchField — Text Field outline medium) — 높이 · 데스크톱 머리 왼쪽 폭(2026-10-16 Q-017-3a C)
+  // 검색칸(searchField — Text Field outline medium) — 높이 · 데스크톱 머리 왼쪽 폭
   search: { height: number; desktopWidth: number };
-  // 데스크톱 화면 제목 줄(screenTitle · screenDescription · screenActions — Q-018-2 A)
+  // 데스크톱 화면 제목 줄(screenTitle · screenDescription · screenActions)
   screenRow: { gap: number; description: NType; descriptionFg: NColor; descriptionGap: number; actionsGap: number; buttonSize: string };
-  // 선 굵기 — 켜고 끄는 단추(aria-pressed)의 켬만 pressedStroke(v106). 색은 켬 · 끔 모두 fg(사용자 결정 2026-10-09 19B)
+  // 선 굵기 — 켜고 끄는 단추(aria-pressed)의 켬만 pressedStroke. 색은 켬 · 끔 모두 fg
   icon: { size: number; radius: number; icon: number; stroke: number; pressedStroke: number; fg: NColor; hoverBg: NColor; pressBg: NColor; disabledFg: NColor };
   text: { height: number; padX: number; radius: number; type: NType; fg: NColor; hoverBg: NColor; pressBg: NColor; disabledFg: NColor };
   dot: { size: number; top: number; right: number; color: NColor };
@@ -73,7 +73,7 @@ export type TopNavLook = {
   leading: Record<TopLeading, { icon: NavIcon; label: string }>;
   // 데스크톱 머리의 주 버튼(Button brandSolid small)
   primary: ButtonLook;
-  // 사진 위 투명 바(tone transparent — SEED, 2026-10-22 5C) — 제목 · 아이콘 · 글 버튼 색, 막힘 색. 막 · 누름 바탕은 열린 일이라 그리지 않는다
+  // 사진 위 투명 바(tone transparent) — 제목 · 아이콘 · 글 버튼 색, 막힘 색. 막 · 누름 바탕은 열린 일이라 그리지 않는다
   transparent: { fg: NColor; disabledFg: NColor };
 };
 export type TopTone = 'layer' | 'transparent';
@@ -133,7 +133,7 @@ export type SideNavLook = {
   icon: { size: number; fg: NColor; currentFg: NColor; disabledFg: NColor };
   label: { type: NType; weight: number; fg: NColor; currentFg: NColor; disabledFg: NColor; padY: number };
   chevron: { size: number; fg: NColor; motion: NMotion };
-  // 하위 펼침 — 높이 · 꺾쇠(d6 — 2026-10-10 Accordion 과 같게), 모션 줄이기면 높이 움직임 없이 서서히(reduce)
+  // 하위 펼침 — 높이 · 꺾쇠(d6 — Accordion 과 같게), 모션 줄이기면 높이 움직임 없이 서서히(reduce)
   sub: { minH: number; padLeft: number; motion: NMotion; reduce: NMotion };
   footer: { pad: number };
   flyout: {
@@ -218,7 +218,7 @@ export type PaginationLook = {
   color: NMotion;
 };
 export type PgSlot = { type: 'page'; page: number } | { type: 'ellipsis' } | { type: 'previous' } | { type: 'next' } | { type: 'empty'; at: 'previous' | 'next' };
-// 칸 배열 — 화살표 둘 + 번호 · 생략(slots − 2). SEED 규칙(pagination.yaml 의 count 비고):
+// 칸 배열 — 화살표 둘 + 번호 · 생략(slots − 2). 규칙(pagination.yaml 의 count 비고):
 // 9칸 — 앞(p ≤ 4) 1 2 3 4 5 … N · 가운데 1 … p−1 p p+1 … N · 뒤(p ≥ N−3) 1 … N−4 … N
 // 7칸 — 앞(p ≤ 3) 1 2 3 4 … · 가운데 … p−1 p p+1 … · 뒤(p ≥ N−2) … N−3 … N(가운데 구간에서는 첫 · 마지막 번호가 없다)
 export function paginationItems(page: number, total: number, slots: number): PgSlot[] {

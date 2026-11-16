@@ -127,7 +127,7 @@ function behaviorRow(spec: string, head: string) {
 }
 
 // ── Top Navigation ──────────────────────────────────────────
-// 켜고 끄는 단추의 켬 굵기(iconButton.strokeWidthOn — v106). Toggle(toggle.yaml)의 켬 굵기와 같아야 한다
+// 켜고 끄는 단추의 켬 굵기(iconButton.strokeWidthOn). Toggle(toggle.yaml)의 켬 굵기와 같아야 한다
 function pressedStrokeOf(raw: unknown, F: string) {
   const on = len(raw, `${F} iconButton.strokeWidthOn`);
   const t = resolveState(loadComponentSpec('toggle'), { toggled: 'on' }, 'enabled')['icon.strokeWidth'];
@@ -547,12 +547,12 @@ function tableLook(brand: Brand): TablePaginationLook {
   const pr = resolveState(spec, {}, 'pressed');
   const fo = resolveState(spec, {}, 'focused');
   const di = resolveState(spec, {}, 'disabled');
-  // 빈 표(0개)는 막힘 상태가 아니라 전체 수의 값 — 화살표 둘 · 범위 "0-0" 이 막힌다(Q-011-5)
+  // 빈 표(0개)는 막힘 상태가 아니라 전체 수의 값 — 화살표 둘 · 범위 "0-0" 이 막힌다
   const empty = resolveState(spec, { total: 'empty' }, 'enabled');
   if (tok(empty['arrow.color'], brand, `${F} total empty arrow.color`).name !== tok(di['arrow.color'], brand, `${F} disabled arrow.color`).name) throw new Error(`${F} 빈 표의 화살표가 막힌 화살표와 다른 색이다 — 그림은 한 색으로 그린다`);
   const select = selectLook(brand);
   const height = len(b['root.height'], `${F} root.height`);
-  // 두 고르기는 Select medium — 그 높이가 줄 높이와 같아야 한다(사용자 결정 2026-10-08)
+  // 두 고르기는 Select medium — 그 높이가 줄 높이와 같아야 한다
   for (const slot of ['pageSize', 'pageRange']) if (!String(unbox(b[`${slot}.size`])).includes('Select medium')) throw new Error(`${F} ${slot}.size 가 Select medium 이 아니다`);
   same(select.trigger.sizes.medium.h, height, `${F} 줄 높이 — Select medium 트리거`);
   const options = [...(spec.slots.pageSize ?? '').matchAll(/(?:선택지\s*)?(\d+)(?=\s*(?:·|$))/g)].map((m) => Number(m[1])).filter((n) => n >= 5);

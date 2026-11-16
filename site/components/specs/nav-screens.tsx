@@ -186,8 +186,8 @@ export function TxCard({ mode = 'auto', title = '최근 거래', action = '전�
     </CardSurface>
   );
 }
-// 띠 화면 — 회색 바닥 위 화면 폭 흰 띠(묶음마다 하나), 띠 사이 8 · 띠 안 위 4 · 아래 8(DESIGN.md Layout 의 "화면 바탕", 2026-10-16 Q-019-3 C).
-// 첫 띠는 머리 바로 아래에 붙고 마지막 띠 아래에도 틈이 없다(2026-10-23 사용자 결정 — 옛 맨 위 8 을 걷었다)
+// 띠 화면 — 회색 바닥 위 화면 폭 흰 띠(묶음마다 하나), 띠 사이 8 · 띠 안 위 4 · 아래 8(DESIGN.md Layout 의 "화면 바탕").
+// 첫 띠는 머리 바로 아래에 붙고 마지막 띠 아래에도 틈이 없다
 export function FloorBands({ mode = 'auto', children }: { mode?: Mode; children: ReactNode }) {
   return (
     <div style={bandStack()}>
@@ -200,7 +200,7 @@ export function FloorBands({ mode = 'auto', children }: { mode?: Mode; children:
   );
 }
 // 구역 띠 — 띠 안은 카드 안과 같은 값이다(머리 글 위 24 · 좌우 24 · 아래 4, 글 · 숫자 내용은 좌우 24 · 아래 24).
-// 띠 안 위 4 · 아래 8 은 그 24 안에 든다(DESIGN.md Layout "화면 바탕" — Desk 폰 구역 화면은 띠, 2026-10-21 I-01 결정 3)
+// 띠 안 위 4 · 아래 8 은 그 24 안에 든다(DESIGN.md Layout "화면 바탕" — 담다 폰 구역 화면은 띠)
 export function BandHead({ mode = 'auto', title, action = '' }: { mode?: Mode; title: string; action?: string }) {
   const c = cardLook();
   return (
@@ -270,7 +270,7 @@ export function LedgerScreen({ mode = 'auto', h = 600, scale = 0.62, tabSize = '
     <NPhone mode={mode} h={h} scale={scale} tabs tab="ledger" tabSize={tabSize} bg={value === 'assets' ? 'bg-layer-basement' : 'bg-layer-default'} bar={<Bar mode={mode} type="root" title="가계부" actions={[{ icon: 'search', label: '검색' }]} />}>
       <MoneyTabs mode={mode} value={value} />
       {value === 'assets' ? (
-        // 자산은 띠 화면 — 회색 바닥 위 구역 띠(화면 바탕 2026-10-16 · 폰 구역 화면은 2026-10-21 I-01 결정 3). 거래는 흰 화면이라 둘을 밀면 바탕이 바뀐다
+        // 자산은 띠 화면 — 회색 바닥 위 구역 띠(Layout "화면 바탕"). 거래는 흰 화면이라 둘을 밀면 바탕이 바뀐다
         <FloorBands mode={mode}>
           <>
             <BandHead mode={mode} title="계좌" action="관리" />
@@ -315,7 +315,7 @@ export function Shell({ mode = 'auto', brand = 'desk', side, header, children, b
     </div>
   );
 }
-// 데스크톱 머리 — 왼쪽 검색칸 · 오른쪽 주 버튼 + 알림 · 설정(금액 가리기 눈은 두지 않는다 — 2026-10-16 Q-017-3c = Q-018-3 B)
+// 데스크톱 머리 — 왼쪽 검색칸 · 오른쪽 주 버튼 + 알림 · 설정(금액 가리기 눈은 두지 않는다)
 export const DESK_HEADER_ACTIONS: TopAction[] = [
   { icon: 'bell', label: '알림, 새 알림 있음', notification: true },
   { icon: 'settings', label: '설정' },
@@ -336,7 +336,7 @@ export function DeskHeader({ mode = 'auto', live = false, state, search = true, 
     />
   );
 }
-// 본문 맨 위 화면 제목(h1 — text-screen-title) — 머리 아래 nav-to-title. description · actions 를 주면 한 줄 제목 줄(Q-018-2 A) —
+// 본문 맨 위 화면 제목(h1 — text-screen-title) — 머리 아래 nav-to-title. description · actions 를 주면 한 줄 제목 줄 —
 // 제목(설명은 그 아래 t3 · fg-neutral-subtle) 왼쪽, 동작 버튼(Button neutralOutline small) 오른쪽 · 제목 덩어리 아래 끝 맞춤
 export function ScreenTitle({ mode = 'auto', brand = 'desk', children, top, style, description, actions }: { mode?: Mode; brand?: Brand; children: ReactNode; top?: number; style?: CSSProperties; description?: string; actions?: [IconName, string][] }) {
   const k = NK(brand);
@@ -447,7 +447,7 @@ export function tableCardH(n: number, paging = true, brand: Brand = 'hr') {
   return c.surface.borderW * 2 + header + t.head.minH + t.row.minH.text * n + (paging ? pg.marginTop + pg.height : 0) + c.list.padBottom;
 }
 // 넘김 줄 자리 — 표와 같은 상자 안, 좌우는 표의 첫 칸 앞 · 끝 칸 뒤와 같은 24(table.yaml root.paddingX). 표 아래 12 는 넘김 줄의 위 여백
-// (table-pagination.yaml root.marginTop — 자리는 위 여백을 더하지 않는다, 2026-10-17 03-D 결정 5 B)
+// (table-pagination.yaml root.marginTop — 자리는 위 여백을 더하지 않는다)
 // above — 나쁜 예(표 위에 둔 줄)
 export function PagingSlot({ children, brand = 'hr', above = false }: { children: ReactNode; brand?: Brand; above?: boolean }) {
   const e = tableLook(brand).edge;
@@ -549,7 +549,7 @@ export function CodePreview({ children, caption, w = 360, pad = 24, bg = 'bg-lay
   );
 }
 
-// 사이드바 바닥의 계정 줄(이니셜 원 · 이름) — 두지 않는다(2026-10-16 Q-018-1 C). footer-guide 의 '지금' 그림에만 쓴다
+// 사이드바 바닥의 계정 줄(이니셜 원 · 이름) — 두지 않는다. footer-guide 의 '지금' 그림에만 쓴다
 export function AccountRow({ mode = 'auto', brand = 'desk', collapsed = false, name = '김민수' }: { mode?: Mode; brand?: Brand; collapsed?: boolean; name?: string }) {
   const k = NK(brand).side;
   return (
