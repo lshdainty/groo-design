@@ -20,7 +20,7 @@ function B(p: Omit<PageBannerViewProps, 'look' | 'state'> & { state?: PageBanner
   return <PageBannerView look={look ?? bl()} state={state} {...rest} />;
 }
 
-// 비교 페이지에서 고른 그대로의 글(2026-10-02)
+// 그림 · 코드 미리보기가 함께 쓰는 띠 글
 const DISCONNECTED = { tone: 'critical' as const, title: '연결 끊김', description: '증권 연결 키가 만료돼 시세를 받지 못해요.', button: { label: '다시 연결' } };
 const EXPIRING = { tone: 'warning' as const, variant: 'solid' as const, title: '곧 만료', description: 'Pro 이용이 10월 31일에 끝나요.', button: { label: '구독 보기' } };
 const NEW_VERSION = { tone: 'informative' as const, description: '새 버전 1.24.0을 받을 수 있어요.', button: { label: '업데이트' } };
@@ -142,7 +142,7 @@ const Anatomy: Fig = ({ caption }) => {
             ['ⓕ', 'Chevron · Close'],
           ]}
         />
-        <span className="max-w-[480px] text-center text-[12px] leading-5 pk-muted">위는 1.5배 — 본문과 버튼이 한 줄에 안 들어가 버튼이 다음 줄로 내려갔다. 아래는 실제 크기 — 띠 전체를 누르는 띠의 뒤 화살표, 닫을 수 있는 띠의 닫기</span>
+        <span className="max-w-[480px] text-center text-[12px] leading-5 pk-muted">위는 1.5배입니다 — 본문과 버튼이 한 줄에 안 들어가 버튼이 다음 줄로 내려갔습니다. 아래는 실제 크기입니다 — 띠 전체를 누르는 띠의 뒤 화살표, 닫을 수 있는 띠의 닫기</span>
       </div>
     </Figure>
   );
@@ -201,7 +201,7 @@ const Layout: Fig = ({ caption }) => {
             <B tone="neutral" interaction="actionable" description="증권 계좌를 연결하면 보유 주식이 자산에 더해져요." state="focused" part="root" />
           </div>
           <Muted>
-            링 {l.ring.width} · 안쪽 {-l.ring.offset}(화면 끝까지 차는 띠라 바깥 링은 잘린다) — 옅은 바탕은 {l.faces.weak.critical.ring.name}, 짙은 바탕은 띠 글자색({l.faces.solid.critical.ring.name}). 버튼 링의 모서리 {l.button.radius}
+            링 {l.ring.width} · 안쪽 {-l.ring.offset}(화면 끝까지 차는 띠라 바깥 링은 잘립니다) — 옅은 바탕은 {l.faces.weak.critical.ring.name}, 짙은 바탕은 띠 글자색({l.faces.solid.critical.ring.name}). 버튼 링의 모서리 {l.button.radius}
           </Muted>
         </div>
         <ul className="flex list-disc flex-col gap-1 pl-5 text-[12px] leading-5 pk-muted">
@@ -235,7 +235,7 @@ const Tones: Fig = ({ caption }) => {
           {(['weak', 'solid'] as const).map((variant) => (
             <div key={variant} className="flex flex-col gap-3 pb-4 pt-3" style={{ background: rc('bg-layer-default', mode) }}>
               <span className="px-4 text-[12px] font-bold" style={{ color: rc('fg-neutral', mode) }}>
-                {variant === 'weak' ? 'weak(기본) — 옅은 바탕' : 'solid — 짙은 바탕, 무거운 상태에만'}
+                {variant === 'weak' ? 'weak(기본) — 옅은 바탕' : 'solid — 짙은 바탕, 더 강하게 알릴 때'}
               </span>
               {tones.map((tone) => {
                 const f = l.faces[variant][tone];
@@ -272,7 +272,7 @@ const Tones: Fig = ({ caption }) => {
 const PlacementGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="mx-auto flex w-full max-w-[640px] flex-col gap-4 md:flex-row">
-      <Verdict ok note="페이지 머리 바로 아래에 하나 — 페이지 전체의 상태만. 그 기능 가까이의 안내는 본문 안 Callout">
+      <Verdict ok note="페이지 머리 바로 아래에 하나 — 페이지 전체의 상태에만 씁니다. 그 기능 가까이의 안내는 본문 안 Callout 입니다">
         <BannerPhone mode="auto" title="증권" scale={0.6} banner={<B {...DISCONNECTED} />}>
           <div className="pt-3">
             <CalloutView look={calloutLook()} tone="informative" description="국내 주식은 15분 늦은 시세예요." state="enabled" />
@@ -280,7 +280,7 @@ const PlacementGuide: Fig = ({ caption }) => (
           <StockRows n={2} />
         </BannerPhone>
       </Verdict>
-      <Verdict ok={false} note="한 화면에 배너 둘 — 무엇이 이 페이지의 상태인지 흐려진다. 새 기능 · 팁은 배너가 아니다">
+      <Verdict ok={false} note="한 화면에 배너 둘 — 무엇이 이 페이지의 상태인지 흐려집니다. 새 기능 · 팁은 배너가 아닙니다">
         <BannerPhone
           mode="auto"
           title="증권"
@@ -303,7 +303,17 @@ const PlacementGuide: Fig = ({ caption }) => (
 const ExDisplay: Fig = () => <BannerDisplayDemo look={bl()} snack={snackbarLook()} />;
 const ExDismissible: Fig = () => <BannerDismissDemo look={bl()} />;
 
+// 개요 카드 — 라이트 띠 셋(연결 끊김 · 새 버전 · 곧 만료). 그린 크기 약 360 × 190 → zoom 0.75 로 270 × 143
+const Thumb: Fig = () => (
+  <div className="flex flex-col gap-2" style={{ width: 360, zoom: 0.75 }}>
+    <B mode="light" {...DISCONNECTED} />
+    <B mode="light" {...NEW_VERSION} />
+    <B mode="light" {...EXPIRING} />
+  </div>
+);
+
 export const pageBannerFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

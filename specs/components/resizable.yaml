@@ -1,14 +1,9 @@
-# Resizable 의 수치 원본 — HR 관리 화면 나누기(2026-10-10 사용자 결정, 펼치고 접기 · 나누기 비교 페이지 12B).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Resizable 의 수치 원본입니다 — HR 관리 화면의 목록 | 상세 나누기입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 축 kind 는 split 하나다. 대시보드 위젯 크기(widget — 13A)는 제품에서 걷어(2026-10-23 사용자 결정 HB1 C)
-# 스펙에서도 걷었다(2026-11-10 사용자 결정 11A — 옛 값은 resizable.history/v-pre-decisions-1110.yaml).
-#   split  — 목록 | 상세 두 패널 사이 손잡이로 목록 폭을 바꾼다(HR 관리 > 역할 · 사용자 · 회사 · 부서 사용자). 768 이상만.
+# 축 kind 는 split 하나입니다.
+#   split  — 목록 | 상세 두 패널 사이 손잡이로 목록 폭을 바꿉니다(HR 관리 > 역할 · 사용자 · 회사 · 부서 사용자). 768 이상에서만 씁니다.
 #            보이는 선 1px + 가운데 손잡이 표시(대비 3 이상) · 누르는 폭 16 · 이름 "목록 너비" · ← → 5% · Home · End ·
-#            목록 20 ~ 40%(오른쪽은 60% 아래로 줄지 않는다) · 화면마다 폭을 기억 · 손잡이를 한 번 누르면 25 ↔ 40(끌지 않는 대안).
-#
-# SEED 와 다른 자리(resizable.md 의 "SEED 와 다른 점")
-#   - SEED 에는 Resizable 이 없다(모바일 앱 중심이라 끌어서 나누는 패널이 없다) — 값은 모두 groo 가 정했다.
+#            목록 20 ~ 40%(오른쪽은 60% 아래로 줄지 않습니다) · 화면마다 폭을 기억 · 손잡이를 한 번 누르면 25 ↔ 40(끌지 않는 대안).
 
 name: Resizable
 
@@ -38,22 +33,22 @@ rules:
   - when: { kind: split }
     enabled:
       group:
-        direction: { value: 가로, note: "목록 | 상세 — 세로 나누기 · 셋 이상 나누기는 쓰는 곳이 없어 두지 않는다" }
-        breakpoint: { value: 768px 이상, note: "768 미만은 나누지 않는다 — 역할 · 사용자는 목록 → 상세, 회사는 탭(지금과 같다)" }
+        direction: { value: 가로, note: "목록 | 상세 — 세로 나누기 · 셋 이상 나누기는 두지 않는다" }
+        breakpoint: { value: 768px 이상, note: "768 미만은 나누지 않는다 — 역할 · 사용자는 목록 → 상세, 회사는 탭" }
       panel:
         width: { value: 25%, note: "목록 패널의 기본 폭 — 1280 에서 본문 992 의 248(사이드바 240 · 여백 24 × 2)" }
         minWidth: { value: 20%, note: "목록이 이보다 좁아지지 않는다" }
-        maxWidth: { value: 40%, note: "오른쪽 상세가 60% 아래로 줄지 않는다 — 지금 회사 · 부서 사용자는 0폭까지 민다" }
+        maxWidth: { value: 40%, note: "오른쪽 상세가 60% 아래로 줄지 않는다" }
         toggleWidth: { value: 40%, note: "손잡이를 한 번 누르면(Enter) 기본 25 ↔ 넓게 40" }
         persist: { value: 화면마다 기억, note: "끌거나 누른 폭을 브라우저에 저장한다(localStorage — 키는 화면: 역할 · 사용자 · 회사 · 부서 사용자). 사이드바 접힘처럼 다시 열면 그 폭" }
       handle:
-        width: { value: 16px, note: "누르는 폭 — 선 가운데로 양쪽 8. 768 이상 데스크톱의 마우스 경계라 44 가 아니다(사용자 결정 12B)" }
+        width: { value: 16px, note: "누르는 폭 — 선 가운데로 양쪽 8. 768 이상 데스크톱의 마우스 경계라 44 가 아니다" }
         cursor: col-resize
         touchAction: { value: none, note: "끄는 동안 화면이 스크롤되지 않게" }
         touchTarget: { value: 16 × 패널 높이, note: "AA ⚠(폭 16) · AAA ✗ — 같은 일을 누르기(25 ↔ 40) · 키보드로도 한다" }
         name: { value: 목록 너비, note: "role=separator · aria-orientation=vertical · aria-valuenow(목록 %) · aria-valuemin 20 · aria-valuemax 40 · aria-controls(목록 패널)" }
         keyboard: { value: "← → 5% · Home 20% · End 40% · Enter 25 ↔ 40", note: "APG Window Splitter — Shift + 화살표는 두지 않는다" }
-        step: { value: 5%, note: "← → 한 번에 — 지금 HR 은 10%" }
+        step: { value: 5%, note: "← → 한 번에" }
         press: { value: 누르면 25 ↔ 40, note: "끌지 않고 한 번 눌렀다 떼면(3px 안) 기본 25 ↔ 넓게 40 — WCAG 2.5.7 Dragging Movements 의 대안" }
         dragStart: { value: 3px, note: "누른 채 3px 넘게 움직이면 끌기 — 그 안에서 놓으면 누르기" }
       line:
@@ -66,7 +61,7 @@ rules:
         width: 4px
         height: 24px
         radius: $radius-r0_5
-        background: { value: $color-stroke-neutral-solid, note: "흰 면 위 4.18 · 다크 4.13(WCAG 1.4.11 ≥ 3) — 지금 HR 은 선 · 손잡이가 모두 #EEEEEE 1.11" }
+        background: { value: $color-stroke-neutral-solid, note: "흰 면 위 4.18 · 다크 4.13(WCAG 1.4.11 ≥ 3)" }
         position: { value: 선 가운데, note: "패널 높이의 가운데" }
     hovered:
       line:
