@@ -1,23 +1,20 @@
-# Slider 의 수치 원본 — 구조는 SEED Slider(2026-10-09 사용자 결정, 입력 비교 페이지 1B · 2C · 3B · 4B · "따라오는 것").
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Slider 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 정해진 범위에서 값 하나(single) 또는 둘(range)을 끌어 고르는 컨트롤이다. 칸 이름 · 설명 · 오류는 Field 가 둘레에서 그리고,
-# 지금 값은 Field 머리 오른쪽(headerValue)에 늘 보인다. 모양은 SEED 무채색 — 트랙 4 · 채움 짙은 글자색 · 손잡이 20(누르면 24),
-# 테두리 · 그림자 없음. 끄는 동안 · 손잡이에 마우스를 올렸을 때 · 키보드 포커스일 때 손잡이 위에 말풍선이 뜨고, 아래에는 양 끝 값 표식이 있다.
-# 구간(단계 사이)이 2 ~ 5개면 트랙을 끊는 굵은 틈(눈금)과 단계마다 표식을 두고, 그보다 많으면 눈금 없이 양 끝 표식만 둔다(SEED).
+# 정해진 범위에서 값 하나(single) 또는 둘(range)을 끌어 고르는 컨트롤입니다. 칸 이름 · 설명 · 오류는 Field 가 둘레에서 그리고,
+# 지금 값은 Field 머리 오른쪽(headerValue)에 늘 보입니다. 모양은 무채색 — 트랙 4 · 채움 짙은 글자색 · 손잡이 20(누르면 24),
+# 테두리 · 그림자 없음입니다. 끄는 동안 · 손잡이에 마우스를 올렸을 때 · 키보드 포커스일 때 손잡이 위에 말풍선이 뜨고, 아래에는 양 끝 값 표식이 있습니다.
+# 구간(단계 사이)이 2 ~ 5개면 트랙을 끊는 굵은 틈(눈금)과 단계마다 표식을 두고, 그보다 많으면 눈금 없이 양 끝 표식만 둡니다.
 #
-# 축 — mode(값 하나 · 둘) · ticks(눈금 없음 · 2 ~ 5 구간). 상태는 손잡이의 상태다(누름 = 누르거나 끄는 동안).
+# 축 — mode(값 하나 · 둘) · ticks(눈금 없음 · 2 ~ 5 구간). 상태는 손잡이의 상태입니다(누름 = 누르거나 끄는 동안).
 #
-# SEED 와 다른 자리(slider.md 의 "SEED 와 다른 점")
-#   - 손잡이 줄(control) 높이 44 — 줄 전체가 누르는 자리다(v106 — 누르는 영역 44). SEED 는 26(표식이 있으면 46).
-#   - 트랙은 SEED palette.gray-400 의 groo 역할 stroke-neutral-weak(같은 gray-400 단계 — 흰 표면 1.23, SEED 1.35).
-#     손잡이 · 말풍선은 SEED bg.neutral-solid(2026-10-01 전 이름 bg.neutral-inverted)의 groo 역할 bg-neutral-inverted —
-#     라이트에서 채움(fg-neutral)과 같은 색이라 손잡이는 크기(20 · 4)로 갈린다(SEED 는 #1a1c20 · #2a3038, 1.28:1).
-#   - 머리 오른쪽에 지금 값을 늘 둔다 — SEED 는 가만히 있을 때 값을 보이지 않는다(말풍선은 SEED 그대로).
-#   - 키보드는 APG — Home · End 는 포커스한 손잡이를 움직이고 RTL 에서도 ↑ 는 늘린다. SEED 는 Home 이 첫 손잡이 · End 가 끝 손잡이,
-#     RTL 에서 ↑ 가 줄인다(Radix 원본과도 다르다).
-#   - 저장은 손을 뗄 때 한 번(SEED onValuesCommit) · 요청 중에도 막지 않는다 · 실패하면 되돌리고 Field 오류로 알린다 — SEED 에 규칙이 없다.
-#   - 막힘은 전용 색(v106) — SEED 와 같다(불투명도를 쓰지 않는다).
+# 눈여겨볼 자리
+#   - 손잡이 줄(control) 높이 44 — 줄 전체가 누르는 자리입니다(누르는 영역 44).
+#   - 트랙은 stroke-neutral-weak(흰 표면 1.23). 손잡이 · 말풍선은 bg-neutral-inverted —
+#     라이트에서 채움(fg-neutral)과 같은 색이라 손잡이는 크기(20 · 4)로 갈립니다.
+#   - 머리 오른쪽에 지금 값을 늘 둡니다(말풍선은 끄는 동안 · 호버 · 키보드 포커스에만).
+#   - 키보드는 APG — Home · End 는 포커스한 손잡이를 움직이고 RTL 에서도 ↑ 는 늘립니다.
+#   - 저장은 손을 뗄 때 한 번(onValueCommit) · 요청 중에도 막지 않습니다 · 실패하면 되돌리고 Field 오류로 알립니다.
+#   - 막힘은 전용 색입니다(불투명도를 쓰지 않습니다).
 
 name: Slider
 
@@ -50,43 +47,43 @@ states:
   hovered: 웹 — 손잡이에 마우스를 올림. 말풍선이 뜬다
   focused: 키보드 포커스 — 링 + 말풍선
   pressed: 손잡이 · 트랙을 누르고 있거나 끄는 동안 — 손잡이 24 + 말풍선
-  disabled: 전용 색(v106) — 포커스도 받지 않는다
+  disabled: 전용 색 — 포커스도 받지 않는다
 
 rules:
   # ── 공통 ──────────────────────────────────────────────
   - when: {}
     enabled:
       root:
-        width: { value: 놓인 자리 폭, note: "Field 의 입력 자리를 채운다 — 폭이 정해진 자리에 두지 않는다" }
-        gap: { value: $spacing-x0_5, note: "손잡이 줄 ↔ 표식 2(SEED)" }
-        paddingTop: { value: $spacing-x6, note: "말풍선 자리 — Field 머리 ↔ 손잡이 줄 32(Field 간격 8 + 24). 말풍선(26)은 손잡이(20) 위 12 에 뜨고 누른 손잡이를 따라 올라가지 않아 머리(라벨 · 머리 값)와 6 이 남는다. 비교 페이지 2C 그림의 자리(30)를 토큰으로. 누르는 자리는 손잡이 줄 44 그대로" }
-        commit: { value: 손을 뗄 때 한 번, note: "끄는 동안은 화면(채움 · 손잡이 · 머리 값 · 말풍선)만 따라가고 손을 뗄 때 한 번 저장한다(onValueCommit · 앱 onChangeEnd). 키보드는 키마다 한 번. 요청 중에도 막지 않는다 — 실패하면 값을 되돌리고 Field 오류로 알린다(사용자 결정 2026-10-09)" }
+        width: { value: 놓인 자리 폭, note: "Field 의 입력 자리를 채웁니다 — 폭이 정해진 자리에 두지 않습니다" }
+        gap: { value: $spacing-x0_5, note: "손잡이 줄 ↔ 표식 2" }
+        paddingTop: { value: $spacing-x6, note: "말풍선 자리 — Field 머리 ↔ 손잡이 줄 32(Field 간격 8 + 24). 말풍선(26)은 손잡이(20) 위 12 에 뜨고 누른 손잡이를 따라 올라가지 않아 머리(라벨 · 머리 값)와 6 이 남습니다. 누르는 자리는 손잡이 줄 44 그대로입니다" }
+        commit: { value: 손을 뗄 때 한 번, note: "끄는 동안은 화면(채움 · 손잡이 · 머리 값 · 말풍선)만 따라가고 손을 뗄 때 한 번 저장합니다(onValueCommit · 앱 onChangeEnd). 키보드는 키마다 한 번입니다. 요청 중에도 막지 않습니다 — 실패하면 값을 되돌리고 Field 오류로 알립니다" }
       control:
-        height: { value: 44px, note: "줄 전체가 누르는 자리 — 손잡이 20 위아래 12 · 트랙 4 위아래 20 이 모두 눌린다(SEED 26 은 44 에 못 미친다)" }
+        height: { value: 44px, note: "줄 전체가 누르는 자리 — 손잡이 20 위아래 12 · 트랙 4 위아래 20 이 모두 눌립니다" }
         cursor: pointer
-        touchTarget: { value: 44 × 폭, note: "AA ✓ · AAA ✓. 손잡이 밖을 누르면 가장 가까운 손잡이가 그 자리(가장 가까운 단계)로 건너뛴다(Tap jump) — 누르기만 하면 말풍선은 뜨지 않는다" }
+        touchTarget: { value: 44 × 폭, note: "AA ✓ · AAA ✓. 손잡이 밖을 누르면 가장 가까운 손잡이가 그 자리(가장 가까운 단계)로 건너뜁니다(Tap jump) — 누르기만 하면 말풍선은 뜨지 않습니다" }
         touchAction: { value: none, note: "가로로 끄는 동안 화면이 스크롤되지 않게 — 줄 밖은 그대로" }
-        dragStart: { value: 150ms · 3px, note: "SEED dragStartDelay — 손잡이 밖을 짧게 누르면 그 자리로 건너뛰기만 한다(말풍선 없음). 150ms 넘게 누르고 있거나 3px 넘게 움직이면 끌기가 된다(손잡이 24 + 말풍선). 손잡이를 누르면 바로 끌기" }
+        dragStart: { value: 150ms · 3px, note: "손잡이 밖을 짧게 누르면 그 자리로 건너뛰기만 합니다(말풍선 없음). 150ms 넘게 누르고 있거나 3px 넘게 움직이면 끌기가 됩니다(손잡이 24 + 말풍선). 손잡이를 누르면 바로 끌기입니다" }
       track:
         height: 4px
         radius: $radius-full
-        background: { value: $color-stroke-neutral-weak, note: "SEED palette.gray-400 의 역할 짝(같은 gray-400). 흰 표면 위 1.23 · 다크 1.56(시트 1.35) — 트랙은 범위의 바탕이고 값은 채움 · 손잡이가 말한다" }
+        background: { value: $color-stroke-neutral-weak, note: "흰 표면 위 1.23 · 다크 1.56(시트 1.35) — 트랙은 범위의 바탕이고 값은 채움 · 손잡이가 알립니다" }
       fill:
-        background: { value: $color-fg-neutral, note: "SEED fg.neutral — 트랙 위 13.38 · 다크 8.62. 모서리는 따로 두지 않는다 — 트랙이 잘라 준다" }
+        background: { value: $color-fg-neutral, note: "트랙 위 13.38 · 다크 8.62. 모서리는 따로 두지 않습니다 — 트랙이 잘라 줍니다" }
       tick:
-        width: { value: 4px, note: "트랙 높이(4) 그대로의 틈 — SEED thick. 연속 값의 가는 눈금(thin 1)은 두지 않는다" }
+        width: { value: 4px, note: "트랙 높이(4) 그대로의 틈. 연속 값의 가는 눈금(thin 1)은 두지 않습니다" }
       thumb:
         size: 20px
         radius: $radius-full
-        background: { value: $color-bg-neutral-inverted, note: "SEED bg.neutral-solid 의 역할 짝 — 라이트는 채움과 같은 #1A1F2E, 다크는 채움과 같은 #F5F6FA(SEED 도 다크에서 같다). 흰 표면 위 16.41 · 다크 13.42" }
-        borderWidth: { value: 0, note: "테두리 · 그림자 없음(사용자 결정 1B — 흰 손잡이 + 테두리 + 그림자는 고르지 않았다)" }
+        background: { value: $color-bg-neutral-inverted, note: "라이트는 채움과 같은 #1A1F2E, 다크는 채움과 같은 #F5F6FA. 흰 표면 위 16.41 · 다크 13.42" }
+        borderWidth: { value: 0, note: "테두리 · 그림자 없음 — 흰 손잡이 + 테두리 + 그림자로 그리지 않습니다" }
         shadow: none
         cursor: grab
-        inset: { value: 10px, note: "트랙 안쪽 — 손잡이 가운데가 트랙 양 끝에서 반지름(10)만큼 들어온 자리까지만 간다. 손잡이가 트랙 밖으로 나가지 않는다(SEED). 채움도 그 가운데까지" }
+        inset: { value: 10px, note: "트랙 안쪽 — 손잡이 가운데가 트랙 양 끝에서 반지름(10)만큼 들어온 자리까지만 갑니다. 손잡이가 트랙 밖으로 나가지 않습니다. 채움도 그 가운데까지입니다" }
         pageStep: { value: 10, note: "Shift + 화살표 · PageUp · PageDown 이 한 번에 옮기는 단계 수(APG)" }
-        keyboard: { value: "← → ↑ ↓ 한 단계 · Shift + 화살표 · PageUp · PageDown 10단계 · Home · End 끝", note: "APG — 포커스한 손잡이만 움직인다. 범위면 다른 손잡이 값이 끝이다(넘지 않는다). RTL 은 ← → 만 뒤집고 ↑ 는 늘 늘린다" }
+        keyboard: { value: "← → ↑ ↓ 한 단계 · Shift + 화살표 · PageUp · PageDown 10단계 · Home · End 끝", note: "APG — 포커스한 손잡이만 움직입니다. 범위면 다른 손잡이 값이 끝입니다(넘지 않습니다). RTL 은 ← → 만 뒤집고 ↑ 는 늘 늘립니다" }
       valueIndicator:
-        display: { value: 숨김, note: "끄는 동안(pressed) · 마우스를 손잡이에 올렸을 때(hovered) · 키보드 포커스일 때(focused)만 보인다. 보조 기술에는 숨긴다(aria-hidden) — 값은 손잡이의 aria-valuetext 가 읽힌다" }
+        display: { value: 숨김, note: "끄는 동안(pressed) · 마우스를 손잡이에 올렸을 때(hovered) · 키보드 포커스일 때(focused)만 보입니다. 보조 기술에는 숨깁니다(aria-hidden) — 값은 손잡이의 aria-valuetext 가 읽힙니다" }
         background: { value: $color-bg-neutral-inverted, note: "손잡이와 같은 색" }
         foreground: { value: $color-fg-neutral-inverted, note: "말풍선 위 16.41 · 다크 13.42" }
         typography: $text-t3
@@ -95,27 +92,27 @@ rules:
         paddingY: $spacing-x1
         paddingX: $spacing-x2
         radius: $radius-r1_5
-        minWidth: { value: 24px, note: "좌우 여백 8 × 2 + 화살표 8(SEED)" }
-        offsetY: { value: 12px, note: "상자 아래 끝 ↔ 손잡이(20) 위 끝(SEED offsetY 12). 누른 손잡이가 1.2배로 커져도 말풍선은 그 자리 그대로다(눈으로는 10) — 화살표가 그 사이에서 손잡이 가운데를 가리킨다" }
-        arrowWidth: { value: 8px, note: "SEED valueIndicatorArrow width x2 — 상자 바탕과 같은 색" }
-        arrowHeight: { value: 6px, note: "SEED valueIndicatorArrow height x1_5 — 상자 아래로 나온다" }
-        clamp: { value: 트랙 안, note: "손잡이가 트랙 끝에 가면 상자만 안쪽으로 밀리고 화살표는 손잡이 가운데를 그대로 가리킨다(SEED)" }
-        enterScale: { value: 0.9, note: "나타날 때 0.9배 · 투명 0 · 아래 5 에서 제자리로(SEED enterScale · enterOpacity)" }
+        minWidth: { value: 24px, note: "좌우 여백 8 × 2 + 화살표 8" }
+        offsetY: { value: 12px, note: "상자 아래 끝 ↔ 손잡이(20) 위 끝. 누른 손잡이가 1.2배로 커져도 말풍선은 그 자리 그대로입니다(눈으로는 10) — 화살표가 그 사이에서 손잡이 가운데를 가리킵니다" }
+        arrowWidth: { value: 8px, note: "상자 바탕과 같은 색" }
+        arrowHeight: { value: 6px, note: "상자 아래로 나옵니다" }
+        clamp: { value: 트랙 안, note: "손잡이가 트랙 끝에 가면 상자만 안쪽으로 밀리고 화살표는 손잡이 가운데를 그대로 가리킵니다" }
+        enterScale: { value: 0.9, note: "나타날 때 0.9배 · 투명 0 · 아래 5 에서 제자리로" }
         enterOpacity: 0
-        enterOffsetY: { value: 5px, note: "아래로 5 에서 시작한다 — 모션 줄이기면 확대 · 이동 없이 투명도만" }
-        exitOpacity: { value: 0, note: "사라질 때 투명 0 · 아래 5 로(SEED exitOpacity — 확대는 그대로 1)" }
+        enterOffsetY: { value: 5px, note: "아래로 5 에서 시작합니다 — 모션 줄이기면 확대 · 이동 없이 투명도만" }
+        exitOpacity: { value: 0, note: "사라질 때 투명 0 · 아래 5 로(확대는 그대로 1)" }
         exitOffsetY: 5px
       markers:
         typography: $text-t3
-        foreground: { value: $color-fg-neutral-muted, note: "흰 표면 7.11 · 다크 7.70(시트 6.67). 보조 기술에는 숨긴다(aria-hidden)" }
-        align: { value: 양 끝, note: "최솟값은 왼쪽 끝, 최댓값은 오른쪽 끝에 글을 맞춘다 — 단계 표식(ticks discrete)의 가운데 것은 단계 자리 가운데" }
+        foreground: { value: $color-fg-neutral-muted, note: "흰 표면 7.11 · 다크 7.70(시트 6.67). 보조 기술에는 숨깁니다(aria-hidden)" }
+        align: { value: 양 끝, note: "최솟값은 왼쪽 끝, 최댓값은 오른쪽 끝에 글을 맞춥니다 — 단계 표식(ticks discrete)의 가운데 것은 단계 자리 가운데" }
       headerValue:
         typography: $text-t5
         fontWeight: { value: 700, note: "라벨(16 · 500)과 같은 크기로 한 단계 굵게 — 머리 오른쪽" }
         foreground: $color-fg-neutral
         numerals: tabular-nums
-        content: { value: 지금 값 + 단위, note: "\"80%\" — formatValue 의 글. 범위면 \"30 ~ 70만원\". 보조 기술에는 숨긴다(값은 손잡이가 읽힌다)" }
-        position: { value: Field 머리 오른쪽, note: "Field 의 headerAction 자리(라벨 오른쪽)에 두는 글이다 — 줄 높이 22 가 머리 높이와 같아 라벨과 한 줄에 맞는다" }
+        content: { value: 지금 값 + 단위, note: "\"80%\" — formatValue 의 글. 범위면 \"30 ~ 70만원\". 보조 기술에는 숨깁니다(값은 손잡이가 읽힙니다)" }
+        position: { value: Field 머리 오른쪽, note: "Field 의 headerAction 자리(라벨 오른쪽)에 두는 글입니다 — 줄 높이 22 가 머리 높이와 같아 라벨과 한 줄에 맞습니다" }
     hovered:
       valueIndicator: { display: 보임 }
     focused:
@@ -123,10 +120,10 @@ rules:
         width: 2px
         offset: { value: 2px, note: "손잡이 둘레 원 — 키보드 포커스에만" }
         color: $color-stroke-focus-ring
-      valueIndicator: { display: { value: 보임, note: "키보드로 옮기는 동안 늘 — 키를 누를 때마다 값이 바뀐다" } }
+      valueIndicator: { display: { value: 보임, note: "키보드로 옮기는 동안 늘 — 키를 누를 때마다 값이 바뀝니다" } }
     pressed:
       thumb:
-        size: { value: 24px, note: "SEED 1.2배 — 끄는 동안 손가락 밑에서 손잡이가 보이게" }
+        size: { value: 24px, note: "1.2배 — 끄는 동안 손가락 밑에서 손잡이가 보이게" }
         cursor: grabbing
       valueIndicator: { display: 보임 }
     disabled:
@@ -137,7 +134,7 @@ rules:
       fill:
         background: $color-fg-disabled
       thumb:
-        background: { value: $color-fg-disabled, note: "채움과 같은 색 — 불투명도로 흐리게 하지 않는다(v106). Tab 순서에서 빠진다" }
+        background: { value: $color-fg-disabled, note: "채움과 같은 색 — 불투명도로 흐리게 하지 않습니다. Tab 순서에서 빠집니다" }
         cursor: not-allowed
       markers:
         foreground: $color-fg-disabled
@@ -154,46 +151,46 @@ rules:
   - when: { mode: range }
     enabled:
       fill:
-        span: { value: 두 손잡이 사이, note: "SEED range" }
+        span: { value: 두 손잡이 사이, note: "두 손잡이 가운데 사이를 채운다" }
       thumb:
-        name: { value: "{라벨} 최소 · {라벨} 최대", note: "손잡이마다 범위에서 하는 일 — \"시작 · 끝\" 처럼 바꿀 수 있다(thumbLabels). 두 손잡이는 서로를 넘지 않는다" }
+        name: { value: "{라벨} 최소 · {라벨} 최대", note: "손잡이마다 범위에서 하는 일 — \"시작 · 끝\" 처럼 바꿀 수 있습니다(thumbLabels). 두 손잡이는 서로를 넘지 않습니다" }
       valueIndicator:
-        target: { value: 움직이는 손잡이, note: "두 손잡이 가운데 끌거나 마우스를 올리거나 포커스한 손잡이 위에만 뜬다" }
+        target: { value: 움직이는 손잡이, note: "두 손잡이 가운데 끌거나 마우스를 올리거나 포커스한 손잡이 위에만 뜹니다" }
 
   # ── 눈금 ──────────────────────────────────────────────
   - when: { ticks: none }
     enabled:
       markers:
-        content: { value: 최솟값 · 최댓값, note: "양 끝 둘(SEED count 2) — 단계를 숫자로 늘어놓지 않는다(지금 제품의 숫자 여섯은 걷는다). 단계는 끄는 동안 말풍선으로 안다" }
+        content: { value: 최솟값 · 최댓값, note: "양 끝 둘 — 단계를 숫자로 늘어놓지 않습니다. 단계는 끄는 동안 말풍선으로 압니다" }
   - when: { ticks: discrete }
     enabled:
       tick:
-        background: { value: $color-bg-layer-default, note: "흰 표면 위 — 놓인 표면과 같은 색으로 트랙 · 채움을 끊는다(SEED fg.on-neutral-solid 의 자리). 양 끝을 뺀 단계 자리마다(구간 − 1개)" }
+        background: { value: $color-bg-layer-default, note: "흰 표면 위 — 놓인 표면과 같은 색으로 트랙 · 채움을 끊습니다. 양 끝을 뺀 단계 자리마다(구간 − 1개)" }
         backgroundOnFloating: { value: $color-bg-layer-floating, note: "시트 · 팝오버 위 — 그 표면과 같은 색" }
-        position: { value: 단계 자리, note: "손잡이가 설 수 있는 자리와 같다 — 트랙 양 끝에서 10 들어온 범위를 구간 수로 똑같이 나눈다" }
+        position: { value: 단계 자리, note: "손잡이가 설 수 있는 자리와 같습니다 — 트랙 양 끝에서 10 들어온 범위를 구간 수로 똑같이 나눕니다" }
       markers:
         content: { value: 단계마다, note: "\"1점 · 2점 · 3점 · 4점 · 5점\" — 끝 둘은 끝에 맞추고 나머지는 단계 자리 가운데" }
       thumb:
-        snap: { value: 단계 자리, note: "끄는 동안에도 단계 자리로만 선다 · 트랙을 누르면 가장 가까운 단계로" }
+        snap: { value: 단계 자리, note: "끄는 동안에도 단계 자리로만 섭니다 · 트랙을 누르면 가장 가까운 단계로" }
 
 motion:
   "손잡이 · 채움 — 건너뛰기":
     duration: $motion-duration-d3
     easing: $motion-ease-easing
     properties: [left, width]
-    note: "트랙을 누르거나 키보드로 옮길 때 150ms — 끄는 동안은 손가락을 1:1 로 따라가 전환이 없다(SEED). 모션 줄이기면 바로"
+    note: "트랙을 누르거나 키보드로 옮길 때 150ms — 끄는 동안은 손가락을 1:1 로 따라가 전환이 없습니다. 모션 줄이기면 바로"
   "손잡이 — 누름":
     duration: $motion-duration-d3
     easing: $motion-ease-easing
     properties: [scale]
-    note: "20 → 24(SEED 1.2배)"
+    note: "20 → 24(1.2배)"
   "말풍선 — 나타남":
     duration: $motion-duration-d4
     easing: $motion-ease-enter
     properties: [opacity, transform]
-    note: "0.9배 · 투명 0 · 아래 5 에서 제자리로(SEED). 모션 줄이기면 투명도만"
+    note: "0.9배 · 투명 0 · 아래 5 에서 제자리로. 모션 줄이기면 투명도만"
   "말풍선 — 사라짐":
     duration: $motion-duration-d4
     easing: $motion-ease-easing
     properties: [opacity, transform]
-    note: "투명 0 · 아래 5 로(SEED)"
+    note: "투명 0 · 아래 5 로"

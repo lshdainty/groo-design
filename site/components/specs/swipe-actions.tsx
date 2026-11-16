@@ -1,6 +1,6 @@
 // Swipe Actions 페이지의 그림 — specs/components/swipe-actions.md 의 `[그림: …](../../site/components/specs/swipe-actions.tsx#<id>)` 자리.
 // 트레이는 swipe-actions.yaml 을 푼 값(swipeKit — data-swipe-view)으로, 감싼 줄은 list.yaml(ListView), 줄을 눌러 들어간 상세는 bottom-sheet.yaml ·
-// button.yaml, 확인 창은 alert-dialog.yaml 로 그린다. 목록 줄에는 ⋮ 를 두지 않는다(menu.md "줄의 동작", 2026-10-25). 가계부 · 메모 · 계좌 줄은 지어낸 것이다.
+// button.yaml, 확인 창은 alert-dialog.yaml 로 그린다. 목록 줄에는 ⋮ 를 두지 않는다(menu.md "줄의 동작"). 가계부 · 메모 · 계좌 줄은 지어낸 것이다.
 import type { CSSProperties, ReactNode } from 'react';
 import { Panel } from '../foundations/ui';
 import { contrastPair } from './data-contrast';
@@ -32,7 +32,7 @@ const Col = ({ children, cap, strong, w }: { children: ReactNode; cap?: ReactNod
 const box: CSSProperties = { outline: `1px dashed ${PINK}`, outlineOffset: -1 };
 const ROW_H = () => rowDims().height;
 const acts = (list = TX_ACTIONS): SwipeAct[] => list.map((a) => ({ value: a.value, kind: a.kind, label: a.label, icon: a.icon }));
-// 가계부 줄 — 앞 타일 · 제목 · 설명 · 금액. 줄 끝 ⋮ 는 두지 않는다 — 같은 동작은 줄을 눌러 들어간 상세에(2026-10-25)
+// 가계부 줄 — 앞 타일 · 제목 · 설명 · 금액. 줄 끝 ⋮ 는 두지 않는다 — 같은 동작은 줄을 눌러 들어간 상세에
 function txRow(r: TxRow): RowSpec {
   return {
     kind: 'button',
@@ -112,7 +112,7 @@ const Anatomy: Fig = ({ caption }) => {
         <Legend
           items={[
             ['ⓐ', 'Row — 감싼 줄(높이 · 여백 · 바탕은 원래 줄)'],
-            ['ⓑ', 'Track — 바탕을 칠하지 않는다'],
+            ['ⓑ', 'Track — 바탕을 칠하지 않습니다'],
             ['ⓒ', 'Action — 원형 배지 + 라벨'],
           ]}
         />
@@ -177,7 +177,7 @@ const Size: Fig = ({ caption }) => {
             ['아이콘', `${s.icon}`],
             ['라벨', `${parseFloat(s.label.fontSize)} / ${s.label.fontWeight} / ${s.label.lineHeight}`],
             ['배지 ↔ 라벨', `${s.gap}`],
-            ['높이', `줄을 따른다 — ${s.rowMin} 보다 낮으면 ${s.rowMin}`],
+            ['높이', `줄을 따릅니다 — ${s.rowMin} 보다 낮으면 ${s.rowMin}`],
             ['트레이', `하나 ${trayWidth(s, 1)} · 둘 ${trayWidth(s, 2)} · 셋 ${trayWidth(s, 3)}`],
           ]}
         />
@@ -198,7 +198,7 @@ const States: Fig = ({ caption }) => {
             </Col>
           ))}
         </Wrap>
-        <Cap w={520}>누름 · 호버는 배지 · 라벨 밝기 {Math.round(SW().brightness * 100)}% — 움직이지 않는다. 포커스는 칸 안쪽 {SW().ring.width}px 링, 막힘은 bg-disabled · fg-disabled(흐리게 하지 않는다)</Cap>
+        <Cap w={520}>누름 · 호버는 배지 · 라벨 밝기 {Math.round(SW().brightness * 100)}% — 움직이지 않습니다. 포커스는 칸 안쪽 {SW().ring.width}px 링, 막힘은 bg-disabled · fg-disabled 이고 흐리게 하지 않습니다</Cap>
       </div>
     </Panel>
   );
@@ -238,12 +238,12 @@ const CountGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="동작 둘 — 무엇을 미는지 줄이 보인다. 나머지는 줄을 눌러 들어간 상세에만">
+        <Verdict ok note="동작 둘 — 무엇을 미는지 줄이 보입니다. 나머지는 줄을 눌러 들어간 상세에만 둡니다">
           <div style={{ width: SCREEN_W - 40, overflow: 'hidden', borderRadius: 12, background: rc('bg-layer-default') }}>
             <LedgerList n={2} />
           </div>
         </Verdict>
-        <Verdict ok={false} note="넷 — 트레이가 줄 폭을 먹어 무엇을 미는지 안 보인다">
+        <Verdict ok={false} note="넷 — 트레이가 줄 폭을 먹어 무엇을 미는지 안 보입니다">
           <div style={{ width: SCREEN_W - 40, overflow: 'hidden', borderRadius: 12, background: rc('bg-layer-default') }}>
             <LedgerList n={2} actions={four} />
           </div>
@@ -256,13 +256,13 @@ const CountGuide: Fig = ({ caption }) => {
 const ConfirmGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex flex-wrap items-center justify-center gap-3">
-      <Col strong="삭제를 누른다" w={220}>
+      <Col strong="삭제를 누릅니다" w={220}>
         <LedgerPhone scale={0.6} h={540}>
           <LedgerList states={{ delete: 'pressed' }} />
         </LedgerPhone>
       </Col>
       <Arrow label="트레이를 먼저 닫고" />
-      <Col strong="상세와 같은 확인 창" cap="제목 · 설명은 그 줄을 아는 부르는 쪽이 넘긴다 — 확인 버튼은 누른 동작의 라벨(삭제)" w={260}>
+      <Col strong="상세와 같은 확인 창" cap="제목 · 설명은 그 줄을 아는 부르는 쪽이 넘깁니다 — 확인 버튼은 누른 동작의 라벨(삭제)입니다" w={260}>
         <LedgerPhone scale={0.6} h={540} overlay={<AlertBox title="거래 삭제" body={`${LEDGER[0].title} 거래를 지울까요?`} confirm="삭제" />}>
           <LedgerList swiped={null} />
         </LedgerPhone>
@@ -305,7 +305,15 @@ const ExRow: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 개요 카드 — 가계부 목록의 첫 줄을 밀어 연 트레이(수정 · 삭제)
+const Thumb: Fig = () => (
+  <div style={{ width: SCREEN_W, zoom: 0.78, borderRadius: 16, overflow: 'hidden', background: rc('bg-layer-default', 'light'), paddingTop: 4, paddingBottom: 4 }}>
+    <LedgerList mode="light" n={3} />
+  </div>
+);
+
 export const swipeActionsFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   anatomy: Anatomy,
   kinds: Kinds,

@@ -227,7 +227,7 @@ const Items: Fig = ({ caption }) => {
           <Band style={{ left: 0, top: (top + 4) * z, width: (s.content.padX + s.group.pad) * z, height: 4 }} label={`${s.content.padX + s.group.pad}`} tag="below" />
         </div>
         <Cap w={420}>
-          묶음 이름 {parseFloat(s.group.type.fontSize)} / {parseFloat(s.group.type.lineHeight)} · {s.group.weight} · 항목 최소 {s.item.minH} · 좌우 {s.item.padX} · 모서리 {s.item.radius} · 아이콘 {s.icon.size} · 사이 {s.item.gap} · 이름 {parseFloat(s.label.type.fontSize)} / {parseFloat(s.label.type.lineHeight)} · {s.label.weight}. 긴 이름은 줄을 바꾼다(통계)
+          묶음 이름 {parseFloat(s.group.type.fontSize)} / {parseFloat(s.group.type.lineHeight)} · {s.group.weight} · 항목 최소 {s.item.minH} · 좌우 {s.item.padX} · 모서리 {s.item.radius} · 아이콘 {s.icon.size} · 사이 {s.item.gap} · 이름 {parseFloat(s.label.type.fontSize)} / {parseFloat(s.label.type.lineHeight)} · {s.label.weight}. 긴 이름은 줄을 바꿉니다(통계)
         </Cap>
       </div>
     </Figure>
@@ -367,10 +367,10 @@ const WidthGuide: Fig = ({ caption }) => {
   return (
     <Figure caption={caption}>
       <div className="flex flex-col items-center gap-5">
-        {win(1440, false, '1440 — 펼침 240(기본) · 손으로 접으면 기억한다')}
+        {win(1440, false, '1440 — 펼침 240(기본) · 손으로 접으면 기억합니다')}
         <div className="flex items-start gap-4">
           {win(1024, true, '1024 — 접힘 56(기본)')}
-          {win(1024, false, '1024 에서 손으로 펼침 — 본문이 좁아진다')}
+          {win(1024, false, '1024 에서 손으로 펼침 — 본문이 좁아집니다')}
         </div>
       </div>
     </Figure>
@@ -394,7 +394,7 @@ const MobileGuide: Fig = ({ caption }) => (
   </Plate>
 );
 
-// 바닥의 보조 링크(설명서) — Anatomy 의 바닥 자리 그림. Desk 웹에는 지금 보조 링크가 없어 바닥을 그리지 않는다(Q-018-1 C)
+// 바닥의 보조 링크(설명서) — Anatomy 의 바닥 자리 그림. Desk 웹에는 보조 링크가 없어 바닥을 그리지 않는다
 function HelpLinkRow({ mode = 'auto' }: { mode?: Mode }) {
   const s = S();
   return (
@@ -405,7 +405,7 @@ function HelpLinkRow({ mode = 'auto' }: { mode?: Mode }) {
   );
 }
 
-// 하위가 사람마다 다른 증권 — 연결한 증권사 0 · 1 은 단독 항목(꺾쇠 없음), 2 · 3 은 부모(펼치기만). 이름은 지어낸 것(Q-017-4 정리)
+// 하위가 사람마다 다른 증권 — 연결한 증권사 0 · 1 은 단독 항목(꺾쇠 없음), 2 · 3 은 부모(펼치기만). 이름은 지어낸 것
 const BROKERS = [
   { value: 'ga', label: '가나증권' },
   { value: 'da', label: '다라투자증권' },
@@ -423,7 +423,7 @@ const DynamicGuide: Fig = ({ caption }) => {
     [0, 'stocks', '연결 0 — 단독 항목 · 누르면 연결 안내'],
     [1, 'stocks', '연결 1 — 단독 항목 · 누르면 가나증권'],
     [2, 'ga', '연결 2 — 부모(펼치기만) · 하위 둘'],
-    [3, 'ma', '연결 3 — 긴 이름은 줄을 바꾼다'],
+    [3, 'ma', '연결 3 — 긴 이름은 줄을 바꿉니다'],
   ];
   return (
     <Figure caption={caption}>
@@ -440,18 +440,18 @@ const DynamicGuide: Fig = ({ caption }) => {
   );
 };
 
-// 바닥 — 지금(이름 줄, 눌러도 아무 일 없음) · 뒤(바닥을 그리지 않는다, 설정 · 로그아웃은 머리 ⚙ — Q-018-1 C)
+// 바닥 — 바닥을 그리지 않는다(설정 · 로그아웃은 머리 ⚙) · 눌러도 아무 일 없는 이름 줄(Don't)
 const FooterGuide: Fig = ({ caption }) => {
   const H = 520;
   return (
     <Plate caption={caption}>
       <Pair>
-        <Verdict ok note="바닥을 그리지 않는다 — 설정 · 로그아웃은 머리의 ⚙">
+        <Verdict ok note="바닥을 그리지 않습니다 — 설정 · 로그아웃은 머리의 ⚙ 가 맡습니다">
           <SideBox h={H}>
             <Side current="ledger" height={H} />
           </SideBox>
         </Verdict>
-        <Verdict ok={false} note="누르는 것처럼 보이는 이름 줄 — 눌러도 아무 일이 없다(지금 Desk 웹)">
+        <Verdict ok={false} note="누르는 것처럼 보이는 이름 줄 — 눌러도 아무 일이 없습니다">
           <SideBox h={H}>
             <Side current="ledger" height={H} footer={<AccountRow />} />
           </SideBox>
@@ -473,7 +473,7 @@ const ParentGuide: Fig = ({ caption }) => {
             </Shell>
           </Desktop>
         </Verdict>
-        <Verdict ok={false} note="증권을 누르면 증권 화면으로 이동하면서 펼쳐진다 — 부모가 화면이기도 하다">
+        <Verdict ok={false} note="증권을 누르면 증권 화면으로 이동하면서 펼쳐집니다 — 부모가 화면이기도 합니다">
           <Desktop w={1280} h={640} s={0.36} cw={620} ch={560}>
             <Shell side={<Side current="stocks" open={['stocks']} groups={groupsBad} />} header={<DeskHeader />}>
               <div className="flex flex-col">
@@ -505,7 +505,7 @@ function Crumbs() {
 const PositionGuide: Fig = ({ caption }) => (
   <Plate caption={caption}>
     <Pair>
-      <Verdict ok note="사이드바의 지금 항목(휴가 › 휴가 현황 — 부모 펼침) + 본문 제목이 위치를 알린다">
+      <Verdict ok note="사이드바의 지금 항목(휴가 › 휴가 현황 — 부모 펼침) + 본문 제목이 위치를 알립니다">
         <Desktop w={1280} h={640} s={0.36} cw={620} ch={560} url="그루 이음">
           <Shell brand="hr" side={<Side brand="hr" current="leave-history" />}>
             <HrLeaveMain />
@@ -542,7 +542,20 @@ const ExCollapsed: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 개요 카드 — 라이트 사이드바 펼침 240(증권 하위 펼침) · 접힘 56
+const Thumb: Fig = () => (
+  <div className="flex items-start" style={{ gap: 24, zoom: 0.58 }}>
+    <div style={{ height: 340 }}>
+      <Side mode="light" current="namu" open={['stocks']} height={340} />
+    </div>
+    <div style={{ height: 340 }}>
+      <Side mode="light" current="namu" collapsed height={340} />
+    </div>
+  </div>
+);
+
 export const sideNavigationFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

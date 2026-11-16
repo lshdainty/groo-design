@@ -1,4 +1,4 @@
-# Select 의 수치 원본 — 구조는 SEED Select(Trigger · Content · Item · Group, 2026-10-01 사용자 결정).
+# Select 의 수치 원본 — 트리거(Trigger) · 목록(Content) · 선택지(Item) · 묶음(Group).
 # 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
 #
 # 짧은 선택지(5개 이상 · 한 줄 설명까지)에서 폼에 넣을 값을 고른다. 목록은 칸에 붙어 열린다 — 폰에서도 시트로 바꾸지 않는다
@@ -10,12 +10,12 @@
 #   선택지  enabled · pressed(누름 · 마우스 호버 · 키보드 위치) · selected · disabled
 # 트리거의 상자는 Input Button 과 같은 값이다.
 #
-# SEED 와 다른 자리(select.md 의 "SEED 와 다른 점")
+# 모양
 #   - 누름 · 호버 · 키보드 위치 바탕은 불투명한 bg-layer-default-pressed(트리거) · bg-layer-floating-pressed(목록 안) —
-#     SEED transparent-pressed 는 투명도가 있어 검사기가 받지 않는다(v102).
-#   - 그림자는 groo s3(v105 — SEED 와 구조는 같고 값은 groo).
-#   - 묶음 사이 선은 불투명한 stroke-neutral-subtle(SEED stroke.neutral-muted 는 투명도가 있다).
-#   - 아이콘은 lucide(v106) — 셰브론 chevron-down, 고른 표시 check(선 2.5 — SEED 는 채운 체크).
+#     투명도가 있는 바탕은 대비 검사기가 받지 않는다.
+#   - 그림자는 shadow-s3.
+#   - 묶음 사이 선은 불투명한 stroke-neutral-subtle.
+#   - 아이콘은 lucide — 셰브론 chevron-down, 고른 표시 check(선 2.5).
 
 name: Select
 
@@ -87,7 +87,7 @@ rules:
         gap: { value: $spacing-x2, note: "묶음 사이(위아래 8 + 선 1px + 8)" }
         marginTop: { value: $spacing-x2, note: "트리거와의 거리 — 아래가 모자라면 위로 뒤집는다" }
         margin: { value: $spacing-x2, note: "화면 가장자리와 최소 거리(안전 영역이 있으면 그 값)" }
-        maxHeight: { value: "min(480px, 남은 화면)", note: "남은 화면 = 목록이 놓이는 쪽(아래에 다 들어가면 아래, 아니면 아래 · 위 중 넓은 쪽)의 트리거 ~ 화면 가장자리 8. 화면 키보드는 세지 않는다 — 열면 초점이 목록으로 가 키보드가 내려간다(Q-008-1). 남은 화면이 200 보다 좁아도 200 은 둔다 — 넘치면 목록 안에서 스크롤. 열면 고른 선택지가 보이게 스크롤된다" }
+        maxHeight: { value: "min(480px, 남은 화면)", note: "남은 화면 = 목록이 놓이는 쪽(아래에 다 들어가면 아래, 아니면 아래 · 위 중 넓은 쪽)의 트리거 ~ 화면 가장자리 8. 화면 키보드는 세지 않는다 — 열면 초점이 목록으로 가 키보드가 내려간다. 남은 화면이 200 보다 좁아도 200 은 둔다 — 넘치면 목록 안에서 스크롤. 열면 고른 선택지가 보이게 스크롤된다" }
       item:
         paddingX: $spacing-x4
         cursor: pointer
@@ -103,7 +103,7 @@ rules:
         foreground: $color-fg-neutral-subtle
         gap: { value: $spacing-x0_5, note: "글 ↔ 설명" }
       indicator:
-        color: { value: $color-fg-neutral, note: "lucide check · 선 2.5 — 앱은 2.5 굵기 글꼴 LucideIcons.check500(Q-008-2)" }
+        color: { value: $color-fg-neutral, note: "lucide check · 선 2.5 — 앱은 2.5 굵기 글꼴 LucideIcons.check500" }
       highlight:
         background: { value: transparent, note: "누를 때 · 키보드로 옮길 때만 칠한다" }
         radius: $radius-r3
@@ -117,8 +117,8 @@ rules:
         marginBottom: $spacing-x2
     pressed:
       trigger:
-        background: { value: $color-bg-layer-default-pressed, note: "SEED bg.transparent-pressed 의 불투명 짝. 마우스는 호버에 같은 바탕" }
-        scale: { value: 콘텐츠 2px 거리 축소, note: "값 · 아이콘만 준다(SEED scaleScope: content) — 테두리 · 바탕은 그대로" }
+        background: { value: $color-bg-layer-default-pressed, note: "불투명한 누름 바탕. 마우스는 호버에 같은 바탕" }
+        scale: { value: 콘텐츠 2px 거리 축소, note: "값 · 아이콘만 준다 — 테두리 · 바탕은 그대로" }
         scaleDuration: $motion-duration-pressed-scale
         scaleEasing: $motion-ease-pressed-scale
       highlight:
@@ -143,7 +143,7 @@ rules:
         borderColor: { value: $color-stroke-critical-solid, note: "1px 위에 2px 가 나타난다(100ms)" }
     disabled:
       trigger:
-        background: { value: $color-bg-disabled, note: "흐리게 하지 않는다(v106)" }
+        background: { value: $color-bg-disabled, note: "흐리게 하지 않는다" }
         cursor: not-allowed
       value:
         foreground: $color-fg-disabled
@@ -198,7 +198,7 @@ rules:
   - when: { size: responsive }
     enabled:
       trigger:
-        breakpoint: { value: 1280px, note: "미만은 large, 이상은 medium 의 값을 쓴다(SEED lg) — 앱은 늘 large" }
+        breakpoint: { value: 1280px, note: "미만은 large, 이상은 medium 의 값을 쓴다 — 앱은 늘 large" }
 
 motion:
   "누름 · 호버 — 바탕":

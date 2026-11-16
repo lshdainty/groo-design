@@ -142,7 +142,7 @@ const Size: Fig = ({ caption }) => (
           <DeskWithPanel s={0.36} size={size} description={false} />
           <Cap>
             {size} {P().widths[size]}
-            {size === P().defaults.size ? ' (기본)' : ''} — 화면의 {Math.round(P().maxRatio * 100)}% 를 넘지 않는다
+            {size === P().defaults.size ? ' (기본)' : ''} — 화면의 {Math.round(P().maxRatio * 100)}% 를 넘지 않습니다
           </Cap>
         </div>
       ))}
@@ -188,7 +188,7 @@ const Layout: Fig = ({ caption }) => {
         </div>
         <div className="flex flex-col items-center gap-2">
           {frame(true, false)}
-          <Cap>본문을 위로 스크롤하면 머리 아래 {p.divider.h}px 선(점선 자리)</Cap>
+          <Cap>본문을 위로 스크롤하면 머리 아래 {p.divider.h}px 선이 생깁니다(점선 자리)</Cap>
         </div>
       </div>
     </Figure>
@@ -200,17 +200,17 @@ const RoleGuide: Fig = ({ caption }) => (
   <Plate caption={caption}>
     <div className="flex w-full flex-col gap-4">
       <Pair>
-        <Verdict ok note="768 미만 — 왼쪽 패널은 주 메뉴(HR 폰)">
+        <Verdict ok note="768 미만 — 왼쪽 패널은 주 메뉴입니다(HR 폰)">
           <HrLeavePhone scale={0.4} h={600} expanded overlay={<HrDrawer />} />
         </Verdict>
-        <Verdict ok note="1280 미만 — 같은 보조 작업은 Bottom Sheet">
+        <Verdict ok note="1280 미만 — 같은 보조 작업은 Bottom Sheet 로 띄웁니다">
           <NPhone scale={0.4} h={600} bar={<Bar title="설정" />} overlay={<Sheet title="알림 설정"><div className="px-6"><SettingRows n={4} /></div></Sheet>}>
             <SettingRows n={2} />
           </NPhone>
         </Verdict>
       </Pair>
       <Pair stack>
-        <Verdict ok note="1280 이상 — 옆에 둘 까닭이 있으면 오른쪽 패널(목록을 보며 한 줄의 상세)">
+        <Verdict ok note="1280 이상 — 옆에 둘 까닭이 있으면 오른쪽 패널을 씁니다(목록을 보며 한 줄의 상세)">
           <Wide>
             <DeskWithPanel s={0.36} />
           </Wide>
@@ -224,21 +224,21 @@ const DrawerGuide: Fig = ({ caption }) => (
   <Plate caption={caption}>
     <div className="flex w-full flex-col gap-4">
       <Pair>
-        <Verdict ok note="지금 묶음(휴가)이 펼쳐진 채 열린다 — 지금 항목이 보인다">
+        <Verdict ok note="지금 묶음(휴가)이 펼쳐진 채 열립니다 — 지금 항목이 보입니다">
           <div className="relative">
             <HrLeavePhone scale={0.4} h={600} expanded overlay={<HrDrawer />} />
             <Tap x={0.4 * (P('hr').body.padXLeft + NK('hr').side.content.padX + NK('hr').side.sub.padLeft + 28)} y={0.4 * (40 + P('hr').header.minH + P('hr').fog.padTop + NK('hr').side.content.padTop + NK('hr').side.group.pad * 2 + parseFloat(NK('hr').side.group.type.lineHeight) + NK('hr').side.item.minH * 5.5)} note="휴가 신청" />
           </div>
         </Verdict>
-        <Verdict ok note="휴가 신청을 누르면 이동하고 닫힌다 — 다음 화면의 제목에 초점">
+        <Verdict ok note="휴가 신청을 누르면 이동하고 닫힙니다 — 다음 화면의 제목에 초점이 갑니다">
           <HrLeavePhone scale={0.4} h={600} title="휴가 신청" />
         </Verdict>
       </Pair>
       <Pair>
-        <Verdict ok={false} note="지금 묶음이 접힌 채 연다 — 어디에 있는지 다시 찾아야 한다">
+        <Verdict ok={false} note="지금 묶음이 접힌 채 엽니다 — 어디에 있는지 다시 찾아야 합니다">
           <HrLeavePhone scale={0.4} h={600} expanded overlay={<HrDrawer open={[]} />} />
         </Verdict>
-        <Verdict ok={false} note="이동한 뒤에도 서랍이 열려 있다">
+        <Verdict ok={false} note="이동한 뒤에도 서랍이 열려 있습니다">
           <HrLeavePhone scale={0.4} h={600} title="휴가 신청" expanded overlay={<HrDrawer current="leave-apply" />} />
         </Verdict>
       </Pair>
@@ -252,13 +252,13 @@ const DismissGuide: Fig = ({ caption }) => {
     <Plate caption={caption}>
       <div className="flex w-full flex-col gap-4">
         <Pair>
-          <Verdict ok note="주 메뉴 — 딤(오른쪽 20%)을 누르면 닫힌다">
+          <Verdict ok note="주 메뉴 — 딤(오른쪽 20%)을 누르면 닫힙니다">
             <div className="relative">
               <HrLeavePhone scale={0.4} h={600} expanded overlay={<HrDrawer />} />
               <Tap x={PHONE * 0.4 * 0.9} y={600 * 0.4 * 0.55} note="누름" />
             </div>
           </Verdict>
-          <Verdict ok note={`주 메뉴 — 손가락으로 왼쪽으로 끌면 닫힌다(빠르게 ${p.drag.velocity}px/ms 넘게 · 폭의 ${Math.round(p.drag.ratio * 100)}% 이상). 마우스로는 끌지 않는다`}>
+          <Verdict ok note={`주 메뉴 — 손가락으로 왼쪽으로 끌면 닫힙니다(빠르게 ${p.drag.velocity}px/ms 넘게 · 폭의 ${Math.round(p.drag.ratio * 100)}% 이상). 마우스로는 끌지 않습니다`}>
             <div className="relative">
               <HrLeavePhone scale={0.4} h={600} expanded overlay={<HrDrawer />} />
               <Tap x={PHONE * 0.4 * 0.45} y={600 * 0.4 * 0.5} note="← 끌기" />
@@ -266,7 +266,7 @@ const DismissGuide: Fig = ({ caption }) => {
           </Verdict>
         </Pair>
         <Pair stack>
-          <Verdict ok note="입력 폼 — 딤 · 끌기로 닫히지 않는다. 머리 닫기 없이 바닥 [취소] · Esc">
+          <Verdict ok note="입력 폼 — 딤 · 끌기로 닫히지 않습니다. 머리 닫기 없이 바닥 [취소] · Esc 로 닫습니다">
             <Wide>
               <div className="relative">
                 <DeskWithPanel s={0.36} form />
@@ -292,7 +292,23 @@ const ExDrawer: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 개요 카드 — 라이트 딤 위 오른쪽 패널 하나(small · 머리 · 설정 줄 · 바닥 버튼)
+const Thumb: Fig = () => {
+  const pw = P().widths.small;
+  return (
+    <div style={{ width: 640, zoom: 0.44 }}>
+      <div className="relative overflow-hidden" style={{ width: 640, height: 454, background: rc('bg-layer-basement', 'light') }}>
+        <div style={{ paddingTop: 24, paddingLeft: 24, fontSize: 22, fontWeight: 700, color: rc('fg-neutral', 'light') }}>설정</div>
+        <SidePanel mode="light" side="right" width={pw} title="알림 설정" description="알림을 받을 때를 골라요." footer={formFooter('light')} close fog={false}>
+          <SettingRows mode="light" n={6} />
+        </SidePanel>
+      </div>
+    </div>
+  );
+};
+
 export const sidePanelFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,
