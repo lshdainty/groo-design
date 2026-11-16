@@ -3322,7 +3322,7 @@ groo 가 사용자에게 말하는 방법입니다. 심플하고 믿음직하게
 
 ### Button
 
-규칙 · 수치는 공유 `DESIGN.md` 의 Button 절과 `specs/components/button.md` 다(2026-09-30 SEED Action Button 구조, v112). 브랜드마다 달라지는 건 brandSolid 의 채움 · 누름과 brandOutline · ghost(brand) 의 글자뿐이다 — hover · 누름의 세기나 전환 시간을 브랜드마다 달리하지 않는다(옛 HR · Desk 차등은 2026-09-30 에 걷었다).
+규칙 · 수치는 공유 `DESIGN.md` 의 Button 절과 `specs/components/button.md` 를 따릅니다. 브랜드마다 달라지는 것은 brandSolid 의 채움 · 누름과 brandOutline · ghost(brand) 의 글자뿐입니다 — hover · 누름의 세기나 전환 시간은 브랜드마다 달리하지 않습니다.
 
 | 자리 | 토큰 | 라이트 | 다크 | 대비 |
 |---|---|---|---|---|
@@ -3331,73 +3331,71 @@ groo 가 사용자에게 말하는 방법입니다. 심플하고 믿음직하게
 | 브랜드 글자(brandOutline · ghost brand) | `fg-brand` | `#075B3C` | `#2ABE84` | `bg-layer-default` 위 8.17:1 · 다크 6.07:1 |
 | 포커스 링 | `stroke-focus-ring` | 브랜드 역할 | 브랜드 역할 | 2px · 띄움 2px |
 
-HR 은 데이터 밀도가 높은 화면이 많다 — 표 · 툴바의 인라인 액션(승인 · 반려)은 `small` · `xsmall`, 모바일 결재 화면의 하단 CTA 는 `large` 를 쓴다. brandSolid 는 휴가 신청처럼 서비스의 핵심 액션 하나에만 쓰고, 저장 · 확인 같은 일반 CTA 는 neutralSolid 다.
+HR 은 데이터 밀도가 높은 화면이 많습니다 — 표 · 툴바의 인라인 액션(승인 · 반려)은 `small` · `xsmall`, 모바일 결재 화면의 하단 CTA 는 `large` 를 씁니다. brandSolid 는 휴가 신청처럼 서비스의 핵심 액션 하나에만 쓰고, 저장 · 확인 같은 일반 CTA 는 neutralSolid 입니다.
 
 ### Input · Textarea
 
-공통 정의는 `DESIGN.md` 의 Input · Textarea 절, 원본은 `specs/components/input.md` · `textarea.md`(2026-10-01 SEED Text Input · Textarea). 포커스 · 오류 · 비활성 색은 브랜드와 관계없이 같다 — 포커스는 `stroke-neutral-contrast` 2px(브랜드 색 아님).
+공통 정의는 `DESIGN.md` 의 Input · Textarea 절, 원본은 `specs/components/input.md` · `textarea.md` 입니다. 포커스 · 오류 · 비활성 색은 브랜드와 관계없이 같습니다 — 포커스는 `stroke-neutral-contrast` 2px(브랜드 색 아님)입니다.
 
 #### HR 쓰임
 
-- HR 웹은 데스크톱이 대부분 — 반응형 기본(1280 이상 medium 40 · 글자 14). 폰 폭에서는 large 52 로 커진다.
-- 결재 · 평가처럼 칸이 많은 폼도 크기를 섞지 않는다. 표(엑셀 셀) 안의 칸은 표 컴포넌트 차례에 정한다.
-- 읽기 전용 값은 입력처럼 생긴 상자를 흉내 내지 않고 읽기 전용 칸(`bg-disabled` 바탕 · 진한 값)으로 둔다.
+- HR 웹은 데스크톱이 대부분이라 반응형 기본(1280 이상 medium 40 · 글자 14)을 씁니다. 폰 폭에서는 large 52 로 커집니다.
+- 결재 · 평가처럼 칸이 많은 폼도 크기를 섞지 않습니다.
+- 읽기 전용 값은 입력처럼 생긴 상자를 흉내 내지 않고 읽기 전용 칸(`bg-disabled` 바탕 · 진한 값)으로 둡니다.
 
 ### Select · Input Button
 
-공통 정의는 `DESIGN.md` 의 Select · Input Button 절, 원본은 `specs/components/select.md` · `input-button.md`(2026-10-01 SEED Select · Input Button). 고른 표시 · 누름 · 포커스 색은 브랜드와 관계없이 같다.
+공통 정의는 `DESIGN.md` 의 Select · Input Button 절, 원본은 `specs/components/select.md` · `input-button.md` 입니다. 고른 표시 · 누름 · 포커스 색은 브랜드와 관계없이 같습니다.
 
 #### HR 쓰임
 
-- HR 웹은 데스크톱이 대부분 — 반응형 기본(1280 이상 트리거 40 · 선택지 39), Input Button 은 칸 아래 팝오버로 연다(1280 미만은 시트).
-- 휴가 신청 — 정책을 먼저 고르는 두 단계다: ① 휴가 정책 Select Box(하나 고르기 · 설명 한 줄) → ② 그 정책의 칸만(2026-10-23 사용자 결정 HC5 A). 날짜 · 기간은 Input Button(달력 팝오버 — "완료").
-- 결재자 · 사람 고르기는 Input Button + 검색 팝오버(위 검색칸 · 아래 목록). 예 / 아니오를 받는 Select 는 Checkbox 로, 2 ~ 4개 폼 값은 Chip.
+- HR 웹은 데스크톱이 대부분이라 반응형 기본(1280 이상 트리거 40 · 선택지 39)을 씁니다. Input Button 은 칸 아래 팝오버로 엽니다(1280 미만은 시트).
+- 휴가 신청은 정책을 먼저 고르는 두 단계입니다 — ① 휴가 정책 Select Box(하나 고르기 · 설명 한 줄) → ② 그 정책의 칸만. 날짜 · 기간은 Input Button(달력 팝오버 — "완료")입니다.
+- 결재자 · 사람 고르기는 Input Button + 검색 팝오버(위 검색칸 · 아래 목록)입니다. 칸에 바로 치는 콤보박스는 두지 않습니다 — 부서는 Tree View 입니다.
+- 예 / 아니오를 받는 값은 Select 가 아니라 Checkbox, 2 ~ 4개 폼 값은 Chip 입니다.
 
 ### Card
 
-> 2026-10-08 — 모양 · 규칙은 공유 DESIGN.md 의 Card 절과 `specs/components/card.md`(SEED 면 · Feedback). 옛 HR 패턴(default 그림자 · interactive 그림자 상승 · outline · flat · 모서리 8 · 4 · 격자 12)은 걷었다.
+모양 · 규칙은 공유 `DESIGN.md` 의 Card 절과 `specs/components/card.md` 를 따릅니다.
 
 #### HR 쓰임
 
-- 페이지 바닥을 회색(`bg-layer-basement`)으로 두고 카드는 그 위 흰 면 + 1px 테두리다 — 지금 흰 바탕 위 흰 카드(테두리 + 그림자)를 바꾼다.
-- 대시보드 위젯 틀(머리 12 + 아래 선 · 제목 14 / 600)은 카드 머리(제목 16 / 22 · 700 + 동작 하나)로. 위젯 격자 칸 사이는 `layout-gutter` 24.
-- 통계 카드는 지표 카드다 — 라벨 13 · 500 · 숫자 24 · 700 · 증감 줄(▲ 빨강 · ▼ 파랑 + 글). "+-12.5%" 와 늘 오르는 초록 화살표를 고친다. 아이콘 타일은 List 의 타일 색(옅은 차트 바탕).
-- 표는 카드 안에 가장자리까지 붙는다(`specs/components/table.md`).
+- 페이지 바닥은 회색(`bg-layer-basement`)이고 카드는 그 위 흰 면 + 1px 테두리입니다 — 흰 바탕 위에 흰 카드(테두리 + 그림자)를 두지 않습니다.
+- 대시보드 위젯 틀은 카드 머리(제목 16 / 22 · 700 + 동작 하나)를 씁니다. 위젯 격자 칸 사이는 `layout-gutter` 24 입니다.
+- 통계 카드는 지표 카드입니다 — 라벨 13 · 500 · 숫자 24 · 700 · 증감 줄(▲ 빨강 · ▼ 파랑 + 글). 부호는 하나만 적고("+-12.5%" 처럼 겹치지 않습니다), 화살표는 값의 방향을 따릅니다. 아이콘 타일은 List 의 타일 색(옅은 차트 바탕)입니다.
+- 표는 카드 안에 가장자리까지 붙습니다(`specs/components/table.md`).
 
-### Page text
+### Table — HR
 
-> 기록 — 기준은 Typography 의 "글자 역할"(2026-10-16)이다: 화면 제목 R1 · 화면 부제 R2 · 구역 제목 R4 · 긴 글 R11. 옛 내용(body-md 15 · 15/600 강조 · 32 · 24 페이지 제목 · title-md 18/600 구역 제목 · 위젯 제목 16/600)은 `DESIGN.history/v119-text-roles.hr.md` 에 있다.
+모양 · 규칙은 공유 `DESIGN.md` 의 Table 절과 `specs/components/table.md` 를 따릅니다. 줄 높이는 45 하나(썸네일 · 두 줄이면 72)이고, compact · 줄무늬 · 표 위 툴바(열 보이기 · 열 크기 조절 · 내보내기)는 두지 않습니다.
 
-### Caption
-
-> 기록 — 기준은 Typography 의 "글자 역할"(2026-10-16)이다: 줄 · 칸 안 설명 · 메타는 R9(`fg-neutral-subtle` 한 색 — 메타 줄은 Tag Group, `specs/components/tag-group.md`), 축 · 단위 · 범례 같은 덧붙인 정보는 R10. 옛 secondary / tertiary 위계는 쓰지 않는다 — `DESIGN.history/v119-text-roles.hr.md`.
+- HR 표(사용자 · 휴가 내역 · 회비 · 신청 내역 · 업무 보고 · 업무 코드 · 위젯 · 대화상자 안 표)는 머리 41 · 줄 45 · 숫자 오른쪽 · 정렬 ↑↓ · 줄 끝 ⋮("{줄} 더보기")입니다. 768 미만은 List 줄이고, 표마다 제목 · 설명 · 오른쪽 값을 정합니다.
+- 고르는 표(업무 보고 · 공휴일 일괄 생성)는 첫 열 Checkbox 24 + 일괄 작업 바(`bg-brand-weak`)입니다 — 바 안 동작은 모두 ghost neutral 이고, 지우기의 빨강은 확인창에서 씁니다. 표 아래는 Table Pagination 이고, 표 아래 12 는 넘김 줄이 갖습니다.
 
 ### Badge · Notification Badge · Tag Group — HR
 
-> 모양 · 쓰는 규칙은 DESIGN.md 의 같은 이름 절(2026-10-03 SEED)과 `specs/components/badge.md` · `notification-badge.md` · `tag-group.md`. HR 의 쓰는 자리만 적는다. 옛 HR Badge 절(18 · 22 · 28 · 알약 위주)은 걷었다.
+모양 · 쓰는 규칙은 `DESIGN.md` 의 같은 이름 절과 `specs/components/badge.md` · `notification-badge.md` · `tag-group.md` 입니다. 여기에는 HR 의 쓰는 자리만 적습니다.
 
-- **결재 상태** — weak 배지 하나로, 톤은 SEED 톤 표대로: 대기 neutral · 진행 informative · 승인 positive · 반려 critical · 취소 neutral(앱 적용 때 확인). 지금은 Tailwind 날 색이라 다크 짝이 없어 다크 화면에 밝은 알약이 뜬다(입금 · 출금 · 통계 "대기" · 현재 결재자도 같다).
-- **공지 종류 · 휴일 · 가입 상태 · 근무 시간** — 관리 화면의 색 상자와 사용자 화면의 shadcn 변형 두 벌을 한 Badge 로. 흰 글자 채움(가입 상태 1.91 ~ 3.81 · 근무 시간 2.13 ~ 3.75)을 걷는다 — 시간대처럼 뜻 없는 분류는 톤이 아니라 글 · Tag Group 으로 가른다.
-- **역할 · 정책** — 코드값(`ROLE_ADMIN` · 정책 코드) 대신 이름("관리자" · 정책 이름), "3 포함된 정책" 은 "정책 3개".
-- **메타 줄** — 공지 · 휴일 목록의 "•"(3.07)를 Tag Group " · " 로, 조회수(눈 아이콘 + 숫자)는 읽을 글 "조회 12". 일정 칩의 "Day 2 of 3 •" · "9:00 AM" 은 "2/3일째" · "오전 9:00".
-- **알림 점** — HR 은 알림 기능이 아직 없다. 구성원 휴가 결재함 탭의 새 소식 점만 — 브랜드 글자색(`fg-brand`, 초록) 6.
-- **필터 개수** — 업무 보고의 "필터 3" 은 Chip 필터 바로 옮기며 걷는다.
-
-### Alert text
-
-> 기록 — 기준은 Callout(`specs/components/callout.md` — 2026-10-02, 본문 t4 · 제목 700 · 톤 contrast 색)과 Field 오류(Typography 의 "글자 역할" R19 — t4 · `fg-critical` + 아이콘)다. 옛 내용(caption 12 · body-md 15 · 15/600 제목)은 `DESIGN.history/v119-text-roles.hr.md` 에 있다.
+- **결재 상태** — weak 배지 하나로 적고, 톤은 대기 neutral · 진행 informative · 승인 positive · 반려 critical · 취소 neutral 입니다. 입금 · 출금 · 통계 "대기" · 현재 결재자도 Badge 톤을 씁니다 — 다크 짝이 없는 날 색(Tailwind 기본 색)을 쓰지 않습니다.
+- **공지 종류 · 휴일 · 가입 상태 · 근무 시간** — 관리 화면과 사용자 화면이 한 Badge 를 씁니다. 흰 글자 채움 배지는 쓰지 않습니다 — 시간대처럼 뜻 없는 분류는 톤이 아니라 글 · Tag Group 으로 가릅니다.
+- **역할 · 정책** — 코드값(`ROLE_ADMIN` · 정책 코드) 대신 이름("관리자" · 정책 이름)을 적고, 개수는 "정책 3개" 꼴입니다.
+- **메타 줄** — 공지 · 휴일 목록의 메타는 Tag Group(" · " 구분)이고, 조회수는 눈 아이콘 + 숫자가 아니라 읽을 글 "조회 12" 입니다. 일정 칩은 "2/3일째" · "오전 9:00" 꼴입니다.
+- **알림 점** — 구성원 휴가 결재함 탭의 새 소식 점에 씁니다 — 브랜드 글자색(`fg-brand`, 초록) 6.
+- **필터 개수** — 업무 보고에 필터 개수 배지("필터 3")를 두지 않습니다 — 걸린 조건은 Chip 필터 바가 보여 줍니다.
 
 ### Focus ring
 
-HR 브랜드 — 역할 색 `stroke-focus-ring`(라이트 `#075B3C` · 다크 `#2ABE84`, v102 · v121 그루 초록)을 쓴다. 옛 `border-focus` · `border-focus-light` 는 같은 값의 별칭이다. 모든 인터랙티브 컴포넌트의 focus 표현을 통일한다.
+HR 의 포커스 링은 역할 색 `stroke-focus-ring`(라이트 `#075B3C` · 다크 `#2ABE84`, 그루 초록)입니다. 모든 인터랙티브 컴포넌트의 포커스 표현을 이 링 하나로 맞춥니다. 모양 · 나타나는 때 · 접근성의 공통 규칙은 `DESIGN.md` 의 Focus ring 절입니다.
 
-#### Mode pair (sparse — 색은 역할 색이 정한다)
-| Token | 색상 | 사용 |
-|---|---|---|
-| `focus-ring-on-light` | `stroke-focus-ring` (`#075B3C`) | 라이트 표면 위 모든 컴포넌트 |
-| `focus-ring-on-dark` | `stroke-focus-ring` 다크 (`#2ABE84`) | 다크 표면 위 모든 컴포넌트 |
+#### 색
 
-#### Contrast (토큰 값으로 계산, 2026-10-22 v121)
+| 모드 | 토큰 | 값 | 사용 |
+|---|---|---|---|
+| 라이트 | `stroke-focus-ring` | `#075B3C` | 라이트 표면 위 모든 컴포넌트 |
+| 다크 | `stroke-focus-ring` 다크 | `#2ABE84` | 다크 표면 위 모든 컴포넌트 |
+
+#### 대비
+
 | 페어 | 대비 |
 |---|---|
 | `#075B3C` vs `bg-layer-basement` (`#F5F6FA`) | **7.56:1** ✅ |
@@ -3406,432 +3404,243 @@ HR 브랜드 — 역할 색 `stroke-focus-ring`(라이트 `#075B3C` · 다크 `#
 | `#2ABE84` vs `bg-layer-default` 다크 (`#242938`) | **6.07:1** ✅ |
 | `#2ABE84` vs `bg-layer-floating` 다크 (`#2D3346`) | **5.26:1** ✅ |
 
-모든 라이트 · 다크 표면에서 2.4.11(UI 3:1)을 넘는다.
+모든 라이트 · 다크 표면에서 WCAG 2.4.11(UI 3:1)을 넘습니다.
 
-#### Spec
-- 두께 2px, offset 2px(v106), shape 컴포넌트와 동일 `border-radius`. 입력칸 · 선택 상자는 입력 중 테두리 2px(State 절)
-- `focus-visible` pseudo만 사용 (마우스 클릭 시 미표시)
-- 디자인 시스템 부품 밖의 요소(본문 링크 · 화면이 만든 버튼 · 손잡이 · 스크롤 영역)도 같은 링 — 웹은 전역 `:focus-visible { outline: 2px solid var(--color-stroke-focus-ring); outline-offset: 2px; }` 를 기본으로 두고 부품이 제 규칙으로 덮는다 — `DESIGN.md` Focus ring 의 Spec(2026-11-10).
+#### 모양
 
-#### Motion
-- focus ring 등장: `motion-duration-color-transition` × `motion-ease-easing`(v106)
-- `prefers-reduced-motion: reduce` 시 즉시 표시
+- 두께 2px · 띄움 2px 이고, 컴포넌트와 같은 `border-radius` 를 씁니다. 입력칸 · 선택 상자는 입력 중에 테두리 2px 입니다(State 절).
+- `focus-visible` 에만 그립니다 — 마우스로 누를 때는 보이지 않습니다.
+- 디자인 시스템 부품 밖의 요소(본문 링크 · 화면이 만든 버튼 · 손잡이 · 스크롤 영역)도 같은 링입니다 — 웹은 전역 `:focus-visible { outline: 2px solid var(--color-stroke-focus-ring); outline-offset: 2px; }` 를 기본으로 두고 부품이 제 규칙으로 덮습니다.
 
-#### A11y
-- 2.4.11 / 2.4.12 / 2.4.13 — 위 contrast 충족, sticky header 아래 자동 스크롤 권장 (`scroll-margin-top`)
-- 다크 모드는 `[data-theme="dark"]` · `prefers-color-scheme: dark` 블록이 `--color-stroke-focus-ring` 을 다크 값으로 바꾼다
+#### 모션
+
+- 링은 `motion-duration-color-transition` × `motion-ease-easing` 으로 나타납니다.
+- `prefers-reduced-motion: reduce` 면 바로 보입니다.
+
+#### 접근성
+
+- WCAG 2.4.11 · 2.4.12 · 2.4.13 — 위 대비를 지키고, 고정 머리 아래로 포커스가 가면 `scroll-margin-top` 으로 스크롤합니다.
+- 다크 모드는 `[data-theme="dark"]` · `prefers-color-scheme: dark` 블록이 `--color-stroke-focus-ring` 을 다크 값으로 바꿉니다.
 
 ### Divider — HR
 
-> 모양 · 쓰는 규칙은 DESIGN.md 의 Divider 절(2026-10-03 SEED)과 `specs/components/divider.md`. HR 의 쓰는 자리만 적는다.
+모양 · 쓰는 규칙은 `DESIGN.md` 의 Divider 절과 `specs/components/divider.md` 입니다. 여기에는 HR 의 쓰는 자리만 적습니다.
 
-- 선은 1px `stroke-neutral-subtle` 하나 — 지금 shadcn `Separator` 10곳 · 메뉴 구분선 10곳(#eeeeee 1.16 · 다크 #353535 1.33)을 옮긴다.
-- 사이드바와 본문 사이는 세로선(끝까지), 대화상자 안 묶음 사이는 끝까지 선, 같은 묶음 안은 들인 선.
-- 데이터 표의 줄 사이 선은 Table 차례에 정한다.
-
-### Outline (border 시각 요소 · 기록 — 기준은 Dialog · Popover 스펙과 v104 의 선)
-
-HR — modal 외곽선, 선택된 row highlight, inline editor in-progress.
-
-#### Mode pair / contrast
-- `outline-strong-light` → `border-strong` (`#7D8593`): surface-default 3.34:1 / bg-page 3.13:1 / surface-input 3.34:1 (모두 UI AA)
-- `outline-strong-dark` → `border-strong-dark` (`#8B95A8`): bg-page-dark 3.97:1 / surface-default-dark 3.39:1 / surface-input-dark 4.05:1 (모두 UI AA)
-
-#### 사용
-- modal: `shadow-xl` + `outline-strong-light` 동시 (focus 분리감)
-- 다크 modal: `shadow-xl-dark` + `outline-strong-dark`
-- 선택 row: `outline-strong-light` 1px + `surface-input` 6% tint (선택, 강조 시)
-
-### Disabled label (기록 — 기준은 v106 상태 — 막힌 글자 `fg-disabled` · 바탕 `bg-disabled`, 불투명도를 쓰지 않는다)
-
-HR — 권한 부재(비-승인자가 결재 버튼 보지만 누르지 못함), 기간 만료(평가 종료 후 입력 disabled) 등 사용 불가 상태 표현.
-
-#### Mode pair (sparse — textColor only)
-- `disabled-label-light` → `fg-disabled` (`#8A91A0` — 흰 면 위 3.16:1, 1.4.3 incidental 예외)
-- `disabled-label-dark` → `fg-disabled` 다크 (`#838997` — 다크 면 위 4.13:1, v109)
-
-#### Spec
-- text color disabled, 배경 `bg-disabled` · 테두리 `stroke-neutral-weak` + cursor:not-allowed (v106 — 불투명도 0.5 는 걷음)
-- **권장 동반 표현**: 컴포넌트 옆 "권한 없음" / "마감 종료" 등 이유 글 — Field 설명과 같은 t4 · 400 · `fg-neutral-subtle`(Typography 의 "글자 역할" R9), 정상 contrast
-
-#### A11y
-- 1.4.3 incidental 예외 명시
-- aria: form은 `disabled`, focus 필요 메뉴는 `aria-disabled="true"`
-- screen reader가 "비활성화됨" 읽음
+- 선은 1px `stroke-neutral-subtle` 하나입니다 — 구분선 · 메뉴 구분선이 모두 이 값을 씁니다.
+- 사이드바와 본문 사이는 세로선(끝까지), 대화상자 안 묶음 사이는 끝까지 선, 같은 묶음 안은 들인 선입니다.
 
 ### Switch / Checkbox / Radio (control 묶음)
 
-HR — 직원 정보 form(필수/선택 옵션), 권한 토글 switch, 평가 항목 다중 선택 checkbox 등 form 화면 광범위 사용. 오늘 HR 화면에 Radio · Switch 는 없다 — 켜고 끄기를 "예 · 아니오" 선택 목록으로 한다(공지 상단 고정 · 공휴일 매년 반복 · 휴가 정책 · 음력 여부). 앱 적용 단계에서 Switch · Checkbox 로 옮긴다(2026-09-30 조사).
+HR 은 직원 정보 폼(필수 · 선택 옵션), 권한 켜고 끄기, 평가 항목 여럿 고르기처럼 폼 화면에서 세 컨트롤을 널리 씁니다. 켜고 끄는 값(공지 상단 고정 · 공휴일 매년 반복 · 휴가 정책 · 음력 여부)은 "예 · 아니오" 선택 목록이 아니라 Switch · Checkbox 로 받습니다.
 
-#### 공통 spec (신규 토큰 없음)
-- 세 컨트롤 모두 2026-09-30 SEED 구조로 바뀌었다(`specs/components/switch.md` · `checkbox.md` · `radio-group.md`) — 색 규칙은 셋이 같다(사용자 결정)
-- 선택 · 켜짐: `bg-neutral-inverted`(짙은 회색) 채움 + `fg-neutral-inverted` 표시(체크 · 점 · 엄지)가 기본. `tone="brand"` 면 HR 초록(`bg-brand-solid`) + `static-white` — 서비스 핵심 흐름에서만
-- 선택 안 됨 · 꺼짐: `stroke-neutral-solid` — Checkbox · Radio 는 1px 테두리, Switch 는 트랙 채움
-- disabled: 전용 색(v106 — State 절) + cursor:not-allowed. 선택 · 켜진 채 막히면 모양 그대로 회색
-- focus: 키보드 포커스에만 `stroke-focus-ring` 2px · 띄움 2px
+#### 공통 규칙
 
-#### Variant
-- Switch: 트랙 38 × 24(`24`, 기본) · 26 × 16(`16`) · 52 × 32(`32`), 끄면 엄지가 0.8 로 작아진다 — 누르는 순간 적용되는 설정에만(권한 on/off 등), 저장해야 적용되는 값은 Checkbox
-- Checkbox: 칸 20(`medium`, 기본) · 24(`large`), 일부 선택(indeterminate) 지원 — 직원 다중 선택 표 머리
-- Radio: 동그라미 20(`medium`, 기본) · 24(`large`), 선택은 채운 원 + 가운데 점, 묶음은 세로 — 오늘 HR 화면에는 쓰는 곳이 없다
+- 세 컨트롤은 색 규칙이 같습니다(`specs/components/switch.md` · `checkbox.md` · `radio-group.md`).
+- 선택 · 켜짐: `bg-neutral-inverted`(짙은 회색) 채움 + `fg-neutral-inverted` 표시(체크 · 점 · 엄지)가 기본입니다. `tone="brand"` 면 HR 초록(`bg-brand-solid`) + `static-white` 이고, 서비스 핵심 흐름에서만 씁니다.
+- 선택 안 됨 · 꺼짐: `stroke-neutral-solid` — Checkbox · Radio 는 1px 테두리, Switch 는 트랙 채움입니다.
+- disabled: 전용 색(State 절) + `cursor: not-allowed` 입니다. 선택 · 켜진 채 막히면 모양 그대로 회색입니다.
+- focus: 키보드 포커스에만 `stroke-focus-ring` 2px · 띄움 2px 입니다.
 
-#### Layout
-- form 행: label + control + helper, 행 간 `lg` (16px)
-- group: vertical 시 항목 간 `md` (12px), horizontal `lg` (16px) — Checkbox · Radio 묶음은 스펙의 줄 사이 12 를 따르고, Radio 는 가로로 놓지 않는다(2026-09-30)
-- touch hit area 44×44 (label 포함)
+#### 변형
 
-#### A11y
-- HTML native `<input>` + `<label for>` 우선
-- focus ring `stroke-focus-ring` (`#075B3C` · 다크 `#2ABE84`) 2px, 키보드 Space (toggle/check), Radio arrow keys
-- error 상태: Checkbox · Radio 는 칸 · 동그라미를 바꾸지 않고 묶음 아래 글로 알린다(2026-09-30). Switch 에는 오류 상태가 없다 — 저장에 실패하면 스위치를 되돌리고 무엇이 안 됐는지 알린다
-- Switch 만 쓰는 설정 줄은 줄 전체가 누르는 영역이고, 줄의 제목이 스위치의 이름이 된다(`<label>` 또는 `aria-labelledby`) — 줄의 모양은 List 의 스위치 줄(`ListSwitchItem`)
+- Switch: 트랙 38 × 24(`24`, 기본) · 26 × 16(`16`) · 52 × 32(`32`)이고, 끄면 엄지가 0.8 로 작아집니다. 누르는 순간 적용되는 설정(권한 on/off 등)에만 쓰고, 저장해야 적용되는 값은 Checkbox 입니다.
+- Checkbox: 칸 20(`medium`, 기본) · 24(`large`)이고, 일부 선택(indeterminate)을 지원합니다 — 직원 여럿 고르기 표 머리에 씁니다.
+- Radio: 동그라미 20(`medium`, 기본) · 24(`large`)이고, 선택은 채운 원 + 가운데 점, 묶음은 세로입니다.
+
+#### 배치
+
+- 폼 행은 label + control + helper 이고, 행 사이는 `spacing-x4` (16px)입니다.
+- 묶음은 세로면 항목 사이 `spacing-x3` (12px), 가로면 `spacing-x4` (16px)입니다 — Checkbox · Radio 묶음은 스펙의 줄 사이 12 를 따르고, Radio 는 가로로 놓지 않습니다.
+- 누르는 영역은 44 × 44 (label 포함)입니다.
+
+#### 접근성
+
+- 네이티브 `<input>` + `<label for>` 를 먼저 씁니다.
+- 포커스 링은 `stroke-focus-ring` (`#075B3C` · 다크 `#2ABE84`) 2px 입니다. 키보드는 Space(켜기 · 체크), Radio 는 화살표 키입니다.
+- 오류: Checkbox · Radio 는 칸 · 동그라미를 바꾸지 않고 묶음 아래 글로 알립니다. Switch 에는 오류 상태가 없습니다 — 저장에 실패하면 스위치를 되돌리고 무엇이 안 됐는지 알립니다.
+- Switch 만 쓰는 설정 줄은 줄 전체가 누르는 영역이고, 줄의 제목이 스위치의 이름이 됩니다(`<label>` 또는 `aria-labelledby`) — 줄의 모양은 List 의 스위치 줄(`ListSwitchItem`)입니다.
 
 ### List
 
-> 상세 spec(Anatomy / 줄의 종류 / 상태 / 모션 / Accessibility / Do-Don't)은 [`specs/components/list.md`](specs/components/list.md)가 단일 SoT, 수치는 `list.yaml` · `list-header.yaml`. 코드(`recipes/shadcn/components/ui/list.tsx`) · 예제(`recipes/shadcn/examples/list-examples.mjs`) · preview 4 source 동기.
+상세 규칙(Anatomy / 줄의 종류 / 상태 / 모션 / Accessibility / Do-Don't)의 원본은 [`specs/components/list.md`](specs/components/list.md)이고, 수치는 `list.yaml` · `list-header.yaml` 입니다. 코드(`recipes/shadcn/components/ui/list.tsx`) · 예제(`recipes/shadcn/examples/list-examples.mjs`) · 미리보기를 스펙과 함께 맞춥니다.
 
-- 구조: 목록(List) · 한 줄(List Item) · 목록 제목(List Header) · 줄 사이 선(ListDivider) — SEED List(2026-10-01). 설정 · 메뉴 · 선택 · 키-값 줄과 거래 · 할 일 · 알림 같은 내용 줄을 모두 List 로 그린다. RadioList 는 걷었다 — 하나 고르기는 오른쪽 라디오 줄(`ListRadioItem`).
-- 한 줄: 위아래 `spacing-x3` (12) · 좌우 `spacing-global-gutter` (24) · 제목 `t5` 16 · 400 `fg-neutral` · 설명 `t3` 13 `fg-neutral-subtle`(제목 아래 2) — 한 줄 46 · 두 줄 66.
-- 앞: 설정 · 메뉴 줄은 아이콘 22(`fg-neutral`), 색이 뜻을 가진 내용 줄은 타일 40(모서리 `radius-r3` 12 · `chart-{색}-weak` 바탕 · 아이콘 20 — 아이콘이 없으면 태그 아이콘, 이체 줄은 회색). 은행 · 카드 같은 물건 줄은 로고 타일 40(Logo Tile), 카드 혜택 줄은 카드 그림 56(Image Frame). 체크 · 라디오는 24, 스위치는 32.
-- 뒤: 값 글자(`t5` · `fg-neutral-subtle`) · 오른쪽 화살표 18(화면을 옮기는 줄에만) · 컨트롤 · 작은 버튼.
-- 누름 · 호버(웹): 바탕 층이 좌우 6 들어와 모서리 10 의 `bg-layer-default-pressed` 가 되고, 콘텐츠 층만 2px 거리로 준다(v104). 끼운 컨트롤은 따로 줄지 않는다. 포커스 링은 줄 안쪽 2px.
-- 강조: 바탕만 `bg-brand-weak`(누름 · 호버 `bg-brand-weak-pressed` — 그동안 설명 · 값 글자는 `fg-neutral-muted`, 4.5:1 을 지키려고).
-- 줄 사이 선은 기본 없음 — 필요할 때만 `ListDivider`(1px `stroke-neutral-subtle`, 줄 폭 또는 좌우 24 들임).
-- 목록 제목: `t4` 14 · 위아래 8 · 좌우 24 — `mediumWeak`(500 · `fg-neutral-subtle`, 기본) · `boldSolid`(700 · `fg-neutral`).
-- HR — 오늘 줄 모양 24가지 · 목록 33곳, 오른쪽 화살표 0, 줄 전체를 누르는 10 중 키보드로 닿는 것 3(2026-10-01 조사). 앱 적용 단계에서 List 로 옮긴다.
-- 하위 줄(2026-10-10): 부모 · 하위 두 단계에서 줄은 편집을 열고 하위만 접는 목록(카테고리) — 부모 줄 앞 꺾쇠 단추 44(이름 "{카테고리} 하위 카테고리" + `aria-expanded` · 펼치면 90° · 300ms) · 하위 줄은 부모 제목 자리 104 · 하위가 없는 줄도 꺾쇠 자리를 비워 부모 타일이 한 세로줄(52)에 선다(17B). 여러 단계에서 고르는 나무는 Tree View.
-- 목록은 흰 바탕(`bg-layer-default`) · 시트(`bg-layer-floating`) 위에 둔다 — 회색 바탕(`bg-layer-basement`) 위에서는 누름 바탕이 보이지 않는다(카드에 담는다).
+- 구조: 목록(List) · 한 줄(List Item) · 목록 제목(List Header) · 줄 사이 선(ListDivider)입니다. 설정 · 메뉴 · 선택 · 키-값 줄과 거래 · 할 일 · 알림 같은 내용 줄을 모두 List 로 그립니다. 하나 고르기는 오른쪽 라디오 줄(`ListRadioItem`)입니다.
+- 한 줄: 위아래 `spacing-x3` (12) · 좌우 `spacing-global-gutter` (24) · 제목 `t5` 16 · 400 `fg-neutral` · 설명 `t3` 13 `fg-neutral-subtle`(제목 아래 2) — 한 줄 46 · 두 줄 66 입니다.
+- 앞: 설정 · 메뉴 줄은 아이콘 22(`fg-neutral`), 색이 뜻을 가진 내용 줄은 타일 40(모서리 `radius-r3` 12 · `chart-{색}-weak` 바탕 · 아이콘 20 — 아이콘이 없으면 태그 아이콘, 이체 줄은 회색)입니다. 은행 · 카드 같은 물건 줄은 로고 타일 40(Logo Tile), 카드 혜택 줄은 카드 그림 56(Image Frame)입니다. 체크 · 라디오는 24, 스위치는 32 입니다.
+- 뒤: 값 글자(`t5` · `fg-neutral-subtle`) · 오른쪽 화살표 18(화면을 옮기는 줄에만) · 컨트롤 · 작은 버튼입니다.
+- 누름 · 호버(웹): 바탕 층이 좌우 6 들어와 모서리 10 의 `bg-layer-default-pressed` 가 되고, 콘텐츠 층만 2px 거리로 줄어듭니다. 끼운 컨트롤은 따로 줄지 않습니다. 포커스 링은 줄 안쪽 2px 입니다.
+- 강조: 바탕만 `bg-brand-weak`(누름 · 호버 `bg-brand-weak-pressed`)입니다 — 그동안 설명 · 값 글자는 4.5:1 을 지키려고 `fg-neutral-muted` 입니다.
+- 줄 사이 선은 기본 없음입니다 — 필요할 때만 `ListDivider`(1px `stroke-neutral-subtle`, 줄 폭 또는 좌우 24 들임)를 씁니다.
+- 목록 제목: `t4` 14 · 위아래 8 · 좌우 24 — `mediumWeak`(500 · `fg-neutral-subtle`, 기본) · `boldSolid`(700 · `fg-neutral`)입니다.
+- HR 의 줄 모양 · 목록은 모두 List 로 그립니다.
+- 하위 줄: 부모 · 하위 두 단계에서 줄은 편집을 열고 하위만 접는 목록(카테고리)입니다 — 부모 줄 앞 꺾쇠 단추 44(이름 "{카테고리} 하위 카테고리" + `aria-expanded` · 펼치면 90° · 300ms) · 하위 줄은 부모 제목 자리 104 · 하위가 없는 줄도 꺾쇠 자리를 비워 부모 타일이 한 세로줄(52)에 섭니다. 여러 단계에서 고르는 나무는 Tree View 입니다.
+- 목록은 흰 바탕(`bg-layer-default`) · 시트(`bg-layer-floating`) 위에 둡니다 — 회색 바탕(`bg-layer-basement`) 위에서는 누름 바탕이 보이지 않기 때문입니다(카드에 담습니다).
 
 ### Select Box
 
-> 상세 spec(Anatomy / 컨트롤 / 배치 / 상태 / 펼침 / 모션 / Accessibility / Do-Don't)은 [`specs/components/select-box.md`](specs/components/select-box.md)가 단일 SoT, 수치는 `select-box.yaml`. 코드(`recipes/shadcn/components/ui/select-box.tsx`) · 예제(`recipes/shadcn/examples/select-box-examples.mjs`) · preview 4 source 동기.
+상세 규칙(Anatomy / 컨트롤 / 배치 / 상태 / 펼침 / 모션 / Accessibility / Do-Don't)의 원본은 [`specs/components/select-box.md`](specs/components/select-box.md)이고, 수치는 `select-box.yaml` 입니다. 코드(`recipes/shadcn/components/ui/select-box.tsx`) · 예제(`recipes/shadcn/examples/select-box-examples.mjs`) · 미리보기를 스펙과 함께 맞춥니다.
 
-- 구조: 하나 고르기(Radio Select Box) · 여럿 고르기(Check Select Box) · 묶음(Select Box Group) — SEED Select Box(2026-10-01). 설명 · 아이콘 · 딸린 입력이 붙는 선택지 2 ~ 6개를 견줘 고르고, 저장 · 다음 같은 버튼으로 반영한다. Tile 은 걷었다.
-- 상자: 모서리 `radius-r3` (12) · 안쪽 1px `stroke-neutral-weak`. 고르면 안쪽에 2px `stroke-neutral-contrast`(v113)를 덧그린다 — 내용이 밀리지 않고, 바탕은 그대로다(브랜드 색 없음).
-- 글자: 제목 `t5` 16 · 500 `fg-neutral` · 설명 `t3` 13 `fg-neutral-muted`(두 줄까지). 앞 아이콘 22(`fg-neutral`).
-- 컨트롤은 오른쪽 — 라디오 20(neutral) · 칸 없는 체크(Checkbox Ghost) · 없음(테두리만, 좁은 3열 같은 자리). 컨트롤은 따로 줄지 않고 자기 포커스 링도 그리지 않는다.
-- 배치: 1열은 가로형(위아래 16 · 왼쪽 20 · 오른쪽 16, 세로 가운데), 2 ~ 3열은 세로형(위아래 20 · 좌우 16, 앞이 위 · 컨트롤은 위 오른쪽). 묶음 줄 사이 `spacing-component-default` · 열 사이 12, 2열 이상이면 모든 상자가 가장 긴 상자의 높이다. 가장 작은 상자 54.
-- 누름 · 호버(웹): 상자 바탕이 `bg-layer-default-pressed` 가 되고 누르는 자리(콘텐츠 + 컨트롤)만 2px 거리로 준다(v104). 키보드 포커스 링은 상자 바깥 2px · 띄움 2px.
-- 펼침: 고른 상자 아래로 딸린 입력 · 안내가 열린다(안쪽 좌우 20 · 아래 16, 높이 400ms · 투명도 300ms). 닫히면 보이지 않고 Tab 도 닿지 않는다.
-- 누르는 순간 바뀌는 고르기(테마 같은)는 List 의 라디오 줄, 누르면 바로 무언가를 하는 자리는 버튼이다.
-- HR — 상자 4 패턴 · 5곳이 모두 손으로 짠 여럿 고르기(권한 · 역할 할당 · 플랜 정책 · 시스템 데일리 체크)다(2026-10-01 조사). 하나 고르기는 지금 모두 드롭다운이다 — 휴가 정책의 부여 방법 · 가변 부여 여부처럼 설명이 붙는 고르기는 앱 적용 단계에서 Select Box 로 옮긴다.
-- HR 사용자 역할 할당은 여럿 고르기 상자(이름 + 역할 설명) + "저장" 한 번이다 — 폰 · 데스크톱 같은 모양(2026-10-15 마무리 10A, 아래 "마무리 — HR").
+- 구조: 하나 고르기(Radio Select Box) · 여럿 고르기(Check Select Box) · 묶음(Select Box Group)입니다. 설명 · 아이콘 · 딸린 입력이 붙는 선택지 2 ~ 6개를 견줘 고르고, 저장 · 다음 같은 버튼으로 반영합니다.
+- 상자: 모서리 `radius-r3` (12) · 안쪽 1px `stroke-neutral-weak` 입니다. 고르면 안쪽에 2px `stroke-neutral-contrast` 를 덧그립니다 — 내용이 밀리지 않고, 바탕은 그대로입니다(브랜드 색 없음).
+- 글자: 제목 `t5` 16 · 500 `fg-neutral` · 설명 `t3` 13 `fg-neutral-muted`(두 줄까지)입니다. 앞 아이콘은 22(`fg-neutral`)입니다.
+- 컨트롤은 오른쪽입니다 — 라디오 20(neutral) · 칸 없는 체크(Checkbox Ghost) · 없음(테두리만, 좁은 3열 같은 자리). 컨트롤은 따로 줄지 않고 자기 포커스 링도 그리지 않습니다.
+- 배치: 1열은 가로형(위아래 16 · 왼쪽 20 · 오른쪽 16, 세로 가운데), 2 ~ 3열은 세로형(위아래 20 · 좌우 16, 앞이 위 · 컨트롤은 위 오른쪽)입니다. 묶음 줄 사이는 `spacing-component-default` · 열 사이 12 이고, 2열 이상이면 모든 상자가 가장 긴 상자의 높이입니다. 가장 작은 상자는 54 입니다.
+- 누름 · 호버(웹): 상자 바탕이 `bg-layer-default-pressed` 가 되고 누르는 자리(콘텐츠 + 컨트롤)만 2px 거리로 줄어듭니다. 키보드 포커스 링은 상자 바깥 2px · 띄움 2px 입니다.
+- 펼침: 고른 상자 아래로 딸린 입력 · 안내가 열립니다(안쪽 좌우 20 · 아래 16, 높이 400ms · 투명도 300ms). 닫히면 보이지 않고 Tab 도 닿지 않습니다.
+- 누르는 순간 바뀌는 고르기(테마 같은)는 List 의 라디오 줄, 누르면 바로 무언가를 하는 자리는 버튼입니다.
+- HR 의 여럿 고르기 상자(권한 · 역할 할당 · 플랜 정책 · 시스템 데일리 체크)는 Check Select Box 입니다. 휴가 정책의 부여 방법 · 가변 부여 여부처럼 설명이 붙는 하나 고르기는 드롭다운이 아니라 Radio Select Box 입니다.
+- HR 사용자 역할 할당은 여럿 고르기 상자(이름 + 역할 설명) + "저장" 한 번이고, 폰 · 데스크톱이 같은 모양입니다(아래 "마무리 — HR").
 
 ### Tabs · Segmented Control
 
-공통 정의는 `DESIGN.md` 의 Tabs · Segmented Control 절, 원본은 `specs/components/tabs.md` · `segmented-control.md`(2026-10-02 SEED). 고른 표시는 중립색이라 브랜드와 관계없이 같고, 알림 점만 브랜드 글자색(`fg-brand` — Notification Badge small)이다.
+공통 정의는 `DESIGN.md` 의 Tabs · Segmented Control 절, 원본은 `specs/components/tabs.md` · `segmented-control.md` 입니다. 고른 표시는 중립색이라 브랜드와 관계없이 같고, 알림 점만 브랜드 글자색(`fg-brand` — Notification Badge small)입니다.
 
-- **구역 이동** — 휴가 내역(사용 내역 · 부여 내역) · 구성원 휴가(결재함 · 직원 휴가) · 업무 코드(업무 파트 · 업무 구분) · 권한(역할 · 사용자)은 Line. 데스크톱 카드 · 페이지는 칸이 지나치게 넓어지므로 Hug 로 둔다. 탭이 하나뿐이면 탭 줄을 두지 않는다 — 휴가 신청은 탭이 없다(승인 내역은 구성원 휴가의 결재함 탭 — 2026-10-23 사용자 결정 H-D1 B).
-- **결재할 것이 있으면** 결재함 탭에 알림 점 — 개수는 탭 글이 아니라 내용에 보인다.
-- **같은 내용 조작**(캘린더 보기 전환 등 2 ~ 4개)은 Segmented Control.
-- 앱 적용 때 정할 자리 — 회사(모바일) 부서 관리 · 조직도, 캘린더 필터 팝오버의 사용자 · 유형.
+- **구역 이동** — 휴가 내역(사용 내역 · 부여 내역) · 구성원 휴가(결재함 · 직원 휴가) · 업무 코드(업무 파트 · 업무 구분) · 권한(역할 · 사용자)은 Line 입니다. 데스크톱 카드 · 페이지는 칸이 지나치게 넓어지므로 Hug 로 둡니다. 탭이 하나뿐이면 탭 줄을 두지 않습니다 — 휴가 신청은 탭이 없습니다(승인 내역은 구성원 휴가의 결재함 탭입니다).
+- **결재할 것이 있으면** 결재함 탭에 알림 점을 둡니다 — 개수는 탭 글이 아니라 내용에 보입니다.
+- **같은 내용 조작**(캘린더 보기 전환 등 2 ~ 4개)은 Segmented Control 입니다.
 
 ### 메뉴 · 메뉴 시트 · 도움말 말풍선 · 툴팁
 
-> 모양 · 쓰는 규칙은 DESIGN.md 의 같은 이름 절(2026-10-02 SEED). HR 의 쓰는 자리만 적는다.
+모양 · 쓰는 규칙은 `DESIGN.md` 의 같은 이름 절입니다. 여기에는 HR 의 쓰는 자리만 적습니다.
 
-- **표의 줄 동작** — 직원 · 휴가 · 업무 코드 줄 끝 ⋮ + Menu(수정 · 비밀번호 초기화 · 삭제 — 위험은 맨 아래). 줄 아이콘 묶음(업무 코드 · 부서 · 역할)도 ⋮ 로 옮긴다.
-- **규정 안내** — 휴가 신청 · 정책의 ⓘ 는 Help Bubble(긴 표가 있는 규정은 Popover).
-- **툴팁** — 접힌 사이드바 메뉴 이름 · 아이콘 버튼의 이름. 브랜드 파랑 툴팁은 걷는다.
+- **표의 줄 동작** — 직원 · 휴가 · 업무 코드 줄 끝은 ⋮ + Menu(수정 · 비밀번호 초기화 · 삭제 — 위험은 맨 아래)입니다. 줄 아이콘 묶음(업무 코드 · 부서 · 역할)도 ⋮ 하나로 모읍니다.
+- **규정 안내** — 휴가 신청 · 정책의 ⓘ 는 Help Bubble 입니다(긴 표가 있는 규정은 Popover).
+- **툴팁** — 접힌 사이드바 메뉴 이름 · 아이콘 버튼의 이름에 씁니다. 툴팁은 브랜드 색으로 칠하지 않습니다.
 
 ### 알림 메시지 — Snackbar · Callout · Page Banner · Result Section
 
-> 모양 · 쓰는 규칙은 DESIGN.md 의 같은 이름 절(2026-10-02 SEED). HR 의 쓰는 자리만 적는다.
+모양 · 쓰는 규칙은 `DESIGN.md` 의 같은 이름 절입니다. 여기에는 HR 의 쓰는 자리만 적습니다.
 
-- **오류** — 전역 오류 토스트(GET 까지 · 재시도마다)를 걷는다. 목록 · 상세를 불러오지 못하면 그 자리 Result Section(실패 + 다시 시도), 저장 실패는 대화상자 맨 위 Callout `critical`, 칸 오류는 칸 아래.
-- **토스트** — 결재 승인 · 반려 · 저장처럼 방금 한 일의 결과만, 아래 가운데. 테마는 앱 테마를 따른다.
-- **안내** — 휴가 신청의 자동 승인 · 결재자 안내는 Callout(번역 키가 아닌 글로), 공지는 Page Banner 가 아니다 — 로그인 뒤 공지는 한 표면(1280 이상 대화상자 · 미만 시트)에서 "1 / N" 으로 넘겨 보고, 바닥은 [오늘은 그만 보기] [닫기](2026-10-23 사용자 결정 H-A9 A · HN3 A).
-- **빈 화면** — shadcn Empty 를 Result Section 으로, 404 는 한국어 Result Section.
+- **오류** — 전역 오류 토스트는 쓰지 않습니다. 목록 · 상세를 불러오지 못하면 그 자리에 Result Section(실패 + 다시 시도), 저장 실패는 대화상자 맨 위 Callout `critical`, 칸 오류는 칸 아래입니다.
+- **토스트** — 결재 승인 · 반려 · 저장처럼 방금 한 일의 결과만 아래 가운데에 띄웁니다. 테마는 앱 테마를 따릅니다.
+- **안내** — 휴가 신청의 자동 승인 · 결재자 안내는 Callout(번역 키가 아닌 글로)입니다. 공지는 Page Banner 가 아닙니다 — 로그인 뒤 공지는 한 표면(1280 이상 대화상자 · 미만 시트)에서 "1 / N" 으로 넘겨 보고, 바닥은 [오늘은 그만 보기] [닫기] 입니다.
+- **빈 화면** — 빈 화면은 Result Section 이고, 404 도 한국어 Result Section 입니다.
 
 ### 시트 · 대화상자 · 확인창 · 팝오버
 
-공통 정의는 `DESIGN.md` 의 같은 절, 원본은 `specs/components/bottom-sheet.md` · `dialog.md` · `alert-dialog.md` · `popover.md`(2026-10-02 SEED). 표면 · 고른 색은 브랜드와 관계없이 같다.
+공통 정의는 `DESIGN.md` 의 같은 절, 원본은 `specs/components/bottom-sheet.md` · `dialog.md` · `alert-dialog.md` · `popover.md` 입니다. 표면 · 고른 색은 브랜드와 관계없이 같습니다.
 
-- **폼 · 상세** — HR 은 데스크톱이 주라 대부분 Dialog(medium 480 · 큰 표는 large 800)이고, 1280 미만에서는 같은 내용이 Bottom Sheet 로 뜬다. 높이는 화면의 80% 까지 · 본문만 스크롤(지금 30곳 중 18곳이 상한 없이 넘친다).
-- **입력 폼은 바닥 [취소] [저장]** — 머리 닫기 버튼을 함께 두지 않고, 바깥을 눌러도 닫히지 않는다. 바뀐 값이 있으면 나가기 전에 묻는다.
-- **삭제 확인 7곳** — Alert Dialog. 확정은 `criticalSolid`, 글은 "… 삭제할까요?"(지금 "정말 … 삭제하시겠습니까?"), `Esc` 는 취소 · 바깥 누르기는 무시.
-- 규정 안내 12 는 설명 아래 늘 펼친다 — 팝오버를 걷는다(2026-10-23 사용자 결정 HK5 A).
-- 앱 적용 때 정할 자리 — 전체 화면 Dialog 3(페이지 · 시트 · Side Panel).
+- **폼 · 상세** — HR 은 데스크톱이 주라 대부분 Dialog(medium 480 · 큰 표는 large 800)이고, 1280 미만에서는 같은 내용이 Bottom Sheet 로 뜹니다. 높이는 화면의 80% 까지이고 본문만 스크롤합니다.
+- **입력 폼은 바닥 [취소] [저장]** — 머리 닫기 버튼을 함께 두지 않고, 바깥을 눌러도 닫히지 않습니다. 바뀐 값이 있으면 나가기 전에 묻습니다.
+- **삭제 확인** — Alert Dialog 입니다. 확정은 `criticalSolid`, 글은 "… 삭제할까요?" 이고, `Esc` 는 취소 · 바깥 누르기는 무시합니다.
+- 규정 안내 12 는 설명 아래 늘 펼쳐 둡니다 — 팝오버로 숨기지 않습니다.
 
 ### Chart color (palette)
 
-HR — 월별 휴가 사용(막대) · 휴가 유형(도넛). 10색 × 2 모드(v110), 쓰는 규칙은 `specs/components/chart.md`(2026-10-08).
+HR 은 월별 휴가 사용(막대) · 휴가 유형(도넛) 차트를 씁니다. 차트 색은 10색 × 2 모드이고, 쓰는 규칙은 `specs/components/chart.md` 입니다.
 
 #### HR 쓰임
 
-- 지금 두 차트는 recharts 데모 색 그대로다(흰 바탕 1.69 ~ 3.53 · 다크에서도 격자 #CCCCCC · 축 #888888) — 앱 적용 단계에서 v110 으로 옮긴다.
-- **휴가 유형 도넛** — 유형마다 차트 색 이름을 정했다 — 서버 유형 차례에 v110 배정 차례를 하나씩(2026-10-23 사용자 결정 HB3 A, 표는 I-23). 정하지 않은 유형은 쓰지 않은 색부터, 회색은 "기타" 전용 — 회색을 "비활성 · 종료" 뜻으로 쓰지 않는다.
-- **월별 사용 막대** — 계열 하나 `chart-blue`, 축과 툴팁의 단위를 같게(일).
-- **부서 색** — shadcn chart-1 ~ 5 이름을 저장한다 — 앱 적용 때 차트 색 이름에 잇는다(v110).
-- 범례 · 툴팁 · 빈 · 실패 · 접근성은 공유 Chart 절이다.
+- **휴가 유형 도넛** — 유형마다 차트 색 이름을 정해 둡니다 — 서버 유형 차례에 차트 색 배정 차례를 하나씩 맞춥니다. 정하지 않은 유형은 쓰지 않은 색부터 쓰고, 회색은 "기타" 전용입니다 — 회색을 "비활성 · 종료" 뜻으로 쓰지 않습니다.
+- **월별 사용 막대** — 계열 하나 `chart-blue` 이고, 축과 툴팁의 단위를 같게(일) 맞춥니다.
+- **부서 색** — 부서 색은 차트 색 이름으로 저장합니다.
+- 범례 · 툴팁 · 빈 · 실패 · 접근성은 공유 Chart 절을 따릅니다.
 
 ### Avatar — HR
 
-> 모양 · 쓰는 규칙은 DESIGN.md 의 Avatar · Avatar Stack 절(2026-10-03 SEED)과 `specs/components/avatar.md`. HR 의 쓰는 자리만 적는다. 옛 HR 패턴(데이터 그리드 사각 24 · 부서별 색 · 상태 점)은 걷었다.
+모양 · 쓰는 규칙은 `DESIGN.md` 의 Avatar · Avatar Stack 절과 `specs/components/avatar.md` 입니다. 여기에는 HR 의 쓰는 자리만 적습니다.
 
-- **사진을 쓴다** — 프로필 사진(8곳). 사진이 없거나 실패하면 이니셜 + 이름 색(지금은 크기와 관계없이 회색 16 / 400 고정).
-- **크기** — 일정 필터 사용자 · 휴가 신청 결재자 24, 표의 직원 · 사이드바 36(지금 32 — 사이드바만 모서리 8 사각, 원으로), 구성원 목록 두 줄 42, 내 정보 · 직원 정보의 큰 사진 96(지금 128), 정보 수정 108(지금 160).
-- **이름** — 이름 옆이면 장식, 혼자면 이름. 근무표 아바타는 `alt` 가 없고 사진 주소를 다른 곳과 다르게 만든다 — 맞춘다.
-- **상태 · 부서** — 재직 · 휴직 · 퇴직은 아바타 점이 아니라 Badge, 부서를 아바타 색으로 가르지 않는다(이름 색은 이름 해시뿐).
-- **사진 바꾸기** — 정보 수정의 108 아래 늘 보이는 "사진 바꾸기" · "사진 지우기"(2026-10-15 마무리 6A — 호버 덮개를 걷는다).
+- **사진을 씁니다** — 프로필 사진을 씁니다. 사진이 없거나 불러오지 못하면 이니셜 + 이름 색입니다.
+- **크기** — 일정 필터 사용자 · 휴가 신청 결재자 24, 표의 직원 · 사이드바 36(사이드바도 원), 구성원 목록 두 줄 42, 내 정보 · 직원 정보의 큰 사진 96, 정보 수정 108 입니다.
+- **이름** — 이름 옆이면 장식, 혼자면 이름입니다. 근무표 아바타도 `alt` 를 두고, 사진 주소를 다른 곳과 같은 방식으로 만듭니다.
+- **상태 · 부서** — 재직 · 휴직 · 퇴직은 아바타 점이 아니라 Badge 입니다. 부서를 아바타 색으로 가르지 않습니다(이름 색은 이름 해시뿐).
+- **사진 바꾸기** — 정보 수정의 108 아래에 늘 보이는 "사진 바꾸기" · "사진 지우기" 를 둡니다 — 마우스를 올려야 나타나는 덮개를 쓰지 않습니다.
 
 ### 날짜 · 시각 고르기 — HR
 
-> 2026-10-03 — 모양 · 규칙은 공유 DESIGN.md 의 "날짜 · 시각 고르기" 절과 `specs/components/date-picker.md` · `time-picker.md` · `wheel-picker.md`. 옛 Calendar(v61) HR 패턴은 걷었다.
+모양 · 규칙은 공유 `DESIGN.md` 의 "날짜 · 시각 고르기" 절과 `specs/components/date-picker.md` · `time-picker.md` · `wheel-picker.md` 입니다.
 
-- 날짜 하나: 휴가 · 초과근무 날짜(+ 시각 칸), 입사일, 생일, 공휴일 · 음력 날짜, 최초 부여일.
-- 기간(기간 달력 + 빠른 기간): 업무 보고 · 공지 게시 · 부여 유효기간 · 일정 시작 ~ 끝.
-- 시각: 초과근무 시작 · 종료(분 간격은 자리마다), 일정 시간표(30분).
-- 연도만: 연도 Select(짧은 선택지) — 달까지 고르면 연 · 월 휠.
-- 캘린더 격자선 — 월 격자의 날 칸 선과 주 보기의 시간 격자선(시각 가로선 · 날 사이 세로선)은 모두 1px `stroke-neutral-subtle` 한 값이다 — 그루 담다 캘린더와 같다(HC9 A, 2026-11-10 디자인시스템 판단 — 25-4).
+- 날짜 하나: 휴가 · 초과근무 날짜(+ 시각 칸), 입사일, 생일, 공휴일 · 음력 날짜, 최초 부여일입니다.
+- 기간(기간 달력 + 빠른 기간): 업무 보고 · 공지 게시 · 부여 유효기간 · 일정 시작 ~ 끝입니다.
+- 시각: 초과근무 시작 · 종료(분 간격은 자리마다), 일정 시간표(30분)입니다.
+- 연도만: 연도 Select(짧은 선택지)입니다 — 달까지 고르면 연 · 월 휠입니다.
+- 캘린더 격자선 — 월 격자의 날 칸 선과 주 보기의 시간 격자선(시각 가로선 · 날 사이 세로선)은 모두 1px `stroke-neutral-subtle` 한 값입니다 — 그루 담다 캘린더와 같습니다.
 
 ### Field — HR
 
-공통 정의는 `DESIGN.md` 의 Field 절, 원본은 `specs/components/field.md`(2026-10-01 SEED Field). 옛 v62 Form layout · v75 Form validation 의 HR 절은 여기로 합쳤다.
+공통 정의는 `DESIGN.md` 의 Field 절, 원본은 `specs/components/field.md` 입니다.
 
 #### HR 쓰임
 
-- 결재 · 직원 등록 · 평가 입력처럼 칸이 많은 폼 — 필수가 2/3 이상이면 선택 칸에만 "선택". 라벨은 칸 위(왼쪽 라벨 배치는 두지 않는다).
-- 저장 · 신청 버튼은 켜 두고, 누르면 칸마다 오류 + 첫 오류 칸으로 포커스. 결재 라인 누락처럼 서버가 가르는 오류도 그 칸의 오류 글로 돌려준다.
-- 사번 · 이메일 중복 확인은 칸을 떠난 뒤 서버에 묻는다 — 확인하는 동안 설명 자리에 "확인하는 중…". 중복이면 제출을 막는다.
-- 휴가 일수처럼 두 칸을 함께 보는 규칙은 뒤 칸(종료일)의 오류 글로 알린다 — "남은 연차(3일)보다 길게 신청할 수 없어요.".
-- 글자 수 — 서버 제한(20 · 50 · 100 · 1000자)이 있는 칸은 Field 의 글자 수로 알린다.
-- 문구는 Writing(v106) — HR 도 해요체다("사번을 입력해주세요." · "이미 등록된 사번이에요.").
-- 결재 의견 · 권한 설정 같은 시트 · 대화상자도 값이 바뀐 채 닫으려 하면 "작성한 내용이 사라져요" 를 묻는다.
+- 결재 · 직원 등록 · 평가 입력처럼 칸이 많은 폼은 필수가 2/3 이상이면 선택 칸에만 "선택" 을 적습니다. 라벨은 칸 위입니다(왼쪽 라벨 배치는 두지 않습니다).
+- 저장 · 신청 버튼은 켜 두고, 누르면 칸마다 오류를 보이고 첫 오류 칸으로 포커스를 옮깁니다. 결재 라인 누락처럼 서버가 가르는 오류도 그 칸의 오류 글로 돌려줍니다.
+- 사번 · 이메일 중복 확인은 칸을 떠난 뒤 서버에 묻습니다 — 확인하는 동안 설명 자리에 "확인하는 중…" 을 보입니다. 중복이면 제출을 막습니다.
+- 휴가 일수처럼 두 칸을 함께 보는 규칙은 뒤 칸(종료일)의 오류 글로 알립니다 — "남은 연차(3일)보다 길게 신청할 수 없어요.".
+- 글자 수 — 서버 제한(20 · 50 · 100 · 1000자)이 있는 칸은 Field 의 글자 수로 알립니다.
+- 문구는 Writing 절을 따릅니다 — HR 도 해요체입니다("사번을 입력해주세요." · "이미 등록된 사번이에요.").
+- 결재 의견 · 권한 설정 같은 시트 · 대화상자도 값이 바뀐 채 닫으려 하면 "작성한 내용이 사라져요" 를 묻습니다.
 
 ### 기다림 — HR
 
-> 모양 · 쓰는 규칙은 DESIGN.md 의 "기다림" 절(2026-10-03 SEED). HR 의 쓰는 자리만 적는다.
+모양 · 쓰는 규칙은 `DESIGN.md` 의 "기다림" 절입니다. 여기에는 HR 의 쓰는 자리만 적습니다.
 
-- **첫 진입** — 대시보드 위젯 · 결재함 · 휴가 내역은 위젯 머리 · 표 머리를 그리고 데이터 줄만 스켈레톤이다. 흰 카드 위에 둔다(지금 #f8f8f8 이 흰 바탕 위 1.06:1 로 거의 안 보인다).
-- **세션 확인 · 인증 콜백** — 화면을 덮는 회색 막 "Loading" 을 걷고 흰 면 가운데 원 40 으로 바꾼다 — 앱 틀은 그리지 않는다. 콜백이 실패하면 Result Section + [다시 로그인하기]이고, 3초 뒤 저절로 옮기기를 걷는다(2026-10-23 사용자 결정 H-A11 B).
-- **원** — 저장 · 승인은 Button 로딩, 영역 기다림은 원 24 · 40 — 이름 "불러오는 중"(지금 영어 "Loading").
-- **연도 · 필터 바꾸기** — 머리는 바로 바뀌고 표 · 숫자 자리만 기다린다.
-- **막대** — 승인률 · 오늘 근무 시간은 높이 8 · 채움 `fg-brand` 미터로, 이름과 값이 읽히게 한다(지금 래퍼가 값을 넘기지 않아 '값 모름'으로 읽힌다).
-- **이미지** — 규정 그림은 Image Frame 이 불러오는 동안 스켈레톤, 못 불러오면 대체 그림을 그린다(아래 "이미지 — HR"). 프로필 사진의 외부 기본 그림을 걷는다.
-- **끝 흐림** — 필터 칩 줄 · 결재 이력 · 권한 목록처럼 넘칠 수 있는 대화상자 본문.
-- **요청** — 재시도 3번(약 7초)을 읽기 2번 · 10초 안으로, 요청 제한 10초를 더한다.
+- **첫 진입** — 대시보드 위젯 · 결재함 · 휴가 내역은 위젯 머리 · 표 머리를 그리고 데이터 줄만 스켈레톤입니다. 스켈레톤은 흰 카드 위에 둡니다.
+- **세션 확인 · 인증 콜백** — 화면을 덮는 회색 막 대신 흰 면 가운데 원 40 을 둡니다 — 앱 틀은 그리지 않습니다. 콜백이 실패하면 Result Section + [다시 로그인하기]이고, 저절로 다른 화면으로 옮기지 않습니다.
+- **원** — 저장 · 승인은 Button 로딩, 영역 기다림은 원 24 · 40 이고, 이름은 "불러오는 중" 입니다.
+- **연도 · 필터 바꾸기** — 머리는 바로 바뀌고 표 · 숫자 자리만 기다립니다.
+- **막대** — 승인률 · 오늘 근무 시간은 높이 8 · 채움 `fg-brand` 미터이고, 이름과 값이 읽히게 합니다.
+- **이미지** — 규정 그림은 Image Frame 이 불러오는 동안 스켈레톤이고, 못 불러오면 대체 그림을 그립니다(아래 "이미지 — HR"). 프로필 사진에 외부 기본 그림을 쓰지 않습니다.
+- **끝 흐림** — 필터 칩 줄 · 결재 이력 · 권한 목록처럼 넘칠 수 있는 대화상자 본문에 씁니다.
+- **요청** — 읽기 재시도는 2번 · 10초 안이고, 요청 제한 10초를 더합니다.
 
 ### 이미지 — HR
 
-> 2026-10-04 — 모양 · 쓰는 규칙은 DESIGN.md 의 "이미지 — Image Frame · Aspect Ratio · Logo Tile" 절과 `specs/components/image-frame.md` · `logo-tile.md`. HR 의 쓰는 자리만 적는다.
+모양 · 쓰는 규칙은 `DESIGN.md` 의 "이미지 — Image Frame · Aspect Ratio · Logo Tile" 절과 `specs/components/image-frame.md` · `logo-tile.md` 입니다. 여기에는 HR 의 쓰는 자리만 적습니다.
 
-- **규정 그림** — 16장을 Image Frame 1:1 로 — 늦게 받고(`lazy`, 지금은 16.3MB 를 한 번에), 마우스 1.05배 확대를 걷고, 제목 · 설명이 내용을 말하므로 장식(`alt=""` — 지금은 파일 이름 "rule_1_1"). 지금 높이 192 고정 틀이 정사각 그림을 58.5 ~ 93% 만 보인다.
-- **회사 로고** — 회사별 인원의 로고는 Logo Tile 32 · 로고 그림(흰 판 + 투명 윤곽) — 다크에서 로고의 검은 부분이 사라지지 않고, 로고가 없는 회사는 깨진 그림 대신 회사 이름의 첫 글자. 회사 이름 옆이라 장식(지금 "{회사} logo" 를 이름과 두 번 읽는다).
-- **영어 대체 글** — "Image" · "logo" · "Groo Logo" 를 걷는다 — 로그인 배경은 장식(`alt=""`), 서비스 로고는 서비스 이름.
+- **규정 그림** — Image Frame 1:1 입니다 — 늦게 받고(`lazy`), 마우스 확대를 두지 않고, 제목 · 설명이 내용을 말하므로 장식(`alt=""`)입니다. 정사각 그림이 잘리지 않게 높이를 고정한 틀에 넣지 않습니다.
+- **회사 로고** — 회사별 인원의 로고는 Logo Tile 32 · 로고 그림(흰 판 + 투명 윤곽)입니다 — 다크에서도 로고의 검은 부분이 사라지지 않고, 로고가 없는 회사는 깨진 그림 대신 회사 이름의 첫 글자입니다. 회사 이름 옆이라 장식입니다.
+- **대체 글** — 영어 대체 글("Image" · "logo")을 쓰지 않습니다 — 로그인 배경은 장식(`alt=""`), 서비스 로고는 서비스 이름입니다.
 
 ### 화면 틀 · 이동 — HR
 
-> 2026-10-04 — 모양 · 쓰는 규칙은 DESIGN.md 의 "화면 틀 · 이동" 절, Layout 의 "화면 틀" · "Safe Area" 절과 각 스펙(`specs/components/top-navigation.md` · `bottom-navigation.md` · `side-navigation.md` · `side-panel.md` · `pagination.md` · `table-pagination.md` · `floating-action-button.md`). HR 의 쓰는 자리만 적는다.
+모양 · 쓰는 규칙은 `DESIGN.md` 의 "화면 틀 · 이동" 절, Layout 의 "화면 틀" · "Safe Area" 절과 각 스펙(`specs/components/top-navigation.md` · `bottom-navigation.md` · `side-navigation.md` · `side-panel.md` · `pagination.md` · `table-pagination.md` · `floating-action-button.md`)입니다. 여기에는 HR 의 쓰는 자리만 적습니다.
 
-- **데스크톱(768 이상)** — 머리를 두지 않는다(빵부스러기를 걷었다 — 접기 버튼은 사이드바 머리로, 테마는 사이드바 바닥 계정 메뉴의 "화면 테마"로 — 기기 설정 · 라이트 · 다크, 2026-10-23 H-A3 A · H-A4 B). 사이드바는 inset 상자(모서리 12 · 그림자)를 걷고 흰 면 + 오른쪽 선, 1280 이상 240 · 768 ~ 1279 접힘 56. 휴가 · 업무처럼 하위가 있는 항목은 펼치기만 하고 하위가 지금이면 저절로 펼친다. 잎 항목도 링크라 키보드로 닿는다. 묶음 이름은 회사 이름("SKC")이 아니라 묶음의 성격으로 — 첫 묶음은 이름 없이, 둘째 묶음 "관리" 는 관리자에게만 보인다. 결재(구성원 휴가)는 "휴가" 안에 두고, 메뉴 이름 = 화면 제목이다(근무 일정 · 구성원 휴가 · 부서 배치 · 홈 — 2026-10-23 사용자 결정 H-A1 B · H-A2 A). 화면 제목은 본문 맨 위 h1(text-screen-title — 지금 30).
-- **폰(768 미만)** — 하단 탭 바가 없다. 상단 바는 ☰ + 화면 제목이고, ☰ 는 왼쪽 Side Panel(주 메뉴 — 제목 "그루 이음")을 연다 — 지금 묶음을 펼친 채, 항목을 누르면 이동하고 닫힌다.
-- **표** — 회비 · 휴가 현황 · 사용자 표 아래는 Table Pagination(줄 수 10 · 25 · 50 · 한글 · 줄이 줄면 마지막 범위로).
-- **떠 있는 버튼** — 대시보드 SpeedDial 은 걷는다 — 홈 편집은 제목 줄 "홈 편집"(폰 상단 바 "편집")이 1280 이상 Side Panel · 미만 Bottom Sheet 의 목록을 연다(2026-10-23 사용자 결정 HB2 A). 폰(768 미만)의 휴가 신청 화면은 오른쪽 아래 + 떠 있는 버튼(`specs/components/floating-action-button.md`)이 신청 폼을 연다 — 데스크톱은 제목 줄의 버튼이다(그루 이음 이관 — 제품에 있다).
-- **알림** — 알림 기능이 없어 상단 바 알림 점은 아직 없다. 생기면 같은 규칙(초록 점).
+- **데스크톱(768 이상)** — 머리와 빵부스러기를 두지 않습니다 — 위치는 사이드바의 지금 항목(부모 자동 펼침)과 본문 제목이 알립니다. 접기 버튼은 사이드바 머리에, 테마는 사이드바 바닥 계정 메뉴의 "화면 테마"(기기 설정 · 라이트 · 다크)에 둡니다. 사이드바는 흰 면 + 오른쪽 선이고(inset 상자 · 그림자 없음), 1280 이상 240 · 768 ~ 1279 접힘 56 입니다. 휴가 · 업무처럼 하위가 있는 항목은 펼치기만 하고, 하위가 지금 화면이면 저절로 펼칩니다. 잎 항목도 링크라 키보드로 닿습니다. 묶음 이름은 회사 이름("SKC")이 아니라 묶음의 성격입니다 — 첫 묶음은 이름 없이, 둘째 묶음 "관리" 는 관리자에게만 보입니다. 결재(구성원 휴가)는 "휴가" 안에 두고, 메뉴 이름 = 화면 제목입니다(근무 일정 · 구성원 휴가 · 부서 배치 · 홈). 화면 제목은 본문 맨 위 h1(`text-screen-title`)입니다.
+- **폰(768 미만)** — 하단 탭 바를 두지 않습니다. 상단 바는 ☰ + 화면 제목이고, ☰ 는 왼쪽 Side Panel(주 메뉴 — 제목 "그루 이음")을 엽니다 — 지금 화면의 묶음을 펼친 채 열리고, 항목을 누르면 이동하고 닫힙니다.
+- **표** — 회비 · 휴가 현황 · 사용자 표 아래는 Table Pagination(줄 수 10 · 25 · 50 · 한글 · 줄이 줄면 마지막 범위로)입니다.
+- **떠 있는 버튼** — 대시보드에 SpeedDial 을 두지 않습니다 — 홈 편집은 제목 줄 "홈 편집"(폰 상단 바 "편집")이 1280 이상 Side Panel · 미만 Bottom Sheet 의 목록을 엽니다. 폰(768 미만)의 휴가 신청 화면은 오른쪽 아래 + 떠 있는 버튼(`specs/components/floating-action-button.md`)이 신청 폼을 엽니다 — 데스크톱은 제목 줄의 버튼입니다.
+- **알림** — 상단 바 알림 점은 초록 점(`fg-brand`)입니다.
 
 ### 입력 — HR
 
-> 2026-10-09 — 모양 · 쓰는 규칙은 DESIGN.md 의 "입력 — Slider · Toggle · Input OTP · Color Swatch · Icon Picker" 절과 각 스펙(`specs/components/slider.md` · `toggle.md` · `input-otp.md` · `color-swatch.md` · `icon-picker.md`). HR 의 쓰는 자리만 적는다. 슬라이더 · 인증 코드 칸 · 아이콘 고르기는 HR 에 없다(2026-10-09 조사).
+모양 · 쓰는 규칙은 `DESIGN.md` 의 "입력 — Slider · Toggle · Input OTP · Color Swatch · Icon Picker" 절과 각 스펙(`specs/components/slider.md` · `toggle.md` · `input-otp.md` · `color-swatch.md` · `icon-picker.md`)입니다. 여기에는 HR 의 쓰는 자리만 적습니다.
 
-- **캘린더 보기 단추** — 일 · 주 · 월 · 년 · 일정 다섯이 붙은 아이콘 단추다(이름 "View by day …" 영어 · 고른 상태 0). Toggle Group 을 걷었으므로 Segmented Control 로 바꾼다 — 데스크톱 주 · 월 · 년 · 목록, 폰 월 · 목록. 일 보기는 걷는다 — 그날 패널 · 시트가 대신한다(2026-10-23 사용자 결정 HC10 A). 이름은 한국어로.
-- **테마 단추** — 이름 "Toggle theme"(영어) · 상태 0. 단추를 걷고 테마는 사이드바 바닥 계정 메뉴의 "화면 테마"(기기 설정 · 라이트 · 다크)로 간다(2026-10-23 사용자 결정 H-A3 A · H-A4 B) — 남는 동안 이름을 한국어로.
-- **부서 색** — 부서 폼의 색은 Select(점 16 + "파란색 · 녹색 · 노란색 · 보라색 · 빨간색" + 없음)이고 shadcn chart-1 ~ chart-5 이름을 저장한다. "노란색" 이 실제 주황이고 점이 흰 바탕 2.52 · 2.55 다. HR 적용 때 Color Swatch(v110 10색 · 색 이름)로 옮기고, 저장 값은 차트 색 이름에 잇는다(위 "Chart color").
+- **캘린더 보기** — Segmented Control 입니다 — 데스크톱 주 · 월 · 년 · 목록, 폰 월 · 목록. 일 보기는 두지 않습니다 — 그날 패널 · 시트가 대신합니다. 이름은 한국어입니다.
+- **테마** — 따로 단추를 두지 않고 사이드바 바닥 계정 메뉴의 "화면 테마"(기기 설정 · 라이트 · 다크)에서 고릅니다.
+- **부서 색** — 부서 폼의 색은 Color Swatch(차트 색 10색 · 색 이름)이고, 저장 값은 차트 색 이름에 잇습니다(위 "Chart color").
 
 ### 펼치고 접기 · 나누기 — HR
 
-> 2026-10-10 — 모양 · 쓰는 규칙은 DESIGN.md 의 "펼치고 접기 · 나누기 — Accordion · Collapsible · Tree View · Resizable · Scroll Area · Scroll Auto Hide" 절과 각 스펙(`specs/components/accordion.md` · `collapsible.md` · `tree-view.md` · `resizable.md` · `scroll-area.md` · `scroll-auto-hide.md`). HR 의 쓰는 자리만 적는다. 아코디언 · 숨는 머리는 HR 에 없다(2026-10-09 조사).
+모양 · 쓰는 규칙은 `DESIGN.md` 의 "펼치고 접기 · 나누기 — Accordion · Collapsible · Tree View · Resizable · Scroll Area · Scroll Auto Hide" 절과 각 스펙(`specs/components/accordion.md` · `collapsible.md` · `tree-view.md` · `resizable.md` · `scroll-area.md` · `scroll-auto-hide.md`)입니다. 여기에는 HR 의 쓰는 자리만 적습니다.
 
-- **부서 나무** — 관리 > 회사 · 부서 사용자의 부서 나무는 Tree View 다. 잎 17개도 키보드로 닿고(`Tab` 하나 · 화살표), 부모 줄은 줄 전체가 누르는 자리라 누르면 고르면서 펴고 접으며(지금처럼 — 꺾쇠는 표시만, 16D), 추가 · 수정 · 삭제는 패널 머리의 ⋮ 하나("{부서} 더보기")가 고른 부서에 건다. 노드마다의 `h3` · 단추 안 단추 · 이름 말줄임을 걷는다. 부서 사용자 화면은 늘 펼친 나무 — 꺾쇠 · `aria-expanded` 없이 들임만.
-- **관리 화면 나누기** — 역할 · 사용자 · 회사 · 부서 사용자(768 이상)는 Resizable — 선 1px + 가운데 손잡이 표시 · 누르는 폭 16 · 이름 "목록 너비" · 5% · 목록 20 ~ 40%(회사 · 부서 사용자도 오른쪽 60% 아래로 줄지 않는다) · 화면마다 폭 기억 · 한 번 누르면 25 ↔ 40.
-- **홈 위젯** — 자유 배치 · 크기 바꾸기를 걷는다(모서리 손잡이 · ⋮ "크기" · `react-grid-layout` 을 두지 않는다). 자리는 넓음 · 좁음 규칙이 정하고, 사용자는 보이기 · 차례만 고른다(2026-10-23 사용자 결정 HB1 C).
-- **업무 보고 필터** — "필터 2" outline 단추(이름 "필터2" · 상태 0)와 Collapsible 조건 카드를 걷고 칩 필터 바로 거른다 — 그루 담다 가계부 필터 바와 같은 문법(2026-10-23 사용자 결정 HC13 B, 아래 Chip "캘린더 · 업무 보고 필터").
-- **사내 규정 카드** — 4줄 자르기(`line-clamp-4` 16곳)를 걷고 줄을 바꿔 다 보인다. 4열에서 한 줄의 카드 높이는 그 줄에서 가장 긴 카드에 맞춘다. "지급 시기" 의 같은 문장이 두 번 찍히는 것도 고친다.
-- **스크롤** — 전역 4px + 회색 바탕을 6px 알약 한 벌로, Radix ScrollArea 8곳(옅은 막대 1.11)은 기본 스크롤로. 달력 일정 · 일 · 주 상자는 초점 가는 것이 없어 이름("10월 9일 일정")을 단다. 휴가 신청 · 승인 · 정책 같은 대화상자 안 상자는 `overscroll-behavior: contain`.
-- **사이드바 메뉴 나무** — 같은 옛 나무 부품을 쓰지만 Side Navigation 이다(위 "화면 틀 · 이동 — HR") — Tree View 가 아니다.
+- **부서 나무** — 관리 > 회사 · 부서 사용자의 부서 나무는 Tree View 입니다. 잎도 키보드로 닿고(`Tab` 하나 · 화살표), 부모 줄은 줄 전체가 누르는 자리라 누르면 고르면서 펴고 접습니다(꺾쇠는 표시만). 추가 · 수정 · 삭제는 패널 머리의 ⋮ 하나("{부서} 더보기")가 고른 부서에 겁니다. 노드마다 `h3` 를 두지 않고, 단추 안에 단추를 넣지 않고, 이름을 말줄임하지 않습니다. 부서 사용자 화면은 늘 펼친 나무입니다 — 꺾쇠 · `aria-expanded` 없이 들임만 둡니다.
+- **관리 화면 나누기** — 역할 · 사용자 · 회사 · 부서 사용자(768 이상)는 Resizable 입니다 — 선 1px + 가운데 손잡이 표시 · 누르는 폭 16 · 이름 "목록 너비" · 5% · 목록 20 ~ 40%(회사 · 부서 사용자도 오른쪽 60% 아래로 줄지 않습니다) · 화면마다 폭 기억 · 한 번 누르면 25 ↔ 40.
+- **홈 위젯** — 자유 배치 · 크기 바꾸기를 두지 않습니다(모서리 손잡이 · ⋮ "크기" · `react-grid-layout` 없음). 자리는 넓음 · 좁음 규칙이 정하고, 사용자는 보이기 · 차례만 고릅니다.
+- **업무 보고 필터** — 칩 필터 바로 거릅니다 — 필터 단추와 Collapsible 조건 카드를 두지 않습니다. 그루 담다 가계부 필터 바와 같은 문법입니다(아래 Chip "캘린더 · 업무 보고 필터").
+- **사내 규정 카드** — 줄을 자르지 않고 줄을 바꿔 다 보입니다 — 잘린 글을 "더 보기" 로 펼치지 않습니다. 4열에서 한 줄의 카드 높이는 그 줄에서 가장 긴 카드에 맞춥니다.
+- **스크롤** — 스크롤 막대는 6px 알약 한 벌이고, 그 밖에는 기본 스크롤입니다(Radix ScrollArea 를 쓰지 않습니다). 달력 일정 · 일 · 주 상자는 초점 가는 것이 없어 이름("10월 9일 일정")을 답니다. 휴가 신청 · 승인 · 정책 같은 대화상자 안 상자는 `overscroll-behavior: contain` 입니다.
+- **사이드바 메뉴 나무** — Side Navigation 입니다(위 "화면 틀 · 이동 — HR") — Tree View 가 아닙니다.
 
 ### 마무리 — HR
 
-> 2026-10-15 — 모양 · 쓰는 규칙은 DESIGN.md 의 "마무리 — Quantity Picker · Attachment Input · Footer" 절과 각 스펙(`specs/components/quantity-picker.md` · `attachment-input.md` · `footer.md` · `select-box.md` · `avatar.md`). HR 의 쓰는 자리만 적는다. HR 웹에는 바닥 · 파일 첨부가 없다(2026-10-15 조사).
-
-- **휴가 정책의 횟수** — 승인 필요 횟수(0 ~ 고를 수 있는 승인자 수) · 반복 간격(1 ~ 100) · 최대 부여 횟수는 Quantity Picker 다(웹 폼 responsive). 지금은 상한 없는 숫자 칸이고, 반복 간격은 비우면 1 로 돌아와 "1" 뒤에 이어 쳐진다. 승인 필요 횟수의 최대를 승인자 수로 걸면 휴가 신청 화면이 따로 줄여 맞출 필요가 없다.
-- **부여 시간** — 정책 · 휴가 신청 · 휴가 부여 세 화면이 복사한 일 · 시간 · 분 칸을 공용 부품 하나로 — 시간은 Quantity Picker 0 ~ 7("n시간"), 분(0 · 30)은 Segmented Control, 일은 흔한 값이 열 단계 안쪽인지 보고 정한다(멀면 숫자 칸).
-- **업무 보고 표의 소요시간** — 줄 수정 중 표 칸은 Quantity Picker small 36 이다 — 가장 긴 값("24h")의 폭을 잡아 열이 늘어난다.
-- **역할 고르기** — 관리 > 역할 및 권한 > 사용자 탭은 Select Box 여럿(이름 + 역할 설명) + 아래 "저장" 한 번, 폰 · 데스크톱 같은 모양이다(10A). 데스크톱 팝오버(cmdk 검색 · 누를 때마다 사용자 전체 저장)와 폰 시트(검색 · 체크 카드 · "완료") 두 벌을 걷고, cmdk 의존과 고아 번역 키 `authority.noRoleFound` 를 지운다. 같은 시트 모양의 "권한 관리" 는 그 차례에 맞춘다.
-- **프로필 사진** — 사용자 수정 대화상자의 사진은 Avatar 108 + 늘 보이는 "사진 바꾸기" · "사진 지우기"다(6A). 마우스를 올려야 나타나는 덮개(키보드 · 터치 0)와 실패 때의 `github.com/shadcn.png` 대체 그림을 걷고, 올리는 중은 딤 + 값 있는 원 24, 실패는 오류 글 하나(해요체)다.
-- **휴가 증빙 서류** — 정책에 제출 시점 타입만 있고 올리는 화면 · API 가 없다. 생기면 Attachment Input 타일이다.
-- **바닥 · 저작권** — HR 웹 화면에는 바닥을 두지 않는다. HR 문서 사이트(VitePress)의 저작권은 "© {해} 그루" 로 — 지금 2025 에 멈춰 있다.
-
-### Pagination / Drawer / Spinner / Stepper (v67 추가 batch · 기록 — 기준은 각 컴포넌트 스펙과 위 절)
-
-HR(B2B) 4 컴포넌트 사용 패턴 — DESIGN.md 공통 spec 외 brand-specific 안내.
-
-#### Pagination — HR
-
-> 2026-10-04 다시 정했다 — 표 아래는 Table Pagination, 위 "화면 틀 · 이동 — HR".
-
-#### Drawer — HR
-
-아래에서 올라오는 시트는 2026-10-02 Bottom Sheet 로 바뀌었다 — 위 "시트 · 대화상자 · 확인창 · 팝오버" 절. 옆 패널은 Side Panel(2026-10-04) — HR 폰의 주 메뉴 서랍(왼쪽)이 쓴다.
-
-#### Spinner / Progress — HR
-
-> 2026-10-03 걷었다 — 위 "기다림 — HR" 절(Progress Circle · Progress).
-
-#### Stepper — HR
-- **결재 단계 horizontal**: 신청 → 1차 결재 → 2차 결재 → 완료. sequential, 이전 단계 비완료 시 진입 차단.
-- **휴가 신청 form 3 step**: 1) 사유·기간 → 2) 결재라인 → 3) 첨부 검토. desktop horizontal, 모바일 자동 vertical 전환.
-- **평가 작성 stepper**: 5단계 — 자기평가 → 동료평가(3) → 관리자평가. step 사이 connector progress 채우기 visual.
-
-### Navigation batch (v68 추가 · 기록 — 기준은 각 컴포넌트 스펙과 위 "화면 틀 · 이동" 절)
-
-HR(B2B) 5 navigation 컴포넌트 — DESIGN.md 공통 spec 외 brand-specific 안내. 데이터 그리드 + 다단계 페이지 위계 깊은 application 톤.
-
-#### Breadcrumb — HR
-
-> 2026-10-04 걷었다 — SEED 에 없고, 경로 19개가 모두 사이드바 항목이라 같은 정보를 두 번 보였다. 위치는 사이드바의 지금 항목(부모 자동 펼침)과 본문 제목이 알린다.
-
-#### Sidebar — HR
-
-> 2026-10-04 다시 정했다 — Side Navigation, 위 "화면 틀 · 이동 — HR".
-
-#### Navigation Menu — HR
-
-> 2026-10-04 걷었다 — 쓰는 곳이 없다.
-
-#### Menubar — HR
-
-> 2026-10-02 걷었다 — 쓰는 곳이 없다("메뉴 · 메뉴 시트 · 도움말 말풍선 · 툴팁" 절).
-
-#### Command (Cmd+K) — HR
-
-> 2026-10-15 걷었다 — 쓰는 곳이 없다(DESIGN.md "### Command" 절).
-
-### Input batch (v69 추가 · 기록 — 기준은 각 컴포넌트 스펙과 위 "입력" 절)
-
-HR(B2B) 5 input 컴포넌트 — 데이터 그리드 + form 입력 위주.
-
-#### Combobox — HR
-
-> 2026-10-15 걷었다 — 칸에 바로 치는 콤보박스를 두지 않는다(사람 고르기는 Searchable List, 부서는 Tree View 다).
-
-#### Slider — HR
-
-> 2026-10-09 다시 정했다 — 위 "입력 — HR". HR 에는 슬라이더가 없다(2026-10-09 조사).
-
-#### Toggle — HR
-
-> 2026-10-09 다시 정했다 — 켜고 끄는 아이콘 단추(위 "입력 — HR"). 보기 바꾸기는 Segmented Control, 결재 상태 거르기는 Chip 이다.
-
-#### Toggle Group — HR
-
-> 2026-10-09 걷었다 — 하나 고르기 2 ~ 4칸은 Segmented Control, 여럿 · 거르기는 Chip, 5개 이상은 Select(위 "입력 — HR" 의 캘린더 보기 단추).
-
-#### Input OTP — HR
-
-> 2026-10-09 다시 정했다 — Input 한 칸(DESIGN.md 의 "입력" 절). HR 에는 인증 코드 칸이 없다.
-
-### Disclosure batch (v70 추가 · 기록 — 기준은 각 컴포넌트 스펙과 위 "펼치고 접기 · 나누기" 절)
-
-HR(B2B) 5 disclosure/overlay 컴포넌트.
-
-#### Accordion — HR
-
-> 2026-10-10 다시 정했다 — 위 "펼치고 접기 · 나누기 — HR". HR 에는 아코디언이 없다(2026-10-09 조사) — 결재 상세 · 권한 · 평가 묶음의 옛 쓰임은 제품에 없다.
-
-#### Collapsible — HR
-
-> 2026-10-10 다시 정했다 — 트리거는 Accordion 항목 하나(위 "펼치고 접기 · 나누기 — HR" 의 업무 보고 필터 — 2026-10-23 HC13 B 로 업무 보고 필터가 칩 필터 바가 되어 이 대상은 없다). 잘린 글을 "더 보기" 로 펼치지 않는다 — 자르지 않는다.
-
-#### Hover Card — HR
-
-> 2026-10-02 걷었다 — 쓰는 곳이 없다("메뉴 · 메뉴 시트 · 도움말 말풍선 · 툴팁" 절).
-
-#### Context Menu — HR
-
-> 2026-10-02 걷었다 — 쓰는 곳이 없다("메뉴 · 메뉴 시트 · 도움말 말풍선 · 툴팁" 절).
-
-#### Alert Dialog — HR
-2026-10-02 SEED Alert Dialog 로 다시 정했다 — 위 "시트 · 대화상자 · 확인창 · 팝오버" 절.
-
-### Data batch (v71 추가 · 기록 — 기준은 각 컴포넌트 스펙과 위 절)
-
-HR(B2B) 5 data display 컴포넌트 — 데이터 그리드 핵심 application 톤.
-
-#### Table — HR
-
-> 2026-10-08 — 공유 DESIGN.md 의 Table 절과 `specs/components/table.md`. compact · 줄무늬 · 표 위 툴바(열 보이기 · 열 크기 조절 · 내보내기)는 걷었다 — 줄 높이는 45 하나(썸네일 · 두 줄이면 72)다.
-
-- HR 표 10개(사용자 · 휴가 내역 · 회비 · 신청 내역 · 업무 보고 · 업무 코드 · 위젯 · 대화상자 안 표)를 머리 41 · 줄 45 · 숫자 오른쪽 · 정렬 ↑↓ · 줄 끝 ⋮("{줄} 더보기")로. 768 미만은 List 줄(표마다 제목 · 설명 · 오른쪽 값을 정한다).
-- 고르는 표(업무 보고 · 공휴일 일괄 생성)는 첫 열 Checkbox 24 + 일괄 작업 바(`bg-brand-weak` — 바 안 동작은 모두 ghost neutral, 지우기의 빨강은 확인창에서, 2026-10-17 01T-033 A), 표 아래 Table Pagination(표 아래 12 는 넘김 줄이 갖는다 — 2026-10-17 03-D 결정 5 B).
-- 옛 Data Table — HR(결재 큐 · 직원 검색 13열 · 평가 history)은 Table 로 합쳤다 — 열 거르기 · 표 위 검색 · 내보내기 줄은 이번에 정하지 않았다.
-
-#### Carousel — HR
-
-> 2026-10-04 걷었다 — 그림 여러 장은 공유 DESIGN.md 의 "이미지 — Image Frame · Aspect Ratio · Logo Tile" 절(끝이 보이는 가로 줄 + 장수 글). 점 · 화살표 · 자동 넘김은 두지 않는다.
-
-#### Scroll Area — HR
-
-> 2026-10-10 다시 정했다 — 기본 스크롤 + 전역 한 벌(위 "펼치고 접기 · 나누기 — HR" 의 스크롤). Radix ScrollArea 8곳 · 전역 4px + 회색 바탕을 걷는다.
-
-#### Resizable — HR
-
-> 2026-10-10 다시 정했다 — 관리 화면 나누기(위 "펼치고 접기 · 나누기 — HR" — 대시보드 위젯 크기는 2026-10-23 HB1 C 로 걷었다). 3단 나누기 · 위아래 나누기는 쓰는 곳이 없다.
-
-### Extras batch (v72 추가 · 기록 — 기준은 각 컴포넌트 스펙과 위 절)
-
-HR(B2B) 5 추가 컴포넌트.
-
-#### Sonner — HR
-
-> 2026-10-02 걷었다 — Snackbar("알림 메시지 — Snackbar · Callout · Page Banner · Result Section" 절).
-
-#### Aspect Ratio — HR
-- **16:9** 직원 프로필 cover image
-- **3:1** 부서 banner
-- **4:3** 결재 첨부 이미지 preview (legacy 비율)
-- 사용 빈도 낮음 — application 톤이라 image-heavy 부적합.
-
-#### Chart — HR
-- **bar / stacked bar**: 부서별 직원 수, 월별 결재 수, 평가 점수 분포
-- **line**: KPI 추이 (월별 출근율, 분기별 응답시간)
-- **pie / donut**: 결재 처리 시간 분포 (1시간 이내 / 하루 / 일주일 등)
-- chart palette HR primary와 충돌 회피 — chart-green 비활성, chart-blue 우선
-- legend interactive 적극 — 시리즈 토글로 데이터 비교
-
-#### Date Range Picker — HR
-
-> 2026-10-03 걷었다 — 기간은 Date Picker 기간("날짜 · 시각 고르기" 절).
-
-#### Time Picker — HR
-
-> 2026-10-03 걷었다 — 시각은 Time Picker("날짜 · 시각 고르기" 절, 오전·오후 12시간 휠).
-
-### Extras-2 batch (v73 추가 · 기록 — 기준은 각 컴포넌트 스펙과 위 절)
-
-HR(B2B) 5 추가 shadcn 누락 컴포넌트.
-
-#### Banner — HR
-
-> 2026-10-02 걷었다 — 화면 안 안내는 Callout, 페이지 맨 위 띠는 Page Banner("알림 메시지 — Snackbar · Callout · Page Banner · Result Section" 절).
-
-#### Chip — HR
-공통 정의는 `DESIGN.md` 의 Chip 절, 원본은 `specs/components/chip.md`(2026-10-02 SEED Chip). 고른 칩은 중립색이라 브랜드와 관계없이 같다.
-- **2 ~ 4개 폼 값** — 지금 Select 인 16칸(분 0 · 30 · 공지 유형 · 유연근무시간 · 공휴일 구분 · 양력 · 음력 …)은 하나 고르는 칩으로(폼은 기본 medium 36 — small 32 는 데스크톱의 촘촘한 필터 · 표 위 줄).
-- **결재라인 · 배정된 역할** — 입력값 칩("홍길동" + × — 이름 "홍길동 지우기").
-- **캘린더 · 업무 보고 필터** — 차원마다 필터 칩(사용자 ▾ · 유형 ▾), 걸린 조건은 짙은 채움 + 값 요약, 맨 앞 지우기.
-- 예 / 아니오 하나는 Checkbox, 설명이 붙는 선택은 Select Box.
-
-#### Popover — HR
-2026-10-02 SEED Popover 로 다시 정했다 — 위 "시트 · 대화상자 · 확인창 · 팝오버" 절.
-
-#### File Upload — HR
-
-> 2026-10-15 걷었다 — 사진 · 파일 첨부는 Attachment Input(위 "마무리 — HR" · `specs/components/attachment-input.md`). 옛 줄의 평가 첨부 · 결재 첨부(5개 · 50MB)는 코드 · 서버에 없는 자리였다 — HR 의 업로드 API 는 프로필 사진 하나뿐이다.
-
-#### Treeview — HR
-
-> 2026-10-10 다시 정했다 — 부서 나무는 Tree View(위 "펼치고 접기 · 나누기 — HR"). 직원까지 4단계 · 검색 동기화 · 권한 체크 나무는 쓰는 곳이 없다.
+모양 · 쓰는 규칙은 `DESIGN.md` 의 "마무리 — Quantity Picker · Attachment Input · Footer" 절과 각 스펙(`specs/components/quantity-picker.md` · `attachment-input.md` · `footer.md` · `select-box.md` · `avatar.md`)입니다. 여기에는 HR 의 쓰는 자리만 적습니다.
+
+- **휴가 정책의 횟수** — 승인 필요 횟수(0 ~ 고를 수 있는 승인자 수) · 반복 간격(1 ~ 100) · 최대 부여 횟수는 Quantity Picker 입니다(웹 폼 responsive). 승인 필요 횟수의 최대를 승인자 수로 걸어, 휴가 신청 화면이 따로 줄여 맞추지 않게 합니다.
+- **부여 시간** — 정책 · 휴가 신청 · 휴가 부여 세 화면의 일 · 시간 · 분 칸은 공용 부품 하나입니다 — 시간은 Quantity Picker 0 ~ 7("n시간"), 분(0 · 30)은 Segmented Control, 일은 흔한 값이 열 단계 안쪽인지 보고 정합니다(멀면 숫자 칸).
+- **업무 보고 표의 소요시간** — 줄 수정 중 표 칸은 Quantity Picker small 36 입니다 — 가장 긴 값("24h")의 폭을 잡아 열이 늘어납니다.
+- **역할 고르기** — 관리 > 역할 및 권한 > 사용자 탭은 Select Box 여럿(이름 + 역할 설명) + 아래 "저장" 한 번이고, 폰 · 데스크톱이 같은 모양입니다. 검색 팝오버 · 누를 때마다 저장하는 방식은 쓰지 않습니다. 같은 시트 모양의 "권한 관리" 도 이 모양을 따릅니다.
+- **프로필 사진** — 사용자 수정 대화상자의 사진은 Avatar 108 + 늘 보이는 "사진 바꾸기" · "사진 지우기" 입니다. 마우스를 올려야 나타나는 덮개와 외부 대체 그림을 쓰지 않고, 올리는 중은 딤 + 값 있는 원 24, 실패는 오류 글 하나(해요체)입니다.
+- **휴가 증빙 서류** — 증빙 서류를 올리는 자리는 Attachment Input 타일입니다.
+- **바닥 · 저작권** — HR 웹 화면에는 바닥을 두지 않습니다. HR 문서 사이트(VitePress)의 저작권은 "© {해} 그루" 입니다.
+
+### Chip — HR
+
+공통 정의는 `DESIGN.md` 의 Chip 절, 원본은 `specs/components/chip.md` 입니다. 고른 칩은 중립색이라 브랜드와 관계없이 같습니다.
+
+- **2 ~ 4개 폼 값** — 분 0 · 30 · 공지 유형 · 유연근무시간 · 공휴일 구분 · 양력 · 음력처럼 선택지가 2 ~ 4개인 폼 값은 Select 가 아니라 하나 고르는 칩입니다(폼은 기본 medium 36 — small 32 는 데스크톱의 촘촘한 필터 · 표 위 줄).
+- **결재라인 · 배정된 역할** — 입력값 칩("홍길동" + × — 이름 "홍길동 지우기")입니다.
+- **캘린더 · 업무 보고 필터** — 차원마다 필터 칩(사용자 ▾ · 유형 ▾)이고, 걸린 조건은 짙은 채움 + 값 요약, 맨 앞에 지우기를 둡니다. 결재 상태 거르기도 Chip 입니다.
+- 예 / 아니오 하나는 Checkbox, 설명이 붙는 선택은 Select Box 입니다.
 
 ## Deprecated aliases
 
