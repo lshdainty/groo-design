@@ -1,7 +1,7 @@
 // Scroll Auto Hide 페이지의 그림 — specs/components/scroll-auto-hide.md 의 `[그림: …](../../site/components/specs/scroll-auto-hide.tsx#<id>)` 자리.
 // 숨는 머리의 자리 · 따라가기 · 스냅(비율 · 시간 · 곡선) · 바탕 · z 는 scroll-auto-hide.yaml 을 푼 값(autoHideLook — collapse-scroll)으로,
 // 상단 바 · 탭 바는 top-navigation · bottom-navigation.yaml(nav-view), Line Tabs 는 tabs.yaml 로 그린다. 원장(머리 · 거래 40줄)은 지어낸 것이다.
-// 원장 머리는 위쪽(총액 · 비교 줄 · 소비 요약)만 숨고 달 이동 줄 · 주 달력은 남는다(2026-11-06 사용자 지시 — scroll-auto-hide.md "원장 머리"). 담다 웹 shared/ui/groo/ledger.tsx 의 Bar · Pin(Head · Keep) 짜임과 같다.
+// 원장 머리는 위쪽(총액 · 비교 줄 · 소비 요약)만 숨고 달 이동 줄 · 주 달력은 남는다(scroll-auto-hide.md "원장 머리"). 담다 웹 shared/ui/groo/ledger.tsx 의 Bar · Pin(Head · Keep) 짜임과 같다.
 // 머리 높이 · 목록이 보이는 높이는 글 길이 · 폭에 따라 달라 브라우저에서 잰다.
 import type { CSSProperties, ReactNode } from 'react';
 import { Figure, Panel, MARK_LINE } from '../foundations/ui';
@@ -30,7 +30,7 @@ function LedgerPhone({ mode = 'auto', frozen, scale = 0.5, h = 760, reduce, filt
     </Phone>
   );
 }
-// 필터를 걸면 달 줄 아래 주 달력 자리에 서는 필터 칩 줄 — 남는 부분이다(숨지 않는다, 2026-11-07 담다 마무리 판단)
+// 필터를 걸면 달 줄 아래 주 달력 자리에 서는 필터 칩 줄 — 남는 부분이다(숨지 않는다)
 function FilterHead({ mode = 'auto' }: { mode?: Mode }) {
   const chip = chipLook();
   return (
@@ -90,8 +90,8 @@ const Anatomy: Fig = ({ caption }) => {
           items={[
             ['ⓐ', 'Scroll Container(분홍 점선) — 상단 바 · 탭 아래부터(쓰는 쪽)'],
             ['ⓑ', `Root(파란 점선) — ${a.position} · top ${a.top} + 위에 붙은 달 줄 높이 · z ${a.z}`],
-            ['', `translate3d 로 위로 옮겨 숨는다 — 높이 그대로(그림은 40 숨음) · 바탕 bg-layer-default. 숨는 거리는 남는 부분(주 달력)의 윗변까지 — 주 달력은 달 줄 바로 아래에서 멈춘다`],
-            ['ⓒ', 'Content — 거래 목록. 머리가 숨으면 화면을 다 쓴다'],
+            ['', `translate3d 로 위로 옮겨 숨습니다 — 높이 그대로(그림은 40 숨음) · 바탕 bg-layer-default. 숨는 거리는 남는 부분(주 달력)의 윗변까지입니다 — 주 달력은 달 줄 바로 아래에서 멈춥니다`],
+            ['ⓒ', 'Content — 거래 목록. 머리가 숨으면 화면을 다 씁니다'],
           ]}
         />
       </div>
@@ -103,9 +103,9 @@ const Anatomy: Fig = ({ caption }) => {
 const Follow: Fig = ({ caption }) => {
   const a = AH();
   const shots: [string, AHFrozen, string][] = [
-    ['900 내림', { scroll: 900, hidden: 'all' }, '숨는 부분이 다 숨었다 — 주 달력은 남는다'],
-    ['40 올림 — 스크롤 중', { scroll: 860, hidden: { fromAll: 40 } }, '올린 40 만큼 드러났다'],
-    ['멈춤 — 스냅', { scroll: 860, hidden: 0 }, `${a.threshold * 100}% 아래만 숨어 있어 ${a.snap.duration} 에 다 드러난다`],
+    ['900 내림', { scroll: 900, hidden: 'all' }, '숨는 부분이 다 숨었습니다 — 주 달력은 남습니다'],
+    ['40 올림 — 스크롤 중', { scroll: 860, hidden: { fromAll: 40 } }, '올린 40 만큼 드러났습니다'],
+    ['멈춤 — 스냅', { scroll: 860, hidden: 0 }, `${a.threshold * 100}% 아래만 숨어 있어 ${a.snap.duration} 에 다 드러납니다`],
   ];
   return (
     <Panel caption={caption}>
@@ -119,7 +119,7 @@ const Follow: Fig = ({ caption }) => {
           ))}
         </div>
         <Cap w={640}>
-          <MeasuredText target="ah-follow-head" template={`숨는 부분 {h}px — 스크롤하는 동안 거리를 1:1 로 따라간다(시간 · 곡선 없음). 스크롤이 끝나면 머리 높이의 ${a.threshold * 100}% 를 기준으로 다 숨거나 다 드러난다(${a.snap.duration} ${a.snap.easing}). 아래 탭 바는 제 규칙으로 줄어든다(따로)`} />
+          <MeasuredText target="ah-follow-head" template={`숨는 부분 {h}px — 스크롤하는 동안 거리를 1:1 로 따라갑니다(시간 · 곡선 없음). 스크롤이 끝나면 머리 높이의 ${a.threshold * 100}% 를 기준으로 다 숨거나 다 드러납니다(${a.snap.duration} ${a.snap.easing}). 아래 탭 바는 제 규칙으로 줄어듭니다(따로)`} />
         </Cap>
       </div>
     </Panel>
@@ -133,11 +133,11 @@ const Reduced: Fig = ({ caption }) => (
       <div className="flex flex-wrap items-start justify-center gap-4">
         <div className="flex flex-col items-center gap-2">
           <LedgerPhone frozen={{ scroll: 900, hidden: 0 }} reduce scale={0.45} />
-          <Cap strong="모션 줄이기">자동 숨김을 끈다 — 900 내려도 머리는 늘 보이고, 목록이 그 아래에서 스크롤한다</Cap>
+          <Cap strong="모션 줄이기">자동 숨김을 끕니다 — 900 내려도 머리는 늘 보이고, 목록이 그 아래에서 스크롤합니다</Cap>
         </div>
         <div className="flex flex-col items-center gap-2">
           <LedgerPhone frozen={{ scroll: 900, hidden: 0, focusSummary: true }} scale={0.45} />
-          <Cap strong="숨은 머리로 Tab">"소비 요약" 에 초점이 오면 바로 다 드러낸다 — 보이지 않는 단추에 초점이 머물지 않는다</Cap>
+          <Cap strong="숨은 머리로 Tab">"소비 요약" 에 초점이 오면 바로 다 드러냅니다 — 보이지 않는 단추에 초점이 머물지 않습니다</Cap>
         </div>
       </div>
     </div>
@@ -153,16 +153,16 @@ const PlaceGuide: Fig = ({ caption }) => {
         <div className="flex flex-col items-center gap-2">
           <LedgerPhone frozen={{ scroll: 0, hidden: 0 }} scale={0.45} measureId="ah-place-head" decor={<span aria-hidden style={{ ...bracket, top: 184, height: 72 }} />} />
           <Cap strong="원장 머리 — 맨 위">
-            <MeasuredText target="ah-place-head" template="총액 · 지난달 비교 줄 · 소비 요약({h}px, 괄호)만 숨는 부분이다 — 달 이동 줄 · 주 달력은 남는다" />
+            <MeasuredText target="ah-place-head" template="총액 · 지난달 비교 줄 · 소비 요약({h}px, 괄호)만 숨는 부분입니다 — 달 이동 줄 · 주 달력은 남습니다" />
           </Cap>
         </div>
         <div className="flex flex-col items-center gap-2">
           <LedgerPhone frozen={{ scroll: 900, hidden: 'all' }} scale={0.45} tabSize="compact" />
-          <Cap strong="내렸을 때">숨는 부분만 올라가고, 주 달력은 달 줄 바로 아래에서 멈춘다(제품은 고른 날이 맨 위 날짜 묶음을 따라간다 — 그림은 멈춘 한 장)</Cap>
+          <Cap strong="내렸을 때">숨는 부분만 올라가고, 주 달력은 달 줄 바로 아래에서 멈춥니다(제품은 고른 날이 맨 위 날짜 묶음을 따라갑니다 — 그림은 멈춘 한 장)</Cap>
         </div>
         <div className="flex flex-col items-center gap-2">
           <LedgerPhone frozen={{ scroll: 900, hidden: 'all' }} scale={0.45} tabSize="compact" filterKeep={<FilterHead />} />
-          <Cap strong="필터를 걸었을 때">달 줄(필터 · 추가 단추) 아래 필터 칩 줄이 남는다 — 숨는 부분이 없다</Cap>
+          <Cap strong="필터를 걸었을 때">달 줄(필터 · 추가 단추) 아래 필터 칩 줄이 남습니다 — 숨는 부분이 없습니다</Cap>
         </div>
       </div>
     </Panel>
@@ -172,10 +172,10 @@ const PlaceGuide: Fig = ({ caption }) => {
 const KeepGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex w-full flex-col gap-4">
-      <Verdict ok note="상단 바(가계부)와 Line Tabs 는 그 자리 — 숨는 것은 원장 머리의 위쪽(총액 · 소비 요약)뿐이고 달 줄 · 주 달력은 남는다. 하단 탭 바는 Bottom Navigation 규칙으로 줄어든다(이 부품이 아니다)">
+      <Verdict ok note="상단 바(가계부)와 Line Tabs 는 그 자리 — 숨는 것은 원장 머리의 위쪽(총액 · 소비 요약)뿐이고 달 줄 · 주 달력은 남습니다. 하단 탭 바는 Bottom Navigation 규칙으로 줄어듭니다(이 부품이 아닙니다)">
         <LedgerPhone frozen={{ scroll: 900, hidden: 'all' }} scale={0.5} tabSize="compact" />
       </Verdict>
-      <Verdict ok={false} note="상단 바 · Line Tabs 까지 숨기기 — 화면 이름과 묶음 이동이 사라진다(시트 · 대화상자 머리도 숨기지 않는다)">
+      <Verdict ok={false} note="상단 바 · Line Tabs 까지 숨기기 — 화면 이름과 묶음 이동이 사라집니다(시트 · 대화상자 머리도 숨기지 않습니다)">
         <LedgerPhone frozen={{ scroll: 900, hidden: 'all' }} scale={0.5} hideBars tabSize="compact" />
       </Verdict>
     </div>
@@ -191,7 +191,7 @@ const ExLedger: Fig = ({ caption }) => (
   </CodePreview>
 );
 
-// 거르는 줄 — 거래 검색(40) · 카드 혜택(140). 600 내림 → 다 숨음, 조금 올리고 손을 떼면 50% 를 기준으로 다 숨거나 다 드러난다(Q-017-5 C)
+// 거르는 줄 — 거래 검색(SEARCH_ROW_H) · 카드 혜택(CARD_ROW_H). 600 내림 → 다 숨음, 조금 올리고 손을 떼면 50% 를 기준으로 다 숨거나 다 드러난다
 function Frame({ cap, children }: { cap: string; children: ReactNode }) {
   return (
     <div className="flex w-[180px] shrink-0 flex-col items-center gap-2">
@@ -211,10 +211,10 @@ const FilterGuide: Fig = ({ caption }) => {
             <Frame cap={`거래 검색 맨 위 — 줄 ${SEARCH_ROW_H}`}>
               <SearchPhone scale={sc} h={H} />
             </Frame>
-            <Frame cap="600 내림 — 줄이 다 숨는다">
+            <Frame cap="600 내림 — 줄이 다 숨습니다">
               <SearchPhone scale={sc} h={H} scroll={600} hidden={SEARCH_ROW_H} />
             </Frame>
-            <Frame cap={`30 올림 — ${Math.round((30 / SEARCH_ROW_H) * 100)}% 나옴 · 손을 떼면 다 드러난다`}>
+            <Frame cap={`30 올림 — ${Math.round((30 / SEARCH_ROW_H) * 100)}% 나옴 · 손을 떼면 다 드러납니다`}>
               <SearchPhone scale={sc} h={H} scroll={570} hidden={0} />
             </Frame>
           </div>
@@ -224,10 +224,10 @@ const FilterGuide: Fig = ({ caption }) => {
             <Frame cap={`카드 혜택 맨 위 — 줄 ${CARD_ROW_H}`}>
               <CardBenefitPhone scale={sc} h={H} />
             </Frame>
-            <Frame cap={`30 올림 — ${Math.round((30 / CARD_ROW_H) * 100)}% · 손을 떼면 다시 숨는다`}>
+            <Frame cap={`30 올림 — ${Math.round((30 / CARD_ROW_H) * 100)}% · 손을 떼면 다시 숨습니다`}>
               <CardBenefitPhone scale={sc} h={H} scroll={570} hidden={CARD_ROW_H} />
             </Frame>
-            <Frame cap={`${CARD_ROW_H / 2} 올림 — 50% · 손을 떼면 200ms 에 다 드러난다`}>
+            <Frame cap={`${CARD_ROW_H / 2} 올림 — 50% · 손을 떼면 200ms 에 다 드러납니다`}>
               <CardBenefitPhone scale={sc} h={H} scroll={600 - CARD_ROW_H / 2} hidden={0} />
             </Frame>
           </div>
@@ -237,7 +237,17 @@ const FilterGuide: Fig = ({ caption }) => {
   );
 };
 
+// 개요 카드 — 내린 끝 모습 하나: 숨는 머리가 다 숨고 달 줄 · 주 달력 아래로 목록이 넓어진 원장(라이트)
+const Thumb: Fig = () => (
+  <div style={{ width: 360, zoom: 0.6 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: 330, borderRadius: 16, overflow: 'hidden' }}>
+      <AutoHideLedger look={AH()} tones={tones()} mode="light" frozen={{ scroll: 900, hidden: 'all' }} />
+    </div>
+  </div>
+);
+
 export const scrollAutoHideFigures: Record<string, Fig> = {
+  thumb: Thumb,
   'filter-guide': FilterGuide,
   hero: Hero,
   playground: Playground,

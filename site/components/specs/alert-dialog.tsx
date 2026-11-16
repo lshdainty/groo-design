@@ -100,7 +100,7 @@ const Anatomy: Fig = ({ caption }) => {
         />
         <Legend
           items={[
-            ['ⓐ', 'Overlay — 눌러도 닫히지 않는다'],
+            ['ⓐ', 'Overlay — 눌러도 닫히지 않습니다'],
             ['ⓑ', 'Container'],
             ['ⓒ', 'Title'],
             ['ⓓ', 'Description'],
@@ -108,7 +108,7 @@ const Anatomy: Fig = ({ caption }) => {
           ]}
         />
         <Note>
-          최대 {a.maxWidth} · 좌우 {a.marginX} 을 남긴다 · 안쪽 {a.padding} · 모서리 {a.radius} — 제목 {px(a.title.fontSize)} / {titleH} · {a.title.fontWeight}, 설명 {px(a.description.fontSize)} / {px(a.description.lineHeight)}(짙은 글자) · 사이 {a.description.marginTop} · 버튼 위 {a.footer.padTop} · 버튼 사이 {a.footer.gap}
+          최대 {a.maxWidth} · 좌우 {a.marginX} 남김 · 안쪽 {a.padding} · 모서리 {a.radius} — 제목 {px(a.title.fontSize)} / {titleH} · {a.title.fontWeight}, 설명 {px(a.description.fontSize)} / {px(a.description.lineHeight)}(짙은 글자) · 사이 {a.description.marginTop} · 버튼 위 {a.footer.padTop} · 버튼 사이 {a.footer.gap}
         </Note>
       </div>
     </Figure>
@@ -213,7 +213,7 @@ const ToneGuide: Fig = ({ caption }) => {
             </Stage>
           </div>
         </Verdict>
-        <Verdict ok={false} note="취소를 Critical 로 — 위험한 쪽이 어느 버튼인지 헷갈린다">
+        <Verdict ok={false} note="취소를 Critical 로 — 위험한 쪽이 어느 버튼인지 헷갈립니다">
           <Stage h={260}>
             <AlertSurface look={al()} title="거래 삭제" description="삭제한 거래는 되돌릴 수 없어요." cancel={{ label: '취소', look: b('criticalSolid') }} confirm={{ label: '삭제', look: b('neutralSolid') }} />
           </Stage>
@@ -228,7 +228,7 @@ const ToneGuide: Fig = ({ caption }) => {
 function EscBadge() {
   return (
     <span aria-hidden className="pointer-events-none absolute left-1/2 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-bold text-white" style={{ bottom: 28, background: 'rgba(26,31,46,0.86)', zIndex: 5 }}>
-      <Keyboard size={14} aria-hidden /> Esc — 취소와 같다
+      <Keyboard size={14} aria-hidden /> Esc — 취소와 같습니다
     </span>
   );
 }
@@ -237,7 +237,7 @@ const DismissGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex flex-wrap items-start justify-center gap-5">
-        <Shot strong={`${k} 미만 — 버튼 ${al().footer.below.height}`} cap="바깥(딤)을 눌러도 닫히지 않는다 — Esc · 뒤로 가기는 취소와 같다">
+        <Shot strong={`${k} 미만 — 버튼 ${al().footer.below.height}`} cap="바깥(딤)을 눌러도 닫히지 않습니다 — Esc · 뒤로 가기는 취소와 같습니다">
           <LedgerPhone
             mode="auto"
             scale={0.6}
@@ -249,7 +249,7 @@ const DismissGuide: Fig = ({ caption }) => {
             }
           />
         </Shot>
-        <Shot strong={`${k} 이상 — 버튼 ${al().footer.above.height}`} cap="Esc 는 취소와 같다 — 닫기 버튼은 없다">
+        <Shot strong={`${k} 이상 — 버튼 ${al().footer.above.height}`} cap="Esc 는 취소와 같습니다 — 닫기 버튼은 없습니다">
           <Scaled w={560} h={384} s={0.66}>
             <WebWindow mode="auto" w={560} h={384}>
               <WebPage mode="auto" title="가계부" />
@@ -290,7 +290,15 @@ const WritingGuide: Fig = ({ caption }) => {
 const ExDelete: Fig = () => <AlertDemo kit={overlayKit()} kind="delete" />;
 const ExLeave: Fig = () => <AlertDemo kit={overlayKit()} kind="leave" />;
 
+// 개요 카드 — 라이트 확인창 하나(거래 삭제), 딤 · 화면 없이
+const Thumb: Fig = () => (
+  <div style={{ zoom: 0.9 }}>
+    <DeleteAlert mode="light" width={al().maxWidth} />
+  </div>
+);
+
 export const alertDialogFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

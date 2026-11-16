@@ -1,5 +1,5 @@
 // Color Swatch 페이지의 그림 — specs/components/color-swatch.md 의 `[그림: …](../../site/components/specs/color-swatch.tsx#<id>)` 자리.
-// 묶음은 color-swatch.yaml 을 푼 값(swatchLook — swatch-view)으로, 칸의 색은 v110 차트 10색(DESIGN.md), 묶음 이름은 Field(field.yaml)로 그린다.
+// 묶음은 color-swatch.yaml 을 푼 값(swatchLook — swatch-view)으로, 칸의 색은 차트 10색(DESIGN.md), 묶음 이름은 Field(field.yaml)로 그린다.
 // 대화상자 · 시트는 dialog · bottom-sheet.yaml(kit), 아이콘 칸은 Icon Picker 의 트리거(Input Button — select-view). 카테고리는 지어낸 것이다.
 import type { CSSProperties, ReactNode } from 'react';
 import { Panel, MARK_LINE, Table } from '../foundations/ui';
@@ -237,7 +237,7 @@ const Size: Fig = ({ caption }) => {
           <div style={{ height: 22 }} />
         </div>
       </Surface>
-      <Cap strong={label}>{`늘 ${l.columns}개씩 두 줄 — 남는 폭은 비워 둔다`}</Cap>
+      <Cap strong={label}>{`늘 ${l.columns}개씩 두 줄 — 남는 폭은 비워 둡니다`}</Cap>
     </div>
   );
   return (
@@ -287,7 +287,7 @@ const Current: Fig = ({ caption }) => {
     <Panel caption={caption}>
       <div className="flex flex-wrap items-start justify-center gap-4">
         {[
-          { cur: { kind: 'custom', hex: l.custom.hex } as SwatchCurrent, cap: `팔레트 밖 ${l.custom.hex} — "${l.names.current}" 칸이 골라져 있다` },
+          { cur: { kind: 'custom', hex: l.custom.hex } as SwatchCurrent, cap: `팔레트 밖 ${l.custom.hex} — "${l.names.current}" 칸이 골라져 있습니다` },
           { cur: { kind: 'auto', color: 'brown' } as SwatchCurrent, cap: `색 없음 — "${l.names.auto}"(차트가 줄 색을 점선 원으로)` },
         ].map(({ cur, cap }) => (
           <div key={cur.kind} className="flex max-w-full flex-col items-center gap-2">
@@ -349,7 +349,7 @@ const States: Fig = ({ caption }) => {
           ))}
         </div>
       </Surface>
-      <Cap strong={mode === 'light' ? '라이트' : '다크'}>{`호버는 칸이 그대로(이름 툴팁만 뜬다) · 포커스 링 ${l.focus.width}px(띄움 ${l.focus.offset}) · 누름 2px 축소 · 막힘은 색 그대로, 고른 고리만 회색`}</Cap>
+      <Cap strong={mode === 'light' ? '라이트' : '다크'}>{`호버는 칸이 그대로(이름 툴팁만 뜹니다) · 포커스 링 ${l.focus.width}px(띄움 ${l.focus.offset}) · 누름 2px 축소 · 막힘은 색 그대로, 고른 고리만 회색`}</Cap>
     </div>
   );
   return (
@@ -389,7 +389,7 @@ const NewGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note={`쓰지 않은 첫 색(v110 배정 순서 — 회색은 빼고)으로 시작 — 기본 여덟이 쓰는 색을 빼면 ${name}`}>
+        <Verdict ok note={`쓰지 않은 첫 색(차트 배정 순서 — 회색은 빼고)으로 시작합니다 — 기본 여덟이 쓰는 색을 빼면 ${name}`}>
           <div className="flex w-full max-w-[300px] flex-col gap-3">
             <CatList extra={['반려동물', first]} />
             <Surface style={{ padding: 10 }}>
@@ -397,7 +397,7 @@ const NewGuide: Fig = ({ caption }) => {
             </Surface>
           </div>
         </Verdict>
-        <Verdict ok={false} note="늘 빨강으로 시작 — 아홉 번째가 식비와 같은 색이 되어 차트에서 둘을 가를 수 없다">
+        <Verdict ok={false} note="늘 빨강으로 시작 — 아홉 번째가 식비와 같은 색이 되어 차트에서 둘을 가를 수 없습니다">
           <div className="flex w-full max-w-[300px] flex-col gap-3">
             <CatList extra={['반려동물', 'red']} />
             <Surface style={{ padding: 10 }}>
@@ -414,14 +414,14 @@ const EditGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note={`가져온 분류(${l.custom.hex})를 열면 "${l.names.current}" 이 골라져 있다 — 이름만 고쳐 저장해도 색은 그대로`}>
+        <Verdict ok note={`가져온 분류(${l.custom.hex})를 열면 "${l.names.current}" 이 골라져 있습니다 — 이름만 고쳐 저장해도 색은 그대로입니다`}>
           <Surface style={{ padding: 10 }}>
             <Fit w={groupW(true)} h={groupH()} s={0.78}>
               <G value={CURRENT} current={{ kind: 'custom', hex: l.custom.hex }} />
             </Fit>
           </Surface>
         </Verdict>
-        <Verdict ok={false} note="열면 빨강이 골라져 있다 — 이름만 고쳐 저장해도 몰래 빨강(#c73838)이 나간다(지금 웹 · 앱)">
+        <Verdict ok={false} note="열면 빨강이 골라져 있고, 이름만 고쳐 저장해도 몰래 빨강(#c73838)이 나갑니다">
           <Surface style={{ padding: 10 }}>
             <Fit w={groupW(false)} h={groupH()} s={0.78}>
               <G value="red" />
@@ -438,7 +438,15 @@ const ExNew: Fig = () => <SwatchNewDemo look={SW()} field={tf().field} used={USE
 const ExEdit: Fig = () => <SwatchEditDemo look={SW()} field={tf().field} surface={tf().surface.default} tip={TIP()} />;
 const ExAuto: Fig = () => <SwatchAutoDemo look={SW()} field={tf().field} surface={tf().surface.default} auto="brown" tip={TIP()} />;
 
+// ── 개요 카드 ────────────────────────────────────────────
+const Thumb: Fig = () => (
+  <div style={{ zoom: 0.9, padding: 16, borderRadius: 16, background: rc('bg-layer-default', 'light') }}>
+    <G value="blue" mode="light" />
+  </div>
+);
+
 export const colorSwatchFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

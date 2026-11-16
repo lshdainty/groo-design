@@ -63,6 +63,14 @@ function BottomStrip({ mode = 'auto', size = 'regular', safe = 0, tab = 'home', 
 }
 
 // ── Overview ──────────────────────────────────────────────
+// 개요 카드 — 라이트 탭 바 둘(펼침 · 줄어듦), 화면 틀 없이
+const Thumb: Fig = () => (
+  <div className="flex flex-col gap-3" style={{ width: PHONE, zoom: 0.75 }}>
+    <Pill mode="light" tab="home" place="flow" />
+    <Pill mode="light" tab="home" size="compact" place="flow" />
+  </div>
+);
+
 const Hero: Fig = ({ caption }) => (
   <Figure caption={caption}>
     <div className="flex flex-col gap-5">
@@ -212,7 +220,7 @@ const Inset: Fig = ({ caption }) => {
   return (
     <Plate caption={caption}>
       <Pair>
-        <Verdict ok note={`본문 아래 여백(바의 아래 자리 + ${k.sizes.regular.h} + ${gap}) — 끝까지 내리면 마지막 줄이 바 위 ${gap} 에서 끝난다`}>
+        <Verdict ok note={`본문 아래 여백(바의 아래 자리 + ${k.sizes.regular.h} + ${gap}) — 끝까지 내리면 마지막 줄이 바 위 ${gap} 에서 끝납니다`}>
           <NPhone scale={0.5} h={600} tabs tab="ledger" bar={<Bar type="root" title="가계부" actions={[{ icon: 'search', label: '검색' }]} />}>
             <div className="flex h-full flex-col justify-end">
               <TxRows n={10} from={0} />
@@ -222,7 +230,7 @@ const Inset: Fig = ({ caption }) => {
             </div>
           </NPhone>
         </Verdict>
-        <Verdict ok={false} note="여백 없이 — 끝까지 내려도 마지막 줄(책)이 바에 덮인다">
+        <Verdict ok={false} note="여백 없이 — 끝까지 내려도 마지막 줄(책)이 바에 덮입니다">
           <NPhone scale={0.5} h={600} bar={<Bar type="root" title="가계부" actions={[{ icon: 'search', label: '검색' }]} />} overlay={<Pill tab="ledger" />}>
             <div className="flex h-full flex-col justify-end" style={{ paddingBottom: zone - 40 }}>
               <TxRows n={10} from={0} />
@@ -287,7 +295,7 @@ const MoneyGuide: Fig = ({ caption }) => (
       <Verdict ok note="탭 바는 홈 · 가계부 · + · 캘린더 · 전체 그대로 — 가계부 · 자산 · 통계 · 예산은 화면 위 Line Tabs">
         <LedgerScreen scale={0.46} h={600} value="assets" />
       </Verdict>
-      <Verdict ok={false} note="가계부에 들어가면 탭 바 칸을 ← · 넷으로 바꾼다 — 캘린더 · 전체로 바로 못 간다">
+      <Verdict ok={false} note="가계부에 들어가면 탭 바 칸을 ← · 넷으로 바꿨습니다 — 캘린더 · 전체로 바로 못 갑니다">
         <NPhone scale={0.46} h={600} bg="bg-layer-basement" bar={<Bar type="root" title="자산" actions={[{ icon: 'search', label: '검색' }]} />} overlay={<Pill items={MONEY_BAD} tab="assets" noAdd />}>
           <FloorBands>
             <>
@@ -324,7 +332,7 @@ const CompactGuide: Fig = ({ caption }) => {
               <LedgerScreen scale={0.32} h={600} tabSize="compact" from={3} />
               <Tap x={PHONE * 0.32 * 0.5} y={600 * 0.32 - 24} />
             </div>,
-            '줄어든 바를 누르면 펴진다',
+            '줄어든 바를 누르면 펴집니다',
           )}
         </div>
         <Reading tone="ok">줄어든 바도 칸마다 이름 — 홈 · 가계부 · 거래 추가 · 캘린더 · 전체</Reading>
@@ -381,7 +389,7 @@ const RetapGuide: Fig = ({ caption }) => {
             <Arrow label="홈 다시" />
             <HomeScreen scale={s} h={600} />
           </div>
-          <Cap>지금 탭을 다시 누르면 그 탭의 첫 화면 · 맨 위로(같은 주소를 쌓지 않는다)</Cap>
+          <Cap>지금 탭을 다시 누르면 그 탭의 첫 화면 · 맨 위로(같은 주소를 쌓지 않습니다)</Cap>
         </div>
       </div>
     </Figure>
@@ -413,7 +421,7 @@ const AddGuide: Fig = ({ caption }) => (
         </Verdict>
       </Pair>
       <Pair>
-        <Verdict ok={false} note="+ 를 라벨 붙은 탭 칸으로 — 탭이 아니라 그 화면의 추가다">
+        <Verdict ok={false} note="+ 를 라벨 붙은 탭 칸으로 — 탭이 아니라 그 화면의 추가입니다">
           <BottomStrip tab="home" w={260}>
             <span aria-hidden className="absolute flex flex-col items-center gap-0.5" style={{ left: cellX(2, 'regular', 260) - 24, bottom: tabBottom(L(), 'regular', 0) + 6, width: 48, height: 54, paddingTop: 6, background: rc('bg-layer-floating'), zIndex: 80 }}>
               <span className="flex h-6 w-6 items-center justify-center rounded-[7px] text-[16px] font-bold leading-none text-white" style={{ background: rc('bg-brand-solid') }}>
@@ -425,7 +433,7 @@ const AddGuide: Fig = ({ caption }) => (
             </span>
           </BottomStrip>
         </Verdict>
-        <Verdict ok={false} note="+ 를 탭 바에서 빼 떠 있는 버튼으로 — 탭 바가 있는 화면에 떠 있는 버튼을 두지 않는다">
+        <Verdict ok={false} note="+ 를 탭 바에서 빼 떠 있는 버튼으로 — 탭 바가 있는 화면에 떠 있는 버튼을 두지 않습니다">
           <NPhone scale={0.42} h={600} bar={<Bar type="root" title="홈" actions={HOME_ACTIONS} />} overlay={<><Pill tab="home" noAdd /><Fab place="absolute" label="거래 추가" bottom={tabBottom(L(), 'regular', 0) + L().sizes.regular.h + NK().fab.bottom} /></>}>
             <TxRows n={8} />
           </NPhone>
@@ -440,7 +448,7 @@ const StackGuide: Fig = ({ caption }) => {
   return (
     <Plate caption={caption}>
       <Pair>
-        <Verdict ok note={`스낵바는 탭 바 위 ${sl.region.padBottom} — 탭 바를 SnackbarAvoidOverlap 으로 감싼다`}>
+        <Verdict ok note={`스낵바는 탭 바 위 ${sl.region.padBottom} — 탭 바를 SnackbarAvoidOverlap 으로 감쌉니다`}>
           <NPhone scale={0.46} h={600} tabs tab="ledger" bar={<Bar type="root" title="가계부" actions={[{ icon: 'search', label: '검색' }]} />}>
             <DayHead />
             <TxRows n={8} />
@@ -449,7 +457,7 @@ const StackGuide: Fig = ({ caption }) => {
             </SnackDock>
           </NPhone>
         </Verdict>
-        <Verdict ok note="입력은 시트로 — 시트 · 딤이 탭 바를 덮는다">
+        <Verdict ok note="입력은 시트로 — 시트 · 딤이 탭 바를 덮습니다">
           <NPhone
             scale={0.46}
             h={600}
@@ -490,6 +498,7 @@ const ExShell: Fig = ({ caption }) => {
 };
 
 export const bottomNavigationFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

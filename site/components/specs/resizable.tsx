@@ -1,6 +1,6 @@
 // Resizable 페이지의 그림 — specs/components/resizable.md 의 `[그림: …](../../site/components/specs/resizable.tsx#<id>)` 자리.
 // 선 · 손잡이 표시 · 누르는 폭 · 범위는 resizable.yaml 을 푼 값(splitLook — collapse-split)으로, 부서 나무는 tree-view.yaml 로 그린다.
-// 1280 화면의 본문 992 를 실제 px 로 짜고 줄여 그린다. 대시보드 위젯 크기는 걷었다(2026-11-10 사용자 결정 11A).
+// 1280 화면의 본문 992 를 실제 px 로 짜고 줄여 그린다.
 import type { CSSProperties, ReactNode } from 'react';
 import { Figure, Panel } from '../foundations/ui';
 import { BODY_W } from './collapse-data';
@@ -106,7 +106,7 @@ const Split: Fig = ({ caption }) => {
             <Cap strong={t}>{`목록 ${Math.round((BODY_W * v) / 100)}px · 1280 화면의 본문 ${BODY_W} 기준`}</Cap>
           </div>
         ))}
-        <Cap w={620}>목록은 {s.panel.min} ~ {s.panel.max}% 사이에서만 바뀐다 — 오른쪽 상세가 {100 - s.panel.max}% 아래로 줄지 않아 조직도 · 사용자 칸이 0폭이 되지 않는다. {s.breakpoint} 미만은 나누지 않는다(목록 → 상세 · 탭)</Cap>
+        <Cap w={620}>목록은 {s.panel.min} ~ {s.panel.max}% 사이에서만 바뀝니다 — 오른쪽 상세가 {100 - s.panel.max}% 아래로 줄지 않아 조직도 · 사용자 칸이 0폭이 되지 않습니다. {s.breakpoint} 미만은 나누지 않습니다(목록 → 상세 · 탭)</Cap>
       </div>
     </Panel>
   );
@@ -118,7 +118,7 @@ const Handle: Fig = ({ caption }) => {
   const k = 3;
   const states: [SplitState, string][] = [
     ['enabled', '기본 — 선은 옅고 표시만'],
-    ['hovered', '호버(웹) — 선이 짙어진다'],
+    ['hovered', '호버(웹) — 선이 짙어집니다'],
     ['focused', `포커스(키보드) — 링 ${s.ring.width}px`],
     ['pressed', '끄는 중 — 화면 전체 col-resize'],
   ];
@@ -145,11 +145,11 @@ const Handle: Fig = ({ caption }) => {
                 ))}
               </div>
             </Wide>
-            <Cap strong={modeKo(mode)}>{`${k}배로 그렸다 — 선 ${s.line.width}px · 표시 ${s.grip.w} × ${s.grip.h} · 누르는 폭 ${s.handle.width}(분홍)`}</Cap>
+            <Cap strong={modeKo(mode)}>{`${k}배로 그렸습니다 — 선 ${s.line.width}px · 표시 ${s.grip.w} × ${s.grip.h} · 누르는 폭 ${s.handle.width}(분홍)`}</Cap>
           </div>
         ))}
         <Cap w={620}>
-          선 stroke-neutral-weak 는 경계만 긋고, 가운데 표시 stroke-neutral-solid 가 끌 수 있는 자리를 알린다. 끌지 않고 한 번 눌렀다 떼면({s.handle.dragStart}px 안) 기본 {s.panel.def} ↔ 넓게 {s.panel.toggle} — 768 이상 데스크톱의 마우스 경계라 누르는 폭이 {s.handle.width} 이다
+          선 stroke-neutral-weak 는 경계만 긋고, 가운데 표시 stroke-neutral-solid 가 끌 수 있는 자리를 알립니다. 끌지 않고 한 번 눌렀다 떼면({s.handle.dragStart}px 안) 기본 {s.panel.def} ↔ 넓게 {s.panel.toggle} 로 바뀝니다 — 768 이상 데스크톱의 마우스 경계라 누르는 폭이 {s.handle.width} 입니다
         </Cap>
       </div>
     </Panel>
@@ -181,7 +181,7 @@ const AltGuide: Fig = ({ caption }) => {
 const PersistGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex w-full flex-col gap-4">
-      <Verdict ok note="회사 화면을 35% 로 넓히고 나갔다가 다시 열면 그 폭 — 화면마다 브라우저에 기억한다(사이드바 접힘처럼)">
+      <Verdict ok note="회사 화면을 35% 로 넓히고 나갔다가 다시 열면 그 폭입니다 — 화면마다 브라우저에 기억합니다(사이드바 접힘처럼)">
         <div className="flex flex-col items-center gap-2">
           <Fit cw={420}>
             <CompanySplit value={35} h={240} />
@@ -192,7 +192,7 @@ const PersistGuide: Fig = ({ caption }) => (
           </Fit>
         </div>
       </Verdict>
-      <Verdict ok={false} note={`기억하지 않기 — 다시 열 때마다 ${S().panel.def}% 로 돌아가 긴 부서 이름을 볼 때마다 다시 넓힌다(지금 HR)`}>
+      <Verdict ok={false} note={`기억하지 않기 — 다시 열 때마다 ${S().panel.def}% 로 돌아가 긴 부서 이름을 볼 때마다 다시 넓혀야 합니다`}>
         <div className="flex flex-col items-center gap-2">
           <Fit cw={420}>
             <CompanySplit value={35} h={240} />
@@ -214,7 +214,15 @@ const ExSplit: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 개요 카드 — 라이트 나누기 하나(부서 나무 40% | 조직도, 호버로 선이 짙은 손잡이). 480 × 340 → zoom 0.58 로 278 × 197
+const Thumb: Fig = () => (
+  <div style={{ width: 480, zoom: 0.58 }}>
+    <CompanySplit mode="light" value={S().panel.max} h={340} state="hovered" />
+  </div>
+);
+
 export const resizableFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

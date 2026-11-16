@@ -1,20 +1,16 @@
-# Input(Text Input) 의 수치 원본 — 구조는 SEED Text Input(2026-10-01 사용자 결정).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Input(Text Input) 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 한 줄 입력칸이다. 라벨 · 설명 · 오류 · 글자 수는 Field(field.yaml)가 둘레에서 그린다.
-# 부위: root 는 상자(테두리 · 바탕 · 모서리 — 앞 · 뒤 붙이개와 지우기 버튼을 담는다), value 는 입력(<input>)이다.
-# 테두리는 상자 안쪽에 1px 로 그리고, 포커스 · 오류의 2px 는 안쪽에 덧그린다(SEED ::after) — 굵어져도 내용이 밀리지 않는다.
-# 포커스는 마우스 · 터치로 눌러도 보인다 — 캐럿과 함께 지금 쓰는 칸을 알린다(버튼의 "키보드에만 링" 과 다르다).
+# 한 줄 입력칸입니다. 라벨 · 설명 · 오류 · 글자 수는 Field(field.yaml)가 둘레에서 그립니다.
+# 부위: root 는 상자(테두리 · 바탕 · 모서리 — 앞 · 뒤 붙이개와 지우기 버튼을 담습니다), value 는 입력(<input>)입니다.
+# 테두리는 상자 안쪽에 1px 로 그리고, 포커스 · 오류의 2px 는 안쪽에 덧그립니다(::after) — 굵어져도 내용이 밀리지 않습니다.
+# 포커스는 마우스 · 터치로 눌러도 보입니다 — 캐럿과 함께 지금 쓰는 칸을 알립니다(버튼의 "키보드에만 링" 과 다릅니다).
 #
-# 크기는 SEED 와 같다 — large 52(폰 · 앱) · medium 40(1280 이상 데스크톱 웹, 마우스). 웹의 기본은 responsive
-# (1280 미만 large · 이상 medium — SEED lg), 앱은 늘 large. 한 폼 안에서 크기를 섞지 않는다.
-# underline 은 화면에 입력이 하나뿐일 때(금액을 먼저 받는 화면 · 목록 위 검색 · 초대 코드 · 잠금 해제).
+# 크기는 large 52(폰 · 앱) · medium 40(1280 이상 데스크톱 웹, 마우스)입니다. 웹의 기본은 responsive
+# (1280 미만 large · 이상 medium), 앱은 늘 large 입니다. 한 폼 안에서 크기를 섞지 않습니다.
+# underline 은 화면에 입력이 하나뿐일 때 씁니다(금액을 먼저 받는 화면 · 목록 위 검색 · 초대 코드 · 잠금 해제).
 #
-# SEED 와 다른 자리(input.md 의 "SEED 와 다른 점")
-#   - 지우기 버튼을 Text Input 에도 둔다(SEED 는 Input Button 에만) — 값은 SEED Input Button 의 지우기(22 · 18)를 따르고, 누르는 영역은
-#     44 다(기초 Inclusive Design v106 — 2026-10-08 앱 적용이 남긴 것).
-#   - 아이콘은 lucide 선 아이콘(기초 Iconography v106) — 지우기는 circle-x, SEED 는 채운 원.
-#   - 상자를 누르면(붙이개 · 여백 포함) 입력으로 포커스가 간다.
+# 지우기 버튼은 보이는 원 22 · 18(lucide circle-x)에 누르는 영역 44 입니다(기초 Inclusive Design). Tab 순서에는 넣지 않습니다.
+# 상자를 누르면(붙이개 · 여백 포함) 입력으로 포커스가 갑니다.
 
 name: Input
 
@@ -56,13 +52,13 @@ rules:
         background: transparent
         borderColor: $color-stroke-neutral-weak
         cursor: text
-        transitionProperty: { value: border-color, note: "덧그린 2px 의 색만 — 두께는 바로 바뀐다(SEED)" }
-        transitionDuration: { value: $motion-duration-d2, note: "SEED 는 0.1s 를 바로 적었다" }
+        transitionProperty: { value: border-color, note: "덧그린 2px 의 색만 — 두께는 바로 바뀐다" }
+        transitionDuration: $motion-duration-d2
         transitionEasing: $motion-ease-easing
       value:
         foreground: $color-fg-neutral
         fontWeight: 400
-        caretColor: { value: $color-fg-neutral, note: "캐럿은 글자색 — 고른 글은 기기 기본 하이라이트(::selection 을 두지 않는다). SEED 도 정하지 않았다. 앱은 cursorColor 를 이 색으로(사용자 결정 2026-10-08)" }
+        caretColor: { value: $color-fg-neutral, note: "캐럿은 글자색 — 고른 글은 기기 기본 하이라이트(::selection 을 두지 않는다). 앱은 cursorColor 를 이 색으로" }
       placeholder:
         foreground: $color-fg-placeholder
         fontWeight: 400
@@ -79,10 +75,10 @@ rules:
       clearButton:
         color: { value: $color-fg-neutral-subtle, note: "lucide circle-x. 이름 \"지우기\" — 누르면 값을 비우고 입력에 포커스를 둔다" }
         radius: $radius-full
-        touchTarget: { value: 44 × 44, note: "보이는 원(22 · 18)과 따로 둘레로 넓힌다 — 상자 밖은 상자가 자른다(medium 40 은 44 × 40). 기초 Inclusive Design v106(사용자 결정 2026-10-08)" }
+        touchTarget: { value: 44 × 44, note: "보이는 원(22 · 18)과 따로 둘레로 넓힌다 — 상자 밖은 상자가 자른다(medium 40 은 44 × 40). 기초 Inclusive Design" }
     focused:
       root:
-        borderColor: { value: $color-stroke-neutral-contrast, note: "읽기 전용이면 바뀌지 않는다 — 읽기 전용은 포커스 표시가 없다(SEED 와 같다, 사용자 결정 2026-10-08 — 까닭 · 2.4.7 은 input.md)" }
+        borderColor: { value: $color-stroke-neutral-contrast, note: "읽기 전용이면 바뀌지 않는다 — 읽기 전용은 포커스 표시가 없다(까닭 · 2.4.7 은 input.md)" }
     invalid:
       root:
         borderColor: { value: $color-stroke-critical-solid, note: "포커스해도 그대로" }
@@ -115,7 +111,7 @@ rules:
         borderWidth: 2px
     disabled:
       root:
-        background: { value: $color-bg-disabled, note: "흐리게 하지 않는다(v106)" }
+        background: { value: $color-bg-disabled, note: "흐리게 하지 않는다" }
     readonly:
       root:
         background: { value: $color-bg-disabled, note: "값은 진한 글자 그대로 — 바탕만으로 편집 칸과 가른다" }
@@ -184,11 +180,11 @@ rules:
   - when: { size: responsive }
     enabled:
       root:
-        breakpoint: { value: 1280px, note: "미만은 large, 이상은 medium 의 값을 쓴다(SEED lg) — 앱은 늘 large" }
+        breakpoint: { value: 1280px, note: "미만은 large, 이상은 medium 의 값을 쓴다 — 앱은 늘 large" }
 
 motion:
   "포커스 · 오류 — 테두리":
     duration: $motion-duration-d2
     easing: $motion-ease-easing
     properties: [border-color]
-    note: "안쪽에 덧그린 2px 의 색이 나타나고 사라진다. SEED 는 0.1s — groo d2 = 100ms"
+    note: "안쪽에 덧그린 2px 의 색이 나타나고 사라진다(d2 = 100ms)"

@@ -1,14 +1,7 @@
-# Callout 의 수치 원본 — 구조는 SEED Callout(2026-10-02 사용자 결정, 비교 페이지 1 · 2 · 6).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Callout 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 화면 안, 그 기능 · 내용 가까이에 늘 보이는 안내 상자 — 팁 · 제약 · 주의 · 저장 실패 같은 그 자리의 오류.
-# 페이지 전체의 상태는 Page Banner(page-banner.yaml), 잠깐 알릴 결과는 Snackbar(snackbar.yaml)다.
-#
-# SEED 와 다른 자리(callout.md 의 "SEED 와 다른 점")
-#   - 톤은 다섯 — magic(AI)은 groo 에 AI 기능이 없어 두지 않는다.
-#   - 아이콘은 lucide 선 아이콘(v106 — SEED 는 채운 아이콘을 권한다).
-#   - 나중에 나타나는 경고 · 위험(저장 실패)은 role="alert"(SEED 는 역할이 없다).
-#   - 버튼에 type="button"(SEED 링크 · 닫기에는 없어 폼 안에서 제출된다).
+# 화면 안, 그 기능 · 내용 가까이에 늘 보이는 안내 상자입니다 — 팁 · 제약 · 주의 · 저장 실패 같은 그 자리의 오류.
+# 페이지 전체의 상태는 Page Banner(page-banner.yaml), 잠깐 알릴 결과는 Snackbar(snackbar.yaml)입니다.
 
 name: Callout
 
@@ -62,7 +55,7 @@ rules:
         typography: { value: $text-t4, note: "본문과 한 문단 — 사이는 띄어쓰기 두 칸" }
         fontWeight: 700
       description:
-        typography: { value: $text-t4, note: "단어 단위 줄바꿈(v114)" }
+        typography: { value: $text-t4, note: "단어 단위 줄바꿈" }
         fontWeight: 400
       link:
         typography: $text-t4
@@ -102,7 +95,7 @@ rules:
   - when: { interaction: actionable }
     pressed:
       root:
-        scale: { value: 2px 거리 축소, note: "상자 전체(SEED scaleScope: self) — 모션 줄이기면 하지 않는다" }
+        scale: { value: 2px 거리 축소, note: "상자 전체 — 모션 줄이기면 하지 않는다" }
         scaleDuration: $motion-duration-pressed-scale
         scaleEasing: $motion-ease-pressed-scale
   - when: { tone: neutral, interaction: actionable }
@@ -129,7 +122,7 @@ rules:
         scaleDuration: $motion-duration-pressed-scale
         scaleEasing: $motion-ease-pressed-scale
   - when: { tone: neutral, interaction: dismissible }
-    hovered: { closeButton: { background: { value: $color-bg-neutral-weak-pressed, note: "톤의 누름 바탕 — SEED 투명 누름 색의 불투명 짝" } } }
+    hovered: { closeButton: { background: { value: $color-bg-neutral-weak-pressed, note: "톤의 누름 바탕 — 투명 누름 색 대신 불투명한 색" } } }
     pressed: { closeButton: { background: $color-bg-neutral-weak-pressed } }
   - when: { tone: informative, interaction: dismissible }
     hovered: { closeButton: { background: $color-bg-informative-weak-pressed } }
@@ -156,4 +149,4 @@ motion:
   "닫힘":
     duration: 0ms
     properties: [바로 사라짐]
-    note: "닫으면 바로 걷는다(SEED) — 초점은 다음 요소로"
+    note: "닫으면 바로 걷는다 — 초점은 다음 요소로"

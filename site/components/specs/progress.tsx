@@ -129,7 +129,7 @@ const Layout: Fig = ({ caption }) => {
             금액 줄 {px(p.amount.fontSize)} / {amountLh}
           </span>
         </div>
-        <Note>요약 머리든 목록 줄이든 같은 막대다 — 크게 보일 것은 막대가 아니라 위의 금액이다. 트랙이 페이지 바탕과 같은 색이라 흰 면(카드 · 시트) 위에 둔다(그림은 1.5배)</Note>
+        <Note>요약 머리든 목록 줄이든 같은 막대입니다 — 크게 보일 것은 막대가 아니라 위의 금액입니다. 트랙이 페이지 바탕과 같은 색이라 흰 면(카드 · 시트) 위에 둡니다(그림은 1.5배).</Note>
       </div>
     </Figure>
   );
@@ -141,8 +141,8 @@ const Meanings: Fig = ({ caption }) => (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {(
         [
-          ['limit — 한도(기본)', '예산 · 카드 한도 — 쓸수록 찬다', BARS[0], BARS[1]],
-          ['goal — 목표', '저축 목표 · 카드 실적 — 모을수록 찬다', BARS[2], BARS[3]],
+          ['limit — 한도(기본)', '예산 · 카드 한도 — 쓸수록 찹니다', BARS[0], BARS[1]],
+          ['goal — 목표', '저축 목표 · 카드 실적 — 모을수록 찹니다', BARS[2], BARS[3]],
         ] as const
       ).map(([t, cap, a, b]) => (
         <Shot key={t} strong={t} cap={cap}>
@@ -190,7 +190,7 @@ const LoadingGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="얼마나 찼나는 막대, 올리는 진행은 값 있는 원 — 둘을 섞지 않는다" bg={BASEMENT}>
+        <Verdict ok note="얼마나 찼는지는 막대로, 올리는 진행은 값 있는 원으로 보입니다 — 둘을 섞지 않습니다" bg={BASEMENT}>
           <div className="flex w-[300px] flex-col gap-5 rounded-2xl px-6 py-5 pk-surface">
             <Meter {...BARS[0]} />
             <div className="flex items-center gap-3">
@@ -199,7 +199,7 @@ const LoadingGuide: Fig = ({ caption }) => {
             </div>
           </div>
         </Verdict>
-        <Verdict ok={false} note="올리기 · 불러오기를 막대로 — 막대는 범위가 정해진 값이 얼마나 찼는지만 보인다. 값을 모른 채 흐르는 막대도 두지 않는다" bg={BASEMENT}>
+        <Verdict ok={false} note="올리기 · 불러오기를 막대로 그렸습니다 — 막대는 범위가 정해진 값이 얼마나 찼는지만 보입니다. 값을 모른 채 흐르는 막대도 두지 않습니다" bg={BASEMENT}>
           <div className="flex w-[300px] flex-col gap-2 rounded-2xl px-6 py-5 pk-surface">
             <div className="flex items-baseline justify-between">
               <span className="text-[14px] font-medium pk-text">10월 카드 명세서.pdf</span>
@@ -224,12 +224,12 @@ const OverGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note={`끝까지 칠하고 위험 색 — 얼마나 넘었는지는 오른쪽 글이 말한다("${won(b.value - b.max)} 초과")`} bg={BASEMENT}>
+        <Verdict ok note={`끝까지 칠하고 위험 색으로 바꿉니다 — 얼마나 넘었는지는 오른쪽 글이 말합니다("${won(b.value - b.max)} 초과")`} bg={BASEMENT}>
           <div className="w-[300px] rounded-2xl px-6 py-5 pk-surface">
             <Meter {...b} />
           </div>
         </Verdict>
-        <Verdict ok={false} note="막대를 100% 너머로 늘이거나 넘친 만큼 다른 색 조각을 잇는다 — 막대의 끝이 무엇인지 흐려진다" bg={BASEMENT}>
+        <Verdict ok={false} note="막대를 100% 너머로 늘이거나 넘친 만큼 다른 색 조각을 이었습니다 — 막대의 끝이 무엇인지 흐려집니다" bg={BASEMENT}>
           <div className="w-[300px] rounded-2xl px-6 py-5 pk-surface">
             <div className="flex flex-col" style={{ gap: p.gap, width: `${100 / (1 + extra / 100)}%` }}>
               <div className="flex items-baseline justify-between">
@@ -257,12 +257,12 @@ const GoalGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note={`닿으면 오른쪽 글을 "달성" 으로 — 막대 색은 브랜드 그대로, 넘어도(${Math.round((b.value / b.max) * 100)}%) 끝까지만 차고 금액 줄이 실제 값을 보인다`} bg={BASEMENT}>
+        <Verdict ok note={`닿으면 오른쪽 글을 "달성" 으로 바꿉니다 — 막대 색은 브랜드 그대로이고, 넘어도(${Math.round((b.value / b.max) * 100)}%) 끝까지만 차며 금액 줄이 실제 값을 보입니다`} bg={BASEMENT}>
           <div className="w-[300px] rounded-2xl px-6 py-5 pk-surface">
             <Meter {...b} />
           </div>
         </Verdict>
-        <Verdict ok={false} note="성공 색 · 축하 모양을 더한다 — 막대의 색은 브랜드 · 위험 둘뿐이다" bg={BASEMENT}>
+        <Verdict ok={false} note="성공 색 · 축하 모양을 더했습니다 — 막대의 색은 브랜드 · 위험 둘뿐입니다" bg={BASEMENT}>
           <div className="w-[300px] rounded-2xl px-6 py-5 pk-surface">
             <Meter {...b} fillStyle={{ background: rc('fg-positive') }} statusStyle={{ color: rc('fg-positive') }} statusText={`${Math.round((b.value / b.max) * 100)}% 달성!`} />
           </div>
@@ -291,7 +291,19 @@ const ExGoal: Fig = () => (
   </Figure>
 );
 
+// 개요 카드 — 흰 면 위 막대 셋(보통 · 넘친 한도 · 목표). 그린 크기 300 × 245(막대 55 × 3 + 사이 20 × 2 + 위아래 20) × 0.8 = 240 × 196
+const Thumb: Fig = () => (
+  <div style={{ width: 300, zoom: 0.8 }}>
+    <div className="flex flex-col rounded-2xl" style={{ gap: 20, padding: 20, background: rc('bg-layer-default', 'light') }}>
+      {BARS.slice(0, 3).map((b) => (
+        <Meter key={b.label} mode="light" {...b} />
+      ))}
+    </div>
+  </div>
+);
+
 export const progressFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

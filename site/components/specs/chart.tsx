@@ -1,7 +1,7 @@
 // Chart 페이지의 그림 — specs/components/chart.md 의 `[그림: …](../../site/components/specs/chart.tsx#<id>)` 자리.
 // 차트 부품(축 · 격자 · 계열 · 툴팁 · 지표 타일 · 도넛 · 열지도)은 chart.yaml 을 푼 값(chartLook — data-chart-view)으로, 카드는 card.yaml,
 // 표로 보기는 table.yaml, 빈 · 실패는 result-section.yaml 로 그린다. 금액은 지어낸 Desk 통계다(돈은 원까지 — 줄임은 축만).
-// 열지도의 가장 큰 칸에는 고리를 두르지 않는다(사용자 결정 2026-10-08 — 키보드 포커스 링과 헷갈린다).
+// 열지도의 가장 큰 칸에는 고리를 두르지 않는다(키보드 포커스 링과 헷갈린다).
 import type { ReactNode } from 'react';
 import { Panel } from '../foundations/ui';
 import { CardHeaderView, CardSurface, StatView } from './data-card-view';
@@ -192,7 +192,7 @@ const AxisFig: Fig = ({ caption }) => {
             <TrendChartView look={look} series={NET} count={6} xLabels={months} heads={months} width={inner(420)} height={200} label="순자산 추이, 10월 11,800,000원" />
           </ChartBox>
         </Col>
-        <Col strong="음수 축 글자가 잘린 것" cap="세로축 폭을 짧게 잡아 빼기(−)가 상자 밖으로 — 지금 자산 화면" w={300}>
+        <Col strong="음수 축 글자가 잘린 것" cap="세로축 폭을 짧게 잡아 빼기(−)가 상자 밖으로 나갑니다" w={300}>
           <ChartBox title="순자산 추이" width={320}>
             <div style={{ overflow: 'hidden' }}>
               <TrendChartView look={look} series={NET} count={6} xLabels={months} heads={months} width={inner(320)} height={200} label="순자산 추이" bad={{ clipNegative: true }} />
@@ -215,7 +215,7 @@ const DualAxis: Fig = ({ caption }) => {
           </ChartBox>
         </Col>
         <Cap w={560}>
-          왼쪽 수입(blue {contrastPair('chart-blue', 'bg-layer-default')}) · 오른쪽 지출(red {contrastPair('chart-red', 'bg-layer-default')}) — 눈금 글자가 그 축의 계열 색. 두 값은 타일 · 툴팁이 숫자로 보인다. 계열이 셋이거나 단위가 같은 두 계열은 축 하나
+          왼쪽 수입(blue {contrastPair('chart-blue', 'bg-layer-default')}) · 오른쪽 지출(red {contrastPair('chart-red', 'bg-layer-default')}) — 눈금 글자가 그 축의 계열 색. 두 값은 타일 · 툴팁이 숫자로 보입니다. 계열이 셋이거나 단위가 같은 두 계열은 축 하나
         </Cap>
       </div>
     </Panel>
@@ -234,7 +234,7 @@ const TooltipFig: Fig = ({ caption }) => {
             <Trend w={420} active={TODAY_DAY - 1} tiles={false} />
           </ChartBox>
         </Col>
-        <Col strong="툴팁" cap={`bg-layer-floating · shadow-s3 · 모서리 ${t.radius} · 위아래 ${t.padY} · 좌우 ${t.padX} · 테두리 없음. 머리 ${parseFloat(t.head.fontSize)} fg-neutral-subtle, 줄 "■ 라벨 값" — 네모 ${t.swatch.size} · 라벨 ${parseFloat(t.row.fontSize)} fg-neutral-muted · 값 ${t.row.valueWeight} 원까지`} w={300}>
+        <Col strong="툴팁" cap={`bg-layer-floating · shadow-s3 · 모서리 ${t.radius} · 위아래 ${t.padY} · 좌우 ${t.padX} · 테두리 없음. 머리 ${parseFloat(t.head.fontSize)} fg-neutral-subtle, 줄 "■ 라벨 값" — 네모 ${t.swatch.size} · 라벨 ${parseFloat(t.row.fontSize)} fg-neutral-subtle · 값 ${t.row.valueWeight} 원까지`} w={300}>
           {/* 1.25 배 — 안쪽 여백은 분홍 칠, 글 자리는 점선 상자. 치수 글은 흰 판의 여백 안에 둔다(잘리지 않게) */}
           <div className="rounded-xl" style={{ position: 'relative', background: rc('bg-layer-default'), paddingTop: 40, paddingBottom: 32, paddingLeft: 72, paddingRight: 32 }}>
             <div style={{ position: 'relative', display: 'inline-block', zoom: 1.25 }}>
@@ -266,20 +266,20 @@ const LegendTiles: Fig = ({ caption }) => {
               <Trend w={380} />
             </ChartBox>
           </Col>
-          <Col strong="지출 끔" cap={`끈 타일 — 흰 면 + 안쪽 ${t.hiddenBorderW}px stroke-neutral-weak, 그 계열의 선이 사라진다(마지막 하나는 끌 수 없다)`} w={340}>
+          <Col strong="지출 끔" cap={`끈 타일 — 흰 면 + 안쪽 ${t.hiddenBorderW}px stroke-neutral-weak, 그 계열의 선이 사라집니다(마지막 하나는 끌 수 없습니다)`} w={340}>
             <ChartBox title={`${TREND_MONTH}월 수입 · 지출`} width={380}>
               <Trend w={380} hidden={['expense']} />
             </ChartBox>
           </Col>
         </Wrap>
-        <Cap w={560}>타일 사이 {t.gap} · 타일 ↔ 차트 {t.gap} · 높이 {t.padY * 2 + parseFloat(t.name.lineHeight) + t.totalGap + parseFloat(t.total.lineHeight)} — 누르면 aria-pressed 가 바뀐다. 차트 아래 점 범례는 두지 않는다</Cap>
+        <Cap w={560}>타일 사이 {t.gap} · 타일 ↔ 차트 {t.gap} · 높이 {t.padY * 2 + parseFloat(t.name.lineHeight) + t.totalGap + parseFloat(t.total.lineHeight)} — 누르면 aria-pressed 가 바뀝니다. 차트 아래 점 범례는 두지 않습니다</Cap>
       </div>
     </Panel>
   );
 };
 
 // 끌 수 없는 마지막 타일 — 지출이 꺼져 수입 하나만 켜져 있다. 커서는 스크린샷에 찍히지 않아 실제 크기(약 34)로 겹쳐 그린다
-// (그림의 수입 타일에 마우스를 올리면 실제 커서도 not-allowed 다 — Q-012-3 C)
+// (그림의 수입 타일에 마우스를 올리면 실제 커서도 not-allowed 다)
 function NoCursor({ left, top }: { left: number; top: number }) {
   return (
     <svg aria-hidden width={34} height={34} viewBox="0 0 34 34" style={{ position: 'absolute', left, top, pointerEvents: 'none', zIndex: 5, filter: 'drop-shadow(0 1px 1px rgba(0,0,0,.3))' }}>
@@ -309,7 +309,7 @@ const LegendLocked: Fig = ({ caption }) => {
           </div>
         ))}
         <Cap w={560}>
-          수입 타일은 켠 색({'chart-{색}-subtle'}) 그대로다 — 회색으로 바꾸지 않는다. 마우스를 올리면 커서가 {t.lockedCursor}(v106 비활성 커서), 누르면 아무 일 없음 · 축소 없음(aria-disabled). 지출 타일을 다시 켜면 둘 다 누를 수 있다
+          수입 타일은 켠 색({'chart-{색}-subtle'}) 그대로입니다 — 회색으로 바꾸지 않습니다. 마우스를 올리면 커서가 {t.lockedCursor}(비활성 커서), 누르면 아무 일 없음 · 축소 없음(aria-disabled). 지출 타일을 다시 켜면 둘 다 누를 수 있습니다
         </Cap>
       </div>
     </Panel>
@@ -348,7 +348,7 @@ const DonutThickness: Fig = ({ caption }) => {
           </div>
         ))}
         <Cap w={560}>
-          두께 = 지름 ÷ {Math.round(1 / look.donut.perDiameter)} + {look.donut.offset} 을 정수로 — 문턱이 없어 지름을 따라 고르게 굵어진다(160 에서 튀지 않는다). 데스크톱 {look.donut.diameter} → {look.donut.thickness} · 폰 {look.donut.phone.diameter} → {look.donut.phone.thickness}. 가운데 합계는 가장 나쁜 값 {worst}(16 / 22 · 700)이 구멍에 들어갈 때만 — 아니면 목록 위 합계로
+          두께 = 지름 ÷ {Math.round(1 / look.donut.perDiameter)} + {look.donut.offset} 을 정수로 — 문턱이 없어 지름을 따라 고르게 굵어집니다. 데스크톱 {look.donut.diameter} → {look.donut.thickness} · 폰 {look.donut.phone.diameter} → {look.donut.phone.thickness}. 가운데 합계는 가장 나쁜 값 {worst}(16 / 22 · 700)이 구멍에 들어갈 때만 — 아니면 목록 위 합계로
         </Cap>
       </div>
     </Panel>
@@ -387,7 +387,7 @@ const HeatmapFig: Fig = ({ caption }) => {
             <HeatmapView look={look} rows={HEAT_ROWS} columns={HEAT_DAYS} columnsFull={HEAT_DAYS_FULL} cell={wide} label="요일 · 시간대별 지출" />
           </ChartBox>
         </Col>
-        <Col strong={`1024 — 칸 ${narrow} · 세기 색만`} cap={`칸이 ${h.threshold} 보다 좁으면 글 없이 세기 다섯(${h.steps.join(' · ')}%)만 — 값은 칸을 가리키거나 누르면 뜨는 툴팁 · 표로 보기. 글자를 줄이거나 돈을 줄여 쓰지 않는다`} w={560}>
+        <Col strong={`1024 — 칸 ${narrow} · 세기 색만`} cap={`칸이 ${h.threshold} 보다 좁으면 글 없이 세기 다섯(${h.steps.join(' · ')}%)만 — 값은 칸을 가리키거나 누르면 뜨는 툴팁 · 표로 보기. 글자를 줄이거나 돈을 줄여 쓰지 않습니다`} w={560}>
           <ChartBox title="요일 · 시간대별 지출" width={h.labelCol + (narrow + h.gap) * 7 + CL().surface.pad * 2 + 2}>
             <div style={{ paddingTop: 52 }}>
               <HeatmapView look={look} rows={HEAT_ROWS} columns={HEAT_DAYS} columnsFull={HEAT_DAYS_FULL} cell={narrow} active={[3, 2]} label="요일 · 시간대별 지출" />
@@ -465,10 +465,10 @@ const OrderGuide: Fig = ({ caption }) => {
         <Verdict ok note="저장된 색 먼저, 남은 항목은 쓰지 않은 색부터 — 구독 남색 · 의료 노랑">
           {view(good)}
         </Verdict>
-        <Verdict ok={false} note="순번 그대로 — 7번째(빨강)가 저장된 빨강(경조사)과 겹친다">
+        <Verdict ok={false} note="순번 그대로 — 7번째(빨강)가 저장된 빨강(경조사)과 겹칩니다">
           {view(sequential)}
         </Verdict>
-        <Verdict ok={false} note="색 없는 항목에 회색 — &quot;기타&quot; 와 구분되지 않는다">
+        <Verdict ok={false} note="색 없는 항목에 회색 — &quot;기타&quot; 와 구분되지 않습니다">
           {view(grey)}
         </Verdict>
       </div>
@@ -483,12 +483,12 @@ const FutureGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="오늘(8일)에서 끝난 선 — 남은 날의 자리는 비워 둔다(눈금은 달 끝까지 둘 수 있다)">
+        <Verdict ok note="오늘(8일)에서 끝난 선 — 남은 날의 자리는 비워 둡니다(눈금은 달 끝까지 둘 수 있습니다)">
           <ChartBox width={320}>
             <TrendChartView look={look} series={full(false)} count={MONTH_DAYS} xLabels={DAY_LABELS} xTicks={ticks} heads={DAY_HEADS} width={inner(320)} height={160} label="10월 지출 추이" />
           </ChartBox>
         </Verdict>
-        <Verdict ok={false} note="31일까지 0 으로 — 선이 바닥으로 떨어져 &quot;지출이 줄었다&quot; 로 읽힌다">
+        <Verdict ok={false} note="31일까지 0 으로 — 선이 바닥으로 떨어져 &quot;지출이 줄었다&quot; 로 읽힙니다">
           <ChartBox width={320}>
             <TrendChartView look={look} series={full(true)} count={MONTH_DAYS} xLabels={DAY_LABELS} xTicks={ticks} heads={DAY_HEADS} width={inner(320)} height={160} label="10월 지출 추이" />
           </ChartBox>
@@ -542,7 +542,7 @@ const StatusGuide: Fig = ({ caption }) => {
             <SkeletonView look={sk} radius="16" height={160} />
           </ChartBox>
         </Col>
-        <Col strong="비었음" cap="빈 축 · 회색 고리 · 0 막대로 대신하지 않는다" w={260}>
+        <Col strong="비었음" cap="빈 축 · 회색 고리 · 0 막대로 대신하지 않습니다" w={260}>
           <ChartBox title={`${TREND_MONTH}월 지출`} width={300}>
             <ResultSectionView look={r} kind="empty" size="medium" inCard icon="receipt-text" title="이번 달 지출이 없어요" />
           </ChartBox>
@@ -584,7 +584,7 @@ const A11yGuide: Fig = ({ caption }) => {
             </CardSurface>
           </Col>
         </Wrap>
-        <Cap w={560}>차트 상자는 role=&quot;img&quot; + 요약 이름(&quot;{'{기간}'} {'{무엇}'} — {'{핵심 값}'}&quot;), 라이브러리가 붙이는 이름 없는 role=&quot;application&quot; 은 걷는다. 키보드로 들어가면 ← → 로 날짜를 옮기며 툴팁</Cap>
+        <Cap w={560}>차트 상자는 role=&quot;img&quot; + 요약 이름(&quot;{'{기간}'} {'{무엇}'} — {'{핵심 값}'}&quot;), 라이브러리가 붙이는 이름 없는 role=&quot;application&quot; 은 걷습니다. 키보드로 들어가면 ← → 로 날짜를 옮기며 툴팁을 띄웁니다</Cap>
       </div>
     </Panel>
   );
@@ -607,7 +607,7 @@ const ExStatus: Fig = ({ caption }) => (
   </CodePreview>
 );
 
-// ── 어느 차트를 쓰나 · 계열 셋까지 · 도넛은 한 전체의 몫 · 두 계열의 색(2026-10-22 사용자 결정 5B · 6B · 8B · 7B) ──────
+// ── 어느 차트를 쓰나 · 계열 셋까지 · 도넛은 한 전체의 몫 · 두 계열의 색 ──────
 const W5 = 300;
 const BASE = 'var(--p-bg-layer-basement)';
 // 선 · 막대 — 지표 타일 + 차트(값은 chart.yaml · 지어낸 통계)
@@ -654,10 +654,10 @@ const WhichGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Wrap gap="gap-4">
-        <Col strong="선 — 흐름" cap="날짜를 따라 오르내리는 흐름 · 가로축은 오늘에서 끝난다" w={W5}>
+        <Col strong="선 — 흐름" cap="날짜를 따라 오르내리는 흐름 · 가로축은 오늘에서 끝납니다" w={W5}>
           <SeriesChart series={trendSeries(2, true)} dual title={`${TREND_MONTH}월 수입 · 지출`} />
         </Col>
-        <Col strong="막대 — 기간마다의 합" cap="기간끼리 견준다 · 음수가 섞여도 된다" w={W5}>
+        <Col strong="막대 — 기간마다의 합" cap="기간끼리 견줍니다 · 음수가 섞여도 됩니다" w={W5}>
           <SeriesChart series={monthlySeries(2, true)} kind="bar" dual title="월별 수입 · 지출" />
         </Col>
         <Col strong="도넛 — 한 전체의 몫" cap="2 ~ 10 + 기타 · 목록 범례 · 가운데는 조각의 합" w={W5}>
@@ -691,17 +691,17 @@ const FIVE: TrendSeries[] = [
 const SeriesGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok bg={BASE} note="셋까지 — 선마다 따라 읽힌다">
+      <Verdict ok bg={BASE} note="셋까지 — 선마다 따라 읽힙니다">
         <SeriesChart series={FIVE.slice(0, 3)} title={`${TREND_MONTH}월 카테고리 지출`} w={280} />
       </Verdict>
-      <Verdict ok={false} bg={BASE} note="다섯 — 선이 엉켜 어느 선이 무엇인지 범례를 오간다. 넷 이상이면 도넛 · 표를 먼저 본다">
+      <Verdict ok={false} bg={BASE} note="다섯 — 선이 엉켜 어느 선이 무엇인지 범례를 오가게 됩니다. 넷 이상이면 도넛 · 표를 먼저 봅니다">
         <SeriesChart series={FIVE} title={`${TREND_MONTH}월 카테고리 지출`} w={280} />
       </Verdict>
     </Pair>
   </Panel>
 );
 
-// 도넛에 넣는 것 — 한 전체(자산)의 몫 · 자산 + 빚을 한 고리에 넣고 가운데에 순자산(지금 웹 자산 화면의 짜임 — 숫자는 지어냄)
+// 도넛에 넣는 것 — 한 전체(자산)의 몫 · 자산 + 빚을 한 고리에 넣고 가운데에 순자산(숫자는 지어냄)
 const ASSETS = [
   { key: 'deposit', label: '예금', hue: 'blue' as ChartHue, amount: 4800000 },
   { key: 'invest', label: '투자', hue: 'green' as ChartHue, amount: 3200000 },
@@ -719,7 +719,7 @@ const DonutGuide: Fig = ({ caption }) => (
       <Verdict ok bg={BASE} note="한 전체(자산)의 몫 — 가운데는 조각의 합, 빚은 따로(순자산 카드 · 막대)">
         <SmallDonut slices={ASSETS} centerLabel="자산" centerAmount={won(ASSETS.reduce((a, x) => a + x.amount, 0))} title="자산 구성" w={280} />
       </Verdict>
-      <Verdict ok={false} bg={BASE} note="자산 + 빚 조각 · 가운데 순자산 — 가장 큰 조각(대출)과 가운데 숫자가 맞지 않는다">
+      <Verdict ok={false} bg={BASE} note="자산 + 빚 조각 · 가운데 순자산 — 가장 큰 조각(대출)과 가운데 숫자가 맞지 않습니다">
         <SmallDonut slices={MIXED} centerLabel="순자산" centerAmount={won(4800000 + 3200000 - 640000 - 9600000)} title="자산 구성" w={280} />
       </Verdict>
     </Pair>
@@ -740,7 +740,7 @@ const PairGuide: Fig = ({ caption }) => {
               <Verdict ok bg={rc('bg-layer-basement', mode)} note="수입 파랑 · 지출 빨강 — 먼 짝">
                 <SeriesChart series={far} dual mode={mode} title={`${TREND_MONTH}월 수입 · 지출`} w={280} />
               </Verdict>
-              <Verdict ok={false} bg={rc('bg-layer-basement', mode)} note={`주황 · 빨강 — 가까운 짝(라이트 11.3 · 다크 9.7), 다크에서는 이름 없이 못 가른다`}>
+              <Verdict ok={false} bg={rc('bg-layer-basement', mode)} note={`주황 · 빨강 — 가까운 짝(라이트 11.3 · 다크 9.7), 다크에서는 이름 없이 가를 수 없습니다`}>
                 <SeriesChart series={near} dual mode={mode} title={`${TREND_MONTH}월 수입 · 지출`} w={280} />
               </Verdict>
             </Pair>
@@ -751,7 +751,17 @@ const PairGuide: Fig = ({ caption }) => {
   );
 };
 
+// 개요 카드 — 라이트 수입 · 지출 추이(지표 타일 둘 · 이중 축)
+const Thumb: Fig = () => (
+  <div style={{ width: 360, zoom: 0.54 }}>
+    <ChartBox title={`${TREND_MONTH}월 수입 · 지출`} mode="light" width={360}>
+      <Trend mode="light" w={360} noTip />
+    </ChartBox>
+  </div>
+);
+
 export const chartFigures: Record<string, Fig> = {
+  thumb: Thumb,
   'which-guide': WhichGuide,
   'series-guide': SeriesGuide,
   'donut-guide': DonutGuide,

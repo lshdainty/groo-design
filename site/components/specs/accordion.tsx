@@ -183,7 +183,7 @@ const Size: Fig = ({ caption }) => {
           <SizeColumn w={dialogBody()} strong="데스크톱 대화상자 480" />
         </div>
         <Cap w={620}>
-          제목만 {l.minH}(위아래 {l.padY} + 제목 {parseFloat(l.title.lineHeight)}) · 설명이 있으면 {l.minHDesc}(+ {l.body.gap} + 설명 {parseFloat(l.description.lineHeight)}) — 28자 제목은 폰 시트에서 두 줄, 대화상자에서는 설명이 두 줄로 줄을 바꾼 만큼 늘어난다. 폰 · 데스크톱이 같은 크기다(잰 높이는 트리거 — 면의 테두리 {l.separated.borderW} 는 뺐다)
+          제목만 {l.minH}(위아래 {l.padY} + 제목 {parseFloat(l.title.lineHeight)}) · 설명이 있으면 {l.minHDesc}(+ {l.body.gap} + 설명 {parseFloat(l.description.lineHeight)}) — 28자 제목은 폰 시트에서 두 줄, 대화상자에서는 설명이 두 줄로 줄을 바꾼 만큼 늘어납니다. 폰 · 데스크톱이 같은 크기입니다(잰 높이는 트리거만 — 면의 테두리 {l.separated.borderW} 는 뺐습니다)
         </Cap>
       </div>
     </Panel>
@@ -211,7 +211,7 @@ const PanelFig: Fig = ({ caption }) => {
           </Board>
         </Wide>
         <Cap w={620}>
-          위 {l.panel.padTop} · 좌우 {l.panel.padX}(앞 아이콘이 있어도 같다) · 아래 {l.panel.padBottom} · 글 {parseFloat(t.fontSize)} / {parseFloat(t.lineHeight)} · {t.fontWeight} — 줄바꿈 문자는 그대로 줄을 바꾸고, 패널 안에서 스크롤하지 않는다(높이 제한 없음)
+          위 {l.panel.padTop} · 좌우 {l.panel.padX}(앞 아이콘이 있어도 같습니다) · 아래 {l.panel.padBottom} · 글 {parseFloat(t.fontSize)} / {parseFloat(t.lineHeight)} · {t.fontWeight} — 줄바꿈 문자는 그대로 줄을 바꾸고, 패널 안에서 스크롤하지 않습니다(높이 제한 없음)
         </Cap>
       </div>
     </Panel>
@@ -244,7 +244,7 @@ const NoDetail: Fig = ({ caption }) => {
             </div>
           </Board>
         </Wide>
-        <Cap w={620}>대중교통 · 편의점은 트리거가 아닌 그냥 줄 — 꺾쇠 · 단추 · 머리말이 없고 Tab 이 건너뛴다. 위아래 {l.padY} · 좌우 {l.padX} · 글 크기가 같아 높이와 글 시작(점선)이 같다</Cap>
+        <Cap w={620}>대중교통 · 편의점은 트리거가 아닌 그냥 줄 — 꺾쇠 · 단추 · 머리말이 없고 Tab 이 건너뜁니다. 위아래 {l.padY} · 좌우 {l.padX} · 글 크기가 같아 높이와 글 시작(점선)이 같습니다</Cap>
       </div>
     </Panel>
   );
@@ -259,10 +259,10 @@ const ExpandAll: Fig = ({ caption }) => {
     <Panel caption={caption}>
       <div className="flex flex-wrap items-start justify-center gap-8">
         {[
-          ['하나라도 접혀 있다', [] as string[]],
-          ['모두 펼쳐져 있다', ['coffee', 'telecom']],
+          ['하나라도 접혀 있을 때', [] as string[]],
+          ['모두 펼쳐져 있을 때', ['coffee', 'telecom']],
         ].map(([label, open]) => (
-          <Shot key={label as string} strong={label as string} cap={(open as string[]).length ? `"${a.labels.collapse}" — 누르면 모두 접는다` : `"${a.labels.expand}" — 상세가 있는 항목을 모두 펼친다(대중교통은 그냥 줄)`}>
+          <Shot key={label as string} strong={label as string} cap={(open as string[]).length ? `"${a.labels.collapse}" — 누르면 모두 접습니다` : `"${a.labels.expand}" — 상세가 있는 항목을 모두 펼칩니다(대중교통은 그냥 줄)`}>
             <Board bg="bg-layer-floating" pad={24} w={sheetBody() + 48}>
               <div style={{ position: 'relative' }}>
                 <AccHeaderView look={l} title={`혜택 상세 · ${BENEFITS.length}건`}>
@@ -280,7 +280,7 @@ const ExpandAll: Fig = ({ caption }) => {
       </div>
       <div className="mt-4 flex justify-center">
         <Cap w={620}>
-          목록 머리 오른쪽 글 버튼(SEED Text Button) — {parseFloat(a.type.fontSize)} · {a.type.fontWeight} · fg-neutral-muted · 아이콘 없음 · 보이는 {a.h} · 누르는 {a.touch}(분홍). 머리는 제목 {parseFloat(l.header.title.fontSize)} / {parseFloat(l.header.title.lineHeight)} · {l.header.title.fontWeight} + 건수 · 높이 {l.header.minH} · 아래 {l.header.marginBottom}
+          목록 머리 오른쪽 글 버튼 — {parseFloat(a.type.fontSize)} · {a.type.fontWeight} · fg-neutral-muted · 아이콘 없음 · 보이는 {a.h} · 누르는 {a.touch}(분홍). 머리는 제목 {parseFloat(l.header.title.fontSize)} / {parseFloat(l.header.title.lineHeight)} · {l.header.title.fontWeight} + 건수 · 높이 {l.header.minH} · 아래 {l.header.marginBottom}
         </Cap>
       </div>
     </Panel>
@@ -357,7 +357,7 @@ const WhenGuide: Fig = ({ caption }) => {
             </CollapsibleView>
           </div>
         </Verdict>
-        <Verdict ok note="줄은 편집, 하위만 접는다 — 카테고리는 List 하위 줄(줄 앞 꺾쇠 단추)">
+        <Verdict ok note="줄은 편집하고 하위만 접습니다 — 카테고리는 List 하위 줄(줄 앞 꺾쇠 단추)">
           <div style={{ width: 312, flexShrink: 0, background: 'var(--p-bg-layer-default)' }}>
             <NestedListView list={listLook()} nest={listNestLook()} categories={CATEGORIES.slice(0, 2)} open={['food']} width={312} childLimit={3} />
           </div>
@@ -373,14 +373,14 @@ const MultiGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note={`모두 펼치기 한 번으로 상세가 있는 ${all.length}개가 함께 열린다(그림은 앞 6건) — 둘을 나란히 견주며 읽고, 시트 본문이 그만큼 길어져 스크롤한다`} bg="#E9E9EC">
+        <Verdict ok note={`모두 펼치기 한 번으로 상세가 있는 ${all.length}개가 함께 열립니다(그림은 앞 6건) — 둘을 나란히 견주며 읽고, 시트 본문이 그만큼 길어져 스크롤합니다`} bg="#E9E9EC">
           <ScaledAuto w={390} s={0.6}>
             <div style={{ background: rc('bg-layer-floating'), borderRadius: 24, paddingTop: 24, paddingBottom: 24, paddingLeft: 24, paddingRight: 24 }}>
               <BenefitList open={all} items={benefitItems({ only: ['pay', 'coffee', 'transit', 'telecom', 'store', 'movie'] })} />
             </div>
           </ScaledAuto>
         </Verdict>
-        <Verdict ok={false} note="하나만 여는 모드 — 커피를 열면 위의 간편결제가 닫혀 누른 자리가 위로 밀려 올라간다. 열 개를 비교하려면 열 번 누른다" bg="#E9E9EC">
+        <Verdict ok={false} note="하나만 여는 모드 — 커피를 열면 위의 간편결제가 닫혀 누른 자리가 위로 밀려 올라갑니다. 열 개를 비교하려면 열 번 눌러야 합니다" bg="#E9E9EC">
           <ScaledAuto w={390} s={0.6}>
             <div style={{ position: 'relative', background: rc('bg-layer-floating'), borderRadius: 24, paddingTop: 24, paddingBottom: 24, paddingLeft: 24, paddingRight: 24 }}>
               <BenefitList open={['coffee']} items={benefitItems({ only: ['pay', 'coffee', 'transit', 'telecom', 'store', 'movie'] })} />
@@ -407,12 +407,12 @@ const ScrollGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="첫 항목을 펼쳐도 트리거는 그 자리 · 초점도 트리거 — 길어진 내용은 시트 본문이 스크롤한다" bg="#E9E9EC">
+        <Verdict ok note="첫 항목을 펼쳐도 트리거는 그 자리 · 초점도 트리거 — 길어진 내용은 시트 본문이 스크롤합니다" bg="#E9E9EC">
           <Phone mode="auto" title="카드 상세" scale={0.55} h={640} screenW={360} overlay={<SheetOver open={['pay']} />}>
             <CardDetailBody />
           </Phone>
         </Verdict>
-        <Verdict ok={false} note="패널에 높이를 정해 안에서 스크롤 — 스크롤이 겹쳐 손가락이 어느 쪽을 움직이는지 모른다" bg="#E9E9EC">
+        <Verdict ok={false} note="패널에 높이를 정해 안에서 스크롤 — 스크롤이 겹쳐 손가락이 어느 쪽을 움직이는지 알 수 없습니다" bg="#E9E9EC">
           <Phone mode="auto" title="카드 상세" scale={0.55} h={640} screenW={360}
             overlay={
               <DimView dim={s.dim} place="end">
@@ -457,13 +457,13 @@ const CardGuide: Fig = ({ caption }) => {
                 </div>
               </ScaledAuto>
             </MeasureH>
-            <Cap strong={modeKo(mode)}>카드 요약 · 혜택 {BENEFITS.length}건 · 유의사항 {CAUTIONS.length}건 — 모두 접혀 있다</Cap>
+            <Cap strong={modeKo(mode)}>카드 요약 · 혜택 {BENEFITS.length}건 · 유의사항 {CAUTIONS.length}건 — 모두 접혀 있습니다</Cap>
           </div>
         ))}
       </div>
       <div className="mt-4 flex justify-center">
         <Cap w={640}>
-          폰은 띠 안 inline — 띠 안 값은 카드 안과 같다. 머리(위 {c.accordion.header.top} · 좌우 {c.accordion.header.x} · 아래 {c.accordion.header.bottom}) 아래 트리거가 화면 끝까지, 띠 아래 {c.accordion.padBottom}(마지막 트리거의 아래 {AL().padY} 와 합쳐 {c.accordion.padBottom + AL().padY}). 첫 띠는 머리 바로 아래, 마지막 띠 아래 틈 없음. 84자 유의사항 제목도 줄을 바꿔 다 보인다
+          폰은 띠 안 inline 입니다 — 띠 안 값은 카드 안과 같습니다. 머리(위 {c.accordion.header.top} · 좌우 {c.accordion.header.x} · 아래 {c.accordion.header.bottom}) 아래 트리거가 화면 끝까지, 띠 아래 {c.accordion.padBottom}(마지막 트리거의 아래 {AL().padY} 와 합쳐 {c.accordion.padBottom + AL().padY}). 첫 띠는 머리 바로 아래, 마지막 띠 아래 틈 없음. 84자 유의사항 제목도 줄을 바꿔 다 보입니다
         </Cap>
       </div>
     </Panel>
@@ -477,12 +477,12 @@ const WrapGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note={`${CAUTIONS[0].title.length}자 제목도 줄을 바꿔 다 보인다(단어 단위) — 펼쳐도 상세만 나오므로 제목은 여기서 다 읽혀야 한다`} bg="var(--p-bg-layer-basement)">
+        <Verdict ok note={`${CAUTIONS[0].title.length}자 제목도 줄을 바꿔 다 보입니다(단어 단위) — 펼쳐도 상세만 나오므로 제목은 여기서 다 읽혀야 합니다`} bg="var(--p-bg-layer-basement)">
           <div style={{ width: 312, flexShrink: 0 }}>
             <AccCard title={`유의사항 · ${CAUTIONS.length}건`} items={first} expandAll={false} />
           </div>
         </Verdict>
-        <Verdict ok={false} note="한 줄 말줄임 — 잘린 제목은 어디에서도 다 읽을 수 없다(펼쳐도 다른 글)" bg="var(--p-bg-layer-basement)">
+        <Verdict ok={false} note="한 줄 말줄임 — 잘린 제목은 어디에서도 다 읽을 수 없습니다(펼쳐도 다른 글)" bg="var(--p-bg-layer-basement)">
           <div style={{ width: 312, flexShrink: 0 }}>
             <AccCard title={`유의사항 · ${CAUTIONS.length}건`} items={first.map((it, i) => (i === 0 ? { ...it, title: '', decor: <Ellipsis text={it.title} l={l} /> } : it))} expandAll={false} />
           </div>
@@ -512,7 +512,15 @@ const ExCard: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 개요 카드 — 라이트 카드 안 inline 아코디언 하나(커피를 펼침)
+const Thumb: Fig = () => (
+  <div style={{ width: 312, zoom: 0.6 }}>
+    <AccCard mode="light" title={`혜택 · ${BENEFITS.length}건`} items={benefitItems({ only: ['coffee', 'telecom', 'movie'], desc: false })} open={['coffee']} />
+  </div>
+);
+
 export const accordionFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

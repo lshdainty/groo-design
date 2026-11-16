@@ -1,6 +1,6 @@
 // Radio 페이지의 그림 — specs/components/radio-group.md 의 `[그림: …](../../site/components/specs/radio-group.tsx#<id>)` 자리.
 // 동그라미 · 라벨은 radio-group.yaml 을 푼 값(radioLook)으로, 화면 예시는 kit 의 Desk 화면 조각으로 그린다.
-// 오늘 제품에는 라벨만 있는 Radio 가 없다 — 선택지는 캘린더 일정의 반복 선택지를 빌렸다(radio-group.md Guidelines).
+// 선택지는 캘린더 일정의 반복 선택지를 예로 든다(radio-group.md Guidelines).
 import type { CSSProperties, ReactNode } from 'react';
 import { Calendar } from 'lucide-react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
@@ -21,7 +21,7 @@ type Fig = (p: { caption?: string }) => ReactNode;
 const spec = () => loadComponentSpec('radio-group');
 const SIZES = () => axisValues(spec(), 'size');
 const GAP = radioGroupGap;
-// 넷 — 선택지 5개 이상은 Select(select.md 판단 순서, 2026-10-22 2B)
+// 넷 — 선택지 5개 이상은 Select(select.md 판단 순서)
 const REPEAT = ['반복 없음', '매일', '매주', '매월'];
 
 // 한 Radio — 조합 · 선택 여부 · 상태 · 모드(고정 그림)
@@ -298,7 +298,7 @@ const TouchTarget: Fig = ({ caption }) => (
               </span>
             ))}
           </div>
-          <Cap strong={s}>줄마다 높이 44 — 이웃 줄과 겹치지 않는다</Cap>
+          <Cap strong={s}>줄마다 높이 44 — 이웃 줄과 겹치지 않습니다</Cap>
         </div>
       ))}
     </div>
@@ -311,13 +311,13 @@ const Pair = ({ children }: { children: ReactNode }) => <div className="flex w-f
 const GroupGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="제목을 위에 두고 선택지를 세로로 — 처음 값(반복 없음)을 골라 둔다">
+      <Verdict ok note="제목을 위에 두고 선택지를 세로로 쌓습니다 — 처음 값(반복 없음)을 골라 둡니다">
         <div className="flex w-[220px] flex-col">
           <Title id="gg-a">반복</Title>
           <G ariaLabelledby="gg-a" items={REPEAT.slice(0, 4)} initial={0} state="enabled" />
         </div>
       </Verdict>
-      <Verdict ok={false} note="가로로 늘어놓기 — 줄이 바뀌면 어느 라벨이 어느 동그라미인지 흐려진다. 한 줄에서 고르려면 Segmented">
+      <Verdict ok={false} note="가로로 늘어놓기 — 줄이 바뀌면 어느 라벨이 어느 동그라미인지 흐려집니다. 한 줄에서 고르려면 Segmented 를 씁니다">
         <div className="flex w-[240px] flex-col">
           <Title>반복</Title>
           <div className="flex flex-wrap" style={{ columnGap: 16 }}>
@@ -350,10 +350,10 @@ function RepeatSheet({ tone, brandBtn }: { tone: string; brandBtn: boolean }) {
 const ToneGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="선택은 짙은 회색 — 화면의 주 액션(저장)이 먼저 읽힌다">
+      <Verdict ok note="선택은 짙은 회색 — 화면의 주 액션(저장)이 먼저 읽힙니다">
         <RepeatSheet tone="neutral" brandBtn={false} />
       </Verdict>
-      <Verdict ok={false} note="선택마다 브랜드 색을 깔면 브랜드 색이 흩어진다">
+      <Verdict ok={false} note="선택마다 브랜드 색을 깔면 브랜드 색이 흩어집니다">
         <RepeatSheet tone="brand" brandBtn />
       </Verdict>
     </Pair>
@@ -386,7 +386,7 @@ const END = [
 const SelectBoxGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="Select Box — 설명은 제목 아래, 입력칸은 고른 상자 아래로 펼쳐진다">
+      <Verdict ok note="Select Box — 설명은 제목 아래, 입력칸은 고른 상자 아래로 펼쳐집니다">
         <div className="flex w-[280px] flex-col">
           <Title id="rg-sb-end">종료</Title>
           <SelectBoxGroupView
@@ -402,7 +402,7 @@ const SelectBoxGuide: Fig = ({ caption }) => (
           />
         </div>
       </Verdict>
-      <Verdict ok={false} note="Radio 줄 안에 설명 · 입력칸 — 입력칸이 라디오의 일부로 읽히고, 누르는 영역이 겹친다">
+      <Verdict ok={false} note="Radio 줄 안에 설명 · 입력칸 — 입력칸이 라디오의 일부로 읽히고, 누르는 영역이 겹칩니다">
         <div className="flex w-[240px] flex-col">
           <Title>종료</Title>
           {END.map((o, i) => (
@@ -441,10 +441,10 @@ function RepeatError({ bordered = false }: { bordered?: boolean }) {
 const ErrorFig: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="동그라미는 그대로, 묶음 아래 글로 무엇을 할지 알린다">
+      <Verdict ok note="동그라미는 그대로 두고, 묶음 아래 글로 무엇을 할지 알립니다">
         <RepeatError />
       </Verdict>
-      <Verdict ok={false} note="동그라미마다 빨간 테두리 — 모든 선택지가 틀린 것처럼 보인다">
+      <Verdict ok={false} note="동그라미마다 빨간 테두리 — 모든 선택지가 틀린 것처럼 보입니다">
         <RepeatError bordered />
       </Verdict>
     </Pair>
@@ -495,7 +495,18 @@ const ExError: Fig = ({ caption }) => (
   </Preview>
 );
 
+// 개요 카드 — 라이트 묶음 하나(제목 + large 선택지 셋, 둘째를 고름). 그린 크기 약 120 × 156(제목 24 + 줄 36 × 3 + 사이 12 × 2) → zoom 1.2 로 144 × 187
+const Thumb: Fig = () => (
+  <div style={{ width: 120, zoom: 1.2 }}>
+    <div className="flex flex-col">
+      <Title mode="light">반복</Title>
+      <G size="large" items={REPEAT.slice(0, 3)} initial={1} mode="light" ariaLabel="반복" state="enabled" />
+    </div>
+  </div>
+);
+
 export const radioGroupFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

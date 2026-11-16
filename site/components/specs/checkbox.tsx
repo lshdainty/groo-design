@@ -373,7 +373,7 @@ const ShapeGuide: Fig = ({ caption }) => (
           </div>
         </div>
       </Verdict>
-      <Verdict ok={false} note="하나 이상 꼭 골라야 하는 긴 목록에 Ghost — 고른 것과 안 고른 것이 잘 안 갈린다">
+      <Verdict ok={false} note="하나 이상 꼭 골라야 하는 긴 목록에 Ghost — 고른 것과 안 고른 것이 잘 갈리지 않습니다">
         <div className="flex w-[240px] flex-col">
           <span className="mb-1 text-[13px] font-bold" style={{ color: rc('fg-neutral-muted') }}>
             내보낼 데이터(하나 이상)
@@ -411,10 +411,10 @@ function ExportSheet({ tone, brandBtn }: { tone: string; brandBtn: boolean }) {
 const ToneGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="체크는 짙은 회색 — 화면의 주 액션(내보내기)이 먼저 읽힌다">
+      <Verdict ok note="체크는 짙은 회색 — 화면의 주 액션(내보내기)이 먼저 읽힙니다">
         <ExportSheet tone="neutral" brandBtn={false} />
       </Verdict>
-      <Verdict ok={false} note="체크마다 브랜드 색을 깔면 브랜드 색이 흩어진다">
+      <Verdict ok={false} note="체크마다 브랜드 색을 깔면 브랜드 색이 흩어집니다">
         <ExportSheet tone="brand" brandBtn />
       </Verdict>
     </Pair>
@@ -424,12 +424,12 @@ const ToneGuide: Fig = ({ caption }) => (
 const ErrorFig: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="칸은 그대로, 묶음 아래 글로 무엇을 할지 알린다">
+      <Verdict ok note="칸은 그대로, 묶음 아래 글로 무엇을 할지 알립니다">
         <div className="w-[220px]">
           <ExportGroup picked={[]} message="내보낼 데이터를 하나 이상 골라 주세요." />
         </div>
       </Verdict>
-      <Verdict ok={false} note="칸마다 빨간 테두리 — 묶음 오류에서 모든 칸이 빨개져 무엇이 틀렸는지 흐려진다">
+      <Verdict ok={false} note="칸마다 빨간 테두리 — 묶음 오류에서 모든 칸이 빨개져 무엇이 틀렸는지 흐려집니다">
         <div className="w-[220px]">
           <ExportGroup picked={[]} bordered message="내보낼 데이터를 하나 이상 골라 주세요." />
         </div>
@@ -542,7 +542,22 @@ const ExCheckmark: Fig = ({ caption }) => (
   </Preview>
 );
 
+// 개요 카드 — 라이트 묶음 하나(부모 일부 선택 · 선택 · 선택 안 됨)
+const Thumb: Fig = () => (
+  <div style={{ width: 240, zoom: 0.9 }}>
+    <Surface mode="light">
+      <div className="flex flex-col" style={{ gap: GROUP_GAP() }}>
+        <C weight="bold" checked="indeterminate" state="enabled" mode="light" label="전체" />
+        <C checked="checked" state="enabled" mode="light" label="거래 내역" />
+        <C checked="checked" state="enabled" mode="light" label="예산" />
+        <C checked="unchecked" state="enabled" mode="light" label="메모" />
+      </div>
+    </Surface>
+  </div>
+);
+
 export const checkboxFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

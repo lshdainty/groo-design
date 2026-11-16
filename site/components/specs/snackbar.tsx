@@ -36,7 +36,7 @@ function LedgerPhone({ mode, scale = 0.65, h = 600, snack, marks = false }: { mo
   );
 }
 // 화면 키보드가 올라온 폰 — 키보드(그림, OS 가 그린다 · 높이 KB)가 탭 바를 덮고 띠는 키보드 바로 위 8(자리의 아래 여백).
-// 2026-10-15 사용자 결정 Q-003-1 — 웹 폰 브라우저도 같다
+// 웹 폰 브라우저도 같다
 const KB = 260;
 function SoftKeyboard({ mode }: { mode: Mode }) {
   const rows = ['ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ', 'ㅁㄴㅇㄹㅎㅗㅓㅏㅣ', 'ㅋㅌㅊㅍㅠㅜㅡ'];
@@ -108,7 +108,7 @@ function RegionMarks() {
 const MESSAGES: { tone?: 'neutral' | 'positive' | 'critical'; message: string; action?: string }[] = [
   { message: '거래를 저장했어요.' },
   { message: '거래를 삭제했어요.', action: '되돌리기' },
-  // 켜고 끄는 단추(관심 등록)의 실패 — 되돌린 뒤 "다시 시도"(Toggle 20A)
+  // 켜고 끄는 단추(관심 등록)의 실패 — 되돌린 뒤 "다시 시도"(Toggle)
   { tone: 'critical', message: '관심 종목에 넣지 못했어요. 다시 시도해주세요.', action: '다시 시도' },
 ];
 const Hero: Fig = ({ caption }) => {
@@ -192,7 +192,7 @@ const Anatomy: Fig = ({ caption }) => {
             ['ⓔ', 'Action'],
           ]}
         />
-        <span className="max-w-[480px] text-center text-[12px] leading-5 pk-muted">1.5배로 그렸다 — 두 줄이면 아이콘 · 액션은 띠 가운데에 선다. 보조 기술용 닫기는 키보드 초점이 올 때만 보인다</span>
+        <span className="max-w-[480px] text-center text-[12px] leading-5 pk-muted">1.5배로 그렸습니다 — 두 줄이면 아이콘 · 액션은 띠 가운데에 섭니다. 보조 기술용 닫기는 키보드 초점이 올 때만 보입니다</span>
       </div>
     </Figure>
   );
@@ -242,7 +242,7 @@ const Layout: Fig = ({ caption }) => {
           <div style={{ width: 328 }}>
             <S message="미리 낸 돈 중 32,000원이 계좌로 돌아왔어요. 잔액이 맞는지 확인해 주세요." action={{ label: '잔액 고치기' }} tone="positive" />
           </div>
-          <Muted>실제 크기(폰 360 · 띠 328) — 글이 길면 줄을 바꾸고 자르지 않는다. 아이콘 · 액션은 띠 가운데</Muted>
+          <Muted>실제 크기(폰 360 · 띠 328) — 글이 길면 줄을 바꾸고 자르지 않습니다. 아이콘 · 액션은 띠 가운데에 섭니다</Muted>
         </div>
         {/* 상태 — 키보드 포커스 링(띠 글자색, 어느 링이든 띠 위) · 액션 누름 */}
         <div className="flex flex-col gap-3">
@@ -395,7 +395,7 @@ function GlobalToastPhone({ mode = 'auto' }: { mode?: Mode }) {
 const ErrorGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="mx-auto flex w-full max-w-[760px] flex-col gap-4">
-      <Verdict ok note="불러오기 실패는 그 자리에 Result Section + 다시 시도, 저장 실패는 폼을 연 채 맨 위 Callout — 무엇이 안 됐고 무엇을 하면 되는지 그 자리에서 보인다">
+      <Verdict ok note="불러오기 실패는 그 자리에 Result Section + 다시 시도, 저장 실패는 폼을 연 채 맨 위 Callout — 무엇이 안 됐고 무엇을 하면 되는지 그 자리에서 보입니다">
         <div className="flex flex-wrap items-start justify-center gap-6">
           <div className="flex flex-col items-center gap-2">
             <FailedLedger />
@@ -407,7 +407,7 @@ const ErrorGuide: Fig = ({ caption }) => (
           </div>
         </div>
       </Verdict>
-      <Verdict ok={false} note="모든 실패를 한곳에서 토스트로 — 서버가 보낸 영어가 그대로 나가고, 화면이 같은 실패를 또 띄운다. 목록은 비어 보여 실패를 숨긴다">
+      <Verdict ok={false} note="모든 실패를 한곳에서 토스트로 — 서버가 보낸 영어가 그대로 나가고, 화면이 같은 실패를 또 띄웁니다. 목록은 비어 보여 실패를 숨깁니다">
         <div className="flex flex-col items-center gap-2">
           <GlobalToastPhone />
           <Cap strong="전역 오류 토스트">띠 둘 · 서버 글 · 빈 목록</Cap>
@@ -429,7 +429,7 @@ const PlacementGuide: Fig = ({ caption }) => {
           <div className="flex w-[240px] flex-col gap-2 text-[13px] leading-5">
             <b className="pk-text">폰 — 탭 바 위 {l.region.padBottom}</b>
             <span className="pk-muted">
-              분홍은 자리의 여백 — 좌우 {l.region.padX} · 아래 {l.region.padBottom}. 띠 폭은 화면 − {l.region.padX * 2}. 아래는 안전 영역과 피할 자리(탭 바 · 플로팅 버튼 · 바닥 버튼) 중 큰 쪽 위 {l.region.padBottom} — 탭 바는 안전 영역을 품고 있다.
+              분홍은 자리의 여백입니다 — 좌우 {l.region.padX} · 아래 {l.region.padBottom}. 띠 폭은 화면 − {l.region.padX * 2} 입니다. 아래는 안전 영역과 피할 자리(탭 바 · 플로팅 버튼 · 바닥 버튼) 중 큰 쪽 위 {l.region.padBottom} 입니다 — 탭 바는 안전 영역을 품고 있습니다.
             </span>
           </div>
         </div>
@@ -438,7 +438,7 @@ const PlacementGuide: Fig = ({ caption }) => {
           <div className="flex w-[240px] flex-col gap-2 text-[13px] leading-5">
             <b className="pk-text">화면 키보드 — 키보드 바로 위 {l.region.keyboardGap}</b>
             <span className="pk-muted">
-              키보드도 피할 자리다 — 탭 바가 키보드 뒤로 가도 띠는 키보드 위 {l.region.keyboardGap} 에 선다. 웹도 폰 브라우저에서 같다(보이는 화면의 아래 끝을 잰다). 자리가 옮겨 갈 때는 {l.region.offset.duration} easing.
+              키보드도 피할 자리입니다 — 탭 바가 키보드 뒤로 가도 띠는 키보드 위 {l.region.keyboardGap} 에 섭니다. 웹도 폰 브라우저에서 같습니다(보이는 화면의 아래 끝을 잽니다). 자리가 옮겨 갈 때는 {l.region.offset.duration} easing 입니다.
             </span>
           </div>
         </div>
@@ -465,7 +465,7 @@ const PlacementGuide: Fig = ({ caption }) => {
             <Band style={{ left: 0, right: 0, bottom: 0, height: l.region.padBottom }} />
           </WebWindow>
           <Cap strong="데스크톱 — 아래 가운데">
-            넓은 화면에서는 최대 {l.root.maxWidth} 로 가운데에 선다 · 아래 {l.region.padBottom}
+            넓은 화면에서는 최대 {l.root.maxWidth} 로 가운데에 섭니다 · 아래 {l.region.padBottom}
           </Cap>
         </div>
       </div>
@@ -495,7 +495,7 @@ const TimingGuide: Fig = ({ caption }) => {
     { title: '액션 없음', bars: [bar(0, plain, `보임 ${plain}초`)] },
     { title: '액션 있음("되돌리기")', bars: [bar(0, withAction, `보임 ${withAction}초`)] },
     { title: '마우스 · 손가락 · 키보드 초점이 머무르면 — 멈췄다가, 떠나면 처음부터', bars: [bar(0, before, `${before}초`), bar(before, before + hold, '멈춤', 'hold'), bar(before + hold, before + hold + plain, `다시 ${plain}초`)] },
-    { title: '새 띠가 오면 — 지금 띠를 바로 바꾼다', bars: [bar(0, 1.5, '지금 띠'), bar(1.5 + exitS, 1.5 + exitS + plain, `새 띠 ${plain}초`, 'next')] },
+    { title: '새 띠가 오면 — 지금 띠를 바로 바꿉니다', bars: [bar(0, 1.5, '지금 띠'), bar(1.5 + exitS, 1.5 + exitS + plain, `새 띠 ${plain}초`, 'next')] },
     { title: '지금 띠에 액션이 있으면 — 끝날 때까지 지키고 새 띠는 그 뒤에', bars: [bar(0, withAction, `되돌리기 ${withAction}초`), bar(withAction + exitS, withAction + exitS + plain, `새 띠 ${plain}초`, 'next')] },
   ];
   return (
@@ -521,7 +521,7 @@ const TimingGuide: Fig = ({ caption }) => {
           </div>
         ))}
         <span className="text-[12px] leading-5 pk-muted">
-          머무름이 끝나면 남은 시간이 아니라 처음부터 다시 센다. 한 번에 하나 — 새 띠가 오면 지금 띠가 {px(l.motion.exit.duration)}ms 로 사라지고 새 띠가 {px(l.motion.enter.duration)}ms 로 나타난다. 지금 띠에 액션(되돌리기 · 다시 시도)이 있으면 그 띠가 끝난 뒤에 새 띠가 뜬다. 되돌리기 같은 액션은 같은 일을 할 다른 길(목록 · 상세)도 둔다.
+          머무름이 끝나면 남은 시간이 아니라 처음부터 다시 셉니다. 한 번에 하나 — 새 띠가 오면 지금 띠가 {px(l.motion.exit.duration)}ms 로 사라지고 새 띠가 {px(l.motion.enter.duration)}ms 로 나타납니다. 지금 띠에 액션(되돌리기 · 다시 시도)이 있으면 그 띠가 끝난 뒤에 새 띠가 뜹니다. 되돌리기 같은 액션은 같은 일을 할 다른 길(목록 · 상세)도 둡니다.
         </span>
       </Surface>
     </Panel>
@@ -541,7 +541,7 @@ const WritingGuide: Fig = ({ caption }) => (
           </div>
         </W>
       </Verdict>
-      <Verdict ok={false} note='시스템 말 · "실패" 로 끝나는 말 · 마침표 없음 · "확인" 액션 — 무엇이 됐는지, 무엇을 하면 되는지 알 수 없다'>
+      <Verdict ok={false} note='시스템 말 · "실패" 로 끝나는 말 · 마침표 없음 · "확인" 액션 — 무엇이 됐는지, 무엇을 하면 되는지 알 수 없습니다'>
         <W>
           <div className="flex flex-col gap-2">
             <S message="처리가 완료되었습니다" />
@@ -559,7 +559,17 @@ const cta = () => buttonLook({ variant: 'neutralSolid', size: 'large' });
 const ExBasic: Fig = () => <SnackBasicDemo look={sl()} cta={cta()} />;
 const ExAction: Fig = () => <SnackActionDemo look={sl()} />;
 
+// 개요 카드 — 라이트 띠 셋(결과 · 되돌리기 · 가벼운 실패)
+const Thumb: Fig = () => (
+  <div className="flex flex-col gap-3" style={{ width: 328, zoom: 0.85 }}>
+    {MESSAGES.map((m) => (
+      <S key={m.message} mode="light" tone={m.tone} message={m.message} action={m.action ? { label: m.action } : undefined} />
+    ))}
+  </div>
+);
+
 export const snackbarFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

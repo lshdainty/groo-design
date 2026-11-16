@@ -207,7 +207,7 @@ const WhereGuide: Fig = ({ caption }) => (
       <Verdict ok note="폰 · 탭 바가 없는 화면(할 일) — 떠 있는 버튼">
         <TodoPhone scale={0.42} safe={34} />
       </Verdict>
-      <Verdict ok note="데스크톱 할 일 — 머리의 주 버튼(내역 추가 자리), 떠 있는 버튼을 두지 않는다">
+      <Verdict ok note="데스크톱 할 일 — 머리의 주 버튼(내역 추가 자리), 떠 있는 버튼을 두지 않습니다">
         <Desktop w={1024} h={720} s={0.28}>
           <Shell side={<Side current="todo" collapsed />} header={<Bar type="desktop" actions={[{ icon: 'bell', label: '알림' }, { icon: 'settings', label: '설정' }]} primary={{ label: '할 일 추가', icon: 'plus' }} />}>
             <ScreenTitle>할 일</ScreenTitle>
@@ -230,7 +230,7 @@ const StackGuide: Fig = ({ caption }) => {
   return (
     <Plate caption={caption}>
       <Pair>
-        <Verdict ok note={`스낵바는 버튼 위 ${sl.region.padBottom} — 버튼을 SnackbarAvoidOverlap 으로 감싼다`}>
+        <Verdict ok note={`스낵바는 버튼 위 ${sl.region.padBottom} — 버튼을 SnackbarAvoidOverlap 으로 감쌉니다`}>
           <TodoPhone
             scale={0.46}
             extra={
@@ -240,7 +240,7 @@ const StackGuide: Fig = ({ caption }) => {
             }
           />
         </Verdict>
-        <Verdict ok note={`목록 아래 여백 ${f.size} + ${f.bottom} + ${f.bottom} — 마지막 줄이 버튼에 가리지 않는다`}>
+        <Verdict ok note={`목록 아래 여백 ${f.size} + ${f.bottom} + ${f.bottom} — 마지막 줄이 버튼에 가리지 않습니다`}>
           <NPhone scale={0.46} h={600} bar={<Bar title="할 일" actions={[{ icon: 'search', label: '검색' }]} />} overlay={<Fab place="absolute" label="할 일 추가" />}>
             <div className="flex h-full flex-col justify-end">
               <TodoRows n={9} from={3} />
@@ -278,7 +278,16 @@ const ExTodo: Fig = ({ caption }) => {
   );
 };
 
+// ── 개요 카드 ─────────────────────────────────────────────
+// 라이트 모습 하나 — 브랜드 원 56 · 흰 + 아이콘(할 일 추가)
+const Thumb: Fig = () => (
+  <div style={{ zoom: 2 }}>
+    <Fab mode="light" label="할 일 추가" />
+  </div>
+);
+
 export const floatingActionButtonFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

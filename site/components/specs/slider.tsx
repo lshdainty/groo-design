@@ -198,7 +198,7 @@ const Anatomy: Fig = ({ caption }) => {
             ['ⓖ', 'Header Value'],
           ]}
         />
-        <span className="text-center text-[12px] pk-muted">{k}배로 그렸다 — 별점 1 ~ 5(4 구간)를 누르는 동안</span>
+        <span className="text-center text-[12px] pk-muted">{k}배로 그렸습니다 — 별점 1 ~ 5(4 구간)를 누르는 동안의 모습입니다</span>
       </div>
     </Panel>
   );
@@ -259,7 +259,7 @@ const Look: Fig = ({ caption }) => (
             <LookRow mode={mode} state="enabled" />
             <LookRow mode={mode} state="pressed" />
           </Surface>
-          <Cap strong={mode === 'light' ? '라이트' : '다크'}>위 기본 · 아래 누르는 동안 — 분홍이 누르는 자리(손잡이 줄 전체)</Cap>
+          <Cap strong={mode === 'light' ? '라이트' : '다크'}>위는 기본, 아래는 누르는 동안입니다 — 분홍이 누르는 자리(손잡이 줄 전체)입니다</Cap>
         </div>
       ))}
     </div>
@@ -279,7 +279,7 @@ const Value: Fig = ({ caption }) => {
       <div className="flex flex-wrap justify-center gap-4">
         {[
           { v: 80, st: 'enabled' as const, cap: '가만히 — 머리 값만(80%)', band: false },
-          { v: 80, st: 'pressed' as const, cap: `끄는 동안 — 손잡이 위 말풍선. 머리 ↔ 손잡이 줄 ${gapAll}(Field ${t.gap} + 위 ${l.padTop})이라 머리를 덮지 않는다(${gapAll + bubbleTop} 남음)`, band: true },
+          { v: 80, st: 'pressed' as const, cap: `끄는 동안 — 손잡이 위 말풍선. 머리 ↔ 손잡이 줄 ${gapAll}(Field ${t.gap} + 위 ${l.padTop})이라 머리를 덮지 않습니다(${gapAll + bubbleTop} 남음)`, band: true },
           { v: 100, st: 'pressed' as const, cap: '끝에서 — 상자만 안으로, 화살표는 손잡이', band: false },
         ].map(({ v, st, cap, band }) => (
           <div key={cap} className="flex max-w-[260px] flex-col items-center gap-2">
@@ -349,7 +349,7 @@ const States: Fig = ({ caption }) => {
           ))}
         </div>
       </Surface>
-      <Cap strong={mode === 'light' ? '라이트' : '다크'}>호버 · 포커스 · 누름에 말풍선 — 누름은 손잡이 24, 포커스는 링. 막힘은 전용 색(흐리게 하지 않는다)</Cap>
+      <Cap strong={mode === 'light' ? '라이트' : '다크'}>호버 · 포커스 · 누름에 말풍선이 뜹니다 — 누름은 손잡이 24, 포커스는 링입니다. 막힘은 전용 색이고 흐리게 하지 않습니다</Cap>
     </div>
   );
   return (
@@ -381,13 +381,13 @@ const CommitGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="끄는 동안은 화면만 따라가고 손을 뗄 때 한 번 — 요청 중에도 막지 않아 키보드 초점이 그대로다">
+        <Verdict ok note="끄는 동안은 화면만 따라가고 손을 뗄 때 한 번 — 요청 중에도 막지 않아 키보드 초점이 그대로입니다">
           <div className="flex w-full max-w-[300px] flex-col gap-3 rounded-xl p-4" style={{ background: rc('bg-layer-default') }}>
             <SF preset={p} value={50} state="focused" width={228} />
             <Requests items={['손을 뗌 → PATCH budgetAlertThreshold 50 — 한 번']} tone="ok" />
           </div>
         </Verdict>
-        <Verdict ok={false} note="단계마다 저장하고 요청 중에 막기 — 80 → 50 에 여섯 번, 막힌 손잡이가 Tab 순서에서 빠져 초점이 본문으로 떨어진다">
+        <Verdict ok={false} note="단계마다 저장하고 요청 중에 막기 — 80 → 50 에 여섯 번, 막힌 손잡이가 Tab 순서에서 빠져 초점이 본문으로 떨어집니다">
           <div className="flex w-full max-w-[300px] flex-col gap-3 rounded-xl p-4" style={{ background: rc('bg-layer-default') }}>
             <SF preset={p} value={55} state="disabled" width={228} />
             <Requests items={[...steps.map((s) => `PATCH ${s}`), '초점 → <body>']} tone="bad" />
@@ -408,7 +408,7 @@ function AmountInput({ mode = 'auto' }: { mode?: Mode }) {
 const WhenGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="2 ~ 5단계 가운데 하나(별점)는 Slider — 단계마다 표식. 정확한 숫자 · 금액은 Input(숫자 키보드 · 뒤 단위)">
+      <Verdict ok note="2 ~ 5단계 가운데 하나(별점)는 Slider 입니다 — 단계마다 표식을 둡니다. 정확한 숫자 · 금액은 Input(숫자 키보드 · 뒤 단위)입니다">
         <div className="flex w-full max-w-[280px] flex-col gap-3">
           <Surface>
             <SF preset={PRESETS.score} width={220} description={false} />
@@ -418,7 +418,7 @@ const WhenGuide: Fig = ({ caption }) => (
           </Surface>
         </div>
       </Verdict>
-      <Verdict ok={false} note="금액을 슬라이더로 — 원하는 값에 맞출 수 없고, 끄는 손이 값을 가린다">
+      <Verdict ok={false} note="금액을 슬라이더로 — 원하는 값에 맞출 수 없고, 끄는 손이 값을 가립니다">
         <Surface className="w-full max-w-[280px]">
           <SF preset={{ key: 'budget', label: '한 달 예산', min: 0, max: 300, step: 1, unit: '만원', value: 150 }} width={220} description={false} />
         </Surface>
@@ -430,7 +430,7 @@ const WhenGuide: Fig = ({ caption }) => (
 const NameGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="이름은 칸 이름(Field 라벨), 값은 aria-valuetext 에 단위를 붙여 — 무엇의 80 인지 들린다">
+      <Verdict ok note="이름은 칸 이름(Field 라벨), 값은 aria-valuetext 에 단위를 붙입니다 — 무엇의 80 인지 들립니다">
         <div className="flex w-full max-w-[300px] flex-col gap-3">
           <Surface>
             <SF preset={PRESETS.threshold} state="focused" width={228} description={false} />
@@ -438,7 +438,7 @@ const NameGuide: Fig = ({ caption }) => (
           <Readout text="예산 알림 임계값, 80%, 슬라이더" />
         </div>
       </Verdict>
-      <Verdict ok={false} note="이름 자리에 값을 넣기(지금 앱) — '80%, 60%' 로 읽혀 무엇을 정하는지 모른다. 올리면 '70%'(실제 85)">
+      <Verdict ok={false} note="이름 자리에 값을 넣기 — '80%, 60%' 로 읽혀 무엇을 정하는지 모릅니다">
         <div className="flex w-full max-w-[300px] flex-col gap-3">
           <Surface>
             <SF preset={PRESETS.threshold} state="focused" width={228} description={false} />
@@ -455,7 +455,17 @@ const ExBasic: Fig = () => <ExBasicDemo look={SL()} field={tf().field} />;
 const ExSteps: Fig = () => <ExStepsDemo look={SL()} field={tf().field} />;
 const ExRange: Fig = () => <ExRangeDemo look={SL()} field={tf().field} />;
 
+// 개요 카드 — 예산 알림 임계값을 끄는 동안(머리 값 · 말풍선 · 양 끝 표식)
+const Thumb: Fig = () => (
+  <div style={{ width: 282 }}>
+    <Surface mode="light">
+      <SF preset={PRESETS.threshold} mode="light" state="pressed" width={242} description={false} />
+    </Surface>
+  </div>
+);
+
 export const sliderFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

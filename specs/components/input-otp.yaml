@@ -1,16 +1,11 @@
-# Input OTP 의 수치 원본 — 인증 코드 칸(2026-10-09 사용자 결정, 입력 비교 페이지 10A · 11B · "따라오는 것").
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Input OTP 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 메일 · 문자로 받은 일회용 코드(지금은 숫자 6자리)를 넣는 Input 한 칸이다 — 칸을 자릿수만큼 나누지 않는다(SEED Text Input
-# "Input을 나누지 말고 … 한 번에 입력"). 상자 · 글자 · 포커스 · 오류 · 막힘의 값은 input.yaml(상자형 large 52 · medium 40 · 반응형)이
-# 원본이고, 라벨 · 설명 · 오류 글은 Field(field.yaml)가 그린다. 여기에는 코드 칸이 더하는 것만 둔다 — 숫자만 받기 · 자동 채우기 ·
-# 설명 줄 · 칸 아래 다시 받기 단추(남은 초 · 그동안 막힘).
+# 메일 · 문자로 받은 일회용 코드(숫자 6자리)를 넣는 Input 한 칸입니다 — 칸을 자릿수만큼 나누지 않습니다. 상자 · 글자 · 포커스 ·
+# 오류 · 막힘의 값은 input.yaml(상자형 large 52 · medium 40 · 반응형)이 원본이고, 라벨 · 설명 · 오류 글은 Field(field.yaml)가 그립니다.
+# 여기에는 코드 칸이 더하는 것만 둡니다 — 숫자만 받기 · 자동 채우기 · 설명 줄 · 칸 아래 다시 받기 버튼(남은 초 · 그동안 막힘).
 #
-# 축 — size(Input 과 같다) · resend(다시 받기 단추의 때). 상태는 칸의 상태다(Input 과 같다).
-#
-# SEED 와 다른 자리(input-otp.md 의 "SEED 와 다른 점")
-#   - SEED 에는 OTP 부품 · 규칙이 없다 — one-time-code · inputmode · 숫자만 뽑기 · 다시 받기 · 설명 줄은 groo 가 정했다.
-#   - 서버 규칙(10분 · 60초 · 5번 — porest-sso-back ReauthServiceImpl)을 화면에 보인다.
+# 축 — size(Input 과 같습니다) · resend(다시 받기 버튼의 때). 상태는 칸의 상태입니다(Input 과 같습니다).
+# 서버 규칙(10분 · 60초 · 5번 — groo-sso-back ReauthServiceImpl)을 화면에 보입니다.
 
 name: Input OTP
 
@@ -46,7 +41,7 @@ rules:
   - when: {}
     enabled:
       field:
-        variant: { value: outline, note: "Input 상자형(input.yaml) — 크기 · 모서리 · 테두리 · 포커스 · 오류 · 막힘은 Input 그대로. 칸을 자릿수만큼 나누지 않는다(사용자 결정 10A — 6칸 · 6칸 모양은 고르지 않았다)" }
+        variant: { value: outline, note: "Input 상자형(input.yaml) — 크기 · 모서리 · 테두리 · 포커스 · 오류 · 막힘은 Input 그대로. 칸을 자릿수만큼 나누지 않고, 6칸 모양도 그리지 않는다" }
         width: { value: 놓인 자리 폭, note: "Field 의 입력 자리를 채운다" }
         background: transparent
         borderColor: { value: $color-stroke-neutral-weak, note: "안쪽 1px(Input)" }
@@ -62,12 +57,12 @@ rules:
         content: { value: 6자리 숫자, note: "자릿수를 알린다 — 보내는 코드가 바뀌면 같이" }
         foreground: $color-fg-placeholder
       description:
-        content: { value: "10분 안에 입력해주세요 · 5번 틀리면 다시 받아요.", note: "늘 보인다(사용자 결정 11B) — 서버 규칙(유효 600초 · 틀림 5번 · 다시 받기 60초 — porest-sso-back ReauthServiceImpl)이 바뀌면 글도 바꾼다. 오류가 나면 Field 규칙대로 오류 글이 이 자리를 대신하고, 칸을 고치면 돌아온다" }
+        content: { value: "10분 안에 입력해주세요 · 5번 틀리면 다시 받아요.", note: "늘 보인다 — 서버 규칙(유효 600초 · 틀림 5번 · 다시 받기 60초 — groo-sso-back ReauthServiceImpl)이 바뀌면 글도 바꾼다. 오류가 나면 Field 규칙대로 오류 글이 이 자리를 대신하고, 칸을 고치면 돌아온다" }
         typography: { value: $text-t4, note: "Field 설명 그대로" }
         foreground: $color-fg-neutral-subtle
       resend:
         variant: { value: neutralWeak, note: "Button — 옅은 회색 채움" }
-        height: { value: 40px, note: "Button medium — 칸 옆이 아니라 아래에 둬 칸(52 · 40)과 높이를 맞출 일이 없다(지금 웹은 칸 40 옆 36)" }
+        height: { value: 40px, note: "Button medium — 칸 옆이 아니라 아래에 둬 칸(52 · 40)과 높이를 맞출 일이 없다" }
         marginTop: { value: $spacing-x3, note: "Field 꼬리(설명 · 오류) ↔ 단추 12. 왼쪽 맞춤" }
         cooldown: { value: 60초, note: "보낸 뒤 60초 동안 막는다(서버 COOLDOWN 60) — 남은 초를 1초마다 줄여 보인다" }
         focus: { value: 보내면 칸으로, note: "단추가 막히며 초점이 본문으로 빠지지 않게 — 코드를 보내면 초점을 코드 칸으로 옮긴다" }
@@ -78,15 +73,15 @@ rules:
       field:
         borderColor: { value: $color-stroke-critical-solid, note: "안쪽 2px(Input) — 포커스해도 그대로" }
       description:
-        content: { value: "코드가 맞지 않거나 시간이 지났어요. 확인하거나 다시 받아주세요.", note: "Field 오류(14 · fg-critical + 아이콘 16)가 설명을 대신한다(18A) — 칸을 고치기 시작하면 설명 줄이 돌아온다" }
+        content: { value: "코드가 맞지 않거나 시간이 지났어요. 확인하거나 다시 받아주세요.", note: "Field 오류(14 · fg-critical + 아이콘 16)가 설명을 대신한다 — 칸을 고치기 시작하면 설명 줄이 돌아온다" }
         foreground: $color-fg-critical
     disabled:
       field:
-        background: { value: $color-bg-disabled, note: "Input 그대로 — 흐리게 하지 않는다(v106)" }
+        background: { value: $color-bg-disabled, note: "Input 그대로 — 흐리게 하지 않는다" }
       value:
         foreground: $color-fg-disabled
       placeholder:
-        foreground: { value: $color-fg-placeholder, note: "막혀도 자리 글은 그대로 — Input · Textarea · SEED text-input(fg-disabled)과 다른 자리다. 막힌 칸은 바탕(bg-disabled) · 커서로 갈린다(2026-10-17 사용자 결정 01T-013 — 추천 fg-disabled 는 고르지 않았다)" }
+        foreground: { value: $color-fg-placeholder, note: "막혀도 자리 글은 그대로 — Input · Textarea(fg-disabled)와 다른 자리다. 막힌 칸은 바탕(bg-disabled) · 커서로 갈린다" }
 
   # ── 크기(Input 그대로) ────────────────────────────────
   - when: { size: large }
@@ -115,6 +110,6 @@ rules:
     enabled:
       resend:
         label: { value: "다시 받기({n}초)", note: "남은 초를 괄호에 붙인다(앞 글자에 붙여 쓴다 — International Design). 0 이 되면 \"다시 받기\"" }
-        background: { value: $color-bg-disabled, note: "Button 막힘 — 흐리게 하지 않는다(v106)" }
+        background: { value: $color-bg-disabled, note: "Button 막힘 — 흐리게 하지 않는다" }
         foreground: $color-fg-disabled
         cursor: not-allowed

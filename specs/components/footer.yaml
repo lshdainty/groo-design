@@ -1,26 +1,15 @@
-# Footer 의 수치 원본 — 짜임은 SEED Footer(디자인 문서 "조합 예시" · registry block footer-01 ~ 04 · qvism-preset footer recipe —
-# Apache-2.0). SEED 에는 rootage 가 없다 — 수치는 블록 코드(footer-04.tsx · footer-02.tsx)와 Footer.LinkText 레시피에 있다.
-# 2026-10-15 사용자 결정, 마무리 비교 페이지 7B · 8A · 9A · "따라오는 것".
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Footer 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 사이트 맨 아래의 바닥 — 정해진 한 덩어리가 아니라 블록을 골라 조립한다(SEED "제품마다 필요한 구성을 골라 조립하는 조합 예시").
-# 필수 블록은 없고 위 → 아래 순서만 있다:
+# 사이트 맨 아래의 바닥입니다. 정해진 한 덩어리가 아니라 자리마다 필요한 블록을 골라 조립합니다.
+# 필수 블록은 없고 위 → 아래 순서만 있습니다:
 #   탐색 영역(navigation) — 브랜드 · 국가 선택 · 사이트맵 열
 #   선(divider) — 두 영역을 함께 쓸 때만
 #   안내 영역(info) — 정책 링크 · 사업자 정보 · 연락처 · 저작권 · 소셜 링크
-# groo 의 지금 쓰는 짜임(groo-home, 7B)은 브랜드 · 사이트맵(서비스 · 계정) | 선 | 정책 링크 · 안내 글 · 저작권이다.
-# 사업자 정보 · 연락처 · 소셜은 블록만 두고 값은 비워 둔다 — groo 에는 아직 그 값이 어디에도 없다(지어내지 않는다).
+# groo-home 의 짜임은 브랜드 · 사이트맵(서비스 · 계정) | 선 | 정책 링크 · 안내 글 · 저작권입니다.
+# 사업자 정보 · 연락처 · 소셜은 값이 정해질 때까지 블록만 두고 비워 둡니다(지어내지 않습니다).
 #
-# 축 — width(1280 이상 · 미만 — 좌우 여백과 저작권 · 소셜의 배치) · linkSize(링크 글 — SEED Footer.LinkText 의 large · medium).
-# 상태(올림 · 누름 · 포커스)는 링크 하나에 걸린다.
-#
-# SEED 와 다른 자리(footer.md 의 "SEED 와 다른 점")
-#   - 1280 미만 좌우 24(spacing-global-gutter — groo 화면 가장자리 규칙). SEED 블록은 늘 x8 32.
-#   - 선은 stroke-neutral-subtle 하나(Divider 2026-10-03) — SEED 블록은 stroke.neutral(muted 쪽).
-#   - 바닥 위 1px 선으로 본문과 가른다 — SEED 블록에는 없다(비교 페이지가 그린 모양).
-#   - 브랜드는 글자 로고("그루" 20 / 27 · 700) + 소개 한 줄 — SEED 는 로고 그림(57 × 32).
-#   - 저작권 "© {해} 그루"(SEED 형식 — 해는 그리는 때의 해). SEED 블록은 ⓒ(동그라미 c)를 쓴다 — groo 는 © 다.
-#   - 링크의 키보드 포커스 링 · 새 탭 링크의 ↗ + "(새 탭)" 을 적는다.
+# 축 — width(1280 이상 · 미만 — 좌우 여백과 저작권 · 소셜의 배치) · linkSize(링크 글 — large · medium).
+# 상태(올림 · 누름 · 포커스)는 링크 하나에 걸립니다.
 
 name: Footer
 
@@ -31,7 +20,7 @@ slots:
   brand: 브랜드 묶음 — 이름 + 소개 한 줄
   brandName: 브랜드 이름 — 글자 로고 "그루"
   brandIntro: 브랜드 소개 — 한 줄(넘치면 줄을 바꾼다)
-  country: 국가 선택 — 나라 링크 목록. 지금 쓰는 자리 없음(groo 는 한국어 사이트 하나)
+  country: 국가 선택 — 나라 링크 목록. groo 는 한국어 사이트 하나라 두지 않는다
   sitemap: 사이트맵 — <nav aria-label="사이트 지도">. 열을 가로로, 넘치면 줄을 바꾼다
   column: 사이트맵 열 — 열 제목 + 링크 목록
   columnTitle: 열 제목 — "서비스" · "계정"
@@ -70,79 +59,79 @@ rules:
   - when: {}
     enabled:
       root:
-        maxWidth: { value: $layout-max-content, note: "1040 — 콘텐츠 레이아웃의 기본 최대 폭(SEED footer 블록 maxWidth 1040과 같다)" }
+        maxWidth: { value: $layout-max-content, note: "1040 — 콘텐츠 레이아웃의 기본 최대 폭" }
         marginX: { value: auto, note: "가운데 정렬" }
-        paddingY: { value: $spacing-x10, note: "위아래 40 — SEED x10" }
-        gap: { value: $spacing-x10, note: "탐색 영역 ↔ 선 ↔ 안내 영역 40 — SEED footer-04 VStack x10" }
+        paddingY: { value: $spacing-x10, note: "위아래 40" }
+        gap: { value: $spacing-x10, note: "탐색 영역 ↔ 선 ↔ 안내 영역 40" }
         background: { value: transparent, note: "페이지 바탕 그대로" }
         landmark: { value: contentinfo, note: "<footer> — article · section 안에 두지 않는다(그러면 랜드마크가 아니다). 한 페이지에 하나" }
       topLine:
         height: 1px
-        background: { value: $color-stroke-neutral-subtle, note: "본문과 바닥을 가른다 — 화면 폭 전체(틀 1040 밖까지). SEED 블록에는 없다" }
+        background: { value: $color-stroke-neutral-subtle, note: "본문과 바닥을 가른다 — 화면 폭 전체(틀 1040 밖까지)" }
       navigation:
-        gap: { value: $spacing-x8, note: "브랜드 ↔ 사이트맵 32 · 줄을 바꾸면 위아래도 32 — SEED footer-04" }
+        gap: { value: $spacing-x8, note: "브랜드 ↔ 사이트맵 32 · 줄을 바꾸면 위아래도 32" }
         wrap: { value: wrap, note: "넘치면 사이트맵이 브랜드 아래로" }
       brand:
         flex: { value: 1 1 240px, note: "남은 폭을 차지하고, 240 아래로 줄면 사이트맵이 아래로 내려간다" }
-        minWidth: { value: 120px, note: "SEED footer-04 로고 · 국가 묶음 최소 120" }
+        minWidth: { value: 120px, note: "브랜드 묶음 최소 120" }
         gap: { value: $spacing-x2, note: "이름 ↔ 소개 8" }
       brandName:
         typography: { value: $text-t7, note: "20 / 27 — 글자 로고(groo 는 로고 그림이 없다)" }
-        fontWeight: { value: 700, note: "SEED 굵기 가운데 가장 굵은 bold" }
-        foreground: { value: $color-fg-neutral, note: "흰 면 16.41 · 다크 13.42. groo-home 은 제 파랑(--blue)을 쓴다(8A)" }
+        fontWeight: { value: 700, note: "bold" }
+        foreground: { value: $color-fg-neutral, note: "흰 면 16.41 · 다크 13.42. groo-home 은 제 파랑(--blue)을 쓴다" }
       brandIntro:
         typography: { value: $text-t3, note: "13 / 18" }
         fontWeight: 400
         foreground: { value: $color-fg-neutral-subtle, note: "흰 면 5.50 · 다크 6.09" }
         maxWidth: { value: 340px, note: "한 줄이 너무 길지 않게 — 넘치면 줄을 바꾼다(자르지 않는다)" }
       country:
-        gap: { value: $spacing-x3, note: "나라 링크 사이 12 · 늘 세로 목록(SEED) — 지금 쓰는 자리 없음" }
+        gap: { value: $spacing-x3, note: "나라 링크 사이 12 · 늘 세로 목록" }
       sitemap:
-        gap: { value: $spacing-x8, note: "열 사이 32 · 넘치면 줄을 바꾼다 — SEED footer-04" }
+        gap: { value: $spacing-x8, note: "열 사이 32 · 넘치면 줄을 바꾼다" }
         wrap: wrap
         name: { value: 사이트 지도, note: "<nav aria-label=\"사이트 지도\"> — 위 머리의 주 메뉴 nav 와 이름으로 갈린다" }
       column:
-        minWidth: { value: 100px, note: "SEED LinkColumn minWidth 100" }
+        minWidth: { value: 100px, note: "열 최소 100" }
         gap: { value: $spacing-x4, note: "열 제목 ↔ 링크 16" }
       columnTitle:
         typography: { value: $text-t3, note: "13 / 18" }
-        fontWeight: { value: 500, note: "SEED t3Medium" }
+        fontWeight: { value: 500, note: "medium" }
         foreground: { value: $color-fg-neutral-muted, note: "흰 면 7.11 · 다크 7.70" }
         element: { value: 글(머리말 아님), note: "열 제목은 목록의 이름이다 — 링크 목록을 aria-labelledby 로 잇는다" }
       columnLinks:
-        gap: { value: $spacing-x4, note: "링크 사이 16 — SEED VStack x4" }
+        gap: { value: $spacing-x4, note: "링크 사이 16" }
       divider:
         height: 1px
-        background: { value: $color-stroke-neutral-subtle, note: "선은 이 색 하나(Divider 2026-10-03) — 틀 안 폭. 장식(role 없음)" }
+        background: { value: $color-stroke-neutral-subtle, note: "선은 이 색 하나 — 틀 안 폭. 장식(role 없음)" }
       info:
-        gap: { value: $spacing-x4, note: "정책 줄 ↔ 안내 글 ↔ 저작권 줄 16 — SEED x4" }
+        gap: { value: $spacing-x4, note: "정책 줄 ↔ 안내 글 ↔ 저작권 줄 16" }
       policy:
-        columnGap: { value: $spacing-x6, note: "링크 사이 24 — SEED HStack x6" }
-        rowGap: { value: $spacing-x2, note: "줄을 바꾸면 위아래 8 — 비교 페이지 그림(SEED 는 위아래도 24)" }
+        columnGap: { value: $spacing-x6, note: "링크 사이 24" }
+        rowGap: { value: $spacing-x2, note: "줄을 바꾸면 위아래 8" }
         wrap: wrap
       infoText:
-        typography: { value: $text-t3, note: "13 / 18 — SEED t3Regular" }
+        typography: { value: $text-t3, note: "13 / 18" }
         fontWeight: 400
         foreground: { value: $color-fg-neutral-subtle, note: "흰 면 5.50 · 다크 6.09" }
-        separator: { value: " | ", note: "사업자 정보 · 연락처는 항목을 \" | \" 로 잇고, 묶음이 바뀌면 줄을 바꾼다(SEED <br>). 안내 문구는 문장 그대로" }
+        separator: { value: " | ", note: "사업자 정보 · 연락처는 항목을 \" | \" 로 잇고, 묶음이 바뀌면 줄을 바꾼다. 안내 문구는 문장 그대로" }
       bottom:
-        justifyContent: { value: space-between, note: "저작권 앞 · 소셜 끝 — SEED HStack" }
+        justifyContent: { value: space-between, note: "저작권 앞 · 소셜 끝" }
         alignItems: center
-        gap: { value: $spacing-x4, note: "줄을 바꾸면 16 — SEED wrap x4" }
+        gap: { value: $spacing-x4, note: "줄을 바꾸면 16" }
         wrap: wrap
       copyright:
-        typography: { value: $text-t4, note: "14 / 19 — SEED t4Medium" }
+        typography: { value: $text-t4, note: "14 / 19" }
         fontWeight: 500
         foreground: { value: $color-fg-neutral-muted, note: "흰 면 7.11 · 다크 7.70" }
-        text: { value: "© {해} 그루", note: "SEED 형식(사용자 결정 9A) — 해는 그리는 때(빌드 · 화면)의 해. 네 곳(홈 · SSO 로그인 · HR 문서 · Desk 설명서) 한 벌" }
-        position: { value: 안내 영역의 마지막, note: "SEED — 저작권은 맨 끝" }
+        text: { value: "© {해} 그루", note: "해는 그리는 때(빌드 · 화면)의 해. 네 곳(홈 · SSO 로그인 · HR 문서 · Desk 설명서) 한 벌" }
+        position: { value: 안내 영역의 마지막, note: "저작권은 맨 끝" }
       social:
-        gap: { value: $spacing-x6, note: "아이콘 버튼 사이 24 — SEED HStack x6" }
-        button: { value: "Button ghost · large · iconOnly", note: "48(groo large) · 아이콘 24 · 이름 필수(\"그루 인스타그램\") · 바깥 여백만큼 끝을 맞춘다(SEED bleedX asPadding). 지금 값이 없다 — 생기면 이 자리" }
+        gap: { value: $spacing-x6, note: "아이콘 버튼 사이 24" }
+        button: { value: "Button ghost · large · iconOnly", note: "48(groo large) · 아이콘 24 · 이름 필수(\"그루 인스타그램\") · 바깥 여백만큼 끝을 맞춘다. 값이 생기면 이 자리" }
       link:
         display: { value: inline-flex, note: "글 + 뒤 아이콘" }
-        gap: { value: $spacing-x1, note: "글 ↔ ↗ 4 — SEED Footer.LinkText" }
-        textDecoration: { value: none, note: "밑줄 없음 — 올림 · 누름은 색으로(SEED)" }
+        gap: { value: $spacing-x1, note: "글 ↔ ↗ 4" }
+        textDecoration: { value: none, note: "밑줄 없음 — 올림 · 누름은 색으로" }
         cursor: pointer
         transitionProperty: color
         transitionDuration: $motion-duration-color-transition
@@ -161,15 +150,15 @@ rules:
   - when: { width: wide }
     enabled:
       root:
-        paddingX: { value: $spacing-x8, note: "좌우 32 — SEED x8" }
+        paddingX: { value: $spacing-x8, note: "좌우 32" }
       bottom:
         direction: { value: row, note: "저작권 · 소셜이 한 줄 양 끝" }
   - when: { width: narrow }
     enabled:
       root:
-        paddingX: { value: $spacing-global-gutter, note: "좌우 24 — groo 화면 가장자리 규칙(SEED 블록은 늘 32)" }
+        paddingX: { value: $spacing-global-gutter, note: "좌우 24 — groo 화면 가장자리 규칙" }
       bottom:
-        direction: { value: column, note: "소셜은 저작권 아래 — 왼쪽 정렬(SEED \"모바일에서 위아래\")" }
+        direction: { value: column, note: "소셜은 저작권 아래 — 왼쪽 정렬" }
         alignItems: flex-start
 
   # ── 링크 크기 ─────────────────────────────────────────
@@ -180,10 +169,10 @@ rules:
         fontWeight: 500
         foreground: { value: $color-fg-neutral, note: "흰 면 16.41 · 다크 13.42" }
       linkIcon:
-        size: { value: 14px, note: "SEED large suffixIcon 14" }
+        size: { value: 14px, note: "large 링크 뒤 아이콘 14" }
     hovered:
       link:
-        foreground: { value: $color-fg-neutral-subtle, note: "옅어진다 — 5.50 · 6.09(SEED engaged)" }
+        foreground: { value: $color-fg-neutral-subtle, note: "옅어진다 — 5.50 · 6.09" }
     pressed:
       link:
         foreground: $color-fg-neutral-subtle
@@ -194,10 +183,10 @@ rules:
         fontWeight: 500
         foreground: { value: $color-fg-neutral-muted, note: "흰 면 7.11 · 다크 7.70" }
       linkIcon:
-        size: { value: 12px, note: "SEED medium suffixIcon 12" }
+        size: { value: 12px, note: "medium 링크 뒤 아이콘 12" }
     hovered:
       link:
-        foreground: { value: $color-fg-neutral, note: "짙어진다 — 16.41 · 13.42(SEED engaged)" }
+        foreground: { value: $color-fg-neutral, note: "짙어진다 — 16.41 · 13.42" }
     pressed:
       link:
         foreground: $color-fg-neutral
@@ -207,4 +196,4 @@ motion:
     duration: $motion-duration-color-transition
     easing: $motion-ease-easing
     properties: [color]
-    note: "올림 · 누름 — SEED Footer.LinkText 의 color-transition"
+    note: "올림 · 누름"

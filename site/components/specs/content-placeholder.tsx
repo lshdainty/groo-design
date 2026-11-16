@@ -173,7 +173,7 @@ const Anatomy: Fig = ({ caption }) => {
         </div>
         <Legend
           items={[
-            ['ⓐ', 'Root — 틀을 채운 면, 모서리는 틀이 자른다'],
+            ['ⓐ', 'Root — 틀을 채운 면, 모서리는 틀이 자릅니다'],
             ['ⓑ', `Glyph — 가운데 정사각, 틀 높이의 ${cp().glyph.ratio * 100}%`],
           ]}
         />
@@ -187,8 +187,8 @@ const Anatomy: Fig = ({ caption }) => {
 const SIZES: [string, number, number, number, string, boolean][] = [
   ['40 썸네일', 40, 40, 1, '', false],
   ['카드 그림 120', Math.round(120 * CARD_RATIO), 120, 1, '', false],
-  ['화면 폭 4:3 사진', 360, 270, 0.6, '(60% 로 줄여 그렸다)', true],
-  ['좁고 긴 틀', 48, 200, 1, '— 폭이 좁아 폭에 맞춘다', false],
+  ['화면 폭 4:3 사진', 360, 270, 0.6, '(60% 로 줄여 그렸습니다)', true],
+  ['좁고 긴 틀', 48, 200, 1, '— 폭이 좁아 폭에 맞춥니다', false],
 ];
 const Sizes: Fig = ({ caption }) => {
   const g = cp().glyph;
@@ -267,7 +267,7 @@ const Glyphs: Fig = ({ caption }) => (
         </div>
       ))}
     </div>
-    <Note>선 굵기 {cp().glyph.stroke}(24 격자) — 그림이 커지면 같은 비율로 굵어진다</Note>
+    <Note>선 굵기 {cp().glyph.stroke}(24 격자) — 그림이 커지면 같은 비율로 굵어집니다</Note>
     </div>
   </Figure>
 );
@@ -295,7 +295,7 @@ const LoadingGuide: Fig = ({ caption }) => {
             {row('BC카드 신용카드', '불러오지 못함', <Placeholder icon="credit-card" label="BC카드 신용카드 카드 그림" w={w} h={h} />)}
           </div>
         </Verdict>
-        <Verdict ok={false} note="불러오는 중과 실패가 같은 그림 — 기다려야 하는지 알 수 없다" bg={BASEMENT}>
+        <Verdict ok={false} note="불러오는 중과 실패가 같은 그림 — 기다려야 하는지 알 수 없습니다" bg={BASEMENT}>
           <div className="w-[290px] rounded-2xl px-6 py-3 pk-surface">
             {row('BC카드 체크카드', '불러오는 중', <Placeholder icon="credit-card" w={w} h={h} />)}
             {row('BC카드 신용카드', '불러오지 못함', <Placeholder icon="credit-card" w={w} h={h} />)}
@@ -370,7 +370,7 @@ const ExBasic: Fig = () => {
   );
 };
 
-// ── 대신 보이는 것 고르기 — 같은 띠의 네 상태(2026-10-22 사용자 결정 1B · 2B) ──────
+// ── 대신 보이는 것 고르기 — 같은 띠의 네 상태 ──────────────
 // 가계부 흰 화면의 "10월 거래" — 불러오는 중(줄 자리만 스켈레톤) · 처음(할 일 + 첫 버튼) · 걸러서 0건(조건 탓 · 버튼 없음) · 불러오지 못함(다시 시도).
 // 결과는 result-section.yaml(resultSectionLook), 스켈레톤은 skeleton.yaml. 필터 바는 모양만 줄인 대역이다(Chip 은 chip.md)
 function SkRow({ mode }: { mode: Mode }) {
@@ -413,8 +413,8 @@ function StandinPhone({ mode, state }: { mode: Mode; state: StandinState }) {
 const STANDIN_CAP: Record<StandinState, [string, string]> = {
   loading: ['불러오는 중', '1초부터 — 필터 · 목록 제목은 그리고 줄 자리만 스켈레톤'],
   first: ['처음 — 하나도 없음', 'Result Section empty — 할 일 + 첫 버튼'],
-  filtered: ['걸러서 0건', '조건 탓을 제목이 말한다 · 버튼 없음(지우기는 필터 바 맨 앞)'],
-  failed: ['불러오지 못함', 'failure + 다시 시도 — 비어 있음으로 보이지 않는다'],
+  filtered: ['걸러서 0건', '조건 탓을 제목이 말합니다 · 버튼 없음(지우기는 필터 바 맨 앞)'],
+  failed: ['불러오지 못함', 'failure + 다시 시도 — 비어 있음으로 보이지 않습니다'],
 };
 const StandinGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
@@ -431,7 +431,25 @@ const StandinGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
+// ── 개요 카드 ────────────────────────────────────────────
+const Thumb: Fig = () => (
+  <div className="flex items-center gap-3" style={{ zoom: 0.85 }}>
+    <Frame w={200} h={150} mode="light">
+      <Placeholder mode="light" w={200} h={150} />
+    </Frame>
+    <div className="flex flex-col items-center gap-3">
+      <Frame w={96} h={Math.round(96 / CARD_RATIO)} mode="light">
+        <Placeholder mode="light" icon="credit-card" w={96} h={Math.round(96 / CARD_RATIO)} />
+      </Frame>
+      <Frame w={40} h={40} mode="light">
+        <Placeholder mode="light" icon="receipt" w={40} h={40} />
+      </Frame>
+    </div>
+  </div>
+);
+
 export const contentPlaceholderFigures: Record<string, Fig> = {
+  thumb: Thumb,
   'standin-guide': StandinGuide,
   hero: Hero,
   playground: Playground,

@@ -101,14 +101,14 @@ const Anatomy: Fig = ({ caption }) => {
         </div>
         <Legend
           items={[
-            ['ⓐ', 'Box — overflow auto(넘치는 방향만) · 문서 전체도 같다'],
+            ['ⓐ', 'Box — overflow auto(넘치는 방향만) · 문서 전체도 같습니다'],
             ['ⓑ', `Scrollbar — 세로 ${l.bar.width} · 가로 ${l.bar.height} · 전역 한 벌`],
             ['ⓒ', `Thumb — 알약 · stroke-neutral-solid`],
             ['ⓓ', `Track — ${l.bar.track}`],
           ]}
         />
         <Cap w={620}>
-          Firefox 는 ::-webkit-scrollbar 를 모르므로 scrollbar-width: {l.firefox.width} + scrollbar-color(막대 · {l.firefox.track}) — 이 두 줄은 @supports not selector(::-webkit-scrollbar) 안에만 둔다. 크로미움은 두 속성이 걸리면 webkit 규칙을 버린다
+          Firefox 는 ::-webkit-scrollbar 를 모르므로 scrollbar-width: {l.firefox.width} + scrollbar-color(막대 · {l.firefox.track}) — 이 두 줄은 @supports not selector(::-webkit-scrollbar) 안에만 둡니다. 크로미움은 두 속성이 걸리면 webkit 규칙을 버리기 때문입니다
         </Cap>
       </div>
     </Panel>
@@ -138,7 +138,7 @@ const Scrollbar: Fig = ({ caption }) => {
                 ))}
               </div>
             </Wide>
-            <Cap strong={modeKo(mode)}>막대 stroke-neutral-solid — 세 면 모두 3 이상(WCAG 1.4.11). 막대는 올리거나 끌어도 모양이 바뀌지 않는다</Cap>
+            <Cap strong={modeKo(mode)}>막대 stroke-neutral-solid — 세 면 모두 3 이상(WCAG 1.4.11). 막대는 올리거나 끌어도 모양이 바뀌지 않습니다</Cap>
           </div>
         ))}
       </div>
@@ -169,7 +169,7 @@ const Context: Fig = ({ caption }) => {
             >
               <div />
             </Phone>
-            <Cap strong="시트 안 상자 — overlay">{`overscroll-behavior: ${L().overscroll} — 상자 끝에 닿아도 시트 · 뒤 화면이 따라 스크롤되지 않는다`}</Cap>
+            <Cap strong="시트 안 상자 — overlay">{`overscroll-behavior: ${L().overscroll} — 상자 끝에 닿아도 시트 · 뒤 화면이 따라 스크롤되지 않습니다`}</Cap>
           </div>
           <div className="flex w-[300px] flex-col items-center gap-2">
             <div style={{ width: 300, background: 'var(--p-bg-layer-default)', borderRadius: 12, paddingTop: 12, paddingBottom: 12, paddingLeft: 24, paddingRight: 24 }}>
@@ -179,7 +179,7 @@ const Context: Fig = ({ caption }) => {
                 ))}
               </ChipGroupView>
             </div>
-            <Cap strong="가로 줄 — row">스크롤바를 숨긴다 — 끝은 Scroll Fog row 흐림이 알린다. 세로 스크롤바는 숨기지 않는다</Cap>
+            <Cap strong="가로 줄 — row">스크롤바를 숨깁니다 — 끝은 Scroll Fog row 흐림이 알립니다. 세로 스크롤바는 숨기지 않습니다</Cap>
           </div>
         </div>
       </div>
@@ -195,7 +195,7 @@ const Focus: Fig = ({ caption }) => {
       <div className="flex flex-col items-center gap-4">
         <FocusRegionDemo look={l} tones={screenTones('hr')} />
         <Cap w={620}>
-          {`글 · 표 · 일정 칸뿐인 상자는 상자 자신이 초점을 받는다 — tabindex ${l.focus.tabIndex} + role="${l.focus.role}" + 이름(역할 없는 div 에는 aria-label 을 쓸 수 없다). 링은 상자 안쪽 ${l.focus.ring.width}px(띄움 ${l.focus.ring.offset}) — 안에 단추 · 링크가 있으면 달지 않는다`}
+          {`글 · 표 · 일정 칸뿐인 상자는 상자 자신이 초점을 받습니다 — tabindex ${l.focus.tabIndex} + role="${l.focus.role}" + 이름(역할 없는 div 에는 aria-label 을 쓸 수 없습니다). 링은 상자 안쪽 ${l.focus.ring.width}px(띄움 ${l.focus.ring.offset}) — 안에 단추 · 링크가 있으면 달지 않습니다`}
         </Cap>
       </div>
     </Panel>
@@ -209,12 +209,12 @@ const OverlayGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full flex-col gap-4">
-        <Verdict ok note="기본 스크롤 + 전역 한 벌 — 넘치면 6px 알약 막대가 늘 보여 더 있다는 것을 안다">
+        <Verdict ok note="기본 스크롤 + 전역 한 벌 — 넘치면 6px 알약 막대가 늘 보여 더 있다는 것을 알 수 있습니다">
           <ScrollBox look={L()} height={200} style={box}>
             {text}
           </ScrollBox>
         </Verdict>
-        <Verdict ok={false} note="내용 위에 겹쳐 뜨는 막대(Radix ScrollArea) — 마우스를 올리기 전에는 막대가 없고, 옅은 색(#EEEEEE 1.11)이면 늘 보이게 해도 안 보인다">
+        <Verdict ok={false} note="내용 위에 겹쳐 뜨는 막대(Radix ScrollArea) — 마우스를 올리기 전에는 막대가 없고, 옅은 색(#EEEEEE 1.11)이면 늘 보이게 해도 안 보입니다">
           <div style={{ ...box, position: 'relative', height: 200, overflow: 'hidden' }}>
             {text}
             {/* 올리기 전 — 막대 없음(겹쳐 뜨는 막대는 내용 위, 투명) */}
@@ -248,7 +248,22 @@ const ExDialog: Fig = ({ caption }) => {
   );
 };
 
+// 개요 카드 — 넘친 글 상자의 끝 모습 하나. 브라우저 스크롤바는 OS 설정에 따라 숨으므로 막대를 직접 그린다
+const Thumb: Fig = () => {
+  const l = L();
+  return (
+    <div style={{ width: 320, zoom: 0.85 }}>
+      <div style={{ position: 'relative', height: 220, overflow: 'hidden', borderRadius: 16, background: rc('bg-layer-default', 'light') }}>
+        <div style={{ padding: '16px 20px 8px', fontSize: 17, fontWeight: 700, color: rc('fg-neutral', 'light') }}>카드 상세</div>
+        <p style={{ margin: 0, padding: '0 20px', fontSize: 14, lineHeight: '22px', color: rc('fg-neutral-muted', 'light'), whiteSpace: 'pre-line' }}>{LONG_DETAIL}</p>
+        <span aria-hidden style={{ position: 'absolute', right: 4, top: 56, width: l.bar.width, height: 64, borderRadius: 9999, background: rc('stroke-neutral-solid', 'light') }} />
+      </div>
+    </div>
+  );
+};
+
 export const scrollAreaFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,
