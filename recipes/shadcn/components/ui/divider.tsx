@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Divider — 구조는 SEED Divider(2026-10-03). 수치 원본은 specs/components/divider.yaml. 옛 Separator 를 대신한다.
+ * Groo Divider — 수치 원본은 specs/components/divider.yaml.
  *
  *   Divider   내용 사이를 나누는 1px 선 — <hr> 이 아니라 <div> 로 그린다
  *
@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
  *   decorative   true(기본) — 장식, aria-hidden(묶음은 제목 · 목록 · section 이 알린다)
  *                false — role="separator" + aria-orientation. 문서의 장처럼 보조 기술도 "구분선" 을 알아야 할 자리만
  *
- * 선은 하나다 — 1px stroke-neutral-subtle(흰 바탕 1.15 · 다크 1.30, SEED 기본 선과 같은 진하기). 굵은 선 · 짙은 선 · 점선 ·
+ * 선은 하나다 — 1px stroke-neutral-subtle(흰 바탕 1.15 · 다크 1.30). 굵은 선 · 짙은 선 · 점선 ·
  * 자리마다 다른 색을 두지 않는다 — 더 세게 나눠야 하면 선이 아니라 간격이다(회색 바탕 bg-layer-basement 위에 흰 층
  * bg-layer-default 묶음을 8 띄워 놓는다 — "8px 구분선" 은 없다). 바깥 여백이 없다 — 위아래 · 좌우 간격은 쓰는 자리가 정하고,
  * 들임만 Divider 가 갖는다. 선은 내용 사이에만 — 화면 · 묶음의 마지막 아래 · 카드 맨 위 · 맨 아래에는 두지 않는다.

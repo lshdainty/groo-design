@@ -8,8 +8,8 @@ import { useInputButtonSurface } from "@/components/ui/input-button";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Groo Side Panel — 구조는 SEED Side Panel(2026-10-04). 수치 원본은 specs/components/side-panel.yaml. Radix Dialog 위에 짰다.
- * 옛 Sheet(shadcn — 네 방향 · 75% · 384 · 그림자 · 선)를 대신한다 — 아래에서 올라오는 것은 Bottom Sheet, 위에서 내려오는 패널은 없다.
+ * Groo Side Panel — 수치 원본은 specs/components/side-panel.yaml. Radix Dialog 위에 짰다.
+ * 아래에서 올라오는 것은 Bottom Sheet, 위에서 내려오는 패널은 없다.
  *
  *   SidePanel          화면 옆에서 미끄러져 나오는 모달 — open · defaultOpen · onOpenChange · form · dirty
  *   SidePanelTrigger   여는 버튼(asChild) — 닫으면 초점이 여기로 돌아온다
@@ -22,7 +22,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *
  * 1280 미만에서 오른쪽 패널을 Bottom Sheet 로 바꾸는 부품은 오른쪽 패널을 쓸 자리가 생길 때 Responsive Dialog 처럼 더한다.
  *
- * 닫는 길(side-panel.md Behavior — Dialog · Bottom Sheet 와 같은 규칙, 2026-10-02)
+ * 닫는 길(side-panel.md Behavior — Dialog · Bottom Sheet 와 같은 규칙)
  *   - 닫기 버튼 · Esc 는 닫는다. 뒤로 가기는 1280 미만에서 닫는다(그 위에서 뒤로 가기는 "이전 페이지" — alert-dialog.tsx 의 useBackClose).
  *   - 바깥(딤) 누르기 · 붙은 쪽으로 끌기는 주 메뉴 · 조회만 닫는다. form(입력 폼)이면 둘 다 무시한다 — 머리 닫기 버튼도 없다(바닥 [취소]).
  *   - 끌기는 손가락 · 펜만(마우스로 끌면 글 고르기와 겹친다) — 가로로 10 을 먼저 움직여야 끌기로 본다(세로면 본문 스크롤).
@@ -37,7 +37,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *
  * 모양: 화면 높이 전체(dvh), 붙은 쪽 끝 — 모서리 · 그림자 · 선 없이 딤(overlay-dim 라이트 0.50 · 다크 0.65)과 표면 색(bg-layer-floating)으로
  *   뜬다. 폭은 왼쪽 80% · 오른쪽 480 · 720 · 960(화면의 80% 를 넘지 않는다 — 딤이 늘 20% 남는다). 붙은 쪽 안전 영역(가로 노치)은 폭에
- *   더하고(SEED 문서), 패널 내용 맨 아래에 아래 안전 영역을 둔다(바닥이 없어도).
+ *   더하고, 패널 내용 맨 아래에 아래 안전 영역을 둔다(바닥이 없어도).
  *   머리 위 24(+ 위 안전 영역) · 좌우 24 · 아래 16 · 최소 70 · 사이 6, 제목 t8 22 / 30 · 700 · 설명 t5 fg-neutral-muted. 닫기 버튼이 있으면
  *   머리 오른쪽 52. 닫기 버튼은 52 투명 상자 · 아이콘 22 fg-neutral-subtle — 아이콘이 위 28 · 오른쪽 24. 누르면 bg-layer-floating-pressed +
  *   2px 거리 축소(52 → 0.962), 호버는 누름 색, 키보드 포커스에 2px 링(띄움 2). 이름 "닫기".
@@ -462,7 +462,7 @@ const SidePanelContent = React.forwardRef<React.ElementRef<typeof DialogPrimitiv
 SidePanelContent.displayName = "SidePanelContent";
 
 // 본문 — 좌우 24(왼쪽 패널 16), 이 안에서만 스크롤. 맨 끝 자식(바닥이 없으면)이면 아래 24. 손가락 가로 끌기는 패널이 받는다.
-// 끝에 닿아도 뒤 화면이 따라 스크롤되지 않는다(overscroll-behavior: contain — Scroll Area 의 옆 패널, 2026-10-10)
+// 끝에 닿아도 뒤 화면이 따라 스크롤되지 않는다(overscroll-behavior: contain — Scroll Area 의 옆 패널)
 const BODY = [
   "min-h-0 flex-1 overflow-y-auto overscroll-contain [touch-action:pan-y_pinch-zoom]",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",

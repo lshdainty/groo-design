@@ -5,8 +5,8 @@ import { cn } from "@/lib/utils";
 import { NotificationBadge } from "@/components/ui/notification-badge";
 
 /*
- * Groo Bottom Navigation — groo 의 떠 있는 알약(2026-10-04 사용자 결정 4B · 5A · 6B · 7A). 규칙은 SEED Bottom Navigation
- * (5칸 · 라벨 5자 · 최대 480 · 배지 2칸 · 글자 크기 설정을 따르지 않음). 수치 원본은 specs/components/bottom-navigation.yaml.
+ * Groo Bottom Navigation — groo 의 떠 있는 알약.
+ * 규칙: 5칸 · 라벨 5자 · 최대 480 · 배지 2칸 · 글자 크기 설정을 따르지 않음. 수치 원본은 specs/components/bottom-navigation.yaml.
  *
  *   BottomNavigation           바(<nav aria-label="주 메뉴">) — Desk 앱 · Desk 웹 768 미만의 주 메뉴. 칸 다섯(홈 · 가계부 · + · 캘린더 · 전체)이
  *                              어느 화면에서나 같다. compact · defaultCompact · onCompactChange(손으로 다룰 때), scrollRoot(줄어들기를 셀
@@ -19,13 +19,13 @@ import { NotificationBadge } from "@/components/ui/notification-badge";
  *
  * 줄어들기 — 아래로 20 이상 스크롤하면 줄어들고(48), 위로 28 이상 스크롤하거나 맨 위 40 안으로 오면 펴진다(스크롤 방향이 바뀌면 다시 센다).
  *   가로 스크롤 · 시트 · 대화상자 · 떠 있는 목록(팝오버) 안의 스크롤은 세지 않는다. 줄어든 바 어디를 눌러도 펴진다 — 칸을 눌렀으면 그 칸의 일도 한다
- *   (다른 탭이면 그 탭으로, 지금 탭이면 다시 누르기 — 첫 화면 · 맨 위로. 2026-10-15 Q-014).
+ *   (다른 탭이면 그 탭으로, 지금 탭이면 다시 누르기 — 첫 화면 · 맨 위로).
  *   줄어들어도 칸마다 이름은 남는다(라벨은 보이지 않게만 — sr-only). 라벨은 줄어들기 시작할 때 사라지고 다 펴진 뒤(200ms) 나타난다.
  *   화면 키보드가 열리면 바를 가린다(visualViewport 가 화면보다 150 넘게 작을 때).
  * 다시 누르기 — 지금 탭(current)을 누르면 링크로 옮기지 않고(같은 주소를 쌓지 않는다) onReselect 를 부른다(그 칸의 onClick 대신).
  *   onReselect 를 주지 않으면: 맨 위로 스크롤하고, 지금 주소가 그 탭의 첫 화면(href)이 아니면 주소를 href 로 고쳐 간다(location.replace).
  *   라우터를 쓰는 셸은 onReselect 에서 navigate(href, { replace: true }) 와 받은 scrollToTop() 을 부른다.
- * 탭마다 기억 — 다른 탭에서 누르면 그 탭의 마지막 화면(resumeHref, 없으면 href)으로 간다. 웹 · 앱 같다(2026-10-16 사용자 결정 Q-018-4 A).
+ * 탭마다 기억 — 다른 탭에서 누르면 그 탭의 마지막 화면(resumeHref, 없으면 href)으로 간다. 웹 · 앱 같다.
  *   마지막 화면 · 스크롤을 기억하고 돌려놓는 것은 셸의 몫이다 — 웹은 돌아온 화면의 목록이 그려진 뒤 스크롤을 돌려놓고, 못 하면 맨 위다.
  *   초점은 그 화면의 제목으로 옮기되 스크롤은 건드리지 않는다(top-navigation.tsx 의 focusScreenTitle({ resetScroll: false })).
  *
@@ -199,7 +199,7 @@ const BottomNavigation = React.forwardRef<HTMLElement, BottomNavigationProps>(
     }, [scrollRoot]);
 
     const own = React.useRef<HTMLElement | null>(null);
-    // 알림 배지는 2칸까지(SEED) — 개발 중에 알린다
+    // 알림 배지는 2칸까지 — 개발 중에 알린다
     React.useEffect(() => {
       if (!import.meta.env.DEV) return;
       const marked = own.current?.querySelectorAll("[data-notification]").length ?? 0;

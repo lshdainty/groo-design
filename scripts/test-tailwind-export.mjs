@@ -32,9 +32,9 @@ const NAMESPACE_PATTERNS = [
   { name: "text--font-weight modifier", regex: /^\s+--text-[a-z0-9-]+--font-weight:/gm, minCount: 7 },
   { name: "radius", regex: /^\s+--radius-[a-z0-9_]+:/gm, minCount: 7 },
   { name: "spacing", regex: /^\s+--spacing-[a-z0-9_-]+:/gm, minCount: 7 },
-  { name: "shadow", regex: /^\s+--shadow-[a-z0-9-]+:/gm, minCount: 16 },
-  { name: "motion-duration", regex: /^\s+--motion-duration-[a-z0-9-]+:/gm, minCount: 13 },
-  { name: "motion-ease", regex: /^\s+--motion-ease-[a-z0-9-]+:/gm, minCount: 8 },
+  { name: "shadow", regex: /^\s+--shadow-[a-z0-9-]+:/gm, minCount: 8 },
+  { name: "motion-duration", regex: /^\s+--motion-duration-[a-z0-9-]+:/gm, minCount: 9 },
+  { name: "motion-ease", regex: /^\s+--motion-ease-[a-z0-9-]+:/gm, minCount: 7 },
   { name: "gradient", regex: /^\s+--gradient-[a-z0-9-]+:/gm, minCount: 3 },
   { name: "overlay-dim", regex: /^\s+--overlay-dim-[a-z]+:/gm, minCount: 2 },
   { name: "breakpoint", regex: /^\s+--breakpoint-[a-z0-9]+:/gm, minCount: 4 },
@@ -45,7 +45,7 @@ const NAMESPACE_PATTERNS = [
   { name: "@keyframes", regex: /^@keyframes\s+[a-z][a-z0-9-]*\s*\{/gm, minCount: 14 },
 ];
 
-const BRAND_COLORS = ["primary", "primary-light", "border-focus", "border-focus-light"];
+const BRAND_COLORS = ["fg-brand", "bg-brand-solid", "bg-brand-weak", "stroke-focus-ring"];
 
 // v116 z-index — 층 이름 열 개(specs/z-index.md L0 ~ L9). 값은 DESIGN*.md 표가 원본이라 여기 적지 않고,
 // 이름이 빠짐없이 나오는지 · z-base 가 auto 인지 · 나머지가 층 차례대로 커지는지 · 세 파일이 같은지만 본다.
@@ -53,7 +53,6 @@ const Z_LAYERS = [
   "z-base", "z-sticky", "z-modal", "z-modal-content", "z-floating", "z-tooltip",
   "z-alert", "z-alert-content", "z-snackbar", "z-dev",
 ];
-const Z_REMOVED = ["z-dropdown", "z-drawer", "z-toast"]; // v65 — v116 에서 걷었다
 let zShared = null;
 
 function checkZIndex(css, target) {
@@ -63,9 +62,6 @@ function checkZIndex(css, target) {
   if (names.join(",") !== Z_LAYERS.join(",")) {
     console.error(`  ❌ z-index 이름 · 차례: ${names.join(", ")} (expected ${Z_LAYERS.join(", ")})`);
     errors++;
-  }
-  for (const old of Z_REMOVED) {
-    if (vars.has(old)) { console.error(`  ❌ 걷은 z-index 토큰 --${old} 가 남았다`); errors++; }
   }
   if (vars.get("z-base") !== "auto") { console.error(`  ❌ --z-base: ${vars.get("z-base")} (expected auto)`); errors++; }
   const nums = Z_LAYERS.slice(1).map((n) => Number(vars.get(n)));
@@ -78,19 +74,11 @@ function checkZIndex(css, target) {
   return errors;
 }
 
-// 옛 그림자 이름 → 새 이름. @theme 에서 값이 아니라 var(--shadow-sN) 이어야 Tailwind 클래스(.shadow-lg)가 다크 값을 따라간다
-const SHADOW_ALIAS = { "shadow-sm": "shadow-s1", "shadow-md": "shadow-s2", "shadow-lg": "shadow-s3", "shadow-xl": "shadow-s4" };
-function checkShadowAliases(css) {
+// 그림자 — @theme 의 --shadow-sN 은 var(--groo-shadow-sN) 이고 값(라이트)은 @theme 밖 :root 에 있어야
+// Tailwind 클래스(.shadow-s3)가 다크 블록의 값을 따라간다.
+function checkShadows(css) {
   let errors = 0;
   const theme = /@theme \{([\s\S]*?)\n\}/.exec(css)?.[1] ?? "";
-  for (const [old, neu] of Object.entries(SHADOW_ALIAS)) {
-    for (const [o, n] of [[old, neu], [`${old}-dark`, `${neu}-dark`]]) {
-      const m = new RegExp(`^\\s+--${o}:\\s*([^;]+);`, "m").exec(theme);
-      if (!m) { console.error(`  ❌ @theme 에 --${o} 없음`); errors++; }
-      else if (m[1].trim() !== `var(--${n})`) { console.error(`  ❌ --${o}: ${m[1].trim()} (expected var(--${n}))`); errors++; }
-    }
-  }
-  // 새 이름 — @theme 의 --shadow-sN 은 var(--groo-shadow-sN), 값(라이트)은 @theme 밖 :root 에(2026-10-17 — 01-003 A 를 새 이름에도)
   const md = readFileSync(resolve(ROOT, "DESIGN.md"), "utf8");
   const sh = parseShadows(md);
   const hold = /\n:root \{\n([\s\S]*?)\n\}/.exec(css)?.[1] ?? "";
@@ -100,7 +88,7 @@ function checkShadowAliases(css) {
     const v = new RegExp(`^\\s+--groo-shadow-s${n}:\\s*([^;]+);`, "m").exec(hold);
     if (!v || v[1].trim() !== sh[`shadow-s${n}`]) { console.error(`  ❌ :root --groo-shadow-s${n}: ${v?.[1]} (expected ${sh[`shadow-s${n}`]})`); errors++; }
   }
-  if (errors === 0) console.log(`  ✓ 그림자 — 옛 이름 → var(--shadow-s1 ~ s4) → var(--groo-shadow-s1 ~ s4), 다크 블록이 값을 바꾼다`);
+  if (errors === 0) console.log(`  ✓ 그림자 — var(--shadow-s1 ~ s4) → var(--groo-shadow-s1 ~ s4), 다크 블록이 값을 바꾼다`);
   return errors;
 }
 
@@ -113,14 +101,13 @@ function checkDarkBlock(css, target) {
   const table = parseColorTable(md.split("\n"));
   const expected = new Map();
   for (const name of table.keys()) {
-    if (name.endsWith("-dark") || !table.has(`${name}-dark`)) continue;
+    if (name === "primary" || name.endsWith("-dark") || !table.has(`${name}-dark`)) continue;
     expected.set(`color-${name}`, resolveColorHex(table, `${name}-dark`));
   }
-  // 옛 그림자 이름(shadow-sm ~ xl)은 @theme 에서 var(--shadow-s1 ~ s4) 라 다크 블록에 따로 두지 않는다(01-003 A — 아래 checkShadowAliases)
   for (const t of [parseShadows(md), parseGradients(md)]) {
     for (const [name, val] of Object.entries(t)) {
-      if (name.endsWith("-dark") || !t[`${name}-dark`] || name in SHADOW_ALIAS) continue;
-      // 새 그림자 이름(shadow-s1 ~ s4)은 값을 든 --groo-shadow-sN 을 바꾼다(아래 checkShadowAliases)
+      if (name.endsWith("-dark") || !t[`${name}-dark`]) continue;
+      // 그림자(shadow-s1 ~ s4)는 값을 든 --groo-shadow-sN 을 바꾼다(위 checkShadows)
       expected.set(/^shadow-s\d+$/.test(name) ? `groo-${name}` : name, t[`${name}-dark`]);
     }
   }
@@ -184,7 +171,11 @@ for (const target of TARGETS) {
       }
     }
     if (BRAND_COLORS.every(bk => new RegExp(`--color-${bk}:`).test(css))) {
-      console.log(`  ✓ brand 토큰 (primary, primary-light, border-focus, border-focus-light)`);
+      console.log(`  ✓ brand 토큰 (${BRAND_COLORS.join(", ")})`);
+    }
+    if (/--color-primary:/.test(css)) {
+      console.error("  ❌ 형식 키 --color-primary 가 내보내졌다");
+      totalErrors++;
     }
   }
 
@@ -201,7 +192,7 @@ for (const target of TARGETS) {
   // 4-1. 다크 블록(2026-10-06) — 다크 값(-dark)이 따로 있는 색 · 그림자 · 그라디언트를 빠짐없이 덮고,
   //      값은 DESIGN 에서 풀어 둔 값이다(var() 사슬이면 반전 역할 색 fg-*-inverted 가 한 번 더 뒤집힌다).
   totalErrors += checkDarkBlock(css, target);
-  totalErrors += checkShadowAliases(css);
+  totalErrors += checkShadows(css);
 
   // 5. 정의되지 않은 placeholder 검출 (예: undefined, null, NaN)
   const placeholders = css.match(/:\s*(undefined|null|NaN);/g);

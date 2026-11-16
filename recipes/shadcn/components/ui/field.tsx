@@ -4,7 +4,7 @@ import { CircleAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Field — 구조는 SEED Field(2026-10-01). 수치 원본은 specs/components/field.yaml.
+ * Groo Field — 수치 원본은 specs/components/field.yaml.
  *
  *   Field            머리(라벨 · 필수 점 또는 "선택" · 보조 액션) · 입력 · 꼬리(설명 또는 오류 · 글자 수). 사이 8
  *   useFieldControl  입력(Input · Textarea)이 Field 의 id · 설명 · 오류 · 필수 · 막힘을 받는다
@@ -12,12 +12,12 @@ import { cn } from "@/lib/utils";
  *   useFieldGroupState  Checkbox · Radio 묶음이 Field 의 막힘 · 오류 · 필수(· 읽기 전용 — Quantity Picker · Attachment Input)를 받는다 —
  *                    묶음은 aria-disabled 와 칸마다 disabled,
  *                    radiogroup 은 aria-invalid · aria-required, 체크박스 묶음(role=group)은 오류를 칸마다 aria-invalid 로 건다
- *                    (role=group 은 aria-invalid · aria-required 를 받지 않는다 — SEED useFieldset 과 같다, 2026-10-08)
- *   submitImplicitly Checkbox · Radio 의 Enter — 진짜 input 처럼 폼의 기본 버튼을 누른다(2026-10-08)
+ *                    (role=group 은 aria-invalid · aria-required 를 받지 않는다)
+ *   submitImplicitly Checkbox · Radio 의 Enter — 진짜 input 처럼 폼의 기본 버튼을 누른다
  *   useTextControl   입력 · 여러 줄 입력의 글자 수 — 자소 단위로 세고 최대에서 자른다(한글 조합이 끝난 뒤)
  *
  * 라벨은 칸과 잇는다 — 입력이면 <label for>, 묶음이면 묶음의 aria-labelledby(라벨은 <span>).
- * 칸이 버튼(Input Button · Select 의 트리거)이면 라벨을 눌러도 포커스만 옮긴다 — 누르지 않는다(시트 · 목록을 열지 않는다, SEED).
+ * 칸이 버튼(Input Button · Select 의 트리거)이면 라벨을 눌러도 포커스만 옮긴다 — 누르지 않는다(시트 · 목록을 열지 않는다).
  * 필수 점은 화면 읽기 프로그램에 숨기고 필수는 칸의 aria-required 가 알린다 — required 속성은 쓰지 않는다
  * (브라우저 기본 말풍선이 오류 글 대신 뜨지 않게). 필수 점 · "선택" 은 한 화면에서 섞지 않는다(2/3 규칙 — field.md).
  * 오류 글(invalid + errorMessage)은 설명 자리를 대신하고 칸의 aria-describedby 로 이어진다. 바뀔 때는 화면 밖의
@@ -198,7 +198,7 @@ export interface FieldProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
   labelHidden?: boolean;
   /** 라벨 오른쪽 보조 액션 — Button ghost · neutralSubtle · xsmall · flush="right" */
   headerAction?: React.ReactNode;
-  /** 설명 — 오류가 있으면 오류가 대신한다 */
+  /** 설명 — 오류가 있으면 그 자리에 오류를 보인다 */
   description?: React.ReactNode;
   /** 설명 앞 아이콘(16) */
   descriptionIcon?: React.ReactNode;
@@ -298,7 +298,7 @@ const Field = React.forwardRef<HTMLDivElement, FieldProps>(
           className={cn("flex w-full min-w-0 flex-col gap-x2", className)}
           {...props}
         >
-          {/* 큰 글자 — 라벨이 머리 폭의 절반을 지키고도 액션이 안 들면 액션이 라벨 아래 줄 오른쪽 끝으로(라벨 최소 50% · 줄바꿈, 03-G 4A 와 같은 반 폭 판정 — field.yaml label.minWidth) */}
+          {/* 큰 글자 — 라벨이 머리 폭의 절반을 지키고도 액션이 안 들면 액션이 라벨 아래 줄 오른쪽 끝으로(라벨 최소 50% · 줄바꿈 — field.yaml label.minWidth) */}
           {(label != null || headerAction != null) && (
             <div
               data-slot="field-header"

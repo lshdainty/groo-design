@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Tag Group — 구조는 SEED Tag Group(2026-10-03). 수치 원본은 specs/components/tag-group.yaml.
+ * Groo Tag Group — 수치 원본은 specs/components/tag-group.yaml.
  *
  *   TagGroup       여러 메타 정보(카테고리 이름 · 자산 · 시각 · 거리 · 개수 · 금액)를 " · " 로 이은 글줄 — 묶음 <span>, 역할 없음
  *                  (목록 역할을 주지 않는다 — "목록, 항목 3개" 를 줄마다 읽지 않게). 항목 사이 구분은 묶음이 스스로 넣는다
@@ -14,16 +14,16 @@ import { cn } from "@/lib/utils";
  *   tone      neutralSubtle(기본 — fg-neutral-subtle) · neutral(fg-neutral) · brand(fg-brand, 아껴서) — 항목마다 고른다
  *   weight    regular 400(기본) · bold 700 — 항목마다. 금액처럼 앞세울 항목 하나만 neutral · bold
  *             묶음의 tone · weight 는 항목의 기본값이다
- *   truncate  false(기본) — 넘치면 낱말 단위로 줄을 바꾼다(keep-all + break-word, v114 — 항목 사이 · 항목 안 띄어쓰기에서)
+ *   truncate  false(기본) — 넘치면 낱말 단위로 줄을 바꾼다(keep-all + break-word — 항목 사이 · 항목 안 띄어쓰기에서)
  *             true — 한 줄(inline-flex · 최대 폭 100%). 넘치면 항목 글이 각자 말줄임(…)하고 구분은 줄지 않는다.
  *             줄어드는 정도는 항목의 shrink — 기본 1, 0 은 줄지 않고 1 이상은 넘친 폭을 '글 폭 × shrink' 비율로 나눠 함께 준다
  *             (차례대로가 아니다 — 금액처럼 꼭 보일 항목은 0). 줄어드는 항목도 첫 글자 + "…" 까지만 — 글 칸의 최소 폭 2.1em,
- *             두 글자 이하면 글 폭(max-content — 넓히지 않는다). 모두 최소 폭이어도 넘치면 줄 끝이 잘린다(2026-10-17 사용자 결정 — 03-E 결정 5 B)
+ *             두 글자 이하면 글 폭(max-content — 넓히지 않는다). 모두 최소 폭이어도 넘치면 줄 끝이 잘린다
  *
  * 구분 " · " 는 줄이 안 바뀌는 공백(U+00A0) · 가운뎃점(U+00B7) · 공백 — 앞 항목에 붙어, 줄이 바뀌면 앞 줄 끝에 남고 다음 줄은
  * 항목으로 시작한다. 아이콘은 그 글과 한 줄에 붙어 있다(아이콘만 줄 끝에 남지 않는다 — 항목 + 구분을 한 칸으로 묶어 칸 안은
  * 글 안 띄어쓰기에서만 줄을 바꾼다). 색은 톤과 관계없이 fg-disabled · 400(글보다 한 단계 흐린 장식). 보조 기술에는 구분을 숨기고 그 자리에
- * 보이지 않는 ", " 를 둔다 — "식비, 신한카드, 오후 2:10" 처럼 끊어 읽는다(SEED 는 "식비신한카드오후 2:10" 처럼 붙는다).
+ * 보이지 않는 ", " 를 둔다 — "식비, 신한카드, 오후 2:10" 처럼 끊어 읽는다(없으면 "식비신한카드오후 2:10" 처럼 붙는다).
  * 빈 항목은 건너뛴다 — 자식이 null · false · "" 이거나, 글 · 아이콘이 모두 없는 TagGroupItem 이면 구분도 넣지 않는다.
  * 아이콘은 늘 aria-hidden(항목 글자색을 따른다). 뜻이 있는 아이콘(갈래 = 분할 · 눈 = 조회)은 srLabel 로 읽을 글을 준다 —
  * 주면 보이는 글 · 아이콘을 숨기고 그 글을 읽는다("분할 2건" · "조회 12"). 말줄임해도 글 전체를 읽는다.
@@ -92,7 +92,7 @@ const LABEL: Record<"wrap" | "truncate", string> = {
 
 // 줄어드는 항목의 최소 폭 — 글 칸에 첫 글자 + "…" 가 남는 2.1em(글자 크기를 따른다) + 아이콘(12 · 13 · 14) · 사이 2.
 // 두 글자 이하인 글은 글 폭 그대로(max-content — 넓히지 않는다). 최소 폭은 항목 칸에 준다 — 글 칸(overflow hidden)의 최소 폭은
-// 항목의 최소 크기로 올라가지 않는다. 사용자 결정 2026-10-17 — 03-E 결정 5 B
+// 항목의 최소 크기로 올라가지 않는다.
 const LABEL_MIN = "2.1em";
 const ICON_PX: Record<TagGroupSize, number> = { t2: 12, t3: 13, t4: 14 };
 const graphemes =

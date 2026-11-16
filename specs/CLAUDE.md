@@ -11,8 +11,6 @@ specs/components/<이름>.md                    ← 원본(규칙 · 가이드)
 specs/components/<이름>.yaml                  ← 수치 원본(있을 때)
 site/components/specs/<이름>.tsx              ← 사이트 그림(thumb · hero · 예시)
 recipes/shadcn/components/ui/<이름>.tsx       ← 웹 레시피(cva variants · sizes 가 스펙과 1:1)
-recipes/shadcn/examples/<이름>-examples.mjs   ← 예제
-scripts/build-preview-html.mjs `.<이름>` CSS  ← 미리보기
 ```
 
 ## 수치 원본 `<이름>.yaml`
@@ -39,7 +37,7 @@ scripts/build-preview-html.mjs `.<이름>` CSS  ← 미리보기
 
 | # | 규칙 | 이유 |
 |---|---|---|
-| 1 | **`<이름>.md` 가 원본**(수치는 `<이름>.yaml` 이 있으면 그쪽) | 어긋나면 스펙이 맞고, 코드 · 예제 · 미리보기가 따라갑니다. |
+| 1 | **`<이름>.md` 가 원본**(수치는 `<이름>.yaml` 이 있으면 그쪽) | 어긋나면 스펙이 맞고, 레시피 · 사이트 그림이 따라갑니다. |
 | 2 | **함께 맞추는 파일을 같이 고칩니다** | 한 곳만 고치면 어긋남이 쌓입니다. |
 | 3 | **WCAG 기준을 나눠 적습니다** — 2.5.5 = AAA(44×44), 2.5.8 = AA(24×24) | 한 줄에 묶으면 충족 · 미달 판단이 섞입니다. |
 | 4 | **한 PR = 한 컴포넌트** | 여러 컴포넌트를 함께 바꾸면 맞추기 어렵습니다(문서 문체만 고치는 일은 예외). |
@@ -70,9 +68,9 @@ scripts/build-preview-html.mjs `.<이름>` CSS  ← 미리보기
 ```
 1. 브랜치      git worktree 로 components/<이름> (워크스페이스 규칙)
 2. 원본        specs/components/<이름>.md · .yaml
-3. 따라 맞추기  사이트 그림 · 레시피 · 예제 · 미리보기
+3. 따라 맞추기  사이트 그림 · 레시피
 4. 검사        npm run verify
-               npm run build:preview
+               npm run test:exports
                (cd site && npm run types:check && npm run build)
 5. 눈으로 확인  사이트의 컴포넌트 페이지 · 개요 카드를 라이트 · 다크로 봅니다
 ```
@@ -82,7 +80,7 @@ scripts/build-preview-html.mjs `.<이름>` CSS  ← 미리보기
 - 스펙 없이 코드부터 바꾸지 않습니다.
 - 함께 맞추는 파일 중 일부만 고친 채 머지하지 않습니다.
 - WCAG 기준을 한 줄에 묶지 않습니다.
-- 미리보기 라벨과 실제 모습이 다른 채 커밋하지 않습니다.
+- 사이트 그림의 라벨과 실제 모습이 다른 채 커밋하지 않습니다.
 
 ## 참고
 

@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Switch — 구조는 SEED Switch(2026-09-30). 수치 원본은 specs/components/switch.yaml.
+ * Groo Switch — 수치 원본은 specs/components/switch.yaml.
  *
  *   Switchmark  스위치만 — 설정 줄에 끼워 쓴다(누르는 영역은 그 줄 전체가 맡는다, 이름 연결 필수)
  *   Switch      스위치 + 라벨 — 라벨까지 눌리고, 누르는 영역은 44 까지 넓힌다(::before)
@@ -13,12 +13,12 @@ import { cn } from "@/lib/utils";
  *   size  "16" 26 × 16(라벨 13) · "24" 38 × 24(라벨 14, 기본) · "32" 52 × 32(라벨 16) — 이름은 트랙 높이
  *   tone  neutral(짙은 회색, 기본) · brand(서비스 핵심 흐름에서만)
  *
- * 누르는 순간 적용되는 설정에만 쓴다 — 저장해야 적용되면 Checkbox(사용자 결정).
- * 끄면 엄지가 0.8 로 작아진다 — 색 말고도 자리 · 크기로 켬 · 끔이 갈린다(SEED). 그림자는 없다.
- * 꺼진 트랙은 stroke-neutral-solid(3:1 — v109). 누르면 색은 그대로, 스위치만 세로 2px 축소(v104) —
+ * 누르는 순간 적용되는 설정에만 쓴다 — 저장해야 적용되면 Checkbox.
+ * 끄면 엄지가 0.8 로 작아진다 — 색 말고도 자리 · 크기로 켬 · 끔이 갈린다. 그림자는 없다.
+ * 꺼진 트랙은 stroke-neutral-solid(3:1). 누르면 색은 그대로, 스위치만 세로 2px 축소 —
  * 기준 길이는 max(높이, 폭 ÷ 4, 24) 라 16 · 24 는 24, 32 는 32. 호버도 색이 바뀌지 않는다.
- * 비활성은 전용 색(v106) — 꺼진 채 막히면 옅은 트랙 + 안쪽 선 + 회색 엄지, 켜진 채 막히면 켜진 모양 그대로
- * 회색 채움 + 밝은 엄지(사용자 결정).
+ * 비활성은 전용 색 — 꺼진 채 막히면 옅은 트랙 + 안쪽 선 + 회색 엄지, 켜진 채 막히면 켜진 모양 그대로
+ * 회색 채움 + 밝은 엄지.
  * 라벨을 눌러도 스위치가 줄어들도록 Switch 는 group/switch, 스위치는 그 active 도 받는다.
  */
 const switchmarkVariants = cva(

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { submitImplicitly, useFieldGroup, useFieldGroupState } from "@/components/ui/field";
 
 /*
- * Groo Radio — 구조는 SEED Radio(2026-09-30). 수치 원본은 specs/components/radio-group.yaml.
+ * Groo Radio — 수치 원본은 specs/components/radio-group.yaml.
  *
  *   Radiomark   동그라미만 — 라벨이 따로 서는 자리에 넣어 쓴다(누르는 영역은 그 줄 전체가 맡는다, 라벨 연결 필수)
  *   Radio       동그라미 + 라벨 — 라벨까지 눌리고, 누르는 영역은 44 까지 넓힌다(::before)
@@ -16,23 +16,23 @@ import { submitImplicitly, useFieldGroup, useFieldGroupState } from "@/component
  *   tone   neutral(짙은 회색, 기본) · brand(서비스 핵심 흐름에서만)
  *   weight regular(기본) · bold(강조)
  *
- * 선택 안 된 동그라미의 테두리는 stroke-neutral-solid(3:1 — v109). 선택은 테두리 없이 채운 원 + 가운데 점(SEED).
- * 호버 = 누름 색(v106), 누르면 동그라미만 세로 2px 축소(v104) — 기준 길이는 max(20·24, 24) = 24.
- * 비활성은 전용 색(v106) — 선택도 채운 원 그대로 색만 바꾼다(Checkbox 와 같다, 사용자 결정).
- * 오류는 동그라미를 바꾸지 않는다 — 묶음 아래 글. 설명 · 딸린 입력이 붙는 선택은 Radio 가 아니라 Select Box(사용자 결정).
+ * 선택 안 된 동그라미의 테두리는 stroke-neutral-solid(3:1). 선택은 테두리 없이 채운 원 + 가운데 점.
+ * 호버 = 누름 색, 누르면 동그라미만 세로 2px 축소 — 기준 길이는 max(20·24, 24) = 24.
+ * 비활성은 전용 색 — 선택도 채운 원 그대로 색만 바꾼다(Checkbox 와 같다).
+ * 오류는 동그라미를 바꾸지 않는다 — 묶음 아래 글. 설명 · 딸린 입력이 붙는 선택은 Radio 가 아니라 Select Box.
  * 점은 늘 그려 두고(forceMount) 색만 바꾼다 — 채움과 함께 색으로 전환된다.
  * 라벨을 눌러도 동그라미가 반응하도록 Radio 는 group/radio, 동그라미는 그 hover · active 도 받는다.
- * 키 — 화살표는 옮기며 고르고 Space 는 포커스된 선택지를 고른다. Enter 는 폼을 제출한다(진짜 input · SEED 와 같다 — 폼의 기본 버튼을
+ * 키 — 화살표는 옮기며 고르고 Space 는 포커스된 선택지를 고른다. Enter 는 폼을 제출한다(진짜 input 과 같다 — 폼의 기본 버튼을
  * 누른다, 고르지 않는다). Radix 의 항목은 onKeyDown 을 덮어써 Enter 를 막기만 하므로 묶음이 받는다(submitOnRadioEnter — Radiomark 를
- * 담는 List · Select Box 의 묶음도 같이 쓴다, 사용자 결정 2026-10-08). Home · End · PageUp · PageDown 은 받지 않는다 — 화살표만(SEED · 진짜
- * 라디오 · APG, 사용자 결정 2026-10-17 — 03-E 결정 3 A). Radix 는 이 키로 초점만 첫 · 끝으로 옮겨 초점과 고른 것이 갈리므로 묶음이
+ * 담는 List · Select Box 의 묶음도 같이 쓴다). Home · End · PageUp · PageDown 은 받지 않는다 — 화살표만(진짜
+ * 라디오 · APG). Radix 는 이 키로 초점만 첫 · 끝으로 옮겨 초점과 고른 것이 갈리므로 묶음이
  * 캡처 단계에서 막는다(ignoreRadioJumpKeys — 라디오를 담는 Chip · Segmented Control · List · Select Box 의 묶음도 같이 쓴다).
  * 라벨 안에 링크 · 버튼을 두지 않는다 — 누르는 영역(::before)이
  * 덮는다. 링크는 라벨 옆 · 아래에(radio-group.md Don't).
  * 묶음의 상태 — Field 의 막힘은 묶음 aria-disabled 와 칸마다 disabled(Radix disabled), 오류 · 필수는 radiogroup 의 aria-invalid ·
- * aria-required 다(SEED RadioGroup 과 같다). 묶음에 직접 준 값이 이긴다.
+ * aria-required 다. 묶음에 직접 준 값이 이긴다.
  * 줄 사이 12 는 누르는 영역 때문이다 — 줄 32 · 36 에 더해 44 · 48 마다 한 줄이라 이웃 줄과 44 영역이 겹치지 않는다
- * (SEED 의 4 로는 한 줄이 36 · 40 만 받는다, 사용자 결정). Radio 줄은 내용만큼만 차지한다(self-start) — 직접 짠 줄은 묶음 폭을 쓴다.
+ * (사이 4 로는 한 줄이 36 · 40 만 받는다). Radio 줄은 내용만큼만 차지한다(self-start) — 직접 짠 줄은 묶음 폭을 쓴다.
  */
 const radiomarkVariants = cva(
   [
@@ -163,7 +163,7 @@ function submitOnRadioEnter(onKeyDown?: React.KeyboardEventHandler<HTMLDivElemen
   };
 }
 
-// 하나 고르기 묶음이 받지 않는 키 — Home · End · PageUp · PageDown(화살표만 — SEED · 진짜 라디오 · APG, 사용자 결정 2026-10-17 — 03-E 결정 3 A).
+// 하나 고르기 묶음이 받지 않는 키 — Home · End · PageUp · PageDown(화살표만 — 진짜 라디오 · APG).
 // Radix 의 RovingFocusGroup 은 이 키로 초점만 첫 · 끝으로 옮긴다(고르지 않는다) — 초점과 고른 것이 갈려, Tab 으로 나갔다 오면 고른 것으로 돌아간다.
 // 묶음이 캡처 단계에서 기본 동작을 막는다 — Radix 의 항목 처리는 defaultPrevented 면 건너뛰고, 화면도 스크롤되지 않는다.
 // 라디오가 아닌 곳(Select Box 펼침 안의 입력칸)에서는 그대로 둔다. 라디오를 담는 묶음(RadioGroup · ChipRadioGroup · SegmentedControl ·

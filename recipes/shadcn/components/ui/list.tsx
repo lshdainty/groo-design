@@ -11,7 +11,7 @@ import { Radiomark, ignoreRadioJumpKeys, submitOnRadioEnter, type RadiomarkProps
 import { Switchmark, type SwitchmarkProps } from "@/components/ui/switch";
 
 /*
- * Groo List — 구조는 SEED List(2026-10-01). 수치 원본은 specs/components/list.yaml · list-header.yaml.
+ * Groo List — 수치 원본은 specs/components/list.yaml · list-header.yaml.
  *
  *   List · ListItem          목록(ul) · 보기만 하는 줄
  *   ListButtonItem · ListLinkItem   줄 전체가 버튼 · 링크(뒤 붙이개의 작은 버튼은 따로 눌린다)
@@ -19,10 +19,10 @@ import { Switchmark, type SwitchmarkProps } from "@/components/ui/switch";
  *   ListRadioGroup · ListCheckGroup   하나 고르기(role=radiogroup) · 여럿 고르기(fieldset) 묶음 — 줄은 li 대신 div
  *   itemRadius               목록 · 묶음의 누름 바탕 모서리(기본 radius-r2_5) — 카드 안에서는 카드 모서리 − 카드 가장자리에서 바탕까지 거리
  *   ListDivider · ListHeader · ListTile   줄 사이 선(필요할 때만) · 목록 제목 · 내용 줄의 앞 타일
- *   ListParentItem           하위 줄을 접는 부모 줄(2026-10-10 — 카테고리). ListButtonItem 의 속성에 collapsible(기본 true) · expandLabel(꺾쇠 단추의
+ *   ListParentItem           하위 줄을 접는 부모 줄(카테고리). ListButtonItem 의 속성에 collapsible(기본 true) · expandLabel(꺾쇠 단추의
  *                            고정 이름 — "{카테고리} 하위 카테고리", 접는 줄이면 필수 · 하위가 없는 줄에도 준다) · open · defaultOpen · onOpenChange(open) 를
  *                            더 받고, 자식(ListButtonItem …)이 하위 줄이 된다. 두 갈래는 유니언 타입이다 — collapsible={false} 없이 expandLabel 을
- *                            빠뜨리면 타입 오류(2026-10-15 사용자 결정 — 구현 세션 질문 Q-002, 안 B). 줄 앞 4 · 꺾쇠 단추 44(보이는 상자 = 누르는 영역, 모서리 10 · chevron-right 20 fg-neutral-subtle ·
+ *                            빠뜨리면 타입 오류. 줄 앞 4 · 꺾쇠 단추 44(보이는 상자 = 누르는 영역, 모서리 10 · chevron-right 20 fg-neutral-subtle ·
  *                            펼치면 90° 300ms) · 그 뒤 4 를 지나 앞 붙이개가 52 에서 시작한다. 단추는 줄과 따로 눌린다(aria-expanded · aria-controls,
  *                            이름은 상태마다 바꾸지 않는다) — 줄을 누르면 하는 일(편집)은 그대로. 하위 줄은 부모의 제목 자리 104 에서 시작하고
  *                            (누름 바탕은 줄 폭 그대로), 높이 300ms 로 펼치고 접는다(모션 줄이기면 150ms 서서히 — Accordion 과 같다).
@@ -31,14 +31,14 @@ import { Switchmark, type SwitchmarkProps } from "@/components/ui/switch";
  *                            타일 · 제목이 같은 자리에 서게 한다
  *
  * 한 줄은 두 층이다 — 바탕 층(li::before: 누름 · 호버 · 강조 바탕, 줄지 않는다)과 콘텐츠 층(앞 · 본문 · 뒤).
- * 누르면 바탕이 좌우 6 들어와 모서리 10 이 되고(SEED), 콘텐츠 층만 2px 거리로 준다(기초 Feedback v104) —
+ * 누르면 바탕이 좌우 6 들어와 모서리 10 이 되고, 콘텐츠 층만 2px 거리로 준다(기초 Feedback) —
  * 배율 = (기준 − 2) ÷ 기준, 기준 = max(높이, 폭 ÷ 4, 24). Button 과 같이 누르는 순간(포인터 · 키) 줄을 재서 --press-basis 로 넘긴다.
- * 호버는 마우스 있는 기기에서만 누름과 같은 바탕(v106). 줄 안의 스위치 · 체크 · 라디오는 따로 줄지 않는다.
+ * 호버는 마우스 있는 기기에서만 누름과 같은 바탕. 줄 안의 스위치 · 체크 · 라디오는 따로 줄지 않는다.
  * 누르는 줄의 버튼 · 링크는 ::after 로 줄 전체를 덮어 줄 어디를 눌러도 눌리고(포커스 링도 그 안쪽 2px),
- * 뒤 붙이개 안의 버튼 · 링크는 z-index 1 로 그 위에 올라 따로 눌린다(SEED 와 같은 짜임).
- * 글자: 제목 t5 · 400, 설명 t3 · fg-neutral-subtle(사용자 결정 — SEED 그대로). 좌우 여백은 spacing-global-gutter(24).
+ * 뒤 붙이개 안의 버튼 · 링크는 z-index 1 로 그 위에 올라 따로 눌린다.
+ * 글자: 제목 t5 · 400, 설명 t3 · fg-neutral-subtle. 좌우 여백은 spacing-global-gutter(24).
  *
- * 값이 길 때(2026-10-15 사용자 결정 — 구현 세션 질문 Q-001, 안 A): 뒤 붙이개는 줄지 않고(SEED suffix flexShrink 0) 본문이 양보한다(content flexGrow 1).
+ * 값이 길 때: 뒤 붙이개는 줄지 않고(suffix flexShrink 0) 본문이 양보한다(content flexGrow 1).
  * 겹침만 막는다 — 본문은 한 글자(제목 글자 1em, 뒤 여백 10 은 따로)까지 주고, 제목 · 글 설명은 칸 끝에서 끊는다(overflow-wrap: anywhere). suffix 에 글을 그대로 넘긴
  * 값 글자(이메일 · 계좌번호 · 긴 이름)는 본문이 제목 낱말 폭이 된 뒤에야 줄고 줄 끝에서 끊는다 — 본문 위로 넘쳐 덮지 않는다. 금액 · 화살표 · 컨트롤 같은
  * 요소는 한 덩어리 그대로다. 값을 줄여 적는 것(억 단위 등)은 그 화면이 정한다.
@@ -97,11 +97,11 @@ const listPrefixVariants = cva("flex shrink-0 items-center pr-x3 text-fg-neutral
   defaultVariants: { disabled: false },
 });
 
-// 본문 — 남는 폭을 쓰고 먼저 양보한다. 제목의 가장 긴 낱말 + 뒤 여백 10 아래로는 줄지 않는다(min-content — 제목이 keep-all,
-// 2026-10-30 결정 B. 옛 1em 은 줄 칸 폼 긴 값 옆 제목을 "장 / 소" 로 쪼갰다)
+// 본문 — 남는 폭을 쓰고 먼저 양보한다. 제목의 가장 긴 낱말 + 뒤 여백 10 아래로는 줄지 않는다(min-content — 제목이 keep-all.
+// 한 글자 폭까지 주면 줄 칸 폼 긴 값 옆 제목이 "장 / 소" 로 쪼개진다)
 const listBodyVariants = cva("flex min-w-min flex-1 flex-col items-start gap-x0_5 pr-x2_5 text-left");
 
-// 제목 — 낱말 단위로만 바꾼다(keep-all + break-word). 본문이 가장 긴 낱말보다 좁아지지 않으니 글자 사이에서 끊지 않는다(결정 B)
+// 제목 — 낱말 단위로만 바꾼다(keep-all + break-word). 본문이 가장 긴 낱말보다 좁아지지 않으니 글자 사이에서 끊지 않는다
 const listTitleVariants = cva("font-sans text-t5 font-normal text-fg-neutral [word-break:keep-all] [overflow-wrap:break-word]", {
   variants: { disabled: { true: "text-fg-disabled", false: "" } },
   defaultVariants: { disabled: false },
@@ -111,7 +111,7 @@ const listTitleVariants = cva("font-sans text-t5 font-normal text-fg-neutral [wo
 const HIGHLIGHT_MUTED =
   "[@media(hover:hover)]:group-has-[[data-list-action]:not([data-disabled]):hover]/list-item:text-fg-neutral-muted group-has-[[data-list-action]:not([data-disabled]):active]/list-item:text-fg-neutral-muted";
 
-// 설명 — 글 설명도 제목처럼 본문이 낱말 하나보다 좁아질 때만 글자 사이에서 끊는다(Q-001 A — 뒤 붙이개에 닿지 않게). Tag Group 설명은 그 스펙대로 한 줄 말줄임
+// 설명 — 글 설명도 제목처럼 본문이 낱말 하나보다 좁아질 때만 글자 사이에서 끊는다(뒤 붙이개에 닿지 않게). Tag Group 설명은 그 스펙대로 한 줄 말줄임
 const listDetailVariants = cva("font-sans text-t3 text-fg-neutral-subtle [overflow-wrap:anywhere]", {
   variants: {
     disabled: { true: "text-fg-disabled", false: "" },
@@ -123,7 +123,7 @@ const listDetailVariants = cva("font-sans text-t3 text-fg-neutral-subtle [overfl
 // 뒤 붙이개 — 값 글자(t5 · 옅은 색) · 화살표 18. 안의 버튼 · 링크는 줄의 ::after 위로 올라 따로 눌린다
 // 강조 줄을 올리거나 누르면 값 글자만 짙어진다 — 화살표는 그대로 옅은 색
 // value: node(기본 — 금액 · 화살표 · 컨트롤 · 작은 버튼, 줄지 않는다) · text(suffix 에 글을 그대로 넘긴 값 글자 — 본문이 제목 낱말 폭이 된 뒤에야 줄고
-// 줄 끝에서 끊는다, Q-001 A). 줄은 suffix 가 글(string · number)이면 text 를 고른다
+// 줄 끝에서 끊는다). 줄은 suffix 가 글(string · number)이면 text 를 고른다
 const listSuffixVariants = cva(
   "flex items-center gap-x1 font-sans text-t5 text-fg-neutral-subtle [&>svg]:size-[18px] [&_a]:relative [&_a]:z-[1] [&_button]:relative [&_button]:z-[1]",
   {
@@ -159,7 +159,7 @@ const listDividerVariants = cva("h-px shrink-0 bg-stroke-neutral-subtle", {
   defaultVariants: { inset: false },
 });
 
-// 큰 글자 — 오른쪽 동작이 머리 폭의 절반을 넘으면 제목 아래 줄 오른쪽 끝으로(제목 최소 50% · 줄바꿈, 2026-10-21 03-G 4A — Button 짝과 같은 반 폭 판정)
+// 큰 글자 — 오른쪽 동작이 머리 폭의 절반을 넘으면 제목 아래 줄 오른쪽 끝으로(제목 최소 50% · 줄바꿈 — Button 짝과 같은 반 폭 판정)
 const listHeaderVariants = cva("flex w-full items-center justify-between gap-x2_5 px-global-gutter py-x2 font-sans text-t4 flex-wrap [&>:first-child:not(:last-child)]:min-w-[50%] [&>:first-child:not(:last-child)]:flex-1 [&>:last-child:not(:first-child)]:ml-auto", {
   variants: {
     variant: {
@@ -173,7 +173,7 @@ const listHeaderVariants = cva("flex w-full items-center justify-between gap-x2_
 // 내용 줄의 앞 타일 — 40 · 모서리 12(크기 × 0.3). 바탕 · 아이콘 색은 카테고리 색(chart-{색}-weak · chart-{색})
 const listTileVariants = cva("inline-grid size-10 shrink-0 place-items-center rounded-r3 [&>svg]:size-5");
 
-// 끼운 컨트롤은 따로 줄지 않는다 — 줄의 콘텐츠가 함께 준다(v104). 라벨의 누름이 컨트롤로 넘어오므로 축소만 끈다.
+// 끼운 컨트롤은 따로 줄지 않는다 — 줄의 콘텐츠가 함께 준다. 라벨의 누름이 컨트롤로 넘어오므로 축소만 끈다.
 // 컨트롤에도 data-list-action 을 단다 — 키보드(Space)로 누르면 :active 가 라벨이 아니라 컨트롤에 걸린다
 const MARK_NO_SCALE = "active:[scale:1]";
 
@@ -512,10 +512,10 @@ export interface ListCheckItemProps extends Omit<CheckmarkProps, "title" | "pref
   markPosition?: "prefix" | "suffix";
   /**
    * 뒤 값 — 체크가 앞일 때만. 내용 줄(거래 · 이체)의 고르기 모드는 체크 + 앞 타일(prefix) + 뒤 값(금액)이고, 값은 보이기만 한다
-   * (따로 누르는 것을 두지 않는다 — list.md "하나 고르기 · 여럿 고르기", 2026-10-25 07-2). 체크가 뒤면 뒤 붙이개는 체크 하나다
+   * (따로 누르는 것을 두지 않는다 — list.md "하나 고르기 · 여럿 고르기"). 체크가 뒤면 뒤 붙이개는 체크 하나다
    */
   suffix?: React.ReactNode;
-  /** 끌 수 없는 켬 — 칸만 막힌 켬, 제목 · 앞 붙이개는 보통 색(2026-10-29 사용자 결정 B) */
+  /** 끌 수 없는 켬 — 칸만 막힌 켬, 제목 · 앞 붙이개는 보통 색 */
   locked?: boolean;
 }
 
@@ -565,7 +565,7 @@ ListRadioGroup.displayName = "ListRadioGroup";
 
 export interface ListCheckGroupProps extends React.FieldsetHTMLAttributes<HTMLFieldSetElement>, ItemRadius {}
 
-// 여럿 고르기 묶음 — fieldset(role=group, aria-label · aria-labelledby 필수). 체크 줄을 담는다(SEED 와 같다)
+// 여럿 고르기 묶음 — fieldset(role=group, aria-label · aria-labelledby 필수). 체크 줄을 담는다
 const ListCheckGroup = React.forwardRef<HTMLFieldSetElement, ListCheckGroupProps>(({ className, itemRadius, style, ...props }, ref) => (
   <ListRowTag.Provider value="div">
     <fieldset ref={ref} className={cn(listVariants(), "m-0 min-w-0 border-0 p-0", className)} style={radiusStyle(itemRadius, style)} {...props} />
@@ -617,8 +617,8 @@ export interface ListHeaderProps extends React.HTMLAttributes<HTMLElement>, Vari
   as?: "h2" | "h3" | "h4" | "div";
 }
 
-// 목록 제목 — 목록 밖, 바로 위. 오른쪽에 작은 버튼을 둘 수 있다. 글이면 글 버튼(SEED Text Button, 2026-10-16 글자 역할 D2 —
-// list-header.yaml action): <Button variant="ghost" size="small" className="-my-x2 -mr-x3_5 text-fg-neutral-muted"> — 14 · 700 · 보이는 36,
+// 목록 제목 — 목록 밖, 바로 위. 오른쪽에 작은 버튼을 둘 수 있다. 글이면 글 버튼(list-header.yaml action):
+// <Button variant="ghost" size="small" className="-my-x2 -mr-x3_5 text-fg-neutral-muted"> — 14 · 700 · 보이는 36,
 // 위아래로 블리드해 줄 높이를 바꾸지 않고 글자 끝이 줄 여백에 선다
 const ListHeader = React.forwardRef<HTMLElement, ListHeaderProps>(({ className, variant, asChild = false, as: Tag = "h2", ...props }, ref) => {
   const Comp = (asChild ? Slot : Tag) as React.ElementType;

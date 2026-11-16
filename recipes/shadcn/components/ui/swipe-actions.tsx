@@ -4,10 +4,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Swipe Actions — groo 에만 있는 패턴(SEED 에는 줄 밀기가 없다). 수치 원본은 specs/components/swipe-actions.yaml.
- * 2026-10-02 — 미는 지름길은 남기고 같은 동작을 줄 끝 ⋮ → Menu Sheet 로도 열었다. 2026-10-08 — 다크 배지 · 중립 배지 · 라벨 색 ·
- * 줄 높이 1.3 · Esc 뒤 초점을 고쳤다(데이터 표시 결정의 "줄 밀기"). 2026-10-25 — 목록 줄의 ⋮ 를 걷었다(SwipeActionsMenu 걷음) —
- * 같은 동작은 줄을 눌러 들어간 화면(바닥 [삭제] · 머리 ⋮)에 다 둔다(menu.md "줄의 동작").
+ * Groo Swipe Actions — groo 에만 있는 패턴. 수치 원본은 specs/components/swipe-actions.yaml.
+ * 미는 동작은 지름길이다 — 같은 동작은 줄을 눌러 들어간 화면(바닥 [삭제] · 머리 ⋮)에 다 둔다(menu.md "줄의 동작").
  *
  *   SwipeActions          폰(768 미만) 목록 줄을 감싼다 — 왼쪽으로 밀면 오른쪽에서 동작 칸이 드러난다. actions(1 ~ 3개 —
  *                         { kind, label, icon, disabled, onSelect }, 뜻의 차례로) · enabled(폰일 때만 true — 768 이상이면 false 로 넘겨
@@ -29,7 +27,7 @@ import { cn } from "@/lib/utils";
  * 라벨 12 / 700 / 1.3(크기만 t2 — 칸 폭 48 이라 기본 줄 높이면 두 줄에서 넘친다). 한글 두 글자 동사.
  * 상태: 호버(웹)는 누름과 같다 — 배지 · 라벨 밝기 88%, 움직이지 않는다(밀어 둔 트레이와 이중으로 움직이면 어지럽다).
  *   키보드 포커스에만 칸 안쪽 2px 링(stroke-focus-ring — 트레이 바깥으로 나가면 줄 경계에서 잘린다). 막힘은 배지 bg-disabled ·
- *   아이콘 · 라벨 fg-disabled — 흐리게 하지 않는다. neutral 배지의 안쪽 1px stroke-neutral-weak 은 막혀도 남는다(v106 · Q-012-4).
+ *   아이콘 · 라벨 fg-disabled — 흐리게 하지 않는다. neutral 배지의 안쪽 1px stroke-neutral-weak 은 막혀도 남는다.
  * 제스처: 데드존 8 · 축 확정 abs(dx) > abs(dy) × 1.5 · 세로는 브라우저에 남긴다(touch-action: pan-y) · 미는 동안 글 고르기 · 길게
  *   누름 메뉴를 막는다 · 놓을 때 트레이 폭의 40% 이상이면 열린 채로 · 열린 채 되돌려 25% 이상이면 닫힌다. 끄는 동안은 손가락을 1:1 로
  *   따라가고, 놓은 뒤 자리를 잡는 것만 150ms(motion-duration-d3) 감속(motion-ease-enter) — 모션 줄이기면 바로. RTL 은 미는 방향이 뒤집힌다.
@@ -130,7 +128,7 @@ const swipeBadgeVariants = cva("flex items-center justify-center rounded-full [&
       destructive: "bg-fg-critical text-fg-neutral-inverted",
     },
     disabled: {
-      // neutral 의 안쪽 1px 테두리(shadow)는 남긴다 — v106 막힘의 테두리 색이 stroke-neutral-weak 다(Q-012-4)
+      // neutral 의 안쪽 1px 테두리(shadow)는 남긴다 — 막힘의 테두리 색이 stroke-neutral-weak 다
       true: "bg-bg-disabled text-fg-disabled",
       false: "",
     },

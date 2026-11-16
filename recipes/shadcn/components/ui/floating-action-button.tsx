@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Floating Action Button — 구조는 SEED Floating Action Button(아이콘만 · extended=false, 2026-10-04).
+ * Groo Floating Action Button — 아이콘만 있는 떠 있는 버튼.
  * 수치 원본은 specs/components/floating-action-button.yaml.
  *
  *   FloatingActionButton   화면 위에 떠 있는 그 화면의 주 동작 하나 — 오른쪽 아래의 브랜드 원 56 + 흰 아이콘 24.
@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
  *     aria-label    필수 — 동작 이름("할 일 추가" · "더치페이 만들기"). 보이는 글이 없으니 이름이 곧 버튼의 글이다
  *     offsetBottom  아래에 고정된 것(바닥 버튼)의 높이 — 기본 0. 아래 안전 영역 위에 놓인 높이(안전 영역은 빼고)를 준다 —
  *                   버튼은 그 위 끝에서 20 에 선다
- *     그 밖은 <button> 속성(onClick …). type 은 늘 "button" 이다 — 폼 안에서 제출되지 않는다(SEED 는 type 이 없다)
+ *     그 밖은 <button> 속성(onClick …). type 은 늘 "button" 이다 — 폼 안에서 제출되지 않는다
  *
  * 폰(768 미만)의 탭 바가 없는 화면(할 일 · 더치페이)에만 둔다 — 탭 바가 있는 화면의 추가는 Bottom Navigation 가운데 +,
  * 데스크톱의 주 동작은 화면 머리의 Button 이다. 화면에 하나만, 글이 붙은 모양(Extended) · 스크롤에 따라 접기는 두지 않는다.

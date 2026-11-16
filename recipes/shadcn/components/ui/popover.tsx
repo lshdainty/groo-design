@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Groo Popover — 구조는 SEED Popover(2026-10-02). 수치 원본은 specs/components/popover.yaml.
+ * Groo Popover — 수치 원본은 specs/components/popover.yaml.
  *
  *   Popover           트리거에 붙어 떠 있는 비모달 표면(Radix Popover) — open · defaultOpen · onOpenChange
  *   PopoverTrigger    여는 버튼 — aria-haspopup="dialog" · aria-expanded, 열린 동안 aria-controls
@@ -22,7 +22,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *   - 열면 초점이 안으로 간다 — 머리 닫기 버튼이 아니라 내용의 첫 칸, 칸이 없으면 표면. autoFocus 를 단 칸이 있으면 그 칸.
  *   - Tab 은 트리거 → 표면 안 → 트리거 다음 칸 순서다. 마지막 칸에서 Tab 을 누르면 초점을 트리거에 두어 브라우저가 트리거 다음 칸으로
  *     보내고, 표면은 바깥으로 나간 초점에 닫힌다(초점은 나간 자리에 남는다). Shift+Tab 은 거꾸로 — 내용 첫 칸 다음은 머리 닫기 버튼,
- *     그다음 트리거다(보이는 순서와 같다 — 2026-10-15 사용자 결정 Q-006). 열린 동안 트리거에서 Tab 은 표면 안으로 — 표면은 문서 끝
+ *     그다음 트리거다(보이는 순서와 같다). 열린 동안 트리거에서 Tab 은 표면 안으로 — 표면은 문서 끝
  *     (portal)에 있어 브라우저에 맡기면 순서가 끊긴다.
  *   - 바깥 누르기 · Esc · 닫기 버튼으로 닫으면 초점은 트리거로 돌아간다 — 바깥을 눌러 다른 칸에 초점이 갔으면 그 자리에 둔다.
  *   - 대화상자 · 시트 안에서 열면 그 위에 뜨고(z-floating 200), 그 표면이 닫히면 함께 닫힌다.

@@ -5,9 +5,8 @@ import { cn } from "@/lib/utils";
 import { ProgressCircle } from "@/components/ui/progress-circle";
 
 /*
- * Groo Skeleton — 구조는 SEED Skeleton(2026-10-03). 수치 원본은 specs/components/skeleton.yaml.
- * 기다리는 동안의 시간표(1초 · 5초 · 10초)는 SEED Loading 패턴을 규칙으로 옮긴 것이다 — skeleton.md 의 "기다리는 동안".
- * 옛 Skeleton(깜빡임 · surface-input · 모서리 4 · 브랜드 25% 띠의 SkeletonShimmer)을 대신한다.
+ * Groo Skeleton — 수치 원본은 specs/components/skeleton.yaml.
+ * 기다리는 동안의 시간표(1초 · 5초 · 10초)는 skeleton.md 의 "기다리는 동안".
  *
  *   Skeleton          면 하나 — 곧 나타날 내용 하나의 자리. 크기 · 폭은 className 으로 준다
  *     radius          "0"(화면 끝에 붙는 사진) · "4" · "6"(폭 24 이하 · 48 이하의 그림 자리 — Image Frame 모서리) ·
@@ -41,7 +40,7 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  *   1초부터 fallback, 5초부터 오래 걸림 글 "평소보다 오래 걸리고 있어요." 한 줄(t4 · 400 · fg-neutral-muted · 단어 단위 줄바꿈) —
  *   스켈레톤이면 첫 스켈레톤 위에 왼쪽 맞춤으로 16 띄워, 원이면 원 아래에 가운데 맞춤으로 16 띄워 둔다. 스켈레톤 · 원은 그대로다.
  *   영역이 목록 카드(body="list")의 바로 아래 자식이면 오래 걸림 글과 실패의 Result Section 이 좌우 24 를 갖는다 — 목록 카드는 카드
- *   여백이 없고 줄이 제 24 를 가지므로(스켈레톤 줄도 List 줄이라 그대로). 내용 카드 안이면 카드의 24 그대로 — 더하지 않는다(23B).
+ *   여백이 없고 줄이 제 24 를 가지므로(스켈레톤 줄도 List 줄이라 그대로). 내용 카드 안이면 카드의 24 그대로 — 더하지 않는다.
  *   기다리는 동안 영역에 aria-busy="true" — 다 오거나 실패하면 푼다. 기다린 뒤 내용으로 바뀌면 투명도로 나타난다(motion-duration-d3 ·
  *   motion-ease-enter, 모션 줄이기면 바로 — 토큰 키프레임 fade-in). 처음부터 내용이 있으면(받아 둔 것) 그대로 보인다.
  *   원 모드는 영역이 가운데 맞춤 세로 묶음이 되고, 부모가 세로 flex 면 남는 높이를 채운다(Result Section 과 같다).
@@ -66,7 +65,7 @@ const LOADING_TIMING = {
 
 export type WaitPhase = "quiet" | "waiting" | "slow";
 
-// 상태 글 · 오래 걸림 글(Writing v106 — 영어 "Loading" · 세 점 "..." 을 쓰지 않는다)
+// 상태 글 · 오래 걸림 글(Writing — 영어 "Loading" · 세 점 "..." 을 쓰지 않는다)
 const WAITING_TEXT = "불러오는 중…";
 const SLOW_TEXT = "평소보다 오래 걸리고 있어요.";
 
@@ -226,8 +225,8 @@ function LoadingAnnouncer({ children }: { children?: React.ReactNode }) {
 LoadingAnnouncer.displayName = "LoadingAnnouncer";
 
 // ── 기다리는 영역 ─────────────────────────────────────────────
-// 오래 걸림 글 — t4 · 400 · fg-neutral-muted, 단어 단위 줄바꿈(v114).
-// 영역이 목록 카드(body="list")의 바로 아래 자식이면 좌우 24 — 목록 카드는 줄마다 24 를 가져 카드 여백이 없다(23B 와 같은 원칙 —
+// 오래 걸림 글 — t4 · 400 · fg-neutral-muted, 단어 단위 줄바꿈.
+// 영역이 목록 카드(body="list")의 바로 아래 자식이면 좌우 24 — 목록 카드는 줄마다 24 를 가져 카드 여백이 없다(내용 카드와 같은 원칙 —
 // 어느 카드에서나 글이 카드 끝에서 24). 스켈레톤 줄은 List 의 24 를 그대로 가진다. 내용 카드 안이면 카드가 24 를 준다 — 더하지 않는다
 const SLOW =
   "m-0 text-t4 font-normal text-fg-neutral-muted break-keep [overflow-wrap:break-word] [[data-slot=card][data-body=list]>[data-slot=loading-region]>&]:px-x6";

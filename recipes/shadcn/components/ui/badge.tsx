@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Badge — 구조는 SEED Badge(2026-10-03). 수치 원본은 specs/components/badge.yaml.
+ * Groo Badge — 수치 원본은 specs/components/badge.yaml.
  *
  *   Badge        대상의 상태 · 분류를 한두 낱말로 보이는 작은 라벨 — <span>. 누르지 않는다(호버 · 누름 · 포커스 · 비활성이 없다)
  *   BadgeGroup   한 대상의 배지 묶음 — 둘까지, 사이 4. 줄을 바꾸지 않는다
@@ -17,8 +17,8 @@ import { cn } from "@/lib/utils";
  *            large 24 — 좌우 8 · 위아래 4 · 모서리 6 · t2 12/16 · 앞 아이콘 14
  *
  * 중립만 짝이 다르다 — weak 는 bg-neutral-weak + fg-neutral-muted, solid 는 bg-neutral-inverted + fg-neutral-inverted(다크에서
- * 밝은 면 + 짙은 글자로 뒤집힌다), outline 은 stroke-neutral-weak + fg-neutral-muted. warning solid 는 주황 + 흰 글자다(SEED 의
- * 노랑 + 검정 글자가 아니다). outline 테두리는 안쪽 1px(inset box-shadow)이라 상자 크기가 변하지 않는다.
+ * 밝은 면 + 짙은 글자로 뒤집힌다), outline 은 stroke-neutral-weak + fg-neutral-muted. warning solid 는 주황 + 흰 글자다.
+ * outline 테두리는 안쪽 1px(inset box-shadow)이라 상자 크기가 변하지 않는다.
  * 중립 weak 의 바탕은 회색 바탕(bg-layer-basement)과 같은 색이라 흰 표면(bg-layer-default) · 시트 위에 둔다 — 회색 위면 outline.
  *
  * 글은 글자 크기 설정을 따르고(t1 · t2 — rem) 최소 높이 20 · 24 는 px 그대로라, 글이 커지면 상자가 따라 커진다.

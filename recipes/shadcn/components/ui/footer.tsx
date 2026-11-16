@@ -4,8 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Footer — 짜임은 SEED Footer(2026-10-15, 디자인 문서 "조합 예시" · registry block footer-01 ~ 04 · qvism-preset footer recipe).
- * 수치 원본은 specs/components/footer.yaml.
+ * Groo Footer — 수치 원본은 specs/components/footer.yaml.
  * 사이트 맨 아래의 바닥 — 정해진 한 덩어리가 아니라 블록을 골라 조립한다. 필수 블록은 없고 위 → 아래 순서만 있다:
  *   탐색 영역(FooterNav — 브랜드 · 사이트맵) · 선(FooterDivider — 두 영역을 함께 쓸 때만) · 안내 영역(FooterInfo — 정책 링크 · 안내 글 ·
  *   사업자 정보 · 연락처 · 저작권 줄). 블록을 빼도 순서는 바꾸지 않는다. Desk · HR 의 제품 화면 · 앱에는 두지 않는다(정책 링크는 설정 목록의 줄).
@@ -22,13 +21,13 @@ import { cn } from "@/lib/utils";
  *                    최소 100 · 제목 ↔ 링크 16 · 링크 사이 16. 안의 FooterLink 는 large. 링크가 아닌 글을 열에 넣지 않는다
  *   FooterDivider    선 — 1px stroke-neutral-subtle, 틀 안 폭. 장식(역할 없음)
  *   FooterInfo       안내 영역 — 정책 링크 줄 · 안내 글 · 저작권 줄을 세로로(사이 16)
- *   FooterLinks      정책 링크 줄 — 링크 사이 24 · 줄을 바꾸면 위아래 8(SEED 는 위아래도 24 — 비교 페이지 그림을 따랐다)
+ *   FooterLinks      정책 링크 줄 — 링크 사이 24 · 줄을 바꾸면 위아래 8
  *   FooterText       안내 글 · 사업자 정보 · 연락처 — t3 13 / 18 · fg-neutral-subtle. 사업자 정보 · 연락처는 항목을 " | " 로 잇고
  *                    묶음이 바뀌면 줄을 바꾼다(<br />)
  *   FooterBottom     저작권 줄 — 저작권(앞) · 소셜(끝)이 1280 이상은 한 줄 양 끝(사이 16 · 넘치면 줄바꿈), 1280 미만은 위아래(왼쪽 정렬)
  *   FooterCopyright  owner(필수) · year(기본 그리는 때의 해) → "© 2026 그루" — t4 14 / 19 · 500 · fg-neutral-muted. 안내 영역의 마지막
  *   FooterSocial     소셜 버튼 묶음(사이 24) — 안에는 Button ghost · large · iconOnly + 이름. 버튼마다 바깥 여백만큼 끝을 맞춘다
- *                    (SEED bleedX asPadding — 좌우 −12)
+ *                    (bleedX asPadding — 좌우 −12)
  *   FooterLink       href(필수) · size(large — 사이트맵 t5 16 / 22 · 500 · fg-neutral, 올리면 · 누르면 fg-neutral-subtle /
  *                    medium — 정책 t4 14 / 19 · 500 · fg-neutral-muted, 올리면 · 누르면 fg-neutral. 기본은 놓인 자리 — 열 안 large, 그 밖
  *                    medium) · external(새 탭 — target="_blank" · rel="noopener" · 뒤에 ↗ lucide arrow-up-right 14 · 12(장식) ·

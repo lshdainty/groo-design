@@ -6,16 +6,16 @@
 //
 // 검증 페어:
 //   본문 4.5:1 (WCAG 1.4.3)
-//     - text-primary-dark / text-secondary-dark × {bg-page-dark, surface-default-dark, surface-input-dark}
-//     - text-tertiary-dark — 정보 위계상 미달 가능 (1.4.3 incidental, warning만)
-//     - primary-light × dark 표면 (어두운 표면 위 brand 비채움)
-//     - {success/error/warning/info}-light × dark 표면
+//     - fg-neutral-dark / fg-neutral-muted-dark × {bg-layer-basement-dark, bg-layer-default-dark, bg-neutral-weak-dark}
+//     - fg-neutral-subtle-dark — 정보 위계상 미달 가능 (1.4.3 incidental, warning만)
+//     - fg-brand-dark × dark 표면 (어두운 표면 위 brand 비채움)
+//     - fg-{critical/positive/warning/informative}-dark × dark 표면
 //   UI 3:1 (WCAG 1.4.11)
-//     - border-focus-light × dark 표면
-//     - chart-*-dark(v110 — 옛 이름 -light) × dark 표면
+//     - stroke-focus-ring-dark × dark 표면
+//     - chart-*-dark × dark 표면
 //
-// text-disabled-dark는 1.4.3 incidental 예외 — 검증 제외.
-// text-on-accent는 채움 위 텍스트(primary fill 등) — light pair lint가 이미 검증.
+// fg-disabled-dark 는 1.4.3 incidental 예외 — 검증 제외.
+// static-white 는 채움 위 텍스트 — light pair lint 가 이미 검증.
 //
 // 사용법:
 //   node scripts/lint-dark-contrast.mjs              # 모든 brand 파일
@@ -70,12 +70,12 @@ function contrastRatio(hex1, hex2) {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-const DARK_SURFACES = ["bg-page-dark", "surface-default-dark", "surface-input-dark"];
-const BODY_TEXTS = ["text-primary-dark", "text-secondary-dark"];
-const TERTIARY_TEXTS = ["text-tertiary-dark"]; // 1.4.3 incidental — warning only
-const BRAND_LIGHT = ["primary-light"]; // brand-specific (HR/Desk)
-const SEMANTIC_LIGHT = ["success-light", "error-light", "warning-light", "info-light"];
-const UI_ELEMENTS_3 = ["border-focus-light", "stroke-focus-ring-dark"]; // border-focus-light 는 brand 파일만, stroke-focus-ring-dark 는 세 파일(그룹은 짙은 회색 — 2026-10-23)
+const DARK_SURFACES = ["bg-layer-basement-dark", "bg-layer-default-dark", "bg-neutral-weak-dark"];
+const BODY_TEXTS = ["fg-neutral-dark", "fg-neutral-muted-dark"];
+const TERTIARY_TEXTS = ["fg-neutral-subtle-dark"]; // 1.4.3 incidental — warning only
+const BRAND_LIGHT = ["fg-brand-dark"]; // brand 파일만
+const SEMANTIC_LIGHT = ["fg-critical-dark", "fg-positive-dark", "fg-warning-dark", "fg-informative-dark"];
+const UI_ELEMENTS_3 = ["stroke-focus-ring-dark"]; // 세 파일(그룹은 짙은 회색)
 const CHART_LIGHT = [
   "chart-red-dark", "chart-orange-dark", "chart-yellow-dark", "chart-green-dark",
   "chart-blue-dark", "chart-indigo-dark", "chart-violet-dark", "chart-pink-dark",
@@ -86,7 +86,7 @@ const RULES = [
   { texts: BODY_TEXTS, surfaces: DARK_SURFACES, threshold: 4.5, severity: "error", label: "본문 4.5:1" },
   { texts: TERTIARY_TEXTS, surfaces: DARK_SURFACES, threshold: 4.5, severity: "warning", label: "tertiary 4.5:1 (1.4.3 incidental 가능)" },
   { texts: BRAND_LIGHT, surfaces: DARK_SURFACES, threshold: 4.5, severity: "error", label: "brand text 4.5:1" },
-  { texts: SEMANTIC_LIGHT, surfaces: DARK_SURFACES, threshold: 4.5, severity: "error", label: "semantic-light 4.5:1" },
+  { texts: SEMANTIC_LIGHT, surfaces: DARK_SURFACES, threshold: 4.5, severity: "error", label: "semantic 4.5:1" },
   { texts: UI_ELEMENTS_3, surfaces: DARK_SURFACES, threshold: 3.0, severity: "error", label: "UI element 3:1" },
   { texts: CHART_LIGHT, surfaces: DARK_SURFACES, threshold: 3.0, severity: "warning", label: "chart UI 3:1" },
 ];

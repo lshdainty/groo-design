@@ -226,14 +226,12 @@ function colorKit(colors = {}) {
     step: (name) => (name in colors && ref(name) ? follow(name).replace(/-dark$/, '') : undefined),
   };
 }
-// 팔레트 · 역할 · 차트만 싣는다. 역할 · 차트를 가리키는 이름(text-primary · bg-page · chart-*-light · Desk 웹 이름 …)은
-// 제품이 옮기는 동안의 별칭이라 싣지 않는다(DESIGN.md "Deprecated aliases")
+// 팔레트 · 역할 · 차트만 싣는다. 역할을 가리키는 형식 키(브랜드 파일의 primary)는 싣지 않는다
 const kind = (kit, name) => {
   const base = name.replace(/-dark$/, '');
   if (PALETTE_NAME.test(base)) return 'palette';
   const target = kit.ref(name);
   if (target && !PALETTE_NAME.test(target.replace(/-dark$/, ''))) return 'alias';
-  if (/^chart-[a-z]+-light$/.test(name)) return 'alias';
   if (/^chart-/.test(name)) return 'chart';
   if (/^(fg|bg|stroke|static)-/.test(name)) return 'role';
   return 'alias';
@@ -246,15 +244,6 @@ function table(head, rows) {
 
 const code = (v) => (v === undefined || v === null || v === '' ? '—' : `\`${v}\``);
 
-// 본문 맨 끝의 숨김 절 — 내보내기는 읽지만 사이트에는 싣지 않는다
-const withoutDeprecated = (text) => {
-  const at = text.search(/^## Deprecated aliases\s*$/m);
-  return at === -1 ? text : text.slice(0, at);
-};
-// 머리말의 옛 이름(옛 15단계 글자 · 모서리 xs ~ 2xl · 간격 xs ~ 3xl)
-const isScaleType = (name) => /^t\d+$/.test(name) || ['screen-title', 'article-body', 'article-note'].includes(name);
-const isScaleRadius = (name) => /^r\d|^full$/.test(name);
-const isLegacySpacing = (name) => /^(xs|sm|md|lg|xl|2xl|3xl)$/.test(name);
 
 // 표 토큰 — `| \`이름\` | \`값\` | 비고 |` 줄. 내보내기(build-tailwind-v4)처럼 뒤에 나온 정의가 이긴다
 const PROSE_GROUPS = [
@@ -285,7 +274,7 @@ function tokenReference() {
   // static-white 처럼 다크 짝이 없는 색은 두 모드가 같다
   const dark = (kit, name) => kit.value(`${name}-dark`) ?? kit.value(name);
 
-  const typography = Object.entries(shared.typography ?? {}).filter(([name]) => isScaleType(name)).map(([name, t]) => [
+  const typography = Object.entries(shared.typography ?? {}).map(([name, t]) => [
     code(name),
     code(t.fontSize),
     code(t.fontWeight),
@@ -293,9 +282,9 @@ function tokenReference() {
     code(t.letterSpacing),
   ]);
   const families = [...new Set(Object.values(shared.typography ?? {}).map((t) => t.fontFamily))];
-  const rounded = Object.entries(shared.rounded ?? {}).filter(([k]) => isScaleRadius(k));
-  const spacing = Object.entries(shared.spacing ?? {}).filter(([k]) => !isLegacySpacing(k));
-  const prose = proseTokenRows(withoutDeprecated(read('DESIGN.md')));
+  const rounded = Object.entries(shared.rounded ?? {});
+  const spacing = Object.entries(shared.spacing ?? {});
+  const prose = proseTokenRows(read('DESIGN.md'));
   const palettes = pick(S, S.names, 'palette');
   const roles = pick(S, S.names, 'role');
   const charts = light(S.names.filter((n) => /^chart-[a-z]+(-(weak|subtle|contrast))?$/.test(n)));
@@ -387,7 +376,7 @@ clean(join(DOCS, 'foundations'));
 clean(join(DOCS, 'components'));
 
 const design = splitFrontMatter(read('DESIGN.md'));
-const sections = new Map(splitSections(withoutDeprecated(design.body)).map((s) => [s.heading, s.content]));
+const sections = new Map(splitSections(design.body).map((s) => [s.heading, s.content]));
 for (const f of FOUNDATION_SECTIONS) {
   const content = sections.get(f.heading);
   if (content === undefined) throw new Error(`DESIGN.md 에 "## ${f.heading}" 절이 없다 — FOUNDATION_SECTIONS 를 고쳐라`);

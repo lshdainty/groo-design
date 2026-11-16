@@ -8,14 +8,14 @@ import { useInputButtonSurface } from "@/components/ui/input-button";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Groo Bottom Sheet — 구조는 SEED Bottom Sheet(2026-10-02). 수치 원본은 specs/components/bottom-sheet.yaml. vaul 위에 짰다.
+ * Groo Bottom Sheet — 수치 원본은 specs/components/bottom-sheet.yaml. vaul 위에 짰다.
  *
  *   BottomSheet          화면 아래에서 올라오는 모달 — open · defaultOpen · onOpenChange · form · dirty · dismissible · snapPoints
  *   BottomSheetTrigger   여는 버튼 — 닫으면 초점이 여기로 돌아온다
  *   BottomSheetContent   시트 — title(늘) · description(덧붙일 말이 있을 때만). 오른쪽 위 닫기 버튼(showCloseButton, 기본 켬).
  *                        onBack 이면 머리 왼쪽 ←(이름 "뒤로") — 한 시트 안 두 단계 흐름의 2단계에서 1단계로 한 단계 되돌린다
- *                        (bottom-sheet.yaml 축 back · 2026-10-29). 쓴 값을 묻고 버리는 일은 부르는 쪽(폼)이 한다
- *                        headerAction 이면 닫기 왼쪽 사이 4 에 머리 동작 하나(⋮ — 동작이 여럿인 상세, bottom-sheet.yaml 축 headerAction · 2026-10-30)
+ *                        (bottom-sheet.yaml 축 back). 쓴 값을 묻고 버리는 일은 부르는 쪽(폼)이 한다
+ *                        headerAction 이면 닫기 왼쪽 사이 4 에 머리 동작 하나(⋮ — 동작이 여럿인 상세, bottom-sheet.yaml 축 headerAction)
  *   BottomSheetBody      본문 — 좌우 화면 여백 24, 넘치면 이 안에서 스크롤. scrollFog 면 끝 흐림(Scroll Fog — 늘 켜진
  *                        위 20 · 아래 80 + 본문 안 여백 위 20 · 아래 80) — 넘칠 수 있는 본문(목록 · 긴 폼)에만 준다
  *   BottomSheetFooter    바닥 — 버튼 하나면 폭 전체, 둘이면 반씩(사이 8). Button large 48 을 크기를 주지 않은 바로 아래 자식에 넣는다
@@ -28,13 +28,13 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  * 닫는 길(bottom-sheet.md Behavior)
  *   - 닫기 버튼 · Esc · 뒤로 가기(1280 미만)는 늘 닫는다.
  *   - 바깥(딤) 누르기 · 아래로 끌기는 조회 · 고르기 시트만 닫는다. form(입력 폼)이면 둘 다 아무 일도 하지 않는다 — 손잡이도 없다.
- *     dismissible={false}(휠 시트 — 시각 · 날짜 휠)도 둘 다 무시한다: 휠을 굴리는 손이 시트 끌기로 읽히지 않게(2026-11-10).
+ *     dismissible={false}(휠 시트 — 시각 · 날짜 휠)도 둘 다 무시한다: 휠을 굴리는 손이 시트 끌기로 읽히지 않게.
  *   - 끌기는 vaul 의 기준 그대로다 — 놓을 때 0.4px/ms 보다 빠르거나 높이의 25% 이상 내려왔으면 닫고 아니면 200ms exit 로 제자리.
  *     열린 뒤 0.5초는 끌리지 않고, 본문이 스크롤돼 있으면(맨 위가 아니면) 끌지 않고 스크롤한다.
  *   - dirty 면 어느 길이든 닫기 전에 "작성한 내용이 사라져요" 를 묻는다 — [계속 작성] 이면 그대로(끌던 시트는 제자리로).
  *
  * 열면 초점은 시트(컨테이너)로 가고 열린 동안 시트 안을 돈다 — 내용이 첫 자리를 정하면(검색 시트의 검색칸 — focusSearchableList) onOpenAutoFocus 를
- * 막고 그리로 옮긴다(열린 뒤 다시 옮기지 않는다 — 2026-10-15 Q-007-3). 닫으면 연 자리(트리거, 없으면 열 때 초점이 있던 곳)로 돌아간다.
+ * 막고 그리로 옮긴다(열린 뒤 다시 옮기지 않는다). 닫으면 연 자리(트리거, 없으면 열 때 초점이 있던 곳)로 돌아간다.
  * 뒤 화면은 보조 기술에서 숨기고 스크롤을 잠근다(Radix Dialog). role="dialog" + aria-modal, 제목 aria-labelledby · 설명 aria-describedby.
  *
  * 모양: 최대 480 으로 가운데, 위 두 모서리 r6 24, 그림자 없이 딤(overlay-dim 라이트 0.50 · 다크 0.65)과 표면 색으로 뜬다.
@@ -51,7 +51,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *
  * 스냅 높이(snapPoints — vaul 그대로, 화면 높이 비율 0 ~ 1 또는 "300px")를 주면 시트를 화면의 90% 높이로 두고 손잡이를 단다
  * (36 × 4 · stroke-neutral-weak · 위 6, 누르는 영역 44, 보조 기술에는 숨긴다). 손잡이를 누르면 다음(더 높은) 스냅 높이로 올라가고,
- * 가장 높은 높이에서 누르면 닫는다(SEED · vaul 의 Handle 과 같다). 스냅 높이 사이 이동은 300ms enter-expressive. form 이면 스냅 높이를
+ * 가장 높은 높이에서 누르면 닫는다(vaul 의 Handle 과 같다). 스냅 높이 사이 이동은 300ms enter-expressive. form 이면 스냅 높이를
  * 쓰지 않는다.
  */
 
@@ -291,7 +291,7 @@ const HANDLE = [
   "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
 ].join(" ");
 
-// 손잡이를 누르면 다음(더 높은) 스냅 높이로, 가장 높은 높이에서는 닫는다(SEED · vaul 의 Handle 과 같다).
+// 손잡이를 누르면 다음(더 높은) 스냅 높이로, 가장 높은 높이에서는 닫는다(vaul 의 Handle 과 같다).
 // 스냅 높이가 없으면 손잡이를 달지 않는다 — always(Menu Sheet)면 달고, 누르면 닫는다(가장 높은 높이와 같다)
 function SheetHandle({ always = false }: { always?: boolean }) {
   const { snapPoints, snap, setSnap, requestClose } = useSheetContext("BottomSheetContent");
@@ -459,7 +459,7 @@ const BottomSheetContent = React.forwardRef<React.ElementRef<typeof DrawerPrimit
 BottomSheetContent.displayName = "BottomSheetContent";
 
 // 본문 — 좌우 화면 여백 24, 넘치면 이 안에서 스크롤. 바닥이 없어 맨 끝이면 아래 16(바닥의 아래 여백).
-// 끝에 닿아도 뒤 화면이 따라 스크롤되지 않는다(overscroll-behavior: contain — Scroll Area, 2026-10-10)
+// 끝에 닿아도 뒤 화면이 따라 스크롤되지 않는다(overscroll-behavior: contain — Scroll Area)
 const BODY = "min-h-0 flex-1 overflow-y-auto overscroll-contain px-global-gutter";
 const BODY_PLAIN = "last:pb-x4";
 // 끝 흐림(scrollFog) — 본문 안 여백 위 20 · 아래 80(바닥이 있어도), 스크롤 여유도 위 20 · 아래 80

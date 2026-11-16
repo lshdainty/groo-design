@@ -32,24 +32,9 @@ const FULL_SYNC_BLOCKS = ["typography", "rounded", "spacing"];
 const MARKER_REGIONS = ["colors-0", "colors-1", "colors-2", "colors-3"];
 
 const SHARED_COLORS = new Set([
-  "bg-page", "bg-page-dark",
-  "surface-default", "surface-default-dark", "surface-input", "surface-input-dark",
-  "text-primary", "text-primary-dark",
-  "text-secondary", "text-secondary-dark",
-  "text-tertiary", "text-tertiary-dark",
-  "text-disabled", "text-disabled-dark",
-  "text-on-accent",
-  "border-default", "border-default-dark",
-  "border-strong", "border-strong-dark",
-  "success", "success-light",
-  "error", "error-light",
-  "warning", "warning-light",
-  "info", "info-light",
   "chart-red", "chart-orange", "chart-yellow", "chart-green", "chart-blue",
   "chart-indigo", "chart-violet", "chart-pink", "chart-brown", "chart-gray",
-  "chart-red-light", "chart-orange-light", "chart-yellow-light", "chart-green-light", "chart-blue-light",
-  "chart-indigo-light", "chart-violet-light", "chart-pink-light", "chart-brown-light", "chart-gray-light",
-  // v110 — 차트 다크 짝의 새 이름(-light 는 별칭)
+  // 차트 다크 짝
   "chart-red-dark", "chart-orange-dark", "chart-yellow-dark", "chart-green-dark", "chart-blue-dark",
   "chart-indigo-dark", "chart-violet-dark", "chart-pink-dark", "chart-brown-dark", "chart-gray-dark",
   // v111 — 카테고리 옅은 바탕 · 그 위 글자

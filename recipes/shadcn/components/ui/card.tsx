@@ -3,19 +3,17 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Card — 면은 SEED Elevation · stroke.neutral-weak · Feedback(2026-10-08). 수치 원본은 specs/components/card.yaml.
- * SEED 에는 카드 컴포넌트가 없다 — 바닥 위 흰 면 + 1px 테두리 · 그림자 없음 · 누름은 SEED 를, 머리 · 여백 · 지표 · 순자산 · 증감은 groo 가 정했다.
- * 옛 변형 넷(shadow · bordered · muted · brand) · 모서리 12 · 여백 16 / 24 · 그림자 상승은 걷었다.
+ * Groo Card — 바닥 위 흰 면 + 1px 테두리(stroke-neutral-weak) · 그림자 없음. 수치 원본은 specs/components/card.yaml.
  *
  *   Card            카드 면. variant "default"(바닥 위 흰 면 + 1px 테두리) · "hero"(순자산 — 브랜드 채움 · 흰 글자, 한 화면에 하나).
  *                   body "content"(기본 — 여백 24) · "list"(List 를 담는다 — 좌우 여백 0, 머리 위 · 좌우 24 · 아래 4, 카드 아래 12) ·
  *                   "accordion"(Accordion inline 을 담는다 — 좌우 여백 0, 머리는 목록 카드와 같다, 카드 아래 8 — 마지막 트리거의 아래 16 과
- *                   합쳐 보이는 24. 머리 오른쪽 동작 자리에는 AccordionExpandAll, 2026-10-10).
+ *                   합쳐 보이는 24. 머리 오른쪽 동작 자리에는 AccordionExpandAll).
  *                   press "none"(기본) · "whole"(카드 전체가 한 곳 — <a href> 또는 <button>, 누름 색 + 2px 축소) · "peers"(카드를 누르면
  *                   열리고 안에 대등한 동작이 더 있다 — 카드 위에 깐 CardLink 가 누르는 자리, 색만 바뀐다). href · onClick 을 주면 "whole"
  *   CardHeader      머리 — 제목과 오른쪽 동작 한 줄, 아래 8(목록 · 아코디언 카드 4)
  *   CardTitle       제목 16 / 22 · 700 · fg-neutral — as(기본 h2)
- *   CardAction      머리 동작("전체 보기") — href · onClick. 글 버튼(SEED Text Button, 2026-10-16 글자 역할 D2): 14 · 700 · fg-neutral-muted,
+ *   CardAction      머리 동작("전체 보기") — href · onClick. 글 버튼: 14 · 700 · fg-neutral-muted,
  *                   꺾쇠 없음, 보이는 상자 36 · 좌우 14 · 모서리 8(오른쪽 −14 로 내어 글자 끝이 카드 여백에), 누르는 영역 44.
  *                   이름은 "{제목} {글}"(aria-labelledby — 제목이 있을 때)
  *   CardContent     본문 — 여백 안, 요소 사이 12. 목록 카드는 CardContent 없이 List 를 바로 넣는다
@@ -29,7 +27,7 @@ import { cn } from "@/lib/utils";
  * 면: 바닥(bg-layer-basement) 위 bg-layer-default + 1px stroke-neutral-weak, 그림자 없음 — 폰 · 데스크톱 · 라이트 · 다크가 같다.
  *   모서리 16(radius-r4 — 카드 안 목록의 누름 바탕 10 = 16 − 6), 여백 24(폭과 상관없이 — List 줄 · 시트와 같다). 쌓은 카드 사이 8 ·
  *   데스크톱 격자 칸 사이 24 는 감싸는 쪽이 정한다. 넘친 것(목록 줄의 누름 바탕 · 순자산 장식 빛)은 모서리에서 자른다.
- * 누름(SEED Feedback): whole — 마우스를 올리면 면이 bg-layer-default-pressed, 누르는 동안 같은 면 + 카드 전체 2px 거리 축소
+ * 누름: whole — 마우스를 올리면 면이 bg-layer-default-pressed, 누르는 동안 같은 면 + 카드 전체 2px 거리 축소
  *   (기준 max(높이, 폭 ÷ 4, 24) 를 누르는 순간 잰다 · 모션 줄이기면 축소하지 않는다). peers — 면 색만(축소 없음), 안의 버튼 · 링크는
  *   카드 링크 위(z 1)에 놓여 각자 눌리고, 눌러도 카드가 열리지 않는다. 테두리 · 글자색은 그대로, 그림자 · 위로 뜨기는 없다.
  *   키보드 포커스에만 카드 바깥 2px 링(띄움 2). 보기만 하는 카드(none)는 역할이 없고 바뀌지 않는다.
@@ -214,7 +212,7 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
       ref={ref}
       data-slot="card-header"
       className={cn(
-        // 큰 글자 — 오른쪽 동작이 머리 폭의 절반을 넘으면 제목 아래 줄 오른쪽 끝으로(제목 최소 50% · 줄바꿈, 2026-10-21 03-G 4A — Button 짝과 같은 반 폭 판정)
+        // 큰 글자 — 오른쪽 동작이 머리 폭의 절반을 넘으면 제목 아래 줄 오른쪽 끝으로(제목 최소 50% · 줄바꿈 — Button 짝과 같은 반 폭 판정)
         "flex items-center justify-between gap-x2 flex-wrap [&>:first-child:not(:last-child)]:min-w-[50%] [&>:first-child:not(:last-child)]:flex-1 [&>:last-child:not(:first-child)]:ml-auto",
         // 목록 · 아코디언 카드 — 위 24 · 좌우 24 · 아래 4(줄 · 트리거가 제 위 여백 12 · 16 을 가진다). 글 카드는 카드 여백 안 · 아래 8
         ctx?.body === "list" || ctx?.body === "accordion" ? "px-x6 pb-x1 pt-x6" : "pb-x2",
@@ -244,7 +242,7 @@ const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(({ as: He
 });
 CardTitle.displayName = "CardTitle";
 
-// 머리 동작 — 글 버튼(SEED Text Button): 보이는 상자 36 · 누르는 영역 44(::before), 누르면 바탕 + 2px 거리 축소
+// 머리 동작 — 글 버튼: 보이는 상자 36 · 누르는 영역 44(::before), 누르면 바탕 + 2px 거리 축소
 const CARD_ACTION = [
   "relative -mr-x3_5 inline-flex h-9 shrink-0 cursor-pointer items-center rounded-r2 border-0 bg-transparent px-x3_5",
   "font-sans text-t4 font-bold text-fg-neutral-muted no-underline",

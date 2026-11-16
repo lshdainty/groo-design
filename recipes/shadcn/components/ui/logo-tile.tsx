@@ -7,9 +7,8 @@ import { avatarHue, avatarInitial, type AvatarHue } from "@/components/ui/avatar
 import { imageFrameImageVariants, imageFrameRadius, imageFrameVariants } from "@/components/ui/image-frame";
 
 /*
- * Groo Logo Tile — groo 에만 있는 부품(2026-10-04 — SEED 는 가게 · 업체를 원 Avatar 로 그리고 로고 타일 규칙이 없다).
+ * Groo Logo Tile — groo 에만 있는 부품.
  * 수치 원본은 specs/components/logo-tile.yaml, 기관 색은 institution-colors.yaml(lib/institution-colors.ts).
- * 지금 제품의 자산 로고(웹 · 앱 AssetLogo)와 HR 회사 로고를 대신한다.
  *
  *   LogoTile   물건 하나(은행 · 증권 · 카드 · 코인 · 금 자산 · 회사)를 보이는 각진 타일 — 면 + 이름의 첫 글자, 그림이 있으면 오는 대로 덮는다
  *     name       필수 — 기관이 있으면 기관 이름("신한"), 없으면 자산 이름("비상금"). 첫 글자 · 기관 색 찾기 · 이름 색 · 보조 기술의 이름이 모두 이 이름이다
@@ -32,7 +31,7 @@ import { imageFrameImageVariants, imageFrameRadius, imageFrameVariants } from "@
  *   logo — 흰 판(static-white — 두 모드 같다) 위에 잘리지 않게(contain). 다크에서도 로고의 검은 부분이 사라지지 않는다.
  *   card — 옅은 판(bg-neutral-weak) 위에 카드 비율(1.586)의 Image Frame(폭 = 크기 − 8 → 24 × 15 · 32 × 20 · 40 × 25, 모서리는
  *          그 폭으로 4 · 6 · 6, 투명 윤곽). 세로 그림(원래 폭 < 높이)은 시계 방향으로 90° 돌려 채운다 — 정사각에 잘라 넣지 않는다.
- * 윤곽 — 안쪽 1px stroke-neutral-overlay(v118, Image Frame 과 같다), 면 · 판 · 그림 위에 늘. 다크의 짙은 남색 타일 · 흰 바탕의
+ * 윤곽 — 안쪽 1px stroke-neutral-overlay(Image Frame 과 같다), 면 · 판 · 그림 위에 늘. 다크의 짙은 남색 타일 · 흰 바탕의
  *   노랑 타일 둘레를 잡는다(장식 — 이름 글이 물건을 알린다).
  * 이름 — 이름 옆 타일은 장식(aria-hidden — 첫 글자 "신" 도 그림도 읽지 않는다, "신 신한 주거래" 가 아니다). 혼자면 role="img" +
  *   aria-label(이름) 하나 — 그림이 있어도 실패해도 같은 이름. 그림의 alt 는 늘 "".

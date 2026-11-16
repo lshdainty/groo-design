@@ -3,9 +3,9 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Progress — groo 만의 막대(SEED 에는 선형 막대가 없다 — 2026-10-03). 수치 원본은 specs/components/progress.yaml.
+ * Groo Progress — groo 만의 막대. 수치 원본은 specs/components/progress.yaml.
  * "얼마나 찼나" 를 보이는 미터다 — 예산 · 카드 한도(쓸수록 찬다), 저축 목표 · 카드 실적(모을수록 찬다). 불러오기 · 올리기 · 받기의
- * 진행에는 쓰지 않는다 — 그건 Progress Circle(progress-circle.tsx)이다. 옛 Progress(높이 2 · 4 · 8 · 흐르는 막대 · Radix)를 대신한다.
+ * 진행에는 쓰지 않는다 — 그건 Progress Circle(progress-circle.tsx)이다.
  *
  *   Progress      이름 줄 · 막대 · 금액 줄 한 묶음
  *     label         이름 — 무엇이 얼마나 찼나("식비 예산" · "여행 자금" · "현대카드 신용카드 전월 실적")
@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
  *   ProgressBar   막대만 — 이름 · 글을 직접 그릴 때. value · max · meaning 과 이름(aria-label) · 값 글(aria-valuetext)을 꼭 준다
  *
  * 모양 — 묶음은 세로, 사이 6(spacing-x1_5). 이름 줄은 이름(t4 · 500 · fg-neutral)과 오른쪽 글(t3 · fg-neutral-subtle · 숫자 폭 같게)을
- *   양 끝에 글자 바탕선으로 맞추고 사이는 적어도 8 이다(progress.yaml header.gap — 2026-10-08 YAML 에 적었다). 막대는 높이 8 · 모서리 full · 트랙 bg-neutral-weak,
+ *   양 끝에 글자 바탕선으로 맞추고 사이는 적어도 8 이다(progress.yaml header.gap). 막대는 높이 8 · 모서리 full · 트랙 bg-neutral-weak,
  *   채움은 브랜드 글자색 fg-brand(다크는 밝은 짝 — 채움 색 bg-brand-solid 는 다크 트랙에 묻힌다). 채움 폭은 값 ÷ 목표(넘쳐도 끝까지)이고
  *   값이 0 보다 크면 적어도 높이만큼(8) — 둥근 끝이 찌그러지지 않게. 금액 줄은 "현재 / 목표"(t2 · fg-neutral-subtle · 숫자 폭 같게).
  *   높이 · 색은 하나다 — 주의 구간 색 · 달성 색 · 자리마다 다른 높이는 두지 않는다. 트랙이 페이지 바탕과 같은 색이라 흰 면 위에 둔다.

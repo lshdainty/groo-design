@@ -5,8 +5,8 @@ import { cn } from "@/lib/utils";
 import { Select, SelectItem } from "@/components/ui/select";
 
 /*
- * Groo Table Pagination — 구조는 SEED Table Pagination(2026-10-04). 수치 원본은 specs/components/table-pagination.yaml.
- * 고르기 둘은 Select medium(select.tsx), 이전 · 다음은 Pagination 의 화살표 칸이다. 줄 · 범위 계산은 SEED useTablePagination 과 같다.
+ * Groo Table Pagination — 수치 원본은 specs/components/table-pagination.yaml.
+ * 고르기 둘은 Select medium(select.tsx), 이전 · 다음은 Pagination 의 화살표 칸이다.
  *
  *   TablePagination   데이터 표 아래의 쪽 넘김 한 줄 — role="group" · aria-label="표 페이지 탐색"
  *     totalItems      전체 수를 알 때 — 범위 고르기 + "/ 총 N개"
@@ -19,18 +19,18 @@ import { Select, SelectItem } from "@/components/ui/select";
  *
  * 줄 수를 바꾸면 첫 범위로 돌아간다. 줄이 줄어 지금 범위가 없어지면 마지막 범위로 옮긴다("Page 3 of 2" 가 되지 않게 — reason "constraint").
  * 범위 목록은 200개까지 모두, 넘으면 첫 · 마지막 · 지금 둘레(가운데 198)만 둔다. 하나뿐이면(빈 표 "0-0" · 한 범위) 범위 고르기를 막는다.
- * 이전 · 다음은 끝에서 숨기지 않고 막는다 — aria-disabled 라 초점이 그 자리에 남는다(SEED 는 disabled 라 초점이 떨어진다).
+ * 이전 · 다음은 끝에서 숨기지 않고 막는다 — aria-disabled 라 초점이 그 자리에 남는다.
  * 넘기면(이전 · 다음 · 범위 · 줄 수) 표(scrollTarget)의 위 끝이 보이게 스크롤하고 숨은 상태 글(role="status")로
  *   "11-20, 총 237개"(전체를 모르면 "11-20")를 한 번 알린다. 초점은 누른 칸(고르기 · 화살표)에 그대로 둔다.
  *
  * 모양: 한 줄 40 · 줄바꿈 없음 · 양 끝 정렬, 왼쪽 묶음 ↔ 오른쪽 묶음 · 범위 묶음 ↔ 화살표 16, 고르기 ↔ 글 8, 표 아래 12(mt-component-default —
- *   이 줄이 갖는다. Table 의 pagination 자리는 좌우 24 만이라 자리에 넣어도 표 바로 뒤에 두어도 12, 2026-10-17 03-D 결정 5 B)
+ *   이 줄이 갖는다. Table 의 pagination 자리는 좌우 24 만이라 자리에 넣어도 표 바로 뒤에 두어도 12)
  *   (spacing-component-default). 좁은 화면에서는 표와 같은 가로 스크롤 상자 안에 둔다 — 줄은 내용 폭보다 줄지 않는다.
- *   고르기는 Select medium(트리거 40 · 최소 폭 96) — 화면 폭과 상관없이 medium 이다(Select 의 "1280 미만 large 52" 규칙의 예외 —
- *   사용자 결정 2026-10-08). 범위 목록은 최대 높이 240(Select 기본 480 대신 — SEED). 글은 t4 14 / 19 · 400 · fg-neutral, 수는 세 자리마다 쉼표.
+ *   고르기는 Select medium(트리거 40 · 최소 폭 96) — 화면 폭과 상관없이 medium 이다(Select 의 "1280 미만 large 52" 규칙의 예외).
+ *   범위 목록은 최대 높이 240(Select 기본 480 대신). 글은 t4 14 / 19 · 400 · fg-neutral, 수는 세 자리마다 쉼표.
  *   화살표는 Pagination 의 칸 그대로 — 40 × 40 · 아이콘 16 · 모서리 8, 누르는 영역은 위아래만 44(같은 예외), 호버 · 누름
  *   bg-layer-default-pressed + 2px 거리 축소(40 → 0.95), 키보드 포커스에만 바깥 2px 링, 막히면 fg-disabled.
- * 이름: 고르기 "페이지당 표시 개수" · "표시 범위", 화살표 "이전 페이지" · "다음 페이지"(SEED 문구). 영어를 쓰지 않는다.
+ * 이름: 고르기 "페이지당 표시 개수" · "표시 범위", 화살표 "이전 페이지" · "다음 페이지". 영어를 쓰지 않는다.
  */
 
 export interface TablePaginationValue {
@@ -97,7 +97,7 @@ function rangeOf(page: number, pageSize: number, itemCount: number) {
 const knownRange = (page: number, pageSize: number, totalItems: number) =>
   totalItems === 0 ? { start: 0, end: 0 } : rangeOf(page, pageSize, Math.min(pageSize, totalItems - (page - 1) * pageSize));
 
-// 범위 목록의 쪽 — 200개까지 모두, 넘으면 첫 · 마지막 + 지금을 가운데에 둔 198(SEED createAutoPageOptions)
+// 범위 목록의 쪽 — 200개까지 모두, 넘으면 첫 · 마지막 + 지금을 가운데에 둔 198
 function rangePages(page: number, totalPages: number) {
   if (totalPages <= MAX_RANGE_OPTIONS) return Array.from({ length: totalPages }, (_, i) => i + 1);
   const windowSize = MAX_RANGE_OPTIONS - 2;

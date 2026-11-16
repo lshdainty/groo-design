@@ -10,18 +10,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { imageFrameRadius } from "@/components/ui/image-frame";
 
 /*
- * Groo Searchable List — 위 검색칸에 치는 대로 아래 목록이 걸러지고 하나를 고르는 묶음(2026-10-08). 수치 원본은
+ * Groo Searchable List — 위 검색칸에 치는 대로 아래 목록이 걸러지고 하나를 고르는 묶음. 수치 원본은
  * specs/components/searchable-list.yaml(줄 · 검색칸의 나머지 값은 list.yaml · input.yaml).
- * SEED 에는 이 컴포넌트가 없다(Combobox 를 아직 두지 않았다) — 부품마다 SEED 를 따른다: 검색칸은 Text Input 밑줄형, 결과는 List 줄 +
- * 오른쪽 Radiomark, 결과 없음은 Result Section, 키보드는 SEED 문서 사이트 검색 창(초점은 입력칸, 화살표는 강조만 옮긴다).
- * 옛 Searchable List(상자 안 결과 · 제목 13 · 썸네일 44 × 28 · 고른 줄 브랜드 바탕)를 대신한다.
+ * 부품: 검색칸은 Text Input 밑줄형, 결과는 List 줄 +
+ * 오른쪽 Radiomark, 결과 없음은 Result Section, 키보드는 콤보박스(초점은 입력칸, 화살표는 강조만 옮긴다).
  *
  *   SearchableList          묶음. value · onValueChange(value — 고르면. 시트는 여기서 닫는다) · query · onQueryChange(query — 치는 대로) ·
  *                           onSearch(query — 서버 검색, 마지막 입력 뒤 searchDelay 기본 300ms 에 한 번) · placement "sheet"(기본 —
  *                           Input Button 의 검색 시트 · 팝오버, 고르면 닫힌다) · "inline"(화면 · 단계 안 — 라디오만 바뀐다) ·
  *                           size "responsive"(기본 — 1280 미만 large 40 · 이상 medium 34, 앱은 large) · selectionMark(기본 true — 줄 오른쪽
- *                           라디오. 누르면 바로 더하고 닫는 목록(종목 추가)은 false — 지금 값이 없어 라디오를 그리지 않는다, value 를 주지 않는다 ·
- *                           2026-10-29 사용자 결정 17-1 Q4 = B)
+ *                           라디오. 누르면 바로 더하고 닫는 목록(종목 추가)은 false — 지금 값이 없어 라디오를 그리지 않는다, value 를 주지 않는다)
  *   SearchableListInput     검색칸 — Input variant="underline" 을 스스로 건다(앞 돋보기 · 지우기). placeholder("{무엇} 검색") · aria-label(기본 "검색").
  *                           role="combobox" · aria-expanded · aria-controls · aria-autocomplete="list" · aria-activedescendant(강조한 줄, 없으면 비움).
  *                           ↓ ↑ 강조 · Enter 고름 · Esc 지움(비었으면 시트 · 팝오버를 닫게 둔다). 스스로 초점을 옮기지 않는다 —
@@ -33,27 +31,26 @@ import { imageFrameRadius } from "@/components/ui/image-frame";
  *   SearchableListEmpty     0건 — Result Section medium "'{검색어}'에 대한 검색 결과가 없어요"(제목은 검색어로 만든다 · role="status" 로 알린다) · description
  *   SearchableListError     실패 — Result Section failure "검색 결과를 불러오지 못했어요" + "다시 시도"(onRetry) · 0건과 따로
  *   SearchableListSkeleton  불러오는 줄 — rows(기본 5) · prefix "logo" · "cardArt" · "avatar" · "none"(기본). 줄 높이 그대로
- *   focusSearchableList     시트 · 팝오버의 onOpenAutoFocus 에 건다 — 첫 초점을 표면 대신 검색칸에, 지금 값을 가운데로(열린 뒤 다시 옮기지 않는다 —
- *                           2026-10-15 구현 세션 질문 Q-007-3 정리)
+ *   focusSearchableList     시트 · 팝오버의 onOpenAutoFocus 에 건다 — 첫 초점을 표면 대신 검색칸에, 지금 값을 가운데로(열린 뒤 다시 옮기지 않는다)
  *   matchesSearch           거르는 규칙 — 검색어와 이름 · 별칭을 NFC 로 맞추고 대소문자 · 공백을 무시해, 하나에 들어 있으면 true. 들고 있는 목록 ·
- *                           서버 검색이 같은 규칙이다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-007-1, 안 C). 초성 검색은 아직 정하지 않았다
+ *                           서버 검색이 같은 규칙이다. 초성 검색은 아직 정하지 않았다
  *
- * 검색칸: Input 밑줄형(화면에 입력이 하나뿐인 목록 위 검색 — 사용자 결정 17A, 상자형 52 는 고르지 않았다) — 아래 1px stroke-neutral-weak,
+ * 검색칸: Input 밑줄형(화면에 입력이 하나뿐인 목록 위 검색) — 아래 1px stroke-neutral-weak,
  *   치는 동안 2px stroke-neutral-contrast, 모서리 · 좌우 여백 없음. 좌우 24 안에 두어 돋보기와 줄의 앞 붙이개가 한 줄에 선다. 목록이
  *   스크롤해도 위에 붙어 있다(sticky — 바탕은 놓인 자리의 면: 시트 · 팝오버 bg-layer-floating, 화면 · 단계 bg-layer-default). 칸 ↔ 목록 8.
  * 결과 줄: List 의 누르는 줄 — 위아래 12 · 좌우 24, 제목 16 / 22 · 400 · fg-neutral, 설명 13 / 18 · fg-neutral-subtle, 앞 붙이개 ↔ 글 12.
  *   고른 줄의 바탕은 칠하지 않는다 — 오른쪽 라디오만 켠다(채운 원 + 점, radio-group.yaml). 단종처럼 알릴 것은 흐리지 않고 Badge 를 단다.
  * 강조: 화살표로 짚은 줄 · 마우스를 올린 줄이 같은 바탕 — 좌우 6 들어온 bg-layer-default-pressed · 모서리 10(List 의 누름 바탕). 한 번에
  *   한 줄, 초점은 검색칸에 그대로다. 누르면 같은 바탕 + 콘텐츠만 2px 거리 축소(기준 max(높이, 폭 ÷ 4, 24) — 모션 줄이기면 하지 않는다).
- *   마우스 · 누름은 바탕이 좌우 0 → 6 들어오며 모서리 0 → 10 으로 150ms 에 둥글어진다(Menu 알약과 같다 — 2026-10-15 Q-009-3 안 B).
- *   화살표로 옮길 때는 바로 바뀐다(전환 없음). 마우스로 짚은 강조는 포인터가 목록을 떠나면 지운다 — 키보드로 짚은 강조는 남는다
- *   (2026-10-15 사용자 결정 — 구현 세션 질문 Q-007-2, 안 B). 강조한 줄은 붙은 검색칸에 가리지 않게 보이도록 스크롤한다.
- * 키보드(콤보박스 — 사용자 결정 12A): 글자는 거르고 강조를 지운다 · ↓ ↑ 는 한 줄씩(강조가 없으면 ↓ 첫 줄 · ↑ 마지막 줄, 끝에서 멈춘다 —
+ *   마우스 · 누름은 바탕이 좌우 0 → 6 들어오며 모서리 0 → 10 으로 150ms 에 둥글어진다(Menu 알약과 같다).
+ *   화살표로 옮길 때는 바로 바뀐다(전환 없음). 마우스로 짚은 강조는 포인터가 목록을 떠나면 지운다 — 키보드로 짚은 강조는 남는다.
+ *   강조한 줄은 붙은 검색칸에 가리지 않게 보이도록 스크롤한다.
+ * 키보드(콤보박스): 글자는 거르고 강조를 지운다 · ↓ ↑ 는 한 줄씩(강조가 없으면 ↓ 첫 줄 · ↑ 마지막 줄, 끝에서 멈춘다 —
  *   분류 머리는 건너뛴다) · Enter 는 강조한 줄을 고른다(강조가 없으면 아무것도 하지 않고 폼을 제출하지 않는다) · Esc 는 검색어가 있으면 지우고
  *   (시트 · 팝오버는 그대로) 비었으면 시트 · 팝오버의 Esc 로 닫힌다 · Tab 은 검색칸을 떠난다. 줄은 Tab 으로 들어가지 않는다.
  *   글자를 조합하는 동안(한글 입력)의 화살표 · Enter · Esc 는 조합의 것이다.
  * 서버 검색은 마지막 입력 뒤 300ms 에 한 번 — 글자마다 보내지 않는다. 들고 있는 목록은 onQueryChange 로 바로 거른다.
- * 결과 개수는 알리지 않는다(SEED 문서 검색과 같다) — 0건 · 실패만 Result Section 의 role="status" 가 한 번 알린다.
+ * 결과 개수는 알리지 않는다 — 0건 · 실패만 Result Section 의 role="status" 가 한 번 알린다.
  */
 
 export type SearchableListPlacement = "sheet" | "inline";

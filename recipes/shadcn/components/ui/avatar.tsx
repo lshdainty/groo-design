@@ -4,13 +4,13 @@ import { cn } from "@/lib/utils";
 import { ProgressCircle } from "@/components/ui/progress-circle";
 
 /*
- * Groo Avatar — 구조는 SEED Avatar · Avatar Stack(2026-10-03). 수치 원본은 specs/components/avatar.yaml · avatar-stack.yaml.
+ * Groo Avatar — 수치 원본은 specs/components/avatar.yaml · avatar-stack.yaml.
  *
  *   Avatar         사람 한 명을 보이는 원 — 사진(src)이 있으면 사진, 없거나 · 불러오는 동안 · 못 불러오면 이니셜 + 이름 색
  *   AvatarStack    여러 사람 — 겹친 묶음. 앞 max(기본 4)명 + 끝에 "+N" 원
  *   avatarInitial  이니셜 — 표시 이름(앞뒤 공백만 뺀 글)의 첫 글자 하나(사용자가 보는 글자 단위 — Intl.Segmenter). 로마자는
  *                  대문자로, 한글 · 숫자 · 그림 글자는 그대로. "김민수" → "김", "Kim Minsu" → "K"
- *   avatarHue      이름 색 — 표시 이름의 유니코드 코드 포인트(UTF-16 단위가 아니다) 합 % 10 → 차트 10색(v110 순서)
+ *   avatarHue      이름 색 — 표시 이름의 유니코드 코드 포인트(UTF-16 단위가 아니다) 합 % 10 → 차트 10색 순서
  *                  blue · green · orange · violet · pink · indigo · red · yellow · brown · gray.
  *                  "김민수" 142420 → blue · "이서연" 151168 → brown · "Kim Minsu" 845 → indigo. 이름이 비면 gray(글자 없음)
  *                  앱은 같은 규칙을 Dart 로 두고(characters.first · runes) 이 예시 이름으로 같은 답이 나오는지 시험한다.
@@ -18,7 +18,7 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  *
  * 크기 10단계 — 20 · 24 · 36 · 42 · 48(기본) · 56 · 64 · 80 · 96 · 108. 자리마다 대표 크기를 쓴다(한 줄 목록 36 · 두 줄 42 ·
  * 줄 안 묶음 24 · Desk 계정 머리 80 · HR 큰 사진 96 · 사진 수정 108). 이 밖의 크기를 만들지 않는다.
- * 모든 크기에 1px 안쪽 투명 테두리 stroke-neutral-overlay(v118 — 검정 4.7% · 다크 흰 5%, SEED stroke.neutral-subtle 의 값) —
+ * 모든 크기에 1px 안쪽 투명 테두리 stroke-neutral-overlay(검정 4.7% · 다크 흰 5%) —
  * ::after 로 사진 · 이니셜 위에 겹친다(크기가 변하지 않는다). 흰 사진이 흰 바탕에 묻히지 않고, 어두운 사진 · 이니셜 원 둘레에는
  * 옅은 테가 생기지 않는다. Image Frame · Logo Tile 의 윤곽과 같은 색이다.
  * 이니셜은 이름 색(chart-{색} — 라이트 700 · 다크 800-dark) 바탕에 fg-neutral-inverted(라이트 흰 · 다크 짙은 글자 — 다크에서
@@ -39,9 +39,9 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  * 묶음은 aria-label(또는 aria-labelledby)을 주면 role="img" 하나로 읽고("참여자 6명: 김민수, 이서연, 박지훈, 최유진 외 2명"),
  * 없으면 aria-hidden — 묶음 옆 글이 수를 말한다("6명 · 412,000원"). 안의 아바타 · "+N" 은 따로 읽지 않는다.
  * 누르지 않는다 — 누르는 자리(프로필 열기)는 감싼 버튼 · 링크가 누름 · 포커스를 가진다(20 · 24 를 누르게 하려면 누르는 영역 44).
- * 상태(안 낸 사람 · 나간 사람)는 아바타를 흐리게 하지 않고 이름 옆 글 · Badge 로 알린다(v106).
+ * 상태(안 낸 사람 · 나간 사람)는 아바타를 흐리게 하지 않고 이름 옆 글 · Badge 로 알린다.
  *
- * 사진 바꾸기 자리(2026-10-15 마무리 6A — avatar.yaml edit photo) — 아바타 아래 16 에 늘 보이는 버튼 둘("사진 바꾸기" Button neutralWeak small ·
+ * 사진 바꾸기 자리(avatar.yaml edit photo) — 아바타 아래 16 에 늘 보이는 버튼 둘("사진 바꾸기" Button neutralWeak small ·
  * "사진 지우기" ghost small, 사진이 있을 때만 — 사이 8 · 가운데)을 쓰는 쪽이 둔다(마우스를 올려야 나타나는 덮개를 두지 않는다).
  * uploadProgress(0 ~ 1)를 주면 올리는 중이다 — 원 위 딤(overlay-dim 라이트 0.50 · 다크 0.65) 가운데 값 있는 원 24(Progress Circle
  * staticWhite · 이름 "프로필 사진 올리는 중" · 값 글 "40%"). 올리는 동안은 아바타를 보조 기술에 숨기지 않는다 — role="img" 는 안의
@@ -66,7 +66,7 @@ function avatarInitial(name: string): string {
   return first.toUpperCase();
 }
 
-/** 이름 색 — 표시 이름의 유니코드 코드 포인트 합 % 10 → 차트 10색(v110 순서). 이름이 비면 gray */
+/** 이름 색 — 표시 이름의 유니코드 코드 포인트 합 % 10 → 차트 10색 순서. 이름이 비면 gray */
 function avatarHue(name: string): AvatarHue {
   const shown = displayName(name);
   if (shown === "") return "gray";

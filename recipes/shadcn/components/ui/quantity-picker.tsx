@@ -6,8 +6,7 @@ import { useFieldGroup, useFieldGroupState } from "@/components/ui/field";
 import { ProgressCircle } from "@/components/ui/progress-circle";
 
 /*
- * Groo Quantity Picker — 구조는 SEED Quantity Picker(2026-10-15, rootage quantity-picker · quantity-picker-button,
- * react-headless useQuantityPicker). 수치 원본은 specs/components/quantity-picker.yaml.
+ * Groo Quantity Picker — 수치 원본은 specs/components/quantity-picker.yaml.
  * 작은 정수를 한 단계씩 늘리고 줄이는 컨트롤 — 흔한 값이 열 단계 안쪽인 수(승인 필요 횟수 0 ~ 3 · 부여 시간 0 ~ 7시간)에 쓴다.
  * 흔한 값이 더 멀거나 돈 · 소수면 Input 의 숫자 칸, 날짜 부분 · 띄엄띄엄 이름 붙은 값은 Select, 범위 안의 자리는 Slider 다.
  *
@@ -27,7 +26,7 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  *
  * 역할 — 루트 role="group" + 이름(Field 라벨 aria-labelledby · aria-label), Field 의 설명 · 오류가 묶음의 설명이 된다(useFieldGroup).
  *   막힘이면 루트 aria-disabled. 두 버튼은 <button type="button"> — 끝(최소 · 최대)에 닿은 버튼은 aria-disabled 만 건다(disabled 속성이
- *   아니다 — 초점이 남아 "사용할 수 없음" 이 들리고 Tab 한 번이면 반대 버튼이다, SEED headless 와 다른 자리). 읽기 전용도 두 버튼 aria-disabled.
+ *   아니다 — 초점이 남아 "사용할 수 없음" 이 들리고 Tab 한 번이면 반대 버튼이다). 읽기 전용도 두 버튼 aria-disabled.
  *   막힘(disabled)만 두 버튼에 disabled 속성 — 초점을 받지 않는다. 값 칸은 aria-live="polite" · aria-atomic 이라 바뀐 값을 단위와 함께
  *   한 번 읽는다("4회"). 값 칸은 누르기 · 초점 · 치기가 없다. 화살표 키 · spinbutton 은 두지 않는다 — 누르고 있어도 반복하지 않는다
  *   (Enter 를 누르고 있을 때 브라우저가 되풀이하는 keydown 도 버린다).
@@ -35,12 +34,12 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  * 모양 — 상자는 bg-layer-default + 안쪽 1px stroke-neutral-weak(inset shadow), 오류는 안쪽 2px stroke-critical-solid(내용이 밀리지 않는다).
  *   모서리 small · medium 8 · large 12. 버튼은 정사각(상자 높이), 바탕 투명 · 아이콘 fg-neutral(16 · 18 · 22, lucide minus · plus).
  *   선 1px × 16 stroke-neutral-subtle(장식). 값 칸은 좌우 8 · 500 · fg-neutral · 고정폭 숫자, 글 t5 16 / 22(large t6 18 / 24).
- *   값 칸은 가장 긴 표시 글을 숨겨 둔 자리 글로 폭을 잡는다(SEED valueDisplayPlaceholder) — getValueText(min) · getValueText(max) ·
+ *   값 칸은 가장 긴 표시 글을 숨겨 둔 자리 글로 폭을 잡는다 — getValueText(min) · getValueText(max) ·
  *   지금 값 가운데 가장 넓은 것. max 를 주지 않으면(Number.MAX_SAFE_INTEGER) 그 글은 빼고 지금 값 · 최소로만 잡는다.
  *   누르는 자리 — 36 · 40 버튼은 보이지 않는 여백(::before)으로 44(4 · 2 씩), 52 는 그대로. 상자는 overflow 를 자르지 않는다(여백 · 링).
- * 상태 — 올림(웹) · 누름 bg-layer-default-pressed, 누르면 그 버튼만 2px 거리 축소(기준 = 버튼 높이 36 · 40 · 52, v104 — 모션 줄이기면
+ * 상태 — 올림(웹) · 누름 bg-layer-default-pressed, 누르면 그 버튼만 2px 거리 축소(기준 = 버튼 높이 36 · 40 · 52 — 모션 줄이기면
  *   하지 않는다). 키보드 포커스에만 버튼 바깥 링 2px · 띄움 2px. 끝 · 읽기 전용 · 막힘은 아이콘 fg-disabled(올려도 눌러도 바탕 없음),
- *   막힘은 값도 fg-disabled — 불투명도로 흐리지 않는다(v106). 로딩은 누름 바탕 + 값 없는 원(16 · 18 · 22, 두께 2, 트랙 gray-500 ·
+ *   막힘은 값도 fg-disabled — 불투명도로 흐리지 않는다. 로딩은 누름 바탕 + 값 없는 원(16 · 18 · 22, 두께 2, 트랙 gray-500 ·
  *   호 fg-neutral — Button ghost 로딩 원과 같은 값, Progress Circle tone inherit).
  */
 

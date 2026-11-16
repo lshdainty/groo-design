@@ -11,69 +11,67 @@
  *   2. <link href="recipes/shadcn/styles/groo-shadcn-bridge.css">
  *   3. <html data-theme="dark"> 로 다크모드 토글 (Groo 토큰 자체 지원)
  *
- * 추가 변수(--radius 등)는 shadcn 표준 변수명을 따라 정의 — Groo yaml에는
- * 별도 alias 토큰을 두지 않고 이 bridge에서만 매핑.
+ * 추가 변수(--radius 등)는 shadcn 표준 변수명을 따라 이 bridge 에서만 Groo 역할 토큰에 잇는다.
  */
 
 :root {
   /* shadcn v3 conv (`--{name}`) — 호환용 */
-  --background: var(--color-bg-page);
-  --foreground: var(--color-text-primary);
-  --card: var(--color-surface-default);
-  --card-foreground: var(--color-text-primary);
-  --popover: var(--color-surface-default);
-  --popover-foreground: var(--color-text-primary);
-  --primary: var(--color-primary);
-  --primary-foreground: var(--color-text-on-accent);
-  --secondary: var(--color-surface-input);
-  --secondary-foreground: var(--color-text-primary);
-  --muted: var(--color-surface-input);
-  --muted-foreground: var(--color-text-secondary);
-  --accent: var(--color-surface-input);
-  --accent-foreground: var(--color-text-primary);
-  --destructive: var(--color-error);
-  --destructive-foreground: var(--color-text-on-accent);
-  --border: var(--color-border-default);
-  --input: var(--color-border-default);
-  --ring: var(--color-border-focus);
-  --radius: var(--radius-md);
+  --background: var(--color-bg-layer-basement);
+  --foreground: var(--color-fg-neutral);
+  --card: var(--color-bg-layer-default);
+  --card-foreground: var(--color-fg-neutral);
+  --popover: var(--color-bg-layer-default);
+  --popover-foreground: var(--color-fg-neutral);
+  --primary: var(--color-fg-brand);
+  --primary-foreground: var(--color-static-white);
+  --secondary: var(--color-bg-neutral-weak);
+  --secondary-foreground: var(--color-fg-neutral);
+  --muted: var(--color-bg-neutral-weak);
+  --muted-foreground: var(--color-fg-neutral-muted);
+  --accent: var(--color-bg-neutral-weak);
+  --accent-foreground: var(--color-fg-neutral);
+  --destructive: var(--color-fg-critical);
+  --destructive-foreground: var(--color-static-white);
+  --border: var(--color-stroke-neutral-weak);
+  --input: var(--color-stroke-neutral-weak);
+  --ring: var(--color-stroke-focus-ring);
+  --radius: var(--radius-r2);
 
   /* Tailwind v4 conv (`--color-{name}`) — utility class 자동 생성용
    * (예: bg-primary-foreground, ring-ring, text-muted-foreground 등) */
-  --color-primary-foreground: var(--color-text-on-accent);
-  --color-secondary: var(--color-surface-input);
-  --color-secondary-foreground: var(--color-text-primary);
-  --color-muted: var(--color-surface-input);
-  --color-muted-foreground: var(--color-text-secondary);
-  --color-accent: var(--color-surface-input);
-  --color-accent-foreground: var(--color-text-primary);
-  --color-destructive: var(--color-error);
-  --color-destructive-foreground: var(--color-text-on-accent);
-  --color-border: var(--color-border-default);
-  --color-input: var(--color-border-default);
-  --color-ring: var(--color-border-focus);
-  --color-card: var(--color-surface-default);
-  --color-card-foreground: var(--color-text-primary);
-  --color-popover: var(--color-surface-default);
-  --color-popover-foreground: var(--color-text-primary);
-  --color-background: var(--color-bg-page);
-  --color-foreground: var(--color-text-primary);
+  --color-primary-foreground: var(--color-static-white);
+  --color-secondary: var(--color-bg-neutral-weak);
+  --color-secondary-foreground: var(--color-fg-neutral);
+  --color-muted: var(--color-bg-neutral-weak);
+  --color-muted-foreground: var(--color-fg-neutral-muted);
+  --color-accent: var(--color-bg-neutral-weak);
+  --color-accent-foreground: var(--color-fg-neutral);
+  --color-destructive: var(--color-fg-critical);
+  --color-destructive-foreground: var(--color-static-white);
+  --color-border: var(--color-stroke-neutral-weak);
+  --color-input: var(--color-stroke-neutral-weak);
+  --color-ring: var(--color-stroke-focus-ring);
+  --color-card: var(--color-bg-layer-default);
+  --color-card-foreground: var(--color-fg-neutral);
+  --color-popover: var(--color-bg-layer-default);
+  --color-popover-foreground: var(--color-fg-neutral);
+  --color-background: var(--color-bg-layer-basement);
+  --color-foreground: var(--color-fg-neutral);
 
   /* Ring offset — Tailwind ring-offset-{n} utility의 갭 색상.
-   * 미정의 시 currentColor가 적용되어 검정 띠로 보이는 문제 회피. bg-page 색을
+   * 미정의 시 currentColor가 적용되어 검정 띠로 보이는 문제 회피. 바닥(bg-layer-basement) 색을
    * 따라가서 input 외곽이 매끄럽게 이어짐 (light=흰색 / dark=짙은 navy). */
-  --ring-offset-color: var(--color-bg-page);
-  --tw-ring-offset-color: var(--color-bg-page);
+  --ring-offset-color: var(--color-bg-layer-basement);
+  --tw-ring-offset-color: var(--color-bg-layer-basement);
 }
 
 /*
- * 다크모드는 Groo 토큰이 [data-theme="dark"]에서 자체 처리(text/surface/border
- * 등이 *-dark 변수로 alias). bridge 변수는 var() 참조라 자동 따라감 — 별도
- * dark mode 블록 불필요.
+ * 다크모드는 Groo 토큰의 [data-theme="dark"] 블록이 역할 색을 다크 값으로 바꾼다.
+ * bridge 변수는 var() 참조라 자동으로 따라간다 — 별도 다크 블록은 필요 없다.
  */
 
 /*
- * 한국어 줄바꿈 — 단어 단위(DESIGN.md Typography "v114 — 줄바꿈"). 낱말 사이에서만 줄을 바꾸고,
+ * 한국어 줄바꿈 — 단어 단위(DESIGN.md Typography 의 "줄바꿈"). 낱말 사이에서만 줄을 바꾸고,
  * 한 줄보다 긴 낱말만 칸 끝에서 끊는다. 이 bridge 를 불러오는 화면은 기초 규칙도 함께 받는다.
  */
 html {
@@ -82,7 +80,7 @@ html {
 }
 
 /*
- * 전역 스크롤바 — Scroll Area(2026-10-10, specs/components/scroll-area.yaml). 스크롤은 브라우저 기본이고 모양만 한 벌 둔다 —
+ * 전역 스크롤바 — Scroll Area(specs/components/scroll-area.yaml). 스크롤은 브라우저 기본이고 모양만 한 벌 둔다 —
  * 세로 · 가로 6px 알약, 막대 stroke-neutral-solid(흰 면 4.18 · 바닥 3.87 · 떠 있는 표면 4.18, 다크 4.13 · 4.68 · 3.58), 바탕 투명.
  * 넘치면 늘 보인다(맥 · 폰의 겹침 스크롤바는 OS 설정대로), 올리거나 끌어도 모양이 바뀌지 않는다.
  * 크로미움 · 사파리는 webkit 규칙, Firefox 만 표준 두 줄. 크로미움은 scrollbar-width · scrollbar-color 가 걸린 요소에서 ::-webkit-scrollbar 를

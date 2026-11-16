@@ -5,9 +5,9 @@ import { cn } from "@/lib/utils";
 import { useExpandMotion } from "@/components/ui/accordion";
 
 /*
- * Groo Tree View — WAI-ARIA APG Treeview(2026-10-10). 수치 원본은 specs/components/tree-view.yaml.
+ * Groo Tree View — WAI-ARIA APG Treeview. 수치 원본은 specs/components/tree-view.yaml.
  * 여러 단계로 된 항목 가운데 하나를 고르는 나무 — HR 관리 > 회사 · 부서 사용자의 부서 나무. 고른 항목의 내용은 옆 패널에 보인다.
- * SEED 에는 나무가 없다 — 키보드 · 역할은 APG Treeview, 줄의 값은 Side Navigation 항목(44 · 모서리 10 · 14 / 19)과 List 의 누름이다.
+ * 키보드 · 역할은 APG Treeview, 줄의 값은 Side Navigation 항목(44 · 모서리 10 · 14 / 19)과 List 의 누름이다.
  * 부모 · 하위 두 단계에서 줄이 편집을 여는 목록은 List 의 하위 줄(ListParentItem), 상세를 접어 두는 목록은 Accordion 이다.
  *
  *   TreeView   나무 — nodes(TreeNode[] — { id, label, children? }) · aria-label 또는 aria-labelledby(필수) · selectedId · onSelectedChange(id) ·
@@ -22,7 +22,7 @@ import { useExpandMotion } from "@/components/ui/accordion";
  *   ↓ ↑ 다음 · 앞 보이는 항목(끝에서 멈춘다) · → 접힌 부모는 펼치고(초점 그대로) 펼친 부모는 첫 하위로 · ← 펼친 부모는 접고 그 밖에는 부모로 ·
  *   Home · End 첫 · 마지막 보이는 항목 · Enter · Space 누르기와 같다. → ← 는 고르지 않는다. 늘 펼친 나무는 → 첫 하위 · ← 부모로 옮기기만 한다.
  *   글자로 찾기 · * 는 두지 않는다.
- * 누르기 — 줄 전체가 누르는 자리다(사용자 결정 16D — SEED Accordion "터치 영역은 Chevron 아이콘뿐만 아니라 Trigger 전체"). 잎은 누르면 고르고,
+ * 누르기 — 줄 전체가 누르는 자리다. 잎은 누르면 고르고,
  *   부모 줄은 누르면 고르면서 접힌 하위는 펴고 펼친 하위는 접는다(onSelectedChange · onExpandedChange 를 함께 부른다 — 펼친 부모를 고르면
  *   하위가 접힌다, 한 번 더 누르면 고르며 편다). Enter · Space 도 같다. 꺾쇠는 표시만이다 — 따로 누르는 자리 · 이벤트가 없다.
  *   collapsible={false}(늘 펼친 나무)면 누르기는 고르기만 한다. ← 로 접어 고른 항목이 부모 안으로 숨으면 고름은 그대로, 그 안에 있던 초점은
@@ -259,7 +259,7 @@ const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       },
       [selectedProp, onSelectedChange],
     );
-    // 누르기 — 고르고, 부모면 펴고 접는다(16D). 늘 펼친 나무는 고르기만
+    // 누르기 — 고르고, 부모면 펴고 접는다. 늘 펼친 나무는 고르기만
     const press = React.useCallback(
       (id: string, parent: boolean) => {
         select(id);

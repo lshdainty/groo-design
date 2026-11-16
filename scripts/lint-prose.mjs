@@ -6,10 +6,9 @@
 // (shadow/motion/overlay)에 정의된 토큰과 비교. 정의되지 않은 reference는
 // typo 또는 outdated를 의심.
 //
-// 추가로 타이포/radius/spacing 주석(`body-lg` (15/400) · `radius-xl` (20px)
+// 추가로 타이포/radius/spacing 주석(`t5` (16/400) · `radius-r4` (16px)
 // 형태)의 px 가 frontmatter typography·rounded·spacing 블록의 값과 맞는지 검사한다. 토큰 값이 바뀌어도 본문 괄호는 안 따라와
-// 사본이 낡는다 — 실제로 body-lg 가 15→16 으로 바뀐 뒤 27군데가 15로 남아
-// 그 표를 근거로 앱·웹 버튼을 잘못 고친 적이 있다(2026-08-21).
+// 사본이 낡기 때문이다.
 // weight 는 검사하지 않는다 — "weight 강조는 인라인 modifier" 가 규약이라
 // 버튼(font-medium 500)처럼 토큰 weight 와 다른 게 정상이다.
 // radius-full 도 검사하지 않는다 — `radius-full` (40px 원형) 처럼 괄호가 radius 가
@@ -49,14 +48,9 @@ const NOISE = new Set([
   "alert-text", "badge", "button", "card", "chart", // 컴포넌트 그룹 명 (실제 토큰은 -success 등 suffix). v83 radius mapping에서 prose에 등장.
   "focus-ring-enhanced", "divider-dashed", "caption-strong", // 미정 / 향후 후보 prose mention
   // DESIGN.md(brand-neutral)에서 brand 위임 안내용으로 reference하는 brand 토큰 — 의도된 패턴
-  "border-focus", "border-focus-light", "primary-light",
-  "button-primary", "button-outline-on-dark",
-  "focus-ring-on-light", "focus-ring-on-dark",
   "stroke-focus-ring", // v106 State 절 — 포커스 링 색은 브랜드 역할(v102)
   "fg-brand-inverted", // v115 알림 메시지 절 — 스낵바 액션 색은 브랜드 역할(반전 짝)
   "border-vs-surface", // 비교 표현 ("border vs surface")
-  // historical reference (v14~v15 fork 시도, v15에서 unified 회귀 기록 표)
-  "bg-page-hr", "bg-page-desk", "page-text-hr-light", "page-text-desk-light",
   // CSS logical properties (v76 RTL doc) — physical/logical property 표기, 토큰 아님
   "margin-left", "margin-right", "margin-inline-start", "margin-inline-end",
   "padding-left", "padding-right", "padding-inline-start", "padding-inline-end",
@@ -69,7 +63,6 @@ const NOISE = new Set([
   "padding-block-start", "padding-block-end",
   "text-start", "text-end",
   "inline-size", "block-size", "max-inline-size",
-  "border-default", "border-strong", "border-default-dark", // shared neutral border tokens (lint-prose 인식 prefix와 충돌 회피)
   "z-index", // CSS 속성 이름 — z- 토큰 아님
 ]);
 
@@ -235,7 +228,7 @@ function extractTypographySizes(content) {
 }
 
 // === 타이포 주석 추출 ===
-// `body-lg` (15/400) · `caption` (12px) · `body-lg` (15/400/1.6) 형태에서
+// `t5` (16/400) · `t2` (12px) · `t5` (16/400/22) 형태에서
 // 토큰명과 괄호 첫 숫자(px)를 뽑는다.
 // radius-full 은 괄호가 지름을 가리키는 표기가 정상이라 검사 대상에서 뺀다.
 const ANNOT_SKIP = new Set(["radius-full"]);
@@ -388,7 +381,7 @@ for (const target of TARGETS) {
     totalMismatch += mismatches.length;
   }
 
-  // 3) 토큰 주석 px mismatch (`body-lg` (15/400) ↔ typography.fontSize)
+  // 3) 토큰 주석 px mismatch (`t5` (16/400) ↔ typography.fontSize)
   const badPx = annots.filter(a => a.px !== a.expected);
   if (badPx.length === 0) {
     console.log(`  ✓ 토큰 주석 px 일관성 통과 (검사 ${annots.length}건)`);

@@ -7,7 +7,7 @@ import { useField, useFieldControl } from "@/components/ui/field";
 import { inputButtonSurfaceVariants, inputButtonVariants } from "@/components/ui/input-button";
 
 /*
- * Groo Select — 구조는 SEED Select(2026-10-01). 수치 원본은 specs/components/select.yaml.
+ * Groo Select — 수치 원본은 specs/components/select.yaml.
  *
  *   Select        트리거(button role=combobox) + 칸 아래 목록(role=listbox). 하나 고르기(기본) · 여럿 고르기(multiple)
  *   SelectGroup   묶음 — 제목(label)은 없어도 된다. 묶음이 둘 이상이면 사이에 선을 저절로 그린다
@@ -27,11 +27,11 @@ import { inputButtonSurfaceVariants, inputButtonVariants } from "@/components/ui
  * 트리거 앞 아이콘: 하나를 골랐고 그 선택지에 아이콘이 있으면 그 아이콘, 아니면 Select 의 prefixIcon.
  *
  * 목록은 트리거 폭 그대로 아래 8(모자라면 위)에 붙고 화면 가장자리와 8 을 둔다. 높이는 min(480, 남은 화면) — 남은 화면이
- * 200 보다 좁아도 200 은 둔다. listMaxHeight 를 주면 480 대신 그 값이다(Table Pagination 의 범위 목록 240 — SEED).
+ * 200 보다 좁아도 200 은 둔다. listMaxHeight 를 주면 480 대신 그 값이다(Table Pagination 의 범위 목록 240).
  * 열면 DOM 포커스가 목록으로 가고 짚은 선택지는 aria-activedescendant 로 알린다.
  * 포인터로 열면 짚지 않고 고른 선택지가 보이게 스크롤만, 키(↓ ↑ Enter Space)로 열면 고른 선택지(없으면 첫 선택지)를 짚는다.
- * 짚은 선택지 · 누르는 선택지는 좌우 8 들인 알약(SEED 그대로 — 키보드 위치도 같은 알약), 누르는 동안만 콘텐츠가 준다.
- * 마우스는 호버로 짚고, 터치는 짚지 않는다(손가락 아래 미리 칠한 알약은 눌린 채 멈춘 것처럼 보인다 — SEED).
+ * 짚은 선택지 · 누르는 선택지는 좌우 8 들인 알약(키보드 위치도 같은 알약), 누르는 동안만 콘텐츠가 준다.
+ * 마우스는 호버로 짚고, 터치는 짚지 않는다(손가락 아래 미리 칠한 알약은 눌린 채 멈춘 것처럼 보인다).
  * 하나 고르기는 고르면 닫히고(다시 눌러도 풀리지 않는다), 여럿 고르기는 열린 채 고르거나 푼다(고른 순서를 지킨다).
  * Esc · 바깥 누르기 · Tab 은 닫는다 — Esc · 고르기로 닫으면 트리거로 포커스가 돌아오고, Tab 은 트리거 다음(Shift 는 앞) 칸으로 간다.
  * 닫힌 트리거에서 글자 키는 하나 고르기면 그 글자로 시작하는 다음 선택지로 값을 바로 바꾼다(열지 않는다 — 네이티브 select).
@@ -242,7 +242,7 @@ type SelectBaseProps = {
   disabled?: boolean;
   /** 읽기 전용 — 포커스는 되고 열리지 않는다 */
   readOnly?: boolean;
-  /** 열린 목록의 최대 높이 px — 기본 480. Table Pagination 의 범위 목록만 240(SEED)을 준다 */
+  /** 열린 목록의 최대 높이 px — 기본 480. Table Pagination 의 범위 목록만 240 을 준다 */
   listMaxHeight?: number;
   /** 트리거(button)의 className */
   className?: string;

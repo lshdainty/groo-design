@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 /*
- * Groo Result Section — 구조는 SEED Result Section(2026-10-02). 수치 원본은 specs/components/result-section.yaml.
+ * Groo Result Section — 수치 원본은 specs/components/result-section.yaml.
  *
  * 화면이나 그 영역 가운데에 놓는 결과 — 비어 있음 · 불러오기 실패(다시 시도) · 완료 · 찾을 수 없는 페이지(404) · 화면 오류를
  * 한 틀로 그린다. 불러오기 실패를 "내역이 없어요" 처럼 비어 있음으로 보이지 않는다 — failure 로, 무엇을 불러오지 못했는지와
@@ -19,13 +19,13 @@ import { Button } from "@/components/ui/button";
  *   title           무슨 상태인지 한 줄(큰 글씨라 마침표 없이) — 제목 태그(as, 기본 h2 — 화면 전체면 그 화면의 제목 단계)
  *   description     왜 · 무엇을 하면 되는지, 해요체 + 마침표, 최대 두 줄을 권한다(fg-neutral-muted · 단어 단위 줄바꿈)
  *   primaryAction   첫 버튼 — 해결 · 다음 동작(다시 시도 · 거래 추가). Button neutralWeak medium 40
- *   secondaryAction 둘째 버튼 — 보조 동작(홈으로 · 다른 파일 가져오기). 글 버튼(SEED Text Button — Button ghost small 36 의 상자에
- *                   글자 fg-neutral-muted, 2026-10-16 글자 역할 D2) — 위아래로 블리드(−8)해
- *                   글 자리만 차지한다. 버튼은 위아래로, 사이 20 — 블리드 때문에 상자 사이는 12(SEED 와 같다)
+ *   secondaryAction 둘째 버튼 — 보조 동작(홈으로 · 다른 파일 가져오기). 글 버튼(Button ghost small 36 의 상자에
+ *                   글자 fg-neutral-muted) — 위아래로 블리드(−8)해
+ *                   글 자리만 차지한다. 버튼은 위아래로, 사이 20 — 블리드 때문에 상자 사이는 12
  *   (버튼: { label, onClick?, href?, loading? } — href 면 링크, loading 이면 Button 의 로딩 — "다시 시도" 하는 동안)
  *
  * 묶음 — 좌우 48 · 위아래 16, 놓인 자리의 가로 · 세로 가운데(부모가 flex 세로면 남는 높이를 채운다), 글은 가운데 정렬.
- * 카드(card.md) 안에서는 좌우 0 — 카드 안 여백 24(표의 빈 줄은 칸의 24)가 가장자리를 맡는다(2026-10-09 사용자 결정 23B).
+ * 카드(card.md) 안에서는 좌우 0 — 카드 안 여백 24(표의 빈 줄은 칸의 24)가 가장자리를 맡는다.
  *   둘 다 두면 72 가 되어 폭 300 카드에서 제목이 두 줄로 넘어간다. 목록 카드(body="list")에 바로 두면 24 — 목록 카드는
  *   줄마다 24 를 가져 카드 여백이 없다. 목록 카드 바로 아래의 LoadingRegion 에 바로 둔 실패 · 비었음도 같다(영역은 자리만 잡는 겹).
  *   어느 카드에서나 글이 카드 끝에서 24 에 선다.
@@ -104,9 +104,9 @@ const SIZES: Record<ResultSectionSize, { title: string; description: string; act
 };
 const TITLE = "font-bold text-fg-neutral break-keep [overflow-wrap:break-word]";
 const DESCRIPTION = "font-normal text-fg-neutral-muted break-keep [overflow-wrap:break-word]";
-// 버튼 묶음 — 위아래로, 사이 20. 둘째 버튼이 위아래 −8 블리드해 상자 사이는 12 다(SEED 와 같다)
+// 버튼 묶음 — 위아래로, 사이 20. 둘째 버튼이 위아래 −8 블리드해 상자 사이는 12 다
 const ACTIONS = "flex flex-col items-center gap-x5";
-// 둘째 버튼 — 글 버튼(SEED Text Button = ghost small 36 + 글자 fg-neutral-muted). 위아래 −8(Button small 의 위아래 여백) — 글 자리만 차지한다
+// 둘째 버튼 — 글 버튼(ghost small 36 + 글자 fg-neutral-muted). 위아래 −8(Button small 의 위아래 여백) — 글 자리만 차지한다
 const SECONDARY = "-my-x2 text-fg-neutral-muted";
 
 function ActionButton({ action, variant, size, className }: { action: ResultSectionAction; variant: "neutralWeak" | "ghost"; size: "medium" | "small"; className?: string }) {

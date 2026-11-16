@@ -6,8 +6,7 @@ import { CircleAlert, CircleCheck, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Snackbar — 구조는 SEED Snackbar(2026-10-02). 수치 원본은 specs/components/snackbar.yaml.
- * 옛 Sonner(sonner.tsx — 흰 카드 · 위 가운데 · 3장 쌓기)를 대신한다.
+ * Groo Snackbar — 수치 원본은 specs/components/snackbar.yaml.
  *
  *   SnackbarProvider      앱 맨 위에 한 번 둔다 — 화면 아래 가운데 자리(region)를 body 끝에 그린다
  *   useSnackbar()         show({ message, tone?, action? }) · dismiss()
@@ -18,14 +17,14 @@ import { cn } from "@/lib/utils";
  *
  * 모양 — 짙은 띠(bg-neutral-inverted, 다크는 밝은 띠) · 최소 44 · 여백 10 + 글 좌우 6 · 모서리 8 · 그림자 없음 · 최대 464.
  *   tone neutral(기본)은 아이콘이 없고 positive(체크) · critical(느낌표)만 아이콘 24 를 둔다 — 상자 24 안에 오른쪽 2 를
- *   두어(SEED 와 같은 border-box) 글은 띠 가장자리에서 16, 아이콘이 있으면 40 에서 시작한다. 아이콘 · 액션은 반전 짝 색
- *   (v115 — fg-positive-inverted · fg-critical-inverted · fg-brand-inverted). 글은 t4 · 400 · 단어 단위 줄바꿈이고 줄을
+ *   두어(border-box) 글은 띠 가장자리에서 16, 아이콘이 있으면 40 에서 시작한다. 아이콘 · 액션은 반전 짝 색
+ *   (fg-positive-inverted · fg-critical-inverted · fg-brand-inverted). 글은 t4 · 400 · 단어 단위 줄바꿈이고 줄을
  *   자르지 않는다. 액션은 하나 — t4 · 700, 누르는 영역은 글 + 좌우 8 × 44, 누르면 글만 2px 거리 축소.
  *
  * 시간 — 4초, 액션이 있으면 6초. 마우스를 올리거나 · 손가락으로 누르고 있거나 · 키보드 초점(focus-visible)이 안에
  *   있으면 멈추고, 셋 다 끝나면 처음부터 다시 센다. 한 번에 하나 — 새 show() 는 지금 띠를 바로 내보내고(100ms) 새 띠를
  *   띄운다. 다만 지금 띠에 액션(되돌리기 · 다시 시도)이 있으면 그 띠는 끝날 때까지(시간 · 액션 · 닫기) 지키고 새 띠는
- *   그 뒤에 뜬다(2026-10-22 사용자 결정 1B — SEED React strategy "queued" 를 이 경우에만). 기다리는 띠는 하나 — 내보내는
+ *   그 뒤에 뜬다. 기다리는 띠는 하나 — 내보내는
  *   중이거나 액션 띠를 기다리는 중에 또 오면 마지막 것만 남는다. 액션을 누르면 그 일을 하고 닫는다. Esc · 밀기 · 글
  *   누르기로는 닫히지 않는다 — 닫기 버튼 · 시간 · 액션으로만.
  *
@@ -49,7 +48,7 @@ import { cn } from "@/lib/utils";
  * 피할 자리 — SnackbarAvoidOverlap 으로 감싼 요소들 중 가장 위 요소의 윗변 + 8 에 띠가 선다(바닥 안전 영역보다
  *   높을 때). 감싼 요소가 붙고 · 떨어지고 · 크기가 바뀌고 · 창 크기가 바뀌고 · 새 띠가 뜰 때 다시 잰다(스크롤은 재지
  *   않는다 — 스크롤하는 본문 요소는 감싸지 않는다). 자리가 옮겨 갈 때는 200ms easing, 모션 줄이기면 바로.
- *   화면 키보드도 피할 자리다 — 띠는 키보드 바로 위 8 에 선다(2026-10-15 사용자 결정 Q-003-1). 폰 브라우저는 키보드가 올라와도
+ *   화면 키보드도 피할 자리다 — 띠는 키보드 바로 위 8 에 선다. 폰 브라우저는 키보드가 올라와도
  *   레이아웃 화면을 줄이지 않아 position: fixed 의 아래가 키보드 뒤에 남는다 — 보이는 화면(visualViewport)의 아래 끝에서 레이아웃 화면
  *   아래까지를 재어 피할 자리와 둘 중 큰 쪽을 쓴다. 보이는 화면이 바뀔 때 다시 잰다(손가락으로 확대한 동안은 세지 않는다 — 키보드만).
  */
@@ -79,7 +78,7 @@ export interface SnackbarApi {
   dismiss: () => void;
 }
 
-// 시간(snackbar.yaml root.duration) — 액션이 있으면 6초(사용자 결정 2026-10-02)
+// 시간(snackbar.yaml root.duration) — 액션이 있으면 6초
 const DURATION = 4000;
 const DURATION_WITH_ACTION = 6000;
 

@@ -4,12 +4,11 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Aspect Ratio — 구조는 SEED Aspect Ratio(2026-10-04). 수치 원본은 specs/components/aspect-ratio.yaml.
- * 옛 Aspect Ratio(Radix · 권장 16:9 · 4:3 · 1:1 · 3:4 · 21:9 · 2:1 · 자식이 모서리 · 바탕을 맡음)를 대신한다.
+ * Groo Aspect Ratio — 수치 원본은 specs/components/aspect-ratio.yaml.
  *
  *   AspectRatio   폭이 정해지면 비율로 높이가 정해지는 상자 하나 — 자식 하나가 상자를 채운다. 그 밖은 div 속성
  *     ratio       "1:1" · "2:1" · "16:9" · "4:3"(기본) · "6:7" · "4:5" · "2:3" · "card"(카드 1.586 — ISO 카드 85.6 × 53.98).
- *                 SEED 의 일곱에 카드 1.586 을 더한 여덟 가지만 받는다 — 옛 3:4 · 21:9 · 아무 숫자는 없다
+ *                 이 여덟 가지만 받는다 — 아무 숫자는 받지 않는다
  *
  * 폭은 부모가 정한다(부모 폭이 0 이면 상자도 0). 높이는 CSS aspect-ratio 로 정해져 내용이 오기 전에 자리를 잡는다 —
  * 내용이 와도 줄이 밀리지 않는다. 모서리 0 · 바탕 · 테두리 · 그림자 · 불러오는 동안 · 대체 그림이 없다. 넘친 자식은 자른다.

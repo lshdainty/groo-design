@@ -21,10 +21,9 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 /*
- * Groo Icon Picker — 카테고리 · 저축 목표에 붙일 아이콘을 고르는 칸(2026-10-09). 수치 원본은 specs/components/icon-picker.yaml, 세트는
+ * Groo Icon Picker — 카테고리 · 저축 목표에 붙일 아이콘을 고르는 칸. 수치 원본은 specs/components/icon-picker.yaml, 세트는
  * specs/components/category-icons.yaml(→ lib/category-icons.ts). 트리거 · 시트 · 팝오버 · 찾기 칸의 나머지 값은 각 레시피(input-button ·
- * bottom-sheet · popover · input)가 그대로다. SEED 에는 아이콘 고르기 부품이 없다 — 세트 · 칸 · 고른 표시 · 키보드 · 한국어 찾기는
- * groo 가 정했다(사용자 결정 15A · 16A · 17A). 옛 Icon Picker(40 정사각 트리거 · 팝오버 320 · lucide 전체 · 영어 이름 · "없음")를 대신한다.
+ * bottom-sheet · popover · input)가 그대로다.
  *
  *   IconPicker   트리거 + 여는 자리 + 찾기 + 격자. value(저장된 lucide 이름 — null · "" 이면 태그) · onValueChange(id — 고르면, 닫는 것은
  *                스스로 한다) · size(트리거 — "responsive" 기본 · "large" · "medium") · disabled · id, 나머지는 Input Button 의 속성.
@@ -35,7 +34,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  *   바꾸지도 않는다(격자에 고른 칸이 없고, 고르지 않고 닫으면 그대로). 서버 시드의 home 은 세트의 house(집)로 본다(lucideAliases).
  * 여는 자리: 1280 미만 Bottom Sheet(제목 "아이콘" · 닫기), 이상 Popover(머리 없이 · 이름 "아이콘" · 폭 408 = 칸 48 × 7 + 사이 4 × 6 +
  *   좌우 24 × 2). 고르면 바로 닫힌다("완료" 없음) — 초점은 트리거로. 묶음 머리 · 격자가 든 스크롤 상자는 끝 흐림(Scroll Fog overlayBody —
- *   위 20 · 아래 80 늘 켜짐 + 본문 안 여백 그만큼, 2026-10-03 규칙)을 건다 — 맨 위에서 첫 묶음 머리, 끝까지 내리면 마지막 줄이 흐림
+ *   위 20 · 아래 80 늘 켜짐 + 본문 안 여백 그만큼)을 건다 — 맨 위에서 첫 묶음 머리, 끝까지 내리면 마지막 줄이 흐림
  *   밖에 선다. 찾기 칸은 스크롤 상자 밖이라 흐리지 않는다.
  * 찾기: 위에 붙은 Input 밑줄형(시트 large 40 · 팝오버 medium 34 · 앞 돋보기 · 지우기 · "아이콘 이름 검색" · 이름 "아이콘 검색") — 목록과
  *   따로 두어 스크롤해도 그 자리다. 치는 대로 세트를 거른다(이름 · 찾는 말 · id — 소문자 · 공백 없이 부분 일치). 결과는 세트 차례 그대로
@@ -46,7 +45,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  *   들어가는 만큼) 줄 사이 4. 스크롤 상자 맨 위(흐림 여백 20 아래)가 첫 묶음 머리(위 12)이고, 찾는 동안은 머리 대신 격자 위
  *   12(searchGap) — 어느 쪽이든 찾기 칸에서 머리 글 · 격자까지 32 다(흐림 여백은 본문 안에 더한다 — bottom-sheet.yaml).
  *   칸 이름은 한국어 이름(role="option" · aria-selected), 마우스는 같은 글의 툴팁(Tooltip — 네이티브 title 은 쓰지 않는다).
- *   고른 칸은 안쪽 2px stroke-neutral-contrast(::after — 아이콘이 밀리지 않는다, Select Box v113) + 선 2.5, 바탕은 칠하지 않는다.
+ *   고른 칸은 안쪽 2px stroke-neutral-contrast(::after — 아이콘이 밀리지 않는다, Select Box 와 같다) + 선 2.5, 바탕은 칠하지 않는다.
  *   호버 · 누름 바탕 bg-layer-floating-pressed, 누르면 칸 2px 거리 축소(48 → 0.958, 모션 줄이기면 하지 않는다), 키보드 포커스에만 바깥 링 2px · 띄움 2px.
  * 키보드: 격자에 Tab 하나(고른 칸, 없으면 첫 칸 — roving tabindex). ← → 는 차례대로(줄 끝에서 다음 줄 · 다음 묶음으로, 끝에서 멈춘다 — RTL 은
  *   반대), ↑ ↓ 는 보이는 위아래 줄의 가장 가까운 칸(묶음 머리를 넘는다), Home · End 는 그 줄의 처음 · 끝, Enter · Space 로 고른다.

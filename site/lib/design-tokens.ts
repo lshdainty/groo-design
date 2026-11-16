@@ -20,13 +20,6 @@ type Front = {
 
 const cache = new Map<Brand, { front: Front; body: string; text: string }>();
 
-// 본문 맨 끝의 숨김 절 — 제품이 아직 쓰는 옛 이름의 별칭이다. 내보내기는 읽지만 사이트는 읽지 않는다
-export const DEPRECATED_HEADING = '## Deprecated aliases';
-const withoutDeprecated = (s: string) => {
-  const at = s.search(/^## Deprecated aliases\s*$/m);
-  return at === -1 ? s : s.slice(0, at);
-};
-
 export function design(brand: Brand = 'shared') {
   const hit = cache.get(brand);
   if (hit) return hit;
@@ -46,7 +39,7 @@ export function design(brand: Brand = 'shared') {
   };
   front.colorRefs = Object.fromEntries(Object.entries(raw).flatMap(([k, v]) => (refOf(v) ? [[k, refOf(v)!]] : [])));
   front.colors = Object.fromEntries(Object.keys(raw).map((k) => [k, resolve(k)]));
-  const out = { front, body: withoutDeprecated(m[2]), text: withoutDeprecated(text) };
+  const out = { front, body: m[2], text };
   cache.set(brand, out);
   return out;
 }
@@ -93,7 +86,7 @@ export function roleColors(brand: Brand = 'shared') {
   const rows: RoleColor[] = [];
   for (const [name, light] of Object.entries(c)) {
     if (!/^(fg|bg|stroke|static)-/.test(name) || name.endsWith('-dark')) continue;
-    // bg-page 처럼 역할을 가리키는 별칭은 역할이 아니다
+    // 역할을 가리키는 형식 키(primary)는 역할이 아니다
     if (colorRefs[name] && !PALETTE_STEP.test(colorRefs[name])) continue;
     rows.push({ name, light, dark: c[`${name}-dark`] });
   }

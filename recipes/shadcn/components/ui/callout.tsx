@@ -5,8 +5,8 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Callout — 구조는 SEED Callout(2026-10-02). 수치 원본은 specs/components/callout.yaml.
- * 옛 Alert(alert.tsx — 왼쪽 4px 막대)를 대신한다. "Alert" 라는 이름은 모달(Alert Dialog)에만 쓴다.
+ * Groo Callout — 수치 원본은 specs/components/callout.yaml.
+ * "Alert" 라는 이름은 모달(Alert Dialog)에만 쓴다.
  *
  * 화면 안, 그 기능 · 내용 가까이에 늘 보이는 안내 상자 — 팁 · 제약 · 주의, 그 자리에서 난 오류(저장 실패는 폼 맨 위
  * critical, 폼은 연 채로). 페이지 전체의 상태는 Page Banner, 잠깐 알릴 결과는 Snackbar 다.
@@ -24,9 +24,9 @@ import { cn } from "@/lib/utils";
  *
  * 상자 — 안쪽 14 · 최소 50 · 모서리 10 · 아이콘 16 · 사이 12, 여러 줄이면 아이콘 · 화살표 · 닫기가 가운데. 제목(700) ·
  *   본문(400) · 링크(400 + 밑줄, 띄움 2)는 모두 t4 이고 한 문단으로 흐른다 — 사이는 띄어쓰기 두 칸(진짜 글자라 복사해도
- *   이어 붙지 않고, 두 칸 뒤에서 줄을 바꿀 수 있다). 단어 단위 줄바꿈(v114).
+ *   이어 붙지 않고, 두 칸 뒤에서 줄을 바꿀 수 있다). 단어 단위 줄바꿈.
  * Actionable — 호버 · 누름은 톤의 누름 바탕(bg-*-weak-pressed), 누르면 상자 전체가 2px 거리로 준다(기준 max(높이, 폭 ÷ 4, 24)
- *   를 누르는 순간 잰다 — SEED scaleScope: self). 모션 줄이기면 축소하지 않는다.
+ *   를 누르는 순간 잰다 — scaleScope: self). 모션 줄이기면 축소하지 않는다.
  * Dismissible — 닫기는 투명 상자 40 · 모서리 8, 바깥 여백 −12 로 줄 높이를 늘리지 않는다(아이콘은 오른쪽 끝에서 14).
  *   호버 · 누름은 톤의 누름 바탕, 누르면 2px 거리 축소(기준 40). 닫으면 바로 걷고(모션 없음) 초점은 다음 요소로 간다
  *   (뒤에 없으면 앞 요소 — body 로 떨어뜨리지 않는다). open · onDismiss 로 닫음을 기억해 다시 띄우지 않는다.
@@ -123,7 +123,7 @@ const calloutVariants = cva(
   },
 );
 
-// 톤의 기본 앞 아이콘 — lucide 선 아이콘(v106)
+// 톤의 기본 앞 아이콘 — lucide 선 아이콘
 const TONE_ICON: Record<CalloutTone, typeof Info> = {
   neutral: Info,
   informative: Info,

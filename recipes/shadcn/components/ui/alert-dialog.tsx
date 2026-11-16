@@ -6,7 +6,7 @@ import { Button, type ButtonProps } from "@/components/ui/button";
 import { useInputButtonSurface } from "@/components/ui/input-button";
 
 /*
- * Groo Alert Dialog — 구조는 SEED Alert Dialog(2026-10-02). 수치 원본은 specs/components/alert-dialog.yaml.
+ * Groo Alert Dialog — 수치 원본은 specs/components/alert-dialog.yaml.
  *
  *   AlertDialog              되돌릴 수 없는 일 앞에서 묻는 확인창(Radix AlertDialog) — open · defaultOpen · onOpenChange
  *   AlertDialogTrigger       여는 버튼 — 닫으면 초점이 여기로 돌아온다
@@ -206,7 +206,7 @@ const OVERLAY = [
 ].join(" ");
 
 // 확인창 — 최대 272, 좌우 32 를 남긴다(화면이 336 보다 좁으면 화면 폭 − 64). 안쪽 20 · 모서리 20, 그림자 없음.
-// 높이는 안전 영역 안 화면까지 — 넘치면 확인창 전체(제목 · 설명 · 버튼)가 스크롤된다(SEED, 2026-10-17 03-F 1A).
+// 높이는 안전 영역 안 화면까지 — 넘치면 확인창 전체(제목 · 설명 · 버튼)가 스크롤된다.
 // 열림 200ms enter-expressive 로 1.3 배에서 줄며 나타난다(모션 줄이기면 150ms 서서히). 닫힘 100ms exit 로 사라진다
 const CONTENT = [
   "fixed left-1/2 top-1/2 z-(--z-alert-content) flex w-[calc(100%-var(--spacing-x8)*2)] max-w-[272px] -translate-x-1/2 -translate-y-1/2 flex-col",

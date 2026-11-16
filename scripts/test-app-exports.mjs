@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // 앱 · 테스트용 내보내기 검증 — Dart 토큰(exports/tokens.<브랜드>.dart) · 스펙 값 JSON(exports/spec/<브랜드>/ · 그룹은 exports/spec/group/).
 // Flutter 없이 돌린다(CI 에 Flutter 가 없다). 컴파일은 앱 레포의 flutter analyze 가 본다 — 여기서는
-// 무엇이 빠지거나 옛 이름이 섞이거나 값이 덜 풀린 채 나가는지만 막는다.
+// 무엇이 빠지거나 형식 키가 섞이거나 값이 덜 풀린 채 나가는지만 막는다.
 //
 // 사용법:
 //   npm run export:dart:all && npm run export:spec && node scripts/test-app-exports.mjs
@@ -43,19 +43,17 @@ function checkDart({ brand, source }) {
   const mask = /fadeMask: LinearGradient\(begin: Alignment\.topCenter, end: Alignment\.bottomCenter, colors: \[((?:Color\(0x[0-9A-F]{8}\)(?:, )?){16})\]/;
   if (!mask.test(dart)) fail("PGradients.fadeMask(위 → 아래 16단계) 없음");
 
-  // 색 — 별칭(옛 이름) · -dark 를 뺀 이름이 모두 필드가 되고, 딤이 하나 더 있다
+  // 색 — 형식 키(primary) · -dark 를 뺀 이름이 모두 필드가 되고, 딤이 하나 더 있다
   const table = parseColorTable(readFileSync(resolve(ROOT, source), "utf8").split("\n"));
   const aliases = colorAliases(table);
   const want = [...table.keys()].filter((n) => !n.endsWith("-dark") && !aliases.has(n)).length + 1;
   const colors = /class PColors[\s\S]*?const PColors\(\{([\s\S]*?)\}\);/.exec(dart);
   const got = colors ? (colors[1].match(/required this\./g) || []).length : 0;
   if (got !== want) fail(`PColors 필드 ${got} (expected ${want})`);
-  else ok(`PColors 필드 ${got} — 옛 이름 ${aliases.size} 개는 뺐다`);
-  for (const old of ["primary", "textSecondary", "surfaceInput", "success", "chartRedLight"]) {
-    if (new RegExp(`final Color ${old};`).test(dart)) fail(`옛 이름 ${old} 이 PColors 에 남았다`);
-  }
+  else ok(`PColors 필드 ${got} — 형식 키 ${aliases.size} 개는 뺐다`);
+  if (/final Color primary;/.test(dart)) fail("형식 키 primary 가 PColors 에 남았다");
 
-  // 스케일 — SEED 이름의 값, 옛 이름 없음
+  // 스케일 — 이름과 값
   const expect = [
     [/static const double x4 = 16;/, "PSpacing.x4 = 16"],
     [/static const double x1_5 = 6;/, "PSpacing.x1_5 = 6"],
@@ -65,9 +63,6 @@ function checkDart({ brand, source }) {
     [/static const TextStyle t4 = TextStyle\([^)]*fontSize: 14, height: 19 \/ 14/, "PTypography.t4 = 14/19"],
   ];
   for (const [re, label] of expect) if (!re.test(dart)) fail(`${label} 없음`);
-  for (const old of [/static const double xs = /, /static const double lg = /, /static const TextStyle displayXl /, /static const Duration fast /]) {
-    if (old.test(dart)) fail(`옛 이름이 남았다: ${old}`);
-  }
   if (/undefined|NaN|null\)/.test(dart)) fail("undefined · NaN 이 있다");
   if (errors === 0) ok("스케일 · 이징 · 글자 · 그림자 이름과 값");
 }

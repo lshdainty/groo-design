@@ -1043,7 +1043,7 @@ function stateDeltaTable(spec, tokens, axes, pick) {
 // (matrix.pressed.on 의 pressed)을 거는 규칙이 정한 속성 — defaults 로만 따라온 크기 규칙처럼
 // 상태와 무관한 값은 빼고, 그 표가 보여 주려는 조건(켜짐 · 체크)의 값은 늘 보인다.
 // 공통 규칙의 시각 속성(배경 · 글자 · 테두리 · 그림자)은 바뀌지 않아도 칸으로 둔다 — 스펙의 상태 표는
-// 늘 이 칸을 보였다(textarea 의 배경 surface-input 처럼 모든 상태에서 같아도).
+// 늘 이 칸을 보였다(textarea 의 배경 bg-neutral-weak 처럼 모든 상태에서 같아도).
 // 부위를 고르면 그 부위가 바뀌는 상태만 줄로 둔다.
 const VISUAL_PROPS = ['background', 'foreground', 'borderColor', 'borderWidth', 'shadow', 'outlineColor'];
 

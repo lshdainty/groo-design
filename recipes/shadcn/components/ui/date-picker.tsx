@@ -7,7 +7,7 @@ import { ChipRadio, ChipRadioGroup } from "@/components/ui/chip";
 import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker";
 
 /*
- * Groo Date Picker — 구조는 SEED Date Picker(2026-10-03). 수치 원본은 specs/components/date-picker.yaml. 옛 Calendar(react-day-picker)를 대신한다.
+ * Groo Date Picker — 수치 원본은 specs/components/date-picker.yaml.
  *
  *   DatePicker          달력 — selection(single · range · multiple) × visibleRange(month · twoMonths · continuous).
  *                       value · onValueChange 는 쓰는 쪽이 가진다(제어 — 시트 · 팝오버의 draft). min · max · isDateDisabled ·
@@ -26,7 +26,7 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker";
  *             완성된 뒤 누르면 새로 시작. onValueChange 는 { start } 다음 { start, end }. readOnlyStart 면 시작은 그대로이고
  *             시작 뒤의 날만 끝이 된다(시작 앞은 막힌 날)
  *   multiple  Date[] — 누를 때마다 고르고 풀린다, 늘 날짜 순 · 겹침 없음. maxSelectionCount 에 닿으면 고르지 않은 날이 막힌 날이
- *             된다(더 넣지 못하고 빼기는 된다 — SEED 의 제약과 같다)
+ *             된다(더 넣지 못하고 빼기는 된다)
  * 고르는 동안 칸 값은 그대로다 — 쓰는 쪽은 draft 에 받고 "완료" 로 칸에 넣는다(input-button.md). 기간은 끝을 고르기 전에 "완료" 를 막는다.
  *
  * 보이는 범위
@@ -45,13 +45,13 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker";
  *              손으로 스크롤해 맨 위 달이 바뀌면 그 달 1일이 Tab 자리가 된다. 키로 달을 넘으면 그 날이 보이게 가장 적게 스크롤한다
  *
  * 날짜 칸 — 높이 max(48, 숫자 줄 높이 + 위아래 3 · 3)(글자가 크면 그만큼만 늘어난다 — 200% 에서 44 + 6 = 50 · 달력 396. 칸 · 머리 · 요일 줄 · 원 · 이전 · 다음은 px,
- * 글자만 배율 — 03-C 1B · SEED) · 폭 = 달력 폭 ÷ 7, 칸 전체가 누르는 자리. 원은 칸 가운데 42(100% 에서 위 3 — 원 · 띠끼리 6 떨어진다), 칸이 44 보다
+ * 글자만 배율) · 폭 = 달력 폭 ÷ 7, 칸 전체가 누르는 자리. 원은 칸 가운데 42(100% 에서 위 3 — 원 · 띠끼리 6 떨어진다), 칸이 44 보다
  * 좁으면(320 화면) 칸 폭 − 2. 기간 띠도 원과 같은 높이다. 숫자 t5 16 / 22 · 500 · tabular-nums. 달 그리드가 크기 컨테이너라
  * --day = min(42px, 칸 폭 − 2px) 를 한 번 셈해 원 · 띠 · 링이 같이 쓴다.
  *
  * 상태(date-picker.yaml · "상태가 겹칠 때")
  *   보통       숫자 fg-neutral-muted · 원 없음
- *   호버 · 누름 원 bg-neutral-weak-alpha-pressed(SEED 투명 색 — 03-C 2B) — 호버는 고운 포인터(마우스)만, 터치는 누르는 동안. 날짜는 줄지 않는다. 오늘(옅은 원) ·
+ *   호버 · 누름 원 bg-neutral-weak-alpha-pressed(투명 색) — 호버는 고운 포인터(마우스)만, 터치는 누르는 동안. 날짜는 줄지 않는다. 오늘(옅은 원) ·
  *              기간 사이 날(띠) 위에서는 한 단계 짙은 bg-neutral-weak-pressed — 옅은 원 · 띠와 같은 색이 되어 안 보이지 않게
  *              (투명 색을 띠 위에 얹으면 띠와 겹쳐 또 다른 색이 된다). 고른 날 · 막힌 날 · 읽기 전용 · 앞뒤 달에는 없다
  *   오늘       원 bg-neutral-weak + 숫자 700 · fg-neutral. 고른 날 · 기간 안에서도 700 은 남는다. aria-current="date"
@@ -259,7 +259,7 @@ const ROOT_SIZE = {
 const PRESETS = "shrink-0 pb-x3";
 
 // 머리 48 — 왼쪽 제목, 오른쪽 이전 · 다음(사이 0)
-// 이전 · 다음 — Button ghost iconOnly medium 을 px 40 으로 고정한다(글자 크기를 따르지 않는다 — 03-C 1B, SEED)
+// 이전 · 다음 — Button ghost iconOnly medium 을 px 40 으로 고정한다(글자 크기를 따르지 않는다)
 const NAV_PX = "h-[40px] w-[40px]";
 const HEADER = "flex min-h-[48px] shrink-0 items-center justify-between";
 // 제목 — 누르는 자리는 머리 높이 48 전체, 글자는 왼쪽에서 4 · 셰브론과 4. 바탕이 없어 모서리 8 은 초점 링에만 보인다
@@ -308,7 +308,7 @@ const BAND_SIDE = {
   end: "before:left-0 before:right-1/2",
 } as const;
 
-// 날짜 버튼 — 칸 전체 · 위아래 3(숫자 줄이 원 42 를 넘는 큰 글자에서 칸이 줄 높이 + 6 이 된다 — 03-C 1B).
+// 날짜 버튼 — 칸 전체 · 위아래 3(숫자 줄이 원 42 를 넘는 큰 글자에서 칸이 줄 높이 + 6 이 된다).
 // 원은 ::before(칸 가운데 --day · 바탕만 color-transition), 키보드 초점 링은 ::after(원 둘레 안쪽 2px)
 const DAY = [
   "relative isolate flex h-full w-full items-center justify-center border-0 bg-transparent px-0 py-[3px] font-sans text-t5 font-medium tabular-nums outline-none select-none [-webkit-tap-highlight-color:transparent]",
@@ -316,7 +316,7 @@ const DAY = [
   "after:pointer-events-none after:absolute after:left-1/2 after:top-1/2 after:size-[var(--day)] after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:content-['']",
   "focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-stroke-focus-ring",
 ].join(" ");
-// 호버(마우스 — 고운 포인터만) · 누름(터치) — 원 bg-neutral-weak-alpha-pressed(SEED 투명 색 — 2026-10-21 03-C 2B), 축소 없음
+// 호버(마우스 — 고운 포인터만) · 누름(터치) — 원 bg-neutral-weak-alpha-pressed(투명 색), 축소 없음
 const DAY_PRESS = "[@media(hover:hover)_and_(pointer:fine)]:hover:before:bg-bg-neutral-weak-alpha-pressed active:before:bg-bg-neutral-weak-alpha-pressed";
 // 오늘(옅은 원) · 기간 사이 날(띠) 위의 호버 · 누름 — 한 단계 짙은 bg-neutral-weak-pressed(옅은 원 · 띠와 같은 색이면 안 보인다)
 const DAY_PRESS_ON_WEAK = "[@media(hover:hover)_and_(pointer:fine)]:hover:before:bg-bg-neutral-weak-pressed active:before:bg-bg-neutral-weak-pressed";
@@ -345,7 +345,7 @@ function mergeRefs<T>(...refs: (React.Ref<T> | undefined)[]) {
   };
 }
 
-// 이어지는 달의 높이 — 달 이름 줄 + 칸 × 주 + 아래 16. 이름 줄 · 칸 · 요일 줄은 글자가 크면 늘어나(03-C 1B — 200% 에서 칸 50)
+// 이어지는 달의 높이 — 달 이름 줄 + 칸 × 주 + 아래 16. 이름 줄 · 칸 · 요일 줄은 글자가 크면 늘어나(200% 에서 칸 50)
 // 숨은 견본(PROBE)으로 잰다. 처음 값은 100% 의 48 · 48 · 48
 const MONTH_GAP = 16;
 const CONTINUOUS_FOG = 96;

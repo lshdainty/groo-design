@@ -6,28 +6,28 @@ import { cn } from "@/lib/utils";
 import { useField, useFieldControl } from "@/components/ui/field";
 
 /*
- * Groo Input Button — 구조는 SEED Input Button(React 이름 Field Button, 2026-10-01). 수치 원본은 specs/components/input-button.yaml.
+ * Groo Input Button — 수치 원본은 specs/components/input-button.yaml.
  *
  *   InputButton             입력칸 모양의 버튼 — 누르면 고르는 자리(달력 · 시각 휠 · 아이콘 격자 · 검색 시트)를 연다
  *   useInputButtonSurface   여는 자리 — 1280 미만 "sheet"(아래 시트) · 이상 "popover"(칸 아래 팝오버). 칸 크기가 바뀌는 폭과 같다
  *   inputButtonVariants · inputButtonSurfaceVariants   상자의 크기 · 겉모습 — Select 의 트리거도 같은 상자를 쓴다
  *
  * 긴 목록의 검색 시트 · 팝오버는 Searchable List(searchable-list.tsx)로 채운다 — 위 검색칸은 Input 의 밑줄형(SearchableListInput 이
- * variant="underline" · 앞 돋보기 · 지우기를 스스로 건다 — 시트에 입력이 하나뿐인 목록 위 검색, 사용자 결정 2026-10-08 17A), 아래는 List 줄 +
+ * variant="underline" · 앞 돋보기 · 지우기를 스스로 건다 — 시트에 입력이 하나뿐인 목록 위 검색), 아래는 List 줄 +
  * 오른쪽 라디오, 고르면 닫는다("완료" 없음). 상자형 52 검색칸을 시트 위에 두지 않는다.
  *
  * 값은 쓰는 쪽이 가진다 — 칸은 value(비면 placeholder)를 보이고 누르면 onClick 을 부를 뿐이다. 라벨 · 설명 · 오류는
  * Field 가 둘레에서 그린다 — Field 안에 두면 id · aria 를 받는다.
- * 상자(div)는 크기 · 여백 · 모서리만 갖고, 진짜 버튼은 상자를 덮는 배경 층이다(SEED) — 테두리(안쪽 1px) · 바탕 ·
+ * 상자(div)는 크기 · 여백 · 모서리만 갖고, 진짜 버튼은 상자를 덮는 배경 층이다 — 테두리(안쪽 1px) · 바탕 ·
  * 키보드 포커스 링 · 오류 2px(::after)를 그리고, 상자 어디를 눌러도(붙이개 · 여백 포함) 눌린다. 값 · 붙이개는 그 위
  * 콘텐츠 층에 얹고 누름을 지나 보낸다(pointer-events: none). 지우기 버튼만 그 위에서 따로 눌린다 — 버튼 안에 버튼을 두지 않는다.
  *
- * 누르면 바탕이 bg-layer-default-pressed 로 바뀌고 콘텐츠 층만 2px 거리로 준다(SEED scaleScope: content · v104) —
+ * 누르면 바탕이 bg-layer-default-pressed 로 바뀌고 콘텐츠 층만 2px 거리로 준다(scaleScope: content) —
  * 배율 = (기준 − 2) ÷ 기준, 기준 = max(높이, 폭 ÷ 4, 24). Button · List 처럼 누르는 순간(포인터 · Enter · Space) 상자를 재서
  * --press-basis 로 넘긴다. 마우스는 호버에 같은 바탕(지우기 버튼 위에서도 상자의 호버를 잇는다). 모션 줄이기면 축소하지 않는다.
  * 포커스 링은 키보드 포커스에만(버튼이라 마우스 · 터치로 눌러서는 없다). 오류의 2px 는 1px 위에 덧그리고 눌러도 그대로다.
  * 비활성은 버튼을 막는다(disabled). 읽기 전용은 포커스는 되고(aria-disabled) 눌러도 · Enter · Space 로도 onClick 을 부르지
- * 않는다. 둘 다 회색 바탕(bg-disabled)으로 가르고 흐리게 하지 않는다(v106) — 읽기 전용의 값은 진한 글자 그대로다.
+ * 않는다. 둘 다 회색 바탕(bg-disabled)으로 가르고 흐리게 하지 않는다 — 읽기 전용의 값은 진한 글자 그대로다.
  *
  * 이름은 Field 의 라벨 + 고른 값(aria-labelledby — "날짜 10월 1일 (목)"), 비면 라벨 + placeholder. aria-label 을 주면
  * 라벨 대신 그 글 + 값이고, aria-labelledby 를 주면 그대로 쓴다. 붙이개 글(prefix · suffix)은 설명으로 읽힌다(단위가 화면
@@ -88,7 +88,7 @@ const CONTENT =
   "relative flex min-w-0 flex-1 select-none items-center gap-[inherit] pointer-events-none [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]";
 const CONTENT_PRESS = "peer-active/input-button:[scale:calc(1-2/var(--press-basis))] motion-reduce:peer-active/input-button:[scale:1]";
 
-// 지우기 — 콘텐츠 층 위에서 따로 눌린다. 보이는 22 · 18, 누르는 영역은 ::before 로 24. 누르면 자기만 준다(기준 24 — SEED scaleScope: self)
+// 지우기 — 콘텐츠 층 위에서 따로 눌린다. 보이는 22 · 18, 누르는 영역은 ::before 로 24. 누르면 자기만 준다(기준 24 — scaleScope: self)
 const CLEAR = [
   "pointer-events-auto relative flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-fg-neutral-subtle",
   "[&>svg]:size-[var(--input-button-clear)]",

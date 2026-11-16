@@ -8,10 +8,7 @@ import { cn } from "@/lib/utils";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRowHeader } from "@/components/ui/table";
 
 /*
- * Groo Chart — 색은 DESIGN.md v110 · v111, 부품은 SEED Layout 의 대시보드 그림(2026-10-08). 수치 원본은 specs/components/chart.yaml.
- * SEED 에는 차트 컴포넌트도 차트 색도 없다 — 이중 축 · 계열 색 눈금 · 가로 격자 · 세로 점선 가리킴 · "■ 라벨 값" 툴팁 · 위 지표 타일은
- * SEED 그림을, 색 배정 · 범례 · 열지도 · 빈 · 실패 · 접근성은 groo 가 정했다. recharts(3.x) 위에 짰다.
- * 옛 Chart(shadcn ChartContainer · 16:9 · 아래 점 범례 · 테두리 툴팁)를 대신한다.
+ * Groo Chart — 색은 DESIGN.md 의 차트 색. 수치 원본은 specs/components/chart.yaml. recharts(3.x) 위에 짰다.
  *
  *   Chart               차트 상자 — label(필수, role="img" 의 요약 이름 — "10월 수입 · 지출 추이, 수입 4,200,000원 · …") · height(px) ·
  *                       legendId(대체가 되는 범례의 id → aria-describedby). 자식은 recharts 차트 하나(ResponsiveContainer 로 감싼다) +
@@ -29,7 +26,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRow
  *   ChartDataTable      표로 보기 — caption · columns · rows, visuallyHidden(기본 true — 숨긴 표, false 면 차트 아래 펼친 표)
  *   assignChartColors   저장된 색 먼저, 나머지는 그 차트에서 쓰지 않은 색부터 배정 순서 — 10개를 넘으면 상위 9 + 회색 "기타"(groupOthers)
  *   formatAxisWon       눈금 글자 — "400만" · "1.2만" · "−3,000만"(만 · 억 · 조, 소수 한 자리, 빼기 U+2212)
- *   chartDonutThickness 도넛 두께 = 지름 ÷ 10 + 6(정수로 — 120 → 18 · 160 → 22 · 180 → 24, 2026-10-15 사용자 결정 Q-012-5 C)
+ *   chartDonutThickness 도넛 두께 = 지름 ÷ 10 + 6(정수로 — 120 → 18 · 160 → 22 · 180 → 24)
  *   chartDonutRadii     지름에서 Pie 의 { innerRadius, outerRadius } — <Pie {...chartDonutRadii(160)}>
  *
  * 색: 차트 10색(라이트 팔레트 700 · 다크 800-dark — var(--color-chart-{색})). 배정 순서 blue → green → orange → violet → pink → indigo → red →
@@ -40,20 +37,20 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRow
  *   계열 색 점 r 4 + 카드 면 색 테두리 2 = 10), Area 의 면은 같은 색 25% → 0% 세로 그라디언트 · Bar 최대 폭 28 · 위 모서리 4 ·
  *   Pie 조각 사이 0 · 12시에서 시계 방향. 그려짐은 300ms 한 번(ease-out) — 모션 줄이기면 바로(라이브러리 기본 "auto" — 강제로 켜지 않는다).
  * 툴팁: bg-layer-floating · shadow-s3 · 모서리 12 · 위아래 10 · 좌우 12 · 최소 128 · 테두리 없음. 머리 12 · fg-neutral-subtle, 줄은 색 네모 8
- *   (모서리 2) ↔ 라벨 6 · 라벨 13 fg-neutral-subtle(글자 역할 D5) ↔ 값 12 이상 · 값 13 · 700 · fg-neutral · 고정폭 숫자(오른쪽). 보조 기술에는 숨긴다 —
+ *   (모서리 2) ↔ 라벨 6 · 라벨 13 fg-neutral-subtle ↔ 값 12 이상 · 값 13 · 700 · fg-neutral · 고정폭 숫자(오른쪽). 보조 기술에는 숨긴다 —
  *   같은 값은 범례 · 표로 보기가 준다. 가리킴 선은 1px 점선(3 · 3) stroke-neutral-weak.
  * 키보드: 차트 상자(Tab 한 칸, role="img")에서 ← · → 로 날짜 · 막대를 옮기며 툴팁을 띄운다 — 처음 누르면 첫 날짜, Esc 로 닫고 상자를 떠나면
  *   닫는다(대화상자 안이어도 Esc 는 툴팁만 닫는다). 포커스 링은 키보드 포커스에만 상자 바깥 2px(띄움 2). 마우스 · 터치로 짚은 자리가 먼저다.
- * 지표 타일: 모서리 12 · 위아래 10 · 좌우 12 · 높이 62 · 폭 100 이상 · 타일 사이 8 · 아래 차트와 8. 점 8 ↔ 이름 6 · 이름 13 fg-neutral-subtle(글자 역할 D5),
+ * 지표 타일: 모서리 12 · 위아래 10 · 좌우 12 · 높이 62 · 폭 100 이상 · 타일 사이 8 · 아래 차트와 8. 점 8 ↔ 이름 6 · 이름 13 fg-neutral-subtle,
  *   아래 2 에 합계 16 / 22 · 700 · fg-neutral. 켠 계열 바탕 chart-{색}-subtle(테두리 없음), 끈 계열 흰 면 + 안쪽 1px stroke-neutral-weak
- *   (끈 타일만 호버에 bg-layer-default-pressed). 누르면 색 없이 2px 거리 축소(Q-012-2), 키보드 포커스에만 바깥 2px 링.
- *   마지막 하나(켠 계열이 하나)는 끌 수 없다 — 색 그대로 · aria-disabled · 커서 not-allowed · 축소 없음(Q-012-3 C, v106 비활성 커서).
+ *   (끈 타일만 호버에 bg-layer-default-pressed). 누르면 색 없이 2px 거리 축소, 키보드 포커스에만 바깥 2px 링.
+ *   마지막 하나(켠 계열이 하나)는 끌 수 없다 — 색 그대로 · aria-disabled · 커서 not-allowed · 축소 없음.
  * 도넛 범례 줄: 44 이상 · 색 네모 10 ↔ 8 · 이름 14 fg-neutral · % 14 fg-neutral-subtle · 금액 14 · 700 · "원". 누르는 줄은 List 줄과 같다 —
  *   카드 본문(여백 24) 안에서 줄을 카드 끝까지 내고(글자는 그대로 24 에 선다), 호버 · 누름 바탕 bg-layer-default-pressed 는 좌우 6 들어온
  *   모서리 10(카드 16 − 6 — List 의 동심 모서리). 키보드 포커스에만 안쪽 2px 링. 가운데 합계 16 / 22 · 700 + 위 라벨 12.
  * 열지도: 왼쪽 시간대 라벨 열 56(이름 13 · 700 + 시간 11 · fg-neutral-subtle) + 칸, 위 요일 머리 12 · fg-neutral-subtle. 칸은 정사각형 ·
  *   모서리 4 · 사이 6. 세기 다섯 — bg-brand-solid 를 카드 면에 18 · 35 · 55 · 76 · 100% 섞는다(가장 큰 값의 8 · 22 · 45 · 75% 에서 끊는다),
- *   값이 없으면 bg-neutral-weak. 가장 큰 칸에 고리를 두르지 않는다(사용자 결정 22A — 포커스 링과 헷갈린다).
+ *   값이 없으면 bg-neutral-weak. 가장 큰 칸에 고리를 두르지 않는다(포커스 링과 헷갈린다).
  *   칸 폭(ResizeObserver 로 잰다)이 textMinCellWidth(112) 이상일 때만 칸에 원까지(11 / 15 · 700 · 고정폭 숫자, 빈 칸은 "—" fg-neutral-subtle),
  *   좁으면 글 없이 세기 색만 — 글자를 줄이거나 돈을 줄여 쓰지 않는다. 칸 글자색은 단계마다 한 번 정한다 — 그 단계 바탕 위 fg-neutral 이
  *   4.5 를 넘으면 fg-neutral, 아니면 static-white(Desk · HR 라이트 76 · 100% 가 흰 글자, 다크는 모두 fg-neutral).
@@ -66,7 +63,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRow
 // ── 색 ───────────────────────────────────────────────────────
 export type ChartColor = "blue" | "green" | "orange" | "violet" | "pink" | "indigo" | "red" | "yellow" | "brown" | "gray";
 
-/** 색이 없는 항목의 배정 순서(v110) — 회색은 "기타" 전용이라 없다 */
+/** 색이 없는 항목의 배정 순서 — 회색은 "기타" 전용이라 없다 */
 const CHART_ORDER: readonly ChartColor[] = ["blue", "green", "orange", "violet", "pink", "indigo", "red", "yellow", "brown"];
 
 const chartVar = (color: ChartColor) => `var(--color-chart-${color})`;
@@ -112,7 +109,7 @@ export interface AssignChartColorsOptions<T> {
 }
 
 /**
- * 저장된 색 먼저, 나머지는 그 차트에서 아직 쓰지 않은 색부터 배정 순서로(사용자 결정 9A) — 저장된 색과 같은 색이 두 번 나오지 않는다.
+ * 저장된 색 먼저, 나머지는 그 차트에서 아직 쓰지 않은 색부터 배정 순서로 — 저장된 색과 같은 색이 두 번 나오지 않는다.
  * 10개를 넘으면 상위 9 + 회색 "기타". 회색은 "기타" 에만 — 색이 없다고 주지 않는다.
  */
 function assignChartColors<T extends object>(items: readonly T[], { colorOf, groupOthers }: AssignChartColorsOptions<T> = {}): ChartColored<T>[] {
@@ -513,7 +510,7 @@ const LEGEND_TILE = [
   "active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1] aria-disabled:cursor-not-allowed aria-disabled:active:[scale:1]",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
-// 끈 타일 — 호버에만 바탕. 누름은 색 없이 축소만(바탕이 이미 켬 · 끔을 말한다 — SEED Feedback Color)
+// 끈 타일 — 호버에만 바탕. 누름은 색 없이 축소만(바탕이 이미 켬 · 끔을 말한다)
 const LEGEND_TILE_HIDDEN = "bg-bg-layer-default shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] hover:bg-bg-layer-default-pressed";
 
 const ChartLegendTiles = React.forwardRef<HTMLDivElement, ChartLegendTilesProps>(
