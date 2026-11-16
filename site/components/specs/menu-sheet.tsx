@@ -103,7 +103,7 @@ const Anatomy: Fig = ({ caption }) => {
           items={[
             ['ⓐ', 'Overlay'],
             ['ⓑ', 'Container'],
-            ['ⓒ', 'Handle — 늘 있다'],
+            ['ⓒ', 'Handle — 늘 있습니다'],
             ['ⓓ', 'Header'],
             ['ⓔ', 'Group'],
             ['ⓕ', 'Item'],
@@ -162,7 +162,7 @@ const Layout: Fig = ({ caption }) => {
         <Note>
           위 {p.top}(손잡이 자리) · 좌우 {p.x} · 아래 {p.bottom} + 안전 영역(빗금, 기기마다) · 위 모서리 {s.radius} · 손잡이 {s.handle.width} × {s.handle.height}(위 {s.handle.top}) — 머리 가운데 정렬, 제목 {px(s.title.fontSize)} / {px(s.title.lineHeight)} · {s.title.fontWeight} ↔ 설명 {px(s.description.fontSize)} / {px(s.description.lineHeight)} 사이 {s.header.gap} · 아래 {s.header.padBottom}
           <br />
-          묶음 모서리 {s.group.radius} · 묶음 사이 {s.group.gap} — 줄 최소 {it.minHeight} · 위아래 {it.padY} · 좌우 {it.padX} · 아이콘 {it.icon} · 사이 {it.gap} · 이름 {px(it.label.fontSize)} / {px(it.label.lineHeight)} · 줄 사이 선 {s.divider.height}(묶음의 마지막 줄 아래에는 없다)
+          묶음 모서리 {s.group.radius} · 묶음 사이 {s.group.gap} — 줄 최소 {it.minHeight} · 위아래 {it.padY} · 좌우 {it.padX} · 아이콘 {it.icon} · 사이 {it.gap} · 이름 {px(it.label.fontSize)} / {px(it.label.lineHeight)} · 줄 사이 선 {s.divider.height}(묶음의 마지막 줄 아래에는 없습니다)
         </Note>
       </div>
     </Panel>
@@ -173,12 +173,12 @@ const Layout: Fig = ({ caption }) => {
 const Layouts: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex flex-wrap items-start justify-center gap-6">
-      <Shot strong="textWithIcon(기본)" cap="아이콘 + 글 — 왼쪽 정렬, 줄 설명을 둘 수 있다">
+      <Shot strong="textWithIcon(기본)" cap="아이콘 + 글 — 왼쪽 정렬, 줄 설명을 둘 수 있습니다">
         <SheetCrop w={320}>
           <Sheet title="메모" groups={HEADER_MENU} />
         </SheetCrop>
       </Shot>
-      <Shot strong="textOnly" cap="글만 — 가운데 정렬, 줄 설명은 두지 않는다">
+      <Shot strong="textOnly" cap="글만 — 가운데 정렬, 줄 설명은 두지 않습니다">
         <SheetCrop w={320}>
           <Sheet title="사진" groups={PHOTO_MENU} layout="textOnly" />
         </SheetCrop>
@@ -199,7 +199,7 @@ const States: Fig = ({ caption }) => (
               <Sheet mode={mode} title="김하늘" groups={PERSON_SHEET} states={{ reset: 'pressed', export: 'disabled', delete: 'pressed' }} />
             </SheetCrop>
           </NShot>
-          <NShot w={300} strong={`${modeName(mode)} — 키보드`} cap="키보드 초점은 줄 안쪽 링 · Tab 이 닫기에 오면 닫기가 보인다">
+          <NShot w={300} strong={`${modeName(mode)} — 키보드`} cap="키보드 초점은 줄 안쪽 링 · Tab 이 닫기에 오면 닫기가 보입니다">
             <div className="flex flex-col gap-3">
               <SheetCrop w={300} mode={mode}>
                 <Sheet mode={mode} title="주간 회의 메모" states={{ edit: 'focused' }} />
@@ -222,7 +222,7 @@ const ResponsiveGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex flex-wrap items-start justify-center gap-6">
-        <Shot strong={`${k.menu.breakpoint} 미만 — Menu Sheet`} cap={`손가락용 · 줄 ${k.sheet.item.minHeight} · 화면 아래라 엄지가 닿는다`}>
+        <Shot strong={`${k.menu.breakpoint} 미만 — Menu Sheet`} cap={`손가락용 · 줄 ${k.sheet.item.minHeight} · 화면 아래라 엄지가 닿습니다`}>
           <PhoneMemoSheet />
         </Shot>
         <Shot strong={`${k.menu.breakpoint} 이상 — Menu`} cap={`마우스용 · 줄 ${k.menu.item.height} · 같은 줄 · 같은 순서 · 같은 막힘`}>
@@ -233,12 +233,12 @@ const ResponsiveGuide: Fig = ({ caption }) => {
   );
 };
 
-// 스와이프는 지름길 · 줄을 누르면 들어간 화면 머리 ⋮ 에 같은 동작(목록 줄에는 ⋮ 를 두지 않는다 — 2026-10-25)
+// 스와이프는 지름길 · 줄을 누르면 들어간 화면 머리 ⋮ 에 같은 동작(목록 줄에는 ⋮ 를 두지 않는다)
 const SWIPE_MEMOS = [{ title: '주간 회의 메모 — 다음 분기 목표', sub: MEMOS[0].sub }, ...MEMOS.slice(1)];
 const SwipeGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex flex-wrap items-start justify-center gap-6">
-      <NShot w={240} strong="밀면 바로 — 지름길" cap="첫 줄을 왼쪽으로 민 모습(고정 · 수정 · 삭제) · 목록 줄에는 ⋮ 가 없다">
+      <NShot w={240} strong="밀면 바로 — 지름길" cap="첫 줄을 왼쪽으로 민 모습(고정 · 수정 · 삭제) · 목록 줄에는 ⋮ 가 없습니다">
         <MemoPhone scale={0.62} swiped memos={SWIPE_MEMOS} />
       </NShot>
       <NShot w={240} strong="줄을 누르면 — 들어간 화면 머리 ⋮" cap="미는 법을 모르는 사람 · 키보드 · 스크린리더의 길 — 트레이와 같은 동작 · 같은 이름 · 같은 확인창">
@@ -263,17 +263,17 @@ const GroupGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="grid w-full gap-4 md:grid-cols-2">
-        <Verdict ok note="줄이 3개 이상이면 묶음 — 위험한 동작은 맨 아래 묶음에 따로(하나여도 된다)" bg={BASEMENT}>
+        <Verdict ok note="줄이 3개 이상이면 묶음 — 위험한 동작은 맨 아래 묶음에 따로(하나여도 됩니다)" bg={BASEMENT}>
           <SheetCrop w={280}>
             <Sheet title="주간 회의 메모" groups={MEMO_MENU} />
           </SheetCrop>
         </Verdict>
-        <Verdict ok={false} note="줄이 둘뿐인데 하나씩 묶음으로 — 줄이 적으면 한 묶음에 둔다" bg={BASEMENT}>
+        <Verdict ok={false} note="줄이 둘뿐인데 하나씩 묶음으로 — 줄이 적으면 한 묶음에 둡니다" bg={BASEMENT}>
           <SheetCrop w={280}>
             <Sheet title="주간 회의 메모" groups={split} />
           </SheetCrop>
         </Verdict>
-        <Verdict ok={false} note="일부 줄에만 아이콘 — 모든 줄에 두거나 모두 뺀다(아이콘 줄과 글만 줄을 섞지 않는다)" bg={BASEMENT}>
+        <Verdict ok={false} note="일부 줄에만 아이콘 — 모든 줄에 두거나 모두 뺍니다(아이콘 줄과 글만 줄을 섞지 않습니다)" bg={BASEMENT}>
           <SheetCrop w={280}>
             <Sheet title="주간 회의 메모" groups={mixed} />
           </SheetCrop>
@@ -292,7 +292,16 @@ const GroupGuide: Fig = ({ caption }) => {
 const ExHeader: Fig = () => <HeaderSheetDemo kit={mk()} ov={overlayKit()} kebab={iconBtn()} groups={HEADER_MENU} />;
 const ExTextOnly: Fig = () => <PhotoSheetDemo kit={mk()} ov={overlayKit()} button={buttonLook({ variant: 'neutralWeak', size: 'small' })} groups={PHOTO_MENU} />;
 
+// 개요 카드 — 라이트 시트 하나(메모 화면 머리 ⋮ 의 목록 — 제목 · 두 묶음 · 위험한 삭제). 딤 · 폰 틀 없이 시트만.
+// 폭 320 · 높이 310(위 24 + 제목 24 + 16 + 줄 52 × 3 + 묶음 사이 10 + 52 + 아래 16 + 안전 영역 12), zoom 0.64 → 205 × 198
+const Thumb: Fig = () => (
+  <div style={{ width: 320, zoom: 0.64 }}>
+    <Sheet mode="light" title="주간 회의 메모" groups={MEMO_MENU} />
+  </div>
+);
+
 export const menuSheetFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

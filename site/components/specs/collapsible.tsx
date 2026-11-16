@@ -115,7 +115,7 @@ const Trigger: Fig = ({ caption }) => {
           </div>
         </Wide>
         <Cap w={620}>
-          이름만 {l.minH}(위아래 {l.padY} + 이름 {parseFloat(l.title.lineHeight)}) · 설명이 있으면 {l.minHDesc}(+ {l.body.gap} + 설명 {parseFloat(l.description.lineHeight)}) — Accordion 항목과 같은 트리거라 줄 전체가 누르는 자리다(지금의 글 단추 18 · 16.5 를 걷는다). 돈은 원까지, 빼기는 U+2212
+          이름만 {l.minH}(위아래 {l.padY} + 이름 {parseFloat(l.title.lineHeight)}) · 설명이 있으면 {l.minHDesc}(+ {l.body.gap} + 설명 {parseFloat(l.description.lineHeight)}) — Accordion 항목과 같은 트리거라 줄 전체가 누르는 영역입니다. 돈은 원까지, 빼기는 U+2212 입니다
         </Cap>
       </div>
     </Panel>
@@ -173,7 +173,7 @@ const Surface: Fig = ({ caption }) => {
       </div>
       <div className="mt-4 flex justify-center">
         <Cap w={640}>
-          같은 트리거 — 글 · 꺾쇠 · 높이는 같고 여백 · 선 · 누름 색만 다르다. 경고 상자는 바탕 · 1px 테두리 · 모서리 {l.warning.box.radius} · 경고 글 위 {l.warning.box.padTop} · 좌우 {l.warning.box.padX} · 아래 {l.warning.box.padBottom} — 상자의 넘침 숨김이 아래 줄의 누름 바탕을 모서리에서 자른다
+          같은 트리거 — 글 · 꺾쇠 · 높이는 같고 여백 · 선 · 누름 색만 다릅니다. 경고 상자는 바탕 · 1px 테두리 · 모서리 {l.warning.box.radius} · 경고 글 위 {l.warning.box.padTop} · 좌우 {l.warning.box.padX} · 아래 {l.warning.box.padBottom} — 상자의 넘침 숨김이 아래 줄의 누름 바탕을 모서리에서 자릅니다
         </Cap>
       </div>
     </Panel>
@@ -237,24 +237,24 @@ const WhenGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full flex-col gap-4">
-        <Verdict ok note="상세 하나를 접고 편다 — 분할 내역은 Collapsible">
+        <Verdict ok note="상세 하나를 접고 폅니다 — 분할 내역은 Collapsible">
           <div style={{ width: 312, flexShrink: 0, background: 'var(--p-bg-layer-default)' }}>
             <CollapsibleView look={l} layout="rows" title={SPLIT_TITLE} description={SPLIT_DESC} open>
               <SplitRows n={2} />
             </CollapsibleView>
           </div>
         </Verdict>
-        <Verdict ok note="같은 모양의 상세가 여럿 — 혜택은 Accordion(모두 펼치기)" bg="var(--p-bg-layer-basement)">
+        <Verdict ok note="같은 모양의 상세가 여럿이면 — 혜택은 Accordion(모두 펼치기)" bg="var(--p-bg-layer-basement)">
           <div style={{ width: 312, flexShrink: 0 }}>
             <AccCard title={`혜택 · ${BENEFITS.length}건`} items={benefitItems({ only: ['coffee', 'transit', 'telecom'] })} />
           </div>
         </Verdict>
-        <Verdict ok note="줄 자체가 편집을 열고 하위 줄만 접는다 — 카테고리는 List 하위 줄(줄 앞 꺾쇠 단추 44)">
+        <Verdict ok note="줄 자체가 편집을 열고 하위 줄만 접습니다 — 카테고리는 List 하위 줄(줄 앞 꺾쇠 단추 44)">
           <div style={{ width: 312, flexShrink: 0, background: 'var(--p-bg-layer-default)' }}>
             <NestedListView list={listLook()} nest={listNestLook()} categories={CATEGORIES.slice(0, 2)} open={['food']} width={312} childLimit={2} />
           </div>
         </Verdict>
-        <Verdict ok={false} note="같은 모양의 Collapsible 을 여럿 쌓기 — 모두 펼치기가 없고 묶음으로 읽히지 않는다. Accordion 을 쓴다">
+        <Verdict ok={false} note="같은 모양의 Collapsible 을 여럿 쌓기 — 모두 펼치기가 없고 묶음으로 읽히지 않습니다. Accordion 을 씁니다">
           <div style={{ width: 312, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
             {benefitItems({ only: ['coffee', 'telecom', 'movie'] }).map((it) => (
               <CollapsibleView key={it.id} look={l} surface="card" title={it.title} description={it.description}>
@@ -270,7 +270,7 @@ const WhenGuide: Fig = ({ caption }) => {
 
 // 이름은 고정 — 펼침은 aria-expanded
 function NowSplitHead({ mode = 'auto' }: { mode?: Mode }) {
-  // 지금(웹 거래 상세) — 머리 "내역 분할 6개" 오른쪽 글 단추 "합계 123,456,789원 ⌄"(128.9 × 18 · 이름에 무엇을 여닫는지 · 빼기 없음)
+  // 틀린 예 — 머리 "내역 분할 6개" 오른쪽 글 단추 "합계 123,456,789원 ⌄"(128.9 × 18 · 이름에 무엇을 여닫는지 · 빼기 없음)
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, paddingTop: 16, paddingBottom: 16, paddingLeft: 24, paddingRight: 24 }}>
       <span style={{ fontSize: 14, fontWeight: 700, color: rc('fg-neutral', mode) }}>{SPLIT_TITLE}</span>
@@ -285,7 +285,7 @@ const NameGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="줄 전체가 트리거 · 이름은 무엇을 여닫는지 그대로 — 펼침은 aria-expanded 가 알린다(APG Disclosure)">
+        <Verdict ok note="줄 전체가 트리거 · 이름은 무엇을 여닫는지 그대로 — 펼침은 aria-expanded 가 알립니다(APG Disclosure)">
           <div className="flex w-full max-w-[312px] flex-col items-center gap-3">
             <div style={{ width: 312, background: 'var(--p-bg-layer-default)' }}>
               <CollapsibleView look={l} layout="rows" title={SPLIT_TITLE} description={SPLIT_DESC} open state="focused">
@@ -295,7 +295,7 @@ const NameGuide: Fig = ({ caption }) => {
             <Reading tone="ok">{triggerReadout(SPLIT_TITLE, SPLIT_DESC, l.heading, true)}</Reading>
           </div>
         </Verdict>
-        <Verdict ok={false} note="지금 — 오른쪽 글 단추 128.9 × 18 이 합계만 말하고 무엇을 여닫는지 · 펼침 · 빼기 부호가 없다">
+        <Verdict ok={false} note="오른쪽 글 단추(128.9 × 18)로 여닫기 — 합계만 말하고 무엇을 여닫는지 · 펼침 · 빼기 부호가 없습니다">
           <div className="flex w-full max-w-[312px] flex-col items-center gap-3">
             <div style={{ width: 312, background: 'var(--p-bg-layer-default)' }}>
               <NowSplitHead />
@@ -351,10 +351,10 @@ const WrapGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full flex-col gap-4">
-        <Verdict ok note="본문을 자르지 않고 줄을 바꿔 다 보인다 — 한 줄의 카드 높이는 그 줄에서 가장 긴 카드에 맞춘다(한국어 · 영어 모두, 데스크톱 4열)" bg="var(--p-bg-layer-basement)">
+        <Verdict ok note="본문을 자르지 않고 줄을 바꿔 다 보입니다 — 한 줄의 카드 높이는 그 줄에서 가장 긴 카드에 맞춥니다(한국어 · 영어 모두, 데스크톱 4열)" bg="var(--p-bg-layer-basement)">
           {block(false)}
         </Verdict>
-        <Verdict ok={false} note="4줄에서 잘라 '더 보기' 로 펼치기 — 잘린 글을 읽으려고 한 번 더 누르고, 영어는 더 많이 잘린다" bg="var(--p-bg-layer-basement)">
+        <Verdict ok={false} note="4줄에서 잘라 '더 보기' 로 펼치기 — 잘린 글을 읽으려고 한 번 더 눌러야 하고, 영어는 더 많이 잘립니다" bg="var(--p-bg-layer-basement)">
           {block(true)}
         </Verdict>
       </div>
@@ -381,8 +381,8 @@ const LedgerGuide: Fig = ({ caption }) => (
       <div className="flex flex-wrap justify-center gap-4">
         {(
           [
-            ['ledger-sum', true, false, '소비 요약을 열면 월 달력이 닫힌다'],
-            ['ledger-cal', false, true, '월 달력을 열면 소비 요약이 닫힌다'],
+            ['ledger-sum', true, false, '소비 요약을 열면 월 달력이 닫힙니다'],
+            ['ledger-cal', false, true, '월 달력을 열면 소비 요약이 닫힙니다'],
           ] as const
         ).map(([id, s, c, t]) => (
           <div key={id} className="flex flex-col items-center gap-2">
@@ -393,7 +393,7 @@ const LedgerGuide: Fig = ({ caption }) => (
           </div>
         ))}
       </div>
-      <Verdict ok={false} note="둘 다 열리면 거래 목록이 화면 아래로 밀려 거의 보이지 않는다 — 웹 가계부도 앱처럼 하나만">
+      <Verdict ok={false} note="둘 다 열리면 거래 목록이 화면 아래로 밀려 거의 보이지 않습니다 — 하나만 펼칩니다">
         <div className="flex flex-col items-center gap-2">
           <LedgerPhone summary calendar id="ledger-both" />
           <Cap>
@@ -422,7 +422,19 @@ const ExCard: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// ── 개요 카드 ────────────────────────────────────────────
+const Thumb: Fig = () => (
+  <div style={{ width: PHONE_BODY, zoom: 0.7 }}>
+    <Board mode="light" w={PHONE_BODY}>
+      <CollapsibleView look={COL()} mode="light" layout="rows" title={SPLIT_TITLE} description={SPLIT_DESC} open>
+        <SplitRows mode="light" n={3} />
+      </CollapsibleView>
+    </Board>
+  </div>
+);
+
 export const collapsibleFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

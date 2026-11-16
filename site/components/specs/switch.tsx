@@ -263,7 +263,7 @@ const Live: Fig = ({ caption }) => (
       </div>
       <div className="w-[320px]">
         <SettingRows rows={NOTI.map(([title, desc, on]) => ({ title, desc, on }))} live />
-        <span className="mt-1 block text-[12px] pk-muted">설정 줄(List) — 줄 어디를 눌러도 바뀐다</span>
+        <span className="mt-1 block text-[12px] pk-muted">설정 줄(List) — 줄 어디를 눌러도 바뀝니다</span>
       </div>
     </div>
   </Figure>
@@ -295,7 +295,7 @@ const TouchTarget: Fig = ({ caption }) => (
   </Figure>
 );
 
-// 좁은 화면에서는 위아래로 — 나란히 두면 줄의 본문이 눌려 낱말이 칸 밖으로 넘친다(단어 단위 줄바꿈 v114)
+// 좁은 화면에서는 위아래로 — 나란히 두면 줄의 본문이 눌려 낱말이 칸 밖으로 넘친다(단어 단위 줄바꿈)
 const Pair = ({ children }: { children: ReactNode }) => <div className="flex w-full max-w-[620px] flex-col gap-4 sm:flex-row">{children}</div>;
 
 function NotiPhone({ tone, masterOn = true, forceOff = false }: { tone?: string; masterOn?: boolean; forceOff?: boolean }) {
@@ -316,10 +316,10 @@ function NotiPhone({ tone, masterOn = true, forceOff = false }: { tone?: string;
 const ImmediateGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="알림 설정 — 누르는 순간 저장된다. Switch 다">
+      <Verdict ok note="알림 설정 — 누르는 순간 저장됩니다. Switch 입니다">
         <NotiPhone />
       </Verdict>
-      <Verdict ok={false} note="자산 추가 — 저장을 눌러야 적용되는 옵션에 Switch. 켠 순간 적용된 것처럼 보인다. Checkbox 로">
+      <Verdict ok={false} note="자산 추가 — 저장을 눌러야 적용되는 옵션에 Switch 를 썼습니다. 켠 순간 적용된 것처럼 보입니다. Checkbox 를 씁니다">
         <Phone
           title="자산"
           h={500}
@@ -347,10 +347,10 @@ const ImmediateGuide: Fig = ({ caption }) => (
 const DependentGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="위 설정을 끄면 아래 줄을 막는다 — 값(켬 · 끔)은 그대로 남아, 다시 켜면 그대로 돌아온다">
+      <Verdict ok note="위 설정을 끄면 아래 줄을 막습니다 — 값(켬 · 끔)은 그대로 남아, 다시 켜면 그대로 돌아옵니다">
         <NotiPhone masterOn={false} />
       </Verdict>
-      <Verdict ok={false} note="위 스위치가 아래를 한꺼번에 끈다 — 값이 사라지고, 위와 아래가 부모 · 자식처럼 읽힌다">
+      <Verdict ok={false} note="위 스위치가 아래를 한꺼번에 끕니다 — 값이 사라지고, 위와 아래가 부모 · 자식처럼 읽힙니다">
         <NotiPhone masterOn={false} forceOff />
       </Verdict>
     </Pair>
@@ -360,12 +360,12 @@ const DependentGuide: Fig = ({ caption }) => (
 const DisabledGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="스위치와 함께 제목 · 설명도 비활성 색 — 줄 전체가 막힌 것으로 읽힌다">
+      <Verdict ok note="스위치와 함께 제목 · 설명도 비활성 색입니다 — 줄 전체가 막힌 것으로 읽힙니다">
         <div className="w-[280px]">
           <SettingRows rows={[{ title: '주간 리포트', desc: '매주 월요일 오전 9시', on: true, disabled: true }]} />
         </div>
       </Verdict>
-      <Verdict ok={false} note="스위치만 회색 — 줄은 눌릴 것처럼 보인다">
+      <Verdict ok={false} note="스위치만 회색입니다 — 줄은 눌릴 것처럼 보입니다">
         <div className="w-[280px]">
           <SettingRows rows={[{ title: '주간 리포트', desc: '매주 월요일 오전 9시', on: true, disabled: true, dimLabel: false }]} />
         </div>
@@ -377,10 +377,10 @@ const DisabledGuide: Fig = ({ caption }) => (
 const ToneGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="켜짐은 neutral — 스위치가 많아도 화면이 조용하다">
+      <Verdict ok note="켜짐은 neutral 입니다 — 스위치가 많아도 화면이 조용합니다">
         <NotiPhone />
       </Verdict>
-      <Verdict ok={false} note="스위치마다 브랜드 색 — 설정 화면 전체에 브랜드 색이 흩어진다">
+      <Verdict ok={false} note="스위치마다 브랜드 색을 썼습니다 — 설정 화면 전체에 브랜드 색이 흩어집니다">
         <NotiPhone tone="brand" />
       </Verdict>
     </Pair>
@@ -431,7 +431,19 @@ const ExSwitchmark: Fig = ({ caption }) => (
   </Preview>
 );
 
+// 개요 카드 — 켬 · 끔 · 켜진 채 막힘(크기 32, 라벨과 함께)
+const Thumb: Fig = () => (
+  <Surface mode="light">
+    <div className="flex flex-col items-start gap-4">
+      <S size="32" on label="푸시 알림" mode="light" />
+      <S size="32" label="주간 리포트" mode="light" />
+      <S size="32" on state="disabled" label="결제 알림" mode="light" />
+    </div>
+  </Surface>
+);
+
 export const switchFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

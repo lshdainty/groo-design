@@ -1,16 +1,14 @@
-# Scroll Fog 의 수치 원본 — 구조는 SEED Scroll Fog(2026-10-03 사용자 결정, 비교 페이지 12).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Scroll Fog 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 스크롤되는 영역의 끝을 흐려 뒤에 더 있다는 것을 알리는 마스크. 색을 덮지 않고(gradient-fade-mask 로 투명도만 바꾼다) 바탕색과
-# 상관없이 맞는다. 스크롤 위치 · 넘침과 상관없이 늘 켜 두고, 흐린 쪽에 깊이 이상의 여백을 둬 처음 · 끝에서는 흐림이 빈 여백 위에
-# 놓인다. 기본 20 — 가로 줄은 좌우 20, 시트 · 대화상자 · 팝오버의 넘칠 수 있는 본문과 바닥 고정 버튼이 있는 화면은 위 20 · 아래 80.
-# 시트 · 대화상자의 옛 규칙("본문이 넘칠 때만 아래 48", 2026-10-02)을 이것이 대신한다. 넘친 쪽만 흐리는 안은 고르지 않았다.
+# 스크롤되는 영역의 끝을 흐려 뒤에 더 있다는 것을 알리는 마스크입니다. 색을 덮지 않고(gradient-fade-mask 로 투명도만 바꿉니다)
+# 바탕색과 상관없이 맞습니다. 스크롤 위치 · 넘침과 상관없이 늘 켜 두고, 흐린 쪽에 깊이 이상의 여백을 둬 처음 · 끝에서는 흐림이
+# 빈 여백 위에 놓입니다. 기본 20 — 가로 줄은 좌우 20, 시트 · 대화상자 · 팝오버의 넘칠 수 있는 본문과 바닥 고정 버튼이 있는 화면은
+# 위 20 · 아래 80 입니다. 넘친 쪽만 흐리는 방식은 두지 않습니다.
 #
-# SEED 와 다른 자리(scroll-fog.md 의 "SEED 와 다른 점")
-#   - 자리마다 방향 · 깊이를 use 로 정해 둔다 — SEED 는 숫자 권장(기본 20 · 세로 위 20 · 아래 80 · 가로 20 · 또는 영역의 15 ~ 20%)만 둔다.
-#   - 가로 줄의 여백은 화면 여백 24(spacing-global-gutter) — 흐림 20 보다 넓어 처음 · 끝 칩은 흐리지 않는다(SEED 칩 탭 예제는 20).
-#   - 키보드 초점이 흐림 아래 가려지지 않게 스크롤 여유(scroll-padding)를 깊이만큼 둔다 — SEED 는 정하지 않았다.
-#   - 부품이 제 안개를 가진 자리(Wheel Picker · Date Picker 이어지는 달)는 그 스펙을 따르고 겹쳐 걸지 않는다.
+#   - 자리마다 방향 · 깊이를 use 로 정해 둡니다 — 영역 크기의 비율로 정하지 않습니다.
+#   - 가로 줄의 여백은 화면 여백 24(spacing-global-gutter) — 흐림 20 보다 넓어 처음 · 끝 칩은 흐리지 않습니다.
+#   - 키보드 초점이 흐림 아래 가려지지 않게 스크롤 여유(scroll-padding)를 깊이만큼 둡니다.
+#   - 부품이 제 안개를 가진 자리(Wheel Picker · Date Picker 이어지는 달)는 그 스펙을 따르고 겹쳐 걸지 않습니다.
 
 name: ScrollFog
 
@@ -38,7 +36,7 @@ rules:
     enabled:
       fog:
         mask: { value: $gradient-fade-mask, note: "색을 덮지 않는 마스크(mask-image) — 흐린 쪽마다 방향을 붙여 하나씩 겹친다(mask-composite: intersect). 바탕색과 상관없이 맞고 라이트 · 다크 같다. 누르기를 막지 않는다" }
-        size: { value: 20px, note: "기본 깊이 — SEED 의 최소 20" }
+        size: { value: 20px, note: "기본 깊이 — 최소 20" }
 
   # ── 자리 ──────────────────────────────────────────────
   - when: { use: box }
@@ -56,7 +54,7 @@ rules:
         overflowX: { value: auto, note: "한 줄 가로 스크롤 — 스크롤바는 숨긴다" }
       fog:
         placement: 좌 · 우
-        size: { value: 20px, note: "좌우 20(SEED Chip Tabs 와 같다)" }
+        size: { value: 20px, note: "좌우 20" }
       content:
         paddingX: { value: $spacing-global-gutter, note: "화면 여백 24 — 흐림 20 보다 넓어 처음 · 끝의 칩은 흐리지 않는다(Chip 의 가로 스크롤 줄 · Chip Tabs 목록과 같은 값). 바깥에 포커스 링을 그리는 내용(칩)이면 위아래에도 링 자리를 둔다 — ChipGroup 은 위아래 6 여백 · 바깥 −6. 두지 않으면 스크롤 상자가 링을 자른다" }
         scrollPadding: { value: $spacing-global-gutter, note: "키보드로 칩을 옮겨도 여백 안에 멈춘다" }
@@ -66,7 +64,7 @@ rules:
         overflowY: auto
       fog:
         placement: 위 · 아래
-        size: { value: 위 20px · 아래 80px, note: "SEED Bottom Sheet 의 권장 — 아래가 깊어 더 있다는 것이 잘 보인다" }
+        size: { value: 위 20px · 아래 80px, note: "아래가 깊어 더 있다는 것이 잘 보인다" }
       content:
         paddingTop: { value: 20px, note: "머리 아래 — 머리 아래 여백(16)은 그대로 두고 본문 안에 더한다" }
         paddingBottom: { value: 80px, note: "끝까지 내려도 마지막 줄이 흐림 아래 남지 않는다 — 바닥 버튼 위" }
@@ -77,7 +75,7 @@ rules:
         overflowY: auto
       fog:
         placement: 위 · 아래
-        size: { value: 위 20px · 아래 80px, note: "SEED 의 화면 전체 세로 스크롤 권장 — 위는 머리(상단 바) 아래, 아래는 바닥 고정 버튼 위에서 끝난다" }
+        size: { value: 위 20px · 아래 80px, note: "위는 머리(상단 바) 아래, 아래는 바닥 고정 버튼 위에서 끝난다" }
       content:
         paddingTop: { value: 20px, note: "머리 아래 — 화면 머리 ↔ 제목 여백(spacing-nav-to-title 20)과 같다" }
         paddingBottom: { value: 80px, note: "바닥 고정 버튼 위 — 화면 아래 여백(spacing-screen-bottom 56) 대신 80" }

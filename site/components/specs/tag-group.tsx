@@ -100,7 +100,7 @@ const Anatomy: Fig = ({ caption }) => {
             </span>
           ))}
         </div>
-        <span className="text-center text-[12px] leading-4 pk-muted">3배로 그렸다(t2) — 구분 &ldquo; · &rdquo; 는 글자다. 앞 공백이 줄이 안 바뀌는 공백이라 앞 항목에 붙는다</span>
+        <span className="text-center text-[12px] leading-4 pk-muted">3배로 그렸습니다(t2). 구분 &ldquo; · &rdquo; 는 글자이며, 앞 공백이 줄이 안 바뀌는 공백이라 앞 항목에 붙습니다</span>
       </div>
     </Figure>
   );
@@ -132,7 +132,7 @@ const Size: Fig = ({ caption }) => {
           })}
         </div>
       </Board>
-      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">크기는 묶음에 하나 — 한 줄 안에서 섞지 않는다. 글은 글자 크기 설정을 따른다</p>
+      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">크기는 묶음에 하나이며 한 줄 안에서 섞지 않습니다. 글은 글자 크기 설정을 따릅니다</p>
     </Panel>
   );
 };
@@ -168,7 +168,7 @@ const Tone: Fig = ({ caption }) => {
           <TagGroupView look={lk} mode={mode} items={items({ label: '12,000원', tone: 'neutral', weight: 'bold' }, '식비', '오후 2:10')} />
         </div>
       </Board>
-      <Cap strong={modeKo(mode)}>구분 &ldquo; · &rdquo; 는 톤과 관계없이 늘 fg-disabled — 글보다 한 단계 흐리다</Cap>
+      <Cap strong={modeKo(mode)}>구분 &ldquo; · &rdquo; 는 톤과 관계없이 늘 fg-disabled 로, 글보다 한 단계 흐립니다</Cap>
     </div>
   );
   return (
@@ -202,7 +202,7 @@ const Icon: Fig = ({ caption }) => {
               <TagGroupView look={lk} size="t4" items={split(at)} />
               <Reading>&ldquo;{tagReading(split(at), lk.srSep)}&rdquo;</Reading>
             </Board>
-            <Cap strong={at === 'prefix' ? '앞 아이콘 prefixIcon' : '뒤 아이콘 suffixIcon'}>항목에 하나만 — 앞뒤 모두 두지 않는다. 뜻은 읽을 글(srLabel)이 말한다</Cap>
+            <Cap strong={at === 'prefix' ? '앞 아이콘 prefixIcon' : '뒤 아이콘 suffixIcon'}>항목에 하나만 둡니다 — 앞뒤 모두 두지 않습니다. 뜻은 읽을 글(srLabel)이 전합니다</Cap>
           </div>
         ))}
       </div>
@@ -230,7 +230,7 @@ const Overflow: Fig = ({ caption }) => {
               <TagGroupView look={lk} size="t3" items={long} />
             </Narrow>
           </Board>
-          <Cap strong="wrap — 줄바꿈(기본)">낱말 단위로 바꾼다 — 구분은 앞 줄 끝에 남고, 다음 줄은 항목으로 시작한다</Cap>
+          <Cap strong="wrap — 줄바꿈(기본)">낱말 단위로 바꿉니다 — 구분은 앞 줄 끝에 남고, 다음 줄은 항목으로 시작합니다</Cap>
         </div>
         <div className="flex min-w-0 flex-col gap-2">
           <Board className="flex min-h-[120px] items-center justify-center">
@@ -238,7 +238,7 @@ const Overflow: Fig = ({ caption }) => {
               <TagGroupView look={lk} size="t3" truncate items={long} />
             </Narrow>
           </Board>
-          <Cap strong="truncate — 한 줄 말줄임">항목 글이 각자 말줄임 — 구분은 줄지 않는다</Cap>
+          <Cap strong="truncate — 한 줄 말줄임">항목 글이 각자 말줄임합니다 — 구분은 줄지 않습니다</Cap>
         </div>
         <div className="flex min-w-0 flex-col gap-2">
           <Board className="flex min-h-[120px] items-center justify-center">
@@ -246,7 +246,7 @@ const Overflow: Fig = ({ caption }) => {
               <TagGroupView look={lk} size="t3" truncate items={items({ label: '대중교통', shrink: 1 }, { label: '신한카드 체크카드(1234)', shrink: 2 }, { label: '오후 2:10', shrink: 0 })} />
             </Narrow>
           </Board>
-          <Cap strong="shrink — 줄어드는 정도">카테고리 1 · 자산 2 · 시각 0 — 이름 항목은 글 폭 × shrink 비율로 함께 준다(긴 자산 이름이 가장 많이). 잘리면 뜻이 없는 시각은 0 이라 그대로다</Cap>
+          <Cap strong="shrink — 줄어드는 정도">카테고리 1 · 자산 2 · 시각 0 — 이름 항목은 글 폭 × shrink 비율로 함께 줄어듭니다(긴 자산 이름이 가장 많이). 잘리면 뜻이 없는 시각은 0 이라 그대로입니다</Cap>
         </div>
         <div className="flex min-w-0 flex-col gap-2">
           <Board className="flex min-h-[120px] items-center justify-center">
@@ -254,10 +254,10 @@ const Overflow: Fig = ({ caption }) => {
               <TagGroupView look={lk} size="t3" truncate items={items('간식 · 디저트 모음 아주 긴 카테고리 이름', '지어낸카드 체크카드 개인(1234)', '오후 2:10', '분할 2건')} />
             </Narrow>
           </Board>
-          <Cap strong="최소 폭 — 첫 글자 + …">모두 shrink 1 이어도 항목마다 첫 글자 + "…"(2.1em)는 남는다 — 글자 조각만 남지 않는다</Cap>
+          <Cap strong="최소 폭 — 첫 글자 + …">모두 shrink 1 이어도 항목마다 첫 글자 + "…"(2.1em)는 남습니다 — 글자 조각만 남지 않습니다</Cap>
         </div>
       </div>
-      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">분홍 점선 — 폭 200. 말줄임해도 글 전체는 보조 기술이 읽는다</p>
+      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">분홍 점선은 폭 200 입니다. 말줄임해도 글 전체는 보조 기술이 읽습니다</p>
     </Panel>
   );
 };
@@ -266,12 +266,12 @@ const Overflow: Fig = ({ caption }) => {
 const RoleGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair stack>
-      <Verdict ok note="상태(예정)는 제목 옆 배지, 메타(분류 · 자산 · 날짜)는 설명 줄 Tag Group">
+      <Verdict ok note="상태(예정)는 제목 옆 배지로, 메타(분류 · 자산 · 날짜)는 설명 줄 Tag Group 으로 보입니다">
         <PhoneBoard>
           <Rows rows={[txRow(TX.netflix), txRow(TX.starbucks)]} />
         </PhoneBoard>
       </Verdict>
-      <Verdict ok={false} note="메타를 배지로 · 상태를 메타 줄에 — 무엇이 상태인지 갈리지 않는다">
+      <Verdict ok={false} note="메타를 배지로, 상태를 메타 줄에 넣었습니다 — 무엇이 상태인지 갈리지 않습니다">
         <PhoneBoard>
           <Rows
             rows={[
@@ -297,12 +297,12 @@ const RoleGuide: Fig = ({ caption }) => (
 const WritingGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="6 ~ 10자 · 조사와 군말을 뺐다 — 화면마다 같은 순서(분류 · 자산 · 시각)">
+      <Verdict ok note="6 ~ 10자로 조사와 군말을 뺐습니다 — 화면마다 같은 순서(분류 · 자산 · 시각)입니다">
         <W w={300}>
           <T items={items('식비', '신한카드', '오후 2:10')} size="t3" />
         </W>
       </Verdict>
-      <Verdict ok={false} note="항목이 문장이 됐다 — 길어져 잘리고 읽기 어렵다. 문장은 설명 글이다">
+      <Verdict ok={false} note="항목이 문장이 됐습니다 — 길어져 잘리고 읽기 어렵습니다. 문장은 설명 글입니다">
         <W w={300}>
           <T items={items('식비로 분류됨', '신한카드로 결제함', '오후 2시 10분에 결제했어요')} size="t3" />
         </W>
@@ -317,19 +317,19 @@ const SeparatorGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair three>
-        <Verdict ok note='글자 " · " — 앞뒤 띄어쓰기, 글보다 한 단계 흐리게(fg-disabled). 글자 크기를 따라간다'>
+        <Verdict ok note='글자 " · " — 앞뒤를 띄우고 글보다 한 단계 흐리게(fg-disabled) 둡니다. 글자 크기를 따라갑니다'>
           <span className="flex flex-col items-center gap-2">
             <TagGroupView look={lk} size="t2" items={list} />
             <TagGroupView look={lk} size="t4" items={list} />
           </span>
         </Verdict>
-        <Verdict ok={false} note="2px 점 그림 — 글자가 커져도 그대로이고 화면마다 크기 · 색이 갈린다">
+        <Verdict ok={false} note="2px 점 그림 — 글자가 커져도 그대로이고 화면마다 크기 · 색이 갈립니다">
           <span className="flex flex-col items-center gap-2">
             <TagGroupView look={lk} size="t2" items={list} badSeparator="dot2" />
             <TagGroupView look={lk} size="t4" items={list} badSeparator="dot2" />
           </span>
         </Verdict>
-        <Verdict ok={false} note='"•" · "|" — 구분이 글보다 무거워 항목처럼 보인다'>
+        <Verdict ok={false} note='"•" · "|" — 구분이 글보다 무거워 항목처럼 보입니다'>
           <span className="flex flex-col items-center gap-2">
             <TagGroupView look={lk} size="t3" items={list} badSeparator="bullet" />
             <TagGroupView look={lk} size="t3" items={list} badSeparator="bar" />
@@ -362,10 +362,10 @@ function Mixed() {
 const SizeGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="한 크기 — 금액은 톤 · 굵기로 앞세운다">
+      <Verdict ok note="한 크기 — 금액은 톤 · 굵기로 앞세웁니다">
         <T items={items({ label: '12,000원', tone: 'neutral', weight: 'bold' }, '식비', '오후 2:10')} size="t3" />
       </Verdict>
-      <Verdict ok={false} note="항목마다 크기를 바꿨다 — 글줄이 들쭉날쭉하고 높이가 흔들린다">
+      <Verdict ok={false} note="항목마다 크기를 바꿨습니다 — 글줄이 들쭉날쭉하고 높이가 흔들립니다">
         <Mixed />
       </Verdict>
     </Pair>
@@ -378,13 +378,13 @@ const ReadingGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note='구분 자리에 보이지 않는 ", " · 아이콘 항목은 읽을 글("조회 12")'>
+        <Verdict ok note='구분 자리에 보이지 않는 ", " 를 두고, 아이콘 항목에는 읽을 글("조회 12")을 줍니다'>
           <span className="flex flex-col items-center gap-3">
             <TagGroupView look={lk} items={notice} />
             <Reading tone="ok">&ldquo;{tagReading(notice, lk.srSep)}&rdquo;</Reading>
           </span>
         </Verdict>
-        <Verdict ok={false} note="구분을 숨기기만 했다 — 항목이 붙어 읽히고 숫자만 남는다">
+        <Verdict ok={false} note="구분을 숨기기만 했습니다 — 항목이 붙어 읽히고 숫자만 남습니다">
           <span className="flex flex-col items-center gap-3">
             <TagGroupView look={lk} items={notice} />
             <Reading tone="bad">&ldquo;인사팀10월 2일12&rdquo;</Reading>
@@ -420,7 +420,20 @@ const ExTruncate: Fig = ({ caption }) => (
   </Preview>
 );
 
+// 개요 카드 — 라이트 메타 줄 셋(가계부 줄 · 금액 하나만 진하게 · 눈 아이콘 조회)
+const Thumb: Fig = () => {
+  const lk = tl();
+  return (
+    <div className="flex flex-col items-start gap-4" style={{ width: 280 }}>
+      <TagGroupView look={lk} mode="light" size="t3" zoom={1.5} items={items('식비', '신한카드', '오후 2:10')} />
+      <TagGroupView look={lk} mode="light" size="t3" zoom={1.5} items={items({ label: '12,000원', tone: 'neutral', weight: 'bold' }, '카페', '현대카드')} />
+      <TagGroupView look={lk} mode="light" size="t3" zoom={1.5} items={items('인사팀', '10월 2일', VIEWS)} />
+    </div>
+  );
+};
+
 export const tagGroupFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

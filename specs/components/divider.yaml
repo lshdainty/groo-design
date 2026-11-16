@@ -1,15 +1,9 @@
-# Divider 의 수치 원본 — 구조는 SEED Divider(2026-10-03 사용자 결정, 표시 비교 페이지 14 "구분선"). 옛 Separator 를 대신한다.
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Divider 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 내용 사이를 나누는 1px 선 — 같은 묶음 안(들인 선) · 묶음 사이(끝까지 선). 크게 다른 내용 사이는 선이 아니라
-# 바탕 층(bg-layer-basement) 위 흰 층(bg-layer-default) 사이 8 간격이다 — "8px Divider 는 없다"(SEED).
-# 반복되는 목록 줄 사이는 List 의 줄 사이 선(ListDivider — 같은 값, 필요할 때만)이다.
-# 기본은 장식(보조 기술에 숨김) — 이름 있는 구획을 나눌 때만 role="separator".
-#
-# SEED 와 다른 자리(divider.md 의 "SEED 와 다른 점")
-#   - 색은 stroke-neutral-subtle 하나 — SEED 기본 stroke.neutral-muted(투명도 있는 검정 6.3%)와 같은 진하기(흰 바탕 1.15 ≈ 1.15)라
-#     새 토큰 없이 둔다. SEED 의 두 번째 색(neutral-subtle 4.7%)은 두지 않는다.
-#   - 기본이 장식(div · aria-hidden) — SEED 는 <hr>(읽힘)가 기본이고 장식은 as="div".
+# 내용 사이를 나누는 1px 선입니다 — 같은 묶음 안(들인 선) · 묶음 사이(끝까지 선). 크게 다른 내용 사이는 선이 아니라
+# 바탕 층(bg-layer-basement) 위 흰 층(bg-layer-default) 사이 8 간격입니다 — 8px 구분선은 두지 않습니다.
+# 반복되는 목록 줄 사이는 List 의 줄 사이 선(ListDivider — 같은 값, 필요할 때만)입니다.
+# 색은 stroke-neutral-subtle 하나입니다. 기본은 장식(div · aria-hidden — 보조 기술에 숨김)이고, 이름 있는 구획을 나눌 때만 role="separator" 를 씁니다.
 
 name: Divider
 
@@ -37,7 +31,7 @@ rules:
     enabled:
       root:
         thickness: { value: 1px, note: "모든 방향 · 모든 자리 1 — 굵은 선을 두지 않는다" }
-        background: { value: $color-stroke-neutral-subtle, note: "흰 바탕 1.15 · 다크 1.30(SEED 기본 neutral-muted 1.15 와 같은 진하기) — 장식이라 3:1 대상이 아니다" }
+        background: { value: $color-stroke-neutral-subtle, note: "흰 바탕 1.15 · 다크 1.30 — 장식이라 3:1 대상이 아니다" }
         margin: { value: 0px, note: "선 위아래 · 좌우 간격은 쓰는 자리가 정한다(들임만 Divider 가 갖는다)" }
 
   # ── 방향 ──────────────────────────────────────────────
@@ -54,7 +48,7 @@ rules:
   - when: { orientation: horizontal, inset: inset }
     enabled:
       root:
-        marginX: { value: $spacing-x4, note: "양끝 16(SEED inset) — 선 폭은 부모 폭 − 32(100% 에 여백을 더하지 않는다). 화면 여백 24 안의 내용에 맞출 때는 쓰는 자리가 여백을 더한다" }
+        marginX: { value: $spacing-x4, note: "양끝 16 — 선 폭은 부모 폭 − 32(100% 에 여백을 더하지 않는다). 화면 여백 24 안의 내용에 맞출 때는 쓰는 자리가 여백을 더한다" }
   - when: { orientation: vertical, inset: inset }
     enabled:
       root:

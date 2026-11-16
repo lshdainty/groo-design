@@ -389,7 +389,7 @@ const Prefix: Fig = ({ caption }) => (
         </Cell>
       </Wide>
       <Wide>
-        <Cell label={<><b className="pk-text">세로형</b> 아이콘이 위에 선다</>}>
+        <Cell label={<><b className="pk-text">세로형</b> 아이콘이 위에 섭니다</>}>
           <G kind="radio" columns={2} boxes={[{ ...SPLIT[0], description: '똑같이 나눠요' }, { ...SPLIT[1], description: '비율대로 나눠요' }]} value="even" ariaLabel="분배 방식" />
         </Cell>
       </Wide>
@@ -405,10 +405,10 @@ const Prefix: Fig = ({ caption }) => (
 const Footer: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="grid gap-4 sm:grid-cols-2">
-      <Cell label="고르기 전 — 칸이 숨어 있다(Tab 도 닿지 않는다)">
+      <Cell label="고르기 전 — 칸이 숨어 있습니다(Tab 도 닿지 않습니다)">
         <G kind="radio" boxes={END} value="none" ariaLabel="종료" />
       </Cell>
-      <Cell label="횟수 지정을 고르면 그 상자 아래로 칸이 열린다">
+      <Cell label="횟수 지정을 고르면 그 상자 아래로 칸이 열립니다">
         <G kind="radio" boxes={END} value="count" ariaLabel="종료" />
       </Cell>
     </div>
@@ -447,12 +447,12 @@ const ZONE = { fill: MARK, line: MARK_LINE };
 const TouchGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="상자 전체가 누르는 영역(분홍) — 어디를 눌러도 고른다">
+      <Verdict ok note="상자 전체가 누르는 영역(분홍)입니다 — 어디를 눌러도 고릅니다">
         <Surface className="w-full">
           <G kind="check" boxes={PERM.slice(0, 2)} zone={ZONE} ariaLabel="휴가 권한" brand="hr" />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="체크와 제목만 눌린다 — 설명이나 빈 자리를 누르면 아무 일도 없다">
+      <Verdict ok={false} note="체크와 제목만 눌립니다 — 설명이나 빈 자리를 누르면 아무 일도 없습니다">
         <Surface className="w-full">
           <G kind="check" boxes={PERM.slice(0, 2)} zone={ZONE} partialTarget ariaLabel="휴가 권한" brand="hr" />
         </Surface>
@@ -464,7 +464,7 @@ const TouchGuide: Fig = ({ caption }) => (
 const SubmitGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="상자로 고르고 내보내기 버튼으로 반영한다">
+      <Verdict ok note="상자로 고르고 내보내기 버튼으로 반영합니다">
         <Screen title="내보내기" scale={0.62} h={560} cta="내보내기">
           <div>
             <Label>파일 형식</Label>
@@ -476,7 +476,7 @@ const SubmitGuide: Fig = ({ caption }) => (
           </div>
         </Screen>
       </Verdict>
-      <Verdict ok={false} note="상자를 누르는 순간 내보내기가 시작된다 — 잘못 누르면 되돌릴 수 없다. 실행은 버튼이다">
+      <Verdict ok={false} note="상자를 누르는 순간 내보내기가 시작됩니다 — 잘못 누르면 되돌릴 수 없습니다. 실행은 버튼입니다">
         <Screen title="내보내기" scale={0.62} h={560}>
           <div>
             <Label>파일 형식</Label>
@@ -494,12 +494,12 @@ const SubmitGuide: Fig = ({ caption }) => (
 const ConciseGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="짧은 제목 · 한두 줄 설명 — 둘을 한눈에 견준다">
+      <Verdict ok note="짧은 제목 · 한두 줄 설명 — 둘을 한눈에 견줍니다">
         <Surface className="w-full">
           <G kind="radio" boxes={FLEX.map((b) => ({ ...b, footer: undefined }))} value="fixed" ariaLabel="가변 부여 여부" brand="hr" />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="설명을 길게 써서 견줄 것을 찾기 어렵다">
+      <Verdict ok={false} note="설명을 길게 써서 견줄 것을 찾기 어렵습니다">
         <Surface className="w-full">
           <G
             kind="radio"
@@ -520,12 +520,12 @@ const ConciseGuide: Fig = ({ caption }) => (
 const HeightGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair wide>
-      <Verdict ok note="모든 상자가 가장 긴 상자의 높이 · 칸이 비지 않는다">
+      <Verdict ok note="모든 상자가 가장 긴 상자의 높이이고, 칸이 비지 않습니다">
         <PhoneWidth>
           <G kind="radio" columns={2} boxes={ACCOUNT.slice(0, 4)} value="cash" ariaLabel="계좌 종류" />
         </PhoneWidth>
       </Verdict>
-      <Verdict ok={false} note="상자마다 높이가 다르고, 다섯을 2열에 두어 칸이 비었다">
+      <Verdict ok={false} note="상자마다 높이가 다르고, 다섯을 2열에 두어 칸이 비었습니다">
         <PhoneWidth>
           <G kind="radio" columns={2} boxes={ACCOUNT} value="cash" ragged ariaLabel="계좌 종류" />
         </PhoneWidth>
@@ -537,7 +537,7 @@ const HeightGuide: Fig = ({ caption }) => (
 const MaxGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair wide>
-      <Verdict ok note="몇 개까지인지 미리 적는다 — 셋째를 누르면 고르지 않고 안내를 띄운다(눌러 보기)">
+      <Verdict ok note="몇 개까지인지 미리 적습니다 — 셋째를 누르면 고르지 않고 안내를 띄웁니다(눌러 보기)">
         <PhoneWidth>
           <Label id="sb-max-ok">홈에 둘 요약</Label>
           <span className="-mt-1 mb-3 block text-[13px]" style={{ color: rc('fg-neutral-muted') }}>
@@ -546,7 +546,7 @@ const MaxGuide: Fig = ({ caption }) => (
           <G kind="check" control="none" columns={2} boxes={SUMMARY.map((b, i) => ({ ...b, checked: i < 2 }))} max={2} ariaLabelledby="sb-max-ok" />
         </PhoneWidth>
       </Verdict>
-      <Verdict ok={false} note="안내가 없다 — 컨트롤이 없는 상자는 몇 개까지 고르는지 알 수 없다">
+      <Verdict ok={false} note="안내가 없습니다 — 컨트롤이 없는 상자는 몇 개까지 고르는지 알 수 없습니다">
         <PhoneWidth>
           <Label id="sb-max-no">홈에 둘 요약</Label>
           <G kind="check" control="none" columns={2} boxes={SUMMARY.map((b, i) => ({ ...b, checked: i < 2 }))} max={2} ariaLabelledby="sb-max-no" />
@@ -556,7 +556,7 @@ const MaxGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// Chip 은 차례 전이라 모양만 그린다
+// Chip 은 모양만 그린다
 function ChipShape({ label, on }: { label: string; on?: boolean }) {
   return (
     <span
@@ -584,7 +584,7 @@ const EdgeGuide: Fig = ({ caption }) => {
           <G kind="check" control="none" columns={3} boxes={TYPES} ariaLabel="거래 종류" />
         </Cell>
         <div className="sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)]">
-        <Cell label={<><b className="pk-text">Chip</b> 짧은 이름 여럿 — 금액을 가릴 카드(모양만 — Chip 차례에 정한다)</>}>
+        <Cell label={<><b className="pk-text">Chip</b> 짧은 이름 여럿 — 금액을 가릴 카드(모양만)</>}>
           <div className="flex flex-wrap gap-2">
             <ChipShape label="신한카드" on />
             <ChipShape label="현대카드" />
@@ -673,7 +673,7 @@ const ExRoles: Fig = ({ caption }) => {
               </div>
             </Fit>
           </div>
-          <Cap strong="데스크톱 — 사용자 상세 칸">역할을 골라도 바로 바뀌지 않는다 — "저장" 한 번(바뀐 것이 없으면 막힘)</Cap>
+          <Cap strong="데스크톱 — 사용자 상세 칸">역할을 골라도 바로 바뀌지 않습니다 — "저장" 한 번으로 반영합니다(바뀐 것이 없으면 막힘)</Cap>
         </div>
         <div className="flex flex-col items-center gap-2">
           <div className="w-full" style={{ maxWidth: 406 }}>
@@ -686,7 +686,7 @@ const ExRoles: Fig = ({ caption }) => {
               </Phone>
             </Fit>
           </div>
-          <Cap strong="폰 390 — 같은 모양">검색 시트 · 팝오버 두 벌을 걷었다 — 역할이 늘어도 상자를 쌓는다</Cap>
+          <Cap strong="폰 390 — 같은 모양">역할이 늘어도 상자를 쌓습니다 — 검색 시트 · 팝오버를 두지 않습니다</Cap>
         </div>
       </div>
       {caption && <figcaption className="sr-only">{caption}</figcaption>}
@@ -694,7 +694,17 @@ const ExRoles: Fig = ({ caption }) => {
   );
 };
 
+// 개요 카드 — 라이트 하나 고르기 묶음(반복 거래 종료 — 횟수 지정을 골라 펼침이 열림)
+const Thumb: Fig = () => (
+  <div style={{ width: 380, zoom: 0.74 }}>
+    <Surface mode="light">
+      <G kind="radio" boxes={END.slice(0, 2)} value="count" mode="light" live={false} ariaLabel="종료" />
+    </Surface>
+  </div>
+);
+
 export const selectBoxFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

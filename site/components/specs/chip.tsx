@@ -1,6 +1,6 @@
 // Chip 페이지의 그림 — specs/components/chip.md 의 `[그림: …](../../site/components/specs/chip.tsx#<id>)` 자리.
 // 칩은 chip.yaml 을 푼 값(chipLook)으로, Field · 칸은 field · input.yaml(textFieldLook), Select · Input Button 은 select · input-button.yaml(selectLook),
-// 버튼은 button.yaml, 시트 · 대화상자 · 팝오버는 bottom-sheet · dialog · popover.yaml(overlay-look)로 그린다. 스크롤 끝 흐림 · Segmented · Tabs 는 아직 스펙이 없어 역할 색 토큰으로 간단히 그린다.
+// 버튼은 button.yaml, 시트 · 대화상자 · 팝오버는 bottom-sheet · dialog · popover.yaml(overlay-look)로 그린다. 스크롤 끝 흐림 · Segmented · Tabs 는 역할 색 토큰으로 간단히 그린다.
 // 휴대폰 화면 안의 칸은 large, 데스크톱 창 안의 칸은 medium 이다. 칩은 어디서나 medium(기본)이고, small 은 데스크톱의 촘촘한 필터 · 표 위 줄만이다.
 import { Fragment, type CSSProperties, type ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
@@ -291,7 +291,7 @@ const Anatomy: Fig = ({ caption }) => {
             </span>
           ))}
         </div>
-        <span className="text-[12px] pk-muted">2배로 그렸다 — 왼쪽은 필터 바의 여는 칩(Solid), 오른쪽은 입력값 칩(Outline Weak 고름 + 지우기)</span>
+        <span className="text-[12px] pk-muted">2배로 그렸습니다 — 왼쪽은 필터 바의 여는 칩(Solid), 오른쪽은 입력값 칩(Outline Weak 고름 + 지우기)</span>
       </div>
     </Figure>
   );
@@ -325,7 +325,7 @@ const Variant: Fig = ({ caption }) => {
           ))}
         </div>
       </Surface>
-      <Cap strong={mode === 'light' ? '라이트' : '다크'}>안 고른 Outline 둘은 같고, 고르면 갈린다</Cap>
+      <Cap strong={mode === 'light' ? '라이트' : '다크'}>안 고른 Outline 둘은 같고, 고르면 갈립니다</Cap>
     </div>
   );
   return (
@@ -394,7 +394,7 @@ const Size: Fig = ({ caption }) => {
         </div>
       </Board>
       <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">
-        분홍 띠 — 누르는 영역(가로 · 세로 {lk.touch.w} 까지 — 글이 있는 칩은 최소 폭이 이미 넘는다, 보이는 칩은 그대로) · 글은 세 크기 모두 {px(lk.text.fontSize)} · {lk.text.fontWeight} · 아이콘과 글 사이 {lk.gap}
+        분홍 띠 — 누르는 영역(가로 · 세로 {lk.touch.w} 까지 — 글이 있는 칩은 최소 폭이 이미 넘고, 보이는 칩은 그대로) · 글은 세 크기 모두 {px(lk.text.fontSize)} · {lk.text.fontWeight} · 아이콘과 글 사이 {lk.gap}
       </p>
     </Panel>
   );
@@ -455,7 +455,7 @@ const Uses: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="grid gap-4 md:grid-cols-2">
-        <CapCell label={<><b className="pk-text">고르기</b> 하나는 라디오(다시 눌러도 그대로) · 여럿은 체크박스(다시 누르면 풀린다)</>}>
+        <CapCell label={<><b className="pk-text">고르기</b> 하나는 라디오(다시 눌러도 그대로) · 여럿은 체크박스(다시 누르면 풀립니다)</>}>
           <Board>
             <Form gap={t.field.form.gapY}>
               <F label="거래 종류">
@@ -467,7 +467,7 @@ const Uses: Fig = ({ caption }) => {
             </Form>
           </Board>
         </CapCell>
-        <CapCell label={<><b className="pk-text">제안</b> 누르면 칸에 값을 넣는 버튼 — 고른 모습이 없다</>}>
+        <CapCell label={<><b className="pk-text">제안</b> 누르면 칸에 값을 넣는 버튼 — 고른 모습이 없습니다</>}>
           <Board>
             <F label="예산" description="누르면 금액이 그 값으로 바뀌어요.">
               <div className="flex flex-col" style={{ gap: t.field.gap }}>
@@ -523,7 +523,7 @@ const SingleGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     {/* 목록 위 줄이 한 줄에 다 보이게 위아래로 놓는다 */}
     <div className="flex w-full max-w-[760px] flex-col gap-4">
-      <Verdict ok note='거르기의 "전체" 는 맨 앞 선택지("태그 없음" 은 맨 뒤) · 폼은 기본값 또는 "{칸 이름} 없음" 을 맨 앞에 — 늘 하나가 골라져 있다'>
+      <Verdict ok note='거르기의 "전체" 는 맨 앞 선택지("태그 없음" 은 맨 뒤) · 폼은 기본값 또는 "{칸 이름} 없음" 을 맨 앞에 — 늘 하나가 골라져 있습니다'>
         <div className="flex w-full flex-wrap items-start justify-center gap-x-8 gap-y-6">
           <MemoTags items={[['전체', true], ['업무'], ['여행'], ['가족'], ['태그 없음']]} />
           <W w={280}>
@@ -533,7 +533,7 @@ const SingleGuide: Fig = ({ caption }) => (
           </W>
         </div>
       </Verdict>
-      <Verdict ok={false} note='"전체" 가 세 번째 — 조건 사이에 섞여 거르지 않는 자리를 찾기 어렵다'>
+      <Verdict ok={false} note='"전체" 가 세 번째 — 조건 사이에 섞여 거르지 않는 자리를 찾기 어렵습니다'>
         <MemoTags items={[['업무'], ['여행'], ['전체', true], ['가족'], ['태그 없음']]} />
       </Verdict>
     </div>
@@ -543,7 +543,7 @@ const SingleGuide: Fig = ({ caption }) => (
 const MultiGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="다시 누르면 풀린다 — 몇 개까지 고를 수 있는지는 Field 설명에">
+      <Verdict ok note="다시 누르면 풀립니다 — 몇 개까지 고를 수 있는지는 Field 설명에">
         <W>
           <div className="flex flex-col gap-3">
             <F label="알림" description="3개까지 고를 수 있어요.">
@@ -559,7 +559,7 @@ const MultiGuide: Fig = ({ caption }) => (
           </div>
         </W>
       </Verdict>
-      <Verdict ok={false} note='"전체 선택" — 다른 칩을 함께 바꿔 무엇이 골라졌는지 짐작하기 어렵다'>
+      <Verdict ok={false} note='"전체 선택" — 다른 칩을 함께 바꿔 무엇이 골라졌는지 짐작하기 어렵습니다'>
         <W>
           <F label="알림">
             <Chips items={[['전체 선택', true], ['당일', true], ['1일 전', true], ['3일 전', true], ['1주 전', true]]} />
@@ -644,7 +644,7 @@ const ExcludeGuide: Fig = ({ caption }) => {
             </F>
           </W>
         </Verdict>
-        <Verdict ok={false} note="누를 때마다 고름 → 빼고 → 해제를 도는 3상태 칩 — 넣기 · 빼기가 한 줄에 섞이고, 칩만 보고는 다음 상태를 알 수 없다">
+        <Verdict ok={false} note="누를 때마다 고름 → 빼고 → 해제를 도는 3상태 칩 — 넣기 · 빼기가 한 줄에 섞이고, 칩만 보고는 다음 상태를 알 수 없습니다">
           <W w={320}>
             <F label="카테고리" description='한 번 더 누르면 "빼고" 가 돼요.'>
               <G>
@@ -678,12 +678,12 @@ function Budget({ picked }: { picked?: string }) {
 const SuggestionGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="누르면 값을 넣는 버튼 — 지금 값은 칸이 보이고, 다시 누르면 같은 값을 다시 넣는다">
+      <Verdict ok note="누르면 값을 넣는 버튼 — 지금 값은 칸이 보이고, 다시 누르면 같은 값을 다시 넣습니다">
         <W>
           <Budget />
         </W>
       </Verdict>
-      <Verdict ok={false} note='칸 값과 같은 칩을 고른 모습으로 — "이 값만 고를 수 있다" 로 읽히고, 칸을 고치면 어긋난다'>
+      <Verdict ok={false} note='칸 값과 같은 칩을 고른 모습으로 — "이 값만 고를 수 있다" 로 읽히고, 칸을 고치면 어긋납니다'>
         <W>
           <Budget picked="30만" />
         </W>
@@ -692,12 +692,12 @@ const SuggestionGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 표면 — Solid 의 바탕은 투명한 bg-neutral-weak-alpha(v120)라 회색 바닥 · 흰 표면 어디서나 보인다. 불투명 bg-neutral-weak 는
-// 라이트에서 회색 바닥과 같은 gray-200 이라 사라진다 — 그 차이가 라이트에서만 보여 라이트로 그린다
+// 표면 — Solid 의 바탕은 투명한 bg-neutral-weak-alpha 라 회색 바닥 · 흰 표면 어디서나 보인다. 불투명 bg-neutral-weak 는
+// 라이트에서 회색 바닥과 같은 색이라 사라진다 — 그 차이가 라이트에서만 보여 라이트로 그린다
 const SurfaceGuide: Fig = ({ caption }) => {
   const m: Mode = 'light';
   const basement = rc('bg-layer-basement', m);
-  // 넷째 "결제 수단" 은 막힌 칩 — 막혀도 바탕은 그대로, 글 · 아이콘만 fg-disabled(2026-10-17 사용자 결정 — 03-B 결정 1 A)
+  // 넷째 "결제 수단" 은 막힌 칩 — 막혀도 바탕은 그대로, 글 · 아이콘만 fg-disabled
   const row = (v: ChipVariant, brand: Brand = 'desk', look = cl(brand)) => (
     <ChipGroupView look={look} mode={m} layout="wrap">
       {['기간', '카테고리', '금액', '결제 수단'].map((l, i) => (
@@ -718,7 +718,7 @@ const SurfaceGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok bg={basement} note="Solid 는 투명한 bg-neutral-weak-alpha — 회색 바닥 위에서도, 흰 표면 위에서도 보인다(1.11:1). 막힌 칩(결제 수단)도 바탕은 그대로, 글 · 아이콘만 fg-disabled">
+        <Verdict ok bg={basement} note="Solid 는 투명한 bg-neutral-weak-alpha — 회색 바닥 위에서도, 흰 표면 위에서도 보입니다(1.11:1). 막힌 칩(결제 수단)도 바탕은 그대로, 글 · 아이콘만 fg-disabled">
           <div className="flex w-full max-w-[320px] flex-col gap-4">
             <div className="flex flex-col gap-1.5 px-1">
               <Muted mode={m}>회색 바닥(bg-layer-basement) — Solid</Muted>
@@ -732,7 +732,7 @@ const SurfaceGuide: Fig = ({ caption }) => {
             </div>
           </div>
         </Verdict>
-        <Verdict ok={false} bg={basement} note="칩 바탕을 불투명 bg-neutral-weak(막힘 bg-disabled)로 — 라이트에서 회색 바닥과 같은 색(1.00:1)이라 칩의 자리가 사라진다">
+        <Verdict ok={false} bg={basement} note="칩 바탕을 불투명 bg-neutral-weak(막힘 bg-disabled)로 — 라이트에서 회색 바닥과 같은 색(1.00:1)이라 칩의 자리가 사라집니다">
           <div className="flex w-full max-w-[320px] flex-col gap-1.5 px-1">
             <Muted mode={m}>회색 바닥(bg-layer-basement) — 불투명 bg-neutral-weak · 막힘 bg-disabled</Muted>
             {row('solid', 'desk', opaque)}
@@ -743,7 +743,7 @@ const SurfaceGuide: Fig = ({ caption }) => {
   );
 };
 
-// 큰 글자(200%) — 웹은 rem 이라 상자도 배율대로, 앱은 높이가 최소 높이라 글을 따라 늘어난다(2026-10-17 사용자 결정 — 03-E 결정 1 C).
+// 큰 글자(200%) — 웹은 rem 이라 상자도 배율대로, 앱은 높이가 최소 높이라 글을 따라 늘어난다.
 // 값은 chip.yaml 에서 — 웹은 medium 의 높이 · 좌우 · 글 · 지우기를 배율로 곱하고, 앱은 글만 곱한 뒤 위아래를 (높이 − 줄 높이) ÷ 2 로 둔다
 const TEXT_ZOOM = 2;
 function ZoomChips({ platform, mode }: { platform: 'web' | 'app'; mode: Mode }) {
@@ -788,7 +788,7 @@ const BigText: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 줄보다 긴 칩 — 줄 폭에서 멈추고 글 끝을 말줄임, 지우기 × 는 남는다(2026-10-17 사용자 결정 — 03-E 결정 2 A).
+// 줄보다 긴 칩 — 줄 폭에서 멈추고 글 끝을 말줄임, 지우기 × 는 남는다.
 // 폰 폭 360 의 안쪽 312 — 넣은 값(사용자가 친 글)은 길이를 고를 수 없다
 const LONG_VALUE = '주말 가족 여행 준비물 · 장보기 목록 · 숙소 체크인 시간 확인';
 const LongLabel: Fig = ({ caption }) => {
@@ -803,12 +803,12 @@ const LongLabel: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="줄보다 긴 칩만 줄 폭에서 멈추고 글 끝을 … 로 — 지우기 × 는 늘 보이고, 보조 기술은 글 전체를 읽는다">
+        <Verdict ok note="줄보다 긴 칩만 줄 폭에서 멈추고 글 끝을 … 로 — 지우기 × 는 늘 보이고, 보조 기술은 글 전체를 읽습니다">
           <W w={312}>
             <F label="메모 태그">{people(true)}</F>
           </W>
         </Verdict>
-        <Verdict ok={false} note="칩이 글만큼 넓어져 줄 밖으로 — 웹은 화면이 옆으로 밀리고, 앱은 지우기 × 가 잘린다">
+        <Verdict ok={false} note="칩이 글만큼 넓어져 줄 밖으로 — 웹은 화면이 옆으로 밀리고, 앱은 지우기 × 가 잘립니다">
           <W w={312}>
             <div className="overflow-hidden">
               <F label="메모 태그">{people(false)}</F>
@@ -836,14 +836,14 @@ const LabelGuide: Fig = ({ caption }) => (
           </div>
         </W>
       </Verdict>
-      <Verdict ok={false} note="문장 · 동작을 붙였다 — 칩이 길어지고 말투가 섞인다">
+      <Verdict ok={false} note="문장 · 동작을 붙였습니다 — 칩이 길어지고 말투가 섞입니다">
         <W w={260}>
           <F label="반복">
             <Chips items={[['매일 반복하기'], ['매주 선택', true], ['한 달에 한 번씩 반복해요']]} />
           </F>
         </W>
       </Verdict>
-      <Verdict ok={false} note="코드값 — 사람이 읽는 글로 바꾼다(관리자 · 구성원)">
+      <Verdict ok={false} note="코드값 — 사람이 읽는 글로 바꿉니다(관리자 · 구성원)">
         <W w={260}>
           <F label="권한">
             <Chips brand="hr" items={[['ADMIN', true], ['USER']]} />
@@ -961,7 +961,32 @@ const ExSuggestion: Fig = () => (
   </DemoFrame>
 );
 
+// 개요 카드 — 라이트 칩 줄 셋(하나 고르기 Outline Strong · 필터 바 Solid · 여럿 고르기 Outline Weak)
+const Thumb: Fig = () => (
+  <div style={{ width: 280 }}>
+    <Surface mode="light">
+      <div className="flex flex-col gap-3">
+        <G mode="light">
+          <C mode="light" v="outlineStrong" on l="지출" />
+          <C mode="light" v="outlineStrong" l="수입" />
+          <C mode="light" v="outlineStrong" l="이체" />
+        </G>
+        <G mode="light">
+          <C mode="light" v="solid" on l="이번 달" suf="chevron-down" />
+          <C mode="light" v="solid" l="카테고리" suf="chevron-down" />
+        </G>
+        <G mode="light">
+          <C mode="light" on l="식비" />
+          <C mode="light" l="교통" />
+          <C mode="light" on l="쇼핑" />
+        </G>
+      </div>
+    </Surface>
+  </div>
+);
+
 export const chipFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

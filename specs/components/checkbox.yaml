@@ -1,15 +1,9 @@
-# Checkbox 의 수치 원본 — 구조는 SEED Checkbox(Checkmark · Checkbox · Checkbox Group, 2026-09-30 사용자 결정).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Checkbox 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 부위: root 는 Checkbox 한 줄(칸 + 라벨), checkmark 는 칸(SEED Checkmark — 따로 쓸 수 있다), group 은 묶음.
-# 체크 여부(checked)는 hover · pressed · disabled 와 곱해지므로 상태가 아니라 축이다(specs/CLAUDE.md).
-#
-# SEED 와 다른 자리(checkbox.md 의 "SEED 와 다른 점")
-#   - 선택 안 된 칸의 테두리는 stroke-neutral-solid(3:1 이상 — v109). SEED 는 옅은 선(stroke.neutral-weak).
-#   - 투명한 누름 · 옅은 테두리는 SEED 가 투명도 있는 색(bg.transparent-pressed · stroke.neutral-muted)이라
-#     불투명한 가장 가까운 역할(bg-layer-default-pressed · stroke-neutral-weak)을 쓴다.
-#   - hovered(웹) · focused(웹 · 앱의 키보드 포커스) 상태를 더한다(v106 · 앱은 2026-10-08). 오류 상태는 두지 않는다 — 묶음 아래 안내 글(사용자 결정).
-#   - 묶음 줄 사이는 12(사용자 결정) — SEED 는 4 다. 4 면 이웃 줄의 44 영역과 겹쳐 한 줄이 36 · 40 만 받는다.
+# 부위: root 는 Checkbox 한 줄(칸 + 라벨), checkmark 는 칸(Checkmark — 따로 쓸 수 있습니다), group 은 묶음(Checkbox Group)입니다.
+# 체크 여부(checked)는 hover · pressed · disabled 와 곱해지므로 상태가 아니라 축으로 둡니다(specs/CLAUDE.md).
+# 누름 · 비활성 테두리는 불투명한 역할 색(bg-layer-default-pressed · stroke-neutral-weak)을 씁니다.
+# 오류 상태는 두지 않습니다 — 묶음 아래 안내 글로 알립니다(checkbox.md 의 "오류").
 
 name: Checkbox
 
@@ -48,10 +42,10 @@ defaults:
 
 states:
   enabled: 기본
-  hovered: 웹 — 누름 색과 같다(v106), 축소는 없다
-  focused: 키보드 포커스에만 링 — 웹 · 앱(앱은 2026-10-08 부터, 손가락으로 누를 때는 없다)
-  pressed: 누름 색 + 칸 세로 2px 거리 축소(v104)
-  disabled: 전용 색(v106) — 불투명도로 흐리게 하지 않는다
+  hovered: 웹 — 누름 색과 같다, 축소는 없다
+  focused: 키보드 포커스에만 링 — 웹 · 앱(앱은 손가락으로 누를 때는 없다)
+  pressed: 누름 색 + 칸 세로 2px 거리 축소
+  disabled: 전용 색 — 불투명도로 흐리게 하지 않는다
 
 rules:
   # ── 공통 ──────────────────────────────────────────────
@@ -61,7 +55,7 @@ rules:
         gap: $spacing-x2
         cursor: pointer
         alignSelf: { value: flex-start, note: "줄은 칸 + 라벨만큼만 차지한다 — 묶음 폭으로 늘이지 않는다(직접 짠 줄은 묶음 폭을 쓴다)" }
-        touchTarget: { value: 44 × 44, note: "라벨까지 묶어 44 — 목록 행에서 칸만 쓰면 줄 전체가 누르는 영역(SEED touch target · 기초 Inclusive)" }
+        touchTarget: { value: 44 × 44, note: "라벨까지 묶어 44 — 목록 행에서 칸만 쓰면 줄 전체가 누르는 영역(기초 Inclusive)" }
       checkmark:
         radius: $radius-r1
         transitionProperty: background-color, border-color, color
@@ -73,20 +67,20 @@ rules:
         fontFamily: $font-sans
         foreground: $color-fg-neutral
       group:
-        gap: { value: $spacing-x3, note: "묶음 안 줄 사이(세로) — 줄 32 · 36 에 12 를 더해 44 · 48 마다 한 줄이라 이웃 줄과 누르는 영역(44)이 겹치지 않는다(사용자 결정 — SEED 는 4)" }
+        gap: { value: $spacing-x3, note: "묶음 안 줄 사이(세로) — 줄 32 · 36 에 12 를 더해 44 · 48 마다 한 줄이라 이웃 줄과 누르는 영역(44)이 겹치지 않는다" }
     pressed:
       checkmark:
-        scale: { value: 세로 2px 축소, note: "칸만 준다 — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px(Feedback 의 눌림 피드백, v104)" }
+        scale: { value: 세로 2px 축소, note: "칸만 준다 — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px(Feedback 의 눌림 피드백)" }
         scaleDuration: $motion-duration-pressed-scale
         scaleEasing: $motion-ease-pressed-scale
     focused:
       focusRing:
-        width: { value: 2px, note: "웹 · 앱 같다 — 앱은 하드웨어 키보드로 옮길 때만 그린다(Flutter FocusHighlightMode.traditional), 손가락으로 누를 때는 없다(2026-10-08 — DESIGN.md State · Button 과 같다)" }
+        width: { value: 2px, note: "웹 · 앱 같다 — 앱은 하드웨어 키보드로 옮길 때만 그린다(Flutter FocusHighlightMode.traditional), 손가락으로 누를 때는 없다(DESIGN.md State · Button 과 같다)" }
         offset: 2px
         color: $color-stroke-focus-ring
     disabled:
       root:
-        cursor: { value: not-allowed, note: "포인터 이벤트는 켜 둔다 — 끄면 이 커서가 안 보인다(SEED 와 같다)" }
+        cursor: { value: not-allowed, note: "포인터 이벤트는 켜 둔다 — 끄면 이 커서가 안 보인다" }
       label:
         foreground: $color-fg-disabled
 
@@ -127,14 +121,14 @@ rules:
   # ── Square — 칸 + 체크 ────────────────────────────────
   - when: { shape: square, checked: unchecked }
     enabled:
-      checkmark: { background: transparent, borderColor: { value: $color-stroke-neutral-solid, note: "3:1 이상 — v109(SEED 는 옅은 선)" }, borderWidth: 1px }
+      checkmark: { background: transparent, borderColor: { value: $color-stroke-neutral-solid, note: "3:1 이상 — 칸을 선으로 알아볼 수 있게(WCAG 1.4.11)" }, borderWidth: 1px }
       icon: { glyph: { value: none, note: "선택 안 된 칸에는 아이콘이 없다" } }
     hovered:
       checkmark: { background: $color-bg-layer-default-pressed }
     pressed:
-      checkmark: { background: { value: $color-bg-layer-default-pressed, note: "SEED bg.transparent-pressed 의 불투명 짝" } }
+      checkmark: { background: { value: $color-bg-layer-default-pressed, note: "불투명한 누름 색" } }
     disabled:
-      checkmark: { background: $color-bg-disabled, borderColor: { value: $color-stroke-neutral-weak, note: "SEED stroke.neutral-muted 의 불투명 짝" } }
+      checkmark: { background: $color-bg-disabled, borderColor: { value: $color-stroke-neutral-weak, note: "불투명한 옅은 테두리" } }
 
   - when: { shape: square, checked: checked }
     enabled:
@@ -204,7 +198,7 @@ rules:
     hovered:
       checkmark: { background: $color-bg-neutral-weak }
     pressed:
-      checkmark: { background: { value: $color-bg-neutral-weak, note: "SEED palette.gray-200" } }
+      checkmark: { background: { value: $color-bg-neutral-weak, note: "불투명한 옅은 회색 바탕" } }
     disabled:
       icon: { color: $color-fg-disabled }
   - when: { shape: ghost, tone: neutral, checked: indeterminate }
@@ -222,7 +216,7 @@ rules:
     hovered:
       checkmark: { background: $color-bg-brand-weak-pressed }
     pressed:
-      checkmark: { background: { value: $color-bg-brand-weak-pressed, note: "SEED palette.carrot-200 자리 — 브랜드 200" } }
+      checkmark: { background: { value: $color-bg-brand-weak-pressed, note: "브랜드 200 단계의 옅은 바탕" } }
     disabled:
       icon: { color: $color-fg-disabled }
   - when: { shape: ghost, tone: brand, checked: indeterminate }
@@ -240,9 +234,9 @@ motion:
     duration: $motion-duration-color-transition
     easing: $motion-ease-easing
     properties: [background, border, icon color]
-    note: "칸의 채움 · 테두리 · 아이콘 색이 함께 바뀐다(SEED Checkmark 와 같다) — 아이콘은 커지거나 줄지 않는다"
+    note: "칸의 채움 · 테두리 · 아이콘 색이 함께 바뀐다 — 아이콘은 커지거나 줄지 않는다"
   누름:
     duration: $motion-duration-pressed-scale
     easing: $motion-ease-pressed-scale
     properties: [scale]
-    note: "칸만 세로 2px 거리 축소 — 라벨은 줄지 않는다(v104)"
+    note: "칸만 세로 2px 거리 축소 — 라벨은 줄지 않는다"

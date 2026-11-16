@@ -1,21 +1,17 @@
-# Notification Badge 의 수치 원본 — 구조는 SEED Notification Badge(2026-10-03 사용자 결정, 표시 비교 페이지 4A · 14).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Notification Badge 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 안 읽은 알림 · 확인하지 않은 새 것이 있다는 신호 — 점(small, 있음)과 숫자(large, 몇 개). 아이콘 버튼 · 탭 글에 붙고,
-# 보면 사라진다. 혼자 누르지 않는다 — 붙은 버튼이 누른다. 점 · 숫자는 보조 기술에 숨기고 붙은 버튼 · 탭의 이름에 넣는다.
-# Tabs · Chip Tabs · Segmented Control 의 알림 점은 이 small 이다(값은 그 스펙에도 있다 — tabs.yaml · chip-tabs.yaml ·
-# segmented-control.yaml 의 notification).
+# 안 읽은 알림 · 확인하지 않은 새 것이 있다는 신호입니다 — 점(small, 있음)과 숫자(large, 몇 개). 아이콘 버튼 · 탭 글에 붙고
+# 보면 사라집니다. 혼자 누르지 않고 붙은 버튼이 누릅니다. 점 · 숫자는 보조 기술에 숨기고 붙은 버튼 · 탭의 이름에 넣습니다.
+# Tabs · Chip Tabs · Segmented Control 의 알림 점은 이 small 입니다(값은 tabs.yaml · chip-tabs.yaml ·
+# segmented-control.yaml 의 notification 에도 있습니다).
 #
-# 자리는 붙는 대상의 상자에서 잰다(SEED 재현 실측 — 24 아이콘 기준).
+# 자리는 붙는 대상의 상자에서 잽니다(24 아이콘 기준).
 #   icon · small : 점의 오른쪽 위 꼭짓점이 (아이콘 폭 − 1, 1) — 24 아이콘이면 x 17 ~ 23 · y 1 ~ 7(아이콘 안쪽)
 #   icon · large : 알약의 왼쪽 아래 꼭짓점이 (아이콘 폭 − 8, 14) — 24 아이콘이면 x 16 ~ 34 · y −4 ~ 14(위 · 오른쪽으로 튀어나온다)
 #   text         : 글 끝에서 2 뒤, 줄 상자 위 끝에 맞춘다(점 · 알약 모두)
 #
-# SEED 와 다른 자리(notification-badge.md 의 "SEED 와 다른 점")
-#   - 점은 브랜드 글자색 fg-brand(다크에서 밝은 짝) — SEED 는 점 · 숫자 모두 bg.brand-solid. groo 다크에서 bg-brand-solid 점은
-#     표면과 Desk · HR 1.73:1 로 묻힌다. 숫자 알약은 SEED 대로 bg-brand-solid + 흰 글자(숫자가 정보를 들고 있다).
-#   - 숫자 상한은 "99+"(SEED 두 문서 중 Bottom Navigation 쪽 — Notification Badge 문서의 "최대 4자 · 999+" 가 아니다).
-#   - 붙은 버튼 · 탭의 이름에 "새 알림 3개" 를 넣는다 — SEED 는 이름이 없어 소리로 알 수 없다.
+# 점은 브랜드 글자색 fg-brand(다크에서 밝은 짝)입니다 — 다크에서 bg-brand-solid 점은 표면과 Desk · HR 1.73:1 로 묻힙니다.
+# 숫자 알약은 bg-brand-solid + 흰 글자입니다(숫자가 정보를 들고 있습니다). 숫자 상한은 "99+" 입니다.
 
 name: NotificationBadge
 
@@ -26,7 +22,7 @@ slots:
 variants:
   size:
     small: 점 6 — 새 것이 있는지만(탭 · Segmented · 상단 바)
-    large: 숫자 18 — 몇 개인지가 중요할 때(상단 바 알림)
+    large: 숫자 18 — 몇 개인지가 중요할 때(하단 탭 바의 칸 · 본문 아이콘 버튼). 상단 바에는 두지 않는다
   attach:
     icon: 아이콘에 붙는다 — 상단 바 · 탭 바의 아이콘 버튼
     text: 글에 붙는다 — 탭 · Segmented 의 글 오른쪽 위
@@ -61,7 +57,7 @@ rules:
         paddingX: $spacing-x1
         background: { value: $color-bg-brand-solid, note: "알약 면은 다크 표면과 Desk · HR 1.73 — 흰 숫자가 정보를 들고 있다(다크 Desk · HR 8.36)" }
       label:
-        typography: { value: $text-t1-static, note: "11 / 15 — 글자 크기 설정을 따르지 않는 px(웹 text-t1-static, 앱 TextScaler.noScaling — SEED t1-static). 커지면 아이콘을 덮는다" }
+        typography: { value: $text-t1-static, note: "11 / 15 — 글자 크기 설정을 따르지 않는 px(웹 text-t1-static, 앱 TextScaler.noScaling). 커지면 아이콘을 덮는다" }
         foreground: { value: $color-static-white, note: "Desk 8.38 · 다크 8.36 · HR 8.17 · 8.36" }
         numerals: { value: tabular-nums, note: "숫자 폭을 같게 — 수가 바뀌어도 흔들리지 않는다" }
 
@@ -74,14 +70,14 @@ rules:
     enabled:
       root:
         top: { value: 1px, note: "아이콘 상자 위에서 1 — 24 아이콘이면 y 1 ~ 7" }
-        right: { value: 1px, note: "아이콘 상자 오른쪽에서 1 — 24 아이콘이면 x 17 ~ 23. 아이콘 안쪽에 놓인다(SEED: top 7 · right 7 + translate(100%, −100%))" }
+        right: { value: 1px, note: "아이콘 상자 오른쪽에서 1 — 24 아이콘이면 x 17 ~ 23. 아이콘 안쪽에 놓인다" }
   - when: { size: large, attach: icon }
     enabled:
       root:
-        position: { value: "absolute — 왼쪽 아래 꼭짓점 = (아이콘 폭 − 8, 14)", note: "24 아이콘이면 (16, 14) — left 16 · top −4. 위 · 오른쪽으로 튀어나와 숫자가 길수록 오른쪽으로 자란다(SEED: top 14 · right 8 + translate(100%, −100%)). 한 자리면 아이콘 버튼 44 안, 두 자리 · 99+ 는 버튼 밖으로 나간다" }
+        position: { value: "absolute — 왼쪽 아래 꼭짓점 = (아이콘 폭 − 8, 14)", note: "24 아이콘이면 (16, 14) — left 16 · top −4. 위 · 오른쪽으로 튀어나와 숫자가 길수록 오른쪽으로 자란다. 한 자리면 아이콘 버튼 44 안, 두 자리 · 99+ 는 버튼 밖으로 나간다" }
   - when: { attach: text }
     enabled:
       root:
-        position: { value: "absolute — 글 끝 + 2 · 줄 상자 위 끝", note: "글 상자 기준 — 마지막 글자 뒤 2, 위는 글 줄 상자의 위 끝(글자 상자보다 1 위). 탭 · 칸 폭과 줄 높이를 바꾸지 않는다(SEED: right −2 + translate(100%, 0)). Chip Tabs 만 칩 안 글 뒤 6 · 세로 가운데 흐름(chip-tabs.yaml)" }
+        position: { value: "absolute — 글 끝 + 2 · 줄 상자 위 끝", note: "글 상자 기준 — 마지막 글자 뒤 2, 위는 글 줄 상자의 위 끝(글자 상자보다 1 위). 탭 · 칸 폭과 줄 높이를 바꾸지 않는다. Chip Tabs 만 칩 안 글 뒤 6 · 세로 가운데 흐름(chip-tabs.yaml)" }
         gap: { value: 2px, note: "글 끝 ↔ 점 · 알약" }
 

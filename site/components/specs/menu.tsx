@@ -123,7 +123,7 @@ const Anatomy: Fig = ({ caption }) => {
             ['1', '앞 아이콘 — 쓰면 모든 줄에'],
             ['2', '이름'],
             ['3', '설명 — 꼭 필요한 줄에만'],
-            ['4', '뒤 아이콘 — 바깥 링크처럼 방향을 알릴 때만(앞 아이콘과 한 줄에 두지 않는다)'],
+            ['4', '뒤 아이콘 — 바깥 링크처럼 방향을 알릴 때만(앞 아이콘과 한 줄에 두지 않습니다)'],
           ]}
         />
       </div>
@@ -251,7 +251,7 @@ const States: Fig = ({ caption }) => (
             <Board mode={mode} style={{ padding: '24px 40px 24px 56px' }}>
               <Menu groups={MEMO_MENU} mode={mode} states={{ edit: 'hovered', delete: 'focused' }} decor={{ items: { edit: <Cursor />, delete: <KeyCap>↓</KeyCap> } }} />
             </Board>
-            <Cap strong={`${modeName(mode)} — 마우스 · 키보드`}>마우스는 수정 위(알약) · 키보드 위치는 삭제(링) — 둘이 따로 보인다</Cap>
+            <Cap strong={`${modeName(mode)} — 마우스 · 키보드`}>마우스는 수정 위(알약) · 키보드 위치는 삭제(링) — 둘이 따로 보입니다</Cap>
           </div>
           <div className="flex w-[300px] max-w-full flex-col items-center gap-2">
             <Board mode={mode} brand="hr" style={{ padding: '24px 40px 24px 56px' }}>
@@ -267,7 +267,7 @@ const States: Fig = ({ caption }) => (
 
 // ── Guidelines ────────────────────────────────────────────
 // 메뉴는 실행만 — 테마는 설정의 List 라디오 줄
-// 테마는 누르는 순간 바뀌는 고르기 — 설정 화면의 List 라디오 줄(select.md "고르는 컴포넌트 고르기" · 2026-10-22 1B)
+// 테마는 누르는 순간 바뀌는 고르기 — 설정 화면의 List 라디오 줄(select.md "고르는 컴포넌트 고르기")
 function ThemeSettings({ mode = 'auto' }: { mode?: Mode }) {
   const look = listLook('desk');
   return (
@@ -299,12 +299,12 @@ function ThemeMenuWindow({ mode = 'auto' }: { mode?: Mode }) {
 const RoleGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="테마처럼 값을 고르는 일은 설정 화면의 List 라디오 줄 — 지금 값이 늘 보이고, 고르면 바로 반영된다" bg={BASEMENT}>
+      <Verdict ok note="테마처럼 값을 고르는 일은 설정 화면의 List 라디오 줄 — 지금 값이 늘 보이고, 고르면 바로 반영됩니다" bg={BASEMENT}>
         <Scaled w={400} h={290} s={0.64}>
           <ThemeSettings />
         </Scaled>
       </Verdict>
-      <Verdict ok={false} note="메뉴에 체크를 달아 값을 고르게 한다 — 메뉴는 누르면 실행하고 닫히는 동작 목록이다(고른 표시가 없다)" bg={BASEMENT}>
+      <Verdict ok={false} note="메뉴에 체크를 달아 값을 고르게 하기 — 메뉴는 누르면 실행하고 닫히는 동작 목록입니다(고른 표시가 없습니다)" bg={BASEMENT}>
         <Scaled w={400} h={290} s={0.64}>
           <ThemeMenuWindow />
         </Scaled>
@@ -313,11 +313,11 @@ const RoleGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 줄의 동작 — 목록 줄은 ⋮ 없이 누르면 들어가고, 동작은 들어간 화면 머리 ⋮(2026-10-25) · 줄 끝 ⋮ · 늘 보이는 아이콘 묶음
+// 줄의 동작 — 목록 줄은 ⋮ 없이 누르면 들어가고, 동작은 들어간 화면 머리 ⋮ · 줄 끝 ⋮ · 늘 보이는 아이콘 묶음
 const RowGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="grid w-full max-w-[760px] gap-4 md:grid-cols-2">
-      <Verdict ok note="목록 줄에는 ⋮ 가 없다 — 줄을 누르면 한 단계 들어간다(메모 화면)" bg={BASEMENT}>
+      <Verdict ok note="목록 줄에는 ⋮ 가 없습니다 — 줄을 누르면 한 단계 들어갑니다(메모 화면)" bg={BASEMENT}>
         <Scaled w={400} h={300} s={0.64}>
           <MemoWindow h={300} />
         </Scaled>
@@ -327,12 +327,12 @@ const RowGuide: Fig = ({ caption }) => (
           <MemoDetailWindow open h={300} />
         </Scaled>
       </Verdict>
-      <Verdict ok={false} note="좁은 목록 줄 끝마다 ⋮ — 같은 아이콘이 줄 수만큼 늘어난다. 줄에 ⋮ 를 둘 수 있는 건 콘텐츠가 높은 카드 머리뿐" bg={BASEMENT}>
+      <Verdict ok={false} note="좁은 목록 줄 끝마다 ⋮ — 같은 아이콘이 줄 수만큼 늘어납니다. 줄에 ⋮ 를 둘 수 있는 건 콘텐츠가 높은 카드 머리뿐입니다" bg={BASEMENT}>
         <Scaled w={400} h={300} s={0.64}>
           <MemoWindow trailing="kebab" h={300} />
         </Scaled>
       </Verdict>
-      <Verdict ok={false} note="수정 · 삭제 아이콘을 줄마다 늘 — 버튼이 줄마다 늘고, 아이콘만으로는 뜻을 다 전하지 못한다" bg={BASEMENT}>
+      <Verdict ok={false} note="수정 · 삭제 아이콘을 줄마다 늘 — 버튼이 줄마다 늘고, 아이콘만으로는 뜻을 다 전하지 못합니다" bg={BASEMENT}>
         <Scaled w={400} h={300} s={0.64}>
           <MemoWindow trailing="icons" h={300} />
         </Scaled>
@@ -350,13 +350,13 @@ const GroupGuide: Fig = ({ caption }) => {
         <Verdict ok note="가장 많이 쓰는 동작을 위에, 위험한 동작은 맨 아래 묶음에 따로" bg={BASEMENT}>
           <Menu groups={MEMO_MENU} />
         </Verdict>
-        <Verdict ok={false} note="위험한 동작이 맨 위 — 습관처럼 누르는 첫 자리에 삭제가 온다" bg={BASEMENT}>
+        <Verdict ok={false} note="위험한 동작이 맨 위 — 습관처럼 누르는 첫 자리에 삭제가 옵니다" bg={BASEMENT}>
           <Menu groups={[{ items: [DELETE, PIN, EDIT, DUPLICATE] }]} />
         </Verdict>
-        <Verdict ok={false} note="일부 줄에만 아이콘 — 모든 줄에 두거나 모두 뺀다" bg={BASEMENT}>
+        <Verdict ok={false} note="일부 줄에만 아이콘 — 모든 줄에 두거나 모두 뺍니다" bg={BASEMENT}>
           <Menu groups={mixed} />
         </Verdict>
-        <Verdict ok={false} note="줄마다 선 — 선은 묶음 사이에만 긋고, 줄 사이에는 없다" bg={BASEMENT}>
+        <Verdict ok={false} note="줄마다 선 — 선은 묶음 사이에만 긋고, 줄 사이에는 없습니다" bg={BASEMENT}>
           <Menu groups={[PIN, EDIT, DUPLICATE, DELETE].map((i) => ({ items: [i] }))} />
         </Verdict>
       </div>
@@ -385,7 +385,15 @@ const ResponsiveGuide: Fig = ({ caption }) => {
 const ExHeader: Fig = () => <MemoHeaderMenuDemo kit={mk()} ov={overlayKit()} kebab={iconBtn()} />;
 const ExDescription: Fig = () => <PeopleMenuDemo kit={mk('hr')} ov={overlayKit('hr')} kebab={iconBtn('hr')} />;
 
+// 개요 카드 — 라이트 메뉴 하나(메모 화면 머리 ⋮ 의 목록, 마우스가 수정 위). 폭 200 · 높이 189(위아래 8 + 줄 39 × 4 + 묶음 사이 17), zoom 1 → 200 × 189
+const Thumb: Fig = () => (
+  <div style={{ width: 200, zoom: 1 }}>
+    <Menu groups={MEMO_MENU} mode="light" states={{ edit: 'hovered' }} />
+  </div>
+);
+
 export const menuFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

@@ -1,6 +1,6 @@
 // Segmented Control 페이지의 그림 — specs/components/segmented-control.md 의 `[그림: …](../../site/components/specs/segmented-control.tsx#<id>)` 자리.
 // 컨트롤은 segmented-control.yaml 을 푼 값(segmentedLook)으로, 탭은 tabs.yaml(tabsLook)로 그린다.
-// 화면 속 목록은 아직 스펙이 없어 역할 색 토큰으로 간단히 그린다(kit).
+// 화면 속 목록은 역할 색 토큰으로 간단히 그린다(kit).
 // 폰 화면은 틀 바깥 360 — 트랙은 화면 여백 안 콘텐츠 폭(360 − 24 × 2 = 312)을 채우고 칸이 똑같이 나눈다.
 import { Fragment, type CSSProperties, type ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
@@ -172,7 +172,7 @@ const Anatomy: Fig = ({ caption }) => {
             </span>
           ))}
         </div>
-        <span className="text-center text-[12px] pk-muted">2배로 그렸다 — 고른 칸 뒤에 흰 알약, 셋째 칸에 알림 점</span>
+        <span className="text-center text-[12px] pk-muted">2배로 그렸습니다 — 고른 칸 뒤에 흰 알약, 셋째 칸에 알림 점</span>
       </div>
     </Figure>
   );
@@ -225,7 +225,7 @@ const Width: Fig = ({ caption }) => {
           </div>
         </Wide>
         <Cap strong={`${SCREEN} 폰 — 트랙 ${track}(여백 ${lk.gutter} × 2)`}>
-          칸 = (트랙 − 안쪽 {p} × 2) ÷ 칸 수 — 최소 폭 없이 4개도 들어간다 · 높이 {H} = 칸 {lk.item.minH} + 안쪽 {p} × 2 · 글 {px(lk.text.fontSize)} · {lk.text.fontWeight} · 칸 좌우 {lk.item.padX}
+          칸 = (트랙 − 안쪽 {p} × 2) ÷ 칸 수 — 최소 폭 없이 4개도 들어갑니다 · 높이 {H} = 칸 {lk.item.minH} + 안쪽 {p} × 2 · 글 {px(lk.text.fontSize)} · {lk.text.fontWeight} · 칸 좌우 {lk.item.padX}
         </Cap>
       </div>
     </Panel>
@@ -303,17 +303,17 @@ function StatsSegScreen({ mode = 'auto' }: { mode?: Mode }) {
 const RoleGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="같은 내용을 다르게 보기 — 가계부 목록을 전체 · 지출 · 수입으로, 그 목록 바로 위에서 바로 거른다">
+      <Verdict ok note="같은 내용을 다르게 보기 — 가계부 목록을 전체 · 지출 · 수입으로, 그 목록 바로 위에서 바로 거릅니다">
         <LedgerScreen mode="auto" />
       </Verdict>
-      <Verdict ok={false} note="다른 구역으로 옮기기 — 카테고리 · 추이 · 비교는 내용 전체가 바뀌는 구역이라 화면 맨 위 Tabs 다">
+      <Verdict ok={false} note="다른 구역으로 옮기기 — 카테고리 · 추이 · 비교는 내용 전체가 바뀌는 구역이라 화면 맨 위 Tabs 를 씁니다">
         <StatsSegScreen />
       </Verdict>
     </Pair>
   </Panel>
 );
 
-// 자리 — 내용 바로 위 하나 · 한 화면에 둘(토스 발견 — 지금 셋이 쌓인 자리)
+// 자리 — 내용 바로 위 하나 · 한 화면에 둘(토스 발견)
 function DiscoverScreen({ mode = 'auto' }: { mode?: Mode }) {
   return (
     <Screen title="증권" mode={mode}>
@@ -334,10 +334,10 @@ function DiscoverScreen({ mode = 'auto' }: { mode?: Mode }) {
 const PlacementGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="바꾸는 목록 바로 위에 하나 — 무엇을 거르는지 바로 보인다">
+      <Verdict ok note="바꾸는 목록 바로 위에 하나 — 무엇을 거르는지 바로 보입니다">
         <TodoScreen mode="auto" />
       </Verdict>
-      <Verdict ok={false} note="한 화면에 둘(토스 발견) — 어느 것이 어느 내용을 바꾸는지 헷갈린다. 둘째 축은 Chip(하나 고르기) · Select 로">
+      <Verdict ok={false} note="한 화면에 둘(토스 발견) — 어느 것이 어느 내용을 바꾸는지 헷갈립니다. 둘째 축은 Chip(하나 고르기) · Select 로 둡니다">
         <DiscoverScreen />
       </Verdict>
     </Pair>
@@ -389,10 +389,10 @@ function RangeScreen({ mode = 'auto' }: { mode?: Mode }) {
 const LabelGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note='짧은 명사 — "3개월 · 6개월 · 1년" 처럼 한 줄에 들어간다'>
+      <Verdict ok note='짧은 명사 — "3개월 · 6개월 · 1년" 처럼 한 줄에 들어갑니다'>
         <RangeScreen />
       </Verdict>
-      <Verdict ok={false} note="문장처럼 길게 — 줄이 바뀌어 모든 칸이 높아진다. 이러면 다른 컴포넌트를 쓴다">
+      <Verdict ok={false} note="문장처럼 길게 — 줄이 바뀌어 모든 칸이 높아집니다. 이러면 다른 컴포넌트를 씁니다">
         <PresetScreen items={PRESET_SORT_LONG} />
       </Verdict>
     </Pair>
@@ -406,7 +406,16 @@ const ExBasic: Fig = () => (
   </SegDemoFrame>
 );
 
+// 개요 카드 — 라이트 컨트롤 둘(가계부 전체 · 지출 · 수입, 할 일 넷 — 고른 알약)
+const Thumb: Fig = () => (
+  <div className="flex flex-col gap-4" style={{ width: SCREEN - sl().gutter * 2, zoom: 0.9 }}>
+    <S mode="light" items={SEG_SETS[3].items} value="all" />
+    <S mode="light" items={SEG_SETS[4].items} value="week" />
+  </div>
+);
+
 export const segmentedControlFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

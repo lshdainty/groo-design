@@ -1,6 +1,6 @@
 // Badge 페이지의 그림 — specs/components/badge.md 의 `[그림: …](../../site/components/specs/badge.tsx#<id>)` 자리.
 // 배지는 badge.yaml 을 푼 값(display-look 의 badgeLook)으로, 메타 줄은 tag-group.yaml, 아바타는 avatar.yaml, 칩은 chip.yaml(chipLook),
-// 목록 줄은 list.yaml(ListView)로 그린다. 화면의 글은 비교 페이지(2026-10-03)와 같다 — 현대카드 신용카드 · 가계부 · 캘린더 공유.
+// 목록 줄은 list.yaml(ListView)로 그린다. 화면 — 현대카드 신용카드 · 가계부 · 캘린더 공유.
 import { Fragment, type CSSProperties, type ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { chipLook } from './chip-look';
@@ -165,7 +165,7 @@ const Variant: Fig = ({ caption }) => {
           ))}
         </div>
       </Board>
-      <Cap strong={modeKo(mode)}>같은 톤이면 weak → outline → solid 순으로 강해진다</Cap>
+      <Cap strong={modeKo(mode)}>같은 톤이면 weak → outline → solid 순으로 강해집니다</Cap>
     </div>
   );
   return (
@@ -227,7 +227,7 @@ const Size: Fig = ({ caption }) => {
           );
         })}
       </div>
-      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">분홍 띠 — 높이 · 좌우 여백 · 위 여백 · 아이콘과 글 사이(3배). 글이 커지면(글자 크기 설정) 최소 높이는 그대로 두고 상자가 글을 따라 커진다</p>
+      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">분홍 띠 — 높이 · 좌우 여백 · 위 여백 · 아이콘과 글 사이(3배). 글이 커지면(글자 크기 설정) 최소 높이는 그대로 두고 상자가 글을 따라 커집니다</p>
     </Panel>
   );
 };
@@ -278,10 +278,10 @@ const RoleGuide: Fig = ({ caption }) => {
         </div>
         <div className="flex flex-wrap justify-center gap-x-6 gap-y-1.5 text-[12px] leading-4 pk-muted">
           <span>
-            <b className="pk-text">ⓐ Chip</b> 고르기 · 거르기(누른다)
+            <b className="pk-text">ⓐ Chip</b> 고르기 · 거르기(누름)
           </span>
           <span>
-            <b className="pk-text">ⓑ Badge</b> 상태 · 분류(누르지 않는다)
+            <b className="pk-text">ⓑ Badge</b> 상태 · 분류(누르지 않음)
           </span>
           <span>
             <b className="pk-text">ⓒ Tag Group</b> 메타 — 분류 · 자산 · 시각
@@ -315,7 +315,7 @@ const PressGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="거르기는 알약 Chip(누르면 걸리고 풀린다) · 상태는 둥근 사각 Badge(누르지 않는다)">
+        <Verdict ok note="거르기는 알약 Chip(누르면 걸리고 풀립니다) · 상태는 둥근 사각 Badge(누르지 않습니다)">
           <div className="flex flex-col items-start gap-4">
             <span className="flex flex-wrap gap-2">
               <ChipView look={ck} variant="solid" selected state="enabled" label="식비" suffixIcon="chevron-down" />
@@ -325,7 +325,7 @@ const PressGuide: Fig = ({ caption }) => {
             <TitleLine title="교통 정기권" badge={<B l="연체 3" t="critical" />} />
           </div>
         </Verdict>
-        <Verdict ok={false} note="배지에 지우기 × 를 달아 거르기에 썼다 — 누르는 것은 Chip(입력값 칩 · 필터 칩)이다">
+        <Verdict ok={false} note="배지에 지우기 × 를 달아 거르기에 썼습니다 — 누르는 것은 Chip(입력값 칩 · 필터 칩)입니다">
           <div className="flex flex-col items-start gap-4">
             <span className="flex flex-wrap gap-1.5">
               {fake('식비')}
@@ -350,12 +350,12 @@ const weakRows = (v: BadgeVariant) => [
 const WeakGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair stack>
-      <Verdict ok note="목록은 weak — 줄마다 있어도 무겁지 않고, 뜻은 톤으로 가른다">
+      <Verdict ok note="목록은 weak — 줄마다 있어도 무겁지 않고, 뜻은 톤으로 가릅니다">
         <PhoneBoard>
           <Rows rows={weakRows('weak')} />
         </PhoneBoard>
       </Verdict>
-      <Verdict ok={false} note="줄마다 solid — 화면이 무거워지고 정작 눈에 띄어야 할 연체가 묻힌다">
+      <Verdict ok={false} note="줄마다 solid — 화면이 무거워지고 정작 눈에 띄어야 할 연체가 묻힙니다">
         <PhoneBoard>
           <Rows rows={weakRows('solid')} />
         </PhoneBoard>
@@ -392,7 +392,7 @@ const SurfaceGuide: Fig = ({ caption }) => {
             </div>
           </div>
         </Verdict>
-        <Verdict ok={false} bg={basement} note="회색 바탕 위 중립 weak — 바탕과 같은 색이라 상자가 사라진다">
+        <Verdict ok={false} bg={basement} note="회색 바탕 위 중립 weak — 바탕과 같은 색이라 상자가 사라집니다">
           <div className="flex w-full max-w-[300px] flex-col gap-1.5 px-1">
             <Muted mode={m}>회색 바탕(bg-layer-basement) — weak</Muted>
             {set('weak')}
@@ -415,7 +415,7 @@ function CardLine({ badges }: { badges: ReactNode }) {
 const CountGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair stack>
-      <Verdict ok note="한 줄에 둘까지 — 사이 4, 줄바꿈하지 않는다">
+      <Verdict ok note="한 줄에 둘까지 — 사이 4, 줄바꿈하지 않습니다">
         <W w={360}>
           <CardLine
             badges={
@@ -427,7 +427,7 @@ const CountGuide: Fig = ({ caption }) => (
           />
         </W>
       </Verdict>
-      <Verdict ok={false} note="배지 넷 — 제목이 밀려 잘리고 무엇이 중요한지 흐려진다. 나머지는 상세에서">
+      <Verdict ok={false} note="배지 넷 — 제목이 밀려 잘리고 무엇이 중요한지 흐려집니다. 나머지는 상세에서 보입니다">
         <W w={360}>
           <CardLine
             badges={
@@ -454,7 +454,7 @@ const ToneGuide: Fig = ({ caption }) => (
           <Rows rows={[txRow(TX.trip), { kind: 'button', prefix: { icon: 'trending-up' }, title: '증권 연동', titleBadge: <B l="Pro" t="brand" />, suffix: { chevron: true } }]} />
         </PhoneBoard>
       </Verdict>
-      <Verdict ok={false} note='"달성" 을 브랜드 색으로 — 같은 뜻이 화면마다 다른 색이 되고 브랜드 버튼과 다툰다'>
+      <Verdict ok={false} note='"달성" 을 브랜드 색으로 — 같은 뜻이 화면마다 다른 색이 되고 브랜드 버튼과 다툽니다'>
         <PhoneBoard>
           <Rows rows={[txRow({ ...TX.trip, badge: { l: '달성', t: 'brand' } }), { kind: 'button', prefix: { icon: 'trending-up' }, title: '증권 연동', titleBadge: <B l="Pro" t="brand" />, suffix: { chevron: true } }]} />
         </PhoneBoard>
@@ -475,12 +475,12 @@ const WritingGuide: Fig = ({ caption }) => (
           <B l="새로" t="informative" />
         </span>
       </Verdict>
-      <Verdict ok={false} note="문장이 된 배지 — 글로 쓰거나 Callout 이다">
+      <Verdict ok={false} note="문장이 된 배지 — 글로 쓰거나 Callout 을 씁니다">
         <span className="flex flex-wrap justify-center gap-1.5">
           <B l="결제가 예정되어 있어요" />
         </span>
       </Verdict>
-      <Verdict ok={false} note='영어 대문자 · 코드값 — "새로" · "관리자" 로 바꾼다'>
+      <Verdict ok={false} note='영어 대문자 · 코드값 — "새로" · "관리자" 로 바꿉니다'>
         <span className="flex flex-wrap justify-center gap-1.5">
           <B l="NEW" t="informative" v="solid" style={{ letterSpacing: '0.08em' }} />
           <B l="ROLE_ADMIN" brand="hr" />

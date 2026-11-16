@@ -1,7 +1,7 @@
 // Card 페이지의 그림 — specs/components/card.md 의 `[그림: …](../../site/components/specs/card.tsx#<id>)` 자리.
 // 카드 면 · 머리 · 지표 · 증감 · 순자산 카드는 card.yaml 을 푼 값(cardLook — data-card-view)으로, 카드 안 목록은 list.yaml(ListView)로,
 // 화면 틀은 kit · nav-screens 로 그린다. 화면 예시는 Desk 홈(순자산 · 지표 · 오늘 쓴 돈)과 HR 휴가 현황이고 내용은 지어낸 것이다.
-// 폰은 카드가 아니라 띠 화면이다 — Desk(DESIGN.md Layout "화면 바탕") · HR(그루 이음 이관 결정 HK4 B) 모두. 카드 면은 데스크톱 그림으로, 폰은 띠로 그린다.
+// 폰은 카드가 아니라 띠 화면이다 — Desk(DESIGN.md Layout "화면 바탕") · HR 모두. 카드 면은 데스크톱 그림으로, 폰은 띠로 그린다.
 // 치수 표시(분홍)는 카드 밖 감싼 상자 기준으로 둔다 — 카드는 모서리 밖을 자른다(overflow hidden).
 import type { CSSProperties, ReactNode } from 'react';
 import { Panel } from '../foundations/ui';
@@ -130,14 +130,14 @@ const Surface: Fig = ({ caption }) => {
         <Col strong="데스크톱" cap={`바닥 bg-layer-basement 위 흰 면 + ${c.surface.borderW}px stroke-neutral-weak, 그림자 없음 — 면 ↔ 바닥 ${contrastPair('bg-layer-default', 'bg-layer-basement')}`} w={560}>
           <HomeDesktop mode="light" s={0.45} h={600} />
         </Col>
-        <Col strong="데스크톱 · 다크" cap={`같은 규칙 — 면 ↔ 바닥 ${contrastPair('bg-layer-default', 'bg-layer-basement', 'dark')}, 선이 경계를 맡는다`} w={560}>
+        <Col strong="데스크톱 · 다크" cap={`같은 규칙 — 면 ↔ 바닥 ${contrastPair('bg-layer-default', 'bg-layer-basement', 'dark')}, 선이 경계를 맡습니다`} w={560}>
           <HomeDesktop mode="dark" s={0.45} h={600} />
         </Col>
         <Wrap gap="gap-5">
-          <Col strong="폰 — 카드 없이 띠" cap="폰(HR · Desk)은 카드를 두지 않는다 — 회색 바닥 위 화면 폭 흰 띠, 모서리 · 테두리 없음, 띠 안 여백은 카드 안과 같다(그루 이음 휴가 현황)" w={240}>
+          <Col strong="폰 — 카드 없이 띠" cap="폰(HR · Desk)은 카드를 두지 않습니다 — 회색 바닥 위 화면 폭 흰 띠, 모서리 · 테두리 없음, 띠 안 여백은 카드 안과 같습니다(그루 이음 휴가 현황)" w={240}>
             <HrHomePhone mode="light" scale={0.5} h={760} />
           </Col>
-          <Col strong="폰 · 다크" cap="같은 띠 — 띠 사이로 회색 바닥이 비친다" w={240}>
+          <Col strong="폰 · 다크" cap="같은 띠 — 띠 사이로 회색 바닥이 비칩니다" w={240}>
             <HrHomePhone mode="dark" scale={0.5} h={760} />
           </Col>
         </Wrap>
@@ -153,7 +153,7 @@ const RadiusGap: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Wrap>
-        <Col strong="세로로 쌓은 카드 — 데스크톱 한 칸" cap={`모서리 ${r} · 카드 사이 ${c.surface.gap}(SEED "8px Gap"). 폰은 카드 없이 띠(띠 사이도 ${c.surface.gap})`} w={300}>
+        <Col strong="세로로 쌓은 카드 — 데스크톱 한 칸" cap={`모서리 ${r} · 카드 사이 ${c.surface.gap}. 폰은 카드 없이 띠(띠 사이도 ${c.surface.gap})`} w={300}>
           <Floor style={{ width: SCREEN_W, position: 'relative' }}>
             <HrStatCard i={0} />
             <HrStatCard i={1} />
@@ -203,7 +203,7 @@ const Padding: Fig = ({ caption }) => {
             <GuideV x={SCREEN_W - EDGE - p} top={0} bottom={0} />
           </Floor>
         </Col>
-        <Col strong="띠 — 폰" cap={`폰은 카드 대신 화면 폭 띠 — 띠 안 여백이 카드 안과 같은 ${p}이라 글자가 화면 끝 ${EDGE} 에 선다(분홍 점선). 데스크톱 카드도 안쪽 ${p}`} w={340}>
+        <Col strong="띠 — 폰" cap={`폰은 카드 대신 화면 폭 띠 — 띠 안 여백이 카드 안과 같은 ${p}이라 글자가 화면 끝 ${EDGE} 에 섭니다(분홍 점선). 데스크톱 카드도 안쪽 ${p}`} w={340}>
           <HrHomePhone mode="light" scale={1} h={560} overlay={<><GuideV x={EDGE} top={96} bottom={0} /><GuideV x={SCREEN_W - EDGE} top={96} bottom={0} /></>}>
             <div style={{ position: 'relative' }}>
               <HrSummaryBand mode="light" />
@@ -269,7 +269,7 @@ const Header: Fig = ({ caption }) => {
         <Legend
           items={[
             ['제목', `${parseFloat(c.title.fontSize)} / ${tl} · ${c.title.fontWeight} · fg-neutral`],
-            ['전체 보기', `글 버튼(SEED Text Button) ${parseFloat(a.type.fontSize)} · ${a.type.fontWeight} · fg-neutral-muted · 꺾쇠 없음`],
+            ['전체 보기', `글 버튼 ${parseFloat(a.type.fontSize)} · ${a.type.fontWeight} · fg-neutral-muted · 꺾쇠 없음`],
             ['보이는 상자', `${a.h} · 모서리 ${a.radius} · 좌우 ${a.padL} — 오른쪽 ${a.padR} 만큼 바깥으로 내어 글자 끝이 여백 선에`],
             ['누르는 영역', `${a.touch}(분홍 칸)`],
             ['머리 ↔ 본문', `${c.header.padBottom}`],
@@ -306,7 +306,7 @@ const Press: Fig = ({ caption }) => {
             <BudgetCard press="whole" state="pressed" />
           </Floor>
         </Col>
-        <Col strong="대등한 동작이 있는 카드(peers)" cap="위 기본 · 아래 누름 — 면 색만, 관심 등록 버튼이 제 누름을 가진다" w={320}>
+        <Col strong="대등한 동작이 있는 카드(peers)" cap="위 기본 · 아래 누름 — 면 색만, 관심 등록 버튼이 제 누름을 가집니다" w={320}>
           <Floor style={{ width: SCREEN_W }}>
             <StockCard />
             <StockCard state="pressed" />
@@ -333,7 +333,7 @@ const ListCardFig: Fig = ({ caption }) => {
           <ListCard rows={TODAY.map((s, i) => spendRow(s, i === 1 ? 'pressed' : undefined))} />
         </Floor>
         <Cap w={520}>
-          누름 바탕은 좌우 {f.pressed.bg.insetX} 들어와 모서리 {c.list.itemRadius}(카드 {c.surface.radius} − {f.pressed.bg.insetX}) — 줄은 좌우 {f.enabled.pad.x} · 위아래 {f.enabled.pad.y}, 줄 사이 선은 두지 않는다
+          누름 바탕은 좌우 {f.pressed.bg.insetX} 들어와 모서리 {c.list.itemRadius}(카드 {c.surface.radius} − {f.pressed.bg.insetX}) — 줄은 좌우 {f.enabled.pad.x} · 위아래 {f.enabled.pad.y}, 줄 사이 선은 두지 않습니다
         </Cap>
       </div>
     </Panel>
@@ -347,7 +347,7 @@ const Stat: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex flex-col items-center gap-6">
-        <Col strong="폰 — 띠 하나에 쌓는다" cap={`폰(HR · Desk)은 지표 카드 없이 한 묶음의 지표를 한 띠 안에 — large 숫자 ${parseFloat(L.fontSize)} / ${parseFloat(L.lineHeight)} · ${c.stat.value.weight}, 사이 · 여백 ${c.surface.pad}(DESIGN.md Layout "화면 바탕")`} w={320}>
+        <Col strong="폰 — 띠 하나에 쌓습니다" cap={`폰(HR · Desk)은 지표 카드 없이 한 묶음의 지표를 한 띠 안에 — large 숫자 ${parseFloat(L.fontSize)} / ${parseFloat(L.lineHeight)} · ${c.stat.value.weight}, 사이 · 여백 ${c.surface.pad}(DESIGN.md Layout "화면 바탕")`} w={320}>
           <div style={{ width: SCREEN_W, background: rc('bg-layer-basement'), borderRadius: 12, overflow: 'hidden', paddingTop: EDGE, paddingBottom: EDGE }}>
             <StatBand stats={[0, 1]} />
           </div>
@@ -364,7 +364,7 @@ const Stat: Fig = ({ caption }) => {
   );
 };
 
-// 큰 글자 — 카드보다 긴 금액은 쉼표 뒤에서만 줄을 바꾼다(card.md 지표 카드 · 순자산 카드, 2026-10-17 03-D 결정 2 B).
+// 큰 글자 — 카드보다 긴 금액은 쉼표 뒤에서만 줄을 바꾼다(card.md 지표 카드 · 순자산 카드).
 // 폭 360 · 글자 200%(앱처럼 글자만 키웠다 — 여백 · 모서리는 그대로). 숫자는 가장 나쁜 값(18자리)과 보통 값. 증감 줄은 빼고 그렸다
 const BIG_SCALE = 2;
 const BIG_WORST = -123456789012;
@@ -379,7 +379,7 @@ const BigText: Fig = ({ caption }) => {
     <Panel caption={caption}>
       <Wrap gap="gap-5">
         {MODES.map((mode) => (
-          <Col key={mode} strong={`${mode === 'dark' ? '다크' : '라이트'} · 폭 ${SCREEN_W} · 글자 ${BIG_SCALE * 100}%`} cap="세 자리 묶음이 갈라지지 않는다 — 줄이 하나 늘 수 있다" w={320}>
+          <Col key={mode} strong={`${mode === 'dark' ? '다크' : '라이트'} · 폭 ${SCREEN_W} · 글자 ${BIG_SCALE * 100}%`} cap="세 자리 묶음이 갈라지지 않습니다 — 줄이 하나 늘 수 있습니다" w={320}>
             <Floor mode={mode} style={{ width: SCREEN_W }}>
               {[STATS[0].amount, BIG_WORST].map((a) => (
                 <CardSurface key={a} look={c} mode={mode} label={STATS[0].label}>
@@ -416,7 +416,7 @@ const Delta: Fig = ({ caption }) => {
             ))}
           </Floor>
         ))}
-        <Cap>▲ fg-critical · ▼ fg-informative · 변화 없음 fg-neutral-subtle — 지출 · 수입 · 순자산 · 주식이 같은 규칙. 보조 기술에는 문장("지난달보다 12.00% 더 썼어요")으로 읽힌다</Cap>
+        <Cap>▲ fg-critical · ▼ fg-informative · 변화 없음 fg-neutral-subtle — 지출 · 수입 · 순자산 · 주식이 같은 규칙입니다. 보조 기술에는 문장("지난달보다 12.00% 더 썼어요")으로 읽힙니다</Cap>
       </div>
     </Panel>
   );
@@ -489,12 +489,12 @@ const States: Fig = ({ caption }) => {
 const FloorGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="회색 바닥 위 흰 면 — 면 · 테두리가 한 덩어리를 말한다">
+      <Verdict ok note="회색 바닥 위 흰 면 — 면 · 테두리가 한 덩어리를 말합니다">
         <Floor style={{ width: 296 }}>
           <StatCard i={0} />
         </Floor>
       </Verdict>
-      <Verdict ok={false} note="흰 바탕(시트 · 흰 화면) 위 카드 — 면이 바탕과 같아 테두리만 남는다. 요약은 List 키-값 줄 · Callout">
+      <Verdict ok={false} note="흰 바탕(시트 · 흰 화면) 위 카드 — 면이 바탕과 같아 테두리만 남습니다. 요약은 List 키-값 줄 · Callout 으로 둡니다">
         <div className="rounded-xl" style={{ width: 280, background: rc('bg-layer-default'), paddingTop: 16, paddingBottom: 16, paddingLeft: 16, paddingRight: 16 }}>
           <StatCard i={0} />
         </div>
@@ -519,12 +519,12 @@ const ShadowGuide: Fig = ({ caption }) => (
           <StatCard i={0} />
         </Floor>
       </Verdict>
-      <Verdict ok={false} note="그림자 카드 — 면 ↔ 바닥이 거의 같아 옅은 그림자가 경계를 맡는다(다크에서 거의 안 보인다)">
+      <Verdict ok={false} note="그림자 카드 — 면 ↔ 바닥이 거의 같아 옅은 그림자가 경계를 맡습니다(다크에서 거의 안 보입니다)">
         <Floor style={{ width: 256 }}>
           <ShadowStat />
         </Floor>
       </Verdict>
-      <Verdict ok={false} note="raised — 흰 바탕 위 흰 카드를 그림자로만 가른다">
+      <Verdict ok={false} note="raised — 흰 바탕 위 흰 카드를 그림자로만 가릅니다">
         <div className="rounded-xl" style={{ width: 240, background: rc('bg-layer-default'), paddingTop: 16, paddingBottom: 16, paddingLeft: 16, paddingRight: 16 }}>
           <ShadowStat raised />
         </div>
@@ -538,13 +538,13 @@ const NestGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="지표 카드를 따로 — 데스크톱은 칸마다 카드 하나(위아래로 이으면 사이 8). 폰은 카드 없이 한 띠 안에 쌓는다">
+        <Verdict ok note="지표 카드를 따로 — 데스크톱은 칸마다 카드 하나(위아래로 이으면 사이 8). 폰은 카드 없이 한 띠 안에 쌓습니다">
           <Floor style={{ width: 296 }}>
             <StatCard i={0} />
             <StatCard i={1} />
           </Floor>
         </Verdict>
-        <Verdict ok={false} note="카드 안에 테두리 상자를 또 — 어느 것이 한 덩어리인지 흐려진다">
+        <Verdict ok={false} note="카드 안에 테두리 상자를 또 — 어느 것이 한 덩어리인지 흐려집니다">
           <Floor style={{ width: 296 }}>
             <CardSurface look={c}>
               <CardHeaderView look={c} title="이번 달" />
@@ -577,7 +577,7 @@ const HeaderGuide: Fig = ({ caption }) => {
             </CardSurface>
           </Floor>
         </Verdict>
-        <Verdict ok={false} note="글자만큼인 링크(높이 18.6) — 손가락으로 맞추기 어렵다">
+        <Verdict ok={false} note="글자만큼인 링크(높이 18.6) — 손가락으로 맞추기 어렵습니다">
           <Floor style={{ width: 316 }}>
             <CardSurface look={c} body="list">
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: lh.top, paddingLeft: lh.x, paddingRight: lh.x, paddingBottom: lh.bottom }}>
@@ -610,13 +610,13 @@ const DeltaGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="방향 색 — ▲ 빨강 · ▼ 파랑, 어디서나. 좋고 나쁨은 글이 말한다">
+        <Verdict ok note="방향 색 — ▲ 빨강 · ▼ 파랑, 어디서나. 좋고 나쁨은 글이 말합니다">
           <Floor style={{ width: 296 }}>
             <StatCard i={0} />
             <StatCard label="순자산" amount={42898100} delta={{ direction: 'up', value: '1.80%', text: '지난달보다' }} />
           </Floor>
         </Verdict>
-        <Verdict ok={false} note="좋고 나쁨 색 — 지출 ▲ 빨강 · 순자산 ▲ 초록. 같은 화면의 주식(▲ 빨강 = 올랐다)과 뜻이 엇갈린다">
+        <Verdict ok={false} note="좋고 나쁨 색 — 지출 ▲ 빨강 · 순자산 ▲ 초록. 같은 화면의 주식(▲ 빨강 = 올랐다)과 뜻이 엇갈립니다">
           <Floor style={{ width: 296 }}>
             <BadStat label="이번 달 지출" amount={1240000} dir="up" value="12.00%" good={false} />
             <BadStat label="순자산" amount={42898100} dir="up" value="1.80%" good />
@@ -653,7 +653,7 @@ const StatusGuide: Fig = ({ caption }) => {
             </ScreenBand>
           </HomePhone>
         </div>
-        <Cap w={520}>Desk 폰 — 순자산 띠만 실패 + 다시 시도, 지출 띠는 숫자 자리만 기다리고, 오늘 쓴 돈은 보인다 — 화면 전체를 스켈레톤으로 되돌리지 않는다(데스크톱은 같은 일을 카드마다)</Cap>
+        <Cap w={520}>Desk 폰 — 순자산 띠만 실패 + 다시 시도, 지출 띠는 숫자 자리만 기다리고, 오늘 쓴 돈은 보입니다 — 화면 전체를 스켈레톤으로 되돌리지 않습니다(데스크톱은 같은 일을 카드마다)</Cap>
       </div>
     </Panel>
   );
@@ -681,7 +681,26 @@ const ExHero: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 개요 카드 — 라이트 바닥 위 순자산 · 지표 · 오늘 쓴 돈 카드
+const Thumb: Fig = () => {
+  const c = CL();
+  return (
+    <div style={{ width: 560, zoom: 0.5 }}>
+      <Floor mode="light" style={{ width: 560, flexDirection: 'row', alignItems: 'flex-start', gap: c.gutter }}>
+        <div style={{ display: 'flex', flex: 1, minWidth: 0, flexDirection: 'column', gap: c.surface.gap }}>
+          <NetWorth mode="light" />
+          <StatCard mode="light" i={0} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <ListCard mode="light" />
+        </div>
+      </Floor>
+    </div>
+  );
+};
+
 export const cardFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

@@ -127,15 +127,15 @@ const Anatomy: Fig = ({ caption }) => {
         </div>
         <Legend
           items={[
-            ['ⓐ', 'Root — 비율 상자 · 모서리로 자른다'],
-            ['ⓑ', 'Image — 꽉 채운다(cover)'],
+            ['ⓐ', 'Root — 비율 상자 · 모서리로 자릅니다'],
+            ['ⓑ', 'Image — 꽉 채웁니다(cover)'],
             ['ⓒ', `Stroke — 안쪽 ${l.stroke.width}px, 그림 위에 늘`],
             ['ⓓ', 'Skeleton · Fallback — 그림 자리에'],
             ['ⓔ', `Floater — 네 모서리, 가장자리에서 ${off}`],
           ]}
         />
         <Note>
-          {W} × {H} 의 4:3(모서리 {l.radius['8'].px} — 폭 {l.bands.r6 + 1} 이상). 흰 그림이라 윤곽이 둘레를 잡는다. 배지 · Indicator 는 가장자리에서 {off}
+          {W} × {H} 의 4:3(모서리 {l.radius['8'].px} — 폭 {l.bands.r6 + 1} 이상). 흰 그림이라 윤곽이 둘레를 잡습니다. 배지 · Indicator 는 가장자리에서 {off} 입니다
         </Note>
       </div>
     </Figure>
@@ -166,7 +166,7 @@ const Ratio: Fig = ({ caption }) => {
               <span className="tabular-nums">
                 {w} × {num1(w / l.ratios[r].value)}
               </span>
-              <span>{r === 'card' ? 'groo — ISO 카드' : RATIO_KO[r]}</span>
+              <span>{r === 'card' ? 'ISO 카드' : RATIO_KO[r]}</span>
             </span>
           </div>
         ))}
@@ -220,7 +220,7 @@ const Radius: Fig = ({ caption }) => {
           </div>
         </div>
         <Note>
-          폭 {l.bands.r4} 이하 {l.radius['4'].px} · {l.bands.r6} 이하 {l.radius['6'].px} · 그 위 {l.radius['8'].px} · 화면 폭 {l.radius['0'].px}. 가운데 줄은 왼쪽 위 모서리를 3배로 본 모습이다
+          폭 {l.bands.r4} 이하 {l.radius['4'].px} · {l.bands.r6} 이하 {l.radius['6'].px} · 그 위 {l.radius['8'].px} · 화면 폭 {l.radius['0'].px}. 가운데 줄은 왼쪽 위 모서리를 3배로 본 모습입니다
         </Note>
       </div>
     </Panel>
@@ -254,7 +254,7 @@ const Stroke: Fig = ({ caption }) => {
             </Zoom>
           ))}
         </div>
-        <Sub mode={mode}>{mode === 'light' ? `${s.name} ${s.light} — 흰 그림 둘레 ${onWhite}:1, 어두운 그림 위에서는 보이지 않는다` : `${s.name} ${s.dark} — 어두운 면 위 ${onDark}:1, 흰 그림 둘레는 그림 자체가 바탕과 갈린다`}</Sub>
+        <Sub mode={mode}>{mode === 'light' ? `${s.name} ${s.light} — 흰 그림 둘레 ${onWhite}:1, 어두운 그림 위에서는 보이지 않습니다` : `${s.name} ${s.dark} — 어두운 면 위 ${onDark}:1, 흰 그림 둘레는 그림 자체가 바탕과 갈립니다`}</Sub>
       </div>
     </ModeBoard>
   );
@@ -281,7 +281,7 @@ const Fit: Fig = ({ caption }) => {
             <Frame width={140} ratio="1:1" pic="dusk" mode={mode} />
           </span>
           <Sub mode={mode} strong="cover">
-            사진 — 가운데를 남겨 자른다(흐린 곳이 잘린 자리)
+            사진 — 가운데를 남겨 자릅니다(흐린 곳이 잘린 자리)
           </Sub>
         </span>
         <span className="flex flex-col items-center gap-1.5">
@@ -385,7 +385,7 @@ const Overlay: Fig = ({ caption }) => {
           </span>
         </div>
         <Note>
-          배지는 상태 · 분류, Indicator 는 장수 · 길이다. 둘 다 가장자리에서 {off}. 바탕 {ind.bgName}({ind.bg})는 두 모드 같다 — 흰 그림 위 흰 글자 {ratioText(contrastOf(ind.fg.light, over(ind.bg, '#FFFFFF')))}:1. 틀의 짧은 변이 {l.floater.minSide} 이상일 때만 얹는다
+          배지는 상태 · 분류, Indicator 는 장수 · 길이입니다. 둘 다 가장자리에서 {off} 입니다. 바탕 {ind.bgName}({ind.bg})는 두 모드가 같습니다 — 흰 그림 위 흰 글자 {ratioText(contrastOf(ind.fg.light, over(ind.bg, '#FFFFFF')))}:1. 틀의 짧은 변이 {l.floater.minSide} 이상일 때만 얹습니다
         </Note>
       </div>
     </Panel>
@@ -425,7 +425,7 @@ const CardRotate: Fig = ({ caption }) => {
             </span>
           </span>
         </div>
-        <Note>목록 56(모서리 {l.radius[imageFrameRadius(56, l.bands)].px}) · 격자 · 상세 모두 카드 비율 {l.ratios.card.value} — 돌린 뒤 cover 로 채워 줄 · 칸의 크기가 카드마다 같다. 방향은 다 받은 뒤 원래 크기로 정하고, 그때까지는 스켈레톤이다</Note>
+        <Note>목록 56(모서리 {l.radius[imageFrameRadius(56, l.bands)].px}) · 격자 · 상세 모두 카드 비율 {l.ratios.card.value} — 돌린 뒤 cover 로 채워 줄 · 칸의 크기가 카드마다 같습니다. 방향은 다 받은 뒤 원래 크기로 정하고, 그때까지는 스켈레톤입니다</Note>
       </div>
     </Panel>
   );
@@ -484,7 +484,7 @@ const CardFace: Fig = ({ caption }) => {
   );
 };
 
-// 큰 글자 × 좁은 면 — 회사 줄 + 이름 한 줄 + 아래 여백이 면 높이보다 크면 첫 글자 면(card-art.yaml label.fit, 2026-10-17 03-D 결정 3 A).
+// 큰 글자 × 좁은 면 — 회사 줄 + 이름 한 줄 + 아래 여백이 면 높이보다 크면 첫 글자 면(card-art.yaml label.fit).
 // 글자만 배율로 키운다(여백 · 면은 그대로). "지어낸카드" · 노란 면은 지어낸 것이다(기관 색 표 밖 — 그림용)
 const FACE_SCALE_W = [96, 110, 124, 150];
 const FACE_SCALES = [1, 1.3, 2];
@@ -564,7 +564,7 @@ const WhichGuide: Fig = ({ caption }) => {
           </span>
         </Cell>
         <div className="sm:col-span-2">
-          <Cell strong="그림이 아닌 비율 상자 → Aspect Ratio" cap="동영상 · 지도 — 모서리 · 윤곽이 없다">
+          <Cell strong="그림이 아닌 비율 상자 → Aspect Ratio" cap="동영상 · 지도 — 모서리 · 윤곽이 없습니다">
             <span className="block" style={{ width: 200 }}>
               <AspectRatioView look={ARL()} ratio="16:9">
                 <VideoChild frame={ARL().ratios['16:9'].value} label="자산 연결 안내 동영상" />
@@ -594,13 +594,13 @@ const StrokeGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="투명 윤곽(stroke-neutral-overlay) — 흰 카드 둘레는 잡히고 어두운 카드 둘레에는 테가 없다" bg={BASEMENT}>
+        <Verdict ok note="투명 윤곽(stroke-neutral-overlay) — 흰 카드 둘레는 잡히고 어두운 카드 둘레에는 테가 없습니다" bg={BASEMENT}>
           <div className="flex flex-wrap justify-center gap-3">
             {set('light', false)}
             {set('dark', false)}
           </div>
         </Verdict>
-        <Verdict ok={false} note="불투명한 테(stroke-neutral-subtle) — 어두운 카드 둘레에 옅은 테가 생긴다" bg={BASEMENT}>
+        <Verdict ok={false} note="불투명한 테(stroke-neutral-subtle) — 어두운 카드 둘레에 옅은 테가 생깁니다" bg={BASEMENT}>
           <div className="flex flex-wrap justify-center gap-3">
             {set('light', true)}
             {set('dark', true)}
@@ -628,13 +628,13 @@ const RadiusGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note={`스켈레톤 · 그림이 같은 모서리(폭 ${w} → ${l.radius[imageFrameRadius(w, l.bands)].px}) — 그림이 와도 모양이 그대로다`} bg={BASEMENT}>
+        <Verdict ok note={`스켈레톤 · 그림이 같은 모서리(폭 ${w} → ${l.radius[imageFrameRadius(w, l.bands)].px}) — 그림이 와도 모양이 그대로입니다`} bg={BASEMENT}>
           <div className="w-[270px] rounded-2xl px-5 py-2 pk-surface">
             {row('loading')}
             {row('loaded')}
           </div>
         </Verdict>
-        <Verdict ok={false} note="스켈레톤 16(옛 '카드 · 썸네일') — 그림이 오는 순간 모서리가 8 로 바뀐다" bg={BASEMENT}>
+        <Verdict ok={false} note="스켈레톤 16 — 그림이 오는 순간 모서리가 8 로 바뀝니다" bg={BASEMENT}>
           <div className="w-[270px] rounded-2xl px-5 py-2 pk-surface">
             {row('loading', l.sk.radius['16'])}
             {row('loaded')}
@@ -645,13 +645,13 @@ const RadiusGuide: Fig = ({ caption }) => {
   );
 };
 
-// 세로 카드는 돌려서 채운다 — 가운데만 잘린 지금
+// 세로 카드는 돌려서 채운다 — 가운데만 잘린 그림
 const RotateGuide: Fig = ({ caption }) => {
   const c = CARDS[1];
   return (
     <Panel caption={caption}>
       <Pair stack>
-        <Verdict ok note="돌려서 채운다 — 카드 전체가 보이고 줄 · 격자의 크기가 카드마다 같다" bg={BASEMENT}>
+        <Verdict ok note="돌려서 채웁니다 — 카드 전체가 보이고 줄 · 격자의 크기가 카드마다 같습니다" bg={BASEMENT}>
           <div className="flex flex-col items-center gap-3">
             <PhoneBoard>
               <Rows rows={[cardRow(c)]} />
@@ -659,7 +659,7 @@ const RotateGuide: Fig = ({ caption }) => {
             <Card width={GRID.cell} issuer={c.issuer} name={c.name} pic={c.pic} />
           </div>
         </Verdict>
-        <Verdict ok={false} note="가로 틀에 그대로 채운다 — 높이의 가운데 띠만 보인다(지금)" bg={BASEMENT}>
+        <Verdict ok={false} note="가로 틀에 그대로 채웁니다 — 높이의 가운데 띠만 보입니다" bg={BASEMENT}>
           <div className="flex flex-col items-center gap-3">
             <PhoneBoard>
               <Rows rows={[{ ...cardRow(c), prefix: { node: <CropCard w={56} /> } }]} />
@@ -671,7 +671,7 @@ const RotateGuide: Fig = ({ caption }) => {
     </Panel>
   );
 };
-// 나쁜 예 — 세로 그림을 돌리지 않고 가로 틀에 cover(지금 제품)
+// 나쁜 예 — 세로 그림을 돌리지 않고 가로 틀에 cover
 function CropCard({ w }: { w: number }) {
   return <Frame width={w} ratio="card" pic="card-v" turn={false} />;
 }
@@ -709,7 +709,7 @@ const FaceGuide: Fig = ({ caption }) => {
         <Verdict ok note="아는 카드사(NH농협 · KB국민 · 신한)는 기관 색 면, 모르는 카드사(BC)는 대체 그림" bg={BASEMENT}>
           <div className="rounded-2xl p-4 pk-surface">{cells(false)}</div>
         </Verdict>
-        <Verdict ok={false} note="모르는 카드사를 브랜드 파랑으로 칠했다 — 그 회사의 색처럼 보인다" bg={BASEMENT}>
+        <Verdict ok={false} note="모르는 카드사를 브랜드 파랑으로 칠했습니다 — 그 회사의 색처럼 보입니다" bg={BASEMENT}>
           <div className="rounded-2xl p-4 pk-surface">{cells(true)}</div>
         </Verdict>
       </Pair>
@@ -740,10 +740,10 @@ const NameGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="그림 아래 카드 이름 · 카드사를 글로 — 그림을 못 읽어도 이름이 남는다" bg={BASEMENT}>
+        <Verdict ok note="그림 아래 카드 이름 · 카드사를 글로 — 그림을 못 읽어도 이름이 남습니다" bg={BASEMENT}>
           {detail(true)}
         </Verdict>
-        <Verdict ok={false} note='제목은 "카드 상세" 뿐 — 이름은 그림 속 글 · alt 에만 있다' bg={BASEMENT}>
+        <Verdict ok={false} note='제목은 "카드 상세" 뿐 — 이름은 그림 속 글 · alt 에만 있습니다' bg={BASEMENT}>
           {detail(false)}
         </Verdict>
       </Pair>
@@ -765,7 +765,7 @@ const OverlayGuide: Fig = ({ caption }) => {
             <Frame width={W} ratio="1:1" pic="forest" floaters={[at('bottom-end', <Ind label="사진 9장 더 있음">+9</Ind>)]} />
           </div>
         </Verdict>
-        <Verdict ok={false} note="배지 · 장수 · 하트 셋을 얹었고, 장수를 배지로 그렸다" bg={BASEMENT}>
+        <Verdict ok={false} note="배지 · 장수 · 하트 셋을 얹었고, 장수를 배지로 그렸습니다" bg={BASEMENT}>
           <div className="flex flex-wrap items-start justify-center gap-3 rounded-2xl p-4 pk-surface">
             <Frame
               width={W}
@@ -802,7 +802,7 @@ const OverlayGuide: Fig = ({ caption }) => {
   );
 };
 
-// 여러 장은 끝이 보이는 가로 줄 — 4:5 · 사이 8 · 다음 장이 보인다 + "1 / 12". 화살표 · 점 · 자동 넘김(옛 Carousel)
+// 여러 장은 끝이 보이는 가로 줄 — 4:5 · 사이 8 · 다음 장이 보인다 + "1 / 12". 화살표 · 점 · 자동 넘김
 const GALLERY: PicKind[] = ['meadow', 'sunset', 'sea', 'forest', 'dusk'];
 const GalleryGuide: Fig = ({ caption }) => {
   const fog = scrollFogLook();
@@ -813,7 +813,7 @@ const GalleryGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair stack>
-        <Verdict ok note={`가로 줄 4:5 · 사이 ${gap} — 셋째 장이 ${next} 보여(끝 흐림 ${fog.uses.row.sides.right}) 넘길 수 있음을 안다. 크게 볼 때는 "1 / 12"`} bg={BASEMENT}>
+        <Verdict ok note={`가로 줄 4:5 · 사이 ${gap} — 셋째 장이 ${next} 보여(끝 흐림 ${fog.uses.row.sides.right}) 넘길 수 있음을 압니다. 크게 볼 때는 "1 / 12"`} bg={BASEMENT}>
           <div className="flex flex-col items-center gap-3">
             <PhoneBoard pad={12}>
               <ScrollFogView look={fog} use="row" live={false}>
@@ -837,7 +837,7 @@ const GalleryGuide: Fig = ({ caption }) => {
             </Screen>
           </div>
         </Verdict>
-        <Verdict ok={false} note="화살표 32 · 점 지시자 · 자동 넘김 — 다음 장이 보이지 않고, 화살표는 누르는 영역이 작다(옛 Carousel)" bg={BASEMENT}>
+        <Verdict ok={false} note="화살표 32 · 점 지시자 · 자동 넘김 — 다음 장이 보이지 않고, 화살표는 누르는 영역이 작습니다" bg={BASEMENT}>
           <div className="flex flex-col items-center gap-3">
             <PhoneBoard pad={16}>
               <div className="flex items-center justify-center gap-2">
@@ -871,12 +871,12 @@ const DimGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note='단종은 "단종" 배지 — 그림은 그대로, 마우스를 올려도 바뀌지 않는다' bg={BASEMENT}>
+        <Verdict ok note='단종은 "단종" 배지 — 그림은 그대로, 마우스를 올려도 바뀌지 않습니다' bg={BASEMENT}>
           <div className="rounded-2xl p-4 pk-surface">
             <CardCell c={c} width={150} />
           </div>
         </Verdict>
-        <Verdict ok={false} note="단종 카드를 불투명도로 흐렸고(0.6), 마우스에 1.05배 커진다" bg={BASEMENT}>
+        <Verdict ok={false} note="단종 카드를 불투명도로 흐렸고(0.6), 마우스에 1.05배 커집니다" bg={BASEMENT}>
           <div className="flex gap-4 rounded-2xl p-4 pk-surface">
             <span className="flex flex-col gap-1.5" style={{ width: 112 }}>
               <Card width={112} issuer={c.issuer} name={c.name} pic={c.pic} dim={0.6} />
@@ -902,7 +902,7 @@ const AltGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note='그림 옆에 이름이 있다 — 그림은 alt="" 로 숨기고 이름을 한 번만 읽는다' bg={BASEMENT}>
+        <Verdict ok note='그림 옆에 이름이 있습니다 — 그림은 alt="" 로 숨기고 이름을 한 번만 읽습니다' bg={BASEMENT}>
           <div className="flex flex-col items-center gap-3">
             <div className="rounded-2xl p-4 pk-surface">
               <CardCell c={c} width={150} />
@@ -910,7 +910,7 @@ const AltGuide: Fig = ({ caption }) => {
             <Reading tone="ok">&ldquo;{c.name}, {c.issuer}&rdquo;</Reading>
           </div>
         </Verdict>
-        <Verdict ok={false} note="alt 가 옆 이름과 같다 — 같은 이름을 두 번 읽는다" bg={BASEMENT}>
+        <Verdict ok={false} note="alt 가 옆 이름과 같습니다 — 같은 이름을 두 번 읽습니다" bg={BASEMENT}>
           <div className="flex flex-col items-center gap-3">
             <div className="rounded-2xl p-4 pk-surface">
               <CardCell c={c} width={150} />
@@ -994,7 +994,16 @@ const ExGallery: Fig = ({ caption }) => {
   );
 };
 
+// 개요 카드 — 단종 배지를 얹은 카드 그림 · Indicator 를 얹은 4:5 사진(라이트)
+const Thumb: Fig = () => (
+  <div className="flex items-center gap-3">
+    <Card width={150} issuer="현대카드" name="신용카드" pic="card-h2" mode="light" floaters={[at('top-start', <Discontinued mode="light" />)]} />
+    <Frame width={110} ratio="4:5" pic="sea" mode="light" floaters={[at('bottom-end', <Ind label="사진 12장 중 1번째">1 / 12</Ind>)]} />
+  </div>
+);
+
 export const imageFrameFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

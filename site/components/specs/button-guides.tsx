@@ -1,4 +1,4 @@
-// Button 페이지의 가이드 그림 — "언제 어떤 버튼을 쓰나" 를 Desk · HR 화면으로 보인다(SEED 가이드의 앱 화면 자리).
+// Button 페이지의 가이드 그림 — "언제 어떤 버튼을 쓰나" 를 Desk · HR 화면으로 보인다.
 // 버튼은 button.yaml 을 푼 값으로, 화면 조각은 kit 로 그린다.
 import type { CSSProperties, ReactNode } from 'react';
 import { Figure, Panel } from '../foundations/ui';
@@ -33,7 +33,7 @@ function Cap({ children, strong }: { children: ReactNode; strong?: ReactNode }) 
 }
 
 // ── 화면 조각 — Desk 홈 · 예산 · HR 휴가 ──────────────────
-// Desk 폰 홈은 띠 화면이다(구역마다 화면 폭 흰 띠 — DESIGN.md Layout "화면 바탕", 2026-10-21 I-01 결정 3). 띠 안 값은 카드 안과 같다
+// Desk 폰 홈은 띠 화면이다(구역마다 화면 폭 흰 띠 — DESIGN.md Layout "화면 바탕"). 띠 안 값은 카드 안과 같다
 function SpendBody({ mode = 'auto', actions }: { mode?: Mode; actions?: ReactNode }) {
   return (
     <>
@@ -48,7 +48,7 @@ function SpendBody({ mode = 'auto', actions }: { mode?: Mode; actions?: ReactNod
     </>
   );
 }
-// 최근 거래 미리보기 — 몇 줄만, 목록 화면으로는 머리의 "전체 보기"(미리보기 끝에 "더 보기" 버튼을 두지 않는다 — card.md 6B)
+// 최근 거래 미리보기 — 몇 줄만, 목록 화면으로는 머리의 "전체 보기"(미리보기 끝에 "더 보기" 버튼을 두지 않는다 — card.md)
 function RecentRows({ mode = 'auto' }: { mode?: Mode }) {
   return (
     <>
@@ -217,7 +217,7 @@ const BrandColor: Fig = ({ caption }) => (
       <Verdict ok note="브랜드 색은 거래 추가 하나 — 서비스의 핵심 액션">
         <Home brandy={false} />
       </Verdict>
-      <Verdict ok={false} note="여기저기 브랜드 색을 쓰면 무엇이 중요한지 흩어진다">
+      <Verdict ok={false} note="여기저기 브랜드 색을 쓰면 무엇이 중요한지 흩어집니다">
         <Home brandy />
       </Verdict>
     </Pair>
@@ -251,7 +251,7 @@ const ComboOutline: Fig = ({ caption }) => (
           </div>
         </div>
       </Verdict>
-      <Verdict ok={false} note="Outline 과 Solid 를 한 줄에 두면 위계가 흐려진다">
+      <Verdict ok={false} note="Outline 과 Solid 를 한 줄에 두면 위계가 흐려집니다">
         <div className="flex w-full gap-2">
           <B variant="neutralOutline" size="small" grow={1} label="건너뛰기" />
           <B variant="neutralSolid" size="small" grow={1} label="지금 기록" />
@@ -262,7 +262,7 @@ const ComboOutline: Fig = ({ caption }) => (
 );
 
 // ── 버튼 배치 ─────────────────────────────────────────────
-// 화면 하단에 채운 두 버튼(닫기 · 초기화 + CTA). 모달 footer 는 Dialog · Drawer 의 폭 나누기를 따른다(지금 균등)
+// 화면 하단에 채운 두 버튼(닫기 · 초기화 + CTA). 모달 footer 는 Dialog · Bottom Sheet 의 폭 나누기(균등)를 따른다
 const FilterPage = ({ equal = false }: { equal?: boolean }) => (
   <Phone
     title="필터"
@@ -318,7 +318,7 @@ const Placement: Fig = ({ caption }) => (
       <Verdict ok note="닫기 · 초기화 같은 neutralWeak 와 CTA 를 화면 하단에 채울 땐 3:7">
         <FilterPage />
       </Verdict>
-      <Verdict ok={false} note="반반이면 초기화와 적용의 무게가 같아 보인다">
+      <Verdict ok={false} note="반반이면 초기화와 적용의 무게가 같아 보입니다">
         <FilterPage equal />
       </Verdict>
     </Pair>
@@ -328,7 +328,7 @@ const Placement: Fig = ({ caption }) => (
 const SideBySide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="위계가 비슷한 neutralWeak 둘은 나란히 둘 수 있다" bg="var(--p-bg-layer-basement)">
+      <Verdict ok note="위계가 비슷한 neutralWeak 둘은 나란히 둘 수 있습니다" bg="var(--p-bg-layer-basement)">
         <div className="w-[260px]">
           <Card>
             <Row title="팀 회식" sub="10월 2일 (목) 19:00" hue="violet" />
@@ -339,7 +339,7 @@ const SideBySide: Fig = ({ caption }) => (
           </Card>
         </div>
       </Verdict>
-      <Verdict ok={false} note="셋 이상 나란히 두지 않는다 — 더 있으면 아이콘만 버튼(더보기)으로 넘긴다">
+      <Verdict ok={false} note="셋 이상 나란히 두는 것은 피합니다 — 더 있으면 아이콘만 버튼(더보기)으로 넘깁니다">
         <div className="flex w-[260px] gap-1.5">
           <B variant="neutralWeak" size="small" grow={1} label="공유" />
           <B variant="neutralWeak" size="small" grow={1} label="복사" />
@@ -351,7 +351,7 @@ const SideBySide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// ── 모달 footer(groo) ───────────────────────────────────
+// ── 모달 footer ─────────────────────────────────────────
 function DeskWebPage() {
   return (
     <div className="flex h-full">
@@ -433,7 +433,7 @@ const Surface: Fig = ({ caption }) => (
           </Card>
         </div>
       </Verdict>
-      <Verdict ok={false} note="라이트에서 페이지 바탕 위에 바로 두면 채움이 사라진다 — neutralOutline 을 쓴다" bg={rc('bg-layer-basement', 'light')}>
+      <Verdict ok={false} note="라이트에서 페이지 바탕 위에 바로 두면 채움이 사라집니다 — neutralOutline 을 씁니다" bg={rc('bg-layer-basement', 'light')}>
         <div className="flex w-[240px] flex-col items-center gap-3">
           <Card mode="light">
             <SpendBody mode="light" />
@@ -474,8 +474,8 @@ const Label: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="무엇을 하는지 동사로 — 누르면 무슨 일이 일어나는지 보인다">{sheet('알림 시간 저장')}</Verdict>
-        <Verdict ok={false} note="'확인' 만으로는 무엇이 저장되는지 모른다">{sheet('확인')}</Verdict>
+        <Verdict ok note="무엇을 하는지 동사로 — 누르면 무슨 일이 일어나는지 보입니다">{sheet('알림 시간 저장')}</Verdict>
+        <Verdict ok={false} note="'확인' 만으로는 무엇이 저장되는지 알 수 없습니다">{sheet('확인')}</Verdict>
       </Pair>
     </Panel>
   );
@@ -485,13 +485,13 @@ const Label: Fig = ({ caption }) => {
 const LongLabel: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="넘치면 세로로 쌓는다 — 주 버튼이 위">
+      <Verdict ok note="넘치면 세로로 쌓습니다 — 주 버튼이 위">
         <div className="flex w-[260px] flex-col gap-2">
           <B variant="neutralSolid" size="medium" fill label="남은 예산을 다음 달로 옮기기" />
           <B variant="neutralWeak" size="medium" fill label="이번 달에 그대로 두기" />
         </div>
       </Verdict>
-      <Verdict ok={false} note="한 줄에 억지로 넣으면 라벨이 잘린다">
+      <Verdict ok={false} note="한 줄에 억지로 넣으면 라벨이 잘립니다">
         <div className="flex w-[260px] gap-2">
           <B variant="neutralWeak" size="medium" grow={1} truncate label="이번 달에 그대로 두기" style={{ overflow: 'hidden' }} />
           <B variant="neutralSolid" size="medium" grow={1} truncate label="남은 예산을 다음 달로 옮기기" style={{ overflow: 'hidden' }} />
@@ -506,22 +506,22 @@ const IconUse: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex w-full max-w-[620px] flex-col gap-4">
       <Pair>
-        <Verdict ok note="앞 아이콘은 동작의 뜻을 돕는다">
+        <Verdict ok note="앞 아이콘은 동작의 뜻을 돕습니다">
           <B variant="brandSolid" prefix="plus" label="거래 추가" />
         </Verdict>
-        <Verdict ok note="뒤 아이콘은 동작을 돕는다(다음 · 펼치기)">
+        <Verdict ok note="뒤 아이콘은 동작을 돕습니다(다음 · 펼치기)">
           <B variant="neutralWeak" suffix="chevron-right" label="전체 보기" />
         </Verdict>
       </Pair>
       <Pair>
-        <Verdict ok={false} note="모든 버튼에 아이콘을 붙이지 않는다">
+        <Verdict ok={false} note="모든 버튼에 아이콘을 붙이지 않습니다">
           <div className="flex gap-2">
             <B variant="neutralWeak" size="small" prefix="pencil" label="수정" />
             <B variant="neutralWeak" size="small" prefix="share" label="공유" />
             <B variant="neutralWeak" size="small" prefix="download" label="저장" />
           </div>
         </Verdict>
-        <Verdict ok={false} note="앞 · 뒤 아이콘을 함께 쓰지 않는다">
+        <Verdict ok={false} note="앞 · 뒤 아이콘을 함께 쓰지 않습니다">
           <B variant="neutralSolid" prefix="plus" suffix="chevron-right" label="거래 추가" />
         </Verdict>
       </Pair>
@@ -533,13 +533,13 @@ const IconUse: Fig = ({ caption }) => (
 const Loading: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="로딩 원만 바꾸고 폭은 그대로 — 눌러 보면 잠시 로딩이 된다">
+      <Verdict ok note="로딩 원만 바꾸고 폭은 그대로 — 눌러 보면 잠시 로딩이 됩니다">
         <div className="flex flex-col items-center gap-3">
           <LoadingDemo look={buttonLook({ variant: 'neutralSolid', size: 'large' })} label="저장" />
           <B variant="neutralSolid" size="large" state="loading" label="저장" />
         </div>
       </Verdict>
-      <Verdict ok={false} note="라벨을 바꾸면 폭이 흔들리고, 비활성으로 두면 고장처럼 보인다">
+      <Verdict ok={false} note="라벨을 바꾸면 폭이 흔들리고, 비활성으로 두면 고장처럼 보입니다">
         <div className="flex flex-col items-center gap-3">
           <B variant="neutralSolid" size="large" label="저장" />
           <B variant="neutralSolid" size="large" state="disabled" label="저장하는 중…" />
@@ -558,22 +558,22 @@ const ChipCompare: Fig = ({ caption }) => (
           <B variant="neutralWeak" size="small" label="취소" />
           <B variant="neutralSolid" size="small" label="완료" />
         </div>
-        <Cap strong="Button">액션을 실행한다 — 라벨만 봐도 무슨 일이 일어날지 안다</Cap>
+        <Cap strong="Button">액션을 실행합니다 — 라벨만 봐도 무슨 일이 일어날지 압니다</Cap>
       </div>
       <div className="flex flex-1 flex-col items-center gap-4 rounded-xl pk-surface p-6">
-        {/* 고르기 칩 — chip.yaml 그대로(하나 고르기 · 고른 칩은 짙은 채움). Toggle Group 은 2026-10-09 걷었다 */}
+        {/* 고르기 칩 — chip.yaml 그대로(하나 고르기 · 고른 칩은 짙은 채움) */}
         <ChipGroupView look={chipLook()}>
           {['전체', '식비', '교통', '쇼핑'].map((t, i) => (
             <ChipView key={t} look={chipLook()} state="enabled" selected={i === 1} label={t} />
           ))}
         </ChipGroupView>
-        <Cap strong="고르기(Chip)">지금 켜진 조건을 보인다 — 둘 이상 묶어서 쓴다</Cap>
+        <Cap strong="고르기(Chip)">지금 켜진 조건을 보입니다 — 둘 이상 묶어서 씁니다</Cap>
       </div>
     </div>
   </Panel>
 );
 
-// ── groo 에만 있는 것 ───────────────────────────────────
+// ── 반반 바 · 가장자리 맞춤 ─────────────────────────────
 const SplitBar: Fig = ({ caption }) => {
   const f = buttonLook({ variant: 'ghost', size: 'xsmall' }).faces.light.enabled;
   return (
