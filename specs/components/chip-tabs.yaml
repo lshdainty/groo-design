@@ -1,14 +1,11 @@
-# Chip Tabs 의 수치 원본 — SEED Tabs 의 Chip 타입(2026-10-02 사용자 결정). 문서는 tabs.md 의 "Chip Tabs" 절.
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Chip Tabs 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다. 문서는 tabs.md 의 "Chip Tabs" 절입니다.
 #
-# 1차 Line 탭 안의 2차 탭. 칩 하나는 chip.yaml 그대로다 — solid 는 Chip Solid, outline 은 Chip Outline Strong,
-# 크기는 Chip medium · large(높이 · 좌우 · 글 · 최소 폭은 chip.yaml 이 원본 — 여기 다시 적지 않는다, 2026-10-15 구현 세션 질문 Q-010-2 정리). 고르면 짙은 채움(bg-neutral-inverted · fg-neutral-inverted)이고 Outline 은 테두리를 지운다.
-# 이 파일에는 탭으로 쓸 때만 붙는 값(목록 · 알림 점)을 적는다 — 칩의 색 · 크기 · 상태를 여기 다시 적지 않는다.
+# 1차 Line 탭 안의 2차 탭입니다. 칩 하나는 chip.yaml 그대로입니다 — solid 는 Chip Solid, outline 은 Chip Outline Strong,
+# 크기는 Chip medium · large(높이 · 좌우 · 글 · 최소 폭은 chip.yaml 이 원본이라 여기 다시 적지 않습니다). 고르면 짙은 채움(bg-neutral-inverted · fg-neutral-inverted)이고 Outline 은 테두리를 지웁니다.
+# 이 파일에는 탭으로 쓸 때만 붙는 값(목록 · 알림 점)을 적습니다 — 칩의 색 · 크기 · 상태를 여기 다시 적지 않습니다.
 #
-# SEED 와 다른 자리(tabs.md 의 "SEED 와 다른 점")
-#   - 목록 좌우: SEED 16 → 화면 여백 spacing-global-gutter 24. Chip 의 가로 스크롤 줄(필터 바 · 제안 줄)과 같게 —
-#     칩 줄은 어디서나 첫 칩이 화면 여백에서 시작한다.
-#   - 칩 사이는 spacing-between-chips 토큰(SEED 는 8px 를 그대로 적었다 — 값은 같다).
+# 목록 좌우는 화면 여백 spacing-global-gutter 24 입니다. Chip 의 가로 스크롤 줄(필터 바 · 제안 줄)과 같게 —
+# 칩 줄은 어디서나 첫 칩이 화면 여백에서 시작합니다. 칩 사이는 spacing-between-chips 토큰입니다.
 
 name: ChipTabs
 
@@ -19,7 +16,7 @@ slots:
 
 variants:
   variant:
-    solid: 화면 전체 내용을 바꾸는 2차 탭 — Chip Solid(투명 바탕 — 회색 바닥 · 흰 표면 어디서나, v120)
+    solid: 화면 전체 내용을 바꾸는 2차 탭 — Chip Solid(투명 바탕 — 회색 바닥 · 흰 표면 어디서나)
     outline: 일부 내용을 바꾸는 2차 탭 — Chip Outline Strong
   size:
     medium: 36 — 기본. 좁은 자리 · 스크롤 중간의 서브 내용
@@ -36,19 +33,19 @@ rules:
   - when: {}
     enabled:
       list:
-        paddingX: { value: $spacing-global-gutter, note: "화면 여백 — Chip 의 가로 스크롤 줄과 같다(SEED 16)" }
-        paddingY: { value: $spacing-x2, note: "1차 Line 목록 아래 · 내용 위 8(SEED 에 없다 — 비교 페이지 그림의 값)" }
+        paddingX: { value: $spacing-global-gutter, note: "화면 여백 — Chip 의 가로 스크롤 줄과 같다" }
+        paddingY: { value: $spacing-x2, note: "1차 Line 목록 아래 · 내용 위 8" }
         gap: $spacing-between-chips
         overflowX: { value: auto, note: "넘치면 가로 스크롤 — 스크롤바는 숨긴다" }
-        fog: { value: 좌우 20px, note: "Scroll Fog row(scroll-fog.yaml) — gradient-fade-mask 마스크, 늘 켜짐. 목록 좌우 여백 24 가 흐림보다 넓어 처음 · 끝의 칩은 흐리지 않는다(2026-10-03)" }
+        fog: { value: 좌우 20px, note: "Scroll Fog row(scroll-fog.yaml) — gradient-fade-mask 마스크, 늘 켜짐. 목록 좌우 여백 24 가 흐림보다 넓어 처음 · 끝의 칩은 흐리지 않는다" }
         scrollPadding: { value: $spacing-global-gutter, note: "고른 칩이 화면 밖이면 화면 여백 24 를 두고 가까운 쪽으로 스크롤한다 — 첫 칩이 늘 화면 여백에서 선다(Chip 의 가로 스크롤 줄과 같다)" }
       trigger:
-        shrink: { value: 0, note: "줄어들지 않는다 — 글이 여백을 침범하지 않게(SEED)" }
+        shrink: { value: 0, note: "줄어들지 않는다 — 글이 여백을 침범하지 않게" }
       notification:
         size: 6px
         radius: $radius-full
         background: { value: $color-fg-brand, note: "브랜드 글자색 — 안 고른 칩(bg-neutral-weak · 투명) 위 Desk 7.76 · 4.69 · HR 7.56 · 4.67. 고른 칩(짙은 채움)에는 없다 — 내용을 보면 사라진다" }
-        gap: { value: $spacing-x1_5, note: "글 뒤 6, 세로 가운데 — 칩 폭이 그만큼 넓어진다(SEED)" }
+        gap: { value: $spacing-x1_5, note: "글 뒤 6, 세로 가운데 — 칩 폭이 그만큼 넓어진다" }
   - when: { variant: solid }
     enabled:
       trigger:

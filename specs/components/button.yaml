@@ -1,31 +1,24 @@
-# Button 의 수치 원본 — 구조는 SEED Action Button(2026-09-30 사용자 결정).
+# Button 의 수치 원본입니다. 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
 # button.md 의 수치 표 자리에는 이 파일을 가리키는 줄(`[표: …](button.yaml#…)`)만 있고,
-# 사이트는 빌드 때 이 파일로 표를 그린다(site/scripts/spec-tables.mjs). 수치를 고치려면 여기를 고친다.
-# 다른 컴포넌트의 YAML 도 이 형식을 따른다.
+# 사이트는 빌드 때 이 파일로 표를 그립니다(site/scripts/spec-tables.mjs). 수치를 고치려면 여기를 고칩니다.
+# 다른 컴포넌트의 YAML 도 이 형식을 따릅니다.
 #
 # 값
 #   `$이름`        DESIGN.md 토큰 — CSS 변수 이름에서 `--` 를 뗀 것(`$spacing-x4` = `--spacing-x4`).
 #   `$이름 / 12%`  그 색을 12% 불투명도로.
 #   그 밖          단위를 붙여 그대로(`9px`, `0.98`, `none`, `min(90%, 420px)`).
 #   { value, dark, note }  다크 모드 값이 따로 있거나 비고를 붙일 때. dark 가 없으면 토큰의
-#                  `-dark` 짝을 쓰고, 짝도 없으면 라이트 값 그대로다.
+#                  `-dark` 짝을 쓰고, 짝도 없으면 라이트 값 그대로입니다.
 # 축 · 상태
-#   목록([a, b]) 또는 설명을 단 맵({ a: 설명, b: 설명 }). 설명은 표의 '설명' 칸에 나온다.
-#   enabled 가 바탕이다. 다른 상태에는 enabled 에서 바뀌는 값만 적는다.
+#   목록([a, b]) 또는 설명을 단 맵({ a: 설명, b: 설명 }). 설명은 표의 '설명' 칸에 나옵니다.
+#   enabled 가 바탕입니다. 다른 상태에는 enabled 에서 바뀌는 값만 적습니다.
 # 규칙
-#   when 에 적은 변형이 모두 맞는 조합에 적용된다. when 이 비면 모든 조합.
-#   뒤에 나온 규칙이 앞의 같은 값을 덮는다.
+#   when 에 적은 변형이 모두 맞는 조합에 적용됩니다. when 이 비면 모든 조합입니다.
+#   뒤에 나온 규칙이 앞의 같은 값을 덮습니다.
 # 표 구역(md 의 `#…`)
 #   base · slots · <축> · grid.<축>[.<축>.<값>…] · states.<축> · matrix[.<축>.<값>…] · compound · motion
 #   — 설명은 site/scripts/spec-tables.mjs 의 renderSection.
-#
-# SEED 와 다른 자리(button.md 의 "SEED 와 다른 점")
-#   - large 는 48(SEED 52) — 사용자 결정. 여백 · 글자 · 아이콘은 SEED large 그대로.
-#   - 테두리 · 투명 누름은 SEED 가 투명도 있는 색(stroke.neutral-muted · bg.transparent-pressed)이라
-#     불투명한 가장 가까운 역할(stroke-neutral-weak · bg-layer-default-pressed)을 쓴다 — 8자리 hex 를 lint 가 거부한다.
-#   - hovered(웹) · focused(웹 · 앱의 키보드 포커스) 상태를 더한다(v106 · 앱은 2026-10-08).
-#   - 누름은 누른 동작이 끝날 때까지 한 번이다(root.press) — SEED 는 정하지 않았다.
 
 name: Button
 
@@ -58,8 +51,8 @@ variants:
   ghostColor:
     neutral: 본문 글자(기본)
     neutralSubtle: 흐린 글자 — 가장자리 텍스트 버튼(flush)
-    brand: 브랜드 글자 — 강조하는 가벼운 액션(옛 accent · link)
-    critical: 위험 글자 — 확인 창을 여는 삭제(옛 dangerSoft)
+    brand: 브랜드 글자 — 강조하는 가벼운 액션
+    critical: 위험 글자 — 확인 창을 여는 삭제
 
 # 크기는 이름이 아니라 높이로 고른다. 기본 조합은 medium · neutralSolid · withText.
 defaults:
@@ -70,11 +63,11 @@ defaults:
 
 states:
   enabled: 기본
-  hovered: 웹 — 누름 색과 같다(v106), 축소는 없다
-  focused: 키보드 포커스에만 링 — 웹 · 앱(앱은 2026-10-08 부터, 손가락으로 누를 때는 없다)
-  pressed: 누름 색 + 세로 2px 거리 축소(v104)
+  hovered: 웹 — 누름 색과 같다, 축소는 없다
+  focused: 키보드 포커스에만 링 — 웹 · 앱(앱은 손가락으로 누를 때는 없다)
+  pressed: 누름 색 + 세로 2px 거리 축소
   loading: 누름 색 위 로딩 원, 라벨 자리 그대로 · 누름을 자동으로 막는다
-  disabled: 전용 색(v106) — 불투명도로 흐리게 하지 않는다
+  disabled: 전용 색 — 불투명도로 흐리게 하지 않는다
 
 rules:
   # ── 공통 ──────────────────────────────────────────────
@@ -82,32 +75,32 @@ rules:
     enabled:
       root:
         cursor: pointer
-        touchTarget: { value: 44 × 44, note: "보이는 크기와 따로 — 누르는 영역을 가로 · 세로 44 까지 넓힌다(v106). AA ✓ · AAA ✓" }
+        touchTarget: { value: 44 × 44, note: "보이는 크기와 따로 — 누르는 영역을 가로 · 세로 44 까지 넓힌다. AA ✓ · AAA ✓" }
         transitionProperty: background-color, color
         transitionDuration: $motion-duration-color-transition
         transitionEasing: $motion-ease-easing
-        press: { value: 누른 동작이 끝날 때까지 한 번, note: "onClick 이 Promise 를 돌려주면 이행 · 거부될 때까지 다음 누름(포인터 · Enter · Space)을 버린다 — 시간 창은 없다. 비동기 동작은 Promise 를 돌려준다(mutateAsync). 돌려주지 않으면 잠그지 않는다. 앱은 Future 가 끝날 때까지. 사용자 결정 2026-10-08" }
+        press: { value: 누른 동작이 끝날 때까지 한 번, note: "onClick 이 Promise 를 돌려주면 이행 · 거부될 때까지 다음 누름(포인터 · Enter · Space)을 버린다 — 시간 창은 없다. 비동기 동작은 Promise 를 돌려준다(mutateAsync). 돌려주지 않으면 잠그지 않는다. 앱은 Future 가 끝날 때까지" }
       label:
         fontFamily: $font-sans
         fontWeight: 700
     pressed:
       root:
-        scale: { value: 세로 2px 축소, note: "기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px — Feedback 의 눌림 피드백(v104)" }
+        scale: { value: 세로 2px 축소, note: "기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px — Feedback 의 눌림 피드백" }
         scaleDuration: $motion-duration-pressed-scale
         scaleEasing: $motion-ease-pressed-scale
     focused:
       focusRing:
-        width: { value: 2px, note: "웹 · 앱 같다 — 앱은 키보드로 옮길 때만 그린다(Flutter FocusHighlightMode.traditional), 손가락으로 누를 때는 없다. 앱 버튼도 포커스를 받아 Tab 순서에 든다(사용자 결정 2026-10-08)" }
+        width: { value: 2px, note: "웹 · 앱 같다 — 앱은 키보드로 옮길 때만 그린다(Flutter FocusHighlightMode.traditional), 손가락으로 누를 때는 없다. 앱 버튼도 포커스를 받아 Tab 순서에 든다" }
         offset: 2px
         color: $color-stroke-focus-ring
     loading:
       root:
         cursor: progress
-        press: { value: 막음, note: "누르기(포인터 · Enter · Space)를 삼켜 두 번 제출을 막는다 — 축소도 없다. aria-busy=true. SEED 는 막지 않는다" }
+        press: { value: 막음, note: "누르기(포인터 · Enter · Space)를 삼켜 두 번 제출을 막는다 — 축소도 없다. aria-busy=true" }
       label: { color: { value: transparent, note: "글자 · 아이콘을 투명하게 해 폭을 그대로 둔다" } }
     disabled:
       root:
-        cursor: { value: not-allowed, note: "포인터 이벤트는 켜 둔다 — 끄면 이 커서가 안 보인다(SEED 와 같다)" }
+        cursor: { value: not-allowed, note: "포인터 이벤트는 켜 둔다 — 끄면 이 커서가 안 보인다" }
         background: $color-bg-disabled
         foreground: $color-fg-disabled
 
@@ -158,12 +151,12 @@ rules:
 
   - when: { variant: brandOutline }
     enabled:
-      root: { background: transparent, foreground: $color-fg-brand, borderColor: { value: $color-stroke-neutral-weak, note: "SEED stroke.neutral-muted(투명도 있는 검정)의 불투명 짝" }, borderWidth: 1px }
-      progressCircle: { track: $color-bg-brand-weak-pressed, range: { value: $color-stroke-brand-solid, note: "Progress Circle brand 톤과 같다 — 다크는 밝은 짝(바탕 위 라이트 Desk 8.38 · HR 8.17, 다크 Desk 6.10 · HR 6.07 — 트랙과 Desk 6.59 · 4.73). 2026-10-08 까지 bg-brand-solid 라 다크 바탕 위 1.73 이었다(채움 색은 다크에서도 짙다)" } }
+      root: { background: transparent, foreground: $color-fg-brand, borderColor: { value: $color-stroke-neutral-weak, note: "투명도 있는 색 대신 불투명한 역할 — lint 가 8자리 hex 를 받지 않는다" }, borderWidth: 1px }
+      progressCircle: { track: $color-bg-brand-weak-pressed, range: { value: $color-stroke-brand-solid, note: "Progress Circle brand 톤과 같다 — 다크는 밝은 짝(바탕 위 라이트 Desk 8.38 · HR 8.17, 다크 Desk 6.10 · HR 6.07 — 트랙과 Desk 6.59 · 4.73). 채움 색 bg-brand-solid 는 다크에서도 짙어 투명한 버튼 위에서 보이지 않는다" } }
     hovered:
       root: { background: $color-bg-layer-default-pressed }
     pressed:
-      root: { background: { value: $color-bg-layer-default-pressed, note: "SEED bg.transparent-pressed 의 불투명 짝" } }
+      root: { background: { value: $color-bg-layer-default-pressed, note: "투명 누름 색 대신 불투명한 역할" } }
     disabled:
       root: { background: transparent, borderColor: $color-stroke-neutral-weak }
 
@@ -191,7 +184,7 @@ rules:
     disabled:
       root: { background: transparent }
 
-  # ghost 의 글자색(SEED ghost 의 color) — 배경 · 누름은 ghost 그대로
+  # ghost 의 글자색 — 배경 · 누름은 ghost 그대로
   - when: { variant: ghost, ghostColor: neutralSubtle }
     enabled:
       root: { foreground: $color-fg-neutral-subtle }
@@ -205,19 +198,19 @@ rules:
   # ── 크기 ──────────────────────────────────────────────
   - when: { size: xsmall }
     enabled:
-      root: { height: { value: 32px, note: "최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다(2026-10-22 사용자 결정 — 버튼 큰 글자 A, SEED action-button root.minHeight)" }, radius: $radius-full }
+      root: { height: { value: 32px, note: "최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다" }, radius: $radius-full }
       progressCircle: { size: 14px, thickness: 2px }
   - when: { size: small }
     enabled:
-      root: { height: { value: 36px, note: "최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다(2026-10-22 사용자 결정 — 버튼 큰 글자 A, SEED action-button root.minHeight)" }, radius: $radius-r2 }
+      root: { height: { value: 36px, note: "최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다" }, radius: $radius-r2 }
       progressCircle: { size: 14px, thickness: 2px }
   - when: { size: medium }
     enabled:
-      root: { height: { value: 40px, note: "최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다(2026-10-22 사용자 결정 — 버튼 큰 글자 A, SEED action-button root.minHeight)" }, radius: $radius-r2 }
+      root: { height: { value: 40px, note: "최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다" }, radius: $radius-r2 }
       progressCircle: { size: 16px, thickness: 2px }
   - when: { size: large }
     enabled:
-      root: { height: { value: 48px, note: "SEED 52 — groo 는 48(사용자 결정). 최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다(2026-10-22 사용자 결정 — 버튼 큰 글자 A, SEED action-button root.minHeight)" }, radius: $radius-r3 }
+      root: { height: { value: 48px, note: "최소 높이 — 글이 상자보다 크면(큰 글자) 상자가 글을 따라 늘어난다" }, radius: $radius-r3 }
       progressCircle: { size: 18px, thickness: 2px }
 
   # 크기 × 배치 — 여백 · 간격 · 글자 · 아이콘
@@ -253,7 +246,7 @@ rules:
       icon: { size: 18px }
   - when: { size: large, layout: withText }
     enabled:
-      root: { paddingX: $spacing-x5, paddingY: { value: $spacing-x3, note: "(48 − 줄 높이 24) ÷ 2 — SEED 52 는 14" }, gap: $spacing-x2 }
+      root: { paddingX: $spacing-x5, paddingY: { value: $spacing-x3, note: "(48 − 줄 높이 24) ÷ 2" }, gap: $spacing-x2 }
       label: { typography: $text-t6 }
       prefixIcon: { size: 22px }
       suffixIcon: { size: 22px }

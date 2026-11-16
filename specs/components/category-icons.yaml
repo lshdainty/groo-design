@@ -1,28 +1,27 @@
-# 카테고리 아이콘 세트 — 카테고리 · 저축 목표에 붙이는 아이콘을 고르는 Icon Picker 의 범위(2026-10-09 사용자 결정, 입력 비교 페이지 15A · 16A · "따라오는 것").
-# 쓰는 곳: Icon Picker(icon-picker.md) — 묶음 차례로 격자를 그리고, 이름 · 찾는 말로 찾는다. 고른 아이콘은 List 의 카테고리 타일(40 · 아이콘 20)에 그린다.
+# 카테고리 아이콘 세트의 원본입니다 — 카테고리 · 저축 목표에 붙이는 아이콘을 고르는 Icon Picker 의 범위입니다.
+# 쓰는 곳: Icon Picker(icon-picker.md) — 묶음 차례로 격자를 그리고, 이름 · 찾는 말로 찾습니다. 고른 아이콘은 List 의 카테고리 타일(40 · 아이콘 20)에 그립니다.
 #
-# 이 표가 고를 수 있는 아이콘의 원본이다. lucide 전체(웹 2,007 · 앱 1,977)를 열지 않고 카테고리에 쓸 만한 것만 묶음으로 둔다
-# (SEED Iconography — "가능한 현재 제작된 범위 내에서 사용하는 것을 권장"). 비교 페이지의 초안(148개 · 13 묶음)을 다듬었다 —
+# 이 표가 고를 수 있는 아이콘의 원본입니다. lucide 전체를 열지 않고 카테고리에 쓸 만한 것만 묶음으로 둡니다.
 # 기본 카테고리(서버 시드: utensils · coffee · bus · home(→ house) · shopping-cart · shirt · heart · film / wallet · gift · trending-up)와
-# 기본값 tag · 저축 목표의 piggy-bank 를 모두 담는다.
+# 기본값 tag · 저축 목표의 piggy-bank 를 모두 담습니다.
 #
 # 키
 #   id             lucide 이름(kebab) — 저장 값. lucide-react 1.28.0(Desk 웹) iconNames 와 앱 lucide_icons_flutter 3.1.15
-#                  (lib/shared/icons/lucide_icon_names.dart) 모두에 있다 — 2026-10-09 148개 모두 확인(웹에만 있는 13개는 넣지 않았다).
-#   group          묶음 — 아래 groups 의 하나. 격자는 groups 차례 · 묶음 안은 이 표의 차례다.
-#   name           한국어 이름 — 칸의 이름(보조 기술) · 트리거의 값 글("커피"). 세트 안에서 겹치지 않는다. 번역 문구에 둔다.
-#   aliases        찾는 말 — 이름 말고 이 아이콘으로 찾을 말("월세" → 집). 다른 아이콘과 겹쳐도 된다.
-#   lucideAliases  같은 아이콘의 다른 lucide 이름(옛 이름) — 저장 값이 이 이름이어도 이 아이콘을 고른 것으로 본다(서버 시드의 home).
+#                  (lib/shared/icons/lucide_icon_names.dart) 모두에 있는 이름만 둡니다.
+#   group          묶음 — 아래 groups 의 하나. 격자는 groups 차례 · 묶음 안은 이 표의 차례입니다.
+#   name           한국어 이름 — 칸의 이름(보조 기술) · 트리거의 값 글("커피"). 세트 안에서 겹치지 않습니다. 번역 문구에 둡니다.
+#   aliases        찾는 말 — 이름 말고 이 아이콘으로 찾을 말("월세" → 집). 다른 아이콘과 겹쳐도 됩니다.
+#   lucideAliases  같은 아이콘의 다른 lucide 이름 — 저장 값이 이 이름이어도 이 아이콘을 고른 것으로 봅니다(서버 시드의 home).
 #
-# 찾기 — 웹 · 앱이 같은 규칙으로. 찾는 말과 name · aliases · id 를 소문자로 바꾸고 공백을 모두 뺀 뒤, 찾는 말이 들어 있으면 걸린다
-# (부분 일치). 결과는 이 표의 차례 그대로(묶음 머리 없이), 개수는 화면 밖으로 알린다. 0건이면 "'{검색어}'에 대한 아이콘이 없어요".
-# 기본 — 새 항목 · 아이콘이 없는 항목(null · "")은 default(tag)다. "없음" 을 고르는 칸은 두지 않는다(2026-10-04 List 결정).
-# 세트 밖 — 이미 저장된 세트 밖 lucide 아이콘은 그대로 그린다(웹 DynamicIcon · 앱 lucideByName). 고르는 격자에는 없다.
+# 찾기 — 웹 · 앱이 같은 규칙으로 찾습니다. 찾는 말과 name · aliases · id 를 소문자로 바꾸고 공백을 모두 뺀 뒤, 찾는 말이 들어 있으면 걸립니다
+# (부분 일치). 결과는 이 표의 차례 그대로(묶음 머리 없이) 보이고, 개수는 화면 밖으로 알립니다. 0건이면 "'{검색어}'에 대한 아이콘이 없어요" 입니다.
+# 기본 — 새 항목 · 아이콘이 없는 항목(null · "")은 default(tag)입니다. "없음" 을 고르는 칸은 두지 않습니다.
+# 세트 밖 — 이미 저장된 세트 밖 lucide 아이콘은 그대로 그립니다(웹 DynamicIcon · 앱 lucideByName). 고르는 격자에는 없습니다.
 #
 # 레시피 — scripts/gen-category-icons.mjs(npm run gen:category-icons)가 이 표를 recipes/shadcn/lib/category-icons.ts 의 표(CATEGORY_ICONS ·
-# CATEGORY_ICON_GROUPS)로 옮기고, npm run verify 의 check:category-icons 가 어긋나면 멈춘다(gen-institution-colors.mjs 와 같은 틀 —
-# 한 줄에 한 아이콘인 흐름 맵 · 모르는 키 · 빠진 키 · 겹치는 id · name · groups 에 없는 묶음 · lucide-react 에 없는 id 를 줄 번호와 함께).
-# 앱도 같은 표에서 만든다.
+# CATEGORY_ICON_GROUPS)로 옮기고, npm run verify 의 check:category-icons 가 어긋나면 멈춥니다(gen-institution-colors.mjs 와 같은 틀 —
+# 한 줄에 한 아이콘인 흐름 맵 · 모르는 키 · 빠진 키 · 겹치는 id · name · groups 에 없는 묶음 · lucide-react 에 없는 id 를 줄 번호와 함께 알립니다).
+# 앱도 같은 표에서 만듭니다.
 
 name: CategoryIcons
 

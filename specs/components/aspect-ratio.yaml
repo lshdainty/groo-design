@@ -1,17 +1,11 @@
-# Aspect Ratio 의 수치 원본 — 구조는 SEED Aspect Ratio(React 레이아웃 상자 — 2026-10-04 사용자 결정, 이미지 비교 페이지 "따라오는 것").
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md. 옛 Aspect Ratio(Radix · 권장 비율 16:9 · 4:3 · 1:1 · 3:4 · 21:9 · 2:1 · 자식 모서리 md 8)는
-# aspect-ratio.history/v-pre-seed-image.* 다.
+# Aspect Ratio 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 폭이 정해지면 비율로 높이가 정해지는 상자 하나 — 모서리 · 윤곽 · 바탕 · 불러오는 동안 · 대체 그림이 없다. 자식 하나가 상자를 채운다.
-# 그림(사진 · 카드 그림 · 규정 그림)은 이것이 아니라 Image Frame 이다(그 안의 비율 상자가 이것). 이것은 그림이 아닌 것 — 동영상 · 지도 ·
-# 바깥 페이지(iframe) · 차트처럼 비율만 지키면 되는 자리 — 에 쓴다.
-# 비율은 Image Frame 과 같은 여덟 가지(SEED 일곱 + 카드 1.586), 기본 4:3. 옛 3:4 · 21:9 는 걷었다.
-# 비율 값은 모두 "W / H" 글로 적는다 — 브라우저가 계산값으로 쓰는 꼴(getComputedStyle 의 aspect-ratio)이라 검사기가 글 그대로 맞추고,
-# 앱은 "/" 로 나눠 W ÷ H 를 쓴다. 숫자(1 · 1.586)와 "16 / 9" 가 섞이면 한 가지 재는 법으로 다 잴 수 없다(2026-10-08).
-#
-# SEED 와 다른 자리(aspect-ratio.md 의 "SEED 와 다른 점")
-#   - 비율을 여덟 가지로 묶는다 — SEED React 는 아무 숫자나 받는다.
-#   - 카드 1.586 을 더한다(groo).
+# 폭이 정해지면 비율로 높이가 정해지는 상자 하나입니다 — 모서리 · 윤곽 · 바탕 · 불러오는 동안 · 대체 그림이 없습니다. 자식 하나가 상자를 채웁니다.
+# 그림(사진 · 카드 그림 · 규정 그림)은 이것이 아니라 Image Frame 입니다(그 안의 비율 상자가 이것). 이것은 그림이 아닌 것 — 동영상 · 지도 ·
+# 바깥 페이지(iframe) · 차트처럼 비율만 지키면 되는 자리 — 에 씁니다.
+# 비율은 Image Frame 과 같은 여덟 가지(일곱 + 카드 1.586), 기본 4:3 입니다.
+# 비율 값은 모두 "W / H" 글로 적습니다 — 브라우저가 계산값으로 쓰는 꼴(getComputedStyle 의 aspect-ratio)이라 검사기가 글 그대로 맞추고,
+# 앱은 "/" 로 나눠 W ÷ H 를 씁니다. 숫자(1 · 1.586)와 "16 / 9" 가 섞이면 한 가지 재는 법으로 다 잴 수 없습니다.
 
 name: AspectRatio
 
@@ -24,7 +18,7 @@ variants:
     "1:1": 정사각 — 지도 미리보기 · 정사각 동영상
     "2:1": 넓은 띠
     "16:9": 동영상 · 바깥 페이지(iframe)
-    "4:3": 기본(SEED)
+    "4:3": 기본
     "6:7": 조금 세로
     "4:5": 세로
     "2:3": 긴 세로
@@ -48,7 +42,7 @@ rules:
         overflow: { value: hidden, note: "넘친 자식을 자른다" }
       child:
         inset: { value: 0px, note: "absolute — 상자를 채운다. 자식은 하나" }
-        objectFit: { value: cover, note: "img · video — 가운데를 남겨 자른다(SEED). 지도 · iframe 은 상자 크기 그대로" }
+        objectFit: { value: cover, note: "img · video — 가운데를 남겨 자른다. 지도 · iframe 은 상자 크기 그대로" }
 
   # ── 비율 ──────────────────────────────────────────────
   - when: { ratio: "1:1" }
@@ -58,7 +52,7 @@ rules:
   - when: { ratio: "16:9" }
     enabled: { root: { aspectRatio: { value: "16 / 9", note: "≈ 1.78" } } }
   - when: { ratio: "4:3" }
-    enabled: { root: { aspectRatio: { value: "4 / 3", note: "≈ 1.33 — 기본(SEED)" } } }
+    enabled: { root: { aspectRatio: { value: "4 / 3", note: "≈ 1.33 — 기본" } } }
   - when: { ratio: "6:7" }
     enabled: { root: { aspectRatio: { value: "6 / 7", note: "≈ 0.86" } } }
   - when: { ratio: "4:5" }

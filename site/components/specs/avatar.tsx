@@ -106,7 +106,7 @@ const Anatomy: Fig = ({ caption }) => {
           ))}
         </div>
         <span className="max-w-[560px] text-center text-[12px] leading-4 pk-muted">
-          {lk.sizes[size].d} 을 2배로 그렸다 — 흰 배경 사진도 1px 안쪽 테두리({lk.border.width}px)가 바탕과 가른다. 묶음은 지름의 약 1/4 을 겹치고, 놓인 바탕색 링으로 앞 아바타를 끊는다(뒤가 위)
+          {lk.sizes[size].d} 을 2배로 그렸습니다 — 흰 배경 사진도 1px 안쪽 테두리({lk.border.width}px)가 바탕과 가릅니다. 묶음은 지름의 약 1/4 을 겹치고, 놓인 바탕색 링으로 앞 아바타를 끊습니다(뒤가 위)
         </span>
       </div>
     </Figure>
@@ -114,12 +114,11 @@ const Anatomy: Fig = ({ caption }) => {
 };
 
 // ── Size ──────────────────────────────────────────────────
-// avatar.yaml 의 자리 설명 — "36 — 댓글(SEED). groo 한 줄 목록 줄(…)" 에서 SEED 자리와 groo 자리
+// avatar.yaml 의 자리 설명 — "36 — 한 줄 목록 줄(…) · …" 에서 "—" 뒤의 자리
 function places(size: AvatarSize) {
   const desc = axisDesc(loadComponentSpec('avatar'), 'size', size) ?? '';
-  const seed = /—\s*([^(.]+)\(SEED\)/.exec(desc)?.[1]?.trim();
-  const groo = /groo\s+([^(]+)/.exec(desc)?.[1]?.trim().replace(/\.$/, '');
-  return { seed, groo };
+  const place = /—\s*(.+)$/.exec(desc)?.[1]?.trim();
+  return { place };
 }
 const Size: Fig = ({ caption }) => {
   const lk = al();
@@ -137,14 +136,13 @@ const Size: Fig = ({ caption }) => {
                   {s === lk.defaultSize && <span className="font-normal pk-muted"> (기본)</span>}
                 </b>
                 <span className="text-[11px] leading-4 pk-muted">글자 {lk.sizes[s].font}</span>
-                <span className="text-[11px] leading-4 pk-text">{p.groo}</span>
-                {p.seed && <span className="text-[11px] leading-4 pk-muted">SEED {p.seed}</span>}
+                <span className="text-[11px] leading-4 pk-text">{p.place}</span>
               </div>
             );
           })}
         </div>
       </Board>
-      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">이니셜 글자는 지름의 40%(가장 작아도 10) · 굵기 {lk.initial.weight} · 모든 크기에 1px 안쪽 테두리. 이 밖의 크기를 만들지 않는다</p>
+      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">이니셜 글자는 지름의 40%(가장 작아도 10) · 굵기 {lk.initial.weight} · 모든 크기에 1px 안쪽 테두리. 이 밖의 크기를 만들지 않습니다</p>
     </Panel>
   );
 };
@@ -234,7 +232,7 @@ const Stack: Fig = ({ caption }) => {
               {big} 을 3배로 — 겹침 {g.overlap}(분홍) · 링 {g.ring} · 뒤가 위 · 앞 {st.max}명 + &ldquo;+{SIX.length - st.max}&rdquo;
             </span>
           </Board>
-          <Cap strong="겹침 · 링 · 넘침">다음 아바타가 지름의 약 1/4 왼쪽으로 겹치고, 바탕색 링이 앞 아바타를 끊는다</Cap>
+          <Cap strong="겹침 · 링 · 넘침">다음 아바타가 지름의 약 1/4 왼쪽으로 겹치고, 바탕색 링이 앞 아바타를 끊습니다</Cap>
         </div>
         <div className="flex min-w-0 flex-col gap-2">
           <Board className="overflow-x-auto">
@@ -249,7 +247,7 @@ const Stack: Fig = ({ caption }) => {
               ))}
             </div>
           </Board>
-          <Cap strong="크기마다">크기는 묶음이 정하고 안의 아바타가 모두 따른다 — &ldquo;+N&rdquo; 도 같은 크기 · 같은 링</Cap>
+          <Cap strong="크기마다">크기는 묶음이 정하고 안의 아바타가 모두 따릅니다 — &ldquo;+N&rdquo; 도 같은 크기 · 같은 링</Cap>
         </div>
       </div>
       <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -258,7 +256,7 @@ const Stack: Fig = ({ caption }) => {
             <Board mode="dark" bg={surface === 'floating' ? 'bg-layer-floating' : 'bg-layer-default'} className="flex items-center justify-center">
               <AvatarStackView look={lk} stack={st} size="36" people={SIX} mode="dark" surface={surface} />
             </Board>
-            <Cap strong={surface === 'floating' ? '시트 · 대화상자 안 — 링 bg-layer-floating' : '화면 위 — 링 bg-layer-default'}>다크 — 두 바탕이 달라 링도 그 바탕색이다</Cap>
+            <Cap strong={surface === 'floating' ? '시트 · 대화상자 안 — 링 bg-layer-floating' : '화면 위 — 링 bg-layer-default'}>다크 — 두 바탕이 달라 링도 그 바탕색입니다</Cap>
           </div>
         ))}
       </div>
@@ -283,7 +281,7 @@ const ThingGuide: Fig = ({ caption }) => (
           />
         </PhoneBoard>
       </Verdict>
-      <Verdict ok={false} note="카드 · 카테고리를 원 아바타로 — 사람과 물건이 한 모양이 된다">
+      <Verdict ok={false} note="카드 · 카테고리를 원 아바타로 — 사람과 물건이 한 모양이 됩니다">
         <PhoneBoard>
           <Rows
             rows={[
@@ -323,7 +321,7 @@ const SizeGuide: Fig = ({ caption }) => {
             ))}
           </W>
         </Verdict>
-        <Verdict ok={false} note="한 화면에 28 · 32 · 36 · 40 — 10단계 밖의 크기가 섞였다">
+        <Verdict ok={false} note="한 화면에 28 · 32 · 36 · 40 — 10단계 밖의 크기가 섞였습니다">
           <W w={300}>
             {people.map((n, i) => (
               <PersonLine key={n} name={n} size="36" zoom={mixed[i] / d36} right={<span className="text-[15px] font-bold tabular-nums pk-text">103,000원</span>} />
@@ -354,7 +352,7 @@ function Sidebar({ mode = 'auto' }: { mode?: Mode }) {
 const NameGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="이름 옆 아바타는 숨기고(이름을 한 번만), 혼자인 아바타는 이름을 가진다">
+      <Verdict ok note="이름 옆 아바타는 숨기고(이름을 한 번만), 혼자인 아바타는 이름을 가집니다">
         <div className="flex flex-col items-center gap-3">
           <W w={260}>
             <PersonLine name="김민수" size="36" />
@@ -366,7 +364,7 @@ const NameGuide: Fig = ({ caption }) => (
           </div>
         </div>
       </Verdict>
-      <Verdict ok={false} note='이름 옆 아바타를 읽는다 — "김 김민수". 혼자인 아바타는 이름이 없어 무엇인지 모른다'>
+      <Verdict ok={false} note='이름 옆 아바타를 읽습니다 — "김 김민수". 혼자인 아바타는 이름이 없어 무엇인지 모릅니다'>
         <div className="flex flex-col items-center gap-3">
           <W w={260}>
             <PersonLine name="김민수" size="36" />
@@ -393,7 +391,7 @@ function PaidRows({ app = false, bad = false }: { app?: boolean; bad?: boolean }
   return (
     <div className="flex flex-col">
       {crew.map(({ name, paid }, i) => {
-        // 나쁜 예 — 앱이 다른 해시를 써 색이 갈린다(지금 앱의 h·31 + c 처럼 다른 순서)
+        // 나쁜 예 — 앱이 다른 해시를 써 색이 갈린다(h·31 + c 처럼 다른 순서)
         const wrong = bad && app ? rc(`chart-${lk.order[(avatarHueIndex(name) + 3 + i) % 10]}`) : undefined;
         return (
           <div key={name} className="flex items-center gap-3 py-2">
@@ -421,7 +419,7 @@ const ColorGuide: Fig = ({ caption }) => (
           ))}
         </div>
       </Verdict>
-      <Verdict ok={false} note="앱이 다른 해시를 써 같은 사람이 다른 색 · 안 낸 사람을 불투명도로 흐렸다">
+      <Verdict ok={false} note="앱이 다른 해시를 써 같은 사람이 다른 색 · 안 낸 사람을 불투명도로 흐렸습니다">
         <div className="grid w-full max-w-[340px] grid-cols-1 gap-3 sm:grid-cols-2">
           {['웹', '앱'].map((p, i) => (
             <Board key={p} pad={12}>
@@ -447,14 +445,14 @@ function TripLine({ children }: { children: ReactNode }) {
 const StackGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note='앞 4명 + "+2" — 옆의 "6명" 이 수를 말하므로 묶음은 장식이다'>
+      <Verdict ok note='앞 4명 + "+2" — 옆의 "6명" 이 수를 말하므로 묶음은 장식입니다'>
         <W w={280}>
           <TripLine>
             <DutchSummary />
           </TripLine>
         </W>
       </Verdict>
-      <Verdict ok={false} note="여섯을 모두 겹치고 수가 없다 — 줄이 길어지고 몇 명인지 세어야 안다">
+      <Verdict ok={false} note="여섯을 모두 겹치고 수가 없습니다 — 줄이 길어지고 몇 명인지 세어야 압니다">
         <W w={280}>
           <TripLine>
             <span className="flex items-center gap-2">
@@ -468,7 +466,7 @@ const StackGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 폭에 맞춘 묶음 — 큰 묶음이 놓인 폭보다 넓으면 보이는 사람 수를 줄이고 "+N" 이 커진다(2026-10-17 사용자 결정 — 03-E 결정 4 B).
+// 폭에 맞춘 묶음 — 큰 묶음이 놓인 폭보다 넓으면 보이는 사람 수를 줄이고 "+N" 이 커진다.
 // 폰 폭 360 의 안쪽 312. 몇 명이 보이는지는 stackFit(avatar-stack.yaml root.overflow 의 셈)이 정한다
 const FIT_W = 312;
 function FitCase({ size, fit }: { size: AvatarSize; fit: boolean }) {
@@ -502,7 +500,7 @@ const StackFit: Fig = ({ caption }) => (
           </div>
         </W>
       </Verdict>
-      <Verdict ok={false} note={`폭을 보지 않고 늘 앞 4명 — 108 묶음이 폰 폭을 넘어 넷째 사람과 "+2" 가 화면 밖으로 나간다`}>
+      <Verdict ok={false} note={`폭을 보지 않고 늘 앞 4명 — 108 묶음이 폰 폭을 넘어 넷째 사람과 "+2" 가 화면 밖으로 나갑니다`}>
         <W w={FIT_W}>
           <FitCase size="108" fit={false} />
         </W>
@@ -552,7 +550,7 @@ const PhotoGuide: Fig = ({ caption }) => {
   const cells: { strong: string; cap: string; props: Partial<Parameters<typeof AvatarEditView>[0]> }[] = [
     { strong: '사진 있음', cap: `${ed.change.label} · ${ed.remove.label} — 아래 ${ed.marginTop} · 사이 ${ed.gap}`, props: { photo: 1 } },
     { strong: '올리는 중', cap: `딤 + 값 있는 원 ${ed.progress} · 두 버튼 막힘`, props: { photo: 1, progress: 0.4 } },
-    { strong: '실패', cap: '그 자리 오류 글 — 성공은 따로 알리지 않는다', props: { photo: 1, error: '5MB 넘는 사진은 올릴 수 없어요.' } },
+    { strong: '실패', cap: '그 자리 오류 글 — 성공은 따로 알리지 않습니다', props: { photo: 1, error: '5MB 넘는 사진은 올릴 수 없어요.' } },
     { strong: '사진 없음', cap: `이니셜 + "${ed.change.label}" 하나`, props: {} },
   ];
   return (
@@ -572,7 +570,7 @@ const PhotoGuide: Fig = ({ caption }) => {
                 </div>
               ))}
             </div>
-            <Cap strong={mode === 'light' ? '라이트' : '다크'}>HR 사용자 수정 대화상자(떠 있는 면) — 108, 마우스를 올려야 나타나는 덮개를 두지 않는다</Cap>
+            <Cap strong={mode === 'light' ? '라이트' : '다크'}>HR 사용자 수정 대화상자(떠 있는 면) — 108, 마우스를 올려야 나타나는 덮개를 두지 않습니다</Cap>
           </div>
         ))}
       </div>
@@ -615,7 +613,23 @@ const ExPhoto: Fig = ({ caption }) => {
   );
 };
 
+// 개요 카드 — 라이트 아바타 한 줄(사진 · 이니셜 + 이름 색)과 묶음(앞 4명 + "+N")
+const Thumb: Fig = () => (
+  <div style={{ width: 332, zoom: 0.8 }}>
+    <Board mode="light" className="flex flex-col items-center gap-4">
+      <span className="flex gap-3">
+        <A name="서다은" size="64" photo={1} mode="light" />
+        <A name="김민수" size="64" mode="light" />
+        <A name="이서연" size="64" mode="light" />
+        <A name="Kim Minsu" size="64" mode="light" />
+      </span>
+      <S people={SIX} size="48" mode="light" />
+    </Board>
+  </div>
+);
+
 export const avatarFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

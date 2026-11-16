@@ -1,7 +1,7 @@
 // Attachment Input 페이지의 그림 — specs/components/attachment-input.md 의 `[그림: …](../../site/components/specs/attachment-input.tsx#<id>)` 자리.
 // 칸은 attachment-input.yaml 을 푼 값(atLook — finish-view 의 AtTriggerView · AtItemView · AtRowView · AtDropzoneView)으로, 칸 이름 · 설명 · 오류는
 // Field(field.yaml — text-field-view), 시트 · 대화상자는 bottom-sheet · dialog.yaml(overlay-view), 항목 메뉴는 menu-sheet · menu.yaml(menu-view),
-// 프로필 사진 자리는 avatar.yaml(AvatarEditView)로 그린다. 사진은 칠한 그림이다. 가게 · 파일 이름은 지어낸 것이다(finish-shared 의 AT_*).
+// 프로필 사진 자리는 avatar.yaml(AvatarEditView)로 그린다. 사진은 칠한 그림, 가게 · 파일 이름은 지어낸 데모 데이터다(finish-shared 의 AT_*).
 import type { CSSProperties, ReactNode } from 'react';
 import { Panel } from '../foundations/ui';
 import { AtNameCard, AtPlayground, ExImportDemo, ExReceiptDemo, ExReorderDemo } from './finish-attach';
@@ -209,7 +209,7 @@ const Layout: Fig = ({ caption }) => {
       <div className="flex flex-col gap-4">
         <div className="grid items-start gap-4 sm:grid-cols-2">
           {(['start', 'end'] as const).map((at) => (
-            <Shot key={at} w={w + 48} strong={at === 'start' ? 'tile — 처음' : 'tile — 끝까지 민 모습'} cap={at === 'start' ? `10/10 한 줄 — 첫 항목은 다른 칸과 같은 자리, 좌우 끝 흐림 ${l.items.fog}` : '올리는 중 · 실패가 끝에 있으면 밀어야 보인다'}>
+            <Shot key={at} w={w + 48} strong={at === 'start' ? 'tile — 처음' : 'tile — 끝까지 민 모습'} cap={at === 'start' ? `10/10 한 줄 — 첫 항목은 다른 칸과 같은 자리, 좌우 끝 흐림 ${l.items.fog}` : '올리는 중 · 실패가 끝에 있으면 밀어야 보입니다'}>
               <Board>
                 <ReceiptField>
                   <Row entries={AT_WORST} at={at} />
@@ -226,7 +226,7 @@ const Layout: Fig = ({ caption }) => {
               </ImportField>
             </Board>
           </Shot>
-          <Shot w={w + 48} strong="dropzone — 1280 미만 · 앱" cap="끌어 놓기가 없다 — 파일 선택 버튼만">
+          <Shot w={w + 48} strong="dropzone — 1280 미만 · 앱" cap="끌어 놓기가 없어 파일 선택 버튼만 둡니다">
             <Board>
               <ImportField>
                 <AtPickButtonView look={l} state="enabled" />
@@ -253,7 +253,7 @@ const Trigger: Fig = ({ caption }) => {
     { count: 0, max: 10, strong: '0/10', cap: '지금 개수는 0 이어도 같은 색' },
     { count: 3, max: 10, strong: '3/10', cap: '"/10" 은 옅은 색' },
     { count: 10, max: 10, strong: '10/10 — 막힘', cap: 'aria-disabled — 초점이 남아 "10/10, 사용할 수 없음"' },
-    { count: 3, accept: 'file', strong: '개수 없음', cap: '최대가 없으면(서버 한도 없음) 개수를 두지 않는다 · 파일만 받으면 클립' },
+    { count: 3, accept: 'file', strong: '개수 없음', cap: '최대가 없으면(서버 한도 없음) 개수를 두지 않습니다 · 파일만 받으면 클립' },
   ];
   return (
     <Panel caption={caption}>
@@ -344,7 +344,7 @@ const Remove: Fig = ({ caption }) => {
             ['누르는 자리', `${l.remove.touch}(분홍 — 둘레 ${l.remove.extend} 씩)`],
           ]}
         />
-        <span className="text-center text-[12px] pk-muted">{z}배로 그렸다</span>
+        <span className="text-center text-[12px] pk-muted">{z}배로 그렸습니다</span>
       </div>
     </Panel>
   );
@@ -537,7 +537,7 @@ const Dropzone: Fig = ({ caption }) => {
               </div>
             </div>
           </Board>
-          <Cap strong="390 · 앱">파일 선택 버튼(고른 뒤 막힘) + 파일 카드 — 바꾸려면 × 로 지우고 다시 고른다</Cap>
+          <Cap strong="390 · 앱">파일 선택 버튼(고른 뒤 막힘) + 파일 카드 — 바꾸려면 × 로 지우고 다시 고릅니다</Cap>
         </div>
       </div>
     </Panel>
@@ -603,7 +603,7 @@ const States: Fig = ({ caption }) => {
             </div>
           </div>
         </div>
-        <Cap strong={modeKo(mode)}>포커스 링은 모두 부품 안쪽 — 불투명도는 사진의 끄는 중 · 읽기 전용에만(SEED 그대로), 막힘은 전용 색</Cap>
+        <Cap strong={modeKo(mode)}>포커스 링은 모두 부품 안쪽 — 불투명도는 사진의 끄는 중 · 읽기 전용에만, 막힘은 전용 색</Cap>
       </div>
     );
   };
@@ -624,14 +624,14 @@ const WhenGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="grid items-start gap-4 sm:grid-cols-3">
-        <Shot w={sheetBody() + 48} strong="영수증 — tile" cap="여럿 · 사진이 섞인다">
+        <Shot w={sheetBody() + 48} strong="영수증 — tile" cap="여럿 · 사진이 섞입니다">
           <Board>
             <ReceiptField>
               <Row entries={[pdfEntry(), photoEntry(0), photoEntry(1)]} />
             </ReceiptField>
           </Board>
         </Shot>
-        <Shot w={sheetBody() + 48} strong="가져오기 — dropzone" cap="파일 하나를 골라 바로 넘긴다">
+        <Shot w={sheetBody() + 48} strong="가져오기 — dropzone" cap="파일 하나를 골라 바로 넘깁니다">
           <Board>
             <ImportField>
               <AtDropzoneView look={l} buttonState="enabled" />
@@ -652,7 +652,7 @@ const RowGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="grid items-start gap-4 sm:grid-cols-2">
       {(['start', 'end'] as const).map((at) => (
-        <Shot key={at} w={sheetBody() + 48} strong={at === 'start' ? '처음 — 끝 흐림이 더 있다고 알린다' : '끝까지 민 모습'} cap={at === 'start' ? '대부분이 옆으로 숨는다 — 실패는 칸 이름에도 들린다("1개는 올리지 못했어요")' : '올리는 중 · 실패가 여기 있었다'}>
+        <Shot key={at} w={sheetBody() + 48} strong={at === 'start' ? '처음 — 끝 흐림이 더 있다고 알립니다' : '끝까지 민 모습'} cap={at === 'start' ? '대부분이 옆으로 숨는다 — 실패는 칸 이름에도 들린다("1개는 올리지 못했어요")' : '올리는 중 · 실패가 끝에 있습니다'}>
           <Board>
             <ReceiptField>
               <Row entries={AT_WORST} at={at} />
@@ -674,7 +674,7 @@ const ValidationGuide: Fig = ({ caption }) => {
             <Row entries={added} />
           </ReceiptField>
         </Board>
-        <Cap strong="고른 셋 — PDF 둘은 붙고, 12MB 사진은 거절">거절은 붙이지 않고 칸 아래 오류 글로 한 번 — 토스트가 아니다. 이유마다 한 문장</Cap>
+        <Cap strong="고른 셋 — PDF 둘은 붙고, 12MB 사진은 거절">거절은 붙이지 않고 칸 아래 오류 글로 한 번 알립니다 — 토스트가 아닙니다. 이유마다 한 문장입니다</Cap>
       </div>
     </Panel>
   );
@@ -687,7 +687,7 @@ const AppGuide: Fig = ({ caption }) => {
     <Panel caption={caption}>
       <div className="grid items-start gap-4 sm:grid-cols-2">
         {MODES.map((mode) => (
-          <Shot key={mode} w={PHONE + 16} strong={`${modeKo(mode)} · 앱`} cap="첨부 타일을 누름 — 받는 형식에 없는 줄은 뺀다">
+          <Shot key={mode} w={PHONE + 16} strong={`${modeKo(mode)} · 앱`} cap="첨부 타일을 누름 — 받는 형식에 없는 줄은 뺍니다">
             <TxPage
               mode={mode}
               h={760}
@@ -711,6 +711,25 @@ const AppGuide: Fig = ({ caption }) => {
   );
 };
 
+// 개요 카드 — 라이트 첨부 타일 + 사진 · 파일 카드 한 줄, 아래 드롭존
+const Thumb: Fig = () => {
+  const l = L();
+  return (
+    <div style={{ width: 384, zoom: 0.7 }}>
+      <Board mode="light">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: l.root.gap }}>
+          <div style={{ display: 'flex', gap: l.items.gap, alignItems: 'flex-start', paddingTop: l.items.padTop }}>
+            <AtTriggerView look={l} mode="light" count={3} max={10} label={LABEL} frozen />
+            <AtItemView look={l} mode="light" entry={photoEntry(0)} frozen />
+            <AtItemView look={l} mode="light" entry={pdfEntry({ name: '카드영수증_10월.pdf', size: 412 * 1024 })} frozen />
+          </div>
+          <AtDropzoneView look={l} mode="light" buttonState="enabled" />
+        </div>
+      </Board>
+    </div>
+  );
+};
+
 // ── 코드 미리보기 ─────────────────────────────────────────
 const kits = () => ({ look: L(), field: TF().field, menu: MK(), ov: overlayKit('desk') });
 const ExReceipt: Fig = () => <ExReceiptDemo {...kits()} initial={[pdfEntry(), photoEntry(0)]} />;
@@ -718,6 +737,7 @@ const ExImport: Fig = () => <ExImportDemo {...kits()} />;
 const ExReorder: Fig = () => <ExReorderDemo {...kits()} initial={FOUR()} />;
 
 export const attachmentInputFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

@@ -373,7 +373,7 @@ const Width: Fig = ({ caption }) => (
             <Field label="내용" value="점심 식사" />
           </div>
         </Phone>
-        <Cap strong="Fill">화면 폭을 채운다 — 아래 고정 CTA</Cap>
+        <Cap strong="Fill">화면 폭을 채웁니다 — 아래 고정 CTA</Cap>
       </div>
     </div>
   </Figure>
@@ -404,7 +404,26 @@ const HitArea: Fig = ({ caption }) => (
 // ── 플레이그라운드 ────────────────────────────────────────
 const Playground: Fig = () => <ButtonPlayground parts={{ desk: buttonParts('desk'), hr: buttonParts('hr') }} />;
 
+// ── 개요 카드 — 라이트 버튼 몇 개(변형 일곱 가지) ─────────
+const THUMB_ROWS: [ButtonCombo['variant'], string, IconName?][][] = [
+  [['brandSolid', '거래 추가', 'plus'], ['neutralSolid', '저장'], ['neutralWeak', '취소']],
+  [['criticalSolid', '삭제'], ['brandOutline', '자세히'], ['neutralOutline', '건너뛰기']],
+  [['ghost', '더보기']],
+];
+const Thumb: Fig = () => (
+  <div className="flex flex-col items-center gap-3" style={{ width: 340, zoom: 0.8 }}>
+    {THUMB_ROWS.map((row, i) => (
+      <div key={i} className="flex justify-center gap-3">
+        {row.map(([v, label, prefix]) => (
+          <B key={label} variant={v} mode="light" state="enabled" label={label} prefix={prefix} />
+        ))}
+      </div>
+    ))}
+  </div>
+);
+
 export const buttonFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

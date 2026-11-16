@@ -1,14 +1,10 @@
-# Alert Dialog 의 수치 원본 — 구조는 SEED Alert Dialog(2026-10-02 사용자 결정, 비교 페이지 1 · 6).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Alert Dialog 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 되돌릴 수 없는 일을 하기 전에 묻는 확인창 — 액션 둘 이하(취소 · 확정)의 양자택일, 또는 알리기만 하는 한 버튼.
-# 폰 · 데스크톱 모두 화면 정중앙에 같은 모양으로 뜬다. 닫기 버튼이 없고, 바깥을 눌러도 닫히지 않으며, Esc 는 취소다.
-# 입력칸을 넣지 않는다 — 입력이 필요하면 Dialog · Bottom Sheet.
-#
-# SEED 와 다른 자리(alert-dialog.md 의 "SEED 와 다른 점")
-#   - 버튼: 1280 미만 medium 40(SEED 와 같다), 1280 이상 small 36(Button 결정 — 대화상자 바닥 36).
-#   - 딤: SEED bg.overlay 0.455 → groo overlay-dim 0.50 · 다크 0.65(v102).
-#   - z-index: specs/z-index.md 의 L5(딤 z-alert 300 · 확인창 z-alert-content 301) — 열린 Dialog · Bottom Sheet 위에 뜬다(SEED 는 모두 2 + layerIndex).
+# 되돌릴 수 없는 일을 하기 전에 묻는 확인창입니다 — 액션 둘 이하(취소 · 확정)의 양자택일, 또는 알리기만 하는 한 버튼.
+# 폰 · 데스크톱 모두 화면 정중앙에 같은 모양으로 뜹니다. 닫기 버튼이 없고, 바깥을 눌러도 닫히지 않으며, Esc 는 취소입니다.
+# 입력칸을 넣지 않습니다 — 입력이 필요하면 Dialog · Bottom Sheet 를 씁니다.
+# 버튼은 1280 미만 medium 40, 1280 이상 small 36 입니다. z-index 는 specs/z-index.md 의 L5(딤 z-alert 300 · 확인창 z-alert-content 301)라
+# 열린 Dialog · Bottom Sheet 위에 뜹니다.
 
 name: AlertDialog
 
@@ -37,7 +33,7 @@ rules:
   - when: {}
     enabled:
       overlay:
-        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "groo 딤(v102)" }
+        background: { value: $overlay-dim-light, dark: $overlay-dim-dark, note: "딤 0.50 · 다크 0.65" }
         zIndex: { value: 300, note: "z-alert — specs/z-index.md L5. 열린 대화상자 · 시트 위" }
       root:
         maxWidth: { value: 272px, note: "좌우 32 는 남긴다 — 화면이 336 보다 좁으면 화면 폭 − 64" }
@@ -45,9 +41,9 @@ rules:
         padding: $spacing-x5
         radius: $radius-r5
         background: $color-bg-layer-floating
-        shadow: { value: none, note: "그림자 없이 딤과 표면 색으로 뜬다(SEED)" }
+        shadow: { value: none, note: "그림자 없이 딤과 표면 색으로 뜬다" }
         zIndex: { value: 301, note: "z-alert-content — specs/z-index.md L5" }
-        maxHeight: { value: 화면 높이(안전 영역 안), note: "dvh 우선 — 넘치면 확인창 전체(제목 · 설명 · 버튼)가 스크롤된다. 끝 흐림 없음(SEED alert-dialog.css content max-height 100%). 2026-10-17 사용자 결정 03-F 1A" }
+        maxHeight: { value: 화면 높이(안전 영역 안), note: "dvh 우선 — 넘치면 확인창 전체(제목 · 설명 · 버튼)가 스크롤된다. 끝 흐림 없음" }
         overflowY: auto
       title:
         typography: $text-t7
@@ -56,7 +52,7 @@ rules:
       description:
         typography: $text-t5
         fontWeight: 400
-        foreground: { value: $color-fg-neutral, note: "다른 떠 있는 표면과 달리 짙은 글자 — 꼭 읽어야 할 말이다(SEED)" }
+        foreground: { value: $color-fg-neutral, note: "다른 떠 있는 표면과 달리 짙은 글자 — 꼭 읽어야 할 말이다" }
         marginTop: { value: $spacing-x1_5, note: "제목 ↔ 설명. 제목이 없으면 0" }
       footer:
         paddingTop: $spacing-x4
@@ -79,14 +75,14 @@ rules:
   - when: { layout: single }
     enabled:
       footer:
-        direction: { value: row, note: "버튼 하나 폭 전체 — 알리기. 고를 것이 없는 결과 알림은 \"확인\", 버튼이 일을 하면(다시 저장) 그 동작 이름(2026-10-22 5B)" }
+        direction: { value: row, note: "버튼 하나 폭 전체 — 알리기. 고를 것이 없는 결과 알림은 \"확인\", 버튼이 일을 하면(다시 저장) 그 동작 이름" }
 
 motion:
   "열림 — 확인창":
     duration: $motion-duration-d4
     easing: $motion-ease-enter-expressive
     properties: [scale 1.3 → 1, opacity 0 → 1]
-    note: "크게 나타나며 줄어든다(SEED) — 모션 줄이기면 150ms 서서히 나타남"
+    note: "크게 나타나며 줄어든다 — 모션 줄이기면 150ms 서서히 나타남"
   "열림 — 딤":
     duration: $motion-duration-d2
     easing: $motion-ease-enter
