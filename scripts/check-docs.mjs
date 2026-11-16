@@ -38,7 +38,9 @@ const files = [
   ...walk(join(ROOT, "site/content/docs"), [".mdx"]),
   ...walk(join(ROOT, "site/components/specs"), [".tsx", ".ts"]),
   ...walk(join(ROOT, "site/components/foundations"), [".tsx", ".ts"]),
-].filter(existsSync);
+].filter(existsSync)
+  // 빌드가 원본에서 만든 페이지(git 밖)는 원본을 검사하므로 건너뜁니다
+  .filter((f) => !/gen-content 가 만든 페이지|에서 생성 — 이 파일을 고치지 말고/.test(readFileSync(f, "utf8").slice(0, 600)));
 
 const pending = new Set(
   existsSync(PENDING_FILE)
