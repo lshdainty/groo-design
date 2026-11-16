@@ -7,14 +7,14 @@ import { NotificationBadge } from "@/components/ui/notification-badge";
 import { useLeaveConfirm } from "@/components/ui/alert-dialog";
 
 /*
- * Groo Top Navigation — 구조는 SEED Top Navigation(Root · Standard, 2026-10-04). 수치 원본은 specs/components/top-navigation.yaml.
- * 데스크톱 머리(desktop)는 SEED 에 컴포넌트가 없어 groo 가 같은 규칙으로 더했다.
+ * Groo Top Navigation — 수치 원본은 specs/components/top-navigation.yaml.
+ * 데스크톱 머리(desktop)도 같은 규칙을 따른다.
  *
  *   TopNavigation               바(<header> — main 밖, banner). type "root"(탭 첫 화면) · "standard"(기본 — 그 아래 화면 · HR 폰) ·
  *                               "desktop"(768 이상 Desk 의 머리 — 제목은 본문 맨 위 ScreenTitle). 자식은 아래 부품을 차례대로.
  *                               tone "layer"(기본 — 불투명 바) · "transparent"(사진이 화면 위를 채우는 상세 — 사진 위 투명 바, 제목 · 아이콘 · 글 버튼
- *                               static-white, SEED tone transparent, 2026-10-22 사용자 결정 5C). 사진이 바 밑으로 지나가면 부르는 쪽이 tone 을 "layer"
- *                               로 바꾼다(바탕이 채워진다 — 바탕 · 글자색 150ms). 막(SEED gradient)과 투명 누름 바탕(SEED bg.transparent-pressed)은
+ *                               static-white). 사진이 바 밑으로 지나가면 부르는 쪽이 tone 을 "layer"
+ *                               로 바꾼다(바탕이 채워진다 — 바탕 · 글자색 150ms). 막(gradient)과 투명 누름 바탕은
  *                               groo 토큰이 없어 열린 일이다 — 투명 바는 막을 그리지 않고, 누르면 바탕 없이 축소만 한다
  *   TopNavigationBackButton     ← "뒤로" — 앱 안에 앞 화면이 있으면 history.back()(react-router 의 navigate(-1) 와 같다), 없으면
  *                               fallbackHref(그 화면의 상위 화면 주소, 필수)로 지금 주소를 고쳐 간다(location.replace). onClick 을 주면
@@ -24,32 +24,32 @@ import { useLeaveConfirm } from "@/components/ui/alert-dialog";
  *   TopNavigationTitle          제목 <h1 tabIndex={-1} data-screen-title> — 한 줄 말줄임. desktop 에서는 그리지 않는다(본문 ScreenTitle)
  *   TopNavigationSearch         검색칸 자리 — 자식은 Input 하나(size="medium" · prefixIcon 돋보기 · clearable — 바 56 안이라 폰에서도 medium 40).
  *                               standard 는 제목 자리(← 다음 6 부터 오른쪽 자리 앞 8 까지)이고 보이지 않는 h1(title, 기본 "검색")을 스스로 둔다 —
- *                               거래 검색 화면. desktop 은 머리 왼쪽 폭 360(본문 여백 32 에서) — 거래 검색 화면의 입구(2026-10-16 Q-017-3a C)
+ *                               거래 검색 화면. desktop 은 머리 왼쪽 폭 360(본문 여백 32 에서) — 거래 검색 화면의 입구
  *   TopNavigationActions        오른쪽 자리 — TopNavigationIconButton 3개까지(2개 권장) 또는 TopNavigationTextButton 하나,
  *                               desktop 이면 맨 앞에 TopNavigationPrimaryButton 하나
  *   TopNavigationIconButton     아이콘 버튼 — 상자 44 = 누르는 영역 · 아이콘 24. aria-label 필수. notification 은 벨의 알림 점(점만 —
  *                               이름에 "새 알림 있음" 을 넣는 것은 부르는 쪽). 그 밖은 <button type="button"> 속성.
  *                               aria-pressed 는 그 자리에서 켜고 끄는 단추에만 — 이름은 고정, 아이콘은 지금 상태를 넘긴다. 다른 화면으로 가는
- *                               버튼에는 달지 않는다(금액 가리기 눈은 상단 바에 두지 않는다 — 순자산 카드의 눈, 2026-10-16 Q-017-2b A · 3c B)
+ *                               버튼에는 달지 않는다(금액 가리기 눈은 상단 바에 두지 않는다 — 순자산 카드의 눈)
  *   TopNavigationTextButton     글 버튼("완료" · "모두 읽음") — 오른쪽 자리에 하나, 아이콘 버튼과 섞지 않는다
  *   TopNavigationPrimaryButton  데스크톱 머리의 주 버튼 — Button brandSolid · small 그대로 + 오른쪽 8. 데스크톱 머리 오른쪽은 이것 + 알림 · 설정
  *   ScreenTitle                 데스크톱 본문 맨 위 제목 <h1 tabIndex={-1} data-screen-title> — text-screen-title 26 / 35 · 700, 머리 아래 20.
- *                               모든 데스크톱 화면에 하나(홈 · 캘린더도). description(화면 부제 — 제목 아래 t5 · 400 · fg-neutral-muted · 위 2, 2026-10-16 글자 역할 D6) · actions(Button small
+ *                               모든 데스크톱 화면에 하나(홈 · 캘린더도). description(화면 부제 — 제목 아래 t5 · 400 · fg-neutral-muted · 위 2) · actions(Button small
  *                               묶음 · 사이 8)를 주면 한 줄 제목 줄 — 제목 덩어리 왼쪽 · 버튼 오른쪽(사이 16), 버튼은 제목 덩어리 아래 끝에 맞춘다.
- *                               글이 길면 설명이 줄을 바꾸고 버튼은 그 자리(2026-10-16 사용자 결정 Q-018-2 A). ref 는 늘 h1
+ *                               글이 길면 설명이 줄을 바꾸고 버튼은 그 자리. ref 는 늘 h1
  *   TopNavigationProvider       product("그루 담다" · "그루 이음") — useScreenTitle(title) 가 문서 제목을 "{title} - {product}" 로 쓴다
  *   focusScreenTitle()          셸이 화면을 옮긴 뒤 부른다 — 본문 스크롤을 맨 위로, 보이는 [data-screen-title] 에 초점(링은 키보드로 왔을 때만).
- *                               { resetScroll: false } 면 초점만 — 하단 탭 · 가계부 묶음 탭을 오갈 때 셸이 기억한 스크롤을 돌려놓는다(Q-018-4 A)
+ *                               { resetScroll: false } 면 초점만 — 하단 탭 · 가계부 묶음 탭을 오갈 때 셸이 기억한 스크롤을 돌려놓는다
  *
  * 바: 높이 56 — 폰 · 데스크톱 모든 화면이 같다. 위 안전 영역만큼 높아지고 내용은 그 아래 56 에 놓인다(바탕은 화면 끝까지).
  *   좌우 6 + 좌우 안전 영역(맨 끝 버튼 상자가 화면 끝에서 6 · 아이콘은 16). desktop 은 왼쪽이 본문 여백 32(layout-margin).
- *   바탕은 불투명한 bg-layer-default, 맨 위에 붙어(sticky) 스크롤해도 그 자리 — 선 · 그림자 · 숨김이 없다(결정 3 — SEED). z-sticky 50.
- * 제목: 왼쪽 정렬 · 700 · fg-neutral · 한 줄 말줄임, 오른쪽 자리 앞 8 을 늘 비운다(SEED titleMinGap). root 는 t8 22 / 30 · 화면 끝에서 16,
+ *   바탕은 불투명한 bg-layer-default, 맨 위에 붙어(sticky) 스크롤해도 그 자리 — 선 · 그림자 · 숨김이 없다. z-sticky 50.
+ * 제목: 왼쪽 정렬 · 700 · fg-neutral · 한 줄 말줄임, 오른쪽 자리 앞 8 을 늘 비운다. root 는 t8 22 / 30 · 화면 끝에서 16,
  *   standard 는 t6 18 / 24 · 화면 끝에서 56(6 + ← 44 + 6). 글자 크기 설정을 1.2배까지만 따른다(clamp — 바 높이는 56 그대로).
  * 아이콘 버튼: 상자 44 · 모서리 r2 8 · 아이콘 24 fg-neutral · 버튼끼리 붙는다(아이콘 중심 간격 44). 바탕은 누를 때 · 마우스를 올릴 때만
- *   bg-layer-default-pressed(불투명 — SEED bg.transparent-pressed 의 짝), 누르면 2px 거리 축소(44 → 0.955). 본문의 Button iconOnly(40 · 18)와 다른 부품이다.
+ *   bg-layer-default-pressed(불투명), 누르면 2px 거리 축소(44 → 0.955). 본문의 Button iconOnly(40 · 18)와 다른 부품이다.
  *   그 자리에서 켜고 끄는 단추(aria-pressed)는 켬 선 2.5 · 끔 선 2 이고 색은 켬 · 끔 모두 fg-neutral 이다 — Toggle 의 흐린 끔(fg-neutral-muted)을
- *   상단 바에서 쓰지 않는다(아이콘 줄에서 하나만 흐리면 막힌 단추처럼 보인다, 사용자 결정 2026-10-09 19B). 바탕도 켬 · 끔에 따라 바뀌지 않는다.
+ *   상단 바에서 쓰지 않는다(아이콘 줄에서 하나만 흐리면 막힌 단추처럼 보인다). 바탕도 켬 · 끔에 따라 바뀌지 않는다.
  *   알림 점은 Notification Badge small — 24 아이콘 상자의 x 17 ~ 23 · y 1 ~ 7, 점만(숫자는 맨 오른쪽 버튼에서 화면 밖으로 나간다).
  * 글 버튼: 높이 44 · 좌우 10 · 모서리 8 · t5 16 / 22 · 500(1.2배까지), 누름 · 호버 같은 바탕 + 2px 거리 축소(기준 max(44, 폭 ÷ 4, 24)).
  * 막힘: 아이콘 · 글 fg-disabled — 흐리게 하지 않는다. 키보드 포커스에만 버튼 상자 안쪽 2px 링(붙은 이웃 · 화면 끝에 걸리지 않게).
@@ -169,7 +169,7 @@ const TopNavigationSearch = React.forwardRef<HTMLDivElement, TopNavigationSearch
 TopNavigationSearch.displayName = "TopNavigationSearch";
 
 // ── 오른쪽 자리 ──────────────────────────────────────────────
-// 제목 끝 ↔ 첫 버튼 상자 8(SEED titleMinGap) — 제목이 없으면 오른쪽으로 민다. 버튼끼리는 붙는다
+// 제목 끝 ↔ 첫 버튼 상자 8 — 제목이 없으면 오른쪽으로 민다. 버튼끼리는 붙는다
 const TopNavigationActions = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
   <div ref={ref} data-slot="top-navigation-actions" className={cn("ml-auto flex shrink-0 items-center pl-x2", className)} {...props} />
 ));
@@ -184,7 +184,7 @@ const FOCUS_INSIDE = "focus-visible:outline-2 focus-visible:-outline-offset-2 fo
 const ICON_BUTTON = [
   "relative flex size-[44px] shrink-0 cursor-pointer items-center justify-center rounded-r2 border-0 bg-transparent p-0 text-fg-neutral",
   "[&_svg]:size-[24px] [&_svg]:shrink-0",
-  // 켜고 끄는 단추(aria-pressed) — 끔 선 2 · 켬 선 2.5, 색은 그대로 fg-neutral(19B). aria-pressed 가 없는 버튼의 선은 건드리지 않는다
+  // 켜고 끄는 단추(aria-pressed) — 끔 선 2 · 켬 선 2.5, 색은 그대로 fg-neutral. aria-pressed 가 없는 버튼의 선은 건드리지 않는다
   "aria-[pressed=false]:[&_svg]:[stroke-width:2] aria-pressed:[&_svg]:[stroke-width:2.5]",
   PRESS_TRANSITION,
   "hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/44)] motion-reduce:active:[scale:1]",
@@ -202,8 +202,8 @@ const TEXT_BUTTON = [
   "disabled:cursor-not-allowed disabled:bg-transparent disabled:text-fg-disabled disabled:[scale:1]",
 ].join(" ");
 
-// 투명 바의 버튼 — 흰 아이콘 · 글. 누름 · 호버 바탕은 열린 일(SEED bg.transparent-pressed — groo 토큰 없음)이라 칠하지 않고 축소만 한다.
-// 막힘은 fg-disabled 그대로(SEED)
+// 투명 바의 버튼 — 흰 아이콘 · 글. 누름 · 호버 바탕은 열린 일(groo 토큰 없음)이라 칠하지 않고 축소만 한다.
+// 막힘은 fg-disabled 그대로
 const TONE_BUTTON: Record<TopNavigationTone, string> = {
   layer: "",
   transparent: "text-static-white hover:bg-transparent active:bg-transparent",
@@ -360,7 +360,7 @@ TopNavigationMenuButton.displayName = "TopNavigationMenuButton";
 // ── 데스크톱 본문 제목 ───────────────────────────────────────
 // 제목 h1 — 26 / 35 · 700. 홀로 서면 머리 아래 20, 제목 줄 안에서는 줄이 20 을 갖는다
 const SCREEN_TITLE = "m-0 font-sans text-screen-title font-bold text-fg-neutral";
-// 제목 줄 — 제목 덩어리(제목 + 설명) 왼쪽 · 버튼 오른쪽(사이 16), 버튼은 덩어리 아래 끝에 맞춘다(Q-018-2 A)
+// 제목 줄 — 제목 덩어리(제목 + 설명) 왼쪽 · 버튼 오른쪽(사이 16), 버튼은 덩어리 아래 끝에 맞춘다
 const SCREEN_TITLE_ROW = "mt-nav-to-title flex items-end gap-x4";
 const SCREEN_DESCRIPTION = "m-0 mt-x0_5 text-t5 font-normal text-fg-neutral-muted break-keep [overflow-wrap:break-word]";
 const SCREEN_ACTIONS = "flex shrink-0 flex-wrap items-center justify-end gap-x2";

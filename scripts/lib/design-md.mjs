@@ -36,7 +36,7 @@ export function parseColorTable(lines) {
   for (let i = start + 1; i < end; i++) {
     const m = /^\s+([a-z0-9-]+):\s*"(#[0-9A-Fa-f]+)"/.exec(lines[i]);
     if (m) { out.set(m[1], { hex: m[2].toLowerCase() }); continue; }
-    // v108 — 역할 · 옛 이름은 팔레트 · 역할을 가리키는 참조("{colors.gray-00}")
+    // 역할 색은 팔레트를 가리키는 참조("{colors.gray-00}")
     const r = /^\s+([a-z0-9-]+):\s*"\{colors\.([a-z0-9-]+)\}"/.exec(lines[i]);
     if (r) out.set(r[1], { ref: r[2] });
   }
@@ -52,11 +52,11 @@ export function resolveColorHex(table, name, depth = 0) {
   return resolveColorHex(table, entry.ref, depth + 1);
 }
 
-// v108 팔레트 단계(gray-500 · brand-600-dark …). 역할 색은 이것만 가리키고, 옛 이름은 역할을 가리킨다.
+// 팔레트 단계(gray-500 · brand-600-dark …). 역할 색은 이것만 가리킨다.
 export const PALETTE_STEP = /^(gray|red|green|orange|blue|yellow|indigo|violet|pink|brown|brand)-\d+(-dark)?$/;
 
-// 옛 이름(별칭) — 팔레트가 아닌 이름(역할 · 차트)을 가리키는 색. primary · text-secondary · success · chart-red-light …
-// 디자인 레포는 옛 이름을 새 역할의 별칭으로 남겨 두었다(v102 · v108). 새 코드는 역할 이름만 부른다.
+// 형식 키 — 팔레트가 아닌 이름(역할)을 가리키는 색. 브랜드 파일의 `primary`(design.md 형식이 요구하는 대표 색)뿐이다.
+// 내보내기는 이 이름을 싣지 않는다.
 export function colorAliases(table) {
   const out = new Set();
   for (const [name, entry] of table) {

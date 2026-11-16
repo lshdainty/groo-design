@@ -4,10 +4,10 @@ import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Scroll Auto Hide — SEED Breeze ScrollAutoHide · Apache-2.0(2026-10-10). 수치 원본은 specs/components/scroll-auto-hide.yaml.
- * 옮긴 곳: github.com/daangn/seed-design docs/registry/react/breeze/scroll-auto-hide/scroll-auto-hide.tsx(dev 045051f87f, 2026-08-13 —
- * "harden scroll auto hide settling" #1997). 동작은 SEED 그대로이고 바뀐 것은 이름뿐이다 — 스냅 200ms · cubic-bezier(0, 0, 0.15, 1) 을
- * groo 토큰 motion-duration-d4 · motion-ease-enter 로(값이 같다, v104), CSS 모듈(position: sticky · top: 0)을 Tailwind 로,
+ * Groo Scroll Auto Hide — 수치 원본은 specs/components/scroll-auto-hide.yaml.
+ * 원본(Apache-2.0): github.com/daangn/seed-design docs/registry/react/breeze/scroll-auto-hide/scroll-auto-hide.tsx.
+ * 원본과 바뀐 것 — 스냅 200ms · cubic-bezier(0, 0, 0.15, 1) 을
+ * groo 토큰 motion-duration-d4 · motion-ease-enter 로(값이 같다), CSS 모듈(position: sticky · top: 0)을 Tailwind 로,
  * @radix-ui/react-compose-refs 를 이 파일의 mergeRefs 로.
  *
  *   ScrollAutoHide   숨는 영역 — scrollContainerRef(스크롤 상자의 ref — 필수) · asChild(자식 하나를 루트로), 나머지는 div 속성.
@@ -24,11 +24,10 @@ import { cn } from "@/lib/utils";
  * 모션 줄이기면 자동 숨김을 끈다(늘 보인다). 숨은 영역 안으로 키보드 초점이 오면 바로 다 드러낸다 — 보이지 않는 단추에 초점이 머물지 않는다.
  * 숨겨도 aria-hidden · inert 를 걸지 않는다(초점이 오면 드러나므로). 상단 바 · Line Tabs · 시트 머리는 숨기지 않는다.
  *
- * groo 확장(SEED 에 없다 — 스펙 "남는 부분 · 위에 붙은 줄", 2026-11-06) 두 가지. 둘 다 쓰지 않으면 SEED 동작 그대로다.
+ * groo 확장(스펙 "남는 부분 · 위에 붙은 줄") 두 가지. 둘 다 쓰지 않으면 원본 동작 그대로다.
  * - keepRef: 영역 안의 이 요소부터 아래는 숨지 않는다. 숨는 거리는 영역 맨 위에서 이 요소 윗변까지다(원장 머리 — 총액 · 요약은 숨고
  *   주 달력은 남는다). 남는 부분 안으로 오는 초점은 영역을 드러내지 않는다 — 드러내면 누르는 사이 남는 부분이 내려가 누름이 빗나간다.
  * - sticky top 이 0 이 아니면(위에 고정 줄이 따로 있다) 그 값만큼 일찍 붙으므로, 스크롤한 거리는 붙는 순간부터 센다.
- * 담다 웹 ds(src/shared/ds/scroll-auto-hide/use-scroll-auto-hide.ts)의 확장을 옮겼다(2026-11-11).
  */
 
 const SNAP_THRESHOLD_RATIO = 0.5;
@@ -42,7 +41,7 @@ type ScrollTimelineConstructor = new (options: { source: Element; axis: "block" 
 type ScrollAutoHideOwnProps = {
   /** 스크롤을 감지할 상자의 ref — 숨는 영역은 이 상자 안 맨 위에 둔다 */
   scrollContainerRef: React.RefObject<HTMLElement | null>;
-  /** groo 확장 — 영역 안의 이 요소부터 아래는 숨지 않는다(숨는 거리 = 영역 맨 위 ~ 이 요소 윗변). 없으면 영역 전체가 숨는다(SEED) */
+  /** groo 확장 — 영역 안의 이 요소부터 아래는 숨지 않는다(숨는 거리 = 영역 맨 위 ~ 이 요소 윗변). 없으면 영역 전체가 숨는다 */
   keepRef?: React.RefObject<HTMLElement | null>;
 };
 
@@ -298,7 +297,7 @@ const ScrollAutoHide = React.forwardRef<HTMLElement, ScrollAutoHideProps>(functi
       const rootRect = root.getBoundingClientRect();
       const scrollRect = scrollContainer.getBoundingClientRect();
       const scrollTop = getScrollTop();
-      // sticky top — relative 로 잴 때 그만큼 밀려 있고, 그만큼 일찍 붙는다(auto · 0 이면 SEED 그대로)
+      // sticky top — relative 로 잴 때 그만큼 밀려 있고, 그만큼 일찍 붙는다(auto · 0 이면 원본 그대로)
       const stickyTop = Number.parseFloat(getComputedStyle(root).top) || 0;
       const keep = keepRef?.current;
       height = keep && root.contains(keep) ? Math.max(0, keep.getBoundingClientRect().top - rootRect.top) : rootRect.height;

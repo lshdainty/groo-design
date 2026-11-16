@@ -240,56 +240,19 @@ colors:
   # @sync:shared-end (colors-0)
   
   # @sync:brand-start (colors-1)
-  # === 옛 이름 별칭 — 브랜드(본문 Deprecated aliases) ===
   primary: "{colors.fg-brand}"
-  primary-light: "{colors.fg-brand-dark}"
   # @sync:brand-end (colors-1)
   
   # @sync:shared-start (colors-1)
-  # === 옛 이름 별칭 — 바닥(본문 Deprecated aliases) ===
-  bg-page: "{colors.bg-layer-basement}"
-  bg-page-dark: "{colors.bg-layer-basement-dark}"
   
-  # === 옛 이름 별칭 — 표면 ===
-  surface-default: "{colors.bg-layer-default}"
-  surface-default-dark: "{colors.bg-layer-default-dark}"
-  surface-input: "{colors.bg-neutral-weak}"
-  surface-input-dark: "{colors.bg-neutral-weak-dark}"
   
-  # === 옛 이름 별칭 — 글자 ===
-  text-primary: "{colors.fg-neutral}"
-  text-primary-dark: "{colors.fg-neutral-dark}"
-  text-secondary: "{colors.fg-neutral-muted}"
-  text-secondary-dark: "{colors.fg-neutral-muted-dark}"
-  text-tertiary: "{colors.fg-neutral-subtle}"
-  text-tertiary-dark: "{colors.fg-neutral-subtle-dark}"
-  text-disabled: "{colors.fg-disabled}"
-  text-disabled-dark: "{colors.fg-disabled-dark}"
-  text-on-accent: "{colors.static-white}"
   
-  # === 옛 이름 별칭 — 선 ===
-  border-default: "{colors.stroke-neutral-weak}"
-  border-default-dark: "{colors.stroke-neutral-weak-dark}"
-  border-strong: "{colors.stroke-neutral-solid}"
-  border-strong-dark: "{colors.stroke-neutral-solid-dark}"
   # @sync:shared-end (colors-1)
   
   # @sync:brand-start (colors-2)
-  # === 옛 이름 별칭 — 포커스 링 ===
-  border-focus: "{colors.stroke-focus-ring}"
-  border-focus-light: "{colors.stroke-focus-ring-dark}"
   # @sync:brand-end (colors-2)
   
   # @sync:shared-start (colors-2)
-  # === 옛 이름 별칭 — 상태 색 ===
-  success: "{colors.fg-positive}"
-  success-light: "{colors.fg-positive-dark}"
-  error: "{colors.fg-critical}"
-  error-light: "{colors.fg-critical-dark}"
-  warning: "{colors.fg-warning}"
-  warning-light: "{colors.fg-warning-dark}"
-  info: "{colors.fg-informative}"
-  info-light: "{colors.fg-informative-dark}"
   
   # === 차트 10색 — 팔레트 단계(라이트 700 · 다크 800-dark), 두 브랜드 공유 ===
   # 저장된 색(카테고리 · 태그 · 캘린더)은 이름표로 두고, 그리는 색만 이 토큰을 따릅니다
@@ -374,17 +337,6 @@ colors:
   chart-gray-subtle-dark: "{colors.gray-300-dark}"
   chart-gray-contrast: "{colors.gray-800}"
   chart-gray-contrast-dark: "{colors.gray-900-dark}"
-  # 옛 이름 별칭 — 차트 다크 짝(본문 Deprecated aliases)
-  chart-red-light: "{colors.chart-red-dark}"
-  chart-orange-light: "{colors.chart-orange-dark}"
-  chart-yellow-light: "{colors.chart-yellow-dark}"
-  chart-green-light: "{colors.chart-green-dark}"
-  chart-blue-light: "{colors.chart-blue-dark}"
-  chart-indigo-light: "{colors.chart-indigo-dark}"
-  chart-violet-light: "{colors.chart-violet-dark}"
-  chart-pink-light: "{colors.chart-pink-dark}"
-  chart-brown-light: "{colors.chart-brown-dark}"
-  chart-gray-light: "{colors.chart-gray-dark}"
   # @sync:shared-end (colors-2)
   
   # @sync:brand-start (colors-3)
@@ -635,87 +587,6 @@ typography:
     fontSize: 14px
     fontWeight: 400
     lineHeight: 22px
-  # 옛 15단계 — 별칭(본문 Deprecated aliases). 새 자리에서 부르지 않습니다.
-  display-xl:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 56px
-    fontWeight: 700
-    lineHeight: 1.05
-    letterSpacing: -1.12px
-  display-lg:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 40px
-    fontWeight: 700
-    lineHeight: 1.1
-    letterSpacing: -0.4px
-  display-md:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 32px
-    fontWeight: 700
-    lineHeight: 1.2
-    letterSpacing: -0.32px
-  display-sm:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 24px
-    fontWeight: 700
-    lineHeight: 1.3
-  title-lg:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 20px
-    fontWeight: 700
-    lineHeight: 1.4
-  title-md:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 18px
-    fontWeight: 600
-    lineHeight: 1.4
-  title-sm:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 16px
-    fontWeight: 500
-    lineHeight: 1.4
-  body-lg:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 16px
-    fontWeight: 400
-    lineHeight: 1.6
-  body-md:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 15px
-    fontWeight: 400
-    lineHeight: 1.6
-  body-sm:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 14px
-    fontWeight: 400
-    lineHeight: 1.5
-  label-md:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 14px
-    fontWeight: 500
-    lineHeight: 1.4
-  label-sm:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 13px
-    fontWeight: 400
-    lineHeight: 1.4
-  caption:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 12px
-    fontWeight: 400
-    lineHeight: 1.5
-  badge:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 11px
-    fontWeight: 600
-    lineHeight: 1.2
-  overline:
-    fontFamily: "Pretendard, Inter, sans-serif"
-    fontSize: 10px
-    fontWeight: 700
-    lineHeight: 1.3
-    letterSpacing: 0.8px
-
 rounded:
   # 모서리 스케일(2px ~ 24px 10단계 + full, r1 = 4px).
   r0_5: 2px
@@ -729,13 +600,6 @@ rounded:
   r5: 20px
   r6: 24px
   full: 9999px
-  # 옛 이름 별칭(본문 Deprecated aliases) — 값은 위 이름과 같습니다.
-  xs: 2px
-  sm: 4px
-  md: 8px
-  lg: 12px
-  xl: 16px
-  2xl: 20px
 
 spacing:
   # 간격 스케일(2px 단위 19단계, x1 = 4px).
@@ -758,14 +622,6 @@ spacing:
   x13: "52px"
   x14: "56px"
   x16: "64px"
-  # 옛 이름 별칭(본문 Deprecated aliases) — 값은 위 이름과 같습니다.
-  xs: "4px"
-  sm: "8px"
-  md: "12px"
-  lg: "16px"
-  xl: "24px"
-  2xl: "32px"
-  3xl: "48px"
   # 역할 간격(수평 · 수직). 값은 위 스케일을 가리킵니다.
   global-gutter: "24px"  # x6 — 화면 전체의 기본 좌우 여백
   between-chips: "8px"  # x2
@@ -777,112 +633,110 @@ spacing:
 components:
   # === 브랜드 채움 버튼(브랜드 채움 + 흰 글자) ===
   button-primary:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.text-on-accent}"
+    backgroundColor: "{colors.fg-brand}"
+    textColor: "{colors.static-white}"
   
   # === 어두운 표면 위 외곽선 버튼(브랜드 다크 글자) ===
   button-outline-on-dark:
-    backgroundColor: "{colors.surface-default-dark}"
-    textColor: "{colors.primary-light}"
+    backgroundColor: "{colors.bg-layer-default-dark}"
+    textColor: "{colors.fg-brand-dark}"
   
-  # === 옛 이름 대비 짝(card · page-text · input · caption-on-card · caption-tertiary-on-card · placeholder-on-input ·
-  # disabled-label · alert-text-*) — 본문 Deprecated aliases. role-* 짝이 같은 일을 새 이름으로 합니다.
   # === 카드 (surface 위 primary 텍스트) ===
   card-light:
-    backgroundColor: "{colors.surface-default}"
-    textColor: "{colors.text-primary}"
+    backgroundColor: "{colors.bg-layer-default}"
+    textColor: "{colors.fg-neutral}"
   card-dark:
-    backgroundColor: "{colors.surface-default-dark}"
-    textColor: "{colors.text-primary-dark}"
+    backgroundColor: "{colors.bg-layer-default-dark}"
+    textColor: "{colors.fg-neutral-dark}"
   
-  # === 페이지 본문 (bg-page 위 primary 텍스트) ===
+  # === 페이지 본문 (bg-layer-basement 위 fg-neutral 글자) ===
   page-text-light:
-    backgroundColor: "{colors.bg-page}"
-    textColor: "{colors.text-primary}"
+    backgroundColor: "{colors.bg-layer-basement}"
+    textColor: "{colors.fg-neutral}"
   page-text-dark:
-    backgroundColor: "{colors.bg-page-dark}"
-    textColor: "{colors.text-primary-dark}"
+    backgroundColor: "{colors.bg-layer-basement-dark}"
+    textColor: "{colors.fg-neutral-dark}"
   
-  # === 입력 필드 (surface-input 위 primary 텍스트) ===
+  # === 입력 필드 (bg-neutral-weak 위 fg-neutral 글자) ===
   input-light:
-    backgroundColor: "{colors.surface-input}"
-    textColor: "{colors.text-primary}"
+    backgroundColor: "{colors.bg-neutral-weak}"
+    textColor: "{colors.fg-neutral}"
   input-dark:
-    backgroundColor: "{colors.surface-input-dark}"
-    textColor: "{colors.text-primary-dark}"
+    backgroundColor: "{colors.bg-neutral-weak-dark}"
+    textColor: "{colors.fg-neutral-dark}"
   
   # === 캡션·메타 (secondary 텍스트, surface 위) ===
   caption-on-card-light:
-    backgroundColor: "{colors.surface-default}"
-    textColor: "{colors.text-secondary}"
+    backgroundColor: "{colors.bg-layer-default}"
+    textColor: "{colors.fg-neutral-muted}"
   caption-on-card-dark:
-    backgroundColor: "{colors.surface-default-dark}"
-    textColor: "{colors.text-secondary-dark}"
+    backgroundColor: "{colors.bg-layer-default-dark}"
+    textColor: "{colors.fg-neutral-muted-dark}"
   
   # === Divider / Outline (border 토큰을 1px 시각 요소의 배경색으로 사용) ===
   # NOTE: 이 컴포넌트들은 textColor 없음 — lint contrast 룰은 미발동.
   # border vs 인접 surface 대비는 spec에 borderColor 프로퍼티가 없어 자동 검증 불가.
   divider-light:
-    backgroundColor: "{colors.border-default}"
+    backgroundColor: "{colors.stroke-neutral-weak}"
   divider-dark:
-    backgroundColor: "{colors.border-default-dark}"
+    backgroundColor: "{colors.stroke-neutral-weak-dark}"
   outline-strong-light:
-    backgroundColor: "{colors.border-strong}"
+    backgroundColor: "{colors.stroke-neutral-solid}"
   outline-strong-dark:
-    backgroundColor: "{colors.border-strong-dark}"
+    backgroundColor: "{colors.stroke-neutral-solid-dark}"
   
   # === 포커스 링(1px 선 — 색 대비는 브랜드 역할 색 짝이 잽니다) ===
   focus-ring-on-light:
-    backgroundColor: "{colors.border-focus}"
+    backgroundColor: "{colors.stroke-focus-ring}"
   focus-ring-on-dark:
-    backgroundColor: "{colors.border-focus-light}"
+    backgroundColor: "{colors.stroke-focus-ring-dark}"
   
   # === Semantic 채움 badge (semantic 배경 + 흰 텍스트) ===
   badge-success:
-    backgroundColor: "{colors.success}"
-    textColor: "{colors.text-on-accent}"
+    backgroundColor: "{colors.fg-positive}"
+    textColor: "{colors.static-white}"
   badge-error:
-    backgroundColor: "{colors.error}"
-    textColor: "{colors.text-on-accent}"
+    backgroundColor: "{colors.fg-critical}"
+    textColor: "{colors.static-white}"
   badge-warning:
-    backgroundColor: "{colors.warning}"
-    textColor: "{colors.text-on-accent}"
+    backgroundColor: "{colors.fg-warning}"
+    textColor: "{colors.static-white}"
   badge-info:
-    backgroundColor: "{colors.info}"
-    textColor: "{colors.text-on-accent}"
+    backgroundColor: "{colors.fg-informative}"
+    textColor: "{colors.static-white}"
   
   # === Semantic 인라인 텍스트 (흰 카드 위 semantic 텍스트) ===
   alert-text-success:
-    backgroundColor: "{colors.surface-default}"
-    textColor: "{colors.success}"
+    backgroundColor: "{colors.bg-layer-default}"
+    textColor: "{colors.fg-positive}"
   alert-text-error:
-    backgroundColor: "{colors.surface-default}"
-    textColor: "{colors.error}"
+    backgroundColor: "{colors.bg-layer-default}"
+    textColor: "{colors.fg-critical}"
   alert-text-warning:
-    backgroundColor: "{colors.surface-default}"
-    textColor: "{colors.warning}"
+    backgroundColor: "{colors.bg-layer-default}"
+    textColor: "{colors.fg-warning}"
   alert-text-info:
-    backgroundColor: "{colors.surface-default}"
-    textColor: "{colors.info}"
+    backgroundColor: "{colors.bg-layer-default}"
+    textColor: "{colors.fg-informative}"
   
   # === Semantic 다크 표면 위 인라인 텍스트 (-light 변형) ===
   alert-text-success-on-dark:
-    backgroundColor: "{colors.surface-default-dark}"
-    textColor: "{colors.success-light}"
+    backgroundColor: "{colors.bg-layer-default-dark}"
+    textColor: "{colors.fg-positive-dark}"
   alert-text-error-on-dark:
-    backgroundColor: "{colors.surface-default-dark}"
-    textColor: "{colors.error-light}"
+    backgroundColor: "{colors.bg-layer-default-dark}"
+    textColor: "{colors.fg-critical-dark}"
   alert-text-warning-on-dark:
-    backgroundColor: "{colors.surface-default-dark}"
-    textColor: "{colors.warning-light}"
+    backgroundColor: "{colors.bg-layer-default-dark}"
+    textColor: "{colors.fg-warning-dark}"
   alert-text-info-on-dark:
-    backgroundColor: "{colors.surface-default-dark}"
-    textColor: "{colors.info-light}"
+    backgroundColor: "{colors.bg-layer-default-dark}"
+    textColor: "{colors.fg-informative-dark}"
   
   # === 사용자 표시(avatar — 차트 색) ===
   avatar:
     backgroundColor: "{colors.chart-blue}"
-    textColor: "{colors.text-on-accent}"
+    textColor: "{colors.static-white}"
   
   # === Chart elements (sparse, fill/stroke 용도 — chart 요소는 textColor 페어가 아님) ===
   chart-color-red:
@@ -1050,24 +904,24 @@ components:
   
   # === Tertiary 텍스트 (placeholder, caption-tertiary, hint) ===
   caption-tertiary-on-card-light:
-    backgroundColor: "{colors.surface-default}"
-    textColor: "{colors.text-tertiary}"
+    backgroundColor: "{colors.bg-layer-default}"
+    textColor: "{colors.fg-neutral-subtle}"
   caption-tertiary-on-card-dark:
-    backgroundColor: "{colors.surface-default-dark}"
-    textColor: "{colors.text-tertiary-dark}"
+    backgroundColor: "{colors.bg-layer-default-dark}"
+    textColor: "{colors.fg-neutral-subtle-dark}"
   placeholder-on-input-light:
-    backgroundColor: "{colors.surface-input}"
-    textColor: "{colors.text-tertiary}"
+    backgroundColor: "{colors.bg-neutral-weak}"
+    textColor: "{colors.fg-neutral-subtle}"
   placeholder-on-input-dark:
-    backgroundColor: "{colors.surface-input-dark}"
-    textColor: "{colors.text-tertiary-dark}"
+    backgroundColor: "{colors.bg-neutral-weak-dark}"
+    textColor: "{colors.fg-neutral-subtle-dark}"
   
   # === Disabled 텍스트 (textColor만 — WCAG 1.4.3 incidental 예외 인정, lint contrast 룰 비대상) ===
   # textColor만 가진 sparse 컴포넌트는 contrastCheck 미발동. 부모 표면 색은 런타임 상속.
   disabled-label-light:
-    textColor: "{colors.text-disabled}"
+    textColor: "{colors.fg-disabled}"
   disabled-label-dark:
-    textColor: "{colors.text-disabled-dark}"
+    textColor: "{colors.fg-disabled-dark}"
   
   # === 역할 색 짝 — 글자가 놓이는 배경과 함께. 짝마다 대비를 lint 가 잽니다(라이트 · 다크) ===
   role-neutral-on-layer-light:
@@ -3462,7 +3316,7 @@ HR 은 직원 정보 폼(필수 · 선택 옵션), 권한 켜고 끄기, 평가 
 
 ### List
 
-상세 규칙(Anatomy / 줄의 종류 / 상태 / 모션 / Accessibility / Do-Don't)의 원본은 [`specs/components/list.md`](specs/components/list.md)이고, 수치는 `list.yaml` · `list-header.yaml` 입니다. 코드(`recipes/shadcn/components/ui/list.tsx`) · 예제(`recipes/shadcn/examples/list-examples.mjs`) · 미리보기를 스펙과 함께 맞춥니다.
+상세 규칙(Anatomy / 줄의 종류 / 상태 / 모션 / Accessibility / Do-Don't)의 원본은 [`specs/components/list.md`](specs/components/list.md)이고, 수치는 `list.yaml` · `list-header.yaml` 입니다. 코드(`recipes/shadcn/components/ui/list.tsx`) 와 사이트 그림을 스펙과 함께 맞춥니다.
 
 - 구조: 목록(List) · 한 줄(List Item) · 목록 제목(List Header) · 줄 사이 선(ListDivider)입니다. 설정 · 메뉴 · 선택 · 키-값 줄과 거래 · 할 일 · 알림 같은 내용 줄을 모두 List 로 그립니다. 하나 고르기는 오른쪽 라디오 줄(`ListRadioItem`)입니다.
 - 한 줄: 위아래 `spacing-x3` (12) · 좌우 `spacing-global-gutter` (24) · 제목 `t5` 16 · 400 `fg-neutral` · 설명 `t3` 13 `fg-neutral-subtle`(제목 아래 2) — 한 줄 46 · 두 줄 66 입니다.
@@ -3478,7 +3332,7 @@ HR 은 직원 정보 폼(필수 · 선택 옵션), 권한 켜고 끄기, 평가 
 
 ### Select Box
 
-상세 규칙(Anatomy / 컨트롤 / 배치 / 상태 / 펼침 / 모션 / Accessibility / Do-Don't)의 원본은 [`specs/components/select-box.md`](specs/components/select-box.md)이고, 수치는 `select-box.yaml` 입니다. 코드(`recipes/shadcn/components/ui/select-box.tsx`) · 예제(`recipes/shadcn/examples/select-box-examples.mjs`) · 미리보기를 스펙과 함께 맞춥니다.
+상세 규칙(Anatomy / 컨트롤 / 배치 / 상태 / 펼침 / 모션 / Accessibility / Do-Don't)의 원본은 [`specs/components/select-box.md`](specs/components/select-box.md)이고, 수치는 `select-box.yaml` 입니다. 코드(`recipes/shadcn/components/ui/select-box.tsx`) 와 사이트 그림을 스펙과 함께 맞춥니다.
 
 - 구조: 하나 고르기(Radio Select Box) · 여럿 고르기(Check Select Box) · 묶음(Select Box Group)입니다. 설명 · 아이콘 · 딸린 입력이 붙는 선택지 2 ~ 6개를 견줘 고르고, 저장 · 다음 같은 버튼으로 반영합니다.
 - 상자: 모서리 `radius-r3` (12) · 안쪽 1px `stroke-neutral-weak` 입니다. 고르면 안쪽에 2px `stroke-neutral-contrast` 를 덧그립니다 — 내용이 밀리지 않고, 바탕은 그대로입니다(브랜드 색 없음).
@@ -3642,161 +3496,3 @@ HR 은 월별 휴가 사용(막대) · 휴가 유형(도넛) 차트를 씁니다
 - **캘린더 · 업무 보고 필터** — 차원마다 필터 칩(사용자 ▾ · 유형 ▾)이고, 걸린 조건은 짙은 채움 + 값 요약, 맨 앞에 지우기를 둡니다. 결재 상태 거르기도 Chip 입니다.
 - 예 / 아니오 하나는 Checkbox, 설명이 붙는 선택은 Select Box 입니다.
 
-## Deprecated aliases
-
-제품 코드가 새 이름으로 옮기는 동안 남겨 두는 옛 이름입니다. 내보내기(웹 CSS · 앱 Dart · 스펙 JSON)는 이 이름을 계속 싣지만, 새 화면 · 컴포넌트에서는 부르지 않습니다. 문서 사이트에는 싣지 않습니다. 제품이 모두 옮기면 이 절과 머리말의 별칭을 함께 지웁니다.
-
-### 색 별칭
-
-옛 이름은 같은 값의 역할 색을 가리키는 별칭입니다(값을 따로 갖지 않습니다). Desk 웹 이름은 담다 웹 코드가 쓰던 이름으로, 역할 색으로 옮길 때 이 표를 따릅니다.
-
-| 역할 | 옛 이름 | Desk 웹 이름 |
-|---|---|---|
-| `fg-neutral` | text-primary | fg-primary · fg-expense · fg-transfer |
-| `fg-neutral-muted` | text-secondary | fg-secondary |
-| `fg-neutral-subtle` | text-tertiary | fg-tertiary |
-| `fg-placeholder` | — | fg-placeholder |
-| `fg-disabled` | text-disabled | fg-disabled |
-| `static-white` | text-on-accent | fg-on-brand · fg-on-danger · fg-on-success |
-| `fg-critical` | error · error-light | status-danger-fg |
-| `fg-positive` | success · success-light | status-success-fg |
-| `fg-warning` | warning · warning-light | status-warning-fg |
-| `fg-informative` | info · info-light | status-info-fg |
-| `bg-layer-basement` | bg-page | bg-canvas · bg-table-head |
-| `bg-layer-default` | surface-default | bg-surface |
-| `bg-layer-default-pressed` | — | bg-hover · bg-row-hover |
-| `bg-layer-floating` | — | bg-surface-raised |
-| `bg-neutral-weak` | surface-input | bg-sunken · bg-muted |
-| `bg-neutral-weak-pressed` | — | bg-warm-press |
-| `bg-neutral-inverted` | — | bg-inverse |
-| `bg-disabled` | — | bg-disabled |
-| `bg-critical-solid` | error | status-danger |
-| `bg-critical-solid-pressed` | — | status-danger-press |
-| `bg-critical-weak` | — | status-danger-subtle |
-| `bg-positive-solid` | success | status-success |
-| `bg-positive-weak` | — | status-success-subtle |
-| `bg-warning-solid` | warning | status-warning |
-| `bg-warning-weak` | — | status-warning-subtle |
-| `bg-informative-solid` | info | status-info |
-| `bg-informative-weak` | — | status-info-subtle |
-| `stroke-neutral-subtle` | — | border-subtle |
-| `stroke-neutral-weak` | border-default | border-default |
-| `stroke-neutral-solid` | border-strong | border-strong |
-| `stroke-critical-solid` | error | status-danger-border |
-| `stroke-positive-solid` | success | status-success-border |
-| `stroke-warning-solid` | warning | status-warning-border |
-| `stroke-informative-solid` | info | status-info-border |
-| `fg-brand` | primary · primary-light | fg-brand · fg-link |
-| `fg-brand-contrast` | — | fg-brand-strong |
-| `bg-brand-solid` | primary | bg-brand |
-| `bg-brand-solid-pressed` | — | bg-brand-press · bg-brand-hover |
-| `bg-brand-weak` | — | bg-brand-subtle |
-| `bg-brand-weak-pressed` | — | bg-brand-muted |
-| `stroke-focus-ring` | border-focus · border-focus-light | border-focus |
-| `stroke-brand-solid` | — | border-brand |
-| `stroke-brand-weak` | — | border-brand-soft |
-
-- `bg-page` · `bg-page-dark` 는 `bg-layer-basement` · `bg-layer-basement-dark` 를 가리킵니다.
-- `chart-{hue}-light` 는 `chart-{hue}-dark` 를 가리킵니다(다크 차트 색의 옛 이름).
-- 브랜드 역할의 옛 이름 · Desk 웹 이름은 두 브랜드 파일에서 같습니다.
-
-### 글자 별칭
-
-머리말 `typography` 의 옛 15단계입니다. 새 자리에서 부르지 않고, 옮길 때는 아래 "가까운 새 이름" 을 따릅니다. 옛 단계의 600(`font-semibold`) 강조는 500 이나 700 으로 정합니다.
-
-| 토큰 | 크기 | 굵기 | 줄 높이 | 자간 |
-|---|---|---|---|---|
-| `display-xl` | 56px | 700 | 1.05 | -1.12px |
-| `display-lg` | 40px | 700 | 1.1 | -0.4px |
-| `display-md` | 32px | 700 | 1.2 | -0.32px |
-| `display-sm` | 24px | 700 | 1.3 | — |
-| `title-lg` | 20px | 700 | 1.4 | — |
-| `title-md` | 18px | 600 | 1.4 | — |
-| `title-sm` | 16px | 500 | 1.4 | — |
-| `body-lg` | 16px | 400 | 1.6 | — |
-| `body-md` | 15px | 400 | 1.6 | — |
-| `body-sm` | 14px | 400 | 1.5 | — |
-| `label-md` | 14px | 500 | 1.4 | — |
-| `label-sm` | 13px | 400 | 1.4 | — |
-| `caption` | 12px | 400 | 1.5 | — |
-| `badge` | 11px | 600 | 1.2 | — |
-| `overline` | 10px | 700 | 1.3 | 0.8px |
-
-- **가까운 새 이름**: display-lg → t13 · display-md → t12 · display-sm → t9 · title-lg → t7 + bold · title-md → t6 + 500 또는 700 · title-sm → t5 + medium · body-lg → t5 또는 article-body · body-md → 자리마다 t4 · t5 · article-body · body-sm → t4 · label-md → t4 + medium · label-sm → t3 · caption → t2 · badge → t1 + 500 또는 700.
-- display-xl(56px) · overline(10px)은 새 스케일 범위 밖이라 대응하는 이름이 없습니다.
-- body-md(15px) 본문은 자리마다 옮깁니다 — 긴 글은 16(article-body), UI 는 14(t4) · 16(t5).
-
-### 간격 별칭
-
-간격 눈금 이전의 이름입니다. 값은 같은 눈금 이름과 같습니다.
-
-| 옛 이름 | 같은 값의 이름 | 값 |
-|---|---|---|
-| `spacing-xs` | `spacing-x1` | 4px |
-| `spacing-sm` | `spacing-x2` | 8px |
-| `spacing-md` | `spacing-x3` | 12px |
-| `spacing-lg` | `spacing-x4` | 16px |
-| `spacing-xl` | `spacing-x6` | 24px |
-| `spacing-2xl` | `spacing-x8` | 32px |
-| `spacing-3xl` | `spacing-x12` | 48px |
-
-### 그림자 별칭
-
-`shadow-sm` · `md` · `lg` · `xl` 과 그 `-dark` 는 `shadow-s1` ~ `s4` 와 같은 값입니다. 웹 내보내기는 이 이름을 값 대신 `var(--shadow-s1)` ~ `var(--shadow-s4)` 로 적어, 옛 클래스(`shadow-lg` …)도 다크에서 s1 ~ s4 의 다크 값을 따라가게 합니다.
-
-| 토큰 | 값 | 같은 새 이름 |
-|---|---|---|
-| `shadow-sm` | `0 1px 2px 0 rgba(15, 18, 28, 0.05)` | `shadow-s1` |
-| `shadow-md` | `0 2px 8px -1px rgba(15, 18, 28, 0.08), 0 1px 3px -1px rgba(15, 18, 28, 0.04)` | `shadow-s2` |
-| `shadow-lg` | `0 8px 24px -4px rgba(15, 18, 28, 0.10), 0 2px 6px -2px rgba(15, 18, 28, 0.05)` | `shadow-s3` |
-| `shadow-xl` | `0 24px 48px -8px rgba(15, 18, 28, 0.16), 0 8px 16px -4px rgba(15, 18, 28, 0.08)` | `shadow-s4` |
-| `shadow-sm-dark` | `0 1px 2px 0 rgba(0, 0, 0, 0.30), inset 0 1px 0 0 rgba(255, 255, 255, 0.05)` | `shadow-s1-dark` |
-| `shadow-md-dark` | `0 2px 8px -1px rgba(0, 0, 0, 0.40), 0 1px 3px -1px rgba(0, 0, 0, 0.20), inset 0 1px 0 0 rgba(255, 255, 255, 0.06)` | `shadow-s2-dark` |
-| `shadow-lg-dark` | `0 8px 24px -4px rgba(0, 0, 0, 0.50), 0 2px 6px -2px rgba(0, 0, 0, 0.25), inset 0 1px 0 0 rgba(255, 255, 255, 0.08)` | `shadow-s3-dark` |
-| `shadow-xl-dark` | `0 24px 48px -8px rgba(0, 0, 0, 0.60), 0 8px 16px -4px rgba(0, 0, 0, 0.30), inset 0 1px 0 0 rgba(255, 255, 255, 0.10)` | `shadow-s4-dark` |
-
-### 모션 별칭
-
-`motion-duration-fast` · `base` · `slow` 는 `d3` · `d4` · `d6` 과 같은 값입니다. `motion-duration-slower`(500ms)와 `motion-ease-out` 은 같은 값의 새 이름이 없습니다 — 큰 전환도 `d6` 안에서 끝내고, 나타나는 모션은 `motion-ease-enter`, 사라지는 모션은 `motion-ease-exit` 로 옮깁니다. 앱의 옛 값은 `instant`(80ms) → `motion-duration-d2`, 곡선 `spring` → `motion-ease-enter-expressive`, `decel` → `motion-ease-enter` 로 옮깁니다.
-
-| 토큰 | 값 | 옮길 새 이름 |
-|---|---|---|
-| `motion-duration-fast` | `150ms` | `motion-duration-d3` |
-| `motion-duration-base` | `200ms` | `motion-duration-d4` |
-| `motion-duration-slow` | `300ms` | `motion-duration-d6` |
-| `motion-duration-slower` | `500ms` | `motion-duration-d6`(큰 전환도 그 안에서) |
-| `motion-ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` | `motion-ease-enter` · `motion-ease-exit` |
-
-### 상태 옛 이름
-
-컴포넌트 스펙 YAML 에 남은 옛 상태 이름은 이렇게 옮깁니다 — `default` → `enabled`, `hover` → `hovered`, `focus-visible` · `focus` → `focused`, `active` → `pressed`, `checked` → `selected`, `error` → `invalid`.
-
-### 모서리 별칭
-
-모서리 눈금 이전의 이름입니다. 값은 같은 눈금 이름과 같습니다. `radius-full` 은 이름이 그대로입니다.
-
-| 옛 이름 | 같은 값의 이름 | 값 |
-|---|---|---|
-| `radius-xs` | `radius-r0_5` | 2px |
-| `radius-sm` | `radius-r1` | 4px |
-| `radius-md` | `radius-r2` | 8px |
-| `radius-lg` | `radius-r3` | 12px |
-| `radius-xl` | `radius-r4` | 16px |
-| `radius-2xl` | `radius-r5` | 20px |
-
-### 옛 대비 짝
-
-머리말 `components` 의 아래 짝은 옛 색 이름(`surface-*` · `text-*` · `border-*` · `success` …)으로 대비를 재던 짝입니다. 같은 일은 역할 색 짝(`role-*`)이 새 이름으로 합니다 — 새 자리에서 부르지 않습니다.
-
-| 옛 짝 | 잰 것 | 지금 기준 |
-|---|---|---|
-| `card-light` · `card-dark` | 흰 면 · 다크 면 위 본문 글자 | `fg-neutral` × `bg-layer-default` |
-| `page-text-light` · `page-text-dark` | 페이지 바탕 위 본문 글자 | `fg-neutral` × `bg-layer-basement` — Typography 의 "글자 역할" R1 · R2 · R4 · R11 |
-| `input-light` · `input-dark` | 읽기 전용 칸의 값 | `fg-neutral` × `bg-disabled` — Input · Textarea 절 |
-| `caption-on-card-*` · `caption-tertiary-on-card-*` | 카드 위 보조 글 | `fg-neutral-subtle` — "글자 역할" R9 · R10 |
-| `placeholder-on-input-*` | 입력칸 위 자리 글 | `fg-placeholder` — "글자 역할" R19 |
-| `disabled-label-light` · `disabled-label-dark` | 막힌 글자(배경 없이 글자만) | `fg-disabled` · `bg-disabled` — State 절 |
-| `alert-text-*` · `alert-text-*-on-dark` | 흰 면 · 다크 면 위 의미 색 글자 | `fg-critical` · `fg-positive` · `fg-warning` · `fg-informative` — Callout · Field 오류 |
-| `divider-light` · `divider-dark` | 구분선(글자가 없어 대비 검사 대상이 아님) | `stroke-neutral-subtle` — Divider 절 |
-| `outline-strong-light` · `outline-strong-dark` | 1px 짙은 외곽선 | `stroke-neutral-solid` |
-| `focus-ring-on-light` · `focus-ring-on-dark` | 포커스 링 | `stroke-focus-ring` — Focus ring 절 |

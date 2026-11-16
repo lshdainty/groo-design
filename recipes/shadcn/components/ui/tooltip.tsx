@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { BUBBLE, BUBBLE_POSITION, BUBBLE_TITLE, BubbleArrow, useBubbleEdgePadding } from "@/components/ui/help-bubble";
 
 /*
- * Groo Tooltip — 구조는 SEED Help Bubble Tooltip(2026-10-02). 수치 원본은 specs/components/help-bubble.yaml 의 opens: hover.
+ * Groo Tooltip — 수치 원본은 specs/components/help-bubble.yaml 의 opens: hover.
  * Radix Tooltip 위에 짰고, 말풍선의 모양은 Help Bubble 의 것(help-bubble.tsx 의 BUBBLE · BubbleArrow)을 그대로 쓴다 — 한 벌이다.
  *
  *   TooltipProvider   화면에 한 번 둔다 — 하나가 열린 뒤 옆 트리거로 옮기면 기다리지 않는다. 지연 값은 고정이다(바꾸지 않는다)
@@ -29,7 +29,7 @@ import { BUBBLE, BUBBLE_POSITION, BUBBLE_TITLE, BubbleArrow, useBubbleEdgePaddin
  *
  * 모양 · 쌓임 · 모션은 Help Bubble 과 같다 — 최대 280 · 위아래 10 · 좌우 12 · 모서리 12 · bg-neutral-inverted · 글 t3 13 / 18 · 700 ·
  * fg-neutral-inverted, 화살표 12 × 8(늘 트리거 가운데) · 화살표 끝 ↔ 트리거 4 · 화면 가장자리 16, z 210(팝오버 · 메뉴 위).
- * 화면 끝의 트리거면 화살표는 가운데에 남고 말풍선이 16 보다 가장자리에 붙는다(useBubbleEdgePadding — Help Bubble 과 같은 규칙, Q-004-1).
+ * 화면 끝의 트리거면 화살표는 가운데에 남고 말풍선이 16 보다 가장자리에 붙는다(useBubbleEdgePadding — Help Bubble 과 같은 규칙).
  * 열림 200ms enter 로 화살표 끝에서 0.9 → 1 · 투명도, 닫힘 200ms easing 으로 투명도만 — 이어서 열 때는 모션 없이.
  * ARIA: 말풍선 role="tooltip"(Radix 가 숨은 사본에 단다) — 트리거의 aria-describedby 가 가리킨다.
  */

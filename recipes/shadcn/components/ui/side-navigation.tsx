@@ -6,8 +6,7 @@ import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 /*
- * Groo Side Navigation — 구조는 SEED Side Navigation(2026-10-04). 수치 원본은 specs/components/side-navigation.yaml.
- * 옛 Sidebar(shadcn — 256 · 48 · 모바일 Sheet · 항목 32 · ⌘B · 쿠키 · floating · inset)를 대신한다.
+ * Groo Side Navigation — 수치 원본은 specs/components/side-navigation.yaml.
  *
  *   SideNavigation           데스크톱(768 이상)의 주 메뉴 — <nav aria-label="주 메뉴">. collapsed · defaultCollapsed · onCollapsedChange
  *                            (손으로 다룰 때). 둘 다 주지 않으면 창 폭(768 ~ 1279 접힘 56 · 1280 이상 펼침 240) + 손으로 접은 기억
@@ -22,18 +21,18 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  *                            자식으로 SideNavigationSubItem 을 둘 이상 주면 부모(버튼 — 펼치기만, 이동하지 않는다): aria-expanded · aria-controls,
  *                            defaultOpen, 하위가 current 면 저절로 펼친다. 하위가 하나 이하이면 부모를 만들지 않고 href 의 단독 링크다
  *                            (href 가 없으면 그 하나의 href · 하위가 current 면 current) — 하위가 사람마다 다른 항목(Desk 증권 — 연결한
- *                            증권사)을 그대로 넘겨도 하나짜리 나무가 생기지 않는다(2026-10-16 Q-017-4 정리 — SEED Standalone Menu)
+ *                            증권사)을 그대로 넘겨도 하나짜리 나무가 생기지 않는다
  *   SideNavigationSubItem    하위 항목(링크) — href · label · current · disabled. 아이콘 없이 이름만
- *   SideNavigationFooter     바닥 — 보조 링크(설명서 · 문의)만. 비면 그리지 않는다. 계정은 두지 않는다(2026-10-16 Q-018-1 C —
- *                            Desk 는 설정 · 로그아웃이 머리 ⚙ 에 있다)
+ *   SideNavigationFooter     바닥 — 보조 링크(설명서 · 문의)만. 비면 그리지 않는다. 계정은 두지 않는다
+ *                            (Desk 는 설정 · 로그아웃이 머리 ⚙ 에 있다)
  *
- * 폭 — 기본은 창 폭으로 정하고, 창 폭이 1280 을 넘나들면 다시 정한다(처음 열 때도 본다 — SEED 코드는 넘나들 때만). 1280 이상에서
+ * 폭 — 기본은 창 폭으로 정하고, 창 폭이 1280 을 넘나들면 다시 정한다(처음 열 때도 본다). 1280 이상에서
  *   손으로 접고 펴면 기억해 다음에도 그 모양으로 연다. 768 ~ 1279 에서 손으로 편 것은 기억하지 않는다(다시 열면 접힌 채).
  *   펼침 ↔ 접힘 200ms easing(폭) — 이름은 접히기 시작할 때 사라지고 다 펴진 뒤 나타난다. 모션 줄이기면 바로 바뀐다.
  * 접혔을 때 — 하위가 없는 항목은 마우스를 올리면 200ms 뒤(키보드 초점이면 바로) 오른쪽에 이름 말풍선(tooltip.tsx — Help Bubble 툴팁,
  *   이름과 같은 글이라 aria-describedby 로 잇지 않는다). 하위가 있는 항목은 아이콘 옆 8(위 끝 맞춤 · 화면 끝과 8)에 펼침 메뉴 —
  *   Menu 와 같은 표면(폭 200 · 모서리 20 · s3 · 위아래 8) · 맨 위에 부모 이름 · 줄 44 · 지금 화면 줄은 지금 항목과 같은 바탕.
- *   1280 미만이어도 Menu Sheet 로 바꾸지 않는다 — Menu 의 1280 규칙의 예외(사용자 결정 2026-10-08).
+ *   1280 미만이어도 Menu Sheet 로 바꾸지 않는다 — Menu 의 1280 규칙의 예외.
  *   펼침 메뉴는 마우스를 올리면 200ms 뒤 열리고(다른 펼침 메뉴가 열려 있으면 바로) 트리거 · 메뉴를 모두 떠나면 100ms 뒤 닫힌다(옮겨 가는
  *   동안 닫히지 않는다). 누르거나 Enter · Space 로 열고 닫는다 — 키보드로 열면 첫 줄로 초점, 마우스 · 터치로 열면 옮기지 않는다.
  *   마우스로 열린 메뉴를 누르면 닫지 않고 붙들어 둔다(다시 누르면 닫는다). 열린 동안 부모에서 Tab 은 메뉴의 첫 줄로, 첫 줄에서 Shift+Tab 은
@@ -47,9 +46,9 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  *   내용 위 8 · 좌우 8 · 아래 24, 묶음 사이 8(접히면 1px 선 · 위아래 8 · 좌우 8). 묶음 이름 t4 14 / 19 · 700 · fg-neutral-muted · 안쪽 6.
  *   항목 최소 44 · 좌우 8 · 아이콘 20 fg-neutral-subtle ↔ 이름 12 · 이름 t4 · 500 · fg-neutral-muted · 위아래 6 · 모서리 10 — 긴 이름은 단어 단위로
  *   줄을 바꾼다(말줄임 없음). 접히면 항목 40(좌우 10 — 아이콘이 화면 끝에서 18). 꺾쇠 16 fg-neutral-subtle(펼치면 위로 300ms).
- *   하위 항목 최소 44 · 이름이 부모 이름과 같은 자리(40)에서 시작, 펼침 · 접힘은 높이 · 투명도 300ms(motion-duration-d6 — Accordion 과 같다,
- *   2026-10-10). 모션 줄이기면 높이를 움직이지 않고 150ms 서서히 나타나고 사라지며 꺾쇠는 바로 돈다.
- *   지금 항목 bg-neutral-weak-pressed + 아이콘 · 이름 fg-neutral(굵기 500 그대로 — 사용자 결정 2026-10-08). 접혔을 때는 하위가 지금인 부모가
+ *   하위 항목 최소 44 · 이름이 부모 이름과 같은 자리(40)에서 시작, 펼침 · 접힘은 높이 · 투명도 300ms(motion-duration-d6 — Accordion 과 같다).
+ *   모션 줄이기면 높이를 움직이지 않고 150ms 서서히 나타나고 사라지며 꺾쇠는 바로 돈다.
+ *   지금 항목 bg-neutral-weak-pressed + 아이콘 · 이름 fg-neutral(굵기 500 그대로). 접혔을 때는 하위가 지금인 부모가
  *   지금 항목이다. 지금 항목은 마우스를 올리거나 눌러도 바탕이 그대로다(그보다 짙은 불투명 역할이 없다).
  * 상태: 호버(웹) · 누름 bg-layer-default-pressed, 누르면 아이콘 · 이름만 2px 거리 축소(바탕은 그대로 — 모션 줄이기면 하지 않는다).
  *   키보드 포커스에만 항목 안쪽 2px 링(모서리 10). 막힌 항목은 fg-disabled · 바탕 없음 · 누르지 못한다(aria-disabled, 링크 주소 없음).

@@ -5,7 +5,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Page Banner — 구조는 SEED Page Banner(2026-10-02). 수치 원본은 specs/components/page-banner.yaml.
+ * Groo Page Banner — 수치 원본은 specs/components/page-banner.yaml.
  *
  * 페이지 맨 위(머리 바로 아래, 위에 사진이 있으면 그 아래)에 화면 폭 전체로 놓는 띠 — 그 페이지 전체의 상태를 알린다
  * (증권 연결 끊김 · Pro 만료 예정 · 새 버전). 한 화면에 하나. 그 기능 가까이의 안내는 Callout, 잠깐 알릴 결과는 Snackbar 다.
@@ -27,7 +27,7 @@ import { cn } from "@/lib/utils";
  *   버튼은 t3 · 700 글 버튼 — 사방 11 을 두고 바깥 −11 로 되돌려 누르는 높이 40 에 띠 높이는 그대로. 뒤 화살표 16 · 닫기는
  *   띠 가운데에 서고 글과 8. 닫기는 투명 상자 40 · 모서리 8, 바깥 −12(아이콘은 오른쪽 끝에서 24).
  * Actionable — 호버 · 누름은 그 바탕의 누름 색, 누르면 바탕은 그대로 안의 내용만 2px 거리로 준다(기준 max(높이, 폭 ÷ 4, 24)
- *   를 띠에서 누르는 순간 잰다 — SEED scaleScope: content). 버튼 · 닫기는 바탕 없이 각자 축소. 모션 줄이기면 축소하지 않는다.
+ *   를 띠에서 누르는 순간 잰다 — scaleScope: content). 버튼 · 닫기는 바탕 없이 각자 축소. 모션 줄이기면 축소하지 않는다.
  * 닫기 — 바로 걷고(모션 없음) 초점은 다음 요소로 간다(뒤에 없으면 앞 요소). open · onDismiss 로 닫음을 기억한다.
  * 포커스 링은 키보드 포커스에만 2px, 안쪽 −2 — 화면 끝까지 차는 띠라 바깥 링이 잘린다(버튼 · 닫기도 같다). 링은 띠 위에
  *   그려지므로 옅은 바탕은 stroke-focus-ring, 짙은 바탕은 띠 글자색(흰 글 · neutral 은 반전 짝)이다 — 브랜드 링은 짙은 바탕
@@ -80,7 +80,7 @@ export type PageBannerActionableProps = PageBannerCommon &
 export type PageBannerDismissibleProps = PageBannerCommon &
   DivProps & {
     interaction: "dismissible";
-    /** 닫기와 버튼은 함께 두지 않는다(SEED) */
+    /** 닫기와 버튼은 함께 두지 않는다 */
     button?: never;
     /** 보이는지 — 주면 부르는 쪽이 정한다(닫은 것을 기억해 다시 띄우지 않는다). 주지 않으면 스스로 닫는다 */
     open?: boolean;
@@ -137,7 +137,7 @@ const pageBannerVariants = cva(
   },
 );
 
-// 톤의 기본 앞 아이콘 — lucide 선 아이콘(v106), Callout 과 같다
+// 톤의 기본 앞 아이콘 — lucide 선 아이콘, Callout 과 같다
 const TONE_ICON: Record<PageBannerTone, typeof Info> = {
   neutral: Info,
   informative: Info,

@@ -5,10 +5,9 @@ import { Button, type ButtonProps } from "@/components/ui/button";
 import { Input, type InputProps } from "@/components/ui/input";
 
 /*
- * Groo Input OTP — 메일 · 문자로 받은 일회용 인증 코드(지금은 숫자 6자리)를 넣는 칸(2026-10-09). 수치 원본은 specs/components/input-otp.yaml,
+ * Groo Input OTP — 메일 · 문자로 받은 일회용 인증 코드(지금은 숫자 6자리)를 넣는 칸. 수치 원본은 specs/components/input-otp.yaml,
  * 칸의 상자 · 글자 · 상태는 input.yaml(Input), 라벨 · 설명 · 오류는 field.yaml(Field)이 원본이다.
- * SEED 에는 이 컴포넌트가 없다 — Text Input 의 "Input을 나누지 말고 … 한 번에 입력" 을 따라 칸을 자릿수만큼 나누지 않는다(사용자 결정 10A).
- * 옛 Input OTP(칸 6 × 40 · 숨은 입력 하나 — input-otp 라이브러리)를 대신한다.
+ * 칸을 자릿수만큼 나누지 않는다 — 한 칸에 한 번에 입력한다.
  *
  *   InputOTP         코드 칸 — Input 상자형 한 칸. Input 의 속성(size · disabled · id · placeholder …)에 value · defaultValue(숫자 글) ·
  *                    onValueChange(value — 숫자만 · 최대 length 자) · length(기본 6)를 받는다. inputMode="numeric" ·
@@ -65,7 +64,7 @@ const InputOTP = React.forwardRef<HTMLInputElement, InputOTPProps>(
         placeholder={placeholder ?? `${length}자리 숫자`}
         // 입력의 data-slot(text-input-value)은 Input 그대로 둔다 — 코드 칸 표시는 따로
         data-input-otp=""
-        // 막혀도 자리 글은 fg-placeholder 그대로 — Input 의 막힘 색(fg-disabled)을 덮는다(input-otp.yaml disabled › placeholder, 2026-10-17 01T-013)
+        // 막혀도 자리 글은 fg-placeholder 그대로 — Input 의 막힘 색(fg-disabled)을 덮는다(input-otp.yaml disabled › placeholder)
         className={cn("placeholder:text-fg-placeholder", className)}
         // 고정폭 숫자는 상자에 건다 — 입력은 상자의 글꼴을 통째로 이어받는다(Input 의 font: inherit)
         rootClassName={cn("tabular-nums", rootClassName)}

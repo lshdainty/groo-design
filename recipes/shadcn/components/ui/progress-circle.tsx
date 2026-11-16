@@ -3,8 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Progress Circle — 구조는 SEED Progress Circle(2026-10-03). 수치 원본은 specs/components/progress-circle.yaml.
- * 옛 Spinner(spinner.tsx — 16 · 24 · 32 · 48, 브랜드 4분의 1 호 · 1.5초 일정 속도)를 대신한다.
+ * Groo Progress Circle — 수치 원본은 specs/components/progress-circle.yaml.
  *
  *   ProgressCircle   작업이 진행 중임을 알리는 원(SVG) — 트랙 · 호
  *     size        "24"(요소 안 — 섹션 제목 옆 · 목록 끝 · 올리는 항목 위, 두께 3) · "40"(기본 — 콘텐츠 영역 가운데, 두께 5) ·
@@ -27,7 +26,7 @@ import { cn } from "@/lib/utils";
  *   spin 은 일정한 속도로 도는 아이콘의 것이다(DESIGN.md Animation library).
  *   값 있는 원은 값이 바뀔 때 채움이 motion-duration-d6(300ms) · motion-ease-enter 로 따라 찬다 — 처음 그릴 때는 움직이지 않고,
  *   값 없는 원에서 값 있는 원으로 바뀔 때도 그 자리에서 시작한다(호를 새로 그린다).
- * 모션 줄이기 — 돌지 않는다. 값 없는 원은 12시부터 시계 방향 3/4 의 고정 호, 값 있는 원은 채움이 바로 바뀐다(v104).
+ * 모션 줄이기 — 돌지 않는다. 값 없는 원은 12시부터 시계 방향 3/4 의 고정 호, 값 있는 원은 채움이 바로 바뀐다.
  * 접근성 — 늘 role="progressbar" + 이름(aria-label). 값 있는 원은 aria-valuenow · aria-valuemin · aria-valuemax + aria-valuetext,
  *   값 없는 원은 값 속성을 두지 않는다. 장식으로 쓸 때(버튼 안 — 버튼이 aria-busy 로 알린다)만 aria-hidden 을 준다.
  *   언제 보이고 언제 실패로 바꾸는지(1초 · 5초 · 10초)는 skeleton.tsx 의 LoadingRegion(fallback="circle")이 맡는다.

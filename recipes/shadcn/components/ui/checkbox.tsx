@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { submitImplicitly, useFieldGroup, useFieldGroupState } from "@/components/ui/field";
 
 /*
- * Groo Checkbox — 구조는 SEED Checkbox(2026-09-30). 수치 원본은 specs/components/checkbox.yaml.
+ * Groo Checkbox — 수치 원본은 specs/components/checkbox.yaml.
  *
  *   Checkmark      칸만 — 목록 행 · 표 머리에 넣어 쓴다(누르는 영역은 행 전체가 맡는다, aria-label 필수)
  *   Checkbox       칸 + 라벨 — 라벨까지 눌리고, 누르는 영역은 44 까지 넓힌다(::before)
@@ -18,16 +18,16 @@ import { submitImplicitly, useFieldGroup, useFieldGroupState } from "@/component
  *   tone   neutral(짙은 회색, 기본) · brand(서비스 핵심 흐름에서만)
  *   weight regular(기본) · bold(강조 · 묶음의 부모)
  *
- * 선택 안 된 칸의 테두리는 stroke-neutral-solid(3:1 — v109). 호버 = 누름 색(v106), 누르면 칸만 세로 2px 축소(v104) —
- * 칸의 기준 길이는 max(20·24, 24) = 24. 비활성은 전용 색(v106). 오류는 칸을 바꾸지 않는다 — 묶음 아래 글(사용자 결정).
+ * 선택 안 된 칸의 테두리는 stroke-neutral-solid(3:1). 호버 = 누름 색, 누르면 칸만 세로 2px 축소 —
+ * 칸의 기준 길이는 max(20·24, 24) = 24. 비활성은 전용 색. 오류는 칸을 바꾸지 않는다 — 묶음 아래 글.
  * 라벨을 눌러도 칸이 반응하도록 Checkbox 는 group/checkbox, 칸은 그 hover · active 도 받는다.
- * 키 — Space 는 켜고 끈다. Enter 는 폼을 제출한다(진짜 input · SEED 와 같다 — 폼의 기본 버튼을 누른다, 칸은 바뀌지 않는다).
- * Radix 는 Enter 를 막기만 해서 칸이 받아 제출한다(사용자 결정 2026-10-08). 라벨 안에 링크 · 버튼을 두지 않는다 — 누르는 영역(::before)이
+ * 키 — Space 는 켜고 끈다. Enter 는 폼을 제출한다(진짜 input 과 같다 — 폼의 기본 버튼을 누른다, 칸은 바뀌지 않는다).
+ * Radix 는 Enter 를 막기만 해서 칸이 받아 제출한다. 라벨 안에 링크 · 버튼을 두지 않는다 — 누르는 영역(::before)이
  * 덮는다. 링크는 라벨 옆 · 아래에(checkbox.md Don't).
  * 묶음의 상태 — Field(또는 묶음에 준 disabled · aria-invalid)의 막힘은 묶음 aria-disabled 와 칸마다 disabled, 오류는 칸마다
- * aria-invalid 다. role="group" 은 aria-invalid · aria-required 를 받지 않아 묶음에는 걸지 않는다(SEED useFieldset 과 같다).
+ * aria-invalid 다. role="group" 은 aria-invalid · aria-required 를 받지 않아 묶음에는 걸지 않는다.
  * 줄 사이 12 는 누르는 영역 때문이다 — 줄 32 · 36 에 더해 44 · 48 마다 한 줄이라 이웃 줄과 44 영역이 겹치지 않는다
- * (SEED 의 4 로는 한 줄이 36 · 40 만 받는다, 사용자 결정). Checkbox 줄은 내용만큼만 차지한다(self-start) — 직접 짠 줄은 묶음 폭을 쓴다.
+ * (사이 4 로는 한 줄이 36 · 40 만 받는다). Checkbox 줄은 내용만큼만 차지한다(self-start) — 직접 짠 줄은 묶음 폭을 쓴다.
  */
 const checkmarkVariants = cva(
   [

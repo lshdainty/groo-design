@@ -3,10 +3,8 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Resizable — HR 관리 화면 나누기(2026-10-10). 수치 원본은 specs/components/resizable.yaml.
- * SEED 에는 Resizable 이 없다(모바일 앱 중심) — 손잡이 · 범위 · 키보드 · 기억은 groo 가 정했고, 키보드는 APG Window Splitter 다.
- * 대시보드 위젯 크기(WidgetResizeHandle)는 걷었다(2026-11-10 사용자 결정 11A — 제품은 2026-10-23 HB1 C).
- * 옛 shadcn 그대로(react-resizable-panels · 가로 · 세로 · 손잡이 상자 12 × 16 · 누르는 폭 4 · 10%)를 대신한다 — 라이브러리 없이 짰다.
+ * Groo Resizable — HR 관리 화면 나누기. 수치 원본은 specs/components/resizable.yaml.
+ * 키보드는 APG Window Splitter 다. 라이브러리 없이 짰다.
  *
  *   ResizablePanelGroup   나눈 자리 — storageKey(화면마다 폭을 기억할 이름 — 필수), 가로로만 나눈다. 768 이상에서만 쓴다
  *                         (768 미만은 화면이 목록 → 상세 · 탭으로 바꾼다). 나머지는 div 속성
@@ -16,7 +14,7 @@ import { cn } from "@/lib/utils";
  *
  * 손잡이 — 선 1px stroke-neutral-weak(경계일 뿐) + 가운데 손잡이 표시 4 × 24 stroke-neutral-solid(대비 3 이상 — 끌 수 있는 자리를 알린다).
  *   마우스를 올리거나 키보드 초점 · 누르는 동안 선 전체가 stroke-neutral-solid 로 짙어진다(150ms). 누르는 폭은 선 가운데로 양쪽 8 — 16
- *   (768 이상 데스크톱의 마우스 경계라 44 가 아니다, 사용자 결정 12B). 키보드 포커스에만 누르는 폭 16 둘레에 링 2px(모서리 4).
+ *   (768 이상 데스크톱의 마우스 경계라 44 가 아니다). 키보드 포커스에만 누르는 폭 16 둘레에 링 2px(모서리 4).
  *   role="separator" · aria-orientation="vertical" · aria-valuenow(목록 %) · aria-valuemin · aria-valuemax · aria-valuetext("25%") · aria-controls(목록 패널).
  * 바꾸는 길 — 끌기: 누른 채 3px 넘게 움직이면 끈다, 포인터를 1:1 로 따라 20 ~ 40% 사이(오른쪽은 60% 아래로 줄지 않는다). 끄는 동안 화면 전체가
  *   col-resize 커서이고 글을 고르지 않는다. 누르기: 3px 안에서 놓으면 기본 25 ↔ 넓게 40(끌지 못하는 사람의 대안 — WCAG 2.5.7) —

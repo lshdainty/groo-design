@@ -7,7 +7,7 @@ import { chipVariants } from "@/components/ui/chip";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Groo Tabs — 구조는 SEED Tabs(2026-10-02). 수치 원본은 specs/components/tabs.yaml(Line) · chip-tabs.yaml(Chip Tabs).
+ * Groo Tabs — 수치 원본은 specs/components/tabs.yaml(Line) · chip-tabs.yaml(Chip Tabs).
  *
  *   Tabs                             값을 쥔 묶음(Radix Tabs). ← → 로 옮기면 바로 고르고(자동), 끝에서 처음으로 돈다.
  *                                    막힌 탭은 건너뛴다. Home · End 는 첫 · 마지막 탭(막히지 않은)
@@ -17,7 +17,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *   TabsSwipeArea                    폰 1차 탭의 내용 칸 묶음 — 내용을 옆으로 밀어 이웃 탭으로 넘긴다
  *
  * Line
- *   layout   fill(기본 — 칸을 똑같이 나눈다, 막대는 탭에서 좌우 16 들인다. 글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤 — SEED,
+ *   layout   fill(기본 — 칸을 똑같이 나눈다, 막대는 탭에서 좌우 16 들인다. 글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤 —
  *            고른 탭은 가장자리와 16 을 두고 드러낸다) ·
  *            hug(탭이 글 + 좌우 10 · 목록 좌우 16, 넘치면 가로 스크롤 — 스크롤바는 숨긴다. 막대는 탭 폭 그대로)
  *   size     small 40 · 글 t4 14(기본) · medium 44 · 글 t5 16
@@ -27,17 +27,17 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  * 막대는 목록에 하나 — 2px · fg-neutral · 끝이 각지다. 고른 탭의 offsetLeft · offsetWidth 를 재서 놓고(값이 바뀔 때 · 목록 ·
  * 탭 크기가 바뀔 때 · 글꼴을 다 불러왔을 때), 고른 탭이 바뀌면 left · width 로 200ms 미끄러진다(motion-duration-d4 ·
  * motion-ease-easing — 200ms 이하는 마이크로 모션이라 모션 줄이기에도 그대로다). 크기가 바뀌어 다시 놓을 때는 바로 놓는다.
- * 호버 모양은 없다. 누르면 탭만 2px 거리로 준다(SEED scaleScope: self · v104) — 배율 = (기준 − 2) ÷ 기준,
+ * 호버 모양은 없다. 누르면 탭만 2px 거리로 준다(scaleScope: self) — 배율 = (기준 − 2) ÷ 기준,
  * 기준 = max(높이, 폭 ÷ 4, 24) 를 누르는 순간(포인터 · Space · Enter) 잰다. 색은 그대로다 — 글자색이 이미 고름을 말하므로
  * 누르는 동안 색이 바뀌면 손을 떼기 전에 고른 것처럼 보인다. 모션 줄이기면 축소하지 않는다.
  * 고름은 손을 뗄 때(click)다 — Radix 는 마우스를 누르는 순간 고르므로 누름(mousedown)을 막고 click 에서 고른다. 누른 채 밖으로
- * 끌어내면 고르지 않는다. 키보드는 화살표로 바로 고른다(2026-10-15 구현 세션 질문 Q-010-1 정리 — "누름은 축소만").
+ * 끌어내면 고르지 않는다. 키보드는 화살표로 바로 고른다.
  * 포커스 링은 키보드 포커스에만 탭 안쪽 2px(띄움 −2 · 각진 모서리 — 이웃 탭 · 바닥 선에 걸리지 않는다). 막대 위에 그린다.
  * 막힌 탭은 fg-disabled · not-allowed · 축소 없음. 고른 탭이 막히면(목록 전체를 막을 때) 막대도 fg-disabled 다.
  * 알림 점(notification)은 6px fg-brand(브랜드 글자색 — bg-brand-solid 는 다크 바탕에서 안 보인다) — 글 끝에서 2 · 글 위쪽에
  * 띄워 탭 폭을 넓히지 않는다. 보조 기술에는 "새 소식" 을 덧붙인다(점만으로 알리지 않는다). 고른 탭에는 점도 "새 소식" 도 없다
  * (내용을 보면 사라진다). 한 목록에 하나만 단다(둘 이상이면 개발 중에 경고). Fill 목록이 넘치면(글이 칸을 넘으면) Hug 로 바꾸지
- * 않고 Fill 모양 그대로 목록만 가로 스크롤한다(SEED tabs.css — 2026-10-21 사용자 결정 03-G 3B).
+ * 않고 Fill 모양 그대로 목록만 가로 스크롤한다.
  *
  * Chip Tabs
  *   variant  solid(기본 — 화면 전체를 바꾸는 2차 탭, Chip Solid) · outline(일부를 바꾸는 2차 탭, Chip Outline Strong)
@@ -53,7 +53,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  * 공통
  * Hug · Chip Tabs 는 고른 탭이 목록 밖이면 가장자리에서 scroll-padding(Hug 16 · Chip Tabs 24) 띄워 가까운 쪽으로 목록만 스크롤한다 — 페이지는
  * 움직이지 않는다. 처음 그릴 때는 바로, 그 뒤로는 부드럽게(모션 줄이기면 바로).
- * 고른 탭만 Tab 이 선다(tabIndex 0) — 값이 밀어 넘기기 · 주소로 바뀌어도 Radix 의 로빙 위치가 옛 탭에 남지 않는다. 다음
+ * 고른 탭만 Tab 이 선다(tabIndex 0) — 값이 밀어 넘기기 · 주소로 바뀌어도 Radix 의 로빙 위치가 이전 탭에 남지 않는다. 다음
  * Tab 은 내용 칸(tabIndex 0)으로 간다. 목록에 보이는 제목이 없으면 aria-label 을 준다(이름이 없으면 개발 중에 경고).
  * value 는 글이 아니라 바뀌지 않는 id 다 — Radix 가 value 로 탭 · 내용 칸의 id 를 만들어 aria-controls · aria-labelledby 로
  * 잇는데, 빈칸이 있으면 그 연결이 깨진다(빈칸이 있으면 개발 중에 경고).
@@ -243,7 +243,7 @@ const tabsListVariants = cva(
   {
     variants: {
       layout: {
-        // 칸을 똑같이 나눈다 — 막대는 탭에서 좌우 16 들인다. 글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤(SEED, 03-G 3B) —
+        // 칸을 똑같이 나눈다 — 막대는 탭에서 좌우 16 들인다. 글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤 —
         // 그때도 고른 탭은 가장자리와 16 을 두고 드러낸다(Hug 와 같다)
         fill: "overflow-x-auto px-0 scroll-px-x4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [--tabs-indicator-inset:var(--spacing-x4)]",
         // 글만큼 — 목록 좌우 16, 넘치면 가로 스크롤(스크롤바는 숨긴다). 고른 탭은 가장자리와 16 을 두고 드러낸다. 막대는 탭 폭 그대로
@@ -807,7 +807,7 @@ const TabsSwipeArea = React.forwardRef<HTMLDivElement, TabsSwipeAreaProps>(({ cl
     };
   }, []);
 
-  // 넘긴 값이 그려진 직후(칠하기 전) — 새 칸은 제자리 흐름에, 옛 칸은 엿보기로 띄워 둘 다 마저 미끄러뜨린다
+  // 넘긴 값이 그려진 직후(칠하기 전) — 새 칸은 제자리 흐름에, 이전 칸은 엿보기로 띄워 둘 다 마저 미끄러뜨린다
   useIsoLayoutEffect(() => {
     const p = pending.current;
     const area = own.current;

@@ -9,21 +9,21 @@ import { Checkmark } from "@/components/ui/checkbox";
 import { Radiomark, ignoreRadioJumpKeys, submitOnRadioEnter } from "@/components/ui/radio-group";
 
 /*
- * Groo Select Box — 구조는 SEED Select Box(2026-10-01). 수치 원본은 specs/components/select-box.yaml.
+ * Groo Select Box — 수치 원본은 specs/components/select-box.yaml.
  *
  *   RadioSelectBoxGroup · RadioSelectBox   하나 고르기 — 묶음은 radiogroup, 오른쪽 라디오(Radiomark 20) 또는 없음
  *   CheckSelectBoxGroup · CheckSelectBox   여럿 고르기 — 묶음은 fieldset, 오른쪽 칸 없는 체크(Checkbox Ghost) 또는 없음
  *
  * 상자 하나 = 선택지 하나. 상자(div)는 테두리 · 바탕만 맡고, 그 안의 누르는 자리(label)가 콘텐츠 + 컨트롤을 담아
  * 펼침(footer)을 뺀 상자 전체가 누르는 영역이 된다. 고른 테두리는 ::after 로 안쪽 2px 에 덧그린다 — 1px → 2px 로
- * 바뀌어도 내용이 밀리지 않는다(SEED). 바탕은 바꾸지 않는다(사용자 결정).
- * 누르면 바탕이 bg-layer-default-pressed 로 바뀌고 누르는 자리만 2px 거리로 준다(SEED scaleScope: content · v104) —
+ * 바뀌어도 내용이 밀리지 않는다. 바탕은 바꾸지 않는다.
+ * 누르면 바탕이 bg-layer-default-pressed 로 바뀌고 누르는 자리만 2px 거리로 준다(scaleScope: content) —
  * 기준 길이 max(높이, 폭 ÷ 4, 24) 는 Button · List 처럼 누르는 순간 잰다. 컨트롤은 따로 줄지 않는다.
- * 키보드 포커스 링은 상자 바깥에 하나만 — 컨트롤은 자기 링을 끈다(SEED).
+ * 키보드 포커스 링은 상자 바깥에 하나만 — 컨트롤은 자기 링을 끈다.
  * 컨트롤이 '없음' 이어도 라디오 · 체크는 화면 밖에 두어(sr-only) 키보드 · 화면 읽기 프로그램이 그대로 쓴다.
  * 1열은 가로형(기본), 2 ~ 3열이면 세로형 — 묶음의 columns 가 정하고 상자마다 layout 으로 바꿀 수 있다.
  * 묶음의 density="compact" 는 세로형의 낮은 상자다 — 위아래 20 → 12 · 앞 ↔ 글 10 → 4(가로형에는 걸리지 않는다). 한 시트에 상자가 많아
- * 100% 글자에서 모두 보여야 할 때만 쓴다(자산 종류 아홉 — 2026-10-29 사용자 결정 17-1 Q5 = B). 선택지 2 ~ 4개는 기본.
+ * 100% 글자에서 모두 보여야 할 때만 쓴다(자산 종류 아홉). 선택지 2 ~ 4개는 기본.
  * 펼침은 고른 상자 아래로 열린다(높이 400ms · 투명도 300ms, 닫을 때 300ms · 400ms). 닫히면 보이지 않고 Tab 도 닿지 않는다.
  */
 
@@ -43,7 +43,7 @@ const pressHandlers = {
   onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => measurePress(e.currentTarget),
 };
 
-// 묶음 — 1 ~ 3열 격자. 2열 이상은 상자 높이를 가장 긴 상자에 맞춘다(모든 줄이 같은 높이 — SEED grid-auto-rows 1fr)
+// 묶음 — 1 ~ 3열 격자. 2열 이상은 상자 높이를 가장 긴 상자에 맞춘다(모든 줄이 같은 높이 — grid-auto-rows 1fr)
 const selectBoxGroupVariants = cva("grid w-full gap-x-x3 gap-y-component-default", {
   variants: {
     columns: {
@@ -68,7 +68,7 @@ const selectBoxVariants = cva(
   ].join(" "),
 );
 
-// 누르는 자리(label) — 콘텐츠 + 컨트롤. 누르면 이 자리만 준다. 상자가 같은 높이로 늘면 남는 자리까지 채운다(grow — SEED) —
+// 누르는 자리(label) — 콘텐츠 + 컨트롤. 누르면 이 자리만 준다. 상자가 같은 높이로 늘면 남는 자리까지 채운다(grow) —
 // 그래야 내용이 짧은 상자의 빈 아래쪽도 눌린다
 const selectBoxTriggerVariants = cva(
   [
@@ -149,8 +149,8 @@ const FOOTER_OPEN = {
 const footerClasses = (visibility: "when-selected" | "when-not-selected") => `${FOOTER_BASE} ${FOOTER_OPEN[visibility]}`;
 const selectBoxFooterInnerVariants = cva("px-x5 pb-x4");
 
-// 컨트롤은 따로 줄지 않는다 — 누르는 자리가 함께 준다(v104). label 의 누름이 컨트롤로 넘어오므로 축소만 끈다.
-// 포커스 링도 상자가 그리므로 컨트롤 자기 링은 끈다(SEED 도 trigger 에서 --seed-focus-ring: none — 링이 두 겹이 되지 않는다).
+// 컨트롤은 따로 줄지 않는다 — 누르는 자리가 함께 준다. label 의 누름이 컨트롤로 넘어오므로 축소만 끈다.
+// 포커스 링도 상자가 그리므로 컨트롤 자기 링은 끈다(링이 두 겹이 되지 않는다).
 // 체크(Ghost)는 상자가 누름 · 호버를 맡으므로 자기 바탕을 끈다
 const MARK_IN_BOX = "active:[scale:1] focus-visible:outline-none";
 const GHOST_NO_BG =

@@ -11,7 +11,7 @@ import { ignoreRadioJumpKeys } from "@/components/ui/radio-group";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Groo Chip — 구조는 SEED Chip(2026-10-02). 수치 원본은 specs/components/chip.yaml.
+ * Groo Chip — 수치 원본은 specs/components/chip.yaml.
  *
  *   Chip                         버튼 — 제안(누르면 칸에 값을 넣는다, 고른 모습 없음) · 필터 바의 여는 칩(뒤 아래 화살표 +
  *                                aria-haspopup="dialog", 걸린 조건이면 selected) · 아이콘만 있는 필터 지우기(↺, aria-label 필수)
@@ -21,21 +21,21 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *   InputChip                    넣은 값 — 버튼이 아닌 알약(Outline Weak 고른 모습) + 뒤 지우기 버튼("{글} 지우기")
  *   ChipGroup                    묶음 — wrap(폼 · 시트 안) · scroll(목록 위 필터 바 · 제안 줄)
  *
- *   variant  solid(옅은 투명 채움 bg-neutral-weak-alpha — 어느 바탕에서나, v120) · outlineStrong(고르면 짙은 채움) ·
+ *   variant  solid(옅은 투명 채움 bg-neutral-weak-alpha — 어느 바탕에서나) · outlineStrong(고르면 짙은 채움) ·
  *            outlineWeak(기본 — 고르면 옅은 바탕 + 짙은 1px, 글자 그대로)
  *   size     small 32 · medium 36(기본) · large 40. 글은 세 크기 모두 t4 14 · 500, 가장자리 ↔ 글 12 · 14 · 16, 아이콘 ↔ 글 6
  *   layout   withText(기본) · iconOnly(원 — 아이콘을 children 으로, aria-label 필수 · 없으면 개발 중에 경고)
  *
  * 고름은 ChipToggle · ChipRadio 는 Radix 의 data-state="checked", Chip 은 selected 가 다는 data-selected 로 칠한다
- * (보이기만 한다 — aria-pressed 는 어디에도 쓰지 않는다, SEED). Chip 에 data-state 를 쓰지 않는 것은 여는 칩을 감싸는
+ * (보이기만 한다 — aria-pressed 는 어디에도 쓰지 않는다). Chip 에 data-state 를 쓰지 않는 것은 여는 칩을 감싸는
  * Popover · Dialog 트리거(asChild)가 data-state="open | closed" 를 덮어쓰기 때문이다. 고른 칩은 브랜드가 아니라 중립색이다.
- * 테두리는 안쪽 1px(inset shadow)이라 칩 크기가 변하지 않는다. 호버 = 누름 바탕(v106 — 마우스 있는 기기에서만, 축소 없음).
- * 누르면 누름 바탕 + 칩 전체가 2px 거리로 준다(SEED scaleScope: self · v104) — 배율 = (기준 − 2) ÷ 기준,
+ * 테두리는 안쪽 1px(inset shadow)이라 칩 크기가 변하지 않는다. 호버 = 누름 바탕(마우스 있는 기기에서만, 축소 없음).
+ * 누르면 누름 바탕 + 칩 전체가 2px 거리로 준다(scaleScope: self) — 배율 = (기준 − 2) ÷ 기준,
  * 기준 = max(높이, 폭 ÷ 4, 24). 누르는 순간(포인터 · Space · Enter) 칩을 재서 --press-basis 로 넘기고, 크기마다 높이를
  * 기본값으로 둔다. 모션 줄이기면 축소하지 않는다. 포커스 링은 키보드 포커스에만 바깥 2px · 띄움 2px.
- * 비활성은 전용 색(bg-disabled · fg-disabled — 흐리게 하지 않는다, v106)이고 호버 · 누름 · 축소가 없다. 안 고른 Solid 는 바탕
- * bg-neutral-weak-alpha 를 그대로 두고 글 · 아이콘만 fg-disabled 다 — bg-disabled 는 회색 바닥과 같은 gray-200 이라 알약이 사라진다
- * (사용자 결정 2026-10-17 — 03-B 결정 1 A). 고른 채 막히면 안쪽 1px stroke-neutral-solid 를 남겨 무엇을 골랐는지 보인다(사용자 결정 2026-10-02).
+ * 비활성은 전용 색(bg-disabled · fg-disabled — 흐리게 하지 않는다)이고 호버 · 누름 · 축소가 없다. 안 고른 Solid 는 바탕
+ * bg-neutral-weak-alpha 를 그대로 두고 글 · 아이콘만 fg-disabled 다 — bg-disabled 는 회색 바닥과 같은 gray-200 이라 알약이 사라진다.
+ * 고른 채 막히면 안쪽 1px stroke-neutral-solid 를 남겨 무엇을 골랐는지 보인다.
  * 누르는 영역은 보이는 칩과 따로 44 까지 넓힌다(::before — Button 과 같다. 아이콘만 있는 칩은 가로도 44).
  *
  * 묶음은 칩 사이 · 줄 사이 8(spacing-between-chips). scroll 은 두 겹이다 — 바깥 묶음(이름 · 포커스 · bleed) 안에 스크롤 칸
@@ -82,16 +82,16 @@ const chipVariants = cva(
       variant: {
         solid: [
           "bg-bg-neutral-weak-alpha text-fg-neutral hover:bg-bg-neutral-weak-alpha-pressed active:bg-bg-neutral-weak-alpha-pressed",
-          // 막혀도 안 고른 Solid 는 바탕 그대로 — 글 · 아이콘만 fg-disabled(bg-disabled 는 회색 바닥과 같은 색, 사용자 결정 2026-10-17 — 03-B 결정 1 A)
+          // 막혀도 안 고른 Solid 는 바탕 그대로 — 글 · 아이콘만 fg-disabled(bg-disabled 는 회색 바닥과 같은 색)
           "[&:not([data-state=checked],[data-selected])]:disabled:bg-bg-neutral-weak-alpha",
           "[&:is([data-state=checked],[data-selected])]:bg-bg-neutral-inverted [&:is([data-state=checked],[data-selected])]:text-fg-neutral-inverted [&:is([data-state=checked],[data-selected])]:hover:bg-bg-neutral-inverted-pressed [&:is([data-state=checked],[data-selected])]:active:bg-bg-neutral-inverted-pressed",
         ].join(" "),
-        // 고르면 짙은 채움 — 테두리는 지운다(SEED Chip Tabs 와 같다)
+        // 고르면 짙은 채움 — 테두리는 지운다
         outlineStrong: [
           "bg-transparent text-fg-neutral shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed",
           "[&:is([data-state=checked],[data-selected])]:bg-bg-neutral-inverted [&:is([data-state=checked],[data-selected])]:text-fg-neutral-inverted [&:is([data-state=checked],[data-selected])]:shadow-none [&:is([data-state=checked],[data-selected])]:hover:bg-bg-neutral-inverted-pressed [&:is([data-state=checked],[data-selected])]:active:bg-bg-neutral-inverted-pressed",
         ].join(" "),
-        // 고르면 옅은 바탕 + 짙은 1px(v113), 글자는 그대로
+        // 고르면 옅은 바탕 + 짙은 1px, 글자는 그대로
         outlineWeak: [
           "bg-transparent text-fg-neutral shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed",
           "[&:is([data-state=checked],[data-selected])]:bg-bg-neutral-weak [&:is([data-state=checked],[data-selected])]:shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-contrast)] [&:is([data-state=checked],[data-selected])]:hover:bg-bg-neutral-weak-pressed [&:is([data-state=checked],[data-selected])]:active:bg-bg-neutral-weak-pressed",
@@ -108,7 +108,7 @@ const chipVariants = cva(
       },
     },
     compoundVariants: [
-      // 크기 × 모양 — 최소 폭 · 좌우 여백(SEED 루트 + 글 여백), 아이콘만 있으면 원 + 아이콘 14 · 16 · 16
+      // 크기 × 모양 — 최소 폭 · 좌우 여백(루트 + 글 여백), 아이콘만 있으면 원 + 아이콘 14 · 16 · 16
       { size: "small", layout: "withText", className: "min-w-11 px-x3" },
       { size: "medium", layout: "withText", className: "min-w-12 px-x3_5" },
       { size: "large", layout: "withText", className: "min-w-13 px-x4" },
@@ -124,7 +124,7 @@ const chipVariants = cva(
   },
 );
 
-// 아이콘 — 앞 14 · 16 · 16, 뒤 14 · 14 · 16(SEED — medium 만 앞 ≠ 뒤), 지우기 14 · 14 · 16.
+// 아이콘 — 앞 14 · 16 · 16, 뒤 14 · 14 · 16(medium 만 앞 ≠ 뒤), 지우기 14 · 14 · 16.
 // Tailwind 는 소스의 글자 그대로를 읽으므로 크기마다 다 적는다
 const ICONS: Record<ChipSize, { prefix: string; suffix: string; remove: string }> = {
   small: { prefix: "[&>svg]:size-3.5", suffix: "[&>svg]:size-3.5", remove: "size-3.5" },

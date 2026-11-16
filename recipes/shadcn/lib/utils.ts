@@ -13,15 +13,12 @@ import { extendTailwindMerge } from "tailwind-merge";
  */
 const SPACING = [
   "x0_5", "x1", "x1_5", "x2", "x2_5", "x3", "x3_5", "x4", "x4_5", "x5", "x6", "x7", "x8", "x9", "x10", "x12", "x13", "x14", "x16",
-  "xs", "sm", "md", "lg", "xl", "2xl", "3xl",
   "global-gutter", "between-chips", "component-default", "between-text", "nav-to-title", "screen-bottom",
 ];
-const RADIUS = ["r0_5", "r1", "r1_5", "r2", "r2_5", "r3", "r3_5", "r4", "r5", "r6", "xs", "sm", "md", "lg", "xl", "2xl"];
+const RADIUS = ["r0_5", "r1", "r1_5", "r2", "r2_5", "r3", "r3_5", "r4", "r5", "r6"];
 const TEXT = [
   "t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14",
   "screen-title", "article-body", "article-note",
-  "display-xl", "display-lg", "display-md", "display-sm", "title-lg", "title-md", "title-sm",
-  "body-lg", "body-md", "body-sm", "label-md", "label-sm", "caption", "badge", "overline",
 ];
 
 const twMerge = extendTailwindMerge({

@@ -6,22 +6,22 @@ import { cn } from "@/lib/utils";
 import { setNativeValue, useFieldControl, useTextControl } from "@/components/ui/field";
 
 /*
- * Groo Input(Text Input) — 구조는 SEED Text Input(2026-10-01). 수치 원본은 specs/components/input.yaml.
+ * Groo Input(Text Input) — 수치 원본은 specs/components/input.yaml.
  *
  * 한 줄 입력칸. 라벨 · 설명 · 오류 · 글자 수는 Field 가 둘레에서 그린다 — Field 안에 두면 id · aria 를 받는다.
  * 상자(div)가 테두리 · 바탕 · 모서리와 앞 · 뒤 붙이개 · 지우기 버튼을 담고, 입력(<input>)은 상자 높이를 채운다.
  * 맨 앞 · 맨 뒤의 입력은 상자의 좌우 여백까지 차지해 어디를 눌러도 쓸 수 있다(붙이개 · 여백을 눌러도 입력으로 간다).
  *
  * 테두리는 상자 안쪽 1px(inset shadow), 포커스 · 오류의 2px 는 ::after 로 안쪽에 덧그린다 — 굵어져도 내용이
- * 밀리지 않고, 색만 100ms 로 나타난다(SEED). 포커스는 마우스 · 터치로 눌러도 보인다(입력 중). 읽기 전용이면
- * 포커스 테두리가 없고(포커스 표시를 두지 않는다 — SEED 와 같다, 사용자 결정 2026-10-08), 오류는 포커스해도 빨간 2px 그대로다.
- * 비활성 · 읽기 전용은 회색 바탕(bg-disabled)으로 가른다 — 흐리게 하지 않는다(v106). 밑줄형은 바탕이 없어
+ * 밀리지 않고, 색만 100ms 로 나타난다. 포커스는 마우스 · 터치로 눌러도 보인다(입력 중). 읽기 전용이면
+ * 포커스 테두리가 없고(포커스 표시를 두지 않는다), 오류는 포커스해도 빨간 2px 그대로다.
+ * 비활성 · 읽기 전용은 회색 바탕(bg-disabled)으로 가른다 — 흐리게 하지 않는다. 밑줄형은 바탕이 없어
  * 읽기 전용을 글자 색(fg-neutral-muted)으로 가른다.
  *
  * 크기: large 52(밑줄 40) · medium 40(밑줄 34) · responsive(웹 기본 — 1280 미만 large · 이상 medium). 앱은 늘 large.
  * 지우기 버튼(clearable)은 값이 있고 막히지 않았을 때만 — 누르면 값을 비우고 입력에 포커스를 둔다. 누르는 영역은 보이는 원(22 · 18)
  * 둘레로 44(::before — 상자가 overflow-hidden 이라 상자 밖은 잘린다, medium 40 은 44 × 40).
- * 캐럿은 글자색(caret-fg-neutral), 고른 글은 기기 기본 하이라이트 — ::selection 을 두지 않는다(2026-10-08).
+ * 캐럿은 글자색(caret-fg-neutral), 고른 글은 기기 기본 하이라이트 — ::selection 을 두지 않는다.
  * 붙이개 글(prefix · suffix)은 입력의 설명으로도 읽힌다(단위 "원" 이 화면 읽기 프로그램에도 들리게).
  */
 
@@ -200,7 +200,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className={cn(
             "min-w-0 flex-1 self-stretch border-0 bg-transparent p-0 caret-fg-neutral outline-none [font:inherit]",
             "first:pl-[var(--text-input-px)] last:pr-[var(--text-input-px)] disabled:cursor-not-allowed",
-            // 브라우저 자동 완성의 바탕색을 지운다 — 글자색은 칸 그대로(SEED)
+            // 브라우저 자동 완성의 바탕색을 지운다 — 글자색은 칸 그대로
             "[&:-webkit-autofill]:bg-clip-text [&:-webkit-autofill]:[-webkit-text-fill-color:var(--color-fg-neutral)] [&:-webkit-autofill]:[transition:background-color_9999s_9999s]",
             valueColor,
             className,

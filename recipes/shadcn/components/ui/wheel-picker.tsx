@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Wheel Picker — 구조는 SEED Wheel Picker(2026-10-03). 수치 원본은 specs/components/wheel-picker.yaml.
+ * Groo Wheel Picker — 수치 원본은 specs/components/wheel-picker.yaml.
  *
  *   WheelPicker         휠 — role="group" + 이름(aria-label · aria-labelledby 중 하나는 꼭). size(small 36 · medium 44, 기본 medium) ·
  *                       visibleItems(5 · 7, 기본 5) · disabled. 칼럼 묶음을 가운데에 모으고 가운데 띠 · 위아래 안개를 그린다
@@ -14,14 +14,14 @@ import { cn } from "@/lib/utils";
  * 값은 휠이 멈춘 뒤에 정한다 — 굴리는 동안에는 띠를 지나는 항목만 짙게 칠하고, 가장 가까운 칸에 멈춘 뒤 onValueChange 를 한 번 부른다.
  * stepDelta 는 지난번 멈춘 자리에서 몇 칸 움직였는지다(아래로 +). 반복 칼럼에서 끝 → 처음을 넘었는지 알 수 있다(Time Picker 의 시 11 ↔ 12).
  *
- * 움직임(wheel-picker.md Behavior · SEED 와 같은 수치)
+ * 움직임(wheel-picker.md Behavior)
  *   - 손가락: 브라우저 스크롤 + CSS 스냅(scroll-snap y mandatory · 항목 가운데) — 관성은 OS 것이다. 손을 떼고 스크롤이 멈추면
  *     (scrollend 또는 120ms 동안 변화 없음) 값을 정한다.
  *   - 마우스 끌기: 3px 넘게 움직이면 끈다(포인터 캡처 · 스냅 끔 · grabbing). 놓을 때 속도 × 180ms 만큼 더 가되 ±3칸까지(속도는 마지막
  *     움직임이 80ms 넘게 묵었으면 0), 가장 가까운 칸으로 220 + 칸당 40ms(최대 360ms) ease-out cubic 으로 맞춘다. 끈 직후의 누름은 삼킨다.
  *   - 마우스 휠 · 트랙패드: 브라우저 스크롤(스냅 끔). 마지막 입력 120ms 뒤 가까운 칸으로 160ms ease-out cubic.
  *   - 보이는 항목 누르기: 그 항목을 가운데로 200ms ease-out cubic(motion-duration-d4)에 옮기고, 멈춘 뒤 값을 정한다 — 브라우저의
- *     부드러운 스크롤(거리마다 120 ~ 260ms, 브라우저마다 다르다)에 맡기지 않는다(2026-10-15 사용자 결정 — 구현 세션 질문 Q-005, 안 A).
+ *     부드러운 스크롤(거리마다 120 ~ 260ms, 브라우저마다 다르다)에 맡기지 않는다.
  *   - 키보드: ↑ ↓ 이전 · 다음(누르고 있으면 바로바로, 아니면 누르기와 같은 200ms), Home · End 처음 · 끝. 칼럼마다 Tab 자리 하나.
  *   - 모션 줄이기면 프로그램이 하는 이동(누르기 · 키 · 맞추기)을 모두 바로 한다.
  *   - 반복(loop): 항목을 앞뒤로 12화면치 이어 그리고, 멈출 때 끝에서 2화면 안이면 같은 값의 가운데 자리로 몰래 옮긴다.
@@ -46,7 +46,7 @@ import { cn } from "@/lib/utils";
  * aria-valuenow 번호 · aria-valuetext 항목 글(getAriaValueText · ariaLabel 로 바꾼다). 항목은 보조 기술에 숨긴다.
  */
 
-// ── 수치(SEED useWheelPickerColumn 과 같다) ────────────────────
+// ── 수치 ────────────────────
 const ITEM_SIZE = { small: 36, medium: 44 } as const;
 const SETTLE_DELAY = 120; // 마지막 스크롤 · 휠 입력 뒤 멈췄다고 보는 시간
 const WHEEL_ALIGN_DURATION = 160; // 휠 · 트랙패드가 멈춘 뒤 가까운 칸으로
@@ -57,7 +57,7 @@ const VELOCITY_MAX_AGE = 80; // 마지막 움직임이 이보다 오래되면 �
 const RELEASE_MIN_DURATION = 220; // 놓은 뒤 맞추기 — 220 + 칸당 40, 최대 360
 const RELEASE_PER_ITEM = 40;
 const RELEASE_MAX_DURATION = 360;
-const MOVE_DURATION = 200; // 누르기 · 키로 칸을 옮길 때 — motion-duration-d4 · ease-out cubic(Q-005 A)
+const MOVE_DURATION = 200; // 누르기 · 키로 칸을 옮길 때 — motion-duration-d4 · ease-out cubic
 const LOOP_BUFFER_VIEWPORTS = 12; // 반복 칼럼은 앞뒤로 12화면치 이어 그린다
 const LOOP_RECENTER_VIEWPORTS = 2; // 끝에서 2화면 안에 멈추면 가운데로 옮긴다
 
@@ -75,7 +75,7 @@ export interface WheelPickerOption {
 export interface WheelPickerValueChangeDetails {
   /** 지난번 멈춘 자리에서 움직인 칸 수 — 아래로 +, 위로 − */
   stepDelta: number;
-  /** Home · End 로 처음 · 끝 항목에 뛴 것 — 지나간 칸을 세지 않는다(Time Picker 의 시 칼럼은 오전 · 오후를 그대로 둔다, 03-C 3A) */
+  /** Home · End 로 처음 · 끝 항목에 뛴 것 — 지나간 칸을 세지 않는다(Time Picker 의 시 칼럼은 오전 · 오후를 그대로 둔다) */
   jump?: boolean;
 }
 

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { useFieldControl, useTextControl } from "@/components/ui/field";
 
 /*
- * Groo Textarea — 구조는 SEED Textarea(Text Input 의 여러 줄, 2026-10-01). 수치 원본은 specs/components/textarea.yaml.
+ * Groo Textarea — Text Input 의 여러 줄. 수치 원본은 specs/components/textarea.yaml.
  *
  * 여러 줄 입력칸. 상자 · 테두리 · 상태는 Input 의 outline 과 같다 — 안쪽 1px, 포커스 · 오류 2px 는 ::after 로 덧그린다.
  * 라벨 · 설명 · 오류 · 글자 수는 Field 가 둘레에서 그린다.
@@ -13,10 +13,10 @@ import { useFieldControl, useTextControl } from "@/components/ui/field";
  * 높이(autoSize)
  *   true(기본)  3줄(large 94 · medium 82)에서 시작해 쓴 만큼 자란다. 최대 높이(max-h-*)를 주면 그 높이부터 칸 안에서 스크롤
  *   false       고정 높이 — 자리마다 높이(h-* · rows)를 정한다. 2줄(72 · 62)보다 낮게 두지 않고, 넘치면 칸 안에서 스크롤.
- *               켜 둔 채 자란 칸에서 끄면 자랄 때 넣은 인라인 높이 · overflow 를 걷는다(2026-10-08)
- * 손잡이(resize)는 두지 않는다 — 자동 높이가 대신한다.
+ *               켜 둔 채 자란 칸에서 끄면 자랄 때 넣은 인라인 높이 · overflow 를 걷는다
+ * 손잡이(resize)는 두지 않는다 — 자동 높이가 그 일을 한다.
  * 크기: large(글자 16 · 모서리 12) · medium(14 · 8, 1280 이상 데스크톱 웹만) · responsive(웹 기본). 앱은 늘 large.
- * 캐럿은 글자색(caret-fg-neutral), 고른 글은 기기 기본 하이라이트. 읽기 전용은 포커스 표시가 없다(Input 과 같다 — 2026-10-08).
+ * 캐럿은 글자색(caret-fg-neutral), 고른 글은 기기 기본 하이라이트. 읽기 전용은 포커스 표시가 없다(Input 과 같다).
  */
 
 const textareaVariants = cva(

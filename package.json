@@ -29,9 +29,6 @@
     "check:category-icons": "node scripts/gen-category-icons.mjs --check",
     "verify": "npm run sync:check && npm run check:institution-colors && npm run check:category-icons && npm run lint:all && npm run lint:dark:strict && npm run lint:prose:strict && npm run check:docs",
     "test:exports": "npm run export:tailwind:all && node scripts/test-tailwind-export.mjs && npm run export:dart:all && npm run export:spec && node scripts/test-app-exports.mjs",
-    "build:preview": "npm run export:tailwind:all && node scripts/build-preview-html.mjs",
-    "build:examples": "npm run export:tailwind && node scripts/build-examples-html.mjs > exports/examples.html",
-    "build:site": "npm run export:tailwind:all && node scripts/build-site.mjs",
     "lint:prose": "node scripts/lint-prose.mjs",
     "lint:prose:strict": "node scripts/lint-prose.mjs --strict",
     "prepare": "git config core.hooksPath .husky 2>/dev/null || true"

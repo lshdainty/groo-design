@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Help Bubble — 구조는 SEED Help Bubble(2026-10-02). 수치 원본은 specs/components/help-bubble.yaml(Tooltip 과 한 파일).
+ * Groo Help Bubble — 수치 원본은 specs/components/help-bubble.yaml(Tooltip 과 한 파일).
  * Radix Popover(비모달) 위에 짰다.
  *
  *   HelpBubble          눌러서 여는 짙은 도움말 말풍선 — open · defaultOpen · onOpenChange
@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
  *
  * 초점(비모달 — 뒤 화면을 숨기지 않고 스크롤도 잠그지 않는다. 스크롤하면 트리거를 따라간다)
  *   - 열어도 초점을 옮기지 않는다(트리거에 남는다). 대신 열릴 때 제목 · 설명을 한 번 알린다 — 트리거 옆에 늘 두는 화면 밖 자리
- *     (role="status" · aria-live="polite")에 열린 뒤 글을 넣고 닫히면 비운다. 누르거나 처음부터 열려도 같다(2026-10-15 사용자 결정 Q-004-2).
+ *     (role="status" · aria-live="polite")에 열린 뒤 글을 넣고 닫히면 비운다. 누르거나 처음부터 열려도 같다.
  *   - 열린 동안 트리거(또는 기준)에서 Tab 은 말풍선으로 — 닫기 버튼이 있으면 그리로, 없으면 말풍선(role="dialog")으로
  *     (말풍선 둘레 바깥 2 에 2px stroke-focus-ring — 키보드 초점에만).
  *     말풍선에서 다시 Tab 으로 나가면 닫히고 초점은 트리거 다음 칸으로 간다. Shift+Tab 은 트리거로.
@@ -31,8 +31,8 @@ import { cn } from "@/lib/utils";
  * 제목 t3 13 / 18 · 700, 설명 t3 · 400(사이 2), 글자는 fg-neutral-inverted — 단어 단위로 줄을 바꾸고 줄바꿈 문자는 살린다.
  * 화살표는 12 × 8(끝 모서리 2) — 늘 트리거 가운데를 가리키고 말풍선 모서리와 14 를 남긴다.
  * 화살표 끝 ↔ 트리거 4(말풍선 몸통과는 12), 화면 가장자리와 16 — 모자라면 반대편으로 뒤집고 옆으로 민다.
- * 셋이 부딪히면 화살표(트리거 가운데) → 모서리 14 → 가장자리 16 순서다 — 화면 끝의 트리거면 말풍선이 16 보다 가장자리에 붙는다(하한 없이 0 까지,
- * 2026-10-15 사용자 결정 Q-004-1). Radix 는 화살표를 가운데에 못 두면 숨기므로(cannotCenterArrow) 트리거 쪽 가장자리 여백을
+ * 셋이 부딪히면 화살표(트리거 가운데) → 모서리 14 → 가장자리 16 순서다 — 화면 끝의 트리거면 말풍선이 16 보다 가장자리에 붙는다(하한 없이 0 까지).
+ * Radix 는 화살표를 가운데에 못 두면 숨기므로(cannotCenterArrow) 트리거 쪽 가장자리 여백을
  * min(16, 트리거 가운데 − 20)으로 줄여 말풍선을 그만큼 더 붙인다(useBubbleEdgePadding). 쌓임은 z-tooltip 210(L4 —
  * 팝오버 · 메뉴 위). 닫기 버튼은 오른쪽 위 모서리에 붙은 38 투명 상자 · 아이콘 14(위 12 · 오른쪽 12 자리) · 누르는 영역 44 ·
  * 글과 4, 누르면 2px 거리 축소만(바탕 없음), 키보드 포커스는 안쪽 2px 링을 말풍선 글자색으로(브랜드 링은 짙은 말풍선 위에서 3:1 에
@@ -63,9 +63,9 @@ const BUBBLE_TITLE = "m-0 block whitespace-pre-line text-t3 font-bold";
 // 설명 — t3 · 400
 const BUBBLE_DESCRIPTION = "m-0 block whitespace-pre-line text-t3 font-normal";
 
-// 화살표 — 12 × 8, 끝 모서리 2(SEED getHelpBubbleArrowTipPath). Popover · Tooltip 의 Arrow 에 asChild 로 넣는다 —
+// 화살표 — 12 × 8, 끝 모서리 2. Popover · Tooltip 의 Arrow 에 asChild 로 넣는다 —
 // Radix 가 넘기는 viewBox(30 × 10)를 덮어 쓴다. visible — Radix 가 가운데를 못 가리킬 때 감싼 span 에 거는 visibility: hidden 을 받지 않는다
-// (화살표를 지우지 않는다 — Q-004-1. 가장자리 여백을 줄여 가운데를 지키므로 보통은 생기지 않는다)
+// (화살표를 지우지 않는다 — 가장자리 여백을 줄여 가운데를 지키므로 보통은 생기지 않는다)
 const BubbleArrow = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>(({ className, ...props }, ref) => (
   <svg ref={ref} aria-hidden {...props} viewBox="0 0 12 8" className={cn("visible block fill-bg-neutral-inverted", className)}>
     <path d="M0,0 H12 L8,6 Q6,8 4,6 Z" />

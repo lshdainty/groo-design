@@ -4,10 +4,7 @@
 // 사용법:
 //   node scripts/build-dart-tokens.mjs --source DESIGN.desk.md > exports/tokens.desk.dart
 //
-// 새 이름(SEED 구조)만 담는다. 옛 이름은 새 이름의 별칭이라 뺐다 — 색의 옛 이름(primary · text-secondary ·
-// success · chart-red-light …, 팔레트가 아닌 이름을 가리키는 색), 간격 · 모서리의 xs ~ 3xl, 글자의 v82 15단계,
-// 그림자 sm ~ xl, 모션 fast · base · slow · slower · ease-out. 앱의 옛 클래스(PSpace · PRadius · PTypo …)와
-// 이름이 겹치지 않게 클래스 이름을 새로 둔다 — 앱 PSpace.x4 는 4px, SEED x4 는 16px 이다.
+// 브랜드 파일의 `primary` 는 design.md 형식이 요구하는 대표 색 키라 내보내지 않는다.
 //
 // 출력
 //   PSpacing    간격 x0_5 ~ x16 + 역할 간격(globalGutter …)       double(px)
@@ -148,11 +145,6 @@ const motion = parseMotion(content);
 const overlays = parseOverlay(content);
 const touch = parseTouchTargets(content);
 
-// 옛 이름 — DESIGN.md 가 별칭으로 남겨 둔 것(v98 · v99 · v100 · v104). 새 이름만 내보낸다.
-const OLD_SCALE = /^(xs|sm|md|lg|xl|\dxl)$/;
-const NEW_TYPE = /^(t\d+|screen-title|article-body|article-note)$/;
-const OLD_MOTION = new Set(["motion-duration-fast", "motion-duration-base", "motion-duration-slow", "motion-duration-slower", "motion-ease-out"]);
-const NEW_SHADOW = /^shadow-s\d+$/;
 
 let out = "";
 const w = (s = "") => { out += s + "\n"; };
@@ -161,7 +153,6 @@ w(`// GENERATED — groo-design scripts/build-dart-tokens.mjs 가 ${source} 에�
 w(`// 바꾸려면 groo-design 의 ${source} 를 고치고 다시 만든다.`);
 w(`// source: ${source} · sha256 ${sha}`);
 w("//");
-w("// 새 이름(SEED 구조)만 담는다 — 옛 이름(primary · text-secondary · xs ~ 3xl · shadow-sm …)은 새 이름의 별칭이라 뺐다.");
 w("// 글자는 웹(CSS)처럼 줄 높이의 남는 간격을 위아래에 똑같이 나눈다(leadingDistribution: even) — 스펙의 줄 높이가 CSS 값이다.");
 w("// ignore_for_file: constant_identifier_names");
 w();
@@ -178,7 +169,6 @@ w();
 w("/// 간격(px) — SEED 눈금 x0_5 ~ x16 + 역할 간격(DESIGN.md v98 · v101). 옛 xs ~ 3xl 은 뺐다.");
 w("abstract final class PSpacing {");
 for (const [name, val] of Object.entries(spacing)) {
-  if (OLD_SCALE.test(name)) continue;
   w(`  /// spacing-${name}`);
   w(`  static const double ${camel(name)} = ${num(px(val, `spacing-${name}`))};`);
 }
@@ -189,7 +179,6 @@ w();
 w("/// 모서리(px) — SEED 눈금 r0_5 ~ r6 + full(DESIGN.md v99). 옛 xs ~ 2xl 은 뺐다.");
 w("abstract final class PRounded {");
 for (const [name, val] of Object.entries(rounded)) {
-  if (OLD_SCALE.test(name)) continue;
   const v = name === "full" || /^9999/.test(val) ? 9999 : px(val, `rounded-${name}`);
   w(`  /// radius-${name}`);
   w(`  static const double ${camel(name)} = ${num(v)};`);
@@ -206,7 +195,6 @@ w("/// 굵기를 컴포넌트가 따로 정하면(버튼 700 …) copyWith 로 �
 w("abstract final class PTypography {");
 w(`  static const String fontFamily = '${family}';`);
 for (const [name, t] of Object.entries(typography)) {
-  if (!NEW_TYPE.test(name)) continue;
   const size = px(t.fontSize, `typography-${name}.fontSize`);
   const fields = ["fontFamily: fontFamily", `fontSize: ${num(size)}`];
   if (t.lineHeight) fields.push(`height: ${num(px(t.lineHeight, `typography-${name}.lineHeight`))} / ${num(size)}`);
@@ -234,7 +222,7 @@ w();
 w("/// 지속 시간 — SEED d1 ~ d6 + 역할(DESIGN.md v104). 옛 fast · base · slow · slower 는 뺐다.");
 w("abstract final class PDuration {");
 for (const [name, val] of Object.entries(motion)) {
-  if (!name.startsWith("motion-duration-") || OLD_MOTION.has(name)) continue;
+  if (!name.startsWith("motion-duration-")) continue;
   const m = /^(\d+(?:\.\d+)?)ms$/.exec(val.trim());
   if (!m) throw new Error(`${name}: ms 값이 아니다 — "${val}"`);
   w(`  /// ${name} — ${val}`);
@@ -245,7 +233,7 @@ w();
 w("/// 이징 — SEED(DESIGN.md v104). 옛 ease-out 은 뺐다.");
 w("abstract final class PEasing {");
 for (const [name, val] of Object.entries(motion)) {
-  if (!name.startsWith("motion-ease-") || OLD_MOTION.has(name)) continue;
+  if (!name.startsWith("motion-ease-")) continue;
   const id = camel(name.replace("motion-ease-", ""));
   const v = val.trim();
   w(`  /// ${name} — ${v}`);
@@ -333,7 +321,7 @@ extension(
 );
 
 const shadowFields = Object.entries(shadows)
-  .filter(([name]) => NEW_SHADOW.test(name))
+  .filter(([name]) => !name.endsWith("-dark"))
   .map(([name, light]) => {
     const dark = shadows[`${name}-dark`] ?? light;
     const list = (css) => `[${dartShadows(css, name).join(", ")}]`;

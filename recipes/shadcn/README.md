@@ -8,8 +8,8 @@ shadcn 코드 구조(cva + Slot + forwardRef)는 그대로, 색상·typography�
 shadcn 컴포넌트는 두 종류의 CSS variable에 의존:
 - `--primary` / `--primary-foreground` / `--background` / `--border` / `--ring` ...
 
-이걸 우리 Groo 토큰(`--color-primary`, `--color-text-on-accent` 등)으로 alias하는
-**bridge CSS** 한 장으로 해결.
+이 변수를 Groo 역할 토큰(`--color-fg-brand`, `--color-static-white` 등)에 잇는
+**bridge CSS** 한 장으로 해결합니다.
 shadcn 컴포넌트 코드는 한 줄도 손대지 않아도 됨.
 
 ```
@@ -54,20 +54,15 @@ shadcn 컴포넌트 (.tsx)      ← cva + Tailwind utility
 recipes/shadcn/
 ├── README.md                        ← 이 파일
 ├── lib/utils.ts                     ← cn() helper (clsx + tailwind-merge)
-├── styles/groo-shadcn-bridge.css  ← Groo 토큰 → shadcn variables alias
-├── components/ui/button.tsx         ← shadcn Button + Groo 토큰
-└── examples/*-examples.mjs          ← 컴포넌트별 예제(정적 HTML) — 옛 문서 사이트가 그린다
+├── styles/groo-shadcn-bridge.css  ← Groo 토큰 → shadcn variables
+└── components/ui/*.tsx              ← 컴포넌트 레시피(cva + Radix)
 ```
 
-## 미리보기
-
-`npm run build:site` 가 옛 문서 사이트(`exports/site/components/<이름>.html`)와 미리보기
-(`exports/preview*.html`)를 만든다. 수치 · 규칙은 `site/` 문서 사이트의 컴포넌트 페이지가 원본이다.
-(예전의 `preview/button-demo.html` 은 2026-09-30 에 걷었다 — 옛 버튼을 따로 한 벌 들고 있었다.)
+컴포넌트의 모습 · 수치 · 규칙은 문서 사이트(`site/`)의 컴포넌트 페이지가 기준입니다.
 
 ## Button — 변형 · 크기 · 배치
 
-구조는 SEED Action Button(2026-09-30). 수치 · 규칙의 원본은 `specs/components/button.md` · `button.yaml`.
+수치 · 규칙의 원본은 `specs/components/button.md` · `button.yaml` 입니다.
 
 | variant | 쓰는 곳 |
 |---|---|
@@ -113,17 +108,3 @@ export function AddTransaction() {
   )
 }
 ```
-
-## 다음 단계 후보 컴포넌트
-
-button 다음에 만들 컴포넌트 우선순위 (Groo 사용처 기준):
-1. **Input / Textarea** — form 영역 핵심
-2. **Card** — listing detail / 정보 그룹
-3. **Dialog (Modal)** — confirm / form modal
-4. **Badge** — 상태 표시 (승인/대기/반려, 카테고리)
-5. **Select · Input Button** — form 영역
-6. **Toast** — 시스템 알림
-7. **Tabs** — 탭 네비
-8. **Menu** — 줄 · 화면의 동작(1280 미만은 Menu Sheet — `menu.tsx` 의 ResponsiveMenu)
-
-각 컴포넌트도 동일 패턴: shadcn 표준 코드 + Groo 토큰 + 한국어 라벨 데모.

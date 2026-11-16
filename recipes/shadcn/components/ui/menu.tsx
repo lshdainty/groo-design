@@ -14,13 +14,13 @@ import {
 } from "@/components/ui/menu-sheet";
 
 /*
- * Groo Menu — 구조는 SEED Menu(small, 2026-10-02). 수치 원본은 specs/components/menu.yaml. Radix DropdownMenu 위(비모달)에 짰다.
+ * Groo Menu — 수치 원본은 specs/components/menu.yaml. Radix DropdownMenu 위(비모달)에 짰다.
  *
  *   Menu              트리거에 붙어 여는 동작 목록 — open · defaultOpen · onOpenChange
  *   MenuTrigger       여는 버튼(⋮ — Button ghost · iconOnly, 이름 "{줄 이름} 더보기") — aria-haspopup="menu" · aria-expanded,
  *                     열린 동안 aria-controls
  *   MenuContent       메뉴 — 폭 200 · 모서리 20 · s3 · 위아래 8 · z-floating 200. 트리거 아래 8(모자라면 위 · 옆), 화면 가장자리와 8.
- *                     트리거의 오른쪽 끝에 맞춘다(align end — 줄 끝 ⋮ · 머리 더보기, SEED 기본은 가운데). 왼쪽에 놓인 트리거는
+ *                     트리거의 오른쪽 끝에 맞춘다(align end — 줄 끝 ⋮ · 머리 더보기). 왼쪽에 놓인 트리거는
  *                     align="start". 모자라면 화면 안으로 민다
  *   MenuGroup         묶음 — 묶음 사이에만 선(좌우 16 들임, 8 + 1 + 8 · stroke-neutral-subtle). 선은 장식이라 보조 기술에 없다
  *   MenuGroupLabel    묶음 이름 — 묶음이 무엇인지 말해야 할 때만. 묶음의 aria-labelledby 가 된다
@@ -48,7 +48,7 @@ import {
  *
  * 고르면 메뉴를 닫고, 다 닫혀 초점이 트리거로 돌아온 뒤 onSelect 를 부른다(Menu Sheet 와 같다). 확인이 필요한 동작은 onSelect 안에서
  * Alert Dialog 를 열면 된다 — 닫히는 메뉴와 열리는 확인창이 겹치지 않고, 확인창은 트리거를 연 자리로 알아 닫으면 초점이 ⋮ 로 돌아온다.
- * 비모달이라 뒤 화면을 숨기지 않고 스크롤도, 포인터(body 의 pointer-events)도 잠그지 않는다 — 옛 모달 메뉴의 잠금이 남는 문제가 없다.
+ * 비모달이라 뒤 화면을 숨기지 않고 스크롤도, 포인터(body 의 pointer-events)도 잠그지 않는다.
  *
  *   const [asking, setAsking] = React.useState(false)
  *   <MenuItem label="삭제" tone="critical" onSelect={() => setAsking(true)} />
@@ -59,7 +59,7 @@ import {
  * 휠 스크롤은 메뉴 안에서 멈춘다(대화상자의 스크롤 잠금이 막지 않게).
  *
  * 모양: 폭 200(글이 길면 줄을 바꾼다 — 단어 단위, 말줄임 없음). 높이는 min(480, 남은 화면) — 남은 화면이 200 보다 좁아도 200 은 둔다.
- * 자리를 재기 전의 높이를 200 으로 두어, 아래가 200 이상 남으면 줄여서 아래에 두고 200 아래일 때만 위로 뒤집는다(SEED — Radix 는
+ * 자리를 재기 전의 높이를 200 으로 두어, 아래가 200 이상 남으면 줄여서 아래에 두고 200 아래일 때만 위로 뒤집는다(Radix 는
  * 뒤집기를 먼저 재므로 처음 잴 때 높이를 200 으로 준다). 줄은 위아래 10 · 좌우 16 · 아이콘 18 ↔ 이름 8, 이름 t4 14 / 19 · 설명 t2
  * fg-neutral-subtle(사이 2) — 한 줄 39, 설명이 있으면 57. 뒤 아이콘 16. 묶음 이름 t3 fg-neutral-subtle · 위아래 8 · 좌우 16.
  * 모션: 150ms enter 로 트리거 쪽 변에서 0.95 → 1 · 투명도, 100ms exit 로 0.95 · 투명도(모션 줄이기면 투명도만).
@@ -222,7 +222,7 @@ const ITEM = [
 ].join(" ");
 
 // 알약 — 줄은 그대로, 마우스를 올리거나(마우스가 있는 기기에서만) 누르면 줄 폭 전체에서 좌우 0 → 8 들어오며 모서리 0 → 12 로
-// 둥글어지고 칠해진다 — 150ms(SEED menu-item, 2026-10-15 Q-009-3 안 B). 떠나면 거꾸로 펴지며 투명해진다. 막힌 줄에는 없다
+// 둥글어지고 칠해진다 — 150ms. 떠나면 거꾸로 펴지며 투명해진다. 막힌 줄에는 없다
 const PILL =
   "pointer-events-none absolute inset-y-0 inset-x-0 rounded-none bg-transparent [transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),inset_var(--motion-duration-color-transition)_var(--motion-ease-easing),border-radius_var(--motion-duration-color-transition)_var(--motion-ease-easing)]";
 const PILL_ON =

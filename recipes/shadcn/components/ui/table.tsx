@@ -8,13 +8,12 @@ import { ResponsiveMenu, ResponsiveMenuTrigger } from "@/components/ui/menu";
 import { Skeleton } from "@/components/ui/skeleton";
 
 /*
- * Groo Table — 구조는 SEED 문서 사이트의 표(TableRoot)와 디자인 그림의 데이터 표(2026-10-08). 수치 원본은 specs/components/table.yaml.
- * 옛 Table(작은 대문자 회색 머리 · 머리 바탕 · 칸 8 · 금액 고정폭 글꼴)과 DESIGN.md 의 Data Table(v71)을 대신한다.
+ * Groo Table — 데이터 표. 수치 원본은 specs/components/table.yaml.
  *
  *   Table               표 상자(가로 스크롤) + <table>. caption 필수(숨긴 표 이름 — 보이는 제목은 카드 머리) · rowHeight "text"(기본 45) ·
  *                       "rich"(72 — 썸네일 · 두 줄 칸이 하나라도 있으면 모든 줄) · stickyHeader(상자가 스스로 스크롤할 때 머리를 붙인다 —
  *                       높이는 className 의 max-h-*) · pagination(표 아래 12 의 Table Pagination — 표와 같은 상자라 함께 가로로 밀린다.
- *                       자리는 좌우 24 만 — 위 12 는 Table Pagination 이 갖는다, 2026-10-17 03-D 결정 5 B)
+ *                       자리는 좌우 24 만 — 위 12 는 Table Pagination 이 갖는다)
  *   TableHeader · TableBody · TableRow   <thead> · <tbody> · <tr>. 본문의 TableRow 에 onClick 을 주면 누르는 줄(호버 · 누름 바탕) —
  *                       줄 안의 체크 · ⋮ · 링크를 누른 것은 줄 누르기가 아니다. 키보드로는 첫 열 이름(TableRowHeader 의 href · onClick)으로 간다
  *   TableHead           머리 칸 <th scope="col">. align "start"(기본) · "end"(숫자 — 머리도 오른쪽). sort 를 주면 정렬할 수 있는 열 —
@@ -31,11 +30,11 @@ import { Skeleton } from "@/components/ui/skeleton";
  *   TableBulkBar        일괄 작업 바 — count(0 이면 그리지 않는다) · onClear(✕ "선택 해제" — 초점은 뒤따르는 표의 머리 체크로) ·
  *                       자식은 동작 버튼(Button ghost small). 고른 수 "{count}개 선택됨" 을 role="status" 로 알린다
  *   TableStatusRow      본문 자리 한 칸(colSpan 은 머리 줄의 칸 수 — 주면 그 값) — 자식은 ResultSection size="medium"(비었음 · 실패).
- *                       칸 좌우 24(첫 칸 앞 · 끝 칸 뒤와 같다)가 가장자리를 맡고, 표가 카드 안이라 Result Section 은 좌우 0 이다(23B)
+ *                       칸 좌우 24(첫 칸 앞 · 끝 칸 뒤와 같다)가 가장자리를 맡고, 표가 카드 안이라 Result Section 은 좌우 0 이다
  *   TableSkeletonRows   불러오는 동안의 줄 — rows(기본 10) · columns({ align, width }[]). 줄 높이 그대로 · 글 자리 t4 19
  *   useTableLayout()    "table"(768 이상) · "list"(미만) — 768 미만이면 쓰는 쪽이 같은 데이터를 List 줄로 그린다
  *
- * 머리 줄 41(위아래 10 + 글 20 + 선 1) · 본문 줄 45(12 + 20 + 1) — SEED 문서 표. 칸 좌우 16, 첫 칸 앞 · 끝 칸 뒤만 카드 여백과 같은 24
+ * 머리 줄 41(위아래 10 + 글 20 + 선 1) · 본문 줄 45(12 + 20 + 1). 칸 좌우 16, 첫 칸 앞 · 끝 칸 뒤만 카드 여백과 같은 24
  *   (표는 카드 안에 가장자리까지 붙는다 — 줄 선은 상자 끝까지). 글은 t4 14 에 줄 높이 20. 머리는 같은 14 · 500 · fg-neutral, 바탕 없음.
  * 줄 선은 1px stroke-neutral-subtle — 머리 아래 · 줄마다 · 마지막 줄 아래까지. 세로 선 · 줄무늬 · 바깥 테두리는 없다.
  *   선은 칸의 아래 테두리다(border-separate) — 줄 높이가 칸 높이 그대로 41 · 45 · 72 가 되고, 붙은 머리도 선을 데리고 붙는다.
@@ -43,7 +42,7 @@ import { Skeleton } from "@/components/ui/skeleton";
  *   둘 다 fg-neutral-muted, 지금 방향 하나만 fg-neutral. 호버 · 누름은 bg-layer-default-pressed(축소 없음). 바꾸면 "{열} 오름차순으로
  *   정렬했어요." 를 표의 숨긴 상태 글(role="status")로 알린다.
  * 누르는 줄: 호버 · 누름 바탕 bg-layer-default-pressed(줄 전체, 선은 그대로) — 표의 줄은 이웃과 붙어 있어 줄지 않는다. 고른 줄에는
- *   바탕을 칠하지 않는다 — 체크가 고른 것을 말한다(사용자 결정 21A). 브랜드 옅은 바탕은 일괄 작업 바(bg-brand-weak · 48 · 모서리 12 ·
+ *   바탕을 칠하지 않는다 — 체크가 고른 것을 말한다. 브랜드 옅은 바탕은 일괄 작업 바(bg-brand-weak · 48 · 모서리 12 ·
  *   왼쪽 16 · 오른쪽 8 · 표 위 8)에만 있다.
  * 키보드 포커스에만 안쪽 2px 링(stroke-focus-ring) — 링크 · 정렬 버튼 · ⋮. 표 상자 가장자리에서 잘리지 않게 안쪽이다.
  * 선택 칸 · ⋮ 칸은 줄 높이를 지키려고 위아래 여백을 줄인다 — 본문 체크 10 · 머리 체크 8 · ⋮ 2(45 · 41 안에 24 · 40 이 든다).
@@ -98,7 +97,7 @@ const HEAD_STICKY = "sticky top-0 z-[1] bg-bg-layer-default";
 // 본문 칸 — 위아래 12 · 400. 칸 안의 인라인 블록(배지 · 이름 링크)은 줄 위에 맞춘다 — 글자 기준선에 맞추면 줄이 45 를 넘는다.
 // 썸네일 · 두 줄 칸이 있는 표는 72 — 칸 여백보다 높이가 먼저다(위아래 여백 없이 72 안 세로 가운데)
 const BODY_CELL = "py-x3 font-normal [&>*]:align-top";
-// 72 는 최소 — 칸 위아래 12, Image Frame 48 칸만 위아래 0(2026-11-10 14C)
+// 72 는 최소 — 칸 위아래 12, Image Frame 48 칸만 위아래 0
 const BODY_RICH = "h-[72px] py-x3 has-[[data-slot=image-frame]]:py-0";
 const ALIGN: Record<TableAlign, string> = {
   start: "text-start",
@@ -582,7 +581,7 @@ const TableStatusRow = React.forwardRef<HTMLTableRowElement, TableStatusRowProps
   }, [colSpan]);
   return (
     <tr ref={mergeRefs(ref, rowRef)} data-slot="table-status-row" className={className} {...props}>
-      {/* 칸은 좌우 24 만 — 위아래는 Result Section 의 16(사이트 그림 · SEED 처럼 제 여백만), 좌우는 카드 안이라 Result Section 이 0 */}
+      {/* 칸은 좌우 24 만 — 위아래는 Result Section 의 16(제 여백만), 좌우는 카드 안이라 Result Section 이 0 */}
       <td colSpan={span} className="border-b border-solid border-stroke-neutral-subtle px-x6 py-0">
         {children}
       </td>

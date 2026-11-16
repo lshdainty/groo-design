@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { ProgressCircle } from "@/components/ui/progress-circle";
 
 /*
- * Groo Button — 구조는 SEED Action Button(2026-09-30). 수치 원본은 specs/components/button.yaml.
+ * Groo Button — 수치 원본은 specs/components/button.yaml.
  *
  * Variants(7) — 한 화면의 강조 버튼(Solid)은 하나
  *   brandSolid     브랜드 색 채움 — 서비스 핵심 액션 하나(Desk 거래 추가 · HR 휴가 신청)
@@ -26,13 +26,13 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  *   크기마다 높이를 기본값으로 둔다. 모션 줄이기면 축소하지 않는다.
  *   disabled 는 전용 색(bg-disabled · fg-disabled) — 흐리게 하지 않는다.
  *   누름은 누른 동작이 끝날 때까지 한 번이다 — onClick 이 Promise 를 돌려주면 이행 · 거부될 때까지 다음 누름(포인터 · Enter · Space)을
- *   버린다(시간 창은 없다, 사용자 결정 2026-10-08). 비동기 동작은 Promise 를 돌려준다(mutateAsync). 돌려주지 않으면 잠그지 않는다.
+ *   버린다(시간 창은 없다). 비동기 동작은 Promise 를 돌려준다(mutateAsync). 돌려주지 않으면 잠그지 않는다.
  *   loading 은 누름 색 위 로딩 원 + 누르기 막기 + aria-busy. 라벨은 글자 · 아이콘 색만 투명하게 해 폭을 그대로 둔다 —
  *   자식을 따로 감싸지 않으므로 부르는 쪽의 [&>span] · [&>svg] 규칙이 그대로 먹는다. asChild 와 함께 쓰지 않는다.
  *   로딩 원은 Progress Circle(progress-circle.tsx) — size · tone inherit 로 이 버튼이 정한 --progress-size(14 · 14 · 16 · 18) ·
  *   --progress-thickness(2) · --progress-track · --progress-range 를 따른다. 장식이다(aria-hidden) — 버튼의 aria-busy 가 알린다.
  *   Brand Outline 의 원은 stroke-brand-solid(Progress Circle brand 톤 — 다크는 밝은 짝, 다크 바탕 위 Desk 6.10:1). 채움 색 bg-brand-solid 는
- *   다크에서도 짙어 투명한 버튼 위에서 1.73:1 이었다(2026-10-08 까지).
+ *   다크에서도 짙어 투명한 버튼 위에서 1.73:1 이라 쓰지 않는다.
  *
  * 누르는 영역은 보이는 크기와 따로 44×44 까지 넓힌다(::before).
  */
@@ -74,21 +74,21 @@ const buttonVariants = cva(
         xsmall: "h-8 rounded-full [--press-basis:32] [--progress-size:14px]",
         small: "h-9 rounded-r2 [--press-basis:36] [--progress-size:14px]",
         medium: "h-10 rounded-r2 [--press-basis:40] [--progress-size:16px]",
-        // SEED large 는 52 — groo 는 48(button.md "SEED 와 다른 점")
+        // large 는 48
         large: "h-12 rounded-r3 [--press-basis:48] [--progress-size:18px]",
       },
       layout: {
         withText: "",
         iconOnly: "",
       },
-      // ghost 의 글자색(SEED ghost 의 color)
+      // ghost 의 글자색
       ghostColor: {
         neutral: "",
         neutralSubtle: "",
         brand: "",
         critical: "",
       },
-      // 가장자리 맞춤(SEED bleed) — 그 방향 가로 여백만 0. 여백은 크기 × 배치 조합 뒤에서 뺀다(아래)
+      // 가장자리 맞춤(bleed) — 그 방향 가로 여백만 0. 여백은 크기 × 배치 조합 뒤에서 뺀다(아래)
       flush: {
         left: "",
         right: "",

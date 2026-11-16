@@ -16,7 +16,7 @@ import { useInputButtonSurface } from "@/components/ui/input-button";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Groo Dialog — 구조는 SEED Dialog · Responsive Dialog(2026-10-02). 수치 원본은 specs/components/dialog.yaml.
+ * Groo Dialog — 수치 원본은 specs/components/dialog.yaml.
  *
  *   Dialog                  1280 이상의 가운데 대화상자(Radix Dialog) — open · defaultOpen · onOpenChange · form · dirty
  *   DialogTrigger           여는 버튼 — 닫으면 초점이 여기로 돌아온다
@@ -372,7 +372,7 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
 DialogContent.displayName = "DialogContent";
 
 // 본문 — 좌우 24, 이 안에서만 스크롤. 맨 앞 자식(머리가 없으면)이면 위 24, 맨 끝 자식(바닥이 없으면)이면 아래 24.
-// 끝에 닿아도 뒤 화면이 따라 스크롤되지 않는다(overscroll-behavior: contain — Scroll Area, 2026-10-10)
+// 끝에 닿아도 뒤 화면이 따라 스크롤되지 않는다(overscroll-behavior: contain — Scroll Area)
 const BODY = [
   "min-h-0 flex-1 overflow-y-auto overscroll-contain px-x6 first:pt-x6",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",

@@ -4,9 +4,9 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
- * Groo Accordion — 구조는 SEED Accordion(rootage accordion.json · accordion-item.json, 2026-10-10). 수치 원본은 specs/components/accordion.yaml.
+ * Groo Accordion — 수치 원본은 specs/components/accordion.yaml.
  * 관련 상세를 세로로 묶고 항목마다 머리(트리거)를 눌러 펼친다 — 카드 혜택 · 유의사항. 하나만 접고 펴는 자리는 Collapsible, 단계가 있는
- * 고르는 나무는 Tree View, 하위 줄을 접는 목록은 List 의 하위 줄이다. 옛 Radix 베이스 · 아래 선만 · 꺾쇠 16 · 하나만 여는 모드는 걷었다.
+ * 고르는 나무는 Tree View, 하위 줄을 접는 목록은 List 의 하위 줄이다.
  *
  *   Accordion            아코디언 — variant "inline"(기본 — 연속 목록 + 들인 사이 선 24) · "separated"(항목마다 Card 면 16 · 1px · 사이 8).
  *                        values · defaultValues · onValuesChange(values) — 펼친 항목의 value 목록. 늘 여럿을 함께 연다(하나만 여는 모드는 없다).
@@ -18,22 +18,22 @@ import { cn } from "@/lib/utils";
  *   AccordionPlainItem   상세가 없는 항목 — title · description · prefixIcon. 단추 · 머리말 · 꺾쇠가 없고 높이 · 글 시작은 트리거와 같다
  *   AccordionHeader      시트 · 대화상자의 목록 머리 — title(건수를 붙인다) + 오른쪽 자식(모두 펼치기). 카드 안이면 CardHeader 가 이 자리다
  *   AccordionExpandAll   모두 펼치기 — controls(아코디언 id) · values · expandable(상세가 있는 항목의 value) · onValuesChange.
- *                        모두 펼쳐져 있으면 "모두 접기" — 글은 단추가 정한다(글 버튼 — SEED Text Button, 아이콘 없음). 이름은 보이는 글, aria-controls 만(aria-expanded 없음)
+ *                        모두 펼쳐져 있으면 "모두 접기" — 글은 단추가 정한다(글 버튼, 아이콘 없음). 이름은 보이는 글, aria-controls 만(aria-expanded 없음)
  *
  *   useExpandMotion      펼침 · 접힘 모션 — Collapsible · Tree View 의 하위 묶음 · List 의 하위 줄도 이것을 쓴다(모두 "Accordion 과 같다")
  *   accordionTriggerVariants · accordionTriggerContentVariants · accordionTitleVariants · accordionDescriptionVariants ·
  *   accordionChevronVariants · accordionPrefixVariants   트리거의 짜임 — Collapsible 이 같은 모양으로 쓴다
  *
  * 트리거는 두 층이다 — 바탕 층(button::before: 누름 · 호버 바탕, 줄지 않는다)과 콘텐츠 층(앞 아이콘 · 본문 · 꺾쇠). 누르거나 올리면 바탕이
- * 좌우 6 들어와 모서리 10 이 되고(SEED), 누르는 동안 콘텐츠 층만 2px 거리로 준다(기초 Feedback v104 — 기준 max(높이, 폭 ÷ 4, 24) 를
- * 누르는 순간 재서 --press-basis 로). 호버는 마우스 있는 기기에서만(v106). 바탕은 불투명한 bg-layer-default-pressed — 시트 · 대화상자 위도 같다.
+ * 좌우 6 들어와 모서리 10 이 되고, 누르는 동안 콘텐츠 층만 2px 거리로 준다(기초 Feedback — 기준 max(높이, 폭 ÷ 4, 24) 를
+ * 누르는 순간 재서 --press-basis 로). 호버는 마우스 있는 기기에서만. 바탕은 불투명한 bg-layer-default-pressed — 시트 · 대화상자 위도 같다.
  * 트리거 위아래 16 · 좌우 24(spacing-global-gutter), 앞 아이콘 22 · 본문 · 꺾쇠 20 사이 12, 제목 t5 16 / 22 · 500 · fg-neutral, 설명 t3 13 / 18 · 500 ·
- * fg-neutral-subtle(제목 아래 2). 제목만이면 54, 설명이 있으면 74 — 제목 · 설명은 늘 줄을 바꾼다(단어 단위, 말줄임 없음 — v114).
+ * fg-neutral-subtle(제목 아래 2). 제목만이면 54, 설명이 있으면 74 — 제목 · 설명은 늘 줄을 바꾼다(단어 단위, 말줄임 없음).
  * 꺾쇠는 lucide chevron-down 20 · fg-neutral-subtle — 펼치면 180° 돈다. 막힘은 앞 아이콘 · 제목 · 설명 · 꺾쇠가 모두 fg-disabled(흐리게 하지 않는다).
  * 키보드 포커스에만 트리거 안쪽 2px 링 — inline 은 각진 링, separated 는 항목 모서리를 따라 14.
  * 펼친 내용은 좌우 24 · 아래 16(위 0 — 트리거 아래 16 에 바로 잇는다), 안에서 스크롤하지 않는다. 펼쳐도 초점은 트리거에 그대로고
- * 화면을 저절로 스크롤하지 않는다(SEED). 펼친 내용에 role="region" 을 두지 않는다 — 함께 열리는 항목이 많아 랜드마크가 늘어난다(APG).
- * 모션: 꺾쇠 · 높이 300ms motion-ease-easing(SEED d6). 모션 줄이기면 높이를 움직이지 않고 150ms 서서히 나타나고 사라지며, 꺾쇠는 바로 뒤집힌다.
+ * 화면을 저절로 스크롤하지 않는다. 펼친 내용에 role="region" 을 두지 않는다 — 함께 열리는 항목이 많아 랜드마크가 늘어난다(APG).
+ * 모션: 꺾쇠 · 높이 300ms motion-ease-easing. 모션 줄이기면 높이를 움직이지 않고 150ms 서서히 나타나고 사라지며, 꺾쇠는 바로 뒤집힌다.
  * 키보드(APG Accordion): Enter · Space 는 단추 그대로, ↓ ↑ 는 다음 · 앞 트리거(끝에서 처음으로 돈다), Home · End 는 첫 · 끝 트리거 —
  * 상세가 없는 줄 · 막힌 트리거는 건너뛴다.
  */
@@ -407,7 +407,7 @@ export interface AccordionPlainItemProps extends Omit<React.HTMLAttributes<HTMLD
   prefixIcon?: React.ReactNode;
 }
 
-// 상세가 없는 항목 — 트리거가 아닌 그냥 줄(사용자 결정 5A). 같은 위아래 16 · 좌우 24 · 글이라 높이 · 글 시작이 같다. 누르거나 올려도 바탕이 없다
+// 상세가 없는 항목 — 트리거가 아닌 그냥 줄. 같은 위아래 16 · 좌우 24 · 글이라 높이 · 글 시작이 같다. 누르거나 올려도 바탕이 없다
 const AccordionPlainItem = React.forwardRef<HTMLDivElement, AccordionPlainItemProps>(({ title, description, prefixIcon, className, ...props }, ref) => {
   const acc = useAccordion("AccordionPlainItem");
   return (
@@ -440,7 +440,7 @@ export interface AccordionHeaderProps extends Omit<React.HTMLAttributes<HTMLDivE
 }
 
 // 목록 머리 — 시트 · 대화상자에서 아코디언 위 한 줄. 높이 36 · 아래 8 · 제목 t5 · 700(카드 머리와 같은 글) + 오른쪽 모두 펼치기.
-// 큰 글자 — 오른쪽 동작이 머리 폭의 절반을 넘으면 제목 아래 줄 오른쪽 끝으로(제목 최소 50% · 줄바꿈, 2026-10-21 03-G 4A — Button 짝과 같은 반 폭 판정)
+// 큰 글자 — 오른쪽 동작이 머리 폭의 절반을 넘으면 제목 아래 줄 오른쪽 끝으로(제목 최소 50% · 줄바꿈 — Button 짝과 같은 반 폭 판정)
 const AccordionHeader = React.forwardRef<HTMLDivElement, AccordionHeaderProps>(({ title, className, children, ...props }, ref) => (
   <div ref={ref} data-slot="accordion-header" className={cn("mb-x2 flex min-h-9 items-center justify-between gap-x2 flex-wrap [&>:first-child:not(:last-child)]:min-w-[50%] [&>:first-child:not(:last-child)]:flex-1 [&>:last-child:not(:first-child)]:ml-auto", className)} {...props}>
     <div data-slot="accordion-header-title" className="min-w-0 font-sans text-t5 font-bold text-fg-neutral break-keep [overflow-wrap:break-word]">
@@ -451,7 +451,7 @@ const AccordionHeader = React.forwardRef<HTMLDivElement, AccordionHeaderProps>((
 ));
 AccordionHeader.displayName = "AccordionHeader";
 
-// 모두 펼치기 — Card 머리 동작과 같은 글 버튼(SEED Text Button, 2026-10-16 글자 역할 D2): 보이는 상자 36 · 좌우 14 · 모서리 8,
+// 모두 펼치기 — Card 머리 동작과 같은 글 버튼: 보이는 상자 36 · 좌우 14 · 모서리 8,
 // 글 t4 · 700 · fg-neutral-muted · 아이콘 없음, 오른쪽 −14 로 내어 글자 끝이 머리 여백에. 누르는 영역 44(::before). 누르면 바탕 + 2px 거리 축소
 const EXPAND_ALL = [
   "relative -mr-x3_5 inline-flex h-9 shrink-0 cursor-pointer items-center rounded-r2 border-0 bg-transparent px-x3_5",

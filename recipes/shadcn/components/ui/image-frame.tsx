@@ -10,8 +10,8 @@ import { ContentPlaceholder } from "@/components/ui/content-placeholder";
 import { LOADING_TIMING, Skeleton } from "@/components/ui/skeleton";
 
 /*
- * Groo Image Frame — 구조는 SEED Image Frame(2026-10-04). 수치 원본은 specs/components/image-frame.yaml(틀) · card-art.yaml(카드 그림 ·
- * 카드 면), 카드 면의 색은 institution-colors.yaml(lib/institution-colors.ts). 옛 Aspect Ratio + 손으로 짠 그림 틀을 대신한다.
+ * Groo Image Frame — 수치 원본은 specs/components/image-frame.yaml(틀) · card-art.yaml(카드 그림 ·
+ * 카드 면), 카드 면의 색은 institution-colors.yaml(lib/institution-colors.ts).
  *
  *   ImageFrame           그림 한 장을 보이는 틀 — 비율 상자에 그림을 꽉 채우고(cover) 그림 위에 안쪽 1px 투명 윤곽을 늘 그린다.
  *                        불러오는 동안은 같은 모서리의 Skeleton, 없거나 · 못 불러오거나 · 10초가 지나도 안 오면 대체 그림(Content Placeholder)
@@ -34,9 +34,9 @@ import { LOADING_TIMING, Skeleton } from "@/components/ui/skeleton";
  * 틀 — 폭은 부르는 쪽, 높이는 폭 ÷ 비율(CSS aspect-ratio)이라 그림이 오기 전에 자리를 잡는다. 모서리로 그림 · 스켈레톤 · 대체 그림을
  *   자르고(overflow hidden) 안의 층을 따로 쌓는다(isolation). 부모보다 넓어지지 않는다(max-width 100%). 틀이 크기 컨테이너
  *   (container image-frame)라 카드 면의 크기 · 그림 위 자리가 틀의 폭 · 높이로 갈린다.
- * 모서리 — 폭으로 고른다(SEED): 24 이하 4(radius-r1) · 48 이하 6(radius-r1_5) · 그 위 8(radius-r2) · 화면 폭 0. 작은 그림일수록
+ * 모서리 — 폭으로 고른다: 24 이하 4(radius-r1) · 48 이하 6(radius-r1_5) · 그 위 8(radius-r2) · 화면 폭 0. 작은 그림일수록
  *   줄인다(24 에 8 이면 알약처럼 보인다). 불러오는 동안 · 대체 그림도 같은 모서리다(틀이 자른다).
- * 윤곽 — 안쪽 1px stroke-neutral-overlay(v118 — 검정 4.7% · 다크 흰 5%), ::after 로 그림 · 스켈레톤 · 대체 그림 · 카드 면 위에 늘
+ * 윤곽 — 안쪽 1px stroke-neutral-overlay(검정 4.7% · 다크 흰 5%), ::after 로 그림 · 스켈레톤 · 대체 그림 · 카드 면 위에 늘
  *   그린다(inset box-shadow — 크기가 변하지 않고 누르기를 막지 않는다). 흰 그림은 흰 바탕 위 1.11 로 잡히고 어두운 그림 위에서는
  *   보이지 않는다. 끄는 속성이 없다.
  * 그림 — 틀을 채운다(cover). contain 이면 잘리지 않게 넣고 둘레는 흰 판(static-white — 두 모드 같다, 그림의 바탕으로 칠한다).
@@ -80,7 +80,7 @@ export type ImageFramePlacement = "top-start" | "top-end" | "bottom-start" | "bo
 // 그림 위 요소 — 틀 하나에 둘까지
 const MAX_FLOATERS = 2;
 
-/** 폭 → 모서리(SEED) — 24 이하 "4" · 48 이하 "6" · 그 위 "8". 폭을 모르면(부모 폭을 채운다) "8" */
+/** 폭 → 모서리 — 24 이하 "4" · 48 이하 "6" · 그 위 "8". 폭을 모르면(부모 폭을 채운다) "8" */
 function imageFrameRadius(width?: number | null): ImageFrameRadius {
   if (width == null || Number.isNaN(width)) return "8";
   return width <= 24 ? "4" : width <= 48 ? "6" : "8";

@@ -6,29 +6,29 @@ import { cn } from "@/lib/utils";
 import { ignoreRadioJumpKeys } from "@/components/ui/radio-group";
 
 /*
- * Groo Segmented Control — 구조는 SEED Segmented Control(2026-10-02). 수치 원본은 specs/components/segmented-control.yaml.
+ * Groo Segmented Control — 수치 원본은 specs/components/segmented-control.yaml.
  *
  *   SegmentedControl       트랙 — 라디오 묶음(role=radiogroup). 같은 내용을 2 ~ 4가지로 바로 거르거나 · 정렬하거나 · 다르게
  *                          보는 자리에, 그 내용 바로 위에 하나만 둔다. 이름(aria-label · aria-labelledby)과 value(또는
  *                          defaultValue)를 준다 — 없으면 개발 중에 경고한다(칸이 2 ~ 4개가 아닐 때도)
  *   SegmentedControlItem   칸 — 라디오(role=radio · aria-checked). value · disabled · notification
  *
- * 크기 · 변형이 하나다. 트랙은 놓인 자리 폭을 채우는 알약(안쪽 4 · 투명한 bg-neutral-weak-alpha — 회색 바닥 위에서도 보인다, v120)이고 칸이 그 폭을 칸 수로 똑같이 나눈다
+ * 크기 · 변형이 하나다. 트랙은 놓인 자리 폭을 채우는 알약(안쪽 4 · 투명한 bg-neutral-weak-alpha — 회색 바닥 위에서도 보인다)이고 칸이 그 폭을 칸 수로 똑같이 나눈다
  * (최소 폭 없음 — 폰 콘텐츠 폭 312 에도 4개가 들어간다). 넓은 화면에서는 놓는 자리를 좁힌다.
  * 칸은 34 이상 · 좌우 12 · 위아래 6 · 알약 모서리. 글은 t5 16 · 700(고르든 안 고르든) · 가운데이고, 단어 단위로 줄을 바꾼다
- * (v114 — keep-all + break-word). 글이 길어 여러 줄이 되면 모든 칸이 가장 높은 칸에 맞춘다(트랙의 줄 높이).
+ * (keep-all + break-word). 글이 길어 여러 줄이 되면 모든 칸이 가장 높은 칸에 맞춘다(트랙의 줄 높이).
  * 고른 알약은 트랙에 하나 — 칸 뒤에 깔리고 폭 (트랙 − 8) ÷ 칸 수, 고른 칸 번호만큼 옆으로 옮겨 200ms 에 미끄러진다
  * (motion-duration-d4 · motion-ease-easing — 200ms 이하는 마이크로 모션이라 모션 줄이기에도 그대로다). 바탕 bg-layer-default
- * + 안쪽 1px stroke-neutral-contrast(짙은 테두리 — SEED 의 옅은 1px 은 트랙과 1.14:1 이라 3:1 에 못 미친다, 사용자 결정).
+ * + 안쪽 1px stroke-neutral-contrast(짙은 테두리 — 옅은 1px 은 트랙과 1.14:1 이라 3:1 에 못 미친다).
  * 고른 칸이 없으면 알약을 숨긴다.
  *
  * 상태(바탕 · 글자 · 테두리는 color-transition 150ms):
- *   안 고른 칸   글 fg-neutral-subtle(다크는 fg-neutral-muted — 투명 트랙 위 4.5:1, 2026-10-17). 올리거나(마우스 있는 기기) 누르면 bg-neutral-weak-pressed + 안쪽 1px stroke-neutral-weak,
+ *   안 고른 칸   글 fg-neutral-subtle(다크는 fg-neutral-muted — 투명 트랙 위 4.5:1). 올리거나(마우스 있는 기기) 누르면 bg-neutral-weak-pressed + 안쪽 1px stroke-neutral-weak,
  *                글 fg-neutral-muted(누름 바탕 위 fg-neutral-subtle 은 다크 3.91:1)
  *   고른 칸      글 fg-neutral. 올리거나 누르면 칸에 bg-layer-default-pressed + 짙은 1px 를 칠해 알약을 덮는다
- *   막힘         글 fg-disabled · not-allowed · 누름 바탕 · 축소 없음(흐리게 하지 않는다 — v106). 고른 채 막히면 칸에
+ *   막힘         글 fg-disabled · not-allowed · 누름 바탕 · 축소 없음(흐리게 하지 않는다). 고른 채 막히면 칸에
  *                bg-disabled + 안쪽 1px stroke-neutral-solid 를 칠해 무엇을 골랐는지 남긴다
- * 누르면 칸 바탕은 그대로 두고 안의 글만 2px 거리로 준다(SEED scaleScope: content · v104) — 배율 = (기준 − 2) ÷ 기준,
+ * 누르면 칸 바탕은 그대로 두고 안의 글만 2px 거리로 준다(scaleScope: content) — 배율 = (기준 − 2) ÷ 기준,
  * 기준 = max(칸 높이, 칸 폭 ÷ 4, 24) 를 누르는 순간(포인터 · Space) 칸을 재서 --press-basis 로 넘긴다. 호버는 축소가 없고,
  * 모션 줄이기면 축소하지 않는다. 포커스 링은 키보드 포커스에만 칸 바깥 2px · 띄움 2px(알약을 따라 둥글다).
  * 알림 점(notification)은 6px fg-brand(브랜드 글자색 — bg-brand-solid 는 다크 트랙에서 안 보인다) — 글 끝에서 2 · 글 위쪽에
@@ -37,7 +37,7 @@ import { ignoreRadioJumpKeys } from "@/components/ui/radio-group";
  *
  * 키보드는 라디오 묶음 그대로다(Radix RadioGroup) — Tab 은 고른 칸 하나에만 서고, ← → ↑ ↓ 로 옮기면 바로 고른다(끝에서
  * 처음으로 돈다). 막힌 칸은 건너뛴다. 고른 칸을 다시 눌러도 그대로다. disabled 를 트랙에 주면 칸이 모두 막힌다.
- * 고른 칸만 tabIndex 0 이다 — Radix 의 로빙 위치는 마지막으로 포커스한 칸이라, 값이 밖에서 바뀌면 Shift+Tab 이 옛 칸에 선다.
+ * 고른 칸만 tabIndex 0 이다 — Radix 의 로빙 위치는 마지막으로 포커스한 칸이라, 값이 밖에서 바뀌면 Shift+Tab 이 이전 칸에 선다.
  * 값은 이 컴포넌트가 한 번 더 쥔다(알약이 고른 칸을 따라가야 한다) — 쓰는 쪽은 value · onValueChange 또는 defaultValue.
  * 저장할 폼 값이 아니므로(폼 값은 Chip · Select) name · required 를 두지 않는다.
  */
@@ -94,7 +94,7 @@ const segmentedControlItemVariants = cva(
   ].join(" "),
 );
 
-// 글 — 가운데 · 단어 단위 줄바꿈(v114). 누르는 동안 글만 준다(칸이 잰 --press-basis). 막힌 칸은 줄지 않는다
+// 글 — 가운데 · 단어 단위 줄바꿈. 누르는 동안 글만 준다(칸이 잰 --press-basis). 막힌 칸은 줄지 않는다
 const SEGMENTED_LABEL = [
   "relative min-w-0 text-center break-keep [overflow-wrap:break-word]",
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",

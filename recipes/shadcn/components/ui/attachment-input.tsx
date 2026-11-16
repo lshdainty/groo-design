@@ -26,8 +26,7 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
 import { ScrollFog } from "@/components/ui/scroll-fog";
 
 /*
- * Groo Attachment Input — 구조는 SEED Attachment Input(2026-10-15, rootage attachment-input · -trigger · -item · -item-action-button ·
- * -item-remove-button · -dropzone, qvism-preset recipe, React AttachmentField). 수치 원본은 specs/components/attachment-input.yaml.
+ * Groo Attachment Input — 수치 원본은 specs/components/attachment-input.yaml.
  * 사진 · 파일을 골라 붙이는 칸. 사람의 프로필 사진은 Avatar 의 "사진 바꾸기", 붙은 사진을 보이기만 하는 자리는 Image Frame 이다.
  *
  *   AttachmentInput  제어 컴포넌트 — 항목 목록(entries)은 쓰는 쪽이 쥐고, 올리기 요청과 상태도 쓰는 쪽이 바꾼다
@@ -42,7 +41,7 @@ import { ScrollFog } from "@/components/ui/scroll-fog";
  *     layout                 tile(기본 — 첨부 타일 + 항목 줄) · dropzone(파일 하나를 골라 바로 넘기는 자리 — 1280 이상 웹은 드롭존,
  *                            1280 미만은 "파일 선택" 버튼 large · 칸 폭 · 앞 아이콘 upload. 고른 파일은 아래 파일 카드)
  *     accept                 고르기 창의 편의 + 다시 검사(MIME image/png · image/* · 확장자 .csv 를 쉼표로)
- *     maxFiles               기본 1(SEED). Infinity 면 개수를 그리지 않는다 — "n/최대" 를 쓰려면 서버의 개수 한도부터 정한다
+ *     maxFiles               기본 1. Infinity 면 개수를 그리지 않는다 — "n/최대" 를 쓰려면 서버의 개수 한도부터 정한다
  *     maxFileSize            바이트 — 넘으면 FILE_TOO_LARGE
  *     badgeLabel             주면 첫 사진에 띠("대표")
  *     disabled · readOnly    Field 안이면 Field 의 값을 받는다. 막힘은 새로 고르지 못하고 × 도 막히며 값을 내지 않는다.
@@ -52,10 +51,10 @@ import { ScrollFog } from "@/components/ui/scroll-fog";
  *   AttachmentEntry · AttachmentRejection · formatFileSize(bytes) — "9.8MB"(B · KB · MB, MB 는 소수 한 자리, 띄어 쓰지 않는다)
  *
  * 항목의 모양은 파일 종류가 정한다 — 사진(image/*)은 80 썸네일, 그 밖은 160 × 80 파일 카드이고 한 줄에 섞인다.
- *   사진은 그림 위에 투명 윤곽 1px stroke-neutral-overlay(v118), 파일 카드는 1px stroke-neutral-weak + 썸네일 칸 48(bg-neutral-weak ·
+ *   사진은 그림 위에 투명 윤곽 1px stroke-neutral-overlay, 파일 카드는 1px stroke-neutral-weak + 썸네일 칸 48(bg-neutral-weak ·
  *   모서리 8 · 아이콘 24 fg-neutral-subtle — PDF file-text · 표 file-spreadsheet · 그 밖 file) + 이름(t2 12 / 16 · 500 · 폭 70) + 크기
  *   (t1 11 / 15 · fg-neutral-subtle). 모서리 12 · 높이 80.
- * 파일 이름 — 글자 단위로 줄을 바꾸고(break-all — SEED, 사용자 결정 11D) 네 줄까지 보인다. 첫 줄만 오른쪽 4 를 비운다(× 구멍 —
+ * 파일 이름 — 글자 단위로 줄을 바꾸고(break-all) 네 줄까지 보인다. 첫 줄만 오른쪽 4 를 비운다(× 구멍 —
  *   YAML name.maskClear). 넘치면 셋째 줄 끝을 "…" 로 줄이고 넷째 줄에 확장자를 남긴다
  *   (보이지 않는 같은 글로 줄 수를 재고 — 글꼴이 늦게 와도 ResizeObserver 가 다시 잰다). 보조 기술은 늘 전체 이름을 읽는다.
  * × — 20 원(bg-layer-default · 안쪽 1px stroke-neutral-weak · lucide x 10 선 2.5 fg-neutral)이 항목 모서리 밖으로 위 4 · 오른쪽 4 걸친다.
@@ -69,9 +68,9 @@ import { ScrollFog } from "@/components/ui/scroll-fog";
  * 순서 바꾸기(onReorder) — 마우스 · 펜은 누른 채 8px 넘게 움직이면, 터치는 250ms 누른 채 움직이면 든다(그 전에 움직이면 줄이 가로로
  *   스크롤한다 — 누르기(메뉴)와 끌기를 가르는 문턱, YAML item.dragStart). 키보드는 항목에서 Space 로
  *   들고 ← → 로 옮긴 뒤 Space · Enter 로 놓는다 · Esc 는 그만두기(처음 자리로). 읽기 글은 한국어(dnd-kit announcements). 끄는 항목은
- *   2px 줄어든 채 따라가고 × 와 구멍이 사라진다. 사진은 불투명도 0.5, 파일 카드는 글 · 아이콘이 fg-disabled(SEED 그대로 — 사용자
- *   결정 13B, v106 의 예외). 읽기 전용도 같다(사진 0.5 · 파일 글 fg-disabled).
- * 항목 메뉴(사용자 결정 14A — WCAG 2.5.7 포인터 한 번 길) — onReorder · onPreview 가운데 하나라도 주면 항목을 누르거나 Enter 로
+ *   2px 줄어든 채 따라가고 × 와 구멍이 사라진다. 사진은 불투명도 0.5, 파일 카드는 글 · 아이콘이 fg-disabled(불투명도로 흐리지 않는 규칙의
+ *   예외). 읽기 전용도 같다(사진 0.5 · 파일 글 fg-disabled).
+ * 항목 메뉴(WCAG 2.5.7 포인터 한 번 길) — onReorder · onPreview 가운데 하나라도 주면 항목을 누르거나 Enter 로
  *   1280 이상 Menu(aria-label = 파일 이름) · 미만 Menu Sheet(머리 = 파일 이름)를 연다(ResponsiveMenu): 크게 보기(파일 카드는 "열기" —
  *   onPreview) · 대표로 정하기(badgeLabel 을 쓰는 칸의 사진 — 맨 앞으로) · 앞으로 옮기기 · 뒤로 옮기기(onReorder) | 지우기(위험 — onRemove).
  *   맨 앞 항목은 앞으로 · 대표로, 맨 끝 항목은 뒤로가 막힌 줄. 옮긴 뒤 초점은 옮긴 항목, 지운 뒤는 × 와 같다. × 는 지름길로 그대로다.
@@ -270,7 +269,7 @@ const ITEM = [
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
   "data-[pressable]:cursor-pointer data-[sortable]:cursor-grab group-data-[dragging]/attachment-item:cursor-grabbing",
 ].join(" ");
-// 사진은 읽기 전용 · 끄는 동안 불투명도 0.5(SEED 그대로 — 사용자 결정 2026-10-15 마무리 13B, v106 의 예외는 이 두 상태뿐) —
+// 사진은 읽기 전용 · 끄는 동안 불투명도 0.5(불투명도로 흐리지 않는 규칙의 예외는 이 두 상태뿐) —
 // 흐림 · 축소는 motion-duration-d4 · ease-easing 으로 서서히(모션 줄이기면 바로)
 const ITEM_KIND = {
   image:
@@ -281,11 +280,11 @@ const ITEM_KIND = {
 const IMAGE = "pointer-events-none size-full select-none rounded-[inherit] object-cover";
 const IMAGE_FALLBACK = "flex size-full items-center justify-center rounded-[inherit] bg-bg-neutral-weak text-fg-neutral-subtle [&>svg]:size-6";
 
-// 파일 카드 — 썸네일 칸 48 · 이름 · 크기. 실패면 다시 시도가 채운다. 읽기 전용 · 끄는 동안 글 · 아이콘 fg-disabled(SEED — 13B)
+// 파일 카드 — 썸네일 칸 48 · 이름 · 크기. 실패면 다시 시도가 채운다. 읽기 전용 · 끄는 동안 글 · 아이콘 fg-disabled
 const THUMBNAIL =
   "flex size-12 shrink-0 items-center justify-center rounded-r2 bg-bg-neutral-weak text-fg-neutral-subtle [&>svg]:size-6 group-data-[readonly]/attachment-item:text-fg-disabled group-data-[dragging]/attachment-item:text-fg-disabled group-data-[status=error]/attachment-item:hidden";
 const META = "flex min-w-0 flex-1 flex-col group-data-[status=error]/attachment-item:hidden";
-// 이름은 글자 단위로 줄을 바꾼다(break-all — SEED 레시피 그대로, 사용자 결정 2026-10-15 마무리 11D)
+// 이름은 글자 단위로 줄을 바꾼다(break-all)
 const NAME =
   "relative block break-all text-t2 font-medium text-fg-neutral group-data-[readonly]/attachment-item:text-fg-disabled group-data-[dragging]/attachment-item:text-fg-disabled";
 // 첫 줄만 오른쪽 4 를 비운다(YAML name.maskClear) — 오른쪽 float 4 × 한 줄. 네 줄이면 이름이 카드 위에 붙어 × 구멍이 첫 줄 끝 글자를
@@ -478,7 +477,7 @@ function ItemFace({ entry, kind, status, badgeLabel }: Kindish & { entry: Attach
   );
 }
 
-// 항목 메뉴(사용자 결정 2026-10-15 마무리 14A — WCAG 2.5.7 의 포인터 한 번 길) — 항목을 누르거나 Enter 면 1280 이상 Menu(aria-label =
+// 항목 메뉴(WCAG 2.5.7 의 포인터 한 번 길) — 항목을 누르거나 Enter 면 1280 이상 Menu(aria-label =
 // 파일 이름) · 미만 Menu Sheet(머리 = 파일 이름). 위 묶음 크게 보기(파일 카드는 "열기" — onPreview) · 대표로 정하기(badgeLabel 을 쓰는 칸의
 // 사진 — 맨 앞으로) · 앞으로 옮기기 · 뒤로 옮기기(onReorder — 맨 앞이면 앞으로 · 대표로, 맨 끝이면 뒤로가 막힌다) | 아래 위험 묶음 지우기.
 // 끄는 길(포인터 · 키보드 Space · ← → · Space)과 × 는 그대로다
