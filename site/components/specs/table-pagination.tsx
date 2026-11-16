@@ -110,7 +110,7 @@ const Layout: Fig = ({ caption }) => {
         </div>
         </Board>
         <Cap w={520}>
-          한 줄 {t.height} · 양 끝 정렬 — 왼쪽 묶음 ↔ 오른쪽 묶음 · 범위 묶음 ↔ 화살표 {t.gap}, 고르기 ↔ 글 {t.pageSize.gap}. 고르기는 Select medium(최소 폭 {t.pageSize.minW}), 화살표는 Pagination 의 칸 {t.arrow.size} 둘
+          한 줄 {t.height} · 양 끝 정렬입니다. 왼쪽 묶음 ↔ 오른쪽 묶음 · 범위 묶음 ↔ 화살표 {t.gap}, 고르기 ↔ 글 {t.pageSize.gap} 입니다. 고르기는 Select medium(최소 폭 {t.pageSize.minW}), 화살표는 Pagination 의 칸 {t.arrow.size} 둘입니다
         </Cap>
       </div>
     </Figure>
@@ -131,7 +131,7 @@ const Total: Fig = ({ caption }) => (
         <div style={{ width: W }}>
           <TablePaginationView look={TL()} page={2} pageSize={10} hasNext />
         </div>
-        <Cap>전체를 모름 — 범위는 &ldquo;11-20&rdquo; 글만(다음이 있는지만 안다)</Cap>
+        <Cap>전체를 모름 — 범위는 &ldquo;11-20&rdquo; 글만(다음이 있는지만 압니다)</Cap>
       </div>
     </div>
     </Board>
@@ -148,11 +148,11 @@ const Ends: Fig = ({ caption }) => (
             <TablePaginationView look={TL()} total={237} page={1} pageSize={10} />
           </div>
         </Board>
-        <Cap>첫 범위 — 이전이 막힌다(숨기지 않는다 · 초점은 남는다)</Cap>
+        <Cap>첫 범위 — 이전이 막힙니다(숨기지 않고, 초점은 남습니다)</Cap>
       </div>
       <div className="flex flex-col items-center gap-2">
         <TableBlock rows={0} total={0} page={1} pageSize={10} title="사용자 0명" />
-        <Cap>빈 표 — &ldquo;0-0 / 총 0개&rdquo;, 이전 · 다음 모두 막힘. 줄 수는 그대로 바꿀 수 있다</Cap>
+        <Cap>빈 표 — &ldquo;0-0 / 총 0개&rdquo;, 이전 · 다음 모두 막힘. 줄 수는 그대로 바꿀 수 있습니다</Cap>
       </div>
     </div>
     </Board>
@@ -163,12 +163,12 @@ const Ends: Fig = ({ caption }) => (
 const PlaceGuide: Fig = ({ caption }) => (
   <Plate caption={caption}>
     <Pair>
-      <Verdict ok note="데이터 표 아래에 한 줄" bg="var(--p-bg-layer-basement)">
+      <Verdict ok note="데이터 표 아래에 한 줄로 둡니다" bg="var(--p-bg-layer-basement)">
         <Shrunk h={tableCardH(4)}>
           <TableBlock rows={4} />
         </Shrunk>
       </Verdict>
-      <Verdict ok={false} note="표 위에 둔 줄" bg="var(--p-bg-layer-basement)">
+      <Verdict ok={false} note="표 위에 줄을 두었습니다" bg="var(--p-bg-layer-basement)">
         <Shrunk h={tableCardH(4)}>
           <div style={{ width: W }}>
             <MiniTable brand="hr" title="사용자" head={USERS_HEAD} rows={HR_USERS.slice(0, 4)} above={<PagingSlot above><TablePaginationView look={TL()} total={21} page={2} pageSize={10} /></PagingSlot>} />
@@ -194,7 +194,7 @@ const OptionsGuide: Fig = ({ caption }) => {
               </div>
               <span style={{ ...txt, paddingTop: 10 }}>씩 보기</span>
             </div>
-            <Cap w={220}>줄 수 — {t.options.join(' · ')}(3 ~ 4개를 넘지 않는다). 바꾸면 첫 범위로</Cap>
+            <Cap w={220}>줄 수 — {t.options.join(' · ')}(3 ~ 4개를 넘지 않습니다). 바꾸면 첫 범위로 돌아갑니다</Cap>
           </div>
           <div className="flex flex-col items-center gap-3">
             <div className="flex items-start" style={{ columnGap: t.range.gap, height: t.range.maxH + 60 }}>
@@ -203,7 +203,7 @@ const OptionsGuide: Fig = ({ caption }) => {
               </div>
               <span style={{ ...txt, paddingTop: 10 }}>/ 총 237개</span>
             </div>
-            <Cap w={240}>범위 — 목록 최대 높이 {t.range.maxH}, 지금 범위가 보이게 열린다(200개를 넘으면 첫 · 마지막 · 지금 둘레만)</Cap>
+            <Cap w={240}>범위 — 목록은 최대 높이 {t.range.maxH} 이며, 지금 범위가 보이게 열립니다(200개를 넘으면 첫 · 마지막 · 지금 둘레만 둡니다)</Cap>
           </div>
         </div>
       </Board>
@@ -214,7 +214,7 @@ const OptionsGuide: Fig = ({ caption }) => {
 const NarrowGuide: Fig = ({ caption }) => (
   <Plate caption={caption}>
     <Pair>
-      <Verdict ok note="좁은 칸 — 카드 안 표 상자에서 표와 줄이 함께 가로로 민다(카드 머리는 그대로)" bg="var(--p-bg-layer-basement)">
+      <Verdict ok note="좁은 칸 — 카드 안 표 상자에서 표와 줄이 함께 가로로 밀립니다(카드 머리는 그대로입니다)" bg="var(--p-bg-layer-basement)">
         <div style={{ width: 300 }}>
           <CardSurface look={cardLook()} body="list">
             <CardHeaderView look={cardLook()} title="사용자" body="list" heading="span" />
@@ -231,7 +231,7 @@ const NarrowGuide: Fig = ({ caption }) => (
           </CardSurface>
         </div>
       </Verdict>
-      <Verdict ok={false} note="줄만 두 줄로 접는다 — 줄은 늘 한 줄" bg="var(--p-bg-layer-basement)">
+      <Verdict ok={false} note="줄만 두 줄로 접었습니다 — 줄은 늘 한 줄입니다" bg="var(--p-bg-layer-basement)">
         <div style={{ width: 300 }}>
           <MiniTable brand="hr" title="사용자" head={['이름', '부서']} rows={HR_USERS.slice(0, 3).map((u) => [u[0], u[1]])}>
             <PagingSlot>
@@ -256,7 +256,16 @@ const ExTable: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 개요 카드 — 라이트 넘김 줄 둘(전체를 앎 "11-20 / 총 237개" · 모름 "11-20")
+const Thumb: Fig = () => (
+  <div className="flex flex-col gap-4" style={{ width: 460, zoom: 0.6 }}>
+    <TablePaginationView look={TL()} mode="light" total={237} page={2} pageSize={10} />
+    <TablePaginationView look={TL()} mode="light" page={2} pageSize={10} hasNext />
+  </div>
+);
+
 export const tablePaginationFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

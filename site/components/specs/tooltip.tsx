@@ -7,6 +7,7 @@ import { ButtonView } from './button-view';
 import { DisabledReasonDemo, ToolbarTooltipDemo, TooltipPlayground } from './bubble-demos';
 import { BellButton, Bubble, BubbleAt, DeskToolWindow, LeaveSummary, NativeTitle, bl } from './bubble-screens';
 import { NK } from './nav-screens';
+import { TopIconButton } from './nav-view';
 import { COPY_REASON } from './menu-data';
 import { Board, Scaled, mk } from './menu-screens';
 import { Legend, pinStyle } from './overlay-screens';
@@ -66,7 +67,7 @@ const Anatomy: Fig = ({ caption }) => {
         </Board>
         <Legend
           items={[
-            ['ⓐ', 'Container — Help Bubble 과 같다'],
+            ['ⓐ', 'Container — Help Bubble 과 같습니다'],
             ['ⓑ', 'Arrow — 늘 트리거 가운데'],
             ['ⓒ', 'Title — 글 하나(굵게)'],
           ]}
@@ -135,19 +136,19 @@ const Timing: Fig = ({ caption }) => {
   return (
     <Figure caption={caption}>
       <div className="flex flex-col gap-5">
-        <Lane name="마우스" note={`올리고 ${open}ms 뒤에 연다 · 트리거와 말풍선을 모두 벗어나면 ${close}ms 뒤에 닫는다(말풍선 위로 옮기는 동안은 열어 둔다)`}>
+        <Lane name="마우스" note={`올리고 ${open}ms 뒤에 엽니다 · 트리거와 말풍선을 모두 벗어나면 ${close}ms 뒤에 닫습니다(말풍선 위로 옮기는 동안은 열어 둡니다)`}>
           <Tick at={0} label="올림" />
           <Shown from={open} to={leave + close} fade={motion} label="알림" />
           <Tick at={open} label={`${open}ms`} below />
           <Tick at={leave} label="벗어남" />
           <Tick at={leave + close} label={`+${close}ms`} below />
         </Lane>
-        <Lane name="키보드" note="Tab 으로 초점이 오면 기다리지 않고 바로 연다 · 초점이 떠나면 닫는다">
+        <Lane name="키보드" note="Tab 으로 초점이 오면 기다리지 않고 바로 엽니다 · 초점이 떠나면 닫습니다">
           <Tick at={0} label="Tab" />
           <Shown from={0} to={leave} fade={motion} label="알림" />
           <Tick at={leave} label="초점 떠남" />
         </Lane>
-        <Lane name="이어서" note={`하나가 열린 동안이나 닫힌 뒤 ${skip}ms 안에 옆 트리거로 옮기면 기다리지 않고 모션 없이 바로 연다`}>
+        <Lane name="이어서" note={`하나가 열린 동안이나 닫힌 뒤 ${skip}ms 안에 옆 트리거로 옮기면 기다리지 않고 모션 없이 바로 엽니다`}>
           <Shown from={0} to={closedAt} fade={0} label="알림" />
           <Tick at={closedAt} label="닫힘" />
           {/* 이어 열기 시간 — 닫힌 뒤 이 안에 옮기면 바로 */}
@@ -175,7 +176,7 @@ const Timing: Fig = ({ caption }) => {
         </div>
         <div className="flex items-center gap-2 pl-[68px] text-[11px] pk-muted">
           <span className="inline-block h-3 w-8 shrink-0 rounded-sm" style={{ background: `linear-gradient(90deg, transparent, ${rc('bg-neutral-inverted')})` }} />
-          열림 모션 {b.motion.open.duration}(크기 {b.motion.from} → 1 · 나타남) · 이어서 열 때는 없다 · 손가락으로 누르면 열지 않는다
+          열림 모션 {b.motion.open.duration}(크기 {b.motion.from} → 1 · 나타남) · 이어서 열 때는 없습니다 · 손가락으로 누르면 열지 않습니다
         </div>
       </div>
     </Figure>
@@ -190,7 +191,7 @@ const AssistGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="grid w-full gap-4 md:grid-cols-2">
-        <Verdict ok note="아이콘 버튼의 이름은 aria-label — 툴팁은 그 이름을 마우스 · 키보드 사용자에게 보여 줄 뿐이다" bg={BASEMENT}>
+        <Verdict ok note="아이콘 버튼의 이름은 aria-label — 툴팁은 그 이름을 마우스 · 키보드 사용자에게 보여 줄 뿐입니다" bg={BASEMENT}>
           <div className="flex flex-col items-center gap-3" style={{ paddingTop: b.height + b.bodyOffset }}>
             <BubbleAt trigger={<BellButton state="focused" />} bubble={(p) => <Bubble title="알림" {...p} />} />
             <code className="rounded px-1.5 py-0.5 text-[12px]" style={{ background: rc('bg-layer-default'), color: rc('fg-neutral') }}>
@@ -198,7 +199,7 @@ const AssistGuide: Fig = ({ caption }) => {
             </code>
           </div>
         </Verdict>
-        <Verdict ok note="막힌 버튼은 초점을 받지 못한다 — 왜 안 되는지는 버튼 가까이 글로 보인다" bg={BASEMENT}>
+        <Verdict ok note="막힌 버튼은 초점을 받지 못합니다 — 왜 안 되는지는 버튼 가까이 글로 보입니다" bg={BASEMENT}>
           <div className="flex flex-col items-start gap-1.5 rounded-xl p-5" style={{ background: rc('bg-layer-default') }}>
             <ButtonView look={weak} state="disabled" label="지난달 예산 복사" />
             <span className="text-[13px] leading-[18px]" style={{ color: rc('fg-neutral-subtle') }}>
@@ -206,7 +207,7 @@ const AssistGuide: Fig = ({ caption }) => {
             </span>
           </div>
         </Verdict>
-        <Verdict ok={false} note="막힌 이유를 툴팁 · 네이티브 title 에만 — 마우스를 올려야만 보이고, 손가락 · 키보드로는 끝내 볼 수 없다" bg={BASEMENT}>
+        <Verdict ok={false} note="막힌 이유를 툴팁 · 네이티브 title 에만 — 마우스를 올려야만 보이고, 손가락 · 키보드로는 끝내 볼 수 없습니다" bg={BASEMENT}>
           <div className="flex flex-col items-start gap-1 rounded-xl p-5" style={{ background: rc('bg-layer-default') }}>
             <span className="relative inline-flex">
               <ButtonView look={weak} state="disabled" label="지난달 예산 복사" />
@@ -235,7 +236,21 @@ const AssistGuide: Fig = ({ caption }) => {
 const ExIcon: Fig = () => <ToolbarTooltipDemo kit={mk()} top={NK().top} />;
 const ExDisabled: Fig = () => <DisabledReasonDemo kit={mk()} weak={buttonLook({ variant: 'neutralWeak', size: 'medium' })} />;
 
+// 개요 카드 — 라이트 상단 바 아이콘 버튼 셋(검색 · 알림 · 설정), 마우스를 올린 알림 위에 툴팁 "알림"
+const Thumb: Fig = () => {
+  const b = bl();
+  const top = NK().top;
+  return (
+    <div className="flex items-end" style={{ zoom: 1.6, paddingTop: b.height + b.bodyOffset }}>
+      <TopIconButton look={top} mode="light" icon="search" label="검색" />
+      <BubbleAt trigger={<BellButton mode="light" state="hovered" />} triggerSize={top.icon.size} bubble={(p) => <Bubble mode="light" title="알림" {...p} />} />
+      <TopIconButton look={top} mode="light" icon="settings" label="설정" />
+    </div>
+  );
+};
+
 export const tooltipFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

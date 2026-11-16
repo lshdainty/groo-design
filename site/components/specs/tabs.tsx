@@ -1,7 +1,7 @@
 // Tabs 페이지의 그림 — specs/components/tabs.md 의 `[그림: …](../../site/components/specs/tabs.tsx#<id>)` 자리.
 // 탭은 tabs.yaml · chip-tabs.yaml 을 푼 값(tabsLook · chipTabsLook)으로, Chip Tabs 의 칩은 chip.yaml(ChipView) 그대로,
 // Segmented 는 segmented-control.yaml(segmentedLook), 폼 칸 · 버튼은 field · input · button.yaml 로 그린다.
-// 화면 속 목록 · 그래프는 아직 스펙이 없어 역할 색 토큰으로 간단히 그린다(kit).
+// 화면 속 목록 · 그래프는 역할 색 토큰으로 간단히 그린다(kit).
 // 폰 화면은 틀 바깥 360(스펙의 "360 폰" 수치를 그대로 잰다) — Line 목록은 화면 끝까지 닿는다.
 import { Fragment, type CSSProperties, type ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
@@ -285,7 +285,7 @@ const Anatomy: Fig = ({ caption }) => {
             </span>
           ))}
         </div>
-        <span className="text-center text-[12px] pk-muted">2배로 그렸다 — Fill · small, 고른 탭 아래 막대, 둘째 탭에 알림 점</span>
+        <span className="text-center text-[12px] pk-muted">2배로 그렸습니다 — Fill · small, 고른 탭 아래 막대, 둘째 탭에 알림 점</span>
       </div>
     </Figure>
   );
@@ -387,7 +387,7 @@ const Layout: Fig = ({ caption }) => {
             </Surface>
           </Wide>
           <Cap strong="Fill — 5개 이하 · 짧은 글">
-            칸을 똑같이 나눠 꽉 채우고 막대는 칸에서 좌우 {inset} 씩 들인다 — {SCREEN} 화면 2 · 3 · 4 · 5개면 막대 {bars.join(' · ')}
+            칸을 똑같이 나눠 꽉 채우고 막대는 칸에서 좌우 {inset} 씩 들입니다 — {SCREEN} 화면 2 · 3 · 4 · 5개면 막대 {bars.join(' · ')}
           </Cap>
         </div>
         <div className="flex flex-col items-center gap-2">
@@ -397,14 +397,14 @@ const Layout: Fig = ({ caption }) => {
             </Surface>
           </Wide>
           <Cap strong="Hug — 6개 이상 · 긴 글">
-            탭이 글만큼(글 + 좌우 {lk.trigger.padX}) · 목록 좌우 {lk.layouts.hug.padX} · 넘치면 가로 스크롤 — 고른 탭이 화면 밖이면 {lk.layouts.hug.scrollPadding} 여유를 두고 그쪽으로
+            탭이 글만큼(글 + 좌우 {lk.trigger.padX}) 넓고 목록 좌우는 {lk.layouts.hug.padX} 이며, 넘치면 가로로 스크롤합니다 — 고른 탭이 화면 밖이면 {lk.layouts.hug.scrollPadding} 여유를 두고 그쪽으로 스크롤합니다
           </Cap>
         </div>
         <div className="flex flex-col items-center gap-2">
           <Wide>
             <HrAuthorityWindow />
           </Wide>
-          <Cap strong="데스크톱의 넓은 카드 · 페이지 — 2개여도 Hug">칸을 나누면 탭이 지나치게 넓어지는 자리 · HR 권한(역할 · 사용자)</Cap>
+          <Cap strong="데스크톱의 넓은 카드 · 페이지 — 2개여도 Hug">칸을 나누면 탭이 지나치게 넓어지는 자리입니다 — HR 권한(역할 · 사용자)</Cap>
         </div>
       </div>
     </Panel>
@@ -459,7 +459,7 @@ const Size: Fig = ({ caption }) => {
         </div>
       </Surface>
       <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">
-        분홍 띠 — 위아래 여백(글은 아래 {lk.trigger.padY} 에 붙고 남는 높이는 위로) · 점선 — 글 줄 · 글은 고르든 안 고르든 {lk.sizes.small.text.fontWeight}
+        분홍 띠는 위아래 여백입니다(글은 아래 {lk.trigger.padY} 에 붙고 남는 높이는 위로 갑니다). 점선은 글 줄이고, 글은 고르든 안 고르든 {lk.sizes.small.text.fontWeight} 입니다.
       </p>
     </Panel>
   );
@@ -494,7 +494,7 @@ const States: Fig = ({ caption }) => {
           ))}
         </div>
       </Surface>
-      <Cap strong={mode === 'light' ? '라이트' : '다크'}>누름은 탭 축소만(색 그대로) · 포커스 링은 탭 안쪽 · 막히면 글 fg-disabled, 고른 채 막히면 막대도 fg-disabled</Cap>
+      <Cap strong={mode === 'light' ? '라이트' : '다크'}>누름은 탭 축소만 합니다(색 그대로). 포커스 링은 탭 안쪽에 그리고, 막히면 글이 fg-disabled, 고른 채 막히면 막대도 fg-disabled 입니다</Cap>
     </div>
   );
   return (
@@ -532,7 +532,7 @@ const ChipTabsFig: Fig = ({ caption }) => {
           )}
         </div>
       </Surface>
-      <Cap strong={mode === 'light' ? '라이트' : '다크'}>고르면 짙은 채움 — Outline 은 고르면 테두리를 지운다</Cap>
+      <Cap strong={mode === 'light' ? '라이트' : '다크'}>고르면 짙게 채웁니다 — Outline 은 고르면 테두리를 지웁니다</Cap>
     </div>
   );
   const h = chip.sizes[c.sizes[c.defaults.size]].h;
@@ -584,7 +584,7 @@ const ChipTabsFig: Fig = ({ caption }) => {
             </Surface>
           </Wide>
           <Cap strong="1차 Line 아래 2차 Chip Tabs">
-            목록 좌우 {c.padX}(화면 여백) · 위아래 {c.padY} · 칩 사이 {c.gap} · 바탕 · 바닥 선 없음 · 고른 칩이 화면 밖이면 {c.scrollPadding} 여유를 두고 스크롤 · 알림 점은 글 뒤 {c.notification.gap}(칩이 그만큼 넓어진다, 고른 칩에는 없다) · 1차 막대는 Fill 이라 칸에서 {lk.layouts.fill.inset} 들인다
+            목록 좌우 {c.padX}(화면 여백) · 위아래 {c.padY} · 칩 사이 {c.gap} 이고 바탕 · 바닥 선이 없습니다. 고른 칩이 화면 밖이면 {c.scrollPadding} 여유를 두고 스크롤합니다. 알림 점은 글 뒤 {c.notification.gap} 에 두고(칩이 그만큼 넓어지며, 고른 칩에는 없습니다), 1차 막대는 Fill 이라 칸에서 {lk.layouts.fill.inset} 들입니다
           </Cap>
         </div>
       </div>
@@ -629,18 +629,18 @@ const RoleGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Stack>
       <Pair>
-        <Verdict ok note="다른 구역으로 옮긴다 — 화면 맨 위 Line 탭, 누르면 아래 내용 전체가 바뀐다">
+        <Verdict ok note="다른 구역으로 옮길 때는 화면 맨 위 Line 탭을 씁니다. 누르면 아래 내용 전체가 바뀝니다">
           <StatsScreen mode="auto" />
         </Verdict>
-        <Verdict ok note="같은 내용을 거른다 — 그 목록 바로 위 Segmented Control">
+        <Verdict ok note="같은 내용을 거를 때는 그 목록 바로 위에 Segmented Control 을 둡니다">
           <LedgerScreen mode="auto" />
         </Verdict>
       </Pair>
       <Pair>
-        <Verdict ok note="저장할 폼 값은 Chip(하나 고르기) · Select">
+        <Verdict ok note="저장할 폼 값은 Chip(하나 고르기) · Select 로 받습니다">
           <TxAddScreen />
         </Verdict>
-        <Verdict ok={false} note="폼 값을 탭으로 — 화살표로 옮기기만 해도 골라져 값이 바뀐다">
+        <Verdict ok={false} note="폼 값을 탭으로 받으면 방향키로 옮기기만 해도 골라져 값이 바뀝니다">
           <TxAddScreen tabs />
         </Verdict>
       </Pair>
@@ -652,10 +652,10 @@ const RoleGuide: Fig = ({ caption }) => (
 const MoneyGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="가계부 — 상단 바 바로 아래 Line 넷(가계부 · 자산 · 통계 · 예산), 탭 바는 홈 · 가계부 · + · 캘린더 · 전체 그대로">
+      <Verdict ok note="가계부 — 상단 바 바로 아래에 Line 넷(가계부 · 자산 · 통계 · 예산)을 두고, 탭 바는 홈 · 가계부 · + · 캘린더 · 전체 그대로입니다">
         <MoneyScreen scale={0.46} h={600} value="ledger" />
       </Verdict>
-      <Verdict ok note="자산을 골라도 탭 바는 바뀌지 않는다 — 지금 탭은 가계부, 캘린더 · 전체로 한 번에 간다">
+      <Verdict ok note="자산을 골라도 탭 바는 바뀌지 않습니다. 고른 탭 바 칸은 가계부이고, 캘린더 · 전체로 한 번에 갑니다">
         <MoneyScreen scale={0.46} h={600} value="assets" />
       </Verdict>
     </Pair>
@@ -676,10 +676,10 @@ const TwoTierGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Stack>
       <Pair>
-        <Verdict ok note="1차 Line(증권사) · 2차 Chip Tabs(보기) — 모양이 달라 큰 갈래가 보인다">
+        <Verdict ok note="1차 Line(증권사) · 2차 Chip Tabs(보기) — 모양이 달라 큰 갈래가 보입니다">
           <StocksScreen mode="auto" />
         </Verdict>
-        <Verdict ok={false} note="Chip Tabs 아래 필터 바 — 칩이 같은 모양이라 무엇이 탭인지 알 수 없다. 필터 바가 있으면 2차도 Line 으로">
+        <Verdict ok={false} note="Chip Tabs 아래 필터 바 — 칩이 같은 모양이라 무엇이 탭인지 알 수 없습니다. 필터 바가 있으면 2차도 Line 으로 둡니다">
           <StocksScreen mode="auto" view="discover" extra={<FilterChips />} />
         </Verdict>
       </Pair>
@@ -712,10 +712,10 @@ function Line3({ mode = 'auto' }: { mode?: Mode }) {
 const FillHugGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="6개 이상은 Hug — 탭이 글만큼 넓고, 넘치면 가로로 스크롤한다">
+      <Verdict ok note="6개 이상은 Hug — 탭이 글만큼 넓고, 넘치면 가로로 스크롤합니다">
         <HideScreen />
       </Verdict>
-      <Verdict ok={false} note="Fill 에 6개를 욱여넣기 — 칸이 글보다 좁아 글이 잘린다">
+      <Verdict ok={false} note="Fill 에 6개를 욱여넣으면 칸이 글보다 좁아 글이 잘립니다">
         <HideScreen squeeze />
       </Verdict>
     </Pair>
@@ -744,18 +744,18 @@ const LabelGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Stack>
       <Pair>
-        <Verdict ok note="이름만 — 개수가 필요하면 내용 안에서 보인다">
+        <Verdict ok note="이름만 씁니다 — 개수가 필요하면 내용 안에서 보입니다">
           <CategoryScreen />
         </Verdict>
-        <Verdict ok={false} note='글에 개수 — "지출 23" 처럼 수가 바뀔 때마다 탭 폭이 흔들린다'>
+        <Verdict ok={false} note='글에 개수를 붙이면 "지출 23" 처럼 수가 바뀔 때마다 탭 폭이 흔들립니다'>
           <CategoryScreen counts />
         </Verdict>
       </Pair>
       <Pair>
-        <Verdict ok note="새 소식은 그 탭 하나에 알림 점 — 내용을 보면 지운다(고른 탭에는 없다)">
+        <Verdict ok note="새 소식은 그 탭 하나에 알림 점으로 알리고, 내용을 보면 지웁니다(고른 탭에는 없습니다)">
           <DotScreen dots={['watch']} />
         </Verdict>
-        <Verdict ok={false} note="여러 탭에 알림 점 — 새 소식은 한 탭에만 단다">
+        <Verdict ok={false} note="여러 탭에 알림 점 — 새 소식은 한 탭에만 답니다">
           <DotScreen dots={['watch', 'discover']} />
         </Verdict>
       </Pair>
@@ -837,7 +837,7 @@ const ContentGuide: Fig = ({ caption }) => (
     <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-center">
       <div className="flex flex-col items-center gap-2">
         <SwipeScreen />
-        <Cap strong="폰 — 1차 탭만 밀어 넘긴다">내용이 손을 따라 움직이고, 놓으면 이웃 탭으로 넘어간다 · 2차 탭 · Segmented · 가로로 스크롤하는 영역 위에서는 넘기지 않는다</Cap>
+        <Cap strong="폰 — 1차 탭만 밀어 넘깁니다">내용이 손을 따라 움직이고, 놓으면 이웃 탭으로 넘어갑니다. 2차 탭 · Segmented · 가로로 스크롤하는 영역 위에서는 넘기지 않습니다</Cap>
       </div>
       <div className="flex flex-col items-center gap-2">
         {/* 주소 막대를 크게 — 1차 탭이 주소에 남는다 */}
@@ -850,7 +850,7 @@ const ContentGuide: Fig = ({ caption }) => (
         <Scaled w={520} h={340} s={0.56}>
           <UrlWindow />
         </Scaled>
-        <Cap strong="웹 — 1차 탭을 주소에">?tab=trend — 뒤로 가기 · 링크 · 새로고침이 같은 탭(추이)을 연다. 탭마다 스크롤 · 입력은 남는다</Cap>
+        <Cap strong="웹 — 1차 탭을 주소에">?tab=trend — 뒤로 가기 · 링크 · 새로고침이 같은 탭(추이)을 엽니다. 탭마다 스크롤 · 입력은 남습니다</Cap>
       </div>
     </div>
   </Panel>
@@ -878,7 +878,16 @@ const ExTwoTier: Fig = () => (
   </TabsDemoFrame>
 );
 
+// 개요 카드 — 라이트 두 단 탭(1차 Line medium 증권사 · 2차 Chip Tabs 보기)
+const Thumb: Fig = () => (
+  <div style={{ width: SCREEN, zoom: 0.75 }}>
+    <T mode="light" size="medium" items={BROKER_TABS} value="namu" />
+    <CT mode="light" items={VIEW_TABS} value="holding" />
+  </div>
+);
+
 export const tabsFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

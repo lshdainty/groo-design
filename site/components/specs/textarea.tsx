@@ -65,7 +65,7 @@ const Hero: Fig = ({ caption }) => {
         </Phone>
         <Phone title="메모" mode="dark" scale={0.62} h={640} bg="bg-layer-default">
           <div className="flex flex-col px-6 pt-4">
-            <FT mode="dark" label="본문" value={'10월 회의록\n\n- 디자인 시스템 입력칸을 SEED 로\n- 고르는 칸은 다음 차례에\n- 앱 적용은 컴포넌트를 다 정한 뒤'} max={10000} count={64} />
+            <FT mode="dark" label="본문" value={'10월 회의록\n\n- 가을 행사 장소는 2층 라운지로\n- 참석 인원은 금요일까지 확인\n- 예산은 다음 회의에서 정하기'} max={10000} count={64} />
           </div>
         </Phone>
       </div>
@@ -133,7 +133,7 @@ const AutoSize: Fig = ({ caption }) => (
         <Surface>
           <T value={`${REASON}\n돌아와서 바로 이어서 할게요.\n급한 건 메신저로 연락 주세요.`} />
         </Surface>
-        <Cap strong="쓴 만큼 자란다">최대 높이는 자리마다</Cap>
+        <Cap strong="쓴 만큼 자랍니다">최대 높이는 자리마다 정합니다</Cap>
       </div>
       <div className="flex flex-col gap-2">
         <Surface>
@@ -176,12 +176,12 @@ const LongGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full max-w-[720px] flex-col gap-4 md:flex-row">
-        <Verdict ok note="긴 글은 자라는 칸에 · 최대 길이가 있으면 글자 수">
+        <Verdict ok note="긴 글은 자라는 칸에 받고, 최대 길이가 있으면 글자 수를 붙입니다">
           <div className="w-[280px]">
             <FT label="탈퇴 사유" indicator="optional" value={'자주 쓰지 않게 됐어요. 가계부는 다른 앱으로 옮겼고, 메모만 가끔 썼어요.'} max={200} count={42} />
           </div>
         </Verdict>
-        <Verdict ok={false} note="한 줄 칸에 200자를 받는다 — 쓴 글을 한눈에 볼 수 없다">
+        <Verdict ok={false} note="한 줄 칸에 200자를 받으면 쓴 글을 한눈에 볼 수 없습니다">
           <div className="w-[280px]">
             <TfFieldView look={lk.field} label="탈퇴 사유">
               <TfInputView look={lk.input} size="large" state="enabled" value="자주 쓰지 않게 됐어요. 가계부는 다른 앱으로 옮겼고" />
@@ -199,10 +199,10 @@ const MaxGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full max-w-[720px] flex-col gap-4 md:flex-row">
-        <Verdict ok note="시트 안에서는 최대 높이 — 저장 버튼이 제자리에">
+        <Verdict ok note="시트 안에서는 최대 높이를 정해 저장 버튼이 제자리에 남습니다">
           <Phone title="" mode="light" scale={0.5} h={600} bg="bg-layer-basement" overlay={<Sheet title="메모 추가" mode="light" footer={cta('저장', 'light')}><TfFieldView look={lk.field} mode="light" label="메모"><TfTextareaView look={lk.textarea} input={lk.input} mode="light" size="large" state="enabled" value={long} maxHeight={140} /></TfFieldView></Sheet>} />
         </Verdict>
-        <Verdict ok={false} note="칸이 끝없이 자라 저장 버튼을 화면 밖으로 밀어낸다">
+        <Verdict ok={false} note="칸이 끝없이 자라 저장 버튼을 화면 밖으로 밀어냅니다">
           <Phone
             title=""
             mode="light"
@@ -261,7 +261,15 @@ const ExFixed: Fig = () => {
   );
 };
 
+// 개요 카드 — 라이트 Field + 여러 줄 칸 하나(메모 두 줄 · 글자 수)
+const Thumb: Fig = () => (
+  <div style={{ width: 300, zoom: 0.9 }}>
+    <FT mode="light" label="메모" indicator="optional" value={MEMO} max={100} count={46} />
+  </div>
+);
+
 export const textareaFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

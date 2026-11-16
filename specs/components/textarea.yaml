@@ -1,18 +1,13 @@
-# Textarea 의 수치 원본 — 구조는 SEED Textarea(Text Input 의 여러 줄, 2026-10-01 사용자 결정).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Textarea 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 여러 줄 입력칸이다. 상자 · 테두리 · 상태는 Input(input.yaml)의 outline 과 같고, 다른 것은 높이 · 위아래 여백 · 자라는 방식이다.
-# 라벨 · 설명 · 오류 · 글자 수는 Field(field.yaml)가 둘레에서 그린다.
-# 부위: root 는 상자(테두리 · 바탕 · 모서리), value 는 입력(<textarea>) — 여백 · 높이는 입력이 가진다(SEED).
+# 여러 줄 입력칸입니다. 상자 · 테두리 · 상태는 Input(input.yaml)의 outline 과 같고, 다른 것은 높이 · 위아래 여백 · 자라는 방식입니다.
+# 모양은 outline 하나입니다. 라벨 · 설명 · 오류 · 글자 수는 Field(field.yaml)가 둘레에 그립니다.
+# 부위: root 는 상자(테두리 · 바탕 · 모서리), value 는 입력(<textarea>)입니다 — 여백 · 높이는 입력이 가집니다.
 #
-# 기본은 자동 높이(autoSize on) — 3줄에서 시작해 쓴 만큼 자라고, 최대 높이는 자리마다 정한다(없으면 끝없이 자란다).
-# 자동 높이를 끄면(off) 높이를 자리마다 정하고(2줄 이상) 넘치는 글은 칸 안에서 스크롤한다(SEED). 켰다가 끄면 늘어날 때 넣은 높이를
-# 걷어 고정 높이로 돌아간다(2026-10-08).
-# 크기는 Input 과 같다 — large(폰 · 앱) · medium(1280 이상 데스크톱 웹), 웹의 기본은 responsive.
-#
-# SEED 와 다른 자리(textarea.md 의 "SEED 와 다른 점")
-#   - 모양은 outline 하나 — SEED 디자인 문서의 Textarea 에는 underline 이 없다(코드에만 있다).
-#   - 자동 높이를 끈 2줄 최소 높이를 줄 높이로 계산해 적었다(72 · 62) — SEED 문서는 70 하나.
+# 기본은 자동 높이(autoSize on)입니다 — 3줄에서 시작해 쓴 만큼 자라고, 최대 높이는 자리마다 정합니다(없으면 끝없이 자랍니다).
+# 자동 높이를 끄면(off) 높이를 자리마다 정하고(2줄 이상) 넘치는 글은 칸 안에서 스크롤합니다. 켰다가 끄면 늘어날 때 넣은 높이를
+# 걷어 고정 높이로 돌아갑니다.
+# 크기는 Input 과 같습니다 — large(폰 · 앱) · medium(1280 이상 데스크톱 웹), 웹의 기본은 responsive 입니다.
 
 name: Textarea
 
@@ -50,20 +45,20 @@ rules:
         borderColor: $color-stroke-neutral-weak
         borderWidth: { value: 1px, note: "상자 안쪽에 그린다(inset)" }
         cursor: text
-        transitionProperty: { value: border-color, note: "덧그린 2px 의 색만 — 두께는 바로 바뀐다(SEED)" }
-        transitionDuration: { value: $motion-duration-d2, note: "SEED 는 0.1s 를 바로 적었다" }
+        transitionProperty: { value: border-color, note: "덧그린 2px 의 색만 — 두께는 바로 바뀐다" }
+        transitionDuration: { value: $motion-duration-d2, note: "100ms" }
         transitionEasing: $motion-ease-easing
       value:
         foreground: $color-fg-neutral
         fontWeight: 400
-        caretColor: { value: $color-fg-neutral, note: "캐럿은 글자색 — 고른 글은 기기 기본 하이라이트(Input 과 같다, 사용자 결정 2026-10-08)" }
+        caretColor: { value: $color-fg-neutral, note: "캐럿은 글자색 — 고른 글은 기기 기본 하이라이트(Input 과 같다)" }
         resize: { value: none, note: "손잡이를 두지 않는다 — 자동 높이가 대신한다" }
       placeholder:
         foreground: $color-fg-placeholder
         fontWeight: 400
     focused:
       root:
-        borderColor: { value: $color-stroke-neutral-contrast, note: "읽기 전용이면 바뀌지 않는다 — 읽기 전용은 포커스 표시가 없다(Input 과 같다, 사용자 결정 2026-10-08)" }
+        borderColor: { value: $color-stroke-neutral-contrast, note: "읽기 전용이면 바뀌지 않는다 — 읽기 전용은 포커스 표시가 없다(Input 과 같다)" }
         borderWidth: { value: 2px, note: "안쪽에 덧그린다 — 글이 밀리지 않는다" }
     invalid:
       root:
@@ -71,7 +66,7 @@ rules:
         borderWidth: 2px
     disabled:
       root:
-        background: { value: $color-bg-disabled, note: "흐리게 하지 않는다(v106)" }
+        background: { value: $color-bg-disabled, note: "흐리게 하지 않는다" }
         cursor: not-allowed
       value:
         foreground: $color-fg-disabled
@@ -95,7 +90,7 @@ rules:
   - when: { size: responsive }
     enabled:
       root:
-        breakpoint: { value: 1280px, note: "미만은 large, 이상은 medium 의 값을 쓴다(SEED lg) — 앱은 늘 large" }
+        breakpoint: { value: 1280px, note: "미만은 large, 이상은 medium 의 값을 쓴다 — 앱은 늘 large" }
 
   # ── 높이 ──────────────────────────────────────────────
   - when: { autoSize: "on", size: large }
@@ -106,12 +101,12 @@ rules:
   - when: { autoSize: "on", size: medium }
     enabled:
       value:
-        minHeight: { value: 82px, note: "3줄 — 줄 높이 19 × 3 + 위아래 12 는 81, SEED 는 82" }
+        minHeight: { value: 82px, note: "3줄 — 줄 높이 19 × 3 + 위아래 12 는 81 이고, 82 로 둔다" }
         maxHeight: { value: 자리마다, note: "정하지 않으면 끝없이 자란다. 정하면 그 높이부터 칸 안에서 스크롤" }
   - when: { autoSize: "off", size: large }
     enabled:
       value:
-        minHeight: { value: 72px, note: "2줄 — 이보다 낮게 두지 않는다(SEED 문서 70). 높이는 자리마다 정하고, 넘치면 칸 안에서 스크롤" }
+        minHeight: { value: 72px, note: "2줄 — 줄 높이 22 × 2 + 위아래 14. 이보다 낮게 두지 않는다. 높이는 자리마다 정하고, 넘치면 칸 안에서 스크롤" }
   - when: { autoSize: "off", size: medium }
     enabled:
       value:

@@ -1,7 +1,7 @@
 // Toggle 페이지의 그림 — specs/components/toggle.md 의 `[그림: …](../../site/components/specs/toggle.tsx#<id>)` 자리.
 // 단추는 toggle.yaml 을 푼 값(toggleLook — toggle-view)으로, 상단 바 안의 단추는 Top Navigation 아이콘 버튼(top-navigation.yaml — 44 · 24,
-// 끔도 fg-neutral · 19B)으로, 카드 · 순자산 카드는 card.yaml(data-card-view)로 그린다. 순자산 카드의 금액 가리기 눈은 Toggle 이 아니다 —
-// 같은 상자 · 색을 빌린 이동 단추(ToggleView link — aria-pressed 없음, 2026-10-16 Q-017-2b A · 3c B). 종목 · 금액은 지어낸 것이다.
+// 끔도 fg-neutral)으로, 카드 · 순자산 카드는 card.yaml(data-card-view)로 그린다. 순자산 카드의 금액 가리기 눈은 Toggle 이 아니다 —
+// 같은 상자 · 색을 빌린 이동 단추(ToggleView link — aria-pressed 없음). 종목 · 금액은 지어낸 것이다.
 import type { CSSProperties, ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { buttonLook } from './button-look';
@@ -38,7 +38,7 @@ function Tg({ kind, pressed = false, state = 'enabled', mode = 'auto', tone = 'd
   const k = TOGGLES[kind];
   return <ToggleView look={T(brand)} mode={mode} state={state} pressed={pressed} icon={icon ?? k.icon} pressedIcon={icon ? undefined : k.pressedIcon} tone={tone} ariaLabel={k.label} style={style} />;
 }
-// 상단 바 안에 둔다면 — Top Navigation 아이콘 버튼(44 · 24) · 끔도 fg-neutral(19B). 지금 상단 바에 켜고 끄는 단추를 두는 화면은 없다
+// 상단 바 안에 둔다면 — Top Navigation 아이콘 버튼(44 · 24) · 끔도 fg-neutral
 const TopStar = ({ on = false, mode = 'auto' }: { on?: boolean; mode?: Mode }) => <TopIconButton look={NK().top} mode={mode} icon="star" label="관심 등록" pressed={on} />;
 const TopBell = ({ mode = 'auto' }: { mode?: Mode }) => <TopIconButton look={NK().top} mode={mode} icon="bell" label="알림" />;
 // 순자산 카드의 금액 가리기 눈 — Toggle 이 아니다(설정으로 가는 버튼 · aria-pressed 없음 · 아이콘은 그 카드가 가려졌는지 · 흰 아이콘만)
@@ -171,7 +171,7 @@ const Anatomy: Fig = ({ caption }) => {
             ['ⓒ', `Focus ring — ${l.ring.width}px · 띄움 ${l.ring.offset}px`],
           ]}
         />
-        <span className="text-center text-[12px] pk-muted">{k}배로 그렸다</span>
+        <span className="text-center text-[12px] pk-muted">{k}배로 그렸습니다</span>
       </div>
     </Panel>
   );
@@ -205,7 +205,7 @@ const Toggled: Fig = ({ caption }) => {
           ))}
         </div>
       </Surface>
-      <Cap strong={mode === 'light' ? '라이트' : '다크'}>{`끔 fg-neutral-muted · 선 ${l.stroke.off} — 켬 fg-neutral · 선 ${l.stroke.on}. 바탕은 둘 다 투명하다`}</Cap>
+      <Cap strong={mode === 'light' ? '라이트' : '다크'}>{`끔 fg-neutral-muted · 선 ${l.stroke.off} — 켬 fg-neutral · 선 ${l.stroke.on}. 바탕은 둘 다 투명합니다`}</Cap>
     </div>
   );
   return (
@@ -250,7 +250,7 @@ const Size: Fig = ({ caption }) => {
             </Surface>
           </Shot>
         </div>
-        <Cap>상단 바에서는 이웃 버튼과 같은 진한 색 — 아이콘 줄에서 하나만 흐리면 막힌 단추처럼 보인다(19B). 켬 · 끔은 굵기와 아이콘으로만 가른다. 지금 상단 바에 켜고 끄는 단추를 두는 화면은 없다</Cap>
+        <Cap>상단 바에서는 끔도 이웃 버튼과 같은 진한 색입니다 — 아이콘 줄에서 하나만 흐리면 막힌 단추처럼 보이기 때문입니다. 켬 · 끔은 굵기와 아이콘으로만 구분합니다</Cap>
       </div>
     </Panel>
   );
@@ -283,7 +283,7 @@ const Tone: Fig = ({ caption }) => {
               <HeroWithEye mode={mode} hidden={false} />
               <HeroWithEye mode={mode} hidden focused />
             </div>
-            <Cap strong={mode === 'light' ? '라이트' : '다크'}>{`금액 가리기 눈 — Toggle 이 아니다(aria-pressed 없음 · 이름 "금액 가리기 설정"). 보임 eye · 가림 eye-off(선 ${l.stroke.off} 그대로) · 흰 아이콘만, 원 · 바탕 없음. 가림 카드는 키보드 포커스 — 링도 흰색(${l.ring.width}px · 띄움 ${l.ring.offset})`}</Cap>
+            <Cap strong={mode === 'light' ? '라이트' : '다크'}>{`금액 가리기 눈은 Toggle 이 아닙니다(aria-pressed 없음 · 이름 "금액 가리기 설정"). 보임은 eye, 가림은 eye-off(선 ${l.stroke.off} 그대로)이고 흰 아이콘만 두며 원 · 바탕은 없습니다. 가림 카드는 키보드 포커스 모습이고, 링도 흰색입니다(${l.ring.width}px · 띄움 ${l.ring.offset})`}</Cap>
           </div>
         ))}
       </div>
@@ -336,7 +336,7 @@ const States: Fig = ({ caption }) => {
 const IconGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="모으기 단추(관심)의 끔은 같은 아이콘이 흐린 선 2 — 관심에 넣지 않은 종목마다 사선 별이 깔리지 않는다. 눈은 지금 상태(키가 가려져 있으면 eye-off)">
+      <Verdict ok note="모으기 단추(관심)의 끔은 같은 아이콘을 흐린 선 2 로 그립니다 — 관심에 넣지 않은 종목마다 사선 별이 깔리지 않습니다. 눈은 지금 상태를 그립니다(키가 가려져 있으면 eye-off)">
         <div className="flex w-full max-w-[300px] flex-col gap-2">
           <Surface style={{ padding: 0 }}>
             <StockHead watched={false} />
@@ -344,7 +344,7 @@ const IconGuide: Fig = ({ caption }) => (
           <ToggleCard title="가나증권" sub="App Key ••••••••••••" toggle={<Tg kind="key" />} />
         </div>
       </Verdict>
-      <Verdict ok={false} note="모으기 단추의 끔을 사선(star-off)으로 — 목록의 칸마다 사선이 깔려 '꺼진 기능' 처럼 읽힌다">
+      <Verdict ok={false} note="모으기 단추의 끔을 사선(star-off)으로 그리면 목록의 칸마다 사선이 깔려 '꺼진 기능' 처럼 읽힙니다">
         <div className="flex w-full max-w-[300px] flex-col gap-2">
           <Surface style={{ padding: 0 }}>
             <StockHead watched={false} icon="star-off" />
@@ -360,7 +360,7 @@ const IconGuide: Fig = ({ caption }) => (
 const NameGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="이름 '관심 등록' 은 그대로 — 켜지면 '눌림' 이 붙는다(APG)">
+      <Verdict ok note="이름 '관심 등록' 은 그대로 두고, 켜지면 '눌림' 이 붙습니다(APG)">
         <div className="flex w-full max-w-[300px] flex-col gap-3">
           <Surface style={{ padding: 0 }}>
             <StockHead watched />
@@ -368,7 +368,7 @@ const NameGuide: Fig = ({ caption }) => (
           <Readout text={toggleReadout('관심 등록', true)} />
         </div>
       </Verdict>
-      <Verdict ok={false} note="켜면 이름을 '관심 해제' 로 — '관심 해제, 눌림' 처럼 이름과 상태가 겹쳐 읽힌다">
+      <Verdict ok={false} note="켜질 때 이름을 '관심 해제' 로 바꾸면 '관심 해제, 눌림' 처럼 이름과 상태가 겹쳐 읽힙니다">
         <div className="flex w-full max-w-[300px] flex-col gap-3">
           <Surface style={{ padding: 0 }}>
             <StockHead watched />
@@ -398,10 +398,10 @@ function EyePlaces({ action = false }: { action?: boolean }) {
 const EyeGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="아이콘은 그 카드의 지금 상태 — 가렸으면 eye-off, 보이면 eye. 누르면 금액 가리기 설정(이름 '금액 가리기 설정' · aria-pressed 없음)">
+      <Verdict ok note="아이콘은 그 카드의 지금 상태를 그립니다 — 가렸으면 eye-off, 보이면 eye 입니다. 누르면 금액 가리기 설정으로 갑니다(이름 '금액 가리기 설정' · aria-pressed 없음)">
         <EyePlaces />
       </Verdict>
-      <Verdict ok={false} note="누르면 할 일을 그린다 — 가린 카드에 eye, 보이는 카드에 eye-off. 같은 화면에서 두 눈이 반대로 읽힌다(7A)">
+      <Verdict ok={false} note="누르면 할 일을 그리면 가린 카드에 eye, 보이는 카드에 eye-off 가 놓여 같은 화면에서 두 눈이 반대로 읽힙니다">
         <EyePlaces action />
       </Verdict>
     </Pair>
@@ -425,14 +425,14 @@ const RoleGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="grid w-full gap-4 md:grid-cols-2">
-        <Verdict ok note="단추 하나가 한 상태를 그 자리에서 켜고 끈다 — 관심 등록 · 고정 · 키 보기는 Toggle">
+        <Verdict ok note="단추 하나가 한 상태를 그 자리에서 켜고 끄면 Toggle 입니다 — 관심 등록 · 고정 · 키 보기">
           <div className="w-full max-w-[300px]">
             <Surface style={{ padding: 0 }}>
               <StockHead watched />
             </Surface>
           </div>
         </Verdict>
-        <Verdict ok note="여럿 가운데 거르거나 고른다 — 계좌 거르기는 Chip(체크박스 · 라디오 의미)">
+        <Verdict ok note="여럿 가운데 거르거나 고르면 Chip 입니다(체크박스 · 라디오 의미) — 계좌 거르기">
           <Surface className="w-full max-w-[300px]">
             <ChipGroupView look={chip}>
               {['국민 주계좌', '토스뱅크', '현대카드 신용카드'].map((t, i) => (
@@ -441,13 +441,13 @@ const RoleGuide: Fig = ({ caption }) => {
             </ChipGroupView>
           </Surface>
         </Verdict>
-        <Verdict ok note="누르는 순간 적용되는 설정 줄 — Switch">
+        <Verdict ok note="누르는 순간 적용되는 설정 줄은 Switch 입니다">
           <Surface className="w-full max-w-[300px]">
             <SettingRow label="예산 알림" on />
             <SettingRow label="카드 결제 알림" on={false} />
           </Surface>
         </Verdict>
-        <Verdict ok={false} note="글이 있는 켜고 끄기 단추(옛 Toggle · SEED Toggle Button)로 거르기 — 고른 것인지 켠 것인지 헷갈린다">
+        <Verdict ok={false} note="글이 있는 켜고 끄기 단추로 거르면 고른 것인지 켠 것인지 헷갈립니다">
           <Surface className="w-full max-w-[300px]">
             <div className="flex gap-1">
               {['전체', '지출', '수입'].map((t, i) => (
@@ -467,7 +467,17 @@ const ExEye: Fig = () => <ExEyeDemo look={T()} card={CL()} />;
 const ExSend: Fig = () => <ExSendDemo look={T()} card={CL()} snack={snackbarLook()} />;
 const ExInverted: Fig = () => <ExInvertedDemo look={T()} card={CL()} />;
 
+// 개요 카드 — 라이트 흰 면 위 단추 넷(관심 등록 끔 · 켬, App Key 보기 끔 · 켬)
+const Thumb: Fig = () => (
+  <div style={{ zoom: 1.6 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, max-content)', gap: 8, padding: 12, borderRadius: 16, background: rc('bg-layer-default', 'light') }}>
+      {(['watch', 'key'] as const).map((kind) => [false, true].map((on) => <Tg key={`${kind}-${on}`} kind={kind} pressed={on} mode="light" />))}
+    </div>
+  </div>
+);
+
 export const toggleFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

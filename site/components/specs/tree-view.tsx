@@ -146,9 +146,9 @@ const Anatomy: Fig = ({ caption }) => {
           items={[
             ['ⓐ', `Tree — role=tree · 이름(패널 제목) · Tab 정지점 하나 · 패널 가장자리 ${l.root.padX}`],
             ['ⓑ', `Item — treeitem · 줄 ${l.row.minH} 이상 · 모서리 ${l.row.radius} · 누르는 자리는 ${l.row.touch}`],
-            ['ⓒ', `Chevron — 칸 ${l.chevron.w} · 아이콘 ${l.chevron.icon} · 펼치면 ${l.chevron.openRotate}° · 표시만(따로 누르는 자리가 없다)`],
+            ['ⓒ', `Chevron — 칸 ${l.chevron.w} · 아이콘 ${l.chevron.icon} · 펼치면 ${l.chevron.openRotate}° · 표시만(따로 누르는 자리 없음)`],
             ['ⓓ', `Icon — ${l.icon.size}(building-2) · 장식`],
-            ['ⓔ', `Label — ${parseFloat(l.label.fontSize)} / ${parseFloat(l.label.lineHeight)} · ${l.label.fontWeight} · 줄을 바꾼다`],
+            ['ⓔ', `Label — ${parseFloat(l.label.fontSize)} / ${parseFloat(l.label.lineHeight)} · ${l.label.fontWeight} · 줄바꿈`],
             ['ⓕ', `Group — role=group · 단계마다 ${l.row.indent} 들임`],
             ['ⓖ', `More Button — 나무 밖 ⋮ 하나 · 보이는 ${l.more.size} · 누르는 ${l.more.touch}`],
           ]}
@@ -196,7 +196,7 @@ const Row: Fig = ({ caption }) => {
           </ScaledAuto>
         </Wide>
         <Cap w={640}>
-          줄 {l.row.minH} 이상(위아래 {l.row.padY} + 이름 첫 줄 {lh}) · 줄 왼쪽 {l.row.padL} + (단계 − 1) × {l.row.indent} · 꺾쇠 칸 {l.chevron.w} × {l.chevron.h} · 아이콘 {l.icon.size} · 사이 {l.content.gap} · 오른쪽 {l.row.padR} · 이름 {parseFloat(l.label.fontSize)} / {lh} · {l.label.fontWeight} — 가장 긴 뿌리 이름은 {W} 패널(본문 {BODY_W} × 목록 기본 폭)에서 줄을 바꾸고 꺾쇠 · 아이콘은 첫 줄에 맞춘다(1.25배로 그렸다)
+          줄 {l.row.minH} 이상(위아래 {l.row.padY} + 이름 첫 줄 {lh}) · 줄 왼쪽 {l.row.padL} + (단계 − 1) × {l.row.indent} · 꺾쇠 칸 {l.chevron.w} × {l.chevron.h} · 아이콘 {l.icon.size} · 사이 {l.content.gap} · 오른쪽 {l.row.padR} · 이름 {parseFloat(l.label.fontSize)} / {lh} · {l.label.fontWeight} — 가장 긴 뿌리 이름은 {W} 패널(본문 {BODY_W} × 목록 기본 폭)에서 줄을 바꾸고 꺾쇠 · 아이콘은 첫 줄에 맞춥니다(1.25배로 그렸습니다)
         </Cap>
       </div>
     </Panel>
@@ -210,7 +210,7 @@ const Expand: Fig = ({ caption }) => {
   const cols: [string, DeptNode[], string[], string][] = [
     ['접힘', parent(false), [], `꺾쇠 오른쪽 · aria-expanded=false — 누르면 ${l.press.collapsed}`],
     ['펼침', parent(true), ['data-o'], `꺾쇠 아래(${l.chevron.openRotate}°) · 하위 묶음 — 누르면 ${l.press.expanded}`],
-    ['하위 없음', [{ id: 'ops', label: '경영지원팀' }], [], `꺾쇠 칸 ${l.chevron.w} 을 비운다(이름이 같은 자리) — 누르면 ${l.press.leaf}`],
+    ['하위 없음', [{ id: 'ops', label: '경영지원팀' }], [], `꺾쇠 칸 ${l.chevron.w} 을 비워 이름이 같은 자리에 섭니다 — 누르면 ${l.press.leaf}`],
   ];
   return (
     <Panel caption={caption}>
@@ -226,7 +226,7 @@ const Expand: Fig = ({ caption }) => {
           ))}
         </div>
         <Cap w={640}>
-          누르는 자리는 {l.row.touch}(점선 — 줄 폭 × {l.row.minH} 이상)다. 꺾쇠 칸 {l.chevron.w} 은 표시만이라 꺾쇠를 눌러도 줄을 누른 것과 같다 — 부모는 고르면서 펴고 접는다. → ← 는 고르지 않고 펴고 접기만. 펼침 · 회전 {l.motion.group.duration} · 모션 줄이기면 {l.motion.reduced.duration} 서서히
+          누르는 자리는 {l.row.touch}(점선 — 줄 폭 × {l.row.minH} 이상)입니다. 꺾쇠 칸 {l.chevron.w} 은 표시만 하므로 꺾쇠를 눌러도 줄을 누른 것과 같습니다 — 부모는 고르면서 펴고 접습니다. → ← 는 고르지 않고 펴고 접기만 합니다. 펼침 · 회전은 {l.motion.group.duration}, 모션 줄이기에서는 {l.motion.reduced.duration} 동안 서서히 바뀝니다
         </Cap>
       </div>
     </Panel>
@@ -249,7 +249,7 @@ const Selected: Fig = ({ caption }) => {
         ))}
       </div>
       <div className="mt-4 flex justify-center">
-        <Cap w={640}>고른 항목은 Side Navigation 지금 항목과 같은 bg-neutral-weak-pressed — 올리거나 눌러도 바탕 그대로(더 짙은 불투명 역할이 없다). 호버 · 누름은 bg-layer-default-pressed, 누르면 꺾쇠 · 아이콘 · 이름만 2px 거리 축소, 포커스는 줄 안쪽 링 2px · 모서리 {T().ring.radius}</Cap>
+        <Cap w={640}>고른 항목은 Side Navigation 지금 항목과 같은 bg-neutral-weak-pressed 이고, 올리거나 눌러도 바탕이 그대로입니다(더 짙은 불투명 역할이 없습니다). 호버 · 누름은 bg-layer-default-pressed 이고 누르면 꺾쇠 · 아이콘 · 이름만 2px 거리 축소합니다. 포커스는 줄 안쪽 링 2px · 모서리 {T().ring.radius} 입니다</Cap>
       </div>
     </Panel>
   );
@@ -269,7 +269,7 @@ const Actions: Fig = ({ caption }) => {
           </div>
         </Wide>
         <Cap w={640}>
-          ⋮ 는 Button ghost · iconOnly · medium(보이는 {l.more.size} · 누르는 {l.more.touch} · 아이콘 {l.more.icon}) — 이름 "경영지원팀 더보기"(고른 부서가 바뀌면 이름도). 1280 이상 Menu · 미만 Menu Sheet. 패널 머리는 제목 {parseFloat(l.title.fontSize)} / {parseFloat(l.title.lineHeight)} · {l.title.fontWeight}(왼쪽 {l.header.padLeft} — 나무 줄의 글과 같은 자리)
+          ⋮ 는 Button ghost · iconOnly · medium(보이는 {l.more.size} · 누르는 {l.more.touch} · 아이콘 {l.more.icon})이고, 이름은 "경영지원팀 더보기" 입니다(고른 부서가 바뀌면 이름도 바뀝니다). 1280 이상은 Menu, 미만은 Menu Sheet 로 엽니다. 패널 머리 제목은 {parseFloat(l.title.fontSize)} / {parseFloat(l.title.lineHeight)} · {l.title.fontWeight} 이고, 왼쪽 {l.header.padLeft} 에서 나무 줄의 글과 같은 자리에 섭니다
         </Cap>
       </div>
     </Panel>
@@ -280,15 +280,15 @@ const Actions: Fig = ({ caption }) => {
 const WhenGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex w-full flex-col gap-4">
-      <Verdict ok note="여러 단계에서 하나를 골라 옆에 그 내용을 본다 — 부서는 Tree View">
+      <Verdict ok note="여러 단계에서 하나를 골라 옆에 그 내용을 보면 Tree View 입니다 — 부서">
         <DeptPanelStatic h={300} />
       </Verdict>
-      <Verdict ok note="부모 · 하위 두 단계에서 줄은 편집, 하위만 접는다 — 카테고리는 List 하위 줄">
+      <Verdict ok note="부모 · 하위 두 단계에서 줄은 편집하고 하위만 접으면 List 하위 줄입니다 — 카테고리">
         <div style={{ width: 312, flexShrink: 0, background: 'var(--p-bg-layer-default)' }}>
           <NestedListView list={listLook()} nest={listNestLook()} categories={CATEGORIES.slice(0, 2)} open={['food']} width={312} childLimit={2} />
         </div>
       </Verdict>
-      <Verdict ok note="화면을 옮기는 주 메뉴 — HR 사이드바는 Side Navigation(같은 옛 부품을 쓰던 자리)">
+      <Verdict ok note="화면을 옮기는 주 메뉴는 Side Navigation 입니다 — HR 사이드바">
         <div style={{ height: 300, overflow: 'hidden', borderRadius: 12, flexShrink: 0 }}>
           <Side brand="hr" current="company" height={300} />
         </div>
@@ -297,8 +297,8 @@ const WhenGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 부모 줄은 고르면서 펴고 접는다(16D) — 펼친 클라우드 인프라팀을 누르면 골라지며 접히고, 한 번 더 누르면 고른 채 펴진다.
-// → 는 고르지 않고 펴기만 한다. 꺾쇠만 누르는 자리(고르지 않은 16A)는 나쁜 예로만 그린다. 경영지원팀이 보이게 데이터 플랫폼팀은 접어 둔다
+// 부모 줄은 고르면서 펴고 접는다 — 펼친 클라우드 인프라팀을 누르면 골라지며 접히고, 한 번 더 누르면 고른 채 펴진다.
+// → 는 고르지 않고 펴기만 한다. 꺾쇠만 누르는 자리는 나쁜 예로만 그린다. 경영지원팀이 보이게 데이터 플랫폼팀은 접어 둔다
 const PressGuide: Fig = ({ caption }) => {
   const l = T();
   // 패널은 경영지원팀 아래에서 끊는다 — 패널 폭에서 이름이 몇 줄로 바뀌든 재서 정한다
@@ -322,20 +322,20 @@ const PressGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full flex-col gap-4">
-        <Verdict ok note={`부모 줄 전체가 누르는 자리 — 펼친 부모는 ${l.press.expanded}, 접힌 부모는 ${l.press.collapsed}(Enter · Space 도 같다). 꺾쇠를 눌러도 줄을 누른 것과 같다`}>
+        <Verdict ok note={`부모 줄 전체가 누르는 자리입니다 — 펼친 부모는 ${l.press.expanded}, 접힌 부모는 ${l.press.collapsed}(Enter · Space 도 같습니다). 꺾쇠를 눌러도 줄을 누른 것과 같습니다`}>
           <div className="flex flex-wrap items-start justify-center gap-4">
-            {step('① 펼친 클라우드 인프라팀을 누른다', `경영지원팀을 고른 채 — 누르면 ${l.press.expanded}`, <Panel_><DeptPanelStatic style={flat} selected="ops" expanded={open} states={{ infra: 'pressed' }} /></Panel_>)}
-            {step('② 골라지며 접혔다', `한 번 더 누르면 ${l.press.collapsed}`, <Panel_><DeptPanelStatic style={flat} selected="infra" expanded={shut} /></Panel_>)}
-            {step('③ 고른 채 펴졌다', '하위를 편 채 부모를 고르려면 한 번 더 누르거나 → 로 편다', <Panel_><DeptPanelStatic style={flat} selected="infra" expanded={open} /></Panel_>)}
+            {step('① 펼친 클라우드 인프라팀을 누릅니다', `경영지원팀을 고른 채 — 누르면 ${l.press.expanded}`, <Panel_><DeptPanelStatic style={flat} selected="ops" expanded={open} states={{ infra: 'pressed' }} /></Panel_>)}
+            {step('② 골라지며 접힙니다', `한 번 더 누르면 ${l.press.collapsed}`, <Panel_><DeptPanelStatic style={flat} selected="infra" expanded={shut} /></Panel_>)}
+            {step('③ 고른 채 펴집니다', '하위를 편 채 부모를 고르려면 한 번 더 누르거나 → 로 폅니다', <Panel_><DeptPanelStatic style={flat} selected="infra" expanded={open} /></Panel_>)}
           </div>
         </Verdict>
-        <Verdict ok note="→ ← 는 고르지 않고 펴고 접기만 한다 — 고른 경영지원팀이 그대로다">
+        <Verdict ok note="→ ← 는 고르지 않고 펴고 접기만 합니다 — 고른 경영지원팀이 그대로입니다">
           <div className="flex flex-wrap items-start justify-center gap-4">
             {step('접힌 클라우드 인프라팀에 초점 — →', '키보드 포커스(링) · 경영지원팀 고름', <Panel_><DeptPanelStatic style={flat} selected="ops" expanded={shut} states={{ infra: 'focused' }} /></Panel_>)}
-            {step('펴졌다 — 고름은 그대로', '초점은 클라우드 인프라팀 · 고른 것은 경영지원팀', <Panel_><DeptPanelStatic style={flat} selected="ops" expanded={open} states={{ infra: 'focused' }} /></Panel_>)}
+            {step('펴집니다 — 고름은 그대로', '초점은 클라우드 인프라팀 · 고른 것은 경영지원팀', <Panel_><DeptPanelStatic style={flat} selected="ops" expanded={open} states={{ infra: 'focused' }} /></Panel_>)}
           </div>
         </Verdict>
-        <Verdict ok={false} note={`꺾쇠만 누르는 작은 자리(빨간 점선 ${rejW} × ${l.row.minH}) — 맞히기 어렵고, 꺾쇠와 줄이 다른 일을 해 같은 줄을 눌러도 결과가 갈린다`}>
+        <Verdict ok={false} note={`꺾쇠만 누르는 작은 자리(빨간 점선 ${rejW} × ${l.row.minH})는 맞히기 어렵고, 꺾쇠와 줄이 다른 일을 해 같은 줄을 눌러도 결과가 갈립니다`}>
           <Panel_><DeptPanelStatic style={flat} selected="ops" expanded={open} hit="chevron" /></Panel_>
         </Verdict>
       </div>
@@ -348,10 +348,10 @@ const KeyboardGuide: Fig = () => <TreeKeyboardDemo look={T()} kit={mk('hr')} ov=
 const WrapGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note={`가장 긴 뿌리 이름도 ${PW()} 패널에서 줄을 바꿔 다 읽힌다 — 앞부분이 같은 부서를 말줄임이 가리지 않는다`}>
+      <Verdict ok note={`가장 긴 뿌리 이름도 ${PW()} 패널에서 줄을 바꿔 다 읽힙니다 — 앞부분이 같은 부서를 말줄임이 가리지 않습니다`}>
         <DeptPanelStatic h={260} selected={null} />
       </Verdict>
-      <Verdict ok={false} note="지금 HR — 한 줄 말줄임 · title 도 없다. 앞부분이 같은 부서가 구별되지 않는다">
+      <Verdict ok={false} note="한 줄로 말줄임하고 title 도 없으면 앞부분이 같은 부서가 구별되지 않습니다">
         <DeptPanelStatic h={260} selected={null} ellipsis />
       </Verdict>
     </Pair>
@@ -370,7 +370,20 @@ const ExFixed: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 개요 카드 — 라이트 부서 패널(머리 "부서" + ⋮, 클라우드 인프라팀 펼침 · 경영지원팀 고름)
+const THUMB_NODES: DeptNode[] = [
+  { id: 'infra', label: '클라우드 인프라팀', children: [{ id: 'k8s', label: '쿠버네티스 운영 파트' }] },
+  { id: 'data', label: '데이터 플랫폼팀', children: [{ id: 'ana', label: '분석 파트' }] },
+  { id: 'ops', label: '경영지원팀' },
+];
+const Thumb: Fig = () => (
+  <div style={{ zoom: 0.75 }}>
+    <DeptPanelStatic mode="light" w={248} nodes={THUMB_NODES} selected="ops" expanded={['infra']} />
+  </div>
+);
+
 export const treeViewFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

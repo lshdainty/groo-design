@@ -158,14 +158,14 @@ const Sizes: Fig = ({ caption }) => {
         })}
       </div>
       <div className="mt-4 flex justify-center">
-        <Note>small 은 좁은 팝오버에만 쓴다 — 누르는 높이 {w.sizes.small.item} 은 AAA(44)에 못 미친다. 달력 머리의 연 · 월 휠은 medium · 7칸({w.sizes.medium.item * 7} · 안개 {Math.floor(fogHeight(w, 'medium', 7))})이다.</Note>
+        <Note>small 은 좁은 팝오버에만 씁니다 — 누르는 높이 {w.sizes.small.item} 은 AAA(44)에 못 미칩니다. 달력 머리의 연 · 월 휠은 medium · 7칸({w.sizes.medium.item * 7} · 안개 {Math.floor(fogHeight(w, 'medium', 7))})입니다.</Note>
       </div>
     </Panel>
   );
 };
 
 // ── 달만 고르기 ────────────────────────────────────────────
-// 나쁜 예 — 4 × 3 월 격자(지금 Desk 의 월 피커). 누르면 바로 들어가고 연은 화살표로만 넘긴다
+// 나쁜 예 — 4 × 3 월 격자. 누르면 바로 들어가고 연은 화살표로만 넘긴다
 function MonthGrid({ mode }: { mode: Mode }) {
   return (
     <div className="flex flex-col gap-2">
@@ -188,10 +188,10 @@ const Pair = ({ children }: { children: ReactNode }) => <div className="mx-auto 
 const MonthGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note='연 | 월 휠 + "완료" — 달력 머리의 연 · 월 휠과 같은 모양, 연을 넘나들기 쉽다'>
+      <Verdict ok note='연 | 월 휠 + "완료" — 달력 머리의 연 · 월 휠과 같은 모양이고, 연을 넘나들기 쉽습니다'>
         <BudgetPhone mode="light" scale={0.52} />
       </Verdict>
-      <Verdict ok={false} note="4 × 3 월 격자 — 누르면 바로 들어가고, 연은 화살표로 한 해씩만 넘긴다">
+      <Verdict ok={false} note="4 × 3 월 격자 — 누르면 바로 들어가고, 연은 화살표로 한 해씩만 넘깁니다">
         <PhoneSheet
           mode="light"
           app="예산"
@@ -211,12 +211,22 @@ const MonthGuide: Fig = ({ caption }) => (
 
 // ── 코드 미리보기 ─────────────────────────────────────────
 const ExMonth: Fig = () => (
-  <DateLive ov={overlayKit()} note='이 창의 폭으로 연다 — 1280 미만은 아래 시트, 이상은 칸 아래 팝오버. 휠이 멈춘 뒤 "완료" 로 넣는다.'>
+  <DateLive ov={overlayKit()} note='이 창의 폭으로 엽니다 — 1280 미만은 아래 시트, 이상은 칸 아래 팝오버입니다. 휠이 멈춘 뒤 "완료" 로 넣습니다.'>
     <MonthFieldDemo kit={dk()} ov={overlayKit()} sel={desk()} field={tf().field} label="예산 월" placeholder="월 선택" initial={OCT} />
   </DateLive>
 );
 
+// 개요 카드 — 라이트 연 | 월 휠 하나(2026년 10월을 고른 모습)
+const Thumb: Fig = () => (
+  <div style={{ width: 280, zoom: 0.85 }}>
+    <Floating mode="light" pad={0}>
+      <MonthWheel mode="light" value={OCT} />
+    </Floating>
+  </div>
+);
+
 export const wheelPickerFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,
