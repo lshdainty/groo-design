@@ -167,7 +167,7 @@ function Clip({ text }: { text: string }) {
 const Paste: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="치기 · 붙여넣기 · 자동 채우기 모두 숫자만 뽑아 앞 6자리 — 메일의 띄어 쓴 코드 · 앞에 붙은 글도 그대로 붙는다">
+      <Verdict ok note="입력 · 붙여넣기 · 자동 채우기 모두 숫자만 뽑아 앞 6자리를 씁니다 — 메일의 띄어 쓴 코드 · 앞에 붙은 글도 그대로 붙습니다">
         <div className="flex w-full max-w-[300px] flex-col gap-4">
           {['123 456', '인증 코드: 123456'].map((p) => (
             <div key={p} className="flex flex-col gap-2">
@@ -179,7 +179,7 @@ const Paste: Fig = ({ caption }) => (
           ))}
         </div>
       </Verdict>
-      <Verdict ok={false} note="maxLength 로 먼저 자르기 — 브라우저가 붙인 글을 6글자로 자른 뒤에 숫자만 남겨 '12345' · 빈 칸이 된다(지금 웹)">
+      <Verdict ok={false} note="maxLength 로 먼저 자르기 — 브라우저가 붙인 글을 6글자로 자른 뒤에 숫자만 남겨 '12345' · 빈 칸이 됩니다">
         <div className="flex w-full max-w-[300px] flex-col gap-4">
           {[
             ['123 456', '12345'],
@@ -239,7 +239,7 @@ const States: Fig = ({ caption }) => {
           ))}
         </div>
       </Surface>
-      <Cap strong={mode === 'light' ? '라이트' : '다크'}>포커스 · 오류는 안쪽 2px(내용이 밀리지 않는다) · 오류 글이 설명 줄을 대신한다 · 막힘은 전용 색</Cap>
+      <Cap strong={mode === 'light' ? '라이트' : '다크'}>포커스 · 오류는 안쪽 2px 입니다(내용이 밀리지 않습니다). 오류 글이 설명 줄을 대신하고, 막힘은 전용 색입니다</Cap>
     </div>
   );
   return (
@@ -253,7 +253,7 @@ const States: Fig = ({ caption }) => {
 };
 
 // ── Guidelines ────────────────────────────────────────────
-// 6칸으로 나눈 칸(나쁜 예 그림) — 칸 크기는 옛 스펙의 모양을 흉내 낸다
+// 6칸으로 나눈 칸(나쁜 예 그림)
 function SixCells() {
   const l = L();
   const s = l.sizes.large;
@@ -276,12 +276,12 @@ function SixCells() {
 const SplitGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="한 칸 — 붙여넣기 · 지우기 · 고치기가 보통 글 칸처럼 되고, 크기 · 포커스 · 막힘 규칙을 따로 지킬 일이 없다">
+      <Verdict ok note="한 칸 — 붙여넣기 · 지우기 · 고치기가 보통 글 칸처럼 되고, 크기 · 포커스 · 막힘 규칙을 따로 지킬 일이 없습니다">
         <Surface className="w-full max-w-[300px]">
           <Otp value="4821" state="focused" />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="자릿수만큼 나눈 칸 · 한 칸 위에 그린 6칸 모양 — 지우기 · 고치기가 칸마다 끊기고 붙여넣기가 한 칸에만 들어간다">
+      <Verdict ok={false} note="자릿수만큼 나눈 칸 · 한 칸 위에 그린 6칸 모양 — 지우기 · 고치기가 칸마다 끊기고 붙여넣기가 한 칸에만 들어갑니다">
         <Surface className="w-full max-w-[300px]">
           <SixCells />
         </Surface>
@@ -310,12 +310,12 @@ function RawServerError() {
 const ErrorGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="칸 2px 빨강 · 오류 글이 설명 줄을 대신한다(무엇이 안 됐는지와 할 일) · 다시 받기는 그대로">
+      <Verdict ok note="칸은 2px 빨강, 오류 글이 설명 줄을 대신합니다(무엇이 안 됐는지와 할 일). 다시 받기는 그대로입니다">
         <Surface className="w-full max-w-[300px]">
           <Otp value="482193" state="invalid" resend="ready" />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="서버가 보낸 글을 그대로 칸 아래 빨갛게 — 칸에는 오류 표시가 없고, 설명 줄과 겹쳐 무엇을 할지 모른다(지금 웹)">
+      <Verdict ok={false} note="서버가 보낸 글을 그대로 칸 아래 빨갛게 — 칸에는 오류 표시가 없고, 설명 줄과 겹쳐 무엇을 할지 알 수 없습니다">
         <Surface className="w-full max-w-[300px]">
           <RawServerError />
         </Surface>
@@ -327,7 +327,17 @@ const ErrorGuide: Fig = ({ caption }) => (
 // ── 코드 미리보기 ─────────────────────────────────────────
 const ExBasic: Fig = () => <OtpExDemo look={L()} field={tf().field} input={tf().input} resend={resendBtn()} cta={buttonLook({ size: 'large' })} snack={snackbarLook()} />;
 
+// 개요 카드 — 라이트 코드 칸(포커스 · 입력 중) · 설명 줄 · 다시 받기(52초)
+const Thumb: Fig = () => (
+  <div style={{ width: 320, zoom: 0.84 }}>
+    <Surface mode="light">
+      <Otp mode="light" value="4821" state="focused" resend="cooldown" left={52} />
+    </Surface>
+  </div>
+);
+
 export const inputOtpFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

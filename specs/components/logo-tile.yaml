@@ -1,20 +1,16 @@
-# Logo Tile 의 수치 원본 — 물건(은행 · 증권 · 카드 · 코인 · 금 자산 · 회사)을 보이는 각진 타일
-# (2026-10-04 사용자 결정, 이미지 비교 페이지 5A · 6B · "따라오는 것"). 사람은 Avatar(원)다.
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md. 기관 색은 institution-colors.yaml.
+# Logo Tile 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따르고, 기관 색은 institution-colors.yaml 입니다.
 #
-# 모양 · 크기는 List 의 타일 — 40 기본 · 48 · 32, 모서리 크기 × 0.3(12 · 14 · 10).
-# 면은 기관 색(표에 있으면) 또는 이름 색(Avatar 의 이름 해시 — 차트 10색), 가운데 첫 글자(Avatar 규칙 — 글자 단위 첫 글자, 로마자 대문자).
-# 그림(카드 그림 · 로고 그림)이 있으면 첫 글자를 먼저 그리고 그림이 오면 덮는다 — 실패하면 첫 글자 그대로(Avatar 와 같다, 스켈레톤을 두지 않는다).
-# 안쪽 1px 투명 윤곽(stroke-neutral-overlay, v118)을 늘 그린다 — 짙은 타일이 다크 표면에, 노랑 타일이 흰 표면에 묻히지 않는다.
+# 물건(은행 · 증권 · 카드 · 코인 · 금 자산 · 회사)을 보이는 각진 타일입니다. 사람은 Avatar(원)입니다.
+# 모양 · 크기는 List 의 타일 — 40 기본 · 48 · 32, 모서리 크기 × 0.3(12 · 14 · 10)입니다.
+# 면은 기관 색(표에 있으면) 또는 이름 색(Avatar 의 이름 해시 — 차트 10색)이고, 가운데에 첫 글자(Avatar 규칙 — 글자 단위 첫 글자, 로마자 대문자)를 둡니다.
+# 그림(카드 그림 · 로고 그림)이 있으면 첫 글자를 먼저 그리고 그림이 오면 덮습니다 — 실패하면 첫 글자 그대로입니다(Avatar 와 같습니다, 스켈레톤을 두지 않습니다).
+# 안쪽 1px 투명 윤곽(stroke-neutral-overlay)을 늘 그립니다 — 짙은 타일이 다크 표면에, 노랑 타일이 흰 표면에 묻히지 않습니다.
 #
-# 이름 — 기관이 있으면 기관 이름("신한"), 없으면 자산 이름("비상금"). 첫 글자 · 기관 색 찾기 · 이름 색 · 보조 기술의 이름이 모두 이 이름이다.
-# 기관 색 표는 기관 이름으로만 찾는다(face institution) — 사용자가 지은 자산 이름 · HR 회사 이름은 표를 보지 않는다(face name).
-# 표의 짧은 별칭("우리" · "하나" · "국민" · "기업")이 "우리 아이 적금" · "하나투어" 같은 이름에 걸리지 않게.
+# 이름 — 기관이 있으면 기관 이름("신한"), 없으면 자산 이름("비상금")입니다. 첫 글자 · 기관 색 찾기 · 이름 색 · 보조 기술의 이름이 모두 이 이름입니다.
+# 기관 색 표는 기관 이름으로만 찾습니다(face institution) — 사용자가 지은 자산 이름 · HR 회사 이름은 표를 보지 않습니다(face name).
+# 표의 짧은 별칭("우리" · "하나" · "국민" · "기업")이 "우리 아이 적금" · "하나투어" 같은 이름에 걸리지 않게 하기 위해서입니다.
 # 글자색 — 기관 색 면은 표의 text(white = static-white, dark = 라이트 fg-neutral · 다크 fg-neutral-inverted — 78곳 모두 4.52 이상),
-#   이름 색 면은 fg-neutral-inverted(Avatar 와 같다 — 라이트 흰 · 다크 짙은 글자, 4.55 ~ 7.70).
-#
-# SEED 에는 물건 타일이 없다 — 가게 · 업체는 원 Avatar(Identity Placeholder business), 물건 사진은 Image Frame, 로고 규칙은 출처에 없다.
-# groo 는 사람만 Avatar 로 두고(2026-10-03) 물건은 이 타일이다.
+#   이름 색 면은 fg-neutral-inverted(Avatar 와 같습니다 — 라이트 흰 · 다크 짙은 글자, 4.55 ~ 7.70)입니다.
 
 name: LogoTile
 
@@ -34,7 +30,7 @@ variants:
     institution: 기관(은행 · 증권 · 카드사 · 코인 · 금)의 이름 — 기관 색 표에서 찾아 그 색 면 + 표의 글자색. 표에 없으면 name 과 같다
     name: 기관이 없는 자산(비상금) · 기관이 아닌 회사(HR) — 표를 보지 않고 이름 색(Avatar 해시) + fg-neutral-inverted
   image:
-    none: 그림 없음 — 첫 글자 타일(기본, 지금 은행 · 증권 · 코인 · 금은 모두 이것)
+    none: 그림 없음 — 첫 글자 타일(기본)
     card: 카드 그림 — 옅은 판 위에 카드 전체(세로 그림은 시계 방향 90°)
     logo: 로고 그림 — 흰 판 위에 잘리지 않게(contain)
 
@@ -60,7 +56,7 @@ rules:
         padding: { value: $spacing-x1, note: "그림은 판 안쪽 4 — 모든 크기 · 두 종류. 타일 모서리에 그림의 모서리가 잘리지 않는다" }
       stroke:
         borderWidth: { value: 1px, note: "안쪽(inset box-shadow) — 크기가 변하지 않는다. 면 · 판 · 그림 위" }
-        borderColor: { value: $color-stroke-neutral-overlay, note: "v118 — 검정 4.7% · 다크 흰 5%. 다크 표면과 1.02 인 짙은 남색 타일 둘레도 1.14(윤곽 : 타일)로 잡힌다(장식 — 이름 글이 물건을 알린다)" }
+        borderColor: { value: $color-stroke-neutral-overlay, note: "검정 4.7% · 다크 흰 5%. 다크 표면과 1.02 인 짙은 남색 타일 둘레도 1.14(윤곽 : 타일)로 잡힌다(장식 — 이름 글이 물건을 알린다)" }
 
   # ── 크기 — 모서리 × 0.3 · 첫 글자 = 크기의 40% ──────────
   - when: { size: "32" }
@@ -83,7 +79,7 @@ rules:
       initial: { foreground: { value: 기관 글자색, note: "표의 text — white 면 static-white, dark 면 라이트 fg-neutral · 다크 fg-neutral-inverted(흰 글자가 4.5:1 에 못 미칠 때). 78곳 모두 4.52 이상" } }
   - when: { face: name }
     enabled:
-      root: { background: { value: "chart-{이름 색}", note: "이름의 코드 포인트 합 % 10 → 차트 10색(v110 순서) — Avatar 와 같은 함수. 라이트 700 · 다크 800-dark. 웹 · 앱이 같다" } }
+      root: { background: { value: "chart-{이름 색}", note: "이름의 코드 포인트 합 % 10 → 차트 10색 — Avatar 와 같은 함수(같은 순서). 라이트 700 · 다크 800-dark. 웹 · 앱이 같다" } }
       initial: { foreground: { value: $color-fg-neutral-inverted, note: "라이트 흰 · 다크 짙은 글자 — 차트 색 위 4.55 ~ 7.70(Avatar 와 같다)" } }
 
   # ── 그림 ──────────────────────────────────────────────

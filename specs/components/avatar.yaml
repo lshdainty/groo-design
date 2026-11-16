@@ -1,21 +1,15 @@
-# Avatar 의 수치 원본 — 구조는 SEED Avatar(2026-10-03 사용자 결정, 표시 비교 페이지 5C · 6B · 14). 묶음은 avatar-stack.yaml.
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Avatar 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다. 묶음은 avatar-stack.yaml 입니다.
 #
-# 사람 한 명을 보이는 원 — 사진이 있으면 사진, 없으면 이름의 첫 글자(이니셜) + 이름 색. 누르지 않는다(누르는 자리는 감싼 버튼 ·
-# 링크가 상태를 가진다). 물건(은행 · 증권 · 카드 · 코인 · 금 · 회사)은 Logo Tile(logo-tile.yaml — 같은 첫 글자 · 이름 색 규칙),
-# 카테고리는 List 의 타일이다 — 아바타가 아니다.
+# 사람 한 명을 보이는 원입니다 — 사진이 있으면 사진, 없으면 이름의 첫 글자(이니셜) + 이름 색. 누르지 않습니다(누르는 자리는 감싼 버튼 ·
+# 링크가 상태를 가집니다). 물건(은행 · 증권 · 카드 · 코인 · 금 · 회사)은 Logo Tile(logo-tile.yaml — 같은 첫 글자 · 이름 색 규칙),
+# 카테고리는 List 의 타일입니다 — 아바타가 아닙니다. 오른쪽 아래 배지는 두지 않습니다.
 #
 # 이니셜 · 이름 색 — 웹 · 앱이 같은 규칙(avatar.md 의 "이니셜과 이름 색")
 #   이니셜  = 표시 이름(앞뒤 공백을 뺀)의 첫 글자 하나(grapheme) — 로마자는 대문자. "김민수" → "김", "Kim Minsu" → "K"
-#   이름 색 = 표시 이름의 유니코드 코드 포인트 합 % 10 → 차트 10색(v110 순서)
+#   이름 색 = 표시 이름의 유니코드 코드 포인트 합 % 10 → 차트 10색(차트 색 순서)
 #            blue · green · orange · violet · pink · indigo · red · yellow · brown · gray
 #            "김민수" 142420 → 0 blue · "이서연" 151168 → 8 brown · "Kim Minsu" 845 → 5 indigo
-#   글자색  = fg-neutral-inverted — 라이트 흰 · 다크 짙은 글자(차트 색 위 4.55 ~ 7.70:1, v110)
-#
-# SEED 와 다른 자리(avatar.md 의 "SEED 와 다른 점")
-#   - 사진이 없으면 이니셜 + 이름 색(사용자 결정 5C) — SEED 는 사람 그림(Identity Placeholder)이고 이니셜이 없다.
-#   - 오른쪽 아래 배지(원 · 방패 · 꽃 마스크)는 두지 않는다 — groo 에 쓰는 자리가 없다.
-#   - 80 · 96 의 자리는 groo 화면에서 정했다(SEED 설명 없음).
+#   글자색  = fg-neutral-inverted — 라이트 흰 · 다크 짙은 글자(차트 색 위 4.55 ~ 7.70:1)
 
 name: Avatar
 
@@ -29,20 +23,20 @@ slots:
 
 variants:
   size:
-    "20": 20 — 댓글 단 사람(SEED). groo 글 한 줄 안(공유한 사람 · 작성자)
-    "24": 24 — 답글(SEED). groo 줄 안 묶음(더치페이 목록의 참여자 — 지금 28) · HR 일정 필터 사용자 · 휴가 신청의 결재자
-    "36": 36 — 댓글(SEED). groo 한 줄 목록 줄(더치페이 참가자 · 캘린더 공유 멤버) · 사이드바 사용자 · HR 표의 직원(지금 28 ~ 40 · 32)
-    "42": 42 — 게시글 상세(SEED). groo 두 줄 목록 줄(이름 + 설명 — 설정의 계정 줄 · HR 구성원 목록, 지금 46)
-    "48": 48 — 작은 목록(SEED). groo 지금 쓰는 곳 없음
-    "56": 56 — 큰 목록(SEED). groo 지금 쓰는 곳 없음
-    "64": 64 — 프로필 상세 · 캐러셀(SEED). groo 지금 쓰는 곳 없음
-    "80": 80 — SEED 설명 없음. groo Desk 계정 화면 머리(웹 · 앱, 지금 72)
-    "96": 96 — SEED 설명 없음. groo HR 내 정보 · 직원 정보의 큰 사진(지금 128)
-    "108": 108 — 프로필 수정(SEED). groo HR 직원 정보 수정의 사진(지금 160)
+    "20": 20 — 글 한 줄 안(공유한 사람 · 작성자)
+    "24": 24 — 줄 안 묶음(더치페이 목록의 참여자) · HR 일정 필터 사용자 · 휴가 신청의 결재자
+    "36": 36 — 한 줄 목록 줄(더치페이 참가자 · 캘린더 공유 멤버) · 사이드바 사용자 · HR 표의 직원
+    "42": 42 — 두 줄 목록 줄(이름 + 설명 — 설정의 계정 줄 · HR 구성원 목록)
+    "48": 48 — 작은 목록
+    "56": 56 — 큰 목록
+    "64": 64 — 프로필 상세 · 캐러셀
+    "80": 80 — Desk 계정 화면 머리(웹 · 앱)
+    "96": 96 — HR 내 정보 · 직원 정보의 큰 사진
+    "108": 108 — 프로필 수정(HR 직원 정보 수정의 사진)
 
   edit:
     none: 보이기만 — 누르지 않는다(기본)
-    photo: 사진 바꾸기 자리 — 아바타 아래 늘 보이는 버튼 둘(HR 직원 정보 수정의 108 — 2026-10-15 마무리 6A)
+    photo: 사진 바꾸기 자리 — 아바타 아래 늘 보이는 버튼 둘(HR 직원 정보 수정의 108)
 
 defaults:
   size: "48"
@@ -61,17 +55,17 @@ rules:
       image:
         objectFit: cover
       initial:
-        background: { value: "chart-{이름 색}", note: "이름의 코드 포인트 합 % 10 → 차트 10색(v110 순서 blue · green · orange · violet · pink · indigo · red · yellow · brown · gray) — 라이트 700 · 다크 800-dark. 색은 뜻이 없다(장식)" }
+        background: { value: "chart-{이름 색}", note: "이름의 코드 포인트 합 % 10 → 차트 10색(차트 색 순서 blue · green · orange · violet · pink · indigo · red · yellow · brown · gray) — 라이트 700 · 다크 800-dark. 색은 뜻이 없다(장식)" }
         foreground: { value: $color-fg-neutral-inverted, note: "라이트 흰 · 다크 짙은 글자 — 차트 색 위 4.55(yellow) ~ 7.70:1(gray 다크). 다크에서 흰 글자는 1.88 ~ 2.39 라 쓰지 않는다" }
         fontWeight: 700
         lineHeight: { value: 1, note: "원 가운데 — 글자 크기 설정을 따르지 않는 px(원 안에서 넘치지 않게)" }
         textTransform: { value: uppercase, note: "로마자 첫 글자만 대문자 — \"Kim Minsu\" → \"K\". 한글 · 숫자 · 그림 글자는 그대로" }
       border:
-        borderWidth: { value: 1px, note: "모든 크기 1 — 원 안쪽(inset box-shadow), 크기가 변하지 않는다(SEED)" }
-        borderColor: { value: $color-stroke-neutral-overlay, note: "v118 — 검정 4.7% · 다크 흰 5%(SEED stroke.neutral-subtle 의 값). 흰 사진이 흰 바탕에 묻히지 않고, 어두운 사진 · 이니셜 원 둘레에는 테가 생기지 않는다. Image Frame · Logo Tile 의 윤곽과 같은 색" }
+        borderWidth: { value: 1px, note: "모든 크기 1 — 원 안쪽(inset box-shadow), 크기가 변하지 않는다" }
+        borderColor: { value: $color-stroke-neutral-overlay, note: "검정 4.7% · 다크 흰 5%. 흰 사진이 흰 바탕에 묻히지 않고, 어두운 사진 · 이니셜 원 둘레에는 테가 생기지 않는다. Image Frame · Logo Tile 의 윤곽과 같은 색" }
 
   # ── 크기 ──────────────────────────────────────────────
-  # 이니셜 글자 = 지름의 40%(가장 작아도 10) — 비교 페이지 그림의 값
+  # 이니셜 글자 = 지름의 40%(가장 작아도 10)
   - when: { size: "20" }
     enabled:
       root: { size: 20px }
@@ -114,7 +108,7 @@ rules:
       initial: { fontSize: 43px }
 
   # ── 사진 바꾸기 자리 ──────────────────────────────────
-  # 아바타 아래 늘 보이는 버튼 둘 — 마우스를 올려야 보이는 덮개(6C)와 Attachment Input 한 장(6B)은 고르지 않았다.
+  # 아바타 아래 늘 보이는 버튼 둘 — 마우스를 올려야 보이는 덮개는 두지 않는다.
   - when: { edit: photo }
     enabled:
       editActions:

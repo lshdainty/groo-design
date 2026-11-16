@@ -113,10 +113,10 @@ const Anatomy: Fig = ({ caption }) => {
         <Legend
           items={[
             ['ⓐ', 'Root — 폭은 부모, 높이는 폭 ÷ 비율'],
-            ['ⓑ', 'Child — 자식 하나가 상자를 채운다'],
+            ['ⓑ', 'Child — 자식 하나가 상자를 채웁니다'],
           ]}
         />
-        <Note>16:9 상자(폭 {W} → 높이 {H.toFixed(1)}). 모서리 · 바탕 · 윤곽이 없다 — 점선은 상자의 자리다</Note>
+        <Note>16:9 상자(폭 {W} → 높이 {H.toFixed(1)}). 모서리 · 바탕 · 윤곽이 없습니다 — 점선은 상자의 자리입니다</Note>
       </div>
     </Figure>
   );
@@ -146,7 +146,7 @@ const Ratio: Fig = ({ caption }) => {
               <span className="tabular-nums">
                 {w} × {(w / l.ratios[r].value).toFixed(1)}
               </span>
-              <span>{r === 'card' ? 'groo — 카드 모양 자리' : RATIO_KO[r]}</span>
+              <span>{r === 'card' ? '카드 모양 자리' : RATIO_KO[r]}</span>
             </span>
           </div>
         ))}
@@ -175,7 +175,7 @@ const WhichGuide: Fig = ({ caption }) => {
             </span>
           </div>
         </Verdict>
-        <Verdict ok={false} note="Aspect Ratio 에 그림을 넣고 모서리를 손으로 둘렀다 — 줄마다 12 · 6 · 4, 윤곽 · 대체 그림이 없다" bg={BASEMENT}>
+        <Verdict ok={false} note="Aspect Ratio 에 그림을 넣고 모서리를 손으로 둘렀습니다 — 줄마다 12 · 6 · 4, 윤곽 · 대체 그림이 없습니다" bg={BASEMENT}>
           <div className="flex w-full flex-col gap-3">
             <PhoneBoard>
               <Rows
@@ -206,7 +206,7 @@ function BrokenImg() {
   );
 }
 
-// 한 화면은 한두 비율 — 한 격자는 한 비율 · 칸마다 다른 비율
+// 한 목록 · 격자는 한 비율 — 한 격자는 한 비율 · 칸마다 다른 비율
 const GRID_PICS: PicKind[] = ['meadow', 'sunset', 'sea', 'forest'];
 const RatioGuide: Fig = ({ caption }) => {
   const mixed: IfRatio[] = ['1:1', '16:9', '4:5', '2:1'];
@@ -219,10 +219,10 @@ const RatioGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="한 격자는 4:3 하나 — 줄 높이가 고르다" bg={BASEMENT}>
+        <Verdict ok note="한 격자는 4:3 하나 — 줄 높이가 고릅니다" bg={BASEMENT}>
           <div className="grid grid-cols-2 items-start gap-3 rounded-2xl p-4 pk-surface">{GRID_PICS.map((p, i) => cell('4:3', p, i))}</div>
         </Verdict>
-        <Verdict ok={false} note="칸마다 1:1 · 16:9 · 4:5 · 2:1 — 줄 높이가 들쭉날쭉하다" bg={BASEMENT}>
+        <Verdict ok={false} note="칸마다 1:1 · 16:9 · 4:5 · 2:1 — 줄 높이가 들쭉날쭉합니다" bg={BASEMENT}>
           <div className="grid grid-cols-2 items-start gap-3 rounded-2xl p-4 pk-surface">{GRID_PICS.map((p, i) => cell(mixed[i], p, i))}</div>
         </Verdict>
       </Pair>
@@ -244,7 +244,27 @@ const ExVideo: Fig = ({ caption }) => (
   </figure>
 );
 
+// 개요 카드 — 라이트 비율 상자 둘(4:3 지도 · 16:9 동영상), 화면 틀 없이
+const Thumb: Fig = () => (
+  <div className="flex items-end" style={{ width: 280, gap: 16 }}>
+    {(
+      [
+        ['4:3', 120, <MapChild key="m" frame={v('4:3')} label="가게 위치 지도" />],
+        ['16:9', 144, <VideoChild key="v" frame={v('16:9')} label="자산 연결 안내 동영상" />],
+      ] as [IfRatio, number, ReactNode][]
+    ).map(([r, w, kid]) => (
+      <div key={r} className="flex flex-col items-center gap-1.5" style={{ width: w }}>
+        <AR ratio={r} width={w}>
+          {kid}
+        </AR>
+        <Sub mode="light" strong={r} />
+      </div>
+    ))}
+  </div>
+);
+
 export const aspectRatioFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

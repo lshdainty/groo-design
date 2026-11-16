@@ -105,7 +105,7 @@ const Anatomy: Fig = ({ caption }) => {
             ['ⓓ', `Stroke — 안쪽 ${l.stroke.width}px 투명 윤곽`],
           ]}
         />
-        <Note>40 을 3배로 그렸다 — 카드 그림은 옅은 판 위에 카드 전체(세로 그림은 돌린다), 로고 그림은 흰 판 위에 잘리지 않게. 점선 안쪽이 판의 여백 {l.platePad} 를 뺀 그림 자리다</Note>
+        <Note>40 을 3배로 그렸습니다 — 카드 그림은 옅은 판 위에 카드 전체(세로 그림은 돌립니다), 로고 그림은 흰 판 위에 잘리지 않게 둡니다. 점선 안쪽이 판의 여백 {l.platePad} 를 뺀 그림 자리입니다</Note>
       </div>
     </Figure>
   );
@@ -135,7 +135,7 @@ const Size: Fig = ({ caption }) => {
             </div>
           ))}
         </div>
-        <Note>모서리는 크기 × 0.3, 첫 글자는 크기의 40%(반올림). 32 는 좁은 줄 · 카드 옆 회사, 40 은 목록 줄, 48 은 상세 머리 — 이 밖의 크기를 만들지 않는다</Note>
+        <Note>모서리는 크기 × 0.3, 첫 글자는 크기의 40%(반올림)입니다. 32 는 좁은 줄 · 카드 옆 회사, 40 은 목록 줄, 48 은 상세 머리에 씁니다 — 이 밖의 크기를 만들지 않습니다</Note>
       </div>
     </Panel>
   );
@@ -333,11 +333,11 @@ const Loading: Fig = ({ caption }) => {
   return (
     <Figure caption={caption}>
       <div className="flex flex-col items-center gap-3">
-        {step('처음 그릴 때', '이름을 아니까 첫 글자 타일 — 스켈레톤을 두지 않는다', 'initial')}
+        {step('처음 그릴 때', '이름을 아니까 첫 글자 타일 — 스켈레톤을 두지 않습니다', 'initial')}
         <ArrowRight aria-hidden size={18} className="rotate-90 pk-muted" />
-        {step('그림이 옴', '판과 카드 그림이 첫 글자를 덮는다(전환 없이)', 'loaded')}
+        {step('그림이 옴', '판과 카드 그림이 첫 글자를 덮습니다(전환 없이)', 'loaded')}
         <span className="text-[12px] pk-muted">또는</span>
-        {step('못 불러옴', '첫 글자 그대로 — 깨진 그림 · 빈 칸이 없다', 'failed')}
+        {step('못 불러옴', '첫 글자 그대로 — 깨진 그림 · 빈 칸이 없습니다', 'failed')}
       </div>
     </Figure>
   );
@@ -358,7 +358,7 @@ const ThingGuide: Fig = ({ caption }) => (
           <Rows rows={[{ kind: 'button', prefix: { tile: 'orange', icon: 'utensils' }, title: '점심 식사', detail: '식비 · 오후 12:40', suffix: { amount: '−12,000원' } }]} />
         </PhoneBoard>
       </Verdict>
-      <Verdict ok={false} note="은행 · 증권을 원 아바타로 — 사람과 물건이 한 모양이 된다" bg={BASEMENT}>
+      <Verdict ok={false} note="은행 · 증권을 원 아바타로 — 사람과 물건이 한 모양이 됩니다" bg={BASEMENT}>
         <PhoneBoard>
           <Header title="자산" />
           <Rows
@@ -373,7 +373,7 @@ const ThingGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 흰 글자가 모자라면 짙은 글자 — 유안타 · 대신 · NH농협(지금 흰 글자)
+// 흰 글자가 모자라면 짙은 글자 — 유안타 · 대신 · NH농협(모든 곳에 흰 글자를 쓰면 4.5:1 에 못 미친다)
 const CONTRAST_NAMES = ['유안타증권', '대신증권', 'NH농협'];
 const ContrastGuide: Fig = ({ caption }) => {
   const l = LTL();
@@ -391,7 +391,7 @@ const ContrastGuide: Fig = ({ caption }) => {
             ))}
           </div>
         </Verdict>
-        <Verdict ok={false} note="모든 기관 색에 흰 글자(지금) — 4.5:1 에 못 미쳐 첫 글자가 읽기 어렵다" bg={BASEMENT}>
+        <Verdict ok={false} note="모든 기관 색에 흰 글자 — 4.5:1 에 못 미쳐 첫 글자가 읽기 어렵습니다" bg={BASEMENT}>
           <div className="flex gap-4 rounded-2xl p-4 pk-surface">
             {CONTRAST_NAMES.map((n) => (
               <span key={n} className="flex flex-col items-center gap-1.5">
@@ -451,13 +451,13 @@ const StrokeGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="투명 윤곽(stroke-neutral-overlay)이 둘레를 잡는다 — 타일 색은 그대로. 윤곽은 장식이라 대비는 작아도 된다(이름 글이 물건을 알린다)" bg={BASEMENT}>
+        <Verdict ok note="투명 윤곽(stroke-neutral-overlay)이 둘레를 잡습니다 — 타일 색은 그대로입니다. 윤곽은 장식이라 대비는 작아도 됩니다(이름 글이 물건을 알립니다)" bg={BASEMENT}>
           <div className="flex flex-wrap justify-center gap-3">
             {set('dark', true)}
             {set('light', true)}
           </div>
         </Verdict>
-        <Verdict ok={false} note="윤곽 없이 — 짙은 남색은 다크 표면에, 노랑은 흰 표면에 묻혀 글자만 뜬다" bg={BASEMENT}>
+        <Verdict ok={false} note="윤곽 없이 — 짙은 남색은 다크 표면에, 노랑은 흰 표면에 묻혀 글자만 뜹니다" bg={BASEMENT}>
           <div className="flex flex-wrap justify-center gap-3">
             {set('dark', false)}
             {set('light', false)}
@@ -468,7 +468,7 @@ const StrokeGuide: Fig = ({ caption }) => {
   );
 };
 
-// 같은 기관은 같은 색 — 같은 자산이 웹 · 앱에서 같은 색 · 웹 · 앱이 다른 해시로 갈린 지금(값은 캡션의 지금 색)
+// 같은 기관은 같은 색 — 같은 자산이 웹 · 앱에서 같은 색 · 웹 · 앱이 다른 해시를 두면 갈린다(값은 캡션의 색)
 const ColorGuide: Fig = ({ caption }) => {
   const m = /웹\s*(#[0-9a-f]{6})\s*·\s*앱\s*(#[0-9a-f]{6})/i.exec(caption ?? '');
   if (!m) throw new Error('logo-tile.md color-guide 캡션에서 "웹 #… · 앱 #…" 를 찾지 못했다 — 그림을 고친다');
@@ -486,13 +486,13 @@ const ColorGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair stack>
-        <Verdict ok note={`웹 · 앱이 Avatar 와 같은 함수로 이름 색을 고른다 — "${asset.name}" 은 어디서나 ${avatarHue(asset.name, LTL().order)}`} bg={BASEMENT}>
+        <Verdict ok note={`웹 · 앱이 Avatar 와 같은 함수로 이름 색을 고릅니다 — "${asset.name}" 은 어디서나 ${avatarHue(asset.name, LTL().order)} 입니다`} bg={BASEMENT}>
           <div className="flex flex-col gap-3">
             {board('웹')}
             {board('앱')}
           </div>
         </Verdict>
-        <Verdict ok={false} note={`웹은 oklch 해시(${web}), 앱은 HSL 해시(${app}) — 같은 자산이 다른 색이다(지금)`} bg={BASEMENT}>
+        <Verdict ok={false} note={`웹은 oklch 해시(${web}), 앱은 HSL 해시(${app})로 따로 고르면 같은 자산이 다른 색이 됩니다`} bg={BASEMENT}>
           <div className="flex flex-col gap-3">
             {board('웹', web)}
             {board('앱', app)}
@@ -515,7 +515,7 @@ const NameGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair stack>
-        <Verdict ok note="이름 옆 타일은 숨긴다(첫 글자도, 그림도) — 혼자인 타일은 이름을 가진다" bg={BASEMENT}>
+        <Verdict ok note="이름 옆 타일은 숨깁니다(첫 글자도, 그림도) — 혼자인 타일은 이름을 가집니다" bg={BASEMENT}>
           <div className="flex flex-col items-center gap-3">
             <PhoneBoard>
               <Rows rows={[assetRow(a)]} />
@@ -525,7 +525,7 @@ const NameGuide: Fig = ({ caption }) => {
             <Reading tone="ok">&ldquo;신한, 이미지&rdquo;</Reading>
           </div>
         </Verdict>
-        <Verdict ok={false} note='첫 글자를 읽는다 — "신 신한 주거래 통장". 혼자인 타일은 이름이 없다' bg={BASEMENT}>
+        <Verdict ok={false} note='첫 글자를 읽습니다 — "신 신한 주거래 통장". 혼자인 타일은 이름이 없습니다' bg={BASEMENT}>
           <div className="flex flex-col items-center gap-3">
             <PhoneBoard>
               <Rows rows={[assetRow(a)]} />
@@ -611,7 +611,27 @@ function checkCodeTable() {
   }
 }
 
+// 개요 카드 — 라이트 타일 여섯(기관 색 흰 · 짙은 글자 · 코인 · 카드 그림 · 로고 그림 · 이름 색). 48 × 3 + 16 × 2 = 176 × 112, zoom 1.5 → 264 × 168
+const THUMB: { name: string; face?: 'institution' | 'name'; image?: 'card' | 'logo'; pic?: 'card-v' | 'logo-leaf' }[] = [
+  { name: '신한' },
+  { name: 'KB국민' },
+  { name: '업비트' },
+  { name: '삼성카드', image: 'card', pic: 'card-v' },
+  { name: '숲길', face: 'name', image: 'logo', pic: 'logo-leaf' },
+  { name: '비상금', face: 'name' },
+];
+const Thumb: Fig = () => (
+  <div style={{ width: 176, zoom: 1.5 }}>
+    <div className="grid grid-cols-3" style={{ gap: 16 }}>
+      {THUMB.map((t) => (
+        <Logo key={t.name} size="48" mode="light" name={t.name} face={t.face} image={t.image} pic={t.pic} />
+      ))}
+    </div>
+  </div>
+);
+
 export const logoTileFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

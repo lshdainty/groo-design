@@ -1,17 +1,12 @@
-# Icon Picker 의 수치 원본 — 카테고리 · 저축 목표 아이콘 고르기(2026-10-09 사용자 결정, 입력 비교 페이지 15A · 16A · 17A · "따라오는 것").
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Icon Picker 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# Input Button 트리거(라벨 "아이콘" · 지금 아이콘 · 그 이름)가 고른 세트(category-icons.yaml — 148개 · 13 묶음)의 격자를
-# 1280 미만은 Bottom Sheet, 이상은 Popover 로 연다. 위에 찾기 칸(Input 밑줄형 — 한국어 이름 · 찾는 말), 아래 묶음 머리 + 칸 48 · 아이콘 24 격자.
-# 고른 칸은 안쪽 2px 짙은 테두리(Select Box v113 과 같다). 누르면 고르고 닫힌다(Input Button 의 "목록은 누르면 바로").
-# 격자는 2차원 화살표(roving tabindex), 찾으면 결과 수를 화면 밖으로 알리고, 0건이면 Result Section.
-# 트리거 · 시트 · 팝오버 · 찾기 칸 · 묶음 머리의 나머지 값은 input-button.yaml · bottom-sheet.yaml · popover.yaml · input.yaml · list-header.yaml 이 원본이다.
+# 카테고리 · 저축 목표의 아이콘을 고릅니다. Input Button 트리거(라벨 "아이콘" · 지금 아이콘 · 그 이름)가 고른 세트(category-icons.yaml — 148개 · 13 묶음)의 격자를
+# 1280 미만은 Bottom Sheet, 이상은 Popover 로 엽니다. 위에 찾기 칸(Input 밑줄형 — 한국어 이름 · 찾는 말), 아래 묶음 머리 + 칸 48 · 아이콘 24 격자를 둡니다.
+# 고른 칸은 안쪽 2px 짙은 테두리(Select Box 와 같습니다). 누르면 고르고 닫힙니다(Input Button 의 "목록은 누르면 바로").
+# 격자는 2차원 화살표(roving tabindex)로 옮기고, 찾으면 결과 수를 화면 밖으로 알리며, 0건이면 Result Section 을 둡니다.
+# 트리거 · 시트 · 팝오버 · 찾기 칸 · 묶음 머리의 나머지 값은 input-button.yaml · bottom-sheet.yaml · popover.yaml · input.yaml · list-header.yaml 이 원본입니다.
 #
-# 축 — selected(고름) · surface(시트 · 팝오버). 상태는 칸의 상태다.
-#
-# SEED 와 다른 자리(icon-picker.md 의 "SEED 와 다른 점")
-#   - SEED 에는 아이콘 고르기 부품이 없다 — 문서 사이트 Icon Library(칸 ≈ 60 · 사이 16 · 아이콘 24 · 고름 = bg.brand-weak 틴트 ·
-#     칸마다 Tab)는 제품 부품이 아니다. 아이콘 24 는 같고, 칸 48 · 고른 테두리 · 2차원 화살표 · 고른 세트 · 한국어 찾기는 groo 가 정했다.
+# 축 — selected(고름) · surface(시트 · 팝오버). 상태는 칸의 상태입니다.
 
 name: Icon Picker
 
@@ -42,9 +37,9 @@ defaults:
 
 states:
   enabled: 기본
-  hovered: 웹 — 누름과 같은 바탕(v106)
+  hovered: 웹 — 누름과 같은 바탕
   focused: 키보드 포커스 — 칸 바깥 링(roving — 격자에 Tab 하나)
-  pressed: 바탕 + 칸 2px 거리 축소(v104) — 손을 떼면 고르고 닫힌다
+  pressed: 바탕 + 칸 2px 거리 축소 — 손을 떼면 고르고 닫힌다
 
 rules:
   # ── 공통 ──────────────────────────────────────────────
@@ -73,11 +68,11 @@ rules:
         radius: $radius-r3
         background: transparent
         cursor: pointer
-        touchTarget: { value: 48 × 48, note: "AA ✓ · AAA ✓ — SEED Iconography \"24px 크기에서는 44px 이상\"" }
+        touchTarget: { value: 48 × 48, note: "AA ✓ · AAA ✓ — 아이콘 24 에는 누르는 영역 44 이상" }
         name: { value: 한국어 이름, note: "\"커피\" — 영어 lucide 이름을 이름으로 두지 않는다. 마우스는 같은 글의 툴팁" }
         role: option
       icon:
-        size: { value: 24px, note: "lucide 기본 격자 — v106 의 24" }
+        size: { value: 24px, note: "lucide 기본 격자" }
         strokeWidth: { value: 2px, note: "lucide 기본" }
         color: { value: $color-fg-neutral, note: "시트 · 팝오버 위 16.41 · 다크 11.62" }
       count:
@@ -90,7 +85,7 @@ rules:
     pressed:
       cell:
         background: $color-bg-layer-floating-pressed
-        scale: { value: 칸 2px 거리 축소, note: "기준 48 — Feedback 의 눌림 피드백(v104). 모션 줄이기면 하지 않는다" }
+        scale: { value: 칸 2px 거리 축소, note: "기준 48 — Feedback 의 눌림 피드백. 모션 줄이기면 하지 않는다" }
         scaleDuration: $motion-duration-pressed-scale
         scaleEasing: $motion-ease-pressed-scale
     focused:
@@ -103,10 +98,10 @@ rules:
   - when: { selected: selected }
     enabled:
       cell:
-        borderWidth: { value: 2px, note: "안쪽에 덧그린다 — 아이콘이 밀리지 않는다(Select Box v113 의 고른 테두리와 같다). 바탕은 칠하지 않는다(반전 · 브랜드 채움은 고르지 않았다 — 17B)" }
+        borderWidth: { value: 2px, note: "안쪽에 덧그린다 — 아이콘이 밀리지 않는다(Select Box 의 고른 테두리와 같다). 바탕은 칠하지 않는다" }
         borderColor: { value: $color-stroke-neutral-contrast, note: "시트 · 팝오버 위 16.41 · 다크 11.62" }
       icon:
-        strokeWidth: { value: 2.5px, note: "v106 — 선택은 선 2.5" }
+        strokeWidth: { value: 2.5px, note: "선택은 선 2.5" }
 
   # ── 여는 자리 ─────────────────────────────────────────
   - when: { surface: sheet }
@@ -117,7 +112,7 @@ rules:
       grid:
         columns: { value: 6, note: "폰 본문 312 ~ 342 — 48 × 6 + 4 × 5 = 308 이 들어간다. 본문이 308 보다 좁으면(320 폰) 들어가는 만큼(5열), 태블릿 시트(432)도 6열" }
       scroll:
-        scrollFog: { value: 켬, note: "격자가 넘친다 — Bottom Sheet 본문의 끝 흐림(Scroll Fog overlayBody, 위 20 · 아래 80 늘 켜짐 · 2026-10-03 규칙). 찾기 칸은 스크롤 상자 밖이라 흐리지 않는다" }
+        scrollFog: { value: 켬, note: "격자가 넘친다 — Bottom Sheet 본문의 끝 흐림(Scroll Fog overlayBody, 위 20 · 아래 80 늘 켜짐). 찾기 칸은 스크롤 상자 밖이라 흐리지 않는다" }
       search:
         height: { value: 40px, note: "밑줄형 large — 글 18 / 24 · 돋보기 24" }
   - when: { surface: popover }
@@ -129,7 +124,7 @@ rules:
       grid:
         columns: { value: 7, note: "본문 360 = 48 × 7 + 4 × 6" }
       scroll:
-        scrollFog: { value: 켬, note: "격자가 넘친다 — Popover 본문의 끝 흐림(Scroll Fog overlayBody, 위 20 · 아래 80 늘 켜짐 · 2026-10-03 규칙). 찾기 칸은 스크롤 상자 밖" }
+        scrollFog: { value: 켬, note: "격자가 넘친다 — Popover 본문의 끝 흐림(Scroll Fog overlayBody, 위 20 · 아래 80 늘 켜짐). 찾기 칸은 스크롤 상자 밖" }
       search:
         height: { value: 34px, note: "밑줄형 medium — 글 16 / 22 · 돋보기 20" }
 

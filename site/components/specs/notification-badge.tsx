@@ -137,7 +137,7 @@ const Anatomy: Fig = ({ caption }) => {
             </span>
           ))}
         </div>
-        <span className="text-center text-[12px] leading-4 pk-muted">4배로 그렸다 — 24 아이콘 상자 위에 겹쳐 놓인다(아이콘 크기 · 버튼 높이를 바꾸지 않는다)</span>
+        <span className="text-center text-[12px] leading-4 pk-muted">4배로 그렸습니다 — 24 아이콘 상자 위에 겹쳐 놓입니다(아이콘 크기 · 버튼 높이를 바꾸지 않습니다)</span>
       </div>
     </Figure>
   );
@@ -183,7 +183,7 @@ const Size: Fig = ({ caption }) => {
         {panel('dark')}
       </div>
       <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">
-        점 {nl().dot.size} · 숫자 알약 높이 {c.h} · 최소 폭 {c.minW} · 좌우 {c.padX} · 숫자 {parseFloat(c.text.fontSize)} / {parseFloat(c.text.lineHeight)} · {c.text.fontWeight} · 숫자 폭 같게({c.numerals}) — 100 이상은 99+, 0 이면 없다. 숫자는 글자 크기 설정을 따르지 않는다
+        점 {nl().dot.size} · 숫자 알약 높이 {c.h} · 최소 폭 {c.minW} · 좌우 {c.padX} · 숫자 {parseFloat(c.text.fontSize)} / {parseFloat(c.text.lineHeight)} · {c.text.fontWeight} · 숫자 폭 같게({c.numerals}) — 100 이상은 99+, 0 이면 없습니다. 숫자는 글자 크기 설정을 따르지 않습니다
       </p>
     </Panel>
   );
@@ -246,7 +246,7 @@ const Placement: Fig = ({ caption }) => {
               </Coord>
             </span>
           </Board>
-          <Cap strong="아이콘 · 점(small)">오른쪽 위 안쪽 {n.dot.right} — 아이콘 크기가 달라도 같은 식</Cap>
+          <Cap strong="아이콘 · 점(small)">오른쪽 위 안쪽 {n.dot.right} — 아이콘 크기가 달라도 같은 식입니다</Cap>
         </div>
         <div className="flex min-w-0 flex-col gap-2">
           <Board className="flex min-h-[230px] items-center justify-center overflow-x-auto">
@@ -266,7 +266,7 @@ const Placement: Fig = ({ caption }) => {
             </span>
           </Board>
           <Cap strong="아이콘 · 숫자(large)">
-            왼쪽 아래 꼭짓점 = (아이콘 폭 − {c.fromRight}, {c.bottom}) — 위로 {c.h - c.bottom} 튀어나오고 숫자가 길수록 오른쪽으로 자란다
+            왼쪽 아래 꼭짓점 = (아이콘 폭 − {c.fromRight}, {c.bottom}) — 위로 {c.h - c.bottom} 튀어나오고 숫자가 길수록 오른쪽으로 자랍니다
           </Cap>
         </div>
         <div className="flex min-w-0 flex-col gap-2">
@@ -279,10 +279,10 @@ const Placement: Fig = ({ caption }) => {
               <Coord style={{ left: '100%', top: -22 }}>{n.textGap}</Coord>
             </span>
           </Board>
-          <Cap strong="글 · 점">마지막 글자 뒤 {n.textGap} · 위는 글 줄 상자의 위 끝 — 탭 폭 · 줄 높이를 바꾸지 않는다(3배)</Cap>
+          <Cap strong="글 · 점">마지막 글자 뒤 {n.textGap} · 위는 글 줄 상자의 위 끝 — 탭 폭 · 줄 높이를 바꾸지 않습니다(3배)</Cap>
         </div>
       </div>
-      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">분홍 테두리 — 24 아이콘 상자(6배, 눈금 1px). 자리는 버튼 상자가 아니라 붙는 대상의 상자에서 잰다</p>
+      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">분홍 테두리 — 24 아이콘 상자(6배, 눈금 1px). 자리는 버튼 상자가 아니라 붙는 대상의 상자에서 잽니다</p>
     </Panel>
   );
 };
@@ -310,7 +310,7 @@ function Arrow({ children }: { children: ReactNode }) {
 const WhenGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="안 읽은 알림이 있을 때만 — 알림 목록을 열면(보면) 바로 사라진다">
+      <Verdict ok note="안 읽은 알림이 있을 때만 답니다 — 알림 목록을 열면(보면) 바로 사라집니다">
         <W w={300}>
           <div className="flex flex-col gap-2">
             <AppBar title="가계부">
@@ -323,7 +323,7 @@ const WhenGuide: Fig = ({ caption }) => (
           </div>
         </W>
       </Verdict>
-      <Verdict ok={false} note="걸린 필터 수 · 거래 수처럼 늘 있는 개수를 알림 숫자로 — 새 것이 아니라 보아도 사라지지 않는다">
+      <Verdict ok={false} note="걸린 필터 수 · 거래 수처럼 늘 있는 개수를 알림 숫자로 — 새 것이 아니라 보아도 사라지지 않습니다">
         <W w={300}>
           <div className="flex flex-col gap-2">
             <AppBar title="가계부">
@@ -356,7 +356,7 @@ const OveruseGuide: Fig = ({ caption }) => (
       <Verdict ok note="한 화면에 하나 — 상단 바의 알림만">
         <LedgerScreen mode="auto" bell={<Bell />} scale={0.62} h={470} />
       </Verdict>
-      <Verdict ok={false} note="탭마다 점 — 무엇이 중요한지 흐려진다. 탭은 여러 탭에 동시에 달지 않는다">
+      <Verdict ok={false} note="탭마다 점 — 무엇이 중요한지 흐려집니다. 탭은 여러 탭에 동시에 달지 않습니다">
         <LedgerScreen mode="auto" bell={<Bell />} scale={0.62} h={470} tabsDots />
       </Verdict>
     </Pair>
@@ -380,7 +380,7 @@ const CountGuide: Fig = ({ caption }) => (
           </AppBar>
         </W>
       </Verdict>
-      <Verdict ok={false} note='개수가 아닌 말("연결됨")을 알림 자리에 — 버튼 글 · Badge 다'>
+      <Verdict ok={false} note='개수가 아닌 말("연결됨")을 알림 자리에 — 말은 버튼 글 · Badge 입니다'>
         <W w={240}>
           <AppBar title="거래 상세">
             <BarButton>
@@ -401,7 +401,7 @@ const CountGuide: Fig = ({ caption }) => (
 const ColorGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="브랜드 색 — Desk 파랑 · HR 초록. 알림은 오류가 아니다">
+      <Verdict ok note="브랜드 색 — Desk 파랑 · HR 초록. 알림은 오류가 아닙니다">
         <W w={280}>
           <div className="flex flex-col gap-2">
             <AppBar title="groo desk">
@@ -415,7 +415,7 @@ const ColorGuide: Fig = ({ caption }) => (
           </div>
         </W>
       </Verdict>
-      <Verdict ok={false} note="빨간 점 · 숫자 — 오류 · 넘침 표시와 같은 색이 된다">
+      <Verdict ok={false} note="빨간 점 · 숫자 — 오류 · 넘침 표시와 같은 색이 됩니다">
         <W w={280}>
           <div className="flex flex-col gap-2">
             <AppBar title="groo desk">
@@ -460,7 +460,7 @@ const NameGuide: Fig = ({ caption }) => (
           <Reading tone="ok">&ldquo;알림, 새 알림 128개, 버튼&rdquo;</Reading>
         </div>
       </Verdict>
-      <Verdict ok={false} note='이름이 "알림" 뿐 — 새 알림이 있는지 소리로 알 수 없다. 숫자만 읽히는 "3" 도 무엇인지 모른다'>
+      <Verdict ok={false} note='이름이 "알림" 뿐 — 새 알림이 있는지 소리로 알 수 없습니다. 숫자만 읽히는 "3" 도 무엇인지 모릅니다'>
         <div className="flex flex-col items-center gap-3">
           <W w={260}>
             <AppBar title="가계부">
@@ -508,7 +508,28 @@ const ExCount: Fig = ({ caption }) => (
   </Preview>
 );
 
+// 개요 카드 — 라이트 알림 버튼 셋(점 · 3 · 99+)과 탭 글의 점
+const Thumb: Fig = () => {
+  const t5 = dk().text.t5;
+  return (
+    // 그린 크기 약 200 × 112 → zoom 1.4 로 280 × 157
+    <div style={{ width: 200, zoom: 1.4 }}>
+      <div className="flex flex-col items-center gap-4 rounded-2xl px-4 py-4" style={{ background: tone('bg-layer-default', 'light') }}>
+        <div className="flex items-center gap-4">
+          <Bell mode="light" />
+          <Bell mode="light" notif="large" count={3} />
+          <Bell mode="light" notif="large" count={128} />
+        </div>
+        <NotificationBadgeView look={nl()} mode="light" attach="text">
+          <span style={{ fontSize: t5.fontSize, lineHeight: t5.lineHeight, fontWeight: 700, color: tone('fg-neutral', 'light') }}>승인 내역</span>
+        </NotificationBadgeView>
+      </div>
+    </div>
+  );
+};
+
 export const notificationBadgeFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

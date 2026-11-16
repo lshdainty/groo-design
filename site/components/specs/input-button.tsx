@@ -236,7 +236,7 @@ const Affix: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Cell label={<><b className="pk-text">달력</b> calendar — 누르면 달력이 열린다</>}>
+        <Cell label={<><b className="pk-text">달력</b> calendar — 누르면 달력이 열립니다</>}>
           <F label="날짜">
             <InputButtonView look={lk} size="large" state="enabled" value="10월 12일 (월)" suffixIcon="calendar" />
           </F>
@@ -282,7 +282,7 @@ const Clear: Fig = ({ caption }) => {
             <InputButtonView look={lk} size="large" state="enabled" value="김포레" suffixIcon="chevron-down" clearable />
           </F>
         </Cell>
-        <Cell label={<><b className="pk-text">막혔을 때</b> 보이지 않는다</>}>
+        <Cell label={<><b className="pk-text">막혔을 때</b> 보이지 않습니다</>}>
           <F label="참조자" indicator="optional">
             <InputButtonView look={lk} size="large" state="disabled" value="김포레" suffixIcon="chevron-down" clearable />
           </F>
@@ -300,14 +300,14 @@ const AloneGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="늘 고르는 자리를 연다 — 달력 · 시각 휠 · 격자 · 목록 · 검색 시트">
+        <Verdict ok note="언제나 고르는 자리를 엽니다 — 달력 · 시각 휠 · 격자 · 목록 · 검색 시트">
           <Screen title="거래 추가" screenW={SCREEN} h={DATE_PHONE_H} overlay={<DateSheet selected={12} />}>
             <F mode="light" label="날짜">
               <InputButtonView look={lk} mode="light" size="large" state="pressed" value="10월 12일 (월)" suffixIcon="calendar" />
             </F>
           </Screen>
         </Verdict>
-        <Verdict ok={false} note="다른 화면으로 가는 칸 — 그건 List 의 줄이다">
+        <Verdict ok={false} note="다른 화면으로 가는 칸 — 이런 자리는 List 의 줄로 만듭니다">
           <Screen title="설정" screenW={SCREEN} h={DATE_PHONE_H}>
             <F mode="light" label="알림">
               <InputButtonView look={lk} mode="light" size="large" state="enabled" value="켜짐" suffixIcon="chevron-right" />
@@ -375,14 +375,14 @@ const ConfirmGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note='고르는 동안 칸은 그대로(1일) — "완료" 를 누를 때 12일이 들어간다'>
+        <Verdict ok note='고르는 동안 칸은 그대로입니다(1일) — "완료" 를 누를 때 12일이 들어갑니다'>
           <Screen title="거래 추가" screenW={SCREEN} h={DATE_PHONE_H} overlay={<DateSheet selected={12} />}>
             <F mode="light" label="날짜">
               <InputButtonView look={lk} mode="light" size="large" state="enabled" value="10월 1일 (목)" suffixIcon="calendar" />
             </F>
           </Screen>
         </Verdict>
-        <Verdict ok={false} note="휠을 굴리는 대로 칸이 바뀐다 — 지나가던 값이 들어가고, 닫아도 되돌릴 수 없다">
+        <Verdict ok={false} note="휠을 굴리는 대로 칸이 바뀝니다 — 지나가던 값이 들어가고, 닫아도 되돌릴 수 없습니다">
           <Screen
             title="거래 추가"
             screenW={SCREEN}
@@ -425,7 +425,7 @@ const ListGuide: Fig = ({ caption }) => {
               <InputButtonView look={lk} mode="light" size="large" state="enabled" value="식비 · 아침" prefixIcon="sunrise" suffixIcon="chevron-down" />
             </F>
           </Screen>
-          <Cap strong="누르는 순간 고른다">격자 · 하나 고르는 목록에는 &quot;완료&quot; 가 없다</Cap>
+          <Cap strong="누르는 순간 고릅니다">격자 · 하나 고르는 목록에는 &quot;완료&quot; 가 없습니다</Cap>
         </div>
         <ArrowRight aria-hidden size={24} className="rotate-90 pk-muted md:rotate-0" />
         <div className="flex flex-col items-center gap-2">
@@ -434,7 +434,7 @@ const ListGuide: Fig = ({ caption }) => {
               <InputButtonView look={lk} mode="light" size="large" state="enabled" value="식비 · 점심" prefixIcon="utensils" suffixIcon="chevron-down" />
             </F>
           </Screen>
-          <Cap strong="닫히고 칸에 들어간다">여럿 고르는 목록만 &quot;완료&quot; 로 넣는다</Cap>
+          <Cap strong="닫히고 칸에 들어갑니다">여럿 고르는 목록만 &quot;완료&quot; 로 넣습니다</Cap>
         </div>
       </div>
     </Panel>
@@ -449,7 +449,7 @@ const SearchGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="시트 위에 밑줄형 검색칸, 아래 목록 — 치는 대로 걸러지고, 고르면 닫힌다">
+        <Verdict ok note="시트 위에 밑줄형 검색칸, 아래에 목록을 둡니다 — 입력하는 대로 걸러지고, 고르면 닫힙니다">
           <Screen
             title="휴가 신청"
             overlay={
@@ -475,7 +475,7 @@ const SearchGuide: Fig = ({ caption }) => {
             </F>
           </Screen>
         </Verdict>
-        <Verdict ok={false} note="검색 없는 긴 Select — 스크롤로 한 사람씩 찾아야 한다">
+        <Verdict ok={false} note="검색 없는 긴 Select — 스크롤로 한 사람씩 찾아야 합니다">
           <Screen title="휴가 신청">
             <F mode="light" label="결재자">
               <SelectOpenView look={lk} mode="light" size="large" groups={all} placeholder="결재자 선택" placement="overlay" maxHeight={340} scrollTop={120} />
@@ -520,7 +520,27 @@ const ExStates: Fig = () => {
   );
 };
 
+// 개요 카드 — 라이트 폼의 날짜 칸 · 카테고리 칸(앞 아이콘)
+const Thumb: Fig = () => {
+  const lk = desk();
+  return (
+    <div style={{ width: 340, zoom: 0.78 }}>
+      <Surface mode="light">
+        <Form>
+          <F mode="light" label="날짜">
+            <InputButtonView look={lk} mode="light" size="large" state="enabled" value="10월 12일 (월)" suffixIcon="calendar" />
+          </F>
+          <F mode="light" label="카테고리">
+            <InputButtonView look={lk} mode="light" size="large" state="enabled" value="식비 · 점심" prefixIcon="utensils" suffixIcon="chevron-down" />
+          </F>
+        </Form>
+      </Surface>
+    </div>
+  );
+};
+
 export const inputButtonFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,
