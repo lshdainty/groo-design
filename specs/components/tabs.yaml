@@ -1,19 +1,14 @@
-# Tabs 의 수치 원본 — 구조는 SEED Tabs 의 Line 타입(2026-10-02 사용자 결정, 비교 페이지 여덟 — Tabs 쪽은 모두 SEED).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Tabs 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 다른 구역으로 옮기는 탭. 화면 · 구역 맨 위의 1차 탭은 Line(이 파일), 그 안 2차 탭은 Chip Tabs(chip-tabs.yaml —
-# 칩 하나는 chip.yaml 그대로). 같은 내용을 2 ~ 4가지로 바로 거르거나 다르게 보는 자리는 Segmented Control
-# (segmented-control.yaml), 폼 값은 Chip · Select, 목록 조건은 Chip 필터 바다.
+# 다른 구역으로 옮기는 탭입니다. 화면 · 구역 맨 위의 1차 탭은 Line(이 파일), 그 안 2차 탭은 Chip Tabs(chip-tabs.yaml —
+# 칩 하나는 chip.yaml 그대로)입니다. 같은 내용을 2 ~ 4가지로 바로 거르거나 다르게 보는 자리는 Segmented Control
+# (segmented-control.yaml), 폼 값은 Chip · Select, 목록 조건은 Chip 필터 바를 씁니다.
 #
-# 고름(selected)은 누름 · 비활성과 곱해지므로 상태가 아니라 축이다(specs/CLAUDE.md).
-# 막대(indicator)는 목록에 하나 있고 고른 탭 아래로 미끄러진다 — 값은 공통 규칙에, 들임은 layout 규칙에 있다.
-#
-# SEED 와 다른 자리(tabs.md 의 "SEED 와 다른 점")
-#   - 목록 바닥 선: SEED stroke.neutral-muted(반투명) → 불투명 구획 선 stroke-neutral-subtle(v102).
-#   - 막대 들임 · Hug 목록 좌우는 SEED 처럼 16 이다 — groo 의 화면 여백 24(spacing-global-gutter)를 쓰지 않는다.
-#     탭이 제 좌우 10 을 더해 Hug 의 첫 글이 26 에서 시작한다(목록 · 본문 글의 24 와 거의 맞는다).
-#   - 알림 점은 브랜드 글자색(fg-brand — 다크에서 밝은 짝, Desk · HR 이 다르다) — Notification Badge small 과 같다(notification-badge.yaml).
-#     SEED 는 bg.brand-solid 이고, groo 다크에서는 그 색이 바탕에 묻힌다.
+# 고름(selected)은 누름 · 비활성과 곱해지므로 상태가 아니라 축으로 둡니다(specs/CLAUDE.md).
+# 막대(indicator)는 목록에 하나 있고 고른 탭 아래로 미끄러집니다 — 값은 공통 규칙에, 들임은 layout 규칙에 있습니다.
+# 막대 들임 · Hug 목록 좌우는 16 이고 화면 여백 24(spacing-global-gutter)를 쓰지 않습니다. 탭의 좌우 10 이 더해져
+# Hug 의 첫 글이 26 에서 시작합니다(본문 글의 24 와 거의 맞습니다).
+# 알림 점은 브랜드 글자색(fg-brand — 다크에서 밝은 짝, Desk · HR 이 다릅니다)이며 Notification Badge small 과 같습니다(notification-badge.yaml).
 
 name: Tabs
 
@@ -43,7 +38,7 @@ defaults:
   selected: unselected
 
 states:
-  enabled: 기본 — 마우스 호버 모양은 없다(SEED)
+  enabled: 기본 — 마우스 호버 모양은 없다
   pressed: 탭을 2px 거리로 축소만 — 색은 그대로(이미 색이 고름을 말한다)
   focused: 웹 — 키보드 포커스에만 링
   disabled: 막힌 탭 — 누를 수 없고 키보드 이동에서 건너뛴다
@@ -54,13 +49,13 @@ rules:
     enabled:
       list:
         background: { value: $color-bg-layer-default, note: "불투명 — 위에 붙어 있어도 아래 내용이 비치지 않는다" }
-        borderBottomColor: { value: $color-stroke-neutral-subtle, note: "안쪽 1px(inset) — 선이 탭 높이를 밀지 않는다. SEED stroke.neutral-muted 의 불투명 구획 선(v102)" }
+        borderBottomColor: { value: $color-stroke-neutral-subtle, note: "안쪽 1px(inset) — 선이 탭 높이를 밀지 않는다. 불투명 구획 선" }
         borderBottomWidth: 1px
-        position: { value: "화면 맨 위 1차 — 상단 바 아래 고정", note: "화면 맨 위 1차 Line 은 어디서나 Top Navigation 바로 아래에 붙어 함께 고정된다(SEED Tabs stickyList — Desk 가계부 묶음 · 카테고리 지출 · 수입). 숨지 않는다 — 숨는 것은 그 아래 스크롤 상자의 Scroll Auto Hide 뿐(2026-10-16 구현 세션 질문 Q-017-5 정리)" }
+        position: { value: "화면 맨 위 1차 — 상단 바 아래 고정", note: "화면 맨 위 1차 Line 은 어디서나 Top Navigation 바로 아래에 붙어 함께 고정된다(Desk 가계부 묶음 · 카테고리 지출 · 수입). 숨지 않는다 — 숨는 것은 그 아래 스크롤 상자의 Scroll Auto Hide 뿐" }
       trigger:
         paddingX: $spacing-x2_5
         paddingY: $spacing-x2_5
-        alignItems: { value: flex-end, note: "글을 아래로 붙인다 — 아래 10, 남는 높이는 위로(SEED)" }
+        alignItems: { value: flex-end, note: "글을 아래로 붙인다 — 아래 10, 남는 높이는 위로" }
         cursor: pointer
         touchTarget: { value: 탭 전체, note: "목록 높이가 곧 누르는 높이 — small 40 · medium 44. 가로는 탭 폭(Hug 는 글 + 20)" }
       label:
@@ -69,7 +64,7 @@ rules:
       indicator:
         height: 2px
         background: { value: $color-fg-neutral, note: "글자색과 같은 짙은 중립색 — 브랜드 색이 아니다" }
-        radius: { value: 0px, note: "끝이 각지다(SEED)" }
+        radius: { value: 0px, note: "끝이 각지다" }
         transitionProperty: { value: "left, width", note: "고른 탭의 자리 · 폭으로 미끄러진다. 글자색은 전환 없이 바로 바뀐다" }
         transitionDuration: $motion-duration-d4
         transitionEasing: $motion-ease-easing
@@ -80,13 +75,13 @@ rules:
         gap: { value: 2px, note: "글 끝에서 2, 글 위쪽에 맞춘다 — 탭 폭을 넓히지 않는다" }
     pressed:
       trigger:
-        scale: { value: 탭 2px 거리 축소, note: "기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px(SEED scaleScope: self · v104) — 모션 줄이기면 하지 않는다" }
+        scale: { value: 탭 2px 거리 축소, note: "기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px(탭 자신 기준) — 모션 줄이기면 하지 않는다" }
         scaleDuration: $motion-duration-pressed-scale
         scaleEasing: $motion-ease-pressed-scale
     focused:
       focusRing:
         width: 2px
-        offset: { value: -2px, note: "탭 안쪽 — 이웃 탭 · 바닥 선에 걸리지 않는다. 모서리는 각지다(SEED)" }
+        offset: { value: -2px, note: "탭 안쪽 — 이웃 탭 · 바닥 선에 걸리지 않는다. 모서리는 각지다" }
         color: $color-stroke-focus-ring
     disabled:
       trigger:
@@ -108,16 +103,16 @@ rules:
     enabled:
       list:
         paddingX: 0px
-        overflowX: { value: auto, note: "글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤 — 스크롤바는 숨긴다(SEED, 2026-10-21 03-G 3B)" }
-        scrollPadding: { value: $spacing-x4, note: "넘쳐 스크롤할 때 고른 탭이 화면 밖이면 16 여유를 두고 가까운 쪽으로 스크롤한다 — Hug 와 같다(웹 · 앱이 이미 이렇게 한다, 2026-10-22 I-04 검수). 넘치지 않으면 하는 일이 없다" }
+        overflowX: { value: auto, note: "글이 칸을 넘으면 Fill 모양 그대로 목록만 가로 스크롤 — 스크롤바는 숨긴다" }
+        scrollPadding: { value: $spacing-x4, note: "넘쳐 스크롤할 때 고른 탭이 화면 밖이면 16 여유를 두고 가까운 쪽으로 스크롤한다 — Hug 와 같다(웹 · 앱 모두). 넘치지 않으면 하는 일이 없다" }
       trigger:
-        grow: { value: 1, note: "칸을 똑같이 나눈다 — 글이 칸보다 길면 그 탭만 넓어지고, 넘치면 Fill 모양 그대로 목록만 가로 스크롤(SEED, 2026-10-21 03-G 3B)" }
+        grow: { value: 1, note: "칸을 똑같이 나눈다 — 글이 칸보다 길면 그 탭만 넓어지고, 넘치면 Fill 모양 그대로 목록만 가로 스크롤" }
       indicator:
         insetX: { value: $spacing-x4, note: "탭 폭에서 좌우 16 씩 들인다 — 막대 = 탭 폭 − 32. 360 폰 2 · 3 · 4 · 5개면 148 · 88 · 58 · 40" }
   - when: { layout: hug }
     enabled:
       list:
-        paddingX: { value: $spacing-x4, note: "SEED 16 — 탭의 좌우 10 이 더해져 첫 글이 26 에서 시작한다" }
+        paddingX: { value: $spacing-x4, note: "16 — 탭의 좌우 10 이 더해져 첫 글이 26 에서 시작한다" }
         overflowX: { value: auto, note: "넘치면 가로 스크롤 — 스크롤바는 숨긴다" }
         scrollPadding: { value: $spacing-x4, note: "고른 탭이 화면 밖이면 16 여유를 두고 가까운 쪽으로 스크롤한다" }
       trigger:

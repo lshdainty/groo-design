@@ -1,32 +1,20 @@
-# Table 의 수치 원본 — 구조는 SEED 문서 사이트의 표와 디자인 그림의 데이터 표(2026-10-08 사용자 결정,
-# 데이터 표시 비교 페이지 1A · 2A · 3B · "따라오는 것"). 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Table 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# SEED 에는 표 컴포넌트가 없다. SEED 팀이 코드로 그린 표는 문서 사이트의 표(TableRoot — "SEED 테이블 디자인의 단일 소스",
-# 제품 컴포넌트가 아니다) 하나이고, Table Pagination 문서 그림의 데이터 표가 정렬 표시 · 선택 칸 · ⋮ 열 · 72 줄을 보인다.
-# 머리 41 · 줄 45 · 글 14 / 20 은 문서 표, 72 줄 · 늘 보이는 ↑↓ · 숫자 오른쪽 · ⋮ 열은 그림에서 왔다. 정렬 동작 · 선택 ·
-# 일괄 작업 바 · 머리 고정 · 좁은 화면 · 빈 · 실패는 SEED 에 없어 groo 가 정했다.
+# 줄과 열로 된 데이터를 견주어 읽는 표입니다. 표는 카드 안에 가장자리까지 붙고, 표 아래 넘김 줄은 Table Pagination 입니다.
 #
-# 상태는 줄의 상태다 — 줄을 누르면 상세가 열리는 표만 hovered · pressed · focused 가 있다(보기만 하는 줄은 enabled 하나).
-# 정렬 버튼도 같은 상태를 쓴다. 줄 종류(row) · 맞춤(align) · 정렬(sort) · 고르기(selection) · 폭(width)은 상태와 곱해지므로 축이다.
-# 768 미만(width: narrow)은 표를 그리지 않고 List 줄로 바꾼다 — 줄의 값은 list.yaml 이고, 여기에는 칸 → 줄 자리의 대응만 둔다.
-#
-# SEED 와 다른 자리(table.md 의 "SEED 와 다른 점")
-#   - 줄 선은 불투명한 stroke-neutral-subtle — SEED 안에서 문서 표(stroke.neutral-muted)와 토큰 설명(stroke.neutral-subtle)이 갈리고
-#     둘 다 투명도가 있는 색이다. groo 의 불투명 짝은 둘 다 stroke-neutral-subtle 이다(v102).
-#   - 머리 굵기는 문서 표의 500 — SEED 그림은 굵게(700 안팎) 보인다.
-#   - 첫 칸 앞 · 끝 칸 뒤 여백은 카드 여백 24 — 표가 카드 안에 가장자리까지 붙는다(SEED 문서 표는 사방 16).
-#   - 상태 배지는 왼쪽(글 열과 같다) — SEED 그림은 가운데.
-#   - 768 미만은 List 줄 — SEED 는 가로 스크롤 상자다.
+# 상태는 줄의 상태입니다 — 줄을 누르면 상세가 열리는 표만 hovered · pressed · focused 가 있습니다(보기만 하는 줄은 enabled 하나).
+# 정렬 버튼도 같은 상태를 씁니다. 줄 종류(row) · 맞춤(align) · 정렬(sort) · 고르기(selection) · 폭(width)은 상태와 곱해지므로 축으로 둡니다.
+# 768 미만(width: narrow)은 표를 그리지 않고 List 줄로 바꿉니다 — 줄의 값은 list.yaml 이고, 여기에는 칸 → 줄 자리의 대응만 둡니다.
 
 name: Table
 
 slots:
-  root: 표 상자 — 카드 안에 가장자리까지 붙는다. 표와 넘김 줄(Table Pagination)을 담고, 넘치면 함께 가로로 민다
-  caption: 표 이름 `<caption>` — 보이는 제목은 카드 머리, 여기는 같은 글을 숨겨 둔다
+  root: 표 상자 — 카드 안에 가장자리까지 붙습니다. 표와 넘김 줄(Table Pagination)을 담고, 넘치면 함께 가로로 밉니다
+  caption: 표 이름 `<caption>` — 보이는 제목은 카드 머리, 여기는 같은 글을 숨겨 둡니다
   headerRow: 머리 줄 `<thead><tr>` — 바탕 없음, 아래 선
   headerCell: 머리 칸 `<th scope="col">` — 열 이름. ⋮ 열은 글 없이 숨긴 "동작"
-  sortButton: 정렬 버튼 — 정렬할 수 있는 열의 머리 칸을 채운다
-  sortIcon: 정렬 표시 ↑↓ — 정렬할 수 있는 열에 늘 있다
+  sortButton: 정렬 버튼 — 정렬할 수 있는 열의 머리 칸을 채웁니다
+  sortIcon: 정렬 표시 ↑↓ — 정렬할 수 있는 열에 늘 있습니다
   row: 본문 줄 `<tr>` — 아래 선(마지막 줄까지)
   cell: 본문 칸 `<td>` — 첫 열(이름)은 `<th scope="row">`
   detail: 칸의 둘째 줄 · 보조 글(ID · 부서 · 단위) — 옅은 글
@@ -51,12 +39,12 @@ variants:
     descending: 내림차순 — ↓ 를 짙게
   selection:
     none: 고르지 않는 표(기본)
-    empty: 고를 수 있다 · 고른 줄 없음 — 체크 칸만, 바 없음
+    empty: 고를 수 있음 · 고른 줄 없음 — 체크 칸만, 바 없음
     some: 일부 고름 — 머리 체크는 일부 · 바 보임
     all: 모두 고름 — 머리 체크 켬 · 바 보임
   width:
-    wide: 768 이상 — 표로 그린다(기본)
-    narrow: 768 미만 — List 줄로 바꾼다
+    wide: 768 이상 — 표로 그립니다(기본)
+    narrow: 768 미만 — List 줄로 바꿉니다
 
 defaults:
   row: text
@@ -67,7 +55,7 @@ defaults:
 
 states:
   enabled: 기본 — 보기만 하는 줄은 이것 하나
-  hovered: 웹 · 누르는 줄 · 정렬 버튼 — 누름과 같은 바탕(v106)
+  hovered: 웹 · 누르는 줄 · 정렬 버튼 — 누름과 같은 바탕
   pressed: 누르는 줄 · 정렬 버튼 — 바탕만(축소 없음)
   focused: 웹 — 키보드 포커스에만 링
 
@@ -76,32 +64,32 @@ rules:
   - when: {}
     enabled:
       root:
-        background: { value: transparent, note: "카드 면(bg-layer-default)이 바탕 — 표는 카드(card.md) 안에 가장자리까지 붙는다. 바깥 테두리 · 모서리 · 세로 선 · 줄무늬 없음" }
-        overflowX: { value: auto, note: "열이 상자보다 넓으면 표와 넘김 줄이 함께 가로로 밀린다(Table Pagination). 768 미만은 표 대신 List 줄이라 밀지 않는다" }
-        paddingX: { value: $spacing-x6, note: "첫 칸 앞 · 끝 칸 뒤만 — 카드 여백 24 와 같아 카드 머리와 첫 열 글자가 한 줄에 선다. 줄 선은 상자 끝까지 긋는다" }
+        background: { value: transparent, note: "카드 면(bg-layer-default)이 바탕입니다 — 표는 카드(card.md) 안에 가장자리까지 붙습니다. 바깥 테두리 · 모서리 · 세로 선 · 줄무늬 없음" }
+        overflowX: { value: auto, note: "열이 상자보다 넓으면 표와 넘김 줄이 함께 가로로 밀립니다(Table Pagination). 768 미만은 표 대신 List 줄이라 밀지 않습니다" }
+        paddingX: { value: $spacing-x6, note: "첫 칸 앞 · 끝 칸 뒤만 — 카드 여백 24 와 같아 카드 머리와 첫 열 글자가 한 줄에 섭니다. 줄 선은 상자 끝까지 긋습니다" }
       caption:
-        display: { value: 숨긴 글, note: "보이는 제목은 카드 머리(16 / 22 · 700). caption 은 같은 글을 화면 밖에 둔다 — 보조 기술이 표 이름으로 읽는다" }
+        display: { value: 숨긴 글, note: "보이는 제목은 카드 머리(16 / 22 · 700)입니다. caption 은 같은 글을 화면 밖에 둡니다 — 보조 기술이 표 이름으로 읽습니다" }
       headerRow:
-        minHeight: { value: 41px, note: "선 1 포함 — 위아래 10 + 글 20(SEED 문서 표)" }
-        background: { value: transparent, note: "머리 바탕 없음. 상자 안에서 고정할 때만 카드 면과 같은 bg-layer-default 로 칠해 지나가는 줄을 가린다 — 바탕이 달라 보이지 않는다" }
+        minHeight: { value: 41px, note: "선 1 포함 — 위아래 10 + 글 20" }
+        background: { value: transparent, note: "머리 바탕 없음. 상자 안에서 고정할 때만 카드 면과 같은 bg-layer-default 로 칠해 지나가는 줄을 가립니다 — 바탕이 달라 보이지 않습니다" }
         borderBottomWidth: 1px
         borderBottomColor: $color-stroke-neutral-subtle
-        position: { value: sticky, note: "표 상자가 스스로 세로로 스크롤할 때만(위 0) — 페이지 스크롤에는 붙이지 않는다" }
-        zIndex: { value: 1, note: "표 상자 안의 겹침 — 층이 아니다(specs/z-index.md)" }
+        position: { value: sticky, note: "표 상자가 스스로 세로로 스크롤할 때만(위 0) — 페이지 스크롤에는 붙이지 않습니다" }
+        zIndex: { value: 1, note: "표 상자 안의 겹침입니다 — 층이 아닙니다(specs/z-index.md)" }
       headerCell:
         paddingY: $spacing-x2_5
         paddingX: $spacing-x4
         typography: $text-t4
-        lineHeight: { value: 20px, note: "SEED 문서 표 14 / 20 — t4(14 / 19)보다 1 높여 머리 41 · 줄 45 를 SEED 와 맞춘다(사용자 결정 1A). 같은 부위의 lineHeight · fontWeight 가 typography 의 값을 덮는다 — 스펙 JSON 은 typography 에 접어 14 / 20 · 500 하나로 싣는다(Q-011-2)" }
+        lineHeight: { value: 20px, note: "14 / 20 — t4(14 / 19)보다 1 높여 머리 41 · 줄 45 를 맞춥니다. 같은 부위의 lineHeight · fontWeight 가 typography 의 값을 덮습니다 — 스펙 JSON 은 typography 에 접어 14 / 20 · 500 하나로 싣습니다" }
         fontWeight: 500
         foreground: $color-fg-neutral
         textAlign: start
       row:
-        minHeight: { value: 45px, note: "선 1 포함 — 위아래 12 + 글 20(SEED 문서 표). 한 표 안에서 줄 높이를 섞지 않는다 — 썸네일 · 두 줄 칸이 하나라도 있으면 모든 줄이 72" }
+        minHeight: { value: 45px, note: "선 1 포함 — 위아래 12 + 글 20. 한 표 안에서 줄 높이를 섞지 않습니다 — 썸네일 · 두 줄 칸이 하나라도 있으면 모든 줄이 72 입니다" }
         borderBottomWidth: 1px
-        borderBottomColor: { value: $color-stroke-neutral-subtle, note: "마지막 줄까지 — 표 끝을 마감한다(SEED 문서 표). 줄무늬 · 세로 선은 두지 않는다" }
+        borderBottomColor: { value: $color-stroke-neutral-subtle, note: "마지막 줄까지 — 표 끝을 마감합니다. 줄무늬 · 세로 선은 두지 않습니다" }
         background: transparent
-        cursor: { value: pointer, note: "누르는 줄만 — 줄을 누르면 상세가 열린다. 보기만 하는 표는 default" }
+        cursor: { value: pointer, note: "누르는 줄만 — 줄을 누르면 상세가 열립니다. 보기만 하는 표는 default" }
         transitionProperty: background-color
         transitionDuration: $motion-duration-color-transition
         transitionEasing: $motion-ease-easing
@@ -109,7 +97,7 @@ rules:
         paddingY: $spacing-x3
         paddingX: $spacing-x4
         typography: $text-t4
-        lineHeight: { value: 20px, note: "머리와 같은 14 / 20 — typography 의 19 를 덮는다(Q-011-2)" }
+        lineHeight: { value: 20px, note: "머리와 같은 14 / 20 — typography 의 19 를 덮습니다" }
         fontWeight: 400
         foreground: $color-fg-neutral
         alignItems: { value: center, note: "칸의 내용은 세로 가운데" }
@@ -118,70 +106,70 @@ rules:
         foreground: $color-fg-neutral-subtle
         gap: { value: $spacing-x0_5, note: "윗줄 ↔ 둘째 줄" }
       thumbnail:
-        size: { value: 48px, note: "Image Frame 1:1 — 모서리는 폭 48 이하라 6(image-frame.yaml). 사람은 Avatar 42, 기관은 Logo Tile 40" }
+        size: { value: 48px, note: "Image Frame 1:1 — 모서리는 폭 48 이하라 6 입니다(image-frame.yaml). 사람은 Avatar 42, 기관은 Logo Tile 40" }
         gap: { value: $spacing-x3, note: "그림 ↔ 글" }
-        cellPaddingY: { value: 0px, note: "Image Frame 48 을 둔 칸만 위아래 0 — 48 + 선 1 이 72 안에 들어 그림 위아래 11.5, 줄은 72 그대로(2026-11-10 사용자 결정 14C — 73 받아들이기 · 표 전용 46 은 고르지 않았다). 같은 줄의 다른 칸은 rich 의 위아래 12 그대로. Avatar 42 · Logo Tile 40 칸은 12 를 지킨다" }
+        cellPaddingY: { value: 0px, note: "Image Frame 48 을 둔 칸만 위아래 0 — 48 + 선 1 이 72 안에 들어 그림 위아래 11.5, 줄은 72 그대로입니다. 같은 줄의 다른 칸은 rich 의 위아래 12 그대로입니다. Avatar 42 · Logo Tile 40 칸은 12 를 지킵니다" }
       badge:
-        size: { value: Badge medium, note: "20 · weak — 톤은 상태의 뜻(badge.md). 한 열은 한 변형, 왼쪽 맞춤" }
+        size: { value: Badge medium, note: "20 · weak — 톤은 상태의 뜻입니다(badge.md). 한 열은 한 변형, 왼쪽 맞춤" }
       checkbox:
-        display: { value: none, note: "고르는 표만 — 첫 열(selection empty · some · all)" }
-        size: { value: 24px, note: "Checkbox large — 열 폭은 24 + 여백(첫 칸이라 앞 24 · 뒤 16). 줄을 누르면 상세라 체크만 고른다" }
-        touchTarget: { value: 44 × 44, note: "체크 가운데 — 줄 45 안에 든다. AA ✓ · AAA ✓" }
+        display: { value: none, note: "고르는 표만 — 첫 열(selection empty · some · all)에 둡니다" }
+        size: { value: 24px, note: "Checkbox large — 열 폭은 24 + 여백(첫 칸이라 앞 24 · 뒤 16)입니다. 줄을 누르면 상세라 체크만 고릅니다" }
+        touchTarget: { value: 44 × 44, note: "체크 가운데 — 줄 45 안에 듭니다. AA ✓ · AAA ✓" }
       moreButton:
         size: { value: 40px, note: "Button ghost · iconOnly · medium — 아이콘 18(lucide ellipsis-vertical). 열 폭 80(앞 16 + 40 + 끝 24 — 끝 열이라 카드 여백), 머리 칸은 글 없이 숨긴 \"동작\"" }
-        touchTarget: { value: 44 × 44, note: "보이는 40 바깥으로 2 씩 — 줄 45 안에 든다. AA ✓ · AAA ✓" }
+        touchTarget: { value: 44 × 44, note: "보이는 40 바깥으로 2 씩 — 줄 45 안에 듭니다. AA ✓ · AAA ✓" }
       bulkBar:
         display: none
         minHeight: { value: 48px, note: "표 위 — 고른 수 글(t4 14 · 500 \"3개 선택됨\") + 동작 버튼(Button ghost small) + 선택 해제 ✕" }
-        actions: { value: Button ghost small · neutral, note: "바 안 동작은 모두 ghost neutral — \"삭제\" 도 회색 글. 빨강은 누른 뒤의 확인창(Alert Dialog criticalSolid)에서. 옅은 브랜드 바탕 위 빨강 글은 라이트 4.44 : 1(2026-10-17 사용자 결정 01T-033 A — SEED ghost 는 fg.neutral 하나)" }
+        actions: { value: Button ghost small · neutral, note: "바 안 동작은 모두 ghost neutral 입니다 — \"삭제\" 도 회색 글입니다. 빨강은 누른 뒤의 확인창(Alert Dialog criticalSolid)에서 씁니다. 옅은 브랜드 바탕 위 빨강 글은 라이트 4.44 : 1 이기 때문입니다" }
         paddingX: { value: $spacing-x4, note: "왼쪽 16 · 오른쪽은 끝 버튼이 붙도록 8" }
         radius: $radius-r3
-        background: { value: $color-bg-brand-weak, note: "한 값 — 지금 표 10% · DESIGN 8% 두 벌을 걷는다. 고른 줄에는 바탕을 칠하지 않는다(체크로만)" }
+        background: { value: $color-bg-brand-weak, note: "한 값입니다. 고른 줄에는 바탕을 칠하지 않습니다(체크로만)" }
         gap: $spacing-x2
         marginBottom: { value: $spacing-x2, note: "바 ↔ 표 머리" }
     hovered:
       row:
-        background: { value: $color-bg-layer-default-pressed, note: "누르는 줄만 — 줄 전체(줄 선 위까지). List 의 누름 바탕과 같은 색" }
+        background: { value: $color-bg-layer-default-pressed, note: "누르는 줄만 — 줄 전체(줄 선 위까지). List 의 누름 바탕과 같은 색입니다" }
       sortButton:
         background: $color-bg-layer-default-pressed
     pressed:
       row:
-        background: { value: $color-bg-layer-default-pressed, note: "바탕만 — 표의 줄 · 칸은 이웃과 붙어 있어 줄이지 않는다" }
+        background: { value: $color-bg-layer-default-pressed, note: "바탕만 — 표의 줄 · 칸은 이웃과 붙어 있어 줄이지 않습니다" }
       sortButton:
         background: $color-bg-layer-default-pressed
     focused:
       focusRing:
         width: 2px
-        offset: { value: -2px, note: "안쪽 — 줄 안의 링크 · 버튼 · 정렬 버튼에. 표 상자 가장자리에서 잘리지 않게" }
+        offset: { value: -2px, note: "안쪽 — 줄 안의 링크 · 버튼 · 정렬 버튼에 둡니다. 표 상자 가장자리에서 잘리지 않게 합니다" }
         color: $color-stroke-focus-ring
 
   # ── 줄 종류 ────────────────────────────────────────────
   - when: { row: rich }
     enabled:
       row:
-        minHeight: { value: 72px, note: "선 1 포함(SEED 그림) — 최소 높이다. 내용이 72 안에 들면 세로 가운데, 넘으면(긴 두 줄 글) 줄이 자란다(2026-11-09 디자인시스템 판단 — 그루 이음 24-1 결재함)" }
+        minHeight: { value: 72px, note: "선 1 포함 — 최소 높이입니다. 내용이 72 안에 들면 세로 가운데, 넘으면(긴 두 줄 글) 줄이 자랍니다" }
       cell:
-        paddingY: { value: $spacing-x3, note: "12 — 72 를 넘는 내용도 줄 선에 붙지 않게 위아래 12 를 지킨다. Avatar 42 · Logo Tile 40 · 두 줄 글(14 + 13)은 12 를 지켜도 72 안에 든다. 옛 값 0 은 긴 글이 선에 붙었다(2026-11-09). Image Frame 48 썸네일 칸만 위아래 0(thumbnail.cellPaddingY — 12 를 지키면 73 이 되어 Q-011-1 \"72 · 높이가 먼저\" 와 갈렸다, 2026-11-10 사용자 결정 14C). 좌우 16 은 그대로" }
+        paddingY: { value: $spacing-x3, note: "12 — 72 를 넘는 내용도 줄 선에 붙지 않게 위아래 12 를 지킵니다. Avatar 42 · Logo Tile 40 · 두 줄 글(14 + 13)은 12 를 지켜도 72 안에 듭니다. Image Frame 48 썸네일 칸만 위아래 0 입니다(thumbnail.cellPaddingY — 12 를 지키면 73 이 되어 줄 높이 72 를 넘습니다). 좌우 16 은 그대로입니다" }
 
   # ── 맞춤 ──────────────────────────────────────────────
   - when: { align: end }
     enabled:
       headerCell:
-        textAlign: { value: end, note: "머리도 오른쪽 — 글 + ↑↓ 묶음이 열 오른쪽 끝에 붙는다" }
+        textAlign: { value: end, note: "머리도 오른쪽 — 글 + ↑↓ 묶음이 열 오른쪽 끝에 붙습니다" }
       cell:
         textAlign: end
-        numerals: { value: tabular-nums, note: "고정폭 숫자 — 자릿수가 위아래로 맞는다. 고정폭 글꼴(mono)은 쓰지 않는다. 돈은 줄이지 않고 원까지, 빼기는 U+2212(−)" }
+        numerals: { value: tabular-nums, note: "고정폭 숫자 — 자릿수가 위아래로 맞습니다. 고정폭 글꼴(mono)은 쓰지 않습니다. 돈은 줄이지 않고 원까지, 빼기는 U+2212(−)" }
 
   # ── 정렬 ──────────────────────────────────────────────
   - when: { sort: sortable }
     enabled:
       sortButton:
-        width: { value: 칸 전체, note: "머리 칸의 여백을 버튼이 가진다 — 칸 어디를 눌러도 정렬. 누르는 영역 칸 폭 × 41(위아래로 44 까지 넓힌다). 누를 때마다 내림 ↔ 오름(두 단계 — 정렬 없음으로 돌아가지 않는다), 처음 누르면 숫자 · 날짜 열은 내림 · 글 열은 오름(사용자 결정 18A)" }
+        width: { value: 칸 전체, note: "머리 칸의 여백을 버튼이 가집니다 — 칸 어디를 눌러도 정렬합니다. 누르는 영역은 칸 폭 × 41(위아래로 44 까지 넓힙니다)입니다. 누를 때마다 내림 ↔ 오름(두 단계 — 정렬 없음으로 돌아가지 않습니다), 처음 누르면 숫자 · 날짜 열은 내림 · 글 열은 오름입니다" }
         gap: { value: $spacing-x1_5, note: "글 ↔ ↑↓" }
         cursor: pointer
       sortIcon:
-        size: { value: 16px, note: "↑ 와 ↓ 를 나란히 한 표시 — 두 화살표를 따로 칠한다" }
-        color: { value: $color-fg-neutral-muted, note: "정렬할 수 있는 열에 늘 보인다 — 둘 다 흐린 색" }
+        size: { value: 16px, note: "↑ 와 ↓ 를 나란히 한 표시 — 두 화살표를 따로 칠합니다" }
+        color: { value: $color-fg-neutral-muted, note: "정렬할 수 있는 열에 늘 보입니다 — 둘 다 흐린 색" }
   - when: { sort: ascending }
     enabled:
       sortButton:
@@ -190,7 +178,7 @@ rules:
         cursor: pointer
       sortIcon:
         size: 16px
-        color: { value: $color-fg-neutral, note: "↑ 만 짙게 — ↓ 는 fg-neutral-muted 그대로. 머리 칸에 aria-sort=\"ascending\"" }
+        color: { value: $color-fg-neutral, note: "↑ 만 짙게 — ↓ 는 fg-neutral-muted 그대로입니다. 머리 칸에 aria-sort=\"ascending\"" }
   - when: { sort: descending }
     enabled:
       sortButton:
@@ -199,23 +187,23 @@ rules:
         cursor: pointer
       sortIcon:
         size: 16px
-        color: { value: $color-fg-neutral, note: "↓ 만 짙게 — ↑ 는 fg-neutral-muted 그대로. 머리 칸에 aria-sort=\"descending\"" }
+        color: { value: $color-fg-neutral, note: "↓ 만 짙게 — ↑ 는 fg-neutral-muted 그대로입니다. 머리 칸에 aria-sort=\"descending\"" }
 
   # ── 고르기 ────────────────────────────────────────────
   - when: { selection: empty }
     enabled:
       checkbox:
-        display: { value: 보임, note: "머리 체크는 꺼짐 — 누르면 지금 쪽의 줄을 모두 고른다" }
+        display: { value: 보임, note: "머리 체크는 꺼짐 — 누르면 지금 쪽의 줄을 모두 고릅니다" }
   - when: { selection: some }
     enabled:
       checkbox:
-        display: { value: 머리 체크 일부, note: "indeterminate — 누르면 모두 고른다" }
+        display: { value: 머리 체크 일부, note: "indeterminate — 누르면 모두 고릅니다" }
       bulkBar:
-        display: { value: 보임, note: "\"{n}개 선택됨\" — 보조 기술에 고른 수를 알린다(role=\"status\")" }
+        display: { value: 보임, note: "\"{n}개 선택됨\" — 보조 기술에 고른 수를 알립니다(role=\"status\")" }
   - when: { selection: all }
     enabled:
       checkbox:
-        display: { value: 머리 체크 켬, note: "누르면 모두 푼다 — 지금 쪽의 줄만" }
+        display: { value: 머리 체크 켬, note: "누르면 모두 풉니다 — 지금 쪽의 줄만" }
       bulkBar:
         display: { value: 보임, note: "\"{n}개 선택됨\"" }
 
@@ -223,18 +211,18 @@ rules:
   - when: { width: narrow }
     enabled:
       root:
-        display: { value: List 줄, note: "768 미만은 표를 그리지 않는다 — 줄마다 List 의 누르는 줄(list.yaml). 넘김 줄 대신 끝없이 불러오기(infinite-list.yaml)" }
-        overflowX: { value: visible, note: "가로로 밀지 않는다" }
+        display: { value: List 줄, note: "768 미만은 표를 그리지 않습니다 — 줄마다 List 의 누르는 줄(list.yaml)입니다. 넘김 줄 대신 끝없이 불러옵니다(infinite-list.yaml)" }
+        overflowX: { value: visible, note: "가로로 밀지 않습니다" }
       cell:
-        display: { value: "제목 · 설명 · 값", note: "첫 열 → 제목(t5 16 / 22), 다음 열 1 ~ 2개 → 설명(t3 13 · \" · \" 로 잇는다), 핵심 숫자 하나 또는 상태 → 오른쪽 값(숫자는 t5 · 고정폭 숫자, 상태는 Badge). 나머지 열은 줄을 눌러 여는 상세에" }
+        display: { value: "제목 · 설명 · 값", note: "첫 열 → 제목(t5 16 / 22), 다음 열 1 ~ 2개 → 설명(t3 13 · \" · \" 로 잇습니다), 핵심 숫자 하나 또는 상태 → 오른쪽 값(숫자는 t5 · 고정폭 숫자, 상태는 Badge). 나머지 열은 줄을 눌러 여는 상세에 둡니다" }
       checkbox:
-        display: { value: 앞 체크 24, note: "고르는 표는 List 의 여럿 고르기(ListCheckItem) — 체크를 앞에" }
+        display: { value: 앞 체크 24, note: "고르는 표는 List 의 여럿 고르기(ListCheckItem) — 체크를 앞에 둡니다" }
       moreButton:
-        display: { value: 줄 끝 ⋮, note: "1280 미만이라 Menu Sheet 를 연다(menu.md). 폰 스와이프는 같은 동작의 지름길(swipe-actions.md)" }
+        display: { value: 줄 끝 ⋮, note: "1280 미만이라 Menu Sheet 를 엽니다(menu.md). 폰 스와이프는 같은 동작의 지름길입니다(swipe-actions.md)" }
 
 motion:
   "줄 바탕":
     duration: $motion-duration-color-transition
     easing: $motion-ease-easing
     properties: [background-color]
-    note: "누르는 줄 · 정렬 버튼의 호버 · 누름 — 축소는 없다"
+    note: "누르는 줄 · 정렬 버튼의 호버 · 누름 — 축소는 없습니다"

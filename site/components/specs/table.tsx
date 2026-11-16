@@ -199,7 +199,7 @@ const RowKinds: Fig = ({ caption }) => {
             <DimV at={{ left: 562, top: top + t.head.minH }} h={t.row.minH.text} label={`${t.row.minH.text}`} />
           </div>
         </Col>
-        <Col strong={`썸네일 · 두 줄 표 — ${t.row.minH.rich}`} cap={`Avatar ${t.thumb.avatar} + 둘째 줄 ${parseFloat(t.detail.type.fontSize)} · fg-neutral-subtle — 한 칸이라도 있으면 모든 줄이 ${t.row.minH.rich}`}>
+        <Col strong={`썸네일 · 두 줄 표 — ${t.row.minH.rich}`} cap={`Avatar ${t.thumb.avatar} + 둘째 줄 ${parseFloat(t.detail.type.fontSize)} · fg-neutral-subtle — 한 칸이라도 있으면 모든 줄이 ${t.row.minH.rich} 입니다`}>
           <div style={{ position: 'relative', width: 560 }}>
             <TableCard title="사용자">
               <TableView look={t} caption="사용자" columns={cols()} rows={userRows(3, true)} rowKind="rich" sort={SORT} minWidth={520} />
@@ -230,12 +230,12 @@ const Numbers: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Wrap>
-        <Col strong="오른쪽 · 고정폭 숫자 · 머리도 오른쪽" cap="자릿수가 위아래로 맞아 큰 값이 한눈에 — 돈은 원까지, 빼기 U+2212" w={300}>
+        <Col strong="오른쪽 · 고정폭 숫자 · 머리도 오른쪽" cap="자릿수가 위아래로 맞아 큰 값이 한눈에 보입니다 — 돈은 원까지, 빼기 U+2212" w={300}>
           <TableCard title="회비" width={380}>
             <TableView look={t} caption="회비" columns={duesCols} rows={duesRows()} />
           </TableCard>
         </Col>
-        <Col strong="왼쪽에 둔 숫자" cap="자릿수가 어긋나 크기를 견주기 어렵다" w={300}>
+        <Col strong="왼쪽에 둔 숫자" cap="자릿수가 어긋나 크기를 견주기 어렵습니다" w={300}>
           <TableCard title="회비" width={380}>
             <TableView look={t} caption="회비" columns={duesCols} rows={duesRows()} bad={{ numbersStart: true }} />
           </TableCard>
@@ -262,13 +262,13 @@ const Sort: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex flex-col items-center gap-6">
-        <Col strong="늘 보이는 ↑↓ — 지금 방향만 짙게" cap={`정렬할 수 있는 열(이름 · 남은 휴가)에 늘 ↑↓(${t.sort.icon}) — 흐린 fg-neutral-muted 둘에서 지금 방향만 fg-neutral. 머리 칸 전체가 버튼, aria-sort 는 정렬된 열에만`} w={520}>
+        <Col strong="늘 보이는 ↑↓ — 지금 방향만 짙게" cap={`정렬할 수 있는 열(이름 · 남은 휴가)에 늘 ↑↓(${t.sort.icon}) — 흐린 fg-neutral-muted 둘 가운데 지금 방향만 fg-neutral 입니다. 머리 칸 전체가 버튼이고, aria-sort 는 정렬된 열에만 답니다`} w={520}>
           <TableCard title="사용자" width={560}>
             <TableView look={t} caption="사용자" columns={cols()} rows={userRows(3)} sort={SORT} minWidth={520} />
           </TableCard>
         </Col>
         <Wrap gap="gap-8">
-          <Col strong="숫자 · 날짜 열 — 처음 내림" cap="누를 때마다 내림 ↔ 오름(두 단계 — 정렬 없음으로 돌아가지 않는다)" w={300}>
+          <Col strong="숫자 · 날짜 열 — 처음 내림" cap="누를 때마다 내림 ↔ 오름(두 단계 — 정렬 없음으로 돌아가지 않습니다)" w={300}>
             <div className="flex flex-col gap-2 rounded-xl" style={{ background: rc('bg-layer-default', 'auto', 'hr'), paddingTop: 12, paddingBottom: 12, paddingLeft: 12, paddingRight: 12 }}>
               {steps.map(([k, d]) => (
                 <div key={k} className="flex items-center gap-3">
@@ -278,7 +278,7 @@ const Sort: Fig = ({ caption }) => {
               ))}
             </div>
           </Col>
-          <Col strong="글 열 — 처음 오름(가나다)" cap="다른 열을 누르면 그 열의 처음 방향으로 옮긴다" w={300}>
+          <Col strong="글 열 — 처음 오름(가나다)" cap="다른 열을 누르면 그 열의 처음 방향으로 옮깁니다" w={300}>
             <div className="flex flex-col gap-2 rounded-xl" style={{ background: rc('bg-layer-default', 'auto', 'hr'), paddingTop: 12, paddingBottom: 12, paddingLeft: 12, paddingRight: 12 }}>
               {textSteps.map(([k, d]) => (
                 <div key={k} className="flex items-center gap-3">
@@ -331,7 +331,7 @@ const More: Fig = ({ caption }) => {
           <Reading>⋮: 김하늘 더보기, 메뉴 버튼</Reading>
         </div>
         <Cap w={520}>
-          열 폭 {t.more.colW}(앞 {t.cell.padX} + {t.more.size} + 끝 {t.edge}) · Button ghost iconOnly medium · 1280 이상 Menu, 미만 Menu Sheet. 머리 칸에는 글을 쓰지 않는다
+          열 폭 {t.more.colW}(앞 {t.cell.padX} + {t.more.size} + 끝 {t.edge}) · Button ghost iconOnly medium · 1280 이상 Menu, 미만 Menu Sheet. 머리 칸에는 글을 쓰지 않습니다
         </Cap>
       </div>
     </Panel>
@@ -356,7 +356,7 @@ const Selection: Fig = ({ caption }) => {
           </TableCard>
         </Col>
         <Cap w={560}>
-          고른 줄은 바탕 없이 체크(Checkbox large {t.check.size})로만 — 머리 체크는 일부(indeterminate). 일괄 작업 바 {t.bulk.minH} · 모서리 {t.bulk.radius} · bg-brand-weak, 표 위 {t.bulk.marginBottom}
+          고른 줄은 바탕 없이 체크(Checkbox large {t.check.size})로만 보입니다 — 머리 체크는 일부(indeterminate)입니다. 일괄 작업 바 {t.bulk.minH} · 모서리 {t.bulk.radius} · bg-brand-weak, 표 위 {t.bulk.marginBottom}
         </Cap>
       </div>
     </Panel>
@@ -373,7 +373,7 @@ const Sticky: Fig = ({ caption }) => {
             <TableView look={t} caption="사용자" columns={cols()} rows={userRows(12)} sort={SORT} stickyHeader maxHeight={t.head.minH + t.row.minH.text * 4} scrollTop={64} minWidth={520} />
           </TableCard>
         </Col>
-        <Cap w={520}>상자 안에서 스크롤하면 머리 줄은 맨 위에 붙고 카드 면과 같은 bg-layer-default 로 지나가는 줄을 가린다 — 페이지 스크롤에는 붙이지 않는다</Cap>
+        <Cap w={520}>상자 안에서 스크롤하면 머리 줄은 맨 위에 붙고 카드 면과 같은 bg-layer-default 로 지나가는 줄을 가립니다 — 페이지 스크롤에는 붙이지 않습니다</Cap>
       </div>
     </Panel>
   );
@@ -387,7 +387,7 @@ const States: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex flex-col items-center gap-5">
-        <Col strong="누르는 줄" cap="호버 · 누름은 같은 bg-layer-default-pressed — 축소는 없다. 포커스는 이름 링크 안쪽 2px 링">
+        <Col strong="누르는 줄" cap="호버 · 누름은 같은 bg-layer-default-pressed 입니다 — 축소는 없습니다. 포커스는 이름 링크 안쪽 2px 링입니다">
           <TableCard title="사용자" width={600}>
             <TableView look={t} caption="사용자" columns={cols()} rows={rows} sort={SORT} pressable rowStates={{ u1: 'enabled', u2: 'hovered', u3: 'pressed', u4: 'focused' }} minWidth={560} />
           </TableCard>
@@ -419,7 +419,7 @@ const NarrowGuide: Fig = ({ caption }) => {
           </TableCard>
         </Col>
         <Arrow label={`${t.breakpoint} 미만`} />
-        <Col strong="List 줄" cap="제목 이름 · 설명 &quot;부서 · 상태&quot; · 오른쪽 남은 휴가(16 · 고정폭 숫자). 나머지는 줄을 눌러 상세">
+        <Col strong="List 줄" cap="제목 이름 · 설명 &quot;부서 · 상태&quot; · 오른쪽 남은 휴가(16 · 고정폭 숫자). 나머지는 줄을 눌러 상세에서 봅니다">
           <UsersPhone scale={0.62} h={560} n={5} title="사용자" />
         </Col>
       </div>
@@ -437,13 +437,13 @@ const LineGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
-        <Verdict ok note="줄 사이 선 하나 — 마지막 줄 아래까지">
+        <Verdict ok note="줄 사이 선 하나로, 마지막 줄 아래까지 긋습니다">
           {mini()}
         </Verdict>
-        <Verdict ok={false} note="세로 선 — 칸이 갇혀 줄을 따라 읽기 어렵다">
+        <Verdict ok={false} note="세로 선 — 칸이 갇혀 줄을 따라 읽기 어렵습니다">
           {mini({ vlines: true })}
         </Verdict>
-        <Verdict ok={false} note="줄무늬(짝수 줄 바탕) — 줄이 길면 열을 줄인다">
+        <Verdict ok={false} note="줄무늬(짝수 줄 바탕) — 줄이 길면 줄무늬 대신 열을 줄입니다">
           {mini({ stripes: true })}
         </Verdict>
         <Verdict ok={false} note="작은 대문자 회색 머리 · 머리 바탕">
@@ -464,7 +464,7 @@ const NumberGuide: Fig = ({ caption }) => {
             <TableView look={t} caption="회비" columns={duesCols} rows={duesRows()} minWidth={280} />
           </TableCard>
         </Verdict>
-        <Verdict ok={false} note="왼쪽 · 고정폭 글꼴(mono) — 자릿수가 어긋나고 글꼴이 섞인다">
+        <Verdict ok={false} note="왼쪽 · 고정폭 글꼴(mono) — 자릿수가 어긋나고 글꼴이 섞입니다">
           <TableCard width={300}>
             <TableView look={t} caption="회비" columns={duesCols} rows={duesRows()} bad={{ numbersStart: true, mono: true }} minWidth={280} />
           </TableCard>
@@ -502,7 +502,7 @@ const ActionsGuide: Fig = ({ caption }) => {
             <TableView look={t} caption="사용자" columns={[cols()[0], cols()[2]]} rows={userRows(3)} more minWidth={280} />
           </TableCard>
         </Verdict>
-        <Verdict ok={false} note="줄마다 늘어놓은 수정 · 삭제 아이콘 — 누르는 것이 줄마다 늘고 이름이 없다">
+        <Verdict ok={false} note="줄마다 늘어놓은 수정 · 삭제 아이콘 — 누르는 것이 줄마다 늘고 이름이 없습니다">
           <TableCard width={300}>
             <TableView look={t} caption="사용자" columns={iconCols} rows={iconRows} minWidth={280} />
           </TableCard>
@@ -525,7 +525,7 @@ const GridGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="&lt;table&gt; — 칸마다 열 이름 · 줄 이름이 읽힌다">
+        <Verdict ok note="&lt;table&gt; — 칸마다 열 이름 · 줄 이름이 읽힙니다">
           <div className="flex flex-col items-center gap-2">
             <TableCard width={320}>
               <TableView look={TL('desk')} caption="가람전자 일별 시세" columns={qCols} rows={qRows.slice(0, 3)} minWidth={300} />
@@ -533,7 +533,7 @@ const GridGuide: Fig = ({ caption }) => {
             <Reading tone="ok">10. 8., 등락률, 1.28% 올랐어요</Reading>
           </div>
         </Verdict>
-        <Verdict ok={false} note="div 격자 — 보이는 것은 같지만 보조 기술이 열 이름을 모른다">
+        <Verdict ok={false} note="div 격자 — 보이는 것은 같지만 보조 기술이 열 이름을 모릅니다">
           <div className="flex flex-col items-center gap-2">
             <div style={{ width: 320, boxSizing: 'border-box', borderRadius: CL().surface.radius, borderWidth: 1, borderStyle: 'solid', borderColor: rc('stroke-neutral-weak'), background: rc('bg-layer-default'), paddingTop: 14, paddingBottom: 12, paddingLeft: t.edge, paddingRight: t.edge, fontFamily: t.cell.type.fontFamily }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', fontSize: 11, fontWeight: 700, color: rc('fg-neutral-subtle'), paddingBottom: 6 }}>
@@ -574,7 +574,7 @@ const StatusGuide: Fig = ({ caption }) => {
             <TableView look={t} caption="사용자" columns={three} rows={[]} status={{ kind: 'empty', icon: 'search-x', title: '조건에 맞는 사용자가 없어요', action: '필터 초기화' }} minWidth={480} />
           </TableCard>
         </Col>
-        <Col strong="실패" cap="실패를 빈 표로 보이지 않는다 — Result Section failure + 다시 시도">
+        <Col strong="실패" cap="실패를 빈 표로 보이지 않습니다 — Result Section failure + 다시 시도">
           <TableCard title="사용자" width={520}>
             <TableView look={t} caption="사용자" columns={three} rows={[]} status={{ kind: 'failure', title: '사용자를 불러오지 못했어요', description: '잠시 뒤 다시 시도해주세요.', action: '다시 시도' }} minWidth={480} />
           </TableCard>
@@ -606,7 +606,20 @@ const ExStatus: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 개요 카드 — 라이트 사용자 표(정렬 ↑↓ · 오른쪽 숫자 · 상태 배지)를 카드 면에
+const Thumb: Fig = () => {
+  const t = L();
+  return (
+    <div style={{ width: 520, zoom: 0.53 }}>
+      <TableCard title="사용자" mode="light">
+        <TableView look={t} mode="light" caption="사용자" columns={cols()} rows={userRows(3)} sort={SORT} minWidth={480} />
+      </TableCard>
+    </div>
+  );
+};
+
 export const tableFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

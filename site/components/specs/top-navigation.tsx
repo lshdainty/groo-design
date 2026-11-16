@@ -213,7 +213,7 @@ const IconButton: Fig = ({ caption }) => {
           </div>
           <span className="pt-5">
             <Cap w={250} strong={`상단 바 — 상자 ${t.icon.size} · 아이콘 ${t.icon.icon}`}>
-              상자가 곧 누르는 영역, 맨 끝 상자가 화면 끝에서 {t.padX}(아이콘 {t.padX + (t.icon.size - t.icon.icon) / 2}) · 버튼끼리 붙는다(중심 간격 {t.icon.size})
+              상자가 곧 누르는 영역, 맨 끝 상자가 화면 끝에서 {t.padX}(아이콘 {t.padX + (t.icon.size - t.icon.icon) / 2}) · 버튼끼리 붙습니다(중심 간격 {t.icon.size})
             </Cap>
           </span>
         </div>
@@ -224,7 +224,7 @@ const IconButton: Fig = ({ caption }) => {
             </span>
           </div>
           <span className="pt-5">
-            <Cap w={220} strong={`본문 Button — 보이는 ${box} · 아이콘 ${ico}`}>Button medium iconOnly — 화면 안(카드 머리 · 목록 줄)의 아이콘 버튼. 상단 바에 쓰지 않는다</Cap>
+            <Cap w={220} strong={`본문 Button — 보이는 ${box} · 아이콘 ${ico}`}>Button medium iconOnly — 화면 안(카드 머리 · 목록 줄)의 아이콘 버튼입니다. 상단 바에 쓰지 않습니다</Cap>
           </span>
         </div>
       </div>
@@ -281,7 +281,7 @@ const TypeGuide: Fig = ({ caption }) => (
           </div>
         </Wide>
       </Verdict>
-      <Verdict ok={false} note="탭 첫 화면에 ← 와 작은 제목 — 뒤로 갈 곳이 없는 화면이다">
+      <Verdict ok={false} note="탭 첫 화면에 ← 와 작은 제목 — 뒤로 갈 곳이 없는 화면입니다">
         <NPhone scale={0.34} h={560} tabs tab="home" bar={<Bar title="홈" actions={HOME_ACTIONS} />}>
           <div className="pt-2">
             <TxRows n={6} />
@@ -303,12 +303,12 @@ const TrailingGuide: Fig = ({ caption }) => {
     <Plate caption={caption}>
       <div className="flex w-full flex-col gap-4">
         <Pair>
-          <Verdict ok note="아이콘 둘 — 제목이 넉넉히 읽힌다">
+          <Verdict ok note="아이콘 둘 — 제목이 넉넉히 읽힙니다">
             <BarBoard w={300}>
               <Bar title="카드 혜택" actions={CARD_ACTIONS} />
             </BarBoard>
           </Verdict>
-          <Verdict ok={false} note="넷을 늘어놓은 바 — 제목이 밀려 읽히지 않는다">
+          <Verdict ok={false} note="넷을 늘어놓은 바 — 제목이 밀려 읽히지 않습니다">
             <BarBoard w={300}>
               <Bar title="카드 혜택" actions={four} />
             </BarBoard>
@@ -360,7 +360,7 @@ const BackCloseGuide: Fig = ({ caption }) => (
             <HomeScreen scale={0.3} h={560} />
           </div>
         </Verdict>
-        <Verdict ok note="✕ — 가져오기 흐름을 닫고 처음 자리(가계부)로. 고른 값이 있으면 먼저 묻는다">
+        <Verdict ok note="✕ — 가져오기 흐름을 닫고 처음 자리(가계부)로. 고른 값이 있으면 먼저 묻습니다">
           <div className="flex items-center gap-2">
             <ImportScreen scale={0.3} />
             <Arrow label="✕" />
@@ -372,12 +372,12 @@ const BackCloseGuide: Fig = ({ caption }) => (
         </Verdict>
       </Pair>
       <Pair>
-        <Verdict ok={false} note="일반 화면(알림)에 ✕ — 닫을 흐름이 없다">
+        <Verdict ok={false} note="일반 화면(알림)에 ✕ — 닫을 흐름이 없습니다">
           <BarBoard w={300}>
             <Bar leading="close" title="알림" actions={[{ kind: 'text', label: '모두 읽음' }]} />
           </BarBoard>
         </Verdict>
-        <Verdict ok={false} note="여러 단계 흐름에 ← 만 — 끝내고 나가는 길이 보이지 않는다">
+        <Verdict ok={false} note="여러 단계 흐름에 ← 만 — 끝내고 나가는 길이 보이지 않습니다">
           <BarBoard w={300}>
             <Bar title="거래 가져오기" />
           </BarBoard>
@@ -416,7 +416,7 @@ const HistoryGuide: Fig = ({ caption }) => (
         </Verdict>
       </Pair>
       <Pair>
-        <Verdict ok note="주소로 바로 · 알림을 눌러 · 새 탭 — 앞 화면이 없으면 상위 화면(/desk)으로, 주소를 고쳐 쓴다">
+        <Verdict ok note="주소로 바로 · 알림을 눌러 · 새 탭 — 앞 화면이 없으면 상위 화면(/desk)으로 가고 주소를 고쳐 씁니다">
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-center gap-1.5">
               <Url>새 탭 …/notifications</Url>
@@ -429,7 +429,7 @@ const HistoryGuide: Fig = ({ caption }) => (
             </div>
           </div>
         </Verdict>
-        <Verdict ok={false} note="← 가 늘 같은 화면(전체)으로 새로 이동 — 들어온 길과 상관없이 쌓인다">
+        <Verdict ok={false} note="← 가 늘 같은 화면(전체)으로 새로 이동 — 들어온 길과 상관없이 쌓입니다">
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-center gap-1.5">
               <Url>…/notifications</Url>
@@ -469,7 +469,7 @@ const ScrollGuide: Fig = ({ caption }) => (
         <Verdict ok note="스크롤한 목록이 바 밑으로 지나가도 선 · 그림자 없음 — 바와 목록이 한 면">
           <ScrolledPhone />
         </Verdict>
-        <Verdict ok={false} note="스크롤하면 바 아래 그림자 · 선을 긋는다">
+        <Verdict ok={false} note="스크롤하면 바 아래에 그림자 · 선을 긋습니다">
           <div className="flex gap-3">
             <ScrolledPhone bad="shadow" />
             <ScrolledPhone bad="line" />
@@ -477,7 +477,7 @@ const ScrollGuide: Fig = ({ caption }) => (
         </Verdict>
       </Pair>
       <Pair stack>
-        <Verdict ok={false} note="데스크톱 머리 아래 늘 있던 1px 선 — 머리도 선 없이">
+        <Verdict ok={false} note="데스크톱 머리 아래 늘 있는 1px 선 — 머리에도 선을 긋지 않습니다">
           <div className="overflow-hidden rounded-lg" style={{ width: 460, background: rc('bg-layer-basement'), boxShadow: `0 0 0 1px ${rc('stroke-neutral-subtle')}` }}>
             <Scaled w={760} h={150} s={460 / 760}>
               <div style={{ width: 760, background: rc('bg-layer-basement') }}>
@@ -541,7 +541,7 @@ const DesktopGuide: Fig = ({ caption }) => {
 const MenuGuide: Fig = ({ caption }) => (
   <Plate caption={caption}>
     <Pair>
-      <Verdict ok note="HR 폰 — 모든 화면이 ☰ + 제목, 하단 탭 바가 없다">
+      <Verdict ok note="HR 폰 — 모든 화면이 ☰ + 제목, 하단 탭 바가 없습니다">
         <HrLeavePhone scale={0.46} h={560} />
       </Verdict>
       <Verdict ok note="☰ 를 누르면 왼쪽 주 메뉴(Side Panel) — 지금 묶음(휴가)이 펼쳐진 채">
@@ -618,7 +618,7 @@ const RouteGuide: Fig = ({ caption }) => {
           </Verdict>
         </Pair>
         <Pair stack>
-          <Verdict ok={false} note="캘린더가 가계부의 스크롤 자리(900)에서 열린다 — 제목이 화면 밖, 초점은 누른 자리에 남는다">
+          <Verdict ok={false} note="캘린더가 가계부의 스크롤 자리(900)에서 열린다 — 제목이 화면 밖, 초점은 누른 자리에 남습니다">
             <Wide>
             <Desktop w={w} h={h} s={s} cw={cw} ch={ch}>
               <Shell side={<Side current="calendar" />} header={<DeskHeader />}>
@@ -639,8 +639,8 @@ const RouteGuide: Fig = ({ caption }) => {
   );
 };
 
-// ── 사진 위 투명 바(tone transparent — SEED, 2026-10-22 사용자 결정 5C) ──────
-// 사진 자리는 어두운 면으로 대신한다(그림이 아니다 — 두 모드 같다). 막(SEED gradient)과 투명 누름 바탕은 열린 일이라 그리지 않는다.
+// ── 사진 위 투명 바(tone transparent) ──────
+// 사진 자리는 어두운 면으로 대신한다(그림이 아니다 — 두 모드 같다). 막과 투명 누름 바탕은 정하지 않은 값이라 그리지 않는다.
 // 그림 틀의 상태 표시줄(흰 면)은 kit 의 것 — 사진은 그 아래에서 시작한다
 const PHOTO_H = 220;
 function PhotoStandIn() {
@@ -696,7 +696,7 @@ const TransparentGuide: Fig = ({ caption }) => (
           </div>
           <div className="flex flex-col items-center gap-2">
             <PhotoPhone mode={mode} filled />
-            <Cap mode={mode}>사진이 지나간 뒤 — layer 로 채워진다 · 선 없음</Cap>
+            <Cap mode={mode}>사진이 지나간 뒤 — layer 로 채워지고 선은 없습니다</Cap>
           </div>
         </div>
       ))}
@@ -738,7 +738,7 @@ const ExMenu: Fig = ({ caption }) => (
   </CodePreview>
 );
 
-// ── 검색칸 · 탭 첫 화면 오른쪽 · 거래 검색 · 알림 · 제목 줄(2026-10-16 Q-017 · Q-018) ──────
+// ── 검색칸 · 탭 첫 화면 오른쪽 · 거래 검색 · 알림 · 제목 줄 ──────
 // 검색칸 — 검색 화면의 제목 자리(← 다음 56 부터 오른쪽 자리 앞 8 까지) · 데스크톱 머리 왼쪽 360(본문 여백 32 에서)
 const SearchField: Fig = ({ caption }) => {
   const t = T();
@@ -771,7 +771,7 @@ const SearchField: Fig = ({ caption }) => {
   );
 };
 
-// 탭 첫 화면 넷 — 홈 = 검색 · 알림, 가계부 · 캘린더 · 전체 = 검색(Q-017-2a A). 금액 가리기는 순자산 카드의 눈(Q-017-2b A)
+// 탭 첫 화면 넷 — 홈 = 검색 · 알림, 가계부 · 캘린더 · 전체 = 검색. 금액 가리기는 순자산 카드의 눈
 const RootGuide: Fig = ({ caption }) => (
   <Figure caption={caption}>
     <div className="flex flex-col items-center gap-4">
@@ -785,23 +785,23 @@ const RootGuide: Fig = ({ caption }) => (
           <Bar type="root" title={title as string} actions={actions as TopAction[]} />
         </BarBoard>
       ))}
-      <Cap>검색은 어느 탭에서나 같은 거래 검색 화면 · 벨은 알림 화면 · 금액 가리기 눈은 머리에 두지 않는다(홈 · 자산 순자산 카드)</Cap>
+      <Cap>검색은 어느 탭에서나 같은 거래 검색 화면 · 벨은 알림 화면 · 금액 가리기 눈은 머리에 두지 않습니다(홈 · 자산 순자산 카드)</Cap>
     </div>
   </Figure>
 );
 
-// 거래 검색 — 맨 위 · 600 내림(거르는 줄 숨음) · 30 올림(줄 40 의 75% — 손을 떼면 다 드러남). 카드 혜택은 140 줄
+// 거래 검색 — 맨 위 · 600 내림(거르는 줄 숨음) · 30 올림(줄의 반 넘게 — 손을 떼면 다 드러남). 카드 혜택은 140 줄
 const SearchGuide: Fig = ({ caption }) => (
   <Figure caption={caption}>
     <Wide>
       <div className="flex items-start gap-3">
-        <Shot cap="맨 위 — 거르는 줄 40 · 목록">
+        <Shot cap={`맨 위 — 거르는 줄 ${SEARCH_ROW_H} · 목록`}>
           <SearchPhone scale={0.46} h={600} />
         </Shot>
-        <Shot cap="600 내림 — 줄이 다 숨고 목록이 바 아래를 다 쓴다">
+        <Shot cap="600 내림 — 줄이 다 숨고 목록이 바 아래를 다 씁니다">
           <SearchPhone scale={0.46} h={600} scroll={600} hidden={SEARCH_ROW_H} />
         </Shot>
-        <Shot cap="30 올림 — 줄 40 의 75% 가 나와 손을 떼면 다 드러난다">
+        <Shot cap="30 올림 — 줄이 반 넘게 나와 손을 떼면 다 드러납니다">
           <SearchPhone scale={0.46} h={600} scroll={570} hidden={0} />
         </Shot>
         <Shot cap="카드 혜택 — 거르는 줄 140(검색칸 + 칩 두 줄)">
@@ -812,7 +812,7 @@ const SearchGuide: Fig = ({ caption }) => (
   </Figure>
 );
 
-// 벨 — 1280 벨 아래 Popover · 1024 Bottom Sheet(Q-017-3b B)
+// 벨 — 1280 벨 아래 Popover · 1024 Bottom Sheet
 const NotificationGuide: Fig = ({ caption }) => (
   <Figure caption={caption}>
     <Wide>
@@ -863,7 +863,23 @@ const ExSearch: Fig = ({ caption }) => (
   </CodePreview>
 );
 
+// 개요 카드 — 라이트 바 셋: 탭 첫 화면(홈 · 검색 · 알림 점) · 알림(← · 모두 읽음) · 카드 혜택(← · 검색 · 알림)
+const Thumb: Fig = () => (
+  <div className="flex flex-col" style={{ width: PHONE, gap: 16, zoom: 0.75 }}>
+    <BarBoard mode="light">
+      <Bar mode="light" type="root" title="홈" actions={HOME_ACTIONS} />
+    </BarBoard>
+    <BarBoard mode="light">
+      <Bar mode="light" title="알림" actions={[{ kind: 'text', label: '모두 읽음' }]} />
+    </BarBoard>
+    <BarBoard mode="light">
+      <Bar mode="light" title="카드 혜택" actions={CARD_ACTIONS} />
+    </BarBoard>
+  </div>
+);
+
 export const topNavigationFigures: Record<string, Fig> = {
+  thumb: Thumb,
   transparent: TransparentGuide,
   'ex-transparent': ExTransparent,
   'search-field': SearchField,

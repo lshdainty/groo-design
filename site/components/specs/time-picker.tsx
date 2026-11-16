@@ -1,6 +1,6 @@
 // Time Picker 페이지의 그림 — specs/components/time-picker.md 의 `[그림: …](../../site/components/specs/time-picker.tsx#<id>)` 자리.
 // 휠은 time-picker · wheel-picker.yaml 을 푼 값(date-look — wheel-view 의 TimePickerView)으로, 시트 · 팝오버는 bottom-sheet · popover.yaml,
-// 칸은 input-button · field.yaml 로 그린다. 칸 값은 International Design(v106) — "오후 3:00".
+// 칸은 input-button · field.yaml 로 그린다. 칸 값은 International Design — "오후 3:00".
 import type { CSSProperties, ReactNode } from 'react';
 import { Figure, Panel, MARK, MARK_LINE } from '../foundations/ui';
 import { DateFieldDemo, DateLive, FitZoom, TimeFieldDemo, TimePickerPlayground } from './date-demos';
@@ -154,7 +154,7 @@ const Layout: Fig = ({ caption }) => {
           </div>
         </div>
         <Note>
-          칼럼은 오전·오후 → 시 → 분, 칼럼 폭은 항목 글 폭 + 좌우 {w.item.padX}(분홍) · 칼럼 묶음은 휠 가운데. 글자 {parseFloat(w.sizes[size].text.fontSize)} / {parseFloat(w.sizes[size].text.lineHeight)} · {w.item.weight}(글자 크기 설정을 따르지 않는 px). 띠는 좌우 {w.band.insetX} 들인 모서리 {w.band.radius} · 띠에 걸친 글자만 짙게, 안개는 min(휠 높이 × {w.fog.ratio * 100}%, 항목 {w.fog.maxItems}칸) = {Math.round(fog)}.
+          칼럼은 오전·오후 → 시 → 분 순서이고, 칼럼 폭은 항목 글 폭 + 좌우 {w.item.padX}(분홍)이며 칼럼 묶음은 휠 가운데에 둡니다. 글자는 {parseFloat(w.sizes[size].text.fontSize)} / {parseFloat(w.sizes[size].text.lineHeight)} · {w.item.weight} 이고, 글자 크기 설정을 따르지 않는 px 입니다. 띠는 좌우 {w.band.insetX} 를 들인 모서리 {w.band.radius} 이고, 띠에 걸친 글자만 짙게 그립니다. 안개는 min(휠 높이 × {w.fog.ratio * 100}%, 항목 {w.fog.maxItems}칸) = {Math.round(fog)} 입니다.
         </Note>
       </div>
     </Panel>
@@ -176,7 +176,7 @@ function PhoneForm({ children }: { children: ReactNode }) {
 const DatetimeGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="mx-auto flex w-full max-w-[440px] flex-col gap-4">
-      <Verdict ok note="날짜 칸 옆에 시각 칸 — 한 줄에 다 들어가지 않으면(다른 해 날짜 · 큰 글자 · 좁은 폰) 시각 칸이 다음 줄로 내려가고, 칸 글은 자르지 않는다">
+      <Verdict ok note="날짜 칸 옆에 시각 칸을 둡니다. 한 줄에 다 들어가지 않으면(다른 해 날짜 · 큰 글자 · 좁은 폰) 시각 칸이 다음 줄로 내려가고, 칸의 글은 자르지 않습니다">
         <div className="flex w-full flex-col items-center gap-2">
           {/* 폰 폭(360) 그대로 그리고 판이 좁으면 통째로 줄인다 — 판 폭에 맞춰 칸을 좁히면 줄바꿈이 360 폰과 달라진다 */}
           <FitZoom w={SCREEN}>
@@ -185,10 +185,10 @@ const DatetimeGuide: Fig = ({ caption }) => (
               <DateTimeRow mode="auto" label="종료" date={D(1, 3, 2027)} time={T(12, 30)} />
             </PhoneForm>
           </FitZoom>
-          <Cap>360 폰 — 한 줄에 들어가지 않으면(다른 해 날짜 {formatDay(D(1, 3, 2027))}) 시각 칸이 다음 줄로. 라벨은 짝마다 하나</Cap>
+          <Cap>360 폰 — 한 줄에 들어가지 않으면(다른 해 날짜 {formatDay(D(1, 3, 2027))}) 시각 칸이 다음 줄로 내려갑니다. 라벨은 짝마다 하나입니다</Cap>
         </div>
       </Verdict>
-      <Verdict ok={false} note="한 칸에 날짜 · 시각 — 시각만 바꿀 때도 날짜부터 지나고, 종일이어도 시각을 걷을 수 없다">
+      <Verdict ok={false} note="한 칸에 날짜 · 시각을 넣으면 시각만 바꿀 때도 날짜부터 지나야 하고, 종일이어도 시각을 걷을 수 없습니다">
         <FitZoom w={SCREEN}>
           <PhoneForm>
             <Field mode="auto" label="시작" value={`${formatDay(START)} ${formatTime(T(15, 0))}`} />
@@ -202,7 +202,7 @@ const DatetimeGuide: Fig = ({ caption }) => (
 
 // ── 코드 미리보기 ─────────────────────────────────────────
 const live = () => ({ kit: dk(), ov: overlayKit(), sel: desk(), field: tf().field });
-const NOTE = '이 창의 폭으로 연다 — 1280 미만은 아래 시트, 이상은 칸 아래 팝오버. 휠을 굴려도 칸은 "완료" 를 누를 때 바뀐다.';
+const NOTE = '이 창의 폭으로 엽니다 — 1280 미만은 아래 시트, 이상은 칸 아래 팝오버입니다. 휠을 굴려도 칸의 값은 "완료" 를 누를 때 바뀝니다.';
 const ExTime: Fig = () => (
   <DateLive ov={overlayKit()} note={NOTE}>
     <TimeFieldDemo {...live()} label="시작 시각" placeholder="시간 선택" initial={T(15, 0)} />
@@ -230,7 +230,17 @@ const ExDatetime: Fig = () => (
   </DateLive>
 );
 
+// 개요 카드 — 라이트 휠 하나(오후 3:00 을 고른 모습)
+const Thumb: Fig = () => (
+  <div style={{ width: 320, zoom: 0.8 }}>
+    <Floating mode="light" pad={0}>
+      <TimeWheel mode="light" value={T(15, 0)} />
+    </Floating>
+  </div>
+);
+
 export const timePickerFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,
