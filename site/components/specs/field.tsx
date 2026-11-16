@@ -218,7 +218,7 @@ const Header: Fig = ({ caption }) => (
         <Surface className="mx-auto w-full max-w-[400px]">
           <F label="카테고리 이름" placeholder="예: 반려동물, 부수입" action={exampleAction()} />
         </Surface>
-        <Cap strong="보조 액션">작은 텍스트 버튼 — 머리 높이를 바꾸지 않는다</Cap>
+        <Cap strong="보조 액션">작은 텍스트 버튼 — 머리 높이를 바꾸지 않습니다</Cap>
       </div>
     </div>
   </Panel>
@@ -278,7 +278,7 @@ const Footer: Fig = ({ caption }) => (
         <Surface>
           <F label="아이디" value="groo" error="이미 쓰고 있는 아이디예요." max={20} count={6} />
         </Surface>
-        <Cap strong="오류">설명 자리를 대신한다 · 글자 수도 빨갛다</Cap>
+        <Cap strong="오류">설명 자리를 대신합니다 · 글자 수도 빨개집니다</Cap>
       </div>
       <div className="flex flex-col gap-2">
         <Surface>
@@ -308,7 +308,7 @@ const LayoutGuide: Fig = ({ caption }) => {
             </Form>
           </div>
         </Verdict>
-        <Verdict ok={false} note="형식이 정해진 값(전화번호)을 칸 셋으로 나눈다 — 한 칸에서 하이픈을 맞춰 준다">
+        <Verdict ok={false} note="형식이 정해진 값(전화번호)을 칸 셋으로 나눴습니다 — 한 칸에서 하이픈을 맞춰 줍니다">
           <div className="w-[300px]">
             <TfFieldView look={lk.field} label="휴대폰 번호">
               <div className="flex items-center gap-2">
@@ -337,7 +337,7 @@ const SubmitGuide: Fig = ({ caption }) => (
           </Form>
         </Screen>
       </Verdict>
-      <Verdict ok={false} note="다 채울 때까지 버튼만 꺼 두면 무엇이 빠졌는지 알 수 없다">
+      <Verdict ok={false} note="다 채울 때까지 버튼만 꺼 두면 무엇이 빠졌는지 알 수 없습니다">
         <Screen title="휴가 신청" mode="light" scale={0.52} h={560} bottom={cta('신청', 'light', 'brandSolid', 'disabled', 'hr')}>
           <Form>
             <F mode="light" label="제목" value="개인 사유" />
@@ -359,7 +359,7 @@ const InlineGuide: Fig = ({ caption }) => (
           <F label="현재 비밀번호" state="focused" />
         </Form>
       </Surface>
-      <Cap>확인 칸을 떠나 다음 칸으로 가는 순간 알린다 — 입력하는 동안에는 띄우지 않는다</Cap>
+      <Cap>확인 칸을 떠나 다음 칸으로 가는 순간 알립니다 — 입력하는 동안에는 띄우지 않습니다</Cap>
     </div>
   </Panel>
 );
@@ -385,7 +385,7 @@ const LeaveGuide: Fig = ({ caption }) => (
             </Form>
           </div>
         </Phone>
-        <Cap strong="바뀐 값이 있으면">나가기 전에 묻는다</Cap>
+        <Cap strong="바뀐 값이 있으면">나가기 전에 묻습니다</Cap>
       </div>
       <div className="flex flex-col items-center gap-2">
         <Phone title="가계부" mode="light" scale={0.56} h={600} back={false} bg="bg-layer-default">
@@ -395,7 +395,7 @@ const LeaveGuide: Fig = ({ caption }) => (
             <Row title="월급" sub="수입 · 10월 1일" amount="+3,200,000원" hue="green" mode="light" />
           </div>
         </Phone>
-        <Cap strong="바뀐 값이 없거나 자동 저장이면">묻지 않고 바로 닫는다</Cap>
+        <Cap strong="바뀐 값이 없거나 자동 저장이면">묻지 않고 바로 닫습니다</Cap>
       </div>
     </div>
   </Panel>
@@ -422,7 +422,7 @@ const IndicatorGuide: Fig = ({ caption }) => (
           </Form>
         </div>
       </Verdict>
-      <Verdict ok={false} note={'한 폼에 점과 "선택" 을 섞는다'}>
+      <Verdict ok={false} note={'한 폼에 점과 "선택" 을 섞었습니다'}>
         <div className="w-[240px]">
           <Form gap={16}>
             <F label="이름" indicator="required" value="김포레" />
@@ -443,7 +443,7 @@ const TextGuide: Fig = ({ caption }) => (
           <F label="휴대폰 번호" value="010-1234" error="휴대폰 번호 10~11자리로 입력해주세요." />
         </div>
       </Verdict>
-      <Verdict ok={false} note="placeholder 를 라벨 대신 쓰고, 오류는 이유만 말한다">
+      <Verdict ok={false} note="placeholder 를 라벨 대신 쓰고, 오류는 이유만 말합니다">
         <div className="w-[280px]">
           <F value="010-1234" error="잘못된 입력입니다." />
         </div>
@@ -562,7 +562,21 @@ const ExForm: Fig = () => {
   );
 };
 
+// ── 개요 카드 ─────────────────────────────────────────────
+// 라이트 모습 하나 — 보조 액션 · 설명 · 글자 수가 붙은 칸과 오류가 설명을 대신한 필수 칸
+const Thumb: Fig = () => (
+  <div style={{ width: 340, zoom: 0.7 }}>
+    <Surface mode="light">
+      <Form>
+        <F mode="light" label="카테고리 이름" value="반려동물" description="목록과 통계에 이 이름으로 보여요." max={12} count={4} action={exampleAction('light')} />
+        <F mode="light" label="금액" indicator="required" error="금액을 입력해주세요." suffix="원" />
+      </Form>
+    </Surface>
+  </div>
+);
+
 export const fieldFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

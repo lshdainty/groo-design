@@ -203,7 +203,7 @@ const Anatomy: Fig = ({ caption }) => {
           </div>
         </div>
         <div className="text-[12px] leading-4 pk-muted">
-          <b className="pk-text">ⓐ</b> Line — {lk.thickness}px · stroke-neutral-subtle · 바깥 여백 {lk.margin}(사이 간격은 쓰는 자리가 정한다)
+          <b className="pk-text">ⓐ</b> Line — {lk.thickness}px · stroke-neutral-subtle · 바깥 여백 {lk.margin}(사이 간격은 쓰는 자리가 정합니다)
         </div>
       </div>
     </Figure>
@@ -227,7 +227,7 @@ const Orientation: Fig = ({ caption }) => (
               <Stats />
             )}
           </Board>
-          <Cap strong={o === 'horizontal' ? 'horizontal — 기본' : 'vertical'}>{o === 'horizontal' ? '세로로 쌓인 내용 사이 — 부모 폭 전체, 높이 1' : '가로로 놓인 칸 사이 — 높이는 부모(flex)가 정한다, 폭 1'}</Cap>
+          <Cap strong={o === 'horizontal' ? 'horizontal — 기본' : 'vertical'}>{o === 'horizontal' ? '세로로 쌓인 내용 사이 — 부모 폭 전체, 높이 1' : '가로로 놓인 칸 사이 — 높이는 부모(flex)가 정합니다, 폭 1'}</Cap>
         </div>
       ))}
     </div>
@@ -258,7 +258,7 @@ const InsetFig: Fig = ({ caption }) => {
           </div>
         ))}
       </div>
-      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">화면 여백(24)에 붙은 목록 줄 사이는 Divider 가 아니라 List 의 줄 사이 선(들임 24 — 줄 글과 맞는다)이다</p>
+      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">화면 여백(24)에 붙은 목록 줄 사이는 Divider 가 아니라 List 의 줄 사이 선(들임 24 — 줄 글과 맞습니다)입니다</p>
     </Panel>
   );
 };
@@ -302,12 +302,12 @@ const StrengthGuide: Fig = ({ caption }) => (
 const NeededGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair stack>
-      <Verdict ok note="줄의 위아래 여백이 줄을 가른다 — 선이 없는 것이 기본">
+      <Verdict ok note="줄의 위아래 여백이 줄을 가릅니다 — 선이 없는 것이 기본입니다">
         <PhoneBoard>
           <Rows rows={[txRow(TX.starbucks), txRow(TX.lunch), txRow(TX.bus)]} />
         </PhoneBoard>
       </Verdict>
-      <Verdict ok={false} note="줄마다 선 + 여백 — 화면이 촘촘한 칸처럼 보이고 무엇이 묶음인지 흐려진다">
+      <Verdict ok={false} note="줄마다 선 + 여백 — 화면이 촘촘한 칸처럼 보이고 무엇이 묶음인지 흐려집니다">
         <PhoneBoard>
           <Rows rows={[txRow(TX.starbucks), txRow(TX.lunch), txRow(TX.bus)]} divider="full" />
         </PhoneBoard>
@@ -333,12 +333,12 @@ function DetailCard({ last }: { last: boolean }) {
 const LastGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="선은 내용 사이에만 — 마지막 줄 아래 · 카드 끝에는 없다">
+      <Verdict ok note="선은 내용 사이에만 둡니다 — 마지막 줄 아래 · 카드 끝에는 없습니다">
         <W w={320}>
           <DetailCard last={false} />
         </W>
       </Verdict>
-      <Verdict ok={false} note="마지막 줄 아래 · 카드 맨 아래에 선 — 나눌 것이 없는데 선이 남는다">
+      <Verdict ok={false} note="마지막 줄 아래 · 카드 맨 아래에 선 — 나눌 것이 없는데 선이 남습니다">
         <W w={320}>
           <DetailCard last />
         </W>
@@ -394,7 +394,16 @@ const ExVertical: Fig = ({ caption }) => (
   </Preview>
 );
 
+// ── 개요 카드 ─────────────────────────────────────────────
+// 라이트 모습 하나 — 거래 상세(키-값 묶음 안은 들인 선, 묶음 사이는 끝까지 선)
+const Thumb: Fig = () => (
+  <div className="overflow-hidden rounded-2xl" style={{ width: 300, zoom: 0.68 }}>
+    <TxDetail mode="light" />
+  </div>
+);
+
 export const dividerFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

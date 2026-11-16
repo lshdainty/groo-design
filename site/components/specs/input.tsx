@@ -198,7 +198,7 @@ const Size: Fig = ({ caption }) => (
         <Surface>
           <F label="반응형 — 지금 이 창의 폭으로" size="responsive" placeholder="1280 미만은 large, 이상은 medium" state={undefined} />
         </Surface>
-        <Cap strong="responsive(웹 기본)">창 폭을 바꿔 보면 1280 에서 바뀐다</Cap>
+        <Cap strong="responsive(웹 기본)">창 폭을 바꿔 보면 1280 에서 바뀝니다</Cap>
       </div>
     </div>
   </Panel>
@@ -274,14 +274,14 @@ const Clear: Fig = ({ caption }) => {
           <I prefixIcon="search" value="회의록" clearable state="focused" hitMark={{ fill: MARK, line: MARK_LINE }} />
         </Surface>
         <Cap strong="값이 있을 때">
-          원 large {L.large.clear} · medium {L.medium.clear} — 분홍 점선은 누르는 영역 {hit}(상자 밖은 잘린다)
+          원 large {L.large.clear} · medium {L.medium.clear} — 분홍 점선은 누르는 영역 {hit}(상자 밖은 잘립니다)
         </Cap>
       </div>
       <div className="flex flex-col gap-2">
         <Surface>
           <I prefixIcon="search" value="회의록" clearable state="disabled" />
         </Surface>
-        <Cap strong="막혔을 때">보이지 않는다</Cap>
+        <Cap strong="막혔을 때">보이지 않습니다</Cap>
       </div>
     </div>
   </Panel>
@@ -303,7 +303,7 @@ const UnderlineGuide: Fig = ({ caption }) => {
             </div>
           </Phone>
         </Verdict>
-        <Verdict ok={false} note="상자형 칸 하나만 덩그러니 둔다">
+        <Verdict ok={false} note="상자형 칸 하나만 덩그러니 둡니다">
           <Phone title="" mode="light" scale={0.52} h={560} bg="bg-layer-default" bottom={cta('다음', 'light')}>
             <div className="px-6 pt-4">
               <TfFieldView look={lk.field} mode="light" label="금액">
@@ -325,7 +325,7 @@ const NumberGuide: Fig = ({ caption }) => (
           <F label="금액" value="1,500,000" suffix="원" />
         </div>
       </Verdict>
-      <Verdict ok={false} note="쉼표 없이 · 단위를 라벨에 붙인다">
+      <Verdict ok={false} note="쉼표 없이 · 단위를 라벨에 붙입니다">
         <div className="w-[280px]">
           <F label="금액(원)" value="1500000" />
         </div>
@@ -339,12 +339,12 @@ const FormatGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full max-w-[720px] flex-col gap-4 md:flex-row">
-        <Verdict ok note="한 칸에서 쓰는 대로 하이픈을 맞춰 준다">
+        <Verdict ok note="한 칸에서 쓰는 대로 하이픈을 맞춰 줍니다">
           <div className="w-[280px]">
             <F label="휴대폰 번호" value="010-1234-5678" inputMode="tel" />
           </div>
         </Verdict>
-        <Verdict ok={false} note="세 칸으로 나눠 칸마다 옮겨 다니게 한다">
+        <Verdict ok={false} note="세 칸으로 나눠 칸마다 옮겨 다니게 합니다">
           <div className="w-[280px]">
             <TfFieldView look={lk.field} label="휴대폰 번호">
               <div className="flex items-center gap-2">
@@ -410,7 +410,20 @@ const ExStates: Fig = () => {
   );
 };
 
+// 개요 카드 — Field 안의 칸 둘: 포커스한 금액(뒤 글자 원) · 값과 지우기가 있는 내용(라이트)
+const Thumb: Fig = () => (
+  <div style={{ width: 320, zoom: 0.8 }}>
+    <Surface mode="light">
+      <Form>
+        <F mode="light" label="금액" value="12,000" suffix="원" state="focused" />
+        <F mode="light" label="내용" value="점심 식사" clearable />
+      </Form>
+    </Surface>
+  </div>
+);
+
 export const inputFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

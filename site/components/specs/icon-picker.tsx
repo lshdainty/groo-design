@@ -365,7 +365,7 @@ const SelectedFig: Fig = ({ caption }) => {
                 <IpCellView key={id} look={l} mode={mode} entry={entry(id)} selected={id === 'coffee'} state="enabled" />
               ))}
             </div>
-            <Cap strong={mode === 'light' ? '라이트' : '다크'}>{`커피를 골랐다 — 바탕은 칠하지 않는다(시트 · 팝오버 면 그대로)`}</Cap>
+            <Cap strong={mode === 'light' ? '라이트' : '다크'}>{`커피를 골랐습니다 — 바탕은 칠하지 않습니다(시트 · 팝오버 면 그대로)`}</Cap>
           </div>
         ))}
       </div>
@@ -390,7 +390,7 @@ const SearchFig: Fig = ({ caption }) => {
                   <List surface="sheet" query={q} value={null} />
                 </Sheet_>
               </Scaled>
-              <Cap strong={`“${q}”`}>{n ? `${IP_COUNT.text.replace('{n}', String(n))} — 치기를 멈추면 화면 밖으로 한 번 읽는다. 찾기 칸 ↔ 격자 ${gap}` : 'Result Section medium — role="status"'}</Cap>
+              <Cap strong={`“${q}”`}>{n ? `${IP_COUNT.text.replace('{n}', String(n))} — 치기를 멈추면 화면 밖으로 한 번 읽습니다. 찾기 칸 ↔ 격자 ${gap}` : 'Result Section medium — role="status"'}</Cap>
             </div>
           );
         })}
@@ -463,14 +463,14 @@ const SCOPE_H = 400;
 const ScopeGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="고른 세트(148개 · 13 묶음)만 — 첫 화면이 식비 · 카페 … 로 열려 찾지 않고도 고른다">
+      <Verdict ok note="고른 세트(148개 · 13 묶음)만 엽니다 — 첫 화면이 식비 · 카페 … 로 열려 찾지 않고도 고릅니다">
         <Scaled w={360} h={SCOPE_H} s={0.78}>
           <Sheet_ h={SCOPE_H}>
             <List surface="sheet" groups={['식비', '카페']} rows={2} />
           </Sheet_>
         </Scaled>
       </Verdict>
-      <Verdict ok={false} note="lucide 전체(2,007) — 첫 화면이 'a-arrow-down …' 이라 사실상 찾기로만 고른다(지금 웹 · 앱)">
+      <Verdict ok={false} note="lucide 전체(2,007)를 열면 첫 화면이 'a-arrow-down …' 이라 사실상 찾기로만 고르게 됩니다">
         <Scaled w={360} h={SCOPE_H} s={0.78}>
           <Sheet_ h={SCOPE_H}>
             <LucideFirst />
@@ -486,7 +486,7 @@ const NameGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <Pair>
-        <Verdict ok note="칸 이름은 한국어 이름 — '커피, 선택됨'. 트리거 값도 같은 글">
+        <Verdict ok note="칸 이름은 한국어 이름입니다 — '커피, 선택됨'. 트리거 값도 같은 글입니다">
           <div className="flex flex-col items-center gap-3">
             <div className="flex gap-1 rounded-xl p-4" style={{ background: rc('bg-layer-floating') }}>
               {['coffee', 'cup-soda', 'beer'].map((id) => (
@@ -496,7 +496,7 @@ const NameGuide: Fig = ({ caption }) => {
             <Readout text="커피, 선택됨, 3개 중 1번째" />
           </div>
         </Verdict>
-        <Verdict ok={false} note="영어 lucide 이름을 이름으로 — 'a-arrow-down' 이 그대로 읽히고 툴팁에 뜬다(지금 웹)">
+        <Verdict ok={false} note="영어 lucide 이름을 이름으로 두면 'a-arrow-down' 이 그대로 읽히고 툴팁에 뜹니다">
           <div className="flex flex-col items-center gap-3">
             <div className="flex gap-1 rounded-xl p-4" style={{ background: rc('bg-layer-floating') }}>
               {LUCIDE_FIRST.slice(0, 3).map((id) => (
@@ -540,7 +540,24 @@ const ExName: Fig = ({ caption }) => {
   );
 };
 
+// ── 개요 카드 ─────────────────────────────────────────────
+// 라이트 — 팝오버(찾기 칸 · 식비 · 카페 묶음 한 줄씩, 커피를 고른 칸). 높이는 두 묶음이 아래 흐림 위에 다 보이게(Anatomy 와 같은 셈)
+const Thumb: Fig = () => {
+  const l = IP();
+  const f = fogOf('popover');
+  const group = l.header.padTop + parseFloat(l.header.text.lineHeight) + l.header.padBottom + l.cell.size;
+  const h = bodyTop('popover') + (l.surfaces.popover.fog ? f.padTop + f.padBottom : 0) + group * 2;
+  return (
+    <div style={{ width: l.popoverWidth, zoom: Math.min(0.68, 200 / h) }}>
+      <Pop mode="light" h={h}>
+        <List surface="popover" mode="light" groups={['식비', '카페']} rows={1} />
+      </Pop>
+    </div>
+  );
+};
+
 export const iconPickerFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,
