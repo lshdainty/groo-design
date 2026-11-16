@@ -520,7 +520,17 @@ const ExConstraints: Fig = () => (
   </DateLive>
 );
 
+// 개요 카드 — 라이트 달력 하나(오늘 · 고른 날)
+const Thumb: Fig = () => (
+  <div style={{ width: 336, zoom: 0.5 }}>
+    <Floating mode="light" pad={0}>
+      <DatePickerView kit={dk()} mode="light" value={D(10, 15)} view={OCT} />
+    </Floating>
+  </div>
+);
+
 export const datePickerFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

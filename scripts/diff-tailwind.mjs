@@ -1,17 +1,14 @@
 #!/usr/bin/env node
-// Tailwind v4 export diff 가시화 (P2-H)
-//
-// 기본 `npm run diff`(design.md frontmatter YAML diff) 외에 사용자 시점의
-// **결과 CSS diff**를 제공. 이전 백업과 현재 DESIGN.md를 각각 v4 @theme CSS로
-// 빌드한 뒤 unified diff 출력.
+// Tailwind v4 내보내기 비교 — 기준 커밋(기본 origin/main)의 원본과 지금 원본을 각각 @theme CSS 로
+// 빌드한 뒤 unified diff 로 보여 줍니다.
 //
 // 사용법:
-//   node scripts/diff-tailwind.mjs                              # 가장 최근 milestone 백업과 비교
-//   node scripts/diff-tailwind.mjs --prev DESIGN.history/v32-add-motion.md
-//   node scripts/diff-tailwind.mjs --source DESIGN.hr.md        # HR/Desk 파일 비교 (자동 백업 안 됨이라 prev 명시 필요)
+//   node scripts/diff-tailwind.mjs                          # origin/main 의 DESIGN.md 와 비교
+//   node scripts/diff-tailwind.mjs --source DESIGN.hr.md    # 브랜드 파일 비교
+//   node scripts/diff-tailwind.mjs --base <커밋>             # 다른 기준 커밋
 
 import { execSync, spawnSync } from "node:child_process";
-import { readdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdtempSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, basename } from "node:path";
 import { tmpdir } from "node:os";
@@ -32,21 +29,12 @@ function parseArgs(arr) {
   return out;
 }
 
-function findLatestMilestoneBackup() {
-  const dir = resolve(ROOT, "DESIGN.history");
-  const files = readdirSync(dir);
-  // v숫자로 시작하는 milestone 백업 (자동 timestamp v20YYYYMMDD-* 제외)
-  const milestone = files
-    .filter(f => /^v\d+-.*\.md$/.test(f) && !/^v20\d{6}-/.test(f))
-    .sort((a, b) => {
-      const na = parseInt(a.match(/^v(\d+)/)[1], 10);
-      const nb = parseInt(b.match(/^v(\d+)/)[1], 10);
-      return nb - na;
-    });
-  if (milestone.length === 0) {
-    throw new Error("milestone 백업(DESIGN.history/v{N}-{이유}.md) 없음 — npm run snapshot은 timestamp 백업만, milestone은 작업 전 cp로 생성됨");
-  }
-  return resolve(dir, milestone[0]);
+// 기준 커밋의 원본을 임시 파일로 꺼낸다
+function sourceAt(base, source) {
+  const text = execSync(`git show ${base}:${source}`, { cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  const file = resolve(mkdtempSync(resolve(tmpdir(), "groo-base-")), basename(source));
+  writeFileSync(file, text, "utf8");
+  return file;
 }
 
 function buildCss(sourcePath) {
@@ -63,7 +51,7 @@ function buildCss(sourcePath) {
 
 const args = parseArgs(argv.slice(2));
 const source = args.source || resolve(ROOT, "DESIGN.md");
-const prev = args.prev || findLatestMilestoneBackup();
+const prev = args.prev || sourceAt(args.base || "origin/main", args.source || "DESIGN.md");
 
 console.log(`source: ${basename(source)}`);
 console.log(`prev:   ${basename(prev)}`);

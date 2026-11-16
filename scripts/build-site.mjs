@@ -1397,11 +1397,6 @@ npm run build:site</code></pre>
       <p style="font-size: var(--text-title-md); font-weight: 700; color: var(--color-primary); margin: 0;">80+</p>
       <p style="margin: 4px 0 0; font-size: var(--text-caption); color: var(--color-text-tertiary);">shadcn/ui ~100% coverage + Banner/Tag/Popover/File Upload/Treeview 누락 보강</p>
     </div>
-    <div class="spec-card">
-      <h4>Milestones</h4>
-      <p style="font-size: var(--text-title-md); font-weight: 700; color: var(--color-primary); margin: 0;">v82</p>
-      <p style="margin: 4px 0 0; font-size: var(--text-caption); color: var(--color-text-tertiary);">v1 → v82 누적 milestone, DESIGN.history/ milestone 백업 1:1</p>
-    </div>
   </div>
 </section>
 `;

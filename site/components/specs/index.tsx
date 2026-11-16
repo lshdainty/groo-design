@@ -160,3 +160,37 @@ export function SpecFigure({ name, id, caption }: { name: string; id: string; ca
     </div>
   );
 }
+
+// 컴포넌트 개요 — 모든 컴포넌트를 카드 한 장씩 한 페이지에 모은다.
+// 카드 그림은 `thumb`(라이트 모습 하나), 아직 없으면 대표 그림(`hero`)을 줄여 쓴다. 그림 안은 inert — 카드 전체가 링크다.
+export function ComponentGallery({ items }: { items: { name: string; title: string }[] }) {
+  return (
+    <div className="not-prose grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3" data-gallery>
+      {items.map(({ name, title }) => {
+        const Thumb = FIGURES[name]?.thumb;
+        const Hero = FIGURES[name]?.hero;
+        if (!Thumb && !Hero) throw new Error(`그림 ${name}#thumb · #hero 가 없다 — 개요 카드에 쓴다`);
+        return (
+          <div key={name} className="group relative flex flex-col gap-3">
+            <div
+              aria-hidden
+              inert
+              className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[#eef0f1] transition-[filter] group-hover:brightness-[0.97]"
+            >
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6">
+                {Thumb ? (
+                  <Thumb />
+                ) : (
+                  <div className="w-[880px] max-w-none [zoom:0.42]">{Hero && <Hero />}</div>
+                )}
+              </div>
+            </div>
+            <a href={`/docs/components/${name}`} className="text-[17px] font-semibold text-fd-foreground after:absolute after:inset-0 after:rounded-xl">
+              {title}
+            </a>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
