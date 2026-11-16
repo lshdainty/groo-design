@@ -134,10 +134,10 @@ const Anatomy: Fig = ({ caption }) => {
         <Legend
           items={[
             ['ⓐ', 'Track — 원 전체, 옅은 색'],
-            ['ⓑ', 'Range — 진행, 12시에서 시계 방향 · 끝이 둥글다(점선)'],
+            ['ⓑ', 'Range — 진행, 12시에서 시계 방향 · 둥근 끝(점선)'],
           ]}
         />
-        <Note>40 원을 {ZOOM}배로 그렸다(값 40%). 트랙과 호는 같은 두께 · 같은 반지름의 원이고, 값 없는 원은 이 호가 늘었다 줄며 돈다.</Note>
+        <Note>40 원을 {ZOOM}배로 그렸습니다(값 40%). 트랙과 호는 같은 두께 · 같은 반지름의 원이고, 값 없는 원은 이 호가 늘었다 줄며 돕니다.</Note>
       </div>
     </Figure>
   );
@@ -196,7 +196,7 @@ const Sizes: Fig = ({ caption }) => {
             );
           })}
         </div>
-        <Note>버튼 안의 원은 Button 이 크기 · 두께 · 색을 넘긴다(inherit — 두께 {buttonLook({ variant: 'neutralSolid', size: 'medium' }).faces.light.enabled.progress.thickness}). 그 밖의 크기(16 · 32 · 48)는 두지 않는다</Note>
+        <Note>버튼 안의 원은 Button 이 크기 · 두께 · 색을 넘깁니다(inherit — 두께 {buttonLook({ variant: 'neutralSolid', size: 'medium' }).faces.light.enabled.progress.thickness}). 그 밖의 크기(16 · 32 · 48)는 두지 않습니다.</Note>
       </div>
     </Figure>
   );
@@ -284,10 +284,10 @@ const Modes: Fig = ({ caption }) => (
     <div className="flex flex-wrap items-start justify-center gap-4 rounded-2xl px-6 py-8 pk-surface">
       {(
         [
-          ['값 없는 원', undefined, `${pc().motion.rotate.ms / 1000}초에 한 바퀴 — 호가 늘었다 줄며 돈다`],
-          ['값 0', 0, '트랙만 — 호를 지운다(둥근 점이 남지 않게)'],
+          ['값 없는 원', undefined, `${pc().motion.rotate.ms / 1000}초에 한 바퀴 — 호가 늘었다 줄며 돕니다`],
+          ['값 0', 0, '트랙만 — 호를 지웁니다(둥근 점이 남지 않게)'],
           ['값 40', 40, '12시부터 40%'],
-          ['값 100', 100, '꽉 찬 원 — 부르는 쪽이 결과로 바꾼다'],
+          ['값 100', 100, '꽉 찬 원 — 부르는 쪽이 결과로 바꿉니다'],
         ] as [string, number | undefined, string][]
       ).map(([t, v, cap]) => (
         <div key={t} className="flex w-[120px] flex-col items-center gap-3">
@@ -316,7 +316,7 @@ const ReducedMotion: Fig = ({ caption }) => (
           </div>
         ))}
       </div>
-      <Note>값 없는 원은 12시부터 시계 방향 {pc().reducedArc}% 에 멈춘 호, 값 있는 원은 채움이 바로 바뀐다(전환 0). 기기에서 동작 줄이기를 켜면 이 모습이다</Note>
+      <Note>값 없는 원은 12시부터 시계 방향 {pc().reducedArc}% 에 멈춘 호, 값 있는 원은 채움이 바로 바뀝니다(전환 0). 기기에서 동작 줄이기를 켜면 이 모습입니다.</Note>
     </div>
   </Figure>
 );
@@ -328,7 +328,7 @@ const PlacementGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full flex-col gap-4">
-        <Verdict ok note="원이 놓인 자리가 무엇을 기다리는지 말한다 — 틀(머리 · 탭 바)은 그대로 그리고 원은 콘텐츠 영역에만" bg={BASEMENT}>
+        <Verdict ok note="원이 놓인 자리가 무엇을 기다리는지 말합니다 — 틀(머리 · 탭 바)은 그대로 그리고 원은 콘텐츠 영역에만 둡니다" bg={BASEMENT}>
           <div className="flex flex-wrap items-start justify-center gap-4">
             <Shot strong="섹션 제목 옆 24" cap="그 섹션 — 보던 내용은 그대로">
               <div className="w-[280px]">
@@ -358,7 +358,7 @@ const PlacementGuide: Fig = ({ caption }) => {
           </div>
         </Verdict>
         <Pair>
-          <Verdict ok={false} note='화면을 덮는 회색 막 위 원 · "Loading" — 뒤 화면이 보이지 않고 무엇을 기다리는지 알 수 없다' bg={BASEMENT}>
+          <Verdict ok={false} note='화면을 덮는 회색 막 위 원 · "Loading" 입니다 — 뒤 화면이 보이지 않고 무엇을 기다리는지 알 수 없습니다' bg={BASEMENT}>
             <LdPhone title="홈" scale={0.5} h={520}>
               <div className="relative h-full">
                 <div style={bandStack()}>
@@ -373,7 +373,7 @@ const PlacementGuide: Fig = ({ caption }) => {
               </div>
             </LdPhone>
           </Verdict>
-          <Verdict ok={false} note="앱 틀 없이 화면 가운데 원 하나 — 첫 진입이어도 머리 · 탭 바는 먼저 그린다" bg={BASEMENT}>
+          <Verdict ok={false} note="앱 틀 없이 화면 가운데 원 하나만 그렸습니다 — 첫 진입이어도 머리 · 탭 바는 먼저 그립니다" bg={BASEMENT}>
             <LdPhone scale={0.5} h={520} tabs={false} bg="bg-layer-default">
               <div className="grid h-full place-items-center">
                 <Circle size="40" decorative />
@@ -412,7 +412,7 @@ const TimelineGuide: Fig = ({ caption }) => {
   return (
     <Figure caption={caption}>
       <div className="grid grid-cols-1 gap-5 rounded-2xl p-4 sm:grid-cols-[264px_264px]" style={{ background: rc('bg-layer-basement') }}>
-        <Shot strong={`0 ~ ${s(r.showAfter)}`} cap="보이지 않는다 — 1초 안에 끝나면 깜빡이지 않는다">
+        <Shot strong={`0 ~ ${s(r.showAfter)}`} cap="보이지 않습니다 — 1초 안에 끝나면 깜빡이지 않습니다">
           <SearchCard phase="quiet" />
         </Shot>
         <Shot strong={`${s(r.showAfter)} ~`} cap="콘텐츠 가운데 원 40">
@@ -458,7 +458,7 @@ function FileRow({ mode = 'auto', value, bar = false }: { mode?: Mode; value: nu
 const DeterminateGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="사진은 딤 위 가운데 흰 원(staticWhite), 파일 · 앱 업데이트는 이름 옆 회색 원(neutral) — 다 차면 원을 걷는다" bg={BASEMENT}>
+      <Verdict ok note="사진은 딤 위 가운데 흰 원(staticWhite), 파일 · 앱 업데이트는 이름 옆 회색 원(neutral) — 다 차면 원을 걷습니다" bg={BASEMENT}>
         <div className="flex w-[300px] flex-col gap-3 rounded-2xl px-6 py-5 pk-surface">
           <div className="flex gap-2">
             <Uploading value={40} />
@@ -467,7 +467,7 @@ const DeterminateGuide: Fig = ({ caption }) => (
           <FileRow value={60} />
         </div>
       </Verdict>
-      <Verdict ok={false} note="올리기를 막대로 — 막대(Progress)는 얼마나 찼나를 보이는 미터다. 진행은 값 있는 원" bg={BASEMENT}>
+      <Verdict ok={false} note="올리기를 막대로 그렸습니다 — 막대(Progress)는 얼마나 찼는지를 보이는 미터입니다. 진행은 값 있는 원으로 보입니다" bg={BASEMENT}>
         <div className="flex w-[300px] flex-col gap-3 rounded-2xl px-6 py-5 pk-surface">
           <FileRow value={60} bar />
         </div>
@@ -512,13 +512,13 @@ const Ptr: Fig = ({ caption }) => {
       <div className="flex flex-col items-center gap-6">
         <PullToRefreshDemo kit={L()} screen={SCREEN()} list={listLook()} snack={snackbarLook()} />
         <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-4">
-          <Shot strong={`당기는 중 ${Math.round(p.threshold / 2)}`} cap={`원이 ${Math.round(50)}% 차고 짙어진다 — 손가락 × ${p.multiplier}`}>
+          <Shot strong={`당기는 중 ${Math.round(p.threshold / 2)}`} cap={`원이 ${Math.round(50)}% 차고 짙어집니다 — 손가락 × ${p.multiplier}`}>
             <PullFrame pull={p.threshold / 2} phase="pulling" />
           </Shot>
-          <Shot strong={`문턱 ${p.threshold}`} cap="꽉 찬 원 — 놓으면 새로 고친다">
+          <Shot strong={`문턱 ${p.threshold}`} cap="꽉 찬 원 — 놓으면 새로 고칩니다">
             <PullFrame pull={p.threshold + 16} phase="ready" />
           </Shot>
-          <Shot strong="새로 고치는 중" cap={`원이 돌고 내용은 ${p.threshold} 에 머문다 — 끝날 때까지`}>
+          <Shot strong="새로 고치는 중" cap={`원이 돌고 내용은 ${p.threshold} 에 머뭅니다 — 끝날 때까지`}>
             <PullFrame pull={p.threshold} phase="refreshing" />
           </Shot>
           <Shot strong="끝남" cap={`${p.motion.done.ms}ms 에 제자리로 — 보던 내용은 그대로`}>
@@ -534,7 +534,19 @@ const Ptr: Fig = ({ caption }) => {
 const ExBasic: Fig = () => <CircleBasicDemo kit={L()} screen={SCREEN()} list={listLook()} search={buttonLook({ variant: 'neutralSolid', size: 'small' })} />;
 const ExDeterminate: Fig = () => <CircleUploadDemo kit={L()} screen={SCREEN()} start={buttonLook({ variant: 'neutralWeak', size: 'small' })} />;
 
+// 개요 카드 — 흰 면 위 원 40 셋(값 없는 원 · 값 있는 원 65% · brand). 그린 크기 240 × 140 × 1.15 = 276 × 161
+const Thumb: Fig = () => (
+  <div style={{ width: 240, zoom: 1.15 }}>
+    <div className="flex items-center justify-center rounded-2xl" style={{ height: 140, gap: 28, background: rc('bg-layer-default', 'light') }}>
+      <Circle mode="light" size="40" />
+      <Circle mode="light" size="40" value={65} />
+      <Circle mode="light" size="40" tone="brand" value={40} />
+    </div>
+  </div>
+);
+
 export const progressCircleFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

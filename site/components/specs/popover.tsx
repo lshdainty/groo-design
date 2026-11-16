@@ -233,7 +233,7 @@ const Placement: Fig = ({ caption }) => {
         <Shot strong="아래가 모자라면 위" cap={`트리거 위 ${p.offset} — 높이는 남은 공간까지`}>
           {shot('above')}
         </Shot>
-        <Shot strong="옆으로 넘치면 민다" cap={`화면 가장자리와 ${p.edge} 을 남긴다`}>
+        <Shot strong="옆으로 넘치면 민다" cap={`화면 가장자리와 ${p.edge} 을 남깁니다`}>
           {shot('edge')}
         </Shot>
       </div>
@@ -284,7 +284,7 @@ const RoleGuide: Fig = ({ caption }) => (
           </Shot>
         </div>
       </Verdict>
-      <Verdict ok={false} note="팝오버에 폼 — 바깥을 누르면 닫혀 쓰던 값이 사라진다. 폼 · 상세는 Dialog">
+      <Verdict ok={false} note="팝오버에 폼 — 바깥을 누르면 닫혀 쓰던 값이 사라집니다. 폼 · 상세는 Dialog 입니다">
         <Scaled w={560} h={360} s={0.46}>
           <FormPopoverWindow />
         </Scaled>
@@ -321,13 +321,13 @@ function FocusWindow({ step }: { step: 'open' | 'back' | 'tab' }) {
 const DismissGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="flex flex-wrap items-start justify-center gap-5">
-      <Shot strong="열면" cap="초점이 팝오버 안으로 — 가두지 않는다(딤 · 스크롤 잠금 없음)">
+      <Shot strong="열면" cap="초점이 팝오버 안으로 갑니다 — 가두지 않습니다(딤 · 스크롤 잠금 없음)">
         <FocusWindow step="open" />
       </Shot>
       <Shot strong="Esc · 바깥 누르기" cap="Esc 는 트리거로 — 바깥을 누르면 누른 자리로(초점을 못 받는 자리면 트리거로)">
         <FocusWindow step="back" />
       </Shot>
-      <Shot strong="마지막에서 Tab" cap="다음 자리로 나가며 닫힌다 — 초점은 나간 자리에">
+      <Shot strong="마지막에서 Tab" cap="다음 자리로 나가며 닫힙니다 — 초점은 나간 자리에 남습니다">
         <FocusWindow step="tab" />
       </Shot>
     </div>
@@ -337,7 +337,7 @@ const DismissGuide: Fig = ({ caption }) => (
 // ── 코드 미리보기(실제로 열고 Tab 으로 빠져나간다 — 1280 미만은 같은 내용을 시트로) ─────
 const ExInfo: Fig = () => <RulePopoverDemo kit={overlayKit('hr')} text={RULE_TEXT} field={tf().field} />;
 
-// 알림 목록 — Desk 데스크톱 벨(Q-017-3b B): 1280 벨 아래 팝오버 · 1024 아래 시트 · 알림 0개
+// 알림 목록 — Desk 데스크톱 벨: 1280 벨 아래 팝오버 · 1024 아래 시트 · 알림 0개
 const NotificationGuide: Fig = ({ caption }) => (
   <Figure caption={caption}>
     <div className="max-w-full overflow-x-auto">
@@ -365,7 +365,21 @@ const ExNotifications: Fig = () => (
   </figure>
 );
 
+// 개요 카드 — 라이트 트리거("연차 사용 규정 ⓘ")와 그 아래 8 의 안내 팝오버. 그린 크기 약 320 × 150 → zoom 0.85 로 272 × 128
+const Thumb: Fig = () => {
+  const p = pv();
+  return (
+    <div className="flex flex-col items-start" style={{ width: p.minWidth, zoom: 0.85, gap: p.offset }}>
+      <RuleTrigger mode="light" style={{ position: 'relative' }} />
+      <RulePopover mode="light" width={p.minWidth} scroll={{ scrolled: false }}>
+        <RuleBody mode="light" short />
+      </RulePopover>
+    </div>
+  );
+};
+
 export const popoverFigures: Record<string, Fig> = {
+  thumb: Thumb,
   'notification-guide': NotificationGuide,
   'ex-notifications': ExNotifications,
   hero: Hero,

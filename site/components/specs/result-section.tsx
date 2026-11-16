@@ -24,7 +24,7 @@ function R(p: Omit<ResultSectionViewProps, 'look'> & { look?: ResultSectionLook 
   return <ResultSectionView look={look ?? rl()} {...rest} />;
 }
 
-// 비교 페이지에서 고른 그대로의 글(2026-10-02)
+// 결과 글의 예
 const EMPTY = { kind: 'empty' as const, icon: 'receipt-text' as const, title: '이번 달 거래가 없어요', description: '거래를 기록하면 여기에 모여요.', primary: { label: '거래 추가' } };
 const FAILURE = { kind: 'failure' as const, title: '거래를 불러오지 못했어요', description: '잠시 뒤 다시 시도해 주세요.', primary: { label: '다시 시도' } };
 const DONE = { kind: 'done' as const, title: '1,204건을 가져왔어요', description: '건너뛴 줄 3 · 실패 0', primary: { label: '가계부로 가기' }, secondary: { label: '다른 파일 가져오기' } };
@@ -104,7 +104,7 @@ const Anatomy: Fig = ({ caption }) => (
           ['ⓔ', 'Second Button'],
         ]}
       />
-      <span className="max-w-[460px] text-center text-[12px] leading-5 pk-muted">가져오기 완료(large) — 아이콘 · 제목 · 설명 · 버튼 둘이 가운데로 쌓인다. 바탕은 놓인 자리의 것이다(결과 자체에는 바탕이 없다)</span>
+      <span className="max-w-[460px] text-center text-[12px] leading-5 pk-muted">가져오기 완료(large) — 아이콘 · 제목 · 설명 · 버튼 둘이 가운데로 쌓입니다. 바탕은 놓인 자리의 것입니다(결과 자체에는 바탕이 없습니다)</span>
     </div>
   </Figure>
 );
@@ -161,11 +161,11 @@ const Sizes: Fig = ({ caption }) => {
               <R size="medium" inCard grow={false} {...FAILURE} />
             </ScreenBand>
           </div>
-          <Cap strong="medium — 카드 · 띠 안">결과 자리의 좌우 {l.root.padXInCard} — 카드 · 띠 안 여백 {cardFace().pad} 이 가장자리를 맡는다(둘 다 두면 {cardFace().pad + l.root.padX})</Cap>
+          <Cap strong="medium — 카드 · 띠 안">결과 자리의 좌우 {l.root.padXInCard} — 카드 · 띠 안 여백 {cardFace().pad} 이 가장자리를 맡습니다(둘 다 두면 {cardFace().pad + l.root.padX})</Cap>
         </div>
       </div>
       <p className="mt-4 text-center text-[12px] leading-5 text-fd-muted-foreground">
-        두 크기 모두 좌우 {l.root.padX}(카드 안에서는 {l.root.padXInCard}) · 위아래 {l.root.padY} · 아이콘 {l.asset.size}(굵기 {l.asset.strokeWidth}) + 아래 {l.asset.marginBottom} — 첫 버튼 {l.primary.variant} {l.primary.size} {l.primary.height}, 둘째 버튼 {l.secondary.variant} {l.secondary.size} {l.secondary.height}. 버튼 사이 {l.actions.gap} — 둘째 버튼이 위아래로 {l.secondary.padY} 블리드해 글 자리만 차지하므로 상자 사이는 {l.actions.gap - l.secondary.padY}
+        두 크기 모두 좌우 {l.root.padX}(카드 안에서는 {l.root.padXInCard}) · 위아래 {l.root.padY} · 아이콘 {l.asset.size}(굵기 {l.asset.strokeWidth}) + 아래 {l.asset.marginBottom} — 첫 버튼 {l.primary.variant} {l.primary.size} {l.primary.height}, 둘째 버튼 {l.secondary.variant} {l.secondary.size} {l.secondary.height}. 버튼 사이 {l.actions.gap} — 둘째 버튼이 위아래로 {l.secondary.padY} 블리드해 글 자리만 차지하므로 상자 사이는 {l.actions.gap - l.secondary.padY} 입니다
       </p>
     </Panel>
   );
@@ -194,7 +194,7 @@ const Kinds: Fig = ({ caption }) => {
           </div>
         ))}
       </div>
-      <Cap strong={mode === 'light' ? '라이트' : '다크'}>실패는 느낌표 · 완료는 체크(lucide 선) — 아이콘은 장식, 상태는 제목이 말한다</Cap>
+      <Cap strong={mode === 'light' ? '라이트' : '다크'}>실패는 느낌표 · 완료는 체크(lucide 선) — 아이콘은 장식이고, 상태는 제목이 말합니다</Cap>
     </div>
   );
   return (
@@ -217,7 +217,7 @@ const FailureGuide: Fig = ({ caption }) => (
           <R size="medium" {...FAILURE} />
         </ResultPhone>
       </Verdict>
-      <Verdict ok={false} note='불러오기에 실패했는데 "내역이 없어요" — 비어 있다고 믿으면 기록을 다시 넣거나 떠난다'>
+      <Verdict ok={false} note='불러오기에 실패했는데 "내역이 없어요" — 비어 있다고 믿으면 기록을 다시 넣거나 떠납니다'>
         <ResultPhone mode="auto" title="가계부" scale={0.6}>
           <R size="large" {...EMPTY} title="내역이 없어요" />
         </ResultPhone>
@@ -226,7 +226,7 @@ const FailureGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 버튼 — SEED 의 두 표(버튼의 위계 · 실패에서 나가는 길, 2026-10-22 사용자 결정 3B):
+// 버튼 — 두 표(버튼의 위계 · 실패에서 나가는 길):
 // 화면 전체의 핵심 행동은 바닥 버튼(Bottom CTA) · 그 상태를 푸는 동작은 안 버튼(Contained) · 잠깐 연 시트는 머리 ✕ · 돌아갈 곳이 없으면 홈으로
 const SHEET_FAILURE = { kind: 'failure' as const, title: '혜택을 불러오지 못했어요', description: '잠시 뒤 다시 시도해 주세요.', primary: { label: '다시 시도' } };
 const ButtonsGuide: Fig = ({ caption }) => {
@@ -284,7 +284,7 @@ const ButtonsGuide: Fig = ({ caption }) => {
   );
 };
 
-// 비어 있는 까닭마다(2026-10-22 사용자 결정 2B) — 처음은 할 일 + 첫 버튼, 걸러서 0건은 조건 탓을 말하고 버튼 없이(지우기는 필터 바 맨 앞), 검색 0건은 검색어로
+// 비어 있는 까닭마다 — 처음은 할 일 + 첫 버튼, 걸러서 0건은 조건 탓을 말하고 버튼 없이(지우기는 필터 바 맨 앞), 검색 0건은 검색어로
 const FIRST = { kind: 'empty' as const, icon: 'receipt-text' as const, title: '아직 기록한 거래가 없어요', description: '거래를 기록하면 날짜별로 여기에 모여요.', primary: { label: '거래 추가' } };
 const FILTERED = { kind: 'empty' as const, icon: 'funnel-x' as const, title: '조건에 맞는 거래가 없어요', description: '조건을 바꾸거나 지워 보세요.' };
 const SEARCHED = { kind: 'empty' as const, icon: 'search-x' as const, title: "'지어낸마트'에 대한 검색 결과가 없어요", description: '가맹점 이름으로도 찾아보세요.' };
@@ -308,7 +308,7 @@ const EmptyGuide: Fig = ({ caption }) => {
           )}
           {cell(
             '걸러서 0건',
-            '조건 탓을 제목이 말한다 · 버튼 없음 — 지우기는 필터 바 맨 앞',
+            '조건 탓을 제목이 말합니다 · 버튼 없음 — 지우기는 필터 바 맨 앞',
             <ResultPhone mode="auto" title="가계부" scale={0.55}>
               <FilterStrip on />
               <R size="large" {...FILTERED} />
@@ -323,13 +323,13 @@ const EmptyGuide: Fig = ({ caption }) => {
           )}
         </div>
         <Pair>
-          <Verdict ok note="걸러서 0건 — 조건 탓이라고 말한다 · 지우기는 필터 바 맨 앞">
+          <Verdict ok note="걸러서 0건 — 조건 탓이라고 말합니다 · 지우기는 필터 바 맨 앞">
             <ResultPhone mode="auto" title="가계부" scale={0.5}>
               <FilterStrip on />
               <R size="large" {...FILTERED} />
             </ResultPhone>
           </Verdict>
-          <Verdict ok={false} note='걸러서 0건에 "거래를 기록하면 여기에 모여요" + "거래 추가" — 할 일이 틀린다'>
+          <Verdict ok={false} note='걸러서 0건에 "거래를 기록하면 여기에 모여요" + "거래 추가" — 할 일이 틀립니다'>
             <ResultPhone mode="auto" title="가계부" scale={0.5}>
               <FilterStrip on />
               <R size="large" {...EMPTY} />
@@ -346,7 +346,15 @@ const ExEmpty: Fig = () => <ResultEmptyDemo look={rl()} snack={snackbarLook()} f
 const ExFailure: Fig = () => <ResultFailureDemo look={rl()} />;
 const ExDone: Fig = () => <ResultDoneDemo look={rl()} />;
 
+// 개요 카드 — 라이트 결과 하나(이번 달 거래 없음, large)를 흰 면 위에. 340 × 약 220 → zoom 0.8 로 272 × 176
+const Thumb: Fig = () => (
+  <div style={{ width: 340, zoom: 0.8, borderRadius: 16, background: rc('bg-layer-default', 'light') }}>
+    <R mode="light" size="large" grow={false} {...EMPTY} />
+  </div>
+);
+
 export const resultSectionFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,
