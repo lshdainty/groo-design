@@ -79,8 +79,8 @@ const ALERTS: RowSpec[] = [
   { kind: 'button', prefix: { tile: 'violet', icon: 'receipt' }, title: '주간 리포트가 도착했어요', detail: '9월 넷째 주 · 어제' },
 ];
 
-// 화면 — DESIGN.md Layout 의 "화면 바탕"(2026-10-16 Q-019-3 C). 묶음 목록 화면(설정 · 알림 …)은 회색 바닥 위에 묶음(목록 제목 + 줄)마다
-// 화면 폭 흰 띠를 8 띄워 쌓는다 — 띠 안 위 4 · 아래 8, 첫 띠 위 · 마지막 띠 아래에는 틈이 없다(2026-10-23). 가계부 거래 목록만 흰 화면(floor="white")이다
+// 화면 — DESIGN.md Layout 의 "화면 바탕". 묶음 목록 화면(설정 · 알림 …)은 회색 바닥 위에 묶음(목록 제목 + 줄)마다
+// 화면 폭 흰 띠를 8 띄워 쌓는다 — 띠 안 위 4 · 아래 8, 첫 띠 위 · 마지막 띠 아래에는 틈이 없다. 가계부 거래 목록만 흰 화면(floor="white")이다
 function Screen({ title, children, mode = 'auto', scale = 0.56, h = 600, floor = 'bands' }: { title: string; children: ReactNode; mode?: Mode; scale?: number; h?: number; floor?: 'bands' | 'white' }) {
   if (floor === 'white') {
     return (
@@ -211,7 +211,7 @@ const Anatomy: Fig = ({ caption }) => {
 const Kinds: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <div className="grid gap-4 sm:grid-cols-2">
-      <Cell label={<><b className="pk-text">보기만 하는 줄</b> ListItem — 누르지 않는다</>}>
+      <Cell label={<><b className="pk-text">보기만 하는 줄</b> ListItem — 누르지 않습니다</>}>
         <L rows={[{ kind: 'view', title: '가입일', suffix: { text: '2026년 3월 2일' } }, { kind: 'view', title: '버전', suffix: { text: '1.23.0' } }]} />
       </Cell>
       <Cell label={<><b className="pk-text">누르는 줄</b> ListButtonItem — 줄 전체가 버튼</>}>
@@ -220,7 +220,7 @@ const Kinds: Fig = ({ caption }) => (
       <Cell label={<><b className="pk-text">링크 줄</b> ListLinkItem — 다른 페이지로</>}>
         <L rows={[{ kind: 'link', prefix: { icon: 'help' }, title: '도움말', suffix: { chevron: true } }, { kind: 'link', prefix: { icon: 'shield' }, title: '개인정보 처리방침', suffix: { icon: 'external' } }]} />
       </Cell>
-      <Cell label={<><b className="pk-text">컨트롤 줄</b> 줄 어디를 눌러도 바뀐다</>}>
+      <Cell label={<><b className="pk-text">컨트롤 줄</b> 줄 어디를 눌러도 바뀝니다</>}>
         <L rows={[{ kind: 'switch', title: '결제 알림', checked: true }, { kind: 'check', title: '거래 내역', checked: true }]} />
       </Cell>
     </div>
@@ -323,11 +323,11 @@ const Suffix: Fig = ({ caption }) => (
         <L
           rows={[
             { kind: 'button', title: '기본 통화', detail: '값 글자 + 화살표', suffix: { text: '대한민국 원', chevron: true } },
-            { kind: 'button', title: '계정', detail: '화살표 — 화면을 옮긴다', suffix: { chevron: true } },
+            { kind: 'button', title: '계정', detail: '화살표 — 화면을 옮깁니다', suffix: { chevron: true } },
             { kind: 'switch', title: '결제 알림', detail: '스위치 32', checked: true },
             { kind: 'check', title: '예산', detail: '체크 24', markPosition: 'suffix', checked: true },
-            { kind: 'button', title: '다라커피 강남점', detail: '금액 — 그 화면이 정한다', suffix: { amount: '−5,800원' } },
-            { kind: 'button', title: '즐겨찾는 가맹점', detail: '작은 버튼 — 따로 눌린다', suffix: { buttons: ['star'] } },
+            { kind: 'button', title: '다라커피 강남점', detail: '금액 — 그 화면이 정합니다', suffix: { amount: '−5,800원' } },
+            { kind: 'button', title: '즐겨찾는 가맹점', detail: '작은 버튼 — 따로 눌립니다', suffix: { buttons: ['star'] } },
           ]}
         />
         <L rows={[{ kind: 'radio', title: '대한민국 원', detail: '라디오 24 — 하나 고르기', value: 'a', checked: true }]} ariaLabel="라디오 예" />
@@ -336,7 +336,7 @@ const Suffix: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 값이 길 때 — 가장 나쁜 값(list.md Suffix "값이 길 때", 2026-10-15 사용자 결정 Q-001 A). 이름은 지어낸 것이다
+// 값이 길 때 — 가장 나쁜 값(list.md Suffix "값이 길 때"). 이름은 지어낸 것이다
 const LONG_TX: RowSpec[] = [
   { kind: 'button', prefix: { tile: 'violet', icon: 'shopping-bag' }, title: '동네 정육점 본점 지하 1층 식품관 명절 한우 선물세트 · 추석 대량 구매', detail: '쇼핑 · 체크카드 · 해외결제', suffix: { amount: '−1,234,567,890,123원' } },
   { kind: 'button', prefix: { tile: 'indigo', icon: 'wallet' }, title: '입출금 통장', suffix: { amount: '−1,234,567,890,123원' } },
@@ -363,20 +363,20 @@ const LongValues: Fig = ({ caption }) => {
       <div className="flex flex-col items-center gap-6">
         {(['light', 'dark'] as const).map((m) => (
           <div key={m} className="flex max-w-full flex-wrap items-start justify-center gap-6">
-            {block(320, LONG_TX, m, '320 · 거래 줄', '금액은 한 줄 그대로 — 본문이 양보하고 제목 · 설명은 칸 끝에서 끊긴다')}
-            {block(360, LONG_KV, m, '360 · 키-값 줄', '52자 이메일은 줄 끝에서 끊긴다 — "이메일" 은 한 글자 폭까지 눌린다')}
+            {block(320, LONG_TX, m, '320 · 거래 줄', '금액은 한 줄 그대로 — 본문이 양보하고, 제목은 낱말 단위로 · 설명은 칸 끝에서 끊깁니다')}
+            {block(360, LONG_KV, m, '360 · 키-값 줄', '52자 이메일은 줄 끝에서 끊깁니다 — "이메일" 은 한 낱말 폭 그대로 섭니다')}
           </div>
         ))}
         <Cap>
-          값은 줄지 않고 본문이 양보한다(SEED 와 같다) — 본문은 {f.body.minWidth}(뒤 여백 {f.body.padRight} 은 따로)까지 주고, 제목 · 설명은 overflow-wrap: {f.title.overflowWrap}(Tag Group 설명은 한 줄 말줄임). 글을 그대로 넘긴 값 글자만 본문이 한 글자 폭이 된 뒤에 줄 끝에서 끊긴다 — 겹치지 않는다. 값을 줄여 적는 것은 그 화면이 정한다
+          값은 줄지 않고 본문이 양보합니다 — 본문은 {f.body.minWidth}(제목의 가장 긴 낱말 폭, 뒤 여백 {f.body.padRight} 은 따로)까지 줄고, 제목은 낱말 단위(overflow-wrap: {f.title.overflowWrap}), 설명은 칸 끝에서 끊깁니다(Tag Group 설명은 한 줄 말줄임). 글을 그대로 넘긴 값 글자만 본문이 제목 낱말 폭이 된 뒤에 줄 끝에서 끊깁니다 — 겹치지 않습니다. 값을 줄여 적는 것은 그 화면이 정합니다
         </Cap>
       </div>
     </Panel>
   );
 };
 
-// 큰 글자 — 줄 안 폭이 제목 글자 16개(16em)보다 좁으면 값을 본문 아래로(list.md "큰 글자에서 값을 본문 아래로", 2026-10-17 03-D 결정 1 B).
-// 글자만 배율로 키운다(앱처럼 — 타일 · 여백은 그대로). 금액은 쉼표 뒤에서만 줄을 바꾼다(결정 2 B — <wbr>). 이름 · 가게는 지어낸 것이다
+// 큰 글자 — 줄 안 폭이 제목 글자 16개(16em)보다 좁으면 값을 본문 아래로(list.md "큰 글자에서 값을 본문 아래로").
+// 글자만 배율로 키운다(앱처럼 — 타일 · 여백은 그대로). 금액은 쉼표 뒤에서만 줄을 바꾼다(<wbr>). 이름 · 가게는 지어낸 것이다
 type NarrowRow = { title: string; detail?: string; icon?: 'utensils' | 'coffee'; hue?: string; text?: string; amount?: string };
 const NARROW_ROWS: NarrowRow[] = [
   { title: '이메일', text: 'groo.demo.long.address@example-company.co.kr' },
@@ -448,7 +448,7 @@ const Narrow: Fig = ({ caption }) => {
                     <NarrowList mode={m} s={s} />
                   </div>
                   <Cap strong={`글자 ${Math.round(s * 100)}% · ${m === 'light' ? '라이트' : '다크'}`}>
-                    줄 안 {inner} = 제목 글자 {Number(em.toFixed(1))}개 — {stacked ? `${lk.narrow.below} 미만이라 값이 본문 아래로` : `${lk.narrow.below} 이상이라 한 줄(Q-001 A)`}
+                    줄 안 {inner} = 제목 글자 {Number(em.toFixed(1))}개 — {stacked ? `${lk.narrow.below} 미만이라 값이 본문 아래로` : `${lk.narrow.below} 이상이라 한 줄`}
                   </Cap>
                 </div>
               );
@@ -456,7 +456,7 @@ const Narrow: Fig = ({ caption }) => {
           </div>
         ))}
         <Cap>
-          폭 360(좌우 {lk.faces.none.light.enabled.pad.x}) · 글자만 배율로 키웠다. 기준은 값의 길이가 아니라 줄 안 폭이다 — {lk.narrow.below}em 이상이면 값이 아무리 길어도 한 줄이다. 금액은 쉼표 뒤에서만 줄을 바꾼다
+          폭 360(좌우 {lk.faces.none.light.enabled.pad.x}) · 글자만 배율로 키웠습니다. 기준은 값의 길이가 아니라 줄 안 폭입니다 — {lk.narrow.below}em 이상이면 값이 아무리 길어도 한 줄입니다. 금액은 쉼표 뒤에서만 줄을 바꿉니다
         </Cap>
       </div>
     </Panel>
@@ -510,7 +510,7 @@ const Divider: Fig = ({ caption }) => (
 );
 
 // ── Guidelines ────────────────────────────────────────────
-// 좁은 화면에서는 위아래로 — 나란히 두면 줄의 본문이 몇 px 로 눌려 낱말이 칸 밖으로 넘친다(단어 단위 줄바꿈 v114)
+// 좁은 화면에서는 위아래로 — 나란히 두면 줄의 본문이 몇 px 로 눌려 낱말이 칸 밖으로 넘친다(단어 단위 줄바꿈)
 const Pair = ({ children }: { children: ReactNode }) => <div className="flex w-full max-w-[640px] flex-col gap-4 sm:flex-row">{children}</div>;
 
 const AllRows: Fig = ({ caption }) => (
@@ -545,7 +545,7 @@ const GroupGuide: Fig = ({ caption }) => (
           <L rows={[{ kind: 'button', prefix: { icon: 'lock' }, title: '앱 잠금', suffix: { text: '켜짐', chevron: true } }]} live={false} />
         </Screen>
       </Verdict>
-      <Verdict ok={false} note="묶음마다 제목을 따로 짰다 — 크기 · 굵기 · 색이 제각각이다">
+      <Verdict ok={false} note="묶음마다 제목을 따로 짰습니다 — 크기 · 굵기 · 색이 제각각입니다">
         <Screen title="설정" scale={0.62} h={560}>
           <div className="px-6 pb-1 pt-3 text-[18px] font-bold" style={{ color: rc('fg-neutral') }}>
             일반
@@ -573,7 +573,7 @@ const ChevronGuide: Fig = ({ caption }) => (
           <L rows={[...SETTINGS.slice(0, 2), { kind: 'view', prefix: { icon: 'info' }, title: '버전', suffix: { text: '1.23.0' } }]} />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="버전에 화살표가 있는데 안 눌리고, 계정은 눌리는데 표시가 없다">
+      <Verdict ok={false} note="버전에 화살표가 있는데 안 눌리고, 계정은 눌리는데 표시가 없습니다">
         <Surface className="w-full">
           <L rows={[{ ...SETTINGS[0], suffix: undefined }, SETTINGS[1], { kind: 'view', prefix: { icon: 'info' }, title: '버전', suffix: { text: '1.23.0', chevron: true } }]} />
         </Surface>
@@ -585,8 +585,8 @@ const ChevronGuide: Fig = ({ caption }) => (
 const TargetsGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      {/* 누르는 자리 하나 · 둘 · 셋(SEED List 그림처럼) — 넷 이상은 피한다(2026-10-22 5B). 목록 줄 끝에는 ⋮ 를 두지 않는다(2026-10-25) */}
-      <Verdict ok note="하나(줄) · 둘(줄 + 즐겨찾기) · 셋(줄 + 즐겨찾기 + 알림) — 셋 이하로 둔다">
+      {/* 누르는 자리 하나 · 둘 · 셋 — 넷 이상은 피한다. 목록 줄 끝에는 ⋮ 를 두지 않는다 */}
+      <Verdict ok note="하나(줄) · 둘(줄 + 즐겨찾기) · 셋(줄 + 즐겨찾기 + 알림) — 셋 이하로 둡니다">
         <Surface className="w-full">
           <L
             rows={[
@@ -597,7 +597,7 @@ const TargetsGuide: Fig = ({ caption }) => (
           />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="넷 — 줄 · 즐겨찾기 · 고치기 · 지우기. 피한다 — 줄을 나누거나 상세 화면으로">
+      <Verdict ok={false} note="넷 — 줄 · 즐겨찾기 · 고치기 · 지우기. 피합니다 — 줄을 나누거나 상세 화면으로">
         <Surface className="w-full">
           <L rows={[{ kind: 'button', prefix: { tile: 'brown', icon: 'coffee' }, title: '동네 카페', detail: '즐겨찾는 가맹점', suffix: { buttons: ['star', 'pencil', 'trash'] } }]} />
         </Surface>
@@ -617,7 +617,7 @@ function Zone({ children }: { children: ReactNode }) {
 const ControlGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="줄 전체가 라벨 — 글자를 눌러도 스위치가 바뀐다(분홍이 누르는 영역)">
+      <Verdict ok note="줄 전체가 라벨 — 글자를 눌러도 스위치가 바뀝니다(분홍이 누르는 영역)">
         <Surface className="w-full">
           <Zone>
             <L rows={[NOTI[0]]} />
@@ -625,7 +625,7 @@ const ControlGuide: Fig = ({ caption }) => (
           <L rows={[NOTI[1]]} />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="컨트롤 줄에 따로 누르는 버튼 — 줄을 누르면 무엇이 바뀌는지 알 수 없다">
+      <Verdict ok={false} note="컨트롤 줄에 따로 누르는 버튼 — 줄을 누르면 무엇이 바뀌는지 알 수 없습니다">
         <Surface className="w-full">
           <L rows={[{ ...NOTI[0], suffix: { buttons: ['more'] } }, NOTI[1]]} />
         </Surface>
@@ -637,12 +637,12 @@ const ControlGuide: Fig = ({ caption }) => (
 const SelectGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="오른쪽 라디오 — 고른 것과 안 고른 것이 모두 보인다">
+      <Verdict ok note="오른쪽 라디오 — 고른 것과 안 고른 것이 모두 보입니다">
         <Surface className="w-full">
           <L rows={CURRENCY.slice(0, 3)} ariaLabel="기본 통화" />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="고른 줄에만 체크 — 나머지가 고를 수 있는 줄인지 보이지 않는다(옛 RadioList)">
+      <Verdict ok={false} note="고른 줄에만 체크 — 나머지가 고를 수 있는 줄인지 보이지 않습니다">
         <Surface className="w-full">
           <L rows={CURRENCY.slice(0, 3).map((r) => ({ kind: 'button', title: r.title, detail: r.detail, suffix: r.checked ? { icon: 'check' } : undefined }))} />
         </Surface>
@@ -654,12 +654,12 @@ const SelectGuide: Fig = ({ caption }) => (
 const SpacingGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="줄마다 같은 여백 — 아이콘 · 글자 · 화살표가 한 줄로 맞는다">
+      <Verdict ok note="줄마다 같은 여백 — 아이콘 · 글자 · 화살표가 한 줄로 맞습니다">
         <Surface className="w-full">
           <L rows={SETTINGS} />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="줄마다 여백이 달라(24 · 16 · 20) 아이콘 · 글자의 세로 줄이 어긋난다">
+      <Verdict ok={false} note="줄마다 여백이 달라(24 · 16 · 20) 아이콘 · 글자의 세로 줄이 어긋납니다">
         <Surface className="w-full">
           <L rows={SETTINGS} padX={[undefined, 16, 20]} />
         </Surface>
@@ -672,12 +672,12 @@ const pressedMiddle = (rows: RowSpec[]) => rows.map((r, i) => (i === 1 ? { ...r,
 const SurfaceGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="흰 바탕 위 — 누른 줄의 바탕이 보인다">
+      <Verdict ok note="흰 바탕 위 — 누른 줄의 바탕이 보입니다">
         <Surface className="w-full">
           <L rows={pressedMiddle(SETTINGS)} />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="회색 바탕(bg-layer-basement) 위 — 누름 바탕이 바탕과 거의 같아 보이지 않는다. 카드 · 흰 띠에 담는다">
+      <Verdict ok={false} note="회색 바탕(bg-layer-basement) 위 — 누름 바탕이 바탕과 거의 같아 보이지 않습니다. 카드 · 흰 띠에 담습니다">
         <Surface className="w-full" bg="bg-layer-basement">
           <L rows={pressedMiddle(SETTINGS)} />
         </Surface>
@@ -695,7 +695,7 @@ const ConcentricGuide: Fig = ({ caption }) => (
           <L rows={pressedMiddle(SETTINGS)} mode="dark" />
         </Card>
       </Verdict>
-      <Verdict ok={false} note="누름 바탕을 카드와 같은 16 으로 — 안쪽 곡선이 바깥보다 커 보여 어긋난다" bg={rc('bg-layer-basement', 'dark')}>
+      <Verdict ok={false} note="누름 바탕을 카드와 같은 16 으로 — 안쪽 곡선이 바깥보다 커 보여 어긋납니다" bg={rc('bg-layer-basement', 'dark')}>
         <Card mode="dark" body="list">
           <L rows={pressedMiddle(SETTINGS)} mode="dark" bgRadius={16} />
         </Card>
@@ -717,7 +717,7 @@ const PrefixGuide: Fig = ({ caption }) => (
           </Surface>
         </div>
       </Verdict>
-      <Verdict ok={false} note="한 목록에 아이콘 · 타일 · 앞 없음이 섞였다 — 글자의 왼쪽 줄이 어긋난다">
+      <Verdict ok={false} note="한 목록에 아이콘 · 타일 · 앞 없음이 섞였습니다 — 글자의 왼쪽 줄이 어긋납니다">
         <Surface className="w-full">
           <L rows={[SETTINGS[0], LEDGER[0], { kind: 'button', title: '지하철', detailNode: meta('auto', '교통', '체크카드'), suffix: { amount: '−1,450원' } }, SETTINGS[1]]} />
         </Surface>
@@ -726,7 +726,7 @@ const PrefixGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 섞이는 결과 — 다른 물건이 한 결과에 나오면(거래와 자산을 함께 찾는 검색) 목록 제목으로 묶음을 나눈다(2026-10-22 사용자 결정 6B). 이름은 지어냈다
+// 섞이는 결과 — 다른 물건이 한 결과에 나오면(거래와 자산을 함께 찾는 검색) 목록 제목으로 묶음을 나눈다. 이름은 지어냈다
 const MIX_TX: RowSpec[] = [
   { kind: 'button', prefix: { tile: 'orange', icon: 'utensils' }, title: '하늘 식당', detailNode: meta('auto', '10월 19일', '식비'), suffix: { amount: '−23,000원' } },
   { kind: 'button', prefix: { tile: 'violet', icon: 'receipt' }, title: '하늘 정기 결제', detailNode: meta('auto', '10월 14일', '구독'), suffix: { amount: '−9,900원' } },
@@ -735,7 +735,7 @@ const MIX_ASSET: RowSpec = { kind: 'button', prefix: { node: <Logo name="하늘�
 const MixGuide: Fig = ({ caption }) => (
   <Panel caption={caption}>
     <Pair>
-      <Verdict ok note="거래 · 자산을 목록 제목으로 나눈다 — 묶음마다 앞 붙이개가 하나(타일 · 로고 타일)">
+      <Verdict ok note="거래 · 자산을 목록 제목으로 나눕니다 — 묶음마다 앞 붙이개가 하나(타일 · 로고 타일)">
         <Surface className="w-full">
           <H title="거래" />
           <L rows={MIX_TX} />
@@ -743,7 +743,7 @@ const MixGuide: Fig = ({ caption }) => (
           <L rows={[MIX_ASSET]} />
         </Surface>
       </Verdict>
-      <Verdict ok={false} note="한 목록에 거래 타일과 자산 로고 타일이 섞였다 — 무엇이 거래이고 무엇이 계좌인지 줄마다 읽어야 한다">
+      <Verdict ok={false} note="한 목록에 거래 타일과 자산 로고 타일이 섞였습니다 — 무엇이 거래이고 무엇이 계좌인지 줄마다 읽어야 합니다">
         <Surface className="w-full">
           <L rows={[MIX_TX[0], MIX_ASSET, MIX_TX[1]]} />
         </Surface>
@@ -752,7 +752,7 @@ const MixGuide: Fig = ({ caption }) => (
   </Panel>
 );
 
-// 합계에 안 드는 줄 — 예정 · 환불(제목 · 금액만 옅게, 환불 금액 취소선, 배지는 보통 대비) · 줄 전체를 불투명도로 흐린 옛 모습
+// 합계에 안 드는 줄 — 예정 · 환불(제목 · 금액만 옅게, 환불 금액 취소선, 배지는 보통 대비) · 줄 전체를 불투명도로 흐린 틀린 예
 function ExcludedList({ dim = false }: { dim?: boolean }) {
   const ex = (tx: Tx) => (dim ? txRow({ ...tx, excluded: undefined }) : txRow(tx));
   return (
@@ -777,10 +777,10 @@ const ExcludedRows: Fig = ({ caption }) => (
   <Panel caption={caption}>
     {/* 금액이 있는 거래 줄이라 늘 위아래로 — 둘로 나누면 줄이 눌린다 */}
     <div className="mx-auto flex w-full max-w-[560px] flex-col gap-4">
-      <Verdict ok note="제목 · 금액만 옅게(환불은 금액에 취소선) — 배지는 보통 대비라 줄을 가르는 단서가 또렷하다">
+      <Verdict ok note="제목 · 금액만 옅게(환불은 금액에 취소선) — 배지는 보통 대비라 줄을 가르는 단서가 또렷합니다">
         <ExcludedList />
       </Verdict>
-      <Verdict ok={false} note="줄 전체를 불투명도로 흐린다 — 그 줄을 가르는 배지까지 흐려진다">
+      <Verdict ok={false} note="줄 전체를 불투명도로 흐리면 그 줄을 가르는 배지까지 흐려집니다">
         <ExcludedList dim />
       </Verdict>
     </div>
@@ -833,7 +833,22 @@ const ExStates: Fig = ({ caption }) => (
   </Preview>
 );
 
+// 개요 카드 — 라이트 목록 하나(아이콘 · 제목 · 설명 · 값 글자 + 화살표). 그린 크기 340 × 약 214 · zoom 0.8 → 272 × 약 171
+const THUMB_ROWS: RowSpec[] = [
+  { kind: 'button', prefix: { icon: 'user' }, title: '계정', detail: '김그루 · groo@example.com', suffix: { chevron: true } },
+  { kind: 'button', prefix: { icon: 'globe' }, title: '기본 통화', detail: '새 거래에 먼저 들어가요', suffix: { text: '원', chevron: true } },
+  { kind: 'button', prefix: { icon: 'bell' }, title: '알림', detail: '결제 · 예산 알림', suffix: { text: '켜짐', chevron: true } },
+];
+const Thumb: Fig = () => (
+  <div style={{ width: 340, zoom: 0.8 }}>
+    <Surface mode="light">
+      <L rows={THUMB_ROWS} mode="light" live={false} />
+    </Surface>
+  </div>
+);
+
 export const listFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

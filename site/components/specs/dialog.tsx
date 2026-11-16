@@ -207,7 +207,7 @@ const Size: Fig = ({ caption }) => {
           </Win>
         </Shot>
         <Note>
-          높이는 내용만큼, 화면 높이의 {Math.round(d.maxHeight * 100)}% 까지 — 넘치는 만큼 본문이 스크롤된다. 화면이 좁으면 좌우 {d.marginX} 을 남기고 준다. 모서리 {d.radius} · 그림자 없음(딤과 표면 색으로 뜬다)
+          높이는 내용만큼, 화면 높이의 {Math.round(d.maxHeight * 100)}% 까지입니다 — 넘치는 만큼 본문이 스크롤됩니다. 화면이 좁으면 좌우 {d.marginX} 을 남기고 줄어듭니다. 모서리 {d.radius} · 그림자 없음(딤과 표면 색으로 뜹니다)
         </Note>
       </div>
     </Figure>
@@ -248,17 +248,17 @@ const Scroll: Fig = ({ caption }) => {
     <Panel caption={caption}>
       <div className="flex flex-wrap items-start justify-center gap-6">
         <div style={{ width: d.sizes.medium * SCROLL_S }}>
-        <Shot strong="맨 위" cap={`위 ${f.top} 흐림은 빈 여백(${f.padTop}) 위 — 아래 ${f.bottom} 이 흐려 더 있음을 알린다`}>
+        <Shot strong="맨 위" cap={`위 ${f.top} 흐림은 빈 여백(${f.padTop}) 위 — 아래 ${f.bottom} 이 흐려 더 있음을 알립니다`}>
           {shot(0, false)}
         </Shot>
         </div>
         <div style={{ width: d.sizes.medium * SCROLL_S }}>
-        <Shot strong="위로 스크롤됨" cap={`흐림은 그대로 · 머리 아래 ${d.scroll.divider.height}px 선이 본문과 머리를 가른다`}>
+        <Shot strong="위로 스크롤됨" cap={`흐림은 그대로 · 머리 아래 ${d.scroll.divider.height}px 선이 본문과 머리를 가릅니다`}>
           {shot(rowH * 1.6, true, lineTag)}
         </Shot>
         </div>
         <div style={{ width: d.sizes.medium * SCROLL_S }}>
-        <Shot strong="끝까지" cap={`아래 ${f.bottom} 흐림은 빈 여백 위 — 마지막 줄은 흐림 밖에 다 보인다`}>
+        <Shot strong="끝까지" cap={`아래 ${f.bottom} 흐림은 빈 여백 위 — 마지막 줄은 흐림 밖에 다 보입니다`}>
           {shot(end, true, lineTag)}
         </Shot>
         </div>
@@ -298,7 +298,7 @@ const DismissGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex flex-wrap items-start justify-center gap-5">
-        <Shot strong="입력 폼 — 휴가 신청" cap="바닥 취소 · Esc 로 닫는다(뒤로 가기는 1280 미만의 시트만). 바뀐 값이 있으면 먼저 묻는다">
+        <Shot strong="입력 폼 — 휴가 신청" cap="바닥 취소 · Esc 로 닫습니다(뒤로 가기는 1280 미만의 시트만). 바뀐 값이 있으면 먼저 묻습니다">
           <Win w={w} h={h} s={0.52} brand="hr" title="휴가">
             <CenterOn mode="auto">
               <GestureMark kind="click" x={x} y="50%" note="눌러도 그대로" ok={false} />
@@ -306,10 +306,10 @@ const DismissGuide: Fig = ({ caption }) => {
             </CenterOn>
           </Win>
         </Shot>
-        <Shot strong="조회 — 거래 상세" cap="바깥 누르기 · Esc · 머리 닫기로 닫힌다">
+        <Shot strong="조회 — 거래 상세" cap="바깥 누르기 · Esc · 머리 닫기로 닫힙니다">
           <Win w={w} h={h} s={0.52} title="가계부">
             <CenterOn mode="auto">
-              <GestureMark kind="click" x={x} y="50%" note="누르면 닫힌다" ok />
+              <GestureMark kind="click" x={x} y="50%" note="누르면 닫힘" ok />
               <DetailDialog mode="auto" />
             </CenterOn>
           </Win>
@@ -327,7 +327,7 @@ const CloseGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="mx-auto flex w-full max-w-[640px] flex-col gap-4">
-        <Verdict ok note="입력 폼은 바닥 [취소] [신청], 조회 · 안내는 머리 닫기 — 닫는 자리가 하나다">
+        <Verdict ok note="입력 폼은 바닥 [취소] [신청], 조회 · 안내는 머리 닫기 — 닫는 자리가 하나입니다">
           <div className="flex flex-wrap justify-center gap-4">
             <Shot strong="입력 폼">
               <Win w={560} h={h} s={k} brand="hr" title="휴가">
@@ -345,7 +345,7 @@ const CloseGuide: Fig = ({ caption }) => {
             </Shot>
           </div>
         </Verdict>
-        <Verdict ok={false} note="머리 닫기와 바닥 취소를 함께 — 닫는 길이 둘이라 어느 쪽인지 망설인다">
+        <Verdict ok={false} note="머리 닫기와 바닥 취소를 함께 두면 닫는 길이 둘이라 어느 쪽인지 망설입니다">
           <Win w={560} h={h} s={k} brand="hr" title="휴가">
             <CenterOn mode="auto">
               <LeaveDialog
@@ -372,7 +372,16 @@ const CloseGuide: Fig = ({ caption }) => {
 const ExForm: Fig = () => <LeaveDialogDemo kit={overlayKit('hr')} date={dateKit('hr')} sel={hr()} field={tf().field} trigger={btn('brandSolid', 'small', 'hr')} />;
 const ExView: Fig = () => <DetailDialogDemo kit={overlayKit()} list={listLook()} rows={DETAIL} />;
 
+// ── 개요 카드 ─────────────────────────────────────────────
+// 라이트 모습 하나 — 휴가 신청 대화상자(입력 폼: 바닥 취소 · 신청)
+const Thumb: Fig = () => (
+  <div style={{ zoom: 0.52 }}>
+    <LeaveDialog mode="light" />
+  </div>
+);
+
 export const dialogFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

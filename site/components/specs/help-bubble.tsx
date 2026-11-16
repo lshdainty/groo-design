@@ -247,7 +247,7 @@ function Cell({ children, label, h = 150, w = 260 }: { children: ReactNode; labe
     </div>
   );
 }
-// 화면 끝의 트리거 — 화살표는 트리거 가운데에 남고(모서리 14) 말풍선이 가장자리 16 보다 붙는다(2026-10-15 Q-004-1).
+// 화면 끝의 트리거 — 화살표는 트리거 가운데에 남고(모서리 14) 말풍선이 가장자리 16 보다 붙는다.
 // ① 상단 바 오른쪽 끝의 알림(아이콘 버튼 44 · 화면 끝 6) — 말풍선 끝이 화면 끝에서 8 ② 화면 왼쪽 끝 0 에 붙은 ⓘ 40 — 0
 function EdgeScenes() {
   const b = bl();
@@ -276,7 +276,7 @@ function EdgeScenes() {
   return (
     <div className="flex w-full flex-wrap items-start justify-center gap-4">
       {scene(
-        `① 상단 바 끝의 알림(${hit} · 화면 끝 ${top.padX}) — 화살표는 버튼 가운데, 말풍선 끝은 화면 끝에서 ${edge1}(가장자리 ${b.edge} 보다 붙는다)`,
+        `① 상단 바 끝의 알림(${hit} · 화면 끝 ${top.padX}) — 화살표는 버튼 가운데, 말풍선 끝은 화면 끝에서 ${edge1}(가장자리 ${b.edge} 보다 붙습니다)`,
         <>
           <TopNavBar look={top} type="root" title="홈" trailing={<BubbleAt side="bottom" align="end" triggerSize={hit} trigger={bell} bubble={(p) => <Bubble title={BELL_TIP.title} description={BELL_TIP.description} close {...p} />} />} />
           {guide({ right: b.edge })}
@@ -332,7 +332,7 @@ const RoleGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="grid w-full gap-4 md:grid-cols-2">
-        <Shot strong="Tooltip — 마우스 · 키보드" cap="아이콘 버튼의 이름 · 줄인 글 — 손가락으로는 열리지 않는다">
+        <Shot strong="Tooltip — 마우스 · 키보드" cap="아이콘 버튼의 이름 · 줄인 글 — 손가락으로는 열리지 않습니다">
           <Board pad={24} style={{ width: 280, paddingTop: 24 + bl().height + bl().bodyOffset }}>
             <div className="flex justify-center">
               <BubbleAt trigger={<BellButton state="hovered" />} bubble={(p) => <Bubble title="알림" {...p} />} />
@@ -344,7 +344,7 @@ const RoleGuide: Fig = ({ caption }) => {
             <LeaveSummary bubbleMax={280 - bl('hr').edge * 2} />
           </Board>
         </Shot>
-        <Shot strong="화면 안 글" cap="일을 하려면 꼭 읽어야 하는 안내 — 숨기지 않는다">
+        <Shot strong="화면 안 글" cap="일을 하려면 꼭 읽어야 하는 안내 — 숨기지 않습니다">
           <Board brand="hr" pad={24} style={{ width: 280 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <span style={{ fontSize: 14, lineHeight: '19px', fontWeight: 700, color: rc('fg-neutral', 'auto', 'hr') }}>휴가 시작일</span>
@@ -353,7 +353,7 @@ const RoleGuide: Fig = ({ caption }) => {
             </div>
           </Board>
         </Shot>
-        <Shot strong="Popover — 버튼 · 입력이 있는 내용" cap="누를 것이 있으면 말풍선이 아니라 팝오버">
+        <Shot strong="Popover — 버튼 · 입력이 있는 내용" cap="누를 것이 있으면 말풍선이 아니라 팝오버를 씁니다">
           <PopoverSurface look={po} mode="auto" title={LEAVE_RULE.title} width={280} avail={280} footer={<EndButtons items={[{ label: '규정 전체 보기', look: buttonLook({ variant: 'neutralWeak', size: s }, 'hr') }]} />}>
             <RuleBody mode="auto" short />
           </PopoverSurface>
@@ -369,14 +369,14 @@ const TouchGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex flex-wrap items-start justify-center gap-6">
-        <Shot strong="폰 — 손가락으로 눌러서" cap="다시 누르거나 바깥을 누르면 닫힌다">
+        <Shot strong="폰 — 손가락으로 눌러서" cap="다시 누르거나 바깥을 누르면 닫힙니다">
           <Phone title="휴가" back={false} scale={0.62} h={520} bg="bg-layer-default">
             <div style={{ position: 'relative', padding: `${24 + b.heightDesc + b.bodyOffset + 20}px 24px 0` }}>
               <LeaveSummary gesture="tap" />
             </div>
           </Phone>
         </Shot>
-        <Shot strong="데스크톱 — 눌러서(마우스 · 키보드)" cap="Enter · Space 로도 열고, Tab 으로 말풍선에 들어간다">
+        <Shot strong="데스크톱 — 눌러서(마우스 · 키보드)" cap="Enter · Space 로도 열고, Tab 으로 말풍선에 들어갑니다">
           <Scaled w={460} h={280} s={0.62}>
             <LeaveWindow gesture="click" />
           </Scaled>
@@ -390,7 +390,16 @@ const TouchGuide: Fig = ({ caption }) => {
 const ExInfo: Fig = () => <LeaveRuleDemo kit={mk('hr')} info={iconBtn('hr', 'neutralSubtle')} />;
 const ExClose: Fig = () => <HideTipDemo kit={mk()} top={NK().top} />;
 
+// ── 개요 카드 ─────────────────────────────────────────────
+// 라이트 — ⓘ 위에 연 연차 사용 규정 말풍선(제목 + 설명)
+const Thumb: Fig = () => (
+  <div className="flex flex-col items-center justify-end" style={{ height: 150, zoom: 0.92 }}>
+    <BubbleAt brand="hr" trigger={<InfoButton mode="light" />} bubble={(p) => <Bubble brand="hr" mode="light" title={LEAVE_RULE.title} description={LEAVE_RULE.description} {...p} />} />
+  </div>
+);
+
 export const helpBubbleFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,
