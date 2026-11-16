@@ -1,22 +1,13 @@
-# Image Frame 의 수치 원본 — 구조는 SEED Image Frame(2026-10-04 사용자 결정, 이미지 비교 페이지 1A · 2A · 3A · 8A · "따라오는 것").
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md. 그림 없는 카드의 면(카드 그림 — CardArt)은 card-art.yaml.
+# Image Frame 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
+# 그림 없는 카드의 면(카드 그림 — CardArt)은 card-art.yaml 에 둡니다.
 #
-# 그림 한 장을 보이는 틀 — 비율 상자(기본 4:3)에 그림을 꽉 채우고(cover), 그림 위에 안쪽 1px 투명 윤곽을 늘 그린다.
-# 불러오는 동안은 같은 모서리의 Skeleton, 없거나 · 못 불러오거나 · 10초가 지나도 안 오면 Content Placeholder 다.
-# 그림 위에는 네 모서리 자리에 배지(solid · 상태 · 분류)와 장수 글(Indicator)을 둘까지 얹는다.
-# 모서리는 틀의 폭으로 고른다 — 24 이하 4 · 48 이하 6 · 그 위 8 · 화면 폭 0(SEED).
+# 그림 한 장을 보이는 틀입니다 — 비율 상자(기본 4:3)에 그림을 꽉 채우고(cover), 그림 위에 안쪽 1px 투명 윤곽을 늘 그립니다(끄는 속성이 없습니다).
+# 불러오는 동안은 같은 모서리의 Skeleton, 없거나 · 못 불러오거나 · 10초가 지나도 안 오면 Content Placeholder 이고, 실패해도 alt 를 대체 그림의 이름으로 남깁니다.
+# 그림 위에는 네 모서리 자리에 배지(solid · 상태 · 분류)와 장수 글(Indicator)을 둘까지 얹습니다.
+# 모서리는 틀의 폭으로 고릅니다 — 24 이하 4 · 48 이하 6 · 그 위 8 · 화면 폭 0.
 #
-# 카드 그림(ratio card — 1.586)은 세로 그림(원래 폭 < 높이)이면 시계 방향으로 90° 돌려 가로 틀을 채운다.
-# 비율 값은 모두 "W / H" 글이다(aspect-ratio.yaml 과 같은 꼴 — 2026-10-08).
-#
-# SEED 와 다른 자리(image-frame.md 의 "SEED 와 다른 점")
-#   - 윤곽은 늘 그린다(끄는 속성이 없다) — SEED 는 CSS · React 기본이 꺼짐이고 rootage JSON 기본 · 그림은 켬이다.
-#   - 모서리는 폭으로 저절로 고른다 — SEED React 는 기본 r2 하나라 작은 그림은 쓰는 쪽이 손으로 내린다.
-#   - 불러오는 동안은 Skeleton, 실패는 Content Placeholder 로 가르고 10초에 실패로 바꾼다 — SEED React 는 받는 중에도 대체 그림을 바로 보인다.
-#   - 실패해도 alt 를 대체 그림의 이름으로 남긴다 — SEED 는 img 를 숨겨 아무것도 읽히지 않는다.
-#   - 그림 위 요소는 배지 · Indicator 둘(Reaction Button · Icon 은 두지 않는다), 네 모서리만(SEED React 는 9자리).
-#   - Indicator 바탕은 overlay-dim-dark(검정 65%) — SEED static-black-alpha-800(63.5%)의 가장 가까운 groo 값(토큰을 더하지 않았다).
-#   - 비율에 카드 1.586 을 더한다(groo — ISO 카드), 세로 카드 그림은 돌린다.
+# 카드 그림(ratio card — 1.586)은 세로 그림(원래 폭 < 높이)이면 시계 방향으로 90° 돌려 가로 틀을 채웁니다.
+# 비율 값은 모두 "W / H" 글입니다(aspect-ratio.yaml 과 같은 꼴).
 
 name: ImageFrame
 
@@ -35,11 +26,11 @@ variants:
     "1:1": 정사각 — 규정 그림 · 격자 썸네일 · 목록 앞 그림
     "2:1": 넓은 띠 — 배너
     "16:9": 동영상 · 화면 폭 띠
-    "4:3": 사진 — 기본(SEED)
+    "4:3": 사진 — 기본
     "6:7": 조금 세로 — 사람 · 물건 사진
     "4:5": 세로 — 가로 줄로 잇는 사진(여러 장)
     "2:3": 긴 세로 — 포스터 · 표지
-    card: 카드 1.586(ISO 카드 85.6 × 53.98) — groo. 목록 · 격자 · 상세의 카드 그림, 세로 그림은 돌린다
+    card: 카드 1.586(ISO 카드 85.6 × 53.98) — 목록 · 격자 · 상세의 카드 그림, 세로 그림은 돌린다
   radius:
     "4": 폭 24 이하
     "6": 폭 25 ~ 48
@@ -66,21 +57,21 @@ rules:
       root:
         width: { value: 부르는 쪽, note: "고정 폭(목록 · 썸네일)이면 그 폭, 아니면 부모 폭을 채운다 — 모서리는 그 폭으로 고른다(radius)" }
         height: { value: 폭 ÷ 비율, note: "그림이 오기 전에 자리를 잡는다 — 그림이 와도 줄이 밀리지 않는다" }
-        overflow: { value: hidden, note: "모서리로 그림 · 스켈레톤 · 대체 그림을 자른다. 안의 층은 따로 쌓는다(isolation: isolate — SEED)" }
+        overflow: { value: hidden, note: "모서리로 그림 · 스켈레톤 · 대체 그림을 자른다. 안의 층은 따로 쌓는다(isolation: isolate)" }
       image:
         width: 100%
         height: 100%
-        objectFit: { value: cover, note: "가운데를 남겨 자른다(SEED — 사진은 늘 cover). 로고 · 글이 든 그림만 fit contain" }
+        objectFit: { value: cover, note: "가운데를 남겨 자른다. 로고 · 글이 든 그림만 fit contain" }
         loading: { value: lazy, note: "화면에 들어올 때 받는다 — 첫 화면의 큰 그림(상세 위 카드 그림)만 eager" }
       stroke:
-        borderWidth: { value: 1px, note: "안쪽(inset box-shadow) — 크기가 변하지 않는다. 그림 위에 그리고(SEED ::after) 누르기를 막지 않는다. 모서리는 틀을 따른다" }
-        borderColor: { value: $color-stroke-neutral-overlay, note: "v118 — 검정 4.7% · 다크 흰 5%. 흰 그림이 흰 바탕에 묻히지 않고(1.11 · 장식), 어두운 그림 둘레에는 테가 생기지 않는다. 늘 그린다 — 끄는 속성이 없다" }
+        borderWidth: { value: 1px, note: "안쪽(inset box-shadow) — 크기가 변하지 않는다. 그림 위에 그리고(::after) 누르기를 막지 않는다. 모서리는 틀을 따른다" }
+        borderColor: { value: $color-stroke-neutral-overlay, note: "검정 4.7% · 다크 흰 5%. 흰 그림이 흰 바탕에 묻히지 않고(1.11 · 장식), 어두운 그림 둘레에는 테가 생기지 않는다. 늘 그린다 — 끄는 속성이 없다" }
       floater:
-        offset: { value: $spacing-x1_5, note: "틀 가장자리 → 요소 바깥 상자 6(SEED). 네 모서리 — 위 시작 · 위 끝 · 아래 시작 · 아래 끝. 한 자리에 하나 · 틀 하나에 둘까지 · 틀의 짧은 변이 80 이상일 때만" }
+        offset: { value: $spacing-x1_5, note: "틀 가장자리 → 요소 바깥 상자 6. 네 모서리 — 위 시작 · 위 끝 · 아래 시작 · 아래 끝. 한 자리에 하나 · 틀 하나에 둘까지 · 틀의 짧은 변이 80 이상일 때만" }
       indicator:
-        background: { value: $overlay-dim-dark, note: "검정 65% — 두 모드 같다(그림은 모드를 따르지 않는다). SEED static-black-alpha-800(63.5%)의 가장 가까운 groo 값. overlay-dim-light(50%)면 흰 그림 위 흰 글자가 3.95 로 모자란다" }
+        background: { value: $overlay-dim-dark, note: "검정 65% — 두 모드 같다(그림은 모드를 따르지 않는다). overlay-dim-light(50%)면 흰 그림 위 흰 글자가 3.95 로 모자란다" }
         foreground: { value: $color-static-white, note: "흰 그림 위 7.00 · 검은 그림 위 21:1 — 어떤 그림 위에서도 4.5 를 넘는다" }
-        typography: { value: $text-t1, note: "11 / 15 — 글자 크기 설정을 따른다(SEED rem)" }
+        typography: { value: $text-t1, note: "11 / 15 — 글자 크기 설정을 따른다(rem)" }
         fontWeight: 500
         paddingX: $spacing-x1_5
         paddingY: $spacing-x0_5
@@ -108,7 +99,7 @@ rules:
   - when: { ratio: "16:9" }
     loaded: { root: { aspectRatio: { value: "16 / 9", note: "≈ 1.78" } } }
   - when: { ratio: "4:3" }
-    loaded: { root: { aspectRatio: { value: "4 / 3", note: "≈ 1.33 — 기본(SEED)" } } }
+    loaded: { root: { aspectRatio: { value: "4 / 3", note: "≈ 1.33 — 기본" } } }
   - when: { ratio: "6:7" }
     loaded: { root: { aspectRatio: { value: "6 / 7", note: "≈ 0.86" } } }
   - when: { ratio: "4:5" }
@@ -122,13 +113,13 @@ rules:
 
   # ── 모서리 — 폭으로 ───────────────────────────────────
   - when: { radius: "4" }
-    loaded: { root: { radius: { value: $radius-r1, note: "폭 24 이하(SEED r1)" } } }
+    loaded: { root: { radius: { value: $radius-r1, note: "폭 24 이하" } } }
   - when: { radius: "6" }
-    loaded: { root: { radius: { value: $radius-r1_5, note: "폭 25 ~ 48(SEED r1.5) — 목록 앞 40 · 48" } } }
+    loaded: { root: { radius: { value: $radius-r1_5, note: "폭 25 ~ 48 — 목록 앞 40 · 48" } } }
   - when: { radius: "8" }
-    loaded: { root: { radius: { value: $radius-r2, note: "폭 49 이상(SEED r2) — 목록 카드 56 · 격자 · 상세" } } }
+    loaded: { root: { radius: { value: $radius-r2, note: "폭 49 이상 — 목록 카드 56 · 격자 · 상세" } } }
   - when: { radius: "0" }
-    loaded: { root: { radius: { value: 0px, note: "화면 폭 — 좌우가 화면 끝에 닿는 그림(SEED 의 'Rounded 를 끈다'). 윤곽은 그대로" } } }
+    loaded: { root: { radius: { value: 0px, note: "화면 폭 — 좌우가 화면 끝에 닿는 그림. 윤곽은 그대로" } } }
 
   # ── 맞춤 ──────────────────────────────────────────────
   - when: { fit: cover }

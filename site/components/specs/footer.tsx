@@ -1,6 +1,6 @@
 // Footer 페이지의 그림 — specs/components/footer.md 의 `[그림: …](../../site/components/specs/footer.tsx#<id>)` 자리.
 // 바닥은 footer.yaml 을 푼 값(ftLook — finish-view 의 FooterView)으로 그린다. 그림은 실제 폭(1280 · 768 · 390)으로 그리고 칸 폭에 맞춰 줄인다(Fit).
-// 사업자 정보 · 연락처 · 소셜은 값이 없다 — 분홍 점선 자리표시로만 그린다(footer.md "값이 없는 블록은 비워 둔다").
+// 사업자 정보 · 연락처 · 소셜은 값이 정해질 때까지 분홍 점선 자리표시로만 그린다(footer.md "값이 없는 블록은 비워 둡니다").
 // 나쁜 예(placeholder-guide)의 가짜 값만 지어낸 것이고, 실제 회사 · 사람의 값이 아니다.
 import type { CSSProperties, ReactNode } from 'react';
 import { Panel } from '../foundations/ui';
@@ -102,7 +102,7 @@ const Anatomy: Fig = ({ caption }) => {
         <Legend
           items={[
             ['ⓐ', 'Brand'],
-            ['ⓑ', 'Country — 두지 않는다'],
+            ['ⓑ', 'Country — 두지 않습니다'],
             ['ⓒ', 'Sitemap'],
             ['ⓓ', 'Divider'],
             ['ⓔ', 'Policy Links'],
@@ -111,7 +111,7 @@ const Anatomy: Fig = ({ caption }) => {
             ['ⓗ', 'Social Links(자리)'],
           ]}
         />
-        <span className="text-center text-[12px] pk-muted">탐색 영역(ⓐ ⓑ ⓒ) · 선(ⓓ) · 안내 영역(ⓔ ⓕ ⓖ ⓗ) — 분홍 점선은 값이 없는 자리</span>
+        <span className="text-center text-[12px] pk-muted">탐색 영역(ⓐ ⓑ ⓒ) · 선(ⓓ) · 안내 영역(ⓔ ⓕ ⓖ ⓗ) — 분홍 점선은 값이 없는 자리입니다</span>
       </div>
     </Panel>
   );
@@ -253,7 +253,7 @@ const Link: Fig = ({ caption }) => {
           </span>
         </div>
       </div>
-      <Cap strong={modeKo(mode)}>밑줄 없이 글자색만 — large 는 옅게, medium 은 짙게. 포커스는 글 둘레 링 {l.ring.width}px · 띄움 {l.ring.offset}</Cap>
+      <Cap strong={modeKo(mode)}>밑줄 없이 글자색만 바뀝니다 — large 는 옅게, medium 은 짙게. 포커스는 글 둘레 링 {l.ring.width}px · 띄움 {l.ring.offset}</Cap>
     </div>
   );
   return (
@@ -267,7 +267,7 @@ const Link: Fig = ({ caption }) => {
 };
 
 // ── Guidelines ────────────────────────────────────────────
-// SSO 로그인 아래 · 설명서 바닥 — 나중의 자리. 정책 링크 + 저작권 줄로(그 차례에 정한다)
+// SSO 로그인 아래 · 설명서 바닥 — 정책 링크 + 저작권 줄
 function LoginStub({ mode = 'auto' }: { mode?: Mode }) {
   return (
     <div aria-hidden style={{ paddingTop: 48, paddingBottom: 24, paddingLeft: 24, paddingRight: 24, display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -285,19 +285,19 @@ const PlacesGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex flex-col gap-4">
-        <Shot w={1280} strong="groo-home 맨 아래(지금)" cap="7B — 브랜드 · 사이트맵 | 선 | 정책 링크 · 안내 글 · 저작권">
+        <Shot w={1280} strong="groo-home 맨 아래" cap="브랜드 · 사이트맵 | 선 | 정책 링크 · 안내 글 · 저작권">
           <PageBottom width={1280}>
             <FooterView look={l} width={1280} blocks={HOME} frozen />
           </PageBottom>
         </Shot>
         <div className="grid items-start gap-4 sm:grid-cols-2">
-          <Shot w={390} strong="SSO 로그인 아래(나중)" cap="정책 링크 + 저작권 — 그 차례에 정한다">
+          <Shot w={390} strong="SSO 로그인 아래" cap="정책 링크 + 저작권">
             <div style={{ width: 390, background: rc('bg-layer-default') }}>
               <LoginStub />
               <FooterView look={l} width={390} blocks={small} frozen />
             </div>
           </Shot>
-          <Shot w={768} strong="설명서 · 문서 사이트 바닥(나중)" cap="정책 링크 + 저작권 — 저작권은 지금 바꾼다">
+          <Shot w={768} strong="설명서 · 문서 사이트 바닥" cap="정책 링크 + 저작권">
             <PageBottom width={768}>
               <FooterView look={l} width={768} blocks={small} frozen />
             </PageBottom>
@@ -332,12 +332,12 @@ const PlaceholderGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full flex-col gap-4 md:flex-row">
-        <Verdict ok note="값이 없으면 블록을 비워 둔다 — 그림 · 예시는 자리표시임이 드러나게(분홍 점선)">
+        <Verdict ok note="값이 없으면 블록을 비워 둡니다 — 그림 · 예시는 자리표시임이 드러나게 그립니다(분홍 점선)">
           <Fit w={390}>
             <FooterView look={l} width={390} blocks={{ ...base, business: FT_PLACEHOLDER.business, contact: FT_PLACEHOLDER.contact, social: 2 }} topLine={false} frozen />
           </Fit>
         </Verdict>
-        <Verdict ok={false} note="그럴듯한 가짜 상호 · 대표 · 번호 · 주소 · 소셜을 넣기 — 사실처럼 읽힌다(그림의 값도 지어낸 것이다)">
+        <Verdict ok={false} note="그럴듯한 가짜 상호 · 대표 · 번호 · 주소 · 소셜을 넣으면 사실처럼 읽힙니다(그림의 값도 지어낸 것입니다)">
           <Fit w={390}>
             <FooterView look={l} width={390} blocks={{ ...base, business: FAKE.business, contact: FAKE.contact, social: 2 }} topLine={false} frozen slots={false} socialSlot={<FakeSocial />} />
           </Fit>
@@ -346,6 +346,7 @@ const PlaceholderGuide: Fig = ({ caption }) => {
     </Panel>
   );
 };
+// 곳마다 다른 저작권 줄 — 나쁜 예
 const NOW = [
   ['groo-home', '© 그루'],
   ['SSO 로그인', 'Copyright © 그루. All Rights Reserved.'],
@@ -366,10 +367,10 @@ const CopyrightGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full flex-col gap-4 md:flex-row">
-        <Verdict ok={false} note="지금 — 네 곳이 네 벌. 해가 2025 에 멈추고, 사이트 이름이 저작권 자리에 있다">
+        <Verdict ok={false} note="곳마다 다른 줄 — 해를 박아 두면 낡고, 사이트 이름은 저작권이 아닙니다">
           <div className="w-full max-w-[320px]">{NOW.map(([p, t]) => line(p, t))}</div>
         </Verdict>
-        <Verdict ok note={`바꾼 뒤 — "${c.format}" 한 벌. 해는 그리는 때(빌드 · 화면)의 해`}>
+        <Verdict ok note={`"${c.format}" 한 벌 — 해는 그리는 때(빌드 · 화면)의 해입니다`}>
           <div className="w-full max-w-[320px]">{NOW.map(([p]) => line(p, copyrightText(c.format, '그루', YEAR)))}</div>
         </Verdict>
       </div>
@@ -386,12 +387,12 @@ const ExternalGuide: Fig = ({ caption }) => {
   return (
     <Panel caption={caption}>
       <div className="flex w-full flex-col gap-4 md:flex-row">
-        <Verdict ok note="새 탭으로 여는 처리방침만 ↗ + 보이지 않는 '(새 탭)'. 같은 탭으로 가는 서비스 링크에는 두지 않는다 · 밑줄 없이 색으로">
+        <Verdict ok note="새 탭으로 여는 처리방침만 ↗ + 보이지 않는 '(새 탭)' 을 둡니다. 같은 탭으로 가는 서비스 링크에는 두지 않고, 밑줄 없이 색으로 알립니다">
           <Fit w={390}>
             <FooterView look={l} width={390} blocks={blocks(false)} topLine={false} frozen />
           </Fit>
         </Verdict>
-        <Verdict ok={false} note="모든 링크에 ↗ · 밑줄 — 어디가 새 탭인지 알 수 없고 바닥이 시끄럽다">
+        <Verdict ok={false} note="모든 링크에 ↗ · 밑줄을 두면 어디가 새 탭인지 알 수 없고 바닥이 시끄럽습니다">
           <Fit w={390}>
             <FooterView look={l} width={390} blocks={blocks(true)} topLine={false} frozen underline />
           </Fit>
@@ -454,7 +455,18 @@ const ExHome: Fig = ({ caption }) => (
   </figure>
 );
 
+// ── 개요 카드 ─────────────────────────────────────────────
+// 라이트 · 768 — 본문 끝 아래에 groo-home 바닥(브랜드 · 사이트맵 | 선 | 정책 링크 · 안내 글 · 저작권)
+const Thumb: Fig = () => (
+  <div style={{ width: 768, zoom: 0.36, borderRadius: 24, overflow: 'hidden' }}>
+    <PageBottom mode="light" width={768}>
+      <FooterView look={F()} mode="light" width={768} blocks={HOME} frozen />
+    </PageBottom>
+  </div>
+);
+
 export const footerFigures: Record<string, Fig> = {
+  thumb: Thumb,
   hero: Hero,
   playground: Playground,
   anatomy: Anatomy,

@@ -1,17 +1,12 @@
-# Input Button 의 수치 원본 — 구조는 SEED Input Button(React Field Button, 2026-10-01 사용자 결정).
-# 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md.
+# Input Button 의 수치 원본입니다. 형식은 button.yaml 머리 주석, 규칙은 specs/CLAUDE.md 를 따릅니다.
 #
-# 입력칸 모양의 버튼이다 — 누르면 시트(1280 미만) · 팝오버(1280 이상)를 열고, 고른 값이 글자로 들어간다. 직접 타이핑하지 않는다.
-# 혼자 쓰지 않는다 — 늘 달력 · 시각 피커 · 아이콘 격자 · 검색 시트 같은 고르는 자리를 연다. 라벨 · 설명 · 오류는 Field.
-# 상자는 Input(input.yaml)의 상자형과 같은 크기 · 모서리 · 테두리다. 다른 것은 누름(바탕 + 콘텐츠 축소)과 포커스(키보드 링).
+# 입력칸 모양의 버튼입니다. 누르면 시트(1280 미만) · 팝오버(1280 이상)를 열고, 고른 값을 글자로 넣습니다. 직접 입력하지 않습니다.
+# 혼자 쓰지 않습니다 — 언제나 달력 · 시각 피커 · 아이콘 격자 · 검색 시트 같은 고르는 자리를 엽니다. 라벨 · 설명 · 오류는 Field 가 그립니다.
+# 상자는 Input(input.yaml)의 상자형과 크기 · 모서리 · 테두리가 같습니다. 다른 것은 누름(바탕 + 콘텐츠 축소)과 포커스(키보드 링)입니다.
 #
-# 부위: root 는 상자 — 그 안의 배경 층 버튼이 테두리 · 바탕 · 포커스 링을 그리고 누르는 영역 전체가 된다(SEED: 버튼은
-# 배경 층, 값 · 붙이개는 그 위에 얹고 누름을 지나 보낸다). 지우기 버튼은 그 위의 따로 누르는 버튼이다(버튼 안에 버튼을 두지 않는다).
-#
-# SEED 와 다른 자리(input-button.md 의 "SEED 와 다른 점")
-#   - 누름 · 호버 바탕은 불투명한 bg-layer-default-pressed(SEED transparent-pressed 는 투명도가 있어 검사기가 받지 않는다 — v102).
-#   - 누르면 콘텐츠를 2px 거리로 준다(SEED rootage 는 scaleScope content 를 적었지만 웹 CSS 에는 없다 — groo 는 rootage 대로, v104).
-#   - 아이콘은 lucide 선 아이콘(v106) — 지우기는 circle-x(SEED 는 채운 원).
+# 부위: root 는 상자입니다 — 그 안의 배경 층 버튼이 테두리 · 바탕 · 포커스 링을 그리고 누르는 영역 전체가 됩니다(값 · 붙이개는
+# 그 위에 얹고 누름을 지나 보냅니다). 지우기 버튼은 그 위의 따로 누르는 버튼입니다(버튼 안에 버튼을 두지 않습니다).
+# 누름 · 호버 바탕은 대비를 검사할 수 있게 불투명한 bg-layer-default-pressed 를 씁니다. 아이콘은 lucide 선 아이콘입니다.
 
 name: Input Button
 
@@ -75,12 +70,12 @@ rules:
         radius: $radius-full
     pressed:
       root:
-        background: { value: $color-bg-layer-default-pressed, note: "SEED bg.transparent-pressed 의 불투명 짝. 마우스는 호버에 같은 바탕" }
-        scale: { value: 콘텐츠 2px 거리 축소, note: "값 · 붙이개만 준다(SEED scaleScope: content) — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px. 테두리 · 바탕은 그대로" }
+        background: { value: $color-bg-layer-default-pressed, note: "불투명한 색. 마우스는 호버에 같은 바탕" }
+        scale: { value: 콘텐츠 2px 거리 축소, note: "값 · 붙이개만 준다 — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px. 테두리 · 바탕은 그대로" }
         scaleDuration: $motion-duration-pressed-scale
         scaleEasing: $motion-ease-pressed-scale
       clearButton:
-        scale: { value: 2px 거리 축소, note: "지우기만 따로 준다(SEED scaleScope: self) — 상자는 누름이 아니다" }
+        scale: { value: 2px 거리 축소, note: "지우기만 따로 준다 — 상자는 누름이 아니다" }
     focused:
       focusRing:
         width: 2px
@@ -92,7 +87,7 @@ rules:
         borderColor: { value: $color-stroke-critical-solid, note: "1px 위에 2px 가 나타난다(100ms) — 두께는 바로" }
     disabled:
       root:
-        background: { value: $color-bg-disabled, note: "흐리게 하지 않는다(v106)" }
+        background: { value: $color-bg-disabled, note: "흐리게 하지 않는다" }
         cursor: not-allowed
       value:
         foreground: $color-fg-disabled
@@ -123,7 +118,7 @@ rules:
       suffixIcon: { size: 20px }
       clearButton: { size: 22px }
     focused:
-      focusRing: { radius: { value: 16px, note: "링 바깥 반지름 = 상자 모서리 12 + 띄움 2 + 두께 2 — 링은 상자 모서리를 따른다(DESIGN.md State › 상태별 표현, 2026-10-15 구현 세션 질문 Q-007-5 정리). 웹은 outline 이 그대로 그리고, 앱은 이 셈으로 그린다" } }
+      focusRing: { radius: { value: 16px, note: "링 바깥 반지름 = 상자 모서리 12 + 띄움 2 + 두께 2 — 링은 상자 모서리를 따른다(DESIGN.md State › 상태별 표현). 웹은 outline 이 그대로 그리고, 앱은 이 셈으로 그린다" } }
   - when: { size: medium }
     enabled:
       root: { minHeight: 40px, radius: $radius-r2, paddingX: $spacing-x3_5, gap: $spacing-x2 }
@@ -139,7 +134,7 @@ rules:
   - when: { size: responsive }
     enabled:
       root:
-        breakpoint: { value: 1280px, note: "미만은 large, 이상은 medium 의 값을 쓴다(SEED lg) — 앱은 늘 large" }
+        breakpoint: { value: 1280px, note: "미만은 large, 이상은 medium 의 값을 쓴다 — 앱은 늘 large" }
 
 motion:
   "누름 · 호버 — 바탕":
@@ -155,4 +150,4 @@ motion:
     duration: $motion-duration-d2
     easing: $motion-ease-easing
     properties: [border-color]
-    note: "안쪽에 덧그린 2px 의 색이 나타나고 사라진다. SEED 는 0.1s"
+    note: "안쪽에 덧그린 2px 의 색이 나타나고 사라진다"
