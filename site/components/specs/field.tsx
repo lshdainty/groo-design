@@ -41,7 +41,7 @@ function Form({ children, gap }: { children: ReactNode; gap?: number }) {
 const cta = (label: string, mode: Mode, variant = 'neutralSolid', state: 'enabled' | 'disabled' = 'enabled', brand: 'desk' | 'hr' = 'desk') => (
   <ButtonView look={buttonLook({ variant, size: 'large' }, brand)} mode={mode} label={label} fill state={state} />
 );
-const exampleAction = (mode: Mode = 'auto') => <ButtonView look={buttonLook({ variant: 'ghost', ghostColor: 'neutralSubtle', size: 'xsmall', flush: 'right' })} mode={mode} label="예시 보기" flush="right" />;
+const exampleAction = (mode: Mode = 'auto') => <ButtonView look={buttonLook({ variant: 'ghost', ghostColor: 'neutralSubtle', size: 'xsmall' })} mode={mode} label="예시 보기" />;
 
 // 휴대폰 화면 — 흰 바탕, 아래에 CTA
 function Screen({ title, children, mode = 'auto', scale = 0.62, h = 640, bottom }: { title: string; children: ReactNode; mode?: Mode; scale?: number; h?: number; bottom?: ReactNode }) {
@@ -141,7 +141,7 @@ const Hero: Fig = ({ caption }) => (
   </Figure>
 );
 
-const Playground: Fig = () => <FieldPlayground look={look()} action={buttonLook({ variant: 'ghost', ghostColor: 'neutralSubtle', size: 'xsmall', flush: 'right' })} />;
+const Playground: Fig = () => <FieldPlayground look={look()} action={buttonLook({ variant: 'ghost', ghostColor: 'neutralSubtle', size: 'xsmall' })} />;
 
 // ── Anatomy ───────────────────────────────────────────────
 const Anatomy: Fig = ({ caption }) => {

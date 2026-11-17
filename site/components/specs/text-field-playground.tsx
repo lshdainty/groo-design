@@ -64,7 +64,7 @@ export function FieldPlayground({ look, action }: { look: TfLook; action: Button
       ...attr(weight === 'bold', 'labelWeight="bold"'),
       ...attr(indicator === 'required', 'showRequiredIndicator'),
       ...attr(indicator === 'optional', 'indicator="선택"'),
-      ...attr(headerAction === 'yes', 'headerAction={<Button type="button" variant="ghost" ghostColor="neutralSubtle" size="xsmall" flush="right">예시 보기</Button>}'),
+      ...attr(headerAction === 'yes', 'headerAction={<Button type="button" variant="ghost" ghostColor="neutralSubtle" size="xsmall">예시 보기</Button>}'),
       ...attr(desc === 'yes', 'description="목록과 통계에 이 이름으로 보여요."'),
       ...attr(count === 'yes', 'maxGraphemeCount={12}'),
       ...attr(error === 'yes', 'invalid errorMessage="이름은 12자 이내로 입력해주세요."'),
@@ -86,7 +86,7 @@ export function FieldPlayground({ look, action }: { look: TfLook; action: Button
           label="카테고리 이름"
           labelWeight={weight}
           indicator={indicator === 'none' ? undefined : indicator}
-          headerAction={headerAction === 'yes' ? <ButtonView look={action} mode={mode} label="예시 보기" flush="right" /> : undefined}
+          headerAction={headerAction === 'yes' ? <ButtonView look={action} mode={mode} label="예시 보기" /> : undefined}
           description={desc === 'yes' ? '목록과 통계에 이 이름으로 보여요.' : undefined}
           errorMessage="이름은 12자 이내로 입력해주세요."
           invalid={error === 'yes'}
