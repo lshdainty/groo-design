@@ -2221,8 +2221,8 @@ Desk 폰 화면(앱 · 768 미만 웹)의 바닥은 늘 `bg-layer-basement`(회�
 |---|---|
 | Top Navigation | 위(바가 그만큼 높아진다) · 좌우 |
 | Bottom Navigation | 아래 · 좌우 |
-| Bottom Sheet · Menu Sheet | 아래 · 좌우 · 위(시트가 화면 위까지 올라올 때 — 키보드 · 꽉 찬 시트) |
-| Dialog · Alert Dialog | 네 변 — 바깥 여백을 안전 영역 경계부터 잽니다 |
+| Bottom Sheet · Menu Sheet | 아래 · 좌우 · 위(시트가 화면 위까지 올라올 때 — 키보드 · 꽉 찬 시트). 최대 폭보다 넓은 화면에서는 좌우 안전 영역을 뺀 자리의 가운데에 섭니다 — 본문과 같은 세로 줄 |
+| Dialog · Alert Dialog | 네 변 — 바깥 여백을 안전 영역 경계부터 잽니다. 좌우 안전 영역을 뺀 자리의 가운데에 섭니다 |
 | Side Panel | 위(머리) · 아래(패널 내용 끝) · 붙은 쪽(폭에 더한다) |
 | Snackbar | 좌우 · 아래 |
 | Floating Action Button | 오른쪽 · 아래 |
