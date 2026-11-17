@@ -34,7 +34,7 @@
 
 라벨 오른쪽에는 필수 · 선택 표시가 붙습니다. 필수는 빨간 점(6, `fg-critical`), 선택은 "선택" 글(14 `fg-neutral-subtle`)입니다 — 둘을 한 화면에 섞지 않습니다(아래 Guidelines › 필수 입력 표시하기).
 
-머리 오른쪽에는 보조 액션을 둘 수 있습니다 — "예시 보기" 처럼 칸을 채우는 데 돕는 작은 텍스트 버튼(Button ghost · neutralSubtle · xsmall · 오른쪽 `flush`)입니다. 머리 높이(22)를 바꾸지 않게 위아래로 넘칩니다.
+머리 오른쪽에는 보조 액션을 둘 수 있습니다 — "예시 보기" 처럼 칸을 채우는 데 돕는 작은 텍스트 버튼(Button ghost · neutralSubtle · xsmall)입니다. 글자만 있는 단추라 가장자리 맞춤(`flush`)은 쓰지 않습니다 — [Button](button.md) 의 "가장자리 맞춤" 은 앞 아이콘이 있는 ghost 만입니다. 머리 높이(22)를 바꾸지 않게 위아래로 넘칩니다.
 
 머리는 줄을 바꿀 수 있습니다 — 큰 글자 · 좁은 칸에서 라벨 옆에 액션이 들 자리가 모자라면 액션이 라벨 아래 줄 오른쪽 끝으로 내려가고, 라벨은 낱말 단위로 줄을 바꿉니다(Typography 의 줄바꿈 규칙). "모자라다" 는 카드 머리 · 아코디언 목록 머리 · [List](list.md) 의 목록 제목과 같은 반 폭 판정입니다 — 라벨이 머리 안쪽 폭의 절반을 지키고도 액션(+ 사이 10)이 남은 폭에 들면 한 줄이고, 안 들면 내립니다. 라벨 글이 길어 한 줄에 다 안 들어가는 것만으로는 내리지 않습니다 — 라벨이 제 자리(절반 이상)에서 줄을 바꿉니다. 웹 · 레시피는 라벨 최소 50% + 줄바꿈(`field.yaml` header · label)으로, 앱 `PField` 는 같은 셈을 레이아웃에서 합니다. 라벨을 한 글자 폭으로 눌러 세우지 않습니다.
 
@@ -203,7 +203,7 @@ import { Button } from "@/components/ui/button"
 
 <Field
   label="카테고리 이름"
-  headerAction={<Button type="button" variant="ghost" ghostColor="neutralSubtle" size="xsmall" flush="right">예시 보기</Button>}
+  headerAction={<Button type="button" variant="ghost" ghostColor="neutralSubtle" size="xsmall">예시 보기</Button>}
 >
   <Input placeholder="예: 반려동물, 부수입" />
 </Field>
