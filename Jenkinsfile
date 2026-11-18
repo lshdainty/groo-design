@@ -40,9 +40,12 @@ pipeline {
                 sh """
                     docker stop ${CONTAINER_NAME} || true
                     docker rm ${CONTAINER_NAME} || true
+                    # 메모리 한도 — 정적 파일만 내주는 컨테이너라 64MB 면 넉넉하다(실측 10~20MB).
+                    # 한도가 없으면 한 컨테이너의 폭주가 같은 서버의 DB 까지 내린다(보안 점검 INF-5).
                     docker run -d --name ${CONTAINER_NAME} \
                         --hostname ${CONTAINER_NAME} \
                         --restart unless-stopped \
+                        --memory=64m --memory-swap=64m \
                         --network ${env.PROD_NETWORK} \
                         ${IMAGE_NAME}:${env.APP_VERSION}
 
