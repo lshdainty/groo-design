@@ -114,7 +114,7 @@ rules:
       scroll:
         scrollFog: { value: 켬, note: "격자가 넘친다 — Bottom Sheet 본문의 끝 흐림(Scroll Fog overlayBody, 위 20 · 아래 80 늘 켜짐). 찾기 칸은 스크롤 상자 밖이라 흐리지 않는다" }
       search:
-        height: { value: 40px, note: "밑줄형 large — 글 18 / 24 · 돋보기 24" }
+        height: { value: 40px, note: "최소 — 밑줄형 large(input.yaml minHeight) · 글 18 / 24 · 돋보기 24. 글이 커지면 칸이 따라 늘어난다" }
   - when: { surface: popover }
     enabled:
       surface:
@@ -126,7 +126,7 @@ rules:
       scroll:
         scrollFog: { value: 켬, note: "격자가 넘친다 — Popover 본문의 끝 흐림(Scroll Fog overlayBody, 위 20 · 아래 80 늘 켜짐). 찾기 칸은 스크롤 상자 밖" }
       search:
-        height: { value: 34px, note: "밑줄형 medium — 글 16 / 22 · 돋보기 20" }
+        height: { value: 34px, note: "최소 — 밑줄형 medium(input.yaml minHeight) · 글 16 / 22 · 돋보기 20. 글이 커지면 칸이 따라 늘어난다" }
 
 motion:
   "호버 · 누름 — 바탕":

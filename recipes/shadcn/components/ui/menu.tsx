@@ -454,7 +454,7 @@ const MenuItem = React.forwardRef<React.ElementRef<typeof DropdownMenuPrimitive.
             )}
           </span>
           {suffixIcon != null && (
-            <span aria-hidden data-slot="menu-item-suffix-icon" className={cn("flex shrink-0 [&>svg]:size-4", fg)}>
+            <span aria-hidden data-slot="menu-item-suffix-icon" className={cn("flex shrink-0 [&>svg]:size-[16px]", fg)}>
               {suffixIcon}
             </span>
           )}

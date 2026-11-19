@@ -40,7 +40,7 @@ rules:
   - when: {}
     enabled:
       root:
-        height: { value: 40px, note: "한 줄 — 줄바꿈하지 않습니다. 좁으면 표와 같은 가로 스크롤 상자 안에 둡니다" }
+        minHeight: { value: 40px, note: "한 줄 — 줄바꿈하지 않습니다. 최소값이라 글자 크기 설정을 따라 고르기 · 글이 커지면 따라 높아집니다. 좁으면 표와 같은 가로 스크롤 상자 안에 둡니다" }
         justifyContent: { value: space-between, note: "왼쪽 줄 수 · 오른쪽 범위와 화살표" }
         gap: { value: $spacing-x4, note: "왼쪽 묶음 ↔ 오른쪽 묶음 · 범위 묶음 ↔ 화살표 16" }
         marginTop: { value: $spacing-component-default, note: "표 아래 12 — 따로 정한 간격이 없는 컴포넌트 사이의 역할 간격입니다. 이 12 는 넘김 줄이 갖습니다 — Table 의 pagination 자리는 좌우 24 만 두고 위 여백을 더하지 않으므로, 자리에 넣어도 표 바로 뒤에 두어도 12 입니다(Pagination root.marginTop 과 같은 방식)" }
@@ -65,7 +65,7 @@ rules:
       arrow:
         size: { value: 40px, note: "Pagination 의 화살표 칸 — 둘이 붙습니다" }
         radius: $radius-r2
-        iconSize: { value: 16px, note: "lucide chevron-left · chevron-right" }
+        iconSize: { value: 16px, note: "lucide chevron-left · chevron-right. 칸 · 아이콘은 px — 글자 크기를 따르지 않습니다" }
         color: $color-fg-neutral
         background: transparent
         touchTarget: { value: 40 × 44, note: "위아래만 44 — Pagination 과 같은 예외. AA ✓ · AAA ⚠" }

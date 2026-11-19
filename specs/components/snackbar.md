@@ -197,6 +197,7 @@ import { SnackbarAvoidOverlap, SnackbarProvider } from "@/components/ui/snackbar
 | 화면 키보드가 올라옴 · 내려감 | 띠가 키보드 바로 위 8 로 옮겨 가고, 내려가면 원래 자리로 돌아옵니다 — 자리가 옮겨 갈 때는 200ms easing(모션 줄이기면 바로). 피할 자리(탭 바 · 바닥 버튼)와 둘 중 위쪽입니다 |
 | `Esc` · 밀기 · 글 누르기 | 닫히지 않습니다 — 닫기 버튼 · 시간 · 액션으로만 닫힙니다 |
 | 띠 안에 초점이 있을 때 닫힘 | 초점은 띠에 들어오기 전 자리로 돌아갑니다 |
+| 글자 크기 설정 | 글 · 액션이 커집니다. 띠 폭은 그대로 두고 글은 줄을 바꿔 받으며, 띠는 최소 높이라 따라 높아집니다. 액션은 한 줄을 지킵니다. 아이콘 · 닫기 X 는 px 그대로입니다 |
 | 시트 · 대화상자가 열린 동안 | 그 위에 그립니다. 띠를 눌러도 그 창은 닫히지 않습니다(바깥 누르기가 아닙니다). 창이 열린 채 봐야 할 결과는 그 안 Callout, 창을 닫으며 끝나는 일은 닫힌 뒤 스낵바입니다 |
 
 ## Accessibility
@@ -204,6 +205,7 @@ import { SnackbarAvoidOverlap, SnackbarProvider } from "@/components/ui/snackbar
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 글 `fg-neutral-inverted` 띠(`bg-neutral-inverted`) 위 16.41 · 다크 13.42, 액션 `fg-brand-inverted` Desk 6.90 · 7.76 · HR 6.88 · 7.56 ✓ |
+| **WCAG 1.4.4** Resize text | 글 · 액션이 글자 크기 설정을 따라 커지고, 띠는 줄을 바꿔 높아집니다 ✓. 아이콘은 글이 아니라 대상이 아닙니다 |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 아이콘 `fg-positive-inverted` 6.87 · 4.70, `fg-critical-inverted` 6.89 · 4.68, 띠 면 페이지 위 16.41 · 13.42 ✓. 포커스 링은 띠 글자색으로 띠 위에 그립니다 ✓ |
 | **WCAG 2.2.1** Timing adjustable | 머무는 동안 멈추고 떠나면 처음부터 셉니다. 액션은 6초 — 같은 일을 할 다른 길을 둡니다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 액션 글 + 좌우 8 × 44 ✓ |

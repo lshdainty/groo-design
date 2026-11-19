@@ -176,7 +176,7 @@ rules:
       placeholder: { typography: $text-t5 }
       prefixIcon: { size: 20px }
       chevron: { size: 20px }
-      item: { paddingY: $spacing-x3, gap: $spacing-x3, height: { value: 46px, note: "한 줄 — 설명이 있으면 66" } }
+      item: { paddingY: $spacing-x3, gap: $spacing-x3, minHeight: { value: 46px, note: "한 줄 — 설명이 있으면 66. 최소 높이라 글자가 커지면 줄을 바꿔 받고 늘어난다" } }
       itemIcon: { size: 22px }
       itemLabel: { typography: $text-t5 }
       itemDescription: { typography: $text-t3 }
@@ -189,7 +189,7 @@ rules:
       placeholder: { typography: $text-t4 }
       prefixIcon: { size: 16px }
       chevron: { size: 16px }
-      item: { paddingY: $spacing-x2_5, gap: $spacing-x2, height: { value: 39px, note: "한 줄 — 설명이 있으면 57" } }
+      item: { paddingY: $spacing-x2_5, gap: $spacing-x2, minHeight: { value: 39px, note: "한 줄 — 설명이 있으면 57. 최소 높이(large 비고)" } }
       itemIcon: { size: 18px }
       itemLabel: { typography: $text-t4 }
       itemDescription: { typography: $text-t2 }

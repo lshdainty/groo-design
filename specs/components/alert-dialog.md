@@ -173,6 +173,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 | `Esc` · 뒤로 가기(1280 미만) | 취소와 같습니다 — 닫습니다. |
 | 바깥(딤) 누르기 | 무시합니다. |
 | 닫힌 뒤 | 100ms 로 사라지고, 초점은 연 자리로 돌아갑니다. 연 자리가 사라졌으면(⋮ 메뉴의 항목 · 지운 줄) 그 줄 → 목록 머리(목록 제목 · 표 머리) → `main` 순으로 남아 있는 첫 곳에 둡니다 — 초점이 문서 맨 앞(`body`)으로 빠지지 않게 하기 위해서입니다. |
+| 글자 크기 설정 | 제목 · 설명 · 버튼 글이 커집니다. 폭(최대 272)은 그대로이고 줄을 바꿔 높이가 늘어나며, 화면 높이를 넘으면 확인창 전체가 스크롤됩니다. 버튼 라벨은 한 줄을 지키고, 반 폭을 넘으면 버튼을 세로로 쌓습니다 |
 | 대화상자 · 시트 위에서 | 그 위에 뜹니다(z-index L5). 닫으면 아래 표면으로 초점이 돌아갑니다. |
 
 ## Accessibility
@@ -180,6 +181,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 · 설명 `fg-neutral` 떠 있는 표면 위 16.41 · 다크 11.62 ✓. 버튼 글자는 [Button](button.md) 의 검증 |
+| **WCAG 1.4.4** Resize text | 제목 · 설명 · 버튼 글이 글자 크기 설정을 따라 커지고, 폭은 그대로 둔 채 높이가 늘어납니다 — 넘치면 확인창 전체가 스크롤되어 글이 잘리지 않습니다 ✓ |
 | **WCAG 2.4.3** Focus order | 열면 확인창으로, 닫으면 연 자리로 갑니다. 열린 동안 초점이 확인창 안을 돕니다 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 버튼 40 · 36 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 버튼은 누르는 영역을 44 까지 넓힙니다(Button) ✓ |

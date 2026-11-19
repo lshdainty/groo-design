@@ -24,6 +24,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *   variant  solid(옅은 투명 채움 bg-neutral-weak-alpha — 어느 바탕에서나) · outlineStrong(고르면 짙은 채움) ·
  *            outlineWeak(기본 — 고르면 옅은 바탕 + 짙은 1px, 글자 그대로)
  *   size     small 32 · medium 36(기본) · large 40. 글은 세 크기 모두 t4 14 · 500, 가장자리 ↔ 글 12 · 14 · 16, 아이콘 ↔ 글 6
+ *            높이는 최소 높이 — 위아래 (높이 − 19) ÷ 2 를 둬 큰 글자에서 글을 따라 늘어난다. 아이콘 · 지우기는 px 라 그대로다
  *   layout   withText(기본) · iconOnly(원 — 아이콘을 children 으로, aria-label 필수 · 없으면 개발 중에 경고)
  *
  * 고름은 ChipToggle · ChipRadio 는 Radix 의 data-state="checked", Chip 은 selected 가 다는 data-selected 로 칠한다
@@ -98,9 +99,9 @@ const chipVariants = cva(
         ].join(" "),
       },
       size: {
-        small: "h-8 [--press-basis:32]",
-        medium: "h-9 [--press-basis:36]",
-        large: "h-10 [--press-basis:40]",
+        small: "min-h-[32px] py-[6.5px] [--press-basis:32]",
+        medium: "min-h-[36px] py-[8.5px] [--press-basis:36]",
+        large: "min-h-[40px] py-[10.5px] [--press-basis:40]",
       },
       layout: {
         withText: "",
@@ -112,9 +113,9 @@ const chipVariants = cva(
       { size: "small", layout: "withText", className: "min-w-11 px-x3" },
       { size: "medium", layout: "withText", className: "min-w-12 px-x3_5" },
       { size: "large", layout: "withText", className: "min-w-13 px-x4" },
-      { size: "small", layout: "iconOnly", className: "w-8 px-0 [&>svg]:size-3.5" },
-      { size: "medium", layout: "iconOnly", className: "w-9 px-0 [&>svg]:size-4" },
-      { size: "large", layout: "iconOnly", className: "w-10 px-0 [&>svg]:size-4" },
+      { size: "small", layout: "iconOnly", className: "w-[32px] px-0 [&>svg]:size-[14px]" },
+      { size: "medium", layout: "iconOnly", className: "w-[36px] px-0 [&>svg]:size-[16px]" },
+      { size: "large", layout: "iconOnly", className: "w-[40px] px-0 [&>svg]:size-[16px]" },
     ],
     defaultVariants: {
       variant: "outlineWeak",
@@ -127,9 +128,9 @@ const chipVariants = cva(
 // 아이콘 — 앞 14 · 16 · 16, 뒤 14 · 14 · 16(medium 만 앞 ≠ 뒤), 지우기 14 · 14 · 16.
 // Tailwind 는 소스의 글자 그대로를 읽으므로 크기마다 다 적는다
 const ICONS: Record<ChipSize, { prefix: string; suffix: string; remove: string }> = {
-  small: { prefix: "[&>svg]:size-3.5", suffix: "[&>svg]:size-3.5", remove: "size-3.5" },
-  medium: { prefix: "[&>svg]:size-4", suffix: "[&>svg]:size-3.5", remove: "size-3.5" },
-  large: { prefix: "[&>svg]:size-4", suffix: "[&>svg]:size-4", remove: "size-4" },
+  small: { prefix: "[&>svg]:size-[14px]", suffix: "[&>svg]:size-[14px]", remove: "size-[14px]" },
+  medium: { prefix: "[&>svg]:size-[16px]", suffix: "[&>svg]:size-[14px]", remove: "size-[14px]" },
+  large: { prefix: "[&>svg]:size-[16px]", suffix: "[&>svg]:size-[16px]", remove: "size-[16px]" },
 };
 const ICON_SLOT = "flex shrink-0 items-center justify-center";
 
@@ -397,9 +398,9 @@ const inputChipVariants = cva(
   {
     variants: {
       size: {
-        small: "h-8 min-w-11 px-x3",
-        medium: "h-9 min-w-12 px-x3_5",
-        large: "h-10 min-w-13 px-x4",
+        small: "min-h-[32px] py-[6.5px] min-w-11 px-x3",
+        medium: "min-h-[36px] py-[8.5px] min-w-12 px-x3_5",
+        large: "min-h-[40px] py-[10.5px] min-w-13 px-x4",
       },
     },
     defaultVariants: { size: "medium" },
@@ -411,7 +412,7 @@ const inputChipVariants = cva(
 const REMOVE = [
   "relative inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-current outline-none",
   "[&>svg]:pointer-events-none [&>svg]:size-full",
-  "before:absolute before:left-1/2 before:top-1/2 before:size-6 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "before:absolute before:left-1/2 before:top-1/2 before:size-[24px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[--press-basis:24] [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
   "disabled:cursor-not-allowed disabled:[scale:1]",
 ].join(" ");

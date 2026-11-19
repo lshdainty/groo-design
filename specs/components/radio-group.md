@@ -252,6 +252,7 @@ import { Radiomark, RadioGroup } from "@/components/ui/radio-group"
 | Keyboard `Enter` | 폼을 제출합니다 — 진짜 `<input type="radio">` 처럼 폼의 기본 버튼(첫 제출 버튼)을 누릅니다. 고르지 않습니다. 기본 버튼이 없거나 막혀 있으면 아무것도 하지 않습니다. Radix 의 선택지는 Enter 를 막기만 하므로 묶음이 받습니다. 동그라미만(`Radiomark`) 쓰는 List 의 라디오 줄 · Select Box 하나 고르기도 같습니다. |
 | Disabled(묶음) | 모든 선택지가 막힙니다 — 묶음에 `aria-disabled` 를 겁니다. 막힌 Field 로 감싸도 같습니다. |
 | Disabled(선택지) | 그 선택지만 막힙니다 — 골라 둔 채로 막을 수 있습니다(채운 원 그대로 색만 바뀝니다). |
+| 글자 크기 설정 | 라벨이 커지고 줄을 바꿔 받습니다 — 줄은 최소 높이라 글을 따라 늘어납니다. 동그라미 · 점은 컨트롤 모양이라 px 그대로입니다. |
 
 **Form 안** — Radix 의 숨은 `<input type="radio">` 가 폼 제출에 들어갑니다(`name` 은 묶음에 줍니다). 검증은 `onSubmit` 에서 합니다 — 누르는 동안 오류를 띄우지 않습니다.
 
@@ -260,6 +261,7 @@ import { Radiomark, RadioGroup } from "@/components/ui/radio-group"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(라벨 ≥ 4.5:1) | 라벨 `fg-neutral` × 흰 표면 16:1+ ✓ |
+| **WCAG 1.4.4** Resize text | 라벨이 글자 크기 설정을 따르고 줄을 바꿔 받아 잘리지 않습니다 ✓. 동그라미 · 점은 px 그대로입니다(컨트롤 모양 — 선택 상태는 보조 기술의 `aria-checked` 로도 읽힙니다) |
 | **WCAG 1.4.11** Non-text contrast(UI ≥ 3:1) | 선택 안 된 동그라미 테두리 `stroke-neutral-solid` × 표면 4.2:1(다크 4.1:1) ✓ · 선택 채움 `bg-neutral-inverted` × 표면 16.4:1(다크 13.4:1) ✓ · 가운데 점 × 채움 — neutral 16.4:1(다크 13.4:1), brand Desk 8.4:1 · HR 8.2:1 ✓. 다크의 brand 채움은 표면과 1.7:1(Desk · HR)이라 채움만으로는 3:1 이 되지 않습니다 — 선택은 가운데 흰 점(표면과 14.5:1)과 테두리가 사라지는 모양이 알립니다 |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에만 링 2px · 띄움 2px(`stroke-focus-ring`)를 그립니다 — 앱도 키보드로 옮길 때만 같은 링을 그립니다 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 동그라미 20 · 24 + 라벨까지 묶은 줄 32 · 36 ✓ |

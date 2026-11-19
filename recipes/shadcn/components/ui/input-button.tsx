@@ -92,7 +92,7 @@ const CONTENT_PRESS = "peer-active/input-button:[scale:calc(1-2/var(--press-basi
 const CLEAR = [
   "pointer-events-auto relative flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-fg-neutral-subtle",
   "[&>svg]:size-[var(--input-button-clear)]",
-  "before:absolute before:left-1/2 before:top-1/2 before:size-6 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "before:absolute before:left-1/2 before:top-1/2 before:size-[24px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[--press-basis:24] [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
 ].join(" ");
 

@@ -50,7 +50,7 @@ rules:
       root:
         width: { value: 100%, note: "자리 폭 — 최대 464, 넓으면 가운데" }
         maxWidth: 464px
-        minHeight: 44px
+        minHeight: { value: 44px, note: "최소값 — 글이 커지거나 줄이 늘면 띠가 따라 높아집니다" }
         padding: $spacing-x2_5
         radius: $radius-r2
         background: { value: $color-bg-neutral-inverted, note: "다크에서는 밝은 띠" }
@@ -63,11 +63,11 @@ rules:
         paddingX: { value: $spacing-x1_5, note: "글은 띠 가장자리에서 16(아이콘이 있으면 40)" }
         gap: { value: $spacing-x2_5, note: "글과 액션은 양 끝 — 사이는 적어도 10" }
       message:
-        typography: { value: $text-t4, note: "단어 단위 줄바꿈 — 줄 수를 자르지 않습니다. 두 줄 안에서 끝나게 씁니다" }
+        typography: { value: $text-t4, note: "글자 크기 설정을 따라 커집니다. 단어 단위 줄바꿈 — 줄 수를 자르지 않습니다. 두 줄 안에서 끝나게 씁니다(100% 기준)" }
         fontWeight: 400
         foreground: $color-fg-neutral-inverted
       action:
-        typography: $text-t4
+        typography: { value: $text-t4, note: "글자 크기 설정을 따라 커지고 한 줄을 지킵니다" }
         fontWeight: 700
         foreground: { value: $color-fg-brand-inverted, note: "반전 짝 — 짙은 띠 위 Desk 6.90 · HR 6.88, 다크의 밝은 띠 위 7.76 · 7.56" }
         touchTarget: { value: 글 + 좌우 8 × 44, note: "띠 높이 안에서 위아래로 넓힙니다" }

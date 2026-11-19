@@ -196,12 +196,14 @@ onRefresh: () async { ref.invalidate(dashboardProvider); },
 | 모션 줄이기 | 돌지 않습니다 — 값 없는 원은 고정된 3/4 호, 채움은 바로 바뀝니다 |
 | 당겨서 새로 고침 | 위 "당겨서 새로 고침" — 당긴 만큼 채움 · 문턱 88 · 놓으면 돎 · 끝날 때까지 88 |
 | 누르기 · 키보드 | 없습니다 — 원은 초점을 받지 않습니다 |
+| 글자 크기 설정 | 원의 크기 · 두께는 px 그대로입니다. 5초 안내 글은 커지고 줄을 바꿔 받습니다. `inherit` 는 놓인 부품이 정한 크기를 따릅니다 |
 
 ## Accessibility
 
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | `neutral` 원 흰 면 위 4.18 · 다크 4.13(떠 있는 면 3.58) · 트랙과 3.63 · 3.18 ✓. `brand` Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓. `staticWhite` 딤 위 3.95 · 다크 19.27 ✓. 트랙은 장식 |
+| **WCAG 1.4.4** Resize text | 5초 안내 글이 글자 크기 설정을 따릅니다 ✓. 원은 글이 아닌 컨트롤 모양이라 px 그대로이고, 기다리는 일은 원의 이름과 영역의 상태 글로 읽힙니다 |
 | **WCAG 2.2.2** Pause, Stop, Hide | 진행을 알리는 반복이라 기준의 예외지만, 10초면 실패로 바뀌어 멈추고 모션 줄이기면 돌지 않습니다 ✓ |
 | **WCAG 2.3.3** Animation from Interactions | 모션 줄이기면 회전 · 호 · 채움 전환이 멈춥니다 ✓ |
 | **WCAG 4.1.2** Name, Role, Value | `role="progressbar"` + 이름(`aria-label` — 기본 "불러오는 중"). 값 있는 원은 `aria-valuenow` · `aria-valuemin` · `aria-valuemax` + `aria-valuetext`("40%"), 값 없는 원은 값 속성을 두지 않습니다 ✓ |

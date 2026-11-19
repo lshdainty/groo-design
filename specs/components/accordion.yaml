@@ -134,7 +134,7 @@ rules:
         fontWeight: 700
         foreground: $color-fg-neutral
       expandAll:
-        height: { value: 36px, note: "보이는 상자 — Card 머리 동작과 같은 모양(card.yaml headerAction)" }
+        minHeight: { value: 36px, note: "보이는 상자 — Card 머리 동작과 같은 모양(card.yaml headerAction). 최소 높이라 큰 글자에서 글을 따라 늘어나고, 한 줄을 지킨다" }
         paddingLeft: $spacing-x3_5
         paddingRight: { value: $spacing-x3_5, note: "좌우 14 — 줄 끝에서는 오른쪽 14 만큼 바깥으로 내어 글자 끝이 머리 여백에 선다" }
         radius: $radius-r2

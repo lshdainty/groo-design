@@ -86,7 +86,7 @@ rules:
         display: { value: 숨김, note: "끄는 동안(pressed) · 마우스를 손잡이에 올렸을 때(hovered) · 키보드 포커스일 때(focused)만 보입니다. 보조 기술에는 숨깁니다(aria-hidden) — 값은 손잡이의 aria-valuetext 가 읽힙니다" }
         background: { value: $color-bg-neutral-inverted, note: "손잡이와 같은 색" }
         foreground: { value: $color-fg-neutral-inverted, note: "말풍선 위 16.41 · 다크 13.42" }
-        typography: $text-t3
+        typography: { value: $text-t3, note: "글자 크기 설정을 따라 커집니다 — 상자는 아래 끝(손잡이 위 12)을 지키고 위로 늘어납니다" }
         fontWeight: 500
         numerals: { value: tabular-nums, note: "끄는 동안 숫자 폭이 흔들리지 않게" }
         paddingY: $spacing-x1
@@ -103,7 +103,7 @@ rules:
         exitOpacity: { value: 0, note: "사라질 때 투명 0 · 아래 5 로(확대는 그대로 1)" }
         exitOffsetY: 5px
       markers:
-        typography: $text-t3
+        typography: { value: $text-t3-static, note: "트랙에 붙은 눈금 표식이라 글자 크기를 따르지 않습니다(WCAG 1.4.4 예외) — 지금 값은 머리 값 · 말풍선이 크게 보입니다" }
         foreground: { value: $color-fg-neutral-muted, note: "흰 표면 7.11 · 다크 7.70(시트 6.67). 보조 기술에는 숨깁니다(aria-hidden)" }
         align: { value: 양 끝, note: "최솟값은 왼쪽 끝, 최댓값은 오른쪽 끝에 글을 맞춥니다 — 단계 표식(ticks discrete)의 가운데 것은 단계 자리 가운데" }
       headerValue:

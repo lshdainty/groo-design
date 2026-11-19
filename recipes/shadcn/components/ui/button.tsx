@@ -19,6 +19,7 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  *
  * Sizes(4) × layout(withText · iconOnly)
  *   xsmall 32(알약) · small 36 · medium 40(기본) · large 48 — 크기는 이름이 아니라 높이로 고른다.
+ *   글이 있는 버튼은 라벨이 글자 크기 설정을 따라 커지고 상자도 따라 커진다(rem). 아이콘 · 아이콘만 있는 버튼은 px 라 그대로다.
  *
  * States
  *   hover = 누름 색(Tailwind v4 의 hover 는 hover 가능한 기기에서만). 누름은 누름 색 + 세로 2px 거리 축소 —
@@ -96,14 +97,14 @@ const buttonVariants = cva(
     },
     compoundVariants: [
       // 크기 × 배치 — 여백 · 간격 · 글자 · 아이콘(button.yaml)
-      { size: "xsmall", layout: "withText", className: "px-x3_5 py-x1_5 gap-x1 text-t3 [&_svg]:size-3.5" },
-      { size: "small", layout: "withText", className: "px-x3_5 py-x2 gap-x1 text-t4 [&_svg]:size-3.5" },
-      { size: "medium", layout: "withText", className: "px-x4 py-x2_5 gap-x1_5 text-t4 [&_svg]:size-4" },
+      { size: "xsmall", layout: "withText", className: "px-x3_5 py-x1_5 gap-x1 text-t3 [&_svg]:size-[14px]" },
+      { size: "small", layout: "withText", className: "px-x3_5 py-x2 gap-x1 text-t4 [&_svg]:size-[14px]" },
+      { size: "medium", layout: "withText", className: "px-x4 py-x2_5 gap-x1_5 text-t4 [&_svg]:size-[16px]" },
       { size: "large", layout: "withText", className: "px-x5 py-x3 gap-x2 text-t6 [&_svg]:size-[22px]" },
-      { size: "xsmall", layout: "iconOnly", className: "w-8 p-x1_5 [&_svg]:size-3.5" },
-      { size: "small", layout: "iconOnly", className: "w-9 p-x2 [&_svg]:size-4" },
-      { size: "medium", layout: "iconOnly", className: "w-10 p-x2_5 [&_svg]:size-[18px]" },
-      { size: "large", layout: "iconOnly", className: "w-12 p-x3 [&_svg]:size-[22px]" },
+      { size: "xsmall", layout: "iconOnly", className: "size-[32px] p-x1_5 [&_svg]:size-[14px]" },
+      { size: "small", layout: "iconOnly", className: "size-[36px] p-x2 [&_svg]:size-[16px]" },
+      { size: "medium", layout: "iconOnly", className: "size-[40px] p-x2_5 [&_svg]:size-[18px]" },
+      { size: "large", layout: "iconOnly", className: "size-[48px] p-x3 [&_svg]:size-[22px]" },
       // 가장자리 맞춤 — 크기 × 배치의 px 보다 뒤에 둬야 tailwind-merge 가 pl-0 · pr-0 을 남긴다
       { flush: "left", className: "pl-0" },
       { flush: "right", className: "pr-0" },

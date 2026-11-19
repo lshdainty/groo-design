@@ -178,11 +178,11 @@ const LINE = [
 ].join(" ");
 // 누르는 폭 16 — 선 가운데로 양쪽 8. 키보드 포커스에만 둘레 링 2px · 모서리 4
 const SEPARATOR = [
-  "absolute inset-y-0 left-1/2 w-4 -translate-x-1/2 cursor-col-resize touch-none rounded-r1",
+  "absolute inset-y-0 left-1/2 w-[16px] -translate-x-1/2 cursor-col-resize touch-none rounded-r1",
   "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 // 손잡이 표시 4 × 24 — 선 가운데(패널 높이의 가운데)
-const GRIP = "pointer-events-none absolute left-1/2 top-1/2 h-6 w-1 -translate-x-1/2 -translate-y-1/2 rounded-r0_5 bg-stroke-neutral-solid";
+const GRIP = "pointer-events-none absolute left-1/2 top-1/2 h-[24px] w-[4px] -translate-x-1/2 -translate-y-1/2 rounded-r0_5 bg-stroke-neutral-solid";
 
 type Press = { pointerId: number; startX: number; startSize: number; dragging: boolean; last: number; restore: (() => void) | null };
 

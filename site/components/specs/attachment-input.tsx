@@ -219,7 +219,7 @@ const Layout: Fig = ({ caption }) => {
           ))}
         </div>
         <div className="grid items-start gap-4 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-          <Shot w={640} strong="dropzone — 1280 이상" cap={`높이 ${l.dropzone.h} · ${l.dropzone.borderW}px 실선 · 안내 + 파일 선택`}>
+          <Shot w={640} strong="dropzone — 1280 이상" cap={`최소 높이 ${l.dropzone.h} · ${l.dropzone.borderW}px 실선 · 안내 + 파일 선택`}>
             <Board>
               <ImportField>
                 <AtDropzoneView look={l} buttonState="enabled" />

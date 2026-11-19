@@ -207,6 +207,7 @@ import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/component
 | 마우스 호버 | 그 줄에 알약 바탕만 — 키보드 위치는 옮기지 않습니다 |
 | 막힌 줄 누르기 | 실행하지 않고 닫히지 않습니다 |
 | 실행이 확인을 부를 때 | 메뉴가 닫힌 뒤 [Alert Dialog](alert-dialog.md) 를 엽니다 — 닫히는 메뉴와 열리는 확인창이 겹치지 않게(위 "줄 누르기" 의 순서) |
+| 글자 크기 설정 | 이름 · 설명 · 묶음 이름은 글자 크기 설정을 따라 커집니다. 메뉴 폭은 그대로라 줄을 바꾸고 줄 높이가 늘어납니다 — 말줄임하지 않습니다. 앞 · 뒤 아이콘은 px 로 그대로입니다. |
 | 1280 아래로 줄면 | 열린 채 [Menu Sheet](menu-sheet.md) 로 바뀝니다(`ResponsiveMenu`). 묶음 이름은 시트에 자리가 없어 묶음 상자로만 나눕니다 |
 | 대화상자 · 시트 안에서 | 그 위(L3)에 뜹니다. `Esc` · 바깥 누르기는 메뉴만 닫습니다 |
 
@@ -215,6 +216,7 @@ import { Menu, MenuContent, MenuGroup, MenuItem, MenuTrigger } from "@/component
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 이름 `fg-neutral` 떠 있는 표면(`bg-layer-floating`) 위 16.41 · 다크 11.62, 설명 · 묶음 이름 `fg-neutral-subtle` 5.50 · 5.27, 위험 `fg-critical` 5.06 · 5.27 ✓. 막힌 줄은 예외(비활성) |
+| **WCAG 1.4.4** Resize text | 이름 · 설명 · 묶음 이름이 글자 크기 설정을 따라 커지고, 폭이 정해진 메뉴 안에서 줄을 바꿔 모두 보입니다 ✓. 넘치면 메뉴 안에서 스크롤합니다 |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ — 호버 알약(1.06)은 장식이고, 위치는 링이 알립니다 |
 | **WCAG 2.1.1** Keyboard | 열기 · 옮기기 · 실행 · 닫기 모두 키보드로 됩니다 |
 | **WCAG 2.4.7** Focus visible | 키보드로 옮긴 줄에 늘 링 — 바탕색만으로 알리지 않습니다 |

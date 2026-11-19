@@ -64,7 +64,7 @@ rules:
         gap: { value: $spacing-between-chips, note: "칩 사이 8 — 시트는 한 줄 가로 스크롤(화면 끝까지), 팝오버는 줄바꿈" }
         paddingBottom: { value: $spacing-x3, note: "칩 줄 ↔ 머리 12" }
       header:
-        height: { value: 48px, note: "최소 — 글자가 크면 그만큼만 늘어난다. 칸 · 머리 · 요일 줄 · 원 · 이전 · 다음은 px, 글자만 배율" }
+        height: { value: 48px, note: "최소 — 제목이 커지면 글을 따라 늘어난다. 칸 · 요일 줄 · 원 · 이전 · 다음은 px 로 그대로" }
       title:
         typography: $text-t5
         fontWeight: 700
@@ -80,12 +80,12 @@ rules:
         iconSize: { value: 18px, note: "lucide chevron-left · chevron-right" }
         color: $color-fg-neutral
       weekday:
-        height: { value: 48px, note: "최소 — 글자가 크면 그만큼만 늘어난다" }
-        typography: $text-t4
+        height: { value: 48px, note: "글자 크기 설정을 따르지 않는다 — 요일 글은 칸 안 글이라 그대로" }
+        typography: $text-t4-static
         fontWeight: 500
         foreground: $color-fg-neutral-subtle
       cell:
-        height: { value: 48px, note: "최소 — 글자가 크면 그만큼만 늘어난다: max(48, 숫자 줄 높이 + 위아래 3 · 3) — 날짜 버튼 · 앞뒤 달 숫자가 위아래 3 을 가진다(200% 44 + 6 = 50 · 달력 396). 폭은 달력 폭 ÷ 7 — 칸 전체가 누르는 자리, 칸 사이 0" }
+        height: { value: 48px, note: "글자 크기 설정을 따르지 않는다 — 숫자가 칸 안 글이라 칸 높이도 그대로. 폭은 달력 폭 ÷ 7 — 칸 전체가 누르는 자리, 칸 사이 0" }
         weeks: { value: 6, note: "늘 6주 — 달을 넘겨도 머리 · 바닥이 움직이지 않는다(이어지는 달만 그 달의 주 수)" }
         cursor: pointer
       dayVisual:
@@ -96,19 +96,19 @@ rules:
         transitionDuration: $motion-duration-color-transition
         transitionEasing: $motion-ease-easing
       dayLabel:
-        typography: { value: $text-t5, note: "숫자 폭을 같게(tabular-nums)" }
+        typography: { value: $text-t5-static, note: "칸 안 글이라 글자 크기 설정을 따르지 않는다. 숫자 폭을 같게(tabular-nums)" }
         fontWeight: 500
         foreground: $color-fg-neutral-muted
       rangeBand:
         height: { value: 42px, note: "칸 위 3 — 원과 같은 높이(칸이 좁아 원이 줄면 띠도 같이). 시작 칸은 원 가운데부터 오른쪽, 끝 칸은 왼쪽부터 원 가운데까지, 사이 칸은 칸 폭 전체 — 줄 끝에서 둥글리지 않고 칸 끝에서 끊는다" }
         background: $color-bg-neutral-weak
       monthLabel:
-        height: { value: 48px, note: "최소 — 글자가 크면 그만큼만 늘어난다" }
+        height: { value: 48px, note: "최소 — 달 이름이 커지면 글을 따라 늘어난다" }
         typography: $text-t5
         fontWeight: 700
         foreground: $color-fg-neutral
       wheel:
-        height: { value: 336px, note: "요일 줄 + 6주 자리를 덮는다 — 높이는 요일 줄 + 6 × 칸이라 글이 크면 달력을 따라 늘어난다(100% 요일 줄 48 + 6주 288 · 200% 48 + 50 × 6 → 348, 열고 닫아도 달력 높이가 그대로). Wheel Picker medium 44 × 7 = 308 을 가운데에(100% 위아래 14). 열린 동안 이전 · 다음은 막힌다" }
+        height: { value: 336px, note: "요일 줄 + 6주 자리(48 + 48 × 6)를 덮는다 — 열고 닫아도 달력 높이가 그대로다. Wheel Picker medium 44 × 7 = 308 을 가운데에(위아래 14). 휠 항목은 글자 크기 설정을 따르지 않는다. 열린 동안 이전 · 다음은 막힌다" }
         columns: { value: 연 120 · 월 96, note: "연은 오른쪽 · 월은 왼쪽 정렬로 가운데에 모은다 — 항목은 \"2026년\" · \"10월\"" }
         background: $color-bg-layer-floating
       footer:

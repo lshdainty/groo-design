@@ -49,7 +49,7 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  * 모양: 화면 정중앙, 폭 480 · 800(좌우 20 은 남긴다), 높이는 내용만큼 화면의 80% 까지(dvh) — 넘치는 만큼 본문만 스크롤한다.
  * 모서리 r5 20, 그림자 없이 딤(overlay-dim 라이트 0.50 · 다크 0.65)과 표면 색으로 뜬다. 머리 위 24 · 좌우 24 · 아래 16 · 사이 6,
  * 제목 t8 22 / 30 · 700, 설명 t5 fg-neutral-muted. 닫기 버튼이 있으면 머리 오른쪽 52(24 + 아이콘 22 + 6).
- * 닫기 버튼은 52 투명 상자 · 아이콘 22 fg-neutral-subtle — 아이콘이 위 28 · 오른쪽 24. 누르면 bg-layer-floating-pressed + 2px 거리
+ * 닫기 버튼은 52 투명 상자 · 아이콘 22 fg-neutral-subtle — 제목 첫 줄 가운데(100% 에서 아이콘 위 28) · 오른쪽 24. 누르면 bg-layer-floating-pressed + 2px 거리
  * 축소(기준 52), 호버는 누름 색. 이름 "닫기". 본문은 좌우 24 — 맨 끝(바닥이 없을 때)이면 아래 24, 맨 앞(머리가 없을 때)이면 위 24.
  * 바닥은 위 16 · 좌우 24 · 아래 24. 넘쳐 스크롤할 수 있는 본문은 키보드로도 스크롤하도록 Tab 이 선다(안쪽 링).
  * 끝 흐림(scrollFog, dialog.yaml · scroll-fog.yaml overlayBody) — 걸 본문인지는 내용의 종류로 정한다(칸 두셋처럼 늘 들어맞는 본문에는
@@ -225,10 +225,11 @@ const HEADER = [
   "[&:has(~[data-slot=dialog-body][data-scrolled])]:shadow-[inset_0_-1px_0_0_var(--color-stroke-neutral-subtle)]",
 ].join(" ");
 
-// 닫기 — 52 투명 상자 · 아이콘 22 fg-neutral-subtle. 아이콘이 위 28 · 오른쪽 24 에 오도록 상자를 (52 − 22) ÷ 2 = 15 만큼 당긴다.
+// 닫기 — 52 투명 상자 · 아이콘 22 fg-neutral-subtle. 상자 가운데가 제목 첫 줄 가운데(위 24 + 제목 줄 높이 ÷ 2)에 오고, 아이콘이
+// 오른쪽 24 에 오도록 상자를 (52 − 22) ÷ 2 = 15 만큼 당긴다. 제목 글자가 커져도 닫기는 크기를 그대로 두고 첫 줄 가운데를 따른다.
 // 누르면 bg-layer-floating-pressed + 2px 거리 축소(기준 52 → 0.962)
 const CLOSE = [
-  "absolute right-[calc(var(--spacing-x6)-15px)] top-[calc(var(--spacing-x7)-15px)] flex size-13 cursor-pointer items-center justify-center",
+  "absolute right-[calc(var(--spacing-x6)-15px)] top-[calc(var(--spacing-x6)+var(--text-t8--line-height)/2-26px)] flex size-[52px] cursor-pointer items-center justify-center",
   "rounded-r3 border-0 bg-transparent p-0 text-fg-neutral-subtle [&>svg]:size-[22px]",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "hover:bg-bg-layer-floating-pressed active:bg-bg-layer-floating-pressed [--press-basis:52] active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
@@ -236,21 +237,21 @@ const CLOSE = [
 ].join(" ");
 
 // 머리 왼쪽 ←(onBack) — 시트와 같은 값(bottom-sheet.yaml 축 back): 보이는 원 40 · 아이콘 24 · 누르는 영역 44, 아이콘이 왼쪽 24 에 오고 세로는
-// 제목 첫 줄 가운데(위 24 + 15). 제목은 원 오른쪽 사이 4 에서 시작한다(36 = 2.25rem). 누르면 bg-neutral-weak-pressed(축소 없음)
+// 제목 첫 줄 가운데(위 24 + 제목 줄 높이 ÷ 2). 제목은 원 오른쪽 사이 4 에서 시작한다(36). 누르면 bg-neutral-weak-pressed(축소 없음)
 const BACK = [
-  "absolute left-[calc(var(--spacing-x6)-0.5rem)] top-[calc(var(--spacing-x6)+0.9375rem)] z-1 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-fg-neutral [&>svg]:size-6",
-  "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "absolute left-[calc(var(--spacing-x6)-8px)] top-[calc(var(--spacing-x6)+var(--text-t8--line-height)/2)] z-1 flex size-[40px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-fg-neutral [&>svg]:size-[24px]",
+  "before:absolute before:left-1/2 before:top-1/2 before:size-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
   "hover:bg-bg-neutral-weak-pressed active:bg-bg-neutral-weak-pressed",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 
-// 머리 오른쪽 동작(headerAction) — Button ghost 아이콘만 36 하나. 닫기 아이콘(22) 왼쪽 사이 4 · 세로는 제목 첫 줄 가운데(39),
+// 머리 오른쪽 동작(headerAction) — Button ghost 아이콘만 36 하나. 닫기 아이콘(22) 왼쪽 사이 4 · 세로는 제목 첫 줄 가운데(위 24 + 제목 줄 높이 ÷ 2),
 // 닫기가 없는 입력 폼은 오른쪽 16. 머리 오른쪽 여백은 닫기 자리 52 + 4 + 36 + 8 = 100, 닫기가 없으면 16 + 36 + 8 = 60(dialog.yaml 축 headerAction)
 const HEADER_WITH_ACTION_CLOSE = "pr-[calc(var(--spacing-x13)+var(--spacing-x1)+36px+var(--spacing-x2))]";
 const HEADER_WITH_ACTION = "pr-[calc(var(--spacing-x4)+36px+var(--spacing-x2))]";
-const HEADER_ACTION_CLOSE = "absolute right-[calc(var(--spacing-x6)+22px+var(--spacing-x1))] top-[39px] z-1 flex -translate-y-1/2 items-center";
-const HEADER_ACTION = "absolute right-x4 top-[39px] z-1 flex -translate-y-1/2 items-center";
+const HEADER_ACTION_CLOSE = "absolute right-[calc(var(--spacing-x6)+22px+var(--spacing-x1))] top-[calc(var(--spacing-x6)+var(--text-t8--line-height)/2)] z-1 flex -translate-y-1/2 items-center";
+const HEADER_ACTION = "absolute right-x4 top-[calc(var(--spacing-x6)+var(--text-t8--line-height)/2)] z-1 flex -translate-y-1/2 items-center";
 
 export interface DialogContentProps extends Omit<React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>, "title"> {
   /** 제목 — 하는 일("휴가 신청" · "거래 상세"). 없으면 aria-label 로 이름을 단다 */
@@ -340,7 +341,7 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
                   <ChevronLeft aria-hidden strokeWidth={2} />
                 </button>
               )}
-              <DialogPrimitive.Title data-slot="dialog-title" className={cn("m-0 text-t8 font-bold text-fg-neutral", onBack && "pl-[2.25rem]")}>
+              <DialogPrimitive.Title data-slot="dialog-title" className={cn("m-0 text-t8 font-bold text-fg-neutral", onBack && "pl-[36px]")}>
                 {title}
               </DialogPrimitive.Title>
               {description != null && (

@@ -63,7 +63,7 @@ outline 의 의미 색 테두리 넷(`stroke-informative-weak` · `-positive-wea
 
 ### Size
 
-`medium` 20 *(기본)* · `large` 24. medium 은 목록 줄 · 표 · 이름 옆, large 는 상세 머리 · 카드 제목 옆에 씁니다. 글은 medium `t1` 11 / 15 · large `t2` 12 / 16, 앞 아이콘은 12 · 14 이고 글과 사이 2 를 둡니다. 글은 글자 크기 설정을 따르고(최소 높이는 그대로 두고 상자가 글을 따라 커집니다), 줄을 바꾸지 않습니다.
+`medium` 20 *(기본)* · `large` 24. medium 은 목록 줄 · 표 · 이름 옆, large 는 상세 머리 · 카드 제목 옆에 씁니다. 글은 medium `t1` 11 / 15 · large `t2` 12 / 16, 앞 아이콘은 12 · 14 이고 글과 사이 2 를 둡니다. 배지는 정해진 디자인 틀이라 글 · 아이콘 · 상자가 글자 크기 설정을 따르지 않고(웹 `-static` · 앱 `TextScaler.noScaling`), 줄을 바꾸지 않습니다.
 
 [그림: 크기 — medium 20 은 줄 안, large 24 는 상세 머리](../../site/components/specs/badge.tsx#size)
 

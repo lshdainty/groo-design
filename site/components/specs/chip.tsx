@@ -743,30 +743,26 @@ const SurfaceGuide: Fig = ({ caption }) => {
   );
 };
 
-// 큰 글자(200%) — 웹은 rem 이라 상자도 배율대로, 앱은 높이가 최소 높이라 글을 따라 늘어난다.
-// 값은 chip.yaml 에서 — 웹은 medium 의 높이 · 좌우 · 글 · 지우기를 배율로 곱하고, 앱은 글만 곱한 뒤 위아래를 (높이 − 줄 높이) ÷ 2 로 둔다
+// 큰 글자(200%) — 웹 · 앱 모두 높이가 최소 높이라 글을 따라 늘어나고, 좌우 여백 · 아이콘 · 지우기는 그대로다.
+// 값은 chip.yaml 에서 — 글만 곱한 뒤 위아래를 (높이 − 줄 높이) ÷ 2 로 둔다
 const TEXT_ZOOM = 2;
-function ZoomChips({ platform, mode }: { platform: 'web' | 'app'; mode: Mode }) {
+function ZoomChips({ mode }: { mode: Mode }) {
   const lk = cl();
   const sz = lk.sizes.medium;
   const fs = px(lk.text.fontSize) * TEXT_ZOOM;
   const lh = px(lk.text.lineHeight) * TEXT_ZOOM;
   const padY = (sz.h - px(lk.text.lineHeight)) / 2;
-  const k = platform === 'web' ? TEXT_ZOOM : 1;
-  const box: CSSProperties =
-    platform === 'web'
-      ? { height: sz.h * k, minWidth: sz.minW * k, padding: `0 ${sz.padX * k}px`, fontSize: fs, lineHeight: `${lh}px` }
-      : { height: 'auto', minHeight: sz.h, padding: `${padY}px ${sz.padX}px`, fontSize: fs, lineHeight: `${lh}px` };
+  const box: CSSProperties = { height: 'auto', minHeight: sz.h, padding: `${padY}px ${sz.padX}px`, fontSize: fs, lineHeight: `${lh}px` };
   const items: [string, boolean][] = [['전체', true], ['지출', false], ['수입', false]];
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-wrap items-start" style={{ gap: lk.group.gap * k }}>
+      <div className="flex flex-wrap items-start" style={{ gap: lk.group.gap }}>
         {items.map(([l, on]) => (
           <ChipView key={l} look={lk} mode={mode} variant="outlineWeak" selected={on} state="enabled" label={l} style={box} />
         ))}
       </div>
       <Muted mode={mode}>
-        {platform === 'web' ? `칩 ${sz.h * k} · 좌우 ${sz.padX * k} — 상자도 ${TEXT_ZOOM}배` : `칩 ${lh + padY * 2} = 글 ${lh} + 위아래 ${padY} — 좌우 ${sz.padX} 그대로`}
+        {`칩 ${lh + padY * 2} = 글 ${lh} + 위아래 ${padY} — 좌우 ${sz.padX} 그대로`}
       </Muted>
     </div>
   );
@@ -778,10 +774,10 @@ const BigText: Fig = ({ caption }) => (
         <div key={p} className="flex min-w-0 flex-1 flex-col gap-2">
           <Board>
             <W w={312}>
-              <ZoomChips platform={p} mode="auto" />
+              <ZoomChips mode="auto" />
             </W>
           </Board>
-          <Cap strong={p === 'web' ? '웹 — 글자 크기 설정 200%' : '앱 — OS 글자 크기 200%'}>{p === 'web' ? 'rem 이라 높이 · 여백 · 아이콘 · 지우기가 배율대로' : '높이는 최소 높이 — 글을 따라 늘어나고 여백 · 아이콘 · 지우기는 그대로'}</Cap>
+          <Cap strong={p === 'web' ? '웹 — 글자 크기 설정 200%' : '앱 — OS 글자 크기 200%'}>높이는 최소 높이 — 글을 따라 늘어나고 여백 · 아이콘 · 지우기는 그대로</Cap>
         </div>
       ))}
     </div>

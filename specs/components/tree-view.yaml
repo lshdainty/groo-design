@@ -82,7 +82,7 @@ rules:
         transitionEasing: $motion-ease-pressed-scale
       chevron:
         width: { value: 20px, note: "꺾쇠 칸 — 하위가 없는 항목은 같은 폭을 비워 둡니다" }
-        height: { value: 19px, note: "이름 첫 줄 높이(t4 19)에 맞춥니다" }
+        height: { value: 19px, note: "이름 첫 줄 높이(t4 19)에 맞춥니다 — 글자 크기 설정을 따라 이름 줄이 높아지면 칸도 그 줄 높이를 따르고, 아이콘 16 은 그대로 첫 줄 가운데에 섭니다" }
         iconSize: { value: 16px, note: "lucide chevron-right — 접혀 있으면 오른쪽, 펼치면 아래를 가리킵니다" }
         color: { value: $color-fg-neutral-subtle, note: "면 위 5.50 · 다크 6.09" }
         rotate: 0deg
@@ -92,10 +92,10 @@ rules:
         transitionEasing: $motion-ease-easing
       icon:
         size: { value: 16px, note: "lucide building-2(부서) — 장식이라 보조 기술에 숨깁니다" }
-        height: { value: 19px, note: "이름 첫 줄에 맞춥니다" }
+        height: { value: 19px, note: "이름 첫 줄 높이(t4 19)에 맞춥니다 — 글자 크기 설정을 따라 이름 줄이 높아지면 칸도 따르고, 아이콘 16 은 그대로입니다" }
         color: $color-fg-neutral-subtle
       label:
-        typography: { value: $text-t4, note: "14 / 19 — Side Navigation 항목과 같은 글자입니다" }
+        typography: { value: $text-t4, note: "14 / 19 — Side Navigation 항목과 같은 글자입니다. 글자 크기 설정을 따라 커지고 줄을 바꿔 받습니다" }
         fontWeight: 400
         foreground: { value: $color-fg-neutral, note: "면 위 16.41 · 다크 13.42 · 고른 바탕 위 14.26 · 8.62" }
         lineClamp: { value: none, note: "긴 이름은 줄을 바꿉니다 — 말줄임 · title 을 쓰지 않습니다" }

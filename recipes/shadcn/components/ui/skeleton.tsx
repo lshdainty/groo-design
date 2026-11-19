@@ -15,7 +15,9 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  *                     그림 자리(썸네일 · 카드 그림)는 다 받은 그림과 같은 모서리다 — 손으로 고르지 않고 Image Frame 의
  *                     imageFrameRadius(폭) 으로 고른다. 카드 그림(신용카드 그림)은 카드 면이 아니라 그림이라 4 · 6 · 8 이다
  *     text            "t1" ~ "t14" — 높이를 그 글자의 줄 높이로(t3 13 → 18 · t4 14 → 19 · t5 16 → 22). 글로 바뀌어도 줄이 밀리지
- *                     않는다. 글 줄의 폭은 실제 글 길이와 비슷하게, 여러 줄이면 마지막 줄을 짧게(60 ~ 80%)
+ *                     않는다. 글 줄의 폭은 실제 글 길이와 비슷하게, 여러 줄이면 마지막 줄을 짧게(60 ~ 80%).
+ *                     줄 높이는 rem 이라 글자 크기 설정을 따라 커진다 — 올 글과 같이. 글자 크기를 따르지 않는 자리(-static 글 —
+ *                     달력 칸 · 차트 그림 · 배지 등)는 "t1-static" ~ "t14-static" 으로 px 줄 높이를 쓴다
  *   LoadingRegion     기다리는 영역 — 데이터 자리 하나(쿼리 하나). 아래 "기다리는 영역"
  *   LoadingAnnouncer  화면의 상태 글 하나 — 앱 맨 위에 한 번 둔다. LoadingRegion 들이 여기에 알리고 같은 글은 한 번만 읽힌다
  *   useWaitPhase      pending 이 이어진 시간 → "quiet"(0 ~ 1초) · "waiting"(1초 ~) · "slow"(5초 ~). 영역을 직접 짤 때 쓴다
@@ -74,7 +76,8 @@ const TIMEOUT_GRACE = 1000;
 
 // ── 스켈레톤 ─────────────────────────────────────────────────
 export type SkeletonRadius = "0" | "4" | "6" | "8" | "12" | "16" | "full";
-export type SkeletonText = "t1" | "t2" | "t3" | "t4" | "t5" | "t6" | "t7" | "t8" | "t9" | "t10" | "t11" | "t12" | "t13" | "t14";
+type SkeletonTextSize = "t1" | "t2" | "t3" | "t4" | "t5" | "t6" | "t7" | "t8" | "t9" | "t10" | "t11" | "t12" | "t13" | "t14";
+export type SkeletonText = SkeletonTextSize | `${SkeletonTextSize}-static`;
 
 // 모서리 — 화면 폭 사진 0 · 그림 자리 4 · 6 · 8(Image Frame — 폭으로) · 글 8 · 타일 12 · 카드 면 16 · 원 full
 const RADIUS: Record<SkeletonRadius, string> = {
@@ -87,7 +90,8 @@ const RADIUS: Record<SkeletonRadius, string> = {
   full: "rounded-full",
 };
 
-// 글 자리의 높이 = 그 글자의 줄 높이(--text-tN--line-height). Tailwind 는 소스의 글자 그대로를 읽으므로 열넷을 다 적는다
+// 글 자리의 높이 = 그 글자의 줄 높이(--text-tN--line-height, rem — 글자 크기 설정을 따른다). 글자 크기를 따르지 않는 자리는
+// -static 의 px 줄 높이. Tailwind 는 소스의 글자 그대로를 읽으므로 스물여덟을 다 적는다
 const TEXT_HEIGHT: Record<SkeletonText, string> = {
   t1: "h-(--text-t1--line-height)",
   t2: "h-(--text-t2--line-height)",
@@ -103,6 +107,20 @@ const TEXT_HEIGHT: Record<SkeletonText, string> = {
   t12: "h-(--text-t12--line-height)",
   t13: "h-(--text-t13--line-height)",
   t14: "h-(--text-t14--line-height)",
+  "t1-static": "h-(--text-t1-static--line-height)",
+  "t2-static": "h-(--text-t2-static--line-height)",
+  "t3-static": "h-(--text-t3-static--line-height)",
+  "t4-static": "h-(--text-t4-static--line-height)",
+  "t5-static": "h-(--text-t5-static--line-height)",
+  "t6-static": "h-(--text-t6-static--line-height)",
+  "t7-static": "h-(--text-t7-static--line-height)",
+  "t8-static": "h-(--text-t8-static--line-height)",
+  "t9-static": "h-(--text-t9-static--line-height)",
+  "t10-static": "h-(--text-t10-static--line-height)",
+  "t11-static": "h-(--text-t11-static--line-height)",
+  "t12-static": "h-(--text-t12-static--line-height)",
+  "t13-static": "h-(--text-t13-static--line-height)",
+  "t14-static": "h-(--text-t14-static--line-height)",
 };
 
 // 면 — 블록 span, 띠를 면 모양으로 자른다
@@ -127,7 +145,7 @@ function alignShimmer(e: React.AnimationEvent<HTMLSpanElement>) {
 export interface SkeletonProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
   /** "0"(화면 폭 사진) · "4" · "6"(그림 자리 — imageFrameRadius(폭)) · "8"(기본 — 글 · 숫자 · 폭 49 이상의 그림 자리) · "12"(목록 앞 타일) · "16"(카드 면) · "full"(아바타 · 원 아이콘 · 칩) */
   radius?: SkeletonRadius;
-  /** 글 자리 — 그 글자의 줄 높이를 높이로(t4 → 19). 폭은 className 으로 */
+  /** 글 자리 — 그 글자의 줄 높이를 높이로(t4 → 19). 글자 크기를 따르지 않는 자리는 "tN-static". 폭은 className 으로 */
   text?: SkeletonText;
 }
 

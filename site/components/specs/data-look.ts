@@ -355,7 +355,7 @@ export function cardLook(): CardLook {
     },
     title: { ...typeOf(b['title.typography'], `${F} title.typography`, b['title.fontWeight']), fg: tok(b['title.foreground'], brand, `${F} title.foreground`) },
     action: {
-      h: len(b['headerAction.height'], `${F} headerAction.height`),
+      h: len(b['headerAction.minHeight'], `${F} headerAction.minHeight`),
       padL: len(b['headerAction.paddingLeft'], `${F} headerAction.paddingLeft`),
       padR: len(b['headerAction.paddingRight'], `${F} headerAction.paddingRight`),
       radius: len(b['headerAction.radius'], `${F} headerAction.radius`),

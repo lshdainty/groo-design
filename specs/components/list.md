@@ -477,6 +477,7 @@ import { List, ListButtonItem, ListParentItem } from "@/components/ui/list"
 | Keyboard `Tab` | 누르는 줄 · 컨트롤로 갑니다. 보기만 하는 줄은 건너뜁니다. |
 | Keyboard `Enter` · `Space` | 누르는 줄은 누르기와 같습니다. 컨트롤 줄은 그 컨트롤의 키(스위치 · 체크 Space, 라디오 화살표)입니다. 체크 · 라디오 줄의 `Enter` 는 폼을 제출합니다 — 진짜 input 처럼 폼의 기본 버튼을 누릅니다(Checkbox · Radio 와 같습니다). 라디오 줄은 묶음(`ListRadioGroup`)이 Radio 와 같은 처리(`submitOnRadioEnter`)로 `Enter` 를 받습니다. 키를 누르고 있는 동안은 포인터로 누를 때와 같은 누름 모습(바탕 · 콘텐츠 축소)입니다. |
 | Keyboard `Home` · `End`(라디오 줄) | 하나 고르기 묶음(`ListRadioGroup`)은 받지 않습니다 — 초점도 고른 줄도 그대로이고, 화면도 스크롤되지 않습니다(`PageUp` · `PageDown` 도). 첫 · 끝 줄로는 화살표로 갑니다 — 진짜 라디오 · WAI-ARIA APG Radio Group 과 같습니다. 레시피는 묶음이 캡처 단계에서 그 키를 막습니다(`ignoreRadioJumpKeys`). |
+| 글자 크기 설정 | 제목 · 설명 · 값 · 금액은 글자 크기 설정을 따라 커지고 줄을 바꿔 줄 높이가 늘어납니다. "두 줄까지" 같은 쓰기 지침은 보통 글자 기준이라 큰 글자에서 줄 수로 자르지 않습니다. 메타를 잇는 설명 줄(Tag Group)만 한 줄 말줄임입니다. 줄 안 폭이 좁아지면 값을 본문 아래로 내립니다(위 "큰 글자에서 값을 본문 아래로"). 타일 · 아이콘 · 꺾쇠 · 끼운 컨트롤과 배지는 크기를 그대로 두고, 자리는 위 맞춤(가운데 · 위)을 따릅니다. |
 | Disabled | 누르기 · 키보드 불가, 포커스에서 빠집니다. 값은 그대로 보입니다. |
 | 꺾쇠 단추(하위 줄) | 누르기 · `Enter` · `Space` 로 하위 줄을 펼치고 접습니다 — 줄의 편집은 열리지 않습니다. 초점은 단추에 그대로 남습니다. `Tab` 은 꺾쇠 단추 → 그 줄 → 펼친 하위 줄 → 다음 부모의 꺾쇠 단추입니다. 모션 줄이기면 높이 움직임 없이 150ms 서서히 나타나고 꺾쇠는 바로 돕니다. `collapsible={false}`(늘 펼친 편집 화면)면 단추가 없고 하위 줄이 늘 보입니다 — `Tab` 은 줄 → 하위 줄 → 다음 부모 줄입니다. |
 
@@ -485,6 +486,7 @@ import { List, ListButtonItem, ListParentItem } from "@/components/ui/list"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 9.90:1 이상. 설명 · 값 글자 `fg-neutral-subtle` — 흰 바탕 5.50 · 6.09(라이트 · 다크), 누름 바탕 5.18 · 4.68, 강조 바탕 4.83 이상 ✓. 강조 줄을 올리거나 누르는 동안은 `fg-neutral-muted` 5.58 이상 ✓(`fg-neutral-subtle` 이면 4.32 로 미달). 막힌 줄의 `fg-disabled` 는 기준 밖(비활성 UI) |
+| **WCAG 1.4.4** Resize text | 제목 · 설명 · 값 · 금액이 글자 크기 설정을 따라 커지고, 줄이 좁으면 값을 본문 아래로 내려 기둥처럼 쪼개지지 않습니다 ✓. 배지는 예외로 그대로 두고, 배지 글은 줄 이름에 함께 읽힙니다 |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 앞 아이콘 `fg-neutral` · 화살표 `fg-neutral-subtle` 은 글자와 같은 값. 타일 아이콘 `chart-{색}` × `chart-{색}-weak` 3.63 이상(가장 낮은 yellow 라이트) ✓ |
 | **WCAG 1.4.1** Use of color | 강조는 바탕 색만 바뀝니다 — 안 읽음 같은 상태는 글로도 알 수 있게 씁니다 |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에만 줄 안쪽 링 2px(`stroke-focus-ring`). 컨트롤 줄은 끼운 컨트롤이 포커스를 받고 그 컨트롤의 링이 보입니다 |

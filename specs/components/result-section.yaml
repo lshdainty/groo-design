@@ -48,7 +48,7 @@ rules:
         foreground: $color-fg-neutral
       description:
         fontWeight: 400
-        foreground: { value: $color-fg-neutral-muted, note: "단어 단위 줄바꿈 — 최대 두 줄을 권한다" }
+        foreground: { value: $color-fg-neutral-muted, note: "단어 단위 줄바꿈 — 최대 두 줄을 권한다(100% 기준 — 큰 글자에서 줄 수로 자르지 않는다)" }
       actions:
         gap: { value: $spacing-x5, note: "첫 버튼과 둘째 버튼(글 버튼) 사이 — 둘째 버튼이 위아래로 8 블리드해 상자 사이는 12" }
       primaryButton:

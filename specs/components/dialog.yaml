@@ -81,7 +81,7 @@ rules:
         radius: $radius-r3
         iconSize: { value: 22px, note: "lucide x" }
         color: $color-fg-neutral-subtle
-        top: { value: 28px, note: "아이콘이 대화상자 위에서 28 · 오른쪽 24 — 제목 첫 줄 가운데와 맞는다" }
+        top: { value: 28px, note: "아이콘이 대화상자 위에서 28 · 오른쪽 24 — 자리를 px 로 박지 않고 제목 첫 줄 가운데(위 24 + 제목 줄 높이 ÷ 2)를 따른다. 제목 글자가 커져도 닫기는 크기를 그대로 둔다" }
         right: $spacing-x6
         touchTarget: 52 × 52
         transitionProperty: background-color, scale
@@ -133,7 +133,7 @@ rules:
         button: { value: Button ghost iconOnly small, note: "보이는 36 · 아이콘 16 — 누르는 영역 44 × 44" }
         size: 36px
         gap: { value: $spacing-x1, note: "닫기 아이콘 왼쪽 끝 ↔ 동작 단추 4. 닫기가 없는 입력 폼은 오른쪽 끝 — 단추 상자가 대화상자 오른쪽에서 16" }
-        centerY: { value: 제목 첫 줄 가운데, note: "대화상자 위 24 + 줄 높이 30 의 절반 = 39 — 닫기 아이콘 가운데와 같다" }
+        centerY: { value: 제목 첫 줄 가운데, note: "대화상자 위 24 + 제목 줄 높이의 절반(30 이면 39) — 닫기 아이콘 · 머리 ← 가운데와 같다. 제목 글자가 커지면 줄 높이를 따라 내려간다" }
         touchTarget: 44 × 44
         name: { value: "{항목 이름} 더보기", note: "아이콘만 있는 단추 — 항목 이름을 앞에 둔다" }
         focusOrder: { value: 제목 → 동작 → 닫기, note: "DOM 차례 그대로 — ← 가 있으면 ← → 제목 → 동작 → 닫기" }

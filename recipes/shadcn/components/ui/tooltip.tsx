@@ -29,6 +29,7 @@ import { BUBBLE, BUBBLE_POSITION, BUBBLE_TITLE, BubbleArrow, useBubbleEdgePaddin
  *
  * 모양 · 쌓임 · 모션은 Help Bubble 과 같다 — 최대 280 · 위아래 10 · 좌우 12 · 모서리 12 · bg-neutral-inverted · 글 t3 13 / 18 · 700 ·
  * fg-neutral-inverted, 화살표 12 × 8(늘 트리거 가운데) · 화살표 끝 ↔ 트리거 4 · 화면 가장자리 16, z 210(팝오버 · 메뉴 위).
+ * 글은 글자 크기 설정을 따라 커지고(rem), 최대 폭 280 은 그대로 두어 줄을 바꿔 높이가 늘어난다. 화살표는 px 그대로다.
  * 화면 끝의 트리거면 화살표는 가운데에 남고 말풍선이 16 보다 가장자리에 붙는다(useBubbleEdgePadding — Help Bubble 과 같은 규칙).
  * 열림 200ms enter 로 화살표 끝에서 0.9 → 1 · 투명도, 닫힘 200ms easing 으로 투명도만 — 이어서 열 때는 모션 없이.
  * ARIA: 말풍선 role="tooltip"(Radix 가 숨은 사본에 단다) — 트리거의 aria-describedby 가 가리킨다.

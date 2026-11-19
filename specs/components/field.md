@@ -269,6 +269,7 @@ const form = useForm({ defaultValues: { title: "", reason: "" } })
 | 제출 | 비거나 틀린 칸마다 오류를 보이고 첫 오류 칸으로 포커스를 옮깁니다. 버튼은 켜 둡니다. |
 | 칸을 떠날 때 | 위험한 칸(보안 · 금융)만 바로 검증합니다. |
 | 오류가 생길 때 | 오류 글이 설명을 대신하고, 화면 읽기 프로그램에 한 번 알립니다(polite). |
+| 글자 크기 설정 | 라벨 · "선택" · 설명 · 오류 · 글자 수는 글자 크기 설정을 따라 커지고 줄을 바꿉니다. 필수 점과 설명 · 오류 아이콘은 크기를 그대로 두고, 아이콘은 글 첫 줄 가운데 · 필수 점은 라벨 첫 줄 위쪽에 섭니다. |
 | 나가기 | 작성 · 수정 화면에서 값이 바뀌었으면 "작성한 내용이 사라져요" 를 묻습니다. |
 
 ## Accessibility
@@ -277,6 +278,7 @@ const form = useForm({ defaultValues: { title: "", reason: "" } })
 |---|---|
 | **WCAG 1.3.1** Info and Relationships | 라벨은 칸과 잇습니다(`<label for>` · 묶음은 `aria-labelledby`), 설명 · 오류 · 글자 수는 `aria-describedby` |
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 흰 바탕(`bg-layer-default`) 라이트 · 다크 — 라벨 `fg-neutral` 16.41 · 13.42, 설명 · "선택" · 글자 수 최대 `fg-neutral-subtle` 5.50 · 6.09, 오류 `fg-critical` 5.06 · 6.08. 시트 바탕(`bg-layer-floating`) 다크에서 `fg-neutral-subtle` · `fg-critical` 5.27 ✓ |
+| **WCAG 1.4.4** Resize text | 라벨 · "선택" · 설명 · 오류 · 글자 수가 글자 크기 설정을 따라 커집니다 ✓. 필수 점은 컨트롤 모양이라 예외로 그대로 두고, 필수는 칸의 `aria-required` 로 알립니다 |
 | **WCAG 1.4.1** Use of color | 오류는 색과 함께 아이콘 · 글로 알립니다. 필수 점은 색만이 아니라 모양(점)이고, 필수는 `aria-required` 로도 알립니다 |
 | **WCAG 3.3.1** Error Identification | 오류 글이 무엇이 잘못됐는지 글로 말합니다. 칸에는 `aria-invalid` |
 | **WCAG 3.3.2** Labels or Instructions | 모든 칸에 라벨을 둡니다 — placeholder 를 이름으로 쓰지 않습니다 |

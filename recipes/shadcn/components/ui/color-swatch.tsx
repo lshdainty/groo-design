@@ -86,17 +86,17 @@ const COLUMNS = 5;
 const SWATCH = [
   // 칸 40 은 px(-static) — 글자 크기 설정을 따르지 않는다(색이 곧 값, 열 · 간격 · 격자 폭 px 와 맞춘다)
   "relative block size-[40px] shrink-0 cursor-pointer rounded-full border-0 p-0",
-  "before:absolute before:-inset-0.5 before:rounded-full before:content-['']",
+  "before:absolute before:-inset-[2px] before:rounded-full before:content-['']",
   "outline-offset-2 aria-checked:outline-2 aria-checked:outline-solid aria-checked:outline-stroke-neutral-contrast",
   "disabled:aria-checked:outline-stroke-neutral-solid not-aria-checked:focus-visible:outline-none",
-  "after:pointer-events-none after:absolute after:-inset-1.5 after:rounded-full after:content-['']",
+  "after:pointer-events-none after:absolute after:-inset-[6px] after:rounded-full after:content-['']",
   "focus-visible:after:outline-2 focus-visible:after:outline-solid focus-visible:after:outline-stroke-focus-ring",
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] [--press-basis:40] active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
   "disabled:cursor-not-allowed disabled:[scale:1]",
 ].join(" ");
 
 // 체크 16 · 선 2.5 — 고른 칸 가운데
-const CHECK = "pointer-events-none absolute inset-0 flex items-center justify-center [&_svg]:size-4";
+const CHECK = "pointer-events-none absolute inset-0 flex items-center justify-center [&_svg]:size-[16px]";
 
 // 지금 색 칸이 있으면 묶음이 놓인 자리의 폭으로 가른다 — 321(칸 40 + 16 + 선 1 + 16 + 격자 248, color-swatch.yaml divider.stackBelow)
 // 보다 좁으면 지금 색 칸 · 선 · 격자를 세로로. 폭을 내용으로 정하는 자리(팝오버 · fit-content)에서는 321 로 잰다(contain-intrinsic)

@@ -66,7 +66,7 @@
 
 ### 날짜와 함께
 
-날짜와 시각을 함께 받으면 날짜 칸 옆에 시각 칸을 나란히 둡니다. 하나만 바꾸기 쉽고, 종일이면 시각 칸만 걷으면 됩니다. 시각 칸은 144(large 에서 "오후 12:30" 이 잘리지 않는 폭), 날짜 칸은 글이 다 들어가는 폭 이상입니다. 한 줄에 둘이 들어가지 않으면 시각 칸이 다음 줄로 내려갑니다 — 다른 해 날짜("2027년 1월 3일 (일)") · 큰 글자 설정 · 좁은 폰에서 그렇습니다. 올해 날짜는 360 폭 폰에서 거의 꽉 차므로(가장 긴 "12월 28일 (월)" 이 1px 남습니다) 글꼴에 따라 내려갈 수 있습니다. 어느 쪽이든 칸의 글은 자르지 않습니다. 칸마다 Field 로 감싸면 폭 클래스는 Field 에 줍니다. 칸의 글을 말줄임으로 자르지 않고, 한 칸에 날짜와 시각을 같이 넣지 않습니다.
+날짜와 시각을 함께 받으면 날짜 칸 옆에 시각 칸을 나란히 둡니다. 하나만 바꾸기 쉽고, 종일이면 시각 칸만 걷으면 됩니다. 시각 칸은 최소 144(large 에서 "오후 12:30" 이 잘리지 않는 폭)이고 글자 크기 설정을 따라 글이 커지면 글만큼 넓어집니다. 날짜 칸은 글이 다 들어가는 폭 이상입니다. 한 줄에 둘이 들어가지 않으면 시각 칸이 다음 줄로 내려갑니다 — 다른 해 날짜("2027년 1월 3일 (일)") · 큰 글자 설정 · 좁은 폰에서 그렇습니다. 올해 날짜는 360 폭 폰에서 거의 꽉 차므로(가장 긴 "12월 28일 (월)" 이 1px 남습니다) 글꼴에 따라 내려갈 수 있습니다. 어느 쪽이든 칸의 글은 자르지 않습니다. 칸마다 Field 로 감싸면 폭 클래스는 Field 에 줍니다. 칸의 글을 말줄임으로 자르지 않고, 한 칸에 날짜와 시각을 같이 넣지 않습니다.
 
 폼에서는 이 두 칸을 나란히 둡니다. 날짜 고르기가 화면의 주된 단계라 달력을 화면에 펼쳤다면([Date Picker](date-picker.md) 의 "놓는 자리"), 시각은 그 아래 칸으로 두고 시트로 엽니다.
 
@@ -98,7 +98,7 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 {/* 한 줄에 다 들어가지 않으면 시각 칸이 다음 줄로 — 날짜 칸은 글이 다 들어가는 폭 이상 */}
 <div className="flex flex-wrap gap-x2">
   <InputButton rootClassName="min-w-max flex-1" value={formatDateValue(date)} placeholder="날짜 선택" suffixIcon={<CalendarDays />} onClick={openDate} />
-  <InputButton rootClassName="w-[144px] shrink-0" value={formatTimeValue(time)} placeholder="시간 선택" suffixIcon={<Clock />} onClick={openTime} />
+  <InputButton rootClassName="w-max min-w-[144px] shrink-0" value={formatTimeValue(time)} placeholder="시간 선택" suffixIcon={<Clock />} onClick={openTime} />
 </div>
 ```
 
@@ -112,6 +112,7 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 | 분 55 → 00 | 시는 바뀌지 않습니다 |
 | 오전 · 오후 바꾸기 | 시 · 분은 그대로 두고 12시간을 더하거나 뺍니다 |
 | 열 때 | 칸의 값(비어 있으면 지금 — 분 간격이 1 이 아니면 반올림한 자리)을 가운데에 두고, 초점을 시 칼럼에 둡니다 |
+| 글자 크기 설정 | 휠 항목 글은 [Wheel Picker](wheel-picker.md) 처럼 그대로입니다. 시각 칸(Input Button)의 글은 커지고, 칸은 최소 폭 144 에서 글만큼 넓어지며 한 줄에 날짜 칸과 들어가지 않으면 다음 줄로 내려갑니다 |
 
 ### 키보드
 
@@ -126,6 +127,7 @@ import { TimePicker, formatTimeValue, roundToStep } from "@/components/ui/time-p
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 고른 항목 `fg-neutral` 은 띠(`bg-neutral-weak`) 위 15.20 · 다크 10.32 ✓. 위아래 항목 `fg-disabled` 는 고를 값이 아닌 둘레 표시입니다(안개로 흐려집니다). 고른 값은 띠 위 글자와 칸의 값으로 알립니다 |
+| **WCAG 1.4.4** Resize text | 휠 항목 글은 휠의 칸 높이 · 띠에 맞춘 디자인 틀이라 기준의 예외로 그대로 둡니다. 고른 값은 시각 칸의 글로 글자 크기 설정을 따라 크게 읽습니다 ✓ |
 | **WCAG 2.1.1** Keyboard | 칼럼마다 `Tab` 자리 하나, `↑` `↓` 로 고릅니다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 항목 높이 44 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 항목 높이 44 ✓ · 폭은 칼럼 글자 폭 + 32(64 이상) ✓ |

@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
  *                   medium(카드 · 섹션 · 시트 안: 제목 t5 16/22 · 설명 t4 · 사이 8 · 버튼 위 24)
  *   icon            아이콘 40 · 굵기 1.5 · 아래 16(lucide 선 아이콘). failure · done 은 주지 않으면 circle-alert · circle-check
  *   title           무슨 상태인지 한 줄(큰 글씨라 마침표 없이) — 제목 태그(as, 기본 h2 — 화면 전체면 그 화면의 제목 단계)
- *   description     왜 · 무엇을 하면 되는지, 해요체 + 마침표, 최대 두 줄을 권한다(fg-neutral-muted · 단어 단위 줄바꿈)
+ *   description     왜 · 무엇을 하면 되는지, 해요체 + 마침표, 최대 두 줄을 권한다 — 100% 기준, 큰 글자에서 줄 수로 자르지 않는다(fg-neutral-muted · 단어 단위 줄바꿈)
  *   primaryAction   첫 버튼 — 해결 · 다음 동작(다시 시도 · 거래 추가). Button neutralWeak medium 40
  *   secondaryAction 둘째 버튼 — 보조 동작(홈으로 · 다른 파일 가져오기). 글 버튼(Button ghost small 36 의 상자에
  *                   글자 fg-neutral-muted) — 위아래로 블리드(−8)해
@@ -90,7 +90,7 @@ const resultSectionVariants = cva(
 );
 
 // 아이콘 — 40 · 굵기 1.5 · 아래 16, 색은 결과마다
-const ASSET = "mb-x4 flex shrink-0 [&>svg]:size-10 [&>svg]:[stroke-width:1.5]";
+const ASSET = "mb-x4 flex shrink-0 [&>svg]:size-[40px] [&>svg]:[stroke-width:1.5]";
 const KIND_COLOR: Record<ResultSectionKind, string> = {
   empty: "text-fg-neutral-subtle",
   failure: "text-fg-critical",

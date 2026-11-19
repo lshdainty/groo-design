@@ -69,7 +69,7 @@ rules:
         transitionDuration: $motion-duration-d4
         transitionEasing: $motion-ease-easing
       notification:
-        size: 6px
+        size: { value: 6px, note: "px — 글자 크기를 따르지 않습니다" }
         radius: $radius-full
         background: { value: $color-fg-brand, note: "브랜드 글자색 — 목록 바탕과 Desk 8.38 · 6.10 · HR 8.17 · 6.07(bg-brand-solid 는 다크에서 Desk · HR 1.73 이라 안 보인다). 고른 탭에는 없다 — 내용을 보면 사라진다" }
         gap: { value: 2px, note: "글 끝에서 2, 글 위쪽에 맞춘다 — 탭 폭을 넓히지 않는다" }
@@ -123,14 +123,14 @@ rules:
   # ── 크기 ──────────────────────────────────────────────
   - when: { size: small }
     enabled:
-      list: { minHeight: 40px }
+      list: { minHeight: { value: 40px, note: "최소값 — 글자 크기 설정을 따라 글이 커지면 목록 · 탭이 따라 높아집니다" } }
       trigger: { minHeight: 40px }
-      label: { typography: { value: $text-t4, note: "14 / 19 — 글은 아래 10, 위 11" } }
+      label: { typography: { value: $text-t4, note: "14 / 19 — 글은 아래 10, 위 11. 글자 크기 설정을 따라 커집니다" } }
   - when: { size: medium }
     enabled:
-      list: { minHeight: 44px }
+      list: { minHeight: { value: 44px, note: "최소값 — 글자 크기 설정을 따라 글이 커지면 목록 · 탭이 따라 높아집니다" } }
       trigger: { minHeight: 44px }
-      label: { typography: { value: $text-t5, note: "16 / 22 — 글은 아래 10, 위 12" } }
+      label: { typography: { value: $text-t5, note: "16 / 22 — 글은 아래 10, 위 12. 글자 크기 설정을 따라 커집니다" } }
 
 motion:
   "막대 — 미끄러짐":

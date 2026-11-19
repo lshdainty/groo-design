@@ -1035,7 +1035,7 @@ html > body[data-scroll-locked] {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  height: var(--pat-dzh);
+  min-height: var(--pat-dzh);
   gap: var(--pat-dzg);
   padding-left: var(--pat-dzpx);
   padding-right: var(--pat-dzpx);

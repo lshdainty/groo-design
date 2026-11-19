@@ -558,8 +558,8 @@ const SearchableListSkeleton = React.forwardRef<HTMLDivElement, SearchableListSk
       <div key={i} data-slot="searchable-list-skeleton-row" className="flex w-full items-center px-global-gutter py-x3">
         {prefix !== "none" && (
           <span className="flex shrink-0 items-center pr-x3">
-            {prefix === "logo" && <Skeleton radius="12" className="size-10" />}
-            {prefix === "cardArt" && <Skeleton radius={CARD_ART_RADIUS} className="aspect-[1.586] w-14" />}
+            {prefix === "logo" && <Skeleton radius="12" className="size-[40px]" />}
+            {prefix === "cardArt" && <Skeleton radius={CARD_ART_RADIUS} className="aspect-[1.586] w-[56px]" />}
             {prefix === "avatar" && <Skeleton radius="full" className="size-[42px]" />}
           </span>
         )}
