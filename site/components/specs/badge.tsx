@@ -227,7 +227,7 @@ const Size: Fig = ({ caption }) => {
           );
         })}
       </div>
-      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">분홍 띠 — 높이 · 좌우 여백 · 위 여백 · 아이콘과 글 사이(3배). 글이 커지면(글자 크기 설정) 최소 높이는 그대로 두고 상자가 글을 따라 커집니다</p>
+      <p className="mt-3 text-center text-[12px] leading-4 text-fd-muted-foreground">분홍 띠 — 높이 · 좌우 여백 · 위 여백 · 아이콘과 글 사이(3배). 배지는 글자 크기 설정을 따르지 않습니다</p>
     </Panel>
   );
 };

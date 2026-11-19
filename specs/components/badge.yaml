@@ -66,7 +66,7 @@ rules:
         radius: $radius-r1
       prefixIcon: { size: 12px }
       label:
-        typography: { value: $text-t1, note: "11 / 15 — 글자 크기 설정을 따른다(rem). 최소 높이는 그대로, 글이 커지면 상자가 따라 커진다" }
+        typography: { value: $text-t1-static, note: "11 / 15 — 글자 크기 설정을 따르지 않습니다(웹 text-t1-static, 앱 TextScaler.noScaling)" }
   - when: { size: large }
     enabled:
       root:
@@ -76,7 +76,7 @@ rules:
         radius: $radius-r1_5
       prefixIcon: { size: 14px }
       label:
-        typography: { value: $text-t2, note: "12 / 16 — 글자 크기 설정을 따른다(rem)" }
+        typography: { value: $text-t2-static, note: "12 / 16 — 글자 크기 설정을 따르지 않습니다(웹 text-t2-static, 앱 TextScaler.noScaling)" }
 
   # ── 변형 — 굵기 ───────────────────────────────────────
   - when: { variant: weak }
