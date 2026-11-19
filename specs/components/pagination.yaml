@@ -60,7 +60,7 @@ rules:
         transitionDuration: $motion-duration-color-transition
         transitionEasing: $motion-ease-easing
       label:
-        typography: $text-t4
+        typography: { value: $text-t4-static, note: "글자 크기 설정을 따르지 않는다 — 칸 40 안에 들어가는 틀" }
         fontWeight: 700
         foreground: $color-fg-neutral
         numerals: { value: tabular-nums, note: "숫자 폭을 같게. 네 자리 이상이 칸을 넘으면 말줄임 — 숫자는 칸 이름에 있다" }

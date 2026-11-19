@@ -476,7 +476,7 @@ export const PROP_LABEL_BY_COMPONENT = {
     'title.typography': '제목 글자',
     'title.fontWeight': '제목 굵기',
     'title.foreground': '제목 글자색',
-    'headerAction.height': '머리 동작 높이',
+    'headerAction.minHeight': '머리 동작 최소 높이',
     'headerAction.paddingLeft': '머리 동작 왼쪽 여백',
     'headerAction.paddingRight': '머리 동작 오른쪽 여백',
     'headerAction.radius': '머리 동작 모서리',
@@ -592,7 +592,7 @@ export const PROP_LABEL_BY_COMPONENT = {
   SearchableList: {
     'root.gap': '검색칸 ↔ 결과',
     'field.variant': '검색칸 모양',
-    'field.height': '검색칸 높이',
+    'field.minHeight': '검색칸 최소 높이',
     'field.marginX': '검색칸 좌우 바깥 여백',
     'field.position': '검색칸 자리',
     'results.role': '결과 목록 역할',

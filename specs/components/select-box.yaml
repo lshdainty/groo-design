@@ -24,7 +24,7 @@ slots:
   prefix: 앞 — 아이콘 22 · 그림
   body: 본문 — 제목 + 설명
   label: 제목 — 배지를 옆에 둘 수 있다
-  description: 설명 — 두 줄까지
+  description: 설명 — 두 줄까지(100% 기준 쓰기 지침 — 큰 글자에서 줄 수로 자르지 않는다)
   control: 오른쪽 컨트롤 — Radiomark(하나 고르기) · 칸 없는 체크(여럿) · 없음
   footer: 펼침 — 고른 상자 아래 딸린 입력 · 안내
   focusRing: 키보드 포커스 링(웹) — 상자 바깥
@@ -86,7 +86,7 @@ rules:
         gap: { value: $spacing-x1, note: "제목 옆 배지 사이" }
       description:
         typography: $text-t3
-        foreground: { value: $color-fg-neutral-muted, note: "List 설명(fg-neutral-subtle)보다 한 단계 진하다. 두 줄까지" }
+        foreground: { value: $color-fg-neutral-muted, note: "List 설명(fg-neutral-subtle)보다 한 단계 진하다. 두 줄까지 — 100% 기준, 큰 글자에서는 자르지 않고 상자가 늘어난다" }
       control:
         size: { value: 20px, note: "하나 고르기 = Radiomark medium(neutral) · 여럿 = Checkbox Ghost medium(체크 14) · 없음. 따로 줄지 않고 자기 포커스 링도 그리지 않는다(링은 상자가). 상자를 올리거나 누르면 라디오는 자기 누름 색이 된다(고른 라디오는 한 단계 짙게), 칸 없는 체크는 바탕이 없다" }
       footer:

@@ -53,7 +53,8 @@ import { ScrollFog } from "@/components/ui/scroll-fog";
  * 항목의 모양은 파일 종류가 정한다 — 사진(image/*)은 80 썸네일, 그 밖은 160 × 80 파일 카드이고 한 줄에 섞인다.
  *   사진은 그림 위에 투명 윤곽 1px stroke-neutral-overlay, 파일 카드는 1px stroke-neutral-weak + 썸네일 칸 48(bg-neutral-weak ·
  *   모서리 8 · 아이콘 24 fg-neutral-subtle — PDF file-text · 표 file-spreadsheet · 그 밖 file) + 이름(t2 12 / 16 · 500 · 폭 70) + 크기
- *   (t1 11 / 15 · fg-neutral-subtle). 모서리 12 · 높이 80.
+ *   (t1 11 / 15 · fg-neutral-subtle). 모서리 12 · 높이 80. 타일 · 사진 · 카드는 rem 이라 큰 글자에서 함께 커지고, 썸네일 칸 · 아이콘 · ×
+ *   · 올리는 중 원은 px 그대로다.
  * 파일 이름 — 글자 단위로 줄을 바꾸고(break-all) 네 줄까지 보인다. 첫 줄만 오른쪽 4 를 비운다(× 구멍 —
  *   YAML name.maskClear). 넘치면 셋째 줄 끝을 "…" 로 줄이고 넷째 줄에 확장자를 남긴다
  *   (보이지 않는 같은 글로 줄 수를 재고 — 글꼴이 늦게 와도 ResizeObserver 가 다시 잰다). 보조 기술은 늘 전체 이름을 읽는다.
@@ -64,7 +65,7 @@ import { ScrollFog } from "@/components/ui/scroll-fog";
  *   파일 — 썸네일 칸에서 아이콘 대신 neutral). 진행(progress 0 ~ 1)이 10초 동안 멈추면 실패로 보인다(Skeleton 의 요청 제한 —
  *   쓰는 쪽의 status 는 그대로, 다시 시도를 누르면 onRetry). error 는 덮개 + "다시 시도"(rotate-cw 24 + t2 500 — 사진은 검정 65% 덮개 ·
  *   static-white, 파일은 썸네일 · 이름 자리를 채운다 · fg-neutral-subtle). 실패 · 대표 띠의 덮개는 두 모드 모두 65%.
- * 대표 띠 — 첫 사진 아래 24(검정 65% · 좌우 4 · 아래 두 모서리 12) · static-white t2 500 한 줄. 순서를 바꾸면 새 첫 사진으로 옮겨 간다.
+ * 대표 띠 — 첫 사진 아래 24(검정 65% · 좌우 4 · 아래 두 모서리 12) · static-white t2-static 500 한 줄(글자 크기 설정을 따르지 않는다). 순서를 바꾸면 새 첫 사진으로 옮겨 간다.
  * 순서 바꾸기(onReorder) — 마우스 · 펜은 누른 채 8px 넘게 움직이면, 터치는 250ms 누른 채 움직이면 든다(그 전에 움직이면 줄이 가로로
  *   스크롤한다 — 누르기(메뉴)와 끌기를 가르는 문턱, YAML item.dragStart). 키보드는 항목에서 Space 로
  *   들고 ← → 로 옮긴 뒤 Space · Enter 로 놓는다 · Esc 는 그만두기(처음 자리로). 읽기 글은 한국어(dnd-kit announcements). 끄는 항목은
@@ -249,7 +250,7 @@ const TRIGGER = [
   "disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:active:bg-transparent disabled:active:[scale:1]",
 ].join(" ");
 const TRIGGER_ICON =
-  "size-6 shrink-0 text-fg-neutral-subtle group-aria-disabled/attachment-trigger:text-fg-disabled group-disabled/attachment-trigger:text-fg-disabled";
+  "size-[24px] shrink-0 text-fg-neutral-subtle group-aria-disabled/attachment-trigger:text-fg-disabled group-disabled/attachment-trigger:text-fg-disabled";
 const COUNT = "text-t2 font-normal";
 const COUNT_NOW = "text-fg-neutral group-aria-disabled/attachment-trigger:text-fg-disabled group-disabled/attachment-trigger:text-fg-disabled";
 const COUNT_MAX = "text-fg-neutral-subtle group-aria-disabled/attachment-trigger:text-fg-disabled group-disabled/attachment-trigger:text-fg-disabled";
@@ -278,11 +279,11 @@ const ITEM_KIND = {
 } as const;
 
 const IMAGE = "pointer-events-none size-full select-none rounded-[inherit] object-cover";
-const IMAGE_FALLBACK = "flex size-full items-center justify-center rounded-[inherit] bg-bg-neutral-weak text-fg-neutral-subtle [&>svg]:size-6";
+const IMAGE_FALLBACK = "flex size-full items-center justify-center rounded-[inherit] bg-bg-neutral-weak text-fg-neutral-subtle [&>svg]:size-[24px]";
 
 // 파일 카드 — 썸네일 칸 48 · 이름 · 크기. 실패면 다시 시도가 채운다. 읽기 전용 · 끄는 동안 글 · 아이콘 fg-disabled
 const THUMBNAIL =
-  "flex size-12 shrink-0 items-center justify-center rounded-r2 bg-bg-neutral-weak text-fg-neutral-subtle [&>svg]:size-6 group-data-[readonly]/attachment-item:text-fg-disabled group-data-[dragging]/attachment-item:text-fg-disabled group-data-[status=error]/attachment-item:hidden";
+  "flex size-[48px] shrink-0 items-center justify-center rounded-r2 bg-bg-neutral-weak text-fg-neutral-subtle [&>svg]:size-[24px] group-data-[readonly]/attachment-item:text-fg-disabled group-data-[dragging]/attachment-item:text-fg-disabled group-data-[status=error]/attachment-item:hidden";
 const META = "flex min-w-0 flex-1 flex-col group-data-[status=error]/attachment-item:hidden";
 // 이름은 글자 단위로 줄을 바꾼다(break-all)
 const NAME =
@@ -301,14 +302,14 @@ const BACKDROP = "absolute inset-0 flex items-center justify-center rounded-[inh
 const BACKDROP_UPLOADING = "bg-[var(--overlay-dim-light)] dark:bg-[var(--overlay-dim-dark)]";
 const BACKDROP_ERROR = "bg-[var(--overlay-dim-dark)]";
 
-// 대표 띠 — 첫 사진 아래 24, 두 모드 0.65
+// 대표 띠 — 첫 사진 아래 24, 두 모드 0.65. 사진 위 표식이라 글자 크기 설정을 따르지 않는다(-static)
 const BADGE =
-  "absolute inset-x-0 bottom-0 flex h-x6 items-center justify-center rounded-b-r3 bg-[var(--overlay-dim-dark)] px-x1 text-t2 font-medium text-static-white";
+  "absolute inset-x-0 bottom-0 flex h-x6 items-center justify-center rounded-b-r3 bg-[var(--overlay-dim-dark)] px-x1 text-t2-static font-medium text-static-white";
 const BADGE_LABEL = "truncate";
 
 // 다시 시도 — 항목 위에 겹친 형제(항목이 단추일 수 있다). 누르면 이것만 2px 거리 축소(기준 80)
 const ACTION = [
-  "absolute inset-0 flex cursor-pointer flex-col items-center justify-center gap-x1 rounded-r3 bg-transparent font-sans text-t2 font-medium [&>svg]:size-6",
+  "absolute inset-0 flex cursor-pointer flex-col items-center justify-center gap-x1 rounded-r3 bg-transparent font-sans text-t2 font-medium [&>svg]:size-[24px]",
   MASK,
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] [--press-basis:80]",
   "active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
@@ -319,7 +320,7 @@ const ACTION_KIND = { image: "text-static-white", file: "text-fg-neutral-subtle"
 
 // × — 20 원이 모서리 밖으로 위 4 · 오른쪽 4. 누르는 자리 44(::before 12 씩). 끄는 동안 사라진다. 이웃 항목 위로 올린다
 const REMOVE = [
-  "absolute -right-x1 -top-x1 z-[1] flex size-5 cursor-pointer items-center justify-center rounded-full bg-bg-layer-default text-fg-neutral",
+  "absolute -right-x1 -top-x1 z-[1] flex size-[20px] cursor-pointer items-center justify-center rounded-full bg-bg-layer-default text-fg-neutral",
   "shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] [&>svg]:size-[10px]",
   "before:absolute before:-inset-x3 before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] [--press-basis:24]",
@@ -333,9 +334,9 @@ const REMOVE = [
 // 항목 자리(li) — 항목 · 다시 시도 · × 를 담는다. 끄는 항목이 위로
 const ITEM_ROOT = "group/attachment-item relative shrink-0 [touch-action:manipulation] data-[dragging]:z-[2]";
 
-// 드롭존(1280 이상) — 높이 120 · 1px 실선. 끌어 들어오면 테두리 · 바탕이 바뀐다. 막히면 옅은 테두리
+// 드롭존(1280 이상) — 최소 높이 120 · 1px 실선. 끌어 들어오면 테두리 · 바탕이 바뀐다. 막히면 옅은 테두리
 const DROPZONE = [
-  "group/attachment-dropzone hidden h-[120px] flex-col items-center justify-center gap-x2 rounded-r3 border border-solid border-stroke-neutral-solid bg-transparent px-x4 lg:flex",
+  "group/attachment-dropzone hidden min-h-[120px] flex-col items-center justify-center gap-x2 rounded-r3 border border-solid border-stroke-neutral-solid bg-transparent px-x4 lg:flex",
   "[transition:border-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
   "data-[drag-over]:border-stroke-neutral-contrast data-[drag-over]:bg-bg-layer-default-pressed",
   "data-[disabled]:border-stroke-neutral-weak",

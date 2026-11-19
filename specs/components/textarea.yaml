@@ -96,21 +96,21 @@ rules:
   - when: { autoSize: "on", size: large }
     enabled:
       value:
-        minHeight: { value: 94px, note: "3줄 — 줄 높이 22 × 3 + 위아래 14" }
+        minHeight: { value: 94px, note: "3줄 — 줄 높이 22 × 3 + 위아래 14. 글자 크기 설정을 따라 글이 커지면 이 최소 높이도 따라 커집니다(웹 rem)" }
         maxHeight: { value: 자리마다, note: "정하지 않으면 끝없이 자란다. 정하면 그 높이부터 칸 안에서 스크롤" }
   - when: { autoSize: "on", size: medium }
     enabled:
       value:
-        minHeight: { value: 82px, note: "3줄 — 줄 높이 19 × 3 + 위아래 12 는 81 이고, 82 로 둔다" }
+        minHeight: { value: 82px, note: "3줄 — 줄 높이 19 × 3 + 위아래 12 는 81 이고, 82 로 둔다. 글자 크기 설정을 따라 글이 커지면 이 최소 높이도 따라 커집니다(웹 rem)" }
         maxHeight: { value: 자리마다, note: "정하지 않으면 끝없이 자란다. 정하면 그 높이부터 칸 안에서 스크롤" }
   - when: { autoSize: "off", size: large }
     enabled:
       value:
-        minHeight: { value: 72px, note: "2줄 — 줄 높이 22 × 2 + 위아래 14. 이보다 낮게 두지 않는다. 높이는 자리마다 정하고, 넘치면 칸 안에서 스크롤" }
+        minHeight: { value: 72px, note: "2줄 — 줄 높이 22 × 2 + 위아래 14. 이보다 낮게 두지 않는다. 글자 크기 설정을 따라 글이 커지면 이 최소 높이도 따라 커집니다(웹 rem). 높이는 자리마다 정하고, 넘치면 칸 안에서 스크롤" }
   - when: { autoSize: "off", size: medium }
     enabled:
       value:
-        minHeight: { value: 62px, note: "2줄 — 줄 높이 19 × 2 + 위아래 12. 높이는 자리마다 정하고, 넘치면 칸 안에서 스크롤" }
+        minHeight: { value: 62px, note: "2줄 — 줄 높이 19 × 2 + 위아래 12. 글자 크기 설정을 따라 글이 커지면 이 최소 높이도 따라 커집니다(웹 rem). 높이는 자리마다 정하고, 넘치면 칸 안에서 스크롤" }
 
 motion:
   "포커스 · 오류 — 테두리":

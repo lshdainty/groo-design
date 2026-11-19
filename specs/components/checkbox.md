@@ -237,6 +237,7 @@ import { Checkmark } from "@/components/ui/checkbox"
 | Keyboard `Space` | 포커스 상태에서 누르기와 같습니다. |
 | Keyboard `Enter` | 폼을 제출합니다 — 진짜 `<input type="checkbox">` 처럼 폼의 기본 버튼(첫 제출 버튼)을 누릅니다. 칸은 바뀌지 않습니다. 기본 버튼이 없거나 막혀 있으면 아무것도 하지 않습니다. Radix 는 Enter 를 막기만 하므로 레시피가 이 동작을 엽니다. 칸만(`Checkmark`) 쓰는 자리 · List 의 체크 줄 · Select Box 여럿 고르기도 같습니다. |
 | Keyboard `Tab` | 다음 포커스로. 묶음 안의 항목도 하나씩 들어갑니다. |
+| 글자 크기 설정 | 라벨이 커지고 줄을 바꿔 받습니다 — 줄의 최소 높이가 글을 따라 늘어납니다. 칸 · 체크는 크기를 그대로 둡니다 |
 | 부모(일부 선택) | 누르면 자식을 모두 선택. 다 선택이면 모두 해제. |
 | Disabled | 누르기 · 키보드 불가, 포커스에서 빠집니다. 묶음에 `disabled` 를 주거나 막힌 Field 로 감싸면 칸이 모두 막힙니다(묶음 `aria-disabled`). |
 
@@ -247,6 +248,7 @@ import { Checkmark } from "@/components/ui/checkbox"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(라벨 ≥ 4.5:1) | 라벨 `fg-neutral` × 흰 표면 16:1+ ✓ |
+| **WCAG 1.4.4** Resize text | 라벨이 글자 크기 설정을 따라 커지고 줄이 따라 늘어납니다 ✓. 칸 · 체크는 컨트롤 모양이라 크기를 그대로 둡니다 |
 | **WCAG 1.4.11** Non-text contrast(UI ≥ 3:1) | 선택 안 된 칸 테두리 `stroke-neutral-solid` × 표면 4.2:1(다크 4.1:1) ✓ · 선택 채움 `bg-neutral-inverted` 16:1+ ✓ · Ghost 선택 안 됨은 `fg-placeholder` 4.18:1(다크 4.13:1) ✓ |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에만 링 2px · 띄움 2px(`stroke-focus-ring`) — 앱도 키보드로 옮길 때만 같은 링 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 칸 20 · 24 + 라벨까지 묶은 줄 32 · 36 ✓ |

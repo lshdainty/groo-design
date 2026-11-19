@@ -303,6 +303,7 @@ import { ScrollFog } from "@/components/ui/scroll-fog"
 |---|---|
 | **WCAG 1.1.1** Non-text Content | `alt` 는 필수입니다 — 이름 옆 그림 · 장식 그림은 `""`, 혼자인 그림은 무엇인지. 실패하면 대체 그림이 `alt` 를 이름으로 이어받습니다(`role="img"` + `aria-label`). 카드 그림은 `decorative` 가 기본이고, 혼자면 "카드사 카드 이름" 입니다 ✓ |
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | Indicator 흰 글자 on 검정 65% — 흰 그림 위 7.00 · 검은 그림 위 21 ✓. 카드 면 글자 — 기관 색 표 78곳 모두 4.52 이상(라이트 · 다크) ✓. 배지는 [Badge](badge.md) 의 solid ✓ |
+| **WCAG 1.4.4** Resize text | Indicator 글("1 / 12" · "+9")은 사진 위 표식이라 예외로 글자 크기 설정을 따르지 않습니다 — 같은 수는 숨은 글(`label`)로 읽습니다 |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 윤곽(흰 바탕 위 1.11 · 다크 1.17) · 스켈레톤 면(1.08 · 1.30) · 대체 그림 아이콘(1.14 · 1.20)은 장식입니다 — 그림 · 이름 글이 내용을 알립니다 |
 | **WCAG 1.4.1** Use of color | 카드사 색은 거드는 것입니다 — 카드사 이름이 줄 · 면의 글에 있습니다 |
 | **WCAG 2.3.3** Animation from Interactions | 모션 줄이기면 반짝임이 멈추고 그림은 바로 나타납니다 ✓ — 마우스에 키우지 않습니다 |

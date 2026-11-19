@@ -190,8 +190,8 @@ export function selectLook(brand: Brand = 'desk'): SelectLook {
     const height = padY * 2 + lh(label, `${where} itemLabel`);
     const heightDesc = height + descGap + lh(desc, `${where} itemDescription`);
     // YAML 의 높이(값 · 비고의 "설명이 있으면 N")는 여백 + 줄 높이와 같아야 한다 — 그림은 여백으로 그린다
-    const yh = len(v['item.height'], `${where} item.height`);
-    const yd = numIn(noteOf(v['item.height']), /설명이 있으면\s*(\d+)/, `${where} item.height 비고`);
+    const yh = len(v['item.minHeight'], `${where} item.minHeight`);
+    const yd = numIn(noteOf(v['item.minHeight']), /설명이 있으면\s*(\d+)/, `${where} item.minHeight 비고`);
     if (yh !== height || yd !== heightDesc) throw new Error(`${where} — 선택지 높이 ${yh} · ${yd} 가 여백 + 줄 높이(${height} · ${heightDesc})와 다르다`);
     items[size] = {
       padY,

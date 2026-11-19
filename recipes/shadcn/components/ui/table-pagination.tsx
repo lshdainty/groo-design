@@ -23,7 +23,7 @@ import { Select, SelectItem } from "@/components/ui/select";
  * 넘기면(이전 · 다음 · 범위 · 줄 수) 표(scrollTarget)의 위 끝이 보이게 스크롤하고 숨은 상태 글(role="status")로
  *   "11-20, 총 237개"(전체를 모르면 "11-20")를 한 번 알린다. 초점은 누른 칸(고르기 · 화살표)에 그대로 둔다.
  *
- * 모양: 한 줄 40 · 줄바꿈 없음 · 양 끝 정렬, 왼쪽 묶음 ↔ 오른쪽 묶음 · 범위 묶음 ↔ 화살표 16, 고르기 ↔ 글 8, 표 아래 12(mt-component-default —
+ * 모양: 한 줄 최소 40(글자 크기 설정을 따라 고르기 · 글이 커지면 높아진다) · 줄바꿈 없음 · 양 끝 정렬, 왼쪽 묶음 ↔ 오른쪽 묶음 · 범위 묶음 ↔ 화살표 16, 고르기 ↔ 글 8, 표 아래 12(mt-component-default —
  *   이 줄이 갖는다. Table 의 pagination 자리는 좌우 24 만이라 자리에 넣어도 표 바로 뒤에 두어도 12)
  *   (spacing-component-default). 좁은 화면에서는 표와 같은 가로 스크롤 상자 안에 둔다 — 줄은 내용 폭보다 줄지 않는다.
  *   고르기는 Select medium(트리거 40 · 최소 폭 96) — 화면 폭과 상관없이 medium 이다(Select 의 "1280 미만 large 52" 규칙의 예외).
@@ -106,9 +106,9 @@ function rangePages(page: number, totalPages: number) {
 }
 
 // ── 모양 ─────────────────────────────────────────────────────
-// 화살표 — Pagination 의 칸(40 · 모서리 8 · 누르는 영역은 위아래만 44)
+// 화살표 — Pagination 의 칸(40 · 모서리 8 · 누르는 영역은 위아래만 44). 칸 · 아이콘은 px — 글자 크기를 따르지 않는다
 const ARROW = [
-  "relative flex size-10 shrink-0 items-center justify-center rounded-r2 border-0 bg-transparent p-0 [&>svg]:size-4",
+  "relative flex size-[40px] shrink-0 items-center justify-center rounded-r2 border-0 bg-transparent p-0 [&>svg]:size-[16px]",
   "before:absolute before:inset-x-0 before:inset-y-[-2px] before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "focus-visible:z-[1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
@@ -237,7 +237,7 @@ const TablePagination = React.forwardRef<HTMLDivElement, TablePaginationProps>((
       aria-label="표 페이지 탐색"
       aria-disabled={disabled || undefined}
       data-slot="table-pagination"
-      className={cn("mt-component-default flex h-10 w-full min-w-max flex-nowrap items-center justify-between gap-x4 font-sans", className)}
+      className={cn("mt-component-default flex min-h-10 w-full min-w-max flex-nowrap items-center justify-between gap-x4 font-sans", className)}
       {...rest}
     >
       <div data-slot="table-pagination-page-size" className="flex shrink-0 items-center gap-x2">

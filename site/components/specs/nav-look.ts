@@ -551,7 +551,7 @@ function tableLook(brand: Brand): TablePaginationLook {
   const empty = resolveState(spec, { total: 'empty' }, 'enabled');
   if (tok(empty['arrow.color'], brand, `${F} total empty arrow.color`).name !== tok(di['arrow.color'], brand, `${F} disabled arrow.color`).name) throw new Error(`${F} 빈 표의 화살표가 막힌 화살표와 다른 색이다 — 그림은 한 색으로 그린다`);
   const select = selectLook(brand);
-  const height = len(b['root.height'], `${F} root.height`);
+  const height = len(b['root.minHeight'], `${F} root.minHeight`);
   // 두 고르기는 Select medium — 그 높이가 줄 높이와 같아야 한다
   for (const slot of ['pageSize', 'pageRange']) if (!String(unbox(b[`${slot}.size`])).includes('Select medium')) throw new Error(`${F} ${slot}.size 가 Select medium 이 아니다`);
   same(select.trigger.sizes.medium.h, height, `${F} 줄 높이 — Select medium 트리거`);

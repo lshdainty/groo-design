@@ -79,8 +79,8 @@ export function chipLook(brand: Brand = 'desk'): ChipLook {
     const v = resolveState(spec, { size, layout: 'withText' }, 'enabled');
     const io = resolveState(spec, { size, layout: 'iconOnly' }, 'enabled');
     const where = `${size}`;
-    const h = len(v['root.height'], `${where} root.height`);
-    if (len(io['root.height'], `${where} iconOnly root.height`) !== h) throw new Error(`chip.yaml ${where} — 아이콘만 있는 칩의 높이가 다르다`);
+    const h = len(v['root.minHeight'], `${where} root.minHeight`);
+    if (len(io['root.minHeight'], `${where} iconOnly root.minHeight`) !== h) throw new Error(`chip.yaml ${where} — 아이콘만 있는 칩의 높이가 다르다`);
     if (len(io['root.paddingX'], `${where} iconOnly root.paddingX`) !== 0) throw new Error(`chip.yaml ${where} — 아이콘만 있는 칩의 좌우 여백이 0 이 아니다(그림은 가운데 맞춤)`);
     // 지우기의 누르는 영역은 크기마다 비고에 적혀 있다 — 셋이 같아야 한다(그림은 하나로 그린다)
     const target = numIn(noteOf(v['removeButton.size']), /누르는 영역\s*(\d+)\s*×/, `${where} removeButton.size 비고`);

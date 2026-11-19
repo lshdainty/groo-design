@@ -52,6 +52,7 @@ import { useLeaveConfirm } from "@/components/ui/alert-dialog";
  *   상단 바에서 쓰지 않는다(아이콘 줄에서 하나만 흐리면 막힌 단추처럼 보인다). 바탕도 켬 · 끔에 따라 바뀌지 않는다.
  *   알림 점은 Notification Badge small — 24 아이콘 상자의 x 17 ~ 23 · y 1 ~ 7, 점만(숫자는 맨 오른쪽 버튼에서 화면 밖으로 나간다).
  * 글 버튼: 높이 44 · 좌우 10 · 모서리 8 · t5 16 / 22 · 500(1.2배까지), 누름 · 호버 같은 바탕 + 2px 거리 축소(기준 max(44, 폭 ÷ 4, 24)).
+ * 검색칸: Input medium — 칸 높이 40 은 px 그대로, 칸 글자 t4 는 제목 · 글 버튼과 같이 1.2배까지만 따른다.
  * 막힘: 아이콘 · 글 fg-disabled — 흐리게 하지 않는다. 키보드 포커스에만 버튼 상자 안쪽 2px 링(붙은 이웃 · 화면 끝에 걸리지 않게).
  * 모션: 바탕 색 150ms easing · 축소 150ms pressed-scale(모션 줄이기면 축소하지 않는다).
  */
@@ -103,7 +104,7 @@ TopNavigation.displayName = "TopNavigation";
 
 // ── 제목 ─────────────────────────────────────────────────────
 // 글자 크기 설정은 1.2배까지 — 크기 · 줄 높이 모두 clamp(고정 값(-static), 설정을 따르는 값(rem), 고정 값 × 1.2).
-// Tailwind 는 소스의 글자 그대로를 읽으므로 쓰는 셋(t8 · t6 · t5)을 풀어 적는다
+// Tailwind 는 소스의 글자 그대로를 읽으므로 쓰는 넷(t8 · t6 · t5 · 검색칸의 t4)을 풀어 적는다
 const TEXT_T8 =
   "text-[length:clamp(var(--text-t8-static),var(--text-t8),calc(var(--text-t8-static)*1.2))] leading-[clamp(var(--text-t8-static--line-height),var(--text-t8--line-height),calc(var(--text-t8-static--line-height)*1.2))]";
 const TEXT_T6 =
@@ -138,10 +139,13 @@ TopNavigationTitle.displayName = "TopNavigationTitle";
 
 // ── 검색칸 자리 ──────────────────────────────────────────────
 // standard — 제목 자리(← 다음 6, 왼쪽 버튼이 없으면 화면 끝에서 56), 오른쪽 자리 앞 8 은 TopNavigationActions 가 비운다.
-// desktop — 머리 왼쪽 폭 360(바의 왼쪽 여백이 본문 여백 32). 자식은 Input(size="medium") 하나 — 높이 40 이 바 56 의 가운데
+// desktop — 머리 왼쪽 폭 360(바의 왼쪽 여백이 본문 여백 32). 자식은 Input(size="medium") 하나 — 높이 40 이 바 56 의 가운데.
+// 칸 글자(t4)는 제목 · 글 버튼과 같이 1.2배까지만 따르고, 칸 높이는 px 40 그대로 둔다(바 56 을 넘지 않게)
+const SEARCH_FIELD =
+  "[&_[data-slot=text-input]]:min-h-[40px] [&_[data-slot=text-input]]:text-[length:clamp(var(--text-t4-static),var(--text-t4),calc(var(--text-t4-static)*1.2))] [&_[data-slot=text-input]]:leading-[clamp(var(--text-t4-static--line-height),var(--text-t4--line-height),calc(var(--text-t4-static--line-height)*1.2))]";
 const SEARCH: Record<Exclude<TopNavigationType, "root">, string> = {
-  standard: "ml-x1_5 first:ml-[50px] flex min-w-0 flex-1 items-center",
-  desktop: "flex w-[360px] min-w-0 shrink items-center",
+  standard: cn("ml-x1_5 first:ml-[50px] flex min-w-0 flex-1 items-center", SEARCH_FIELD),
+  desktop: cn("flex w-[360px] min-w-0 shrink items-center", SEARCH_FIELD),
 };
 
 export interface TopNavigationSearchProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -366,7 +370,7 @@ const SCREEN_DESCRIPTION = "m-0 mt-x0_5 text-t5 font-normal text-fg-neutral-mute
 const SCREEN_ACTIONS = "flex shrink-0 flex-wrap items-center justify-end gap-x2";
 
 export interface ScreenTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
-  /** 제목 아래 설명 — t3 13 / 18 · fg-neutral-subtle. 길면 줄을 바꾼다 */
+  /** 제목 아래 설명 — t5 16 / 22 · fg-neutral-muted. 길면 줄을 바꾼다 */
   description?: React.ReactNode;
   /** 그 화면의 동작 버튼(Button small) — 제목 줄 오른쪽 */
   actions?: React.ReactNode;

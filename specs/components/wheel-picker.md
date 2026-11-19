@@ -87,6 +87,7 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker"
 | 반복 | 칼럼마다 정합니다. 끄면 처음 · 끝에서 멈추고, 켜면 끝 다음에 처음이 이어집니다 |
 | 막힘 | 값은 그대로 두고, 굴릴 수도 초점을 받을 수도 없습니다 |
 | 모션 줄이기 | 모든 이동을 바로 합니다 |
+| 글자 크기 설정 | 항목 글 · 칸 높이 · 띠는 그대로입니다 — 휠은 칸에 맞춘 디자인 틀입니다. 고른 값은 휠을 연 칸(Input Button 등)의 글로 크게 읽습니다 |
 
 ### 키보드
 
@@ -101,6 +102,7 @@ import { WheelPicker, WheelPickerColumn } from "@/components/ui/wheel-picker"
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 고른 항목 `fg-neutral` 은 띠 위 15.20 · 다크 10.32 ✓. 둘레 항목은 고를 값이 아닌 표시입니다(안개로 흐려집니다) |
+| **WCAG 1.4.4** Resize text | 항목 글은 휠 칸에 맞춘 디자인 틀이라 기준의 예외로 그대로 둡니다(`-static`). 고른 값은 휠을 연 칸의 글로 글자 크기 설정을 따라 크게 읽고, 보조 기술은 `aria-valuetext` 로 읽습니다 |
 | **WCAG 2.1.1** Keyboard | 칼럼마다 `Tab` 자리, `↑` `↓` `Home` `End` ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | medium 44 · small 36 ✓ |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | medium 44 ✓ · small 36 ⚠ |

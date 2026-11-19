@@ -147,6 +147,7 @@ const [error, setError] = useState<string | null>(null)
 | 확인 — 6자리가 안 됨 | Field 오류 "인증 코드 6자리를 입력해주세요." · 초점은 칸으로 |
 | 확인 — 틀림 · 지남 | Field 오류(칸 2px 빨강 · 오류 글이 설명 줄을 대신) · 화면 읽기 프로그램에 한 번 알립니다 |
 | 칸 고치기 | 오류를 지우고 설명 줄로 돌아옵니다 |
+| 글자 크기 설정 | 값 · placeholder · 설명 · 오류 · 버튼 글은 글자 크기 설정을 따라 커지고, 칸 · 버튼 높이가 따라 늘어납니다. 칸은 한 줄을 지킵니다(Input). |
 | Disabled | 포커스 · 입력 불가(Input) |
 
 ## Accessibility
@@ -154,6 +155,7 @@ const [error, setError] = useState<string | null>(null)
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | Input · Field 의 검증 그대로 — 값 `fg-neutral` 16.41 · 13.42, 설명 `fg-neutral-subtle` 5.50 · 6.09(시트 다크 5.27), 오류 `fg-critical` 5.06 · 6.08 ✓. placeholder `fg-placeholder` 4.18 · 4.13(시트 다크 3.58) — 4.5:1 에 못 미치는 것을 알고 둔 값입니다. 다시 받기 글 `fg-neutral` · `bg-neutral-weak` 위 15.20 · 10.32 ✓ — 막힌 동안 `fg-disabled` 는 기준 밖 |
+| **WCAG 1.4.4** Resize text | 값 · placeholder · 설명 · 오류 · 다시 받기 글이 글자 크기 설정을 따라 커집니다 ✓ — 6자리 숫자는 칸 한 줄에 들고, 설명 · 오류는 줄을 바꿉니다 |
 | **WCAG 1.3.5** Identify input purpose | `autocomplete="one-time-code"` ✓ |
 | **WCAG 3.3.1** Error identification | 틀린 코드를 글로 알리고 칸에 `aria-invalid` ✓ |
 | **WCAG 2.2.1** Timing adjustable | 유효 시간(10분)을 설명 줄로 미리 알리고, 지나면 다시 받을 수 있습니다 ✓ |

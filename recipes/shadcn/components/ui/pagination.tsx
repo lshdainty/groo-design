@@ -34,7 +34,7 @@ import { useWaitPhase } from "@/components/ui/skeleton";
  *   바꾸는 자리 — 링크의 기본 이동은 막는다), 주지 않았으면 브라우저가 그 주소로 간다. 지금 쪽 · 막힌 줄은 눌러도 아무것도 하지 않는다.
  * 막힘(disabled) — 칸은 aria-disabled 로 남긴다(초점이 그 자리를 잃지 않게). 번호 · 화살표 fg-disabled, 지금 쪽은 bg-disabled.
  *
- * 모양: 칸 40 × 40 을 사이 없이 잇는다(9칸 360 · 7칸 280), 목록 끝 → 줄 24, 가운데. 번호 t4 14 / 19 · 700 · fg-neutral · 숫자 폭 고정 ·
+ * 모양: 칸 40 × 40 을 사이 없이 잇는다(9칸 360 · 7칸 280), 목록 끝 → 줄 24, 가운데. 번호 t4-static 14 / 19 · 700(글자 크기 설정을 따르지 않는다) · fg-neutral · 숫자 폭 고정 ·
  *   세 자리마다 쉼표, 칸을 넘으면 말줄임(숫자는 칸 이름에 있다). 화살표는 아이콘만 16(chevron). 생략은 40 상자 + 점 셋 16. 모서리 r2 8.
  *   지금 쪽은 짙은 채움 bg-neutral-inverted + fg-neutral-inverted(다크는 밝은 반전) — 브랜드 색이 아니다. aria-current="page".
  *   누르는 영역은 위아래만 44(보이지 않는 여백 2 씩), 옆은 칸 폭 40 — "누르는 영역 44" 의 예외.
@@ -117,7 +117,7 @@ const formatNumber = (n: number) => n.toLocaleString("ko-KR");
 // ── 모양 ─────────────────────────────────────────────────────
 // 칸 — 40 × 40 · 모서리 8, 누르는 영역은 위아래만 44(::before 2 씩). 키보드 포커스에만 바깥 2px 링 — 이웃 칸 위로 올린다
 const CELL = [
-  "relative flex size-10 shrink-0 items-center justify-center rounded-r2 border-0 bg-transparent p-0 font-sans no-underline",
+  "relative flex size-[40px] shrink-0 items-center justify-center rounded-r2 border-0 bg-transparent p-0 font-sans no-underline",
   "before:absolute before:inset-x-0 before:inset-y-[-2px] before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "focus-visible:z-[1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
@@ -130,7 +130,7 @@ const CELL_CURRENT = "bg-bg-neutral-inverted text-fg-neutral-inverted hover:bg-b
 const CELL_DISABLED = "cursor-not-allowed text-fg-disabled";
 const CELL_DISABLED_CURRENT = "bg-bg-disabled";
 // 번호 — t4 · 700 · 숫자 폭 고정, 칸을 넘으면 말줄임
-const LABEL = "block min-w-0 max-w-full truncate text-t4 font-bold tabular-nums";
+const LABEL = "block min-w-0 max-w-full truncate text-t4-static font-bold tabular-nums";
 
 export interface PaginationProps extends Omit<React.HTMLAttributes<HTMLElement>, "onChange" | "children"> {
   /** 전체 쪽 수 — 1 이하면 그리지 않는다 */
@@ -215,13 +215,13 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
     const renderCell = (item: PaginationItem, index: number) => {
       if (item.type === "ellipsis") {
         return (
-          <span key={index} aria-hidden data-slot="pagination-ellipsis" className="flex size-10 shrink-0 items-center justify-center text-fg-neutral [&>svg]:size-4">
+          <span key={index} aria-hidden data-slot="pagination-ellipsis" className="flex size-[40px] shrink-0 items-center justify-center text-fg-neutral [&>svg]:size-[16px]">
             <Ellipsis />
           </span>
         );
       }
       if (item.type === "empty") {
-        return <span key={index} aria-hidden data-slot="pagination-empty" className="size-10 shrink-0" />;
+        return <span key={index} aria-hidden data-slot="pagination-empty" className="size-[40px] shrink-0" />;
       }
       const isArrow = item.type === "previous" || item.type === "next";
       const isCurrent = item.type === "page" && item.page === current;
@@ -242,7 +242,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
         className: cellClass,
       };
       const content = isArrow ? (
-        item.type === "previous" ? <ChevronLeft aria-hidden className="size-4" /> : <ChevronRight aria-hidden className="size-4" />
+        item.type === "previous" ? <ChevronLeft aria-hidden className="size-[16px]" /> : <ChevronRight aria-hidden className="size-[16px]" />
       ) : (
         <span className={LABEL}>{formatNumber(item.page)}</span>
       );

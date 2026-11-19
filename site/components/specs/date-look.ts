@@ -216,10 +216,10 @@ export function timeLook(): TimeLook {
   if (String(unbox(v['periodColumn.items'])).replace(/\s/g, '') !== '오전·오후') throw new Error(`${w} periodColumn.items 가 오전 · 오후가 아니다`);
   if (String(unbox(v['hourColumn.items'])).replace(/\s/g, '') !== '1~12') throw new Error(`${w} hourColumn.items 가 1 ~ 12 가 아니다`);
   if (!/00\s*~\s*59/.test(String(unbox(v['minuteColumn.items'])))) throw new Error(`${w} minuteColumn.items 가 00 ~ 59 가 아니다`);
-  // 날짜 칸 옆 시각 칸 — time-picker.md "날짜와 함께" 의 "시각 칸은 144" 와 코드(flex-wrap · 날짜 min-w-max flex-1 · 시각 w-[144px] shrink-0)
+  // 날짜 칸 옆 시각 칸 — time-picker.md "날짜와 함께" 의 "시각 칸은 최소 144" 와 코드(flex-wrap · 날짜 min-w-max flex-1 · 시각 w-max min-w-[144px] shrink-0)
   const md = readFileSync(join(process.cwd(), '..', 'specs/components/time-picker.md'), 'utf8');
-  const fieldWidth = numIn(md, /시각 칸은\s*(\d+)/, 'time-picker.md 날짜와 함께');
-  same(numIn(md, /w-\[(\d+)px\] shrink-0/, 'time-picker.md 코드의 시각 칸'), fieldWidth, 'time-picker.md 시각 칸 폭 — 글 · 코드');
+  const fieldWidth = numIn(md, /시각 칸은 최소\s*(\d+)/, 'time-picker.md 날짜와 함께');
+  same(numIn(md, /min-w-\[(\d+)px\] shrink-0/, 'time-picker.md 코드의 시각 칸'), fieldWidth, 'time-picker.md 시각 칸 최소 폭 — 글 · 코드');
   if (!/flex flex-wrap/.test(md) || !/min-w-max flex-1/.test(md)) throw new Error('time-picker.md 날짜 + 시각 코드가 flex-wrap · min-w-max flex-1 이 아니다 — date-screens 의 DateTimeRow 를 고친다');
   timeCache = {
     height,

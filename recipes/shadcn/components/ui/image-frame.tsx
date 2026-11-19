@@ -340,9 +340,9 @@ const ImageFrameFloater = React.forwardRef<HTMLDivElement, ImageFrameFloaterProp
 ImageFrameFloater.displayName = "ImageFrameFloater";
 
 // ── Indicator ───────────────────────────────────────────────
-// 알약 · 검정 65%(두 모드 같다) · 흰 11/15 500 · 좌우 6 · 위아래 2 · 높이 19(글이 커지면 따라 커진다)
+// 알약 · 검정 65%(두 모드 같다) · 흰 11/15 500 · 좌우 6 · 위아래 2 · 높이 19. 사진 위 표식이라 글자 크기 설정을 따르지 않는다(t1-static)
 const imageFrameIndicatorVariants = cva(
-  "inline-flex min-h-[19px] items-center whitespace-nowrap rounded-full bg-[var(--overlay-dim-dark)] px-x1_5 py-x0_5 font-sans text-t1 font-medium text-static-white",
+  "inline-flex min-h-[19px] items-center whitespace-nowrap rounded-full bg-[var(--overlay-dim-dark)] px-x1_5 py-x0_5 font-sans text-t1-static font-medium text-static-white",
 );
 
 export interface ImageFrameIndicatorProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {

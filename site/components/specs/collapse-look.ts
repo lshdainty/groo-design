@@ -196,7 +196,7 @@ export function accordionLook(brand: Brand = 'desk'): AccLook {
       title: { ...k.type(b['headerTitle.typography'], b['headerTitle.fontWeight'], 'headerTitle.typography'), fg: k.tok(b['headerTitle.foreground'], brand, 'headerTitle.foreground') },
     },
     expandAll: {
-      h: k.len(b['expandAll.height'], 'expandAll.height'),
+      h: k.len(b['expandAll.minHeight'], 'expandAll.minHeight'),
       padL: k.len(b['expandAll.paddingLeft'], 'expandAll.paddingLeft'),
       padR: k.len(b['expandAll.paddingRight'], 'expandAll.paddingRight'),
       radius: k.len(b['expandAll.radius'], 'expandAll.radius'),

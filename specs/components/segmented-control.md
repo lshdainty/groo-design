@@ -122,7 +122,7 @@ import { SegmentedControl, SegmentedControlItem } from "@/components/ui/segmente
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 안 고른 글 `fg-neutral-subtle` 트랙 위 — 트랙이 투명해 놓인 바탕에 따라 다릅니다: 라이트 흰 면 4.95 · 회색 바닥 4.59, 다크 바닥 4.68 ✓ · 다크는 `fg-neutral-muted` 로 한 단계 짙게 — 다크 카드(`bg-layer-default`) 5.18 · 다크 시트(`bg-layer-floating`) 4.50 · 다크 바닥 5.93 ✓(subtle 이면 4.09 · 3.56). 올리거나 누르는 동안 `fg-neutral-muted` 6.17 · 4.95, 고른 글 `fg-neutral` 알약 위 16.41 · 13.42 · 누름 15.48 · 10.32 ✓. 비활성 `fg-disabled` 는 기준 밖입니다(비활성 UI) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 고른 칸은 알약의 짙은 1px `stroke-neutral-contrast`(트랙과 라이트 13.71 ~ 14.79 · 다크 7.84 ~ 10.33) ✓. 고른 채 막힘 `stroke-neutral-solid` 은 `bg-disabled` 위 3.87 · 3.18 ✓(비활성이라 기준 밖). 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓. 알림 점 `fg-brand` 트랙 위 Desk 라이트 7.00 ~ 7.55 · 다크 3.56 ~ 4.69 · HR 라이트 6.82 ~ 7.36 · 다크 3.55 ~ 4.67 ✓ — 고른 칸에는 그리지 않습니다 |
-| **WCAG 1.4.4** Resize text | 칸 글은 예외입니다 — `t5-static` 16 이라 글자 크기 설정을 따르지 않습니다(웹 `text-t5-static` · 앱 `TextScaler.noScaling`). 칸이 트랙을 나눠 폰 4칸이 76(글 자리 52)이라, 글자를 따라 키우면 200% 에서 "오 / 늘" · "이 / 번 / 주" 처럼 한 글자씩 세로로 쪼개지기 때문입니다. 하단 탭 라벨과 같은 대가입니다(DESIGN.md 의 -static 목록) |
+| **WCAG 1.4.4** Resize text | 칸 글은 예외입니다 — `t5-static` 16 이라 글자 크기 설정을 따르지 않습니다(웹 `text-t5-static` · 앱 `TextScaler.noScaling`). 칸이 트랙을 나눠 폰 4칸이 76(글 자리 52)이라, 글자를 따라 키우면 200% 에서 "오 / 늘" · "이 / 번 / 주" 처럼 한 글자씩 세로로 쪼개지기 때문입니다. 하단 탭 라벨과 같은 대가입니다(DESIGN.md 의 -static 목록). 고른 칸이 바꾼 아래 내용은 커지는 글로 보입니다. 알림 점도 px 그대로입니다 |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 링 2px · 띄움 2px — 칸 바깥에 그립니다 |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 칸 34 × 칸 폭 ✓(폰 4개면 칸 폭 76) |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 칸 34 ✗ |

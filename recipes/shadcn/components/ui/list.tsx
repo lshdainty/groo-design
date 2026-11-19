@@ -171,7 +171,7 @@ const listHeaderVariants = cva("flex w-full items-center justify-between gap-x2_
 });
 
 // 내용 줄의 앞 타일 — 40 · 모서리 12(크기 × 0.3). 바탕 · 아이콘 색은 카테고리 색(chart-{색}-weak · chart-{색})
-const listTileVariants = cva("inline-grid size-10 shrink-0 place-items-center rounded-r3 [&>svg]:size-5");
+const listTileVariants = cva("inline-grid size-[40px] shrink-0 place-items-center rounded-r3 [&>svg]:size-[20px]");
 
 // 끼운 컨트롤은 따로 줄지 않는다 — 줄의 콘텐츠가 함께 준다. 라벨의 누름이 컨트롤로 넘어오므로 축소만 끈다.
 // 컨트롤에도 data-list-action 을 단다 — 키보드(Space)로 누르면 :active 가 라벨이 아니라 컨트롤에 걸린다
@@ -324,15 +324,15 @@ ListLinkItem.displayName = "ListLinkItem";
 // 올리거나 누르면 단추만 bg-layer-default-pressed, 누르면 2px 거리 축소(기준 44 → 0.955). 키보드 포커스에만 단추 안쪽 2px 링.
 // 위아래 2 를 줄의 여백에 겹쳐 타일 40 줄의 높이(64)를 그대로 둔다. 줄의 버튼 ::after 위(z 1)에 놓인다
 const LIST_EXPAND_BUTTON = [
-  "relative z-[1] -my-x0_5 mr-x1 inline-flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-r2_5 border-0 bg-transparent p-0 text-fg-neutral-subtle",
+  "relative z-[1] -my-x0_5 mr-x1 inline-flex size-[44px] shrink-0 cursor-pointer appearance-none items-center justify-center rounded-r2_5 border-0 bg-transparent p-0 text-fg-neutral-subtle",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "[--press-basis:44] [@media(hover:hover)]:hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 // 꺾쇠 20 — 접혀 있으면 오른쪽, 펼치면 아래(90° · 300ms easing, 모션 줄이기면 바로)
-const LIST_EXPAND_ICON = "size-5 shrink-0 [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none";
+const LIST_EXPAND_ICON = "size-[20px] shrink-0 [transition:rotate_var(--motion-duration-d6)_var(--motion-ease-easing)] motion-reduce:transition-none";
 // 하위가 없는 부모 줄 · 늘 펼친 편집 화면(collapsible={false}) — 꺾쇠 단추와 같은 폭의 빈 자리
-const LIST_EXPAND_SLOT = "-my-x0_5 mr-x1 size-11 shrink-0";
+const LIST_EXPAND_SLOT = "-my-x0_5 mr-x1 size-[44px] shrink-0";
 
 /** 접는 부모 줄(기본) — 꺾쇠 단추의 이름이 필수다 */
 type ListParentFoldProps = {

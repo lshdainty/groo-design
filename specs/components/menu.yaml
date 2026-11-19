@@ -44,7 +44,7 @@ rules:
   - when: {}
     enabled:
       content:
-        width: { value: 200px, note: "글이 길면 줄을 바꾼다 — 폭을 늘리지 않는다" }
+        width: { value: 200px, note: "고정 — 글이 길거나 글자가 커지면 줄을 바꿔 높이가 늘어난다. 폭을 늘리지 않는다" }
         background: $color-bg-layer-floating
         radius: $radius-r5
         shadow: $shadow-s3
@@ -57,7 +57,7 @@ rules:
         paddingY: $spacing-x2_5
         paddingX: $spacing-x4
         gap: $spacing-x2
-        height: { value: 39px, note: "한 줄 — 설명이 있으면 57. 글이 길면 줄을 바꿔 늘어난다(말줄임 없음)" }
+        height: { value: 39px, note: "최소 · 한 줄 — 설명이 있으면 57. 글이 길거나 글자가 커지면 줄을 바꿔 늘어난다(말줄임 없음)" }
         cursor: pointer
         transitionProperty: { value: "background-color, inset, border-radius", note: "알약 바탕 · 들임(0 → 8) · 모서리(0 → 12)가 함께 150ms 에 — 들임 · 모서리(d3)와 색(color-transition)이 둘 다 150ms 라 하나로 적는다" }
         transitionDuration: $motion-duration-color-transition

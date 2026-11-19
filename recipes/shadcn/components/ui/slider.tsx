@@ -24,6 +24,8 @@ import { useFieldGroup, useFieldGroupState } from "@/components/ui/field";
  * 값: 머리 값(SliderValue) · 말풍선(끄는 동안 · 마우스를 손잡이에 올렸을 때 · 키보드 포커스일 때 — 손잡이 위 12, 13 / 18 · 500,
  *   bg-neutral-inverted · 위아래 4 · 좌우 8 · 모서리 6 · 아래 8 × 6 화살표, 트랙 끝에서는 상자만 안으로 밀린다) · 아래 2 의 표식(양 끝 값,
  *   13 / 18 fg-neutral-muted). 말풍선 · 표식은 보조 기술에 숨긴다.
+ * 글자 크기: 머리 값 · 말풍선 글은 글자 크기 설정을 따라 커진다(말풍선 상자는 위로 늘어난다). 표식은 트랙에 붙은 눈금이라 그대로(t3-static)다.
+ *   손잡이 줄 44 · 트랙 4 · 손잡이 20 · 눈금 틈 4 는 컨트롤 모양이라 px 다.
  * 눈금: 구간((max − min) ÷ step)이 2 ~ 5개면 양 끝을 뺀 단계 자리마다 트랙 · 채움을 끊는 틈 4(놓인 표면이 비친다 — 마스크로 끊어
  *   시트 · 팝오버 위에서도 표면 색 그대로)와 단계마다 표식. 6개 이상이면 눈금 없이 양 끝 표식만 — 숫자를 늘어놓지 않는다.
  * 누르기: 손잡이를 누르면 바로 끈다(24 + 말풍선). 손잡이 밖(손잡이 줄 어디든)을 누르면 가장 가까운 손잡이가 그 자리(가장 가까운 단계)로
@@ -405,7 +407,7 @@ const SliderCore = React.forwardRef<HTMLDivElement, CoreProps>(
           ref={controlRef}
           data-slot="slider-control"
           className={cn(
-            "relative h-11 w-full touch-none",
+            "relative h-[44px] w-full touch-none",
             disabled ? "cursor-not-allowed" : dragging != null ? "cursor-grabbing" : "cursor-pointer",
           )}
           onPointerDown={onPointerDown}
@@ -417,7 +419,7 @@ const SliderCore = React.forwardRef<HTMLDivElement, CoreProps>(
           <div
             data-slot="slider-track"
             className={cn(
-              "absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 overflow-hidden rounded-full",
+              "absolute inset-x-0 top-1/2 h-[4px] -translate-y-1/2 overflow-hidden rounded-full",
               disabled ? "bg-bg-disabled" : "bg-stroke-neutral-weak",
             )}
             style={mask ? { maskImage: mask, WebkitMaskImage: mask } : undefined}
@@ -476,7 +478,7 @@ const SliderCore = React.forwardRef<HTMLDivElement, CoreProps>(
                   aria-describedby={labelling["aria-describedby"]}
                   {...nameProps}
                   className={cn(
-                    "absolute left-0 top-1/2 block size-5 -translate-x-1/2 -translate-y-1/2 rounded-full",
+                    "absolute left-0 top-1/2 block size-[20px] -translate-x-1/2 -translate-y-1/2 rounded-full",
                     disabled ? "cursor-not-allowed bg-fg-disabled" : dragging === i ? "cursor-grabbing bg-bg-neutral-inverted" : "cursor-grab bg-bg-neutral-inverted",
                     "[transition:scale_var(--motion-duration-d3)_var(--motion-ease-easing)] motion-reduce:transition-none data-[pressed]:[scale:1.2]",
                     // 키보드 포커스에만 링 — :focus-visible 이 아니라 키보드로 왔을 때(위 trackInput)
@@ -535,11 +537,12 @@ const SliderCore = React.forwardRef<HTMLDivElement, CoreProps>(
             );
           })}
         </div>
-        {/* 표식 — 양 끝 값(구간 2 ~ 5 면 단계마다). 끝 둘은 트랙 끝에 맞추고 가운데는 단계 자리 가운데 */}
+        {/* 표식 — 양 끝 값(구간 2 ~ 5 면 단계마다). 끝 둘은 트랙 끝에 맞추고 가운데는 단계 자리 가운데.
+            트랙 아래 눈금 표식이라 글자 크기를 따르지 않는다(t3-static) — 지금 값은 머리 값 · 말풍선이 크게 보인다 */}
         <div
           aria-hidden
           data-slot="slider-markers"
-          className={cn("relative h-[var(--text-t3--line-height)] text-t3", disabled ? "text-fg-disabled" : "text-fg-neutral-muted")}
+          className={cn("relative h-[var(--text-t3-static--line-height)] text-t3-static", disabled ? "text-fg-disabled" : "text-fg-neutral-muted")}
         >
           {markers.map((m, k) => {
             const last = k === markers.length - 1;

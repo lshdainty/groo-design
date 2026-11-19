@@ -14,6 +14,7 @@ import { useFieldControl, useTextControl } from "@/components/ui/field";
  *   true(기본)  3줄(large 94 · medium 82)에서 시작해 쓴 만큼 자란다. 최대 높이(max-h-*)를 주면 그 높이부터 칸 안에서 스크롤
  *   false       고정 높이 — 자리마다 높이(h-* · rows)를 정한다. 2줄(72 · 62)보다 낮게 두지 않고, 넘치면 칸 안에서 스크롤.
  *               켜 둔 채 자란 칸에서 끄면 자랄 때 넣은 인라인 높이 · overflow 를 걷는다
+ * 글자 크기: 값 · placeholder 는 글자 크기 설정을 따라 커진다. 최소 높이(3줄 · 2줄)도 rem 이라 글을 따라 커진다.
  * 손잡이(resize)는 두지 않는다 — 자동 높이가 그 일을 한다.
  * 크기: large(글자 16 · 모서리 12) · medium(14 · 8, 1280 이상 데스크톱 웹만) · responsive(웹 기본). 앱은 늘 large.
  * 캐럿은 글자색(caret-fg-neutral), 고른 글은 기기 기본 하이라이트. 읽기 전용은 포커스 표시가 없다(Input 과 같다).

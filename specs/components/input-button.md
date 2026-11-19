@@ -246,6 +246,7 @@ const done = <Button disabled={!draft} onClick={() => { setDate(draft); setOpen(
 | 지우기 | 값만 비웁니다(`onClear`) — 열지 않습니다. 포커스는 칸으로 갑니다. Tab 순서에 없습니다. |
 | `<label>` 누르기 | 칸으로 포커스만 옮깁니다 — 열지 않습니다(Field). |
 | 마우스 호버 | 누름과 같은 바탕(축소 없음). |
+| 글자 크기 설정 | 값 · placeholder · 붙이개 글은 글자 크기 설정을 따라 커지고 상자 높이가 따라 늘어납니다. 줄은 하나를 지키고, 넘치면 끝을 "…" 로 줄입니다. 앞 · 뒤 아이콘과 지우기는 px 로 그대로입니다. |
 | Disabled | 포커스 · 열기 불가. 커서 not-allowed. |
 | Readonly | 포커스는 받고 열리지 않습니다(`aria-disabled`). 값은 그대로 읽힙니다. |
 
@@ -254,6 +255,7 @@ const done = <Button disabled={!draft} onClick={() => { setDate(draft); setOpen(
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 값 `fg-neutral` 16.41 · 13.42(누름 바탕 위 15.48 · 10.32), 붙이개 글자 5.50 · 6.09(누름 바탕 위 5.18 · 4.68), 읽기 전용 값 15.20 · 10.32 ✓. placeholder 4.18 · 4.13(누름 바탕 위 3.94 · 3.18) — 4.5:1 에 못 미치는 것을 알고 둔 값입니다. 비활성 `fg-disabled` 는 기준 밖(비활성 UI) |
+| **WCAG 1.4.4** Resize text | 값 · placeholder · 붙이개 글이 글자 크기 설정을 따라 커지고 상자가 따라 높아집니다 ✓. 한 줄 부품이라 넘친 값은 "…" 로 줄이고, 전체 값은 칸 이름(라벨 + 값)으로 읽고 여는 자리(시트 · 팝오버)에서 크게 봅니다 |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 키보드 포커스 링 `stroke-focus-ring` Desk 8.38 · 6.10 · HR 8.17 · 6.07, 오류 테두리 5.06 · 6.08, 뒤 아이콘 `fg-neutral-muted` 7.11 · 7.70 ✓. 기본 1px 테두리(1.23 · 1.56)는 칸을 알리는 유일한 표시가 아닙니다 — 라벨 · 뒤 아이콘이 함께 알립니다 |
 | **WCAG 2.4.7** Focus visible | 키보드 포커스에 바깥 링 2px · 띄움 2px |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 모든 크기 ✓. 지우기 버튼 22 · 18 은 보이는 크기이고, 누르는 영역은 24 이상으로 넓힙니다 |

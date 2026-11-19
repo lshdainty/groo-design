@@ -162,6 +162,7 @@ const description = unread > 0 ? `읽지 않은 알림 ${unread}개` : "새 알�
 | `Esc` | 닫고, 초점은 트리거로 돌아갑니다. |
 | 바깥 누르기 | 닫습니다 — 초점은 누른 자리로 갑니다(누른 곳이 초점을 받지 못하면 트리거로). |
 | 대화상자 · 시트 안에서 | 그 위에 뜹니다(z-index L3) — 대화상자가 닫히면 함께 닫힙니다. |
+| 글자 크기 설정 | 제목 · 설명 · 본문 글이 커집니다. 폭은 최대 폭을 넘지 않고 줄을 바꿔 높이가 늘어나며, 최대 높이를 넘으면 본문이 스크롤합니다. 닫기 상자 · 아이콘은 px 그대로이고 제목 첫 줄 가운데에 섭니다. |
 
 ## Accessibility
 
@@ -169,6 +170,7 @@ const description = unread > 0 ? `읽지 않은 알림 ${unread}개` : "새 알�
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 16.41 · 다크 11.62, 설명 `fg-neutral-muted` 7.11 · 6.67 ✓ |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 표면 경계는 그림자 s3(딤 없음) — 표면을 알리는 유일한 표시가 아닙니다(머리 · 내용이 알립니다). 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ |
+| **WCAG 1.4.4** Resize text | 제목 · 설명 · 본문이 글자 크기 설정을 따르고, 최대 폭 안에서 줄을 바꿔 받아 잘리지 않습니다(넘치면 본문 스크롤) ✓ |
 | **WCAG 1.4.13** Content on Hover or Focus | 누를 때 열리고(호버로 열지 않습니다) 바깥 · `Esc` 로 닫힙니다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 버튼 52 ✓ · 알림 줄 ⋮ 보이는 32(누르는 44) ✓ |
 | **ARIA** | `role="dialog"`(`aria-modal` 없음), 제목 `aria-labelledby`(있을 때), 트리거 `aria-haspopup="dialog"` · `aria-expanded` · `aria-controls`. 머리 없는 고르는 패널은 `aria-label` 로 이름을 답니다 |

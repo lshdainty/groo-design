@@ -32,7 +32,7 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  *   (Enter 를 누르고 있을 때 브라우저가 되풀이하는 keydown 도 버린다).
  *
  * 모양 — 상자는 bg-layer-default + 안쪽 1px stroke-neutral-weak(inset shadow), 오류는 안쪽 2px stroke-critical-solid(내용이 밀리지 않는다).
- *   모서리 small · medium 8 · large 12. 버튼은 정사각(상자 높이), 바탕 투명 · 아이콘 fg-neutral(16 · 18 · 22, lucide minus · plus).
+ *   모서리 small · medium 8 · large 12. 버튼은 정사각 px(100% 에서 상자 높이와 같고, 글자가 커져 상자가 높아져도 크기를 그대로 두고 세로 가운데에 선다), 바탕 투명 · 아이콘 fg-neutral(16 · 18 · 22, lucide minus · plus).
  *   선 1px × 16 stroke-neutral-subtle(장식). 값 칸은 좌우 8 · 500 · fg-neutral · 고정폭 숫자, 글 t5 16 / 22(large t6 18 / 24).
  *   값 칸은 가장 긴 표시 글을 숨겨 둔 자리 글로 폭을 잡는다 — getValueText(min) · getValueText(max) ·
  *   지금 값 가운데 가장 넓은 것. max 를 주지 않으면(Number.MAX_SAFE_INTEGER) 그 글은 빼고 지금 값 · 최소로만 잡는다.
@@ -66,7 +66,7 @@ const ROOT_LAYOUT: Record<QuantityPickerLayout, string> = {
 // 끝 · 읽기 전용(aria-disabled) · 막힘(disabled)은 바탕 · 축소 없이 아이콘만 fg-disabled. 로딩(aria-busy)은 누름 바탕 + 원
 const BUTTON = [
   "relative inline-flex shrink-0 cursor-pointer items-center justify-center bg-transparent text-fg-neutral",
-  "before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-[44px] before:w-full before:min-w-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
@@ -77,11 +77,11 @@ const BUTTON = [
   "[--progress-thickness:2px] [--progress-track:var(--color-gray-500)] [--progress-range:var(--color-fg-neutral)]",
 ].join(" ");
 const BUTTON_SIZE: Record<QuantityPickerSize, string> = {
-  small: "size-9 rounded-r2 [--press-basis:36] [--progress-size:16px] [&>svg]:size-4",
-  medium: "size-10 rounded-r2 [--press-basis:40] [--progress-size:18px] [&>svg]:size-[18px]",
-  large: "size-13 rounded-r3 [--press-basis:52] [--progress-size:22px] [&>svg]:size-[22px]",
+  small: "size-[36px] rounded-r2 [--press-basis:36] [--progress-size:16px] [&>svg]:size-[16px]",
+  medium: "size-[40px] rounded-r2 [--press-basis:40] [--progress-size:18px] [&>svg]:size-[18px]",
+  large: "size-[52px] rounded-r3 [--press-basis:52] [--progress-size:22px] [&>svg]:size-[22px]",
   responsive:
-    "size-13 rounded-r3 [--press-basis:52] [--progress-size:22px] [&>svg]:size-[22px] lg:size-10 lg:rounded-r2 lg:[--press-basis:40] lg:[--progress-size:18px] lg:[&>svg]:size-[18px]",
+    "size-[52px] rounded-r3 [--press-basis:52] [--progress-size:22px] [&>svg]:size-[22px] lg:size-[40px] lg:rounded-r2 lg:[--press-basis:40] lg:[--progress-size:18px] lg:[&>svg]:size-[18px]",
 };
 
 // 선 — 1px × 16, 장식

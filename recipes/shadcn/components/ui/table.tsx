@@ -34,7 +34,7 @@ import { Skeleton } from "@/components/ui/skeleton";
  *   TableSkeletonRows   불러오는 동안의 줄 — rows(기본 10) · columns({ align, width }[]). 줄 높이 그대로 · 글 자리 t4 19
  *   useTableLayout()    "table"(768 이상) · "list"(미만) — 768 미만이면 쓰는 쪽이 같은 데이터를 List 줄로 그린다
  *
- * 머리 줄 41(위아래 10 + 글 20 + 선 1) · 본문 줄 45(12 + 20 + 1). 칸 좌우 16, 첫 칸 앞 · 끝 칸 뒤만 카드 여백과 같은 24
+ * 머리 줄 최소 41(위아래 10 + 글 20 + 선 1) · 본문 줄 최소 45(12 + 20 + 1) — 글자 크기 설정을 따라 글이 커지면 줄이 따라 높아진다. 칸 좌우 16, 첫 칸 앞 · 끝 칸 뒤만 카드 여백과 같은 24
  *   (표는 카드 안에 가장자리까지 붙는다 — 줄 선은 상자 끝까지). 글은 t4 14 에 줄 높이 20. 머리는 같은 14 · 500 · fg-neutral, 바탕 없음.
  * 줄 선은 1px stroke-neutral-subtle — 머리 아래 · 줄마다 · 마지막 줄 아래까지. 세로 선 · 줄무늬 · 바깥 테두리는 없다.
  *   선은 칸의 아래 테두리다(border-separate) — 줄 높이가 칸 높이 그대로 41 · 45 · 72 가 되고, 붙은 머리도 선을 데리고 붙는다.
@@ -125,7 +125,7 @@ const ROW_HEADER_ACTION = [
 ].join(" ");
 
 // 체크 · ⋮ 의 누르는 영역 44 — 보이는 상자 둘레로(Checkmark 는 relative)
-const HIT_44 = "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']";
+const HIT_44 = "before:absolute before:left-1/2 before:top-1/2 before:size-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']";
 
 // ── 표 ───────────────────────────────────────────────────────
 export interface TableProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
@@ -240,7 +240,7 @@ function SortIcon({ sort }: { sort: TableSort }) {
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="size-4 shrink-0"
+      className="size-[16px] shrink-0"
     >
       <g data-arrow="up" className={sort === "ascending" ? "stroke-fg-neutral" : "stroke-fg-neutral-muted"}>
         <path d="m3 8 4-4 4 4" />
@@ -399,7 +399,7 @@ const TableSelectHead = React.forwardRef<HTMLTableCellElement, TableSelectHeadPr
         ref={ref}
         scope="col"
         data-slot="table-select-head"
-        className={cn(CELL, HEAD_CELL, "w-16 py-x2", ctx.stickyHeader && HEAD_STICKY, className)}
+        className={cn(CELL, HEAD_CELL, "w-[64px] py-x2", ctx.stickyHeader && HEAD_STICKY, className)}
         {...props}
       >
         <div className="flex items-center">
@@ -434,7 +434,7 @@ const TableSelectCell = React.forwardRef<HTMLTableCellElement, TableSelectCellPr
       <td
         ref={ref}
         data-slot="table-select-cell"
-        className={cn(CELL, BODY_CELL, "w-16 py-x2_5", ctx.rowHeight === "rich" && BODY_RICH, className)}
+        className={cn(CELL, BODY_CELL, "w-[64px] py-x2_5", ctx.rowHeight === "rich" && BODY_RICH, className)}
         {...props}
       >
         <div className="flex items-center">
@@ -458,7 +458,7 @@ TableSelectCell.displayName = "TableSelectCell";
 const TableMoreHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTableCellElement>>(({ className, ...props }, ref) => {
   const ctx = React.useContext(TableContext);
   return (
-    <th ref={ref} scope="col" data-slot="table-more-head" className={cn(CELL, HEAD_CELL, "w-20", ctx.stickyHeader && HEAD_STICKY, className)} {...props}>
+    <th ref={ref} scope="col" data-slot="table-more-head" className={cn(CELL, HEAD_CELL, "w-[80px]", ctx.stickyHeader && HEAD_STICKY, className)} {...props}>
       <span className="sr-only">동작</span>
     </th>
   );
@@ -480,7 +480,7 @@ const TableMoreCell = React.forwardRef<HTMLTableCellElement, TableMoreCellProps>
   ({ label, open, onOpenChange, className, children, ...props }, ref) => {
     const ctx = React.useContext(TableContext);
     return (
-      <td ref={ref} data-slot="table-more-cell" className={cn(CELL, BODY_CELL, "w-20 py-x0_5", ctx.rowHeight === "rich" && BODY_RICH, className)} {...props}>
+      <td ref={ref} data-slot="table-more-cell" className={cn(CELL, BODY_CELL, "w-[80px] py-x0_5", ctx.rowHeight === "rich" && BODY_RICH, className)} {...props}>
         <div className="flex items-center">
           <ResponsiveMenu open={open} onOpenChange={onOpenChange}>
             <ResponsiveMenuTrigger asChild>

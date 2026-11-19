@@ -183,6 +183,7 @@ import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNav
 | 본문 스크롤 | 본문만 스크롤됩니다 — 위로 스크롤되면 머리 아래 선이 생깁니다. 끝 흐림(`scrollFog`)은 걸었으면 늘 그대로입니다 |
 | 닫힌 뒤 | 300ms 로 나가고, 초점은 연 자리(☰ · 트리거)로 돌아갑니다 |
 | 열린 동안 | 뒤 화면을 보조 기술에서 숨기고 스크롤을 잠급니다. 초점은 패널 안을 돕니다 |
+| 글자 크기 설정 | 제목 · 설명 · 본문 · 바닥 버튼 글이 커집니다. 폭은 그대로 두고 줄을 바꿔 받으며, 머리는 최소 높이라 글을 따라 늘어납니다. 닫기 버튼(상자 · 아이콘)은 px 그대로이고 제목 첫 줄 가운데에 섭니다 |
 
 ## Accessibility
 
@@ -190,6 +191,7 @@ import { SideNavigationContent, SideNavigationGroup, SideNavigationItem, SideNav
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 제목 `fg-neutral` 떠 있는 표면(`bg-layer-floating`) 위 16.41 · 다크 11.62, 설명 `fg-neutral-muted` 7.11 · 6.67, 주 메뉴 항목 이름 7.11 · 6.67 · 지금 항목 15.20 · 10.32 ✓ |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 닫기 아이콘 `fg-neutral-subtle` 5.50 · 5.27 ✓, 주 메뉴 아이콘 같은 값 ✓. 키보드 포커스 링 Desk 8.38 · 5.28 · HR 8.17 · 5.26 ✓ |
+| **WCAG 1.4.4** Resize text | 제목 · 설명 · 본문 · 바닥 버튼 글이 글자 크기 설정을 따라 커지고, 패널 폭은 그대로 두어 줄을 바꿔 받습니다 ✓. 닫기 아이콘은 글이 아니라 대상이 아닙니다 |
 | **WCAG 2.4.3** Focus order | 열면 패널로, 닫으면 연 자리로 초점이 갑니다. 열린 동안 초점이 뒤 화면으로 나가지 않습니다 ✓ |
 | **WCAG 2.5.1** Pointer Gestures | 끌기 말고도 딤 누르기 · 닫기 · `Esc` · 뒤로 가기로 닫힙니다 ✓ |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 닫기 52 · 주 메뉴 항목 44 · 바닥 버튼 36 ✓ |

@@ -14,6 +14,7 @@ import { submitImplicitly, useFieldGroup, useFieldGroupState } from "@/component
  *   CheckboxGroup  묶음 — 세로로 쌓고 줄 사이 12
  *
  *   size   medium 20(라벨 14 · 줄 32, 기본) · large 24(라벨 16 · 줄 36)
+ *          칸 · 체크는 px 라 글자 크기 설정을 따르지 않는다. 라벨은 커지고 줄(최소 높이)이 따라 늘어난다
  *   shape  square(칸 + 체크, 기본) · ghost(칸 없이 체크만 — 선택 안 됨도 옅은 체크)
  *   tone   neutral(짙은 회색, 기본) · brand(서비스 핵심 흐름에서만)
  *   weight regular(기본) · bold(강조 · 묶음의 부모)
@@ -41,8 +42,8 @@ const checkmarkVariants = cva(
   {
     variants: {
       size: {
-        medium: "size-5 [--press-basis:24]",
-        large: "size-6 [--press-basis:24]",
+        medium: "size-[20px] [--press-basis:24]",
+        large: "size-[24px] [--press-basis:24]",
       },
       shape: {
         // 선택 안 됨: 테두리 칸. 선택 · 일부 선택: 테두리 없이 채움(톤 조합에서)
@@ -59,9 +60,9 @@ const checkmarkVariants = cva(
     },
     compoundVariants: [
       // 크기 × 모양 — 아이콘(Ghost 는 칸이 없어 크다)
-      { size: "medium", shape: "square", className: "[&_svg]:size-3" },
-      { size: "large", shape: "square", className: "[&_svg]:size-3.5" },
-      { size: "medium", shape: "ghost", className: "[&_svg]:size-3.5" },
+      { size: "medium", shape: "square", className: "[&_svg]:size-[12px]" },
+      { size: "large", shape: "square", className: "[&_svg]:size-[14px]" },
+      { size: "medium", shape: "ghost", className: "[&_svg]:size-[14px]" },
       { size: "large", shape: "ghost", className: "[&_svg]:size-[18px]" },
       // Square × 톤 — 선택 · 일부 선택의 채움, 누름 · 호버는 -pressed
       {

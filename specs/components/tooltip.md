@@ -120,6 +120,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 | 손가락으로 누르기 | 열지 않습니다 |
 | 이어서 옆 트리거로 | 하나가 열려 있거나 닫힌 지 300ms 안에 다른 트리거로 옮기면 기다리지 않고 모션 없이 바로 엽니다(`help-bubble.yaml` 의 `skipDelay`) |
 | 스크롤 | 트리거를 따라갑니다 |
+| 글자 크기 설정 | 글이 커집니다. 최대 폭 280 은 그대로 두고 줄을 바꿔 받아 높이가 늘어납니다 — "한 줄 · 두 줄" 쓰기 지침은 100% 기준이라 큰 글자에서 줄 수로 자르지 않습니다. 화살표는 px 그대로입니다 |
 
 ## Accessibility
 
@@ -127,6 +128,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 |---|---|
 | **WCAG 1.1.1** Non-text Content | 아이콘 버튼의 이름은 `aria-label` 입니다 — 툴팁이 없어도 이름이 있습니다 |
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 글 `fg-neutral-inverted` 말풍선(`bg-neutral-inverted`) 위 16.41 · 다크 13.42 ✓ |
+| **WCAG 1.4.4** Resize text | 글이 글자 크기 설정을 따라 커지고, 폭 280 안에서 줄을 바꿔 높이가 늘어납니다 ✓ |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 말풍선 면 페이지 위 16.41 · 다크 13.42 ✓ |
 | **WCAG 1.4.13** Content on Hover or Focus | 닫을 수 있고(`Esc`), 말풍선 위로 옮겨도 남고, 벗어나기 전까지 사라지지 않습니다 ✓ |
 | **WCAG 2.1.1** Keyboard | 키보드 초점으로 바로 열립니다 ✓ — 막힌 버튼은 초점을 받지 못하므로 이유는 가까운 글로 보입니다 |

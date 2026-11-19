@@ -281,7 +281,7 @@ const Field = React.forwardRef<HTMLDivElement, FieldProps>(
     const labelContent = (
       <>
         {label}
-        {showRequiredIndicator && <span aria-hidden className="ml-[0.125rem] mt-[0.25rem] inline-block size-[0.375rem] rounded-full bg-fg-critical align-top" />}
+        {showRequiredIndicator && <span aria-hidden className="ml-[2px] mt-[4px] inline-block size-[6px] rounded-full bg-fg-critical align-top" />}
         {!showRequiredIndicator && indicator != null && (
           <span className="pl-[0.25rem] align-bottom text-t4 font-normal leading-[var(--text-t5--line-height)] text-fg-neutral-subtle">{indicator}</span>
         )}
@@ -326,14 +326,14 @@ const Field = React.forwardRef<HTMLDivElement, FieldProps>(
             <div data-slot="field-footer" className="flex items-start gap-x2 px-x0_5 font-sans">
               {showError && (
                 <p id={errorId} aria-hidden className="m-0 flex min-w-0 text-t4 text-fg-critical">
-                  <CircleAlert aria-hidden className="mr-x1_5 mt-[calc((var(--text-t4--line-height)_-_1rem)/2)] size-4 shrink-0" />
+                  <CircleAlert aria-hidden className="mr-x1_5 mt-[calc((var(--text-t4--line-height)_-_16px)/2)] size-[16px] shrink-0" />
                   <span className="min-w-0">{errorMessage}</span>
                 </p>
               )}
               {showDescription && (
                 <p id={descriptionId} className="m-0 flex min-w-0 text-t4 text-fg-neutral-subtle">
                   {descriptionIcon != null && (
-                    <span aria-hidden className="mr-x1_5 mt-[calc((var(--text-t4--line-height)_-_1rem)/2)] flex shrink-0 [&>svg]:size-4">
+                    <span aria-hidden className="mr-x1_5 mt-[calc((var(--text-t4--line-height)_-_16px)/2)] flex shrink-0 [&>svg]:size-[16px]">
                       {descriptionIcon}
                     </span>
                   )}

@@ -184,6 +184,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 | 트리거 누르기 · `Enter` · `Space` | 펼치고 접습니다 — 초점은 트리거에 그대로, 저절로 스크롤하지 않습니다 |
 | `Tab` | 트리거 → 펼친 내용 안의 초점 가는 것 → 다음 |
 | Disabled | 누르기 · 키보드 불가. 펼친 채 막히면 내용은 그대로 보입니다 |
+| 글자 크기 설정 | 이름 · 설명 · 펼친 내용이 커지고 줄을 바꿔 받습니다 — 트리거 줄의 높이(최소 높이)가 글을 따라 늘어납니다. 꺾쇠는 크기를 그대로 둡니다 |
 | 모션 줄이기 | 높이 움직임 없이 150ms 서서히 · 꺾쇠는 바로 · 누름 축소 없음 |
 
 ## Accessibility
@@ -191,6 +192,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 | 기준 | 검증 |
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 이름 `fg-neutral` 16.41 · 다크 13.42(경고 상자 누름 바탕 위 13.04 · 9.59), 설명 `fg-neutral-subtle` 5.50 · 6.09(경고 상자 4.91 · 5.30) ✓ |
+| **WCAG 1.4.4** Resize text | 이름 · 설명 · 펼친 내용이 글자 크기 설정을 따라 커지고 줄을 바꿔 받습니다 ✓. 꺾쇠는 글이 아니라 크기를 그대로 둡니다 |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 꺾쇠 `fg-neutral-subtle` 5.50 · 6.09 · 경고 상자 누름 바탕 위 4.37 · 4.35 ✓. 키보드 포커스 링 Desk 8.38 · 6.10 · HR 8.17 · 6.07 ✓ |
 | **WCAG 1.4.1** Use of color | 펼침은 꺾쇠 방향과 보이는 내용으로 알립니다 ✓ |
 | **WCAG 2.1.1** Keyboard | `Tab` · `Enter` · `Space` ✓ |

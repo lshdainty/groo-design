@@ -39,6 +39,8 @@
 
 크기는 그 자리에 올 내용의 크기입니다. 글 · 숫자 자리는 그 글자의 줄 높이만큼 높습니다 — 14 글자(`t4`)면 19, 16 글자(`t5`)면 22 입니다. 글자보다 낮은 막대로 그리면 글이 오는 순간 줄이 밀립니다. 글 줄의 폭은 실제 글 길이와 비슷하게 두고, 여러 줄이면 마지막 줄을 짧게 둡니다.
 
+줄 높이는 올 글을 따릅니다. 글자 크기 설정을 따라 커지는 글의 자리는 스켈레톤도 같이 커지고, 글자 크기를 따르지 않는 자리(`-static` 글 — 달력 칸 · 차트 그림 · 배지 등)는 `-static` 줄 높이(`text="t3-static"`)로 그립니다.
+
 [그림: 글자 자리 = 글줄 높이 — 12 · 14 · 16 · 20 글자 옆에 같은 높이의 스켈레톤](../../site/components/specs/skeleton.tsx#text-height)
 
 [표: 면](skeleton.yaml#base.enabled@root)
@@ -187,7 +189,7 @@
 
 레시피 `recipes/shadcn/components/ui/skeleton.tsx` 를 씁니다. 조각은 `Skeleton`, 기다리는 영역은 `LoadingRegion`(시간표 · `aria-busy` · 오래 걸림 글 · 실패로 바꿈)이고, 앱 맨 위에 `LoadingAnnouncer` 를 한 번 둡니다(화면의 상태 글 하나). 아래 미리보기는 스펙 값으로 그린 모습입니다.
 
-- `Skeleton` — `radius`(`"0"` · `"4"` · `"6"` · `"8"` 기본 · `"12"` · `"16"` · `"full"` — 그림 자리는 Image Frame 의 `imageFrameRadius(폭)` 으로 고른다), `text`(`"t1"` ~ `"t14"` — 그 글자의 줄 높이를 높이로, 모서리 8), 크기 · 폭은 `className` 으로 줍니다. 늘 `aria-hidden` 이고, 글 자리(`span` · `p`) 안에도 둘 수 있게 `span`(블록)으로 그립니다.
+- `Skeleton` — `radius`(`"0"` · `"4"` · `"6"` · `"8"` 기본 · `"12"` · `"16"` · `"full"` — 그림 자리는 Image Frame 의 `imageFrameRadius(폭)` 으로 고른다), `text`(`"t1"` ~ `"t14"` — 그 글자의 줄 높이를 높이로, 모서리 8. 글자 크기를 따르지 않는 자리는 `"t1-static"` ~ `"t14-static"`), 크기 · 폭은 `className` 으로 줍니다. 늘 `aria-hidden` 이고, 글 자리(`span` · `p`) 안에도 둘 수 있게 `span`(블록)으로 그립니다.
 - `LoadingRegion` — `pending`(처음 받는 중 · 내용 없음) · `failed`(내용 없이 실패) · `fallback`(스켈레톤, 또는 `"circle"` — 영역 가운데 Progress Circle 40) · `failure`(실패 때 — Result Section) · `children`(내용). 1초까지 `fallback` 을 보이지 않게 그려 높이를 지키고, 5초에 오래 걸림 글을 더하고, `pending` 동안 `aria-busy` 를 답니다. 내용이 이미 있으면(같은 내용을 다시 받는 중) `pending` 이 아닙니다 — 내용을 그대로 둡니다.
 - `LoadingAnnouncer` — 화면의 상태 글 하나입니다. `LoadingRegion` 들이 여기에 알리고, 같은 글은 한 번만 읽습니다.
 - `useWaitPhase(pending)` — `"quiet"`(0 ~ 1초) · `"waiting"`(1초 ~) · `"slow"`(5초 ~). 영역을 직접 짤 때 씁니다.
@@ -307,11 +309,13 @@ new QueryClient({
 | 다 옴 | 스켈레톤을 걷고 내용이 투명도로 나타납니다(150ms, 웹) — 자리 크기는 그대로입니다. 앱은 전환 없이 바로 바꿉니다 |
 | 모션 줄이기 | 띠가 멈추고 면만 남습니다 — 시간표 · 상태 글은 그대로입니다 |
 | 누르기 · 키보드 | 없습니다 — 스켈레톤은 초점을 받지 않습니다 |
+| 글자 크기 설정 | 글 자리의 높이가 올 글의 줄 높이를 따라 커집니다(`-static` 자리는 그대로). 오래 걸림 글도 커지고 줄을 바꿔 받습니다 |
 
 ## Accessibility
 
 | 기준 | 검증 |
 |---|---|
+| **WCAG 1.4.4** Resize text | 오래 걸림 글은 글자 크기 설정을 따라 커집니다 ✓. 스켈레톤 면은 글이 아니라 대상이 아니고, 높이는 올 글과 같이 커져 글이 와도 줄이 밀리지 않습니다 |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 스켈레톤은 장식(`aria-hidden`)이라 기준 밖입니다 — 흰 면 위 1.08 · 다크 1.30(떠 있는 면 1.13), 띠가 지나가며 모양이 드러납니다. 기다리는 상태는 상태 글이 알립니다 |
 | **WCAG 2.2.2** Pause, Stop, Hide | 진행을 알리는 반복이라 기준의 예외지만, 10초면 실패로 바뀌어 멈추고 모션 줄이기면 처음부터 멈춥니다 ✓ |
 | **WCAG 2.3.3** Animation from Interactions | 모션 줄이기면 띠를 멈춥니다 ✓ |

@@ -69,7 +69,7 @@ rules:
         gap: { value: $spacing-x2, note: "검색칸 ↔ 결과 목록 8" }
       field:
         variant: { value: underline, note: "Input 밑줄형(input.yaml) — 화면(시트)에 입력이 하나뿐인 목록 위 검색. 아래 1px stroke-neutral-weak, 입력 중 2px stroke-neutral-contrast · 모서리 · 좌우 여백 없음. 앞 돋보기 · 지우기 · placeholder \"{무엇} 검색\" · 이름 \"검색\"" }
-        height: { value: 40px, note: "large — 위아래 8 · 글 18 / 24(t6) · 앞 아이콘 24 · 지우기 22(누르는 영역 44) · 사이 10" }
+        minHeight: { value: 40px, note: "large · 최소 높이 — 글자가 커지면 칸이 글을 따라 높아지고 한 줄을 지킨다(넘치면 칸 안에서 가로로 스크롤). 위아래 8 · 글 18 / 24(t6) · 앞 아이콘 24 · 지우기 22(누르는 영역 44) · 사이 10" }
         marginX: { value: $spacing-x6, note: "좌우 24 — 밑줄형은 좌우 여백이 없어 돋보기가 줄의 앞 붙이개와 한 줄에 섭니다" }
         position: { value: sticky, note: "위에 붙습니다 — 목록만 스크롤" }
       results:
@@ -121,7 +121,7 @@ rules:
   - when: { size: medium }
     enabled:
       field:
-        height: { value: 34px, note: "medium — 위아래 6 · 글 16 / 22(t5) · 앞 아이콘 20 · 지우기 18 · 사이 8" }
+        minHeight: { value: 34px, note: "medium · 최소 높이(large 비고) — 위아래 6 · 글 16 / 22(t5) · 앞 아이콘 20 · 지우기 18 · 사이 8" }
 
   # ── 놓인 자리 ─────────────────────────────────────────
   - when: { placement: sheet }

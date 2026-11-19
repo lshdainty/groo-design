@@ -33,11 +33,11 @@ import { cn } from "@/lib/utils";
 
 const toggleVariants = cva(
   [
-    "relative inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-r2 border-0 bg-transparent p-0",
+    "relative inline-flex size-[40px] shrink-0 cursor-pointer items-center justify-center rounded-r2 border-0 bg-transparent p-0",
     // 누르는 영역 44 — 보이는 40 둘레로 2 씩
-    "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+    "before:absolute before:left-1/2 before:top-1/2 before:size-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
     // 아이콘 20 · 끔 선 2 · 켬 선 2.5(막혀도 그대로)
-    "[&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0 [&_svg]:[stroke-width:2] aria-pressed:[&_svg]:[stroke-width:2.5]",
+    "[&_svg]:pointer-events-none [&_svg]:size-[20px] [&_svg]:shrink-0 [&_svg]:[stroke-width:2] aria-pressed:[&_svg]:[stroke-width:2.5]",
     // 바탕은 color-transition, 축소는 pressed-scale
     "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
     "[--press-basis:40] active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",

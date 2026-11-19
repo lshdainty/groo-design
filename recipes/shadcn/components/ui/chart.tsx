@@ -31,7 +31,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRow
  *
  * 색: 차트 10색(라이트 팔레트 700 · 다크 800-dark — var(--color-chart-{색})). 배정 순서 blue → green → orange → violet → pink → indigo → red →
  *   yellow → brown, 회색은 "기타" 전용(색이 없다고 주지 않는다). 수입 blue · 지출 red.
- * 축 · 격자: 눈금 11 / 15 · 고정폭 숫자 · fg-neutral-subtle(이중 축의 눈금은 그 계열 색 — 글자 기준 4.5 를 넘는다). 가로 점선 격자만 —
+ * 축 · 격자: 눈금 11 / 15(px — 글자 크기 설정을 따르지 않는다) · 고정폭 숫자 · fg-neutral-subtle(이중 축의 눈금은 그 계열 색 — 글자 기준 4.5 를 넘는다). 가로 점선 격자만 —
  *   세로 격자 · 축 선 · 눈금 선 없음. 돈 축만 "만" 으로 줄인다(formatAxisWon). 오늘 뒤 날짜는 데이터에 넣지 않는다(0 으로 그리지 않는다).
  * 계열: 차트의 바로 아래 자식에 기본값을 넣는다(쓰는 쪽이 준 값이 이긴다) — Area · Line 선 2 · monotone · 점 없음(가리킨 자리에만
  *   계열 색 점 r 4 + 카드 면 색 테두리 2 = 10), Area 의 면은 같은 색 25% → 0% 세로 그라디언트 · Bar 최대 폭 28 · 위 모서리 4 ·
@@ -47,16 +47,17 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRow
  *   마지막 하나(켠 계열이 하나)는 끌 수 없다 — 색 그대로 · aria-disabled · 커서 not-allowed · 축소 없음.
  * 도넛 범례 줄: 44 이상 · 색 네모 10 ↔ 8 · 이름 14 fg-neutral · % 14 fg-neutral-subtle · 금액 14 · 700 · "원". 누르는 줄은 List 줄과 같다 —
  *   카드 본문(여백 24) 안에서 줄을 카드 끝까지 내고(글자는 그대로 24 에 선다), 호버 · 누름 바탕 bg-layer-default-pressed 는 좌우 6 들어온
- *   모서리 10(카드 16 − 6 — List 의 동심 모서리). 키보드 포커스에만 안쪽 2px 링. 가운데 합계 16 / 22 · 700 + 위 라벨 12.
+ *   모서리 10(카드 16 − 6 — List 의 동심 모서리). 키보드 포커스에만 안쪽 2px 링. 가운데 합계 16 / 22 · 700 + 위 라벨 12(-static).
  * 열지도: 왼쪽 시간대 라벨 열 56(이름 13 · 700 + 시간 11 · fg-neutral-subtle) + 칸, 위 요일 머리 12 · fg-neutral-subtle. 칸은 정사각형 ·
  *   모서리 4 · 사이 6. 세기 다섯 — bg-brand-solid 를 카드 면에 18 · 35 · 55 · 76 · 100% 섞는다(가장 큰 값의 8 · 22 · 45 · 75% 에서 끊는다),
- *   값이 없으면 bg-neutral-weak. 가장 큰 칸에 고리를 두르지 않는다(포커스 링과 헷갈린다).
+ *   값이 없으면 bg-neutral-weak. 가장 큰 칸에 고리를 두르지 않는다(포커스 링과 헷갈린다). 라벨 · 머리 · 칸 글은 -static 이다.
  *   칸 폭(ResizeObserver 로 잰다)이 textMinCellWidth(112) 이상일 때만 칸에 원까지(11 / 15 · 700 · 고정폭 숫자, 빈 칸은 "—" fg-neutral-subtle),
  *   좁으면 글 없이 세기 색만 — 글자를 줄이거나 돈을 줄여 쓰지 않는다. 칸 글자색은 단계마다 한 번 정한다 — 그 단계 바탕 위 fg-neutral 이
  *   4.5 를 넘으면 fg-neutral, 아니면 static-white(Desk · HR 라이트 76 · 100% 가 흰 글자, 다크는 모두 fg-neutral).
  *   툴팁(머리 tooltipLabel · 줄 "■ {valueLabel} 값", 네모는 그 칸의 세기 색)은 가리키면(마우스) · 누르면(터치 — 다른 곳을 누를 때까지) ·
  *   키보드로 옮기면 뜬다 — 글이 보이는 넓은 칸에서도. 키보드: 상자(Tab 한 칸)에서 ← → 요일 · ↑ ↓ 시간대(처음 누르면 첫 칸), 지금 칸에
  *   바깥 2px 링(띄움 2), Esc · 떠나면 닫는다. 툴팁은 화면 위 떠 있는 층(z-floating 200, 포털)이라 카드 모서리에 잘리지 않는다.
+ * 글자 크기: 차트 그림 안 글(축 눈금 · 막대 위 값 · 도넛 가운데 · 열지도)은 따르지 않는다(-static). 지표 타일 · 툴팁 · 도넛 범례 줄은 커진다.
  * 보조 기술: 차트 · 열지도 상자는 role="img" + 요약 이름, 범례(지표 타일 · 목록)가 대체(legendId → aria-describedby), 날짜마다 값은 표로 보기.
  */
 
@@ -436,7 +437,7 @@ const TOOLTIP_SURFACE = "flex min-w-[128px] flex-col gap-x1 rounded-r3 bg-bg-lay
 function TooltipRow({ swatch, name, value }: { swatch: string | undefined; name: React.ReactNode; value: React.ReactNode }) {
   return (
     <div data-slot="chart-tooltip-row" className="flex items-center text-t3">
-      <span aria-hidden data-slot="chart-tooltip-swatch" className="mr-x1_5 size-2 shrink-0 rounded-[2px]" style={{ background: swatch }} />
+      <span aria-hidden data-slot="chart-tooltip-swatch" className="mr-x1_5 size-[8px] shrink-0 rounded-[2px]" style={{ background: swatch }} />
       <span data-slot="chart-tooltip-label" className="text-fg-neutral-subtle">
         {name}
       </span>
@@ -547,7 +548,7 @@ const ChartLegendTiles = React.forwardRef<HTMLDivElement, ChartLegendTilesProps>
                 }}
               >
                 <span className="flex items-center gap-x1_5 text-t3 text-fg-neutral-subtle">
-                  <span aria-hidden data-slot="chart-legend-dot" className={cn("size-2 shrink-0 rounded-full", DOT_BG[item.color])} />
+                  <span aria-hidden data-slot="chart-legend-dot" className={cn("size-[8px] shrink-0 rounded-full", DOT_BG[item.color])} />
                   {item.label}
                 </span>
                 <span data-slot="chart-legend-total" className="mt-x0_5 text-t5 font-bold tabular-nums text-fg-neutral">
@@ -593,7 +594,7 @@ const LEGEND_ROW_PRESSABLE = [
 function DonutLegendBody({ item }: { item: ChartDonutLegendItem }) {
   return (
     <>
-      <span aria-hidden data-slot="chart-donut-swatch" className={cn("size-2.5 shrink-0 rounded-[2px]", DOT_BG[item.color])} />
+      <span aria-hidden data-slot="chart-donut-swatch" className={cn("size-[10px] shrink-0 rounded-[2px]", DOT_BG[item.color])} />
       <span data-slot="chart-donut-label" className="min-w-0 flex-1 text-fg-neutral">
         {item.label}
       </span>
@@ -672,8 +673,8 @@ function ChartDonutCenter({ label, amount, onFitChange, className, ...props }: C
       {...props}
     >
       <div ref={textRef} className="flex w-max flex-col items-center text-center font-sans">
-        {label != null && <span className="text-t2 text-fg-neutral-subtle">{label}</span>}
-        <span className="whitespace-nowrap text-t5 font-bold tabular-nums text-fg-neutral">{amount}</span>
+        {label != null && <span className="text-t2-static text-fg-neutral-subtle">{label}</span>}
+        <span className="whitespace-nowrap text-t5-static font-bold tabular-nums text-fg-neutral">{amount}</span>
       </div>
     </div>
   );
@@ -915,15 +916,15 @@ const ChartHeatmap = React.forwardRef<HTMLDivElement, ChartHeatmapProps>(
       >
         <span aria-hidden />
         {columns.map((column) => (
-          <span key={column.key} aria-hidden data-slot="chart-heatmap-column" className="text-center text-t2 text-fg-neutral-subtle">
+          <span key={column.key} aria-hidden data-slot="chart-heatmap-column" className="text-center text-t2-static text-fg-neutral-subtle">
             {column.label}
           </span>
         ))}
         {rows.map((row, r) => (
           <React.Fragment key={row.key}>
             <span aria-hidden data-slot="chart-heatmap-row" className="flex min-w-0 flex-col justify-center">
-              <span className="text-t3 font-bold text-fg-neutral">{row.label}</span>
-              {row.sub != null && <span className="text-t1 text-fg-neutral-subtle">{row.sub}</span>}
+              <span className="text-t3-static font-bold text-fg-neutral">{row.label}</span>
+              {row.sub != null && <span className="text-t1-static text-fg-neutral-subtle">{row.sub}</span>}
             </span>
             {columns.map((column, c) => {
               const value = values[r]?.[c];
@@ -940,7 +941,7 @@ const ChartHeatmap = React.forwardRef<HTMLDivElement, ChartHeatmapProps>(
                   data-step={step}
                   data-active={isActive ? active.source : undefined}
                   className={cn(
-                    "flex aspect-square min-w-0 items-center justify-center overflow-hidden rounded-r1 text-t1 font-bold tabular-nums whitespace-nowrap",
+                    "flex aspect-square min-w-0 items-center justify-center overflow-hidden rounded-r1 text-t1-static font-bold tabular-nums whitespace-nowrap",
                     step < 0 ? "bg-bg-neutral-weak text-fg-neutral-subtle" : HEAT_STEP_BG[step],
                     step >= 0 && (text[step] === "white" ? "text-static-white" : "text-fg-neutral"),
                     // 키보드로 온 칸 — 바깥 2px 링(띄움 2). 가장 큰 칸의 고리는 두지 않는다

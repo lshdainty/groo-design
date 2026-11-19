@@ -66,7 +66,7 @@ rules:
         transitionDuration: $motion-duration-color-transition
         transitionEasing: $motion-ease-easing
       label:
-        typography: { value: $text-t4, note: "세 크기 모두 14 / 19 — 폰트 크기 설정을 따른다. 큰 글자에서 상자 — 웹은 rem 이라 높이 · 여백 · 아이콘 · 지우기가 배율대로 커진다(200% 에서 medium 72 · 지우기 28). 앱은 높이가 최소 높이라 글을 따라 늘어나고(글 줄 높이 + 위아래 (높이 − 19) ÷ 2 — medium 200% 에서 38 + 8.5 × 2 = 55), 여백 · 아이콘 · 지우기는 그대로다. 어느 쪽도 글이 상자를 넘지 않는다. 보통 글자(100%)에서는 두 플랫폼 모두 32 · 36 · 40 그대로다" }
+        typography: { value: $text-t4, note: "세 크기 모두 14 / 19 — 글자 크기 설정을 따른다. 큰 글자에서 칩은 높이가 최소 높이라 글을 따라 늘어나고(글 줄 높이 + 위아래 (높이 − 19) ÷ 2 — medium 200% 에서 38 + 8.5 × 2 = 55), 좌우 여백 · 아이콘 · 지우기는 그대로다(웹 · 앱 같음). 줄은 하나를 지키고 글이 상자를 넘지 않는다. 보통 글자(100%)에서는 32 · 36 · 40 그대로다" }
         fontWeight: 500
         overflow: { value: 말줄임(…), note: "칩이 줄 폭(root.maxWidth)에 닿을 때만 — 한 줄 그대로 끝을 줄인다. 보조 기술 · 지우기 이름(\"{글} 지우기\")은 글 전체를 읽는다" }
       removeButton:
@@ -107,21 +107,21 @@ rules:
   # ── 크기 ──────────────────────────────────────────────
   - when: { size: small }
     enabled:
-      root: { height: { value: 32px, note: "웹 rem — 큰 글자에서 배율대로. 앱은 최소 높이 — 글을 따라 늘어난다(label 비고)" }, paddingX: { value: $spacing-x3, note: "가장자리 ↔ 글 12 — 아이콘이 있어도 가장자리 ↔ 아이콘 12" } }
+      root: { minHeight: { value: 32px, note: "최소 높이 — 큰 글자에서 글을 따라 늘어난다(label 비고)" }, paddingX: { value: $spacing-x3, note: "가장자리 ↔ 글 12 — 아이콘이 있어도 가장자리 ↔ 아이콘 12" } }
       prefixIcon: { size: 14px }
       suffixIcon: { size: 14px }
       removeButton: { size: { value: 14px, note: "누르는 영역 24 × 24" } }
       icon: { size: 14px }
   - when: { size: medium }
     enabled:
-      root: { height: { value: 36px, note: "웹 rem — 큰 글자에서 배율대로. 앱은 최소 높이 — 글을 따라 늘어난다(label 비고)" }, paddingX: { value: $spacing-x3_5, note: "가장자리 ↔ 글 14" } }
+      root: { minHeight: { value: 36px, note: "최소 높이 — 큰 글자에서 글을 따라 늘어난다(label 비고)" }, paddingX: { value: $spacing-x3_5, note: "가장자리 ↔ 글 14" } }
       prefixIcon: { size: 16px }
       suffixIcon: { size: 14px }
       removeButton: { size: { value: 14px, note: "누르는 영역 24 × 24" } }
       icon: { size: 16px }
   - when: { size: large }
     enabled:
-      root: { height: { value: 40px, note: "웹 rem — 큰 글자에서 배율대로. 앱은 최소 높이 — 글을 따라 늘어난다(label 비고)" }, paddingX: { value: $spacing-x4, note: "가장자리 ↔ 글 16" } }
+      root: { minHeight: { value: 40px, note: "최소 높이 — 큰 글자에서 글을 따라 늘어난다(label 비고)" }, paddingX: { value: $spacing-x4, note: "가장자리 ↔ 글 16" } }
       prefixIcon: { size: 16px }
       suffixIcon: { size: 16px }
       removeButton: { size: { value: 16px, note: "누르는 영역 24 × 24" } }

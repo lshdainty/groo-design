@@ -138,6 +138,7 @@ import { PageBanner } from "@/components/ui/page-banner"
 | 닫기 | 바로 사라집니다 — 닫은 것을 기억해 다시 띄우지 않습니다. 초점은 다음 요소로 옮깁니다 |
 | 스크롤 | 기본은 같이 올라갑니다. 맨 위에 붙일 때는 머리 아래에 붙습니다 |
 | 나중에 나타남(연결이 끊김) | 경고 · 위험이면 보조 기술에 알립니다(`role="alert"`) |
+| 글자 크기 설정 | 제목 · 본문 · 버튼 글이 커지고 줄을 바꿔 받습니다 — 띠는 최소 높이라 글을 따라 늘어납니다. 앞 아이콘 · 뒤 화살표 · 닫기 상자는 px 그대로이고, 앞 아이콘은 글 첫 줄 가운데에 섭니다 |
 
 ## Accessibility
 
@@ -145,6 +146,7 @@ import { PageBanner } from "@/components/ui/page-banner"
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 옅은 바탕 `fg-*-contrast` 5.65 ~ 5.72 · 7.78 ~ 7.84, 짙은 바탕 흰 글 5.06 ~ 5.09 · 5.77 ~ 5.79, neutral 짙음 16.41 · 13.42 ✓ |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 포커스 링(안쪽) — 옅은 바탕은 `stroke-focus-ring` 3.91 이상 ✓, 짙은 바탕은 띠 글자색 4.93 이상 ✓(누름 바탕 포함). 띠 면은 장식입니다 |
+| **WCAG 1.4.4** Resize text | 제목 · 본문 · 버튼 글이 글자 크기 설정을 따르고, 띠가 글을 따라 늘어나 잘리지 않습니다 ✓. 아이콘 · 닫기 상자는 크기를 그대로 둡니다(아이콘은 1.4.4 의 대상이 아닙니다) |
 | **WCAG 2.5.8** Target Size — Minimum(AA ≥ 24×24) | 버튼 높이 40 · 닫기 40 ✓ |
 | **ARIA** | 띠는 문단(`role` 없음), Actionable 은 `<button type="button">`, 버튼은 모두 `type="button"`. 나중에 나타나는 경고 · 위험은 `role="alert"`. 닫기 이름 "닫기" |
 

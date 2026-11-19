@@ -124,6 +124,7 @@ import { Textarea } from "@/components/ui/textarea"
 | `Enter` | 줄을 바꿉니다. 폼을 제출하지 않습니다. |
 | Disabled | 포커스 · 입력을 받지 않습니다. 커서는 not-allowed 입니다. |
 | Readonly | 포커스 · 복사 · 스크롤은 되고 입력은 되지 않습니다. 포커스 표시가 없습니다(Input 과 같습니다). |
+| 글자 크기 설정 | 값 · placeholder 가 커지고 줄을 바꿔 받습니다. 최소 높이(3줄 · 2줄)는 글 줄 높이를 따라 커집니다. 폭은 그대로입니다. |
 
 ## Accessibility
 
@@ -131,6 +132,7 @@ import { Textarea } from "@/components/ui/textarea"
 |---|---|
 | **WCAG 1.4.3** Color contrast(글자 ≥ 4.5:1) | 값 `fg-neutral` 16.41 · 13.42, 읽기 전용 바탕 위 값 15.20 · 10.32 ✓. placeholder `fg-placeholder` 4.18 · 4.13(시트 다크 3.58) — 4.5:1 에 못 미치는 것을 알고 쓰는 값입니다. 비활성 `fg-disabled` 는 기준 밖입니다(비활성 UI) |
 | **WCAG 1.4.11** Non-text contrast(≥ 3:1) | 포커스 테두리 16.41 · 13.42, 오류 5.06 · 6.08 ✓. 기본 1px 테두리(1.23 · 1.56)는 라벨 · placeholder 와 함께 칸을 알립니다 |
+| **WCAG 1.4.4** Resize text | 값 · placeholder 가 글자 크기 설정을 따라 커지고, 칸의 최소 높이도 따라 커집니다 ✓ |
 | **WCAG 1.4.10** Reflow | 자동 높이라 가로 스크롤 없이 글이 감깁니다 |
 | **WCAG 2.4.7** Focus visible | 편집 칸은 포커스하면 테두리가 2px 짙어집니다 ✓. 읽기 전용은 포커스 표시가 없습니다 ⚠ — 이유는 [Input](input.md) 의 같은 줄에 있습니다 |
 | **WCAG 2.5.5** Target Size — Enhanced(AAA ≥ 44×44) | 최소 높이 62 이상 ✓ |

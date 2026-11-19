@@ -62,7 +62,7 @@ rules:
         foreground: $color-fg-neutral-subtle
       resend:
         variant: { value: neutralWeak, note: "Button — 옅은 회색 채움" }
-        height: { value: 40px, note: "Button medium — 칸 옆이 아니라 아래에 둬 칸(52 · 40)과 높이를 맞출 일이 없다" }
+        height: { value: 40px, note: "최소 — Button medium, 글이 커지면 따라 높아진다. 칸 옆이 아니라 아래에 둬 칸(52 · 40)과 높이를 맞출 일이 없다" }
         marginTop: { value: $spacing-x3, note: "Field 꼬리(설명 · 오류) ↔ 단추 12. 왼쪽 맞춤" }
         cooldown: { value: 60초, note: "보낸 뒤 60초 동안 막는다(서버 COOLDOWN 60) — 남은 초를 1초마다 줄여 보인다" }
         focus: { value: 보내면 칸으로, note: "단추가 막히며 초점이 본문으로 빠지지 않게 — 코드를 보내면 초점을 코드 칸으로 옮긴다" }

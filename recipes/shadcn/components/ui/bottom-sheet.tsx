@@ -261,34 +261,36 @@ const CONTENT = [
   "motion-reduce:data-[vaul-drawer]:data-[vaul-snap-points]:[--sheet-move-duration:0s]",
 ].join(" ");
 
-// 닫기 — 28 원 · 아이콘 14, 누르는 영역 44(::before). 누르면 bg-neutral-weak-pressed + 2px 거리 축소(기준 28 → 0.929)
+// 닫기 — 28 원 · 아이콘 14(px), 누르는 영역 44(::before). 누르면 bg-neutral-weak-pressed + 2px 거리 축소(기준 28 → 0.929).
+// 원 위 24(글자 100%) — 큰 글자에서는 크기를 그대로 두고 제목 첫 줄 가운데(줄 높이 30 = 1.875rem 의 절반)를 따라 내려간다
 const CLOSE = [
-  "absolute right-global-gutter top-x6 flex size-7 cursor-pointer items-center justify-center rounded-full border-0 bg-bg-neutral-weak p-0 text-fg-neutral [&>svg]:size-3.5",
-  "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "absolute right-global-gutter top-[calc(var(--spacing-x6)+0.9375rem-15px)] flex size-[28px] cursor-pointer items-center justify-center rounded-full border-0 bg-bg-neutral-weak p-0 text-fg-neutral [&>svg]:size-[14px]",
+  "before:absolute before:left-1/2 before:top-1/2 before:size-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "hover:bg-bg-neutral-weak-pressed active:bg-bg-neutral-weak-pressed [--press-basis:28] active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 
 // 머리 왼쪽 ←(onBack) — 보이는 원 40 · 아이콘 24 · 누르는 영역 44(::before). 아이콘이 화면 여백 24 에 오도록 원을 8 당기고, 세로는 제목 첫 줄(30)
-// 가운데(위 24 + 15)에 맞춘다. 제목은 원 오른쪽 사이 4 에서 시작한다(36 = 2.25rem — 글자 배율을 따른다). 누르면 bg-neutral-weak-pressed(축소 없음), 호버도 누름 색
+// 가운데(위 24 + 15 — 15 는 0.9375rem 이라 큰 글자에서 제목 첫 줄을 따라 내려간다)에 맞춘다. 원 · 아이콘은 px 그대로다. 제목은 원 오른쪽 사이 4 에서 시작한다(36). 누르면 bg-neutral-weak-pressed(축소 없음), 호버도 누름 색
 const BACK = [
-  "absolute left-[calc(var(--spacing-global-gutter)-0.5rem)] top-[calc(var(--spacing-x6)+0.9375rem)] z-1 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-fg-neutral [&>svg]:size-6",
-  "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "absolute left-[calc(var(--spacing-global-gutter)-8px)] top-[calc(var(--spacing-x6)+0.9375rem)] z-1 flex size-[40px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-fg-neutral [&>svg]:size-[24px]",
+  "before:absolute before:left-1/2 before:top-1/2 before:size-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
   "hover:bg-bg-neutral-weak-pressed active:bg-bg-neutral-weak-pressed",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
 ].join(" ");
 
-// 머리 오른쪽 동작(headerAction) — Button ghost 아이콘만 36 하나. 닫기 원(28) 왼쪽 사이 4 · 세로는 닫기 원 가운데(위 24 + 14),
+// 머리 오른쪽 동작(headerAction) — Button ghost 아이콘만 36 하나. 닫기 원(28) 왼쪽 사이 4 · 세로는 닫기 원 가운데(위 24 + 14 — 큰 글자에서는
+// 닫기 원과 함께 제목 첫 줄을 따라 내려간다),
 // 닫기 버튼이 없으면 닫기 자리(오른쪽 화면 여백). 제목은 남은 폭(닫기 자리 40 + 4 + 36 = 80, 닫기가 없으면 36 + 4 + 8 = 48)을 비운다(bottom-sheet.yaml 축 headerAction)
-const HEADER_ACTION = "absolute right-[calc(var(--spacing-global-gutter)+28px+var(--spacing-x1))] top-[calc(var(--spacing-x6)+14px)] z-1 flex -translate-y-1/2 items-center";
-const HEADER_ACTION_NO_CLOSE = "absolute right-global-gutter top-[calc(var(--spacing-x6)+14px)] z-1 flex -translate-y-1/2 items-center";
+const HEADER_ACTION = "absolute right-[calc(var(--spacing-global-gutter)+28px+var(--spacing-x1))] top-[calc(var(--spacing-x6)+14px+0.9375rem-15px)] z-1 flex -translate-y-1/2 items-center";
+const HEADER_ACTION_NO_CLOSE = "absolute right-global-gutter top-[calc(var(--spacing-x6)+14px+0.9375rem-15px)] z-1 flex -translate-y-1/2 items-center";
 
 // 손잡이 — 36 × 4 · 위 6 가운데, 누르는 영역 44. 누름 색은 두지 않는다(bottom-sheet.yaml)
 const HANDLE = [
-  "absolute left-1/2 top-x1_5 h-1 w-9 -translate-x-1/2 cursor-pointer rounded-full bg-stroke-neutral-weak",
-  "before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+  "absolute left-1/2 top-x1_5 h-[4px] w-[36px] -translate-x-1/2 cursor-pointer rounded-full bg-stroke-neutral-weak",
+  "before:absolute before:left-1/2 before:top-1/2 before:size-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
 ].join(" ");
 
 // 손잡이를 누르면 다음(더 높은) 스냅 높이로, 가장 높은 높이에서는 닫는다(vaul 의 Handle 과 같다).
@@ -423,7 +425,7 @@ const BottomSheetContent = React.forwardRef<React.ElementRef<typeof DrawerPrimit
                   ? "pr-[calc(var(--spacing-x10)+var(--spacing-x1)+36px)]"
                   : "pr-[calc(36px+var(--spacing-x1)+var(--spacing-x2))]"
                 : showCloseButton && "pr-x10",
-              onBack && "pl-[2.25rem]",
+              onBack && "pl-[36px]",
             )}
           >
             {title}

@@ -342,7 +342,7 @@ export function atLook(brand: Brand = 'desk'): AtLook {
     remove,
     mask,
     dropzone: {
-      h: k.len(dz['dropzone.height'], 'dropzone.height'),
+      h: k.len(dz['dropzone.minHeight'], 'dropzone.minHeight'),
       gap: k.len(dz['dropzone.gap'], 'dropzone.gap'),
       padX: k.len(dz['dropzone.paddingX'], 'dropzone.paddingX'),
       radius: k.len(dz['dropzone.radius'], 'dropzone.radius'),

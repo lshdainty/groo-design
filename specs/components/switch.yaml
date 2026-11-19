@@ -67,7 +67,7 @@ rules:
       label:
         fontFamily: $font-sans
         fontWeight: 500
-        foreground: $color-fg-neutral
+        foreground: { value: $color-fg-neutral, note: "글자 크기 설정을 따라 커지고 줄을 바꿔 받습니다 — 스위치(트랙 · 엄지, px)는 라벨 첫 줄 가운데에 섭니다" }
     pressed:
       switchmark:
         scale: { value: 세로 2px 축소, note: "스위치만 줄입니다 — 기준 길이 max(높이, 폭 ÷ 4, 24) 에서 2px. 색은 바뀌지 않습니다(Feedback 의 눌림 피드백)" }

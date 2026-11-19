@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
  *   role         나중에 나타나는 경고 · 위험(연결이 끊김)은 role="alert"
  *
  * 띠 — 화면 폭 · 모서리 0 · 좌우 화면 여백 24(spacing-global-gutter — 띠 안 글이 페이지 글과 같은 선) · 위아래 10 · 최소 40.
- *   아이콘 16 은 위 2 를 두어 첫 줄 가운데에 붙고(여러 줄이어도 첫 줄), 아이콘 ↔ 글 8. 제목(700) · 본문(500)은 t4 한 문단
+ *   아이콘 16 은 위 2(글자를 키워 줄이 높아지면 늘어난 만큼의 절반을 더한다)를 두어 첫 줄 가운데에 붙고(여러 줄이어도 · 글자를 키워도 첫 줄), 아이콘 ↔ 글 8. 제목(700) · 본문(500)은 t4 한 문단
  *   (사이 띄어쓰기 두 칸). 본문과 버튼은 한 줄에 양 끝 — 안 들어가면 버튼이 다음 줄 본문 시작선으로 간다(줄 사이 6).
  *   버튼은 t3 · 700 글 버튼 — 사방 11 을 두고 바깥 −11 로 되돌려 누르는 높이 40 에 띠 높이는 그대로. 뒤 화살표 16 · 닫기는
  *   띠 가운데에 서고 글과 8. 닫기는 투명 상자 40 · 모서리 8, 바깥 −12(아이콘은 오른쪽 끝에서 24).
@@ -149,7 +149,7 @@ const TONE_ICON: Record<PageBannerTone, typeof Info> = {
 // 안의 내용 — 아이콘 · 글 · 화살표 · 닫기. Actionable 을 누르는 동안 이 층만 준다(바탕은 그대로)
 const SCALE = "relative flex min-w-0 flex-1 items-start gap-x2 [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]";
 const SCALE_PRESS = "group-active/page-banner:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-active/page-banner:[scale:1]";
-const ICON = "mt-x0_5 flex shrink-0 [&>svg]:size-4";
+const ICON = "mt-[calc(var(--spacing-x0_5)+(var(--text-t4--line-height)_-_19px)/2)] flex shrink-0 [&>svg]:size-[16px]";
 // 글과 버튼 — 한 줄에 양 끝, 안 들어가면 버튼이 다음 줄 시작선으로(줄 사이 6)
 const CONTENT = "flex min-w-0 flex-1 flex-wrap items-center justify-between gap-x1_5";
 const BODY = "min-w-0 text-t4 font-medium break-keep [overflow-wrap:break-word]";
@@ -161,10 +161,10 @@ const BUTTON = [
   "[--press-basis:40] [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
   "focus-visible:outline-2 focus-visible:-outline-offset-2",
 ].join(" ");
-const CHEVRON = "size-4 shrink-0 self-center";
+const CHEVRON = "size-[16px] shrink-0 self-center";
 // 닫기 — 투명 상자 40 · 모서리 8 · 바깥 −12, 바탕 없이 2px 거리 축소(기준 40). 링 색은 RING
 const CLOSE = [
-  "relative -m-x3 flex size-10 shrink-0 cursor-pointer items-center justify-center self-center rounded-r2 [&>svg]:size-4",
+  "relative -m-x3 flex size-[40px] shrink-0 cursor-pointer items-center justify-center self-center rounded-r2 [&>svg]:size-[16px]",
   "[--press-basis:40] [transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
   "focus-visible:outline-2 focus-visible:-outline-offset-2",
 ].join(" ");

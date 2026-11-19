@@ -102,7 +102,7 @@ const SEGMENTED_LABEL = [
 ].join(" ");
 
 // 알림 점 — 브랜드 글자색, 글 끝에서 2 · 글 위쪽. 띄워 두므로 칸 폭이 바뀌지 않는다. 고른 칸에는 그리지 않는다
-const SEGMENTED_NOTIFICATION = "pointer-events-none absolute left-[calc(100%_+_2px)] top-0 size-1.5 rounded-full bg-fg-brand";
+const SEGMENTED_NOTIFICATION = "pointer-events-none absolute left-[calc(100%_+_2px)] top-0 size-[6px] rounded-full bg-fg-brand";
 
 // 고른 값 — 칸이 고른 칸인지(tabIndex) 안다
 const SegmentedValueContext = React.createContext<string | null>(null);

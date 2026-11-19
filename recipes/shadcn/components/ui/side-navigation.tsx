@@ -41,7 +41,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  *   한 번에 하나만 열린다. 쌓임은 z-floating 200(L3), 모션은 Menu 와 같다(150ms enter 로 0.95 → 1 · 투명도, 100ms exit).
  *
  * 모양: 흰 면 bg-layer-default + 오른쪽 안쪽 1px stroke-neutral-subtle(그림자 없음), 화면 왼쪽 · 높이 전체(sticky) — 본문과 따로 스크롤.
- *   머리 64 · 안쪽 8, 마크 24 + 이름 t5 16 / 22 · 700(화면 끝에서 16). 접기 버튼 40 · 아이콘 18 fg-neutral-subtle · 모서리 8 · 누르는 영역 44,
+ *   머리 64 · 안쪽 8, 마크 24 + 이름 t5-static 16 / 22 · 700(화면 끝에서 16 — 이름은 글자 크기 설정을 따르지 않는다). 접기 버튼 40 · 아이콘 18 fg-neutral-subtle · 모서리 8 · 누르는 영역 44,
  *   위 12 · 오른쪽 12(접히면 8 — 56 의 가운데).
  *   내용 위 8 · 좌우 8 · 아래 24, 묶음 사이 8(접히면 1px 선 · 위아래 8 · 좌우 8). 묶음 이름 t4 14 / 19 · 700 · fg-neutral-muted · 안쪽 6.
  *   항목 최소 44 · 좌우 8 · 아이콘 20 fg-neutral-subtle ↔ 이름 12 · 이름 t4 · 500 · fg-neutral-muted · 위아래 6 · 모서리 10 — 긴 이름은 단어 단위로
@@ -258,7 +258,7 @@ const HEADER = [
   "[&:has(~[data-slot=side-navigation-content][data-scrolled])]:shadow-[inset_0_-1px_0_0_var(--color-stroke-neutral-subtle)]",
 ].join(" ");
 // 로고 — 마크 24 + 이름 t5 · 700, 화면 끝에서 16. 접기 버튼 자리(40 + 12)를 비운다
-const LOGO = "ml-x2 mr-[52px] flex min-w-0 items-center gap-x2 overflow-hidden whitespace-nowrap text-t5 font-bold text-fg-neutral [&>img]:size-[24px] [&>img]:shrink-0 [&>svg]:size-[24px] [&>svg]:shrink-0";
+const LOGO = "ml-x2 mr-[52px] flex min-w-0 items-center gap-x2 overflow-hidden whitespace-nowrap text-t5-static font-bold text-fg-neutral [&>img]:size-[24px] [&>img]:shrink-0 [&>svg]:size-[24px] [&>svg]:shrink-0";
 // 접기 버튼 — 40 · 아이콘 18 · 모서리 8 · 누르는 영역 44, 위 12 · 오른쪽 12(접히면 8)
 const TRIGGER = [
   "absolute top-x3 flex size-[40px] cursor-pointer items-center justify-center rounded-r2 border-0 bg-transparent p-0 text-fg-neutral-subtle [&>svg]:size-[18px]",
