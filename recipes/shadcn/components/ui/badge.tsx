@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
  * outline 테두리는 안쪽 1px(inset box-shadow)이라 상자 크기가 변하지 않는다.
  * 중립 weak 의 바탕은 회색 바탕(bg-layer-basement)과 같은 색이라 흰 표면(bg-layer-default) · 시트 위에 둔다 — 회색 위면 outline.
  *
- * 글은 글자 크기 설정을 따르고(t1 · t2 — rem) 최소 높이 20 · 24 는 px 그대로라, 글이 커지면 상자가 따라 커진다.
+ * 글은 글자 크기 설정을 따르지 않는다(t1-static · t2-static — 정해진 디자인 틀, Typography "그대로 두는 것").
  * 최대 폭이 없다 — 한 줄이고, 부모가 좁거나(flex 안) 쓰는 쪽이 폭을 막을 때만 글이 말줄임(…)한다. 글 전체는 DOM 에 남아
  * 보조 기술이 다 읽는다. 역할이 없는 글이라 앞뒤 글(줄 이름)과 이어 읽힌다. 앞 아이콘은 aria-hidden — 글자색을 따르고,
  * 크기는 배지가 정한다. 상태가 바뀌면 글 · 색이 바로 바뀐다(모션 없음).
@@ -48,8 +48,8 @@ const badgeVariants = cva(
         critical: "",
       },
       size: {
-        medium: "min-h-x5 rounded-r1 px-x1_5 py-x0_5 text-t1",
-        large: "min-h-x6 rounded-r1_5 px-x2 py-x1 text-t2",
+        medium: "min-h-x5 rounded-r1 px-x1_5 py-x0_5 text-t1-static",
+        large: "min-h-x6 rounded-r1_5 px-x2 py-x1 text-t2-static",
       },
     },
     compoundVariants: [
