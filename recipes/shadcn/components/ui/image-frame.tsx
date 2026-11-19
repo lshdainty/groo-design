@@ -377,8 +377,8 @@ const CARD_FACE_INITIAL = cn(
 // medium · large — 왼쪽 아래 회사 · 카드 이름
 const CARD_FACE_LABEL =
   "absolute inset-x-0 bottom-0 hidden flex-col px-x2_5 pb-x2 @min-[96px]/image-frame:flex @min-[240px]/image-frame:px-x4 @min-[240px]/image-frame:pb-x3_5";
-const CARD_FACE_ISSUER = "truncate text-t2 font-medium @min-[240px]/image-frame:text-t3";
-const CARD_FACE_NAME = "line-clamp-1 break-keep text-t4 font-bold [overflow-wrap:break-word] @min-[240px]/image-frame:line-clamp-2 @min-[240px]/image-frame:text-t5";
+const CARD_FACE_ISSUER = "truncate text-t2-static font-medium @min-[240px]/image-frame:text-t3-static";
+const CARD_FACE_NAME = "line-clamp-1 break-keep text-t4-static font-bold [overflow-wrap:break-word] @min-[240px]/image-frame:line-clamp-2 @min-[240px]/image-frame:text-t5-static";
 
 function CardFace({ issuer, name, institution }: { issuer: string; name: string; institution: InstitutionColor }) {
   return (
