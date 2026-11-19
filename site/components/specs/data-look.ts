@@ -635,7 +635,7 @@ export function searchLook(): SearchLook {
   const pr = resolveState(spec, {}, 'pressed');
   const tf = textFieldLook(brand).input;
   if (String(unbox(b['field.variant'])) !== 'underline') throw new Error(`${F} field.variant 가 underline 이 아니다 — 그림은 밑줄형으로 그린다`);
-  const heights = { large: len(b['field.height'], `${F} field.height`), medium: len(resolveState(spec, { size: 'medium' }, 'enabled')['field.height'], `${F} medium field.height`) };
+  const heights = { large: len(b['field.minHeight'], `${F} field.minHeight`), medium: len(resolveState(spec, { size: 'medium' }, 'enabled')['field.minHeight'], `${F} medium field.minHeight`) };
   same(heights.large, tf.sizes.underline.large.minHeight, `${F} 검색칸 large — input.yaml 밑줄형 large`);
   same(heights.medium, tf.sizes.underline.medium.minHeight, `${F} 검색칸 medium — input.yaml 밑줄형 medium`);
   const breakpoint = numIn(must(axisDesc(spec, 'size', 'large'), `${F} size.large 설명`), /(\d+)\s*미만/, `${F} size.large 설명`);

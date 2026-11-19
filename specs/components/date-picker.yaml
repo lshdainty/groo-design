@@ -108,7 +108,7 @@ rules:
         fontWeight: 700
         foreground: $color-fg-neutral
       wheel:
-        height: { value: 336px, note: "요일 줄 + 6주 자리(48 + 48 × 6)를 덮는다 — 열고 닫아도 달력 높이가 그대로다. Wheel Picker medium 44 × 7 = 308 을 가운데에(위아래 14). 휠 항목은 글자 크기 설정을 따르지 않는다. 열린 동안 이전 · 다음은 막힌다" }
+        height: { value: 336px, note: "요일 줄 48 + 6주 288 자리를 덮는다 — 열고 닫아도 달력 높이가 그대로다. Wheel Picker medium 44 × 7 = 308 을 가운데에(위아래 14). 휠 항목은 글자 크기 설정을 따르지 않는다. 열린 동안 이전 · 다음은 막힌다" }
         columns: { value: 연 120 · 월 96, note: "연은 오른쪽 · 월은 왼쪽 정렬로 가운데에 모은다 — 항목은 \"2026년\" · \"10월\"" }
         background: $color-bg-layer-floating
       footer:

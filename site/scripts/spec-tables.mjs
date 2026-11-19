@@ -592,7 +592,7 @@ export const PROP_LABEL_BY_COMPONENT = {
   SearchableList: {
     'root.gap': '검색칸 ↔ 결과',
     'field.variant': '검색칸 모양',
-    'field.height': '검색칸 높이',
+    'field.minHeight': '검색칸 최소 높이',
     'field.marginX': '검색칸 좌우 바깥 여백',
     'field.position': '검색칸 자리',
     'results.role': '결과 목록 역할',
