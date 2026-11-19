@@ -404,7 +404,7 @@ const OPTION = [
 ].join(" ");
 // 콘텐츠 — 위아래 12 · 좌우 24, 최소 48(라디오 24 가 있으면 내용이 채우고, 라디오가 없는 줄 — selectionMark false — 도 46 으로 줄지 않는다)
 const OPTION_CONTENT = [
-  "relative flex min-h-12 w-full items-center px-global-gutter py-x3",
+  "relative flex min-h-x12 w-full items-center px-global-gutter py-x3",
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
   "group-active/sl-option:[scale:calc(1-2/var(--press-basis))] motion-reduce:group-active/sl-option:[scale:1]",
 ].join(" ");

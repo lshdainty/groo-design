@@ -132,7 +132,7 @@ const REGION = [
 // 사라지는 동안은 누르지 않고, 끝난 모습(투명)을 지켜 걷기 전에 번쩍이지 않는다. duration-* 은 transition-duration 도
 // 주므로(transition-property 기본값 all) 띠는 transition-none — 포커스 링 · 색이 애니메이션 시간만큼 번지지 않는다
 const ROOT = [
-  "pointer-events-auto relative flex min-h-11 w-full max-w-[464px] items-center rounded-r2 bg-bg-neutral-inverted p-x2_5 font-sans text-fg-neutral-inverted transition-none",
+  "pointer-events-auto relative flex min-h-[44px] w-full max-w-[464px] items-center rounded-r2 bg-bg-neutral-inverted p-x2_5 font-sans text-fg-neutral-inverted transition-none",
   "focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-fg-neutral-inverted",
   "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:duration-[var(--motion-duration-d3)] data-[state=open]:ease-[var(--motion-ease-enter)] motion-safe:data-[state=open]:zoom-in-80",
   "data-[state=closed]:pointer-events-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:fill-mode-forwards data-[state=closed]:duration-[var(--motion-duration-d2)] data-[state=closed]:ease-[var(--motion-ease-exit)] motion-safe:data-[state=closed]:zoom-out-80",

@@ -189,6 +189,8 @@ Solid 의 옅은 바탕은 투명한 `bg-neutral-weak-alpha` 라 흰 표면에�
 
 레시피 `recipes/shadcn/components/ui/chip.tsx` 를 씁니다. 고르기 묶음은 [Field](field.md) 안에 둡니다(라벨이 묶음의 이름). 아래 미리보기는 스펙 값으로 그린 모습입니다.
 
+칩과 입력값 칩은 놓인 줄보다 넓어지지 않습니다(`max-w-full`). 글만 있는 자식은 `ChipLabel` 이 `span[data-slot=chip-label]`(`CHIP_LABEL` = `min-w-0 truncate`)로 감싸 줄 폭에 닿으면 끝을 "…" 로 줄이고, 입력값 칩의 글도 같은 클래스를 씁니다. 아이콘 · 요소가 섞인 자식은 그대로 둡니다. 높이 · 최소 폭 · 아이콘은 px 이고, 위아래 여백은 글이 있는 칩에만 둡니다(아이콘만 있는 칩은 원 그대로). 칩을 직접 짤 때(Chip Tabs 처럼) 글을 `ChipLabel` 로 감쌉니다.
+
 ### 하나 고르기
 
 [그림: 하나 고르기 — 거래 종류](../../site/components/specs/chip.tsx#ex-single)

@@ -140,14 +140,14 @@ Checkmark.displayName = "Checkmark";
 const checkboxVariants = cva(
   [
     "group/checkbox relative inline-flex cursor-pointer select-none items-center gap-x2 self-start",
-    "before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+    "before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-[44px] before:w-full before:min-w-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
     "has-[:disabled]:cursor-not-allowed",
   ].join(" "),
   {
     variants: {
       size: {
-        medium: "min-h-8",
-        large: "min-h-9",
+        medium: "min-h-[32px]",
+        large: "min-h-[36px]",
       },
     },
     defaultVariants: { size: "medium" },

@@ -127,7 +127,7 @@
 
 ## 코드
 
-레시피 `recipes/shadcn/components/ui/alert-dialog.tsx` 를 씁니다(Radix AlertDialog 위). 버튼 배치는 `AlertDialogFooter` 가 글 길이로 정합니다. 아래 미리보기는 스펙 값으로 그린 모습입니다.
+레시피 `recipes/shadcn/components/ui/alert-dialog.tsx` 를 씁니다(Radix AlertDialog 위). 버튼 배치는 `AlertDialogFooter` 가 글 길이로 정합니다 — 바닥은 Button 의 짝 버튼 부품 `ResponsivePair` 라 한 라벨이 반 폭을 넘으면 세로로 쌓고 확정이 위로 가며, 쌓은 뒤에도 긴 라벨은 끝을 "…" 로 줄입니다. 아래 미리보기는 스펙 값으로 그린 모습입니다.
 
 ### 지우기
 

@@ -189,6 +189,13 @@
 
 레시피 `recipes/shadcn/components/ui/date-picker.tsx` 를 [Input Button](input-button.md) 이 연 시트 · 팝오버 안에 둡니다. 값은 쓰는 쪽이 가집니다 — 달력은 고르는 중인 값(draft)을 보이고, "완료" 가 칸에 넣습니다. 여는 자리는 `useInputButtonSurface()` 가 정합니다(1280 미만 `"sheet"`, 이상 `"popover"`). 아래 미리보기는 스펙 값으로 그린 모습입니다.
 
+- `DatePicker` — 달력입니다. `selection`(`"single"` 기본 · `"range"` · `"multiple"`) · `visibleRange`(`"month"` 기본 · `"twoMonths"` · `"continuous"`) · `value` · `onValueChange(value)` · `min` · `max` · `isDateDisabled(date)` · `yearRange`(기본 오늘 ± 100년) · `today` · `autoFocus` · `labels` · `aria-label`(기본 "날짜 선택") · `aria-labelledby`, 기간은 `readOnlyStart` · `presets`, 여러 날은 `maxSelectionCount` 를 받습니다. 빠른 기간 칩 줄은 시트 · 팝오버 어디서나 한 줄 가로 스크롤이라 배치를 고르는 속성이 없습니다.
+- `labels` — 글 한 벌입니다(기본 `DATE_PICKER_LABELS` 한국어). 다른 언어는 같은 꼴로 넘깁니다. `weekdays` 는 보이는 요일(영어 두 글자 `Su Mo Tu We Th Fr Sa`), `weekdaysNarrow` 는 칸에 두 글자가 들지 않을 때의 요일(영어 한 글자 `S M T W T F S`), `weekdaysLong` 은 읽는 이름입니다. 한국어는 `weekdays` 와 `weekdaysNarrow` 가 같습니다("일" ~ "토").
+- `getPresetRange(name, today)` · `formatDateValue(date)` · `formatRangeValue(range)` — 빠른 기간의 범위, 칸에 넣는 하루 · 기간 글입니다.
+- `DATE_PICKER_TWO_MONTHS_POPOVER` — 두 달 보기를 담는 `PopoverContent` 의 className 입니다(팝오버 폭 744).
+- `DATE_PICKER_CONTINUOUS_SHEET_BODY` — 이어지는 달을 담는 `BottomSheetBody` 의 className 입니다. 가로를 자르고 세로는 본문이 스크롤합니다 — 시트가 낮아 달이 요일 줄 + 2주에서 멈추면 넘친 만큼 본문이 스크롤합니다.
+- `@/lib/weekday-fit` — 일곱 칸 요일 머리의 두 글자 / 한 글자 판정입니다. 날짜 고르기 달력 · 캘린더 · 열지도의 요일 머리가 같이 씁니다. `WeekdayProbe`(칸마다 두는 두 글자 견본 — 보이지 않고 읽히지 않습니다, 칸은 `relative`) · `useWeekdayNarrow(ref, textKey)`(견본 가운데 하나라도 제 칸보다 넓으면 `true` — `ref` 는 요일 줄, `textKey` 는 두 글자 글) · `useWeekdayFit(ref, labels)`(글 세 벌을 받아 보이는 요일 · 견본 글 · 읽는 이름과 판정을 함께 줍니다, 기본 한국어) · `weekdayOverflows(root)` · `WEEKDAY_PROBE_SLOT`. 줄 · 견본의 크기나 글이 바뀌면 다시 잽니다.
+
 ### 날짜 하나 — "완료" 로 넣기
 
 [그림: 일정 날짜 — 시트 · 팝오버](../../site/components/specs/date-picker.tsx#ex-single)

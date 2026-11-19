@@ -76,16 +76,20 @@ export function ChartPlayground({ look, card, sk, result }: { look: ChartLook; c
     const S = kind === 'bar' ? 'Bar' : 'Area';
     return [
       `import { ${S}, ${C}, CartesianGrid, XAxis, YAxis } from "recharts"`,
-      'import { Chart, ChartLegendTiles, ChartTooltip, ChartTooltipContent, chartAxisProps, chartGridProps, formatAxisWon } from "@/components/ui/chart"',
+      `import { Chart, ChartLegendTiles, ChartTooltip, ChartTooltipContent, chartAxisProps, chartGridProps, chartValueIntervals, chartXAxisProps, formatAxisWon, ${useDual ? 'niceDualValueAxes' : 'niceValueAxis'} } from "@/components/ui/chart"`,
+      '',
+      useDual
+        ? 'const axes = niceDualValueAxes(incomes, expenses, formatAxisWon, chartValueIntervals(200))'
+        : 'const axis = niceValueAxis(values, formatAxisWon, chartValueIntervals(200))',
       '',
       `<ChartLegendTiles id="trend-legend" items={[${series.map((s) => `{ key: "${s.key}", label: "${s.label}", color: "${s.hue}", total: "${total(s)}" }`).join(', ')}]} hidden={hidden} onHiddenChange={setHidden} />`,
       `<Chart label="…" legendId="trend-legend" height={200}>`,
       `  <${C} data={${kind === 'bar' ? 'months' : 'daysUntilToday'}}>`,
       ...(useDual ? ['    {/* 이중 축이면 격자도 축 하나에 건다 — 없으면 recharts 가 격자를 두 줄만 긋는다 */}', '    <CartesianGrid {...chartGridProps} yAxisId="income" />'] : ['    <CartesianGrid {...chartGridProps} />']),
-      `    <XAxis dataKey="${kind === 'bar' ? 'month' : 'day'}" {...chartAxisProps()} />`,
-      useDual ? '    <YAxis yAxisId="income" tickFormatter={formatAxisWon} {...chartAxisProps({ color: "blue" })} />' : '    <YAxis tickFormatter={formatAxisWon} {...chartAxisProps()} />',
-      ...(useDual ? ['    <YAxis yAxisId="expense" orientation="right" tickFormatter={formatAxisWon} {...chartAxisProps({ color: "red" })} />'] : []),
-      '    <ChartTooltip content={<ChartTooltipContent headFormatter={formatDay} valueFormatter={formatWon} />} />',
+      `    <XAxis dataKey="${kind === 'bar' ? 'month' : 'day'}" {...chartXAxisProps(${kind === 'bar' ? 'monthTicks' : 'dayTicks'})} />`,
+      useDual ? '    <YAxis yAxisId="income" {...axes.left} {...chartAxisProps({ color: "blue" })} />' : '    <YAxis {...axis} {...chartAxisProps()} />',
+      ...(useDual ? ['    <YAxis yAxisId="expense" orientation="right" {...axes.right} {...chartAxisProps({ color: "red" })} />'] : []),
+      '    <ChartTooltip content={<ChartTooltipContent headFormatter={formatDay} />} />',
       ...series.map((s) => `    {!hidden.has("${s.key}") && <${S}${useDual ? ` yAxisId="${s.key === 'expense' ? 'expense' : 'income'}"` : ''} dataKey="${s.key}" name="${s.label}" ${kind === 'bar' ? 'fill' : 'stroke'}="var(--color-chart-${s.hue})" />}`),
       `  </${C}>`,
       '</Chart>',

@@ -519,7 +519,7 @@ const SliderCore = React.forwardRef<HTMLDivElement, CoreProps>(
                       boxRefs.current[i] = node;
                     }}
                     data-slot="slider-value-indicator-box"
-                    className="absolute bottom-0 left-0 block min-w-6 whitespace-nowrap rounded-r1_5 bg-bg-neutral-inverted px-x2 py-x1 text-center text-t3 font-medium tabular-nums text-fg-neutral-inverted"
+                    className="absolute bottom-0 left-0 block min-w-[24px] whitespace-nowrap rounded-r1_5 bg-bg-neutral-inverted px-x2 py-x1 text-center text-t3 font-medium tabular-nums text-fg-neutral-inverted"
                   >
                     {formatValue(v)}
                   </span>

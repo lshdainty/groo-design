@@ -51,10 +51,10 @@ export type QuantityPickerLoading = boolean | { decrement?: boolean; increment?:
 const ROOT =
   "relative inline-flex shrink-0 items-center bg-bg-layer-default font-sans shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)] data-[invalid]:shadow-[inset_0_0_0_2px_var(--color-stroke-critical-solid)]";
 const ROOT_SIZE: Record<QuantityPickerSize, string> = {
-  small: "min-h-9 rounded-r2",
-  medium: "min-h-10 rounded-r2",
-  large: "min-h-13 rounded-r3",
-  responsive: "min-h-13 rounded-r3 lg:min-h-10 lg:rounded-r2",
+  small: "min-h-[36px] rounded-r2",
+  medium: "min-h-[40px] rounded-r2",
+  large: "min-h-[52px] rounded-r3",
+  responsive: "min-h-[52px] rounded-r3 lg:min-h-[40px] lg:rounded-r2",
 };
 // hug — 내용 폭(Field 같은 세로 Flex 안에서도 늘어나지 않는다) · fill — 부모 Flex 의 남은 폭(세로 Flex 면 칸 폭)
 const ROOT_LAYOUT: Record<QuantityPickerLayout, string> = {

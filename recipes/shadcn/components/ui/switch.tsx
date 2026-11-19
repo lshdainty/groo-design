@@ -108,9 +108,9 @@ const switchVariants = cva(
   {
     variants: {
       size: {
-        "16": "min-h-6 gap-x1_5",
-        "24": "min-h-6 gap-x2",
-        "32": "min-h-8 gap-x2_5",
+        "16": "min-h-[24px] gap-x1_5",
+        "24": "min-h-[24px] gap-x2",
+        "32": "min-h-[32px] gap-x2_5",
       },
     },
     defaultVariants: { size: "24" },

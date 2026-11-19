@@ -448,12 +448,12 @@ const Presets: Fig = ({ caption }) => {
             form={<Field mode="auto" label="기간" value={formatRange({ start: D(9, 1), end: D(9, 30) })} />}
             sheet={
               <PickerSheet mode="auto" title="기간 선택" tall footer={sheetFooter('auto', [RESET, DONE])}>
-                <DatePickerView kit={dk()} mode="auto" selection="range" visibleRange="continuous" value={{ start: D(10, 1), end: D(10, 31) }} months={[SEP, OCT, NOV]} view={OCT} presets={CHIPS} preset="thisMonth" presetLayout="scroll" fill />
+                <DatePickerView kit={dk()} mode="auto" selection="range" visibleRange="continuous" value={{ start: D(10, 1), end: D(10, 31) }} months={[SEP, OCT, NOV]} view={OCT} presets={CHIPS} preset="thisMonth" fill />
               </PickerSheet>
             }
           />
         </Shot>
-        <Shot strong="팝오버 — 넘치면 줄바꿈" cap={`칩 사이 ${d.presets.gap} · 달력과 ${d.presets.padBottom} — 하나 고르기, 고른 칩은 짙게`}>
+        <Shot strong="팝오버 — 한 줄 가로 스크롤" cap={`칩 사이 ${d.presets.gap} · 달력과 ${d.presets.padBottom} — 하나 고르기, 고른 칩은 짙게`}>
           <StatsWindow mode="auto" scale={0.6} preset="lastMonth" value={{ start: D(9, 1), end: D(9, 30) }} />
         </Shot>
       </div>

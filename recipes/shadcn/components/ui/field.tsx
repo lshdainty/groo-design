@@ -270,7 +270,7 @@ const Field = React.forwardRef<HTMLDivElement, FieldProps>(
       [controlId, labelId, describedBy, invalid, isRequired, disabled, readOnly, maxGraphemeCount],
     );
 
-    const labelClass = cn("min-w-0 font-sans text-t5 text-fg-neutral", labelWeight === "bold" ? "font-bold" : "font-medium");
+    const labelClass = cn("min-w-0 break-keep font-sans text-t5 text-fg-neutral", labelWeight === "bold" ? "font-bold" : "font-medium");
     // 칸이 버튼이면 라벨의 기본 동작(칸을 누르기)을 막고 포커스만 옮긴다 — 입력칸은 그대로(포커스 · 커서)
     const onLabelClick = (e: React.MouseEvent<HTMLLabelElement>) => {
       const control = e.currentTarget.ownerDocument.getElementById(controlId);
@@ -283,7 +283,7 @@ const Field = React.forwardRef<HTMLDivElement, FieldProps>(
         {label}
         {showRequiredIndicator && <span aria-hidden className="ml-[2px] mt-[4px] inline-block size-[6px] rounded-full bg-fg-critical align-top" />}
         {!showRequiredIndicator && indicator != null && (
-          <span className="pl-[0.25rem] align-bottom text-t4 font-normal leading-[var(--text-t5--line-height)] text-fg-neutral-subtle">{indicator}</span>
+          <span className="pl-[4px] align-bottom text-t4 font-normal leading-[var(--text-t5--line-height)] text-fg-neutral-subtle">{indicator}</span>
         )}
       </>
     );

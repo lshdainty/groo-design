@@ -281,17 +281,25 @@
 
 레시피 `recipes/shadcn/components/ui/chart.tsx` 를 씁니다(recharts 위). 아래 미리보기는 스펙 값으로 그린 모습입니다.
 
-- `Chart` — 차트 상자. `label`(필수 — 요약 이름, `role="img"` 의 이름) · `height`(px) · `legendId`(대체가 되는 범례의 id — `aria-describedby`). 자식은 recharts 차트입니다(`ResponsiveContainer` 를 안에서 감쌉니다).
-- `chartAxisProps` · `chartGridProps` — recharts `XAxis` · `YAxis` · `CartesianGrid` 에 펼쳐 넣는 값(눈금 11 · `fg-neutral-subtle` · 축 선 · 눈금 선 없음 · 가로 점선 격자 3 3 · `stroke-neutral-subtle`). 이중 축은 `chartAxisProps({ color: "red" })` 처럼 계열 색을 줍니다.
-- `ChartLegendTiles` — 지표 타일 묶음(`role="group"`). `items`(`{ key, label, color, total }[]` — `color` 는 차트 색 이름, `total` 은 원까지 만든 글) · `hidden`(숨긴 key 의 집합) · `onHiddenChange`. 타일은 `<button aria-pressed>` 이고 마지막 하나는 막습니다(`aria-disabled` · 커서 `not-allowed`).
-- `ChartTooltip` · `ChartTooltipContent` — 툴팁. `headFormatter(label)` · `valueFormatter(value, key)` · 줄은 "■ 라벨 값".
+- `Chart` — 차트 상자. `label`(필수 — 요약 이름, `role="img"` 의 이름) · `height`(px) · `legendId`(대체가 되는 범례의 id — `aria-describedby`) · `dots`(늘 찍는 점 — 기본 `false`) · `xGroup`(같은 화면 · 같은 기간 차트 묶음 — `createChartXGroup()`). 자식은 recharts 차트입니다(`ResponsiveContainer` 를 안에서 감쌉니다). 축은 안에서 맞춥니다 — 세로축이 보이면 위 여백을 ⌈눈금 줄 높이 ÷ 2⌉ 이상으로 잡고, 가로축이 `chartXAxisProps` 면 눈금 줄 높이 27 · 그리는 자리 오른쪽에 끝 글 폭의 절반을 비웁니다(오른쪽 세로축 폭이 먼저 덮습니다). `ticks` · `tickFormatter` · `width` 를 준 세로축은 그리는 글로 폭을 다시 재 모자라면 넓힙니다.
+- `chartAxisProps` · `chartGridProps` — recharts `XAxis` · `YAxis` · `CartesianGrid` 에 펼쳐 넣는 값(눈금 11 · `fg-neutral-subtle` · 축 선 · 눈금 선 없음 · 눈금 글자 사이 최소 8(`minTickGap`) · 가로 점선 격자 3 3 · `stroke-neutral-subtle`). 이중 축은 `chartAxisProps({ color: "red" })` 처럼 계열 색을 줍니다.
+- `chartXAxisProps(ticks, { emphasize })` — 날짜 · 월 가로축. `chartAxisProps()` 대신 펼칩니다. `ticks` 는 칸마다 `{ label, yearLabel?, year? }`("11월" · "2026. 1." · 2026)이고, 끝(가장 최근) 글을 지키고 앞에서부터 건너뛰며 연도는 남은 눈금 가운데 해가 바뀌는 첫 눈금에 붙입니다. `emphasize` 는 고른 기간의 칸 번호입니다 — 보일 때 `fg-neutral` · 700 입니다.
+- `createChartXGroup()` — 같은 화면 · 같은 기간 · 같은 눈금 단위 차트 묶음. 묶음 하나를 만들어 차트마다 `<Chart xGroup={group}>` 로 주면, 그리는 자리가 가장 좁은 차트로 건너뛰기를 한 번 세고 모두 그 날짜 글을 씁니다.
+- `niceValueAxis(values, format, maxIntervals)` — 값 축 하나. `<YAxis {...niceValueAxis(값들, formatAxisWon, chartValueIntervals(200))} {...chartAxisProps()} />` 처럼 펼칩니다. 0 을 포함하는 1 · 2 · 5 × 10ⁿ 눈금 · 범위 · 가장 긴 글로 잰 폭 · `tickFormatter` 를 줍니다. 값은 지금 보이는 계열만 넘깁니다.
+- `niceDualValueAxes(left, right, format, maxIntervals)` — 이중 축. 0 위 · 아래 칸 수를 두 축 가운데 많은 쪽에 맞춰 두 축의 눈금이 같은 높이에 섭니다(`{ left, right }`).
+- `chartValueIntervals(height, { top, bottom })` — 세로 눈금 글이 겹치지 않고 들어가는 칸 수. `niceValueAxis` 의 `maxIntervals` 로 넘기면 낮은 차트에서 눈금 수를 줄입니다. `niceStep` · `niceAxis` 는 눈금 셈만 따로 씁니다.
+- `ChartLegendTiles` — 지표 타일 묶음(`role="group"`). `items`(`{ key, label, color, total, marker? }[]` — `color` 는 차트 색 이름, `total` 은 원까지 만든 글, `marker` 는 점의 꼴 `"fill"`(기본) · `"outline"`) · `hidden`(숨긴 key 의 집합) · `onHiddenChange`. 타일은 `<button aria-pressed>` 이고 마지막 하나는 막습니다(`aria-disabled` · 커서 `not-allowed`).
+- `ChartTooltip` · `ChartTooltipContent` — 툴팁. `headFormatter(label)` · `valueFormatter(value, key)` · `locale`(기본 값 글의 언어 — `"ko"` · `"en"`) · `markers`(계열 key 마다 색 네모의 꼴 — `{ planned: "outline" }`) · 줄은 "■ 라벨 값".
+- 미리 잡는 일정(예정) 계열 — 막대를 `fill="var(--color-chart-{색}-subtle)"` · `stroke="var(--color-chart-{색})"` · `strokeWidth={1}` 로 그리고, 지표 타일 `marker: "outline"` · 툴팁 `markers` 를 같이 줍니다. 타일 점 · 툴팁 색 네모가 막대와 같은 옅은 바탕 + 1px 계열 색 테두리가 됩니다.
 - `ChartDonutLegend` — 도넛 목록 범례(`List`). `items`(`{ key, label, color, percent, amount, onClick? }[]` — `onClick` 이 있는 줄만 누르는 줄).
 - `chartDonutRadii(diameter)` — 도넛 지름에서 `{ innerRadius, outerRadius }`(두께 = 지름 ÷ 10 + 6, 정수로). `<Pie {...chartDonutRadii(160)}>` 처럼 펼쳐 넣습니다. `chartDonutThickness(diameter)` 는 두께만 줍니다.
-- `ChartDonutCenter` — 가운데 합계. `label` · `amount` · `onFitChange(fits)`(구멍에 들어가지 않으면 그리지 않고 `false` 를 알립니다 — 쓰는 쪽이 목록 위에 합계를 둡니다).
-- `ChartHeatmap` — 열지도. `label`(필수 — 요약 이름, `role="img"` 의 이름) · `rows`(`{ key, label, sub }[]` — 시간대, "저녁" · "18~22시") · `columns`(`{ key, label }[]` — 요일) · `values`(`number[][]`, 줄 × 칸) · `formatValue`(기본 원까지 — "35,000원") · `textMinCellWidth`(기본 112 — 칸 폭이 이보다 좁으면 칸에 글을 두지 않습니다) · `tooltipLabel(row, column)`(툴팁 머리 — "수요일 저녁 18~22시") · `valueLabel`(툴팁 줄 이름 — 기본 "지출"). 세기 다섯 단계와 단계마다 글자색은 안에서 정합니다. 칸 폭은 `ResizeObserver` 로 재고, 가리키면 · 누르면 · 키보드(← → ↑ ↓)로 툴팁을 띄웁니다.
+- `ChartDonutCenter` — 가운데 합계. `label` · `amount` · `onFitChange(fits)`(구멍에 들어가지 않으면 그리지 않고 `false` 를 알립니다 — 쓰는 쪽이 목록 위에 합계를 둡니다). 합계 글은 `CHART_DONUT_CENTER_AMOUNT`(`text-t5-static` · 700)이고, 들어가는지도 이 고정 크기로 잽니다.
+- `ChartHeatmap` — 열지도. `label`(필수 — 요약 이름, `role="img"` 의 이름) · `rows`(`{ key, label, sub }[]` — 시간대, "저녁" · "18~22시") · `columns`(`{ key, label, narrowLabel? }[]` — 요일 "We", 칸에 들지 않을 때의 한 글자 "W") · `values`(`number[][]`, 줄 × 칸) · `formatValue`(기본 원까지 — "35,000원") · `locale`(기본 값 글의 언어) · `textMinCellWidth`(기본 112 — 칸 폭이 이보다 좁으면 칸에 글을 두지 않습니다) · `tooltipLabel(row, column)`(툴팁 머리 — "수요일 저녁 18~22시") · `valueLabel`(툴팁 줄 이름 — 기본 "지출") · `emptyLabel`(값 없는 칸의 툴팁 값 — 기본 "없음"). 요일 머리는 줄을 바꾸지 않습니다 — `narrowLabel` 을 주면 `label` 이 하나라도 칸을 넘을 때 모든 칸을 `narrowLabel` 로 줄입니다(`lib/weekday-fit` 의 `useWeekdayNarrow`). 세기 다섯 단계와 단계마다 글자색은 안에서 정합니다. 칸 폭은 `ResizeObserver` 로 재고, 가리키면 · 누르면 · 키보드(← → ↑ ↓)로 툴팁을 띄웁니다.
 - `ChartDataTable` — 표로 보기. `columns` · `rows`, `visuallyHidden`(기본 `true` — 숨긴 표, `false` 면 차트 아래 펼친 표).
 - `assignChartColors(items, { colorOf, groupOthers })` — 저장된 색 먼저, 나머지는 쓰지 않은 색부터 배정 순서, 10개를 넘으면 상위 9 + 회색 "기타"(`groupOthers(rest)` 가 "기타" 항목을 만듭니다). 돌려준 항목에 `color` 와 `fill` 이 붙어 `<Pie data>` 에 바로 넣습니다.
-- `formatAxisWon(value)` — 눈금 글자("400만" · "1.2만" · "−3,000만").
+- `formatAxisWon(value, ticks, locale)` — 눈금 글자. 한 축은 한 단위라 그 축의 눈금 목록(`ticks`)을 함께 받아 가장 큰 절댓값으로 단위를 고릅니다 — 한국어 만 · 억 · 조("0.5만 · 1만 · 1.5만"), 영어(`"en"`) K · M · B("0.5K · 1K"), 1만 · 1K 미만 축은 쉼표 정수입니다. `tickFormatter` 에 바로 넣지 않고 `niceValueAxis` 에 넘깁니다.
+- `formatWon(value, locale)` — 줄이지 않는 돈. 한국어 "1,240,000원" · 영어 "₩1,240,000", 빼기 U+2212.
+- `CHART_TICK_SIZE`("11px" — 글자 크기 설정을 따르지 않습니다) · `CHART_TICK_GAP`(8 — 눈금 글자 사이 최소). 축 셈은 `recipes/shadcn/lib/chart-axis.ts` 에 있고 차트 레시피가 함께 내보냅니다.
 
 ### 수입 · 지출 추이 — 이중 축
 
@@ -300,8 +308,12 @@
 ```tsx
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
-  Chart, ChartLegendTiles, ChartTooltip, ChartTooltipContent, chartAxisProps, chartGridProps, formatAxisWon,
+  Chart, ChartLegendTiles, ChartTooltip, ChartTooltipContent, chartAxisProps, chartGridProps, chartValueIntervals,
+  chartXAxisProps, formatAxisWon, formatWon, niceDualValueAxes,
 } from "@/components/ui/chart"
+
+// 지금 보이는 계열만 넘깁니다 — 두 축의 눈금이 같은 높이에 섭니다
+const axes = niceDualValueAxes(incomes, expenses, formatAxisWon, chartValueIntervals(200))
 
 <ChartLegendTiles
   id="trend-legend"
@@ -317,10 +329,11 @@ import {
   <AreaChart data={daysUntilToday}>
     {/* 이중 축이면 격자도 축 하나에 건다 — 없으면 recharts 가 격자를 두 줄만 긋는다 */}
     <CartesianGrid {...chartGridProps} yAxisId="income" />
-    <XAxis dataKey="day" {...chartAxisProps()} />
-    <YAxis yAxisId="income" tickFormatter={formatAxisWon} {...chartAxisProps({ color: "blue" })} />
-    <YAxis yAxisId="expense" orientation="right" tickFormatter={formatAxisWon} {...chartAxisProps({ color: "red" })} />
-    <ChartTooltip content={<ChartTooltipContent headFormatter={formatDay} valueFormatter={formatWon} />} />
+    {/* dayTicks — 칸마다 { label: "10. 8.", yearLabel: "2026. 10. 8.", year: 2026 } */}
+    <XAxis dataKey="day" {...chartXAxisProps(dayTicks)} />
+    <YAxis yAxisId="income" {...axes.left} {...chartAxisProps({ color: "blue" })} />
+    <YAxis yAxisId="expense" orientation="right" {...axes.right} {...chartAxisProps({ color: "red" })} />
+    <ChartTooltip content={<ChartTooltipContent headFormatter={formatDay} valueFormatter={(v) => formatWon(Number(v))} />} />
     {!hidden.has("income") && <Area yAxisId="income" dataKey="income" name="수입" stroke="var(--color-chart-blue)" />}
     {!hidden.has("expense") && <Area yAxisId="expense" dataKey="expense" name="지출" stroke="var(--color-chart-red)" />}
   </AreaChart>

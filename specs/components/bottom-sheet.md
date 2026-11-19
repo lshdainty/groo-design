@@ -150,7 +150,9 @@
 
 ## 코드
 
-레시피 `recipes/shadcn/components/ui/bottom-sheet.tsx` 를 씁니다(vaul 위). 폼 · 상세는 1280 에서 Dialog 와 바뀌는 `ResponsiveDialog`([Dialog](dialog.md) 의 코드)로 짜고, 늘 시트인 자리(Input Button 의 시트 · 고르기)만 `BottomSheet` 를 바로 씁니다. 본문에 [List](list.md) 를 바로 두면 줄이 제 좌우 여백(24)을 가지므로 본문 좌우 여백을 뺍니다(`className="px-0"`). 아래 미리보기는 스펙 값으로 그린 모습입니다.
+레시피 `recipes/shadcn/components/ui/bottom-sheet.tsx` 를 씁니다(vaul 위). 폼 · 상세는 1280 에서 Dialog 와 바뀌는 `ResponsiveDialog`([Dialog](dialog.md) 의 코드)로 짜고, 늘 시트인 자리(Input Button 의 시트 · 고르기)만 `BottomSheet` 를 바로 씁니다. 본문에 [List](list.md) 를 바로 두면 줄이 제 좌우 여백(24)을 가지므로 본문 좌우 여백을 뺍니다(`className="px-0"`). `BottomSheetFooter` 는 Button 의 짝 버튼 부품 `ResponsivePair` 입니다 — 버튼 둘은 반씩이고, 한 라벨이 반 폭을 넘으면 세로로 쌓고 주 버튼(뒤)이 위로 갑니다. 아래 미리보기는 스펙 값으로 그린 모습입니다.
+
+바닥 왼쪽 [삭제] 는 글자만큼 둡니다 — 버튼에 `data-fit="content"` 를 주면 `ResponsivePair` 가 반 폭 바탕을 주지 않고, 남은 폭을 주 버튼이 채웁니다(`<Button variant="ghost" ghostColor="critical" data-fit="content">삭제</Button>`).
 
 ### 고르기 — 기간
 

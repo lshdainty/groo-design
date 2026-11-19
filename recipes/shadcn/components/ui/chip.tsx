@@ -24,7 +24,8 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *   variant  solid(옅은 투명 채움 bg-neutral-weak-alpha — 어느 바탕에서나) · outlineStrong(고르면 짙은 채움) ·
  *            outlineWeak(기본 — 고르면 옅은 바탕 + 짙은 1px, 글자 그대로)
  *   size     small 32 · medium 36(기본) · large 40. 글은 세 크기 모두 t4 14 · 500, 가장자리 ↔ 글 12 · 14 · 16, 아이콘 ↔ 글 6
- *            높이는 최소 높이 — 위아래 (높이 − 19) ÷ 2 를 둬 큰 글자에서 글을 따라 늘어난다. 아이콘 · 지우기는 px 라 그대로다
+ *            높이는 최소 높이 — 글이 있는 칩은 위아래 (높이 − 19) ÷ 2 를 둬 큰 글자에서 글을 따라 늘어난다. 아이콘 · 지우기는 px 라 그대로다
+ *            칩은 놓인 줄보다 넓어지지 않고(max-w-full), 줄 폭에 닿으면 글 끝을 "…" 로 줄인다(ChipLabel). 아이콘 · 지우기는 줄지 않는다
  *   layout   withText(기본) · iconOnly(원 — 아이콘을 children 으로, aria-label 필수 · 없으면 개발 중에 경고)
  *
  * 고름은 ChipToggle · ChipRadio 는 Radix 의 data-state="checked", Chip 은 selected 가 다는 data-selected 로 칠한다
@@ -64,9 +65,9 @@ type ChipSize = "small" | "medium" | "large";
 // ── 칩 ───────────────────────────────────────────────────────
 const chipVariants = cva(
   [
-    "relative inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-x1_5 whitespace-nowrap rounded-full font-sans text-t4 font-medium no-underline",
+    "relative inline-flex max-w-full shrink-0 cursor-pointer select-none items-center justify-center gap-x1_5 whitespace-nowrap rounded-full font-sans text-t4 font-medium no-underline",
     // 누르는 영역 44 — 보이는 칩보다 작으면 ::before 가 넓힌다
-    "before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+    "before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-[44px] before:w-full before:min-w-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
     // 바탕 · 글자 · 테두리는 color-transition, 축소는 pressed-scale
     "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing),box-shadow_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
     "active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
@@ -99,9 +100,9 @@ const chipVariants = cva(
         ].join(" "),
       },
       size: {
-        small: "min-h-[32px] py-[6.5px] [--press-basis:32]",
-        medium: "min-h-[36px] py-[8.5px] [--press-basis:36]",
-        large: "min-h-[40px] py-[10.5px] [--press-basis:40]",
+        small: "min-h-[32px] [--press-basis:32]",
+        medium: "min-h-[36px] [--press-basis:36]",
+        large: "min-h-[40px] [--press-basis:40]",
       },
       layout: {
         withText: "",
@@ -109,10 +110,11 @@ const chipVariants = cva(
       },
     },
     compoundVariants: [
-      // 크기 × 모양 — 최소 폭 · 좌우 여백(루트 + 글 여백), 아이콘만 있으면 원 + 아이콘 14 · 16 · 16
-      { size: "small", layout: "withText", className: "min-w-11 px-x3" },
-      { size: "medium", layout: "withText", className: "min-w-12 px-x3_5" },
-      { size: "large", layout: "withText", className: "min-w-13 px-x4" },
+      // 크기 × 모양 — 글이 있는 칩은 최소 폭 · 좌우 여백(루트 + 글 여백)과 위아래 (높이 − 19) ÷ 2(19 = 글 t4 줄 높이)를 px 로 둔다 —
+      // 글자 크기 설정이 커지면 줄 높이만 커져 칩이 글 줄 높이 + (높이 − 19)로 늘고, 100% 는 높이 그대로다. 아이콘만 있으면 원 + 아이콘 14 · 16 · 16
+      { size: "small", layout: "withText", className: "min-w-[44px] px-x3 py-[6.5px]" },
+      { size: "medium", layout: "withText", className: "min-w-[48px] px-x3_5 py-[8.5px]" },
+      { size: "large", layout: "withText", className: "min-w-[52px] px-x4 py-[10.5px]" },
       { size: "small", layout: "iconOnly", className: "w-[32px] px-0 [&>svg]:size-[14px]" },
       { size: "medium", layout: "iconOnly", className: "w-[36px] px-0 [&>svg]:size-[16px]" },
       { size: "large", layout: "iconOnly", className: "w-[40px] px-0 [&>svg]:size-[16px]" },
@@ -124,6 +126,22 @@ const chipVariants = cva(
     },
   },
 );
+
+// 글 — 칩이 줄 폭(max-w-full)에 닿을 때만 글 끝을 말줄임한다. 앞 · 뒤 아이콘과 지우기 ×(shrink-0)는 줄지 않고 남는다
+const CHIP_LABEL = "min-w-0 truncate";
+
+// 글만 있는 칩의 글 — 말줄임 칸으로 감싼다. 아이콘 · 요소가 섞이면(아이콘만 있는 칩 포함) 그대로 둔다(자식 선택자 [&>svg] 가 깨지지 않게)
+function ChipLabel({ children }: { children?: React.ReactNode }) {
+  const parts = React.Children.toArray(children);
+  const plain = parts.length > 0 && parts.every((c) => typeof c === "string" || typeof c === "number");
+  return plain ? (
+    <span data-slot="chip-label" className={CHIP_LABEL}>
+      {children}
+    </span>
+  ) : (
+    <>{children}</>
+  );
+}
 
 // 아이콘 — 앞 14 · 16 · 16, 뒤 14 · 14 · 16(medium 만 앞 ≠ 뒤), 지우기 14 · 14 · 16.
 // Tailwind 는 소스의 글자 그대로를 읽으므로 크기마다 다 적는다
@@ -225,7 +243,7 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
     return (
       <button ref={mergeRefs(ref, own)} type={type ?? "button"} {...common} {...props}>
         {prefix}
-        {children}
+        <ChipLabel>{children}</ChipLabel>
         {suffix}
       </button>
     );
@@ -264,7 +282,7 @@ const ChipToggle = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Ro
       {...props}
     >
       {prefixIcon != null && <PrefixIcon size={size ?? "medium"}>{prefixIcon}</PrefixIcon>}
-      {children}
+      <ChipLabel>{children}</ChipLabel>
     </CheckboxPrimitive.Root>
   ),
 );
@@ -277,8 +295,8 @@ ChipToggle.displayName = "ChipToggle";
 const chipGroupVariants = cva("relative", {
   variants: {
     layout: {
-      wrap: "flex flex-wrap gap-between-chips empty:min-h-9",
-      scroll: "has-[>[data-slot=chip-scroll-row]:empty]:min-h-9",
+      wrap: "flex flex-wrap gap-between-chips empty:min-h-[36px]",
+      scroll: "has-[>[data-slot=chip-scroll-row]:empty]:min-h-[36px]",
     },
     bleed: {
       true: "",
@@ -378,7 +396,7 @@ const ChipRadio = React.forwardRef<React.ElementRef<typeof RadioGroupPrimitive.I
       {...props}
     >
       {prefixIcon != null && <PrefixIcon size={size ?? "medium"}>{prefixIcon}</PrefixIcon>}
-      {children}
+      <ChipLabel>{children}</ChipLabel>
     </RadioGroupPrimitive.Item>
   ),
 );
@@ -388,7 +406,7 @@ ChipRadio.displayName = "ChipRadio";
 // 알약 — 누르지 않는다(호버 · 누름 없음). Outline Weak 의 고른 모습, 막히면 회색 바탕 + 짙은 1px stroke-neutral-solid
 const inputChipVariants = cva(
   [
-    "relative inline-flex shrink-0 items-center justify-center gap-x1_5 whitespace-nowrap rounded-full font-sans text-t4 font-medium",
+    "relative inline-flex max-w-full shrink-0 items-center justify-center gap-x1_5 whitespace-nowrap rounded-full font-sans text-t4 font-medium",
     "bg-bg-neutral-weak text-fg-neutral shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-contrast)]",
     "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing),box-shadow_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
     "data-[disabled]:bg-bg-disabled data-[disabled]:text-fg-disabled data-[disabled]:shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-solid)]",
@@ -398,9 +416,9 @@ const inputChipVariants = cva(
   {
     variants: {
       size: {
-        small: "min-h-[32px] py-[6.5px] min-w-11 px-x3",
-        medium: "min-h-[36px] py-[8.5px] min-w-12 px-x3_5",
-        large: "min-h-[40px] py-[10.5px] min-w-13 px-x4",
+        small: "min-h-[32px] min-w-[44px] px-x3 py-[6.5px]",
+        medium: "min-h-[36px] min-w-[48px] px-x3_5 py-[8.5px]",
+        large: "min-h-[40px] min-w-[52px] px-x4 py-[10.5px]",
       },
     },
     defaultVariants: { size: "medium" },
@@ -472,7 +490,7 @@ const InputChip = React.forwardRef<HTMLSpanElement, InputChipProps>(
         {...props}
       >
         {prefixIcon != null && <PrefixIcon size={s}>{prefixIcon}</PrefixIcon>}
-        <span id={labelId} data-slot="input-chip-label">
+        <span id={labelId} data-slot="input-chip-label" className={CHIP_LABEL}>
           {children}
         </span>
         <button
@@ -497,4 +515,16 @@ const InputChip = React.forwardRef<HTMLSpanElement, InputChipProps>(
 );
 InputChip.displayName = "InputChip";
 
-export { Chip, ChipToggle, ChipGroup, ChipRadioGroup, ChipRadio, InputChip, chipVariants, chipGroupVariants, inputChipVariants };
+export {
+  Chip,
+  ChipToggle,
+  ChipGroup,
+  ChipRadioGroup,
+  ChipRadio,
+  InputChip,
+  ChipLabel,
+  CHIP_LABEL,
+  chipVariants,
+  chipGroupVariants,
+  inputChipVariants,
+};
