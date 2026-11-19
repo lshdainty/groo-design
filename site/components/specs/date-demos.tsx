@@ -203,7 +203,6 @@ export function DateFieldDemo({
           max={max}
           readOnlyStart={readOnlyStart}
           presets={range ? presets : undefined}
-          presetLayout={wide ? 'wrap' : 'scroll'}
           width={wide ? undefined : '100%'}
           fill={visible === 'continuous'}
           ariaLabel={label}
@@ -605,7 +604,6 @@ export function DatePickerPlayground({ kits, ovs, sels, field }: { kits: Record<
       min={min}
       max={max}
       presets={range && chips === 'yes' ? CHIP_SET : undefined}
-      presetLayout={sheet ? 'scroll' : 'wrap'}
       width={sheet ? '100%' : undefined}
       fill={visible === 'continuous'}
       ariaLabel={label}

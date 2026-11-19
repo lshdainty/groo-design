@@ -237,7 +237,7 @@ const TablePagination = React.forwardRef<HTMLDivElement, TablePaginationProps>((
       aria-label="표 페이지 탐색"
       aria-disabled={disabled || undefined}
       data-slot="table-pagination"
-      className={cn("mt-component-default flex min-h-10 w-full min-w-max flex-nowrap items-center justify-between gap-x4 font-sans", className)}
+      className={cn("mt-component-default flex min-h-[40px] w-full min-w-max flex-nowrap items-center justify-between gap-x4 font-sans", className)}
       {...rest}
     >
       <div data-slot="table-pagination-page-size" className="flex shrink-0 items-center gap-x2">

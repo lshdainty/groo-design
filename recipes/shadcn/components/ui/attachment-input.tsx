@@ -53,8 +53,8 @@ import { ScrollFog } from "@/components/ui/scroll-fog";
  * 항목의 모양은 파일 종류가 정한다 — 사진(image/*)은 80 썸네일, 그 밖은 160 × 80 파일 카드이고 한 줄에 섞인다.
  *   사진은 그림 위에 투명 윤곽 1px stroke-neutral-overlay, 파일 카드는 1px stroke-neutral-weak + 썸네일 칸 48(bg-neutral-weak ·
  *   모서리 8 · 아이콘 24 fg-neutral-subtle — PDF file-text · 표 file-spreadsheet · 그 밖 file) + 이름(t2 12 / 16 · 500 · 폭 70) + 크기
- *   (t1 11 / 15 · fg-neutral-subtle). 모서리 12 · 높이 80. 타일 · 사진 · 카드는 rem 이라 큰 글자에서 함께 커지고, 썸네일 칸 · 아이콘 · ×
- *   · 올리는 중 원은 px 그대로다.
+ *   (t1 11 / 15 · fg-neutral-subtle). 모서리 12 · 높이 80. 타일 · 사진 · 카드 · 썸네일 칸 · 아이콘 · × · 올리는 중 원은 px 그대로이고,
+ *   큰 글자에서는 글만 커진다.
  * 파일 이름 — 글자 단위로 줄을 바꾸고(break-all) 네 줄까지 보인다. 첫 줄만 오른쪽 4 를 비운다(× 구멍 —
  *   YAML name.maskClear). 넘치면 셋째 줄 끝을 "…" 로 줄이고 넷째 줄에 확장자를 남긴다
  *   (보이지 않는 같은 글로 줄 수를 재고 — 글꼴이 늦게 와도 ResizeObserver 가 다시 잰다). 보조 기술은 늘 전체 이름을 읽는다.
@@ -81,7 +81,7 @@ import { ScrollFog } from "@/components/ui/scroll-fog";
  *   막힘은 disabled — 아이콘 · 개수 fg-disabled. 이름 "{칸 이름} 첨부, 3/10".
  * 항목 줄(tile) — 화면 가장자리까지 넓히고(좌우 −24 · 안쪽 24 — 첫 항목이 다른 칸과 같은 자리) 넘치면 가로로 스크롤한다. 끝 흐림은
  *   Scroll Fog row(좌우 20 · 늘 켬 · 스크롤바 숨김). 위 16 을 더 두고 같은 만큼 당겨 × 의 누르는 자리 44 가 잘리지 않게 한다.
- * 드롭존(1280 이상 웹) — 높이 120 · 모서리 12 · 1px 실선 stroke-neutral-solid · 안내 t4 500 fg-neutral-subtle "파일을 여기로 끌어다
+ * 드롭존(1280 이상 웹) — 최소 높이 120 · 모서리 12 · 1px 실선 stroke-neutral-solid · 안내 t4 500 fg-neutral-subtle "파일을 여기로 끌어다
  *   놓으세요" + 8 아래 Button neutralWeak small "파일 선택"(키보드 길 — 상자 전체를 누르는 자리로 두지 않는다). 파일을 끌고 들어오면
  *   테두리 stroke-neutral-contrast + 바탕 bg-layer-default-pressed. 막힘 · 다 참 · 읽기 전용이면 테두리 stroke-neutral-weak · 안내 fg-disabled
  *   이고 받지 않는다. 드롭존이 있는 동안 드롭존 밖에 놓은 파일을 브라우저가 열지 않게 막는다.
@@ -241,7 +241,7 @@ const LIST = "m-0 flex list-none items-start gap-x2 p-0";
 
 // 첨부 타일 — 80 · 모서리 12 · 안쪽 1px. 다 참 · 읽기 전용(aria-disabled) · 막힘(disabled)은 바탕 · 축소 없이 아이콘 · 개수만 fg-disabled
 const TRIGGER = [
-  "group/attachment-trigger relative flex size-20 shrink-0 cursor-pointer flex-col items-center justify-center gap-x1 rounded-r3 bg-transparent font-sans",
+  "group/attachment-trigger relative flex size-[80px] shrink-0 cursor-pointer flex-col items-center justify-center gap-x1 rounded-r3 bg-transparent font-sans",
   "shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)]",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] [--press-basis:80]",
   "hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
@@ -262,7 +262,7 @@ const MASK =
 // 항목 상자 — 높이 80 · 모서리 12 · 윤곽(::after, 그림 위). 끄는 동안 2px 거리 축소(기준 80).
 // 누를 수 있는 항목(메뉴 · 순서 바꾸기)은 role="button" — 키보드 포커스 링은 안쪽 2px
 const ITEM = [
-  "relative flex h-20 shrink-0 items-center justify-center gap-x2_5 rounded-r3 bg-transparent",
+  "relative flex h-[80px] shrink-0 items-center justify-center gap-x2_5 rounded-r3 bg-transparent",
   "after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:content-['']",
   MASK,
   "[transition:scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)] [--press-basis:80]",
@@ -274,8 +274,8 @@ const ITEM = [
 // 흐림 · 축소는 motion-duration-d4 · ease-easing 으로 서서히(모션 줄이기면 바로)
 const ITEM_KIND = {
   image:
-    "w-20 after:shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-overlay)] [transition:opacity_var(--motion-duration-d4)_var(--motion-ease-easing),scale_var(--motion-duration-d4)_var(--motion-ease-easing)] motion-reduce:[transition:none] group-data-[readonly]/attachment-item:opacity-50 group-data-[dragging]/attachment-item:opacity-50",
-  file: "w-40 px-x4 after:shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)]",
+    "w-[80px] after:shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-overlay)] [transition:opacity_var(--motion-duration-d4)_var(--motion-ease-easing),scale_var(--motion-duration-d4)_var(--motion-ease-easing)] motion-reduce:[transition:none] group-data-[readonly]/attachment-item:opacity-50 group-data-[dragging]/attachment-item:opacity-50",
+  file: "w-[160px] px-x4 after:shadow-[inset_0_0_0_1px_var(--color-stroke-neutral-weak)]",
 } as const;
 
 const IMAGE = "pointer-events-none size-full select-none rounded-[inherit] object-cover";

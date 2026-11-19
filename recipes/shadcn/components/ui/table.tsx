@@ -541,7 +541,7 @@ const TableBulkBar = React.forwardRef<HTMLDivElement, TableBulkBarProps>(({ coun
           role="region"
           aria-label="선택한 항목"
           data-slot="table-bulk-bar"
-          className={cn("mb-x2 flex min-h-12 items-center gap-x2 rounded-r3 bg-bg-brand-weak pl-x4 pr-x2 font-sans", className)}
+          className={cn("mb-x2 flex min-h-[48px] items-center gap-x2 rounded-r3 bg-bg-brand-weak pl-x4 pr-x2 font-sans", className)}
           {...props}
         >
           {/* 보이는 고른 수 — 읽는 글은 위 상태 글이 맡는다 */}

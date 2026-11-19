@@ -273,9 +273,8 @@ export type DatePickerViewProps = {
   readOnlyStart?: boolean;
   // 여러 날의 최대 개수 — 다 고르면 고르지 않은 날이 막힌 날이 된다(고른 날은 풀 수 있다)
   maxCount?: number;
-  // 빠른 기간 — 시트는 한 줄 가로 스크롤(화면 끝까지), 팝오버는 줄바꿈
+  // 빠른 기간 — 시트 · 팝오버 어디서나 한 줄 가로 스크롤(화면 끝까지)
   presets?: PresetName[];
-  presetLayout?: 'scroll' | 'wrap';
   preset?: PresetName;
   live?: boolean;
   // 폭 — 기본은 팝오버(336 · 두 달 696), 시트는 '100%'
@@ -331,7 +330,6 @@ export function DatePickerView({
   readOnlyStart = false,
   maxCount,
   presets,
-  presetLayout = 'wrap',
   preset: presetProp,
   live = false,
   width,
@@ -599,9 +597,9 @@ export function DatePickerView({
   const presetRow = presets?.length ? (
     <div style={{ paddingBottom: look.presets.padBottom, ...marks?.presets }}>
       {live ? (
-        <ChipRadioGroupLive look={kit.chip} mode={mode} variant={look.presets.variant} size={look.presets.size} layout={presetLayout} items={presets.map((p) => ({ value: p, label: presetLabel(p), disabled: presetBlocked(p) }))} value={preset ?? ''} onValue={onPreset} ariaLabel="빠른 기간" />
+        <ChipRadioGroupLive look={kit.chip} mode={mode} variant={look.presets.variant} size={look.presets.size} layout="scroll" items={presets.map((p) => ({ value: p, label: presetLabel(p), disabled: presetBlocked(p) }))} value={preset ?? ''} onValue={onPreset} ariaLabel="빠른 기간" />
       ) : (
-        <ChipGroupView look={kit.chip} mode={mode} layout={presetLayout}>
+        <ChipGroupView look={kit.chip} mode={mode} layout="scroll">
           {presets.map((p) => (
             <ChipView key={p} look={kit.chip} mode={mode} variant={look.presets.variant} size={look.presets.size} state={presetBlocked(p) ? 'disabled' : 'enabled'} selected={p === preset} label={presetLabel(p)} />
           ))}

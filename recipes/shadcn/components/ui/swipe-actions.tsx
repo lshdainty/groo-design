@@ -101,7 +101,7 @@ const clampOffset = (dragged: number, tray: number) => Math.max(0, Math.min(drag
 const swipeActionVariants = cva(
   [
     "flex shrink-0 cursor-pointer flex-col items-center justify-center gap-x0_5 self-stretch border-0 bg-transparent",
-    "min-h-14 font-sans text-t2 font-bold leading-[1.3]",
+    "min-h-[56px] font-sans text-t2 font-bold leading-[1.3]",
     "[transition:filter_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
     "hover:brightness-[0.88] active:brightness-[0.88]",
     "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-stroke-focus-ring",

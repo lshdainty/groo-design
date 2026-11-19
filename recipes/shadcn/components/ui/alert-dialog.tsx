@@ -2,7 +2,7 @@ import * as React from "react";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 
 import { cn } from "@/lib/utils";
-import { Button, type ButtonProps } from "@/components/ui/button";
+import { Button, ResponsivePair, type ButtonProps } from "@/components/ui/button";
 import { useInputButtonSurface } from "@/components/ui/input-button";
 
 /*
@@ -13,7 +13,7 @@ import { useInputButtonSurface } from "@/components/ui/input-button";
  *   AlertDialogContent       확인창 — 딤 위 화면 정중앙, 최대 272 · 좌우 32 를 남긴다. 닫기 버튼이 없다
  *   AlertDialogTitle         묻는 말 — 없어도 된다. 없으면 Content 에 aria-label 로 묻는 말을 단다(둘 다 없으면 개발 중에 경고)
  *   AlertDialogDescription   무엇이 어떻게 되는지 · 되돌릴 수 없다는 사실 — 늘 둔다. 제목 아래 6
- *   AlertDialogFooter        버튼 — [취소] [확정] 을 반씩. 한쪽 글이 반 폭을 넘으면 세로로 쌓고 확정이 위, 하나면 폭 전체
+ *   AlertDialogFooter        버튼 — [취소] [확정] 을 반씩(ResponsivePair). 한쪽 글이 반 폭을 넘으면 세로로 쌓고 확정이 위, 하나면 폭 전체
  *   AlertDialogCancel        취소 — neutralWeak. 누르면 닫힌다
  *   AlertDialogAction        확정 — variant criticalSolid(지우기 · 잃기) | neutralSolid(기본). 누르면 닫힌다.
  *                            onClick 에서 e.preventDefault() 하면 닫지 않고, loading 이면 누르기를 막는다(서버 응답을 기다릴 때)
@@ -298,23 +298,15 @@ const AlertDialogDescription = React.forwardRef<
 ));
 AlertDialogDescription.displayName = "AlertDialogDescription";
 
-// 바닥 — 위 16, 버튼 사이 8. 버튼마다 반 폭을 바탕으로(늘어나 채운다) 글 폭보다 줄지 않는다 — 한쪽 글이 반을 넘으면
-// 줄이 넘어가고 wrap-reverse 라 둘째(확정)가 위로 간다. 하나면 폭 전체
+// 바닥 — 위 16 + 짝 버튼(ResponsivePair — 버튼 사이 8, 버튼마다 반 폭 바탕). 한쪽 글이 반을 넘으면 줄이 넘어가고
+// wrap-reverse 라 둘째(확정)가 위로 간다. 쌓은 뒤에도 폭보다 긴 라벨은 끝을 "…" 로 줄인다. 하나면 폭 전체
 const AlertDialogFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, children, ...props }, ref) => {
     const size = useInputButtonSurface() === "popover" ? "small" : "medium";
     return (
-      <div
-        ref={ref}
-        data-slot="alert-dialog-footer"
-        className={cn(
-          "flex flex-wrap-reverse gap-x2 pt-x4 [&>*]:min-w-max [&>*]:grow [&>*]:basis-[calc(50%-var(--spacing-x2)/2)]",
-          className,
-        )}
-        {...props}
-      >
+      <ResponsivePair ref={ref} data-slot="alert-dialog-footer" className={cn("pt-x4", className)} {...props}>
         {withButtonSize(children, size)}
-      </div>
+      </ResponsivePair>
     );
   },
 );

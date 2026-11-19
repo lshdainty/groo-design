@@ -138,7 +138,7 @@
 
 ## 코드
 
-레시피 `recipes/shadcn/components/ui/dialog.tsx` 를 씁니다(Radix Dialog 위). 폼 · 상세는 `ResponsiveDialog` 입니다 — 1280 에서 Dialog 와 Bottom Sheet 를 바꾸고, `form` 이면 닫는 자리도 표면에 맞춰 바꿉니다(대화상자는 바닥 취소, 시트는 위 닫기). `form` 이 아니면(조회 · 안내) 두 표면 모두 위 닫기 버튼입니다. 본문에 [List](list.md) 를 바로 두면 줄이 제 좌우 여백(24)을 가지므로 본문 좌우 여백을 뺍니다(`className="px-0"`). 넘칠 수 있는 본문은 `scrollFog` 를 줍니다(위 20 · 아래 80 끝 흐림 — [Scroll Fog](scroll-fog.md)). 아래 미리보기는 스펙 값으로 그린 모습입니다.
+레시피 `recipes/shadcn/components/ui/dialog.tsx` 를 씁니다(Radix Dialog 위). 폼 · 상세는 `ResponsiveDialog` 입니다 — 1280 에서 Dialog 와 Bottom Sheet 를 바꾸고, `form` 이면 닫는 자리도 표면에 맞춰 바꿉니다(대화상자는 바닥 취소, 시트는 위 닫기). `form` 이 아니면(조회 · 안내) 두 표면 모두 위 닫기 버튼입니다. 본문에 [List](list.md) 를 바로 두면 줄이 제 좌우 여백(24)을 가지므로 본문 좌우 여백을 뺍니다(`className="px-0"`). 넘칠 수 있는 본문은 `scrollFog` 를 줍니다(위 20 · 아래 80 끝 흐림 — [Scroll Fog](scroll-fog.md)). `DialogFooter` 는 오른쪽 정렬이고, 큰 글자로 버튼이 한 줄에 들지 않으면 세로로 쌓고 주 버튼(뒤)이 위로 갑니다(`flex-wrap-reverse`). 바닥 폭보다 긴 라벨은 끝을 "…" 로 줄입니다. 아래 미리보기는 스펙 값으로 그린 모습입니다.
 
 ### 입력 폼
 

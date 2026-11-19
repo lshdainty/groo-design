@@ -300,7 +300,7 @@ const PopoverContent = React.forwardRef<React.ElementRef<typeof PopoverPrimitive
         >
           {hasHeader && (
             <div data-slot="popover-header" className={HEADER}>
-              <h2 id={titleId} data-slot="popover-title" className="m-0 text-t7 font-bold text-fg-neutral">
+              <h2 id={titleId} data-slot="popover-title" className="m-0 text-t7 font-bold text-fg-neutral break-keep [overflow-wrap:break-word]">
                 {title}
               </h2>
               {description != null && (

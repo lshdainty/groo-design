@@ -61,7 +61,7 @@ rules:
         background: $color-bg-layer-floating
       presets:
         chip: { value: Chip outlineStrong medium 36, note: "하나 고르기(라디오) — 고른 칩은 짙은 채움, 달력에서 다른 날을 누르면 풀린다. 이름 · 범위는 date-picker.md 의 '빠른 기간'" }
-        gap: { value: $spacing-between-chips, note: "칩 사이 8 — 시트는 한 줄 가로 스크롤(화면 끝까지), 팝오버는 줄바꿈" }
+        gap: { value: $spacing-between-chips, note: "칩 사이 8 — 시트 · 팝오버 어디서나 한 줄 가로 스크롤(화면 끝까지)" }
         paddingBottom: { value: $spacing-x3, note: "칩 줄 ↔ 머리 12" }
       header:
         height: { value: 48px, note: "최소 — 제목이 커지면 글을 따라 늘어난다. 칸 · 요일 줄 · 원 · 이전 · 다음은 px 로 그대로" }

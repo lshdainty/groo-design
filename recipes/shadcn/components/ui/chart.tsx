@@ -5,37 +5,66 @@ import { createPortal } from "react-dom";
 import * as RechartsPrimitive from "recharts";
 
 import { cn } from "@/lib/utils";
+import {
+  CHART_TICK_GAP,
+  CHART_TICK_SIZE,
+  CHART_X_AXIS_HEIGHT,
+  CHART_X_TICK_GAP,
+  chartTopMargin,
+  chartXEndReserve,
+  chartXTickFullLabels,
+  chartXTickInterval,
+  chartXTickLabels,
+  measureTextWidth,
+  measureTickWidth,
+  type ChartXGroup,
+  type ChartXTick,
+} from "@/lib/chart-axis";
+import { useWeekdayNarrow, WeekdayProbe } from "@/lib/weekday-fit";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRowHeader } from "@/components/ui/table";
 
 /*
  * Groo Chart — 색은 DESIGN.md 의 차트 색. 수치 원본은 specs/components/chart.yaml. recharts(3.x) 위에 짰다.
+ * 축 셈(값 축 · 눈금 폭 · 여백 · 가로 눈금 건너뛰기 · 같은 기간 묶음)은 lib/chart-axis.ts 에 있고 여기서 함께 내보낸다.
  *
  *   Chart               차트 상자 — label(필수, role="img" 의 요약 이름 — "10월 수입 · 지출 추이, 수입 4,200,000원 · …") · height(px) ·
- *                       legendId(대체가 되는 범례의 id → aria-describedby). 자식은 recharts 차트 하나(ResponsiveContainer 로 감싼다) +
- *                       ChartDonutCenter. 라이브러리가 svg 에 다는 role="application" · 이름 없는 tabindex 를 걷는다
- *   chartAxisProps      XAxis · YAxis 에 펼쳐 넣는 값 — 눈금 11 · fg-neutral-subtle(이중 축이면 { color } 로 그 계열 색) · 축 선 · 눈금 선 없음
+ *                       legendId(대체가 되는 범례의 id → aria-describedby) · dots(늘 찍는 점 — 기본 꺼짐) · xGroup(같은 화면 · 같은 기간
+ *                       차트 묶음 — 가장 좁은 차트로 가로 건너뛰기를 한 번 센다). 자식은 recharts 차트 하나(ResponsiveContainer 로 감싼다) +
+ *                       ChartDonutCenter. 라이브러리가 svg 에 다는 role="application" · 이름 없는 tabindex 를 걷는다.
+ *                       축 맞추기 — 세로축이 보이면 위 여백 ⌈눈금 줄 ÷ 2⌉ 이상, 가로축이 chartXAxisProps 면 눈금 줄 높이 27 · 그리는 자리
+ *                       오른쪽에 끝 글 반 폭(오른쪽 세로축 폭이 먼저 덮는다), 눈금 · 글자 · 폭을 준 세로축은 그리는 글로 다시 재 넓힌다
+ *   chartAxisProps      XAxis · YAxis 에 펼쳐 넣는 값 — 눈금 11 · fg-neutral-subtle(이중 축이면 { color } 로 그 계열 색) · 축 선 · 눈금 선 없음 ·
+ *                       눈금 글자 사이 최소 8(minTickGap)
+ *   chartXAxisProps     날짜 · 월 가로축 — chartXAxisProps(ticks, { emphasize }). 끝(가장 최근) 글을 지키고 앞에서부터 건너뛰며, 연도는
+ *                       남은 눈금 가운데 해가 바뀌는 첫 눈금에 붙인다. emphasize 칸은 보일 때 fg-neutral · 700
  *   chartGridProps      CartesianGrid — 가로 점선(3 · 3) stroke-neutral-subtle 만
- *   ChartLegendTiles    선 · 막대 차트 위 지표 타일(role="group") — items({ key, label, color, total }) · hidden(숨긴 key) · onHiddenChange.
+ *   ChartLegendTiles    선 · 막대 차트 위 지표 타일(role="group") — items({ key, label, color, total, marker? }) · hidden(숨긴 key) · onHiddenChange.
  *                       타일은 <button aria-pressed>, 마지막 하나는 끌 수 없다(aria-disabled). id 는 legendId 로 쓴다
- *   ChartTooltip · ChartTooltipContent   툴팁 — 떠 있는 표면 · 머리(headFormatter) · 줄 "■ 라벨 값"(valueFormatter, 기본 원까지).
- *                       ChartTooltip 은 가리킴 선(세로 점선)과 이 내용을 기본으로 단다
+ *   ChartTooltip · ChartTooltipContent   툴팁 — 떠 있는 표면 · 머리(headFormatter) · 줄 "■ 라벨 값"(valueFormatter, 기본 원까지 — locale) ·
+ *                       markers(계열마다 색 네모의 꼴). ChartTooltip 은 가리킴 선(세로 점선)과 이 내용을 기본으로 단다
  *   ChartDonutLegend    도넛 범례 — 카테고리 목록 items({ key, label, color, percent, amount, onClick? }) — onClick 이 있는 줄만 누르는 줄
  *   ChartDonutCenter    도넛 가운데 합계 — label · amount(원까지). 구멍에 들어가지 않으면 그리지 않고 onFitChange(false) — 쓰는 쪽이 목록 위에 합계를 둔다
- *   ChartHeatmap        요일 × 시간 열지도 — label(요약 이름) · rows · columns · values · formatValue(기본 원까지) · valueLabel(툴팁 줄 이름, 기본 "지출") ·
- *                       textMinCellWidth(기본 112) · tooltipLabel(row, column)
+ *   ChartHeatmap        요일 × 시간 열지도 — label(요약 이름) · rows · columns({ key, label, narrowLabel? }) · values · formatValue(기본 원까지) ·
+ *                       locale · valueLabel(툴팁 줄 이름, 기본 "지출") · emptyLabel(기본 "없음") · textMinCellWidth(기본 112) · tooltipLabel(row, column)
  *   ChartDataTable      표로 보기 — caption · columns · rows, visuallyHidden(기본 true — 숨긴 표, false 면 차트 아래 펼친 표)
  *   assignChartColors   저장된 색 먼저, 나머지는 그 차트에서 쓰지 않은 색부터 배정 순서 — 10개를 넘으면 상위 9 + 회색 "기타"(groupOthers)
- *   formatAxisWon       눈금 글자 — "400만" · "1.2만" · "−3,000만"(만 · 억 · 조, 소수 한 자리, 빼기 U+2212)
+ *   formatAxisWon       눈금 글자 — formatAxisWon(value, ticks, locale). 한 축은 한 단위(가장 큰 절댓값의 눈금으로 고른다) —
+ *                       한국어 만 · 억 · 조("0.5만 · 1만"), 영어 K · M · B("0.5K · 1K"), 1만 · 1K 미만 축은 쉼표 정수. 소수 한 자리 · 빼기 U+2212
+ *   formatWon           돈 원까지 — formatWon(value, locale). 한국어 "1,234원", 영어 "₩1,234"
  *   chartDonutThickness 도넛 두께 = 지름 ÷ 10 + 6(정수로 — 120 → 18 · 160 → 22 · 180 → 24)
  *   chartDonutRadii     지름에서 Pie 의 { innerRadius, outerRadius } — <Pie {...chartDonutRadii(160)}>
+ *   CHART_DONUT_CENTER_AMOUNT  도넛 가운데 합계 글의 클래스(t5-static · 700) — 들어가는지 재는 글도 같은 크기다
+ *   CHART_TICK_SIZE · CHART_TICK_GAP  눈금 글자 크기 "11px"(고정) · 글자 사이 최소 8
  *
  * 색: 차트 10색(라이트 팔레트 700 · 다크 800-dark — var(--color-chart-{색})). 배정 순서 blue → green → orange → violet → pink → indigo → red →
  *   yellow → brown, 회색은 "기타" 전용(색이 없다고 주지 않는다). 수입 blue · 지출 red.
  * 축 · 격자: 눈금 11 / 15(px — 글자 크기 설정을 따르지 않는다) · 고정폭 숫자 · fg-neutral-subtle(이중 축의 눈금은 그 계열 색 — 글자 기준 4.5 를 넘는다). 가로 점선 격자만 —
- *   세로 격자 · 축 선 · 눈금 선 없음. 돈 축만 "만" 으로 줄인다(formatAxisWon). 오늘 뒤 날짜는 데이터에 넣지 않는다(0 으로 그리지 않는다).
+ *   세로 격자 · 축 선 · 눈금 선 없음. 돈 축만 "만" 으로 줄인다(formatAxisWon). 눈금 간격은 1 · 2 · 5 × 10ⁿ(niceValueAxis), 세로 눈금이 겹치면
+ *   수를 줄인다(chartValueIntervals). 오늘 뒤 날짜는 데이터에 넣지 않는다(0 으로 그리지 않는다).
  * 계열: 차트의 바로 아래 자식에 기본값을 넣는다(쓰는 쪽이 준 값이 이긴다) — Area · Line 선 2 · monotone · 점 없음(가리킨 자리에만
- *   계열 색 점 r 4 + 카드 면 색 테두리 2 = 10), Area 의 면은 같은 색 25% → 0% 세로 그라디언트 · Bar 최대 폭 28 · 위 모서리 4 ·
- *   Pie 조각 사이 0 · 12시에서 시계 방향. 그려짐은 300ms 한 번(ease-out) — 모션 줄이기면 바로(라이브러리 기본 "auto" — 강제로 켜지 않는다).
+ *   계열 색 점 r 4 + 카드 면 색 테두리 2 = 10 — dots 를 켜면 값마다 계열 색 점 r 3 · 테두리 없음), Area 의 면은 같은 색 25% → 0% 세로 그라디언트 ·
+ *   Bar 최대 폭 28 · 위 모서리 4 · Pie 조각 사이 0 · 12시에서 시계 방향. 그려짐은 300ms 한 번(ease-out) — 모션 줄이기면 바로(라이브러리 기본 "auto" — 강제로 켜지 않는다).
+ *   미리 잡는 일정(예정) 계열은 막대를 chart-{색}-subtle 채움 + 1px 계열 색 테두리로 그리고, 지표 타일 marker · 툴팁 markers 를 "outline" 으로 준다.
  * 툴팁: bg-layer-floating · shadow-s3 · 모서리 12 · 위아래 10 · 좌우 12 · 최소 128 · 테두리 없음. 머리 12 · fg-neutral-subtle, 줄은 색 네모 8
  *   (모서리 2) ↔ 라벨 6 · 라벨 13 fg-neutral-subtle ↔ 값 12 이상 · 값 13 · 700 · fg-neutral · 고정폭 숫자(오른쪽). 보조 기술에는 숨긴다 —
  *   같은 값은 범례 · 표로 보기가 준다. 가리킴 선은 1px 점선(3 · 3) stroke-neutral-weak.
@@ -48,7 +77,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableRow
  * 도넛 범례 줄: 44 이상 · 색 네모 10 ↔ 8 · 이름 14 fg-neutral · % 14 fg-neutral-subtle · 금액 14 · 700 · "원". 누르는 줄은 List 줄과 같다 —
  *   카드 본문(여백 24) 안에서 줄을 카드 끝까지 내고(글자는 그대로 24 에 선다), 호버 · 누름 바탕 bg-layer-default-pressed 는 좌우 6 들어온
  *   모서리 10(카드 16 − 6 — List 의 동심 모서리). 키보드 포커스에만 안쪽 2px 링. 가운데 합계 16 / 22 · 700 + 위 라벨 12(-static).
- * 열지도: 왼쪽 시간대 라벨 열 56(이름 13 · 700 + 시간 11 · fg-neutral-subtle) + 칸, 위 요일 머리 12 · fg-neutral-subtle. 칸은 정사각형 ·
+ * 열지도: 왼쪽 시간대 라벨 열 56(이름 13 · 700 + 시간 11 · fg-neutral-subtle) + 칸, 위 요일 머리 12 · fg-neutral-subtle(줄을 바꾸지 않는다 —
+ *   두 글자 label 이 칸에 들지 않으면 모든 칸을 narrowLabel 로 줄인다). 칸은 정사각형 ·
  *   모서리 4 · 사이 6. 세기 다섯 — bg-brand-solid 를 카드 면에 18 · 35 · 55 · 76 · 100% 섞는다(가장 큰 값의 8 · 22 · 45 · 75% 에서 끊는다),
  *   값이 없으면 bg-neutral-weak. 가장 큰 칸에 고리를 두르지 않는다(포커스 링과 헷갈린다). 라벨 · 머리 · 칸 글은 -static 이다.
  *   칸 폭(ResizeObserver 로 잰다)이 textMinCellWidth(112) 이상일 때만 칸에 원까지(11 / 15 · 700 · 고정폭 숫자, 빈 칸은 "—" fg-neutral-subtle),
@@ -94,6 +124,15 @@ const SUBTLE_BG: Record<ChartColor, string> = {
   brown: "bg-chart-brown-subtle",
   gray: "bg-chart-gray-subtle",
 };
+
+/**
+ * 계열 표식(지표 타일 점 · 툴팁 색 네모)의 꼴 — 막대 모양을 따른다. `fill` 은 계열 색 채움(기본), `outline` 은 옅은 바탕
+ * (chart-{색}-subtle) + 1px 계열 색 테두리 — 같은 모양으로 그린 예정 계열이 같은 색의 쓴 값 계열과 표식으로도 갈린다
+ */
+export type ChartMarker = "fill" | "outline";
+
+// outline 표식의 테두리 — 1px 계열 색(크기는 그대로 — box-sizing border-box)
+const outlineMarkerStyle = (color: string): React.CSSProperties => ({ borderWidth: 1, borderStyle: "solid", borderColor: color });
 
 export type ChartColored<T> = T & {
   /** 차트 색 이름 — 범례 · 타일 */
@@ -145,20 +184,38 @@ function assignChartColors<T extends object>(items: readonly T[], { colorOf, gro
 const MINUS = "\u2212";
 const round1 = (x: number) => Math.floor(x * 10 + 0.5) / 10;
 
-/** 눈금 글자 — 1만 미만은 쉼표 정수, 그 위는 만 · 억 · 조에 소수 한 자리(.0 은 버린다). 빼기는 U+2212 */
-function formatAxisWon(value: number): string {
+const isEnglish = (locale: string) => locale.toLowerCase().startsWith("en");
+
+/** 축 단위 — 눈금 가운데 가장 큰 절댓값이 그 값 이상이면 그 축의 모든 눈금이 그 단위다(큰 것부터) */
+const AXIS_UNITS = [
+  { min: 1e12, label: "조" },
+  { min: 1e8, label: "억" },
+  { min: 1e4, label: "만" },
+] as const;
+/** 영어 축 단위 — 천 단위로 센다(1,000M 이 아니라 1B) */
+const AXIS_UNITS_EN = [
+  { min: 1e9, label: "B" },
+  { min: 1e6, label: "M" },
+  { min: 1e3, label: "K" },
+] as const;
+
+/**
+ * 눈금 글자 — 한 축은 한 단위. 그 축의 눈금([ticks]) 가운데 가장 큰 절댓값이 1억 이상이면 모든 눈금을 억 단위(0.5억 · 1억 · 1.5억),
+ * 1만 이상이면 만 단위(0.5만 · 1만), 아니면 쉼표 정수(2,000 · 4,000 — 조도 같은 셈). 영어([locale] "en")는 천 단위 K · M · B.
+ * 소수는 한 자리(.0 은 버린다), 0 은 "0", 빼기는 U+2212. [ticks] 는 그 축이 그리는 눈금 목록 그대로다(niceValueAxis 가 넘긴다).
+ * tickFormatter 에 바로 넣지 않는다 — 눈금 목록을 함께 넘기는 niceValueAxis(값들, formatAxisWon) 를 쓴다.
+ */
+function formatAxisWon(value: number, ticks: readonly number[], locale = "ko"): string {
   if (!Number.isFinite(value)) return "";
   const sign = value < 0 ? MINUS : "";
   const n = Math.abs(value);
-  if (n < 10000) return sign + Math.round(n).toLocaleString("ko-KR");
-  let scaled = n / 10000;
-  let unit = "만";
-  for (const bigger of ["억", "조"]) {
-    if (round1(scaled) < 10000) break;
-    scaled /= 10000;
-    unit = bigger;
-  }
-  return sign + round1(scaled).toLocaleString("ko-KR", { maximumFractionDigits: 1 }) + unit;
+  const en = isEnglish(locale);
+  const numberLocale = en ? "en-US" : "ko-KR";
+  const axisMax = Math.max(n, ...ticks.filter(Number.isFinite).map((t) => Math.abs(t)));
+  const unit = (en ? AXIS_UNITS_EN : AXIS_UNITS).find((u) => axisMax >= u.min);
+  if (!unit) return sign + Math.round(n).toLocaleString(numberLocale);
+  if (n === 0) return "0";
+  return sign + round1(n / unit.min).toLocaleString(numberLocale, { maximumFractionDigits: 1 }) + unit.label;
 }
 
 /** 도넛 두께 — 지름 ÷ 10 + 6 을 정수로(120 → 18 · 160 → 22 · 180 → 24). 문턱 없이 지름을 따라 고르게 굵어진다 */
@@ -172,8 +229,12 @@ function chartDonutRadii(diameter: number): { innerRadius: number; outerRadius: 
   return { innerRadius: outerRadius - chartDonutThickness(diameter), outerRadius };
 }
 
-// 돈은 줄이지 않고 원까지(툴팁 · 열지도 칸의 기본)
-const formatWon = (value: number) => (value < 0 ? MINUS : "") + Math.round(Math.abs(value)).toLocaleString("ko-KR") + "원";
+/** 돈은 줄이지 않고 원까지(툴팁 · 열지도 칸의 기본) — 한국어 "1,234원", 영어([locale] "en") "₩1,234". 빼기는 U+2212 */
+function formatWon(value: number, locale = "ko"): string {
+  const sign = value < 0 ? MINUS : "";
+  const n = Math.round(Math.abs(value));
+  return isEnglish(locale) ? `${sign}₩${n.toLocaleString("en-US")}` : `${sign}${n.toLocaleString("ko-KR")}원`;
+}
 
 // ── 축 · 격자 ─────────────────────────────────────────────────
 export interface ChartAxisOptions {
@@ -181,14 +242,80 @@ export interface ChartAxisOptions {
   color?: ChartColor;
 }
 
-/** XAxis · YAxis 에 펼친다 — 눈금 11 · fg-neutral-subtle(이중 축이면 계열 색) · 축 선 · 눈금 선 없음 · 눈금과 그리는 자리 사이 8 */
+/** XAxis · YAxis 에 펼친다 — 눈금 11 · fg-neutral-subtle(이중 축이면 계열 색) · 축 선 · 눈금 선 없음 · 눈금과 그리는 자리 사이 8 · 눈금 글자 사이 최소 8 */
 function chartAxisProps({ color }: ChartAxisOptions = {}) {
   return {
     axisLine: false,
     tickLine: false,
     tickMargin: 8,
-    tick: { fill: color ? chartVar(color) : "var(--color-fg-neutral-subtle)", fontSize: 11 },
+    minTickGap: CHART_TICK_GAP,
+    tick: { fill: color ? chartVar(color) : "var(--color-fg-neutral-subtle)", fontSize: CHART_TICK_SIZE },
   } as const;
+}
+
+/** recharts 가 눈금 그리기 함수에 넘기는 것 가운데 쓰는 것 — width 는 가로축(= 그리는 자리)의 폭 */
+interface XTickRenderProps {
+  x?: number | string;
+  y?: number | string;
+  width?: number | string;
+  index?: number;
+  textAnchor?: "start" | "middle" | "end" | "inherit";
+  verticalAnchor?: "start" | "middle" | "end";
+  className?: string;
+  /** 같은 기간 차트 묶음(xGroup) — 이 차트가 센 간격을 받아 묶음의 간격(가장 큰 것)을 돌려준다. Chart 가 넣어 준다 */
+  sharedInterval?: (own: number) => number;
+}
+
+/** chartXAxisProps 가 만든 눈금 그리기 함수 → 그 눈금 목록. Chart 가 끝 글 자리(chartXEndReserve)를 비우려고 찾아 쓴다 */
+const ticksOfRenderer = new WeakMap<object, readonly ChartXTick[]>();
+const chartXTicksOf = (tick: unknown): readonly ChartXTick[] | undefined => (typeof tick === "function" ? ticksOfRenderer.get(tick) : undefined);
+
+/**
+ * 날짜 · 월 · 주 · 요일 가로축 — `<XAxis dataKey="month" {...chartXAxisProps(ticks)} />`(chartAxisProps() 대신 펼친다).
+ * 남길 눈금을 recharts 에 맡기지 않고 직접 정한다 — 글자 사이 최소 8 로 들어가는 칸을 세어 끝(가장 최근) 눈금을 지키고 앞에서부터
+ * 건너뛰고, 연도는 남은 눈금 가운데 해가 바뀌는 첫 눈금에 붙인다. recharts 에는 모든 칸을 그리게 하고(interval 0) 건너뛴 칸은 비운다.
+ * 끝 글은 옮기지 않는다 — Chart 가 그리는 자리 오른쪽에 끝 글 폭의 절반을 비운다. [emphasize] 칸(고른 기간)은 보일 때만 fg-neutral · 700.
+ */
+function chartXAxisProps(ticks: readonly ChartXTick[], { emphasize }: { emphasize?: number } = {}) {
+  const axis = chartAxisProps();
+  const full = chartXTickFullLabels(ticks);
+  // 칸마다 불리므로 그리는 자리 폭이 같으면 한 번만 센다(글 폭을 재는 것이 비싸다)
+  let own: { width: number; interval: number } | undefined;
+  let plan: { interval: number; labels: (string | null)[] } | undefined;
+  const labelsAt = (p: XTickRenderProps) => {
+    const width = Number(p.width) || 0;
+    if (own?.width !== width) own = { width, interval: chartXTickInterval(ticks.length, width, measureTextWidth(full)) };
+    const interval = p.sharedInterval?.(own.interval) ?? own.interval;
+    if (plan?.interval !== interval) plan = { interval, labels: chartXTickLabels(ticks, interval) };
+    return plan.labels;
+  };
+  const tick = (p: XTickRenderProps) => {
+    const label = labelsAt(p)[p.index ?? -1];
+    if (label == null) return <g />;
+    const strong = emphasize != null && p.index === emphasize;
+    return (
+      <RechartsPrimitive.Text
+        x={p.x}
+        y={p.y}
+        textAnchor={p.textAnchor}
+        verticalAnchor={p.verticalAnchor}
+        className={p.className}
+        fill={strong ? "var(--color-fg-neutral)" : axis.tick.fill}
+        fontSize={axis.tick.fontSize}
+        fontWeight={strong ? 700 : undefined}
+      >
+        {label}
+      </RechartsPrimitive.Text>
+    );
+  };
+  ticksOfRenderer.set(tick, ticks);
+  return {
+    ...axis,
+    interval: 0 as const,
+    // 눈금 선을 긋지 않으니 그 길이(기본 6)도 두지 않는다 — 눈금 줄 높이 · 글 시작은 Chart 가 잡는다
+    tickSize: 0,
+    tick,
+  };
 }
 
 /** CartesianGrid 에 펼친다 — 가로 점선(3 · 3) stroke-neutral-subtle 만 */
@@ -201,13 +328,17 @@ const chartGridProps = {
 // ── 계열 기본값 ───────────────────────────────────────────────
 // 가리킨 자리의 점 — r 4 + 테두리 2(바깥 지름 10), 테두리는 카드 면 색
 const ACTIVE_DOT = { r: 4, strokeWidth: 2, stroke: "var(--color-bg-layer-default)" } as const;
+// 늘 찍는 점(dots) — 가리킨 점에서 카드 면 색 테두리를 뺀 계열 색 원(지름 6 · 테두리 없음). 가리킨 점이 그 위에 선다
+const SERIES_DOT = { r: 3, strokeWidth: 0 } as const;
 const DRAW = { animationDuration: 300, animationEasing: "ease-out" } as const;
 
 type AnyProps = Record<string, unknown>;
 
 // 차트의 바로 아래 계열에 기본값을 넣는다 — 쓰는 쪽이 준 값이 이긴다. Area 의 면은 같은 색 25% → 0% 세로 그라디언트
-function withSeriesDefaults(chart: React.ReactElement<AnyProps>, idPrefix: string) {
+function withSeriesDefaults(chart: React.ReactElement<AnyProps>, idPrefix: string, dots: boolean) {
   const gradients: React.ReactElement[] = [];
+  // 늘 찍는 점 — 계열 선 색 원. Area 는 면(그라디언트)이 점 색으로 번지지 않게 fill 을 선 색으로 준다
+  const dotOf = (props: AnyProps) => (dots && typeof props.stroke === "string" ? { ...SERIES_DOT, fill: props.stroke } : false);
   const pick = (props: AnyProps, defaults: AnyProps) => {
     const out: AnyProps = {};
     for (const [key, value] of Object.entries(defaults)) if (props[key] === undefined) out[key] = value;
@@ -217,7 +348,7 @@ function withSeriesDefaults(chart: React.ReactElement<AnyProps>, idPrefix: strin
     if (!React.isValidElement<AnyProps>(child)) return child;
     const props = child.props;
     if (child.type === RechartsPrimitive.Area) {
-      const extra = pick(props, { type: "monotone", strokeWidth: 2, dot: false, activeDot: ACTIVE_DOT, ...DRAW });
+      const extra = pick(props, { type: "monotone", strokeWidth: 2, dot: dotOf(props), activeDot: ACTIVE_DOT, ...DRAW });
       if (props.fill === undefined && typeof props.stroke === "string") {
         const id = `${idPrefix}area${index}`;
         gradients.push(
@@ -232,7 +363,7 @@ function withSeriesDefaults(chart: React.ReactElement<AnyProps>, idPrefix: strin
       return React.cloneElement(child, extra);
     }
     if (child.type === RechartsPrimitive.Line) {
-      return React.cloneElement(child, pick(props, { type: "monotone", strokeWidth: 2, dot: false, activeDot: ACTIVE_DOT, ...DRAW }));
+      return React.cloneElement(child, pick(props, { type: "monotone", strokeWidth: 2, dot: dotOf(props), activeDot: ACTIVE_DOT, ...DRAW }));
     }
     if (child.type === RechartsPrimitive.Bar) {
       return React.cloneElement(child, pick(props, { maxBarSize: 28, radius: [4, 4, 0, 0], ...DRAW }));
@@ -272,10 +403,17 @@ const CHART_ROOT = [
   "relative w-full rounded-r2 font-sans",
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring",
   "[&_.recharts-cartesian-axis-tick-value]:tabular-nums",
-  // 가리킨 점의 테두리는 카드 면 색(라이브러리 기본 흰색을 덮는다) · 늘 찍는 점은 두지 않는다
-  "[&_.recharts-active-dot_.recharts-dot]:stroke-bg-layer-default [&_.recharts-line-dots]:hidden [&_.recharts-area-dots]:hidden",
+  // 가리킨 점의 테두리는 카드 면 색(라이브러리 기본 흰색을 덮는다)
+  "[&_.recharts-active-dot_.recharts-dot]:stroke-bg-layer-default",
   "[&_.recharts-surface]:outline-none [&_.recharts-wrapper]:outline-none [&_.recharts-sector]:outline-none",
 ].join(" ");
+// 늘 찍는 점은 두지 않는다 — dots 를 켜지 않은 차트(기본)에 붙인다
+const CHART_HIDE_DOTS = "[&_.recharts-line-dots]:hidden [&_.recharts-area-dots]:hidden";
+
+/** 카르테시안 차트의 기본 바깥 여백 — 쓰는 쪽이 주지 않은 값을 채운다. 위 8(세로축이 보이면 chartTopMargin 이 키운다), 나머지는 recharts 기본 5 */
+const CHART_MARGIN = { top: 8, right: 5, bottom: 5, left: 5 };
+const noSubscribe = () => () => {};
+const noVersion = () => 0;
 
 export interface ChartProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
   /** 요약 이름 — "{기간} {무엇} — {핵심 값}"(role="img" 의 이름) */
@@ -284,14 +422,25 @@ export interface ChartProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
   height?: number;
   /** 대체가 되는 범례(지표 타일 · 목록)의 id — aria-describedby */
   legendId?: string;
+  /**
+   * 늘 찍는 점 — 선 · 면 계열의 값마다 계열 색 원(지름 6 · 테두리 없음)을 찍는다. 기본 꺼짐(가리킨 자리에만 점).
+   * 점이 적은 추이 · 0 이 대부분인 날마다의 합(값 7 개 이하)에 켠다
+   */
+  dots?: boolean;
+  /**
+   * 같은 화면 · 같은 기간 차트 묶음(createChartXGroup) — 묶음의 차트들은 그리는 자리가 가장 좁은 차트로 가로 눈금 건너뛰기를 한 번 세고
+   * 모두 그 날짜 글을 쓴다. 가로축이 chartXAxisProps 일 때만 쓴다
+   */
+  xGroup?: ChartXGroup;
   /** recharts 차트 하나 + ChartDonutCenter */
   children: React.ReactNode;
 }
 
 const Chart = React.forwardRef<HTMLDivElement, ChartProps>(
-  ({ label, height, legendId, className, style, children, onKeyDown, onBlur, ...props }, ref) => {
+  ({ label, height, legendId, dots = false, xGroup, className, style, children, onKeyDown, onBlur, ...props }, ref) => {
     const rootRef = React.useRef<HTMLDivElement>(null);
-    const idPrefix = React.useId().replace(/[^a-zA-Z0-9_-]/g, "");
+    const rawId = React.useId();
+    const idPrefix = rawId.replace(/[^a-zA-Z0-9_-]/g, "");
     const all = React.Children.toArray(children);
     const overlays = all.filter((c) => React.isValidElement(c) && c.type === ChartDonutCenter);
     const chart = all.find((c): c is React.ReactElement<AnyProps> => React.isValidElement(c) && c.type !== ChartDonutCenter);
@@ -308,6 +457,74 @@ const Chart = React.forwardRef<HTMLDivElement, ChartProps>(
     const hole = typeof inner === "number" ? inner * 2 : null;
     const ctx = React.useMemo(() => ({ hole }), [hole]);
 
+    // 같은 기간 차트 묶음 — 묶음의 간격이 바뀌면 다시 그리고, 이 차트가 사라지면 그 간격을 거둔다
+    React.useSyncExternalStore(xGroup ? xGroup.subscribe : noSubscribe, xGroup ? xGroup.version : noVersion, noVersion);
+    React.useEffect(() => {
+      if (!xGroup) return;
+      return () => xGroup.remove(rawId);
+    }, [xGroup, rawId]);
+
+    // 세로축 폭 — 눈금(ticks) · 글(tickFormatter) · 폭(width)을 준 세로축은 그리는 글로 다시 재 준 폭보다 넓으면 넓힌다(가장 긴 글이 잘리지 않게)
+    const fitYAxis = (c: React.ReactElement<AnyProps>) => {
+      const { ticks, tickFormatter, width } = c.props;
+      if (!Array.isArray(ticks) || typeof tickFormatter !== "function" || typeof width !== "number") return c;
+      const format = tickFormatter as (v: unknown, i: number) => unknown;
+      const need = measureTickWidth(ticks.map((v: unknown, i: number) => String(format(v, i))));
+      return need > width ? React.cloneElement(c, { width: need }) : c;
+    };
+    // 날짜 가로축(chartXAxisProps) — 눈금 줄 높이 27 · 글은 그리는 자리 아래 12 에서 시작(맨 아래 세로 글과 겹치지 않게).
+    // 묶음이면 자기 폭으로 센 간격을 알리고 묶음의 간격(가장 큰 것 = 가장 좁은 차트의 간격)을 쓴다
+    const fitXAxis = (c: React.ReactElement<AnyProps>) => {
+      const tick = c.props.tick;
+      if (!chartXTicksOf(tick)) return c;
+      const fit = { height: CHART_X_AXIS_HEIGHT, tickMargin: CHART_X_TICK_GAP };
+      if (!xGroup) return React.cloneElement(c, fit);
+      const draw = tick as (p: XTickRenderProps) => React.ReactNode;
+      return React.cloneElement(c, {
+        ...fit,
+        tick: (p: XTickRenderProps) =>
+          draw({
+            ...p,
+            sharedInterval: (own) => {
+              xGroup.report(rawId, own);
+              return xGroup.interval() ?? own;
+            },
+          }),
+      });
+    };
+    const parts: React.ReactNode[] = chart
+      ? (React.Children.map(chart.props.children as React.ReactNode, (c) => {
+          if (!React.isValidElement<AnyProps>(c)) return c;
+          if (c.type === RechartsPrimitive.YAxis) return fitYAxis(c);
+          if (c.type === RechartsPrimitive.XAxis) return fitXAxis(c);
+          return c;
+        }) ?? [])
+      : [];
+    // 여백 — 보이는 세로축이 있으면 위 여백을 ⌈눈금 줄 ÷ 2⌉ 이상으로(맨 위 글이 상자 밖으로 나가지 않게). 날짜 가로축이면 그리는 자리
+    // 오른쪽에 끝 글 폭의 절반을 비운다 — 오른쪽 세로축 폭이 먼저 덮고 모자란 만큼만(끝 글이 차트 오른쪽 끝을 넘지 않는다)
+    // 눈금 목록은 쓰는 쪽이 준 그리기 함수에서(묶음이면 위에서 감쌌다), 오른쪽 축 폭은 다시 잰 폭에서 읽는다
+    let xTicks: readonly ChartXTick[] | undefined;
+    for (const c of React.Children.toArray(chart?.props.children as React.ReactNode)) {
+      if (React.isValidElement<AnyProps>(c) && c.type === RechartsPrimitive.XAxis) xTicks ??= chartXTicksOf(c.props.tick);
+    }
+    let rightAxis = 0;
+    let valueAxis = false;
+    for (const c of parts) {
+      if (!React.isValidElement<AnyProps>(c) || c.type !== RechartsPrimitive.YAxis || c.props.hide) continue;
+      valueAxis = true;
+      if (c.props.orientation === "right") rightAxis += typeof c.props.width === "number" ? c.props.width : 60;
+    }
+    const given = { ...CHART_MARGIN, ...(chart?.props.margin as Partial<typeof CHART_MARGIN> | undefined) };
+    const margin =
+      xTicks || valueAxis
+        ? {
+            ...given,
+            ...(valueAxis && { top: chartTopMargin(given.top) }),
+            ...(xTicks && { right: chartXEndReserve(xTicks, (l) => measureTextWidth([l]), rightAxis) }),
+          }
+        : undefined;
+    const drawn = chart ? React.cloneElement(chart, margin ? { margin } : {}, parts) : chart;
+
     // 라이브러리가 svg 에 다는 role="application" · tabindex 를 걷는다 — 차트 상자가 이름 있는 role="img" 하나다
     React.useLayoutEffect(() => {
       const root = rootRef.current;
@@ -317,6 +534,8 @@ const Chart = React.forwardRef<HTMLDivElement, ChartProps>(
           if (svg.hasAttribute("tabindex")) svg.removeAttribute("tabindex");
           if (svg.hasAttribute("role")) svg.removeAttribute("role");
         });
+        // 도넛 조각 묶음(g.recharts-pie)도 tabindex 를 달아 이름 없는 초점이 된다 — 안쪽 요소의 tabindex 도 걷는다
+        root.querySelectorAll("svg.recharts-surface [tabindex]").forEach((el) => el.removeAttribute("tabindex"));
       };
       strip();
       const observer = new MutationObserver(strip);
@@ -347,7 +566,7 @@ const Chart = React.forwardRef<HTMLDivElement, ChartProps>(
           aria-describedby={legendId}
           tabIndex={navigable ? 0 : undefined}
           data-slot="chart"
-          className={cn(CHART_ROOT, className)}
+          className={cn(CHART_ROOT, !dots && CHART_HIDE_DOTS, className)}
           style={{ height, ...style }}
           onKeyDown={(e) => {
             onKeyDown?.(e);
@@ -374,9 +593,9 @@ const Chart = React.forwardRef<HTMLDivElement, ChartProps>(
           }}
           {...props}
         >
-          {chart != null && (
+          {drawn != null && (
             <RechartsPrimitive.ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 1, height: height ?? 1 }}>
-              {withSeriesDefaults(chart, idPrefix)}
+              {withSeriesDefaults(drawn, idPrefix, dots)}
             </RechartsPrimitive.ResponsiveContainer>
           )}
           {overlays}
@@ -416,6 +635,7 @@ type TooltipPayloadEntry = {
   dataKey?: unknown;
   color?: string;
   fill?: string;
+  stroke?: string;
   payload?: Record<string, unknown>;
   hide?: boolean;
 };
@@ -425,6 +645,13 @@ export interface ChartTooltipContentProps {
   headFormatter?: (label: React.ReactNode) => React.ReactNode;
   /** 값 — 기본 원까지("4,200,000원", 빼기 U+2212) */
   valueFormatter?: (value: number | string, key: string) => React.ReactNode;
+  /** 기본 값 글의 언어 — "ko"(기본) "1,240,000원" · "en" "₩1,240,000" */
+  locale?: string;
+  /**
+   * 계열마다 색 네모의 꼴(키는 valueFormatter 의 key — dataKey). `outline` 이면 막대처럼 옅은 바탕(그 계열의 fill) + 1px 테두리(그 계열의
+   * stroke, 없으면 색)로 그린다 — 예정 계열을 같은 색의 쓴 값 계열과 가른다
+   */
+  markers?: Readonly<Record<string, ChartMarker>>;
   className?: string;
   // recharts 가 넣는 값
   active?: boolean;
@@ -434,10 +661,17 @@ export interface ChartTooltipContentProps {
 
 const TOOLTIP_SURFACE = "flex min-w-[128px] flex-col gap-x1 rounded-r3 bg-bg-layer-floating px-x3 py-x2_5 font-sans text-fg-neutral shadow-[var(--shadow-s3)]";
 
-function TooltipRow({ swatch, name, value }: { swatch: string | undefined; name: React.ReactNode; value: React.ReactNode }) {
+// [outline] 이 있으면 색 네모를 막대처럼 옅은 바탕([swatch]) + 1px [outline] 색 테두리로 그린다(ChartMarker "outline")
+function TooltipRow({ swatch, outline, name, value }: { swatch: string | undefined; outline?: string; name: React.ReactNode; value: React.ReactNode }) {
   return (
     <div data-slot="chart-tooltip-row" className="flex items-center text-t3">
-      <span aria-hidden data-slot="chart-tooltip-swatch" className="mr-x1_5 size-[8px] shrink-0 rounded-[2px]" style={{ background: swatch }} />
+      <span
+        aria-hidden
+        data-slot="chart-tooltip-swatch"
+        data-marker={outline ? "outline" : undefined}
+        className="mr-x1_5 size-[8px] shrink-0 rounded-[2px]"
+        style={{ background: swatch, ...(outline ? outlineMarkerStyle(outline) : null) }}
+      />
       <span data-slot="chart-tooltip-label" className="text-fg-neutral-subtle">
         {name}
       </span>
@@ -448,7 +682,7 @@ function TooltipRow({ swatch, name, value }: { swatch: string | undefined; name:
   );
 }
 
-function ChartTooltipContent({ active, payload, label, headFormatter, valueFormatter, className }: ChartTooltipContentProps) {
+function ChartTooltipContent({ active, payload, label, headFormatter, valueFormatter, locale, markers, className }: ChartTooltipContentProps) {
   if (!active || !payload?.length) return null;
   const rows = payload.filter((item) => item.value != null && !item.hide);
   if (rows.length === 0) return null;
@@ -463,10 +697,11 @@ function ChartTooltipContent({ active, payload, label, headFormatter, valueForma
       {rows.map((item, i) => {
         const key = typeof item.dataKey === "string" || typeof item.dataKey === "number" ? String(item.dataKey) : String(item.name ?? i);
         const raw = item.value as number | string;
-        const value = valueFormatter ? valueFormatter(raw, key) : typeof raw === "number" ? formatWon(raw) : raw;
+        const value = valueFormatter ? valueFormatter(raw, key) : typeof raw === "number" ? formatWon(raw, locale) : raw;
         // 선 · 영역 · 막대는 계열 색, 도넛 조각은 그 조각의 fill(assignChartColors)
         const swatch = item.color ?? item.fill ?? (typeof item.payload?.fill === "string" ? item.payload.fill : undefined);
-        return <TooltipRow key={key} swatch={swatch} name={item.name} value={value} />;
+        const outline = markers?.[key] === "outline" ? (item.stroke ?? item.color ?? swatch) : undefined;
+        return <TooltipRow key={key} swatch={outline ? (item.fill ?? swatch) : swatch} outline={outline} name={item.name} value={value} />;
       })}
     </div>
   );
@@ -496,6 +731,8 @@ export interface ChartLegendItem {
   color: ChartColor;
   /** 합계 — 원까지 만든 글("4,200,000원") */
   total: React.ReactNode;
+  /** 점의 꼴 — 기본 `fill`(계열 색 채움). 예정 계열은 `outline` — 옅은 바탕(chart-{색}-subtle) + 1px 계열 색 테두리 */
+  marker?: ChartMarker;
 }
 
 export interface ChartLegendTilesProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "hidden"> {
@@ -548,7 +785,13 @@ const ChartLegendTiles = React.forwardRef<HTMLDivElement, ChartLegendTilesProps>
                 }}
               >
                 <span className="flex items-center gap-x1_5 text-t3 text-fg-neutral-subtle">
-                  <span aria-hidden data-slot="chart-legend-dot" className={cn("size-[8px] shrink-0 rounded-full", DOT_BG[item.color])} />
+                  <span
+                    aria-hidden
+                    data-slot="chart-legend-dot"
+                    data-marker={item.marker === "outline" ? "outline" : undefined}
+                    className={cn("size-[8px] shrink-0 rounded-full", item.marker === "outline" ? SUBTLE_BG[item.color] : DOT_BG[item.color])}
+                    style={item.marker === "outline" ? outlineMarkerStyle(chartVar(item.color)) : undefined}
+                  />
                   {item.label}
                 </span>
                 <span data-slot="chart-legend-total" className="mt-x0_5 text-t5 font-bold tabular-nums text-fg-neutral">
@@ -581,7 +824,7 @@ export interface ChartDonutLegendProps extends Omit<React.HTMLAttributes<HTMLULi
   items: ChartDonutLegendItem[];
 }
 
-const LEGEND_ROW = "flex min-h-11 w-full items-center gap-x2 text-start font-sans text-t4";
+const LEGEND_ROW = "flex min-h-[44px] w-full items-center gap-x2 text-start font-sans text-t4";
 // 누르는 줄 — List 줄처럼 카드 끝까지(본문 여백 24 를 되돌린다), 바탕 층(::before)은 좌우 6 들어온 모서리 10(카드 16 − 6)
 const LEGEND_ROW_PRESSABLE = [
   "relative isolate -mx-x6 w-[calc(100%+var(--spacing-x6)*2)] cursor-pointer border-0 bg-transparent px-x6",
@@ -639,6 +882,12 @@ export interface ChartDonutCenterProps extends Omit<React.HTMLAttributes<HTMLDiv
 // 가운데 글 묶음의 모서리와 구멍 가장자리 사이 — 조각에 붙지 않게
 const HOLE_INSET = 4;
 
+/**
+ * 도넛 가운데 합계 글 — 16 / 22 · 700 · 고정폭 숫자, 글자 크기 설정을 따르지 않는다(t5-static). 구멍에 들어가는지도 이 크기의 글로
+ * 재므로 큰 글자에서도 판정과 그림이 같다. 가운데 합계를 따로 그리거나 재는 쪽도 이 클래스를 쓴다
+ */
+const CHART_DONUT_CENTER_AMOUNT = "text-t5-static font-bold whitespace-nowrap tabular-nums";
+
 function ChartDonutCenter({ label, amount, onFitChange, className, ...props }: ChartDonutCenterProps) {
   const { hole } = React.useContext(ChartContext);
   const textRef = React.useRef<HTMLDivElement>(null);
@@ -674,7 +923,9 @@ function ChartDonutCenter({ label, amount, onFitChange, className, ...props }: C
     >
       <div ref={textRef} className="flex w-max flex-col items-center text-center font-sans">
         {label != null && <span className="text-t2-static text-fg-neutral-subtle">{label}</span>}
-        <span className="whitespace-nowrap text-t5-static font-bold tabular-nums text-fg-neutral">{amount}</span>
+        <span data-slot="chart-donut-center-amount" className={cn(CHART_DONUT_CENTER_AMOUNT, "text-fg-neutral")}>
+          {amount}
+        </span>
       </div>
     </div>
   );
@@ -692,8 +943,13 @@ export interface ChartHeatmapRow {
 
 export interface ChartHeatmapColumn {
   key: string;
-  /** 요일 — "수"(12 · fg-neutral-subtle) */
+  /** 요일 — "수" · 영어 두 글자 "We"(12 · fg-neutral-subtle, 글자 크기 설정을 따르지 않는다) */
   label: React.ReactNode;
+  /**
+   * 칸에 [label] 이 들지 않을 때의 요일 — 영어 한 글자 "W". 주면 칸마다 [label] 견본을 두고 하나라도 칸을 넘으면 모든 칸을 이 글로 줄인다
+   * (날짜 고르기 요일 줄과 같은 판정 — useWeekdayNarrow). 요일 머리는 줄을 바꾸지 않는다
+   */
+  narrowLabel?: React.ReactNode;
 }
 
 export interface ChartHeatmapProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
@@ -705,8 +961,12 @@ export interface ChartHeatmapProps extends Omit<React.HTMLAttributes<HTMLDivElem
   values: (number | null | undefined)[][];
   /** 칸 · 툴팁의 값 — 기본 원까지("35,000원") */
   formatValue?: (value: number) => string;
+  /** 기본 값 글의 언어 — "ko"(기본) "35,000원" · "en" "₩35,000" */
+  locale?: string;
   /** 툴팁 줄의 이름 — 기본 "지출"("■ 지출 35,000원") */
   valueLabel?: string;
+  /** 값이 없는 칸의 툴팁 값 — 기본 "없음" */
+  emptyLabel?: string;
   /** 칸 폭이 이보다 좁으면 칸에 글을 두지 않는다 — 기본 112 */
   textMinCellWidth?: number;
   /** 툴팁 머리 — 기본 "{요일} {시간대} {시간}" */
@@ -802,9 +1062,25 @@ type HeatActive = { row: number; col: number; source: "pointer" | "touch" | "key
 
 const ChartHeatmap = React.forwardRef<HTMLDivElement, ChartHeatmapProps>(
   (
-    { label, rows, columns, values, formatValue = formatWon, valueLabel = "지출", textMinCellWidth = 112, tooltipLabel, className, onKeyDown, onBlur, ...props },
+    {
+      label,
+      rows,
+      columns,
+      values,
+      formatValue: formatValueProp,
+      locale,
+      valueLabel = "지출",
+      emptyLabel = "없음",
+      textMinCellWidth = 112,
+      tooltipLabel,
+      className,
+      onKeyDown,
+      onBlur,
+      ...props
+    },
     ref,
   ) => {
+    const formatValue = formatValueProp ?? ((value: number) => formatWon(value, locale));
     const rootRef = React.useRef<HTMLDivElement>(null);
     const firstCellRef = React.useRef<HTMLSpanElement>(null);
     const tipRef = React.useRef<HTMLDivElement>(null);
@@ -814,6 +1090,9 @@ const ChartHeatmap = React.forwardRef<HTMLDivElement, ChartHeatmapProps>(
     const text = useHeatText(rootRef);
     const max = Math.max(0, ...values.flat().map((v) => (typeof v === "number" && v > 0 ? v : 0)));
     const showText = cellWidth >= textMinCellWidth;
+    // 요일 머리 — 칸에 두 글자가 들지 않으면 모든 칸을 narrowLabel 로(narrowLabel 이 없으면 견본도 두지 않는다)
+    const probes = columns.some((c) => c.narrowLabel != null);
+    const narrow = useWeekdayNarrow(rootRef, columns.map((c) => String(c.label)).join("\u0000"));
 
     // 칸 폭 — 창 크기 · 회전에 따라 112 를 넘나들면 글을 보이고 감춘다(글자 크기는 그대로)
     React.useLayoutEffect(() => {
@@ -916,8 +1195,9 @@ const ChartHeatmap = React.forwardRef<HTMLDivElement, ChartHeatmapProps>(
       >
         <span aria-hidden />
         {columns.map((column) => (
-          <span key={column.key} aria-hidden data-slot="chart-heatmap-column" className="text-center text-t2-static text-fg-neutral-subtle">
-            {column.label}
+          <span key={column.key} aria-hidden data-slot="chart-heatmap-column" className="relative text-center text-t2-static whitespace-nowrap text-fg-neutral-subtle">
+            {narrow && column.narrowLabel != null ? column.narrowLabel : column.label}
+            {probes && <WeekdayProbe>{column.label}</WeekdayProbe>}
           </span>
         ))}
         {rows.map((row, r) => (
@@ -977,7 +1257,7 @@ const ChartHeatmap = React.forwardRef<HTMLDivElement, ChartHeatmapProps>(
               <TooltipRow
                 swatch={activeStep < 0 ? "var(--color-bg-neutral-weak)" : HEAT_STEP_SWATCH[activeStep]}
                 name={valueLabel}
-                value={activeStep < 0 ? "없음" : formatValue(activeValue as number)}
+                value={activeStep < 0 ? emptyLabel : formatValue(activeValue as number)}
               />
             </div>,
             document.body,
@@ -1050,6 +1330,7 @@ ChartDataTable.displayName = "ChartDataTable";
 export {
   Chart,
   chartAxisProps,
+  chartXAxisProps,
   chartGridProps,
   ChartLegendTiles,
   ChartTooltip,
@@ -1060,6 +1341,28 @@ export {
   ChartDataTable,
   assignChartColors,
   formatAxisWon,
+  formatWon,
   chartDonutThickness,
   chartDonutRadii,
+  CHART_DONUT_CENTER_AMOUNT,
 };
+
+// 축 셈(lib/chart-axis.ts) — 쓰는 쪽이 차트 레시피 한 곳에서 가져온다
+export {
+  CHART_TICK_SIZE,
+  CHART_TICK_GAP,
+  CHART_X_AXIS_HEIGHT,
+  niceStep,
+  niceAxis,
+  niceValueAxis,
+  niceDualValueAxes,
+  chartValueIntervals,
+  chartTopMargin,
+  measureTextWidth,
+  chartXTickFullLabels,
+  chartXTickInterval,
+  chartXTickLabels,
+  chartXEndReserve,
+  createChartXGroup,
+} from "@/lib/chart-axis";
+export type { AxisFormat, ChartXGroup, ChartXTick, NiceAxis, ValueAxisProps } from "@/lib/chart-axis";

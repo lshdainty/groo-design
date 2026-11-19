@@ -4,6 +4,7 @@ import { ChevronLeft, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useBackClose, useLeaveConfirm } from "@/components/ui/alert-dialog";
+import { ResponsivePair } from "@/components/ui/button";
 import { useInputButtonSurface } from "@/components/ui/input-button";
 import { useScrollFog } from "@/components/ui/scroll-fog";
 
@@ -18,7 +19,8 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *                        headerAction 이면 닫기 왼쪽 사이 4 에 머리 동작 하나(⋮ — 동작이 여럿인 상세, bottom-sheet.yaml 축 headerAction)
  *   BottomSheetBody      본문 — 좌우 화면 여백 24, 넘치면 이 안에서 스크롤. scrollFog 면 끝 흐림(Scroll Fog — 늘 켜진
  *                        위 20 · 아래 80 + 본문 안 여백 위 20 · 아래 80) — 넘칠 수 있는 본문(목록 · 긴 폼)에만 준다
- *   BottomSheetFooter    바닥 — 버튼 하나면 폭 전체, 둘이면 반씩(사이 8). Button large 48 을 크기를 주지 않은 바로 아래 자식에 넣는다
+ *   BottomSheetFooter    바닥 — 버튼 하나면 폭 전체, 둘이면 반씩(사이 8). Button large 48 을 크기를 주지 않은 바로 아래 자식에 넣는다.
+ *                        짝 버튼은 ResponsivePair — 한 라벨이 반 폭을 넘으면 세로로 쌓고 뒤(주) 버튼이 위
  *                        확인을 여는 [삭제](ghost critical)를 두면 맨 앞(왼쪽) 자식 — 바닥 왼쪽은 [삭제] 의 자리다(상세 · 입력 폼 시트 모두)
  *   BottomSheetSurface   바탕 — 딤 · 시트 · 손잡이와 닫는 길(Esc · 바깥 · 끌기 · 초점)만. 머리가 다른 시트(Menu Sheet)가 이 위에 짠다.
  *                        BottomSheetContent 도 이것 위에 머리 · 닫기 버튼을 얹은 것이다. handle="always" 면 스냅 높이가 없어도 손잡이를 단다
@@ -488,16 +490,15 @@ const BottomSheetBody = React.forwardRef<HTMLDivElement, BottomSheetBodyProps>((
 BottomSheetBody.displayName = "BottomSheetBody";
 
 // 바닥 — 위 12 · 아래 16(그 아래 안전 영역은 시트가 둔다), 버튼 하나면 폭 전체 · 둘이면 반씩(사이 8). Button large 48
+// 짝 버튼 판정은 ResponsivePair 가 맡는다 — 한 라벨이 반 폭을 넘으면 세로로 쌓고 뒤 버튼(주)이 위로 간다(wrap-reverse).
+// 여기는 바닥 자리 여백만 둔다
+const SHEET_FOOTER = "shrink-0 px-global-gutter pb-x4 pt-x3";
+
 const BottomSheetFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, children, ...props }, ref) => (
-    <div
-      ref={ref}
-      data-slot="bottom-sheet-footer"
-      className={cn("flex shrink-0 gap-x2 px-global-gutter pb-x4 pt-x3 [&>*]:min-w-0 [&>*]:flex-1", className)}
-      {...props}
-    >
+    <ResponsivePair ref={ref} data-slot="bottom-sheet-footer" className={cn(SHEET_FOOTER, className)} {...props}>
       {withButtonSize(children, "large")}
-    </div>
+    </ResponsivePair>
   ),
 );
 BottomSheetFooter.displayName = "BottomSheetFooter";

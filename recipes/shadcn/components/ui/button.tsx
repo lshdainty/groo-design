@@ -19,7 +19,9 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  *
  * Sizes(4) × layout(withText · iconOnly)
  *   xsmall 32(알약) · small 36 · medium 40(기본) · large 48 — 크기는 이름이 아니라 높이로 고른다.
- *   글이 있는 버튼은 라벨이 글자 크기 설정을 따라 커지고 상자도 따라 커진다(rem). 아이콘 · 아이콘만 있는 버튼은 px 라 그대로다.
+ *   높이는 최소 높이(min-h)라 글자 크기 설정으로 라벨이 커지면 상자도 따라 커진다. 아이콘 · 아이콘만 있는 버튼의 폭은 px 다.
+ *   라벨은 한 줄을 지키고 넘치면 끝을 "…" 로 줄인다 — 이어진 글 자식은 span[data-slot=button-label] 로 묶인다(wrapLabel).
+ *   버튼은 놓인 자리보다 넓어지지 않는다(max-w-full).
  *
  * States
  *   hover = 누름 색(Tailwind v4 의 hover 는 hover 가능한 기기에서만). 누름은 누름 색 + 세로 2px 거리 축소 —
@@ -29,7 +31,7 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  *   누름은 누른 동작이 끝날 때까지 한 번이다 — onClick 이 Promise 를 돌려주면 이행 · 거부될 때까지 다음 누름(포인터 · Enter · Space)을
  *   버린다(시간 창은 없다). 비동기 동작은 Promise 를 돌려준다(mutateAsync). 돌려주지 않으면 잠그지 않는다.
  *   loading 은 누름 색 위 로딩 원 + 누르기 막기 + aria-busy. 라벨은 글자 · 아이콘 색만 투명하게 해 폭을 그대로 둔다 —
- *   자식을 따로 감싸지 않으므로 부르는 쪽의 [&>span] · [&>svg] 규칙이 그대로 먹는다. asChild 와 함께 쓰지 않는다.
+ *   글은 라벨 span, 아이콘은 svg 그대로 버튼의 바로 아래 자식이라 부르는 쪽의 [&>span] · [&>svg] 규칙이 먹는다. asChild 와 함께 쓰지 않는다.
  *   로딩 원은 Progress Circle(progress-circle.tsx) — size · tone inherit 로 이 버튼이 정한 --progress-size(14 · 14 · 16 · 18) ·
  *   --progress-thickness(2) · --progress-track · --progress-range 를 따른다. 장식이다(aria-hidden) — 버튼의 aria-busy 가 알린다.
  *   Brand Outline 의 원은 stroke-brand-solid(Progress Circle brand 톤 — 다크는 밝은 짝, 다크 바탕 위 Desk 6.10:1). 채움 색 bg-brand-solid 는
@@ -39,9 +41,9 @@ import { ProgressCircle } from "@/components/ui/progress-circle";
  */
 const buttonVariants = cva(
   [
-    "relative inline-flex items-center justify-center whitespace-nowrap font-sans font-bold",
+    "relative inline-flex max-w-full items-center justify-center whitespace-nowrap font-sans font-bold",
     // 누르는 영역 44 — 보이는 상자보다 작으면 ::before 가 넓힌다
-    "before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-11 before:w-full before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
+    "before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-[44px] before:w-full before:min-w-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
     // 색은 color-transition, 축소는 pressed-scale
     "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing),color_var(--motion-duration-color-transition)_var(--motion-ease-easing),scale_var(--motion-duration-pressed-scale)_var(--motion-ease-pressed-scale)]",
     "active:[scale:calc(1-2/var(--press-basis))] motion-reduce:active:[scale:1]",
@@ -72,11 +74,11 @@ const buttonVariants = cva(
           "bg-transparent text-fg-neutral hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed aria-busy:bg-bg-layer-default-pressed disabled:bg-transparent [--progress-track:var(--color-gray-500)] [--progress-range:var(--color-fg-neutral)]",
       },
       size: {
-        xsmall: "h-8 rounded-full [--press-basis:32] [--progress-size:14px]",
-        small: "h-9 rounded-r2 [--press-basis:36] [--progress-size:14px]",
-        medium: "h-10 rounded-r2 [--press-basis:40] [--progress-size:16px]",
+        xsmall: "min-h-[32px] rounded-full [--press-basis:32] [--progress-size:14px]",
+        small: "min-h-[36px] rounded-r2 [--press-basis:36] [--progress-size:14px]",
+        medium: "min-h-[40px] rounded-r2 [--press-basis:40] [--progress-size:16px]",
         // large 는 48
-        large: "h-12 rounded-r3 [--press-basis:48] [--progress-size:18px]",
+        large: "min-h-[48px] rounded-r3 [--press-basis:48] [--progress-size:18px]",
       },
       layout: {
         withText: "",
@@ -101,10 +103,10 @@ const buttonVariants = cva(
       { size: "small", layout: "withText", className: "px-x3_5 py-x2 gap-x1 text-t4 [&_svg]:size-[14px]" },
       { size: "medium", layout: "withText", className: "px-x4 py-x2_5 gap-x1_5 text-t4 [&_svg]:size-[16px]" },
       { size: "large", layout: "withText", className: "px-x5 py-x3 gap-x2 text-t6 [&_svg]:size-[22px]" },
-      { size: "xsmall", layout: "iconOnly", className: "size-[32px] p-x1_5 [&_svg]:size-[14px]" },
-      { size: "small", layout: "iconOnly", className: "size-[36px] p-x2 [&_svg]:size-[16px]" },
-      { size: "medium", layout: "iconOnly", className: "size-[40px] p-x2_5 [&_svg]:size-[18px]" },
-      { size: "large", layout: "iconOnly", className: "size-[48px] p-x3 [&_svg]:size-[22px]" },
+      { size: "xsmall", layout: "iconOnly", className: "w-[32px] p-x1_5 [&_svg]:size-[14px]" },
+      { size: "small", layout: "iconOnly", className: "w-[36px] p-x2 [&_svg]:size-[16px]" },
+      { size: "medium", layout: "iconOnly", className: "w-[40px] p-x2_5 [&_svg]:size-[18px]" },
+      { size: "large", layout: "iconOnly", className: "w-[48px] p-x3 [&_svg]:size-[22px]" },
       // 가장자리 맞춤 — 크기 × 배치의 px 보다 뒤에 둬야 tailwind-merge 가 pl-0 · pr-0 을 남긴다
       { flush: "left", className: "pl-0" },
       { flush: "right", className: "pr-0" },
@@ -129,6 +131,17 @@ const buttonVariants = cva(
   },
 );
 
+// 짝 버튼(ResponsivePair) — 한 라벨이 반 폭을 넘으면 세로로 쌓고 주 버튼이 위(button.md "긴 라벨").
+// 사이 8 · 버튼마다 반 폭 바탕. 버튼은 글 폭보다 줄지 않되(flex 의 자동 최소 = 라벨 한 줄 폭) 짝의 폭은 넘지 않는다(max-w-full —
+// 자동 최소도 이 값에서 멈춘다). 라벨이 반 폭을 넘으면 줄이 넘어가고 wrap-reverse 라 뒤(주) 버튼이 위로 가며, 쌓은 뒤에도 짝 폭보다
+// 길면 라벨 끝을 "…" 로 줄인다(button.md "글자 크기 설정")
+// 글자만큼 버튼(data-fit="content" — 시트 바닥의 [삭제])은 반 폭 바탕을 받지 않고 글 폭이며, 남은 폭은 주 버튼이 채운다(bottom-sheet.md "머리 · 본문 · 바닥")
+const RESPONSIVE_PAIR =
+  "flex flex-wrap-reverse gap-x2 [&>*]:max-w-full [&>*]:grow [&>*]:basis-[calc(50%-var(--spacing-x2)/2)] [&>[data-fit=content]]:grow-0 [&>[data-fit=content]]:basis-auto";
+
+// 라벨 — 한 줄을 지키고 넘치면 끝을 "…" 로(button.md "글자 크기 설정"). 글은 그대로 DOM 에 있어 보조 기술은 전체 라벨을 읽는다
+const BUTTON_LABEL = "min-w-0 truncate";
+
 export interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick">,
     VariantProps<typeof buttonVariants> {
@@ -152,6 +165,34 @@ function setPressBasis(e: React.PointerEvent<HTMLElement>) {
   const el = e.currentTarget;
   const basis = Math.max(el.offsetHeight, el.offsetWidth / 4, 24);
   el.style.setProperty("--press-basis", String(basis));
+}
+
+/**
+ * 라벨 감싸기 — 이어진 글(문자열 · 숫자)을 한 덩어리 span 으로 묶어 한 줄 "…" 로 줄인다. 아이콘 · 요소는 그대로 둔다(아이콘은 px).
+ * 글을 나눠 쓴 자식({"총 "}{n}{"개"})도 한 span 이라 한꺼번에 줄어든다.
+ */
+function wrapLabel(children: React.ReactNode): React.ReactNode {
+  const out: React.ReactNode[] = [];
+  let text: (string | number)[] = [];
+  const flush = () => {
+    if (text.length === 0) return;
+    out.push(
+      <span key={`label-${out.length}`} data-slot="button-label" className={BUTTON_LABEL}>
+        {text.join("")}
+      </span>,
+    );
+    text = [];
+  };
+  // toArray — 요소에 열쇠를 달고 빈 값(null · 참거짓)을 걷는다
+  for (const c of React.Children.toArray(children)) {
+    if (typeof c === "string" || typeof c === "number") text.push(c);
+    else {
+      flush();
+      out.push(c);
+    }
+  }
+  flush();
+  return out;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -194,7 +235,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         onClick={loading ? swallow : handleClick}
         {...props}
       >
-        {children}
+        {wrapLabel(children)}
         {loading && (
           <ProgressCircle
             size="inherit"
@@ -209,4 +250,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = "Button";
 
-export { Button, buttonVariants };
+/**
+ * ResponsivePair — 짝 버튼(보조 · 주 순서로 둔다). 어느 한 라벨이 짝 폭의 절반을 넘으면 둘 다 세로로 쌓고
+ * 주 버튼이 위로 가며, 라벨은 한 줄을 지킨다(button.md "긴 라벨"). 판정은 CSS 가 한다 — 줄바꿈 거꾸로(flex-wrap-reverse) +
+ * 버튼마다 반 폭 바탕(basis) + 글 폭보다 줄지 않음(flex 의 자동 최소). 시트 · 확인창 바닥도 이 부품을 쓴다.
+ */
+const ResponsivePair = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} data-slot="responsive-pair" className={cn(RESPONSIVE_PAIR, className)} {...props} />
+  ),
+);
+ResponsivePair.displayName = "ResponsivePair";
+
+export { Button, buttonVariants, ResponsivePair, RESPONSIVE_PAIR };

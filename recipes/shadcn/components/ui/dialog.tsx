@@ -26,7 +26,8 @@ import { useScrollFog } from "@/components/ui/scroll-fog";
  *                           headerAction 이면 닫기 왼쪽 사이 4(닫기가 없으면 오른쪽 끝)에 머리 동작 하나(⋮ — dialog.yaml 축 headerAction)
  *   DialogBody              본문 — 이 안에서만 스크롤, 위로 스크롤되면 머리 아래 1px 선. scrollFog 면 끝 흐림(Scroll Fog —
  *                           늘 켜진 위 20 · 아래 80 + 본문 안 여백 위 20 · 아래 80) — 넘칠 수 있는 본문(목록 · 긴 폼)에만 준다
- *   DialogFooter            바닥 — 오른쪽 정렬, 사이 8. Button small 36 을 크기를 주지 않은 바로 아래 자식에 넣는다
+ *   DialogFooter            바닥 — 오른쪽 정렬, 사이 8. Button small 36 을 크기를 주지 않은 바로 아래 자식에 넣는다.
+ *                           한 줄에 들지 않으면 세로로 쌓고 뒤(주) 버튼이 위(flex-wrap-reverse)
  *   DialogCancel            바닥 [취소] — neutralWeak. 닫기를 청한다(바뀐 값이 있으면 먼저 묻는다)
  *
  *   ResponsiveDialog        폼 · 상세는 이것으로 짠다 — 1280 이상 Dialog, 미만 Bottom Sheet(Input Button 과 같은 경계,
@@ -403,13 +404,15 @@ const DialogBody = React.forwardRef<HTMLDivElement, DialogBodyProps>(({ scrollFo
 });
 DialogBody.displayName = "DialogBody";
 
-// 바닥 — 위 16 · 좌우 24 · 아래 24, 오른쪽 정렬 [취소] [저장], 사이 8. Button small 36
+// 바닥 — 위 16 · 좌우 24 · 아래 24, 오른쪽 정렬 [취소] [저장], 사이 8. Button small 36.
+// 큰 글자로 나란한 버튼이 한 줄에 들지 않으면 세로로 쌓는다 — 줄바꿈 거꾸로라 뒤(주) 버튼이 위, 쌓인 줄 사이도 8. 한 버튼이 바닥 폭보다
+// 길면 라벨 끝을 "…" 로 줄인다(button.md "글자 크기 설정" — 시트 · 확인창 바닥의 ResponsivePair 와 같은 규칙)
 const DialogFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, children, ...props }, ref) => (
     <div
       ref={ref}
       data-slot="dialog-footer"
-      className={cn("flex shrink-0 items-center justify-end gap-x2 px-x6 pb-x6 pt-x4", className)}
+      className={cn("flex shrink-0 flex-wrap-reverse items-center justify-end gap-x2 px-x6 pb-x6 pt-x4", className)}
       {...props}
     >
       {withButtonSize(children, "small")}

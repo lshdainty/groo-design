@@ -216,7 +216,7 @@
 
 **날짜 기간이 든 라벨도 한 줄입니다.** 통계 기간 버튼처럼 라벨이 날짜 기간이면 줄을 바꾸지 않고 날짜를 줄입니다 — 해가 다른 직접 기간은 점 · 두 자리 연도 "25. 11. 10.~26. 11. 10."(영어 "Nov 10, '25–Nov 10, '26" — en dash 앞뒤를 붙입니다)입니다. 네 자리 점 표기("2025. 11. 10.~2026. 11. 10.")는 큰 글자에서 버튼이 화면 밖으로 나가고, 두 줄로 바꾸면 버튼 높이가 바뀌기 때문입니다. 표기는 DESIGN.md International Design 의 "날짜" 를 따릅니다.
 
-**큰 글자에서 높이** — 크기마다의 높이(32 · 36 · 40 · 48)는 최소 높이입니다. 글자가 커져 라벨이 상자보다 높아지면 상자가 글을 따라 커지고 글을 자르지 않습니다(앱 200% 에서 36 · 40 · 48 → 54 · 58 · 72, 100% 는 그대로). 웹은 높이가 rem 이라 이미 그렇습니다. 같은 200% 에서 웹(72 · 80 · 96)이 앱보다 큽니다. 아이콘과 아이콘만 있는 버튼은 글이 없어 웹 · 앱 모두 px 그대로입니다.
+**큰 글자에서 높이** — 크기마다의 높이(32 · 36 · 40 · 48)는 최소 높이입니다. 글자가 커져 라벨이 상자보다 높아지면 상자가 글을 따라 커지고 글을 자르지 않습니다(200% 에서 36 · 40 · 48 → 54 · 58 · 72, 100% 는 그대로 — 웹 · 앱 같음). 아이콘과 아이콘만 있는 버튼은 글이 없어 웹 · 앱 모두 px 그대로입니다.
 
 이 판정은 부품 하나가 맡습니다 — 웹 `ResponsivePair` · 앱 `PResponsivePair`(자식 둘 — 보조 버튼 · 주 버튼 순서, 쌓이면 주 버튼이 위). 시트 · 확인창 바닥의 짝 버튼도 이 부품을 씁니다 — 같은 판정을 바닥마다 따로 적지 않습니다.
 
@@ -276,6 +276,10 @@ Button 은 액션을 실행합니다. 선택 · 필터는 [Chip](chip.md)(같은
 레시피 `recipes/shadcn/components/ui/button.tsx` 를 씁니다. 아래 미리보기는 스펙 값으로 그린 모습입니다.
 
 레시피의 cva 는 groo 스케일 이름(`text-t4` · `px-x4` · `rounded-r2`)을 씁니다. 기본 tailwind-merge 는 `text-t4` 를 글자색으로 읽어 앞의 `text-fg-neutral-inverted` 를 지우고(짙은 버튼의 흰 글자가 사라집니다), `px-x4` 를 여백으로 읽지 못해 `p-0` 덮어쓰기가 먹지 않습니다. 레시피 `lib/utils.ts` 처럼 spacing · radius · text 스케일을 `extendTailwindMerge` 에 등록합니다.
+
+버튼은 놓인 자리보다 넓어지지 않습니다(`max-w-full`). 이어진 글 자식(문자열 · 숫자)은 레시피가 `span[data-slot=button-label]`(`min-w-0 truncate`) 하나로 묶어 한 줄을 지키고, 넘치면 끝을 "…" 로 줄입니다. 아이콘 · 요소 자식은 그대로 둡니다. 크기마다의 높이는 최소 높이(`min-h-[32px]` …)이고, 아이콘 · 아이콘만 있는 버튼의 폭 · 누르는 영역 44 는 px 입니다.
+
+레시피는 짝 버튼 부품 `ResponsivePair` 와 그 클래스 `RESPONSIVE_PAIR` 를 함께 내보냅니다 — 자식은 보조 버튼 · 주 버튼 순서로 둡니다. 시트 · 확인창 바닥(`BottomSheetFooter` · `AlertDialogFooter`)도 이 부품입니다.
 
 ### 기본
 
@@ -368,6 +372,18 @@ const [saving, setSaving] = useState(false)
   <Button variant="neutralWeak" size="small">취소</Button>
   <Button size="small">저장</Button>
 </footer>
+```
+
+### 짝 버튼
+
+```tsx
+import { Button, ResponsivePair } from "@/components/ui/button"
+
+{/* 한 라벨이 반 폭을 넘으면 세로로 쌓고 주 버튼(뒤)이 위로 갑니다 */}
+<ResponsivePair>
+  <Button variant="neutralWeak" size="large">나중에</Button>
+  <Button size="large">지금 업데이트</Button>
+</ResponsivePair>
 ```
 
 ## Behavior

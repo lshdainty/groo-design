@@ -111,7 +111,7 @@ const TreeContext = React.createContext<TreeContextValue | null>(null);
 
 // 줄 — 44 · 위아래 12 · 오른쪽 8 · 모서리 10(왼쪽은 단계마다 style). 호버(웹) · 누름은 bg-layer-default-pressed, 고른 항목은 bg-neutral-weak-pressed 그대로
 const ROW = [
-  "relative flex min-h-11 cursor-pointer rounded-r2_5 py-x3 pr-x2",
+  "relative flex min-h-[44px] cursor-pointer rounded-r2_5 py-x3 pr-x2",
   "[transition:background-color_var(--motion-duration-color-transition)_var(--motion-ease-easing)]",
 ].join(" ");
 const ROW_IDLE = "[@media(hover:hover)]:hover:bg-bg-layer-default-pressed active:bg-bg-layer-default-pressed";
