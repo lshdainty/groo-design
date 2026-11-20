@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
  * 회색 채움 + 밝은 엄지.
  * 라벨을 눌러도 스위치가 줄어들도록 Switch 는 group/switch, 스위치는 그 active 도 받는다.
  * 글자 크기: 라벨은 글자 크기 설정을 따라 커진다. 트랙 · 엄지 · 누르는 영역 44 는 컨트롤 모양이라 px 이고, 라벨이 커져 줄이 높아지면
- * 스위치는 라벨 첫 줄 가운데에 선다.
+ * 스위치는 라벨 전체의 세로 가운데에 선다(Checkbox · Radio 와 같다).
  */
 const switchmarkVariants = cva(
   [
@@ -97,11 +97,10 @@ const Switchmark = React.forwardRef<React.ElementRef<typeof SwitchPrimitive.Root
 Switchmark.displayName = "Switchmark";
 
 // 한 줄 — 스위치 + 라벨. 누르는 영역은 ::before 로 44 까지.
-// 라벨은 글자 크기 설정을 따라 커지고 줄을 바꿔 받는다. 스위치는 px 그대로 라벨 첫 줄 가운데에 선다 — 둘 다 위에 붙이고,
-// 첫 줄 상자 높이 max(줄 최소 높이, 라벨 줄 높이) 안에서 각자 가운데로 내린다(100% 에서는 가운데 맞춤과 같다)
+// 라벨은 글자 크기 설정을 따라 커지고 줄을 바꿔 받는다. 스위치는 px 그대로 라벨 전체의 세로 가운데에 선다
 const switchVariants = cva(
   [
-    "group/switch relative inline-flex cursor-pointer select-none items-start self-start",
+    "group/switch relative inline-flex cursor-pointer select-none items-center self-start",
     "before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-[44px] before:w-full before:min-w-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
     "has-[:disabled]:cursor-not-allowed",
   ].join(" "),
@@ -117,27 +116,6 @@ const switchVariants = cva(
   },
 );
 
-// 줄 안에서 스위치 · 라벨이 첫 줄 가운데에 서도록 내리는 거리(Switch 에서만 — Switchmark · 라벨을 따로 쓰면 걸지 않는다)
-const switchRowmarkOffset = cva("", {
-  variants: {
-    size: {
-      "16": "mt-[calc((max(24px,var(--text-t3--line-height))_-_16px)/2)]",
-      "24": "mt-[calc((max(24px,var(--text-t4--line-height))_-_24px)/2)]",
-      "32": "mt-[calc((max(32px,var(--text-t5--line-height))_-_32px)/2)]",
-    },
-  },
-  defaultVariants: { size: "24" },
-});
-const switchRowLabelOffset = cva("", {
-  variants: {
-    size: {
-      "16": "mt-[calc((max(24px,var(--text-t3--line-height))_-_var(--text-t3--line-height))/2)]",
-      "24": "mt-[calc((max(24px,var(--text-t4--line-height))_-_var(--text-t4--line-height))/2)]",
-      "32": "mt-[calc((max(32px,var(--text-t5--line-height))_-_var(--text-t5--line-height))/2)]",
-    },
-  },
-  defaultVariants: { size: "24" },
-});
 
 const switchLabelVariants = cva("font-sans font-medium text-fg-neutral peer-disabled:text-fg-disabled", {
   variants: {
@@ -161,8 +139,8 @@ const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitive.Root>, S
     const sid = id ?? autoId;
     return (
       <label htmlFor={sid} className={cn(switchVariants({ size }), className)}>
-        <Switchmark ref={ref} id={sid} size={size} tone={tone} {...props} className={switchRowmarkOffset({ size })} />
-        <span className={cn(switchLabelVariants({ size }), switchRowLabelOffset({ size }), labelClassName)}>{label}</span>
+        <Switchmark ref={ref} id={sid} size={size} tone={tone} {...props} />
+        <span className={cn(switchLabelVariants({ size }), labelClassName)}>{label}</span>
       </label>
     );
   },
