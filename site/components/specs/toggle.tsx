@@ -266,8 +266,8 @@ function HeroWithEye({ mode, hidden, focused = false }: { mode: Mode; hidden: bo
       mode={mode}
       width={HERO_W}
       label="순자산 · 2026년 10월"
-      amount={hidden ? '••••••원' : '42,898,100원'}
-      detail={hidden ? '총 자산 •••••• · 총 부채 ••••••' : '총 자산 52,320,000원 · 총 부채 9,421,900원'}
+      amount={hidden ? '••••' : '42,898,100원'}
+      detail={hidden ? '총 자산 •••• · 총 부채 ••••' : '총 자산 52,320,000원 · 총 부채 9,421,900원'}
       labelEnd={<EyeLink hidden={hidden} mode={mode} state={focused ? 'focused' : 'enabled'} />}
     />
   );
@@ -390,7 +390,7 @@ function EyePlaces({ action = false }: { action?: boolean }) {
   );
   return (
     <div className="flex w-full max-w-[312px] flex-col gap-3">
-      {place('홈 순자산 카드 — 가림', <HeroCardView look={CL()} width="100%" label="순자산 · 2026년 10월" amount="••••••원" labelEnd={<EyeLink hidden={!action} />} />)}
+      {place('홈 순자산 카드 — 가림', <HeroCardView look={CL()} width="100%" label="순자산 · 2026년 10월" amount="••••" labelEnd={<EyeLink hidden={!action} />} />)}
       {place('자산 순자산 카드 — 보임', <HeroCardView look={CL()} width="100%" label="순자산 · 자산" amount="42,898,100원" labelEnd={<EyeLink hidden={action} />} />)}
     </div>
   );
