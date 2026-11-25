@@ -230,8 +230,8 @@ export function ExInvertedDemo({ look, card }: { look: ToggleLook; card: CardLoo
       <HeroCardView
         look={card}
         label="순자산 · 2026년 10월"
-        amount={hidden ? '••••••원' : '42,898,100원'}
-        detail={hidden ? '총 자산 •••••• · 총 부채 ••••••' : '총 자산 52,320,000원 · 총 부채 9,421,900원'}
+        amount={hidden ? '••••' : '42,898,100원'}
+        detail={hidden ? '총 자산 •••• · 총 부채 ••••' : '총 자산 52,320,000원 · 총 부채 9,421,900원'}
         labelEnd={<ToggleView look={look} tone="inverted" link ariaLabel="금액 가리기 설정" icon={hidden ? 'eye-off' : 'eye'} onActivate={() => setWent(true)} />}
       />
       <Readout text={went ? '→ 설정 › 금액 가리기 › 홈 묶음이 열린다' : '금액 가리기 설정, 버튼'} />
