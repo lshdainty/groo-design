@@ -164,14 +164,14 @@ export function TablePaginationPlayground({ look, tones, table, card }: { look: 
       wide
       stage={
         <div className="flex flex-col gap-3" style={{ fontFamily: FONT }}>
-          {/* 표 카드 — card.yaml 면 + 머리(표 이름). 표(table.yaml)와 넘김 줄은 같은 가로 스크롤 상자 안, 줄은 표 아래 12 · 좌우 24 */}
+          {/* 표 카드 — card.yaml 면 + 머리(표 이름). 표(table.yaml)와 넘김 줄은 같은 가로 스크롤 상자 안 — 표만 밀리고 줄은 보이는 폭에 붙는다. 줄은 표 아래 12 · 좌우 24 */}
           <div style={{ boxSizing: 'border-box', overflow: 'hidden', borderRadius: card.radius, borderWidth: card.borderW, borderStyle: 'solid', borderColor: tc(tones, 'stroke-neutral-weak', mode), background: tc(tones, 'bg-layer-default', mode), paddingBottom: card.listBottom }}>
             <div style={{ paddingTop: card.head.top, paddingRight: card.head.x, paddingBottom: card.head.bottom, paddingLeft: card.head.x, fontFamily: card.title.fontFamily, fontSize: card.title.fontSize, lineHeight: card.title.lineHeight, fontWeight: card.title.fontWeight, color: tc(tones, 'fg-neutral', mode) }}>사용자</div>
-            <div style={{ overflowX: 'auto' }}>
+            <div style={{ overflowX: 'auto', containerType: 'inline-size' }}>
               <div style={{ minWidth: 520 }}>
                 <TableView look={table} mode={mode} caption="사용자" columns={PG_COLS} rows={shown.map(pgRow)} status={shown.length === 0 ? { kind: 'empty', title: '사용자가 없어요' } : undefined} />
                 {shown.length > 0 && to - from + 1 > shown.length && <div style={{ height: 28, paddingLeft: table.edge, fontSize: 12, lineHeight: '28px', color: tc(tones, 'fg-neutral-subtle', mode) }}>… {to - from + 1 - shown.length}줄 더(그림에서 줄였다)</div>}
-                <div style={{ marginTop: look.marginTop, paddingLeft: table.edge, paddingRight: table.edge }}>
+                <div style={{ position: 'sticky', left: 0, width: '100cqw', minWidth: 'max-content', boxSizing: 'border-box', marginTop: look.marginTop, paddingLeft: table.edge, paddingRight: table.edge }}>
                   <TablePaginationView
                     look={look}
                     mode={mode}

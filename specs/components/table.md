@@ -18,7 +18,7 @@
 
 [그림: 표는 머리 줄 · 본문 줄 · 칸으로 이뤄지고, 정렬 표시 · 상태 배지 · 줄 끝 ⋮ · 선택 칸 · 일괄 작업 바를 붙인다](../../site/components/specs/table.tsx#anatomy)
 
-| ⓐ Root | 표 상자 — 카드 안에 가장자리까지 붙습니다. 표와 넘김 줄을 담고, 넘치면 함께 가로로 밉니다. |
+| ⓐ Root | 표 상자 — 카드 안에 가장자리까지 붙습니다. 표와 넘김 줄을 담고, 넘치면 표만 가로로 밉니다 — 넘김 줄은 보이는 폭에 붙습니다. |
 | ⓑ Header Row | 머리 줄 — 41, 바탕 없음, 아래 선입니다. |
 | ⓒ Header Cell | 머리 칸 — 열 이름 14 / 20 · 500 입니다. 정렬할 수 있는 열은 칸 전체가 버튼입니다. |
 | ⓓ Sort Icon | 정렬 표시 ↑↓ — 정렬할 수 있는 열에 늘 있고, 지금 방향만 짙습니다. |
@@ -192,7 +192,7 @@
 
 ### 표 아래는 Table Pagination
 
-줄이 한 쪽(10줄)보다 많을 수 있으면 표 아래 12 에 [Table Pagination](table-pagination.md) 을 둡니다 — 표와 같은 상자 안이라 열이 넘쳐 가로로 밀 때 함께 밀립니다. 넘기면 표 맨 위로 스크롤합니다. 12 는 넘김 줄의 위 여백(`table-pagination.yaml` root.marginTop)입니다 — 표의 `pagination` 자리는 좌우 24 만 두고 위 여백을 더하지 않습니다. 그래서 자리에 넣어도 표 바로 뒤에 두어도 12 입니다.
+줄이 한 쪽(10줄)보다 많을 수 있으면 표 아래 12 에 [Table Pagination](table-pagination.md) 을 둡니다 — 표와 같은 상자 안이지만 보이는 폭에 붙어, 열이 넘쳐 표를 가로로 밀어도 그대로 있습니다(줄이 보이는 폭보다 넓으면 표를 끝까지 밀 때 끝이 보입니다). 넘기면 표 맨 위로 스크롤합니다. 12 는 넘김 줄의 위 여백(`table-pagination.yaml` root.marginTop)입니다 — 표의 `pagination` 자리는 좌우 24 만 두고 위 여백을 더하지 않습니다. 그래서 자리에 넣어도 표 바로 뒤에 두어도 12 입니다.
 
 ### 글
 
@@ -202,7 +202,7 @@
 
 레시피 `recipes/shadcn/components/ui/table.tsx` 를 씁니다. 아래 미리보기는 스펙 값으로 그린 모습입니다.
 
-- `Table` — 표 상자(가로 스크롤) + `<table>`. `caption`(필수 — 숨긴 표 이름, 보이는 제목은 카드 머리) · `rowHeight`(`"text"` 기본 45 · `"rich"` 72) · `stickyHeader`(상자가 스스로 스크롤할 때 머리를 붙입니다 — 높이는 `className` 의 `max-h-*`) · `pagination`(표 아래 [Table Pagination](table-pagination.md) 자리 — 표와 같은 가로 스크롤 상자 안, 좌우 24. 위 12 는 Table Pagination 이 갖습니다) · `tableClassName`(안쪽 `<table>` 에 붙는 클래스).
+- `Table` — 표 상자(가로 스크롤) + `<table>`. `caption`(필수 — 숨긴 표 이름, 보이는 제목은 카드 머리) · `rowHeight`(`"text"` 기본 45 · `"rich"` 72) · `stickyHeader`(상자가 스스로 스크롤할 때 머리를 붙입니다 — 높이는 `className` 의 `max-h-*`) · `pagination`(표 아래 [Table Pagination](table-pagination.md) 자리 — 표와 같은 가로 스크롤 상자 안이지만 보이는 폭에 붙습니다. 좌우 24. 위 12 는 Table Pagination 이 갖습니다) · `tableClassName`(안쪽 `<table>` 에 붙는 클래스).
 - `TableHeader` · `TableBody` · `TableRow` — `<thead>` · `<tbody>` · `<tr>`. `TableRow` 에 `onClick` 을 주면 누르는 줄입니다(호버 · 누름 바탕). 키보드로는 첫 열의 이름 링크(`TableRowHeader` 의 `href` 또는 `onClick`)로 같은 곳에 갑니다.
 - `TableHead` — 머리 칸(`<th scope="col">`). `align`(`"start"` 기본 · `"end"`) · `sort`(`"none"` · `"ascending"` · `"descending"` — 주면 정렬할 수 있는 열이 되어 칸 전체가 버튼이고, ↑↓ 를 늘 그리며 `aria-sort` 를 답니다) · `onSortChange(next)`(누를 때마다 내림 ↔ 오름, 두 단계 — `"none"` 으로 돌아가지 않습니다) · `defaultSortDirection`(그 열을 처음 누를 때의 방향 — 기본은 `align="end"`(숫자)면 `"descending"`, 아니면 `"ascending"` 입니다. 날짜 열은 `"descending"` 을 줍니다).
 - `TableRowHeader` — 첫 열(`<th scope="row">`, 그 줄의 이름). `href` · `onClick` 을 주면 이름이 링크 · 버튼이 됩니다.

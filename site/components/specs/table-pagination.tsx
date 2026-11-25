@@ -1,6 +1,6 @@
 // Table Pagination 페이지의 그림 — specs/components/table-pagination.md 의 `[그림: …](../../site/components/specs/table-pagination.tsx#<id>)` 자리.
 // 줄은 table-pagination.yaml 을 푼 값(navKit().table — nav-page-view 의 TablePaginationView)으로, 두 고르기는 select.yaml medium(select-view)으로 그린다.
-// 표는 table.yaml 대로 카드 안에 가장자리까지 붙고(nav-screens MiniTable — TableView), 줄은 표와 같은 상자 안 표 아래 12 다(지어낸 내용).
+// 표는 table.yaml 대로 카드 안에 가장자리까지 붙고(nav-screens MiniTable — TableView), 줄은 표와 같은 상자 안 표 아래 12 · 보이는 폭에 붙는다(지어낸 내용).
 import type { ReactNode } from 'react';
 import { Figure, Panel as Plate } from '../foundations/ui';
 import { Verdict, rc, type Mode } from './kit';
@@ -24,7 +24,7 @@ const Shrunk = ({ h, children }: { h: number; children: ReactNode }) => (
   </div>
 );
 const USERS_HEAD = ['이름', '부서', '직책', '상태'];
-// 표 카드 — 머리(표 이름) + 표 + 아래 줄. 줄은 표와 같은 상자 안 표 아래 12(spacing-component-default — 넘김 줄의 위 여백, 표의 자리는 좌우 24 만)
+// 표 카드 — 머리(표 이름) + 표 + 아래 줄. 줄은 표와 같은 상자 안 표 아래 12(spacing-component-default — 넘김 줄의 위 여백, 표의 자리는 좌우 24 만) · 보이는 폭에 붙는다
 function TableBlock({ mode = 'auto', w = W, rows = 4, head = USERS_HEAD, data = HR_USERS, total = 21, page = 2, pageSize = 10, row, title = '사용자' }: { mode?: Mode; w?: number; rows?: number; head?: string[]; data?: string[][]; total?: number; page?: number; pageSize?: number; row?: ReactNode; title?: string }) {
   return (
     <div style={{ width: w }}>
@@ -211,21 +211,24 @@ const OptionsGuide: Fig = ({ caption }) => {
   );
 };
 
+// 좁은 칸 그림 — 칸 폭 · 표 최소 폭 · 민 거리(지어낸 값). 넘김 줄은 칸 안에 들고 표만 넘친다
+const NARROW = { w: 520, table: 760, scroll: 160 };
 const NarrowGuide: Fig = ({ caption }) => (
   <Plate caption={caption}>
-    <Pair>
-      <Verdict ok note="좁은 칸 — 카드 안 표 상자에서 표와 줄이 함께 가로로 밀립니다(카드 머리는 그대로입니다)" bg="var(--p-bg-layer-basement)">
-        <div style={{ width: 300 }}>
+    <Pair stack>
+      <Verdict ok note="좁은 칸 — 표만 가로로 밀리고, 줄은 보이는 폭에 붙어 이전 · 다음이 늘 보입니다(카드 머리도 그대로입니다)" bg="var(--p-bg-layer-basement)">
+        {/* 줄이 보이는 폭 안에 드는 좁은 칸 — 표(760)만 160 밀린 모습 */}
+        <div style={{ width: NARROW.w }}>
           <CardSurface look={cardLook()} body="list">
             <CardHeaderView look={cardLook()} title="사용자" body="list" heading="span" />
             <div className="relative">
-              <MiniTable bare brand="hr" title="사용자" head={USERS_HEAD} rows={HR_USERS.slice(0, 3)} minWidth={W} scrollLeft={120}>
+              <MiniTable bare brand="hr" title="사용자" head={USERS_HEAD} rows={HR_USERS.slice(0, 3)} minWidth={NARROW.table} scrollLeft={NARROW.scroll}>
                 <PagingSlot>
                   <TablePaginationView look={TL()} total={21} page={2} pageSize={10} />
                 </PagingSlot>
               </MiniTable>
               <span aria-hidden className="absolute -bottom-2 left-6 right-6 block h-1 rounded-full" style={{ background: rc('stroke-neutral-weak') }}>
-                <span className="block h-1 rounded-full" style={{ width: '45%', marginLeft: '25%', background: rc('fg-neutral-subtle') }} />
+                <span className="block h-1 rounded-full" style={{ width: `${(NARROW.w / NARROW.table) * 100}%`, marginLeft: `${(NARROW.scroll / NARROW.table) * 100}%`, background: rc('fg-neutral-subtle') }} />
               </span>
             </div>
           </CardSurface>
