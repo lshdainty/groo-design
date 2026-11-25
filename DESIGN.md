@@ -2081,7 +2081,7 @@ html {
 | 동작 목록(들어간 화면 머리 ⋮ · 표 줄 ⋮ — 목록 줄에는 ⋮ 없음) | Menu Sheet | Menu Sheet | Menu |
 | 접힌 사이드바의 하위 | — | 옆 펼침 메뉴(줄 44 — Menu Sheet 로 바꾸지 않는다) | 같다(손으로 접었을 때) |
 | 긴 목록 | 끝없이 불러오기 | 상황에 따라 — 아래 "목록 넘기기" | 같다 |
-| 데이터 표 | Table Pagination(표와 함께 가로 스크롤) | Table Pagination | Table Pagination |
+| 데이터 표 | Table Pagination(표만 가로로 밀리고 줄은 보이는 폭에) | Table Pagination | Table Pagination |
 | 화면의 주 동작 | 탭 바 가운데 + · 탭 바 없는 화면은 떠 있는 버튼 | 머리의 버튼 | 같다 |
 | 본문 폭 | 화면 폭 | 밀도 표(720) | 밀도 표(720 · 1040) |
 

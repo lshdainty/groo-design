@@ -415,19 +415,21 @@ export function HrLeaveMain({ mode = 'auto', title = '휴가 현황', rows = 5 }
 // 상태 열은 Badge(medium weak), 숫자 열(일수 · 금액)은 오른쪽 · 고정폭 숫자. above 는 표 위, children 은 표 아래(넘김 줄)
 const STATUS_TONE: Record<string, TBadge['tone']> = { 재직: 'positive', 승인: 'positive', 휴직: 'warning', 대기: 'informative', 반려: 'critical' };
 const NUMERIC = /^[+−-]?[\d,.]+(일|원|시간|개|%)$/;
-// 표 상자(table.yaml root)는 표와 넘김 줄을 함께 담아 넘치면 함께 가로로 민다. bare 면 카드 없이 표 상자만(줄인 그림 · 스크롤한 그림)
+// 표 상자(table.yaml root)는 표와 넘김 줄을 함께 담고, 열이 넘치면 표만 가로로 민다 — 넘김 줄은 상자의 보이는 폭(100cqw)에 붙어(sticky) 그대로다.
+// scrollLeft 는 민 모습을 멈춰 그린다(표만 옮기고 넘김 줄은 보이는 폭에). bare 면 카드 없이 표 상자만(줄인 그림 · 스크롤한 그림)
 // empty — 줄이 없을 때 본문 자리의 비었음(Result Section medium — table.yaml 상태)
 export function MiniTable({ mode = 'auto', brand = 'desk', title, head, rows, minWidth, above, children, bare = false, scrollLeft, empty }: { mode?: Mode; brand?: Brand; title: string; head: string[]; rows: string[][]; minWidth?: number; above?: ReactNode; children?: ReactNode; bare?: boolean; scrollLeft?: number; empty?: string }) {
   const c = cardLook();
   const cols: TCol[] = head.map((h, i) => ({ key: String(i), label: h, align: rows.length > 0 && rows.every((r) => NUMERIC.test(r[i] ?? '')) ? 'end' : 'start' }));
   const data: TRow[] = rows.map((r, j) => ({ id: `r${j}`, name: r[0], cells: Object.fromEntries(r.map((v, i) => [String(i), head[i] === '상태' && STATUS_TONE[v] ? { badge: { label: v, tone: STATUS_TONE[v] } } : v])) }));
   const box = (
-    <div style={{ overflowX: scrollLeft ? 'hidden' : 'auto' }}>
+    <div style={{ overflowX: scrollLeft ? 'hidden' : 'auto', containerType: 'inline-size' }}>
       <div style={{ minWidth, marginLeft: scrollLeft ? -scrollLeft : undefined }}>
         {above}
         <TableView look={tableLook(brand)} mode={mode} caption={title} columns={cols} rows={data} minWidth={minWidth} status={rows.length === 0 && empty ? { kind: 'empty', title: empty } : undefined} />
-        {children}
+        {!scrollLeft && children != null && <div style={{ position: 'sticky', left: 0, width: '100cqw', minWidth: 'max-content' }}>{children}</div>}
       </div>
+      {scrollLeft ? children : null}
     </div>
   );
   if (bare) return box;
@@ -446,7 +448,7 @@ export function tableCardH(n: number, paging = true, brand: Brand = 'hr') {
   const header = c.header.list.top + parseFloat(c.title.lineHeight ?? c.title.fontSize) + c.header.list.bottom;
   return c.surface.borderW * 2 + header + t.head.minH + t.row.minH.text * n + (paging ? pg.marginTop + pg.height : 0) + c.list.padBottom;
 }
-// 넘김 줄 자리 — 표와 같은 상자 안, 좌우는 표의 첫 칸 앞 · 끝 칸 뒤와 같은 24(table.yaml root.paddingX). 표 아래 12 는 넘김 줄의 위 여백
+// 넘김 줄 자리 — 표와 같은 상자 안 · 보이는 폭에 붙음, 좌우는 표의 첫 칸 앞 · 끝 칸 뒤와 같은 24(table.yaml root.paddingX). 표 아래 12 는 넘김 줄의 위 여백
 // (table-pagination.yaml root.marginTop — 자리는 위 여백을 더하지 않는다)
 // above — 나쁜 예(표 위에 둔 줄)
 export function PagingSlot({ children, brand = 'hr', above = false }: { children: ReactNode; brand?: Brand; above?: boolean }) {
